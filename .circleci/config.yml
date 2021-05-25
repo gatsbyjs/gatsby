@@ -8,14 +8,14 @@ executors:
       image:
         type: string
         # First 10.x LTS release, but old Yarn
-        default: "14.16"
+        default: "12.13"
     docker:
       - image: circleci/node:<< parameters.image >>
 
 aliases:
   e2e-executor: &e2e-executor
     docker:
-      - image: cypress/browsers:node14.15.0-chrome86-ff82
+      - image: cypress/browsers:node12.18.3-chrome87-ff82
 
   restore_cache: &restore_cache
     restore_cache:
@@ -82,7 +82,7 @@ aliases:
     requires:
       - lint
       - typecheck
-      - unit_tests_node14
+      - unit_tests_node12
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
     <<: *e2e-executor
@@ -219,6 +219,11 @@ jobs:
       - run: yarn typecheck
       - run: yarn check-repo-fields
 
+  unit_tests_node12:
+    executor:
+      name: node
+    <<: *test_template
+
   unit_tests_node14:
     executor:
       name: node
@@ -226,16 +231,15 @@ jobs:
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
-    machine:
-      image: ubuntu-2004:202104-01
+    machine: true
     steps:
       - run:
           command: |
             echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
             echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-      - run: nvm install 14.16.0
-      - run: nvm alias default 14.16.0
-      - run: nvm use 14.16.0
+      - run: nvm install v12
+      - run: nvm alias default v12
+      - run: nvm use v12
       - run: npm i -g yarn@1.22.10
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
@@ -497,11 +501,11 @@ jobs:
       #       - yarn-packages-v2-{{ checksum "yarn.lock" }}
       #       - yarn-packages-v2-
       - run:
-          name: Install node 14.16
+          name: Install node 12.13
           command: |
-            nvm install 14.16.0
-            nvm alias default 14.16.0
-            nvm use 14.16.0
+            nvm install 12.13.0
+            nvm alias default 12.13.0
+            nvm use 12.13.0
             choco install yarn
       - run:
           name: Set yarn timeout
@@ -610,6 +614,12 @@ workflows:
           <<: *ignore_docs
           requires:
             - lint
+      - unit_tests_node12:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - typecheck
+            - bootstrap
       - unit_tests_node14:
           <<: *ignore_docs
           requires:
