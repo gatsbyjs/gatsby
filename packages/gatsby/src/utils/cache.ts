@@ -5,7 +5,7 @@ import manager, {
   MultiCache,
 } from "cache-manager"
 import fs from "fs-extra"
-import fsStore from "../cache/cache-fs"
+import * as fsStore from "../cache/cache-fs"
 import path from "path"
 
 const MAX_CACHE_SIZE = 250
@@ -22,6 +22,7 @@ export default class GatsbyCache {
   public directory: string
   public cache?: MultiCache
 
+  // @ts-ignore - set & get types are missing from fsStore?
   constructor({ name = `db`, store = fsStore }: ICacheProperties = {}) {
     this.name = name
     this.store = store

@@ -7,14 +7,14 @@ import multer from "multer"
 import * as express from "express"
 import { getMatchPath, urlResolve } from "gatsby-core-utils"
 import { CreateDevServerArgs, ParentSpanPluginArgs } from "gatsby"
-import { internalActions } from "../../redux/actions"
-import { IGatsbyFunction } from "../../redux/types"
-import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
 import chokidar from "chokidar"
-import pathToRegexp from "path-to-regexp"
+import { pathToRegexp, Key } from "path-to-regexp"
 import cookie from "cookie"
+import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
+import { internalActions } from "../../redux/actions"
+import { IGatsbyFunction } from "../../redux/types"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
 
@@ -139,6 +139,7 @@ const createWebpackConfig = async ({
 
   // Combine functions by the route name so that functions in the default
   // functions directory can override the plugin's implementations.
+  // @ts-ignore - Seems like a TS bug: https://github.com/microsoft/TypeScript/issues/28010#issuecomment-713484584
   const knownFunctions = _.unionBy(...allFunctions, func => func.functionRoute)
 
   store.dispatch(internalActions.setFunctions(knownFunctions))
@@ -422,14 +423,7 @@ export async function onCreateDevServer({
         // We loop until we find the first match.
         functions.some(f => {
           let exp
-          interface IKey {
-            name: string
-            prefix: string
-            suffix: string
-            pattern: string
-            modifier: string
-          }
-          const keys: Array<IKey> = []
+          const keys: Array<Key> = []
           if (f.matchPath) {
             exp = pathToRegexp(f.matchPath, keys)
           }

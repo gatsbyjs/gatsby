@@ -272,10 +272,10 @@ function innerLock(resolve, reject, filePath): void {
  * unlocks a file path
  * @type {Function}
  * @param {string} filePath
- * @returns {Promise}
+ * @returns {void}
  * @private
  */
-DiskStore.prototype._unlock = function _unlock(filePath): Promise<void> {
+DiskStore.prototype._unlock = function _unlock(filePath): void {
   globalGatsbyCacheLock.delete(filePath)
 }
 

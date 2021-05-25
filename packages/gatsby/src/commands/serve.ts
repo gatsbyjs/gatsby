@@ -8,9 +8,8 @@ import { match as reachMatch } from "@gatsbyjs/reach-router/lib/utils"
 import onExit from "signal-exit"
 import report from "gatsby-cli/lib/reporter"
 import multer from "multer"
-import pathToRegexp from "path-to-regexp"
+import { pathToRegexp, Key } from "path-to-regexp"
 import cookie from "cookie"
-
 import telemetry from "gatsby-telemetry"
 
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
@@ -18,6 +17,7 @@ import { getConfigFile } from "../bootstrap/get-config-file"
 import { preferDefault } from "../bootstrap/prefer-default"
 import { IProgram } from "./types"
 import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
+import { IGatsbyFunction } from "../redux/types"
 
 interface IMatchPath {
   path: string
@@ -120,7 +120,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     `functions`
   )
 
-  let functions
+  let functions: Array<IGatsbyFunction> = []
   try {
     functions = JSON.parse(
       fs.readFileSync(path.join(compiledFunctionsDir, `manifest.json`), `utf-8`)
@@ -161,12 +161,13 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           // We loop until we find the first match.
           functions.some(f => {
             let exp
-            const keys = []
+            const keys: Array<Key> = []
             if (f.matchPath) {
               exp = pathToRegexp(f.matchPath, keys)
             }
             if (exp && exp.exec(pathFragment) !== null) {
               functionObj = f
+              // @ts-ignore - TS bug? https://stackoverflow.com/questions/50234481/typescript-2-8-3-type-must-have-a-symbol-iterator-method-that-returns-an-iterato
               const matches = [...pathFragment.match(exp)].slice(1)
               const newParams = {}
               matches.forEach(
