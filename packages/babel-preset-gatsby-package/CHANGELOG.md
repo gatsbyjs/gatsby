@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.6.0-next.0...babel-preset-gatsby-package@1.6.0) (2021-05-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-gatsby-cloud:** only load indicator code when enabled ([#31506](https://github.com/gatsbyjs/gatsby/issues/31506)) ([#31575](https://github.com/gatsbyjs/gatsby/issues/31575)) ([ae5f270](https://github.com/gatsbyjs/gatsby/commit/ae5f270bb1c472fd75b307f42711cc1339db1909))
+
 # [1.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.5.0-next.0...babel-preset-gatsby-package@1.6.0-next.0) (2021-05-06)
 
 **Note:** Version bump only for package babel-preset-gatsby-package

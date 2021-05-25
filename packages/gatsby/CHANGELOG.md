@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.6.0-next.6...gatsby@3.6.0) (2021-05-25)
+
+### Bug Fixes
+
+- **gatsby:** better detection of Babel rules for HMR when customizing the Webpack config ([#31477](https://github.com/gatsbyjs/gatsby/issues/31477)) ([#31574](https://github.com/gatsbyjs/gatsby/issues/31574)) ([c68ec94](https://github.com/gatsbyjs/gatsby/commit/c68ec944fa0551461b072f69ce4793f7eb6ed0cc))
+
+### Features
+
+- **gatsby:** enable concurrent features ([#31394](https://github.com/gatsbyjs/gatsby/issues/31394)) ([#31580](https://github.com/gatsbyjs/gatsby/issues/31580)) ([d543723](https://github.com/gatsbyjs/gatsby/commit/d54372383bbb6f4ffccfeade5e98ce70f4f27271))
+- **gatsby:** lazily compile functions in development ([#31508](https://github.com/gatsbyjs/gatsby/issues/31508)) ([#31579](https://github.com/gatsbyjs/gatsby/issues/31579)) ([1960552](https://github.com/gatsbyjs/gatsby/commit/1960552fefce97378e8396758330a90071a76eff))
+
 # [3.6.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.6.0-next.5...gatsby@3.6.0-next.6) (2021-05-20)
 
 ### Features

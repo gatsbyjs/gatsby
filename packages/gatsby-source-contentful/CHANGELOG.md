@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.6.0-next.0...gatsby-source-contentful@5.6.0) (2021-05-25)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** use correct name for crop parameter in query string ([#31492](https://github.com/gatsbyjs/gatsby/issues/31492)) ([#31577](https://github.com/gatsbyjs/gatsby/issues/31577)) ([998a28b](https://github.com/gatsbyjs/gatsby/commit/998a28ba0726e67b8053631c18afb8c3f2cae52f))
+
 # [5.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.5.0-next.0...gatsby-source-contentful@5.6.0-next.0) (2021-05-06)
 
 **Note:** Version bump only for package gatsby-source-contentful
