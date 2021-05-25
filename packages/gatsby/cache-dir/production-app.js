@@ -193,7 +193,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     const renderer = apiRunner(
       `replaceHydrateFunction`,
       undefined,
-      process.env.GATSBY_CONCURRENT_FEATURES
+      process.env.GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES
         ? ReactDOM.unstable_createRoot
         : ReactDOM.hydrate
     )[0]
