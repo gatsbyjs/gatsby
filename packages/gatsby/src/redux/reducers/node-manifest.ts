@@ -33,7 +33,7 @@ export const nodeManifestReducer = (
       state.push({
         ...action.payload,
         node: {
-          id: action.payload.node.id,
+          id: node.id,
         },
       })
 
