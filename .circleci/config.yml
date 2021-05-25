@@ -230,6 +230,14 @@ jobs:
       image: "14"
     <<: *test_template
 
+  unit_tests_node14_strict_mode:
+    executor:
+      name: node
+      image: "14"
+    environment:
+      GATSBY_EXPERIMENTAL_STRICT_MODE: 1
+    <<: *test_template
+
   integration_tests_gatsby_source_wordpress:
     machine: true
     steps:
