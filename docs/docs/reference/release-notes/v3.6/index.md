@@ -25,24 +25,27 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Functions
 
-- Functions in plugins: https://github.com/gatsbyjs/gatsby/pull/31466
-- Uploading files: https://github.com/gatsbyjs/gatsby/pull/31470
-- Disable minifaction: https://github.com/gatsbyjs/gatsby/pull/31473
-- FS Caching: https://github.com/gatsbyjs/gatsby/pull/31505
-- Lazy Compile Functions in Dev: https://github.com/gatsbyjs/gatsby/pull/31508
+This is feature-packed release for [Functions](/docs/how-to/functions/)! Since Gatsby v3.4 you can enable them as a flag in your `gatsby-config.js` ([learn more in the discussion](https://github.com/gatsbyjs/gatsby/discussions/30735)).
+
+Gatsby plugins (and thus also Gatsby themes) can ship functions now ([PR #31466](https://github.com/gatsbyjs/gatsby/pull/31466)). Place them inside `src/api/%pluginName%/` and your users will be able to call them at `/api/%pluginName%/` -- this unlocks powerful plug-and-play opportunities like e-commerce themes that ship with frontend and backend logic. We're eager to see in the [discussion](https://github.com/gatsbyjs/gatsby/discussions/30735) what you're building.
+
+Functions also support uploading files as part of forms with this release ([PR #31470](https://github.com/gatsbyjs/gatsby/pull/31470)). You can access the data at `req.files`.
+
+Last but not least we shipped multiple performance & DX improvements to Functions. We [disabled minifaction](https://github.com/gatsbyjs/gatsby/pull/31473) of functions to speed up the build, [enabled](https://github.com/gatsbyjs/gatsby/pull/31505) webpack 5 `filesystem` caching, and [lazily compile functions](https://github.com/gatsbyjs/gatsby/pull/31508) in development to ensure a fast bootstrap.
 
 ## Preview Status Indicator
 
-TODO + Add preview image (via githubusercontent link)
-https://github.com/gatsbyjs/gatsby/pull/31347
+TODO
+
+![Showing the different states that the Preview Indicator can take. It's a rectangular container with three vertically stacked icons. The first icon is the Gatsby logo, the second icon indicates a link, and the third icon is an information icon. The Gatsby logo can indicate that the preview information is getting fetched, that a new preview is available, and that the preview has an error. In this case you can view logs. The link icon let's you copy the current URL path to share. The information icon tells you when the preview was last updated.](https://user-images.githubusercontent.com/16143594/119472866-e741a280-bd4a-11eb-9845-2bd9007070ab.jpg)
 
 ## Notable bugfixes & improvements
 
-- `gatsby-source-wordpress`: Add `searchAndReplace` feature, via [PR #31091](https://github.com/gatsbyjs/gatsby/pull/31091)
+- `gatsby-source-wordpress`: Add `searchAndReplace` feature, via [PR #31091](https://github.com/gatsbyjs/gatsby/pull/31091).
 - `gatsby-plugin-sitemap`: Fixes a bug where sitemaps were being written in a sub-directory but the sitemap index didn't contain that sub-directory, via [PR #31184](https://github.com/gatsbyjs/gatsby/pull/31184). Also remove `reporter.verbose` calls that would spam your Gatsby Cloud logs, via [PR #31448](https://github.com/gatsbyjs/gatsby/pull/31448).
-- `gatsby-source-drupal`: Add toggleable multilingual support by prefixing nodes with their langcode, via [PR #26720](https://github.com/gatsbyjs/gatsby/pull/26720)
-- `gatsby-plugin-image`: Remove extra "margin" on `CONSTRAINED` images, via [PR #31497](https://github.com/gatsbyjs/gatsby/pull/31497)
-- `gatsby-source-contentful`: Use correct parameter for "focus" & fix dominant color on cropped images, via [PR #31492](https://github.com/gatsbyjs/gatsby/pull/31492)
+- `gatsby-source-drupal`: Add toggleable multilingual support by prefixing nodes with their langcode, via [PR #26720](https://github.com/gatsbyjs/gatsby/pull/26720).
+- `gatsby-plugin-image`: Remove extra "margin" on `CONSTRAINED` images, via [PR #31497](https://github.com/gatsbyjs/gatsby/pull/31497).
+- `gatsby-source-contentful`: Use correct parameter for "focus" & fix dominant color on cropped images, via [PR #31492](https://github.com/gatsbyjs/gatsby/pull/31492).
 
 ## Contributors
 
