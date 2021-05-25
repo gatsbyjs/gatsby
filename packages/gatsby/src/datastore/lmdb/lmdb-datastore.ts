@@ -96,15 +96,6 @@ function getTypes(): Array<string> {
   return getDatabases().nodesByType.getKeys({}).asArray
 }
 
-function hasNodeChanged(id: string, digest: string): boolean {
-  const node = getNode(id)
-  if (!node) {
-    return true
-  } else {
-    return node.internal.contentDigest !== digest
-  }
-}
-
 let lastOperationPromise: Promise<any> = Promise.resolve()
 
 function updateDataStore(action: ActionsUnion): void {
@@ -146,7 +137,6 @@ export function setupLmdbStore(): IDataStore {
     iterateNodesByType,
     updateDataStore,
     ready,
-    hasNodeChanged,
 
     // deprecated:
     getNodes,
