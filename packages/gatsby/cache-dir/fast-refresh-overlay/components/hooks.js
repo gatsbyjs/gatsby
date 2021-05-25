@@ -1,6 +1,15 @@
 import * as React from "react"
 import { prettifyStack } from "../utils"
 
+const initialResponse = {
+  decoded: null,
+  sourcePosition: {
+    line: null,
+    number: null,
+  },
+  sourceContent: null,
+}
+
 export function useStackFrame({ moduleId, lineNumber, columnNumber }) {
   const url =
     `/__original-stack-frame?moduleId=` +
@@ -10,14 +19,7 @@ export function useStackFrame({ moduleId, lineNumber, columnNumber }) {
     `&columnNumber=` +
     window.encodeURIComponent(columnNumber)
 
-  const [response, setResponse] = React.useState({
-    decoded: null,
-    sourcePosition: {
-      line: null,
-      number: null,
-    },
-    sourceContent: null,
-  })
+  const [response, setResponse] = React.useState(initialResponse)
 
   React.useEffect(() => {
     async function fetchData() {
