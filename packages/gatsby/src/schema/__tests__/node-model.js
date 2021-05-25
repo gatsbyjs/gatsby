@@ -3,6 +3,7 @@ const { actions } = require(`../../redux/actions`)
 const { LocalNodeModel } = require(`../node-model`)
 const { build } = require(`..`)
 const typeBuilders = require(`../types/type-builders`)
+const { isStrictMode } = require(`../../utils/is-strict-mode`)
 
 const nodes = require(`./fixtures/node-model`)
 
@@ -1255,8 +1256,11 @@ describe(`NodeModel`, () => {
     })
   })
 
-  // FIXME: disallow circular references in the strict mode
-  describe.skip(`circular references`, () => {
+  describe(`circular references`, () => {
+    if (isStrictMode()) {
+      // Circular references are disallowed in the strict mode, this tests are expected to fail
+      return
+    }
     describe(`directly on a node`, () => {
       beforeEach(async () => {
         // This tests whether addRootNodeToInlineObject properly prevents re-traversing the same key-value pair infinitely
