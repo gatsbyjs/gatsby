@@ -20,19 +20,24 @@ export function useStackFrame({ moduleId, lineNumber, columnNumber }) {
   })
 
   React.useEffect(() => {
-    async function fetchData() {
-      const res = await fetch(url)
-      const json = await res.json()
-      const decoded = prettifyStack(json.codeFrame)
-      const { sourcePosition, sourceContent } = json
-      setResponse({
-        decoded,
-        sourceContent,
-        sourcePosition,
-      })
-    }
-    fetchData()
-  }, [])
+    try {
+      async function fetchData() {
+        const res = await fetch(url)
+        const json = await res.json()
+        const decoded = prettifyStack(json.codeFrame)
+        const { sourcePosition, sourceContent } = json
+       setResponse({
+          decoded,
+         sourceContent,
+         sourcePosition,
+        })
+      }
+      fetchData()
+    }, [])
+  }
+  catch (e) {
+		console.error("An error occurred while fetching the overlays: ", e)
+	}
 
   return response
 }
