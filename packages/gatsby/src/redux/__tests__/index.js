@@ -9,6 +9,7 @@ const v8Deserialize = jest.spyOn(v8, `deserialize`)
 const reporterInfo = jest.spyOn(reporter, `info`).mockImplementation(jest.fn)
 const reporterWarn = jest.spyOn(reporter, `warn`).mockImplementation(jest.fn)
 
+const { isStrictMode } = require(`../../utils/is-strict-mode`)
 const { saveState, store, readState } = require(`../index`)
 
 const {
@@ -145,7 +146,7 @@ describe(`redux db`, () => {
 
     expect(initialComponentsState).toEqual(new Map())
 
-    // store.getState().nodes = getFakeNodes()
+    store.getState().nodes = getFakeNodes()
 
     await saveState()
 
@@ -164,7 +165,8 @@ describe(`redux db`, () => {
     // make sure data was read and is not the same as our clean redux state
     expect(data.components).not.toEqual(initialComponentsState)
 
-    expect(data).toMatchSnapshot()
+    const snapshotName = isStrictMode() ? `STRICT_MODE` : undefined
+    expect(data).toMatchSnapshot({}, snapshotName)
   })
 
   describe(`GATSBY_DISABLE_CACHE_PERSISTENCE`, () => {
@@ -178,7 +180,7 @@ describe(`redux db`, () => {
     it(`shouldn't write redux cache to disk when GATSBY_DISABLE_CACHE_PERSISTENCE env var is used`, async () => {
       expect(initialComponentsState).toEqual(new Map())
 
-      // store.getState().nodes = getFakeNodes()
+      store.getState().nodes = getFakeNodes()
 
       await saveState()
 
