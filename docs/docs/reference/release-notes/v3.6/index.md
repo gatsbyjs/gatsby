@@ -35,7 +35,7 @@ Last but not least we shipped multiple performance & DX improvements to Function
 
 ## Preview Status Indicator
 
-With the latest release, we introduce our newest design for the preview status indicator. As with the previous indicator, you will need the latest version of `gatsby-plugin-gatsby-cloud` to be installed and configured in your `gatsby-node` file.
+With the latest release, we introduce our newest design for the preview status indicator. As with the previous indicator, you will need the latest version of `gatsby-plugin-gatsby-cloud` to be installed and configured in your `gatsby-config` file.
 
 This indicator will show up on your previews hosted on Gatsby Cloud. There are 4 interactable states to alert to the user the state of their preview builds as well as giving more context to when things succeed or go wrong.
 
