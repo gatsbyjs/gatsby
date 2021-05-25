@@ -23,8 +23,9 @@ This doc goes over the high level areas of this plugin, roughly what they do, ho
 - [`gatsby develop` DX features](#gatsby-develop-dx-features)
 - [WPGatsby](#wpgatsby)
 - [Preview](#preview)
-- [Image processing](#image-processing)
+- [File processing](#file-processing)
 - [HTML processing](#html-processing)
+- [Non-node root fields](#non-node-root-fields)
 
 ## Historical Info
 
@@ -154,21 +155,37 @@ When developing a site locally, this plugin periodically checks for data or sche
 ## WPGatsby
 
 The WPGatsby plugin stores and exposes WP change events for Gatsby to query and then update data/schema with.
-It also adds some additional fields to the WPGraphQL schema (like `schemaMd5` and compatibility api fields) which the source plugin requires to function. See https://github.com/gatsbyjs/wp-gatsby for more info.
-
-<!-- todo -->
+It also adds some additional fields to the WPGraphQL schema (like `schemaMd5` and [compatibility api](#compatibility-api-dx-and-security-ish-feature) fields) which the source plugin requires to function. See https://github.com/gatsbyjs/wp-gatsby for more info.
 
 ## Preview
 
-## Image processing
+The code for Preview lives partially in WPGatsby (see above) and partially in this plugin. There is a lot that goes into previews functioning since WPGatsby has it's own preview loader logic which talks back and forth with the Gatsby process from WP. See `src/steps/preview/preview.md` for a more detailed explanation. All preview logic in this plugin lives in `src/steps/preview` and `src/steps/source-nodes/index.ts`.
 
-- lazyNodes
-- retry on end of queue
+## File processing
+
+In this plugin we have 2 related node types for files, the `MediaItem` node type which contains meta information about the media item file, and `File` which is Gatsby's file node type (it lives on `MediaItem.localFile`). See `src/steps/source-nodes/create-nodes/create-remote-media-item-node.js`.
+
+`MediaItem` nodes are only fetched if they're referenced via a GraphQL connection on another node. This is done so that we only fetch files we might need since admins often upload many more images than they use as they're editing content. See `src/steps/source-nodes/fetch-nodes/fetch-referenced-media-items.js`.
+
+Local `File` nodes are fetched as a side effect of fetching `MediaItem` nodes via the `beforeChangeNode` plugin option. See the `WpMediaItem` default option in `src/models/gatsby-api.ts` (currently on line 218).
+
+Since we have a list of all media item's that are in use by WPGraphQL ID's, we don't need to paginate through media items to fetch them. This allows us to retry failed requests on the end of the request queue (which increases the success rate during failures vs retrying in place) and it also allows us to parellelize data and file requests at any concurrency level we want. See `src/steps/source-nodes/fetch-nodes/fetch-referenced-media-items.js`.
+
+In some cases it's not desireable to fetch all local `File` nodes on `MediaItem` nodes. A user might only want to fetch some or none of them so there is a `lazyNodes` option which causes `File` nodes to be fetched in GraphQL resolvers instead of during the source nodes api. See `src/models/gatsby-api.ts` (currently on line 226) and `src/steps/create-schema-customization/transform-fields/transform-object.js` (currently on line 73).
 
 ## HTML processing
 
-- links
-- files
-- images
+HTML is processed in node data via regexp find/replaces on the stringified JSON of each node. This is done for performance since very complex data structures will mean a lot of looping and recursively running checks and regexp replaces on each individual field at any arbitrary depth. See `src/steps/source-nodes/create-nodes/process-node.js`.
 
-<!-- end todo -->
+The following are processed:
+
+- anchor links that point at WP are made into relative links
+- file links (css background-image, anchor links to files, etc) are converted to static Gatsby files
+- image tags are converted to Gatsby images with static files
+- custom regexp find/replaces can replace any arbitrary strings
+
+During the above processes the plugin will fetch MediaItem nodes (if it can find them by url) and/or File nodes (either by the MediaItem.sourceUrl field or by the url in html).
+
+## Non-node root fields
+
+In addition to sourcing nodes this plugin sources any root fields (acf options for example) that it reasonably can. Any fields which require input args are automatically skipped. These fields are re-fetched on every data update since we can't store WPGatsby events about data that isn't attached to a node. See `src/steps/source-nodes/create-nodes/fetch-and-create-non-node-root-fields.js`.
