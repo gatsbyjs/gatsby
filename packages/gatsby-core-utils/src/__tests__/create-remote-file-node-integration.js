@@ -208,8 +208,7 @@ describe(`create-remote-file-node`, () => {
     expect(gotStream).toBeCalledTimes(1)
   })
 
-  // FIXME: somehow it only fails on Windows with node 14+. Node 12 works :shrug:
-  describe.skip(`retries the download`, () => {
+  describe(`retries the download`, () => {
     it(`Retries when gzip compression file is incomplete`, async () => {
       const filePath = await fetchRemoteFile({
         url: `http://external.com/logo-gzip.svg?attempts=1&maxBytes=300`,
