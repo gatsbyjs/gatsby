@@ -31,7 +31,12 @@ export function useStackFrame({ moduleId, lineNumber, columnNumber }) {
         sourcePosition,
       })
     }
-    fetchData()
+    try{
+      fetchData()
+    }
+    catch (err){
+      console.error("Error Caught while fetching the overlays: ", err)
+    }
   }, [])
 
   return response
