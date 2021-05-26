@@ -1,15 +1,10 @@
 import { ActionsUnion, IGatsbyState } from "../types"
 import { isStrictMode } from "../../utils/is-strict-mode"
 
-export const nodesReducer = (
+export const actualNodesReducer = (
   state: IGatsbyState["nodes"] = new Map(),
   action: ActionsUnion
 ): IGatsbyState["nodes"] => {
-  // Nodes are stored in LMDB when strict mode is enabled
-  if (isStrictMode()) {
-    return state
-  }
-
   switch (action.type) {
     case `DELETE_CACHE`:
       return new Map()
@@ -34,4 +29,15 @@ export const nodesReducer = (
     default:
       return state
   }
+}
+
+export const nodesReducer = (
+  state: IGatsbyState["nodes"] = new Map(),
+  action: ActionsUnion
+): IGatsbyState["nodes"] => {
+  // Nodes are stored in LMDB when strict mode is enabled
+  if (isStrictMode()) {
+    return state
+  }
+  return actualNodesReducer(state, action)
 }
