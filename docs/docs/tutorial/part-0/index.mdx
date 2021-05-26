@@ -3,9 +3,9 @@ title: Set Up Your Development Environment
 tableOfContentsDepth: 2
 ---
 
-import { Announcement, Notification } from 'gatsby-interface'
+import { Announcement, Notification, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
-import { MdInfo } from 'react-icons/md'
+import { MdInfo, MdArrowForward } from 'react-icons/md'
 
 <Notification
   Icon={MdInfo}
@@ -331,10 +331,6 @@ In this Tutorial, you will deploy your site using Gatsby Cloud. To use Gatsby Cl
 
 Now that you have all the knowledge and tools you'll need, you're ready for the Tutorial!
 
-### What's coming next?
-
-In the next part, you'll create your first Gatsby site and deploy it online for everyone to see.
-
 <Announcement style={{marginBottom: "1.5rem"}}>
 
 **Share Your Feedback!**
@@ -344,3 +340,15 @@ Our goal is for this Tutorial to be helpful and easy to follow. We'd love to hea
 Use the "Was this doc helpful to you?" form at the bottom of this page to let us know what worked well and what we can improve.
 
 </Announcement>
+
+### What's coming next?
+
+In Part 1 of the Tutorial, you'll create your first Gatsby site and deploy it online for everyone to see.
+
+<LinkButton
+  to="/docs/tutorial/part-1"
+  rightIcon={<MdArrowForward />}
+  variant="SECONDARY"
+>
+  Continue to Part 1
+</LinkButton>
