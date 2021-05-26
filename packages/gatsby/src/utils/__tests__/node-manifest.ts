@@ -1,5 +1,4 @@
 import { foundPageByToLogIds } from "./../node-manifest"
-import { errorMap } from "./../../../../gatsby-cli/src/structured-errors/error-map"
 import path from "path"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
@@ -146,7 +145,7 @@ describe(`processNodeManifests() warnings`, () => {
     ])
 
     // first as develop
-    process.env._GATSBY_INTERNAL_TEST_NODE_MANIFEST_AS_DEVELOP = `1`
+    process.env.NODE_ENV = `development`
 
     await processNodeManifests()
 
@@ -156,7 +155,7 @@ describe(`processNodeManifests() warnings`, () => {
     )
 
     // then as build
-    delete process.env._GATSBY_INTERNAL_TEST_NODE_MANIFEST_AS_DEVELOP
+    process.env.NODE_ENV = `production`
 
     // adding both nodes to query tracking on each page to force using context.id
     store.trackPagePathOnNode(`1`, `/test`)
@@ -170,6 +169,7 @@ describe(`processNodeManifests() warnings`, () => {
     expect(reporter.error.mock.results[1].value.id).toEqual(
       foundPageByToLogIds[`context.id`]
     )
+    process.env.NODE_ENV = `test`
   })
 
   it(`warns about using node->query tracking to map from node->page instead of using ownerNodeId`, async () => {
@@ -325,16 +325,14 @@ describe(`processNodeManifests`, () => {
   }
 
   it(`processes node manifests gatsby develop`, async () => {
-    // this emulates `gatsby develop`
-    process.env._GATSBY_INTERNAL_TEST_NODE_MANIFEST_AS_DEVELOP = `1`
-
+    process.env.NODE_ENV = `development`
     await testProcessNodeManifests()
+    process.env.NODE_ENV = `test`
   })
 
   it(`processes node manifests gatsby build`, async () => {
-    // removing this emulates `gatsby build`
-    delete process.env._GATSBY_INTERNAL_TEST_NODE_MANIFEST_AS_DEVELOP
-
+    process.env.NODE_ENV = `production`
     await testProcessNodeManifests()
+    process.env.NODE_ENV = `test`
   })
 })
