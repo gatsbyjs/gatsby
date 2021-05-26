@@ -180,7 +180,7 @@
     "cross-env": "^7.0.3",
     "documentation": "^13.1.0",
     "enhanced-resolve": "^4.2.0",
-    "lmdb-store": "^1.5.1",
+    "lmdb-store": "^1.5.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "rimraf": "^3.0.2",
