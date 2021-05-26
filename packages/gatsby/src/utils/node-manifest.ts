@@ -79,63 +79,63 @@ async function findPageOwnedByNodeId({
     let foundOwnerNodeId = false
 
     // for each page this nodeId is queried in
-    pagePathSetOrMap.forEach((...args) => {
-      if (
-        // if we haven't found a page with this nodeId
-        // set as page.ownerNodeId then run this logic.
-        // this condition is on foundOwnerNodeId instead of ownerPagePath
-        // in case we find a page with the nodeId in page.context.id
-        // and then later in the loop there's a page with this nodeId
-        // set on page.ownerNodeId.
-        // We always want to prefer ownerPagePath over context.id
-        !foundOwnerNodeId
-      ) {
-        const path: string = usingPagesMap
-          ? // in development this is a Map, so the page path is the second arg (the key)
-            args[1]
-          : // in builds we're using a Set so the page path is the first arg (the value)
-            args[0]
-
-        const fullPage: IGatsbyPage | undefined = pages.get(path)
-
-        foundOwnerNodeId = fullPage?.ownerNodeId === nodeId
-
-        const foundPageIdInContext = fullPage?.context.id === nodeId
-
-        if (foundOwnerNodeId) {
-          foundPageBy = `ownerNodeId`
-        } else if (foundPageIdInContext && fullPage) {
-          const pageCreatedByPluginName = nodes.get(fullPage.pluginCreatorId)
-            ?.name
-
-          const pageCreatedByFilesystemPlugin =
-            pageCreatedByPluginName === `gatsby-plugin-page-creator`
-
-          foundPageBy = pageCreatedByFilesystemPlugin
-            ? `filesystem-route-api`
-            : `context.id`
-        }
-
-        if (
-          fullPage &&
-          // first check for the ownerNodeId on the page. this is
-          // the defacto owner. Can't get more specific than this
-          (foundOwnerNodeId ||
-            // if there's no specified owner look to see if
-            // pageContext has an `id` variable which matches our
-            // nodeId. Using an "id" as a variable in queries is common
-            // and if we don't have an owner this is a better guess
-            // of an owner than grabbing the first page query we find
-            // that's mapped to this node id.
-            // this also makes this work with the filesystem Route API without
-            // changing that API.
-            foundPageIdInContext)
-        ) {
-          // save this path to use in our manifest!
-          ownerPagePath = fullPage.path
-        }
+    for (const pathOrPageObject of pagePathSetOrMap.values()) {
+      // if we haven't found a page with this nodeId
+      // set as page.ownerNodeId then run this logic.
+      // this condition is on foundOwnerNodeId instead of ownerPagePath
+      // in case we find a page with the nodeId in page.context.id
+      // and then later in the loop there's a page with this nodeId
+      // set on page.ownerNodeId.
+      // We always want to prefer ownerPagePath over context.id
+      if (foundOwnerNodeId) {
+        continue
       }
-    })
+
+      const path = (usingPagesMap
+        ? // in development we're using a Map, so the value here is a page object
+          (pathOrPageObject as IGatsbyPage).path
+        : // in builds we're using a Set so the page path is the value
+          pathOrPageObject) as string
+
+      const fullPage: IGatsbyPage | undefined = pages.get(path)
+
+      foundOwnerNodeId = fullPage?.ownerNodeId === nodeId
+
+      const foundPageIdInContext = fullPage?.context.id === nodeId
+
+      if (foundOwnerNodeId) {
+        foundPageBy = `ownerNodeId`
+      } else if (foundPageIdInContext && fullPage) {
+        const pageCreatedByPluginName = nodes.get(fullPage.pluginCreatorId)
+          ?.name
+
+        const pageCreatedByFilesystemPlugin =
+          pageCreatedByPluginName === `gatsby-plugin-page-creator`
+
+        foundPageBy = pageCreatedByFilesystemPlugin
+          ? `filesystem-route-api`
+          : `context.id`
+      }
+
+      if (
+        fullPage &&
+        // first check for the ownerNodeId on the page. this is
+        // the defacto owner. Can't get more specific than this
+        (foundOwnerNodeId ||
+          // if there's no specified owner look to see if
+          // pageContext has an `id` variable which matches our
+          // nodeId. Using an "id" as a variable in queries is common
+          // and if we don't have an owner this is a better guess
+          // of an owner than grabbing the first page query we find
+          // that's mapped to this node id.
+          // this also makes this work with the filesystem Route API without
+          // changing that API.
+          foundPageIdInContext)
+      ) {
+        // save this path to use in our manifest!
+        ownerPagePath = fullPage.path
+      }
+    }
 
     if (ownerPagePath) {
       pagePath = ownerPagePath
