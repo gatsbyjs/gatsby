@@ -150,6 +150,8 @@ async function findPageOwnedByNodeId({
   }
 }
 
+// these id's correspond to error id's in
+// packages/gatsby-cli/src/structured-errors/error-map.ts
 export const foundPageByToLogIds = {
   none: `11801`,
   [`context.id`]: `11802`,
