@@ -1,5 +1,10 @@
 ---
 title: Client-only Routes & User Authentication
+examples:
+  - label: Client-only Paths
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/client-only-paths"
+  - label: Simple Authentication
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/simple-auth"
 ---
 
 Often you want to create a site with client-only portions, which allows you to gate them by authentication or load different content based on URL parameters.

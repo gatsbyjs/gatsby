@@ -119,6 +119,7 @@ export interface IGatsbyStaticQueryComponents {
 
 export interface IGatsbyPageComponent {
   componentPath: SystemPath
+  componentChunkName: string
   query: string
   pages: Set<string>
   isInBootstrap: boolean

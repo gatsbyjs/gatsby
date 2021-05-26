@@ -4,8 +4,8 @@ import * as PropTypes from "prop-types"
 import { Link, graphql } from "gatsby"
 import { GatsbyImage } from "gatsby-plugin-image"
 
-import Layout from "../layouts"
-import { rhythm } from "../utils/typography"
+import Layout from "../../layouts"
+import { rhythm } from "../../utils/typography"
 
 const propTypes = {
   data: PropTypes.object.isRequired,
@@ -45,9 +45,7 @@ class CategoryTemplate extends React.Component {
             {product &&
               product.map((p, i) => (
                 <li key={i}>
-                  <Link to={`/products/${p.id}`}>
-                    {p.productName.productName}
-                  </Link>
+                  <Link to={p.gatsbyPath}>{p.productName.productName}</Link>
                 </li>
               ))}
           </ul>
@@ -71,6 +69,7 @@ export const pageQuery = graphql`
         gatsbyImageData(layout: FIXED, width: 75)
       }
       product {
+        gatsbyPath(filePath: "/products/{ContentfulProduct.id}")
         id
         productName {
           productName
