@@ -23,15 +23,22 @@ export function useStackFrame({ moduleId, lineNumber, columnNumber }) {
 
   React.useEffect(() => {
     async function fetchData() {
-      const res = await fetch(url)
-      const json = await res.json()
-      const decoded = prettifyStack(json.codeFrame)
-      const { sourcePosition, sourceContent } = json
-      setResponse({
-        decoded,
-        sourceContent,
-        sourcePosition,
-      })
+      try {
+        const res = await fetch(url)
+        const json = await res.json()
+        const decoded = prettifyStack(json.codeFrame)
+        const { sourcePosition, sourceContent } = json
+        setResponse({
+          decoded,
+          sourceContent,
+          sourcePosition,
+        })
+      } catch (err) {
+        setResponse({
+          ...initialResponse,
+          decoded: prettifyStack(err.stack || err.message),
+        })
+      }
     }
     fetchData()
   }, [])
