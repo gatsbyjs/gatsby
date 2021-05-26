@@ -1,14 +1,16 @@
 {
   "name": "gatsby-remark-katex",
   "description": "Transform math nodes to html markup",
-  "version": "5.4.0-next.0",
+  "version": "5.4.1-next.0",
   "author": "Jeffrey Xiao <jeffrey.xiao1998@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
+    "rehype-parse": "^7.0.1",
     "remark-math": "^4.0.0",
+    "unified": "^9.2.1",
     "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
@@ -16,7 +18,8 @@
     "@babel/core": "^7.12.3",
     "babel-preset-gatsby-package": "^1.7.0-next.0",
     "cross-env": "^7.0.3",
-    "katex": "^0.13.0"
+    "katex": "^0.13.3",
+    "remark": "^13.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-katex#readme",
   "keywords": [
@@ -29,7 +32,7 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^3.0.0-next.0",
-    "katex": "^0.12.0"
+    "katex": "^0.13.3"
   },
   "repository": {
     "type": "git",
@@ -39,7 +42,8 @@
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\"",
+    "test": "jest src/__tests__/index.js"
   },
   "engines": {
     "node": ">=12.13.0"
