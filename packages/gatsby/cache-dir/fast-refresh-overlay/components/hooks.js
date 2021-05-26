@@ -36,7 +36,7 @@ export function useStackFrame({ moduleId, lineNumber, columnNumber }) {
       } catch (err) {
         setResponse({
           ...initialResponse,
-          decoded: prettifyStack(err.stack || err.message),
+          decoded: prettifyStack(err.message),
         })
       }
     }
