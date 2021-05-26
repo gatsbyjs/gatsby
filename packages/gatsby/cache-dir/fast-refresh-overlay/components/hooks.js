@@ -1,6 +1,15 @@
 import * as React from "react"
 import { prettifyStack } from "../utils"
 
+const initialResponse = {
+  decoded: null,
+  sourcePosition: {
+    line: null,
+    number: null,
+  },
+  sourceContent: null,
+}
+
 export function useStackFrame({ moduleId, lineNumber, columnNumber }) {
   const url =
     `/__original-stack-frame?moduleId=` +
@@ -10,26 +19,26 @@ export function useStackFrame({ moduleId, lineNumber, columnNumber }) {
     `&columnNumber=` +
     window.encodeURIComponent(columnNumber)
 
-  const [response, setResponse] = React.useState({
-    decoded: null,
-    sourcePosition: {
-      line: null,
-      number: null,
-    },
-    sourceContent: null,
-  })
+  const [response, setResponse] = React.useState(initialResponse)
 
   React.useEffect(() => {
     async function fetchData() {
-      const res = await fetch(url)
-      const json = await res.json()
-      const decoded = prettifyStack(json.codeFrame)
-      const { sourcePosition, sourceContent } = json
-      setResponse({
-        decoded,
-        sourceContent,
-        sourcePosition,
-      })
+      try {
+        const res = await fetch(url)
+        const json = await res.json()
+        const decoded = prettifyStack(json.codeFrame)
+        const { sourcePosition, sourceContent } = json
+        setResponse({
+          decoded,
+          sourceContent,
+          sourcePosition,
+        })
+      } catch (err) {
+        setResponse({
+          ...initialResponse,
+          decoded: prettifyStack(err.message),
+        })
+      }
     }
     fetchData()
   }, [])
