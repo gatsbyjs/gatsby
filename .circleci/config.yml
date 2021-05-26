@@ -69,7 +69,7 @@ aliases:
       - when:
           condition: << parameters.npm_rebuild >>
           steps:
-            - run: yarn rebuild
+            - run: npm rebuild
       - run: yarn list react
       - run: yarn why lmdb-store
       - run:
