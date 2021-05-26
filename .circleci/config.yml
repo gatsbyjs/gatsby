@@ -63,6 +63,7 @@ aliases:
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
       - run: yarn list react
+      - run: yarn why lmdb-store
       - run:
           command: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
           environment:
