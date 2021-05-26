@@ -8,7 +8,7 @@ import { match as reachMatch } from "@gatsbyjs/reach-router/lib/utils"
 import onExit from "signal-exit"
 import report from "gatsby-cli/lib/reporter"
 import multer from "multer"
-import { pathToRegexp, Key } from "path-to-regexp"
+import pathToRegexp from "path-to-regexp"
 import cookie from "cookie"
 import telemetry from "gatsby-telemetry"
 
@@ -22,6 +22,14 @@ import { IGatsbyFunction } from "../redux/types"
 interface IMatchPath {
   path: string
   matchPath: string
+}
+
+interface IPathToRegexpKey {
+  name: string | number
+  prefix: string
+  suffix: string
+  pattern: string
+  modifier: string
 }
 
 interface IServeProgram extends IProgram {
@@ -161,7 +169,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           // We loop until we find the first match.
           functions.some(f => {
             let exp
-            const keys: Array<Key> = []
+            const keys: Array<IPathToRegexpKey> = []
             if (f.matchPath) {
               exp = pathToRegexp(f.matchPath, keys)
             }
