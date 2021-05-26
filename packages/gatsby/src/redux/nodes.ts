@@ -63,35 +63,33 @@ export interface IFilterCache {
 }
 export type FiltersCache = Map<FilterCacheKey, IFilterCache>
 
-const datastore = getDataStore()
-
 /**
  * Get all nodes from redux store.
  */
-export const getNodes = (): Array<IGatsbyNode> => datastore.getNodes()
+export const getNodes = (): Array<IGatsbyNode> => getDataStore().getNodes()
 
 /**
  * Get node by id from store.
  */
 export const getNode = (id: string): IGatsbyNode | undefined =>
-  datastore.getNode(id)
+  getDataStore().getNode(id)
 
 /**
  * Get all nodes of type from redux store.
  */
 export const getNodesByType = (type: string): Array<IGatsbyNode> =>
-  datastore.getNodesByType(type)
+  getDataStore().getNodesByType(type)
 
 /**
  * Get all type names from redux store.
  */
-export const getTypes = (): Array<string> => datastore.getTypes()
+export const getTypes = (): Array<string> => getDataStore().getTypes()
 
 /**
  * Determine if node has changed.
  */
 export const hasNodeChanged = (id: string, digest: string): boolean => {
-  const node = datastore.getNode(id)
+  const node = getDataStore().getNode(id)
   if (!node) {
     return true
   } else {
@@ -126,7 +124,7 @@ export const saveResolvedNodes = async (
   resolver: Resolver
 ): Promise<void> => {
   for (const typeName of nodeTypeNames) {
-    const nodes = datastore.getNodesByType(typeName)
+    const nodes = getDataStore().getNodesByType(typeName)
     if (!nodes || !nodes.length) continue
 
     const resolvedNodes = new Map()

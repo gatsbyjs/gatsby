@@ -26,6 +26,7 @@ import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
 import availableFlags from "../utils/flags"
+import { detectStrictMode } from "../utils/is-strict-mode"
 
 interface IPluginResolution {
   resolve: string
@@ -204,6 +205,7 @@ export async function initialize({
     // enable loading indicator
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `true`
   }
+  detectStrictMode()
 
   // theme gatsby configs can be functions or objects
   if (config) {
