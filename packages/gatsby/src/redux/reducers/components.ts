@@ -50,6 +50,9 @@ export const componentsReducer = (
       component.pages.delete(action.payload.path)
       return state
     }
+    case `SET_EXTRACTED_QUERIES`: {
+      return action.payload.components
+    }
   }
 
   return state

@@ -44,6 +44,8 @@ import {
 } from "../utils/webpack-status"
 import { updateSiteMetadata, isTruthy } from "gatsby-core-utils"
 import { showExperimentNotices } from "../utils/show-experiment-notice"
+import { runQueriesInWorkers } from "../utils/worker/pool"
+import { clear as clearEphemeralDb } from "../utils/worker/shared-db"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (isTruthy(process.env.VERBOSE)) {
@@ -91,19 +93,23 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const { queryIds } = await calculateDirtyQueries({ store })
 
-  await runStaticQueries({
-    queryIds,
-    parentSpan: buildSpan,
-    store,
-    graphqlRunner,
-  })
+  if (process.env.GATSBY_BUILD_SCHEMA_IN_DIFF_PROC) {
+    await runQueriesInWorkers(workerPool, queryIds)
+  } else {
+    await runStaticQueries({
+      queryIds,
+      parentSpan: buildSpan,
+      store,
+      graphqlRunner,
+    })
 
-  await runPageQueries({
-    queryIds,
-    graphqlRunner,
-    parentSpan: buildSpan,
-    store,
-  })
+    await runPageQueries({
+      queryIds,
+      graphqlRunner,
+      parentSpan: buildSpan,
+      store,
+    })
+  }
 
   await writeOutRequires({
     store,
@@ -298,4 +304,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   } else if (await userPassesFeedbackRequestHeuristic()) {
     showFeedbackRequest()
   }
+
+  clearEphemeralDb()
 }

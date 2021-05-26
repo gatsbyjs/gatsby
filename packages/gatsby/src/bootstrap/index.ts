@@ -14,9 +14,14 @@ import {
 import { Runner, createGraphQLRunner } from "./create-graphql-runner"
 import reporter from "gatsby-cli/lib/reporter"
 import { globalTracer } from "opentracing"
-import JestWorker from "jest-worker"
+// import JestWorker from "jest-worker"
 import { handleStalePageData } from "../utils/page-data"
-import { numWorkers } from "../utils/worker/pool"
+import {
+  buildSchemaInWorkers,
+  loadConfigInWorkers,
+  setExtractedQueriesInWorkers,
+} from "../utils/worker/pool"
+import type { IGatsbyWorkerPool } from "../utils/worker/types"
 
 const tracer = globalTracer()
 
@@ -24,7 +29,7 @@ export async function bootstrap(
   initialContext: Partial<IBuildContext>
 ): Promise<{
   gatsbyNodeGraphQLFunction: Runner
-  workerPool: JestWorker
+  workerPool: IGatsbyWorkerPool
 }> {
   const spanArgs = initialContext.parentSpan
     ? { childOf: initialContext.parentSpan }
@@ -45,6 +50,11 @@ export async function bootstrap(
     ...(await initialize(bootstrapContext)),
   }
 
+  // This is async but we don't need to wait for it here
+  // (jest-worker will queue tasks). We can continue with main process
+  // bootstrap
+  loadConfigInWorkers(context.workerPool, context.store.getState().program)
+
   await customizeSchema(context)
   await sourceNodes(context)
 
@@ -61,27 +71,24 @@ export async function bootstrap(
 
   await rebuildSchemaWithSitePage(context)
 
-  if (process.env.GATSBY_BUILD_SCHEMA_IN_DIFF_PROC) {
-    const promises: Array<Promise<void>> = []
-    const { flattenedPlugins, inferenceMetadata } = context.store.getState()
-    const sharedContext = {
-      flattenedPlugins,
-      inferenceMetadata,
-    }
-
-    for (let i = 0; i < numWorkers; i++) {
-      promises.push(
-        context.workerPool.buildSchema({
-          ...sharedContext,
-          workerNumber: i,
-        })
-      )
-    }
-
-    await Promise.all(promises)
-  }
+  // This is async but we don't need to wait for it here
+  // (jest-worker will queue tasks). We can continue with main process
+  // bootstrap
+  buildSchemaInWorkers(
+    context.workerPool,
+    context.store.getState().inferenceMetadata
+  )
 
   await extractQueries(context)
+
+  // This is async but we don't need to wait for it here
+  // (jest-worker will queue tasks). We can continue with main process
+  // bootstrap
+  setExtractedQueriesInWorkers(
+    context.workerPool,
+    context.store.getState().components,
+    context.store.getState().staticQueryComponents
+  )
 
   await writeOutRedirects(context)
 

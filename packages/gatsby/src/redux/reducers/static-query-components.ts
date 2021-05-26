@@ -12,6 +12,9 @@ export const staticQueryComponentsReducer = (
     case `REMOVE_STATIC_QUERY`:
       state.delete(action.payload)
       return state
+    case `SET_EXTRACTED_QUERIES`: {
+      return action.payload.staticQueryComponents
+    }
   }
 
   return state

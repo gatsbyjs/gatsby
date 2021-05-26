@@ -384,6 +384,8 @@ export type ActionsUnion =
   | IGeneratedHtml
   | IMarkHtmlDirty
   | ISSRUsedUnsafeBuiltin
+  | ISetInferenceMetadata
+  | ISetExtractedQueries
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -856,4 +858,17 @@ interface IMarkHtmlDirty {
 
 interface ISSRUsedUnsafeBuiltin {
   type: `SSR_USED_UNSAFE_BUILTIN`
+}
+
+interface ISetInferenceMetadata {
+  type: `SET_INFERENCE_METADATA`
+  payload: IGatsbyState["inferenceMetadata"]
+}
+
+interface ISetExtractedQueries {
+  type: `SET_EXTRACTED_QUERIES`
+  payload: {
+    components: IGatsbyState["components"]
+    staticQueryComponents: IGatsbyState["staticQueryComponents"]
+  }
 }

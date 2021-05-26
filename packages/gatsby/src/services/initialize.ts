@@ -11,25 +11,21 @@ import apiRunnerNode from "../utils/api-runner-node"
 import handleFlags from "../utils/handle-flags"
 import { getBrowsersList } from "../utils/browserslist"
 import { Store, AnyAction } from "redux"
-import { preferDefault } from "../bootstrap/prefer-default"
 import {
   create as createWorkerPool,
   IGatsbyWorkerPool,
 } from "../utils/worker/pool"
 // import JestWorker from "jest-worker"
 import { startPluginRunner } from "../redux/plugin-runner"
-import { loadPlugins } from "../bootstrap/load-plugins"
 import { store, emitter } from "../redux"
-import loadThemes from "../bootstrap/load-themes"
 import reporter from "gatsby-cli/lib/reporter"
-import { getConfigFile } from "../bootstrap/get-config-file"
 import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
-import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
 import availableFlags from "../utils/flags"
 import { detectLmdbStore } from "../datastore"
+import { loadConfig } from "../bootstrap/load-config"
 
 interface IPluginResolution {
   resolve: string
@@ -140,27 +136,7 @@ export async function initialize({
 
   emitter.on(`END_JOB`, onEndJob)
 
-  // Try opening the site's gatsby-config.js file.
-  let activity = reporter.activityTimer(`open and validate gatsby-configs`, {
-    parentSpan,
-  })
-  activity.start()
-  const { configModule, configFilePath } = await getConfigFile(
-    program.directory,
-    `gatsby-config`
-  )
-  let config = preferDefault(configModule)
-
-  // The root config cannot be exported as a function, only theme configs
-  if (typeof config === `function`) {
-    reporter.panic({
-      id: `10126`,
-      context: {
-        configName: `gatsby-config`,
-        path: program.directory,
-      },
-    })
-  }
+  const { config, flattenedPlugins } = await loadConfig({ program, parentSpan })
 
   // Setup flags
   if (config) {
@@ -210,24 +186,11 @@ export async function initialize({
   }
   detectLmdbStore()
 
-  // theme gatsby configs can be functions or objects
-  if (config) {
-    const plugins = await loadThemes(config, {
-      configFilePath,
-      rootDir: program.directory,
-    })
-    config = plugins.config
-  }
-
   if (config && config.polyfill) {
     reporter.warn(
       `Support for custom Promise polyfills has been removed in Gatsby v2. We only support Babel 7's new automatic polyfilling behavior.`
     )
   }
-
-  store.dispatch(internalActions.setSiteConfig(config))
-
-  activity.end()
 
   if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
     if (process.env.gatsby_executing_command !== `develop`) {
@@ -245,13 +208,6 @@ export async function initialize({
   // run stale jobs
   store.dispatch(removeStaleJobs(store.getState()))
 
-  activity = reporter.activityTimer(`load plugins`, {
-    parentSpan,
-  })
-  activity.start()
-  const flattenedPlugins = await loadPlugins(config, program.directory)
-  activity.end()
-
   // Multiple occurrences of the same name-version-pair can occur,
   // so we report an array of unique pairs
   const pluginsStr = _.uniq(flattenedPlugins.map(p => `${p.name}@${p.version}`))
@@ -268,7 +224,7 @@ export async function initialize({
   startPluginRunner()
 
   // onPreInit
-  activity = reporter.activityTimer(`onPreInit`, {
+  let activity = reporter.activityTimer(`onPreInit`, {
     parentSpan,
   })
   activity.start()

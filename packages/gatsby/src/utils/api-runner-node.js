@@ -290,7 +290,7 @@ const runAPI = async (plugin, api, args, activity) => {
                 ? actionCreator
                 : (...args) => {
                     reporter.verbose(
-                      `action from worker`,
+                      `action from worker ${actionName}`,
                       process.env.JEST_WORKER_ID,
                       actionName,
                       args
