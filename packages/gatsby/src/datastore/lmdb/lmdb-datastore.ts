@@ -1,4 +1,4 @@
-import { ArrayLikeIterable, open, RootDatabase } from "lmdb-store"
+import { ArrayLikeIterable, RootDatabase } from "lmdb-store"
 // import { performance } from "perf_hooks"
 import { ActionsUnion, IGatsbyNode } from "../../redux/types"
 import { updateNodes } from "./updates/nodes"
@@ -16,6 +16,7 @@ let databases
 
 function getRootDb(): RootDatabase {
   if (!rootDb) {
+    const { open } = require(`lmdb-store`)
     rootDb = open({
       name: `root`,
       path: process.cwd() + `/.cache/data/` + rootDbFile,
