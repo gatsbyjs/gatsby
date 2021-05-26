@@ -39,13 +39,13 @@ interface IPathToRegexpKey {
 
 // During development, we lazily compile functions only when they're requested.
 // Here we keep track of which functions have been requested so are "active"
-const activeDevelopmentFunctions = new Set<IFunctionData>()
+const activeDevelopmentFunctions = new Set<IGatsbyFunction>()
 let activeEntries = {}
 
 async function ensureFunctionIsCompiled(
-  functionObj: IFunctionData,
+  functionObj: IGatsbyFunction,
   compiledFunctionsDir: string
-): any {
+): Promise<any> {
   // stat the compiled function. If it's there, then return.
   let compiledFileExists = false
   try {
@@ -347,7 +347,7 @@ export async function onPreBootstrap({
     // We do this ungainly thing as we need to make accessible
     // the resolve/reject functions to our shared callback function
     // eslint-disable-next-line
-    await new Promise<void>(async (resolve, reject) => {
+    await new Promise<any>(async (resolve, reject) => {
       const config = await createWebpackConfig({
         siteDirectoryPath,
         store,
