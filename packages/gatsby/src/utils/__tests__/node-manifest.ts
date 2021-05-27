@@ -46,49 +46,20 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 
+const storeState = {
+  nodeManifests: [],
+  nodes: new Map(),
+  pages: new Map(),
+  program: {
+    directory: process.cwd(),
+  },
+  queries: { byNode: new Map() },
+}
+
 jest.mock(`../../redux`, () => {
-  const initialState = {
-    nodeManifests: [],
-    nodes: new Map(),
-    pages: new Map(),
-    program: {
-      directory: process.cwd(),
-    },
-    queries: { byNode: new Map() },
-  }
-
-  let state = { ...initialState }
-
   return {
     store: {
-      getState: jest.fn(() => state),
-      getNode: (nodeId: string): { id: string } | undefined =>
-        state.nodes.get(nodeId),
-      setManifests: (manifests): void => {
-        state.nodeManifests = manifests
-      },
-      createNode: (node): void => {
-        state.nodes.set(node.id, node)
-      },
-      createPage: (page): void => {
-        state.pages.set(page.path, page)
-      },
-      trackPagePathOnNode: (nodeId: string, pagePath: string): void => {
-        const byNode = state.queries.byNode || new Map()
-        const pagePaths = byNode.get(nodeId)
-
-        if (pagePaths?.size > 0) {
-          pagePaths.add(pagePath)
-          byNode.set(nodeId, pagePaths)
-        } else {
-          byNode.set(nodeId, new Set([pagePath]))
-        }
-
-        state.queries.byNode = byNode
-      },
-      reset: (): void => {
-        state = { ...initialState }
-      },
+      getState: jest.fn(),
       dispatch: jest.fn(),
     },
   }
@@ -96,22 +67,23 @@ jest.mock(`../../redux`, () => {
 
 beforeEach(() => {
   jest.clearAllMocks()
-  store.reset()
-  delete process.env._GATSBY_INTERNAL_TEST_NODE_MANIFEST_AS_DEVELOP
 })
 
 describe(`processNodeManifests() warnings`, () => {
   it(`warns about no page found for manifest node id`, async () => {
-    store.createNode({
-      id: `1`,
+    store.getState.mockImplementation(() => {
+      return {
+        ...storeState,
+        nodes: new Map([[`1`, { id: `1` }]]),
+        nodeManifests: [
+          {
+            pluginName: `test`,
+            node: { id: `1` },
+            manifestId: `1`,
+          },
+        ],
+      }
     })
-    store.setManifests([
-      {
-        pluginName: `test`,
-        node: { id: `1` },
-        manifestId: `1`,
-      },
-    ])
 
     await processNodeManifests()
 
@@ -122,27 +94,44 @@ describe(`processNodeManifests() warnings`, () => {
   })
 
   it(`warns about using context.id to map from node->page instead of ownerNodeId`, async () => {
-    store.createNode({
-      id: `1`,
+    store.getState.mockImplementation(() => {
+      return {
+        ...storeState,
+        nodes: new Map([
+          [`1`, { id: `1` }],
+          [`2`, { id: `2` }],
+        ]),
+        pages: new Map([
+          [
+            `/test`,
+            {
+              path: `/test`,
+              context: { id: `1` },
+            },
+          ],
+          [
+            `/test-2`,
+            {
+              path: `/test-2`,
+              context: { id: `2` },
+            },
+          ],
+        ]),
+        nodeManifests: [
+          {
+            pluginName: `test`,
+            node: { id: `1` },
+            manifestId: `1`,
+          },
+        ],
+        queries: {
+          byNode: new Map([
+            [`1`, new Set([`/test`, `/test-2`])],
+            [`2`, new Set([`/test`, `/test-2`])],
+          ]),
+        },
+      }
     })
-    store.createNode({
-      id: `2`,
-    })
-    store.createPage({
-      path: `/test`,
-      context: { id: `1` },
-    })
-    store.createPage({
-      path: `/test-2`,
-      context: { id: `2` },
-    })
-    store.setManifests([
-      {
-        pluginName: `test`,
-        node: { id: `1` },
-        manifestId: `1`,
-      },
-    ])
 
     // first as develop
     process.env.NODE_ENV = `development`
@@ -157,12 +146,6 @@ describe(`processNodeManifests() warnings`, () => {
     // then as build
     process.env.NODE_ENV = `production`
 
-    // adding both nodes to query tracking on each page to force using context.id
-    store.trackPagePathOnNode(`1`, `/test`)
-    store.trackPagePathOnNode(`1`, `/test-2`)
-    store.trackPagePathOnNode(`2`, `/test`)
-    store.trackPagePathOnNode(`2`, `/test-2`)
-
     await processNodeManifests()
 
     expect(reporter.error).toBeCalled()
@@ -173,22 +156,31 @@ describe(`processNodeManifests() warnings`, () => {
   })
 
   it(`warns about using node->query tracking to map from node->page instead of using ownerNodeId`, async () => {
-    store.createNode({
-      id: `1`,
+    store.getState.mockImplementation(() => {
+      return {
+        ...storeState,
+        nodes: new Map([[`1`, { id: `1` }]]),
+        pages: new Map([
+          [
+            `/test`,
+            {
+              path: `/test`,
+              context: {},
+            },
+          ],
+        ]),
+        nodeManifests: [
+          {
+            pluginName: `test`,
+            node: { id: `1` },
+            manifestId: `1`,
+          },
+        ],
+        queries: {
+          byNode: new Map([[`1`, new Set([`/test`])]]),
+        },
+      }
     })
-    store.createPage({
-      path: `/test`,
-      context: {},
-    })
-    store.setManifests([
-      {
-        pluginName: `test`,
-        node: { id: `1` },
-        manifestId: `1`,
-      },
-    ])
-
-    store.trackPagePathOnNode(`1`, `/test`)
 
     await processNodeManifests()
 
@@ -228,6 +220,8 @@ describe(`processNodeManifests() warnings`, () => {
 
 describe(`processNodeManifests`, () => {
   it(`Doesn't do anything when there are no pending manifests`, async () => {
+    store.getState.mockImplementation(() => storeState)
+
     await processNodeManifests()
 
     expect(fs.writeJSON).not.toBeCalled()
@@ -244,32 +238,6 @@ describe(`processNodeManifests`, () => {
       { id: `3`, useQueryTracking: true },
     ]
 
-    nodes.forEach(node => {
-      // @ts-ignore: store is mocked
-      store.createNode(node)
-
-      const pagePath = `/${node.id}`
-
-      // @ts-ignore: store is mocked
-      store.createPage({
-        path: pagePath,
-        ownerNodeId: node.useOwnerNodeId ? node.id : null,
-        context: {
-          id: node.usePageContextId ? node.id : null,
-        },
-      })
-
-      if (
-        node.useQueryTracking ||
-        // if this isn't gatsby develop we emulate gatsby build
-        // where query tracking is always 100% complete
-        !process.env._GATSBY_INTERNAL_TEST_NODE_MANIFEST_AS_DEVELOP
-      ) {
-        // @ts-ignore: store is mocked
-        store.trackPagePathOnNode(node.id, pagePath)
-      }
-    })
-
     const pendingManifests: Array<INodeManifest> = [
       ...nodes,
       {
@@ -284,8 +252,30 @@ describe(`processNodeManifests`, () => {
       }
     })
 
-    // @ts-ignore: store is mocked
-    store.setManifests(pendingManifests)
+    store.getState.mockImplementation(() => {
+      return {
+        ...storeState,
+        nodes: new Map(nodes.map(node => [`${node.id}`, { id: `${node.id}` }])),
+        pages: new Map(
+          nodes.map(node => [
+            `/${node.id}`,
+            {
+              path: `/${node.id}`,
+              ownerNodeId: node.useOwnerNodeId ? node.id : null,
+              context: {
+                id: node.usePageContextId ? node.id : null,
+              },
+            },
+          ])
+        ),
+        nodeManifests: pendingManifests,
+        queries: {
+          byNode: new Map(
+            nodes.map(node => [`${node.id}`, new Set([`/${node.id}`])])
+          ),
+        },
+      }
+    })
 
     await processNodeManifests()
 
@@ -300,14 +290,15 @@ describe(`processNodeManifests`, () => {
     )
     expect(store.dispatch).toBeCalled()
 
-    // @ts-ignore: store is mocked
+    // @ts-ignore: fs is mocked
     expect(fs.ensureDir.mock.calls.length).toBe(nodes.length)
-    // @ts-ignore: store is mocked
+    // @ts-ignore: fs is mocked
     expect(fs.writeJSON.mock.calls.length).toBe(nodes.length)
 
     pendingManifests.forEach((manifest, index) => {
-      // @ts-ignore: store is mocked
-      if (!store.getNode(manifest.node.id)) {
+      // if a node doesn't exist for this manifest we don't want to assert that
+      // a manifest was written
+      if (!nodes.find(node => node.id === manifest.node.id)) {
         return
       }
 
