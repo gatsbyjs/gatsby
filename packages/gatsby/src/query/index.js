@@ -52,9 +52,11 @@ function groupQueryIds(queryIds) {
   const grouped = _.groupBy(queryIds, p =>
     p.slice(0, 4) === `sq--` ? `static` : `page`
   )
+  const { pages } = store.getState()
   return {
     staticQueryIds: grouped.static || [],
-    pageQueryIds: grouped.page || [],
+    pageQueryIds:
+      grouped.page.map(pagePath => pages.get(pagePath)).filter(Boolean) || [],
   }
 }
 
@@ -184,16 +186,7 @@ async function processPageQueries(
   })
 }
 
-function createPageQueryJob(state, queryId) {
-  const page = state.pages.get(queryId)
-
-  // Make sure we filter out pages that don't exist. An example is
-  // /dev-404-page/, whose SitePage node is created via
-  // `internal-data-bridge`, but the actual page object is only
-  // created during `gatsby develop`.
-  if (!page) {
-    return undefined
-  }
+function createPageQueryJob(state, page) {
   const component = state.components.get(page.componentPath)
   const { path, componentPath, context } = page
   const { query } = component

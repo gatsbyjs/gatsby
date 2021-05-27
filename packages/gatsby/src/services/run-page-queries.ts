@@ -23,23 +23,15 @@ export async function runPageQueries({
     return
   }
   const { pageQueryIds } = queryIds
-  const state = store.getState()
-  const pageQueryIdsCount = pageQueryIds.filter(id => state.pages.has(id))
-    .length
-
-  if (!pageQueryIdsCount) {
+  if (pageQueryIds.length === 0) {
     return
   }
+  const state = store.getState()
 
-  const activity = reporter.createProgress(
-    `run page queries`,
-    pageQueryIdsCount,
-    0,
-    {
-      id: `page-query-running`,
-      parentSpan,
-    }
-  )
+  const activity = reporter.createProgress(pageQueryIds.length, 0, {
+    id: `page-query-running`,
+    parentSpan,
+  })
 
   activity.start()
 

@@ -46,7 +46,7 @@ export const create = (): IGatsbyWorkerPool => {
     },
   }) as IGatsbyWorkerPool
 
-  console.log(`[warmup call] main`)
+  // console.log(`[warmup call] main`)
   runInAllWorkers(workerId => worker.warmup({ workerId }))
 
   return worker
@@ -70,7 +70,7 @@ export async function loadConfigInWorkers(
     const act = reporter.activityTimer(`loadConfigInWorkers`)
     act.start()
     await setProgram(program)
-    console.log(`[loadConfig call] main`)
+    // console.log(`[loadConfig call] main`)
     await runInAllWorkers(workerId => pool.loadConfig({ workerId }))
     act.end()
   } else {
@@ -86,7 +86,7 @@ export async function buildSchemaInWorkers(
     const act = reporter.activityTimer(`${Date.now()} buildSchemaInWorkers`)
     act.start()
     await setInferenceMetadata(inferenceMetadata)
-    console.log(`[buildSchema call] main`)
+    // console.log(`[buildSchema call] main`)
     await runInAllWorkers(workerId => pool.buildSchema({ workerId }))
     act.end()
   } else {
@@ -105,7 +105,7 @@ export async function setExtractedQueriesInWorkers(
     )
     act.start()
     await setExtractedQueries(components, staticQueryComponents)
-    console.log(`[setExtractedQueries call] main`)
+    // console.log(`[setExtractedQueries call] main`)
     await runInAllWorkers(workerId => pool.setExtractedQueries({ workerId }))
     act.end()
   } else {
@@ -131,7 +131,7 @@ export async function runQueriesInWorkers(
 
   const promises: Array<Promise<void>> = []
 
-  console.log(`[runQueries call] main`)
+  // console.log(`[runQueries call] main`)
 
   for (const staticQueryId of queryIds.staticQueryIds) {
     currentBatch.staticQueryIds.push(staticQueryId)

@@ -5,7 +5,7 @@ import { store } from "../../redux"
 import { GraphQLRunner } from "../../query/graphql-runner"
 
 export async function runQueries(queryIds: IGroupedQueryIds): Promise<void> {
-  console.log(`run queries ${process.env.JEST_WORKER_ID || `main`}`, queryIds)
+  // console.log(`run queries ${process.env.JEST_WORKER_ID || `main`}`, queryIds)
 
   const graphqlRunner = new GraphQLRunner(store, {
     collectStats: true,

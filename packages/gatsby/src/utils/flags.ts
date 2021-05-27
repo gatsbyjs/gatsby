@@ -222,6 +222,7 @@ const activeFlags: Array<IFlag> = [
     // we kind of need support for WeakRef
     testFitness: (): fitnessEnum => semver.satisfies(process.version, `>=14.6`),
     telemetryId: ``,
+    includedFlags: [`STRICT_MODE`],
   },
 ]
 

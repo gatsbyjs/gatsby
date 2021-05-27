@@ -3,10 +3,10 @@ import { IProgram } from "../../commands/types"
 import { Runner } from "../../bootstrap/create-graphql-runner"
 import { GraphQLRunner } from "../../query/graphql-runner"
 import { Store, AnyAction } from "redux"
-import { IGatsbyState } from "../../redux/types"
+import { IGatsbyState, IGatsbyPage } from "../../redux/types"
 import JestWorker from "jest-worker"
 export interface IGroupedQueryIds {
-  pageQueryIds: Array<string>
+  pageQueryIds: Array<IGatsbyPage>
   staticQueryIds: Array<string>
 }
 

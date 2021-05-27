@@ -7,5 +7,5 @@ export { loadConfig } from "./child-load-config"
 export { runQueries } from "./run-quries"
 
 export function warmup(_context: IWorkerRunAllContext): void {
-  console.log(`[warmup] ${process.env.JEST_WORKER_ID}`)
+  // console.log(`[warmup] ${process.env.JEST_WORKER_ID}`)
 }

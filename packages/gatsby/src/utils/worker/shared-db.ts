@@ -27,7 +27,10 @@ function getDB(): RootDatabase {
 
 export function clear(): void {
   report.verbose(`clearing db`)
-  getDB().clear()
+  const db = getDB()
+  db.transactionSync(() => {
+    getDB().clear()
+  })
 }
 
 export async function setProgram(
