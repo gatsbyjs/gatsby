@@ -116,6 +116,7 @@ At the root of a Gatsby app run `gatsby serve` to serve the production build of 
 |  `-p`, `--port`  | Set port. Defaults to 9000                                                               |                               |
 |  `-o`, `--open`  | Open the site in your (default) browser for you                                          |                               |
 | `--prefix-paths` | Serve site with link paths prefixed (if built with pathPrefix in your gatsby-config.js). | `env.PREFIX_PATHS` or `false` |
+| `-S`, `--https`  | Use HTTPS                                                                                |                               |
 
 For prefixing paths, most will want to use the CLI flag (`gatsby build --prefix-paths`). For environments where you can't pass the --prefix-paths flag (ie Gatsby Cloud),the environment variable `PREFIX_PATHS` can be set to `true` to provide another way to prefix paths.
 
