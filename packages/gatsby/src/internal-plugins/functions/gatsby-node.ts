@@ -220,22 +220,19 @@ const createWebpackConfig = async ({
     }
   }
 
-  const envObject = Object.keys(parsed).reduce(
-    (acc, key) => {
-      acc[key] = JSON.stringify(parsed[key])
-      return acc
-    },
-    // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
-    {
-      NODE_ENV: JSON.stringify(nodeEnv),
-      PUBLIC_DIR: JSON.stringify(`${siteDirectoryPath}/public`),
-    }
-  )
+  const envObject = Object.keys(parsed).reduce((acc, key) => {
+    acc[key] = JSON.stringify(parsed[key])
+    return acc
+  }, {} as Record<string, string>)
 
   const varsFromProcessEnv = Object.keys(process.env).reduce((acc, key) => {
     acc[key] = JSON.stringify(process.env[key])
     return acc
-  }, {})
+  }, {} as Record<string, string>)
+
+  // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
+  envObject.NODE_ENV = JSON.stringify(nodeEnv)
+  envObject.PUBLIC_DIR = JSON.stringify(`${siteDirectoryPath}/public`)
 
   const mergedEnvVars = Object.assign(envObject, varsFromProcessEnv)
 

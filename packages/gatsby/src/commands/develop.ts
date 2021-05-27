@@ -21,7 +21,7 @@ import {
 } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { getSslCert } from "../utils/get-ssl-cert"
-import { startDevelopProxy } from "../utils/develop-proxy"
+import { IProxyControls, startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram, IDebugInfo } from "./types"
 
 // Adapted from https://stackoverflow.com/a/16060619
@@ -498,7 +498,17 @@ module.exports = async (program: IProgram): Promise<void> => {
     )
   })
 }
-function shutdownServices(
+
+interface IShutdownServicesOptions {
+  statusServer: https.Server | http.Server
+  developProcess: ControllableScript
+  proxy: IProxyControls
+  unlocks: Array<UnlockFn | null>
+  watcher: chokidar.FSWatcher
+  telemetryServerProcess: ControllableScript
+}
+
+async function shutdownServices(
   {
     statusServer,
     developProcess,
@@ -506,7 +516,7 @@ function shutdownServices(
     unlocks,
     watcher,
     telemetryServerProcess,
-  },
+  }: IShutdownServicesOptions,
   signal: NodeJS.Signals
 ): Promise<void> {
   const services = [
@@ -518,7 +528,9 @@ function shutdownServices(
   ]
 
   unlocks.forEach(unlock => {
-    services.push(unlock())
+    if (unlock) {
+      services.push(unlock())
+    }
   })
 
   return Promise.all(services)
