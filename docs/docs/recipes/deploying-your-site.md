@@ -105,6 +105,22 @@ Use [Vercel CLI](https://vercel.com/download) to deploy your Gatsby application 
 
 - [Deploying to Vercel](/docs/how-to/previews-deploys-hosting/deploying-to-vercel/)
 
+## Deploying to Layer0
+
+Use the [Layer0 CLI](https://docs.layer0.co/guides/cli) to deploy your Gatsby application without leaving the command-line interface.
+
+### Prerequisites
+
+- An account on [Layer0](https://app.layer0.co/signup)
+- A [Gatsby site](/docs/quick-start) set up with Gatsby's CLI
+- [Layer0 CLI](https://docs.layer0.co/guides/cli) package installed
+
+See the official guide on [how to deploy an Gatsby application on Layer0](https://docs.layer0.co/guides/gatsby)
+
+### Additional resources
+
+- [Deploying to Layer0](https://docs.layer0.co/guides/gatsby)
+
 ## Deploying to Cloudflare Workers
 
 Use [`wrangler`](https://developers.cloudflare.com/workers/tooling/wrangler/) to deploy your Gatsby application globally without leaving the command-line interface.
