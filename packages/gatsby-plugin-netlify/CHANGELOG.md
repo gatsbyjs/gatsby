@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.6.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.6.0...gatsby-plugin-netlify@3.6.1) (2021-05-27)
+
+### Bug Fixes
+
+- **gatsby:** add componentChunkName to components list so don't need to loop over pages ([#31547](https://github.com/gatsbyjs/gatsby/issues/31547)) ([#31606](https://github.com/gatsbyjs/gatsby/issues/31606)) ([1f26765](https://github.com/gatsbyjs/gatsby/commit/1f2676513a22e3acf283e6b2ef0cf5797c17818b))
+
 # [3.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.6.0-next.0...gatsby-plugin-netlify@3.6.0) (2021-05-25)
 
 **Note:** Version bump only for package gatsby-plugin-netlify
