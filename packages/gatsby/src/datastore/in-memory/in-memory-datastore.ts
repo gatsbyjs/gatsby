@@ -29,6 +29,14 @@ function getTypes(): Array<string> {
   return Array.from(store.getState().nodesByType.keys()).sort()
 }
 
+function countNodes(typeName?: string): number {
+  if (!typeName) {
+    return store.getState().nodes.size
+  }
+  const nodes = store.getState().nodesByType.get(typeName)
+  return nodes ? nodes.size : 0
+}
+
 const readyPromise = Promise.resolve(undefined)
 
 /**
@@ -43,6 +51,7 @@ export function setupInMemoryStore(): IDataStore {
   return {
     getNode,
     getTypes,
+    countNodes,
     ready,
 
     // deprecated:

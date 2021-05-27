@@ -12,6 +12,7 @@ export interface ILmdbDatabases {
 export interface IDataStore {
   getNode(id: string): IGatsbyNode | undefined
   getTypes(): Array<string>
+  countNodes(typeName?: string): number
   ready(): Promise<void>
 
   /** @deprecated */

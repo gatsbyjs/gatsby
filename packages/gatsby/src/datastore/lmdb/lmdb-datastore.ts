@@ -97,6 +97,21 @@ function getTypes(): Array<string> {
   return getDatabases().nodesByType.getKeys({}).asArray
 }
 
+function countNodes(typeName?: string): number {
+  if (!typeName) {
+    const stats = getDatabases().nodes.getStats()
+    // @ts-ignore
+    return Number(stats.entryCount || 0)
+  }
+
+  const { nodesByType } = getDatabases()
+  let count = 0
+  nodesByType.getValues(typeName).forEach(() => {
+    count++
+  })
+  return count
+}
+
 let lastOperationPromise: Promise<any> = Promise.resolve()
 
 function updateDataStore(action: ActionsUnion): void {
@@ -134,6 +149,7 @@ export function setupLmdbStore(): IDataStore {
   const lmdbDatastore = {
     getNode,
     getTypes,
+    countNodes,
     iterateNodes,
     iterateNodesByType,
     updateDataStore,
