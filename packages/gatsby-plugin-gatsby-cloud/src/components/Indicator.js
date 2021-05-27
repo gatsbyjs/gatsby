@@ -10,12 +10,32 @@ import InfoIndicatorButton from "./InfoIndicatorButton"
 
 const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL || 3000
 
+export function PreviewIndicator({ children, buildInfo }) {
+  console.log(`in the preview indicator`)
+  return (
+    <>
+      <Style />
+      <div
+        data-testid="preview-status-indicator"
+        data-gatsby-preview-indicator="root"
+        aria-live="assertive"
+      >
+        <GatsbyIndicatorButton {...buildInfo} />
+        <LinkIndicatorButton {...buildInfo} />
+        <InfoIndicatorButton {...buildInfo} />
+      </div>
+      {children}
+    </>
+  )
+}
+
 export default function Indicator({ children }) {
   const [buildInfo, setBuildInfo] = useState()
   const timeoutRef = useRef()
   const shouldPoll = useRef(false)
   let trackedInitialLoad
   let buildId
+
   const pollData = useCallback(async function pollData() {
     const prettyUrlRegex = /^preview-/
     const host = window.location.hostname
@@ -99,19 +119,5 @@ export default function Indicator({ children }) {
     }
   }, [])
 
-  return (
-    <>
-      <Style />
-      <div
-        data-testid="preview-status-indicator"
-        data-gatsby-preview-indicator="root"
-        aria-live="assertive"
-      >
-        <GatsbyIndicatorButton {...buildInfo} />
-        <LinkIndicatorButton {...buildInfo} />
-        <InfoIndicatorButton {...buildInfo} />
-      </div>
-      {children}
-    </>
-  )
+  return <PreviewIndicator buildInfo={buildInfo}>{children}</PreviewIndicator>
 }
