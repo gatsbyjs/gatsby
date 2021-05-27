@@ -10,5 +10,9 @@ export const query = graphql`
     testFsRouteType(id: { eq: $id }) {
       id
     }
+    # querying this other node to make sure inferring the owner from context.id prevents this node from being the page owner
+    otherNode: testNode(id: { eq: "2" }) {
+      id
+    }
   }
 `

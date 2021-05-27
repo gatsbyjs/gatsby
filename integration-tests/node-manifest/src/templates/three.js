@@ -10,5 +10,8 @@ export const query = graphql`
     testNode(id: { eq: "3" }) {
       id
     }
+    otherNode: testNode(id: { eq: "2" }) {
+      id
+    }
   }
 `

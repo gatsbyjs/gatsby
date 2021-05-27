@@ -10,5 +10,9 @@ export const query = graphql`
     testNode(id: { eq: "1" }) {
       id
     }
+    # querying this other node to make sure ownerNodeId in gatsby-node prevents this node from being the page owner
+    otherNode: testNode(id: { eq: "2" }) {
+      id
+    }
   }
 `
