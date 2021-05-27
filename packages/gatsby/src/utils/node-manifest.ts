@@ -86,7 +86,7 @@ async function findPageOwnedByNodeId({
       // set on page.ownerNodeId.
       // We always want to prefer ownerPagePath over context.id
       if (foundOwnerNodeId) {
-        continue
+        break
       }
 
       const path = (usingPagesMap
