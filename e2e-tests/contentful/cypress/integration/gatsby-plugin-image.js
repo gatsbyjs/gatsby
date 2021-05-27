@@ -44,7 +44,7 @@ function testGatsbyPluginImage(type, testPlaceholder) {
   cy.get(`[data-cy="${type}"]`).scrollIntoView({ duration: 500 })
 
   // Wait images for load
-  cy.wait(2000)
+  cy.wait(1000)
 
   cy.get(`[data-cy="${type}"]`)
     .find(".gatsby-image-wrapper > picture > img")
