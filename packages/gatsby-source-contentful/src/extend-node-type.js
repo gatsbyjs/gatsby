@@ -855,7 +855,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
         fields: {
           base64: {
             type: GraphQLString,
-            resolve: getBase64Image,
+            resolve: imageProps => getBase64Image(imageProps, reporter),
           },
           tracedSVG: {
             type: GraphQLString,
