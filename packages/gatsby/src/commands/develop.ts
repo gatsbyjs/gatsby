@@ -508,7 +508,7 @@ interface IShutdownServicesOptions {
   telemetryServerProcess: ControllableScript
 }
 
-async function shutdownServices(
+function shutdownServices(
   {
     statusServer,
     developProcess,
