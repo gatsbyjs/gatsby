@@ -24,9 +24,10 @@ interface INodeManifestOut {
 
 type FoundPageBy =
   | `ownerNodeId`
+  | `filesystem-route-api`
+  // for these three we warn to use ownerNodeId instead
   | `context.id`
   | `queryTracking`
-  | `filesystem-route-api`
   | `none`
 
 /**
