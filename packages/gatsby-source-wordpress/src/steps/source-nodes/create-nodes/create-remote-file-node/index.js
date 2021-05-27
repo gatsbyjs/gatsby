@@ -244,6 +244,7 @@ async function processRemoteNode({
   createNode,
   parentNodeId,
   auth = {},
+  httpOpts = {},
   httpHeaders = {},
   createNodeId,
   ext,
@@ -261,7 +262,6 @@ async function processRemoteNode({
 
   // Add htaccess authentication if passed in. This isn't particularly
   // extensible. We should define a proper API that we validate.
-  const httpOpts = {}
   if (auth?.htaccess_pass && auth?.htaccess_user) {
     headers[`Authorization`] = `Basic ${btoa(
       `${auth.htaccess_user}:${auth.htaccess_pass}`
@@ -376,6 +376,7 @@ module.exports = ({
   getCache,
   parentNodeId = null,
   auth = {},
+  httpOpts = {},
   httpHeaders = {},
   createNodeId,
   ext = null,
@@ -449,6 +450,7 @@ module.exports = ({
     parentNodeId,
     createNodeId,
     auth,
+    httpOpts,
     httpHeaders,
     ext,
     name,

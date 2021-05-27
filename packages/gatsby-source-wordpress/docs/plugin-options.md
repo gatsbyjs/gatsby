@@ -25,6 +25,7 @@
   - [develop.nodeUpdateInterval](#developnodeupdateinterval)
   - [develop.hardCacheMediaFiles](#develophardcachemediafiles)
   - [develop.hardCacheData](#develophardcachedata)
+- [httpOpts](#httpopts)
 - [auth](#auth)
   - [auth.htaccess](#authhtaccess)
     - [auth.htaccess.username](#authhtaccessusername)
@@ -523,6 +524,32 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
   },
 }
 
+```
+
+## httpOpts
+
+Option to use a custom agent when we download the files from your WordPress.
+We use the [got](https://github.com/sindresorhus/got) to fetch the files.
+
+**Field type**: `Object`
+
+**Default value**: `{}`
+
+ex: _Set a custom agent_
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    httpOpts: {
+      // cf https://github.com/sindresorhus/got#agent
+      agent: {
+        http: new ProxyAgent(process.env.http_proxy),
+        https: new ProxyAgent(process.env.https_proxy)
+      }
+    },
+  },
+}
 ```
 
 ## auth
