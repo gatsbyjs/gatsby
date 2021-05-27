@@ -6,6 +6,7 @@ const Grid = ({ children, columns, ...rest }) => (
       display: "grid",
       gridTemplateColumns: "repeat(auto-fill, 240px)",
       gridGap: "2rem",
+      maxWidth: "240px",
     }}
     {...rest}
   >
