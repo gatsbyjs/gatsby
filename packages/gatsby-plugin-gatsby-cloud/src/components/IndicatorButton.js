@@ -100,7 +100,10 @@ const IndicatorButton = ({
 
   const onMouseEnter = () => {
     setShowTooltip(true)
-    mouseOverCallback && mouseOverCallback()
+
+    if (mouseOverCallback) {
+      mouseOverCallback()
+    }
   }
   const onMouseLeave = () => setShowTooltip(false)
 
