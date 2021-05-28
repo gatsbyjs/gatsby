@@ -1,5 +1,6 @@
 {
   "extends": "../../tsconfig.json",
-  // This is for typegen purposes only. For now index.d.ts is manually-created, but gatsby/internal is auto-generated
-  "include": ["./src/internal.ts"]
+  // For now index.d.ts is manually-created, but gatsby/internal is auto-generated
+  "include": ["src/**/*.ts"],
+  "exclude": ["**/__tests__/**/*"]
 }

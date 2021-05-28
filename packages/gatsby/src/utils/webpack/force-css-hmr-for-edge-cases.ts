@@ -14,8 +14,8 @@ import { Compiler, Module } from "webpack"
  */
 export class ForceCssHMRForEdgeCases {
   private name: string
-  private originalBlankCssHash: string
-  private blankCssKey: string
+  private originalBlankCssHash: string | undefined
+  private blankCssKey: string | undefined
   private hackCounter = 0
   private previouslySeenCss: Set<string> = new Set<string>()
 
@@ -63,6 +63,7 @@ export class ForceCssHMRForEdgeCases {
 
               if (
                 !this.originalBlankCssHash &&
+                // @ts-ignore - exists on NormalModule but not Module
                 module.rawRequest === `./blank.css`
               ) {
                 this.blankCssKey = key
@@ -70,6 +71,7 @@ export class ForceCssHMRForEdgeCases {
                   records.chunkModuleHashes[this.blankCssKey]
               }
 
+              // @ts-ignore - exists on NormalModule but not Module
               const isUsingMiniCssExtract = module.loaders?.find(loader =>
                 loader?.loader?.includes(`mini-css-extract-plugin`)
               )
