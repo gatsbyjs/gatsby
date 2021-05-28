@@ -1,7 +1,5 @@
-import { setupLmdbStore } from "./lmdb/lmdb-datastore"
-import { setupInMemoryStore } from "./in-memory/in-memory-datastore"
 import { IDataStore } from "./types"
-import { isStrictMode } from "../utils/is-strict-mode"
+import { isLmdbStore } from "../utils/is-lmdb-store"
 import { emitter } from "../redux"
 
 let dataStore: IDataStore
@@ -9,13 +7,20 @@ let isLmdb
 
 export function getDataStore(): IDataStore {
   if (!dataStore) {
-    isLmdb = isStrictMode()
-    dataStore = isLmdb ? setupLmdbStore() : setupInMemoryStore()
-  } else if (isLmdb !== isStrictMode()) {
+    isLmdb = isLmdbStore()
+    if (isLmdb) {
+      const { setupLmdbStore } = require(`./lmdb/lmdb-datastore`)
+      dataStore = setupLmdbStore()
+    } else {
+      const { setupInMemoryStore } = require(`./in-memory/in-memory-datastore`)
+      dataStore = setupInMemoryStore()
+    }
+  } else if (isLmdb !== isLmdbStore()) {
     // Sanity check to make sure the mode hadn't changed after initialization
     throw new Error(
-      `Data store was initialized for ${isLmdb ? `strict` : `default`} mode` +
-        `but the mode had changed to ${isStrictMode() ? `strict` : `default`}.`
+      `GATSBY_EXPERIMENTAL_LMDB_STORE flag had changed after the data store was initialized.` +
+        `(original value: ${isLmdb ? `true` : `false`}, ` +
+        `new value: ${isLmdbStore() ? `true` : `false`})`
     )
   }
   return dataStore

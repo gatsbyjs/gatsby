@@ -202,7 +202,7 @@ const activeFlags: Array<IFlag> = [
   },
   {
     name: `STRICT_MODE`,
-    env: `GATSBY_EXPERIMENTAL_STRICT_MODE`,
+    env: `GATSBY_EXPERIMENTAL_LMDB_STORE`,
     command: `all`,
     telemetryId: `StrictMode`,
     experimental: true,

@@ -3,7 +3,7 @@ const { actions } = require(`../../redux/actions`)
 const { LocalNodeModel } = require(`../node-model`)
 const { build } = require(`..`)
 const typeBuilders = require(`../types/type-builders`)
-const { isStrictMode } = require(`../../utils/is-strict-mode`)
+const { isLmdbStore } = require(`../../utils/is-lmdb-store`)
 
 const nodes = require(`./fixtures/node-model`)
 
@@ -1257,7 +1257,7 @@ describe(`NodeModel`, () => {
   })
 
   describe(`circular references`, () => {
-    if (isStrictMode()) {
+    if (isLmdbStore()) {
       // Circular references are disallowed in the strict mode, this tests are expected to fail
       return
     }

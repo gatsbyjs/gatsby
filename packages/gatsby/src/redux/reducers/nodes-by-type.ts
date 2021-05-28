@@ -1,5 +1,5 @@
 import { IGatsbyNode, IGatsbyState, ActionsUnion } from "../types"
-import { isStrictMode } from "../../utils/is-strict-mode"
+import { isLmdbStore } from "../../utils/is-lmdb-store"
 
 const getNodesOfType = (
   node: IGatsbyNode,
@@ -25,7 +25,7 @@ export const nodesByTypeReducer = (
   action: ActionsUnion
 ): IGatsbyState["nodesByType"] => {
   // nodesByType map is stored in LMDB when strict mode is enabled
-  if (isStrictMode()) {
+  if (isLmdbStore()) {
     return state
   }
 

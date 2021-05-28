@@ -10,7 +10,7 @@ import {
   writeFileSync,
 } from "fs-extra"
 import { IGatsbyNode, ICachedReduxState, IGatsbyPage } from "./types"
-import { isStrictMode } from "../utils/is-strict-mode"
+import { isLmdbStore } from "../utils/is-lmdb-store"
 import { sync as globSync } from "glob"
 import report from "gatsby-cli/lib/reporter"
 
@@ -41,7 +41,7 @@ export function readFromCache(): ICachedReduxState {
     readFileSync(reduxSharedFile(reduxCacheFolder))
   )
 
-  if (isStrictMode()) {
+  if (isLmdbStore()) {
     // Note: nodes are stored in LMDB in strict node, so no need to restore
     obj.nodes = new Map()
   } else {

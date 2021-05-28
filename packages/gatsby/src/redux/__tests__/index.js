@@ -9,7 +9,7 @@ const v8Deserialize = jest.spyOn(v8, `deserialize`)
 const reporterInfo = jest.spyOn(reporter, `info`).mockImplementation(jest.fn)
 const reporterWarn = jest.spyOn(reporter, `warn`).mockImplementation(jest.fn)
 
-const { isStrictMode } = require(`../../utils/is-strict-mode`)
+const { isLmdbStore } = require(`../../utils/is-lmdb-store`)
 const { saveState, store, readState } = require(`../index`)
 
 const {
@@ -171,7 +171,7 @@ describe(`redux db`, () => {
       nodesByType: expect.any(Map),
     })
 
-    if (!isStrictMode()) {
+    if (!isLmdbStore()) {
       const expecteNodes = getFakeNodes()
       const expectedNodesByType = new Map([
         [`Ding`, new Map()],
@@ -211,7 +211,7 @@ describe(`redux db`, () => {
       v8Serialize.mockRestore()
       v8Deserialize.mockRestore()
     })
-    if (isStrictMode()) {
+    if (isLmdbStore()) {
       // Nodes are stored in LMDB, those tests are irrelevant
       return
     }
@@ -432,7 +432,7 @@ describe(`redux db`, () => {
     )
 
     // In strict mode nodes are stored in LMDB not redux state
-    expect(store.getState().nodes.size).toEqual(isStrictMode() ? 0 : 1)
+    expect(store.getState().nodes.size).toEqual(isLmdbStore() ? 0 : 1)
     expect(store.getState().pages.size).toEqual(0)
 
     let persistedState = readState()
@@ -453,7 +453,7 @@ describe(`redux db`, () => {
     persistedState = readState()
 
     // In strict mode nodes are stored in LMDB not redux state
-    expect(persistedState.nodes?.size ?? 0).toEqual(isStrictMode() ? 0 : 1)
+    expect(persistedState.nodes?.size ?? 0).toEqual(isLmdbStore() ? 0 : 1)
     expect(persistedState.pages?.size ?? 0).toEqual(0)
   })
 
@@ -484,7 +484,7 @@ describe(`redux db`, () => {
     persistedState = readState()
 
     expect(persistedState.nodes?.size ?? 0).toEqual(0)
-    if (isStrictMode()) {
+    if (isLmdbStore()) {
       // In strict mode nodes are stored in LMDB not redux state
       // so missing nodes are expected and we should still load pages in this case
       expect(persistedState.pages?.size ?? 0).toEqual(1)

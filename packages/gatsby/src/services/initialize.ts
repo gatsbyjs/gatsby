@@ -26,7 +26,7 @@ import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
 import availableFlags from "../utils/flags"
-import { detectStrictMode } from "../utils/is-strict-mode"
+import { detectStrictMode } from "../utils/is-lmdb-store"
 
 interface IPluginResolution {
   resolve: string
