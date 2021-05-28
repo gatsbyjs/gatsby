@@ -7,7 +7,7 @@ const downloadWithRetry = require(`./download-with-retry`).default
 
 const inFlightImageCache = new Map()
 
-module.exports = async function cacheImage(store, image, options) {
+module.exports = async function cacheImage(store, image, options, reporter) {
   const program = store.getState().program
   const CACHE_DIR = resolve(`${program.directory}/.cache/contentful/assets/`)
   const {
@@ -59,10 +59,13 @@ module.exports = async function cacheImage(store, image, options) {
     const downloadPromise = new Promise((resolve, reject) => {
       const previewUrl = `http:${url}?${params.join(`&`)}`
 
-      downloadWithRetry({
-        url: previewUrl,
-        responseType: `stream`,
-      })
+      downloadWithRetry(
+        {
+          url: previewUrl,
+          responseType: `stream`,
+        },
+        reporter
+      )
         .then(response => {
           const file = createWriteStream(absolutePath)
           response.data.pipe(file)
