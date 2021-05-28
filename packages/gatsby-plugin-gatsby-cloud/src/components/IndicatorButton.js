@@ -93,11 +93,15 @@ const IndicatorButton = ({
   showSpinner,
   active = false,
   testId,
+  mouseOverCallback,
 }) => {
   const [showTooltip, setShowTooltip] = useState(false)
   const marginTop = isFirstButton ? `0px` : `8px`
 
-  const onMouseEnter = () => setShowTooltip(true)
+  const onMouseEnter = () =>  {
+    setShowTooltip(true)
+    mouseOverCallback && mouseOverCallback()
+  }
   const onMouseLeave = () => setShowTooltip(false)
 
   return (
