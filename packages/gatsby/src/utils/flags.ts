@@ -206,8 +206,11 @@ const activeFlags: Array<IFlag> = [
     command: `all`,
     telemetryId: `LmdbStore`,
     experimental: true,
-    description: `Get faster builds with lower memory consumption by adhering to additional constraints.`,
-    testFitness: (): fitnessEnum => true,
+    description: `Store nodes in a persistent embedded database (vs in-memory). Lowers peak memory usage.`,
+    testFitness: (): fitnessEnum => {
+      const [major, minor] = process.versions.node.split(`.`)
+      return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
+    },
   },
 ]
 
