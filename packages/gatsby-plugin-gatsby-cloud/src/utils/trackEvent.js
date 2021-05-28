@@ -15,7 +15,7 @@ export default async function trackEvent({
         componentId: `gatsby-plugin-gatsby-cloud_preview-indicator`,
         version: 1,
         componentVersion: pkgjson.version,
-        orgId,
+        organizationId: orgId,
         siteId,
         buildId,
         name,
