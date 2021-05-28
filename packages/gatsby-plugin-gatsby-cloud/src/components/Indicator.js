@@ -49,7 +49,7 @@ export default function Indicator({ children }) {
         eventType: `PREVIEW_INDICATOR_LOADED`,
         orgId: defaultBuildInfo.orgId,
         siteId: defaultBuildInfo.siteId,
-        buildId
+        buildId,
       })
 
       trackedInitialLoad = true

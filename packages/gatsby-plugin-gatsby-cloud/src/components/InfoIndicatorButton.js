@@ -46,7 +46,13 @@ const getButtonProps = ({ status, createdAt }) => {
   }
 }
 
-export default function InfoIndicatorButton({ status, createdAt, buildId, orgId, siteId }) {
+export default function InfoIndicatorButton({
+  status,
+  createdAt,
+  buildId,
+  orgId,
+  siteId,
+}) {
   const buttonProps = getButtonProps({ status, createdAt })
 
   const trackHover = () => {
@@ -55,7 +61,7 @@ export default function InfoIndicatorButton({ status, createdAt, buildId, orgId,
       orgId,
       siteId,
       buildId,
-      name: `info hover`
+      name: `info hover`,
     })
   }
 

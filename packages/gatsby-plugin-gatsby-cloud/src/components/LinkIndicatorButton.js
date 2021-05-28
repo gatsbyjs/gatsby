@@ -56,7 +56,12 @@ const getButtonProps = ({ status, copyLinkClick, button }) => {
   }
 }
 
-export default function LinkIndicatorButton({ status, orgId, siteId, buildId }) {
+export default function LinkIndicatorButton({
+  status,
+  orgId,
+  siteId,
+  buildId,
+}) {
   const [button, setButton] = useState()
 
   const copyLinkClick = () => {
@@ -65,7 +70,7 @@ export default function LinkIndicatorButton({ status, orgId, siteId, buildId }) 
       orgId,
       siteId,
       buildId,
-      name: 'copy link'
+      name: "copy link",
     })
 
     setButton({
@@ -100,7 +105,7 @@ export default function LinkIndicatorButton({ status, orgId, siteId, buildId }) 
       orgId,
       siteId,
       buildId,
-      name: `link hover`
+      name: `link hover`,
     })
   }
 

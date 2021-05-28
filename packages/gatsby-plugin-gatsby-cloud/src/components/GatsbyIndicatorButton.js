@@ -46,7 +46,13 @@ const failedIcon = (
   </svg>
 )
 
-const newPreviewAvailableClick = ({ isOnPrettyUrl, sitePrefix, orgId, siteId, buildId }) => {
+const newPreviewAvailableClick = ({
+  isOnPrettyUrl,
+  sitePrefix,
+  orgId,
+  siteId,
+  buildId,
+}) => {
   // Grabs domain that preview is hosted on https://preview-sitePrefix.gtsb.io
   // This will match `gtsb.io`
   const previewDomain = window.location.hostname.split(`.`).slice(-2).join(`.`)
@@ -56,7 +62,7 @@ const newPreviewAvailableClick = ({ isOnPrettyUrl, sitePrefix, orgId, siteId, bu
     orgId,
     siteId,
     buildId,
-    name: 'new preview'
+    name: "new preview",
   })
 
   if (isOnPrettyUrl || window.location.hostname === `localhost`) {
@@ -77,7 +83,7 @@ const viewLogsClick = ({ orgId, siteId, buildId, errorBuildId }) => {
     orgId,
     siteId,
     buildId,
-    name: 'error logs'
+    name: "error logs",
   })
 
   window.open(`${pathToBuildLogs}?returnTo=${returnTo}`)
@@ -98,7 +104,14 @@ const getButtonProps = ({
         tooltipText: `New preview available`,
         overrideShowTooltip: true,
         active: true,
-        onClick: () => newPreviewAvailableClick({ isOnPrettyUrl, sitePrefix, orgId, siteId, buildId, }),
+        onClick: () =>
+          newPreviewAvailableClick({
+            isOnPrettyUrl,
+            sitePrefix,
+            orgId,
+            siteId,
+            buildId,
+          }),
         tooltipLink: `Click to view`,
       }
     }
