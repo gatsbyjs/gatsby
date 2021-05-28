@@ -70,7 +70,7 @@ export default function LinkIndicatorButton({
       orgId,
       siteId,
       buildId,
-      name: "copy link",
+      name: `copy link`,
     })
 
     setButton({

@@ -62,7 +62,7 @@ const newPreviewAvailableClick = ({
     orgId,
     siteId,
     buildId,
-    name: "new preview",
+    name: `new preview`,
   })
 
   if (isOnPrettyUrl || window.location.hostname === `localhost`) {
@@ -83,7 +83,7 @@ const viewLogsClick = ({ orgId, siteId, buildId, errorBuildId }) => {
     orgId,
     siteId,
     buildId,
-    name: "error logs",
+    name: `error logs`,
   })
 
   window.open(`${pathToBuildLogs}?returnTo=${returnTo}`)
