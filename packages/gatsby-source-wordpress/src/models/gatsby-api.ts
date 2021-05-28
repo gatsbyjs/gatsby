@@ -76,6 +76,9 @@ export interface IPluginOptions {
       password: string | null
     }
   }
+  httpOpts?: {
+    agent?: any
+  }
   schema?: {
     queryDepth: number
     circularQueryLimit: number
@@ -148,6 +151,9 @@ const defaultPluginOptions: IPluginOptions = {
       username: null,
       password: null,
     },
+  },
+  httpOpts: {
+    agent: null,
   },
   schema: {
     queryDepth: 15,
