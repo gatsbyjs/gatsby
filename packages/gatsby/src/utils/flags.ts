@@ -201,10 +201,10 @@ const activeFlags: Array<IFlag> = [
     },
   },
   {
-    name: `STRICT_MODE`,
+    name: `LMDB_STORE`,
     env: `GATSBY_EXPERIMENTAL_LMDB_STORE`,
     command: `all`,
-    telemetryId: `StrictMode`,
+    telemetryId: `LmdbStore`,
     experimental: true,
     description: `Get faster builds with lower memory consumption by adhering to additional constraints.`,
     testFitness: (): fitnessEnum => true,

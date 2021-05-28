@@ -26,7 +26,7 @@ import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
 import availableFlags from "../utils/flags"
-import { detectStrictMode } from "../utils/is-lmdb-store"
+import { detectLmdbStore } from "../utils/is-lmdb-store"
 
 interface IPluginResolution {
   resolve: string
@@ -205,7 +205,7 @@ export async function initialize({
     // enable loading indicator
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `true`
   }
-  detectStrictMode()
+  detectLmdbStore()
 
   // theme gatsby configs can be functions or objects
   if (config) {
