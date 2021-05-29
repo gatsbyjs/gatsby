@@ -750,6 +750,14 @@ const Layout = ({ pageTitle, children }) => {
 export default Layout
 ```
 
+<Announcement>
+
+**Syntax Hint:** In CSS, the convention is to name classes using kebab case (like `.nav-links`). But in JavaScript, the convention is to name variables using camel case (like `navLinks`).
+
+Luckily, when you use CSS Modules with Gatsby, you can have both! Your kebab-case class names in your `.modules.css` files will automatically be converted to camel-case variables that you can import in your `.js` files.
+
+</Announcement>
+
 7. Once your development server finishes rebuilding your site, you should see your new styles applied in your web browser:
 
 ![A screenshot of the Home page. The styles have been updated so now the page title is in purple, and the navigation links at the top of the page are in a single line instead of a bulleted list.](./index-page-styled.png)
