@@ -32,8 +32,6 @@ import { MdInfo } from 'react-icons/md'
 
 So far, you've built a site with a few landing pages. The next step is to build out the actual blog page!
 
-![Your finished blog page will show a list of all your posts, with links to separate pages for each post.](./current-vs-goal.png)
-
 Eventually, your blog page will link to separate pages for each of your posts. But there's a lot to learn to achieve that, so you'll be working up to that goal over the next few parts of the Tutorial.
 
 In this part, you'll learn about how Gatsby pulls data into your site.
@@ -70,7 +68,7 @@ How do you know what data is in your site's GraphQL data layer? When you run you
 
 You can view GraphiQL by going to `http://localhost:8000/___graphql` in your browser. (That's three underscores in the URL.)
 
-![GATSBY_EMPTY_ALT](./graphiql.png)
+![A screenshot of the GraphiQL interface in a web browser. It has three main sections: the Explorer, the Query Editor, and the Result Window.](./graphiql.png)
 
 There are three main sections of the GraphiQL interface:
 
@@ -89,12 +87,24 @@ GraphiQL is a helpful tool for testing out your GraphQL queries before you add t
 
 1. Click the play button (the triangle pointing to the right) to run the query. Look at the data returned in the Result window.
 
-<Collapsible>
-General process for using data
+<Collapsible
+  summary="General process for using data"
+>
+
+1. Add a source plugin to add data into the GraphQL data layer.
+1. Use GraphiQL to design a query that responds with the data you want from the data layer.
+1. Add the query into your component.
+    * Use page queries for page components.
+    * Use `useStaticQuery` for "building block" components.
+1. Use the data from the response in your component.
 
 </Collapsible>
 
-## Use `useStaticQuery` to pull the site title into the `Layout` component
+## Pull the site title into the `Layout` component
+
+### Task: Use GraphiQL to build the query
+
+### Task: Use `useStaticQuery` to pull the site title into the `Layout` component
 
 https://github.com/meganesu/gatsby-intro-workshop-example-site-with-v3/commit/83996e21e5b60d5684c6212065466e2291ae3931
 
@@ -143,7 +153,7 @@ const data = useStaticQuery(graphql`
 
 1. Import your new styles into your .js file and apply them to the site title you just added.
 
- ```js:title=src/components/layout.js
+```js:title=src/components/layout.js
 import { siteTitle } from './layout.module.css'
 <p className={siteTitle}>{data.site.siteMetadata.title}</p>
 ```
@@ -153,15 +163,6 @@ Reload your browser to see your new styles applied to your site title.
 // insert screenshot
 
 Congratulations, you've just used GraphQL to pull data into your site! Try changing the site title in your `gatsby-config.js` file and see your site update in the browser. (Do you need to restart your local dev server for this?)
-
-## Create some MDX blog posts
-
-https://github.com/meganesu/gatsby-intro-workshop-example-site-with-v3/commit/792a70a77fc6432e4ba403d06a90f3165a8d4bb0
-(But don't actually add the markdown contents. Just add a line of text to each file for now. Explain Markdown in Part 5.)
-
-Create a new top-level directory in your project called `blog`.
-
-Create some new files. Give them the `.mdx` extension. Just put in some placeholder text for now. (We'll talk more about MDX in Part 5.)
 
 ## Create a blog page with a list of post filenames
 
@@ -183,6 +184,15 @@ const BlogPage = () => {
 
 export default BlogPage
 ```
+
+### Task: Create some MDX blog posts
+
+https://github.com/meganesu/gatsby-intro-workshop-example-site-with-v3/commit/792a70a77fc6432e4ba403d06a90f3165a8d4bb0
+(But don't actually add the markdown contents. Just add a line of text to each file for now. Explain Markdown in Part 5.)
+
+Create a new top-level directory in your project called `blog`.
+
+Create some new files. Give them the `.mdx` extension. Just put in some placeholder text for now. (We'll talk more about MDX in Part 5.)
 
 ### Task: Use GraphiQL to build the query
 
