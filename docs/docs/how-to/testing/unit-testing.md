@@ -65,8 +65,11 @@ const babelOptions = {
   presets: ["babel-preset-gatsby"],
 }
 
-module.exports = require("babel-jest").createTransformer(babelOptions)
+module.exports = require("babel-jest").default.createTransformer(babelOptions)
 ```
+
+> Note: if you're using Jest 26.6.3 or below, `module.exports` has to be changed to
+> `module.exports = require("babel-jest").createTransformer(babelOptions)`
 
 - The next option is `moduleNameMapper`. This
   section works a bit like webpack rules and tells Jest how to handle imports.
