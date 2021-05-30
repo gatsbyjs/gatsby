@@ -21,6 +21,149 @@ npx -p @storybook/cli sb init
 
 This command adds a set of boilerplate files for Storybook in your project. However, since this is for a Gatsby project, you need to update the default Storybook configuration a bit so you don't get errors when trying to use Gatsby specific components inside of the stories.
 
+### Storybook version 6
+
+Storybook v6 uses Webpack v4 by default, while [Gatsby v3 uses webpack v5](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v2-to-v3/#webpack-upgraded-from-version-4-to-version-5). Hence, the Webpack version for Storybook should be upgraded to v5 to prevent conflicts.
+
+Storybook v6.2 has added [experimental Webpack v5 support](https://storybook.js.org/blog/storybook-for-webpack-5/), however bound to work without issues with the upcoming v6.3 release. At the time of writing this guide, v6.3 is only available as beta and hence be used as such.
+
+Upgrade the existing Storybook version
+
+```shell
+npx sb@next upgrade --prerelease
+```
+
+Add Webpack v5 builder
+
+```shell
+npm i -D @storybook/builder-webpack5@next @storybook/manager-webpack5@next
+```
+
+Then update your `.storybook/main.js` file to use Webpack v5
+
+```js:title=.storybook/main.js
+module.exports = {
+  ...
+  core: {
+    builder: "webpack5",
+  },
+  ...
+};
+```
+
+Then update Storybook's Webpack configuration to include Gatsby module for Webpack processing and include the `babel-plugin-remove-graphql-queries` to remove static queries from the components
+
+```js:title=.storybook/main.js
+module.exports = {
+  ...
+  webpackFinal: async (config) => {
+    // transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
+    config.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
+   
+    // use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
+    config.module.rules[0].use[0].options.plugins.push(require.resolve("babel-plugin-remove-graphql-queries"))
+
+    return config
+  },
+  ...
+};
+```
+
+The final `.storybook/main.js` file would look like
+
+```js:title=.storybook/main.js
+module.exports = {
+  "stories": [
+    "../src/**/*.stories.mdx",
+    "../src/**/*.stories.@(js|jsx|ts|tsx)"
+  ],
+  "addons": [
+    "@storybook/addon-links",
+    "@storybook/addon-essentials"
+  ],
+  // highlight-start
+  "core": {
+    "builder": "webpack5"
+  },
+  webpackFinal: async (config) => {
+    // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
+    config.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
+   
+    // use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
+    config.module.rules[0].use[0].options.plugins.push(require.resolve("babel-plugin-remove-graphql-queries"))
+
+    return config
+  },
+  // highlight-end
+}
+```
+
+Finally, add snippets to prevent certain errors using Gatsby components like [Links](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-link/) etc. inside of Storybook.
+
+```js:title=.storybook/preview.js
+import { action } from "@storybook/addon-actions"
+...
+// Gatsby's Link overrides:
+// Gatsby Link calls the `enqueue` & `hovering` methods on the global variable ___loader.
+// This global object isn't set in storybook context, requiring you to override it to empty functions (no-op),
+// so Gatsby Link doesn't throw errors.
+global.___loader = {
+  enqueue: () => {},
+  hovering: () => {},
+}
+// This global variable prevents the "__BASE_PATH__ is not defined" error inside Storybook.
+global.__BASE_PATH__ = "/"
+
+// Navigating through a gatsby app using gatsby-link or any other gatsby component will use the `___navigate` method.
+// In Storybook it makes more sense to log an action than doing an actual navigate. Checkout the actions addon docs for more info: https://github.com/storybookjs/storybook/tree/master/addons/actions.
+
+window.___navigate = pathname => {
+  action("NavigateTo:")(pathname)
+}
+```
+
+The final code for `.storybook/preview.js` looks like
+
+```js:title=.storybook/preview.js
+// highlight-start
+import { action } from "@storybook/addon-actions"
+// highlight-end
+
+export const parameters = {
+  actions: { argTypesRegex: "^on[A-Z].*" },
+  controls: {
+    matchers: {
+      color: /(background|color)$/i,
+      date: /Date$/,
+    },
+  },
+}
+
+// highlight-start
+// Gatsby's Link overrides:
+// Gatsby Link calls the `enqueue` & `hovering` methods on the global variable ___loader.
+// This global object isn't set in storybook context, requiring you to override it to empty functions (no-op),
+// so Gatsby Link doesn't throw errors.
+global.___loader = {
+  enqueue: () => {},
+  hovering: () => {},
+}
+// This global variable prevents the "__BASE_PATH__ is not defined" error inside Storybook.
+global.__BASE_PATH__ = "/"
+
+// Navigating through a gatsby app using gatsby-link or any other gatsby component will use the `___navigate` method.
+// In Storybook it makes more sense to log an action than doing an actual navigate. Checkout the actions addon docs for more info: https://github.com/storybookjs/storybook/tree/master/addons/actions.
+
+window.___navigate = pathname => {
+  action("NavigateTo:")(pathname)
+}
+// highlight-end
+```
+
+#### TypeScript Support
+
+The Storybook v6 has [out-of-the-box support for Typescript](https://storybook.js.org/docs/react/configure/typescript). The stories and components can be authored with `.tsx` extension
+
 ### Storybook version 5
 
 Storybook version 5.3 [brought a major change to how Storybook is configured](https://medium.com/storybookjs/declarative-storybook-configuration-49912f77b78).
