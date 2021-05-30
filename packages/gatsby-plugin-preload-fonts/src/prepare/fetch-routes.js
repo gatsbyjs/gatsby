@@ -1,10 +1,10 @@
 const { createContentDigest, isCI } = require(`gatsby-core-utils`)
-const { request } = require(`graphql-request`)
+const { request, gql } = require(`graphql-request`)
 const { formatRelative } = require(`date-fns`)
 const { red, blue, bold, dim } = require(`chalk`)
 
 module.exports = async ({ logger, endpoint, cache }) => {
-  const query = `
+  const query = gql`
     query Routes {
       allSitePage {
         nodes {
