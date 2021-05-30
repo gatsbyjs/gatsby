@@ -15,7 +15,7 @@
     "date-fns": "^2.21.1",
     "fs-extra": "^8.1.0",
     "gatsby-core-utils": "^2.13.0-next.1",
-    "graphql-request": "^1.8.2",
+    "graphql-request": "^3.5.0",
     "progress": "^2.0.3",
     "puppeteer": "^3.3.0"
   },

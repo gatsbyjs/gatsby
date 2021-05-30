@@ -1,5 +1,5 @@
 jest.mock(`graphql-request`, () => {
-  return { request: jest.fn() }
+  return { request: jest.fn(), gql: jest.fn() }
 })
 
 jest.mock(`gatsby-core-utils`)

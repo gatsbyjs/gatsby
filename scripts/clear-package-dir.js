@@ -5,7 +5,7 @@ const chalk = require(`chalk`)
 const collectUpdates = require(`@lerna/collect-updates`)
 const PackageGraph = require(`@lerna/package-graph`)
 const Project = require(`@lerna/project`)
-const PromptUtilities = require(`@lerna/prompt`)
+const { promptConfirmation } = require(`@lerna/prompt`)
 const _ = require(`lodash`)
 const path = require(`path`)
 const packlist = require(`npm-packlist`)
@@ -137,7 +137,7 @@ const run = async () => {
     if (!argv[`dry-run`] && filesToDelete.length > 0) {
       if (
         argv[`force`] ||
-        (await PromptUtilities.confirm(
+        (await promptConfirmation(
           `Are you sure you want to delete those files?`
         ))
       ) {
