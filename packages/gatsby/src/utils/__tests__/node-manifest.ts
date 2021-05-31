@@ -186,7 +186,7 @@ describe(`processNodeManifests() warnings`, () => {
 
     expect(reporter.error).toBeCalled()
     expect(reporter.error.mock.results[0].value.id).toEqual(
-      foundPageByToLogIds[`queryTracking`]
+      foundPageByToLogIds.queryTracking
     )
   })
 
