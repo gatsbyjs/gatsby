@@ -291,7 +291,7 @@ describe(`processNodeManifests`, () => {
     expect(store.dispatch).toBeCalled()
 
     // @ts-ignore: fs is mocked
-    expect(fs.ensureDir.mock.calls.length).toBe(nodes.length)
+    expect(fs.ensureDir).toBeCalledTimes(nodes.length)
     // @ts-ignore: fs is mocked
     expect(fs.writeJSON.mock.calls.length).toBe(nodes.length)
 
