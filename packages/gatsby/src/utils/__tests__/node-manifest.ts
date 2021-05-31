@@ -139,8 +139,10 @@ describe(`processNodeManifests() warnings`, () => {
     await processNodeManifests()
 
     expect(reporter.error).toBeCalled()
-    expect(reporter.error.mock.results[0].value.id).toEqual(
-      foundPageByToLogIds[`context.id`]
+    expect(reporter.error).toBeCalledWith(
+      expect.objectContaining({
+        id: foundPageByToLogIds[`context.id`],
+      })
     )
 
     // then as build
@@ -149,8 +151,10 @@ describe(`processNodeManifests() warnings`, () => {
     await processNodeManifests()
 
     expect(reporter.error).toBeCalled()
-    expect(reporter.error.mock.results[1].value.id).toEqual(
-      foundPageByToLogIds[`context.id`]
+    expect(reporter.error).toBeCalledWith(
+      expect.objectContaining({
+        id: foundPageByToLogIds[`context.id`],
+      })
     )
     process.env.NODE_ENV = `test`
   })
@@ -185,8 +189,10 @@ describe(`processNodeManifests() warnings`, () => {
     await processNodeManifests()
 
     expect(reporter.error).toBeCalled()
-    expect(reporter.error.mock.results[0].value.id).toEqual(
-      foundPageByToLogIds.queryTracking
+    expect(reporter.error).toBeCalledWith(
+      expect.objectContaining({
+        id: foundPageByToLogIds.queryTracking,
+      })
     )
   })
 
