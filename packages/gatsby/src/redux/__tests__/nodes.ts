@@ -1,5 +1,5 @@
 import { actions } from "../actions"
-import { actualNodesReducer as nodesReducer } from "../reducers/nodes"
+import { nodesReducer } from "../reducers/nodes"
 import { IGatsbyNode } from "../types"
 import { nodesTouchedReducer } from "../reducers/nodes-touched"
 
