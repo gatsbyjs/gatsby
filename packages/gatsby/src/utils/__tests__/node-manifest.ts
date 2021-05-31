@@ -300,16 +300,21 @@ describe(`processNodeManifests`, () => {
         return
       }
 
-      // @ts-ignore: fs is mocked
-      const jsonResults = fs.writeJSON.mock.results[index].value
-
-      expect(jsonResults.manifestFilePath).toBe(
-        `${path.join(process.cwd(), `.cache`, `node-manifests`, `test`)}/${
+      expect(fs.writeJSON).toHaveBeenNthCalledWith(
+        index + 1,
+        `${path.join(
+          process.cwd(),
+          `.cache`,
+          `node-manifests`,
+          `test`,
           manifest.manifestId
-        }.json`
+        )}.json`,
+        expect.objectContaining({
+          page: {
+            path: `/${manifest.node.id}`,
+          },
+        })
       )
-
-      expect(jsonResults.finalManifest.page.path).toBe(`/${manifest.node.id}`)
     })
   }
 
