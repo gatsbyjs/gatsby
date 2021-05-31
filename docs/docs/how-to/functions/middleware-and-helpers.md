@@ -13,6 +13,7 @@ We parse commonly used data types. You can parse more by [adding custom middlewa
 - URL Queries (e.g. `api/foo?query=foo`) at `req.query`
 - Form parameters and data at `req.body`
 - JSON POST bodies at `req.body`
+- Files uploaded from forms at `req.files`
 
 ## Response helpers
 

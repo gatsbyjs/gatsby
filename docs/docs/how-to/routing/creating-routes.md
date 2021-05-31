@@ -1,5 +1,8 @@
 ---
 title: Creating Routes
+examples:
+  - label: Using Collection Routing
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/route-api"
 ---
 
 There are multiple ways to create routes in Gatsby.

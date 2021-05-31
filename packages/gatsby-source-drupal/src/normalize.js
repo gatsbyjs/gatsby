@@ -1,5 +1,6 @@
 const { URL } = require(`url`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const path = require(`path`)
 
 const { getOptions } = require(`./plugin-options`)
 const getHref = link => {
@@ -108,6 +109,7 @@ exports.downloadFile = async (
         : {}
     const fileNode = await createRemoteFileNode({
       url: url.href,
+      name: path.parse(decodeURIComponent(url.pathname)).name,
       store,
       cache,
       createNode,

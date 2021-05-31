@@ -8,10 +8,6 @@ import { IRenderHtmlResult } from "../../commands/build-html"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
 
-declare global {
-  let unsafeBuiltinUsage: Array<string> | undefined
-}
-
 /**
  * Used to track if renderHTMLProd / renderHTMLDev are called within same "session" (from same renderHTMLQueue call).
  * As long as sessionId remains the same we can rely on memoized/cached resources for templates, css file content for inlining and static query results.
@@ -45,7 +41,7 @@ function clearCaches(): void {
 const getStaticQueryPath = (hash: string): string =>
   join(`page-data`, `sq`, `d`, `${hash}.json`)
 
-const getStaticQueryResult = async (hash: string): any => {
+const getStaticQueryResult = async (hash: string): Promise<any> => {
   const staticQueryPath = getStaticQueryPath(hash)
   const absoluteStaticQueryPath = join(process.cwd(), `public`, staticQueryPath)
   const staticQueryRaw = await fs.readFile(absoluteStaticQueryPath)
@@ -64,7 +60,7 @@ async function readPageData(
   return JSON.parse(rawPageData)
 }
 
-async function readWebpackStats(publicDir: string): any {
+async function readWebpackStats(publicDir: string): Promise<any> {
   const filePath = join(publicDir, `webpack.stats.json`)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
 

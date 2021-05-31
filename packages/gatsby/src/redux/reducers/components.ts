@@ -22,6 +22,7 @@ export const componentsReducer = (
       if (!component) {
         component = {
           componentPath: action.payload.componentPath,
+          componentChunkName: action.payload.componentChunkName,
           query: ``,
           pages: new Set(),
           isInBootstrap: true,

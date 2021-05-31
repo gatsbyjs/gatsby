@@ -5,7 +5,13 @@ import slugify from "slugify"
 import Layout from "../components/layout"
 
 const DatePage = ({ data }) => {
-  const entries = [data.date, data.dateTime, data.dateTimeTimezone]
+  const entries = [
+    data.date,
+    data.dateTime,
+    data.dateTimeTimezone,
+    { ...data.dateEnglish, title: "Date: English" },
+    { ...data.dateGerman, title: "Date: German" },
+  ]
   return (
     <Layout>
       {entries.map(({ title, date, formatted }) => {
@@ -42,6 +48,22 @@ export const pageQuery = graphql`
       title
       date
       formatted: date(formatString: "D.M.YYYY")
+    }
+    dateEnglish: contentfulDate(
+      contentful_id: { eq: "1ERWZvDiYELryAZEP1dmKG" }
+      node_locale: { eq: "en-US" }
+    ) {
+      title
+      date: dateLocalized
+      formatted: dateLocalized(formatString: "D.M.YYYY - HH:mm:ss")
+    }
+    dateGerman: contentfulDate(
+      contentful_id: { eq: "1ERWZvDiYELryAZEP1dmKG" }
+      node_locale: { eq: "de-DE" }
+    ) {
+      title
+      date: dateLocalized
+      formatted: dateLocalized(formatString: "D.M.YYYY - HH:mm:ss")
     }
   }
 `

@@ -1,3 +1,10 @@
+const testConfig = {
+  retries: {
+    runMode: 2,
+    openMode: 0,
+  },
+}
+
 function hasSVGPlaceholder(el) {
   el.find(`img`)
     .should(`have.attr`, `src`)
@@ -36,7 +43,7 @@ function testGatsbyPluginImage(type, testPlaceholder) {
 
   cy.get(`[data-cy="${type}"]`).scrollIntoView({ duration: 500 })
 
-  // Wait for load
+  // Wait images for load
   cy.wait(1000)
 
   cy.get(`[data-cy="${type}"]`)
@@ -54,13 +61,38 @@ describe(`gatsby-plugin-image`, () => {
     cy.visit("/gatsby-plugin-image").waitForRouteChange()
   })
 
-  it(`constrained`, () =>
-    testGatsbyPluginImage(`constrained`, hasColorPlaceholder))
-  it(`full-width`, () => testGatsbyPluginImage(`full-width`, hasNoPlaceholder))
-  it(`fixed`, () => testGatsbyPluginImage(`fixed`, hasNoPlaceholder))
-  it(`dominant-color`, () =>
-    testGatsbyPluginImage(`dominant-color`, hasColorPlaceholder))
-  it(`traced`, () => testGatsbyPluginImage(`traced`, hasSVGPlaceholder))
-  it(`blurred`, () => testGatsbyPluginImage(`blurred`, hasJPEGPlaceholder))
-  it(`sqip`, () => testGatsbyPluginImage(`sqip`, hasSVGPlaceholder))
+  it(`constrained`, testConfig, () =>
+    testGatsbyPluginImage(`constrained`, hasColorPlaceholder)
+  )
+  it(`full-width`, testConfig, () =>
+    testGatsbyPluginImage(`full-width`, hasNoPlaceholder)
+  )
+  it(`fixed`, testConfig, () =>
+    testGatsbyPluginImage(`fixed`, hasNoPlaceholder)
+  )
+  it(`dominant-color`, testConfig, () =>
+    testGatsbyPluginImage(`dominant-color`, hasColorPlaceholder)
+  )
+  it(`traced`, testConfig, () =>
+    testGatsbyPluginImage(`traced`, hasSVGPlaceholder)
+  )
+  it(`blurred`, testConfig, () =>
+    testGatsbyPluginImage(`blurred`, hasJPEGPlaceholder)
+  )
+  it(`sqip`, testConfig, () => testGatsbyPluginImage(`sqip`, hasSVGPlaceholder))
+
+  it(`english`, testConfig, () => {
+    testGatsbyPluginImage(`english`, hasColorPlaceholder)
+    cy.get(`[data-cy="english"] p strong`).should(
+      "have.text",
+      "Locale - American English (png)"
+    )
+  })
+  it(`german`, testConfig, () => {
+    testGatsbyPluginImage(`german`, hasColorPlaceholder)
+    cy.get(`[data-cy="german"] p strong`).should(
+      "have.text",
+      "Locale - German (png)"
+    )
+  })
 })

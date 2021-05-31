@@ -29,6 +29,7 @@ module.exports = {
     // images with the NPM package “sharp”. It's used by
     // several other plugins.
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-image`,
     // This plugin identifies file nodes that are images and
     // transforms these to create new “ImageSharp” nodes.
     // With them you can resize images and

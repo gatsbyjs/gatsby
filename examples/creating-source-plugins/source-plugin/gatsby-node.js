@@ -144,7 +144,7 @@ exports.sourceNodes = async function sourceNodes(
   console.log(await cache.get(`hello`))
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node))
   getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
     touchNode(node)
   )
