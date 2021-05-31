@@ -136,6 +136,7 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
           value: { pageCategory: `home` },
         },
         dataLayerName,
+        disableWebVitalsTracking: true,
       }
 
       onRenderBody(mocks, pluginOptions)

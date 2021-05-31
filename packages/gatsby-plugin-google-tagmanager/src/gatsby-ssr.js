@@ -40,6 +40,7 @@ exports.onRenderBody = (
     gtmPreview,
     defaultDataLayer,
     dataLayerName = `dataLayer`,
+    disableWebVitalsTracking = true,
   }
 ) => {
   if (process.env.NODE_ENV === `production` || includeInDevelopment) {
@@ -59,16 +60,33 @@ exports.onRenderBody = (
       )
     }
 
-    setHeadComponents([
+    const inlineScripts = []
+    if (!disableWebVitalsTracking) {
+      inlineScripts.push(
+        <script
+          key={`gatsby-plugin-google-tagmanager-web-vitals`}
+          data-gatsby="web-vitals-polyfill"
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(){var e,t,n,i,r={passive:!0,capture:!0},a=new Date,o=function(){i=[],t=-1,e=null,f(addEventListener)},c=function(i,r){e||(e=r,t=i,n=new Date,f(removeEventListener),u())},u=function(){if(t>=0&&t<n-a){var r={entryType:"first-input",name:e.type,target:e.target,cancelable:e.cancelable,startTime:e.timeStamp,processingStart:e.timeStamp+t};i.forEach((function(e){e(r)})),i=[]}},s=function(e){if(e.cancelable){var t=(e.timeStamp>1e12?new Date:performance.now())-e.timeStamp;"pointerdown"==e.type?function(e,t){var n=function(){c(e,t),a()},i=function(){a()},a=function(){removeEventListener("pointerup",n,r),removeEventListener("pointercancel",i,r)};addEventListener("pointerup",n,r),addEventListener("pointercancel",i,r)}(t,e):c(t,e)}},f=function(e){["mousedown","keydown","touchstart","pointerdown"].forEach((function(t){return e(t,s,r)}))},p="hidden"===document.visibilityState?0:1/0;addEventListener("visibilitychange",(function e(t){"hidden"===document.visibilityState&&(p=t.timeStamp,removeEventListener("visibilitychange",e,!0))}),!0);o(),self.webVitals={firstInputPolyfill:function(e){i.push(e),u()},resetFirstInputPolyfill:o,get firstHiddenTime(){return p}}}();
+            `,
+          }}
+        />
+      )
+    }
+
+    inlineScripts.push(
       <script
         key="plugin-google-tagmanager"
         dangerouslySetInnerHTML={{
           __html: oneLine`
-            ${defaultDataLayerCode}
-            ${generateGTM({ id, environmentParamStr, dataLayerName })}`,
+          ${defaultDataLayerCode}
+          ${generateGTM({ id, environmentParamStr, dataLayerName })}`,
         }}
-      />,
-    ])
+      />
+    )
+
+    setHeadComponents(inlineScripts)
 
     setPreBodyComponents([
       <noscript
