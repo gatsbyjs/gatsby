@@ -1,7 +1,6 @@
 const { actions } = require(`../../redux/actions`)
 const { store } = require(`../../redux`)
-const { getNode, getNodes } = require(`../../datastore`)
-const { getDataStore } = require(`../../datastore`)
+const { getDataStore, getNode, getNodes } = require(`..`)
 
 const report = require(`gatsby-cli/lib/reporter`)
 jest.mock(`gatsby-cli/lib/reporter`)
