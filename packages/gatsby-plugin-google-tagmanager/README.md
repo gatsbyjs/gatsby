@@ -37,6 +37,8 @@ plugins: [
       //
       // Defaults to gatsby-route-change
       routeChangeEventName: "YOUR_ROUTE_CHANGE_EVENT_NAME",
+      // Defaults to true
+      disableWebVitalsTracking: false,
     },
   },
 ]
@@ -79,6 +81,12 @@ This plugin will fire a new event called `gatsby-route-change` (or as in the `ga
 5. Choose the trigger type by clicking the pencil button and clicking "Custom event". For event name, enter `gatsby-route-change` (or as in the `gatsby-config.js` configured `routeChangeEventName`).
 
 This tag will now catch every route change in Gatsby, and you can add Google tag services as you wish to it.
+
+#### Tracking Core Web Vitals
+
+Optimizing for the quality of user experience is key to the long-term success of any site on the web. Capturing Real user metrics (RUM) helps you understand the experience of your user/customer. By setting `disableWebVitalsTracking` to false, GTM will get "core-web-vitals" events with their values.
+
+You can save this data in Google Analytics or any database of your choosing.
 
 #### Note
 

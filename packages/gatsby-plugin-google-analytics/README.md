@@ -43,6 +43,7 @@ module.exports = {
         sampleRate: 5,
         siteSpeedSampleRate: 10,
         cookieDomain: "example.com",
+        disableWebVitalsTracking: false,
       },
     },
   ],
@@ -132,6 +133,10 @@ If you need to set up SERVER_SIDE Google Optimize experiment, you can add the ex
 ### `variationId`
 
 Besides the experiment ID you also need the variation ID for SERVER_SIDE experiments in Google Optimize. Set 0 for original version.
+
+### `disableWebVitalsTracking`
+
+Optimizing for the quality of user experience is key to the long-term success of any site on the web. Capturing Real user metrics (RUM) helps you understand the experience of your user/customer. By setting `disableWebVitalsTracking` to false, Google Analytics will get "core-web-vitals" events with their values.
 
 ## Optional Fields
 
