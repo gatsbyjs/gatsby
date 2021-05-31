@@ -1,4 +1,4 @@
-const pkgjson = require(`../package.json`)
+import pkgJSON from "../package.json"
 
 export default async function trackEvent({
   eventType,
@@ -14,7 +14,7 @@ export default async function trackEvent({
         eventType,
         componentId: `gatsby-plugin-gatsby-cloud_preview-indicator`,
         version: 1,
-        componentVersion: pkgjson.version,
+        componentVersion: pkgJSON.version,
         organizationId: orgId,
         siteId,
         buildId,
