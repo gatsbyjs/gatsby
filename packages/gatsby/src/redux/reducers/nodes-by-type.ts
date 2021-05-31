@@ -1,5 +1,4 @@
 import { IGatsbyNode, IGatsbyState, ActionsUnion } from "../types"
-import { isLmdbStore } from "../../utils/is-lmdb-store"
 
 const getNodesOfType = (
   node: IGatsbyNode,
@@ -24,11 +23,6 @@ export const nodesByTypeReducer = (
   state: IGatsbyState["nodesByType"] = new Map(),
   action: ActionsUnion
 ): IGatsbyState["nodesByType"] => {
-  // nodesByType map is stored in LMDB when strict mode is enabled
-  if (isLmdbStore()) {
-    return state
-  }
-
   switch (action.type) {
     case `DELETE_CACHE`:
       return new Map()

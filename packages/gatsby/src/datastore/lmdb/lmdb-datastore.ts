@@ -4,7 +4,7 @@ import { ActionsUnion, IGatsbyNode } from "../../redux/types"
 import { updateNodes } from "./updates/nodes"
 import { updateNodesByType } from "./updates/nodes-by-type"
 import { IDataStore, ILmdbDatabases } from "../types"
-import { emitter } from "../../redux"
+import { emitter, replaceReducer } from "../../redux"
 
 const rootDbFile =
   process.env.NODE_ENV === `test`
@@ -154,6 +154,10 @@ export function setupLmdbStore(): IDataStore {
     getNodes,
     getNodesByType,
   }
+  replaceReducer({
+    nodes: (state = new Map(), _) => state,
+    nodesByType: (state = new Map(), _) => state,
+  })
   emitter.on(`*`, action => {
     if (action) {
       updateDataStore(action)

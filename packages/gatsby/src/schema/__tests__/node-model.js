@@ -3,7 +3,7 @@ const { actions } = require(`../../redux/actions`)
 const { LocalNodeModel } = require(`../node-model`)
 const { build } = require(`..`)
 const typeBuilders = require(`../types/type-builders`)
-const { isLmdbStore } = require(`../../utils/is-lmdb-store`)
+const { isLmdbStore } = require(`../../datastore`)
 
 const nodes = require(`./fixtures/node-model`)
 

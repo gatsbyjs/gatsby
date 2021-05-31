@@ -1,7 +1,6 @@
 import { ActionsUnion, IGatsbyState } from "../types"
-import { isLmdbStore } from "../../utils/is-lmdb-store"
 
-export const actualNodesReducer = (
+export const nodesReducer = (
   state: IGatsbyState["nodes"] = new Map(),
   action: ActionsUnion
 ): IGatsbyState["nodes"] => {
@@ -29,15 +28,4 @@ export const actualNodesReducer = (
     default:
       return state
   }
-}
-
-export const nodesReducer = (
-  state: IGatsbyState["nodes"] = new Map(),
-  action: ActionsUnion
-): IGatsbyState["nodes"] => {
-  // Nodes are stored in LMDB when strict mode is enabled
-  if (isLmdbStore()) {
-    return state
-  }
-  return actualNodesReducer(state, action)
 }

@@ -10,7 +10,6 @@ import {
   writeFileSync,
 } from "fs-extra"
 import { IGatsbyNode, ICachedReduxState, IGatsbyPage } from "./types"
-import { isLmdbStore } from "../utils/is-lmdb-store"
 import { sync as globSync } from "glob"
 import report from "gatsby-cli/lib/reporter"
 
@@ -41,27 +40,23 @@ export function readFromCache(): ICachedReduxState {
     readFileSync(reduxSharedFile(reduxCacheFolder))
   )
 
-  if (isLmdbStore()) {
-    // Note: nodes are stored in LMDB in strict node, so no need to restore
-    obj.nodes = new Map()
-  } else {
-    // Note: at 1M pages, this will be 1M/chunkSize chunks (ie. 1m/10k=100)
-    const nodesChunks = globSync(
-      reduxChunkedNodesFilePrefix(reduxCacheFolder) + `*`
-    ).map(file => v8.deserialize(readFileSync(file)))
+  // Note: at 1M pages, this will be 1M/chunkSize chunks (ie. 1m/10k=100)
+  const nodesChunks = globSync(
+    reduxChunkedNodesFilePrefix(reduxCacheFolder) + `*`
+  ).map(file => v8.deserialize(readFileSync(file)))
 
-    const nodes: Array<[string, IGatsbyNode]> = [].concat(...nodesChunks)
+  const nodes: Array<[string, IGatsbyNode]> = [].concat(...nodesChunks)
 
-    if (!nodesChunks.length) {
-      report.info(
-        `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
-      )
-      // TODO: this is a DeepPartial<ICachedReduxState> but requires a big change
-      return {} as ICachedReduxState
-    }
-
-    obj.nodes = new Map(nodes)
+  // Note: using GATSBY_EXPERIMENTAL_LMDB_STORE env var directly (vs. isLmdbStore()) to avoid cycles in imports
+  if (!nodesChunks.length && !process.env.GATSBY_EXPERIMENTAL_LMDB_STORE) {
+    report.info(
+      `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
+    )
+    // TODO: this is a DeepPartial<ICachedReduxState> but requires a big change
+    return {} as ICachedReduxState
   }
+
+  obj.nodes = new Map(nodes)
 
   // Note: at 1M pages, this will be 1M/chunkSize chunks (ie. 1m/10k=100)
   const pagesChunks = globSync(

@@ -9,7 +9,7 @@ const v8Deserialize = jest.spyOn(v8, `deserialize`)
 const reporterInfo = jest.spyOn(reporter, `info`).mockImplementation(jest.fn)
 const reporterWarn = jest.spyOn(reporter, `warn`).mockImplementation(jest.fn)
 
-const { isLmdbStore } = require(`../../utils/is-lmdb-store`)
+const { isLmdbStore } = require(`../../datastore`)
 const { saveState, store, readState } = require(`../index`)
 
 const {

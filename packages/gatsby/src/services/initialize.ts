@@ -26,7 +26,7 @@ import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
 import availableFlags from "../utils/flags"
-import { detectLmdbStore } from "../utils/is-lmdb-store"
+import { detectLmdbStore } from "../datastore"
 
 interface IPluginResolution {
   resolve: string
