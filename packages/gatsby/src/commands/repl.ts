@@ -3,7 +3,7 @@ import { graphql } from "graphql"
 import { bootstrap } from "../bootstrap"
 import { trackCli } from "gatsby-telemetry"
 import { getNodes, getNode, getNodesByType } from "../datastore"
-import { loadNodeContent } from "../db/nodes"
+import { loadNodeContent } from "../utils/nodes"
 import { store } from "../redux"
 import { IProgram } from "./types"
 

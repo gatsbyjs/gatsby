@@ -24,12 +24,11 @@ import {
 } from "../schema/types/type-builders"
 const { emitter, store } = require(`../redux`)
 const { getNodes, getNode, getNodesByType } = require(`../datastore`)
-const { getNodeAndSavePathDependency } = require(`./nodes`)
+const { getNodeAndSavePathDependency, loadNodeContent } = require(`./nodes`)
 const { getPublicPath } = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 import errorParser from "./api-runner-error-parser"
-const { loadNodeContent } = require(`../db/nodes`)
 
 if (!process.env.BLUEBIRD_DEBUG && !process.env.BLUEBIRD_LONG_STACK_TRACES) {
   // Unless specified - disable longStackTraces
