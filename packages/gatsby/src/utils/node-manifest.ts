@@ -284,14 +284,15 @@ export async function processNodeManifests(): Promise<void> {
     }
   })
 
-  const s = (length: number): string => (length > 1 || length === 0 ? `s` : ``)
+  const pluralize = (length: number): string =>
+    length > 1 || length === 0 ? `s` : ``
 
   reporter.info(
-    `Wrote out ${totalProcessedManifests} node page manifest file${s(
+    `Wrote out ${totalProcessedManifests} node page manifest file${pluralize(
       totalProcessedManifests
     )}${
       totalFailedManifests > 0
-        ? `. ${totalFailedManifests} manifest${s(
+        ? `. ${totalFailedManifests} manifest${pluralize(
             totalFailedManifests
           )} couldn't be processed.`
         : ``
