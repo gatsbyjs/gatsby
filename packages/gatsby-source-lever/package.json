@@ -8,7 +8,7 @@
   },
   "bundledDependencies": [],
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
+    "@babel/runtime": "^7.14.0",
     "axios": "^0.21.1",
     "bluebird": "^3.7.2",
     "deep-map": "^1.5.0",
@@ -18,8 +18,8 @@
   },
   "deprecated": false,
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
     "babel-preset-gatsby-package": "^1.7.0-next.1",
     "cross-env": "^7.0.3"
   },
