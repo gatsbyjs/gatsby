@@ -7,7 +7,7 @@ export default async function trackEvent({
   buildId,
   name,
 }) {
-  if (process.env.GATSBY_ANALYTICS_ENDPOINT) {
+  if (process.env.GATSBY_TELEMETRY_API) {
     try {
       const body = {
         time: new Date(),
@@ -21,7 +21,7 @@ export default async function trackEvent({
         name,
       }
 
-      const res = await fetch(process.env.GATSBY_ANALYTICS_ENDPOINT, {
+      const res = await fetch(process.env.GATSBY_TELEMETRY_API, {
         mode: `cors`,
         method: `POST`,
         headers: {
