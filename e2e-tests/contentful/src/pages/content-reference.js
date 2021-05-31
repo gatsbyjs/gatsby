@@ -17,10 +17,14 @@ function renderReferencedComponent(ref) {
 }
 
 const ContentReferencePage = ({ data }) => {
-  const entries = data.allContentfulContentReference.nodes
+  const defaultEntries = data.default.nodes
+  const englishEntries = data.english.nodes
+  const germanEntries = data.german.nodes
+
   return (
     <Layout>
-      {entries.map(({ contentful_id, title, one, many }) => {
+      <h1>Default</h1>
+      {defaultEntries.map(({ contentful_id, title, one, many }) => {
         const slug = slugify(title, { strict: true, lower: true })
 
         let content = null
@@ -33,12 +37,56 @@ const ContentReferencePage = ({ data }) => {
         }
 
         return (
-          <div data-cy-id={slug} key={contentful_id}>
+          <div data-cy-id={`default-${slug}`} key={contentful_id}>
             <h2>{title}</h2>
             {content}
           </div>
         )
       })}
+      <h1>English Locale</h1>
+      {englishEntries.map(
+        ({ contentful_id, title, oneLocalized, manyLocalized }) => {
+          const slug = slugify(title, { strict: true, lower: true })
+
+          let content = null
+          if (manyLocalized) {
+            content = manyLocalized.map(renderReferencedComponent)
+          }
+
+          if (oneLocalized) {
+            content = renderReferencedComponent(oneLocalized)
+          }
+
+          return (
+            <div data-cy-id={`english-${slug}`} key={contentful_id}>
+              <h2>{title}</h2>
+              {content}
+            </div>
+          )
+        }
+      )}
+      <h1>German Locale</h1>
+      {germanEntries.map(
+        ({ contentful_id, title, oneLocalized, manyLocalized }) => {
+          const slug = slugify(title, { strict: true, lower: true })
+
+          let content = null
+          if (manyLocalized) {
+            content = manyLocalized.map(renderReferencedComponent)
+          }
+
+          if (oneLocalized) {
+            content = renderReferencedComponent(oneLocalized)
+          }
+
+          return (
+            <div data-cy-id={`german-${slug}`} key={contentful_id}>
+              <h2>{title}</h2>
+              {content}
+            </div>
+          )
+        }
+      )}
     </Layout>
   )
 }
@@ -47,7 +95,10 @@ export default ContentReferencePage
 
 export const pageQuery = graphql`
   query ContentReferenceQuery {
-    allContentfulContentReference(sort: { fields: title }) {
+    default: allContentfulContentReference(
+      sort: { fields: title }
+      filter: { node_locale: { eq: "en-US" }, title: { glob: "!*Localized*" } }
+    ) {
       nodes {
         title
         contentful_id
@@ -121,6 +172,66 @@ export const pageQuery = graphql`
               ... on ContentfulContentReference {
                 title
               }
+            }
+          }
+        }
+      }
+    }
+    english: allContentfulContentReference(
+      sort: { fields: title }
+      filter: { node_locale: { eq: "en-US" }, title: { glob: "*Localized*" } }
+    ) {
+      nodes {
+        title
+        contentful_id
+        oneLocalized {
+          __typename
+          title
+          decimal
+          integer
+        }
+        manyLocalized {
+          __typename
+          ... on ContentfulNumber {
+            title
+            decimal
+            integer
+          }
+          ... on ContentfulText {
+            title
+            short
+            longPlain {
+              longPlain
+            }
+          }
+        }
+      }
+    }
+    german: allContentfulContentReference(
+      sort: { fields: title }
+      filter: { node_locale: { eq: "de-DE" }, title: { glob: "*Localized*" } }
+    ) {
+      nodes {
+        title
+        contentful_id
+        oneLocalized {
+          __typename
+          title
+          decimal
+          integer
+        }
+        manyLocalized {
+          __typename
+          ... on ContentfulNumber {
+            title
+            decimal
+            integer
+          }
+          ... on ContentfulText {
+            title
+            short
+            longPlain {
+              longPlain
             }
           }
         }
