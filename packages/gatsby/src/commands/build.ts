@@ -305,5 +305,5 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     showFeedbackRequest()
   }
 
-  clearEphemeralDb()
+  // clearEphemeralDb()
 }

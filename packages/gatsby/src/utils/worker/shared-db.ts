@@ -3,14 +3,48 @@ import { IGatsbyState, ActionsUnion } from "../../redux/types"
 import { store } from "../../redux"
 import { omit } from "lodash"
 import report from "gatsby-cli/lib/reporter"
+import pDefer from "p-defer"
+import uuidv4 from "uuid/v4"
 // import { createPageDependency } from "../../redux/actions/add-page-dependency"
 // let rootDb: RootDatabase | undefined
+
+type MessageKey = ["from" | "to", number, number]
 
 interface ISharedDatabases {
   snapshots: Database<any, string>
   dataDependencies: Database<{ nodeId: string; connection?: string }, string>
-  messaging: Database<ActionsUnion, [number, number]>
+  messaging: Database<IMessage, MessageKey>
 }
+
+interface IMessagePendingPromise<PayloadType = any> {
+  type: `promise.pending`
+  namespace: string
+  payload: PayloadType
+  uuid: string
+}
+
+interface IMessageResolvedPromise<ResultType = any> {
+  type: `promise.resolved`
+  namespace: string
+  result: ResultType
+  uuid: string
+}
+
+interface IRemotePromiseConfig<ResultType, PayloadType> {
+  create: (payload: PayloadType) => Promise<ResultType>
+  handle: (
+    message: IMessagePendingPromise,
+    messageChannel: number
+  ) => Promise<ResultType>
+}
+
+type IMessage =
+  | {
+      type: `redux`
+      action: ActionsUnion
+    }
+  | IMessagePendingPromise
+  | IMessageResolvedPromise
 
 let dbs
 
@@ -22,18 +56,9 @@ function getDBs(): ISharedDatabases {
       compression: true, // do we want that here?
     })
 
-    // rootDb.openDB()
-
     if (!process.env.JEST_WORKER_ID) {
       rootDb.clear()
     }
-
-    rootDb.on(`beforecommit`, (...args) => {
-      console.log(
-        `[${process.env.JEST_WORKER_ID || `main`}] beforecommit`,
-        args
-      )
-    })
 
     dbs = {
       snapshots: rootDb.openDB({
@@ -123,20 +148,119 @@ export function ready(): Promise<boolean> | undefined {
   return updatePromise
 }
 
-let messageCounter = 0 // each worker remembers their own message counter
+// each worker remembers their own message counter
+let sendMessageCounter: number
+let readMessageCounter: number
 const messageChannel = parseInt(process.env.JEST_WORKER_ID ?? ``, 10) ?? 0
-
-export function forwardToMain(action: ActionsUnion): void {
-  const key: [number, number] = [messageChannel, ++messageCounter]
-  updatePromise = getDBs().messaging.put(key, action)
-}
+const promisesToResolve = new Map<string, pDefer.DeferredPromise<any>>()
 
 let readMessages: Map<number, number>
-export function initMessaging(numWorkers: number): void {
-  readMessages = new Map()
-  for (let i = 1; i <= numWorkers; i++) {
-    readMessages.set(i, 0)
+let sendMessages: Map<number, number>
+export function initMessaging(isMain: boolean, numWorkers?: number): void {
+  if (isMain) {
+    if (!numWorkers) {
+      throw new Error(`need numWorkers in main`)
+    }
+    readMessages = new Map()
+    sendMessages = new Map()
+    for (let i = 1; i <= numWorkers; i++) {
+      readMessages.set(i, 0)
+      sendMessages.set(i, 0)
+    }
+    setInterval(dispatchActionFromWorkers, 100)
+  } else {
+    sendMessageCounter = 0
+    readMessageCounter = 0
+    setInterval(readFromMain, 100)
   }
+}
+
+function readFromMain(): void {
+  let lastMessageFromMain
+
+  const rangeOptions = {
+    start: [`to`, messageChannel, readMessageCounter],
+    end: [`to`, messageChannel + 1, 0],
+  }
+
+  const messagingDB = getDBs().messaging
+  const iterator = messagingDB.getRange(rangeOptions)
+
+  for (const {
+    key: [workerID, messageIndex],
+    value: message,
+  } of iterator) {
+    // console.log({ messageChannel, message })
+    // if (message.type === `redux`) {
+    //   store.dispatch(message.action)
+    // }
+    if (message.type === `promise.resolved`) {
+      const deferred = promisesToResolve.get(message.uuid)
+      deferred?.resolve(message.result)
+    }
+    lastMessageFromMain = messageIndex
+  }
+
+  if (lastMessageFromMain) {
+    readMessageCounter = lastMessageFromMain + 1
+  }
+}
+
+export function forwardToMain(action: ActionsUnion): void {
+  const key: MessageKey = [`from`, messageChannel, ++sendMessageCounter]
+
+  updatePromise = getDBs().messaging.put(key, { type: `redux`, action })
+}
+
+const remotePromiseHandlers = new Map<string, IRemotePromiseConfig<any, any>>()
+
+export function remotePromiseHandler<ResultType, PayloadType>(
+  namespace: string,
+  executor: (payload: PayloadType) => Promise<ResultType>
+): IRemotePromiseConfig<ResultType, PayloadType> {
+  const ret: IRemotePromiseConfig<ResultType, PayloadType> = {
+    // executed in worker
+    create(payload: PayloadType): Promise<ResultType> {
+      const deferred = pDefer<ResultType>()
+
+      const key: MessageKey = [`from`, messageChannel, ++sendMessageCounter]
+      const uuid = uuidv4()
+      promisesToResolve.set(uuid, deferred)
+      const stuff: IMessagePendingPromise = {
+        type: `promise.pending`,
+        namespace,
+        payload,
+        uuid,
+      }
+      updatePromise = getDBs().messaging.put(key, stuff)
+
+      return deferred.promise
+    },
+    // executed in main
+    async handle(
+      message: IMessagePendingPromise<PayloadType>,
+      messageChannel: number
+    ): Promise<ResultType> {
+      const result = await executor({ ...message.payload, store })
+
+      const messageCounter = (sendMessages.get(messageChannel) || 0) + 1
+      sendMessages.set(messageChannel, messageCounter)
+
+      const key: MessageKey = [`to`, messageChannel, messageCounter]
+      updatePromise = getDBs().messaging.put(key, {
+        type: `promise.resolved`,
+        namespace,
+        result,
+        uuid: message.uuid,
+      })
+
+      return result
+    },
+  }
+
+  remotePromiseHandlers.set(namespace, ret)
+
+  return ret
 }
 
 export function dispatchActionFromWorkers(): void {
@@ -145,23 +269,33 @@ export function dispatchActionFromWorkers(): void {
   for (const [workerID, indexOfNextMessagesToRead] of readMessages.entries()) {
     let lastMessageFromWorker
 
-    const rangeOptions = {
-      start: [workerID, indexOfNextMessagesToRead],
-      end: [workerID + 1, 0],
+    const rangeOptions: { start: MessageKey; end: MessageKey } = {
+      start: [`from`, workerID, indexOfNextMessagesToRead],
+      end: [`from`, workerID + 1, 0],
     }
 
     const iterator = messagingDB.getRange(rangeOptions)
 
     for (const {
-      key: [workerID, messageIndex],
-      value: action,
+      key: [_, workerID, messageIndex],
+      value: message,
     } of iterator) {
-      store.dispatch(action)
+      if (message.type === `redux`) {
+        store.dispatch(message.action)
+      } else if (message.type === `promise.pending`) {
+        const handler = remotePromiseHandlers.get(message.namespace)
+        if (!handler) {
+          console.log(`no handler registered for ${message.namespace}`)
+          continue
+        }
+
+        handler.handle(message, workerID)
+      }
       lastMessageFromWorker = messageIndex
     }
 
     if (lastMessageFromWorker) {
-      readMessages.set(workerID, lastMessageFromWorker)
+      readMessages.set(workerID, lastMessageFromWorker + 1)
     }
   }
 }

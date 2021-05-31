@@ -77,31 +77,32 @@ const multi: Middleware<IMultiDispatch> = ({ dispatch }) => next => (
 // and error-prone. Instead we'll make use of the createStore return value, and export that type.
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const configureStore = (initialState: IGatsbyState) => {
-  const unknown = new Set()
-  const allowedInWorker = new Set([
-    `SET_INFERENCE_METADATA`, // new (to hydrate inference metadata)
-    `SET_SCHEMA`,
-    `SET_SCHEMA_COMPOSER`,
-    `SET_EXTRACTED_QUERIES`, // new (to hydrate components and staticQueryComponents)
-    `SET_PROGRAM`,
-    `SET_SITE_CONFIG`,
-    `SET_SITE_FLATTENED_PLUGINS`,
-    `CREATE_TYPES`,
-  ])
-
-  const actionsToForward = new Set([
-    `QUERY_START`,
-    `CREATE_COMPONENT_DEPENDENCY`,
-    `ADD_PENDING_PAGE_DATA_WRITE`,
-    `PAGE_QUERY_RUN`,
-  ])
-
   const middleware = [
     thunk as ThunkMiddleware<IGatsbyState, ActionsUnion>,
     multi,
   ]
 
   if (process.env.JEST_WORKER_ID) {
+    const unknown = new Set()
+    const allowedInWorker = new Set([
+      `SET_INFERENCE_METADATA`, // new (to hydrate inference metadata)
+      `SET_SCHEMA`,
+      `SET_SCHEMA_COMPOSER`,
+      `SET_EXTRACTED_QUERIES`, // new (to hydrate components and staticQueryComponents)
+      `SET_PROGRAM`,
+      `SET_SITE_CONFIG`,
+      `SET_SITE_FLATTENED_PLUGINS`,
+      `CREATE_TYPES`,
+    ])
+
+    const actionsToForward = new Set([
+      `QUERY_START`,
+      `CREATE_COMPONENT_DEPENDENCY`,
+      `ADD_PENDING_PAGE_DATA_WRITE`,
+      `PAGE_QUERY_RUN`,
+    ])
+
+    const notAllowed = new Set([`CREATE_JOB_V2`, `END_JOB_V2`])
     // insert forwarding middleware
     middleware.splice(1, 0, _ => next => (action: ActionsUnion):
       | ActionsUnion
@@ -111,16 +112,18 @@ export const configureStore = (initialState: IGatsbyState) => {
         return next(action)
       } else if (actionsToForward.has(action.type)) {
         return forwardToMain(action)
+      } else if (notAllowed.has(action.type)) {
+        // throw new Error(`Action "${action.type}" not allowed in worker`)
       } else {
         unknown.add(action.type)
         return Promise.resolve() // just so we don't crash on `createJobV2` for now as caller expect promise
       }
     })
-  }
 
-  onExit(() => {
-    console.log(`unknown actions`, unknown)
-  })
+    onExit(() => {
+      console.log(`unknown actions`, unknown)
+    })
+  }
 
   return createStore(
     combineReducers<IGatsbyState>({ ...reducers }),

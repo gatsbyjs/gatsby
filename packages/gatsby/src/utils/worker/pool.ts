@@ -50,7 +50,7 @@ export const create = (): IGatsbyWorkerPool => {
     },
   }) as IGatsbyWorkerPool
 
-  initMessaging(numWorkers)
+  initMessaging(true, numWorkers)
 
   // console.log(`[warmup call] main`)
   runInAllWorkers(workerId => worker.warmup({ workerId }))

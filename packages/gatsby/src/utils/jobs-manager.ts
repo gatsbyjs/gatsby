@@ -290,6 +290,12 @@ export async function enqueueJob(
   // When we already have a job that's executing, return the same promise.
   // we have another check in our createJobV2 action to return jobs that have been done in a previous gatsby run
   if (jobsInProcess.has(job.contentDigest)) {
+    console.log(
+      `[enqueuejob] reusing in progress job ${
+        process.env.JEST_WORKER_ID || `main`
+      }`,
+      job.contentDigest
+    )
     return jobsInProcess.get(job.contentDigest)!.deferred.promise
   }
 
@@ -303,6 +309,11 @@ export async function enqueueJob(
     activityForJobs = reporter.phantomActivity(`Running jobs v2`)
     activityForJobs!.start()
   }
+
+  console.log(
+    `[enqueuejob] creating new job ${process.env.JEST_WORKER_ID || `main`}`,
+    job.contentDigest
+  )
 
   const deferred = pDefer<Record<string, unknown>>()
   jobsInProcess.set(job.contentDigest, {
