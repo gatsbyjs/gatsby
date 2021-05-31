@@ -72,7 +72,7 @@ export default function InfoIndicatorButton({
       {...buttonProps}
       // See IndicatorButtonTooltip for explanation
       toolTipOffset={80}
-      mouseOverCallback={buttonProps.active && trackHover}
+      onMouseOver={buttonProps.active && trackHover}
     />
   )
 }
