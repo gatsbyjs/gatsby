@@ -290,10 +290,8 @@ describe(`processNodeManifests`, () => {
     )
     expect(store.dispatch).toBeCalled()
 
-    // @ts-ignore: fs is mocked
     expect(fs.ensureDir).toBeCalledTimes(nodes.length)
-    // @ts-ignore: fs is mocked
-    expect(fs.writeJSON.mock.calls.length).toBe(nodes.length)
+    expect(fs.writeJSON).toBeCalledTimes(nodes.length)
 
     pendingManifests.forEach((manifest, index) => {
       // if a node doesn't exist for this manifest we don't want to assert that
