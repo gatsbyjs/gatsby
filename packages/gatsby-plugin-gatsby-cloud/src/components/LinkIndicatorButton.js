@@ -116,7 +116,7 @@ export default function LinkIndicatorButton({
       {...buttonProps}
       // See IndicatorButtonTooltip for explanation
       toolTipOffset={40}
-      mouseOverCallback={buttonProps.active && trackHover}
+      onMouseOver={buttonProps.active && trackHover}
     />
   )
 }
