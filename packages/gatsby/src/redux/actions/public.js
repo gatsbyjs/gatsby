@@ -10,7 +10,7 @@ const url = require(`url`)
 const { slash, createContentDigest } = require(`gatsby-core-utils`)
 const { hasNodeChanged } = require(`../../utils/nodes`)
 const { getNode } = require(`../../datastore`)
-const sanitizeNode = require(`../../db/sanitize-node`)
+const sanitizeNode = require(`../../utils/sanitize-node`)
 const { store } = require(`..`)
 const { validatePageComponent } = require(`../../utils/validate-page-component`)
 import { nodeSchema } from "../../joi-schemas/joi"
