@@ -9,7 +9,13 @@ import { LAST_COMPLETED_SOURCE_TIME } from "../../../constants"
  * This function checks wether there is atleast 1 WPGatsby action ready to be processed by Gatsby
  * If there is, it calls the refresh webhook so that schema customization and source nodes run again.
  */
+let sourceIt = true
 const checkForNodeUpdates = async ({ cache, emitter }) => {
+  console.log(`checking for node updates`)
+  // if there's atleast 1 new action, pause polling,
+  // refresh Gatsby schema+nodes and continue on
+  store.dispatch.develop.pauseRefreshPolling()
+
   // get the last sourced time
   const lastCompletedSourceTime = await cache.get(LAST_COMPLETED_SOURCE_TIME)
   const since = lastCompletedSourceTime - 500
@@ -30,19 +36,21 @@ const checkForNodeUpdates = async ({ cache, emitter }) => {
   })
 
   if (newActions.length) {
-    // if there's atleast 1 new action, pause polling,
-    // refresh Gatsby schema+nodes and continue on
-    store.dispatch.develop.pauseRefreshPolling()
-
+    console.log(`triggering webhook`)
     emitter.emit(`WEBHOOK_RECEIVED`, {
       webhookBody: {
         since,
         refreshing: true,
       },
+      pluginName: `gatsby-source-wordpress`,
     })
+    sourceIt = false
   } else {
+    console.log(`not triggering webhook`)
+    sourceIt = true
     // set new last completed source time and move on
     await cache.set(LAST_COMPLETED_SOURCE_TIME, Date.now())
+    store.dispatch.develop.resumeRefreshPolling()
   }
 }
 
@@ -55,7 +63,10 @@ const refetcher = async (
     const { refreshPollingIsPaused } = store.getState().develop
 
     if (!refreshPollingIsPaused) {
+      console.log(`refresh polling not paused`)
       await checkForNodeUpdates(helpers)
+    } else {
+      console.log(`refresh polling paused`)
     }
 
     if (reconnectionActivity) {
@@ -108,28 +119,45 @@ const refetcher = async (
   )
 }
 
+let startedPolling = false
+
 /**
  * Starts constantly refetching the latest WordPress changes
  * so we can update Gatsby nodes when data changes
  */
-const startPollingForContentUpdates = helpers => {
+const startPollingForContentUpdates = async helpers => {
   if (
+    startedPolling ||
     process.env.WP_DISABLE_POLLING ||
     process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
   ) {
     return
   }
 
+  startedPolling = true
+
   const { verbose, develop } = store.getState().gatsbyApi.pluginOptions
 
   const msRefetchInterval = develop.nodeUpdateInterval
 
-  if (verbose) {
-    helpers.reporter.log(``)
-    helpers.reporter.info(formatLogMessage`Watching for WordPress changes`)
-  }
+  let startedRefetching
 
-  refetcher(msRefetchInterval, helpers)
+  helpers.emitter.on(`COMPILATION_DONE`, () => {
+    if (!startedRefetching) {
+      startedRefetching = true
+
+      setTimeout(() => {
+        if (verbose) {
+          helpers.reporter.log(``)
+          helpers.reporter.info(
+            formatLogMessage`Watching for WordPress changes`
+          )
+        }
+
+        refetcher(msRefetchInterval, helpers)
+      }, 1000)
+    }
+  })
 }
 
 export { startPollingForContentUpdates }
