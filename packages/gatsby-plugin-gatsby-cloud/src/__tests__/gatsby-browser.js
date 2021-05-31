@@ -11,9 +11,12 @@ import { server } from "./mocks/server"
 const createUrl = path => `https://test.com/${path}`
 const copyLinkMessage = `Copy link`
 const infoButtonMessage = `Preview updated`
-const { location } = window
 
 process.env.GATSBY_PREVIEW_AUTH_TOKEN = `token`
+
+jest.mock(`../package.json`, () => jest.requireActual(`../../package.json`), {
+  virtual: true,
+})
 
 describe(`Preview status indicator`, () => {
   const assertTooltipText = async ({ route, text, matcherType }) => {
@@ -48,20 +51,11 @@ describe(`Preview status indicator`, () => {
     jest.resetModules()
     global.fetch = require(`node-fetch`)
     jest.spyOn(global, `fetch`)
-    // delete window.location
-    //   window.location = {
-    //     href: `https://preview-xxx.gtsb.io`,
-    //     host: `preview-xxx.gtsb.io`,
-    //     hostname: `preview-xxx.gtsb.io`,
-    //     reload: jest.fn(),
-    //     replace: jest.fn()
-    //   }
   })
 
   afterEach(() => {
     jest.useRealTimers()
     server.resetHandlers()
-    // window.location = location
   })
 
   afterAll(() => {
