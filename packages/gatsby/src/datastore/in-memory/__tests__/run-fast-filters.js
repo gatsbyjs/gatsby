@@ -2,10 +2,10 @@ const {
   runFastFiltersAndSort,
   applyFastFilters,
 } = require(`../run-fast-filters`)
-const { store } = require(`../index`)
-const { getDataStore, getNode } = require(`../../datastore`)
-const { createDbQueriesFromObject } = require(`../../db/common/query`)
-const { actions } = require(`../actions`)
+const { store } = require(`../../../redux`)
+const { getDataStore, getNode } = require(`../../../datastore`)
+const { createDbQueriesFromObject } = require(`../../common/query`)
+const { actions } = require(`../../../redux/actions`)
 const {
   GraphQLObjectType,
   GraphQLNonNull,

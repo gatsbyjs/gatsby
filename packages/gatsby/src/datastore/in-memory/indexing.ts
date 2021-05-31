@@ -1,8 +1,7 @@
-import { store } from "./"
-import { IGatsbyNode } from "./types"
-import { createPageDependency } from "./actions/add-page-dependency"
-import { IDbQueryElemMatch } from "../db/common/query"
-import { getNode, getNodes, getNodesByType } from "../datastore"
+import { store } from "../../redux"
+import { IGatsbyNode } from "../../redux/types"
+import { IDbQueryElemMatch } from "../common/query"
+import { getNodes, getNodesByType } from "../"
 
 // Only list supported ops here. "CacheableFilterOp"
 export type FilterOp =  // TODO: merge with DbComparator ?
@@ -62,87 +61,6 @@ export interface IFilterCache {
   }
 }
 export type FiltersCache = Map<FilterCacheKey, IFilterCache>
-
-/**
- * Determine if node has changed.
- */
-export const hasNodeChanged = (id: string, digest: string): boolean => {
-  const node = getNode(id)
-  if (!node) {
-    return true
-  } else {
-    return node.internal.contentDigest !== digest
-  }
-}
-
-/**
- * Get node and save path dependency.
- */
-export const getNodeAndSavePathDependency = (
-  id: string,
-  path: string
-): IGatsbyNode | undefined => {
-  const node = getNode(id)
-
-  if (!node) {
-    console.error(
-      `getNodeAndSavePathDependency failed for node id: ${id} as it was not found in cache`
-    )
-    return undefined
-  }
-
-  createPageDependency({ path, nodeId: id })
-  return node
-}
-
-type Resolver = (node: IGatsbyNode) => Promise<any> // TODO
-
-export const saveResolvedNodes = async (
-  nodeTypeNames: Array<string>,
-  resolver: Resolver
-): Promise<void> => {
-  for (const typeName of nodeTypeNames) {
-    const nodes = getNodesByType(typeName)
-    if (!nodes || !nodes.length) continue
-
-    const resolvedNodes = new Map()
-    for (const node of nodes) {
-      const resolved = await resolver(node)
-      resolvedNodes.set(node.id, resolved)
-    }
-    store.dispatch({
-      type: `SET_RESOLVED_NODES`,
-      payload: {
-        key: typeName,
-        nodes: resolvedNodes,
-      },
-    })
-  }
-}
-
-/**
- * Get node and save path dependency.
- */
-export const getResolvedNode = (
-  typeName: string,
-  id: string
-): IGatsbyNode | null => {
-  const { resolvedNodesCache } = store.getState()
-
-  const node = getNode(id)
-
-  if (!node || node.internal.type !== typeName) {
-    return null
-  }
-
-  const resolvedNodes = resolvedNodesCache.get(typeName)
-
-  if (resolvedNodes) {
-    node.__gatsby_resolved = resolvedNodes.get(id)
-  }
-
-  return node
-}
 
 export function postIndexingMetaSetup(
   filterCache: IFilterCache,
