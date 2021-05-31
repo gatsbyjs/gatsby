@@ -88,8 +88,8 @@ describe(`processNodeManifests() warnings`, () => {
     await processNodeManifests()
 
     expect(reporter.error).toBeCalled()
-    expect(reporter.error.mock.results[0].value.id).toEqual(
-      foundPageByToLogIds.none
+    expect(reporter.error).toBeCalledWith(
+      expect.objectContaining({ id: foundPageByToLogIds.none })
     )
   })
 
