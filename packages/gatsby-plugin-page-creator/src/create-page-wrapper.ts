@@ -27,12 +27,11 @@ export function createPage(
   graphql: CreatePagesArgs["graphql"],
   reporter: Reporter,
   ignore?: IPathIgnoreOptions | string | Array<string> | null,
-  slugifyOptions?: ISlugifyOptions,
-  includeYamlFiles?: boolean
+  slugifyOptions?: ISlugifyOptions
 ): void {
   // Filter out special components that shouldn't be made into
   // pages.
-  if (!validatePath(filePath, includeYamlFiles)) {
+  if (!ignore?.overrideDefaults && !validatePath(filePath)) {
     return
   }
 

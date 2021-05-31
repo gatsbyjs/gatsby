@@ -66,12 +66,11 @@ module.exports = {
 
 The plugin supports options to ignore files and to pass options to the [`slugify`](https://github.com/sindresorhus/slugify) instance that is used in the File System Route API to create slugs.
 
-| Option           | Type                                                 | Description                                                                                                                                                  | Required |
-| ---------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
-| path             | `string`                                             | Any file that lives inside this directory will be expected to export a React component to generate a page                                                    | true     |
-| ignore           | `IPathIgnoreOptions ∣ string ∣ Array<string> ∣ null` | Ignore certain files inside the directory specified with `path`                                                                                              | false    |
-| slugify          | `ISlugifyOptions`                                    | Pass [options](https://github.com/sindresorhus/slugify#options) to the `slugify` instance that is used inside the File System Route API to generate the slug | false    |
-| includeYamlFiles | `boolean`                                            | Include YAML files                                                                                                                                           | false    |
+| Option  | Type                                                 | Description                                                                                                                                                  | Required |
+| ------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| path    | `string`                                             | Any file that lives inside this directory will be expected to export a React component to generate a page                                                    | true     |
+| ignore  | `IPathIgnoreOptions ∣ string ∣ Array<string> ∣ null` | Ignore certain files inside the directory specified with `path`                                                                                              | false    |
+| slugify | `ISlugifyOptions`                                    | Pass [options](https://github.com/sindresorhus/slugify#options) to the `slugify` instance that is used inside the File System Route API to generate the slug | false    |
 
 ### Ignoring Specific Files
 
