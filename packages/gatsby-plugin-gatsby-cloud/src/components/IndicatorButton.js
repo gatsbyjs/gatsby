@@ -111,7 +111,6 @@ const IndicatorButton = ({
     <>
       <div
         data-gatsby-preview-indicator="button"
-        data-testid={`${testId}-button`}
         data-gatsby-preview-indicator-active-button={`${active}`}
         data-gatsby-preview-indicator-hoverable={
           active && !isFirstButton ? `true` : `false`
@@ -119,6 +118,7 @@ const IndicatorButton = ({
         style={{ marginTop: marginTop }}
       >
         <div
+          data-testid={`${testId}-button`}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
           onClick={onClick}

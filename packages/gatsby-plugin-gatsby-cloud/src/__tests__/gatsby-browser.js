@@ -11,6 +11,10 @@ import { server } from "./mocks/server"
 const createUrl = path => `https://test.com/${path}`
 const copyLinkMessage = `Copy link`
 const infoButtonMessage = `Preview updated`
+const errorLogMessage = `View logs`
+const newPreviewMessage = `New preview available`
+const initialStateMessage = `Fetching preview info...`
+const buildingPreviewMessage = `Building a new preview`
 
 process.env.GATSBY_PREVIEW_AUTH_TOKEN = `token`
 
@@ -39,6 +43,40 @@ describe(`Preview status indicator`, () => {
       await waitFor(() => {
         expect(screen.getByText(text, { exact: false })).toBeInTheDocument()
       })
+    }
+  }
+
+  const assertTrackEventGetsCalled = async ({
+    text,
+    route,
+    action,
+    testId,
+  }) => {
+    process.env.GATSBY_PREVIEW_API_URL = createUrl(route)
+    process.env.GATSBY_TELEMETRY_API = `http://test.com/events`
+    let component
+
+    jest.useFakeTimers()
+
+    await act(async () => {
+      render(<Indicator />)
+    })
+
+    await waitFor(() => {
+      if (testId) {
+        component = screen.getByTestId(testId)
+      } else {
+        component = screen.getByText(text, { exact: false })
+      }
+    })
+
+    if (action) {
+      userEvent[action](component)
+      // Initial poll fetch, initial load trackEvent, and trackEvent after action
+      expect(window.fetch.mock.calls.length).toBe(3)
+    } else {
+      // Initial poll fetch for build data and then trackEvent fetch call
+      expect(window.fetch.mock.calls.length).toBe(2)
     }
   }
 
@@ -122,11 +160,56 @@ describe(`Preview status indicator`, () => {
   })
 
   describe(`Indicator`, () => {
+    describe(`trackEvent`, () => {
+      it(`should trackEvent after indicator's initial poll`, async () => {
+        await assertTrackEventGetsCalled({
+          route: `success`,
+          text: newPreviewMessage,
+        })
+      })
+
+      it(`should trackEvent after error logs are opened`, async () => {
+        window.open = jest.fn()
+
+        await assertTrackEventGetsCalled({
+          route: `error`,
+          text: errorLogMessage,
+          action: `click`,
+        })
+      })
+
+      it(`should trackEvent after copy link is clicked`, async () => {
+        navigator.clipboard = { writeText: jest.fn() }
+
+        await assertTrackEventGetsCalled({
+          route: `uptodate`,
+          text: copyLinkMessage,
+          action: `click`,
+        })
+      })
+
+      it(`should trackEvent after info button is hovered over`, async () => {
+        await assertTrackEventGetsCalled({
+          route: `uptodate`,
+          testId: `info-button`,
+          action: `hover`,
+        })
+      })
+
+      it(`should trackEvent after link button is hovered over`, async () => {
+        await assertTrackEventGetsCalled({
+          route: `uptodate`,
+          testId: `link-button`,
+          action: `hover`,
+        })
+      })
+    })
+
     describe(`Gatsby Button`, () => {
       it(`should show a more recent succesful build when available`, async () => {
         await assertTooltipText({
           route: `success`,
-          text: `New preview available`,
+          text: newPreviewMessage,
           matcherType: `get`,
         })
       })
@@ -134,7 +217,7 @@ describe(`Preview status indicator`, () => {
       it(`should show an error message when most recent build fails`, async () => {
         await assertTooltipText({
           route: `error`,
-          text: `Preview error`,
+          text: errorLogMessage,
           matcherType: `get`,
         })
       })
@@ -142,7 +225,7 @@ describe(`Preview status indicator`, () => {
       it(`should show a preview building message when most recent build is building`, async () => {
         await assertTooltipText({
           route: `building`,
-          text: `Building a new preview`,
+          text: buildingPreviewMessage,
           matcherType: `get`,
         })
       })
@@ -150,7 +233,7 @@ describe(`Preview status indicator`, () => {
       it(`should have loading state if no build data has been fetched`, async () => {
         await assertTooltipText({
           route: `fetching`,
-          text: `Fetching preview info...`,
+          text: initialStateMessage,
           matcherType: `get`,
         })
       })
@@ -158,7 +241,7 @@ describe(`Preview status indicator`, () => {
       it(`should have no tooltip when preview is up to date`, async () => {
         await assertTooltipText({
           route: `uptodate`,
-          text: `Fetching preview info...`,
+          text: initialStateMessage,
           matcherType: `query`,
         })
       })
@@ -176,7 +259,9 @@ describe(`Preview status indicator`, () => {
         })
 
         await waitFor(() => {
-          gatsbyButtonTooltip = screen.getByText(`View logs`, { exact: false })
+          gatsbyButtonTooltip = screen.getByText(errorLogMessage, {
+            exact: false,
+          })
         })
 
         userEvent.click(gatsbyButtonTooltip)
