@@ -12,13 +12,8 @@ const {
 } = require(`graphql`)
 const invariant = require(`invariant`)
 const reporter = require(`gatsby-cli/lib/reporter`)
-import {
-  getNode,
-  getNodes,
-  getNodesByType,
-  getTypes,
-  saveResolvedNodes,
-} from "../redux/nodes"
+import { saveResolvedNodes } from "../redux/nodes"
+import { getNode, getNodes, getNodesByType, getTypes } from "../datastore"
 import { runFastFiltersAndSort } from "../redux/run-fast-filters"
 
 type TypeOrTypeName = string | GraphQLOutputType

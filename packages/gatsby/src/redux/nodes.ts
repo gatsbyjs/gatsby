@@ -2,7 +2,7 @@ import { store } from "./"
 import { IGatsbyNode } from "./types"
 import { createPageDependency } from "./actions/add-page-dependency"
 import { IDbQueryElemMatch } from "../db/common/query"
-import { getDataStore } from "../datastore"
+import { getNode, getNodes, getNodesByType } from "../datastore"
 
 // Only list supported ops here. "CacheableFilterOp"
 export type FilterOp =  // TODO: merge with DbComparator ?
@@ -64,32 +64,10 @@ export interface IFilterCache {
 export type FiltersCache = Map<FilterCacheKey, IFilterCache>
 
 /**
- * Get all nodes from redux store.
- */
-export const getNodes = (): Array<IGatsbyNode> => getDataStore().getNodes()
-
-/**
- * Get node by id from store.
- */
-export const getNode = (id: string): IGatsbyNode | undefined =>
-  getDataStore().getNode(id)
-
-/**
- * Get all nodes of type from redux store.
- */
-export const getNodesByType = (type: string): Array<IGatsbyNode> =>
-  getDataStore().getNodesByType(type)
-
-/**
- * Get all type names from redux store.
- */
-export const getTypes = (): Array<string> => getDataStore().getTypes()
-
-/**
  * Determine if node has changed.
  */
 export const hasNodeChanged = (id: string, digest: string): boolean => {
-  const node = getDataStore().getNode(id)
+  const node = getNode(id)
   if (!node) {
     return true
   } else {
@@ -124,7 +102,7 @@ export const saveResolvedNodes = async (
   resolver: Resolver
 ): Promise<void> => {
   for (const typeName of nodeTypeNames) {
-    const nodes = getDataStore().getNodesByType(typeName)
+    const nodes = getNodesByType(typeName)
     if (!nodes || !nodes.length) continue
 
     const resolvedNodes = new Map()

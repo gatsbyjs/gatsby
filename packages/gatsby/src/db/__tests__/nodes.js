@@ -1,6 +1,6 @@
 const { actions } = require(`../../redux/actions`)
 const { store } = require(`../../redux`)
-const { getNode, getNodes } = require(`../../redux/nodes`)
+const { getNode, getNodes } = require(`../../datastore`)
 const { getDataStore } = require(`../../datastore`)
 
 const report = require(`gatsby-cli/lib/reporter`)

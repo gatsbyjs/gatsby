@@ -23,12 +23,8 @@ import {
   buildScalarType,
 } from "../schema/types/type-builders"
 const { emitter, store } = require(`../redux`)
-const {
-  getNodes,
-  getNode,
-  getNodesByType,
-  getNodeAndSavePathDependency,
-} = require(`../redux/nodes`)
+const { getNodes, getNode, getNodesByType } = require(`../datastore`)
+const { getNodeAndSavePathDependency } = require(`../redux/nodes`)
 const { getPublicPath } = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)

@@ -3,8 +3,7 @@ const {
   applyFastFilters,
 } = require(`../run-fast-filters`)
 const { store } = require(`../index`)
-const { getDataStore } = require(`../../datastore`)
-const { getNode } = require(`../nodes`)
+const { getDataStore, getNode } = require(`../../datastore`)
 const { createDbQueriesFromObject } = require(`../../db/common/query`)
 const { actions } = require(`../actions`)
 const {
