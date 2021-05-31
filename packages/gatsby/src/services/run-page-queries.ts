@@ -28,10 +28,15 @@ export async function runPageQueries({
   }
   const state = store.getState()
 
-  const activity = reporter.createProgress(pageQueryIds.length, 0, {
-    id: `page-query-running`,
-    parentSpan,
-  })
+  const activity = reporter.createProgress(
+    `run page queries ${process.env.JEST_WORKER_ID || `main`}`,
+    pageQueryIds.length,
+    0,
+    {
+      id: `page-query-running`,
+      parentSpan,
+    }
+  )
 
   activity.start()
 

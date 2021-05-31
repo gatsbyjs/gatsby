@@ -3,6 +3,7 @@ import { runStaticQueries, runPageQueries } from "../../services"
 import { store } from "../../redux"
 
 import { GraphQLRunner } from "../../query/graphql-runner"
+import { ready } from "./shared-db"
 
 export async function runQueries(queryIds: IGroupedQueryIds): Promise<void> {
   // console.log(`run queries ${process.env.JEST_WORKER_ID || `main`}`, queryIds)
@@ -25,4 +26,6 @@ export async function runQueries(queryIds: IGroupedQueryIds): Promise<void> {
     // parentSpan: buildSpan,
     store,
   })
+
+  await ready()
 }

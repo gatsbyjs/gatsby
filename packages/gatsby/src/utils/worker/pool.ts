@@ -5,6 +5,9 @@ import {
   setProgram,
   setInferenceMetadata,
   setExtractedQueries,
+  dispatchActionFromWorkers,
+  initMessaging,
+  // applyDataDependencies,
 } from "./shared-db"
 import reporter from "gatsby-cli/lib/reporter"
 
@@ -25,6 +28,7 @@ export const create = (): IGatsbyWorkerPool => {
     forkOptions: {
       silent: false,
     },
+    maxRetries: 1,
     computeWorkerKey(method, ...args): string | null {
       if (
         (method === `buildSchema` ||
@@ -45,6 +49,8 @@ export const create = (): IGatsbyWorkerPool => {
       return null
     },
   }) as IGatsbyWorkerPool
+
+  initMessaging(numWorkers)
 
   // console.log(`[warmup call] main`)
   runInAllWorkers(workerId => worker.warmup({ workerId }))
@@ -113,7 +119,7 @@ export async function setExtractedQueriesInWorkers(
   }
 }
 
-const maxBatchSize = 1
+const maxBatchSize = 2
 
 function initBatch(): IGroupedQueryIds {
   return {
@@ -160,4 +166,6 @@ export async function runQueriesInWorkers(
   }
 
   await Promise.all(promises)
+
+  dispatchActionFromWorkers()
 }

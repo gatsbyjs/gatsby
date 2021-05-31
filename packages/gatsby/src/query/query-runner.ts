@@ -90,6 +90,9 @@ async function startQueryJob(
   queryJob: IQueryJob,
   parentSpan: Span | undefined
 ): Promise<ExecutionResult> {
+  console.log(
+    `run query "${queryJob.id}" in ${process.env.JEST_WORKER_ID || `main`}`
+  )
   let isPending = true
 
   // Print out warning when query takes too long
