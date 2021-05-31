@@ -68,7 +68,7 @@ const babelOptions = {
 module.exports = require("babel-jest").default.createTransformer(babelOptions)
 ```
 
-> Note: if you're using Jest 26.6.3 or below, `module.exports` has to be changed to
+> **Note:** If you're using Jest 26.6.3 or below, the last line has to be changed to
 > `module.exports = require("babel-jest").createTransformer(babelOptions)`
 
 - The next option is `moduleNameMapper`. This
