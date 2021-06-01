@@ -120,6 +120,7 @@ const refetcher = async (
 }
 
 let startedPolling = false
+let firstCompilationDone
 
 /**
  * Starts constantly refetching the latest WordPress changes
@@ -140,11 +141,10 @@ const startPollingForContentUpdates = async helpers => {
 
   const msRefetchInterval = develop.nodeUpdateInterval
 
-  let startedRefetching
-
   helpers.emitter.on(`COMPILATION_DONE`, () => {
-    if (!startedRefetching) {
-      startedRefetching = true
+    if (!firstCompilationDone) {
+      console.log(`----> compilation done`)
+      firstCompilationDone = true
 
       setTimeout(() => {
         if (verbose) {
