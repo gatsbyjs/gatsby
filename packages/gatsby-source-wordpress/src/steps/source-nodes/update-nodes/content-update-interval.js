@@ -134,6 +134,12 @@ const startPollingForContentUpdates = async helpers => {
   const msRefetchInterval = develop.nodeUpdateInterval
 
   helpers.emitter.on(`COMPILATION_DONE`, () => {
+    /**
+     * we only want to start our refetcher helper 1 time after the first COMPILATION_DONE event.
+     * This event happens when the dev server is ready.
+     * onCreateDevServer (the node API we're hooking into) is called before the dev server is ready.
+     * Running our logic at that point is problematic because we could end up triggering the WEBHOOK_RECEIVED event before the dev server is ready and this can cause Gatsby to throw errors.
+     */
     if (!firstCompilationDone) {
       firstCompilationDone = true
 
