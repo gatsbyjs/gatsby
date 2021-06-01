@@ -23,6 +23,8 @@ export interface IDataStore {
   getTypes(): Array<string>
   countNodes(typeName?: string): number
   ready(): Promise<void>
+  iterateNodes(): IGatsbyIterable<IGatsbyNode>
+  iterateNodesByType(type: string): IGatsbyIterable<IGatsbyNode>
 
   /** @deprecated */
   getNodes(): Array<IGatsbyNode>
