@@ -49,7 +49,7 @@ const failedIcon = (
 const waitForTrackEventToFire = ms =>
   new Promise(resolve => setTimeout(resolve, ms || 50))
 
-const newPreviewAvailableClick = ({
+const newPreviewAvailableClick = async ({
   isOnPrettyUrl,
   sitePrefix,
   orgId,
@@ -68,6 +68,8 @@ const newPreviewAvailableClick = ({
     name: `new preview`,
   })
 
+  await waitForTrackEventToFire(75)
+
   if (isOnPrettyUrl || window.location.hostname === `localhost`) {
     window.location.reload()
   } else {
@@ -77,7 +79,7 @@ const newPreviewAvailableClick = ({
   }
 }
 
-const viewLogsClick = async ({ orgId, siteId, buildId, errorBuildId }) => {
+const viewLogsClick = ({ orgId, siteId, buildId, errorBuildId }) => {
   const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/builds/${errorBuildId}/details`
   const returnTo = encodeURIComponent(pathToBuildLogs)
 
@@ -88,8 +90,6 @@ const viewLogsClick = async ({ orgId, siteId, buildId, errorBuildId }) => {
     buildId,
     name: `error logs`,
   })
-
-  await waitForTrackEventToFire(100)
 
   window.open(`${pathToBuildLogs}?returnTo=${returnTo}`)
 }
