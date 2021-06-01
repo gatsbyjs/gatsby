@@ -2,9 +2,9 @@
 title: Create and Deploy Your First Gatsby Site
 ---
 
-import { Announcement, Notification } from 'gatsby-interface'
+import { Announcement, Notification, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
-import { MdInfo } from 'react-icons/md'
+import { MdInfo, MdArrowForward } from 'react-icons/md'
 
 <Notification
   Icon={MdInfo}
@@ -304,10 +304,6 @@ First, you write the code for your Gatsby site from your computer. When you're r
 
 </Collapsible>
 
-### What's coming next?
-
-Now that you have a default Gatsby site up and running, it's time to make it your own. In the next section, you'll learn how to use React to customize the design and contents of your site.
-
 <Announcement style={{marginBottom: "1.5rem"}}>
 
 **Share Your Feedback!**
@@ -317,3 +313,15 @@ Our goal is for this Tutorial to be helpful and easy to follow. We'd love to hea
 Use the "Was this doc helpful to you?" form at the bottom of this page to let us know what worked well and what we can improve.
 
 </Announcement>
+
+### What's coming next?
+
+Now that you have a default Gatsby site up and running, it's time to make it your own. In Part 2 of the Tutorial, you'll learn how to use React to customize the design and contents of your site.
+
+<LinkButton
+  to="/docs/tutorial/part-2"
+  rightIcon={<MdArrowForward />}
+  variant="SECONDARY"
+>
+  Continue to Part 2
+</LinkButton>

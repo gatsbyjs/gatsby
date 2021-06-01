@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-utils",
-  "version": "1.7.0-next.0",
+  "version": "1.7.0-next.1",
   "description": "Gatsby utils that help creating plugins",
   "main": "dist/index.js",
   "scripts": {
@@ -24,9 +24,9 @@
     "joi": "^17.2.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^1.7.0-next.0",
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "babel-preset-gatsby-package": "^1.7.0-next.1",
     "cross-env": "^7.0.3",
     "rimraf": "^3.0.2",
     "typescript": "^4.1.5"

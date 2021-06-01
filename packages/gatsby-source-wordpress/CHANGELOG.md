@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.7.0-next.0...gatsby-source-wordpress@5.7.0-next.1) (2021-05-31)
+
+### Features
+
+- **gatsby-source-wordpress:** auto-alias any field named `fields` to prevent conflicts with Gatsby core ([#31526](https://github.com/gatsbyjs/gatsby/issues/31526)) ([8bdb7f5](https://github.com/gatsbyjs/gatsby/commit/8bdb7f56a69ca7480a8887a650d7d5f7254dbbc1))
+- **gatsby-source-wordpress:** Fix false positive error if the URL and the responsePath are the same ([#31612](https://github.com/gatsbyjs/gatsby/issues/31612)) ([cca71cf](https://github.com/gatsbyjs/gatsby/commit/cca71cfb32b295e6feeed19a4103f27e3aeed2c0))
+
 # [5.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.6.0-next.2...gatsby-source-wordpress@5.7.0-next.0) (2021-05-21)
 
 **Note:** Version bump only for package gatsby-source-wordpress

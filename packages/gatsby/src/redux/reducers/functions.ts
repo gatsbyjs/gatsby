@@ -1,7 +1,7 @@
 import { IGatsbyState, ISetSiteFunctions } from "../types"
 
 export const functionsReducer = (
-  state: IGatsbyState["functions"] = new Map(),
+  state: IGatsbyState["functions"] = [],
   action: ISetSiteFunctions
 ): IGatsbyState["functions"] => {
   switch (action.type) {
