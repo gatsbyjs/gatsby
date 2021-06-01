@@ -47,8 +47,7 @@ export function readFromCache(): ICachedReduxState {
 
   const nodes: Array<[string, IGatsbyNode]> = [].concat(...nodesChunks)
 
-  // Note: using GATSBY_EXPERIMENTAL_LMDB_STORE env var directly (vs. isLmdbStore()) to avoid cycles in imports
-  if (!nodesChunks.length && !process.env.GATSBY_EXPERIMENTAL_LMDB_STORE) {
+  if (!nodesChunks.length) {
     report.info(
       `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
     )
@@ -120,6 +119,27 @@ function prepareCacheFolder(
   contents.pages = pagesMap
 
   if (nodesMap) {
+    if (nodesMap.size === 0 && process.env.GATSBY_EXPERIMENTAL_LMDB_STORE) {
+      // Nodes are actually stored in LMDB.
+      //  But we need at least one node in redux state to workaround the warning above:
+      //  "Cache exists but contains no nodes..." (when loading cache).
+      // Sadly, cannot rely on GATSBY_EXPERIMENTAL_LMDB_STORE env variable at cache load time
+      //  because it is not initialized at this point (when set via flags in config)
+      const dummyNode: IGatsbyNode = {
+        id: `dummy-node-id`,
+        parent: ``,
+        children: [],
+        internal: {
+          type: `DummyNode`,
+          contentDigest: `dummy-node`,
+          counter: 0,
+          owner: ``,
+        },
+        __gatsby_resolved: {},
+        fields: [],
+      }
+      nodesMap.set(dummyNode.id, dummyNode)
+    }
     // Now store the nodes separately, chunk size determined by a heuristic
     const values: Array<[string, IGatsbyNode]> = [...nodesMap.entries()]
     const chunkSize = guessSafeChunkSize(values)
