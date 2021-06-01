@@ -1,4 +1,3 @@
-import { INodeManifest } from "./../../../gatsby/src/redux/types"
 import { stripIndent, stripIndents } from "common-tags"
 import { IOptionalGraphQLInfoContext, Level, Type } from "./types"
 
@@ -9,7 +8,11 @@ const optionalGraphQLInfo = (context: IOptionalGraphQLInfoContext): string =>
     context.plugin ? `\nPlugin: ${context.plugin}` : ``
   }`
 
-const getSharedNodeManifestWarning = (inputManifest: INodeManifest): string =>
+const getSharedNodeManifestWarning = (inputManifest: {
+  manifestId: string
+  node: { id: string }
+  pluginName: string
+}): string =>
   `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest() for node id "${inputManifest.node.id}" with a manifest id of "${inputManifest.manifestId}"`
 
 export enum ErrorCategory {
