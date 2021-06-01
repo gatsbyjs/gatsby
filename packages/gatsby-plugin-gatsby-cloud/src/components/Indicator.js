@@ -175,11 +175,10 @@ export default function Indicator({ children }) {
     isOnPrettyUrl,
     sitePrefix,
     createdAt,
-  } = buildInfo
+  } = buildInfo || {}
 
   return (
     <PreviewIndicator
-      buildInfo={buildInfo}
       gatsbyIndicatorButtonProps={{
         ...getGatsbyIndicatorButtonProps({
           status,

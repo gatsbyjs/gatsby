@@ -1,4 +1,4 @@
-const getLinkIndicatorButtonProps = ({ status, copyLinkClick, button }) => {
+const getLinkIndicatorButtonProps = ({ status, button }) => {
   switch (status) {
     case `SUCCESS`:
     case `ERROR`: {
@@ -11,7 +11,6 @@ const getLinkIndicatorButtonProps = ({ status, copyLinkClick, button }) => {
     default: {
       return {
         tooltipText: button?.tooltipText || `Copy link`,
-        onClick: copyLinkClick,
         overrideShowTooltip: button?.overrideShowTooltip,
         tooltipIcon: button?.tooltipIcon,
         active: true,
