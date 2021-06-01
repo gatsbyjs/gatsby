@@ -4,7 +4,7 @@
     "@babel/eslint-parser": "^7.13.8",
     "@babel/eslint-plugin": "^7.13.0",
     "@babel/node": "^7.14.2",
-    "@babel/plugin-transform-typescript": "^7.13.0",
+    "@babel/plugin-transform-typescript": "^7.14.4",
     "@babel/runtime": "^7.13.9",
     "@lerna/prompt": "3.18.5",
     "@types/babel__code-frame": "^7.0.2",
