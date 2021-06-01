@@ -312,17 +312,19 @@ export const sourcePreview = async (
     isPreview: true,
   })
 
-  const manifestId = node.databaseId + previewData.modified
+  if (`unstable_createNodeManifest` in actions) {
+    const manifestId = node.databaseId + previewData.modified
 
-  reporter.info(
-    formatLogMessage(
-      `Creating node manifest for ${node.id} with manifestId ${manifestId}`
+    reporter.info(
+      formatLogMessage(
+        `Creating node manifest for ${node.id} with manifestId ${manifestId}`
+      )
     )
-  )
-  actions.unstable_createNodeManifest({
-    manifestId,
-    node,
-  })
+    actions.unstable_createNodeManifest({
+      manifestId,
+      node,
+    })
+  }
 }
 
 /**
