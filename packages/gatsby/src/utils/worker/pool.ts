@@ -135,6 +135,16 @@ export async function runQueriesInWorkers(
   let currentBatchSize = 0
   let currentBatch = initBatch()
 
+  function getBatchLength(batch: IGroupedQueryIds): number {
+    return batch.pageQueryIds.length + batch.staticQueryIds.length
+  }
+
+  const activity = reporter.createProgress(
+    `run queries in workers`,
+    getBatchLength(queryIds)
+  )
+  activity.start()
+
   const promises: Array<Promise<void>> = []
 
   // console.log(`[runQueries call] main`)
@@ -144,7 +154,11 @@ export async function runQueriesInWorkers(
 
     currentBatchSize++
     if (currentBatchSize >= maxBatchSize) {
-      promises.push(pool.runQueries(currentBatch))
+      promises.push(
+        pool.runQueries(currentBatch).then(() => {
+          activity.tick(getBatchLength(currentBatch))
+        })
+      )
       currentBatch = initBatch()
       currentBatchSize = 0
     }
@@ -155,17 +169,27 @@ export async function runQueriesInWorkers(
 
     currentBatchSize++
     if (currentBatchSize >= maxBatchSize) {
-      promises.push(pool.runQueries(currentBatch))
+      promises.push(
+        pool.runQueries(currentBatch).then(() => {
+          activity.tick(getBatchLength(currentBatch))
+        })
+      )
       currentBatch = initBatch()
       currentBatchSize = 0
     }
   }
 
   if (currentBatchSize > 0) {
-    promises.push(pool.runQueries(currentBatch))
+    promises.push(
+      pool.runQueries(currentBatch).then(() => {
+        activity.tick(getBatchLength(currentBatch))
+      })
+    )
   }
 
   await Promise.all(promises)
+
+  activity.end()
 
   dispatchActionFromWorkers()
 }
