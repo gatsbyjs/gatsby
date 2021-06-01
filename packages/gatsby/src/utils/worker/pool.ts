@@ -119,7 +119,7 @@ export async function setExtractedQueriesInWorkers(
   }
 }
 
-const maxBatchSize = 2
+const maxBatchSize = 50
 
 function initBatch(): IGroupedQueryIds {
   return {
