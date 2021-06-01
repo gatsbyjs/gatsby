@@ -46,6 +46,9 @@ const failedIcon = (
   </svg>
 )
 
+const waitForTrackEventToFire = ms =>
+  new Promise(resolve => setTimeout(resolve, ms || 50))
+
 const newPreviewAvailableClick = ({
   isOnPrettyUrl,
   sitePrefix,
@@ -74,7 +77,7 @@ const newPreviewAvailableClick = ({
   }
 }
 
-const viewLogsClick = ({ orgId, siteId, buildId, errorBuildId }) => {
+const viewLogsClick = async ({ orgId, siteId, buildId, errorBuildId }) => {
   const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/builds/${errorBuildId}/details`
   const returnTo = encodeURIComponent(pathToBuildLogs)
 
@@ -85,6 +88,8 @@ const viewLogsClick = ({ orgId, siteId, buildId, errorBuildId }) => {
     buildId,
     name: `error logs`,
   })
+
+  await waitForTrackEventToFire(100)
 
   window.open(`${pathToBuildLogs}?returnTo=${returnTo}`)
 }
