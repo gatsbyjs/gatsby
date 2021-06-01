@@ -31,10 +31,10 @@
   "dependencies": {
     "ci-info": "2.0.0",
     "configstore": "^5.0.1",
-    "file-type": "^16.2.0",
+    "file-type": "^16.5.0",
     "fs-extra": "^8.1.0",
-    "node-object-hash": "^2.0.0",
-    "proper-lockfile": "^4.1.1",
+    "node-object-hash": "^2.3.3",
+    "proper-lockfile": "^4.1.2",
     "tmp": "^0.2.1",
     "xdg-basedir": "^4.0.0"
   },
