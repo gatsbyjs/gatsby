@@ -12,8 +12,8 @@
     "@prefresh/webpack": "^3.2.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "babel-preset-gatsby-package": "^1.7.0-next.1",
     "cross-env": "^7.0.3"

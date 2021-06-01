@@ -24,18 +24,18 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.12.3",
-    "@babel/plugin-proposal-class-properties": "^7.12.1",
-    "@babel/plugin-syntax-jsx": "^7.12.1",
-    "@babel/plugin-syntax-typescript": "^7.12.1",
-    "@babel/runtime": "^7.12.5",
+    "@babel/core": "^7.14.3",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-syntax-jsx": "^7.12.13",
+    "@babel/plugin-syntax-typescript": "^7.12.13",
+    "@babel/runtime": "^7.14.0",
     "execa": "^5.0.0",
     "graphql": "^15.5.0",
     "jscodeshift": "^0.11.0",
     "recast": "^0.20.4"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
+    "@babel/cli": "^7.14.3",
     "babel-preset-gatsby-package": "^1.7.0-next.1",
     "cross-env": "^7.0.3"
   },
