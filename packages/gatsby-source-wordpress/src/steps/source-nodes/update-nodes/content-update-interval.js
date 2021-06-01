@@ -137,6 +137,7 @@ const startPollingForContentUpdates = async helpers => {
     if (!firstCompilationDone) {
       firstCompilationDone = true
 
+      // wait a second so that terminal output is more smooth
       setTimeout(() => {
         if (verbose) {
           helpers.reporter.log(``)
