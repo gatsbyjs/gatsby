@@ -8,6 +8,7 @@ const {
   GraphQLList,
   GraphQLObjectType,
   GraphQLInterfaceType,
+  GraphQLUnionType,
 } = require(`graphql`)
 const {
   ObjectTypeComposer,
@@ -404,6 +405,15 @@ const mergeTypes = ({
   ) {
     mergeFields({ typeComposer, fields: type.getFields() })
     type.getInterfaces().forEach(iface => typeComposer.addInterface(iface))
+  }
+
+  if (
+    type instanceof GraphQLInterfaceType ||
+    type instanceof InterfaceTypeComposer ||
+    type instanceof GraphQLUnionType ||
+    type instanceof UnionTypeComposer
+  ) {
+    mergeResolveType({ typeComposer, type })
   }
 
   if (isNamedTypeComposer(type)) {
@@ -1387,3 +1397,20 @@ const mergeFields = ({ typeComposer, fields }) =>
       typeComposer.setField(fieldName, fieldConfig)
     }
   })
+
+const mergeResolveType = ({ typeComposer, type }) => {
+  if (
+    (type instanceof GraphQLInterfaceType ||
+      type instanceof GraphQLUnionType) &&
+    type.resolveType
+  ) {
+    typeComposer.setResolveType(type.resolveType)
+  }
+  if (
+    (type instanceof InterfaceTypeComposer ||
+      type instanceof UnionTypeComposer) &&
+    type.getResolveType()
+  ) {
+    typeComposer.setResolveType(type.getResolveType())
+  }
+}
