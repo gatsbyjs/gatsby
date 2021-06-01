@@ -6,7 +6,7 @@ import _ from "lodash"
 import multer from "multer"
 import * as express from "express"
 import { getMatchPath, urlResolve } from "gatsby-core-utils"
-import { CreateDevServerArgs, ParentSpanPluginArgs } from "gatsby"
+import { CreateDevServerArgs, ParentSpanPluginArgs, BuildArgs } from "gatsby"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
 import chokidar from "chokidar"
@@ -139,11 +139,7 @@ const createWebpackConfig = async ({
   store,
   reporter,
 }): Promise<webpack.Configuration> => {
-  const compiledFunctionsDir = path.join(
-    siteDirectoryPath,
-    `.cache`,
-    `functions`
-  )
+  const compiledFunctionsDir = getCompiledFunctionsDir(siteDirectoryPath)
 
   const globs = createGlobArray(
     siteDirectoryPath,
@@ -309,6 +305,7 @@ const createWebpackConfig = async ({
             loader: `babel-loader`,
             options: {
               presets: [`@babel/typescript`],
+              plugins: [`babel-plugin-remove-graphql-queries`],
             },
           },
         },
@@ -319,7 +316,12 @@ const createWebpackConfig = async ({
 }
 
 let isFirstBuild = true
-export async function onPreBootstrap({
+
+function getCompiledFunctionsDir(siteDirectoryPath): string {
+  return path.join(siteDirectoryPath, `.cache`, `functions`)
+}
+
+async function compileFunctions({
   reporter,
   store,
 }: ParentSpanPluginArgs): Promise<void> {
@@ -330,12 +332,7 @@ export async function onPreBootstrap({
     program: { directory: siteDirectoryPath },
   } = store.getState()
 
-  reporter.verbose(`Attaching functions to development server`)
-  const compiledFunctionsDir = path.join(
-    siteDirectoryPath,
-    `.cache`,
-    `functions`
-  )
+  const compiledFunctionsDir = getCompiledFunctionsDir(siteDirectoryPath)
 
   await fs.ensureDir(compiledFunctionsDir)
   await fs.emptyDir(compiledFunctionsDir)
@@ -345,12 +342,6 @@ export async function onPreBootstrap({
     // the resolve/reject functions to our shared callback function
     // eslint-disable-next-line
     await new Promise<any>(async (resolve, reject) => {
-      const config = await createWebpackConfig({
-        siteDirectoryPath,
-        store,
-        reporter,
-      })
-
       function callback(err, stats): any {
         const rawMessages = stats.toJson({ moduleTrace: false })
         if (rawMessages.warnings.length > 0) {
@@ -383,6 +374,12 @@ export async function onPreBootstrap({
 
         return resolve(null)
       }
+
+      const config = await createWebpackConfig({
+        siteDirectoryPath,
+        store,
+        reporter,
+      })
 
       if (isProductionEnv) {
         webpack(config).run(callback)
@@ -438,22 +435,24 @@ export async function onPreBootstrap({
   activity.end()
 }
 
-export async function onCreateDevServer({
-  reporter,
-  app,
-  store,
-}: CreateDevServerArgs): Promise<void> {
+export async function onPostBuild(args: BuildArgs): Promise<void> {
+  await compileFunctions(args)
+}
+
+export async function onCreateDevServer(
+  args: CreateDevServerArgs
+): Promise<void> {
+  await compileFunctions(args)
+
+  const { reporter, app, store } = args
+
   reporter.verbose(`Attaching functions to development server`)
 
   const {
     program: { directory: siteDirectoryPath },
   } = store.getState()
 
-  const compiledFunctionsDir = path.join(
-    siteDirectoryPath,
-    `.cache`,
-    `functions`
-  )
+  const compiledFunctionsDir = getCompiledFunctionsDir(siteDirectoryPath)
 
   app.use(
     `/api/*`,

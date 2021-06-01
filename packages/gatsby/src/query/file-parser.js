@@ -62,7 +62,7 @@ function referencesGatsby(path, callee, calleeName) {
   if (callee.referencesImport(`gatsby`, ``)) {
     return true
   } else {
-    // This finds where userStaticQuery was declared and then checks
+    // This finds where useStaticQuery was declared and then checks
     // if it is a "require" and "gatsby" is the argument.
     const declaration = path.scope.getBinding(calleeName)
     if (
@@ -75,6 +75,14 @@ function referencesGatsby(path, callee, calleeName) {
       return false
     }
   }
+}
+
+function isFunctionQuery(path) {
+  const tag = path.node.tag
+  if (tag.name === `graphql`) {
+    return referencesGatsby(path, path.get(`tag`), tag.name)
+  }
+  return false
 }
 
 function isUseStaticQuery(path) {
@@ -212,7 +220,8 @@ async function findGraphQLTags(
 
         const extractStaticQuery = (
           taggedTemplateExpressPath,
-          isHook = false
+          isHook = false,
+          isFunction = false
         ) => {
           const { ast: gqlAst, text, hash, isGlobal } = getGraphQLTag(
             taggedTemplateExpressPath
@@ -247,6 +256,7 @@ async function findGraphQLTags(
             hash: hash,
             isStaticQuery: true,
             isHook,
+            isFunction,
             templateLoc,
           }
 
@@ -314,6 +324,16 @@ async function findGraphQLTags(
             return
           },
         })
+
+        // Look for queries in functions.
+        if (file.includes(`/api/`)) {
+          traverse(ast, {
+            TaggedTemplateExpression(templatePath) {
+              if (!isFunctionQuery(templatePath)) return
+              extractStaticQuery(templatePath, false, true)
+            },
+          })
+        }
 
         // Look for queries in useStaticQuery hooks.
         traverse(ast, {

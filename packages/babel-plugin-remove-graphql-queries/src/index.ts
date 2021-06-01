@@ -3,6 +3,7 @@
 import graphql from "gatsby/graphql"
 import { murmurhash } from "./murmur"
 import nodePath from "path"
+import fs from "fs"
 import { NodePath, PluginObj } from "@babel/core"
 import { slash } from "gatsby-core-utils"
 import { Binding } from "babel__traverse"
@@ -537,7 +538,26 @@ export default function ({ types: t }): PluginObj {
             }
 
             // Replace the query with the hash of the query.
-            path2.replaceWith(t.StringLiteral(queryHash))
+            const filename = state.file.opts.filename
+            if (filename.includes(`/src/api/`)) {
+              const json = fs.readFileSync(
+                `./public/page-data/sq/d/${queryHash}.json`,
+                {
+                  encoding: `utf-8`,
+                }
+              )
+              path2.replaceWith(
+                t.callExpression(
+                  t.memberExpression(
+                    t.identifier(`JSON`),
+                    t.identifier(`parse`)
+                  ),
+                  [t.StringLiteral(json)]
+                )
+              )
+            } else {
+              path2.replaceWith(t.StringLiteral(queryHash))
+            }
             return null
           },
         })

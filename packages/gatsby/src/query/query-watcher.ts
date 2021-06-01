@@ -16,7 +16,7 @@ import { slash } from "gatsby-core-utils"
 
 import { store, emitter } from "../redux/"
 import { actions } from "../redux/actions"
-import { IGatsbyStaticQueryComponents } from "../redux/types"
+import { IGatsbyStaticQueryComponents, IGatsbyFunction } from "../redux/types"
 import queryCompiler from "./query-compiler"
 import report from "gatsby-cli/lib/reporter"
 import { getGatsbyDependents } from "../utils/gatsby-dependents"
@@ -44,6 +44,7 @@ interface IQuery {
 
 interface IQuerySnapshot {
   components: Map<string, IComponent>
+  functions: Array<IGatsbyFunction>
   staticQueryComponents: Map<string, IGatsbyStaticQueryComponents>
 }
 
@@ -52,6 +53,7 @@ const getQueriesSnapshot = (): IQuerySnapshot => {
 
   const snapshot: IQuerySnapshot = {
     components: new Map<string, IComponent>(state.components),
+    functions: state.functions,
     staticQueryComponents: new Map<string, IGatsbyStaticQueryComponents>(
       state.staticQueryComponents
     ),
