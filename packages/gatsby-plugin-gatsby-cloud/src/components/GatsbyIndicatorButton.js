@@ -3,7 +3,7 @@ import React from "react"
 import trackEvent from "../utils/trackEvent"
 import IndicatorButton from "./IndicatorButton"
 
-const gatsbyIcon = (
+export const gatsbyIcon = (
   <svg
     width="24"
     height="24"
@@ -94,7 +94,7 @@ const viewLogsClick = ({ orgId, siteId, buildId, errorBuildId }) => {
   window.open(`${pathToBuildLogs}?returnTo=${returnTo}`)
 }
 
-const getButtonProps = ({
+export const getButtonProps = ({
   status,
   orgId,
   siteId,

@@ -2,6 +2,20 @@ import React, { useState, useEffect, useCallback, useRef } from "react"
 
 import getBuildInfo from "../utils/getBuildInfo"
 import trackEvent from "../utils/trackEvent"
+import IndicatorButton from "./IndicatorButton"
+import {
+  getButtonProps as getIndicatorButtonProps,
+  gatsbyIcon,
+  logsIcon,
+} from "./GatsbyIndicatorButton"
+import {
+  getButtonProps as getInfoIndicatorButtonProps,
+  infoIcon,
+} from "./InfoIndicatorButton"
+import {
+  getButtonProps as getLinkIndicatorButtonProps,
+  linkIcon,
+} from "./InfoIndicatorButton"
 import Style from "./Style"
 
 import GatsbyIndicatorButton from "./GatsbyIndicatorButton"
@@ -10,8 +24,13 @@ import InfoIndicatorButton from "./InfoIndicatorButton"
 
 const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL || 3000
 
-export function PreviewIndicator({ children, buildInfo }) {
-  console.log(`in the preview indicator`)
+export function PreviewIndicator({
+  children,
+  gatsbyIndicatorButtonProps,
+  linkIndicatorButtonProps,
+  infoIndicatorButtonProps,
+}) {
+  console.log(`testing the compile..., yes...`)
   return (
     <>
       <Style />
@@ -20,9 +39,27 @@ export function PreviewIndicator({ children, buildInfo }) {
         data-gatsby-preview-indicator="root"
         aria-live="assertive"
       >
-        <GatsbyIndicatorButton {...buildInfo} />
-        <LinkIndicatorButton {...buildInfo} />
-        <InfoIndicatorButton {...buildInfo} />
+        <IndicatorButton
+          testId="gatsby"
+          iconSvg={gatsbyIcon}
+          {...gatsbyIndicatorButtonProps}
+        />
+        {/* <GatsbyIndicatorButton {...buildInfo} />*/}
+        <IndicatorButton
+          testId={`link`}
+          iconSvg={linkIcon}
+          toolTipOffset={40}
+          {...linkIndicatorButtonProps}
+        />
+        />
+        {/* <LinkIndicatorButton {...buildInfo} />*/}
+        <IndicatorButton
+          testId="info"
+          iconSvg={infoIcon}
+          {...infoIndicatorButtonProps}
+          toolTipOffset={80}
+        />
+        {/* <InfoIndicatorButton {...buildInfo} />*/}
       </div>
       {children}
     </>
@@ -119,5 +156,54 @@ export default function Indicator({ children }) {
     }
   }, [])
 
-  return <PreviewIndicator buildInfo={buildInfo}>{children}</PreviewIndicator>
+  const {
+    status,
+    orgId,
+    siteId,
+    errorBuildId,
+    isOnPrettyUrl,
+    sitePrefix,
+    createdAt,
+  } = buildInfo
+
+  return (
+    <PreviewIndicator
+      buildInfo={buildInfo}
+      gatsbyIndicatorButtonProps={{
+        ...getIndicatorButtonProps({
+          status,
+          orgId,
+          siteId,
+          errorBuildId,
+          isOnPrettyUrl,
+          sitePrefix,
+        }),
+      }}
+      linkIndicatorButtonProps={{
+        ...getLinkIndicatorButtonProps({
+          status,
+          /**
+           * @todo replace this
+           */
+          copyLinkClick: () => console.log(`fake copy!!!!`),
+          /**
+           * @todo replace this
+           */
+          button: {
+            tooltipIcon: linkIcon,
+            tooltipText: `fake tt text`,
+            overrideShowTooltip: false,
+          },
+        }),
+      }}
+      infoIndicatorButtonProps={{
+        ...getInfoIndicatorButtonProps({
+          status,
+          createdAt,
+        }),
+      }}
+    >
+      {children}
+    </PreviewIndicator>
+  )
 }
