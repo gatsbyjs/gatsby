@@ -210,18 +210,6 @@ describe(`processNodeManifests() warnings`, () => {
     expect(reporter.error).not.toBeCalled()
     expect(logId).toEqual(foundPageByToLogIds[`filesystem-route-api`])
   })
-
-  it(`warnings helper throws in impossible foundPageBy state`, () => {
-    expect(() =>
-      warnAboutNodeManifestMappingProblems({
-        pagePath: undefined,
-        // @ts-ignore: intentionally doing the wrong thing here
-        inputManifest: null,
-        // @ts-ignore: intentionally doing the wrong thing here
-        foundPageBy: `nope`,
-      })
-    ).toThrow()
-  })
 })
 
 describe(`processNodeManifests`, () => {
