@@ -118,7 +118,7 @@ let firstCompilationDone = false
  * Starts constantly refetching the latest WordPress changes
  * so we can update Gatsby nodes when data changes
  */
-const startPollingForContentUpdates = async helpers => {
+const startPollingForContentUpdates = helpers => {
   if (
     startedPolling ||
     process.env.WP_DISABLE_POLLING ||
