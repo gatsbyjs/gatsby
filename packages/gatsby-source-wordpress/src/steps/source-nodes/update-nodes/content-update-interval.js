@@ -10,8 +10,9 @@ import { LAST_COMPLETED_SOURCE_TIME } from "../../../constants"
  * If there is, it calls the refresh webhook so that schema customization and source nodes run again.
  */
 const checkForNodeUpdates = async ({ cache, emitter }) => {
-  // if there's atleast 1 new action, pause polling,
-  // refresh Gatsby schema+nodes and continue on
+  // pause polling until we know wether or not there are new actions
+  // if there aren't any we will unpause below, if there are some we will unpause
+  // at the end of sourceNodes (triggered by WEBHOOK_RECEIVED below)
   store.dispatch.develop.pauseRefreshPolling()
 
   // get the last sourced time
