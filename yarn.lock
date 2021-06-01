@@ -22980,10 +22980,10 @@ remark-cli@^9.0.0:
     remark "^13.0.0"
     unified-args "^8.0.0"
 
-remark-custom-blocks@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/remark-custom-blocks/-/remark-custom-blocks-2.5.0.tgz#57cfb814b2c867fbd45a2e331582a1e402e0c4e5"
-  integrity sha512-FcCd5Boqn4XBXnlIvpy/9jyVTOZRg7unXv8m14FM4EM0qXLeSvxSReRfuoWmFWZwi0+MOf8bqEwJIBut0NYdJw==
+remark-custom-blocks@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/remark-custom-blocks/-/remark-custom-blocks-2.5.1.tgz#15c2067a9fc2afe71809a21a7719b45c12a7acec"
+  integrity sha512-4S4oHsBVvTteNDkqN7ZgdSZPSAwwMsPQkWRbsnj+a522EvU6qp5hQiCW0bBT3NQTl1iChLYe4v7eaqcbpiVfeA==
   dependencies:
     space-separated-tokens "^1.1.5"
 
