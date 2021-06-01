@@ -74,10 +74,10 @@ describe(`Preview status indicator`, () => {
       if (action) {
         userEvent[action](component)
         // Initial poll fetch, initial load trackEvent, and trackEvent after action
-        expect(window.fetch.mock.calls.length).toBe(3)
+        expect(window.fetch).toBeCalledTimes(3)
       } else {
         // Initial poll fetch for build data and then trackEvent fetch call
-        expect(window.fetch.mock.calls.length).toBe(2)
+        expect(window.fetch).toBeCalledTimes(2)
       }
     })
   }
