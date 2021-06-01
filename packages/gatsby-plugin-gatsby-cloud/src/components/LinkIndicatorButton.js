@@ -18,7 +18,7 @@ export const linkIcon = (
   </svg>
 )
 
-const successIcon = (
+export const successIcon = (
   <svg
     style={{ marginRight: `5px` }}
     width="11"

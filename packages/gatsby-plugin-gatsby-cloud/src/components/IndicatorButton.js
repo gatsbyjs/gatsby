@@ -121,7 +121,7 @@ const IndicatorButton = ({
           data-testid={`${testId}-button`}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
-          onClick={onClick}
+          onClick={active ? onClick : null}
         >
           {iconSvg}
           {showSpinner && (
