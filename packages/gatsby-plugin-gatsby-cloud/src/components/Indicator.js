@@ -2,19 +2,15 @@ import React, { useState, useEffect, useCallback, useRef } from "react"
 import getBuildInfo from "../utils/getBuildInfo"
 import trackEvent from "../utils/trackEvent"
 import IndicatorButton from "./IndicatorButton"
+import { getButtonProps as getIndicatorButtonProps } from "./GatsbyIndicatorButton"
+import { getButtonProps as getInfoIndicatorButtonProps } from "./InfoIndicatorButton"
+import { getButtonProps as getLinkIndicatorButtonProps } from "./LinkIndicatorButton"
 import {
-  getButtonProps as getIndicatorButtonProps,
   gatsbyIcon,
-} from "./GatsbyIndicatorButton"
-import {
-  getButtonProps as getInfoIndicatorButtonProps,
   infoIcon,
-} from "./InfoIndicatorButton"
-import {
-  getButtonProps as getLinkIndicatorButtonProps,
   linkIcon,
   successIcon,
-} from "./LinkIndicatorButton"
+} from "./icons"
 import Style from "./Style"
 
 const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL || 3000
