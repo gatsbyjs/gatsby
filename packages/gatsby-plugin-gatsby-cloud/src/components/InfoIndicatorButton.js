@@ -45,34 +45,3 @@ export const getButtonProps = ({ status, createdAt }) => {
     }
   }
 }
-
-export default function InfoIndicatorButton({
-  status,
-  createdAt,
-  buildId,
-  orgId,
-  siteId,
-}) {
-  const buttonProps = getButtonProps({ status, createdAt })
-
-  const trackHover = () => {
-    trackEvent({
-      eventType: `PREVIEW_INDICATOR_HOVER`,
-      orgId,
-      siteId,
-      buildId,
-      name: `info hover`,
-    })
-  }
-
-  return (
-    <IndicatorButton
-      testId="info"
-      iconSvg={infoIcon}
-      {...buttonProps}
-      // See IndicatorButtonTooltip for explanation
-      toolTipOffset={80}
-      onMouseOver={buttonProps.active && trackHover}
-    />
-  )
-}
