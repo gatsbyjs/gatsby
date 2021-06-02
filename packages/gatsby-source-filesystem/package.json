@@ -26,7 +26,7 @@
     "@babel/core": "^7.14.3",
     "babel-preset-gatsby-package": "^1.7.0-next.1",
     "cross-env": "^7.0.3",
-    "msw": "^0.25.0"
+    "msw": "^0.29.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#readme",
   "keywords": [
