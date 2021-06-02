@@ -434,7 +434,7 @@ describe(`redux db`, () => {
 
     persistedState = readState()
 
-    // With lmdb store we always restore a single dummy node to bypass
+    // With lmdb store we always persist a single dummy node to bypass
     //  "Cache exists but contains no nodes..." warning
     if (isLmdbStore()) {
       expect(persistedState.nodes?.size).toEqual(1)
