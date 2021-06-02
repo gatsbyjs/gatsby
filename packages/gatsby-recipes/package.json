@@ -62,7 +62,7 @@
     "unist-util-remove": "^2.0.0",
     "unist-util-visit": "^2.0.2",
     "uuid": "3.4.0",
-    "ws": "^7.3.0",
+    "ws": "^7.4.6",
     "xstate": "^4.9.1",
     "yoga-layout-prebuilt": "^1.9.6"
   },
