@@ -57,18 +57,7 @@ export class CacheFolderResolver {
             obj,
             `change issuer to gatsby package by cache-folder-resolver to fix pnp`,
             resolveContext,
-            (err, result) => {
-              if (err) {
-                return callback(err)
-              }
-
-              if (result) {
-                return callback(null, result)
-              }
-
-              // Skip alternatives
-              return callback(null, null)
-            }
+            callback
           )
         }
       )
