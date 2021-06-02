@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.6.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.6.1...gatsby@3.6.2) (2021-06-02)
+
+### Bug Fixes
+
+- **gatsby:** merge resolveType when merging abstract types ([#31710](https://github.com/gatsbyjs/gatsby/issues/31710)) ([#31723](https://github.com/gatsbyjs/gatsby/issues/31723)) ([f9ad35c](https://github.com/gatsbyjs/gatsby/commit/f9ad35c65122862ddb15713f81f3fb4cf5eae7b0))
+
 ## [3.6.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.6.0...gatsby@3.6.1) (2021-05-27)
 
 ### Bug Fixes
