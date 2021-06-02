@@ -1,6 +1,6 @@
 {
   "name": "create-gatsby",
-  "version": "1.7.0-next.1",
+  "version": "1.7.0-next.2",
   "main": "lib/index.js",
   "bin": "cli.js",
   "license": "MIT",
@@ -27,7 +27,7 @@
     "eslint": "^7.27.0",
     "execa": "^4.1.0",
     "fs-extra": "^9.1.0",
-    "gatsby-plugin-utils": "^1.7.0-next.1",
+    "gatsby-plugin-utils": "^1.7.0-next.2",
     "joi": "^17.4.0",
     "microbundle": "^0.13.1",
     "node-fetch": "^2.6.1",
