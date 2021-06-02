@@ -93,6 +93,7 @@ export const configureStore = (initialState: IGatsbyState) => {
       `SET_SITE_CONFIG`,
       `SET_SITE_FLATTENED_PLUGINS`,
       `CREATE_TYPES`,
+      `SET_RESOLVED_NODES`, // we wouldn't want it eventually - this is just for the spike
     ])
 
     const actionsToForward = new Set([
