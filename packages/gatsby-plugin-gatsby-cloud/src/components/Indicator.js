@@ -139,13 +139,6 @@ export default function Indicator({ children, stopPolling = false }) {
       }
     }
 
-    const baseBuildInfo = {
-      currentBuild,
-      latestBuild,
-      siteInfo,
-      isOnPrettyUrl,
-    }
-
     if (!trackedInitialLoad) {
       trackEvent({
         eventType: `PREVIEW_INDICATOR_LOADED`,
@@ -156,24 +149,13 @@ export default function Indicator({ children, stopPolling = false }) {
 
       trackedInitialLoad = true
     }
-    let status
-    let errorBuildId
 
-    if (currentBuild?.buildStatus === `BUILDING`) {
-      status = `BUILDING`
-    } else if (currentBuild?.buildStatus === `ERROR`) {
-      status = `ERROR`
-      errorBuildId = currentBuild?.id
-    } else if (buildId === currentBuild?.id) {
-      status = `UPTODATE`
-    } else if (
-      buildId !== latestBuild?.id &&
-      latestBuild?.buildStatus === `SUCCESS`
-    ) {
-      status = `SUCCESS`
-    }
-
-    setBuildInfo({ status, errorBuildId, ...baseBuildInfo })
+    setBuildInfo({
+      currentBuild,
+      latestBuild,
+      siteInfo,
+      isOnPrettyUrl,
+    })
 
     if (shouldPoll.current) {
       setTimeout(pollData, POLLING_INTERVAL)
@@ -194,7 +176,7 @@ export default function Indicator({ children, stopPolling = false }) {
     }
   }, [])
 
-  if (buildInfo?.status === `BUILDING`) {
+  if (buildInfo?.currentBuild?.buildStatus === `BUILDING`) {
     return (
       <PreviewIndicator>
         <GatsbyIndicatorButton
@@ -208,7 +190,7 @@ export default function Indicator({ children, stopPolling = false }) {
     )
   }
 
-  if (buildInfo?.status === `ERROR`) {
+  if (buildInfo?.currentBuild?.buildStatus === `ERROR`) {
     return (
       <PreviewIndicator>
         <GatsbyIndicatorButton
@@ -240,7 +222,6 @@ export default function Indicator({ children, stopPolling = false }) {
     )
     return (
       <PreviewIndicator>
-        {/** @todo do we need to pass an empty tooltip text here? */}
         <GatsbyIndicatorButton active={true} />
         <LinkIndicatorButton tooltipText={`Copy link`} active={true} />
         <InfoIndicatorButton
@@ -279,7 +260,7 @@ export default function Indicator({ children, stopPolling = false }) {
   return (
     <PreviewIndicator>
       <GatsbyIndicatorButton active={false} />
-      <LinkIndicatorButton active={true} />
+      <LinkIndicatorButton active={false} />
       <InfoIndicatorButton active={false} />
     </PreviewIndicator>
   )
