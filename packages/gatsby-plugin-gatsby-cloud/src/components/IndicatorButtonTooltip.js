@@ -13,9 +13,6 @@ const IndicatorButtonTooltip = ({
 }) => (
   <div
     onClick={onClick}
-    /**
-     * @todo auto calculate this based on button index (position)
-     */
     // toolTipOffset needs to be 40 * button possition (0 indexed) + 12
     // This will align the tooltip with its correct button
     // The first button is (40 * 0) + 12
