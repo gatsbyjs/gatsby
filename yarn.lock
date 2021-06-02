@@ -12785,6 +12785,15 @@ gatsby-design-tokens@^2.0.2:
   dependencies:
     hex2rgba "^0.0.1"
 
+gatsby-image@^3.7.0-next.1:
+  version "3.7.0-next.1"
+  resolved "https://registry.yarnpkg.com/gatsby-image/-/gatsby-image-3.7.0-next.1.tgz#ed473d4063252c1ed43670f899ec66f5def5c97c"
+  integrity sha512-6+sary6Oxsm5dZLTgn2Nh4c3j07Uf+3Vao1ij32BMjFIER+gAzPaT1/bYDvUXQAu9er3DUKJGeH90XRm5VjZWw==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    object-fit-images "^3.2.4"
+    prop-types "^15.7.2"
+
 gatsby-interface@^0.0.244:
   version "0.0.244"
   resolved "https://registry.yarnpkg.com/gatsby-interface/-/gatsby-interface-0.0.244.tgz#76d07099248f55be55b17d9577326a180fa1136d"
@@ -16202,11 +16211,6 @@ jest-matcher-utils@^26.6.2:
     jest-diff "^26.6.2"
     jest-get-type "^26.3.0"
     pretty-format "^26.6.2"
-
-jest-matchmedia-mock@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/jest-matchmedia-mock/-/jest-matchmedia-mock-1.1.0.tgz#eaae8c5d1dee4e4f7c59f8cb1b38b5d7ea842552"
-  integrity sha512-REnJRsOSCMpGAlkxmvVTqEBpregyFVi9MPEH3N83W1yLKzDdNehtCkcdDZduXq74PLtfI+11NyM4zKCK5ynV9g==
 
 jest-message-util@^22.4.0, jest-message-util@^22.4.3:
   version "22.4.3"
