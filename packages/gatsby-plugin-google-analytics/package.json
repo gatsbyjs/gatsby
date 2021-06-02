@@ -1,20 +1,21 @@
 {
   "name": "gatsby-plugin-google-analytics",
   "description": "Gatsby plugin to add google analytics onto a site",
-  "version": "3.7.0-next.0",
+  "version": "3.7.0-next.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
+    "@babel/runtime": "^7.14.0",
     "minimatch": "3.0.4",
     "web-vitals": "^1.1.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
     "@testing-library/react": "^9.5.0",
-    "babel-preset-gatsby-package": "^1.7.0-next.0",
+    "babel-preset-gatsby-package": "^1.7.0-next.1",
     "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics#readme",
