@@ -65,7 +65,7 @@ Gatsby cannot know about the types and fields without having documents of the gi
 
 ## Using images
 
-Image fields will have the image URL available under the `field.asset.url` key, but you can also use [gatsby-image](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image) for a smooth experience. It's a React component that enables responsive images and advanced image loading techniques. It works great with this source plugin, without requiring any additional build steps.
+Image fields will have the image URL available under the `field.asset.url` key, but you can also use [gatsby-plugin-image](/plugins/gatsby-plugin-image/) for a smooth experience. It's a React component that enables responsive images and advanced image loading techniques. It works great with this source plugin, without requiring any additional build steps.
 
 There are two types of responsive images supported; _fixed_ and _fluid_. To decide between the two, ask yourself: "do I know the exact size this image will be?" If yes, you'll want to use _fixed_. If no and its width and/or height need to vary depending on the size of the screen, then you'll want to use _fluid_.
 
@@ -73,12 +73,12 @@ There are two types of responsive images supported; _fixed_ and _fluid_. To deci
 
 ```jsx
 import React from "react"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 
 const Person = ({ data }) => (
   <article>
     <h2>{data.sanityPerson.name}</h2>
-    <Img fluid={data.sanityPerson.profileImage.asset.fluid} />
+    <GatsbyImage fluid={data.sanityPerson.profileImage.asset.gatsbyImageData} />
   </article>
 )
 
@@ -90,9 +90,7 @@ export const query = graphql`
       name
       profileImage {
         asset {
-          fluid(maxWidth: 700) {
-            ...GatsbySanityImageFluid
-          }
+          gatsbyImageData(fit: CLIP, placeholder: BLURRED)
         }
       }
     }
@@ -104,12 +102,12 @@ export const query = graphql`
 
 ```jsx
 import React from "react"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 
 const Person = ({ data }) => (
   <article>
     <h2>{data.sanityPerson.name}</h2>
-    <Img fixed={data.sanityPerson.profileImage.asset.fixed} />
+    <Img fixed={data.sanityPerson.profileImage.asset.gatsbyImageData} />
   </article>
 )
 
@@ -121,28 +119,13 @@ export const query = graphql`
       name
       profileImage {
         asset {
-          fixed(width: 400) {
-            ...GatsbySanityImageFixed
-          }
+          gatsbyImageData(fit: FIXED, placeholder: BLURRED, width: 400)
         }
       }
     }
   }
 `
 ```
-
-### Available fragments
-
-These are the fragments available on image assets, which allows lookup of the fields required by gatsby-image in various modes:
-
-- `GatsbySanityImageFixed`
-- `GatsbySanityImageFixed_noBase64`
-- `GatsbySanityImageFixed_withWebp`
-- `GatsbySanityImageFixed_withWebp_noBase64`
-- `GatsbySanityImageFluid`
-- `GatsbySanityImageFluid_noBase64`
-- `GatsbySanityImageFluid_withWebp`
-- `GatsbySanityImageFluid_withWebp_noBase64`
 
 ## Overlaying drafts
 

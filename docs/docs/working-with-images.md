@@ -6,7 +6,7 @@ _This document uses the deprecated image plugin. Please check out how to work wi
 
 Optimizing images is a challenge on any website. To utilize best practices for performance across devices, you need multiple sizes and resolutions of each image. Luckily, Gatsby has several useful [plugins](/docs/plugins/) that work together to do that for images on [page components](/docs/conceptual/building-with-components/#page-components).
 
-The recommended approach is to use [GraphQL queries](/docs/conceptual/graphql-concepts/) to get images of the optimal size or resolution, then, display them with the [`gatsby-image`](/plugins/gatsby-image/) component.
+The recommended approach is to use [GraphQL queries](/docs/conceptual/graphql-concepts/) to get images of the optimal size or resolution, then, display them with the [`gatsby-plugin-image`](/plugins/gatsby-plugin-image/) component.
 
 ## Query images with GraphQL
 
@@ -15,7 +15,7 @@ Querying images with GraphQL allows you to access the image's data as well as pe
 You'll need a few plugins for this:
 
 - [`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem/) plugin allows you to [query files with GraphQL](/docs/conceptual/graphql-concepts/#images)
-- [`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp) powers the connections between Sharp and Gatsby Plugins
+- [`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/) powers the connections between Sharp and Gatsby Plugins
 - [`gatsby-transformer-sharp`](/plugins/gatsby-transformer-sharp/) allows you to create multiples images of the right sizes and resolutions with a query
 
 If the final image is of a fixed size, optimization relies on having multiple resolutions of the image. If it is responsive, meaning it stretches to fill a container or page, optimization relies on having different sizes of the same image. See the [Gatsby Image documentation for more information](/plugins/gatsby-image/#two-types-of-responsive-images).
@@ -38,9 +38,9 @@ export const query = graphql`
 `
 ```
 
-## Optimizing images with gatsby-image
+## Optimizing images with gatsby-plugin-image
 
-[`gatsby-image`](/plugins/gatsby-image/) is a plugin that automatically creates React components for optimized images that:
+[`gatsby-image`](/plugins/gatsby-plugin-image/) is a plugin that automatically creates React components for optimized images that:
 
 > - Loads the optimal size of image for each device size and screen resolution
 > - Holds the image position while loading so your page doesn't jump around as images load

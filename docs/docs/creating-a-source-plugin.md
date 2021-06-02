@@ -305,7 +305,7 @@ This loose coupling between the data source and the transformer plugins allow Ga
 
 #### Sourcing and optimizing images from remote locations
 
-A common use case for source plugins is pulling images from a remote location and optimizing them for use with [Gatsby Image](/plugins/gatsby-image/). An API may return a URL for an image on a CDN, which could be further optimized by Gatsby at build time.
+A common use case for source plugins is pulling images from a remote location and optimizing them for use with [Gatsby Plugin Image](/plugins/gatsby-plugin-image/). An API may return a URL for an image on a CDN, which could be further optimized by Gatsby at build time.
 
 This can be achieved by the following steps:
 
@@ -413,7 +413,9 @@ query {
     id
     remoteImage {
       childImageSharp {
-        # fluid or fixed fields for optimized images
+        gatsbyImageData(
+          # fluid or fixed fields for optimized images
+        )
       }
     }
   }
