@@ -12,7 +12,7 @@
     "@types/bluebird": "^3.5.33",
     "@types/cache-manager": "^2.10.3",
     "@types/common-tags": "^1.8.0",
-    "@types/express": "^4.17.3",
+    "@types/express": "^4.17.12",
     "@types/fs-extra": "^8.1.1",
     "@types/got": "^9.6.11",
     "@types/jaeger-client": "^3.18.0",
