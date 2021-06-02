@@ -60,7 +60,7 @@
     "lerna": "^3.22.1",
     "lint-staged": "^10.5.4",
     "markdown-magic": "^0.2.1",
-    "npm-packlist": "^2.1.5",
+    "npm-packlist": "^2.2.2",
     "npm-run-all": "4.1.5",
     "plop": "^1.9.1",
     "prettier": "2.1.2",
