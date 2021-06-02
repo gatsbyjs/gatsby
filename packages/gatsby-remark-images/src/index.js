@@ -83,7 +83,7 @@ module.exports = (
     const getCaptionString = () => {
       const captionOptions = Array.isArray(options.showCaptions)
         ? options.showCaptions
-        : options.showCaptions === true
+        : options.showCaptions === true && node.alt !== EMPTY_ALT
         ? [`title`, `alt`]
         : false
 
@@ -174,8 +174,8 @@ module.exports = (
     const alt = isEmptyAlt
       ? ``
       : _.escape(
-          overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
-        )
+        overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
+      )
 
     const title = node.title ? _.escape(node.title) : alt
 
@@ -362,9 +362,8 @@ module.exports = (
     rawHTML = `
     <span
       class="${imageWrapperClass}"
-      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: ${presentationWidth}px; ${
-      imageCaption ? `` : wrapperStyle
-    }"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: ${presentationWidth}px; ${imageCaption ? `` : wrapperStyle
+      }"
     >
       ${rawHTML}
     </span>
