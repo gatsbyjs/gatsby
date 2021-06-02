@@ -150,13 +150,29 @@ describe(`onRouteUpdate`, () => {
     await Promise.resolve()
 
     expect(window.dataLayer.length).toBe(3)
+    expect(window.dataLayer).toContainEqual({
+      event: `core-web-vitals`,
+      webVitalsMeasurement: {
+        name: `CLS`,
+        id: `3`,
+        value: 100,
+      },
+    })
+    expect(window.dataLayer).toContainEqual({
+      event: `core-web-vitals`,
+      webVitalsMeasurement: {
+        name: `FID`,
+        id: `2`,
+        value: 150,
+      },
+    })
     expect(window.dataLayer).toEqual([
       {
         event: `core-web-vitals`,
         webVitalsMeasurement: {
-          name: `LCP`,
-          id: `1`,
-          value: 300,
+          name: `CLS`,
+          id: `3`,
+          value: 100,
         },
       },
       {
@@ -170,9 +186,9 @@ describe(`onRouteUpdate`, () => {
       {
         event: `core-web-vitals`,
         webVitalsMeasurement: {
-          name: `CLS`,
-          id: `3`,
-          value: 100,
+          name: `LCP`,
+          id: `1`,
+          value: 300,
         },
       },
     ])
