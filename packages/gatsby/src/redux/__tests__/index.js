@@ -9,6 +9,7 @@ const v8Deserialize = jest.spyOn(v8, `deserialize`)
 const reporterInfo = jest.spyOn(reporter, `info`).mockImplementation(jest.fn)
 const reporterWarn = jest.spyOn(reporter, `warn`).mockImplementation(jest.fn)
 
+const { isLmdbStore } = require(`../../datastore`)
 const { saveState, store, readState } = require(`../index`)
 
 const {
@@ -131,6 +132,7 @@ describe(`redux db`, () => {
   }
 
   beforeEach(() => {
+    store.getState().nodes = new Map()
     store.dispatch({
       type: `DELETE_CACHE`,
     })
@@ -191,6 +193,10 @@ describe(`redux db`, () => {
       v8Serialize.mockRestore()
       v8Deserialize.mockRestore()
     })
+    if (isLmdbStore()) {
+      // Nodes are stored in LMDB, those tests are irrelevant
+      return
+    }
 
     // we set limit to 1.5 * 1024 * 1024 * 1024 per shard
     // simulating size for page and nodes will allow us to see if we create expected amount of shards
@@ -407,7 +413,8 @@ describe(`redux db`, () => {
       )
     )
 
-    expect(store.getState().nodes.size).toEqual(1)
+    // In strict mode nodes are stored in LMDB not redux state
+    expect(store.getState().nodes.size).toEqual(isLmdbStore() ? 0 : 1)
     expect(store.getState().pages.size).toEqual(0)
 
     let persistedState = readState()
@@ -427,7 +434,8 @@ describe(`redux db`, () => {
 
     persistedState = readState()
 
-    expect(persistedState.nodes?.size ?? 0).toEqual(1)
+    // In strict mode nodes are stored in LMDB not redux state
+    expect(persistedState.nodes?.size ?? 0).toEqual(isLmdbStore() ? 0 : 1)
     expect(persistedState.pages?.size ?? 0).toEqual(0)
   })
 
@@ -458,13 +466,20 @@ describe(`redux db`, () => {
     persistedState = readState()
 
     expect(persistedState.nodes?.size ?? 0).toEqual(0)
-    // we expect state to be discarded because gatsby creates it least few nodes of it's own
-    // (particularly `Site` node). If there was nodes read this likely means something went wrong
-    // and state is not consistent
-    expect(persistedState.pages?.size ?? 0).toEqual(0)
+    if (isLmdbStore()) {
+      // In strict mode nodes are stored in LMDB not redux state
+      // so missing nodes are expected and we should still load pages in this case
+      expect(persistedState.pages?.size ?? 0).toEqual(1)
+      expect(reporterInfo).not.toBeCalled()
+    } else {
+      // we expect state to be discarded because gatsby creates it least few nodes of it's own
+      // (particularly `Site` node). If there was nodes read this likely means something went wrong
+      // and state is not consistent
+      expect(persistedState.pages?.size ?? 0).toEqual(0)
 
-    expect(reporterInfo).toBeCalledWith(
-      `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
-    )
+      expect(reporterInfo).toBeCalledWith(
+        `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
+      )
+    }
   })
 })

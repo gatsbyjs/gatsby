@@ -7,6 +7,7 @@ import { actions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 const { deleteNode } = actions
 import { Node } from "../../index"
+import { getDataStore } from "../datastore"
 
 /**
  * Finds the name of all plugins which implement Gatsby APIs that
@@ -104,6 +105,7 @@ export default async ({
     webhookBody: webhookBody || {},
     pluginName,
   })
+  await getDataStore().ready()
 
   const state = store.getState()
   const nodes = getNodes()

@@ -200,6 +200,18 @@ const activeFlags: Array<IFlag> = [
       }
     },
   },
+  {
+    name: `LMDB_STORE`,
+    env: `GATSBY_EXPERIMENTAL_LMDB_STORE`,
+    command: `all`,
+    telemetryId: `LmdbStore`,
+    experimental: true,
+    description: `Store nodes in a persistent embedded database (vs in-memory). Lowers peak memory usage.`,
+    testFitness: (): fitnessEnum => {
+      const [major, minor] = process.versions.node.split(`.`)
+      return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
+    },
+  },
 ]
 
 export default activeFlags

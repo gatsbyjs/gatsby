@@ -58,11 +58,20 @@ aliases:
           - /blog.+/
 
   test_template: &test_template
+    parameters:
+      npm_rebuild:
+        type: boolean
+        default: false
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
+      - when:
+          condition: << parameters.npm_rebuild >>
+          steps:
+            - run: npm rebuild
       - run: yarn list react
+      - run: yarn why lmdb-store
       - run:
           command: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
           environment:
@@ -228,6 +237,14 @@ jobs:
     executor:
       name: node
       image: "14"
+    <<: *test_template
+
+  unit_tests_node14_strict_mode:
+    executor:
+      name: node
+      image: "14"
+    environment:
+      GATSBY_EXPERIMENTAL_STRICT_MODE: 1
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
@@ -622,6 +639,14 @@ workflows:
             - bootstrap
       - unit_tests_node14:
           <<: *ignore_docs
+          requires:
+            - lint
+            - typecheck
+            - bootstrap
+      - unit_tests_node14_strict_mode:
+          <<: *ignore_docs
+          # rebuild to get correct version of lmdb-store (compiled for node14 not node12)
+          npm_rebuild: true
           requires:
             - lint
             - typecheck
