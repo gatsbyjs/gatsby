@@ -57,7 +57,12 @@ const Style = () => (
           height: 32px;
           padding: 4px;
           border-radius: 4px;
+<<<<<<< HEAD
           box-sizing: border-box;
+=======
+          border: none;
+          background: none;
+>>>>>>> 0d21105842... feat: use a <button /> for better A11y compatibility
         }
 
         [data-gatsby-preview-indicator-hoverable="true"]:hover {

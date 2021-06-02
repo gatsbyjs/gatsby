@@ -109,7 +109,7 @@ const IndicatorButton = ({
 
   return (
     <>
-      <div
+      <button
         data-gatsby-preview-indicator="button"
         data-gatsby-preview-indicator-active-button={`${active}`}
         data-gatsby-preview-indicator-hoverable={
@@ -128,7 +128,7 @@ const IndicatorButton = ({
             <div data-gatsby-preview-indicator="spinner">{spinnerIcon}</div>
           )}
         </div>
-      </div>
+      </button>
       {tooltipText && (
         <IndicatorButtonTooltip
           tooltipText={tooltipText}
