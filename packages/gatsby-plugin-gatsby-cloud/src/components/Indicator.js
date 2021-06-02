@@ -1,21 +1,47 @@
 import React, { useState, useEffect, useCallback, useRef } from "react"
+import { formatDistance } from "date-fns"
 import getBuildInfo from "../utils/getBuildInfo"
 import trackEvent from "../utils/trackEvent"
 import IndicatorButton from "./IndicatorButton"
-import getGatsbyIndicatorButtonProps from "./getGatsbyIndicatorButtonProps"
-import getLinkIndicatorButtonProps from "./getLinkIndicatorButtonProps"
-import getInfoIndicatorButtonProps from "./getInfoIndicatorButtonProps"
-import { gatsbyIcon, infoIcon, linkIcon, successIcon } from "./icons"
+import {
+  gatsbyIcon,
+  logsIcon,
+  failedIcon,
+  infoIcon,
+  linkIcon,
+  successIcon,
+} from "./icons"
 import Style from "./Style"
 
 const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL || 3000
 
-export function PreviewIndicator({
-  children,
-  gatsbyIndicatorButtonProps,
-  linkIndicatorButtonProps,
-  infoIndicatorButtonProps,
-}) {
+export function PreviewIndicator({ children }) {
+  return (
+    <>
+      <Style />
+      <div
+        data-testid="preview-status-indicator"
+        data-gatsby-preview-indicator="root"
+        aria-live="assertive"
+      >
+        {children}
+      </div>
+    </>
+  )
+}
+
+function GatsbyIndicatorButton(props) {
+  return (
+    <IndicatorButton
+      testId="gatsby"
+      iconSvg={gatsbyIcon}
+      isFirstButton={true}
+      {...props}
+    />
+  )
+}
+
+function LinkIndicatorButton(props) {
   const [linkButtonCopyProps, setLinkButtonCopyProps] = useState()
 
   const copyLinkClick = () => {
@@ -44,40 +70,50 @@ export function PreviewIndicator({
   }
 
   return (
-    <>
-      <Style />
-      <div
-        data-testid="preview-status-indicator"
-        data-gatsby-preview-indicator="root"
-        aria-live="assertive"
-      >
-        <IndicatorButton
-          testId="gatsby"
-          iconSvg={gatsbyIcon}
-          isFirstButton={true}
-          {...gatsbyIndicatorButtonProps}
-        />
-        <IndicatorButton
-          testId={`link`}
-          iconSvg={linkIcon}
-          toolTipOffset={40}
-          onClick={copyLinkClick}
-          {...linkButtonCopyProps}
-          {...linkIndicatorButtonProps}
-        />
-        <IndicatorButton
-          testId="info"
-          iconSvg={infoIcon}
-          {...infoIndicatorButtonProps}
-          toolTipOffset={80}
-        />
-      </div>
-      {children}
-    </>
+    <IndicatorButton
+      testId={`link`}
+      iconSvg={linkIcon}
+      toolTipOffset={40}
+      onClick={copyLinkClick}
+      {...linkButtonCopyProps}
+      {...props}
+    />
   )
 }
 
-export default function Indicator({ children }) {
+function InfoIndicatorButton(props) {
+  return (
+    <IndicatorButton
+      testId="info"
+      iconSvg={infoIcon}
+      toolTipOffset={80}
+      {...props}
+    />
+  )
+}
+
+const viewLogsClick = ({ orgId, siteId, errorBuildId }) => {
+  const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/builds/${errorBuildId}/details`
+  const returnTo = encodeURIComponent(pathToBuildLogs)
+
+  window.open(`${pathToBuildLogs}?returnTo=${returnTo}`)
+}
+
+const newPreviewAvailableClick = ({ isOnPrettyUrl, sitePrefix }) => {
+  // Grabs domain that preview is hosted on https://preview-sitePrefix.gtsb.io
+  // This will match `gtsb.io`
+  const previewDomain = window.location.hostname.split(`.`).slice(-2).join(`.`)
+
+  if (isOnPrettyUrl || window.location.hostname === `localhost`) {
+    window.location.reload()
+  } else {
+    window.location.replace(
+      `https://preview-${sitePrefix}.${previewDomain}${window.location.pathname}`
+    )
+  }
+}
+
+export default function Indicator({ children, stopPolling = false }) {
   const [buildInfo, setBuildInfo] = useState()
   const timeoutRef = useRef()
   const shouldPoll = useRef(false)
@@ -103,51 +139,41 @@ export default function Indicator({ children }) {
       }
     }
 
-    const defaultBuildInfo = {
-      createdAt: currentBuild?.createdAt,
-      orgId: siteInfo?.orgId,
-      siteId: siteInfo?.siteId,
-      buildId,
+    const baseBuildInfo = {
+      currentBuild,
+      latestBuild,
+      siteInfo,
       isOnPrettyUrl,
-      sitePrefix: siteInfo?.sitePrefix,
     }
 
     if (!trackedInitialLoad) {
       trackEvent({
         eventType: `PREVIEW_INDICATOR_LOADED`,
-        orgId: defaultBuildInfo.orgId,
-        siteId: defaultBuildInfo.siteId,
+        orgId: siteInfo.orgId,
+        siteId: siteInfo.siteId,
         buildId,
       })
 
       trackedInitialLoad = true
     }
+    let status
+    let errorBuildId
 
     if (currentBuild?.buildStatus === `BUILDING`) {
-      setBuildInfo({
-        status: `BUILDING`,
-        ...defaultBuildInfo,
-      })
+      status = `BUILDING`
     } else if (currentBuild?.buildStatus === `ERROR`) {
-      setBuildInfo({
-        status: `ERROR`,
-        errorBuildId: currentBuild?.id,
-        ...defaultBuildInfo,
-      })
+      status = `ERROR`
+      errorBuildId = currentBuild?.id
     } else if (buildId === currentBuild?.id) {
-      setBuildInfo({
-        status: `UPTODATE`,
-        ...defaultBuildInfo,
-      })
+      status = `UPTODATE`
     } else if (
       buildId !== latestBuild?.id &&
       latestBuild?.buildStatus === `SUCCESS`
     ) {
-      setBuildInfo({
-        status: `SUCCESS`,
-        ...defaultBuildInfo,
-      })
+      status = `SUCCESS`
     }
+
+    setBuildInfo({ status, errorBuildId, ...baseBuildInfo })
 
     if (shouldPoll.current) {
       setTimeout(pollData, POLLING_INTERVAL)
@@ -159,6 +185,7 @@ export default function Indicator({ children }) {
     pollData()
 
     return function cleanup() {
+      if (stopPolling) return
       shouldPoll.current = false
 
       if (timeoutRef.current) {
@@ -167,41 +194,93 @@ export default function Indicator({ children }) {
     }
   }, [])
 
-  const {
-    status,
-    orgId,
-    siteId,
-    errorBuildId,
-    isOnPrettyUrl,
-    sitePrefix,
-    createdAt,
-  } = buildInfo || {}
+  if (buildInfo?.status === `BUILDING`) {
+    return (
+      <PreviewIndicator>
+        <GatsbyIndicatorButton
+          tooltipText={`Building a new preview`}
+          showSpinner={true}
+          overrideShowTooltip={true}
+        />
+        <LinkIndicatorButton tooltipText={`Copy link`} active={true} />
+        <InfoIndicatorButton />
+      </PreviewIndicator>
+    )
+  }
+
+  if (buildInfo?.status === `ERROR`) {
+    return (
+      <PreviewIndicator>
+        <GatsbyIndicatorButton
+          tooltipText={`Preview error`}
+          overrideShowTooltip={true}
+          active={true}
+          tooltipIcon={failedIcon}
+          tooltipLink={`View logs`}
+          tooltipLinkImage={logsIcon}
+          onClick={() =>
+            viewLogsClick({
+              orgId: buildInfo?.siteInfo?.orgId,
+              siteId: buildInfo?.siteInfo?.siteId,
+              errorBuildId: buildInfo?.currentBuild?.id,
+            })
+          }
+        />
+        <LinkIndicatorButton />
+        <InfoIndicatorButton />
+      </PreviewIndicator>
+    )
+  }
+
+  if (buildId && buildId === buildInfo?.currentBuild?.id) {
+    const updatedDate = formatDistance(
+      Date.now(),
+      new Date(buildInfo?.currentBuild?.createdAt),
+      { includeSeconds: true }
+    )
+    return (
+      <PreviewIndicator>
+        {/** @todo do we need to pass an empty tooltip text here? */}
+        <GatsbyIndicatorButton active={true} />
+        <LinkIndicatorButton tooltipText={`Copy link`} active={true} />
+        <InfoIndicatorButton
+          tooltipText={`Preview updated ${updatedDate} ago`}
+          active={true}
+        />
+      </PreviewIndicator>
+    )
+  }
+
+  if (
+    buildId &&
+    buildId !== buildInfo?.latestBuild?.id &&
+    buildInfo?.latestBuild?.buildStatus === `SUCCESS`
+  ) {
+    return (
+      <PreviewIndicator>
+        <GatsbyIndicatorButton
+          tooltipText={`New preview available`}
+          overrideShowTooltip={true}
+          active={true}
+          onClick={() =>
+            newPreviewAvailableClick({
+              isOnPrettyUrl: buildInfo?.isOnPrettyUrl,
+              sitePrefix: buildInfo?.siteInfo?.sitePrefix,
+            })
+          }
+          tooltipLink={`Click to view`}
+        />
+        <LinkIndicatorButton />
+        <InfoIndicatorButton />
+      </PreviewIndicator>
+    )
+  }
 
   return (
-    <PreviewIndicator
-      gatsbyIndicatorButtonProps={{
-        ...getGatsbyIndicatorButtonProps({
-          status,
-          orgId,
-          siteId,
-          errorBuildId,
-          isOnPrettyUrl,
-          sitePrefix,
-        }),
-      }}
-      linkIndicatorButtonProps={{
-        ...getLinkIndicatorButtonProps({
-          status,
-        }),
-      }}
-      infoIndicatorButtonProps={{
-        ...getInfoIndicatorButtonProps({
-          status,
-          createdAt,
-        }),
-      }}
-    >
-      {children}
+    <PreviewIndicator>
+      <GatsbyIndicatorButton active={false} />
+      <LinkIndicatorButton active={true} />
+      <InfoIndicatorButton active={false} />
     </PreviewIndicator>
   )
 }
