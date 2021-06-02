@@ -875,7 +875,7 @@ const saveResolvedNodes = async (nodeTypeNames, resolver) => {
       const resolved = await resolver(node)
       resolvedNodes.set(node.id, resolved)
     }
-    if (!resolvedNodes.size) return
+    if (!resolvedNodes.size) continue
 
     store.dispatch({
       type: `SET_RESOLVED_NODES`,
