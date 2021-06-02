@@ -2,6 +2,9 @@ import { IDataStore } from "../types"
 import { store } from "../../redux"
 import { IGatsbyNode } from "../../redux/types"
 
+/**
+ * @deprecated
+ */
 function getNodes(): Array<IGatsbyNode> {
   const nodes = store.getState().nodes
   if (nodes) {
@@ -11,6 +14,9 @@ function getNodes(): Array<IGatsbyNode> {
   }
 }
 
+/**
+ * @deprecated
+ */
 function getNodesByType(type: string): Array<IGatsbyNode> {
   const nodes = store.getState().nodesByType.get(type)
   if (nodes) {

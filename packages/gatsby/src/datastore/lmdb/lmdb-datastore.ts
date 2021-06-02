@@ -43,6 +43,9 @@ function getDatabases(): ILmdbDatabases {
   return databases
 }
 
+/**
+ * @deprecated
+ */
 function getNodes(): Array<IGatsbyNode> {
   // const start = performance.now()
   const result = Array.from<IGatsbyNode>(iterateNodes())
@@ -54,6 +57,9 @@ function getNodes(): Array<IGatsbyNode> {
   return result ?? []
 }
 
+/**
+ * @deprecated
+ */
 function getNodesByType(type: string): Array<IGatsbyNode> {
   // const start = performance.now()
   const result = Array.from<IGatsbyNode>(iterateNodesByType(type))
