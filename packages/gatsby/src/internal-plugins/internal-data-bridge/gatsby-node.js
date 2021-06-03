@@ -5,7 +5,7 @@ const _ = require(`lodash`)
 
 const { emitter, store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-const { getNode } = require(`../../redux/nodes`)
+const { getNode } = require(`../../datastore`)
 
 function transformPackageJson(json) {
   const transformDeps = deps =>
