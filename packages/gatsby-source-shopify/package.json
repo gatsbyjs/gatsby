@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "babel-preset-gatsby-package": "^1.8.0-next.0",
-    "chalk": "^4.1.0",
+    "chalk": "^4.1.1",
     "gatsby-node-helpers": "^0.3.0",
     "gatsby-source-filesystem": "^3.8.0-next.0",
     "graphql-request": "^1.8.2",
