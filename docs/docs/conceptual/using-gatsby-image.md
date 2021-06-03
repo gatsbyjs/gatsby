@@ -36,7 +36,7 @@ First, automatically detect which images should be lazily loaded. While developm
 
 Second, actually implement lazy loading. This is supported natively for many browsers, but right now, [almost 30% of users are on browsers](https://caniuse.com/loading-lazy-attr) that don't support it.
 
-Gatsby generates the native component for use in browsers that can use it, and creates the same effect manually for browsers than haven't yet implemented lazy loading through leveraging the IntersectionObserver API.
+Gatsby generates the native component for use in browsers that can use it, and creates the same effect manually for browsers that haven't yet implemented lazy loading through leveraging the IntersectionObserver API.
 
 ## Image placeholders
 
