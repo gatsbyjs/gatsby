@@ -27,9 +27,9 @@
     "chokidar": "^3.5.1",
     "fs-exists-cached": "^1.0.0",
     "gatsby-core-utils": "^2.8.0-next.0",
-    "glob": "^7.1.6",
+    "glob": "^7.1.7",
     "lodash": "^4.17.21",
-    "micromatch": "^4.0.2"
+    "micromatch": "^4.0.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
