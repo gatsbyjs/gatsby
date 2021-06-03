@@ -1,5 +1,5 @@
 import { ErrorId } from "./../../../gatsby-cli/src/structured-errors/error-map"
-import { getNode } from "./../redux/nodes"
+import { getNode } from "./../datastore"
 import { IGatsbyPage, INodeManifest } from "./../redux/types"
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../redux/"
