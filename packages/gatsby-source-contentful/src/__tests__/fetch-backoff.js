@@ -87,6 +87,8 @@ describe(`fetch-backoff`, () => {
         `/spaces/${options.spaceId}/environments/master/content_types?skip=0&limit=1000&order=sys.createdAt`
       )
       .reply(200, { items: [] })
+      .get(`/spaces/${options.spaceId}/environments/master/tags`)
+      .reply(200, { items: [] })
 
     await fetchData({ pluginConfig, reporter })
 
@@ -129,6 +131,8 @@ describe(`fetch-backoff`, () => {
       .get(
         `/spaces/${options.spaceId}/environments/master/content_types?skip=0&limit=1000&order=sys.createdAt`
       )
+      .reply(200, { items: [] })
+      .get(`/spaces/${options.spaceId}/environments/master/tags`)
       .reply(200, { items: [] })
 
     await fetchData({ pluginConfig, reporter })

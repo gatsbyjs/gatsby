@@ -3,6 +3,7 @@ const _ = require(`lodash`)
 const chalk = require(`chalk`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
 const { CODES } = require(`./report`)
+const axios = require(`axios`)
 
 /**
  * Generate a user friendly error message.
@@ -297,9 +298,36 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
 
   const contentTypeItems = contentTypes.items
 
+  // We need to fetch tags with the non-sync API as the sync API
+  // doesn't support this.
+  let tags
+  try {
+    // Temporarily use axios for this till Contentful JS-SDK supports this endpoint
+    tags = await axios({
+      url: `https://${pluginConfig.get(`host`)}/spaces/${pluginConfig.get(
+        `spaceId`
+      )}/environments/${pluginConfig.get(`environment`)}/tags`,
+      headers: { Authorization: `Bearer ${pluginConfig.get(`accessToken`)}` },
+    })
+  } catch (e) {
+    reporter.panic({
+      id: CODES.FetchTags,
+      context: {
+        sourceMessage: `Error fetching tags: ${createContentfulErrorMessage(
+          e
+        )}`,
+      },
+    })
+  }
+
+  const tagItems = tags.data.items
+
+  reporter.verbose(`Tags fetched ${tagItems.length}`)
+
   const result = {
     currentSyncData,
     contentTypeItems,
+    tagItems,
     defaultLocale,
     locales,
     space,

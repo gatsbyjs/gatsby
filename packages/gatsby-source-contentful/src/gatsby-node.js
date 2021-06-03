@@ -24,7 +24,7 @@ const restrictedNodeFields = [
   `parent`,
 ]
 
-const restrictedContentTypes = [`entity`, `reference`]
+const restrictedContentTypes = [`entity`, `reference`, `tag`, `asset`]
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
 
@@ -182,6 +182,7 @@ exports.sourceNodes = async (
 
   let currentSyncData
   let contentTypeItems
+  let tagItems
   let defaultLocale
   let locales
   let space
@@ -241,6 +242,7 @@ exports.sourceNodes = async (
     ;({
       currentSyncData,
       contentTypeItems,
+      tagItems,
       defaultLocale,
       locales,
       space,
@@ -285,6 +287,7 @@ exports.sourceNodes = async (
     ;({
       currentSyncData,
       contentTypeItems,
+      tagItems,
       defaultLocale,
       locales,
       space,
@@ -361,6 +364,18 @@ exports.sourceNodes = async (
       },
     })
   }
+
+  createTypes(
+    schema.buildObjectType({
+      name: `ContentfulTag`,
+      fields: {
+        name: { type: `String!` },
+        contentful_id: { type: `String!` },
+        id: { type: `ID!` },
+      },
+      interfaces: [`Node`],
+    })
+  )
 
   createTypes(`
   interface ContentfulEntry implements Node {
@@ -531,7 +546,9 @@ exports.sourceNodes = async (
   currentSyncData.deletedAssets.forEach(deleteContentfulNode)
 
   const existingNodes = getNodes().filter(
-    n => n.internal.owner === `gatsby-source-contentful`
+    n =>
+      n.internal.owner === `gatsby-source-contentful` &&
+      (n?.sys?.type === `Asset` || n?.sys?.type === `Entry`)
   )
   existingNodes.forEach(n => touchNode(n))
 
@@ -653,7 +670,7 @@ exports.sourceNodes = async (
   }
 
   if (assets.length) {
-    reporter.info(`Creating ${assets.length} Contentful asset nodes`)
+    reporter.info(`Creating ${assets.length} Contentful Asset nodes`)
   }
 
   for (let i = 0; i < assets.length; i++) {
@@ -668,6 +685,23 @@ exports.sourceNodes = async (
         space,
       })
     )
+  }
+
+  // Create tags entities
+  if (tagItems.length) {
+    reporter.info(`Creating ${tagItems.length} Contentful Tag nodes`)
+
+    for (const tag of tagItems) {
+      await createNode({
+        id: createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`),
+        name: tag.name,
+        contentful_id: tag.sys.id,
+        internal: {
+          type: `ContentfulTag`,
+          contentDigest: tag.sys.updatedAt,
+        },
+      })
+    }
   }
 
   creationActivity.end()

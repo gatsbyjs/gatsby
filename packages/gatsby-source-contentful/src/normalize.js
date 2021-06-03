@@ -76,11 +76,9 @@ exports.buildResolvableSet = ({
 }) => {
   const resolvable = new Set()
   existingNodes.forEach(node => {
-    if (node.internal.owner === `gatsby-source-contentful`) {
-      // We need to add only root level resolvable (assets and entries)
-      // Derived nodes (markdown or JSON) will be recreated if needed.
-      resolvable.add(`${node.contentful_id}___${node.sys.type}`)
-    }
+    // We need to add only root level resolvable (assets and entries)
+    // Derived nodes (markdown or JSON) will be recreated if needed.
+    resolvable.add(`${node.contentful_id}___${node.sys.type}`)
   })
 
   entryList.forEach(entries => {
@@ -590,6 +588,15 @@ exports.createNodesForContentType = ({
 
         // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
         entryNode.internal.contentDigest = entryItem.sys.updatedAt
+
+        // Link tags
+        if (entryItem?.metadata?.tags) {
+          entryNode.metadata = {
+            tags___NODE: entryItem?.metadata?.tags.map(tag =>
+              createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
+            ),
+          }
+        }
 
         return entryNode
       })
