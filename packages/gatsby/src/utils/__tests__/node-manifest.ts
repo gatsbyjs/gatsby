@@ -58,6 +58,9 @@ const storeState = {
 
 jest.mock(`../../redux`, () => {
   return {
+    emitter: {
+      on: jest.fn(),
+    },
     store: {
       getState: jest.fn(),
       dispatch: jest.fn(),
