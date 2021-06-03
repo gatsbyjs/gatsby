@@ -336,7 +336,7 @@ jobs:
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
       - run:
-          command: mkdir -p /tmp/e2e-tests/gatsby-pnp
+          command: mkdir -p /tmp/e2e-tests/
           working_directory: ~/project
       - run:
           command: cp -r ./starters/default /tmp/e2e-tests/gatsby-pnp
@@ -348,7 +348,7 @@ jobs:
           command: yarn policies set-version berry
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Forces to use the local packages
-          command: yarn link --all --private ../..
+          command: yarn link --all --private ~/project
           working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: yarn install
