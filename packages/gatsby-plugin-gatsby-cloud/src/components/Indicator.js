@@ -107,6 +107,7 @@ export default function Indicator() {
   const shouldPoll = useRef(false)
   let trackedInitialLoad
   let buildId
+  const buildStatus = buildInfo?.currentBuild?.buildStatus
 
   const pollData = useCallback(async function pollData() {
     const prettyUrlRegex = /^preview-/
@@ -163,7 +164,7 @@ export default function Indicator() {
     }
   }, [])
 
-  if (buildInfo?.currentBuild?.buildStatus === `BUILDING`) {
+  if (buildStatus === `BUILDING`) {
     return (
       <PreviewIndicator>
         <GatsbyIndicatorButton
@@ -177,7 +178,7 @@ export default function Indicator() {
     )
   }
 
-  if (buildInfo?.currentBuild?.buildStatus === `ERROR`) {
+  if (buildStatus === `ERROR`) {
     return (
       <PreviewIndicator>
         <GatsbyIndicatorButton
@@ -222,7 +223,7 @@ export default function Indicator() {
   if (
     buildId &&
     buildId !== buildInfo?.latestBuild?.id &&
-    buildInfo?.latestBuild?.buildStatus === `SUCCESS`
+    buildStatus === `SUCCESS`
   ) {
     return (
       <PreviewIndicator>

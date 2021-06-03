@@ -26,6 +26,9 @@ const IndicatorButtonTooltip = ({
   >
     {tooltipIcon}
     {tooltipText}
+    {/**
+      @todo replace p with a Link for A11y
+     */}
     {tooltipLink && (
       <p data-gatsby-preview-indicator="tooltip-link">{tooltipLink}</p>
     )}
