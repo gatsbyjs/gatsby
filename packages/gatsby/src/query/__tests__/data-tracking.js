@@ -155,7 +155,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
 
   const queryUtil = require(`../`)
   const { store, emitter } = require(`../../redux`)
-  const { saveState } = require(`../../db`)
+  const { saveState } = require(`../../redux/save-state`)
   const reporter = require(`gatsby-cli/lib/reporter`)
   const { bindActionCreators } = require(`redux`)
   const { queryRunner } = require(`../query-runner`)
