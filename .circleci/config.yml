@@ -336,6 +336,9 @@ jobs:
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
       - run:
+          command: mkdir -p /tmp/e2e-tests/gatsby-pnp
+          working_directory: ~/project
+      - run:
           command: cp -r ./starters/default /tmp/e2e-tests/gatsby-pnp
           working_directory: ~/project
       - run:
