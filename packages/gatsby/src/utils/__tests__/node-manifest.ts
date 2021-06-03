@@ -3,6 +3,7 @@ import path from "path"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../../redux"
+import { getNode } from "../../datastore"
 
 import { INodeManifest } from "./../../redux/types"
 
@@ -46,6 +47,12 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 
+jest.mock(`../../datastore`, () => {
+  return {
+    getNode: jest.fn(),
+  }
+})
+
 const storeState = {
   nodeManifests: [],
   nodes: new Map(),
@@ -68,16 +75,21 @@ jest.mock(`../../redux`, () => {
   }
 })
 
+function mockGetNodes(nodeStore: Map<string, { id: string }>) {
+  return getNode.mockImplementation(id => nodeStore.get(id))
+}
+
 beforeEach(() => {
   jest.clearAllMocks()
 })
 
 describe(`processNodeManifests() warnings`, () => {
   it(`warns about no page found for manifest node id`, async () => {
+    mockGetNodes(new Map([[`1`, { id: `1` }]]))
+
     store.getState.mockImplementation(() => {
       return {
         ...storeState,
-        nodes: new Map([[`1`, { id: `1` }]]),
         nodeManifests: [
           {
             pluginName: `test`,
@@ -97,13 +109,15 @@ describe(`processNodeManifests() warnings`, () => {
   })
 
   it(`warns about using context.id to map from node->page instead of ownerNodeId`, async () => {
+    mockGetNodes(
+      new Map([
+        [`1`, { id: `1` }],
+        [`2`, { id: `2` }],
+      ])
+    )
     store.getState.mockImplementation(() => {
       return {
         ...storeState,
-        nodes: new Map([
-          [`1`, { id: `1` }],
-          [`2`, { id: `2` }],
-        ]),
         pages: new Map([
           [
             `/test`,
@@ -163,10 +177,10 @@ describe(`processNodeManifests() warnings`, () => {
   })
 
   it(`warns about using node->query tracking to map from node->page instead of using ownerNodeId`, async () => {
+    mockGetNodes(new Map([[`1`, { id: `1` }]]))
     store.getState.mockImplementation(() => {
       return {
         ...storeState,
-        nodes: new Map([[`1`, { id: `1` }]]),
         pages: new Map([
           [
             `/test`,
@@ -234,6 +248,9 @@ describe(`processNodeManifests`, () => {
       { id: `2`, useOwnerNodeId: true },
       { id: `3`, useQueryTracking: true },
     ]
+    mockGetNodes(
+      new Map(nodes.map(node => [`${node.id}`, { id: `${node.id}` }]))
+    )
 
     const pendingManifests: Array<INodeManifest> = [
       ...nodes,
@@ -252,7 +269,6 @@ describe(`processNodeManifests`, () => {
     store.getState.mockImplementation(() => {
       return {
         ...storeState,
-        nodes: new Map(nodes.map(node => [`${node.id}`, { id: `${node.id}` }])),
         pages: new Map(
           nodes.map(node => [
             `/${node.id}`,
