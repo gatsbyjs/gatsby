@@ -3,9 +3,6 @@ import { nodesReducer } from "../reducers/nodes"
 import { IGatsbyNode } from "../types"
 import { nodesTouchedReducer } from "../reducers/nodes-touched"
 
-jest.mock(`../../db/nodes`)
-jest.mock(`../nodes`)
-
 const dispatch = jest.fn()
 
 type MapObject = Record<string, IGatsbyNode>
