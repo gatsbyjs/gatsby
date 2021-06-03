@@ -187,8 +187,8 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => {
       // Because of this, this flag will never show up
       const semverConstraints = {
-        react: `^0.0.0-experimental-57768ef90`,
-        "react-dom": `^0.0.0-experimental-57768ef90`,
+        react: `^0.0.0-experimental-2bf4805e4`,
+        "react-dom": `^0.0.0-experimental-2bf4805e4`,
       }
 
       if (satisfiesSemvers(semverConstraints)) {
