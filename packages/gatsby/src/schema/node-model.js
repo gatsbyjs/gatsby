@@ -12,14 +12,9 @@ const {
 } = require(`graphql`)
 const invariant = require(`invariant`)
 const reporter = require(`gatsby-cli/lib/reporter`)
-import {
-  getNode,
-  getNodes,
-  getNodesByType,
-  getTypes,
-  saveResolvedNodes,
-} from "../redux/nodes"
-import { runFastFiltersAndSort } from "../redux/run-fast-filters"
+import { store } from "../redux"
+import { getNode, getNodes, getNodesByType, getTypes } from "../datastore"
+import { runFastFiltersAndSort } from "../datastore/in-memory/run-fast-filters"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -864,6 +859,26 @@ const addRootNodeToInlineObject = (
     if (!isNode) {
       rootNodeMap.set(data, nodeId)
     }
+  }
+}
+
+const saveResolvedNodes = async (nodeTypeNames, resolver) => {
+  for (const typeName of nodeTypeNames) {
+    const nodes = getNodesByType(typeName)
+    if (!nodes || !nodes.length) continue
+
+    const resolvedNodes = new Map()
+    for (const node of nodes) {
+      const resolved = await resolver(node)
+      resolvedNodes.set(node.id, resolved)
+    }
+    store.dispatch({
+      type: `SET_RESOLVED_NODES`,
+      payload: {
+        key: typeName,
+        nodes: resolvedNodes,
+      },
+    })
   }
 }
 

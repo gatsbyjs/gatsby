@@ -18,8 +18,7 @@ const {
   ScalarTypeComposer,
   EnumTypeComposer,
 } = require(`graphql-compose`)
-const { getNode, getNodesByType } = require(`../redux/nodes`)
-const { getDataStore } = require(`../datastore`)
+const { getDataStore, getNode, getNodesByType } = require(`../datastore`)
 
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
