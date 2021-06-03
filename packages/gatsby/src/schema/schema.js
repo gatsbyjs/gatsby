@@ -8,6 +8,7 @@ const {
   GraphQLList,
   GraphQLObjectType,
   GraphQLInterfaceType,
+  GraphQLUnionType,
 } = require(`graphql`)
 const {
   ObjectTypeComposer,
@@ -17,7 +18,7 @@ const {
   ScalarTypeComposer,
   EnumTypeComposer,
 } = require(`graphql-compose`)
-const { getNode, getNodesByType } = require(`../redux/nodes`)
+const { getDataStore, getNode, getNodesByType } = require(`../datastore`)
 
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
@@ -61,6 +62,8 @@ const buildSchema = async ({
   inferenceMetadata,
   parentSpan,
 }) => {
+  // FIXME: consider removing .ready here - it is needed for various tests to pass (although probably harmless)
+  await getDataStore().ready()
   await updateSchemaComposer({
     schemaComposer,
     types,
@@ -404,6 +407,15 @@ const mergeTypes = ({
   ) {
     mergeFields({ typeComposer, fields: type.getFields() })
     type.getInterfaces().forEach(iface => typeComposer.addInterface(iface))
+  }
+
+  if (
+    type instanceof GraphQLInterfaceType ||
+    type instanceof InterfaceTypeComposer ||
+    type instanceof GraphQLUnionType ||
+    type instanceof UnionTypeComposer
+  ) {
+    mergeResolveType({ typeComposer, type })
   }
 
   if (isNamedTypeComposer(type)) {
@@ -1387,3 +1399,20 @@ const mergeFields = ({ typeComposer, fields }) =>
       typeComposer.setField(fieldName, fieldConfig)
     }
   })
+
+const mergeResolveType = ({ typeComposer, type }) => {
+  if (
+    (type instanceof GraphQLInterfaceType ||
+      type instanceof GraphQLUnionType) &&
+    type.resolveType
+  ) {
+    typeComposer.setResolveType(type.resolveType)
+  }
+  if (
+    (type instanceof InterfaceTypeComposer ||
+      type instanceof UnionTypeComposer) &&
+    type.getResolveType()
+  ) {
+    typeComposer.setResolveType(type.getResolveType())
+  }
+}

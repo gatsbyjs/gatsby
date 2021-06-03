@@ -21,7 +21,7 @@ addMatchImageSnapshotCommand({
   customDiffConfig: {
     threshold: 0.1,
   },
-  failureThreshold: 0.04,
+  failureThreshold: 0.08,
   failureThresholdType: `percent`,
 })
 

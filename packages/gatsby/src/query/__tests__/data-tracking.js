@@ -123,12 +123,8 @@ const getTypedNodeCreators = ({
 
 let isFirstRun = true
 const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
-  isFirstRun = false
   if (restart) {
     jest.resetModules()
-    if (clearCache) {
-      mockPersistedState = {}
-    }
   } else if (clearCache) {
     console.error(`Can't clear cache without restarting`)
     process.exit(1)
@@ -159,7 +155,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
 
   const queryUtil = require(`../`)
   const { store, emitter } = require(`../../redux`)
-  const { saveState } = require(`../../db`)
+  const { saveState } = require(`../../redux/save-state`)
   const reporter = require(`gatsby-cli/lib/reporter`)
   const { bindActionCreators } = require(`redux`)
   const { queryRunner } = require(`../query-runner`)
@@ -178,6 +174,12 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
     {}
   )
   const apiRunner = require(`../../utils/api-runner-node`)
+
+  if (isFirstRun || clearCache) {
+    mockPersistedState = {}
+    store.dispatch({ type: `DELETE_CACHE` })
+  }
+  isFirstRun = false
 
   queryRunner.mockClear()
 

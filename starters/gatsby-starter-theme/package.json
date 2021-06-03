@@ -10,7 +10,7 @@
   },
   "license": "0BSD",
   "dependencies": {
-    "gatsby": "^3.4.1",
+    "gatsby": "^3.6.2",
     "gatsby-theme-blog": "^3.0.0",
     "gatsby-theme-notes": "^3.0.0",
     "react": "^17.0.2",
