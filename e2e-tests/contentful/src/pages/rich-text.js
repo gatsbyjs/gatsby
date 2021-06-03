@@ -67,15 +67,41 @@ const options = {
 }
 
 const RichTextPage = ({ data }) => {
-  const entries = data.allContentfulRichText.nodes
+  const defaultEntries = data.default.nodes
+  const englishEntries = data.english.nodes
+  const germanEntries = data.german.nodes
   return (
     <Layout>
-      {entries.map(({ id, title, richText }) => {
+      {defaultEntries.map(({ id, title, richText }) => {
         const slug = slugify(title, { strict: true, lower: true })
         return (
           <div data-cy-id={slug} key={id}>
             <h2>{title}</h2>
             {renderRichText(richText, options)}
+            <hr />
+          </div>
+        )
+      })}
+
+      <h1>English Locale</h1>
+      {englishEntries.map(({ id, title, richTextLocalized }) => {
+        const slug = slugify(title, { strict: true, lower: true })
+        return (
+          <div data-cy-id={`english-${slug}`} key={id}>
+            <h2>{title}</h2>
+            {renderRichText(richTextLocalized, options)}
+            <hr />
+          </div>
+        )
+      })}
+
+      <h1>German Locale</h1>
+      {germanEntries.map(({ id, title, richTextLocalized }) => {
+        const slug = slugify(title, { strict: true, lower: true })
+        return (
+          <div data-cy-id={`german-${slug}`} key={id}>
+            <h2>{title}</h2>
+            {renderRichText(richTextLocalized, options)}
             <hr />
           </div>
         )
@@ -88,7 +114,13 @@ export default RichTextPage
 
 export const pageQuery = graphql`
   query RichTextQuery {
-    allContentfulRichText(sort: { fields: title }) {
+    default: allContentfulRichText(
+      sort: { fields: title }
+      filter: {
+        title: { glob: "!*Localized*|*Validated*" }
+        node_locale: { eq: "en-US" }
+      }
+    ) {
       nodes {
         id
         title
@@ -153,6 +185,30 @@ export const pageQuery = graphql`
               }
             }
           }
+        }
+      }
+    }
+    english: allContentfulRichText(
+      sort: { fields: title }
+      filter: { title: { glob: "*Localized*" }, node_locale: { eq: "en-US" } }
+    ) {
+      nodes {
+        id
+        title
+        richTextLocalized {
+          raw
+        }
+      }
+    }
+    german: allContentfulRichText(
+      sort: { fields: title }
+      filter: { title: { glob: "*Localized*" }, node_locale: { eq: "de-DE" } }
+    ) {
+      nodes {
+        id
+        title
+        richTextLocalized {
+          raw
         }
       }
     }

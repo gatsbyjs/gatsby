@@ -23,7 +23,7 @@ The Gatsby team is constantly updating plugins to use less memory and run faster
 
 #### Audit plugin configuration and queries and remove unused ones
 
-As your site's codebaes evolves, you might acccumulate plugins that are not longer needed. Try looking through your `gatsby-config.js` to make sure you're using all the plugins you have installed. In addition, you may want to look through queries to make sure you're using them (and the fields in each query).
+As your site's codebase evolves, you might accumulate plugins that are not longer needed. Try looking through your `gatsby-config.js` to make sure you're using all the plugins you have installed. In addition, you may want to look through queries to make sure you're using them (and the fields in each query).
 
 #### Make sure you're not clearing the cache between builds
 
@@ -31,7 +31,7 @@ In the past, Gatsby's cache was less reliable than it is now. As a result, some 
 
 #### Run builds on a machine with more and higher-powered CPUs
 
-The better the underlying hardware / VM / container you have, the faster your builds will go. As an anecdote, a Gatsby core team developer ran the same build on two machines they owned -- a five-year-old low-powered Windows machine and a new Macbook Pro -- and found that the latter gave a 30x build speed improvement.
+The better the underlying hardware / VM / container you have, the faster your builds will go. As an anecdote, a Gatsby core team developer ran the same build on two machines they owned -- a five-year-old low-powered Windows machine and a new MacBook Pro -- and found that the latter gave a 30x build speed improvement.
 
 #### Use Gatsby Cloud
 

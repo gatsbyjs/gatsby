@@ -1,13 +1,13 @@
 {
   "name": "gatsby-remark-copy-linked-files",
   "description": "Find files which are linked to from markdown and copy them to the public directory",
-  "version": "4.4.0-next.0",
+  "version": "4.4.0-next.2",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
+    "@babel/runtime": "^7.14.0",
     "cheerio": "^1.0.0-rc.9",
     "fs-extra": "^8.1.0",
     "is-relative-url": "^3.0.0",
@@ -17,9 +17,9 @@
     "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^1.7.0-next.0",
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "babel-preset-gatsby-package": "^1.7.0-next.2",
     "cross-env": "^7.0.3",
     "remark": "^13.0.0",
     "remark-mdx": "^1.6.22"

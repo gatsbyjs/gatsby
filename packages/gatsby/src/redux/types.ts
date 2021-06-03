@@ -40,7 +40,20 @@ export interface IGatsbyPage {
 }
 
 export interface IGatsbyFunction {
-  path: string
+  /** The route in the browser to access the function **/
+  functionRoute: string
+  /** The absolute path to the original function **/
+  originalAbsoluteFilePath: string
+  /** The relative path to the original function **/
+  originalRelativeFilePath: string
+  /** The relative path to the compiled function (always ends with .js) **/
+  relativeCompiledFilePath: string
+  /** The absolute path to the compiled function (doesn't transfer across machines) **/
+  absoluteCompiledFilePath: string
+  /** The matchPath regex created by path-to-regexp. Only created if the function is dynamic. **/
+  matchPath: string | undefined
+  /** The plugin that owns this function route **/
+  pluginName: string
 }
 
 export interface IGatsbyConfig {
@@ -228,7 +241,7 @@ export interface IGatsbyState {
     pluginFilepath: SystemPath
   }>
   config: IGatsbyConfig
-  functions: Map<string, IGatsbyFunction>
+  functions: Array<IGatsbyFunction>
   pages: Map<string, IGatsbyPage>
   schema: GraphQLSchema
   definitions: Map<string, IDefinitionMeta>
