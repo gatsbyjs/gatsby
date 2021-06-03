@@ -24,6 +24,15 @@ export function PreviewIndicator({ children }) {
         data-gatsby-preview-indicator="root"
         aria-live="assertive"
       >
+        {React.Children.map(children, (child, i) => {
+          let isFirstButton = false
+          if (i === 0) isFirstButton = true
+          return React.cloneElement(child, {
+            ...child.props,
+            isFirstButton,
+            buttonIndex: i,
+          })
+        })}
         {children}
       </div>
     </>
@@ -73,7 +82,6 @@ export function LinkIndicatorButton(props) {
     <IndicatorButton
       testId={`link`}
       iconSvg={linkIcon}
-      toolTipOffset={40}
       onClick={copyLinkClick}
       {...linkButtonCopyProps}
       {...props}
@@ -82,14 +90,7 @@ export function LinkIndicatorButton(props) {
 }
 
 export function InfoIndicatorButton(props) {
-  return (
-    <IndicatorButton
-      testId="info"
-      iconSvg={infoIcon}
-      toolTipOffset={80}
-      {...props}
-    />
-  )
+  return <IndicatorButton testId="info" iconSvg={infoIcon} {...props} />
 }
 
 const viewLogsClick = ({ orgId, siteId, errorBuildId }) => {
