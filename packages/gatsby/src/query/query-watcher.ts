@@ -279,7 +279,12 @@ export const updateStateAndRunQueries = async (
       `)
   }
 
-  await processNodeManifests()
+  if (process.env.NODE_ENV === `development`) {
+    /**
+     * only process node manifests here in develop. we want this to run every time queries are updated. for gatsby build we process node manifests in src/services/run-page-queries.ts after all queries are run and pages are created. If we process node manifests in this location for gatsby build we wont have all the information needed to create the manifests. If we don't process manifests in this location during gatsby develop manifests will only be written once and never again when more manifests are created.
+     */
+    await processNodeManifests()
+  }
 }
 
 export const extractQueries = ({
