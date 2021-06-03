@@ -75,8 +75,8 @@ jest.mock(`../../redux`, () => {
   }
 })
 
-function mockGetNodes(nodeStore: Map<string, { id: string }>) {
-  return getNode.mockImplementation(id => nodeStore.get(id))
+function mockGetNodes(nodeStore: Map<string, { id: string }>): void {
+  getNode.mockImplementation(id => nodeStore.get(id))
 }
 
 beforeEach(() => {
