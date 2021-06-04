@@ -13,7 +13,6 @@ import { getBrowsersList } from "../utils/browserslist"
 import { Store, AnyAction } from "redux"
 import { preferDefault } from "../bootstrap/prefer-default"
 import * as WorkerPool from "../utils/worker/pool"
-import JestWorker from "jest-worker"
 import { startPluginRunner } from "../redux/plugin-runner"
 import { loadPlugins } from "../bootstrap/load-plugins"
 import { store, emitter } from "../redux"
@@ -76,7 +75,7 @@ export async function initialize({
   parentSpan,
 }: IBuildContext): Promise<{
   store: Store<IGatsbyState, AnyAction>
-  workerPool: JestWorker
+  workerPool: WorkerPool.GatsbyWorkerPool
 }> {
   if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
     reporter.info(

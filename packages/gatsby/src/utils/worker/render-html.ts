@@ -280,7 +280,7 @@ export const renderHTMLProd = async ({
 }: {
   htmlComponentRendererPath: string
   paths: Array<string>
-  envVars: Array<Array<string>>
+  envVars: Array<[string, string | undefined]>
   sessionId: number
 }): Promise<IRenderHtmlResult> => {
   const publicDir = join(process.cwd(), `public`)
@@ -353,7 +353,7 @@ export const renderHTMLDev = async ({
 }: {
   htmlComponentRendererPath: string
   paths: Array<string>
-  envVars: Array<Array<string>>
+  envVars: Array<[string, string | undefined]>
   sessionId: number
 }): Promise<Array<unknown>> => {
   const outputDir = join(process.cwd(), `.cache`, `develop-html`)
