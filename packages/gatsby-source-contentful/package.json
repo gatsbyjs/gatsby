@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-contentful",
   "description": "Gatsby source plugin for building websites using the Contentful CMS as a data source",
-  "version": "5.7.0-next.2",
+  "version": "5.8.0-next.0",
   "author": "Marcus Ericsson <mericsson@gmail.com> (mericsson.com)",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -17,9 +17,9 @@
     "common-tags": "^1.8.0",
     "contentful": "^8.1.7",
     "fs-extra": "^9.1.0",
-    "gatsby-core-utils": "^2.7.0-next.2",
-    "gatsby-plugin-utils": "^1.7.0-next.2",
-    "gatsby-source-filesystem": "^3.7.0-next.2",
+    "gatsby-core-utils": "^2.8.0-next.0",
+    "gatsby-plugin-utils": "^1.8.0-next.0",
+    "gatsby-source-filesystem": "^3.8.0-next.0",
     "is-online": "^8.5.1",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.21",
@@ -31,7 +31,7 @@
   "devDependencies": {
     "@babel/cli": "^7.14.3",
     "@babel/core": "^7.14.3",
-    "babel-preset-gatsby-package": "^1.7.0-next.2",
+    "babel-preset-gatsby-package": "^1.8.0-next.0",
     "cross-env": "^7.0.3",
     "nock": "^13.0.6"
   },

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.7.0-next.2...gatsby-plugin-gatsby-cloud@2.8.0-next.0) (2021-06-03)
+
+### Features
+
+- **gatsby-plugin-gatsby-cloud:** Track user engagement in preview UI ([#31642](https://github.com/gatsbyjs/gatsby/issues/31642)) ([58be1c3](https://github.com/gatsbyjs/gatsby/commit/58be1c3762fa3cf14c275d7952c52fb0ded6cbc4))
+
 # [2.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.7.0-next.1...gatsby-plugin-gatsby-cloud@2.7.0-next.2) (2021-06-02)
 
 **Note:** Version bump only for package gatsby-plugin-gatsby-cloud

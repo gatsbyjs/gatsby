@@ -99,6 +99,7 @@ type PageInput = {
   path: string,
   component: string,
   context?: Object,
+  ownerNodeId?: string,
 }
 
 type Page = {
@@ -109,6 +110,7 @@ type Page = {
   internalComponentName: string,
   componentChunkName: string,
   updatedAt: number,
+  ownerNodeId?: string,
 }
 
 type ActionOptions = {
@@ -160,6 +162,7 @@ const reservedFields = [
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
  * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
+ * @param {string} page.ownerNodeId The id of the node that owns this page. This is used for routing users to previews via the unstable_createNodeManifest public action. Since multiple nodes can be queried on a single page, this allows the user to tell us which node is the main node for the page.
  * @param {string} page.component The absolute path to the component for this page
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pageContext` as well as to the graphql query
@@ -168,6 +171,7 @@ const reservedFields = [
  * createPage({
  *   path: `/my-sweet-new-page/`,
  *   component: path.resolve(`./src/templates/my-sweet-new-page.js`),
+ *   ownerNodeId: `123456`,
  *   // The context is passed as props to the component as well
  *   // as into the component's GraphQL query.
  *   context: {
@@ -404,6 +408,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     // Link page to its plugin.
     pluginCreator___NODE: plugin.id ?? ``,
     pluginCreatorId: plugin.id ?? ``,
+  }
+
+  if (page.ownerNodeId) {
+    internalPage.ownerNodeId = page.ownerNodeId
   }
 
   // If the path doesn't have an initial forward slash, add it.
@@ -1479,6 +1487,43 @@ actions.createServerVisitedPage = (chunkName: string) => {
   return {
     type: `CREATE_SERVER_VISITED_PAGE`,
     payload: { componentChunkName: chunkName },
+  }
+}
+
+/**
+ * Creates an individual node manifest.
+ * This is used to tie the unique revision state within a data source at the current point in time to a page generated from the provided node when it's node manifest is processed.
+ *
+ * @param {Object} manifest a page object
+ * @param {string} manifest.manifestId An id which ties the revision unique state of this manifest to the unique revision state of a data source.
+ * @param {string} manifest.node The Gatsyby node to tie the manifestId to
+ * @example
+ * unstable_createNodeManifest({
+ *   manifestId: `post-id-1--updated-53154315`,
+ *   node: {
+ *      id: `post-id-1`
+ *   },
+ * })
+ */
+actions.unstable_createNodeManifest = (
+  {
+    manifestId,
+    node,
+  }: {
+    manifestId: string,
+    node: {
+      id: string,
+    },
+  },
+  plugin: Plugin
+) => {
+  return {
+    type: `CREATE_NODE_MANIFEST`,
+    payload: {
+      manifestId,
+      node,
+      pluginName: plugin.name,
+    },
   }
 }
 
