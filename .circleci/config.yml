@@ -193,7 +193,7 @@ jobs:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
       # python 2 is not built in and node-gyp needs it to build lmdb
-      - run: apt-get install python -y
+      - run: apt-get update && apt-get install python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *check_lockfile
