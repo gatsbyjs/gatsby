@@ -4,6 +4,7 @@ export {
   GatsbyIndicatorButton,
   LinkIndicatorButton,
   InfoIndicatorButton,
+  BuildErrorIndicatorTooltip,
 } from "./Indicator"
 
 export { IndicatorButton } from "./IndicatorButton"

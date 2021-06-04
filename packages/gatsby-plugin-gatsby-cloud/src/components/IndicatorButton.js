@@ -82,11 +82,8 @@ const spinnerIcon = (
 
 const IndicatorButton = ({
   buttonIndex,
-  tooltipText,
+  tooltipContent,
   overrideShowTooltip = false,
-  tooltipLink,
-  tooltipIcon,
-  tooltipLinkImage,
   iconSvg,
   onClick,
   showSpinner,
@@ -129,16 +126,12 @@ const IndicatorButton = ({
           )}
         </div>
       </button>
-      {tooltipText && (
+      {tooltipContent && (
         <IndicatorButtonTooltip
-          tooltipText={tooltipText}
+          tooltipContent={tooltipContent}
           overrideShowTooltip={overrideShowTooltip}
           showTooltip={showTooltip}
-          tooltipIcon={tooltipIcon}
           buttonIndex={buttonIndex}
-          tooltipLink={tooltipLink}
-          tooltipLinkImage={tooltipLinkImage}
-          onClick={onClick}
           testId={testId}
         />
       )}

@@ -1,18 +1,13 @@
 import React from "react"
 
 const IndicatorButtonTooltip = ({
-  onClick,
-  tooltipLinkImage,
-  tooltipLink,
+  tooltipContent,
   overrideShowTooltip,
   showTooltip,
-  tooltipText,
-  tooltipIcon,
   buttonIndex,
   testId,
 }) => (
   <div
-    onClick={onClick}
     // The tooltip offset needs to be 40 * button possition (0 indexed) + 12
     // This will align the tooltip with its correct button
     // The first button is (40 * 0) + 12
@@ -24,15 +19,7 @@ const IndicatorButtonTooltip = ({
     }`}
     data-testid={`${testId}-tooltip`}
   >
-    {tooltipIcon}
-    {tooltipText}
-    {/** @todo wrap this with a <Link /> for A11y */}
-    {tooltipLink && (
-      <p data-gatsby-preview-indicator="tooltip-link">{tooltipLink}</p>
-    )}
-    {tooltipLinkImage && (
-      <div data-gatsby-preview-indicator="tooltip-svg">{tooltipLinkImage}</div>
-    )}
+    {tooltipContent}
   </div>
 )
 

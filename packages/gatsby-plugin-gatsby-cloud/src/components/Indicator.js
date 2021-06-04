@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react"
 import { formatDistance } from "date-fns"
+import { Link } from "gatsby-interface"
 import getBuildInfo from "../utils/getBuildInfo"
 import trackEvent from "../utils/trackEvent"
 import IndicatorButton from "./IndicatorButton"
@@ -36,27 +37,32 @@ export function GatsbyIndicatorButton(props) {
   return <IndicatorButton testId="gatsby" iconSvg={gatsbyIcon} {...props} />
 }
 
+const copySuccessTooltip = (
+  <>
+    {successIcon}
+    {`Link copied`}
+  </>
+)
+
 export function LinkIndicatorButton(props) {
   const [linkButtonCopyProps, setLinkButtonCopyProps] = useState()
 
   const copyLinkClick = () => {
     setLinkButtonCopyProps({
-      tooltipIcon: successIcon,
+      tooltipContent: copySuccessTooltip,
       overrideShowTooltip: true,
-      tooltipText: `Link copied`,
     })
 
     setTimeout(() => {
       setLinkButtonCopyProps({
-        tooltipIcon: successIcon,
+        tooltipContent: copySuccessTooltip,
         overrideShowTooltip: false,
-        tooltipText: `Link copied`,
       })
       // We want the tooltip to linger for two seconds to let the user know it has been copied
     }, 2000)
 
     setTimeout(() => {
-      setLinkButtonCopyProps({ tooltipText: `Copy Link` })
+      setLinkButtonCopyProps({ tooltipContent: `Copy Link` })
       // The tooltips fade out, in order to make sure that the text does not change
       // while it is fading out we need to wait a bit longer than the time used above.
     }, 2400)
@@ -79,11 +85,46 @@ export function InfoIndicatorButton(props) {
   return <IndicatorButton testId="info" iconSvg={infoIcon} {...props} />
 }
 
-const viewLogsClick = ({ orgId, siteId, errorBuildId }) => {
+export function BuildErrorIndicatorTooltip({ siteId, orgId, buildId }) {
+  return (
+    <>
+      {failedIcon}
+      {`Unabled to build preview`}
+      <Link
+        href={generateBuildLogUrl({ orgId, siteId, buildId })}
+        onClick={() => {
+          /** @todo add click tracking */
+        }}
+      >
+        <p data-gatsby-preview-indicator="tooltip-link">{`View logs`}</p>
+        <div data-gatsby-preview-indicator="tooltip-svg">{logsIcon}</div>
+      </Link>
+    </>
+  )
+}
+
+function BuildSuccessIndicatorTooltip({ isOnPrettyUrl, sitePrefix }) {
+  return (
+    <>
+      {`New preview available`}
+      <Link
+        // href={generateBuildLogUrl({ orgId, siteId, buildId })}
+        onClick={() => {
+          newPreviewAvailableClick({ isOnPrettyUrl, sitePrefix })
+          /** @todo add click tracking */
+        }}
+      >
+        <p data-gatsby-preview-indicator="tooltip-link">{`Click to view`}</p>
+      </Link>
+    </>
+  )
+}
+
+const generateBuildLogUrl = ({ orgId, siteId, errorBuildId }) => {
   const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/builds/${errorBuildId}/details`
   const returnTo = encodeURIComponent(pathToBuildLogs)
 
-  window.open(`${pathToBuildLogs}?returnTo=${returnTo}`)
+  return `${pathToBuildLogs}?returnTo=${returnTo}`
 }
 
 const newPreviewAvailableClick = ({ isOnPrettyUrl, sitePrefix }) => {
@@ -106,7 +147,12 @@ export default function Indicator() {
   const shouldPoll = useRef(false)
   let trackedInitialLoad
   let buildId
-  const buildStatus = buildInfo?.currentBuild?.buildStatus
+
+  const {
+    siteInfo: { orgId, siteId },
+    currentBuild,
+  } = buildInfo || { siteInfo: {}, currentBuild: {} }
+  const { buildStatus } = currentBuild
 
   const pollData = useCallback(async function pollData() {
     const prettyUrlRegex = /^preview-/
@@ -167,11 +213,11 @@ export default function Indicator() {
     return (
       <PreviewIndicator>
         <GatsbyIndicatorButton
-          tooltipText={`Building a new preview`}
+          tooltipContent={`Building a new preview`}
           showSpinner={true}
           overrideShowTooltip={true}
         />
-        <LinkIndicatorButton tooltipText={`Copy link`} active={true} />
+        <LinkIndicatorButton tooltipContent={`Copy link`} active={true} />
         <InfoIndicatorButton />
       </PreviewIndicator>
     )
@@ -181,19 +227,15 @@ export default function Indicator() {
     return (
       <PreviewIndicator>
         <GatsbyIndicatorButton
-          tooltipText={`Preview error`}
+          toolTipContent={
+            <BuildErrorIndicatorTooltip
+              siteId={siteId}
+              orgId={orgId}
+              buildId={currentBuild.id}
+            />
+          }
           overrideShowTooltip={true}
           active={true}
-          tooltipIcon={failedIcon}
-          tooltipLink={`View logs`}
-          tooltipLinkImage={logsIcon}
-          onClick={() =>
-            viewLogsClick({
-              orgId: buildInfo?.siteInfo?.orgId,
-              siteId: buildInfo?.siteInfo?.siteId,
-              errorBuildId: buildInfo?.currentBuild?.id,
-            })
-          }
         />
         <LinkIndicatorButton />
         <InfoIndicatorButton />
@@ -210,9 +252,9 @@ export default function Indicator() {
     return (
       <PreviewIndicator>
         <GatsbyIndicatorButton active={true} />
-        <LinkIndicatorButton tooltipText={`Copy link`} active={true} />
+        <LinkIndicatorButton tooltipContent={`Copy link`} active={true} />
         <InfoIndicatorButton
-          tooltipText={`Preview updated ${updatedDate} ago`}
+          tooltipContent={`Preview updated ${updatedDate} ago`}
           active={true}
         />
       </PreviewIndicator>
@@ -227,7 +269,12 @@ export default function Indicator() {
     return (
       <PreviewIndicator>
         <GatsbyIndicatorButton
-          tooltipText={`New preview available`}
+          tooltipContent={
+            <BuildSuccessIndicatorTooltip
+              isOnPrettyUrl={buildInfo?.isOnPrettyUrl}
+              sitePrefix={buildInfo?.siteInfo?.sitePrefix}
+            />
+          }
           overrideShowTooltip={true}
           active={true}
           onClick={() =>
@@ -236,7 +283,6 @@ export default function Indicator() {
               sitePrefix: buildInfo?.siteInfo?.sitePrefix,
             })
           }
-          tooltipLink={`Click to view`}
         />
         <LinkIndicatorButton />
         <InfoIndicatorButton />

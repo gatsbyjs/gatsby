@@ -119,6 +119,7 @@ const Style = () => (
         [data-gatsby-preview-indicator="tooltip-link"] {
           color: #a97ec7;
           font-weight: bold;
+          margin-bottom: 0;
           margin-left: 5px;
           line-height: 12px;
           font-size: 0.8rem;
