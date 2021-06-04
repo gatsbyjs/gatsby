@@ -1,8 +1,8 @@
-import { IGatsbyNode } from "./types"
-import { GatsbyGraphQLType } from "../.."
-import { prepareRegex } from "../utils/prepare-regex"
+import { IGatsbyNode } from "../../redux/types"
+import { GatsbyGraphQLType } from "../../.."
+import { prepareRegex } from "../../utils/prepare-regex"
 import { makeRe } from "micromatch"
-import { getValueAt } from "../utils/get-value-at"
+import { getValueAt } from "../../utils/get-value-at"
 import _ from "lodash"
 import {
   DbQuery,
@@ -11,7 +11,7 @@ import {
   objectToDottedField,
   createDbQueriesFromObject,
   prefixResolvedFields,
-} from "../db/common/query"
+} from "../common/query"
 import {
   FilterOp,
   FilterCacheKey,
@@ -23,8 +23,8 @@ import {
   getNodesFromCacheByValue,
   intersectNodesByCounter,
   IFilterCache,
-} from "./nodes"
-import { IGraphQLRunnerStats } from "../query/types"
+} from "./indexing"
+import { IGraphQLRunnerStats } from "../../query/types"
 
 // The value is an object with arbitrary keys that are either filter values or,
 // recursively, an object with the same struct. Ie. `{a: {a: {a: 2}}}`

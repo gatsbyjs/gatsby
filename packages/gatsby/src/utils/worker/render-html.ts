@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-namespace */
+
 import fs from "fs-extra"
 import Bluebird from "bluebird"
 import * as path from "path"
@@ -9,7 +11,12 @@ import { IRenderHtmlResult } from "../../commands/build-html"
 const { join } = path.posix
 
 declare global {
-  let unsafeBuiltinUsage: Array<string> | undefined
+  namespace NodeJS {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    interface Global {
+      unsafeBuiltinUsage: Array<string> | undefined
+    }
+  }
 }
 
 /**
@@ -45,7 +52,7 @@ function clearCaches(): void {
 const getStaticQueryPath = (hash: string): string =>
   join(`page-data`, `sq`, `d`, `${hash}.json`)
 
-const getStaticQueryResult = async (hash: string): any => {
+const getStaticQueryResult = async (hash: string): Promise<any> => {
   const staticQueryPath = getStaticQueryPath(hash)
   const absoluteStaticQueryPath = join(process.cwd(), `public`, staticQueryPath)
   const staticQueryRaw = await fs.readFile(absoluteStaticQueryPath)
@@ -64,7 +71,7 @@ async function readPageData(
   return JSON.parse(rawPageData)
 }
 
-async function readWebpackStats(publicDir: string): any {
+async function readWebpackStats(publicDir: string): Promise<any> {
   const filePath = join(publicDir, `webpack.stats.json`)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
 
@@ -284,7 +291,7 @@ export const renderHTMLProd = async ({
 }: {
   htmlComponentRendererPath: string
   paths: Array<string>
-  envVars: Array<Array<string>>
+  envVars: Array<[string, string | undefined]>
   sessionId: number
 }): Promise<IRenderHtmlResult> => {
   const publicDir = join(process.cwd(), `public`)
@@ -357,7 +364,7 @@ export const renderHTMLDev = async ({
 }: {
   htmlComponentRendererPath: string
   paths: Array<string>
-  envVars: Array<Array<string>>
+  envVars: Array<[string, string | undefined]>
   sessionId: number
 }): Promise<Array<unknown>> => {
   const outputDir = join(process.cwd(), `.cache`, `develop-html`)

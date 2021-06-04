@@ -745,7 +745,11 @@ const fetchGraphql = async ({
 
     const responsePath = response.request.path
 
-    if (path !== responsePath && responsePath !== undefined) {
+    if (
+      path !== responsePath &&
+      responsePath !== undefined &&
+      responsePath !== url
+    ) {
       throw new Error(`GraphQL request was redirected to ${responsePath}`)
     }
 
