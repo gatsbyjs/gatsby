@@ -238,13 +238,13 @@ jobs:
   unit_tests_node14:
     executor:
       name: node
-      image: "14"
+      image: "14.17.0"
     <<: *test_template
 
   unit_tests_node14_lmdb_store:
     executor:
       name: node
-      image: "14"
+      image: "14.17.0"
     environment:
       GATSBY_EXPERIMENTAL_LMDB_STORE: 1
     <<: *test_template
