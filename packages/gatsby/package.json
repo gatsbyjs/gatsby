@@ -166,6 +166,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
+    "@babel/register": "^7.13.16",
     "@babel/runtime": "^7.14.0",
     "@types/eslint": "^7.2.6",
     "@types/micromatch": "^4.0.1",
