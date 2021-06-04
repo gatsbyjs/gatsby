@@ -89,7 +89,7 @@ export function BuildErrorIndicatorTooltip({ siteId, orgId, buildId }) {
   return (
     <>
       {failedIcon}
-      {`Unabled to build preview`}
+      {`Unable to build preview`}
       <Link
         href={generateBuildLogUrl({ orgId, siteId, buildId })}
         onClick={() => {
