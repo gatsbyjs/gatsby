@@ -206,6 +206,7 @@ const activeFlags: Array<IFlag> = [
     command: `all`,
     telemetryId: `LmdbStore`,
     experimental: true,
+    umbrellaIssue: `https://gatsby.dev/lmdb-feedback`,
     description: `Store nodes in a persistent embedded database (vs in-memory). Lowers peak memory usage.`,
     testFitness: (): fitnessEnum => {
       const [major, minor] = process.versions.node.split(`.`)
