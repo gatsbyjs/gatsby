@@ -21,7 +21,7 @@ export const startLogger = (): void => {
     }
   }
   // if child process - use ipc logger
-  if (process.send) {
+  if (process.send && !process.env.JEST_WORKER_ID) {
     // process.env.FORCE_COLOR = `0`
 
     initializeIPCLogger()
