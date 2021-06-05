@@ -71,9 +71,9 @@ export function resolvePlugin(
   rootDir = (!_.isString(plugin) && plugin.parentDir) || rootDir
 
   // Only find plugins when we're not given an absolute path
-  if (!existsSync(pluginName)) {
+  if (!existsSync(pluginName) && rootDir) {
     // Find the plugin in the local plugins folder
-    const resolvedPath = slash(path.resolve(`./plugins/${pluginName}`))
+    const resolvedPath = slash(path.join(rootDir, `plugins/${pluginName}`))
 
     if (existsSync(resolvedPath)) {
       if (existsSync(`${resolvedPath}/package.json`)) {
