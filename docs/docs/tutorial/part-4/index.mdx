@@ -273,25 +273,7 @@ import {
 
 const Layout = ({ pageTitle, children }) => {
   return (
-    <main className={container}>
-      <title>{pageTitle}</title>
-      <nav>
-        <ul className={navLinks}>
-          <li className={navLinkItem}>
-            <Link to="/" className={navLinkText}>
-              Home
-            </Link>
-          </li>
-          <li className={navLinkItem}>
-            <Link to="/about" className={navLinkText}>
-              About
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <h1 className={heading}>{pageTitle}</h1>
-      {children}
-    </main>
+    // ...
   )
 }
 
@@ -325,32 +307,14 @@ const Layout = ({ pageTitle, children }) => {
   // highlight-end
   
   return (
-    <main className={container}>
-      <title>{pageTitle}</title>
-      <nav>
-        <ul className={navLinks}>
-          <li className={navLinkItem}>
-            <Link to="/" className={navLinkText}>
-              Home
-            </Link>
-          </li>
-          <li className={navLinkItem}>
-            <Link to="/about" className={navLinkText}>
-              About
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <h1 className={heading}>{pageTitle}</h1>
-      {children}
-    </main>
+    // ...
   )
 }
 
 export default Layout
 ```
 
-3. Use the value from the response to render the title of your site in the JSX for your `Layout` component.
+3. Use the value from the response to render the title of your site in the JSX for your `Layout` component. Add it so it appears in both the browser tab and at the top of your page content.
 
 ```js:title=src/components/layout.js
 import * as React from 'react'
