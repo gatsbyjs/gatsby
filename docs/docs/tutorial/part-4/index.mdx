@@ -50,7 +50,7 @@ By the end of this part of the Tutorial, you will be able to:
 
 - Use **GraphiQL** to explore the data in the data layer and build your own GraphQL queries.
 - Use the **`useStaticQuery`** hook to pull data into a "building-block" component.
-- Use the **`gatsby-source-filesystem`** plugin to pull data into your site from your local file system.
+- Use the **`gatsby-source-filesystem`** plugin to pull data into your site from your computer's filesystem.
 - Create a **page query** to pull data into a page component.
 
 ## Meet Gatsby's GraphQL data layer
@@ -79,7 +79,7 @@ How do you get data back out of the data layer? You can write **GraphQL queries*
 
 How do you know what data is in your site's GraphQL data layer? When you start the local development server for your site, Gatsby automatically creates a special endpoint that lets you use an in-browser tool called **GraphiQL**. With GraphiQL, you can explore your site's data and build GraphQL queries.
 
-To see GraphiQL:
+Follow the steps below to open the GraphiQL interface:
 
 1. Start up your local development server by running `gatsby develop`.
 1. In a web browser, go to `http://localhost:8000/___graphql`. (That's three underscores in the URL.)
@@ -175,23 +175,36 @@ Try changing the value of the `title` property in your `gatsby-config.js` file. 
 
 https://github.com/meganesu/gatsby-intro-workshop-example-site-with-v3/commit/83996e21e5b60d5684c6212065466e2291ae3931
 
-You've seen how to use GraphiQL to write queries. But how do you actually use those queries inside your JavaScript files? The approach looks slightly different depending on whether you're trying to pull data into a page component or a building-block component.
+Now that you have a GraphQL query that returns the data you're looking for, how do you use that query in your React components?
 
-You'll try pulling data into a building-block component first. To do that, you'll need to use a pre-defined function from Gatsby: `useStaticQuery`.
+To pull data into a building-block component, you'll need to use a pre-defined function from Gatsby called `useStaticQuery`.
 
 <Collapsible
   summary={<h4>Key Gatsby Concept: Introduce <code>useStaticQuery</code></h4>}
 >
 
-To add a GraphQL query to a "building block" component, you use a special hook called `useStaticQuery`:
+To add a GraphQL query to a "building block" component, you use a special hook called `useStaticQuery`.
 
-```javascript
+// What is the graphql tag?
+The `graphql` tag is something called a [tagged template literal](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates). Basically, the `graphql` tag tells Gatsby that the string following it is a GraphQL query, so then Gatsby can parse and run it.
+
+1. Import the `useStaticQuery` hook and the `graphql` tag from the `gatsby` package.
+2. Inside your component, create a new variable and set it to the return value of `useStaticQuery`.
+    * The `useStaticQuery` takes a single argument: a string (templated with the `graphql` tag) of your GraphQL query.
+3. Use the data in your component by using the dot operator (`.`) to access the appropriate field off the response.
+
+Here's a small example to show what this process looks like in practice:
+
+```js:title=src/components/header.js
 import React from 'react'
 
+// highlight-start
 // Step 1: Import the useStaticQuery hook and graphql tag
 import { useStaticQuery, graphql } from 'gatsby'
+// highlight-end
 
 const Header = () => {
+  // highlight-start
   /* Step 2: Use the useStaticQuery hook and
     graphql tag to query for data
     (The query gets run at build time) */
@@ -204,11 +217,14 @@ const Header = () => {
       }
     }
   `)
+  // highlight-end
 
   return (
     <header>
+      {/* highlight-start */}
       {/* Step 3: Use the data in your component */}
       <h1>{ data.site.siteMetadata.title }</h1>
+      {/* highlight-end */}
     </header>
   )
 }
@@ -216,38 +232,184 @@ const Header = () => {
 export default Header
 ```
 
+<Announcement>
+
+**Note:** You can only call `useStaticQuery` once per file. If you need multiple fields, you can add them all into a single query.
+
+For example, if you need data from both the `site` field and the `siteBuildMetadata` field, you could make the following call to `useStaticQuery`:
+
+```js
+const data = useStaticQuery(graphql`
+  query MyQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+    siteBuildMetadata {
+      buildTime
+    }
+  }
+`)
+```
+</Announcement>
+
 </Collapsible>
 
 Follow the steps below to use `useStaticQuery` to pull in the site title from your site metadata into your `Layout` component.
 
 1. Import useStaticQuery and graphql from gatsby
 
-1. Paste the query from GraphiQL into useStaticQuery
+```js:title=src/components/layout.js
+import * as React from 'react'
+import { Link, useStaticQuery, graphql } from 'gatsby' // highlight-line
+import {
+  container,
+  heading,
+  navLinks,
+  navLinkItem,
+  navLinkText
+} from './layout.module.css'
+
+const Layout = ({ pageTitle, children }) => {
+  return (
+    <main className={container}>
+      <title>{pageTitle}</title>
+      <nav>
+        <ul className={navLinks}>
+          <li className={navLinkItem}>
+            <Link to="/" className={navLinkText}>
+              Home
+            </Link>
+          </li>
+          <li className={navLinkItem}>
+            <Link to="/about" className={navLinkText}>
+              About
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      <h1 className={heading}>{pageTitle}</h1>
+      {children}
+    </main>
+  )
+}
+
+export default Layout
+```
+
+2. Paste the query from GraphiQL into useStaticQuery
 
 ```js:title=src/components/layout.js
-const data = useStaticQuery(graphql`
-  query {
-    site {
-      siteMetadata {
-        title
+import * as React from 'react'
+import { Link, useStaticQuery, graphql } from 'gatsby'
+import {
+  container,
+  heading,
+  navLinks,
+  navLinkItem,
+  navLinkText
+} from './layout.module.css'
+
+const Layout = ({ pageTitle, children }) => {
+  // highlight-start
+  const data = useStaticQuery(graphql`
+    query MyQuery {
+      site {
+        siteMetadata {
+          title
+        }
       }
-    }
-  }
-`)
+    }  
+  `)
+  // highlight-end
+  
+  return (
+    <main className={container}>
+      <title>{pageTitle}</title>
+      <nav>
+        <ul className={navLinks}>
+          <li className={navLinkItem}>
+            <Link to="/" className={navLinkText}>
+              Home
+            </Link>
+          </li>
+          <li className={navLinkItem}>
+            <Link to="/about" className={navLinkText}>
+              About
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      <h1 className={heading}>{pageTitle}</h1>
+      {children}
+    </main>
+  )
+}
+
+export default Layout
 ```
 
-1. Use the value from the response to render the title of your site in the JSX for your `Layout` component.
+3. Use the value from the response to render the title of your site in the JSX for your `Layout` component.
 
 ```js:title=src/components/layout.js
-<title>{pageTitle} | {data.site.siteMetadata.title}</title>
-<p>{data.site.siteMetadata.title}</p>
+import * as React from 'react'
+import { Link, useStaticQuery, graphql } from 'gatsby'
+import {
+  container,
+  heading,
+  navLinks,
+  navLinkItem,
+  navLinkText
+} from './layout.module.css'
+
+const Layout = ({ pageTitle, children }) => {
+  const data = useStaticQuery(graphql`
+    query MyQuery {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }  
+  `)
+  
+  return (
+    <main className={container}>
+      {/* highlight-start */}
+      <title>{pageTitle} | {data.site.siteMetadata.title}</title>
+      <p>{data.site.siteMetadata.title}</p>
+      {/* highlight-end */}
+      <nav>
+        <ul className={navLinks}>
+          <li className={navLinkItem}>
+            <Link to="/" className={navLinkText}>
+              Home
+            </Link>
+          </li>
+          <li className={navLinkItem}>
+            <Link to="/about" className={navLinkText}>
+              About
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      <h1 className={heading}>{pageTitle}</h1>
+      {children}
+    </main>
+  )
+}
+
+export default Layout
 ```
 
-// Insert screenshot of the rendered page
+![A screenshot of the home page in a web browser. The title of the page in the browser tab now says, "Home Page | My First Gatsby Site", and the top of the page has an unstyled paragraph that says, "My First Gatsby Site".](./index-page-with-site-title.png)
 
-1. Now that your data is showing up on the page, it's time to add some style! Define some styles for the site title below the existing styles in your `layout.module.css` file.
+4. Now that your data is showing up on the page, it's time to add some style! Define some styles for the site title below the existing styles in your `layout.module.css` file.
 
 ```css:title=src/components/layout.module.css
+/* ... your existing styles */
+
 .site-title {
   font-size: 3rem;
   color: gray;
@@ -255,16 +417,62 @@ const data = useStaticQuery(graphql`
 }
 ```
 
-1. Import your new styles into your .js file and apply them to the site title you just added.
+5. Import your new styles into your `Layout` component and apply them to the site title paragraph you added.
 
 ```js:title=src/components/layout.js
-import { siteTitle } from './layout.module.css'
-<p className={siteTitle}>{data.site.siteMetadata.title}</p>
+import * as React from 'react'
+import { Link, useStaticQuery, graphql } from 'gatsby'
+import {
+  container,
+  heading,
+  navLinks,
+  navLinkItem,
+  navLinkText,
+  siteTitle, // highlight-line
+} from './layout.module.css'
+
+const Layout = ({ pageTitle, children }) => {
+  const data = useStaticQuery(graphql`
+    query MyQuery {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }  
+  `)
+  
+  return (
+    <main className={container}>
+      <title>{pageTitle} | {data.site.siteMetadata.title}</title>
+      {/* highlight-next-line */}
+      <p className={siteTitle}>{data.site.siteMetadata.title}</p>
+      <nav>
+        <ul className={navLinks}>
+          <li className={navLinkItem}>
+            <Link to="/" className={navLinkText}>
+              Home
+            </Link>
+          </li>
+          <li className={navLinkItem}>
+            <Link to="/about" className={navLinkText}>
+              About
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      <h1 className={heading}>{pageTitle}</h1>
+      {children}
+    </main>
+  )
+}
+
+export default Layout
 ```
 
 Reload your browser to see your new styles applied to your site title.
 
-// insert screenshot
+![A screenshot of the home page in a web browser. Now the site title paragraph is styled to be larger and gray.](./index-page-with-site-title-styled.png)
 
 Congratulations, you've just used GraphQL to pull data into your site! Try changing the site title in your `gatsby-config.js` file and see your site update in the browser. (Do you need to restart your local dev server for this?)
 
@@ -358,7 +566,7 @@ You won't be able to render the contents of your posts just yet, since your site
 
 // TURN THIS INTO A GRAPHIC INSTEAD OF A COLLAPSIBLE SECTION
 <Collapsible
-  summary="<h2>General process for using data</h2>"
+  summary={<h2>General process for using data</h2>}
 >
 
 1. Add a source plugin to add data into the GraphQL data layer.
@@ -374,6 +582,9 @@ You won't be able to render the contents of your posts just yet, since your site
 
 Take a moment to think back on what you've learned so far. Challenge yourself to answer the following questions from memory:
 
+* How do you get data into the data layer?
+* How can you see what data is in the data layer?
+* How do you get data out of the data layer?
 * What is the difference between a page query and `useStaticQuery`? How would you decide which one to use?
 
 <Announcement style={{marginBottom: "1.5rem"}}>
