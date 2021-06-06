@@ -198,18 +198,23 @@ Follow the below steps to configure your site with a free SSL/TLS certificate fr
 
 1. Install Certbot onto your droplet.
 
-   You'll need to add the Certbot PPA (Personal Package Archives) to your list of repositories. To do so, run the following commands:
+   You'll need to install Certbot using `snapd`. To do so, run the following commands:
 
    ```shell
-   sudo apt-get update
-   sudo add-apt-repository ppa:certbot/certbot
-   sudo apt-get update
+   sudo snap install core; sudo snap refresh core
+   sudo apt-get remove certbot
    ```
 
-   Run the following commands to install Certbot.
+   Run the following command to install Certbot.
 
    ```shell
-   sudo apt-get install certbot python3-certbot-nginx
+   sudo snap install --classic certbot
+   ```
+   
+   Run the following command to start using Certbot.
+   
+   ```shell
+   sudo ln -s /snap/bin/certbot /usr/bin/certbot
    ```
 
 2. Generate the certificate. Certbot will automatically edit and configure the Nginx config file and point to the certificate file.
@@ -255,3 +260,4 @@ There's a lot more to learn about DigitalOcean's Droplets, Ubuntu configurations
 - [Configuring HTTPS Servers with Nginx](https://nginx.org/en/docs/http/configuring_https_servers.html)
 - [How To Install Nginx on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04)
 - [How To Secure Nginx with Let's Encrypt on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-18-04)
+- [Installing Certbot with Nginx](https://certbot.eff.org/lets-encrypt/ubuntuxenial-nginx)
