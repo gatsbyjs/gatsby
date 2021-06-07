@@ -10,6 +10,7 @@ Welcome to `gatsby@3.7.0` release (June 2021 #1)
 
 Key highlights of this release:
 
+- [Functions](#functions) - Now generally available
 - [Webpack caching](#webpack-caching) - starting gradual rollout
 - [New API for source plugins: `createNodeManifest`](#new-api-for-source-plugins-createnodemanifest)
 - [Experimental: Node persistence in LMDB](#experimental-node-persistence-in-lmdb) - lower peak memory usage
@@ -25,6 +26,12 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 [Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.7.0-next.0...gatsby@3.7.0)
 
 ---
+
+## Functions
+
+[Functions](https://www.gatsbyjs.com/docs/how-to/functions/), first class support for serverless functions is now generally available in this version of Gatsby. Learn more about functions in the [documentation](https://www.gatsbyjs.com/docs/how-to/functions) and [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples).
+
+If you've been using it as an experimental feature for a while, you no longer need to include the experimental `FUNCTIONS` flag to use it after this update.
 
 ## Webpack caching
 
