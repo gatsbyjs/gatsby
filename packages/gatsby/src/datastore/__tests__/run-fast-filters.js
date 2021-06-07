@@ -1,11 +1,11 @@
 const {
   runFastFiltersAndSort,
   applyFastFilters,
-} = require(`../run-fast-filters`)
-const { store } = require(`../index`)
-const { getNode } = require(`../nodes`)
-const { createDbQueriesFromObject } = require(`../../db/common/query`)
-const { actions } = require(`../actions`)
+} = require(`../in-memory/run-fast-filters`)
+const { store } = require(`../../redux`)
+const { getDataStore, getNode } = require(`../../datastore`)
+const { createDbQueriesFromObject } = require(`../common/query`)
+const { actions } = require(`../../redux/actions`)
 const {
   GraphQLObjectType,
   GraphQLNonNull,
@@ -128,11 +128,12 @@ const gqlType = new GraphQLObjectType({
 })
 
 describe(`fast filter tests`, () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     mockNodes().forEach(node =>
       actions.createNode(node, { name: `test` })(store.dispatch)
     )
+    await getDataStore().ready()
   })
 
   describe(`filters by just id correctly`, () => {
@@ -381,11 +382,12 @@ describe(`fast filter tests`, () => {
 })
 
 describe(`applyFastFilters`, () => {
-  beforeAll(() => {
+  beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     mockNodes().forEach(node =>
       actions.createNode(node, { name: `test` })(store.dispatch)
     )
+    await getDataStore().ready()
   })
 
   it(`gets stuff from cache for simple query`, () => {
@@ -462,14 +464,15 @@ describe(`applyFastFilters`, () => {
 })
 
 describe(`edge cases (yay)`, () => {
-  beforeAll(() => {
+  beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     mockNodes().forEach(node =>
       actions.createNode(node, { name: `test` })(store.dispatch)
     )
+    await getDataStore().ready()
   })
 
-  it(`throws when node counters are messed up`, () => {
+  it(`throws when node counters are messed up`, async () => {
     const filter = {
       slog: { $eq: `def` }, // matches id_2 and id_4
       deep: { flat: { search: { chain: { $eq: 500 } } } }, // matches id_2
@@ -502,6 +505,7 @@ describe(`edge cases (yay)`, () => {
       type: `CREATE_NODE`,
       payload: badNode,
     })
+    await getDataStore().ready()
 
     const run = () =>
       applyFastFilters(createDbQueriesFromObject(filter), [typeName], new Map())

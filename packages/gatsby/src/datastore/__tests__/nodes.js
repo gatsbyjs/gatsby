@@ -1,6 +1,6 @@
 const { actions } = require(`../../redux/actions`)
 const { store } = require(`../../redux`)
-const { getNode, getNodes } = require(`../../redux/nodes`)
+const { getDataStore, getNode, getNodes } = require(`..`)
 
 const report = require(`gatsby-cli/lib/reporter`)
 jest.mock(`gatsby-cli/lib/reporter`)
@@ -44,7 +44,7 @@ describe(`nodes db tests`, () => {
     expect(report.warn).toHaveBeenCalledWith(deprecationNotice)
   })
 
-  it(`deletes previously transformed children nodes when the parent node is updated`, () => {
+  it(`deletes previously transformed children nodes when the parent node is updated`, async () => {
     store.dispatch(
       actions.createNode(
         {
@@ -131,10 +131,11 @@ describe(`nodes db tests`, () => {
         }
       )
     )
+    await getDataStore().ready()
     expect(getNodes()).toHaveLength(1)
   })
 
-  it(`deletes previously transformed children nodes when the parent node is deleted`, () => {
+  it(`deletes previously transformed children nodes when the parent node is deleted`, async () => {
     store.dispatch(
       actions.createNode(
         {
@@ -226,6 +227,7 @@ describe(`nodes db tests`, () => {
         name: `tests`,
       })
     )
+    await getDataStore().ready()
     expect(getNodes()).toHaveLength(1)
   })
 
