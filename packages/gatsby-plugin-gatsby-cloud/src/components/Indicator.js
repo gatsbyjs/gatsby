@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react"
 
 import getBuildInfo from "../utils/getBuildInfo"
+import trackEvent from "../utils/trackEvent"
 import Style from "./Style"
 
 import GatsbyIndicatorButton from "./GatsbyIndicatorButton"
@@ -13,6 +14,7 @@ export default function Indicator({ children }) {
   const [buildInfo, setBuildInfo] = useState()
   const timeoutRef = useRef()
   const shouldPoll = useRef(false)
+  let trackedInitialLoad
   let buildId
   const pollData = useCallback(async function pollData() {
     const prettyUrlRegex = /^preview-/
@@ -37,8 +39,20 @@ export default function Indicator({ children }) {
       createdAt: currentBuild?.createdAt,
       orgId: siteInfo?.orgId,
       siteId: siteInfo?.siteId,
+      buildId,
       isOnPrettyUrl,
       sitePrefix: siteInfo?.sitePrefix,
+    }
+
+    if (!trackedInitialLoad) {
+      trackEvent({
+        eventType: `PREVIEW_INDICATOR_LOADED`,
+        orgId: defaultBuildInfo.orgId,
+        siteId: defaultBuildInfo.siteId,
+        buildId,
+      })
+
+      trackedInitialLoad = true
     }
 
     if (currentBuild?.buildStatus === `BUILDING`) {

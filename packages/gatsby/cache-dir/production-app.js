@@ -193,7 +193,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       `replaceHydrateFunction`,
       undefined,
       process.env.GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES
-        ? ReactDOM.unstable_createRoot
+        ? ReactDOM.createRoot
         : ReactDOM.hydrate
     )[0]
 
@@ -203,7 +203,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           ? document.getElementById(`___gatsby`)
           : null
 
-      if (renderer === ReactDOM.unstable_createRoot) {
+      if (renderer === ReactDOM.createRoot) {
         renderer(rootElement, {
           hydrate: true,
         }).render(<App />)

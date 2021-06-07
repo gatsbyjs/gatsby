@@ -32,10 +32,10 @@ window.___emitter = emitter
 
 if (
   process.env.GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES &&
-  !ReactDOM.unstable_createRoot
+  !ReactDOM.createRoot
 ) {
   throw new Error(
-    `The GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES flag is not compatible with your React version. Please install "react@0.0.0-experimental-57768ef90" and "react-dom@0.0.0-experimental-57768ef90" or higher.`
+    `The GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES flag is not compatible with your React version. Please install "react@0.0.0-experimental-2bf4805e4" and "react-dom@0.0.0-experimental-2bf4805e4" or higher.`
   )
 }
 
@@ -142,9 +142,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   if (focusEl && focusEl.children.length) {
     if (
       process.env.GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES &&
-      ReactDOM.unstable_createRoot
+      ReactDOM.createRoot
     ) {
-      defaultRenderer = ReactDOM.unstable_createRoot
+      defaultRenderer = ReactDOM.createRoot
     } else {
       defaultRenderer = ReactDOM.hydrate
     }
@@ -202,7 +202,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         )
         document.body.append(indicatorMountElement)
 
-        if (renderer === ReactDOM.unstable_createRoot) {
+        if (renderer === ReactDOM.createRoot) {
           renderer(indicatorMountElement).render(
             <LoadingIndicatorEventHandler />
           )
@@ -231,7 +231,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         dismissLoadingIndicator()
       }
 
-      if (renderer === ReactDOM.unstable_createRoot) {
+      if (renderer === ReactDOM.createRoot) {
         renderer(rootElement, {
           hydrate: true,
         }).render(<App />)
