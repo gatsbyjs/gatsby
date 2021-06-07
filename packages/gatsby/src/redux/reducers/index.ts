@@ -28,6 +28,7 @@ import { queriesReducer } from "./queries"
 import { visitedPagesReducer } from "./visited-page"
 import { htmlReducer } from "./html"
 import { functionsReducer } from "./functions"
+import { nodeManifestReducer } from "./node-manifest"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -63,4 +64,5 @@ export {
   queriesReducer as queries,
   htmlReducer as html,
   functionsReducer as functions,
+  nodeManifestReducer as nodeManifests,
 }
