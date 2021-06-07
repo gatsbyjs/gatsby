@@ -1,6 +1,9 @@
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-const { runFastFiltersAndSort } = require(`../../redux/run-fast-filters`)
+const { getDataStore } = require(`../../datastore`)
+const {
+  runFastFiltersAndSort,
+} = require(`../../datastore/in-memory/run-fast-filters`)
 
 const makeNodesUneven = () => [
   // Note: This is assumed to be an uneven node count
@@ -312,15 +315,16 @@ function makeGqlType(nodes) {
   return { sc, type: tc.getType() }
 }
 
-function resetDb(nodes) {
+async function resetDb(nodes) {
   store.dispatch({ type: `DELETE_CACHE` })
   nodes.forEach(node =>
     actions.createNode(node, { name: `test` })(store.dispatch)
   )
+  await getDataStore().ready()
 }
 
 async function runQuery(queryArgs, nodes = makeNodesUneven()) {
-  resetDb(nodes)
+  await resetDb(nodes)
   const { sc, type: gqlType } = makeGqlType(nodes)
   const args = {
     gqlType,

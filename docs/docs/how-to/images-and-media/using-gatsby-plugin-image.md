@@ -43,7 +43,7 @@ Note that `gatsby-source-filesystem` is not included in this config. If you are 
 
 ### Decide which component to use
 
-The Gatsby Image plugin includes two image components: one for static and one for dynamic images. The simplest way to decide which you need to is to ask yourself: _"will this image be the same every time the component or template is used?"_. If it will always be the same, then use `StaticImage`. If it will change, whether through data coming from a CMS or different values passed to a component each time you use it, then it is a dynamic image and you should use the `GatsbyImage` component.
+The Gatsby Image plugin includes two image components: one for static and one for dynamic images. The simplest way to decide which you need is to ask yourself: _"will this image be the same every time the component or template is used?"_. If it will always be the same, then use `StaticImage`. If it will change, whether through data coming from a CMS or different values passed to a component each time you use it, then it is a dynamic image and you should use the `GatsbyImage` component.
 
 ### Static images
 
@@ -233,7 +233,7 @@ module.exports = {
 
 ## Using images from a CMS or CDN
 
-Many source plugins have native support for `gatsby-plugin-image`, with images served directly from a content delivery network (CDN). This means that builds are faster, because there is no need download images and process them locally. The query syntax varies according to the plugin, as do the supported transformation features and image formats. Make sure you update to the latest version of the source plugin to ensure there is support. For plugins that are not in this list you can use [dynamic images from `gatsby-transformer-sharp`](#dynamic-images).
+Many source plugins have native support for `gatsby-plugin-image`, with images served directly from a content delivery network (CDN). This means that builds are faster, because there is no need to download images and process them locally. The query syntax varies according to the plugin, as do the supported transformation features and image formats. Make sure you update to the latest version of the source plugin to ensure there is support. For plugins that are not in this list you can use [dynamic images from `gatsby-transformer-sharp`](#dynamic-images).
 
 ### Source plugins
 
@@ -364,7 +364,7 @@ If not, check steps 1 and 2 above.
 
 If you're using GatsbyImage:
 
-Run the query you're using in your site. Does it return a gatsbyImageData object?
+Run the query you're using in your site. Does it return a `gatsbyImageData` object?
 
 If not, check steps 1 and 2 above.
 

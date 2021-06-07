@@ -1,7 +1,6 @@
 const _ = require(`lodash`)
 const report = require(`gatsby-cli/lib/reporter`)
-const redux = require(`../redux`)
-const { emitter } = redux
+const redux = require(`./`)
 
 let saveInProgress = false
 async function saveState() {
@@ -16,18 +15,7 @@ async function saveState() {
 
   saveInProgress = false
 }
-const saveStateDebounced = _.debounce(saveState, 1000)
-
-/**
- * Starts listening to redux actions and triggers a database save to
- * disk upon any action (debounced to every 1 second)
- */
-function startAutosave() {
-  saveStateDebounced()
-  emitter.on(`*`, () => saveStateDebounced())
-}
 
 module.exports = {
-  startAutosave,
   saveState,
 }

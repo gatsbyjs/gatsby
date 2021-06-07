@@ -41,7 +41,6 @@ import { Express } from "express"
 import * as path from "path"
 
 import { Stage, IProgram } from "../commands/types"
-import JestWorker from "jest-worker"
 import { findOriginalSourcePositionAndContent } from "./stack-trace-utils"
 import { appendPreloadHeaders } from "./develop-preload-headers"
 import {
@@ -58,7 +57,7 @@ interface IServer {
   webpackActivity: ActivityTracker
   cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
   websocketManager: WebsocketManager
-  workerPool: JestWorker
+  workerPool: WorkerPool.GatsbyWorkerPool
   webpackWatching: IWebpackWatchingPauseResume
 }
 
@@ -70,7 +69,7 @@ export interface IWebpackWatchingPauseResume {
 export async function startServer(
   program: IProgram,
   app: Express,
-  workerPool: JestWorker = WorkerPool.create()
+  workerPool: WorkerPool.GatsbyWorkerPool = WorkerPool.create()
 ): Promise<IServer> {
   const directory = program.directory
 
