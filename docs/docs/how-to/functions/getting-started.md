@@ -80,16 +80,6 @@ export default function handler(req, res) {
 
 Only HTTP headers prefixed with `x-gatsby-` are passed into your functions.
 
-```js:title=src/api/method-example.js
-export default function handler(req, res) {
-  if (req.method === `POST`) {
-    res.send(`I am POST`)
-  } else {
-    // Handle other methods or return error
-  }
-}
-```
-
 ## Environment variables
 
 Site [environment variables](/docs/how-to/local-development/environment-variables) are used to pass secrets and environment-specific configuration to Functions.
