@@ -1,5 +1,6 @@
 import { getNode } from "../../../../datastore"
 import apiRunner from "../../../api-runner-node"
+import { store } from "../../../../redux"
 
 // re-export all usual methods from production worker
 export * from "../../child"
@@ -19,4 +20,9 @@ export async function runAPI(apiName: string): Promise<any> {
 // test: config
 export function getAPIRunResult(): string | undefined {
   return (global as any).test
+}
+
+// test:share-state
+export function getPage(): any {
+  return store.getState().pages.get(`/foo/`)
 }

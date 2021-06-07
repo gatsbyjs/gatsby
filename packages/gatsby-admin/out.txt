@@ -1,0 +1,889 @@
+success open and validate gatsby-configs - 0.033s
+
+[2K[1A[2K[Gsuccess load plugins - 0.167s
+
+[2K[1A[2K[Gsuccess onPreInit - 0.019s
+
+[2K[1A[2K[Gsuccess initialize cache - 0.005s
+
+[2K[1A[2K[Gsuccess copy gatsby files - 0.098s
+
+[2K[1A[2K[Gsuccess onPreBootstrap - 0.788s
+
+[2K[1A[2K[Gsuccess createSchemaCustomization - 0.001s
+
+[2K[1A[2K[Gsuccess Checking for changed pages - 0.000s
+
+[2K[1A[2K[Gsuccess source and transform nodes - 0.028s
+
+[2K[1A[2K[Gsuccess building schema - 0.222s
+
+[2K[1A[2K[Ginfo Total nodes: 24, SitePage nodes: 1 (use --verbose for breakdown)
+
+[2K[1A[2K[Gsuccess createPages - 0.002s
+
+[2K[1A[2K[Gsuccess Checking for changed pages - 0.000s
+
+[2K[1A[2K[Gsuccess createPagesStatefully - 0.050s
+
+[2K[1A[2K[Gsuccess update schema - 0.036s
+
+[2K[1A[2K[Gsuccess onPreExtractQueries - 0.000s
+
+[2K[1A[2K[Gsuccess extract queries from components - 0.507s
+
+[2K[1A[2K[Gsuccess write out redirect data - 0.001s
+
+[2K[1A[2K[Gsuccess onPostBootstrap - 0.000s
+
+[2K[1A[2K[Ginfo bootstrap finished - 5.984s
+
+[2K[1A[2K[Gsuccess run page queries - 0.010s - 5/5 515.32/s
+
+[2K[1A[2K[Gsuccess write out requires - 0.004s
+
+[2K[1A[2K[Gwarn [deprecation] gatsby-plugin-typescript added a new module rule to the
+webpack config without specyfing the resolve property. This option will become
+mandatory in the next release. For more information go to
+https://webpack.js.org/configuration/module/#ruleresolve
+
+[2K[1A[2K[Gwarn export 'push' (reexported as 'push') was not found in 'gatsby-link'
+(possible exports: __esModule, default, navigate, parsePath, withAssetPrefix,
+withPrefix)
+
+[2K[1A[2K[Gwarn export 'replace' (reexported as 'replace') was not found in 'gatsby-link'
+(possible exports: __esModule, default, navigate, parsePath, withAssetPrefix,
+withPrefix)
+
+[2K[1A[2K[Gwarn export 'navigateTo' (reexported as 'navigateTo') was not found in
+'gatsby-link' (possible exports: __esModule, default, navigate, parsePath,
+withAssetPrefix, withPrefix)
+
+[2K[1A[2K[Gwarn Attempted import error: 'TextAreaField' is not exported from
+'gatsby-interface' (imported as 'TextAreaField').
+
+[2K[1A[2K[Gwarn Attempted import error: 'TextAreaFieldControl' is not exported from
+'gatsby-interface' (imported as 'TextAreaFieldControl').
+
+[2K[1A[2K[Gsuccess Building production JavaScript and CSS bundles - 38.927s
+
+[2K[1A[2K[Gsuccess Rewriting compilation hashes - 0.003s
+
+[2K[1A[2K[Gsuccess Building HTML renderer - 20.608s
+
+[Function: StepRenderer]
+[2K[1A[2K[Gwarn Unsafe builtin method was used, future builds will need to rebuild all
+pages
+
+[2K[1A[2K[GSet {
+  'Unsafe builtin usage fs.readdirSync\n' +
+    '    at getFirst (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/rend
+er-page.js:100914:20)\n' +
+    '    at Function.load.path (/Users/misiek/dev/gatsby/packages/gatsby-admin/p
+ublic/render-page.js:100894:17)\n' +
+    '    at load (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-p
+age.js:100883:30)\n' +
+    '    at Object.../../node_modules/bufferutil/index.js (/Users/misiek/dev/gat
+sby/packages/gatsby-admin/public/render-page.js:29325:107)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/buffer-util.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/rende
+r-page.js:149428:22)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/permessage-deflate.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/publi
+c/render-page.js:149885:20)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/websocket.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-
+page.js:151761:27)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at
+Object.../../node_modules/subscriptions-transport-ws/node_modules/ws/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:149355:19)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/server.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148961:17)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148804:14)
+',
+  'Unsafe builtin usage fs.readdirSync\n' +
+    '    at getFirst (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/rend
+er-page.js:100914:20)\n' +
+    '    at Function.load.path (/Users/misiek/dev/gatsby/packages/gatsby-admin/p
+ublic/render-page.js:100897:15)\n' +
+    '    at load (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-p
+age.js:100883:30)\n' +
+    '    at Object.../../node_modules/bufferutil/index.js (/Users/misiek/dev/gat
+sby/packages/gatsby-admin/public/render-page.js:29325:107)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/buffer-util.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/rende
+r-page.js:149428:22)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/permessage-deflate.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/publi
+c/render-page.js:149885:20)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/websocket.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-
+page.js:151761:27)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at
+Object.../../node_modules/subscriptions-transport-ws/node_modules/ws/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:149355:19)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/server.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148961:17)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148804:14)
+',
+  'Unsafe builtin usage fs.readdirSync\n' +
+    '    at getFirst (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/rend
+er-page.js:100914:20)\n' +
+    '    at Function.load.path (/Users/misiek/dev/gatsby/packages/gatsby-admin/p
+ublic/render-page.js:100900:18)\n' +
+    '    at load (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-p
+age.js:100883:30)\n' +
+    '    at Object.../../node_modules/bufferutil/index.js (/Users/misiek/dev/gat
+sby/packages/gatsby-admin/public/render-page.js:29325:107)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/buffer-util.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/rende
+r-page.js:149428:22)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/permessage-deflate.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/publi
+c/render-page.js:149885:20)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/websocket.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-
+page.js:151761:27)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at
+Object.../../node_modules/subscriptions-transport-ws/node_modules/ws/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:149355:19)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/server.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148961:17)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148804:14)
+',
+  'Unsafe builtin usage fs.readdirSync\n' +
+    '    at getFirst (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/rend
+er-page.js:100914:20)\n' +
+    '    at Function.load.path (/Users/misiek/dev/gatsby/packages/gatsby-admin/p
+ublic/render-page.js:100903:21)\n' +
+    '    at load (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-p
+age.js:100883:30)\n' +
+    '    at Object.../../node_modules/bufferutil/index.js (/Users/misiek/dev/gat
+sby/packages/gatsby-admin/public/render-page.js:29325:107)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/buffer-util.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/rende
+r-page.js:149428:22)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/permessage-deflate.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/publi
+c/render-page.js:149885:20)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/websocket.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-
+page.js:151761:27)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at
+Object.../../node_modules/subscriptions-transport-ws/node_modules/ws/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:149355:19)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/server.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148961:17)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148804:14)
+',
+  'Unsafe builtin usage fs.readdirSync\n' +
+    '    at getFirst (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/rend
+er-page.js:100914:20)\n' +
+    '    at Function.load.path (/Users/misiek/dev/gatsby/packages/gatsby-admin/p
+ublic/render-page.js:100906:14)\n' +
+    '    at load (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-p
+age.js:100883:30)\n' +
+    '    at Object.../../node_modules/bufferutil/index.js (/Users/misiek/dev/gat
+sby/packages/gatsby-admin/public/render-page.js:29325:107)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/buffer-util.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/rende
+r-page.js:149428:22)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/permessage-deflate.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/publi
+c/render-page.js:149885:20)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/websocket.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-
+page.js:151761:27)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at
+Object.../../node_modules/subscriptions-transport-ws/node_modules/ws/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:149355:19)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/server.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148961:17)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148804:14)
+',
+  'Unsafe builtin usage fs.readdirSync\n' +
+    '    at getFirst (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/rend
+er-page.js:100914:20)\n' +
+    '    at Function.load.path (/Users/misiek/dev/gatsby/packages/gatsby-admin/p
+ublic/render-page.js:100894:17)\n' +
+    '    at load (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-p
+age.js:100883:30)\n' +
+    '    at Object.../../node_modules/utf-8-validate/index.js (/Users/misiek/dev
+/gatsby/packages/gatsby-admin/public/render-page.js:155007:107)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/validation.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render
+-page.js:151346:23)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/receiver.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-p
+age.js:150413:20)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/websocket.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-
+page.js:151765:18)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at
+Object.../../node_modules/subscriptions-transport-ws/node_modules/ws/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:149355:19)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/server.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148961:17)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148804:14)
+',
+  'Unsafe builtin usage fs.readdirSync\n' +
+    '    at getFirst (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/rend
+er-page.js:100914:20)\n' +
+    '    at Function.load.path (/Users/misiek/dev/gatsby/packages/gatsby-admin/p
+ublic/render-page.js:100897:15)\n' +
+    '    at load (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-p
+age.js:100883:30)\n' +
+    '    at Object.../../node_modules/utf-8-validate/index.js (/Users/misiek/dev
+/gatsby/packages/gatsby-admin/public/render-page.js:155007:107)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/validation.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render
+-page.js:151346:23)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/receiver.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-p
+age.js:150413:20)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/websocket.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-
+page.js:151765:18)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at
+Object.../../node_modules/subscriptions-transport-ws/node_modules/ws/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:149355:19)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/server.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148961:17)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148804:14)
+',
+  'Unsafe builtin usage fs.readdirSync\n' +
+    '    at getFirst (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/rend
+er-page.js:100914:20)\n' +
+    '    at Function.load.path (/Users/misiek/dev/gatsby/packages/gatsby-admin/p
+ublic/render-page.js:100900:18)\n' +
+    '    at load (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-p
+age.js:100883:30)\n' +
+    '    at Object.../../node_modules/utf-8-validate/index.js (/Users/misiek/dev
+/gatsby/packages/gatsby-admin/public/render-page.js:155007:107)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/validation.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render
+-page.js:151346:23)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/receiver.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-p
+age.js:150413:20)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/websocket.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-
+page.js:151765:18)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at
+Object.../../node_modules/subscriptions-transport-ws/node_modules/ws/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:149355:19)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/server.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148961:17)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148804:14)
+',
+  'Unsafe builtin usage fs.readdirSync\n' +
+    '    at getFirst (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/rend
+er-page.js:100914:20)\n' +
+    '    at Function.load.path (/Users/misiek/dev/gatsby/packages/gatsby-admin/p
+ublic/render-page.js:100903:21)\n' +
+    '    at load (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-p
+age.js:100883:30)\n' +
+    '    at Object.../../node_modules/utf-8-validate/index.js (/Users/misiek/dev
+/gatsby/packages/gatsby-admin/public/render-page.js:155007:107)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/validation.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render
+-page.js:151346:23)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/receiver.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-p
+age.js:150413:20)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/websocket.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-
+page.js:151765:18)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at
+Object.../../node_modules/subscriptions-transport-ws/node_modules/ws/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:149355:19)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/server.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148961:17)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148804:14)
+',
+  'Unsafe builtin usage fs.readdirSync\n' +
+    '    at getFirst (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/rend
+er-page.js:100914:20)\n' +
+    '    at Function.load.path (/Users/misiek/dev/gatsby/packages/gatsby-admin/p
+ublic/render-page.js:100906:14)\n' +
+    '    at load (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-p
+age.js:100883:30)\n' +
+    '    at Object.../../node_modules/utf-8-validate/index.js (/Users/misiek/dev
+/gatsby/packages/gatsby-admin/public/render-page.js:155007:107)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/validation.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render
+-page.js:151346:23)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/receiver.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-p
+age.js:150413:20)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/node_modules/ws
+/lib/websocket.js (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-
+page.js:151765:18)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at
+Object.../../node_modules/subscriptions-transport-ws/node_modules/ws/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:149355:19)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/server.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148961:17)
+\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object.../../node_modules/subscriptions-transport-ws/dist/index.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:148804:14)
+',
+  'Unsafe builtin usage https.Agent\n' +
+    '    at getKeepaliveAgent (/Users/misiek/dev/gatsby/packages/gatsby-admin/pu
+blic/render-page.js:26218:22)\n' +
+    '    at getAgent (/Users/misiek/dev/gatsby/packages/gatsby-admin/public/rend
+er-page.js:26173:13)\n' +
+    '    at new AlgoliaSearchNodeJS (/Users/misiek/dev/gatsby/packages/gatsby-ad
+min/public/render-page.js:26350:35)\n' +
+    '    at algoliasearch (/Users/misiek/dev/gatsby/packages/gatsby-admin/public
+/render-page.js:26333:10)\n' +
+    '    at Module../src/utils/use-npm-data.tsx (/Users/misiek/dev/gatsby/packag
+es/gatsby-admin/public/render-page.js:167113:68)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Module../src/pages/plugins.tsx (/Users/misiek/dev/gatsby/packages/ga
+tsby-admin/public/render-page.js:166310:77)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Object../.cache/_this_is_virtual_fs_path_/$virtual/sync-requires.js
+(/Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js:158738:370
+)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at Module../.cache/static-entry.js (/Users/misiek/dev/gatsby/packages/g
+atsby-admin/public/render-page.js:159270:768)\n' +
+    '    at __webpack_require__ (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:168221:42)\n' +
+    '    at /Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js
+:168304:18\n' +
+    '    at Object.<anonymous> (/Users/misiek/dev/gatsby/packages/gatsby-admin/p
+ublic/render-page.js:168305:12)\n' +
+    '    at Module._compile (internal/modules/cjs/loader.js:1138:30)\n' +
+    '    at Object.Module._extensions..js
+(internal/modules/cjs/loader.js:1158:10)',
+  'Unsafe builtin usage fs.readFileSync\n' +
+    '    at Object.onRenderBody (/Users/misiek/dev/gatsby/packages/gatsby-admin/
+public/render-page.js:157886:1900)\n' +
+    '    at /Users/misiek/dev/gatsby/packages/gatsby-admin/public/render-page.js
+:158762:111\n' +
+    '    at Array.map (<anonymous>)\n' +
+    '    at module.exports (/Users/misiek/dev/gatsby/packages/gatsby-admin/publi
+c/render-page.js:158762:21)\n' +
+    '    at Object.__WEBPACK_DEFAULT_EXPORT__ [as default] (/Users/misiek/dev/ga
+tsby/packages/gatsby-admin/public/render-page.js:159283:29)\n' +
+    '    at /Users/misiek/dev/gatsby/packages/gatsby/dist/utils/worker/render-ht
+ml.js:279:40'
+}
+
+[2K[1A[2K[Gwarn WebpackError: Unsafe builtin usage fs.readdirSync
+    at gatsby-admin/node_modules/node-gyp-build/index.js:47:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:27:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:16:1
+    at gatsby-admin/node_modules/bufferutil/index.js:4:44
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+buffer-util.js:56:22
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+permessage-deflate.js:6:20
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+websocket.js:11:27
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/inde
+x.js:3:19
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/server.js:4:17
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/index.js:14:14
+
+  45 | function getFirst (dir, filter) {
+  46 |   try {
+> 47 |     var files = fs.readdirSync(dir).filter(filter)
+     | ^
+  48 |     return files[0] && path.join(dir, files[0])
+  49 |   } catch (err) {
+  50 |     return null
+
+
+[2K[1A[2K[Gwarn WebpackError: Unsafe builtin usage fs.readdirSync
+    at gatsby-admin/node_modules/node-gyp-build/index.js:47:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:30:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:16:1
+    at gatsby-admin/node_modules/bufferutil/index.js:4:44
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+buffer-util.js:56:22
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+permessage-deflate.js:6:20
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+websocket.js:11:27
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/inde
+x.js:3:19
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/server.js:4:17
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/index.js:14:14
+
+  45 | function getFirst (dir, filter) {
+  46 |   try {
+> 47 |     var files = fs.readdirSync(dir).filter(filter)
+     | ^
+  48 |     return files[0] && path.join(dir, files[0])
+  49 |   } catch (err) {
+  50 |     return null
+
+
+[2K[1A[2K[Gwarn WebpackError: Unsafe builtin usage fs.readdirSync
+    at gatsby-admin/node_modules/node-gyp-build/index.js:47:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:33:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:16:1
+    at gatsby-admin/node_modules/bufferutil/index.js:4:44
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+buffer-util.js:56:22
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+permessage-deflate.js:6:20
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+websocket.js:11:27
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/inde
+x.js:3:19
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/server.js:4:17
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/index.js:14:14
+
+  45 | function getFirst (dir, filter) {
+  46 |   try {
+> 47 |     var files = fs.readdirSync(dir).filter(filter)
+     | ^
+  48 |     return files[0] && path.join(dir, files[0])
+  49 |   } catch (err) {
+  50 |     return null
+
+
+[2K[1A[2K[Gwarn WebpackError: Unsafe builtin usage fs.readdirSync
+    at gatsby-admin/node_modules/node-gyp-build/index.js:47:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:36:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:16:1
+    at gatsby-admin/node_modules/bufferutil/index.js:4:44
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+buffer-util.js:56:22
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+permessage-deflate.js:6:20
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+websocket.js:11:27
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/inde
+x.js:3:19
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/server.js:4:17
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/index.js:14:14
+
+  45 | function getFirst (dir, filter) {
+  46 |   try {
+> 47 |     var files = fs.readdirSync(dir).filter(filter)
+     | ^
+  48 |     return files[0] && path.join(dir, files[0])
+  49 |   } catch (err) {
+  50 |     return null
+
+
+[2K[1A[2K[Gwarn WebpackError: Unsafe builtin usage fs.readdirSync
+    at gatsby-admin/node_modules/node-gyp-build/index.js:47:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:39:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:16:1
+    at gatsby-admin/node_modules/bufferutil/index.js:4:44
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+buffer-util.js:56:22
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+permessage-deflate.js:6:20
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+websocket.js:11:27
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/inde
+x.js:3:19
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/server.js:4:17
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/index.js:14:14
+
+  45 | function getFirst (dir, filter) {
+  46 |   try {
+> 47 |     var files = fs.readdirSync(dir).filter(filter)
+     | ^
+  48 |     return files[0] && path.join(dir, files[0])
+  49 |   } catch (err) {
+  50 |     return null
+
+
+[2K[1A[2K[Gwarn WebpackError: Unsafe builtin usage fs.readdirSync
+    at gatsby-admin/node_modules/node-gyp-build/index.js:47:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:27:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:16:1
+    at gatsby-admin/node_modules/utf-8-validate/index.js:4:44
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+validation.js:4:23
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+receiver.js:7:20
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+websocket.js:15:18
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/inde
+x.js:3:19
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/server.js:4:17
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/index.js:14:14
+
+  45 | function getFirst (dir, filter) {
+  46 |   try {
+> 47 |     var files = fs.readdirSync(dir).filter(filter)
+     | ^
+  48 |     return files[0] && path.join(dir, files[0])
+  49 |   } catch (err) {
+  50 |     return null
+
+
+[2K[1A[2K[Gwarn WebpackError: Unsafe builtin usage fs.readdirSync
+    at gatsby-admin/node_modules/node-gyp-build/index.js:47:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:30:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:16:1
+    at gatsby-admin/node_modules/utf-8-validate/index.js:4:44
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+validation.js:4:23
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+receiver.js:7:20
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+websocket.js:15:18
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/inde
+x.js:3:19
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/server.js:4:17
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/index.js:14:14
+
+  45 | function getFirst (dir, filter) {
+  46 |   try {
+> 47 |     var files = fs.readdirSync(dir).filter(filter)
+     | ^
+  48 |     return files[0] && path.join(dir, files[0])
+  49 |   } catch (err) {
+  50 |     return null
+
+
+[2K[1A[2K[Gwarn WebpackError: Unsafe builtin usage fs.readdirSync
+    at gatsby-admin/node_modules/node-gyp-build/index.js:47:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:33:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:16:1
+    at gatsby-admin/node_modules/utf-8-validate/index.js:4:44
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+validation.js:4:23
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+receiver.js:7:20
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+websocket.js:15:18
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/inde
+x.js:3:19
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/server.js:4:17
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/index.js:14:14
+
+  45 | function getFirst (dir, filter) {
+  46 |   try {
+> 47 |     var files = fs.readdirSync(dir).filter(filter)
+     | ^
+  48 |     return files[0] && path.join(dir, files[0])
+  49 |   } catch (err) {
+  50 |     return null
+
+
+[2K[1A[2K[Gwarn WebpackError: Unsafe builtin usage fs.readdirSync
+    at gatsby-admin/node_modules/node-gyp-build/index.js:47:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:36:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:16:1
+    at gatsby-admin/node_modules/utf-8-validate/index.js:4:44
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+validation.js:4:23
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+receiver.js:7:20
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+websocket.js:15:18
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/inde
+x.js:3:19
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/server.js:4:17
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/index.js:14:14
+
+  45 | function getFirst (dir, filter) {
+  46 |   try {
+> 47 |     var files = fs.readdirSync(dir).filter(filter)
+     | ^
+  48 |     return files[0] && path.join(dir, files[0])
+  49 |   } catch (err) {
+  50 |     return null
+
+
+[2K[1A[2K[Gwarn WebpackError: Unsafe builtin usage fs.readdirSync
+    at gatsby-admin/node_modules/node-gyp-build/index.js:47:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:39:1
+    at gatsby-admin/node_modules/node-gyp-build/index.js:16:1
+    at gatsby-admin/node_modules/utf-8-validate/index.js:4:44
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+validation.js:4:23
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+receiver.js:7:20
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/lib/
+websocket.js:15:18
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/node_modules/ws/inde
+x.js:3:19
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/server.js:4:17
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/node_modules/subscriptions-transport-ws/dist/index.js:14:14
+
+  45 | function getFirst (dir, filter) {
+  46 |   try {
+> 47 |     var files = fs.readdirSync(dir).filter(filter)
+     | ^
+  48 |     return files[0] && path.join(dir, files[0])
+  49 |   } catch (err) {
+  50 |     return null
+
+
+[2K[1A[2K[Gwarn WebpackError: Unsafe builtin usage https.Agent
+    at
+gatsby-admin/node_modules/algoliasearch/src/server/builds/get-agent.js:69:1
+    at
+gatsby-admin/node_modules/algoliasearch/src/server/builds/get-agent.js:24:1
+    at gatsby-admin/node_modules/algoliasearch/src/server/builds/node.js:85:1
+    at gatsby-admin/node_modules/algoliasearch/src/server/builds/node.js:68:1
+    at gatsby-admin/src/utils/use-npm-data.tsx:6:3
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/webpack/bootstrap:18:1
+    at
+gatsby-admin/.cache/_this_is_virtual_fs_path_/$virtual/sync-requires.js:10:58
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/.cache/static-entry.js:15:22
+    at gatsby-admin/webpack/bootstrap:18:1
+    at gatsby-admin/webpack/startup:4:1
+    at gatsby-admin/node_modules/@emotion/core/dist/core.esm.js:147:1
+
+  67 |     });
+  68 |   } else if (protocol === 'https:') {
+> 69 |     keepAliveAgent = new https.Agent({
+     | ^
+  70 |       keepAlive: true,
+  71 |       maxSockets: Infinity
+  72 |     });
+
+
+[2K[1A[2K[Gwarn WebpackError: Unsafe builtin usage fs.readFileSync
+    at gatsby-admin/node_modules/gatsby-plugin-webfonts/gatsby-ssr.js:37:25
+    at gatsby-admin/.cache/api-runner-ssr.js:41:41
+    at gatsby-admin/.cache/api-runner-ssr.js:36:25
+    at gatsby-admin/.cache/static-entry.js:255:5
+    at
+gatsby-admin/node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js:5:1
+
+  35 |       options = (0,
+_objectWithoutPropertiesLoose2.default)(_createOptions, ["usePreload",
+"formats"]);
+  36 |
+> 37 |   var css = _fs.default.readFileSync(_path.default.join("./.cache",
+"webfonts", "webfonts.css"), "utf8");
+     |                         ^
+  38 |
+  39 |   setHeadComponents([/*#__PURE__*/_react.default.createElement(_preconnec
+t.default, {
+  40 |     key: "webFontsPreconnectGoogleFonts",
+
+
+[2K[1A[2K[Gsuccess Building static HTML for pages - 2.199s - 5/5 2.27/s
+
+[2K[1A[2K[Gsuccess onPostBuild - 0.003s
+
+[2K[1A[2K[Ginfo Done building in 68.399560811 sec
+
