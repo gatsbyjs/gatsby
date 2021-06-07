@@ -13,7 +13,6 @@ import { getBrowsersList } from "../utils/browserslist"
 import { Store, AnyAction } from "redux"
 import { preferDefault } from "../bootstrap/prefer-default"
 import * as WorkerPool from "../utils/worker/pool"
-import JestWorker from "jest-worker"
 import { startPluginRunner } from "../redux/plugin-runner"
 import { loadPlugins } from "../bootstrap/load-plugins"
 import { store, emitter } from "../redux"
@@ -26,6 +25,7 @@ import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
 import availableFlags from "../utils/flags"
+import { detectLmdbStore } from "../datastore"
 
 interface IPluginResolution {
   resolve: string
@@ -75,7 +75,7 @@ export async function initialize({
   parentSpan,
 }: IBuildContext): Promise<{
   store: Store<IGatsbyState, AnyAction>
-  workerPool: JestWorker
+  workerPool: WorkerPool.GatsbyWorkerPool
 }> {
   if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
     reporter.info(
@@ -204,6 +204,7 @@ export async function initialize({
     // enable loading indicator
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `true`
   }
+  detectLmdbStore()
 
   // theme gatsby configs can be functions or objects
   if (config) {

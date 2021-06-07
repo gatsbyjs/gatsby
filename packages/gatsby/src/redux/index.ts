@@ -3,6 +3,7 @@ import {
   combineReducers,
   createStore,
   Middleware,
+  ReducersMapObject,
 } from "redux"
 import _ from "lodash"
 import telemetry from "gatsby-telemetry"
@@ -83,6 +84,15 @@ export const configureStore = (initialState: IGatsbyState) =>
 
 export type GatsbyReduxStore = ReturnType<typeof configureStore>
 export const store: GatsbyReduxStore = configureStore(readState())
+
+/**
+ * Allows overloading some reducers (e.g. when setting a custom datastore)
+ */
+export function replaceReducer(
+  customReducers: Partial<ReducersMapObject<IGatsbyState>>
+): void {
+  store.replaceReducer(combineReducers({ ...reducers, ...customReducers }))
+}
 
 // Persist state.
 export const saveState = (): void => {
