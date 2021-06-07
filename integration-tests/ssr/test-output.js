@@ -44,6 +44,8 @@
       )
     )
 
+    console.log(`built html: `, builtHtml)
+
     // Fetch once to trigger re-compilation.
     await fetch(`${devSiteBasePath}/${path}`)
 
@@ -64,6 +66,7 @@
     }
 
     const devHtml = format(filterHtml(rawDevHtml))
+    console.log(`dev html: `, devHtml)
     const diffResult = diff(devHtml, builtHtml, {
       contextLines: 3,
       expand: false,
