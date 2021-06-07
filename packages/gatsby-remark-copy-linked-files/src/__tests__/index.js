@@ -24,19 +24,20 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     fsExtra.copy.mockReset()
   })
 
+  const parentDir = `/`
   const markdownNode = {
     parent: {},
   }
   const getNode = () => {
     return {
-      dir: ``,
+      dir: parentDir,
       internal: {
         type: `File`,
       },
     }
   }
   const getFiles = filePath => {
-    const absolutePath = path.posix.normalize(filePath)
+    const absolutePath = path.posix.normalize(parentDir + filePath)
     return [
       {
         absolutePath,
@@ -273,12 +274,13 @@ describe(`gatsby-remark-copy-linked-files`, () => {
 
   describe(`respects pathPrefix`, () => {
     const imageName = `sample-image`
-    const imagePath = `images/${imageName}.svg`
+    const imageRelativePath = `images/${imageName}.svg`
+    const imagePath = parentDir + imageRelativePath
 
     // pathPrefix passed to plugins already combine pathPrefix and assetPrefix
     it(`relative pathPrefix (no assetPrefix)`, async () => {
       const pathPrefix = `/path-prefix`
-      const markdownAST = remark.parse(`![some image](${imagePath})`)
+      const markdownAST = remark.parse(`![some image](${imageRelativePath})`)
 
       const expectedNewPath = path.posix.join(
         process.cwd(),
@@ -304,7 +306,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
 
     it(`absolute pathPrefix (with assetPrefix, empty base path prefix)`, async () => {
       const pathPrefix = `https://cdn.mysiteassets.com`
-      const markdownAST = remark.parse(`![some image](${imagePath})`)
+      const markdownAST = remark.parse(`![some image](${imageRelativePath})`)
 
       const expectedNewPath = path.posix.join(
         process.cwd(),
@@ -330,7 +332,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
 
     it(`absolute pathPrefix (with assetPrefix, and non-empty base path prefix)`, async () => {
       const pathPrefix = `https://cdn.mysiteassets.com/path-prefix`
-      const markdownAST = remark.parse(`![some image](${imagePath})`)
+      const markdownAST = remark.parse(`![some image](${imageRelativePath})`)
 
       const expectedNewPath = path.posix.join(
         process.cwd(),
@@ -357,10 +359,13 @@ describe(`gatsby-remark-copy-linked-files`, () => {
 
   describe(`options.destinationDir`, () => {
     const imageName = `sample-image`
-    const imagePath = `images/${imageName}.gif`
+    const imageRelativePath = `images/${imageName}.gif`
+    const imagePath = parentDir + imageRelativePath
 
     it(`throws an error if the destination supplied by destinationDir points outside of the root dir`, async () => {
-      const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
+      const markdownAST = remark.parse(
+        `![some absolute image](${imageRelativePath})`
+      )
       const invalidDestinationDir = `../destination`
       expect.assertions(2)
       return plugin(
@@ -375,7 +380,9 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
 
     it(`throws an error if the destination supplied by the destinationDir function points outside of the root dir`, async () => {
-      const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
+      const markdownAST = remark.parse(
+        `![some absolute image](${imageRelativePath})`
+      )
       const invalidDestinationDir = `../destination`
       const customDestinationDir = f =>
         `../destination/${f.hash}/${f.name}/${f.notexist}`
@@ -392,7 +399,9 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
 
     it(`copies file to the destination supplied by destinationDir`, async () => {
-      const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
+      const markdownAST = remark.parse(
+        `![some absolute image](${imageRelativePath})`
+      )
       const validDestinationDir = `path/to/dir`
       const fileLocationPart = `some-hash/${imageName}.gif`
       const expectedNewPath = path.posix.join(
@@ -417,7 +426,9 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
 
     it(`copies file to the destination supplied by the destinationDir function`, async () => {
-      const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
+      const markdownAST = remark.parse(
+        `![some absolute image](${imageRelativePath})`
+      )
       const customDestinationDir = f => `foo/${f.hash}--bar`
       const expectedDestination = `foo/some-hash--bar.gif`
       expect.assertions(3)
@@ -435,7 +446,9 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
 
     it(`copies file to the destination supplied by destinationDir (with pathPrefix)`, async () => {
-      const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
+      const markdownAST = remark.parse(
+        `![some absolute image](${imageRelativePath})`
+      )
       const pathPrefix = `/blog`
       const validDestinationDir = `path/to/dir`
 
@@ -468,7 +481,9 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
 
     it(`copies file to the destination supplied by the destinationDir function (with pathPrefix)`, async () => {
-      const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
+      const markdownAST = remark.parse(
+        `![some absolute image](${imageRelativePath})`
+      )
       const pathPrefix = `/blog`
       const customDestinationDir = f => `hello${f.name}123`
       const expectedDestination = `hello${imageName}123.gif`
@@ -495,7 +510,9 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
 
     it(`copies file to the root dir when destinationDir is not supplied`, async () => {
-      const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
+      const markdownAST = remark.parse(
+        `![some absolute image](${imageRelativePath})`
+      )
       const expectedNewPath = path.posix.join(
         process.cwd(),
         `public`,
