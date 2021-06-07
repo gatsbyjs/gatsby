@@ -25,7 +25,9 @@ describe(`SSR`, () => {
   })
 
   test(`dev & build outputs match`, async () => {
+    console.log(`sanity check`)
     const childProcess = await execa(`yarn`, [`test-output`])
+    console.log(childProcess.stdout)
 
     expect(childProcess.code).toEqual(0)
   }, 15000)
