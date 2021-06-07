@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-namespace */
+
 import fs from "fs-extra"
 import Bluebird from "bluebird"
 import * as path from "path"
@@ -7,6 +9,15 @@ import { IPageDataWithQueryResult } from "../../utils/page-data"
 import { IRenderHtmlResult } from "../../commands/build-html"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
+
+declare global {
+  namespace NodeJS {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    interface Global {
+      unsafeBuiltinUsage: Array<string> | undefined
+    }
+  }
+}
 
 /**
  * Used to track if renderHTMLProd / renderHTMLDev are called within same "session" (from same renderHTMLQueue call).
@@ -280,7 +291,7 @@ export const renderHTMLProd = async ({
 }: {
   htmlComponentRendererPath: string
   paths: Array<string>
-  envVars: Array<Array<string>>
+  envVars: Array<[string, string | undefined]>
   sessionId: number
 }): Promise<IRenderHtmlResult> => {
   const publicDir = join(process.cwd(), `public`)
@@ -353,7 +364,7 @@ export const renderHTMLDev = async ({
 }: {
   htmlComponentRendererPath: string
   paths: Array<string>
-  envVars: Array<Array<string>>
+  envVars: Array<[string, string | undefined]>
   sessionId: number
 }): Promise<Array<unknown>> => {
   const outputDir = join(process.cwd(), `.cache`, `develop-html`)

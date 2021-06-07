@@ -1,8 +1,8 @@
-import { IWebhookBody } from "./../steps/preview/index"
+import { IPreviewData } from "./../steps/preview/index"
 import type { NodePluginArgs, Reporter } from "gatsby"
 export type GatsbyNodeApiHelpers = NodePluginArgs & {
   Joi?: any
-  webhookBody?: IWebhookBody
+  webhookBody?: IPreviewData
   page?: {
     path: string
     component: string

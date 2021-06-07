@@ -9,7 +9,7 @@ import { isDate } from "../types/date"
 import { addDerivedType } from "../types/derived-types"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
 import { printDirectives } from "../print"
-const { getNode, getNodes } = require(`../../redux/nodes`)
+const { getNode, getNodes } = require(`../../datastore`)
 
 const addInferredFields = ({
   schemaComposer,

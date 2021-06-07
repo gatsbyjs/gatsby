@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.7.0-next.2...gatsby-cli@3.8.0-next.0) (2021-06-03)
+
+### Features
+
+- **gatsby:** add createNodeManifest action ([#31127](https://github.com/gatsbyjs/gatsby/issues/31127)) ([eed6108](https://github.com/gatsbyjs/gatsby/commit/eed610813da645356316826a4558640ecc4365b5))
+
+# [3.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.7.0-next.1...gatsby-cli@3.7.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package gatsby-cli
+
 # [3.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.7.0-next.0...gatsby-cli@3.7.0-next.1) (2021-05-31)
 
 **Note:** Version bump only for package gatsby-cli
