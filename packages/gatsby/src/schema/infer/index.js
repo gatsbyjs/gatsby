@@ -4,7 +4,7 @@ const { hasNodes } = require(`./inference-metadata`)
 const { getExampleObject } = require(`./build-example-data`)
 const { addNodeInterface } = require(`../types/node-interface`)
 const { addInferredFields } = require(`./add-inferred-fields`)
-const { getNodesByType } = require(`../../redux/nodes`)
+const { getNodesByType } = require(`../../datastore`)
 
 const addInferredTypes = ({
   schemaComposer,

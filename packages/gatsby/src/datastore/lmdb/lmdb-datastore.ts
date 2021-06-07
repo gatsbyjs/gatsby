@@ -161,8 +161,10 @@ export function setupLmdbStore(): IDataStore {
     getNodesByType,
   }
   replaceReducer({
-    nodes: (state = new Map(), _) => state,
-    nodesByType: (state = new Map(), _) => state,
+    nodes: (state = new Map(), action) =>
+      action.type === `DELETE_CACHE` ? new Map() : state,
+    nodesByType: (state = new Map(), action) =>
+      action.type === `DELETE_CACHE` ? new Map() : state,
   })
   emitter.on(`*`, action => {
     if (action) {
