@@ -1,6 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
-body { font-family: 'Inter', sans-serif; }
+body {
+  font-family: "Inter", sans-serif;
+}
 
 main {
   max-width: 95%;
@@ -9,23 +11,24 @@ main {
   margin-right: auto;
 }
 
-h2 { 
+h2 {
   margin-top: 30px;
   margin-bottom: 10px;
 }
 
-input, textarea {
+input,
+textarea {
   display: block;
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
   resize: none;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
-label { 
-  display: block; 
-  margin-bottom: 5px; 
+label {
+  display: block;
+  margin-bottom: 5px;
 }
 
 button {
@@ -36,7 +39,7 @@ button {
   border-radius: 3px;
 }
 
-button[disabled]{
+button[disabled] {
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
