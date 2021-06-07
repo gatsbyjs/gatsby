@@ -22,7 +22,7 @@
       // There are many script tag differences
       $(`script`).remove()
       // Only added in production
-      $(`style[data-identity="gatsby-global-css"]`).remove()
+      $(`#gatsby-global-css`).remove()
       // Only added in development
       $(`link[data-identity='gatsby-dev-css']`).remove()
       // Only in prod
