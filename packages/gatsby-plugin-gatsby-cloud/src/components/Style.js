@@ -36,6 +36,7 @@ const Style = () => (
             Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
             "Segoe UI Symbol" !important;
           background: white;
+          box-sizing: border-box;
           position: fixed;
           top: 50%;
           -ms-transform: translateY(-50%);
@@ -56,6 +57,7 @@ const Style = () => (
           height: 32px;
           padding: 4px;
           border-radius: 4px;
+          box-sizing: border-box;
         }
 
         [data-gatsby-preview-indicator-hoverable="true"]:hover {
