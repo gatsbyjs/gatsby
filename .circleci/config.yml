@@ -8,9 +8,9 @@ executors:
       image:
         type: string
         # First 10.x LTS release, but old Yarn
-        default: "12.13"
+        default: "12.13.0"
     docker:
-      - image: circleci/node:<< parameters.image >>
+      - image: cimg/node:<< parameters.image >>
 
 aliases:
   e2e-executor: &e2e-executor
@@ -58,11 +58,20 @@ aliases:
           - /blog.+/
 
   test_template: &test_template
+    parameters:
+      npm_rebuild:
+        type: boolean
+        default: false
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
+      - when:
+          condition: << parameters.npm_rebuild >>
+          steps:
+            - run: npm rebuild
       - run: yarn list react
+      - run: yarn why lmdb-store
       - run:
           command: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
           environment:
@@ -183,6 +192,8 @@ jobs:
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
+      # python 2 is not built in and node-gyp needs it to build lmdb
+      - run: apt-get update && apt-get install python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *check_lockfile
@@ -227,7 +238,15 @@ jobs:
   unit_tests_node14:
     executor:
       name: node
-      image: "14"
+      image: "14.17.0"
+    <<: *test_template
+
+  unit_tests_node14_lmdb_store:
+    executor:
+      name: node
+      image: "14.17.0"
+    environment:
+      GATSBY_EXPERIMENTAL_LMDB_STORE: 1
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
@@ -243,6 +262,12 @@ jobs:
       - run: npm i -g yarn@1.22.10
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
+
+  integration_tests_node_manifest:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/node-manifest
 
   integration_tests_long_term_caching:
     executor: node
@@ -319,32 +344,32 @@ jobs:
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
       - run:
-          command: cp -r ./starters/default ./e2e-tests/gatsby-pnp
+          command: mkdir -p /tmp/e2e-tests/
+          working_directory: ~/project
+      - run:
+          command: cp -r ./starters/default /tmp/e2e-tests/gatsby-pnp
           working_directory: ~/project
       - run:
           command: touch yarn.lock
-          working_directory: ~/project/e2e-tests/gatsby-pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Quick upgrade to the v2 (any version, we just need the real set version)
           command: yarn policies set-version berry
-          working_directory: ~/project/e2e-tests/gatsby-pnp
-      - run: # force typescript to 4.1.5 to pass test
-          command: sed '$ s/.$/,"resolutions":{"typescript":"4.1.5"}}/' package.json > tmpfile && cat tmpfile > package.json && rm tmpfile
-          working_directory: ~/project/e2e-tests/gatsby-pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Forces to use the local packages
-          command: yarn link --all --private ../..
-          working_directory: ~/project/e2e-tests/gatsby-pnp
+          command: yarn link --all --private ~/project
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: yarn install
-          working_directory: ~/project/e2e-tests/gatsby-pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: yarn add start-server-and-test@^1.11.0
-          working_directory: ~/project/e2e-tests/gatsby-pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: yarn build
-          working_directory: ~/project/e2e-tests/gatsby-pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
-          working_directory: ~/project/e2e-tests/gatsby-pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnp
 
   e2e_tests_gatsby-image:
     <<: *e2e_tests_gatsby-image_alias
@@ -626,7 +651,17 @@ workflows:
             - lint
             - typecheck
             - bootstrap
+      - unit_tests_node14_lmdb_store:
+          <<: *ignore_docs
+          # rebuild to get correct version of lmdb-store (compiled for node14 not node12)
+          npm_rebuild: true
+          requires:
+            - lint
+            - typecheck
+            - bootstrap
       - integration_tests_gatsby_source_wordpress:
+          <<: *e2e-test-workflow
+      - integration_tests_node_manifest:
           <<: *e2e-test-workflow
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
