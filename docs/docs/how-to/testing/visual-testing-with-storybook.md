@@ -295,4 +295,3 @@ This is a very simple story without much going on, but honestly, nothing else re
 - For more information on Storybook, visit
   [the Storybook site](https://storybook.js.org/).
 - Get started with a [Jest and Storybook starter](https://github.com/Mathspy/gatsby-storybook-jest-starter)
-- or get started with a [Gatsby Testing Starter](https://github.com/DanailMinchev/gatsby-starter-testing) which includes automated visual testing with [jest-puppeteer](https://github.com/smooth-code/jest-puppeteer) and [jest-image-snapshot](https://github.com/americanexpress/jest-image-snapshot)
