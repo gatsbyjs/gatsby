@@ -148,15 +148,26 @@ export function BuildErrorIndicatorTooltip({ siteId, orgId, buildId }) {
   )
 }
 
-function BuildSuccessIndicatorTooltip({ isOnPrettyUrl, sitePrefix }) {
+function BuildSuccessIndicatorTooltip({
+  isOnPrettyUrl,
+  sitePrefix,
+  orgId,
+  siteId,
+  buildId,
+}) {
   return (
     <>
       {`New preview available`}
       <Link
         // href={generateBuildLogUrl({ orgId, siteId, buildId })}
         onClick={() => {
-          newPreviewAvailableClick({ isOnPrettyUrl, sitePrefix })
-          /** @todo add click tracking */
+          newPreviewAvailableClick({
+            isOnPrettyUrl,
+            sitePrefix,
+            orgId,
+            siteId,
+            buildId,
+          })
         }}
       >
         <p data-gatsby-preview-indicator="tooltip-link">{`Click to view`}</p>
@@ -276,7 +287,7 @@ export default function Indicator() {
     }
   }, [])
 
-  const linkIndicatorButtonCommonProps = { buildId, siteId, orgId }
+  const trackEventProps = { buildId, siteId, orgId }
 
   if (buildStatus === `BUILDING`) {
     return (
@@ -289,9 +300,9 @@ export default function Indicator() {
         <LinkIndicatorButton
           tooltipContent={`Copy link`}
           active={true}
-          {...linkIndicatorButtonCommonProps}
+          {...trackEventProps}
         />
-        <InfoIndicatorButton />
+        <InfoIndicatorButton {...trackEventProps} />
       </PreviewIndicator>
     )
   }
@@ -310,8 +321,8 @@ export default function Indicator() {
           overrideShowTooltip={true}
           active={true}
         />
-        <LinkIndicatorButton {...linkIndicatorButtonCommonProps} />
-        <InfoIndicatorButton />
+        <LinkIndicatorButton {...trackEventProps} />
+        <InfoIndicatorButton {...trackEventProps} />
       </PreviewIndicator>
     )
   }
@@ -328,11 +339,12 @@ export default function Indicator() {
         <LinkIndicatorButton
           tooltipContent={`Copy link`}
           active={true}
-          {...linkIndicatorButtonCommonProps}
+          {...trackEventProps}
         />
         <InfoIndicatorButton
           tooltipContent={`Preview updated ${updatedDate} ago`}
           active={true}
+          {...trackEventProps}
         />
       </PreviewIndicator>
     )
@@ -350,6 +362,9 @@ export default function Indicator() {
             <BuildSuccessIndicatorTooltip
               isOnPrettyUrl={buildInfo?.isOnPrettyUrl}
               sitePrefix={buildInfo?.siteInfo?.sitePrefix}
+              buildId={buildId}
+              siteId={siteId}
+              orgId={orgId}
             />
           }
           overrideShowTooltip={true}
@@ -361,9 +376,9 @@ export default function Indicator() {
             })
           }
         />
-        <LinkIndicatorButton {...linkIndicatorButtonCommonProps} />
+        <LinkIndicatorButton {...trackEventProps} />
 
-        <InfoIndicatorButton />
+        <InfoIndicatorButton {...trackEventProps} />
       </PreviewIndicator>
     )
   }
@@ -371,8 +386,8 @@ export default function Indicator() {
   return (
     <PreviewIndicator>
       <GatsbyIndicatorButton active={false} />
-      <LinkIndicatorButton active={false} {...linkIndicatorButtonCommonProps} />
-      <InfoIndicatorButton active={false} />
+      <LinkIndicatorButton active={false} {...trackEventProps} />
+      <InfoIndicatorButton active={false} {...trackEventProps} />
     </PreviewIndicator>
   )
 }
