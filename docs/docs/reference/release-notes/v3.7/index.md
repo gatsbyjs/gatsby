@@ -13,8 +13,7 @@ Key highlights of this release:
 - [Webpack caching](#webpack-caching) - starting gradual rollout
 - [New API for source plugins: `createNodeManifest`](#new-api-for-source-plugins-createnodemanifest)
 - [Experimental: Node persistence in LMDB](#experimental-node-persistence-in-lmdb) - lower peak memory usage
-- [Experimental: React concurrent features](#experimental-react-concurrent-features)
-- [gatsby-remark-images: async image decoding by default](#gatsby-remark-images-async-image-decoding-by-default)
+- [`gatsby-remark-images`: async image decoding by default](#gatsby-remark-images-async-image-decoding-by-default)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -69,12 +68,6 @@ We encourage you to try it and [let us know](https://github.com/gatsbyjs/gatsby/
 Installation instructions are in the [Umbrella Discussion](https://github.com/gatsbyjs/gatsby/discussions/31769).
 
 [Original PR](https://github.com/gatsbyjs/gatsby/pull/31371)
-
-# Experimental: React concurrent features
-
-TODOC
-
-[Original PR](https://github.com/gatsbyjs/gatsby/pull/31394)
 
 ## Notable bugfixes & improvements
 
