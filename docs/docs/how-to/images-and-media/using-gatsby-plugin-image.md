@@ -250,7 +250,7 @@ These source plugins support using `gatsby-plugin-image` with images served from
 
 A dedicated image CDN can be used with sources that don't have their own CDN, or where you need more transforms or formats than the CDN offers.
 
-- [imgix](https://github.com/imgix/gatsby)
+- [imgix](/plugins/@imgix/gatsby)
 
 ### Plugin authors
 
