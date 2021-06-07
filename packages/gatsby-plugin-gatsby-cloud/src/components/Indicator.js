@@ -45,9 +45,18 @@ const copySuccessTooltip = (
 )
 
 export function LinkIndicatorButton(props) {
+  const { orgId, siteId, buildId, active } = props
   const [linkButtonCopyProps, setLinkButtonCopyProps] = useState()
 
   const copyLinkClick = () => {
+    trackEvent({
+      eventType: `PREVIEW_INDICATOR_CLICK`,
+      orgId,
+      siteId,
+      buildId,
+      name: `copy link`,
+    })
+
     setLinkButtonCopyProps({
       tooltipContent: copySuccessTooltip,
       overrideShowTooltip: true,
@@ -70,11 +79,23 @@ export function LinkIndicatorButton(props) {
     navigator.clipboard.writeText(window.location.href)
   }
 
+  const trackHover = () => {
+    if (!active) return
+    trackEvent({
+      eventType: `PREVIEW_INDICATOR_HOVER`,
+      orgId,
+      siteId,
+      buildId,
+      name: `link hover`,
+    })
+  }
+
   return (
     <IndicatorButton
       testId={`link`}
       iconSvg={linkIcon}
       onClick={copyLinkClick}
+      onMouseOver={trackHover}
       {...linkButtonCopyProps}
       {...props}
     />
@@ -82,7 +103,25 @@ export function LinkIndicatorButton(props) {
 }
 
 export function InfoIndicatorButton(props) {
-  return <IndicatorButton testId="info" iconSvg={infoIcon} {...props} />
+  const { active, orgId, siteId, buildId } = props
+  const trackHover = () => {
+    if (!active) return
+    trackEvent({
+      eventType: `PREVIEW_INDICATOR_HOVER`,
+      orgId,
+      siteId,
+      buildId,
+      name: `info hover`,
+    })
+  }
+  return (
+    <IndicatorButton
+      testId="info"
+      iconSvg={infoIcon}
+      onMouseOver={trackHover}
+      {...props}
+    />
+  )
 }
 
 export function BuildErrorIndicatorTooltip({ siteId, orgId, buildId }) {
@@ -93,7 +132,13 @@ export function BuildErrorIndicatorTooltip({ siteId, orgId, buildId }) {
       <Link
         href={generateBuildLogUrl({ orgId, siteId, buildId })}
         onClick={() => {
-          /** @todo add click tracking */
+          trackEvent({
+            eventType: `PREVIEW_INDICATOR_CLICK`,
+            orgId,
+            siteId,
+            buildId,
+            name: `error logs`,
+          })
         }}
       >
         <p data-gatsby-preview-indicator="tooltip-link">{`View logs`}</p>
@@ -127,7 +172,29 @@ const generateBuildLogUrl = ({ orgId, siteId, errorBuildId }) => {
   return `${pathToBuildLogs}?returnTo=${returnTo}`
 }
 
-const newPreviewAvailableClick = ({ isOnPrettyUrl, sitePrefix }) => {
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms || 50))
+
+const newPreviewAvailableClick = async ({
+  isOnPrettyUrl,
+  sitePrefix,
+  orgId,
+  siteId,
+  buildId,
+}) => {
+  trackEvent({
+    eventType: `PREVIEW_INDICATOR_CLICK`,
+    orgId,
+    siteId,
+    buildId,
+    name: `new preview`,
+  })
+
+  /**
+   * Delay to ensure that track event fires but do not await trackEvent directly since we do not
+   * want to block the thread until the event request comes back
+   */
+  await delay(75)
+
   // Grabs domain that preview is hosted on https://preview-sitePrefix.gtsb.io
   // This will match `gtsb.io`
   const previewDomain = window.location.hostname.split(`.`).slice(-2).join(`.`)
@@ -209,6 +276,8 @@ export default function Indicator() {
     }
   }, [])
 
+  const linkIndicatorButtonCommonProps = { buildId, siteId, orgId }
+
   if (buildStatus === `BUILDING`) {
     return (
       <PreviewIndicator>
@@ -217,7 +286,11 @@ export default function Indicator() {
           showSpinner={true}
           overrideShowTooltip={true}
         />
-        <LinkIndicatorButton tooltipContent={`Copy link`} active={true} />
+        <LinkIndicatorButton
+          tooltipContent={`Copy link`}
+          active={true}
+          {...linkIndicatorButtonCommonProps}
+        />
         <InfoIndicatorButton />
       </PreviewIndicator>
     )
@@ -237,7 +310,7 @@ export default function Indicator() {
           overrideShowTooltip={true}
           active={true}
         />
-        <LinkIndicatorButton />
+        <LinkIndicatorButton {...linkIndicatorButtonCommonProps} />
         <InfoIndicatorButton />
       </PreviewIndicator>
     )
@@ -252,7 +325,11 @@ export default function Indicator() {
     return (
       <PreviewIndicator>
         <GatsbyIndicatorButton active={true} />
-        <LinkIndicatorButton tooltipContent={`Copy link`} active={true} />
+        <LinkIndicatorButton
+          tooltipContent={`Copy link`}
+          active={true}
+          {...linkIndicatorButtonCommonProps}
+        />
         <InfoIndicatorButton
           tooltipContent={`Preview updated ${updatedDate} ago`}
           active={true}
@@ -284,7 +361,8 @@ export default function Indicator() {
             })
           }
         />
-        <LinkIndicatorButton />
+        <LinkIndicatorButton {...linkIndicatorButtonCommonProps} />
+
         <InfoIndicatorButton />
       </PreviewIndicator>
     )
@@ -293,7 +371,7 @@ export default function Indicator() {
   return (
     <PreviewIndicator>
       <GatsbyIndicatorButton active={false} />
-      <LinkIndicatorButton active={false} />
+      <LinkIndicatorButton active={false} {...linkIndicatorButtonCommonProps} />
       <InfoIndicatorButton active={false} />
     </PreviewIndicator>
   )
