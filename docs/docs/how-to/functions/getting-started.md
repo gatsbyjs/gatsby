@@ -2,20 +2,20 @@
 title: Getting Started
 examples:
   - label: Authenticate with Google Auth
-    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/google-auth"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/functions-google-auth"
   - label: Authenticate with Auth0
-    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/auth0"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/functions-auth0"
   - label: Submit form to Airtable
-    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/airtable-form"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/functions-airtable-form"
   - label: Send email with SendGrid
-    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/sendgrid-email"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/functions-sendgrid-email"
   - label: Basic form that submits to a Function
-    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/basic-form"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/functions-basic-form"
 ---
 
 Gatsby Functions help you build [Express-like](https://expressjs.com/) backends without running servers.
 
-Functions are currently in beta and can be enabled by adding the `FUNCTIONS` flag to your `gatsby-config.js` to sites running Gatsby 3.4 and above. [Learn more and join the discussion](https://github.com/gatsbyjs/gatsby/discussions/30735).
+Functions are generally available in sites running Gatsby 3.7.1 and above.
 
 ## Hello World
 
@@ -33,13 +33,6 @@ A Function file must export a single function that takes two parameters:
 
 - `req`: Node's [http request object](https://nodejs.org/api/http.html#http_class_http_incomingmessage) with some [automatically parsed data](/docs/how-to/functions/getting-started/#common-data-formats-are-automatically-parsed)
 - `res`: Node's [http response object](https://nodejs.org/api/http.html#http_class_http_serverresponse) with some [extra helper functions](/docs/how-to/functions/middleware-and-helpers/#res-helpers)
-
-Dynamic routing is supported for creating REST-ful APIs and other uses cases
-
-- `/api/users` => `src/api/users/index.js`
-- `/api/users/23` => `src/api/users/[id].js`
-
-[Learn more about dynamic routes](/docs/how-to/functions/routing#dynamic-routing)
 
 ## Typescript
 
@@ -123,7 +116,7 @@ export default async function postNewPersonHandler(req, res) {
 
 ## Forms
 
-Forms and Functions are often used together. For a working example you can play with locally, see the [form example](https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/basic-form). The [Forms doc page](/docs/how-to/adding-common-features/adding-forms/) is a gentle introduction for building forms in React. Below is sample code for a very simple form that submits to a function that you can use as a basis for building out forms in Gatsby.
+Forms and Functions are often used together. For a working example you can play with locally, see the [form example](https://github.com/gatsbyjs/gatsby/tree/master/examples/functions-basic-form). The [Forms doc page](/docs/how-to/adding-common-features/adding-forms/) is a gentle introduction for building forms in React. Below is sample code for a very simple form that submits to a function that you can use as a basis for building out forms in Gatsby.
 
 ```js:title=src/api/form.js
 export default function formHandler(req, res) {
