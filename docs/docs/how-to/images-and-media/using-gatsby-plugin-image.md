@@ -240,10 +240,10 @@ Many source plugins have native support for `gatsby-plugin-image`, with images s
 These source plugins support using `gatsby-plugin-image` with images served from their CDN.
 
 - [AgilityCMS](https://github.com/agility/gatsby-image-agilitycms)
-- [Contentful](/plugins/gatsby-source-contentful#using-the-new-gatsby-image-plugin)
-- [DatoCMS](/plugins/gatsby-source-datocms#integration-with-gatsby-image)
-- [GraphCMS](/plugins/gatsby-source-graphcms#usage-with-gatsby-plugin-image)
-- [Sanity](/plugins/gatsby-source-sanity#using-images)
+- [Contentful](/plugins/gatsby-source-contentful/#using-the-new-gatsby-image-plugin)
+- [DatoCMS](/plugins/gatsby-source-datocms/#integration-with-gatsby-image)
+- [GraphCMS](/plugins/gatsby-source-graphcms/#usage-with-gatsby-plugin-image)
+- [Sanity](/plugins/gatsby-source-sanity/#using-images)
 - [Shopify](https://github.com/gatsbyjs/gatsby-source-shopify-experimental#images)
 
 ### Image CDNs
