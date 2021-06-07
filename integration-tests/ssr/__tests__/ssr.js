@@ -25,19 +25,14 @@ describe(`SSR`, () => {
   })
 
   test(`dev & build outputs match`, async () => {
-    console.log(`sanity check`)
     const childProcess = await execa(`yarn`, [`test-output`])
 
-    console.log(`stdout:`)
-    console.log(childProcess.stdout)
-
-    console.log(`stderr:`)
-    console.log(childProcess.stderr)
-
-    console.log(`failed:`)
-    console.log(childProcess.failed, childProcess.shortMessage)
-
     expect(childProcess.code).toEqual(0)
+
+    // Additional sanity-check
+    expect(String(childProcess.stdout)).toContain(
+      `testing these paths for differences between dev & prod outputs`
+    )
   }, 15000)
 
   test(`it generates an error page correctly`, async () => {
