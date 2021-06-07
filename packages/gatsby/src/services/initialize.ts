@@ -8,7 +8,6 @@ import path from "path"
 import telemetry from "gatsby-telemetry"
 
 import apiRunnerNode from "../utils/api-runner-node"
-import handleFlags from "../utils/handle-flags"
 import { getBrowsersList } from "../utils/browserslist"
 import { Store, AnyAction } from "redux"
 import * as WorkerPool from "../utils/worker/pool"
@@ -19,7 +18,6 @@ import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
-import availableFlags from "../utils/flags"
 import { detectLmdbStore } from "../datastore"
 import { loadConfigAndPlugins } from "../bootstrap/load-config-and-plugins"
 
@@ -143,42 +141,8 @@ export async function initialize({
 
   const { config, flattenedPlugins } = await loadConfigAndPlugins({
     siteDirectory: program.directory,
+    processFlags: true,
   })
-
-  // Setup flags
-  if (config) {
-    // Get flags
-    const { enabledConfigFlags, unknownFlagMessage, message } = handleFlags(
-      availableFlags,
-      config.flags
-    )
-
-    if (unknownFlagMessage !== ``) {
-      reporter.warn(unknownFlagMessage)
-    }
-
-    //  set process.env for each flag
-    enabledConfigFlags.forEach(flag => {
-      process.env[flag.env] = `true`
-    })
-
-    // Print out message.
-    if (message !== ``) {
-      reporter.info(message)
-    }
-
-    //  track usage of feature
-    enabledConfigFlags.forEach(flag => {
-      if (flag.telemetryId) {
-        telemetry.trackFeatureIsUsed(flag.telemetryId)
-      }
-    })
-
-    // Track the usage of config.flags
-    if (config.flags) {
-      telemetry.trackFeatureIsUsed(`ConfigFlags`)
-    }
-  }
 
   // TODO: figure out proper way of disabling loading indicator
   // for now GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
