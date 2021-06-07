@@ -131,7 +131,6 @@ export function resolvePlugin(
       version: packageJSON.version,
     }
   } catch (err) {
-    console.log({ err })
     if (process.env.gatsby_log_level === `verbose`) {
       reporter.panicOnBuild(
         `plugin "${pluginName} threw the following error:\n`,
