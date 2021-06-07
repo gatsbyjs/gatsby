@@ -210,9 +210,9 @@ Follow the below steps to configure your site with a free SSL/TLS certificate fr
    ```shell
    sudo snap install --classic certbot
    ```
-   
+
    Run the following command to start using Certbot.
-   
+
    ```shell
    sudo ln -s /snap/bin/certbot /usr/bin/certbot
    ```
