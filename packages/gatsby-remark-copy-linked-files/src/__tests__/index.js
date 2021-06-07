@@ -272,6 +272,23 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).not.toHaveBeenCalled()
   })
 
+  it(`do nothing if dir is not found`, async () => {
+    const getNode = () => {
+      return {
+        internal: {
+          type: `Node`,
+        },
+      }
+    }
+    const path = `images/sample-image.gif`
+
+    const markdownAST = remark.parse(`![sample][1]\n\n[1]: ${path}`)
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).not.toHaveBeenCalled()
+  })
+
   describe(`respects pathPrefix`, () => {
     const imageName = `sample-image`
     const imageRelativePath = `images/${imageName}.svg`
