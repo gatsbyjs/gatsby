@@ -15,7 +15,7 @@ examples:
 
 Gatsby Functions help you build [Express-like](https://expressjs.com/) backends without running servers.
 
-Functions are generally available in sites running Gatsby 3.7.1 and above.
+Functions are generally available in sites running Gatsby 3.7 and above.
 
 ## Hello World
 
