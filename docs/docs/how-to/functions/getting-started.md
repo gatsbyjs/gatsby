@@ -199,3 +199,8 @@ export default function FormPage() {
   )
 }
 ```
+
+## Limitations
+
+- Gatsby Functions do not support dynamic routes in Gatsby Cloud at the moment
+- Bundling in native dependencies is not supported at the moment
