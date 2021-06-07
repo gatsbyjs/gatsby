@@ -117,6 +117,7 @@ function getPosition({
       source: frame
         .getFileName()
         .substr(frame.getFileName().indexOf(`webpack:`)),
+      name: null,
     }
   }
 
