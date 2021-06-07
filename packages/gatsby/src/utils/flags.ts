@@ -173,16 +173,6 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => true,
   },
   {
-    name: `FUNCTIONS`,
-    env: `GATSBY_EXPERIMENTAL_FUNCTIONS`,
-    command: `all`,
-    telemetryId: `Functions`,
-    experimental: false,
-    description: `Compile Serverless functions in your Gatsby project and write them to disk, ready to deploy to Gatsby Cloud`,
-    umbrellaIssue: `https://gatsby.dev/functions-feedback`,
-    testFitness: (): fitnessEnum => true,
-  },
-  {
     name: `CONCURRENT_FEATURES`,
     env: `GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES`,
     command: `all`,
