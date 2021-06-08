@@ -12,6 +12,7 @@ Key highlights of this release:
 
 - [Functions](#functions) - Now generally available
 - [webpack caching](#webpack-caching) - Starting gradual rollout
+- [Yarn 2 (PNP) support](#yarn-2-pnp-support)
 - [New API for source plugins: `createNodeManifest`](#new-api-for-source-plugins-createnodemanifest)
 - [Experimental: Node persistence in LMDB](#experimental-node-persistence-in-lmdb) - Lower peak memory usage
 - [`gatsby-remark-images`: async image decoding by default](#gatsby-remark-images-async-image-decoding-by-default)
@@ -91,6 +92,7 @@ If doing so would cause problems, you can specify `sync` to disable asynchronous
 ## Yarn 2 (PNP) support
 
 Yarn 2 with Plug'n'Play (Pnp) is available again. With the upgrade of Webpack v4-v5 during our Gatsby v3 release, PnP support broke. We've added an e2e-test to make sure this won't happen again in the future. With yarn 2, you'll notice faster NPM installs and less data usage as yarn2 is aggresivily caching node_modules.
+
 [Original PR](https://github.com/gatsbyjs/gatsby/pull/31732)
 
 ## Notable bugfixes & improvements
