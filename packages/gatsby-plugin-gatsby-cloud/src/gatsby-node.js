@@ -1,5 +1,5 @@
 import WebpackAssetsManifest from "webpack-assets-manifest"
-
+import { captureEvent } from "gatsby-telemetry"
 import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
 import copyFunctionsManifest from "./copy-functions-manifest"
@@ -36,7 +36,17 @@ exports.onPostBuild = async (
   const pluginData = makePluginData(store, assetsManifest, pathPrefix)
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
-  const { redirects } = store.getState()
+  const { redirects, pageDataStats, nodes } = store.getState()
+
+  const pagesCount = pageDataStats && pageDataStats.size
+  const nodesCount = nodes && nodes.size
+
+  captureEvent(`GATSBY_CLOUD_METADATA`, {
+    siteMeasurements: {
+      pagesCount,
+      nodesCount,
+    },
+  })
 
   let rewrites = []
   if (pluginOptions.generateMatchPathRewrites) {
