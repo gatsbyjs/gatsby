@@ -62,7 +62,7 @@ The result is that a source plugin can allow a CMS to create a manifest file usi
 
 [Original PR](https://github.com/gatsbyjs/gatsby/pull/31127).
 
-# Experimental: Node persistence in LMDB
+## Experimental: Node persistence in LMDB
 
 This release introduces a new experimental data storage option: LMDB (via the excellent [lmdb-store](github.com/DoctorEvidence/lmdb-store) package).
 
