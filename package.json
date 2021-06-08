@@ -78,7 +78,7 @@
     "retext-diacritics": "^3.0.0",
     "retext-emoji": "^7.0.2",
     "retext-english": "^3.0.4",
-    "retext-indefinite-article": "^2.0.1",
+    "retext-indefinite-article": "^2.0.3",
     "retext-redundant-acronyms": "^3.0.0",
     "retext-sentence-spacing": "^4.0.0",
     "retext-spell": "^4.0.0",
