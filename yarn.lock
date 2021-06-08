@@ -24408,10 +24408,10 @@ retext-smartypants@^4.0.0:
     nlcst-to-string "^2.0.0"
     unist-util-visit "^2.0.0"
 
-retext-spell@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/retext-spell/-/retext-spell-4.0.0.tgz#ff8391c7d6eda0beeeb3db1420483a5b04ed25d7"
-  integrity sha512-sEyVkWfiuljLGD7qCvpvmrk1yNlnpOG9otMJ4uWiIvKGKIHbFn+NknqL1DbInvQd3VAmnOaWFNRynrpAv/zw8g==
+retext-spell@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/retext-spell/-/retext-spell-4.0.1.tgz#1b796094d5fccb13401b53bc5b34e0ff05addf24"
+  integrity sha512-tJimlzi2xJ2011l0YhmjgTvo801guDEQHS7p2Jm1RnYvemnDfnrZkqf+U0Ysz/dT0Ym8muRt5qklw7+N3hsroA==
   dependencies:
     nlcst-is-literal "^1.0.0"
     nlcst-to-string "^2.0.0"
