@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.7.0-next.2...gatsby@3.7.0) (2021-06-08)
+
+### Bug Fixes
+
+- **gatsby:** do not add global id to style tag ([#31813](https://github.com/gatsbyjs/gatsby/issues/31813)) ([#31827](https://github.com/gatsbyjs/gatsby/issues/31827)) ([86f6628](https://github.com/gatsbyjs/gatsby/commit/86f6628b0458a6df027b1e8c046cae6d05273524))
+- **gatsby:** fix PNP resolving from the .cache folder ([#31732](https://github.com/gatsbyjs/gatsby/issues/31732)) ([d10e8ce](https://github.com/gatsbyjs/gatsby/commit/d10e8ceddf915b8a6e8c2552cdb342d6ea4e6790))
+- **gatsby:** fix signature for latest experimental version of react-dom ([#31750](https://github.com/gatsbyjs/gatsby/issues/31750)) ([#31829](https://github.com/gatsbyjs/gatsby/issues/31829)) ([2a4ea62](https://github.com/gatsbyjs/gatsby/commit/2a4ea623728127a663dc2abbe983e919b0d1bd7a))
+- **gatsby:** fix tests for state persistence with lmdb ([#31736](https://github.com/gatsbyjs/gatsby/issues/31736)) ([5660ce9](https://github.com/gatsbyjs/gatsby/commit/5660ce98133bb9c4c5eab38c64ebdc56ccc4d792))
+
+### Features
+
+- **gatsby:** add createNodeManifest action ([#31127](https://github.com/gatsbyjs/gatsby/issues/31127)) ([eed6108](https://github.com/gatsbyjs/gatsby/commit/eed610813da645356316826a4558640ecc4365b5))
+- **gatsby:** remove concurrent-features flag and depend on export ([#31818](https://github.com/gatsbyjs/gatsby/issues/31818)) ([#31830](https://github.com/gatsbyjs/gatsby/issues/31830)) ([d8c948c](https://github.com/gatsbyjs/gatsby/commit/d8c948c907f16b1d02be4031a6176e490a142f75))
+- **gatsby:** Turn on Functions experiment for everybody ([#31807](https://github.com/gatsbyjs/gatsby/issues/31807)) ([#31826](https://github.com/gatsbyjs/gatsby/issues/31826)) ([5f66cb1](https://github.com/gatsbyjs/gatsby/commit/5f66cb12e22092efcd258e496f581a761b4eb0aa))
+
 # [3.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.7.0-next.1...gatsby@3.7.0-next.2) (2021-06-02)
 
 ### Bug Fixes

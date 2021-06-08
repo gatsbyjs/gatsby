@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-schema-snapshot@2.7.0-next.0...gatsby-plugin-schema-snapshot@2.7.0) (2021-06-08)
+
+**Note:** Version bump only for package gatsby-plugin-schema-snapshot
+
 # [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-schema-snapshot@2.6.0-next.0...gatsby-plugin-schema-snapshot@2.7.0-next.0) (2021-05-21)
 
 **Note:** Version bump only for package gatsby-plugin-schema-snapshot

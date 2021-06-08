@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-google-tagmanager",
   "description": "Gatsby plugin to add google tagmanager onto a site",
-  "version": "3.7.0-next.2",
+  "version": "3.7.0",
   "author": "Thijs Koerselman <thijs@vauxlab.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -12,9 +12,9 @@
   "devDependencies": {
     "@babel/cli": "^7.14.3",
     "@babel/core": "^7.14.3",
-    "babel-preset-gatsby-package": "^1.7.0-next.2",
+    "babel-preset-gatsby-package": "^1.7.0",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-utils": "^1.7.0-next.2"
+    "gatsby-plugin-utils": "^1.7.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-tagmanager#readme",
   "keywords": [
