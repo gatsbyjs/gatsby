@@ -132,7 +132,6 @@ export function BuildErrorIndicatorTooltip({ siteId, orgId, buildId }) {
         href={generateBuildLogUrl({ orgId, siteId, buildId })}
         target="_blank"
         onClick={() => {
-          console.log(`build error link click`)
           trackEvent({
             eventType: `PREVIEW_INDICATOR_CLICK`,
             orgId,
@@ -251,17 +250,6 @@ export default function Indicator() {
       }
     }
 
-    if (siteInfo && !trackedInitialLoad) {
-      trackEvent({
-        eventType: `PREVIEW_INDICATOR_LOADED`,
-        orgId: siteInfo?.orgId,
-        siteId: siteInfo?.siteId,
-        buildId,
-      })
-
-      setTrackedInitialLoad(true)
-    }
-
     setBuildInfo({
       currentBuild,
       latestBuild,
@@ -273,6 +261,20 @@ export default function Indicator() {
       setTimeout(pollData, POLLING_INTERVAL)
     }
   }, [])
+
+  useEffect(() => {
+    if (buildInfo?.siteInfo && !trackedInitialLoad) {
+      const { siteInfo } = buildInfo
+      trackEvent({
+        eventType: `PREVIEW_INDICATOR_LOADED`,
+        orgId: siteInfo?.orgId,
+        siteId: siteInfo?.siteId,
+        buildId,
+      })
+
+      setTrackedInitialLoad(true)
+    }
+  }, [buildInfo, trackedInitialLoad, buildId])
 
   useEffect(() => {
     shouldPoll.current = true
