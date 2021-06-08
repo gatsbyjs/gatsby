@@ -17,7 +17,8 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-helmet": "^6.1.0"
+    "react-helmet": "^6.1.0",
+    "webpack": "^5.35.0"
   },
   "devDependencies": {
     "prettier": "2.3.2"
