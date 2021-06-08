@@ -223,7 +223,7 @@ export default function Indicator() {
   const [buildInfo, setBuildInfo] = useState()
   const timeoutRef = useRef()
   const shouldPoll = useRef(false)
-  let trackedInitialLoad
+  const [trackedInitialLoad, setTrackedInitialLoad] = useState(false)
   const [buildId, setBuildId] = useState()
 
   const { siteInfo, currentBuild } = buildInfo || { siteInfo: {}, currentBuild: {} }
@@ -249,7 +249,7 @@ export default function Indicator() {
       }
     }
 
-    if (!trackedInitialLoad) {
+    if (siteInfo && !trackedInitialLoad) {
       trackEvent({
         eventType: `PREVIEW_INDICATOR_LOADED`,
         orgId: siteInfo?.orgId,
@@ -257,7 +257,7 @@ export default function Indicator() {
         buildId,
       })
 
-      trackedInitialLoad = true
+      setTrackedInitialLoad(true)
     }
 
     setBuildInfo({
