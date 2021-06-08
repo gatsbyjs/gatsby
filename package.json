@@ -9,7 +9,7 @@
     "@lerna/prompt": "3.18.5",
     "@types/babel__code-frame": "^7.0.2",
     "@types/better-queue": "^3.8.2",
-    "@types/bluebird": "^3.5.33",
+    "@types/bluebird": "^3.5.35",
     "@types/cache-manager": "^2.10.3",
     "@types/common-tags": "^1.8.0",
     "@types/express": "^4.17.3",
