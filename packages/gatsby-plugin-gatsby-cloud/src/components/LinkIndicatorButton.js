@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 
+import trackEvent from "../utils/trackEvent"
 import IndicatorButton from "./IndicatorButton"
 
 const linkIcon = (
@@ -55,10 +56,23 @@ const getButtonProps = ({ status, copyLinkClick, button }) => {
   }
 }
 
-export default function LinkIndicatorButton({ status }) {
+export default function LinkIndicatorButton({
+  status,
+  orgId,
+  siteId,
+  buildId,
+}) {
   const [button, setButton] = useState()
 
   const copyLinkClick = () => {
+    trackEvent({
+      eventType: `PREVIEW_INDICATOR_CLICK`,
+      orgId,
+      siteId,
+      buildId,
+      name: `copy link`,
+    })
+
     setButton({
       tooltipIcon: successIcon,
       overrideShowTooltip: true,
@@ -85,6 +99,16 @@ export default function LinkIndicatorButton({ status }) {
 
   const buttonProps = getButtonProps({ status, copyLinkClick, button })
 
+  const trackHover = () => {
+    trackEvent({
+      eventType: `PREVIEW_INDICATOR_HOVER`,
+      orgId,
+      siteId,
+      buildId,
+      name: `link hover`,
+    })
+  }
+
   return (
     <IndicatorButton
       testId={`link`}
@@ -92,6 +116,7 @@ export default function LinkIndicatorButton({ status }) {
       {...buttonProps}
       // See IndicatorButtonTooltip for explanation
       toolTipOffset={40}
+      onMouseOver={buttonProps.active && trackHover}
     />
   )
 }

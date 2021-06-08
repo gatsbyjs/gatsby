@@ -30,9 +30,13 @@ Lastly you need to tell Jest where to find this file. Open your `jest.config.js`
 
 ```js:title=jest.config.js
 module.exports = {
+  testEnvironment: `jsdom`,
   setupFilesAfterEnv: ["<rootDir>/setup-test-env.js"],
 }
 ```
+
+> **Note:** The [Jest 27](https://jestjs.io/blog/2021/05/25/jest-27#flipping-defaults) configuration `testEnvironment` default value changed to `node`,
+> you need to change it to `jsdom` for React Testing Library to work properly
 
 ## Usage
 

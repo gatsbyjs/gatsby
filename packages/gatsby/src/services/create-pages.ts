@@ -100,6 +100,7 @@ export async function createPages({
       changedPages.length === 1 ? `` : `s`
     }`
   )
+
   tim.end()
 
   store.dispatch(actions.apiFinished({ apiName: `createPages` }))

@@ -8,7 +8,9 @@ import { emitter, replaceReducer } from "../../redux"
 
 const rootDbFile =
   process.env.NODE_ENV === `test`
-    ? `test-datastore-${process.env.JEST_WORKER_ID}`
+    ? `test-datastore-${
+        process.env.FORCE_TEST_DATABASE_ID ?? process.env.JEST_WORKER_ID
+      }`
     : `datastore`
 
 let rootDb
