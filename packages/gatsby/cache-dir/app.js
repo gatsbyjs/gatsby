@@ -31,15 +31,6 @@ module.hot.accept([
 
 window.___emitter = emitter
 
-if (
-  process.env.GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES &&
-  !ReactDOM.createRoot
-) {
-  throw new Error(
-    `The GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES flag is not compatible with your React version. Please install "react@0.0.0-experimental-2bf4805e4" and "react-dom@0.0.0-experimental-2bf4805e4" or higher.`
-  )
-}
-
 const loader = new DevLoader(asyncRequires, matchPaths)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
@@ -141,10 +132,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   // render to avoid React complaining about hydration mis-matches.
   let defaultRenderer = ReactDOM.render
   if (focusEl && focusEl.children.length) {
-    if (
-      process.env.GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES &&
-      ReactDOM.createRoot
-    ) {
+    if (ReactDOM.createRoot) {
       defaultRenderer = ReactDOM.createRoot
     } else {
       defaultRenderer = ReactDOM.hydrate
@@ -208,7 +196,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
             <LoadingIndicatorEventHandler />
           )
         } else {
-          renderer(<LoadingIndicatorEventHandler />, indicatorMountElement)
+          ReactDOM.render(
+            <LoadingIndicatorEventHandler />,
+            indicatorMountElement
+          )
         }
       }
     }
