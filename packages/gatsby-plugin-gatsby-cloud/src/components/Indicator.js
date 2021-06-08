@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react"
 import { formatDistance } from "date-fns"
-import { Link } from "gatsby-interface"
+import { ThemeProvider, Link } from "gatsby-interface"
 import getBuildInfo from "../utils/getBuildInfo"
 import trackEvent from "../utils/trackEvent"
 import IndicatorButton from "./IndicatorButton"
@@ -18,7 +18,7 @@ const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL || 3000
 
 export function PreviewIndicator({ children }) {
   return (
-    <>
+    <ThemeProvider>
       <Style />
       <div
         data-testid="preview-status-indicator"
@@ -29,7 +29,7 @@ export function PreviewIndicator({ children }) {
           React.cloneElement(child, { ...child.props, buttonIndex: i })
         )}
       </div>
-    </>
+    </ThemeProvider>
   )
 }
 
@@ -96,8 +96,8 @@ export function LinkIndicatorButton(props) {
       iconSvg={linkIcon}
       onClick={copyLinkClick}
       onMouseOver={trackHover}
-      {...linkButtonCopyProps}
       {...props}
+      {...linkButtonCopyProps}
     />
   )
 }
@@ -224,13 +224,11 @@ export default function Indicator() {
   const timeoutRef = useRef()
   const shouldPoll = useRef(false)
   let trackedInitialLoad
-  let buildId
+  const [buildId, setBuildId] = useState()
 
-  const {
-    siteInfo: { orgId, siteId },
-    currentBuild,
-  } = buildInfo || { siteInfo: {}, currentBuild: {} }
-  const { buildStatus } = currentBuild
+  const { siteInfo, currentBuild } = buildInfo || { siteInfo: {}, currentBuild: {} }
+  const { orgId, siteId } = siteInfo || {}
+  const { buildStatus } = currentBuild || {}
 
   const pollData = useCallback(async function pollData() {
     const prettyUrlRegex = /^preview-/
@@ -243,19 +241,19 @@ export default function Indicator() {
 
     if (!buildId) {
       if (isOnPrettyUrl) {
-        buildId = latestBuild?.id
+        setBuildId(latestBuild?.id)
       } else {
         // Match UUID from preview build URL https://build-af44185e-b8e5-11eb-8529-0242ac130003.gtsb.io
         const buildIdMatch = host.match(/build-(.*?(?=\.))/)
-        buildId = buildIdMatch && buildIdMatch[1]
+        buildIdMatch && setBuildId(buildIdMatch[1])
       }
     }
 
     if (!trackedInitialLoad) {
       trackEvent({
         eventType: `PREVIEW_INDICATOR_LOADED`,
-        orgId: siteInfo.orgId,
-        siteId: siteInfo.siteId,
+        orgId: siteInfo?.orgId,
+        siteId: siteInfo?.siteId,
         buildId,
       })
 
@@ -311,7 +309,7 @@ export default function Indicator() {
     return (
       <PreviewIndicator>
         <GatsbyIndicatorButton
-          toolTipContent={
+          tooltipContent={
             <BuildErrorIndicatorTooltip
               siteId={siteId}
               orgId={orgId}
