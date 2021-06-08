@@ -4,13 +4,19 @@ import v8 from "v8"
 import {
   existsSync,
   mkdtempSync,
-  moveSync, // Note: moveSync over renameSync because /tmp may be on other mount
+  moveSync,
   readFileSync,
   removeSync,
   writeFileSync,
 } from "fs-extra"
-import { IGatsbyNode, ICachedReduxState, IGatsbyPage } from "./types"
+import {
+  GatsbyStateSlices,
+  ICachedReduxState,
+  IGatsbyNode,
+  IGatsbyPage,
+} from "./types"
 import { sync as globSync } from "glob"
+import { createContentDigest } from "gatsby-core-utils"
 import report from "gatsby-cli/lib/reporter"
 
 const getReduxCacheFolder = (): string =>
@@ -26,8 +32,13 @@ function reduxChunkedNodesFilePrefix(dir: string): string {
 function reduxChunkedPagesFilePrefix(dir: string): string {
   return path.join(dir, `redux.page.state_`)
 }
+function reduxWorkerSlicesPrefix(dir: string): string {
+  return path.join(dir, `redux.worker.slices_`)
+}
 
-export function readFromCache(): ICachedReduxState {
+export function readFromCache(
+  slices: Array<GatsbyStateSlices> | undefined = undefined
+): ICachedReduxState {
   // The cache is stored in two steps; the nodes and pages in chunks and the rest
   // First we revive the rest, then we inject the nodes and pages into that obj (if any)
   // Each chunk is stored in its own file, this circumvents max buffer lengths
@@ -35,6 +46,14 @@ export function readFromCache(): ICachedReduxState {
   // of reading them is not relevant.
 
   const reduxCacheFolder = getReduxCacheFolder()
+
+  if (slices) {
+    return v8.deserialize(
+      readFileSync(
+        reduxWorkerSlicesPrefix(reduxCacheFolder) + createContentDigest(slices)
+      )
+    )
+  }
 
   const obj: ICachedReduxState = v8.deserialize(
     readFileSync(reduxSharedFile(reduxCacheFolder))
@@ -103,7 +122,8 @@ export function guessSafeChunkSize(
 
 function prepareCacheFolder(
   targetDir: string,
-  contents: ICachedReduxState
+  contents: ICachedReduxState,
+  slices: Array<GatsbyStateSlices> | undefined = undefined
 ): void {
   // Temporarily save the nodes and pages and remove them from the main redux store
   // This prevents an OOM when the page nodes collectively contain to much data
@@ -113,7 +133,15 @@ function prepareCacheFolder(
   const pagesMap = contents.pages
   contents.pages = undefined
 
-  writeFileSync(reduxSharedFile(targetDir), v8.serialize(contents))
+  if (slices) {
+    writeFileSync(
+      reduxWorkerSlicesPrefix(targetDir) + createContentDigest(slices),
+      v8.serialize(contents)
+    )
+    return
+  } else {
+    writeFileSync(reduxSharedFile(targetDir), v8.serialize(contents))
+  }
   // Now restore them on the redux store
   contents.nodes = nodesMap
   contents.pages = pagesMap
@@ -184,13 +212,16 @@ function safelyRenameToBak(reduxCacheFolder: string): string {
   return bakName
 }
 
-export function writeToCache(contents: ICachedReduxState): void {
+export function writeToCache(
+  contents: ICachedReduxState,
+  slices?: Array<GatsbyStateSlices> | undefined
+): void {
   // Note: this should be a transactional operation. So work in a tmp dir and
   // make sure the cache cannot be left in a corruptable state due to errors.
 
   const tmpDir = mkdtempSync(path.join(os.tmpdir(), `reduxcache`)) // linux / windows
 
-  prepareCacheFolder(tmpDir, contents)
+  prepareCacheFolder(tmpDir, contents, slices)
 
   // Replace old cache folder with new. If the first rename fails, the cache
   // is just stale. If the second rename fails, the cache is empty. In either

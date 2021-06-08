@@ -320,6 +320,8 @@ export interface IGatsbyState {
   }
 }
 
+export type GatsbyStateSlices = keyof IGatsbyState
+
 export interface ICachedReduxState {
   nodes?: IGatsbyState["nodes"]
   status: IGatsbyState["status"]
