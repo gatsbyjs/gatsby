@@ -131,6 +131,7 @@ export function BuildErrorIndicatorTooltip({ siteId, orgId, buildId }) {
       <a
         href={generateBuildLogUrl({ orgId, siteId, buildId })}
         target="_blank"
+        rel="noreferrer"
         onClick={() => {
           trackEvent({
             eventType: `PREVIEW_INDICATOR_CLICK`,
@@ -227,7 +228,10 @@ export default function Indicator() {
   const [trackedInitialLoad, setTrackedInitialLoad] = useState(false)
   const [buildId, setBuildId] = useState()
 
-  const { siteInfo, currentBuild } = buildInfo || { siteInfo: {}, currentBuild: {} }
+  const { siteInfo, currentBuild } = buildInfo || {
+    siteInfo: {},
+    currentBuild: {},
+  }
   const { orgId, siteId } = siteInfo || {}
   const { buildStatus } = currentBuild || {}
 
@@ -246,7 +250,9 @@ export default function Indicator() {
       } else {
         // Match UUID from preview build URL https://build-af44185e-b8e5-11eb-8529-0242ac130003.gtsb.io
         const buildIdMatch = host.match(/build-(.*?(?=\.))/)
-        buildIdMatch && setBuildId(buildIdMatch[1])
+        if (buildIdMatch) {
+          setBuildId(buildIdMatch[1])
+        }
       }
     }
 
