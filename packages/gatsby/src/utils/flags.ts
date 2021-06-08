@@ -180,7 +180,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Compile Serverless functions in your Gatsby project and write them to disk, ready to deploy to Gatsby Cloud`,
     umbrellaIssue: `https://gatsby.dev/functions-feedback`,
-    testFitness: (): fitnessEnum => true,
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
   },
   {
     name: `CONCURRENT_FEATURES`,
