@@ -94,7 +94,7 @@ export function LinkIndicatorButton(props) {
       testId={`link`}
       iconSvg={linkIcon}
       onClick={copyLinkClick}
-      onMouseOver={trackHover}
+      onMouseEnter={trackHover}
       {...props}
       {...linkButtonCopyProps}
     />
@@ -117,7 +117,7 @@ export function InfoIndicatorButton(props) {
     <IndicatorButton
       testId="info"
       iconSvg={infoIcon}
-      onMouseOver={trackHover}
+      onMouseEnter={trackHover}
       {...props}
     />
   )

@@ -89,19 +89,12 @@ const IndicatorButton = ({
   showSpinner,
   active = false,
   testId,
-  onMouseOver,
+  onMouseEnter,
 }) => {
   const [showTooltip, setShowTooltip] = useState(false)
   const isFirstButton = buttonIndex === 0
   const marginTop = isFirstButton ? `0px` : `8px`
 
-  const onMouseEnter = () => {
-    setShowTooltip(true)
-
-    if (onMouseOver) {
-      onMouseOver()
-    }
-  }
   const onMouseLeave = () => setShowTooltip(false)
 
   return (
@@ -116,7 +109,13 @@ const IndicatorButton = ({
       >
         <div
           data-testid={`${testId}-button`}
-          onMouseEnter={onMouseEnter}
+          onMouseEnter={() => {
+            setShowTooltip(true)
+
+            if (onMouseEnter) {
+              onMouseEnter()
+            }
+          }}
           onMouseLeave={onMouseLeave}
           onClick={active ? onClick : null}
         >
