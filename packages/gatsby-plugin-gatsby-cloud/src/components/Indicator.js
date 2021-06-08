@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react"
 import { formatDistance } from "date-fns"
-import { ThemeProvider, Link } from "gatsby-interface"
 import getBuildInfo from "../utils/getBuildInfo"
 import trackEvent from "../utils/trackEvent"
 import IndicatorButton from "./IndicatorButton"
@@ -18,7 +17,7 @@ const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL || 3000
 
 export function PreviewIndicator({ children }) {
   return (
-    <ThemeProvider>
+    <>
       <Style />
       <div
         data-testid="preview-status-indicator"
@@ -29,7 +28,7 @@ export function PreviewIndicator({ children }) {
           React.cloneElement(child, { ...child.props, buttonIndex: i })
         )}
       </div>
-    </ThemeProvider>
+    </>
   )
 }
 
@@ -129,9 +128,11 @@ export function BuildErrorIndicatorTooltip({ siteId, orgId, buildId }) {
     <>
       {failedIcon}
       {`Unable to build preview`}
-      <Link
+      <a
         href={generateBuildLogUrl({ orgId, siteId, buildId })}
+        target="_blank"
         onClick={() => {
+          console.log(`build error link click`)
           trackEvent({
             eventType: `PREVIEW_INDICATOR_CLICK`,
             orgId,
@@ -143,7 +144,7 @@ export function BuildErrorIndicatorTooltip({ siteId, orgId, buildId }) {
       >
         <p data-gatsby-preview-indicator="tooltip-link">{`View logs`}</p>
         <div data-gatsby-preview-indicator="tooltip-svg">{logsIcon}</div>
-      </Link>
+      </a>
     </>
   )
 }
@@ -158,7 +159,8 @@ function BuildSuccessIndicatorTooltip({
   return (
     <>
       {`New preview available`}
-      <Link
+      {/** @todo styling plus target attrs, etc... */}
+      <a
         // href={generateBuildLogUrl({ orgId, siteId, buildId })}
         onClick={() => {
           newPreviewAvailableClick({
@@ -171,7 +173,7 @@ function BuildSuccessIndicatorTooltip({
         }}
       >
         <p data-gatsby-preview-indicator="tooltip-link">{`Click to view`}</p>
-      </Link>
+      </a>
     </>
   )
 }
