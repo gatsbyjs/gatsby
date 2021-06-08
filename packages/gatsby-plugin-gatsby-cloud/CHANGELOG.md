@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.7.0-next.2...gatsby-plugin-gatsby-cloud@2.8.0-next.0) (2021-06-03)
+
+### Features
+
+- **gatsby-plugin-gatsby-cloud:** Track user engagement in preview UI ([#31642](https://github.com/gatsbyjs/gatsby/issues/31642)) ([58be1c3](https://github.com/gatsbyjs/gatsby/commit/58be1c3762fa3cf14c275d7952c52fb0ded6cbc4))
+
+# [2.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.7.0-next.1...gatsby-plugin-gatsby-cloud@2.7.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
+# [2.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.7.0-next.0...gatsby-plugin-gatsby-cloud@2.7.0-next.1) (2021-05-31)
+
+### Bug Fixes
+
+- **gatsby:** add componentChunkName to components list so don't need to loop over pages ([#31547](https://github.com/gatsbyjs/gatsby/issues/31547)) ([783b937](https://github.com/gatsbyjs/gatsby/commit/783b937c8f70478796bce37808bf8bf967bb4252))
+- **gatsby-plugin-gatsby-cloud:** fix cloud being bundled ([#31604](https://github.com/gatsbyjs/gatsby/issues/31604)) ([4a62a20](https://github.com/gatsbyjs/gatsby/commit/4a62a20450639fab915593f6d61bfc9fdddde1d1))
+- **gatsby-plugin-gatsby-cloud:** only load indicator code when enabled ([#31506](https://github.com/gatsbyjs/gatsby/issues/31506)) ([cb654cd](https://github.com/gatsbyjs/gatsby/commit/cb654cd7dd3a42f5e557736d18b0f7530d4a710e))
+
 # [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.6.0-next.1...gatsby-plugin-gatsby-cloud@2.7.0-next.0) (2021-05-21)
 
 **Note:** Version bump only for package gatsby-plugin-gatsby-cloud

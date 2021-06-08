@@ -979,6 +979,70 @@ describe(`Build schema`, () => {
       expect(interfaces).toEqual([`Foo`, `Bar`])
     })
 
+    it(`merges resolveType for abstract types (Type Builder)`, async () => {
+      createTypes(
+        [
+          `interface Foo { foo: String }`,
+          `
+            type Fizz { id: ID! }
+            type Buzz { id: ID! }
+            union FizzBuzz = Fizz | Buzz
+          `,
+          buildInterfaceType({
+            name: `Foo`,
+            fields: { id: `ID!` },
+            resolveType: source => source.expectedType,
+          }),
+          buildUnionType({
+            name: `FizzBuzz`,
+            resolveType: source => (source.isFizz ? `Fizz` : `Buzz`),
+          }),
+        ],
+        {
+          name: `default-site-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const Foo = schema.getType(`Foo`)
+      expect(Foo.resolveType({ expectedType: `Bar` })).toEqual(`Bar`)
+
+      const FizzBuzz = schema.getType(`FizzBuzz`)
+      expect(FizzBuzz.resolveType({ isFizz: true })).toEqual(`Fizz`)
+      expect(FizzBuzz.resolveType({ isFizz: false })).toEqual(`Buzz`)
+    })
+
+    it(`merges resolveType for abstract types (graphql-js)`, async () => {
+      createTypes(
+        [
+          `interface Foo { foo: String }`,
+          `
+            type Fizz { id: ID! }
+            type Buzz { id: ID! }
+            union FizzBuzz = Fizz | Buzz
+          `,
+          new GraphQLInterfaceType({
+            name: `Foo`,
+            fields: { foo: { type: GraphQLString } },
+            resolveType: source => source.expectedType,
+          }),
+          new GraphQLUnionType({
+            name: `FizzBuzz`,
+            resolveType: source => (source.isFizz ? `Fizz` : `Buzz`),
+          }),
+        ],
+        {
+          name: `default-site-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const Foo = schema.getType(`Foo`)
+      expect(Foo.resolveType({ expectedType: `Bar` })).toEqual(`Bar`)
+
+      const FizzBuzz = schema.getType(`FizzBuzz`)
+      expect(FizzBuzz.resolveType({ isFizz: true })).toEqual(`Fizz`)
+      expect(FizzBuzz.resolveType({ isFizz: false })).toEqual(`Buzz`)
+    })
+
     it(`merges plugin-defined type (Type Builder) with overridable built-in type without warning`, async () => {
       createTypes(
         [

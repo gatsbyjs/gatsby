@@ -1,3 +1,4 @@
+import { IDeleteNodeManifests } from "./../types"
 import reporter from "gatsby-cli/lib/reporter"
 
 import {
@@ -341,5 +342,11 @@ export const setFunctions = (
   return {
     type: `SET_SITE_FUNCTIONS`,
     payload: functions,
+  }
+}
+
+export const deleteNodeManifests = (): IDeleteNodeManifests => {
+  return {
+    type: `DELETE_NODE_MANIFESTS`,
   }
 }

@@ -65,7 +65,7 @@ const isImage = image =>
   )
 
 // Note: this may return a Promise<body>, body (sync), or null
-const getBase64Image = imageProps => {
+const getBase64Image = (imageProps, reporter) => {
   if (!imageProps) {
     return null
   }
@@ -111,10 +111,13 @@ const getBase64Image = imageProps => {
   }
 
   const loadImage = async () => {
-    const imageResponse = await downloadWithRetry({
-      url: requestUrl,
-      responseType: `arraybuffer`,
-    })
+    const imageResponse = await downloadWithRetry(
+      {
+        url: requestUrl,
+        responseType: `arraybuffer`,
+      },
+      reporter
+    )
 
     const base64 = Buffer.from(imageResponse.data, `binary`).toString(`base64`)
 
@@ -470,14 +473,14 @@ const resolveResize = (image, options) => {
 
 exports.resolveResize = resolveResize
 
-const fixedNodeType = ({ name, getTracedSVG }) => {
+const fixedNodeType = ({ name, getTracedSVG, reporter }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
       fields: {
         base64: {
           type: GraphQLString,
-          resolve: getBase64Image,
+          resolve: imageProps => getBase64Image(imageProps, reporter),
         },
         tracedSVG: {
           type: GraphQLString,
@@ -565,14 +568,14 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
   }
 }
 
-const fluidNodeType = ({ name, getTracedSVG }) => {
+const fluidNodeType = ({ name, getTracedSVG, reporter }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
       fields: {
         base64: {
           type: GraphQLString,
-          resolve: getBase64Image,
+          resolve: imageProps => getBase64Image(imageProps, reporter),
         },
         tracedSVG: {
           type: GraphQLString,
@@ -662,7 +665,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
   }
 }
 
-exports.extendNodeType = ({ type, store }) => {
+exports.extendNodeType = ({ type, store, reporter }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
@@ -679,7 +682,7 @@ exports.extendNodeType = ({ type, store }) => {
       return null
     }
 
-    const absolutePath = await cacheImage(store, image, options)
+    const absolutePath = await cacheImage(store, image, options, reporter)
     const extension = path.extname(absolutePath)
 
     return traceSVG({
@@ -696,7 +699,7 @@ exports.extendNodeType = ({ type, store }) => {
 
   const getDominantColor = async ({ image, options }) => {
     try {
-      const absolutePath = await cacheImage(store, image, options)
+      const absolutePath = await cacheImage(store, image, options, reporter)
 
       const pluginSharp = require(`gatsby-plugin-sharp`)
       if (!(`getDominantColor` in pluginSharp)) {
@@ -748,9 +751,12 @@ exports.extendNodeType = ({ type, store }) => {
     }
 
     if (options.placeholder === `blurred`) {
-      placeholderDataURI = await getBase64Image({
-        baseUrl,
-      })
+      placeholderDataURI = await getBase64Image(
+        {
+          baseUrl,
+        },
+        reporter
+      )
     }
 
     if (options.placeholder === `tracedSVG`) {
@@ -767,9 +773,17 @@ exports.extendNodeType = ({ type, store }) => {
     return imageProps
   }
 
-  const fixedNode = fixedNodeType({ name: `ContentfulFixed`, getTracedSVG })
+  const fixedNode = fixedNodeType({
+    name: `ContentfulFixed`,
+    getTracedSVG,
+    reporter,
+  })
 
-  const fluidNode = fluidNodeType({ name: `ContentfulFluid`, getTracedSVG })
+  const fluidNode = fluidNodeType({
+    name: `ContentfulFluid`,
+    getTracedSVG,
+    reporter,
+  })
 
   // gatsby-plugin-image
   const getGatsbyImageData = () => {
@@ -841,7 +855,7 @@ exports.extendNodeType = ({ type, store }) => {
         fields: {
           base64: {
             type: GraphQLString,
-            resolve: getBase64Image,
+            resolve: imageProps => getBase64Image(imageProps, reporter),
           },
           tracedSVG: {
             type: GraphQLString,

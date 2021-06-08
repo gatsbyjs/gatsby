@@ -1,16 +1,16 @@
 {
   "name": "gatsby-remark-images",
   "description": "Processes images in markdown so they can be used in the production build.",
-  "version": "5.4.0-next.0",
+  "version": "5.5.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
+    "@babel/runtime": "^7.14.0",
     "chalk": "^4.1.0",
     "cheerio": "^1.0.0-rc.9",
-    "gatsby-core-utils": "^2.7.0-next.0",
+    "gatsby-core-utils": "^2.8.0-next.0",
     "is-relative-url": "^3.0.0",
     "lodash": "^4.17.21",
     "mdast-util-definitions": "^4.0.0",
@@ -20,11 +20,11 @@
     "unist-util-visit-parents": "^3.1.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^1.7.0-next.0",
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "babel-preset-gatsby-package": "^1.8.0-next.0",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-utils": "^1.7.0-next.0",
+    "gatsby-plugin-utils": "^1.8.0-next.0",
     "hast-util-to-html": "^7.1.2",
     "mdast-util-to-hast": "^10.2.0"
   },

@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.7.0-next.2...gatsby@3.8.0-next.0) (2021-06-03)
+
+### Bug Fixes
+
+- **gatsby:** fix PNP resolving from the .cache folder ([#31732](https://github.com/gatsbyjs/gatsby/issues/31732)) ([d10e8ce](https://github.com/gatsbyjs/gatsby/commit/d10e8ceddf915b8a6e8c2552cdb342d6ea4e6790))
+- **gatsby:** fix tests for state persistence with lmdb ([#31736](https://github.com/gatsbyjs/gatsby/issues/31736)) ([5660ce9](https://github.com/gatsbyjs/gatsby/commit/5660ce98133bb9c4c5eab38c64ebdc56ccc4d792))
+
+### Features
+
+- **gatsby:** add createNodeManifest action ([#31127](https://github.com/gatsbyjs/gatsby/issues/31127)) ([eed6108](https://github.com/gatsbyjs/gatsby/commit/eed610813da645356316826a4558640ecc4365b5))
+
+# [3.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.7.0-next.1...gatsby@3.7.0-next.2) (2021-06-02)
+
+### Bug Fixes
+
+- **gatsby:** merge resolveType when merging abstract types ([#31710](https://github.com/gatsbyjs/gatsby/issues/31710)) ([2dde956](https://github.com/gatsbyjs/gatsby/commit/2dde956bd1de6ad404416ec9dc4406a25951fe4b))
+
+### Features
+
+- **gatsby:** node persistence ([#31371](https://github.com/gatsbyjs/gatsby/issues/31371)) ([334d2bc](https://github.com/gatsbyjs/gatsby/commit/334d2bc2d3a03c83882dbc55bdc168647903c9f9)), closes [#31403](https://github.com/gatsbyjs/gatsby/issues/31403)
+
+# [3.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.7.0-next.0...gatsby@3.7.0-next.1) (2021-05-31)
+
+### Bug Fixes
+
+- **gatsby:** add componentChunkName to components list so don't need to loop over pages ([#31547](https://github.com/gatsbyjs/gatsby/issues/31547)) ([783b937](https://github.com/gatsbyjs/gatsby/commit/783b937c8f70478796bce37808bf8bf967bb4252))
+- **gatsby:** better detection of Babel rules for HMR when customizing the Webpack config ([#31477](https://github.com/gatsbyjs/gatsby/issues/31477)) ([42951f0](https://github.com/gatsbyjs/gatsby/commit/42951f0f459a15cb7a8923f97c52cc131ba6714d))
+- **gatsby:** Correct config for svgo plugins whitelist ([7e787bd](https://github.com/gatsbyjs/gatsby/commit/7e787bd020788cb6bc9f72d88c7878bbb34d46c9))
+- **gatsby:** prevent infinite loop in fast-refresh-overlay ([#31594](https://github.com/gatsbyjs/gatsby/issues/31594)) ([3368884](https://github.com/gatsbyjs/gatsby/commit/3368884db230b0ccbcd1c357273516859e9f0556))
+
+### Features
+
+- **gatsby:** enable concurrent features ([#31394](https://github.com/gatsbyjs/gatsby/issues/31394)) ([3457163](https://github.com/gatsbyjs/gatsby/commit/34571630f9b7e5de360cbf91c1e53aa655e86633))
+- **gatsby:** lazily compile functions in development ([#31508](https://github.com/gatsbyjs/gatsby/issues/31508)) ([d38f4d9](https://github.com/gatsbyjs/gatsby/commit/d38f4d97256fe4654a68177bc81cdea6277267d5))
+
 # [3.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.6.0-next.6...gatsby@3.7.0-next.0) (2021-05-21)
 
 **Note:** Version bump only for package gatsby

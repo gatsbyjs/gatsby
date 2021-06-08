@@ -1,0 +1,26 @@
+{
+  "name": "google-auth",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Google Auth",
+  "author": "Polina Vorozheykina",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "gatsby": "^3.1.0-functions-next.60",
+    "gatsby-plugin-functions": "^0.1.0-7",
+    "gatsby-plugin-gatsby-cloud": "^2.3.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-use-googlelogin": "^0.12.5"
+  }
+}

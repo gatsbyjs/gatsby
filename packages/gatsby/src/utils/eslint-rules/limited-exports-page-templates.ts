@@ -10,6 +10,7 @@ import {
   TemplateLiteral,
   VariableDeclarator,
   ObjectPattern,
+  AssignmentProperty,
 } from "estree"
 import { store } from "../../redux"
 import { isPageTemplate } from "../eslint-rules-helpers"
@@ -127,11 +128,14 @@ const limitedExports: Rule.RuleModule = {
           // Search for "graphql" in a const { graphql, Link } = require('gatsby')
           const graphqlTagSpecifier = ((requiredFromGatsby as VariableDeclarator)
             .id as ObjectPattern)?.properties.find(
-            el => (el.key as Identifier).name === DEFAULT_GRAPHQL_TAG_NAME
+            el =>
+              ((el as AssignmentProperty).key as Identifier).name ===
+              DEFAULT_GRAPHQL_TAG_NAME
           )
 
           if (graphqlTagSpecifier) {
-            graphqlTagName = (graphqlTagSpecifier.value as Identifier).name
+            graphqlTagName = ((graphqlTagSpecifier as AssignmentProperty)
+              .value as Identifier).name
           }
         }
 
