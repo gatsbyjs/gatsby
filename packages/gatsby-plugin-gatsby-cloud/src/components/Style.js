@@ -114,6 +114,10 @@ const Style = () => (
         }
 
         [data-gatsby-preview-indicator="tooltip-link"] {
+          text-decoration: none;
+        }
+
+        [data-gatsby-preview-indicator="tooltip-link-text"] {
           color: #a97ec7;
           font-weight: bold;
           margin-bottom: 0;

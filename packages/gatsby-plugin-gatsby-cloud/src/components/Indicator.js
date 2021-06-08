@@ -141,8 +141,9 @@ export function BuildErrorIndicatorTooltip({ siteId, orgId, buildId }) {
             name: `error logs`,
           })
         }}
+        data-gatsby-preview-indicator="tooltip-link"
       >
-        <p data-gatsby-preview-indicator="tooltip-link">{`View logs`}</p>
+        <p data-gatsby-preview-indicator="tooltip-link-text">{`View logs`}</p>
         <div data-gatsby-preview-indicator="tooltip-svg">{logsIcon}</div>
       </a>
     </>
@@ -171,8 +172,9 @@ function BuildSuccessIndicatorTooltip({
             buildId,
           })
         }}
+        data-gatsby-preview-indicator="tooltip-link"
       >
-        <p data-gatsby-preview-indicator="tooltip-link">{`Click to view`}</p>
+        <p data-gatsby-preview-indicator="tooltip-link-text">{`Click to view`}</p>
       </a>
     </>
   )
