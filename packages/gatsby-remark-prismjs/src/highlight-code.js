@@ -11,6 +11,7 @@ module.exports = (
   language,
   code,
   additionalEscapeCharacters = {},
+  lineNumbersOutput = [],
   lineNumbersHighlight = [],
   noInlineHighlight = false,
   diffLanguage = null
@@ -61,11 +62,19 @@ module.exports = (
   }
 
   const grammar = Prism.languages[language]
-  const highlighted = Prism.highlight(
-    code,
-    grammar,
-    diffLanguage ? `${language}-${diffLanguage}` : language
-  )
+  const highlighted = code
+    .split(`\n`)
+    .map((codeLine, index) =>
+      lineNumbersOutput.includes(index + 1)
+        ? codeLine
+        : Prism.highlight(
+            codeLine,
+            grammar,
+            diffLanguage ? `${language}-${diffLanguage}` : language
+          )
+    )
+    .join(`\n`)
+
   const codeSplits = handleDirectives(highlighted, lineNumbersHighlight)
 
   let finalCode = ``
