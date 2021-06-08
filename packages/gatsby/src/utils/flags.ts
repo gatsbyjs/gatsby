@@ -144,7 +144,13 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Use webpack's persistent caching and don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
     umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => true,
+    testFitness: (): fitnessEnum => {
+      if (sampleSiteForExperiment(`PRESERVE_WEBPACK_CACHE`, 20)) {
+        return `OPT_IN`
+      } else {
+        return true
+      }
+    },
   },
   {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
@@ -174,7 +180,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Compile Serverless functions in your Gatsby project and write them to disk, ready to deploy to Gatsby Cloud`,
     umbrellaIssue: `https://gatsby.dev/functions-feedback`,
-    testFitness: (): fitnessEnum => true,
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
   },
   {
     name: `LMDB_STORE`,

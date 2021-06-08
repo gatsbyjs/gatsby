@@ -1,6 +1,5 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import domReady from "@mikaelkristiansson/domready"
 import io from "socket.io-client"
 
 import socketIo from "./socketIo"
@@ -218,7 +217,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       return <Root />
     }
 
-    domReady(() => {
+    function runRender() {
       if (dismissLoadingIndicator) {
         dismissLoadingIndicator()
       }
@@ -230,6 +229,28 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       } else {
         renderer(<App />, rootElement)
       }
-    })
+    }
+
+    // https://github.com/madrobby/zepto/blob/b5ed8d607f67724788ec9ff492be297f64d47dfc/src/zepto.js#L439-L450
+    // TODO remove IE 10 support
+    const doc = document
+    if (
+      doc.readyState === `complete` ||
+      (doc.readyState !== `loading` && !doc.documentElement.doScroll)
+    ) {
+      setTimeout(function () {
+        runRender()
+      }, 0)
+    } else {
+      const handler = function () {
+        doc.removeEventListener(`DOMContentLoaded`, handler, false)
+        window.removeEventListener(`load`, handler, false)
+
+        runRender()
+      }
+
+      doc.addEventListener(`DOMContentLoaded`, handler, false)
+      window.addEventListener(`load`, handler, false)
+    }
   })
 })
