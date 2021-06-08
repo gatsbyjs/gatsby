@@ -88,6 +88,11 @@ If doing so would cause problems, you can specify `sync` to disable asynchronous
 
 [Read more about the `decode` property](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decoding).
 
+## Yarn 2 (PNP) support
+
+Yarn 2 with Plug'n'Play (Pnp) is available again. With the upgrade of Webpack v4-v5 during our Gatsby v3 release, PnP support broke. We've added an e2e-test to make sure this won't happen again in the future. With yarn 2, you'll notice faster NPM installs and less data usage as yarn2 is aggresivily caching node_modules.
+[Original PR](https://github.com/gatsbyjs/gatsby/pull/31732)
+
 ## Notable bugfixes & improvements
 
 - Better detection of Babel rules for HMR when customizing the webpack config, via [PR #31477](https://github.com/gatsbyjs/gatsby/pull/31477)
