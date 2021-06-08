@@ -65,7 +65,7 @@ The result is that a source plugin can allow a CMS to create a manifest file usi
 
 ## Experimental: Node persistence in LMDB
 
-This release introduces a new experimental data storage option: LMDB (via the excellent [lmdb-store](github.com/DoctorEvidence/lmdb-store) package).
+This release introduces a new experimental data storage option: LMDB (via the excellent [lmdb-store](https://github.com/DoctorEvidence/lmdb-store) package).
 
 Instead of keeping nodes in memory (as it's in Redux), they are instantly saved to this persistent embeddable storage.
 This will be beneficial for larger sites that can run into OOMs when persisting redux state to disk.
