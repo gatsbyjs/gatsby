@@ -38,8 +38,20 @@ exports.onPostBuild = async (
 
   const { redirects, pageDataStats, nodes } = store.getState()
 
+  let nodesCount
+
+  try {
+    const { getDataStore } = require(`gatsby/dist/datastore`)
+    nodesCount = getDataStore().countNodes()
+  } catch (e) {
+    // swallow exception
+  }
+
+  if (typeof nodesCount === `undefined`) {
+    nodesCount = nodes && nodes.size
+  }
+
   const pagesCount = pageDataStats && pageDataStats.size
-  const nodesCount = nodes && nodes.size
 
   captureEvent(`GATSBY_CLOUD_METADATA`, {
     siteMeasurements: {
