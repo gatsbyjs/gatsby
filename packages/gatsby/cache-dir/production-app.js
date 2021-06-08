@@ -3,7 +3,6 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import domReady from "@mikaelkristiansson/domready"
 import { StaticQueryContext } from "gatsby"
 import {
   shouldUpdateScroll,
@@ -193,24 +192,44 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     const renderer = apiRunner(
       `replaceHydrateFunction`,
       undefined,
-      process.env.GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES
-        ? ReactDOM.createRoot
-        : ReactDOM.hydrate
+      ReactDOM.createRoot ? ReactDOM.createRoot : ReactDOM.hydrate
     )[0]
 
-    domReady(() => {
-      const container =
+    function runRender() {
+      const rootElement =
         typeof window !== `undefined`
           ? document.getElementById(`___gatsby`)
           : null
 
       if (renderer === ReactDOM.createRoot) {
-        renderer(container, {
+        renderer(rootElement, {
           hydrate: true,
         }).render(<App />)
       } else {
-        renderer(<App />, container)
+        renderer(<App />, rootElement)
       }
-    })
+    }
+
+    // https://github.com/madrobby/zepto/blob/b5ed8d607f67724788ec9ff492be297f64d47dfc/src/zepto.js#L439-L450
+    // TODO remove IE 10 support
+    const doc = document
+    if (
+      doc.readyState === `complete` ||
+      (doc.readyState !== `loading` && !doc.documentElement.doScroll)
+    ) {
+      setTimeout(function () {
+        runRender()
+      }, 0)
+    } else {
+      const handler = function () {
+        doc.removeEventListener(`DOMContentLoaded`, handler, false)
+        window.removeEventListener(`load`, handler, false)
+
+        runRender()
+      }
+
+      doc.addEventListener(`DOMContentLoaded`, handler, false)
+      window.addEventListener(`load`, handler, false)
+    }
   })
 })

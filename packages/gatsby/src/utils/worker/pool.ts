@@ -14,6 +14,5 @@ export const create = (): GatsbyWorkerPool => {
     },
   }) as GatsbyWorkerPool
   delete process.env.GATSBY_WORKER_POOL_WORKER
-
   return worker
 }

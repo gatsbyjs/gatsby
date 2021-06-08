@@ -144,7 +144,13 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Use webpack's persistent caching and don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
     umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => true,
+    testFitness: (): fitnessEnum => {
+      if (sampleSiteForExperiment(`PRESERVE_WEBPACK_CACHE`, 20)) {
+        return `OPT_IN`
+      } else {
+        return true
+      }
+    },
   },
   {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
@@ -174,31 +180,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Compile Serverless functions in your Gatsby project and write them to disk, ready to deploy to Gatsby Cloud`,
     umbrellaIssue: `https://gatsby.dev/functions-feedback`,
-    testFitness: (): fitnessEnum => true,
-  },
-  {
-    name: `CONCURRENT_FEATURES`,
-    env: `GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES`,
-    command: `all`,
-    telemetryId: `ConcurrentFeatures`,
-    experimental: true,
-    description: `Enable React's concurrent features`,
-    // umbrellaIssue: `https://gatsby.dev/concurrent-features`,
-    testFitness: (): fitnessEnum => {
-      // Because of this, this flag will never show up
-      const semverConstraints = {
-        react: `^0.0.0-experimental-2bf4805e4`,
-        "react-dom": `^0.0.0-experimental-2bf4805e4`,
-      }
-
-      if (satisfiesSemvers(semverConstraints)) {
-        return true
-      } else {
-        // react & react-dom is either not installed or not new enough so
-        // just disable — it won't work anyways.
-        return false
-      }
-    },
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
   },
   {
     name: `LMDB_STORE`,
