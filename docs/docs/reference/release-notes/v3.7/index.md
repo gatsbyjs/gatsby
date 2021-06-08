@@ -108,4 +108,25 @@ Yarn 2 with Plug'n'Play (Pnp) is available again. With the upgrade of Webpack v4
 
 A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.7.0-next.0...gatsby@3.7.0) to this release 💜
 
-TODO
+- [Marco-Daniel](https://github.com/Marco-Daniel): feat(gatsby-source-wordpress): auto-alias any field named `fields` to prevent conflicts with Gatsby core [PR #31526](https://github.com/gatsbyjs/gatsby/pull/31526)
+- [njbmartin](https://github.com/njbmartin): fix(gatsby-source-contentful): use correct name for crop parameter in query string [PR #31492](https://github.com/gatsbyjs/gatsby/pull/31492)
+- [wafflepie](https://github.com/wafflepie): fix(gatsby): better detection of Babel rules for HMR when customizing the Webpack config [PR #31477](https://github.com/gatsbyjs/gatsby/pull/31477)
+- [pindjur](https://github.com/pindjur): fix(gatsby): prevent infinite loop in fast-refresh-overlay [PR #31594](https://github.com/gatsbyjs/gatsby/pull/31594)
+- [yellowful](https://github.com/yellowful): Update adding-an-rss-feed.md [PR #31518](https://github.com/gatsbyjs/gatsby/pull/31518)
+- [lqze](https://github.com/lqze): chore(gatsby-source-wordpress): Fix typos [PR #31600](https://github.com/gatsbyjs/gatsby/pull/31600)
+- [axe312ger](https://github.com/axe312ger)
+
+  - fix(contentful): pass reporter to retry function [PR #31608](https://github.com/gatsbyjs/gatsby/pull/31608)
+  - chore: Add translations and validations to Contentful test [PR #31533](https://github.com/gatsbyjs/gatsby/pull/31533)
+
+- [TommasoAmici](https://github.com/TommasoAmici): Fixed syntax error in example [PR #31636](https://github.com/gatsbyjs/gatsby/pull/31636)
+- [dhoko](https://github.com/dhoko): feat(gatsby-source-wordpress): Fix false positive error if the URL and the responsePath are the same [PR #31612](https://github.com/gatsbyjs/gatsby/pull/31612)
+- [eneax](https://github.com/eneax)
+
+  - Fix typos in improving-build-performance.md [PR #31640](https://github.com/gatsbyjs/gatsby/pull/31640)
+  - Fix typo in adding-search.md [PR #31639](https://github.com/gatsbyjs/gatsby/pull/31639)
+
+- [sj-rai](https://github.com/sj-rai): chore(docs): Update Jest instructions for v27 [PR #31649](https://github.com/gatsbyjs/gatsby/pull/31649)
+- [kevinfoerster](https://github.com/kevinfoerster): chore(docs): Correct nginx spelling [PR #31651](https://github.com/gatsbyjs/gatsby/pull/31651)
+- [viralganatra](https://github.com/viralganatra): feat(gatsby-remark-images): Add decoding prop to img elements [PR #31558](https://github.com/gatsbyjs/gatsby/pull/31558)
+- [BurkovBA](https://github.com/BurkovBA): fix(gatsby-remark-katex): fix compatibility with remark 13 [PR #31596](https://github.com/gatsbyjs/gatsby/pull/31596)
