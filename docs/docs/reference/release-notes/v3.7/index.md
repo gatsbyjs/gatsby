@@ -11,9 +11,9 @@ Welcome to `gatsby@3.7.0` release (June 2021 #1)
 Key highlights of this release:
 
 - [Functions](#functions) - Now generally available
-- [Webpack caching](#webpack-caching) - starting gradual rollout
+- [webpack caching](#webpack-caching) - Starting gradual rollout
 - [New API for source plugins: `createNodeManifest`](#new-api-for-source-plugins-createnodemanifest)
-- [Experimental: Node persistence in LMDB](#experimental-node-persistence-in-lmdb) - lower peak memory usage
+- [Experimental: Node persistence in LMDB](#experimental-node-persistence-in-lmdb) - Lower peak memory usage
 - [`gatsby-remark-images`: async image decoding by default](#gatsby-remark-images-async-image-decoding-by-default)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
@@ -29,16 +29,16 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Functions
 
-[Functions](https://www.gatsbyjs.com/docs/how-to/functions/), first class support for serverless functions is now generally available in this version of Gatsby. Learn more about functions in the [documentation](https://www.gatsbyjs.com/docs/how-to/functions) and [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples).
+[Functions](/docs/reference/functions/), first class support for serverless functions is now generally available in this version of Gatsby. Learn more about functions in the [documentation](/docs/reference/functions/) and [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples).
 
 If you've been using it as an experimental feature for a while, you no longer need to include the experimental `FUNCTIONS` flag to use it after this update.
 
-## Webpack caching
+## webpack caching
 
-Webpack 5 introduced [built-in persistent caching](https://webpack.js.org/blog/2020-10-10-webpack-5-release/#persistent-caching).
+webpack 5 introduced [built-in persistent caching](https://webpack.js.org/blog/2020-10-10-webpack-5-release/#persistent-caching).
 It allows webpack to reuse results of previous compilations and significantly speed up compilation steps.
 
-We've added this feature in [3.4 release](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
+We've added this feature in [3.4 release](/docs/reference/release-notes/v3.4/)
 behind a flag. Now we are starting a gradual rollout for everyone. This release enables it for 20% of users.
 
 If you encounter any issues, please let us know in the [umbrella discussion](https://github.com/gatsbyjs/gatsby/discussions/31525).
@@ -76,19 +76,10 @@ Installation instructions are in the [Umbrella Discussion](https://github.com/ga
 
 [Original PR](https://github.com/gatsbyjs/gatsby/pull/31371)
 
-## Notable bugfixes & improvements
-
-- Better detection of Babel rules for HMR when customizing the Webpack config, via [PR #31477](https://github.com/gatsbyjs/gatsby/pull/31477)
-- Correct config for svgo plugins, via [PR #31620](https://github.com/gatsbyjs/gatsby/pull/31620)
-- `gatsby-plugin-gatsby-cloud`: Fixed `Maximum call stack size exceeded` error, via [PR #31547](https://github.com/gatsbyjs/gatsby/pull/31547)
-- `gatsby-source-contentful`: Fix blinking progress bar, via [PR #31467](https://github.com/gatsbyjs/gatsby/pull/31467)
-- `gatsby-source-wordpress`: Prevent "EADDRINUSE: address already in use 127.0.0.1" error, via [PR #31710](https://github.com/gatsbyjs/gatsby/pull/31710)
-- `gatsby-remark-katext`: Fix compatibility with remark 13, via [PR #31596](https://github.com/gatsbyjs/gatsby/pull/31596)
-
 ## gatsby-remark-images: async image decoding by default
 
 Added new plugin option `decoding` that adds corresponding attribute to all `img` tags produced by the plugin.
-Default value is `async` (other allowed values are: `sync` or `auto).
+Default value is `async` (other allowed values are: `sync` or `auto`).
 
 The `decoding` property allows you to control if the browser is allowed to try to parallelize loading your image.
 If doing so would cause problems, you can specify `sync` to disable asynchronous loading.
@@ -96,6 +87,15 @@ If doing so would cause problems, you can specify `sync` to disable asynchronous
 [Original PR](https://github.com/gatsbyjs/gatsby/pull/31558)
 
 [Read more about the `decode` property](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decoding).
+
+## Notable bugfixes & improvements
+
+- Better detection of Babel rules for HMR when customizing the webpack config, via [PR #31477](https://github.com/gatsbyjs/gatsby/pull/31477)
+- Correct config for svgo plugins, via [PR #31620](https://github.com/gatsbyjs/gatsby/pull/31620)
+- `gatsby-plugin-gatsby-cloud`: Fixed `Maximum call stack size exceeded` error, via [PR #31547](https://github.com/gatsbyjs/gatsby/pull/31547)
+- `gatsby-source-contentful`: Fix blinking progress bar, via [PR #31467](https://github.com/gatsbyjs/gatsby/pull/31467)
+- `gatsby-source-wordpress`: Prevent "EADDRINUSE: address already in use 127.0.0.1" error, via [PR #31710](https://github.com/gatsbyjs/gatsby/pull/31710)
+- `gatsby-remark-katext`: Fix compatibility with remark 13, via [PR #31596](https://github.com/gatsbyjs/gatsby/pull/31596)
 
 ## Contributors
 
