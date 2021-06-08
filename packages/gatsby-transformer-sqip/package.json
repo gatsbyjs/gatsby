@@ -11,7 +11,7 @@
     "fs-extra": "^8.1.0",
     "gatsby-plugin-sharp": "^3.8.0-next.0",
     "md5-file": "^5.0.0",
-    "mini-svg-data-uri": "^1.2.3",
+    "mini-svg-data-uri": "^1.3.3",
     "p-queue": "^6.6.2",
     "sqip": "^0.3.3"
   },

@@ -12,7 +12,7 @@
     "@babel/types": "^7.14.4",
     "ast-types": "^0.14.2",
     "common-tags": "^1.8.0",
-    "react-docgen": "^5.3.1"
+    "react-docgen": "^5.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
