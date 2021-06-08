@@ -18,6 +18,8 @@ const defaultPackageRules = [
     // update internal packages immediately after publish instead of waiting 3 days
     stabilityDays: 0,
   },
+
+  // update our examples and starters automatically
   {
     groupName: `starters and examples`,
     matchPaths: [`starters/**`, `examples/**`],
@@ -33,57 +35,58 @@ const defaultPackageRules = [
     prPriority: 50,
     schedule: `at any time`,
   },
+
+  // bundle well known monorepos
   {
-    groupName: `remark docs linting`,
-    updateTypes: [`major`, `minor`, `patch`, `pin`],
-    matchPaths: [`+(package.json)`],
-    packageNames: [`remark`, `retext`],
-    packagePatterns: [`^remark-`, `^retext-`],
-    dependencyDashboardApproval: false,
-    excludePackageNames: [`remark-mdx`, `remark-mdxjs`],
+    groupName: `babel monorepo`,
+    matchPaths: [`+(package.json)`, `packages/**`],
+    sourceUrlPrefixes: [`https://github.com/babel/babel`],
   },
   {
-    groupName: `eslint`,
+    groupName: `lodash monorepo`,
+    matchPaths: [`+(package.json)`, `packages/**`],
+    sourceUrlPrefixes: [`https://github.com/lodash`],
+  },
+  {
+    groupName: `gatsby monorepo`,
+    matchPaths: [`+(package.json)`],
+  },
+
+  // group eslint & prettier
+  {
+    groupName: `formatting & linting`,
     updateTypes: [`major`, `minor`, `patch`, `pin`],
     matchPaths: [`+(package.json)`],
     packageNames: [`eslint`, `prettier`],
     packagePatterns: [`^eslint-`],
-    dependencyDashboardApproval: false,
   },
+
+  // some widely used packages
   {
     groupName: `cross-env`,
     matchPaths: [`+(package.json)`, `packages/**`],
     packageNames: [`cross-env`],
-    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `execa`,
+    matchPaths: [`+(package.json)`, `packages/**`],
+    packageNames: [`execa`],
   },
   {
     groupName: `mini-css-extract-plugin`,
     matchPaths: [`+(package.json)`, `packages/**`],
     packageNames: [`mini-css-extract-plugin`],
-    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `sharp`,
+    matchPaths: [`+(package.json)`, `packages/**`],
+    packageNames: [`sharp`, `@types/sharp`],
   },
   {
     groupName: `typescript`,
     matchPaths: [`+(package.json)`, `packages/**`],
     packageNames: [`typescript`],
     packagePatterns: [`^@typescript-eslint/`],
-    dependencyDashboardApproval: false,
-  },
-  {
-    groupName: `babel monorepo`,
-    matchPaths: [`+(package.json)`, `packages/**`],
-    sourceUrlPrefixes: [`https://github.com/babel/babel`],
-    dependencyDashboardApproval: false,
-  },
-  {
-    groupName: `lodash monorepo`,
-    matchPaths: [`+(package.json)`, `packages/**`],
-    sourceUrlPrefixes: [`https://github.com/lodash`],
-    dependencyDashboardApproval: false,
-  },
-  {
-    groupName: `gatsby monorepo`,
-    matchPaths: [`+(package.json)`],
   },
 ]
 const monorepoPackages = glob
