@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.14.0",
     "bluebird": "^3.7.2",
-    "pdf2json": "^1.2.0"
+    "pdf2json": "^1.2.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
