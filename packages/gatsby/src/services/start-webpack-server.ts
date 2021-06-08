@@ -34,6 +34,8 @@ export async function startWebpackServer({
 }> {
   if (!program || !app || !store) {
     report.panic(`Missing required params`)
+    // @ts-ignore - early return so that all params is defined
+    return undefined
   }
   let {
     compiler,

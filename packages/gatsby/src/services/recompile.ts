@@ -9,6 +9,8 @@ export async function recompile({
 }: IBuildContext): Promise<Stats> {
   if (!webpackWatching) {
     reporter.panic(`Missing compiler`)
+    // @ts-ignore - early return so that webpackWatching is defined
+    return undefined
   }
   // Promisify the event-based API. We do this using emitter
   // because you can't "untap" a webpack watcher, and we just want

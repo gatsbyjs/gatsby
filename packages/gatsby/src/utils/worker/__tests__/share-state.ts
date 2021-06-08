@@ -5,6 +5,7 @@ import {
   saveStateForWorkers,
   loadStateInWorker,
 } from "../../../redux"
+import { GatsbyStateSlices } from "../../../redux/types"
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -52,7 +53,7 @@ describe(`worker (share-state)`, () => {
     expect(result).toBe(null)
   })
 
-  it(`test`, () => {
+  it(`saves and retrieves state for workers correctly`, () => {
     store.dispatch({
       type: `CREATE_PAGE`,
       payload: dummyPagePayload,
@@ -60,11 +61,72 @@ describe(`worker (share-state)`, () => {
         name: `test`,
       },
     })
+    store.dispatch({
+      type: `REPLACE_STATIC_QUERY`,
+      plugin: {
+        name: `test`,
+      },
+      payload: {
+        name: `foo`,
+        componentPath: `/foo`,
+        id: `1`,
+        query: `query`,
+        hash: `hash`,
+      },
+    })
 
-    saveStateForWorkers([`components`])
+    const slicesOne: Array<GatsbyStateSlices> = [`components`]
+    const slicesTwo: Array<GatsbyStateSlices> = [
+      `components`,
+      `staticQueryComponents`,
+    ]
 
-    const test = loadStateInWorker([`components`])
+    saveStateForWorkers(slicesOne)
+    const resultOne = loadStateInWorker(slicesOne)
 
-    console.log(test)
+    expect(resultOne).toMatchInlineSnapshot(`
+      Object {
+        "components": Map {
+          "/foo" => Object {
+            "componentChunkName": undefined,
+            "componentPath": "/foo",
+            "isInBootstrap": true,
+            "pages": Set {
+              "/foo/",
+            },
+            "query": "",
+          },
+        },
+      }
+    `)
+
+    saveStateForWorkers(slicesTwo)
+
+    const resultTwo = loadStateInWorker(slicesTwo)
+
+    expect(resultTwo).toMatchInlineSnapshot(`
+      Object {
+        "components": Map {
+          "/foo" => Object {
+            "componentChunkName": undefined,
+            "componentPath": "/foo",
+            "isInBootstrap": true,
+            "pages": Set {
+              "/foo/",
+            },
+            "query": "",
+          },
+        },
+        "staticQueryComponents": Map {
+          "1" => Object {
+            "componentPath": "/foo",
+            "hash": "hash",
+            "id": "1",
+            "name": "foo",
+            "query": "query",
+          },
+        },
+      }
+    `)
   })
 })

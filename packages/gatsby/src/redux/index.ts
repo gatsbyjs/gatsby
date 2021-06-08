@@ -5,6 +5,7 @@ import {
   Middleware,
   ReducersMapObject,
 } from "redux"
+import _ from "lodash"
 import telemetry from "gatsby-telemetry"
 
 import { mett } from "../utils/mett"
@@ -92,7 +93,9 @@ export const store: GatsbyReduxStore = configureStore(
 export function replaceReducer(
   customReducers: Partial<ReducersMapObject<IGatsbyState>>
 ): void {
-  store.replaceReducer(combineReducers({ ...reducers, ...customReducers }))
+  store.replaceReducer(
+    combineReducers<IGatsbyState>({ ...reducers, ...customReducers })
+  )
 }
 
 // Persist state.
@@ -124,8 +127,9 @@ export const saveState = (): void => {
 
 export const saveStateForWorkers = (slices: Array<GatsbyStateSlices>): void => {
   const state = store.getState()
+  const contents = _.pick(state, slices)
 
-  return writeToCache({ components: state.components }, slices)
+  return writeToCache(contents, slices)
 }
 
 export const loadStateInWorker = (
