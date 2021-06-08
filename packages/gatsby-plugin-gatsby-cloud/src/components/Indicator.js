@@ -160,9 +160,7 @@ function BuildSuccessIndicatorTooltip({
   return (
     <>
       {`New preview available`}
-      {/** @todo styling plus target attrs, etc... */}
       <a
-        // href={generateBuildLogUrl({ orgId, siteId, buildId })}
         onClick={() => {
           newPreviewAvailableClick({
             isOnPrettyUrl,
@@ -180,8 +178,8 @@ function BuildSuccessIndicatorTooltip({
   )
 }
 
-const generateBuildLogUrl = ({ orgId, siteId, errorBuildId }) => {
-  const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/builds/${errorBuildId}/details`
+const generateBuildLogUrl = ({ orgId, siteId, buildId }) => {
+  const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/builds/${buildId}/details`
   const returnTo = encodeURIComponent(pathToBuildLogs)
 
   return `${pathToBuildLogs}?returnTo=${returnTo}`
