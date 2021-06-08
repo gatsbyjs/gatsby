@@ -2,7 +2,7 @@
 // - build the site first
 // - start the develop server
 // - run this script
-;(async function () {
+async function run() {
   const { getPageHtmlFilePath } = require(`gatsby/dist/utils/page-html`)
   const { join } = require(`path`)
   const fs = require(`fs-extra`)
@@ -110,4 +110,9 @@
   } else {
     process.exit(1)
   }
-})()
+}
+
+run().catch(e => {
+  console.error(e)
+  process.exit(1)
+})
