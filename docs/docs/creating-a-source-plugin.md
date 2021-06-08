@@ -422,60 +422,9 @@ query {
 
 ### Improve plugin developer experience by enabling faster sync
 
-One challenge when developing locally is that a developer might make modifications in a remote data source, like a CMS, and then want to see how it looks in the local environment. Typically they will have to restart the `gatsby develop` server to see changes. In order to improve the development experience of using a plugin, you can reduce the time it takes to sync between Gatsby and the data source by enabling faster synchronization of data changes. There are two approaches for doing this:
+One challenge when developing locally is that a developer might make modifications in a remote data source, like a CMS, and then want to see how it looks in the local environment. Typically they will have to restart the `gatsby develop` server to see changes. In order to improve the development experience of using a plugin, you can reduce the time it takes to sync between Gatsby and the data source by enabling faster synchronization of data changes. The best way to do this is by adding **event-based syncing**.
 
-- **Proactively fetch updates**. You can avoid having to restart the `gatsby develop` server by proactively fetching updates from the remote server. For example, [gatsby-source-sanity](https://github.com/sanity-io/gatsby-source-sanity) listens to changes to Sanity content when `watchMode` is enabled and pulls them into the Gatsby develop server. The [example source plugin repository](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins) uses GraphQL subscriptions to listen for changes and update data.
-- **Add event-based sync**. Some data sources keep event logs and are able to return a list of objects modified since a given time. If you're building a source plugin, you can store the last time you fetched data using the [cache](/docs/creating-a-source-plugin/#caching-data-between-runs) or [`setPluginStatus`](/docs/reference/config-files/actions/#setPluginStatus) and then only sync down nodes that have been modified since that time. [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful) is an example of a source plugin that does this.
-
-If possible, the proactive listener approach creates the best experience if existing APIs in the data source can support it (or you have access to build support into the data source).
-
-Here's some pseudo code that shows this behavior:
-
-```javascript:title=source-plugin/gatsby-node.js
-exports.sourceNodes = async ({ actions, getNodesByType }, pluginOptions) => {
-  const { createNode, touchNode, deleteNode } = actions
-
-  // highlight-start
-  // touch nodes to ensure they aren't garbage collected
-  getNodesByType(`YourSourceType`).forEach(node => touchNode(node)
-
-  // ensure a plugin is in a preview mode and/or supports listening
-  if (pluginOptions.preview) {
-    const subscription = await subscription(SUBSCRIPTION_TO_WEBSOCKET)
-    subscription.subscribe(({ data: newData }) => {
-      newData.forEach(newDatum => {
-        switch (newDatum.status) {
-          case "deleted":
-            deleteNode(getNode(createNodeId(`YourSourceType-${newDatum.uuid}`)))
-            break
-          case "created":
-          case "updated":
-          default:
-            // created and updated can be handled by the same code path
-            // the post's id is presumed to stay constant (or can be inferred)
-            createNode(processDatum(newDatum))
-            break
-        )
-      }
-    })
-  }
-  // highlight-end
-
-  const data = await client.query(QUERY_TO_API)
-
-  // Process data and create nodes.using a custom processDatum function
-  data.forEach(datum => createNode(processDatum(datum)))
-
-  // You're done, return.
-  return
-}
-```
-
-_Note: This is pseudo code to illustrate the logic and concept of how these plugins function, you can see an example in the [creating source plugins](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins) repository._
-
-Because the code in `sourceNodes` is reinvoked when changes in the data source occur, a few steps need to be taken to ensure that Gatsby is tracking the existing nodes as well as the new data. A first step is ensuring that the existing nodes created are not garbage collected which is done by "touching" the nodes with the [`touchNode` action](/docs/reference/config-files/actions/#touchNode).
-
-Then the new data needs to be pulled in via a live update like a websocket (in the example above with a subscription). The new data needs to have some information attached that dictates whether the data was created, updated, or deleted; that way, when it is processed, a new node can be created/updated (with `createNode`) or deleted (with `deleteNode`). In the example above that information is coming from `newDatum.status`.
+Some data sources keep event logs and are able to return a list of objects modified since a given time. If you're building a source plugin, you can store the last time you fetched data using the [cache](/docs/creating-a-source-plugin/#caching-data-between-runs) or [`setPluginStatus`](/docs/reference/config-files/actions/#setPluginStatus) and then only sync down nodes that have been modified since that time. [`gatsby-source-contentful`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful) is an example of a source plugin that does this.
 
 ## Additional resources
 
