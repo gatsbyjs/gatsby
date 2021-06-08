@@ -10,6 +10,7 @@ export function createTestWorker(): GatsbyTestWorkerPool {
   // but running jest tests would create processes with possibly other IDs
   // this will let child processes use same database ID as parent process (one that executes test)
   process.env.FORCE_TEST_DATABASE_ID = process.env.JEST_WORKER_ID
+  process.env.GATSBY_WORKER_POOL_WORKER = `true`
 
   const worker = new Worker(require.resolve(`./wrapper-for-tests`), {
     numWorkers: 1,
@@ -18,5 +19,7 @@ export function createTestWorker(): GatsbyTestWorkerPool {
     },
     maxRetries: 1,
   }) as GatsbyTestWorkerPool
+  delete process.env.GATSBY_WORKER_POOL_WORKER
+
   return worker
 }
