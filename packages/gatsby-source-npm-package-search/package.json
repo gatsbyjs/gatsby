@@ -11,7 +11,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-npm-package-search#readme",
   "dependencies": {
     "@babel/runtime": "^7.14.0",
-    "algoliasearch": "^4.8.4",
+    "algoliasearch": "^4.9.1",
     "got": "^8.3.2"
   },
   "devDependencies": {

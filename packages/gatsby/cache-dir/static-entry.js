@@ -347,7 +347,7 @@ export default ({
         headComponents.unshift(
           <style
             data-href={`${__PATH_PREFIX__}/${style.name}`}
-            id={`gatsby-global-css`}
+            data-identity={`gatsby-global-css`}
             dangerouslySetInnerHTML={{
               __html: style.content,
             }}
