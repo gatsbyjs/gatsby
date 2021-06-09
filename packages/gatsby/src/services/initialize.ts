@@ -85,8 +85,6 @@ export async function initialize({
   }
   if (!args) {
     reporter.panic(`Missing program args`)
-    // @ts-ignore - early return so that args is defined
-    return undefined
   }
 
   /* Time for a little story...
