@@ -2,7 +2,7 @@
 title: "Part 4: Query for Data with GraphQL"
 ---
 
-import { Announcement, Notification } from 'gatsby-interface'
+import { Announcement, Notification, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
 import { MdInfo } from 'react-icons/md'
 
@@ -894,24 +894,10 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 
 In Part 5, you'll add some content to your blog posts using a special format called MDX. You'll also learn about transformer plugins, which you can use to convert data in your data layer from one type to another.
 
-<Notification
-  Icon={MdInfo}
-  tone="WARNING"
+<LinkButton
+  to="/docs/tutorial/part-5/"
+  rightIcon={<MdArrowForward />}
   variant="SECONDARY"
-  content={
-    <div>
-      <p>
-        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
-        You've reached the end of the new content we've released so far. Subsequent parts
-        will be added as we finish them.
-      </p>
-      <p style={{ marginBottom: 0 }}>
-        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
-        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
-          <strong>Gatsby v2 Tutorial</strong>
-        </a>
-        .
-      </p>
-    </div>
-  }
-/>
+>
+  Continue to Part 5
+</LinkButton>
