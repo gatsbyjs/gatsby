@@ -1,44 +1,38 @@
+name: Stale Bot
 on:
   schedule:
     - cron: "0 */12 * * *"
-name: Stale Bot workflow
 jobs:
-  build:
-    name: stale
+  stale:
     runs-on: ubuntu-latest
     steps:
-      - name: stale
+      - uses: actions/stale@v3
+        name: stale
         id: stale
-        uses: gatsbyjs/stale@0.1.0
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DAYS_BEFORE_STALE: 20
-          DAYS_BEFORE_CLOSE: 40
-          OPERATIONS_PER_RUN: 5000
-          STALE_ISSUE_MESSAGE: |
+          debug-only: true
+          days-before-stale: 20
+          days-before-pr-stale: -1 # Don't mark PRs as stale
+          days-before-close: 40
+          exempt-all-assignees: true
+          operations-per-run: 1000
+          stale-issue-message: |
             Hiya!
 
             This issue has gone quiet. Spooky quiet. 👻
 
             We get a lot of issues, so we currently close issues after 60 days of inactivity. It’s been at least 20 days since the last update here.
             If we missed this issue or if you want to keep it open, please reply here.
-            As a friendly reminder: the best way to see this issue, or any other, fixed is to open a Pull Request. Check out [gatsby.dev/contribute](https://www.gatsbyjs.org/contributing/how-to-contribute/) for more information about opening PRs, triaging issues, and contributing!
+            As a friendly reminder: the best way to see this issue, or any other, fixed is to open a Pull Request. Check out [gatsby.dev/contribute](https://www.gatsbyjs.com/contributing/how-to-contribute/) for more information about opening PRs, triaging issues, and contributing!
 
             Thanks for being a part of the Gatsby community! 💪💜
-          CLOSE_MESSAGE: |
+          close-issue-message: |
             Hey again!
 
             It’s been 60 days since anything happened on this issue, so our friendly neighborhood robot (that’s me!) is going to close it.
             Please keep in mind that I’m only a robot, so if I’ve closed this issue in error, I’m `HUMAN_EMOTION_SORRY`. Please feel free to comment on this issue or create a new one if you need anything else.
-            As a friendly reminder: the best way to see this issue, or any other, fixed is to open a Pull Request. Check out [gatsby.dev/contribute](https://www.gatsbyjs.org/contributing/how-to-contribute/) for more information about opening PRs, triaging issues, and contributing!
+            As a friendly reminder: the best way to see this issue, or any other, fixed is to open a Pull Request. Check out [gatsby.dev/contribute](https://www.gatsbyjs.com/contributing/how-to-contribute/) for more information about opening PRs, triaging issues, and contributing!
 
             Thanks again for being part of the Gatsby community! 💪💜
-          EXEMPT_ISSUE_LABELS: |
-            not stale
-            status: triage needed
-      - name: Post slack report
-        uses: pullreminders/slack-action@v1.0.7
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
-        with:
-          args: '{\"channel\": \"${{ secrets.SLACK_STALE_CHANNEL_ID }}\", \"text\": \"\", \"blocks\": ${{ steps.stale.outputs.blocks }} }'
+          stale-issue-label: "stale?"
+          exempt-issue-labels: "not stale,status: triage needed"
