@@ -69,7 +69,6 @@ const globalPackageRules = [
     packageNames: [`sharp`, `@types/sharp`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
-    dependencyDashboardApproval: false,
   },
   {
     groupName: `typescript`,
@@ -100,7 +99,7 @@ const globalPackageRules = [
     groupName: `testing library`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
     matchPackagePatterns: [`^@testing-library/`],
-    updateTypes: [`*`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
   },
@@ -109,8 +108,8 @@ const globalPackageRules = [
 const globalExcludePackages = []
 const globalExcludePackagePatterns = []
 globalPackageRules.forEach(group => {
-  if (group.packagePatterns) {
-    globalExcludePackagePatterns.push(...group.packagePatterns)
+  if (group.matchPackagePatterns) {
+    globalExcludePackagePatterns.push(...group.matchPackagePatterns)
   }
   if (group.packageNames) {
     globalExcludePackages.push(...group.packageNames)
