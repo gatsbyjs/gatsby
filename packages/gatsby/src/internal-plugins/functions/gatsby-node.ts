@@ -319,7 +319,7 @@ const createWebpackConfig = async ({
 }
 
 let isFirstBuild = true
-export async function onPreBootstrap({
+export async function onPostBootstrap({
   reporter,
   store,
 }: ParentSpanPluginArgs): Promise<void> {
