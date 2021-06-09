@@ -78,7 +78,7 @@ Self-hosting your fonts can increase your site’s loading speed by up to ~300 m
 
 This example shows how to install the [Open Sans](https://fonts.google.com/specimen/Open+Sans) font. If you have a different Google Font you want to use, you can find the corresponding package in [NPM](https://www.npmjs.com/search?q=fontsource) or the [packages directory in the Fontsource repository](https://github.com/fontsource/fontsource/tree/master/packages).
 
-1. Run `npm install @fontsource/open-sans` to install the necessary package files.
+1. Run `npm install --save @fontsource/open-sans` to install the necessary package files.
 
 2. Then within your app entry file or site component, import the font package. It is recommended you import in your site's gatsby-browser.js file.
 
