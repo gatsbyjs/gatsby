@@ -24,6 +24,7 @@
     "@types/http-proxy": "^1.17.4",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.15.2",
+    "@vercel/webpack-asset-relocator-loader": "^1.4.1",
     "address": "1.1.2",
     "anser": "^2.0.1",
     "autoprefixer": "^10.2.4",

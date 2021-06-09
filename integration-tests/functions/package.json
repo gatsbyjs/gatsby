@@ -4,7 +4,9 @@
   "private": true,
   "description": "functions",
   "author": "Kyle Mathews",
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
@@ -25,9 +27,10 @@
     "start-server-and-test": "^1.11.3"
   },
   "dependencies": {
-    "gatsby": "next",
+    "gatsby": "3.8.0-next.0-dev-1623259474078",
     "gatsby-plugin-gatsby-cloud": "^2.5.0-next.0",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "sharp": "^0.28.3"
   }
 }

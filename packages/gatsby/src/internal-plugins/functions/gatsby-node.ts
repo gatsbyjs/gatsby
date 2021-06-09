@@ -2,6 +2,7 @@ import fs from "fs-extra"
 import glob from "glob"
 import path from "path"
 import webpack from "webpack"
+import relocateLoader from "@vercel/webpack-asset-relocator-loader"
 import _ from "lodash"
 import multer from "multer"
 import * as express from "express"
@@ -303,18 +304,37 @@ const createWebpackConfig = async ({
     module: {
       rules: [
         {
-          test: [/.js$/, /.ts$/],
-          exclude: /node_modules/,
-          use: {
-            loader: `babel-loader`,
-            options: {
-              presets: [`@babel/typescript`],
+          test: [/.m?js$/, /.ts$/, /.node$/],
+          // exclude: /node_modules/,
+          parser: { amd: false },
+          use: [
+            {
+              loader: `babel-loader`,
+              options: {
+                presets: [`@babel/typescript`],
+              },
             },
-          },
+            {
+              loader: "@vercel/webpack-asset-relocator-loader",
+              options: { production: true, debugLog: true },
+            },
+          ],
         },
       ],
     },
-    plugins: [new webpack.DefinePlugin(processEnvVars)],
+    plugins: [
+      {
+        apply(compiler) {
+          compiler.hooks.compilation.tap(
+            "webpack-asset-relocator-loader",
+            compilation => {
+              relocateLoader.initAssetCache(compilation)
+            }
+          )
+        },
+      },
+      new webpack.DefinePlugin(processEnvVars),
+    ],
   }
 }
 
