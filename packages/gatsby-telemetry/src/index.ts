@@ -126,6 +126,7 @@ export {
 module.exports = {
   trackFeatureIsUsed,
   trackCli,
+  captureEvent,
   trackError,
   trackBuildError,
   setDefaultTags,
