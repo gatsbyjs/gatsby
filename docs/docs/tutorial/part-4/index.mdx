@@ -97,7 +97,7 @@ There are three main sections of the GraphiQL interface:
     * The blue items correspond to the different data fields you can query for.
     * The purple items accept additional arguments that you can use to filter down the data returned in the response.
 * **Query Editor:** This is the middle section, which you can use to write out a query to test.
-    * You can add fields to your query by checking the boxes for different fields in the Explorer pane. Or, if you'd prefer, you can type the fields directly into the Query Editor.
+    * You can add fields to your query by checking the boxes for different fields in the Explorer pane. Or, if you'd prefer, you can type the fields directly into the Query Editor. (You can press `Ctrl + Space` on your keyboard to bring up an autocompletion box that shows what fields are available to you.)
     * To execute the query in the Query Editor, click the "Execute Query" button (it looks like a "play" button triangle) at the top of the page.
 * **Result Window:** This is the section on the right, which shows you the result of running the query in the Query Editor.
 
@@ -173,30 +173,38 @@ Try changing the value of the `title` property in your `gatsby-config.js` file. 
 
 ### Task: Use `useStaticQuery` to pull the site title into the `Layout` component
 
-https://github.com/meganesu/gatsby-intro-workshop-example-site-with-v3/commit/83996e21e5b60d5684c6212065466e2291ae3931
-
 Now that you have a GraphQL query that returns the data you're looking for, how do you use that query in your React components?
 
-To pull data into a building-block component, you'll need to use a pre-defined function from Gatsby called `useStaticQuery`.
+To pull data into a building-block component, you'll use a pre-defined function from Gatsby called `useStaticQuery`.
 
 <Collapsible
-  summary={<h4>Key Gatsby Concept: Introduce <code>useStaticQuery</code></h4>}
+  summary={<h4>Key Gatsby Concept: Pulling data into building-block components with <code>useStaticQuery</code></h4>}
 >
 
-To add a GraphQL query to a "building block" component, you use a special hook called `useStaticQuery`.
+The Gatsby package has a special pre-defined hook that lets you add GraphQL queries to your building-block components: `useStaticQuery`.
 
-// What is the graphql tag?
-The `graphql` tag is something called a [tagged template literal](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates). Basically, the `graphql` tag tells Gatsby that the string following it is a GraphQL query, so then Gatsby can parse and run it.
+`useStaticQuery` takes one parameter: a templated string of the GraphQL query you want to run. It returns the requested data, which you can store in a variable and then use throughout your component.
+
+Here's a brief outline of the process for adding `useStaticQuery` to pull data into your building-block components:
 
 1. Import the `useStaticQuery` hook and the `graphql` tag from the `gatsby` package.
-2. Inside your component, create a new variable and set it to the return value of `useStaticQuery`.
-    * The `useStaticQuery` takes a single argument: a string (templated with the `graphql` tag) of your GraphQL query.
+    * The `graphql` tag is something called a [tagged template literal](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates). Basically, the `graphql` tag tells Gatsby that the string following it is a GraphQL query, so then Gatsby can parse and run it.
+    ```js
+    import { useStaticQuery, graphql } from 'gatsby'
+    ```
+2. Inside your component, call `useStaticQuery` using the `graphql` template tag and your query from GraphiQL. Store the results in a new variable so that you can use it later in your component.
+    ```js
+    const data = useStaticQuery(graphql`
+      // Copy-paste your query from GraphiQL here
+      // Change the name of the query to something unique (instead of the default "MyQuery")
+    `)
+    ```
 3. Use the data in your component by using the dot operator (`.`) to access the appropriate field off the response.
 
 Here's a small example to show what this process looks like in practice:
 
 ```js:title=src/components/header.js
-import React from 'react'
+import * as React from 'react'
 
 // highlight-start
 // Step 1: Import the useStaticQuery hook and graphql tag
@@ -232,7 +240,7 @@ const Header = () => {
 export default Header
 ```
 
-<Announcement>
+<Announcement style={{marginBottom: "1.5rem"}}>
 
 **Note:** You can only call `useStaticQuery` once per file. If you need multiple fields, you can add them all into a single query.
 
@@ -240,7 +248,7 @@ For example, if you need data from both the `site` field and the `siteBuildMetad
 
 ```js
 const data = useStaticQuery(graphql`
-  query MyQuery {
+  query HeaderQuery {
     site {
       siteMetadata {
         title
@@ -258,7 +266,7 @@ const data = useStaticQuery(graphql`
 
 Follow the steps below to use `useStaticQuery` to pull in the site title from your site metadata into your `Layout` component.
 
-1. Import useStaticQuery and graphql from gatsby
+1. Import the `useStaticQuery` function and the `graphql` tag from the Gatsby package.
 
 ```js:title=src/components/layout.js
 import * as React from 'react'
@@ -280,7 +288,13 @@ const Layout = ({ pageTitle, children }) => {
 export default Layout
 ```
 
-2. Paste the query from GraphiQL into useStaticQuery
+2. Call `useStaticQuery` and pass it the query you created in GraphiQL. Be sure to use the `graphiql` tag so Gatsby knows that the string you're passing in is a GraphQL query. Store the return value from `useStaticQuery` in a variable.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Note:** Query names need to be unique, so update the default from `MyQuery` to something more descriptive.
+
+</Announcement>
 
 ```js:title=src/components/layout.js
 import * as React from 'react'
@@ -296,7 +310,7 @@ import {
 const Layout = ({ pageTitle, children }) => {
   // highlight-start
   const data = useStaticQuery(graphql`
-    query MyQuery {
+    query LayoutQuery {
       site {
         siteMetadata {
           title
@@ -314,7 +328,40 @@ const Layout = ({ pageTitle, children }) => {
 export default Layout
 ```
 
-3. Use the value from the response to render the title of your site in the JSX for your `Layout` component. Add it so it appears in both the browser tab and at the top of your page content.
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Note:** If you add a line to print out the value of `data` to the console, you'll see that the response has a slightly different structure from what it looked like in GraphiQL's Result Window. Specifically, `data` will only contain the object that matches the `data` field in the Result Window.
+
+So if your GraphiQL Result Window showed this:
+
+```json
+{
+  "data": {
+    "site": {
+      "siteMetadata": {
+        "title": "My First Gatsby Site"
+      }
+    }
+  },
+  "extensions": {}
+}
+```
+
+then your `data` variable will have the following structure:
+
+```js
+{
+  "site": {
+    "siteMetadata": {
+      "title": "My First Gatsby Site"
+    }
+  }
+}
+```
+
+</Announcement>
+
+3. Now that you have a variable with the results of your query, you can render the title of your site in the JSX for your `Layout` component. To access the site title, use the JavaScript dot operator (`.`) to get the value of `data.site.siteMetadata.title`. Add it so it appears in both the browser tab and at the top of your page content.
 
 ```js:title=src/components/layout.js
 import * as React from 'react'
@@ -329,7 +376,7 @@ import {
 
 const Layout = ({ pageTitle, children }) => {
   const data = useStaticQuery(graphql`
-    query MyQuery {
+    query LayoutQuery {
       site {
         siteMetadata {
           title
@@ -369,7 +416,7 @@ export default Layout
 
 ![A screenshot of the home page in a web browser. The title of the page in the browser tab now says, "Home Page | My First Gatsby Site", and the top of the page has an unstyled paragraph that says, "My First Gatsby Site".](./index-page-with-site-title.png)
 
-4. Now that your data is showing up on the page, it's time to add some style! Define some styles for the site title below the existing styles in your `layout.module.css` file.
+4. Now that the site title is showing up on the page, it's time to add some style! Define some styles for the site title below the existing styles in your `layout.module.css` file.
 
 ```css:title=src/components/layout.module.css
 /* ... your existing styles */
@@ -397,7 +444,7 @@ import {
 
 const Layout = ({ pageTitle, children }) => {
   const data = useStaticQuery(graphql`
-    query MyQuery {
+    query LayoutQuery {
       site {
         siteMetadata {
           title
@@ -438,26 +485,22 @@ Reload your browser to see your new styles applied to your site title.
 
 ![A screenshot of the home page in a web browser. Now the site title paragraph is styled to be larger and gray.](./index-page-with-site-title-styled.png)
 
-Congratulations, you've just used GraphQL to pull data into your site! Try changing the site title in your `gatsby-config.js` file and see your site update in the browser. (Do you need to restart your local dev server for this?)
+Congratulations, you've just used GraphQL to pull data into your site! Try changing the site title in your `gatsby-config.js` file and see your site update in the browser.
 
 ## Queries in page components: Create a blog page with a list of post filenames
 
 So far, your site has a few static landing pages: the Home page and the About page. The next step is to build out the actual blog page!
 
-Eventually, your blog page will link to separate pages for each of your posts. But there's a lot to learn to achieve that, so you'll be working up to that goal over the next few parts of the Tutorial.
+Eventually, your blog page will link to separate pages for each of your posts. But there's a lot to learn to achieve that, so you'll be working up to that goal over the next few parts of the Tutorial (Parts 4, 5, and 6).
 
-### Task: Create some MDX blog posts
+In this part, you'll create a blog page that lists the filenames for your posts.
 
-https://github.com/meganesu/gatsby-intro-workshop-example-site-with-v3/commit/792a70a77fc6432e4ba403d06a90f3165a8d4bb0
-(But don't actually add the markdown contents. Just add a line of text to each file for now. Explain Markdown in Part 5.)
-
-Create a new top-level directory in your project called `blog`.
-
-Create some new files. Give them the `.mdx` extension. Just put in some placeholder text for now. (We'll talk more about MDX in Part 5.)
 
 ### Task: Create a new blog page
 
-Use the Layout component to create the skeleton for your blog page.
+Start by setting up the skeleton for your new blog page component.
+
+1. Create a new file: `src/pages/blog.js`. Define and export a new page component for your blog page. Use your existing `Layout` component to add some basic structure.
 
 ```js:title=src/pages/blog.js
 import * as React from 'react'
@@ -466,7 +509,7 @@ import Layout from '../components/layout'
 const BlogPage = () => {
   return (
     <Layout pageTitle="My Blog Posts">
-      My cool posts will go in here
+      <p>My cool posts will go in here</p>
     </Layout>
   )
 }
@@ -474,24 +517,181 @@ const BlogPage = () => {
 export default BlogPage
 ```
 
+2. Add a link to your new blog page to the navigation bar in your `Layout` component:
+
+```js:title=src/components/layout.js
+// ... import statements
+
+const Layout = ({ pageTitle, children }) => {
+  const data = useStaticQuery(graphql`
+    query LayoutQuery {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+
+  return (
+    <main className={container}>
+      <title>{pageTitle} | {data.site.siteMetadata.title}</title>
+      <p className={siteTitle}>{data.site.siteMetadata.title}</p>
+      <nav>
+        <ul className={navLinks}>
+          <li className={navLinkItem}>
+            <Link to="/" className={navLinkText}>
+              Home
+            </Link>
+          </li>
+          <li className={navLinkItem}>
+            <Link to="/about" className={navLinkText}>
+              About
+            </Link>
+          </li>
+          {/* highlight-start */}
+          <li className={navLinkItem}>
+            <Link to="/blog" className={navLinkText}>
+              Blog
+            </Link>
+          </li>
+          {/* highlight-end */}
+        </ul>
+      </nav>
+      <h1 className={heading}>{pageTitle}</h1>
+      {children}
+    </main>
+  )
+}
+
+export default Layout
+```
+
+3. Now, if you go to `localhost:8000/blog` in your web browser, you should see your new blog page skeleton, and there should be a link to the blog page in your navigation bar.
+
+![A screenshot of the blog page in a web browser.](./blog-page-skeleton.png)
+
+### Task: Create some MDX blog posts
+
+Now that you have a blog page, it's time to create some blog posts! For your site, you'll store each blog post as a separate file inside of a folder in your project.
+
+1. Create a new directory called `blog` at the top level of your project folder.
+
+2. Create three new files in the `blog` directory: one for each post. It doesn't matter what you name them, as long as they end with the `.mdx` extension. (You'll learn more about the powers of MDX in Part 5.) You can leave the files empty for now.
+
+![A screenshot of the VS Code Explorer pane. There's a new top-level directory called "blog", which contains three new files: "another-post.mdx", "my-first-post.mdx", and "yet-another-post.mdx".](./blog-posts-folder-structure.png)
+
 ### Task: Use GraphiQL to build the query
 
-Introduce gatsby-source-filesystem. You'd normally have to install this, but we did that in Part 3 (because `gatsby-plugin-image` needed `gatsby-source-filesystem` in order to use the `StaticImage` component).
+Now that you have some posts saved to your local filesystem, it's time to pull those files into the Gatsby data layer. To do that, you'll use a special plugin called `gatsby-source-filesystem`.
 
-Build the query in GraphiQL. gatsby-source-filesystem gives you two fields: allFile and File.
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Note:** Remember the process for adding a plugin to your site from [Part 3](/docs/tutorial/part-3)? The first step was to **install** the plugin.
+
+If you've been following along from the beginning, you should already have installed `gatsby-source-filesystem` in Part 3 (because you needed it for adding static images with `gatsby-plugin-image`).
+
+Otherwise, you can install the plugin by running the following command from the command line:
+
+```shell
+npm install gatsby-source-filesystem
+```
+
+</Announcement>
+
+1. Configure `gatsby-source-filesystem` in your `gatsby-config.js` file. Since `gatsby-source-filesystem` requires some additional configuration options, you'll use a configuration object instead of a string.
+
+```js:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    title: "My First Gatsby Site",
+  },
+  plugins: [
+    "gatsby-plugin-gatsby-cloud",
+    "gatsby-plugin-image",
+    "gatsby-plugin-sharp",
+    // highlight-start
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: `blog`,
+        path: `${__dirname}/blog`,
+      }
+    },
+    // highlight-end
+  ],
+};
+```
+
+<Announcement style={{ marginBottom: "1.5rem" }}>
+
+**A closer look at the configuration options:**
+
+When your site builds, `gatsby-source-filesystem` adds all the files in folder specified by the `path` option to the data layer.
+
+The `name` option in the configuration object gets set to the `sourceInstanceName` field for each file. This comes in handy when you want to source files from multiple folders. By giving each folder a different `name` option, you can build GraphQL queries that filter down to only a particular folder.
+
+</Announcement>
+
+2. Restart your local development server to make sure it picks up the configuration changes and adds your files to the data layer.
+
+3. In GraphiQL, try exploring the different fields within `allFile` to see what sorts of data you get back. Then build a query using the `allFile` field to get the name of all the files in your blog folder:
+
+```graphql
+query MyQuery {
+  allFile {
+    nodes {
+      name
+    }
+  }
+}
+```
+
+4. Run the query in GraphiQL. Your response in the Result Window should look something like the object below:
+
+```json
+{
+  "data": {
+    "allFile": {
+      "nodes": [
+        {
+          "name": "my-first-post"
+        },
+        {
+          "name": "another-post"
+        },
+        {
+          "name": "yet-another-post"
+        }
+      ]
+    }
+  },
+  "extensions": {}
+}
+```
 
 ### Task: Use a page query to pull the list of post filenames into your blog page
 
-https://github.com/meganesu/gatsby-intro-workshop-example-site-with-v3/commit/607dedde6b2377a223b25c5fe14041877c03d817
+Now that you've built a GraphQL query that returns a list of your post filenames, it's time to render that data in your blog page!
+
+Using GraphQL queries in page components uses a slightly different syntax from queries in building-block components. In page components, you use **page queries**.
 
 <Collapsible
-  summary={<h4>Key Gatsby Concept: Page queries</h4>}
+  summary={<h4>Key Gatsby Concept: Pulling data into page components with page queries</h4>}
 >
 
-The syntax for making a query in a page component looks slightly different from `useStaticQuery`:
+The process for making a query in a page component looks slightly different from `useStaticQuery`:
+
+1. Import the `graphql` tag from the Gatsby package.
+2. Export a variable that stores a templated string with the GraphQL query you want to run.
+    * When your site gets built, Gatsby will run your page query and pass the resulting data into your page component as a prop called `data`.
+    * Your page query needs to be defined outside of your page component. (With `useStaticQuery`, your query was defined inside your component.)
+3. Use the `data` prop in your page component, as needed. You can use the JavaScript dot operator (`.`) to choose fields off of the `data` prop.
+
+Here's a small example to show what this process looks like in practice:
 
 ```javascript
-import React from 'react'
+import * as React from 'react'
 
 // Step 1: Import the graphql tag
 import { graphql } from 'gatsby'
@@ -519,28 +719,119 @@ export const query = graphql`
 export default HomePage
 ```
 
-Note that you need to export your page query, which is defined outside of your component. (With `useStaticQuery`, your query was defined inside your component.)
-
-The response data automatically gets passed into your page component as the `data` prop. You can choose fields off of the `data` object and use the values in your page component.
-
 </Collapsible>
 
+Follow the steps below to add a list of post filenames to your blog page.
+
+1. Import the `graphql` tag from the Gatsby package.
+
+```js:title=src/pages/blog.js
+import * as React from 'react'
+import { graphql } from 'gatsby' // highlight-line
+import Layout from '../components/layout'
+
+const BlogPage = () => {
+  return (
+    <Layout pageTitle="My Blog Posts">
+      <p>My cool posts will go in here</p>
+    </Layout>
+  )
+}
+
+export default BlogPage
+```
+
+2. Define and export your page query. Copy over the query you built in GraphiQL.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Note:** Query names need to be unique, so update the default from `MyQuery` to something more descriptive.
+
+</Announcement>
+
+```js:title=src/pages/blog.js
+import * as React from 'react'
+import { graphql } from 'gatsby'
+import Layout from '../components/layout'
+
+const BlogPage = () => {
+  return (
+    <Layout pageTitle="My Blog Posts">
+      <p>My cool posts will go in here</p>
+    </Layout>
+  )
+}
+
+// highlight-start
+export const query = graphql`
+  query BlogPageQuery {
+    allFile {
+      nodes {
+        name
+      }
+    }
+  }
+`
+// highlight-end
+
+export default BlogPage
+```
+
+3. Add in `data` prop to the function definition. Then map over the `nodes` array and render the filename for each of your posts.
+
+```js:title=src/pages/blog.js
+import * as React from 'react'
+import { graphql } from 'gatsby'
+import Layout from '../components/layout'
+
+const BlogPage = ({ data }) => { // highlight-line
+  return (
+    <Layout pageTitle="My Blog Posts">
+      {/* highlight-start */}
+      <ul>
+      {
+        data.allFile.nodes.map(node => (
+          <li key={node.name}>
+            {node.name}
+          </li>
+        ))
+      }
+      </ul>
+      {/* highlight-end */}
+    </Layout>
+  )
+}
+
+export const query = graphql`
+  query BlogPageQuery {
+    allFile {
+      nodes {
+        name
+      }
+    }
+  }
+`
+
+export default BlogPage
+```
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Syntax Hint:** In JavaScript, arrays have a built-in [`.map()` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map), which you can use to iterate over the elements in the array.
+
+`.map()` takes in a function, which it runs on each element in the array. In the code block above, you're using `.map()` to loop over each of the nodes in `data.allFile.nodes` and return a React element that wraps the node's `name` in an `<li>` element.
+
+In React, when you use the `.map()` method to render a list of elements, you should give each element in the list a unique `key` prop. This helps React keep track of what values have changed and need to be rerendered. For more on rendering lists in React, check out the [React Docs: Lists and Keys](https://reactjs.org/docs/lists-and-keys.html).
+
+</Announcement>
+
+4. Now, when you look at your blog page in a web browser, you should see a list with the filenames for each of your posts:
+
+![](./blog-page-with-post-filenames.png)
+
+Good job! You've finished the first step of your new blog page.
 
 You won't be able to render the contents of your posts just yet, since your site doesn't know how to process MDX. You'll fix that in the next part of the Tutorial!
-
-// TURN THIS INTO A GRAPHIC INSTEAD OF A COLLAPSIBLE SECTION
-<Collapsible
-  summary={<h2>General process for using data</h2>}
->
-
-1. Add a source plugin to add data into the GraphQL data layer.
-1. Use GraphiQL to design a query that responds with the data you want from the data layer.
-1. Add the query into your component.
-    * Use page queries for page components.
-    * Use `useStaticQuery` for "building block" components.
-1. Use the data from the response in your component.
-
-</Collapsible>
 
 ## Summary
 
@@ -549,7 +840,7 @@ Take a moment to think back on what you've learned so far. Challenge yourself to
 * How do you get data into the data layer?
 * How can you see what data is in the data layer?
 * How do you get data out of the data layer?
-* What is the difference between a page query and `useStaticQuery`? How would you decide which one to use?
+* What are the differences between a page query and `useStaticQuery`? How would you decide which one to use?
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -577,7 +868,18 @@ Once your changes have been pushed to GitHub, Gatsby Cloud should notice the upd
     * To pull data into a "building block" component, use the `useStaticQuery` hook.
     * To pull data into a page component, use a page query.
 
+<Collapsible
+  summary={<h2>Key Gatsby Concept: General process for using data in your site</h2>}
+>
 
+1. Add a source plugin to add data into the GraphQL data layer.
+1. Use GraphiQL to design a query that responds with the data you want from the data layer.
+1. Add the query into your component.
+    * Use page queries for page components.
+    * Use `useStaticQuery` for "building block" components.
+1. Use the data from the response in your component.
+
+</Collapsible>
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -591,7 +893,7 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 
 ### What's coming next?
 
-In Part 5, you'll learn how to use another kind of plugin to render the contents of your blog posts.
+In Part 5, you'll add some content to your blog posts using a special format called MDX. You'll also learn about transformer plugins, which you can use to convert data in your data layer from one type to another.
 
 <Notification
   Icon={MdInfo}
