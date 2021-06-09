@@ -129,4 +129,42 @@ describe(`worker (share-state)`, () => {
       }
     `)
   })
+
+  it(`stores empty state with no slices`, () => {
+    store.dispatch({
+      type: `CREATE_PAGE`,
+      payload: dummyPagePayload,
+      plugin: {
+        name: `test`,
+      },
+    })
+
+    const slices: Array<GatsbyStateSlices> = []
+
+    saveStateForWorkers(slices)
+    const result = loadStateInWorker(slices)
+
+    expect(result).toEqual({})
+  })
+
+  it(`returns default for slice even if no data is given`, () => {
+    store.dispatch({
+      type: `CREATE_PAGE`,
+      payload: dummyPagePayload,
+      plugin: {
+        name: `test`,
+      },
+    })
+
+    const slices: Array<GatsbyStateSlices> = [`staticQueryComponents`]
+
+    saveStateForWorkers(slices)
+    const result = loadStateInWorker(slices)
+
+    expect(result).toMatchInlineSnapshot(`
+      Object {
+        "staticQueryComponents": Map {},
+      }
+    `)
+  })
 })
