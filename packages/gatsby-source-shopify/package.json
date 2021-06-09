@@ -1,49 +1,42 @@
 {
   "name": "gatsby-source-shopify",
-  "version": "4.8.0-next.0",
-  "description": "Gatsby source plugin for building websites using Shopify as a data source.",
+  "version": "5.0.0-rc.x",
+  "description": "",
   "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
-    "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "npm run build -- --watch"
+    "watch": "tsc-watch --outDir .",
+    "build": "tsc --outDir .",
+    "prepublish": "yarn build && cp ../README.md ."
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git",
-    "directory": "packages/gatsby-source-shopify"
+    "url": "git+https://github.com/gatsbyjs/gatsby-source-shopify.git"
   },
+  "author": "Sam Slotsky <sam.slotsky@gatsbyjs.com>, Daniel Lew <daniel.lew@gatsbyjs.com>",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/gatsbyjs/gatsby-source-shopify/issues"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "gatsby-source-plugin",
-    "shopify"
-  ],
-  "author": "Angelo Ashmore",
-  "license": "MIT",
-  "peerDependencies": {
-    "gatsby": "^3.0.0-next.0"
+  "homepage": "https://github.com/gatsbyjs/gatsby-source-shopify#readme",
+  "dependencies": {
+    "gatsby-core-utils": "^2.1.0",
+    "gatsby-source-filesystem": "^3.1.0",
+    "node-fetch": "^2.6.1",
+    "sharp": "^0.28.0",
+    "shift-left": "^0.1.5"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.3",
-    "@babel/core": "^7.14.3",
-    "cross-env": "^7.0.3"
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.34",
+    "@types/node-fetch": "^2.5.8",
+    "@types/sharp": "^0.28.0",
+    "gatsby-plugin-image": "^1.1.0",
+    "msw": "^0.27.1",
+    "prettier": "^2.2.1",
+    "prettier-check": "^2.0.0",
+    "tsc-watch": "^4.2.9",
+    "typescript": "^4.2.3"
   },
-  "dependencies": {
-    "babel-preset-gatsby-package": "^1.8.0-next.0",
-    "chalk": "^4.1.0",
-    "gatsby-node-helpers": "^0.3.0",
-    "gatsby-source-filesystem": "^3.8.0-next.0",
-    "graphql-request": "^1.8.2",
-    "lodash": "^4.17.21",
-    "p-iteration": "^1.1.8",
-    "prettyjson": "^1.2.1"
-  },
-  "engines": {
-    "node": ">=12.13.0"
-  },
-  "main": "index.js"
+  "peerDependencies": {
+    "gatsby-plugin-image": "^1.1.0"
+  }
 }
