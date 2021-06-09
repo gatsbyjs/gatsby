@@ -1,10 +1,121 @@
 const path = require(`path`)
 const glob = require(`glob`)
 const fs = require(`fs-extra`)
-const semver = require(`semver`)
 
 const ROOT_DIR = path.join(__dirname, `..`)
 const packageRules = new Map()
+
+const globalPackageRules = [
+  // bundle well known monorepos
+  {
+    groupName: `babel monorepo`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    sourceUrlPrefixes: [`https://github.com/babel/babel`],
+  },
+  {
+    groupName: `lodash monorepo`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    sourceUrlPrefixes: [`https://github.com/lodash`],
+  },
+  {
+    groupName: `gatsby monorepo`,
+    groupSlug: `gatsby-monorepo`,
+    matchPaths: [`+(package.json)`],
+    dependencyDashboardApproval: false,
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    commitMessageTopic: `dependencies for Gatsby monorepo`,
+  },
+
+  // group eslint & prettier
+  {
+    groupName: `formatting & linting`,
+    commitMessageTopic: `Formatting & linting`,
+    matchPaths: [`+(package.json)`],
+    packageNames: [`eslint`, `prettier`],
+    packagePatterns: [`^eslint-`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+
+  // some widely used packages
+  {
+    groupName: `cross-env`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    packageNames: [`cross-env`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `execa`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    packageNames: [`execa`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `mini-css-extract-plugin`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    packageNames: [`mini-css-extract-plugin`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+  },
+  {
+    groupName: `sharp`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    packageNames: [`sharp`, `@types/sharp`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `typescript`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    packageNames: [`typescript`],
+    matchPackagePatterns: [`^@typescript-eslint/`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `chalk`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    packageNames: [`chalk`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `fs-extra`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    packageNames: [`fs-extra`, `@types/fs-extra`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `testing library`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackagePatterns: [`^@testing-library/`],
+    updateTypes: [`*`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+]
+
+const globalExcludePackages = []
+const globalExcludePackagePatterns = []
+globalPackageRules.forEach(group => {
+  if (group.packagePatterns) {
+    globalExcludePackagePatterns.push(...group.packagePatterns)
+  }
+  if (group.packageNames) {
+    globalExcludePackages.push(...group.packageNames)
+  }
+})
 
 // our default rules
 const defaultPackageRules = [
@@ -22,72 +133,47 @@ const defaultPackageRules = [
   // update our examples and starters automatically
   {
     groupName: `starters and examples`,
+    commitMessageTopic: `starters and examples`,
+    groupSlug: `starters-examples-minor`,
     matchPaths: [`starters/**`, `examples/**`],
     schedule: `before 7am on Monday`,
-    automerge: true,
+    matchUpdateTypes: [`patch`, `minor`],
   },
   {
     extends: [`monorepo:gatsby`],
+    commitMessageTopic: `starters and examples Gatsby packages`,
     groupName: `starters and examples - Gatsby`,
+    groupSlug: `starters-examples-gatsby-minor`,
     matchPaths: [`starters/**`, `examples/**`],
     automerge: true,
     stabilityDays: 0,
     prPriority: 50,
     schedule: `at any time`,
+    matchUpdateTypes: [`patch`, `minor`],
+  },
+  {
+    groupName: `starters and examples`,
+    commitMessageTopic: `starters and examples`,
+    matchPaths: [`starters/**`, `examples/**`],
+    schedule: `before 7am on Monday`,
+    matchUpdateTypes: [`major`],
+    groupSlug: `starters-examples-major`,
+    dependencyDashboardApproval: false,
+  },
+  {
+    extends: [`monorepo:gatsby`],
+    commitMessageTopic: `starters and examples Gatsby packages`,
+    groupName: `starters and examples - Gatsby`,
+    matchPaths: [`starters/**`, `examples/**`],
+    stabilityDays: 0,
+    prPriority: 50,
+    schedule: `at any time`,
+    matchUpdateTypes: [`major`],
+    groupSlug: `starters-examples-gatsby-major`,
+    dependencyDashboardApproval: false,
   },
 
-  // bundle well known monorepos
-  {
-    groupName: `babel monorepo`,
-    matchPaths: [`+(package.json)`, `packages/**`],
-    sourceUrlPrefixes: [`https://github.com/babel/babel`],
-  },
-  {
-    groupName: `lodash monorepo`,
-    matchPaths: [`+(package.json)`, `packages/**`],
-    sourceUrlPrefixes: [`https://github.com/lodash`],
-  },
-  {
-    groupName: `gatsby monorepo`,
-    matchPaths: [`+(package.json)`],
-  },
-
-  // group eslint & prettier
-  {
-    groupName: `formatting & linting`,
-    updateTypes: [`major`, `minor`, `patch`, `pin`],
-    matchPaths: [`+(package.json)`],
-    packageNames: [`eslint`, `prettier`],
-    packagePatterns: [`^eslint-`],
-  },
-
-  // some widely used packages
-  {
-    groupName: `cross-env`,
-    matchPaths: [`+(package.json)`, `packages/**`],
-    packageNames: [`cross-env`],
-  },
-  {
-    groupName: `execa`,
-    matchPaths: [`+(package.json)`, `packages/**`],
-    packageNames: [`execa`],
-  },
-  {
-    groupName: `mini-css-extract-plugin`,
-    matchPaths: [`+(package.json)`, `packages/**`],
-    packageNames: [`mini-css-extract-plugin`],
-  },
-  {
-    groupName: `sharp`,
-    matchPaths: [`+(package.json)`, `packages/**`],
-    packageNames: [`sharp`, `@types/sharp`],
-  },
-  {
-    groupName: `typescript`,
-    matchPaths: [`+(package.json)`, `packages/**`],
-    packageNames: [`typescript`],
-    packagePatterns: [`^@typescript-eslint/`],
-  },
+  ...globalPackageRules,
 ]
 const monorepoPackages = glob
   .sync(`packages/*/package.json`)
@@ -122,6 +208,11 @@ monorepoPackages.forEach(pkg => {
       groupName: `[DEV] minor and patch dependencies for ${pkg}`,
       groupSlug: `${pkg}-dev-minor`,
       automerge: true,
+      excludePackageNames: globalExcludePackages,
+      excludePackagePatterns: globalExcludePackagePatterns,
+      // When only one package get updated the groupName is not used and you don't know which plugin in the monorepo gets updated
+      // ex: chore(deps): update dependency katex to ^0.13.11
+      commitMessageSuffix: `{{#unless groupName}} for ${pkg}{{/unless}}`,
     },
     {
       matchPaths: [`packages/${pkg}/package.json`],
@@ -130,6 +221,10 @@ monorepoPackages.forEach(pkg => {
       groupName: `[DEV] major dependencies for ${pkg}`,
       groupSlug: `${pkg}-dev-major`,
       automerge: true,
+      dependencyDashboardApproval: false,
+      excludePackageNames: globalExcludePackages,
+      excludePackagePatterns: globalExcludePackagePatterns,
+      commitMessageSuffix: `{{#unless groupName}} for ${pkg}{{/unless}}`,
     },
     {
       matchPaths: [`packages/${pkg}/package.json`],
@@ -137,6 +232,9 @@ monorepoPackages.forEach(pkg => {
       matchUpdateTypes: [`patch`, `minor`],
       groupName: `minor and patch dependencies for ${pkg}`,
       groupSlug: `${pkg}-prod-minor`,
+      excludePackageNames: globalExcludePackages,
+      excludePackagePatterns: globalExcludePackagePatterns,
+      commitMessageSuffix: `{{#unless groupName}} for ${pkg}{{/unless}}`,
     },
     {
       matchPaths: [`packages/${pkg}/package.json`],
@@ -144,6 +242,10 @@ monorepoPackages.forEach(pkg => {
       matchUpdateTypes: [`major`],
       groupName: `major dependencies for ${pkg}`,
       groupSlug: `${pkg}-prod-major`,
+      excludePackageNames: globalExcludePackages,
+      excludePackagePatterns: globalExcludePackagePatterns,
+      commitMessageSuffix: `{{#unless groupName}} for ${pkg}{{/unless}}`,
+      dependencyDashboardApproval: true,
     },
     // all deps below <1.0.0 will get special treatment.
     {
@@ -153,6 +255,9 @@ monorepoPackages.forEach(pkg => {
       groupSlug: `${pkg}-prod-minor`,
       matchPackageNames: preFirstMajorPackages,
       matchUpdateTypes: [`patch`],
+      excludePackageNames: globalExcludePackages,
+      excludePackagePatterns: globalExcludePackagePatterns,
+      commitMessageSuffix: `{{#unless groupName}} for ${pkg}{{/unless}}`,
     },
     {
       matchPaths: [`packages/${pkg}/package.json`],
@@ -161,6 +266,10 @@ monorepoPackages.forEach(pkg => {
       groupSlug: `${pkg}-prod-major`,
       matchPackageNames: preFirstMajorPackages,
       matchUpdateTypes: [`major`, `minor`],
+      excludePackageNames: globalExcludePackages,
+      excludePackagePatterns: globalExcludePackagePatterns,
+      commitMessageSuffix: `{{#unless groupName}} for ${pkg}{{/unless}}`,
+      dependencyDashboardApproval: true,
     },
   ]
 
@@ -187,7 +296,7 @@ const renovateConfig = {
     dependencyDashboardApproval: true,
   },
   dependencyDashboard: true,
-  ignoreDeps: [`react`, `react-dom`],
+  ignoreDeps: [`react`, `react-dom`, `uuid`],
   rangeStrategy: `bump`,
   bumpVersion: null,
   prHourlyLimit: 0,
