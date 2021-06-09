@@ -107,6 +107,7 @@ describe(`mdx-loader`, () => {
         })
 
       await createLoader()(content)
+      console.log(err)
       expect(err).toBeNull()
       expect(result).toMatchSnapshot()
       err = result = undefined
@@ -115,6 +116,7 @@ describe(`mdx-loader`, () => {
         await createLoader({
           resourceQuery: `${fakeGatsbyNode.absolutePath}?type=component`,
         })(content)
+        console.log(err)
         expect(err).toBeNull()
         expect(result).toMatchSnapshot()
       }
