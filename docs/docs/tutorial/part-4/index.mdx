@@ -59,7 +59,7 @@ Gatsby has its own [GraphQL](https://graphql.org/) data layer where it keeps all
 
 First, your data is stored in one or more **sources**. That source might be a folder on your computer's filesystem, a content management system (CMS) like WordPress, or a database. You might even have multiple data sources!
 
-How do you get from its source into the data layer? By adding special plugins to your site called **source plugins**. Each source plugin is designed to communicate with a specific source. When you build your site, each source plugin pulls data from its particular source and adds it to the GraphQL data layer for your site.
+How do you get from its source into the data layer? By adding a type of plugin to your site called a **source plugin**. Each source plugin is designed to communicate with a specific source. When you build your site, each source plugin pulls data from its particular source and adds it to the GraphQL data layer for your site.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -69,7 +69,7 @@ For example, a few popular source plugins are `gatsby-source-filesystem` and `ga
 
 </Announcement>
 
-How do you get data back out of the data layer? You can write **GraphQL queries** inside of your components to pull out the data you want to use in your site. When you build your site, Gatsby will find all the GraphQL queries in your components, run them, and pass the resulting data into your component as a `data` prop.
+How do you get data back out of the data layer? You can write **GraphQL queries** inside of your components to pull out the data you want to use in your site. When you build your site, Gatsby will find all the GraphQL queries in your components, run them, and put the resulting data in your component.
 
 
 ![A diagram showing how data flows into and out of the GraphQL data layer. Source plugins pull data out of a particular data source and into the data layer for your site. GraphQL queries to pull data out of the data layer and into your React components.](./data-layer.png)
@@ -195,8 +195,7 @@ Here's a brief outline of the process for adding `useStaticQuery` to pull data i
 2. Inside your component, call `useStaticQuery` using the `graphql` template tag and your query from GraphiQL. Store the results in a new variable so that you can use it later in your component.
     ```js
     const data = useStaticQuery(graphql`
-      // Copy-paste your query from GraphiQL here
-      // Change the name of the query to something unique (instead of the default "MyQuery")
+      // Copy-paste your query from GraphiQL here, and delete the query name "MyQuery"
     `)
     ```
 3. Use the data in your component by using the dot operator (`.`) to access the appropriate field off the response.
@@ -217,7 +216,7 @@ const Header = () => {
     graphql tag to query for data
     (The query gets run at build time) */
   const data = useStaticQuery(graphql`
-    query HeaderQuery {
+    query {
       site {
         siteMetadata {
           title
@@ -288,11 +287,11 @@ const Layout = ({ pageTitle, children }) => {
 export default Layout
 ```
 
-2. Call `useStaticQuery` and pass it the query you created in GraphiQL. Be sure to use the `graphiql` tag so Gatsby knows that the string you're passing in is a GraphQL query. Store the return value from `useStaticQuery` in a variable.
+2. Call `useStaticQuery` and pass it the query you created in GraphiQL. Be sure to use the `graphql` tag so Gatsby knows that the string you're passing in is a GraphQL query. Store the return value from `useStaticQuery` in a variable.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Note:** Query names need to be unique, so update the default from `MyQuery` to something more descriptive.
+**Note:** By default, the query you build in GraphiQL will have a query name, like `MyQuery`. You may see an error if you have more than one query with the same name, so after you copy your query over from GraphiQL to your component, delete the name (as in the code example below).
 
 </Announcement>
 
@@ -310,7 +309,7 @@ import {
 const Layout = ({ pageTitle, children }) => {
   // highlight-start
   const data = useStaticQuery(graphql`
-    query LayoutQuery {
+    query {
       site {
         siteMetadata {
           title
@@ -376,7 +375,7 @@ import {
 
 const Layout = ({ pageTitle, children }) => {
   const data = useStaticQuery(graphql`
-    query LayoutQuery {
+    query {
       site {
         siteMetadata {
           title
@@ -444,7 +443,7 @@ import {
 
 const Layout = ({ pageTitle, children }) => {
   const data = useStaticQuery(graphql`
-    query LayoutQuery {
+    query {
       site {
         siteMetadata {
           title
@@ -481,7 +480,7 @@ const Layout = ({ pageTitle, children }) => {
 export default Layout
 ```
 
-Reload your browser to see your new styles applied to your site title.
+When your browser reloads, you should see your new styles applied to your site title.
 
 ![A screenshot of the home page in a web browser. Now the site title paragraph is styled to be larger and gray.](./index-page-with-site-title-styled.png)
 
@@ -524,7 +523,7 @@ export default BlogPage
 
 const Layout = ({ pageTitle, children }) => {
   const data = useStaticQuery(graphql`
-    query LayoutQuery {
+    query {
       site {
         siteMetadata {
           title
@@ -583,7 +582,7 @@ Now that you have a blog page, it's time to create some blog posts! For your sit
 
 ### Task: Use GraphiQL to build the query
 
-Now that you have some posts saved to your local filesystem, it's time to pull those files into the Gatsby data layer. To do that, you'll use a special plugin called `gatsby-source-filesystem`.
+Now that you have some posts saved to your local filesystem, it's time to pull those files into the Gatsby data layer. To do that, you'll use a plugin called `gatsby-source-filesystem`.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -707,7 +706,7 @@ const HomePage = ({ data }) => {
 
 // Step 2: Export a page query
 export const query = graphql`
-  query HomePageQuery {
+  query {
     site {
       siteMetadata {
         description
@@ -745,7 +744,7 @@ export default BlogPage
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Note:** Query names need to be unique, so update the default from `MyQuery` to something more descriptive.
+**Note:** By default, the query you build in GraphiQL will have a query name, like `MyQuery`. You may see an error if you have more than one query with the same name, so after you copy your query over from GraphiQL to your component, delete the name (as in the code example below).
 
 </Announcement>
 
@@ -827,7 +826,7 @@ In React, when you use the `.map()` method to render a list of elements, you sho
 
 4. Now, when you look at your blog page in a web browser, you should see a list with the filenames for each of your posts:
 
-![](./blog-page-with-post-filenames.png)
+![A screenshot of the blog page in a web browser. Under the heading "My Blog Posts", there's a bulleted list of the post filenames: "another-post", "my-first-post", and "yet-another-post".](./blog-page-with-post-filenames.png)
 
 Good job! You've finished the first step of your new blog page.
 
