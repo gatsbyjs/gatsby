@@ -4,16 +4,16 @@ import v8 from "v8"
 import {
   existsSync,
   mkdtempSync,
-  moveSync,
+  moveSync, // Note: moveSync over renameSync because /tmp may be on other mount
   readFileSync,
   removeSync,
   writeFileSync,
 } from "fs-extra"
 import {
-  GatsbyStateSlices,
   ICachedReduxState,
   IGatsbyNode,
   IGatsbyPage,
+  GatsbyStateSlices,
 } from "./types"
 import { sync as globSync } from "glob"
 import { createContentDigest } from "gatsby-core-utils"

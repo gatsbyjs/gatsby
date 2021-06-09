@@ -1,6 +1,6 @@
 import { getNode } from "../../../../datastore"
 import { store } from "../../../../redux"
-import { IGatsbyPage } from "../../../../redux/types"
+import { IGatsbyPage, IGatsbyPageComponent } from "../../../../redux/types"
 import reporter from "gatsby-cli/lib/reporter"
 
 // re-export all usual methods from production worker
@@ -16,6 +16,11 @@ export function getNodeFromWorker(nodeId: string): ReturnType<typeof getNode> {
 // test:share-state
 export function getPage(pathname: string): IGatsbyPage | undefined {
   return store.getState().pages.get(pathname)
+}
+export function getComponent(
+  componentPath: IGatsbyPageComponent["componentPath"]
+): IGatsbyPageComponent | undefined {
+  return store.getState().components.get(componentPath)
 }
 
 // test: reporter

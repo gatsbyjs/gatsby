@@ -167,4 +167,33 @@ describe(`worker (share-state)`, () => {
       }
     `)
   })
+
+  it(`can set slices results into state and access it`, async () => {
+    worker = createTestWorker()
+
+    store.dispatch({
+      type: `CREATE_PAGE`,
+      payload: dummyPagePayload,
+      plugin: {
+        name: `test`,
+      },
+    })
+
+    const slices: Array<GatsbyStateSlices> = [`components`]
+
+    saveStateForWorkers(slices)
+
+    await worker.setState(slices)
+
+    const res = await worker.getComponent(dummyPagePayload.component)
+
+    expect(res).toMatchInlineSnapshot(`
+      Object {
+        "componentPath": "/foo",
+        "isInBootstrap": true,
+        "pages": Object {},
+        "query": "",
+      }
+    `)
+  })
 })

@@ -2,6 +2,7 @@ import {
   applyMiddleware,
   combineReducers,
   createStore,
+  DeepPartial,
   Middleware,
   ReducersMapObject,
 } from "redux"
@@ -11,8 +12,8 @@ import telemetry from "gatsby-telemetry"
 import { mett } from "../utils/mett"
 import thunk, { ThunkMiddleware } from "redux-thunk"
 import * as reducers from "./reducers"
-import { readFromCache, writeToCache } from "./persist"
-import { ActionsUnion, GatsbyStateSlices, IGatsbyState } from "./types"
+import { writeToCache, readFromCache } from "./persist"
+import { IGatsbyState, ActionsUnion, GatsbyStateSlices } from "./types"
 
 // Create event emitter for actions
 export const emitter = mett()
@@ -134,9 +135,9 @@ export const saveStateForWorkers = (slices: Array<GatsbyStateSlices>): void => {
 
 export const loadStateInWorker = (
   slices: Array<GatsbyStateSlices>
-): IGatsbyState => {
+): DeepPartial<IGatsbyState> => {
   try {
-    return readFromCache(slices) as IGatsbyState
+    return readFromCache(slices) as DeepPartial<IGatsbyState>
   } catch (e) {
     // ignore errors.
   }
