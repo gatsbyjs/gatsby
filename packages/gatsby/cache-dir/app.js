@@ -1,6 +1,5 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import domReady from "@mikaelkristiansson/domready"
 import io from "socket.io-client"
 
 import socketIo from "./socketIo"
@@ -127,12 +126,22 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   const rootElement = document.getElementById(`___gatsby`)
 
   const focusEl = document.getElementById(`gatsby-focus-wrapper`)
+
+  // Client only pages have any empty body so we just do a normal
+  // render to avoid React complaining about hydration mis-matches.
+  let defaultRenderer = ReactDOM.render
+  if (focusEl && focusEl.children.length) {
+    if (ReactDOM.createRoot) {
+      defaultRenderer = ReactDOM.createRoot
+    } else {
+      defaultRenderer = ReactDOM.hydrate
+    }
+  }
+
   const renderer = apiRunner(
     `replaceHydrateFunction`,
     undefined,
-    // Client only pages have any empty body so we just do a normal
-    // render to avoid React complaining about hydration mis-matches.
-    focusEl && focusEl.children.length > 0 ? ReactDOM.hydrate : ReactDOM.render
+    defaultRenderer
   )[0]
 
   let dismissLoadingIndicator
@@ -166,31 +175,82 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   ]).then(() => {
     navigationInit()
 
-    domReady(() => {
-      if (dismissLoadingIndicator) {
-        dismissLoadingIndicator()
-      }
+    function onHydrated() {
+      apiRunner(`onInitialClientRender`)
 
-      renderer(<Root />, rootElement, () => {
-        apiRunner(`onInitialClientRender`)
+      // Render query on demand overlay
+      if (
+        process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR &&
+        process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
+      ) {
+        const indicatorMountElement = document.createElement(`div`)
+        indicatorMountElement.setAttribute(
+          `id`,
+          `query-on-demand-indicator-element`
+        )
+        document.body.append(indicatorMountElement)
 
-        // Render query on demand overlay
-        if (
-          process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR &&
-          process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
-        ) {
-          const indicatorMountElement = document.createElement(`div`)
-          indicatorMountElement.setAttribute(
-            `id`,
-            `query-on-demand-indicator-element`
+        if (renderer === ReactDOM.createRoot) {
+          renderer(indicatorMountElement).render(
+            <LoadingIndicatorEventHandler />
           )
-          document.body.append(indicatorMountElement)
+        } else {
           ReactDOM.render(
             <LoadingIndicatorEventHandler />,
             indicatorMountElement
           )
         }
-      })
-    })
+      }
+    }
+
+    function App() {
+      const onClientEntryRanRef = React.useRef(false)
+
+      React.useEffect(() => {
+        if (!onClientEntryRanRef.current) {
+          onClientEntryRanRef.current = true
+
+          onHydrated()
+        }
+      }, [])
+
+      return <Root />
+    }
+
+    function runRender() {
+      if (dismissLoadingIndicator) {
+        dismissLoadingIndicator()
+      }
+
+      if (renderer === ReactDOM.createRoot) {
+        renderer(rootElement, {
+          hydrate: true,
+        }).render(<App />)
+      } else {
+        renderer(<App />, rootElement)
+      }
+    }
+
+    // https://github.com/madrobby/zepto/blob/b5ed8d607f67724788ec9ff492be297f64d47dfc/src/zepto.js#L439-L450
+    // TODO remove IE 10 support
+    const doc = document
+    if (
+      doc.readyState === `complete` ||
+      (doc.readyState !== `loading` && !doc.documentElement.doScroll)
+    ) {
+      setTimeout(function () {
+        runRender()
+      }, 0)
+    } else {
+      const handler = function () {
+        doc.removeEventListener(`DOMContentLoaded`, handler, false)
+        window.removeEventListener(`load`, handler, false)
+
+        runRender()
+      }
+
+      doc.addEventListener(`DOMContentLoaded`, handler, false)
+      window.addEventListener(`load`, handler, false)
+    }
   })
 })

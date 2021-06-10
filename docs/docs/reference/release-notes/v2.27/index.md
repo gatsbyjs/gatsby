@@ -1,6 +1,7 @@
 ---
 date: "2020-11-19"
 version: "2.27.0"
+title: "v2.27 Release Notes"
 ---
 
 # [v2.27](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.0-next.0...gatsby@2.27.0) (November 2020 #2)

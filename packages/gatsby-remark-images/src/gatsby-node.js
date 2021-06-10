@@ -101,6 +101,12 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(
         `Set the browser’s native lazy loading attribute. One of lazy, eager or auto.`
       ),
+    decoding: Joi.string()
+      .valid(`async`, `sync`, `auto`)
+      .default(`async`)
+      .description(
+        `Set the browser’s native decoding attribute. One of async, sync or auto.`
+      ),
     disableBgImageOnAlpha: Joi.boolean()
       .default(false)
       .description(
