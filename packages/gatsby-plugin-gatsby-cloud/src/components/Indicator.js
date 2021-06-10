@@ -75,7 +75,9 @@ export function LinkIndicatorButton(props) {
       // while it is fading out we need to wait a bit longer than the time used above.
     }, 2400)
 
-    navigator.clipboard.writeText(window.location.href)
+    if (window) {
+      navigator.clipboard.writeText(window.location.href)
+    }
   }
 
   const trackHover = () => {
@@ -207,6 +209,10 @@ const newPreviewAvailableClick = async ({
    * want to block the thread until the event request comes back
    */
   await delay(75)
+
+  if (!window) {
+    return
+  }
 
   // Grabs domain that preview is hosted on https://preview-sitePrefix.gtsb.io
   // This will match `gtsb.io`

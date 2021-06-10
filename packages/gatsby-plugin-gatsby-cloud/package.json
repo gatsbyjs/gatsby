@@ -36,6 +36,7 @@
     "http/2-server-push",
     "gatsby-cloud"
   ],
+  "types": "./index.d.ts",
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
