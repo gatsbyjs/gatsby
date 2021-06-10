@@ -58,7 +58,7 @@ function preset(context, options = {}) {
     overrides: [
       {
         test: [`**/*.ts`, `**/*.tsx`],
-        plugins: [[`@babel/plugin-transform-typescript`, { isTSX: true }]],
+        plugins: [[r(`@babel/plugin-transform-typescript`), { isTSX: true }]],
       },
     ],
   }
