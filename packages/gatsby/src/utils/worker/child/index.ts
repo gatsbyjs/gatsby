@@ -1,5 +1,5 @@
-import { GatsbyStateSlices } from "../../redux/types"
-import { loadStateInWorker, store } from "../../redux"
+import { GatsbyStateSlices } from "../../../redux/types"
+import { loadStateInWorker, store } from "../../../redux"
 // Note: this doesn't check for conflicts between module exports
 export { renderHTMLProd, renderHTMLDev } from "./render-html"
 
