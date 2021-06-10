@@ -521,6 +521,7 @@ jobs:
     executor:
       name: win/default
       shell: powershell.exe
+      size: large
     steps:
       - checkout
       - run:
