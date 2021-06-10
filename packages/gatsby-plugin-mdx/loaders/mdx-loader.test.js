@@ -1,4 +1,3 @@
-const mdxLoader = require(`./mdx-loader`)
 const prettier = require(`prettier`)
 const { BaseN } = require(`js-combinatorics/commonjs/combinatorics`)
 
@@ -66,59 +65,73 @@ describe(`mdx-loader`, () => {
       return true
     },
   })
+  beforeEach(() => {
+    jest.resetModules()
+  })
   test.each(fixtures)(
     `snapshot with %s`,
     async (filename, fakeGatsbyNode, content, isDevelopStage, lessBabel) => {
-      let err
-      let result
+      const createLoader = (opts = {}) => content =>
+        new Promise((resolve, reject) => {
+          jest.resetModules()
+          const mdxLoader = require(`./mdx-loader`)
+          const boundMdxLoader = mdxLoader.bind({
+            async() {
+              return (_err, _result) => {
+                if (_err) {
+                  reject(_err)
+                } else {
+                  resolve(_result)
+                }
+              }
+            },
+            query: {
+              getNodes(_type) {
+                return fixtures.map(([, node]) => node)
+              },
+              getNodesByType(_type) {
+                return fixtures.map(([, node]) => node)
+              },
+              pluginOptions: {
+                lessBabel,
+              },
+              cache: {
+                get() {
+                  return false
+                },
+                set() {
+                  return
+                },
+              },
+              isolateMDXComponent: isDevelopStage,
+            },
+            resourcePath: fakeGatsbyNode.absolutePath,
+            resourceQuery: fakeGatsbyNode.absolutePath,
+            rootContext: `/fake/`,
+            ...opts,
+          })
 
-      const createLoader = (opts = {}) =>
-        mdxLoader.bind({
-          async() {
-            return (_err, _result) => {
-              err = _err
-              result = _result
-            }
-          },
-          query: {
-            getNodes(_type) {
-              return fixtures.map(([, node]) => node)
-            },
-            getNodesByType(_type) {
-              return fixtures.map(([, node]) => node)
-            },
-            pluginOptions: {
-              lessBabel,
-            },
-            cache: {
-              get() {
-                return false
-              },
-              set() {
-                return
-              },
-            },
-            isolateMDXComponent: isDevelopStage,
-          },
-          resourcePath: fakeGatsbyNode.absolutePath,
-          resourceQuery: fakeGatsbyNode.absolutePath,
-          rootContext: `/fake/`,
-          ...opts,
+          boundMdxLoader(content)
         })
 
-      await createLoader()(content)
-      console.log(err)
-      expect(err).toBeNull()
-      expect(result).toMatchSnapshot()
-      err = result = undefined
-
-      if (isDevelopStage) {
-        await createLoader({
-          resourceQuery: `${fakeGatsbyNode.absolutePath}?type=component`,
-        })(content)
+      try {
+        const result = await createLoader()(content)
+        expect(result).toMatchSnapshot()
+      } catch (err) {
         console.log(err)
         expect(err).toBeNull()
-        expect(result).toMatchSnapshot()
+      }
+
+      if (isDevelopStage) {
+        try {
+          const result = await createLoader({
+            resourceQuery: `${fakeGatsbyNode.absolutePath}?type=component`,
+          })(content)
+          expect(result).toMatchSnapshot()
+        } catch (err) {
+          console.log(err)
+          expect(err).toBeNull()
+        }
       }
     }
   )
