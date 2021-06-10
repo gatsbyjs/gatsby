@@ -47,12 +47,6 @@
       "enabled": false
     },
     {
-      "packageNames": [
-        "gatsby-interface"
-      ],
-      "stabilityDays": 0
-    },
-    {
       "groupName": "starters and examples",
       "commitMessageTopic": "starters and examples",
       "groupSlug": "starters-examples-minor",
