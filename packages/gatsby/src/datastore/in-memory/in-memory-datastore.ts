@@ -1,29 +1,32 @@
-import { IDataStore } from "../types"
+import { IDataStore, IGatsbyIterable } from "../types"
 import { store } from "../../redux"
 import { IGatsbyNode } from "../../redux/types"
+import { GatsbyIterable } from "../common/iterable"
 
 /**
  * @deprecated
  */
 function getNodes(): Array<IGatsbyNode> {
-  const nodes = store.getState().nodes
-  if (nodes) {
-    return Array.from(nodes.values())
-  } else {
-    return []
-  }
+  const nodes = store.getState().nodes ?? new Map()
+  return Array.from(nodes.values())
 }
 
 /**
  * @deprecated
  */
 function getNodesByType(type: string): Array<IGatsbyNode> {
-  const nodes = store.getState().nodesByType.get(type)
-  if (nodes) {
-    return Array.from(nodes.values())
-  } else {
-    return []
-  }
+  const nodes = store.getState().nodesByType.get(type) ?? new Map()
+  return Array.from(nodes.values())
+}
+
+function iterateNodes(): IGatsbyIterable<IGatsbyNode> {
+  const nodes = store.getState().nodes ?? new Map()
+  return new GatsbyIterable(nodes.values())
+}
+
+function iterateNodesByType(type: string): IGatsbyIterable<IGatsbyNode> {
+  const nodes = store.getState().nodesByType.get(type) ?? new Map()
+  return new GatsbyIterable(nodes.values())
 }
 
 function getNode(id: string): IGatsbyNode | undefined {
@@ -59,6 +62,8 @@ export function setupInMemoryStore(): IDataStore {
     getTypes,
     countNodes,
     ready,
+    iterateNodes,
+    iterateNodesByType,
 
     // deprecated:
     getNodes,

@@ -11,3 +11,5 @@ export function setState(slices: Array<GatsbyStateSlices>): void {
     store.getState()[key] = val
   })
 }
+
+export { loadConfigAndPlugins } from "./load-config-and-plugins"
