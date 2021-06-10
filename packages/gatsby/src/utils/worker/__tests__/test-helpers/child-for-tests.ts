@@ -5,6 +5,7 @@ import reporter from "gatsby-cli/lib/reporter"
 
 // re-export all usual methods from production worker
 export * from "../../child"
+export { setState } from "../../child/state"
 
 // additional functions to be able to write assertions that won't be available in production code
 
