@@ -170,6 +170,7 @@ describe(`worker (share-state)`, () => {
 
   it(`can set slices results into state and access it`, async () => {
     worker = createTestWorker()
+    const staticQueryID = `1`
 
     store.dispatch({
       type: `CREATE_PAGE`,
@@ -179,20 +180,57 @@ describe(`worker (share-state)`, () => {
       },
     })
 
-    const slices: Array<GatsbyStateSlices> = [`components`]
+    store.dispatch({
+      type: `REPLACE_STATIC_QUERY`,
+      plugin: {
+        name: `test`,
+      },
+      payload: {
+        name: `foo`,
+        componentPath: dummyPagePayload.component,
+        id: staticQueryID,
+        query: `I'm a static query`,
+        hash: `hash`,
+      },
+    })
 
-    saveStateForWorkers(slices)
+    store.dispatch({
+      type: `QUERY_EXTRACTED`,
+      payload: {
+        componentPath: `/foo`,
+        componentChunkName: `foo`,
+        query: `I'm a page query`,
+      },
+      plugin: {
+        name: `test`,
+      },
+    })
 
-    await worker.setState(slices)
+    saveStateForWorkers([`components`, `staticQueryComponents`])
 
-    const res = await worker.getComponent(dummyPagePayload.component)
+    await worker.setExtractedSlices()
 
-    expect(res).toMatchInlineSnapshot(`
+    const components = await worker.getComponent(dummyPagePayload.component)
+    const staticQueryComponents = await worker.getStaticQueryComponent(
+      staticQueryID
+    )
+
+    expect(components).toMatchInlineSnapshot(`
       Object {
         "componentPath": "/foo",
         "isInBootstrap": true,
         "pages": Object {},
-        "query": "",
+        "query": "I'm a page query",
+      }
+    `)
+
+    expect(staticQueryComponents).toMatchInlineSnapshot(`
+      Object {
+        "componentPath": "/foo",
+        "hash": "hash",
+        "id": "1",
+        "name": "foo",
+        "query": "I'm a static query",
       }
     `)
   })

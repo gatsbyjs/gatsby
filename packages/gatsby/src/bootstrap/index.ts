@@ -61,9 +61,11 @@ export async function bootstrap(
 
   await rebuildSchemaWithSitePage(context)
 
-  saveStateForWorkers([`components`, `staticQueryComponents`])
-
   await extractQueries(context)
+
+  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    saveStateForWorkers([`components`, `staticQueryComponents`])
+  }
 
   await writeOutRedirects(context)
 
