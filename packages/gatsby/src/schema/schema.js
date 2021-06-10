@@ -749,7 +749,10 @@ const addSetFieldsOnGraphQLNodeTypeFields = ({ schemaComposer, parentSpan }) =>
         const result = await apiRunner(`setFieldsOnGraphQLNodeType`, {
           type: {
             name: typeName,
-            nodes: getNodesByType(typeName),
+            get nodes() {
+              // TODO STRICT_MODE: return iterator instead of array
+              return getNodesByType(typeName)
+            },
           },
           traceId: `initial-setFieldsOnGraphQLNodeType`,
           parentSpan,
@@ -1161,11 +1164,20 @@ const addInferredChildOfExtension = ({ schemaComposer, typeComposer }) => {
   if (shouldInfer === false) return
 
   const parentTypeName = typeComposer.getTypeName()
-  const nodes = getNodesByType(parentTypeName)
 
-  const childNodesByType = groupChildNodesByType({ nodes })
+  // This is expensive.
+  // TODO: We should probably collect this info during inference metadata pass
+  const childNodeTypes = new Set()
+  for (const node of getDataStore().iterateNodesByType(parentTypeName)) {
+    const children = (node.children || []).map(getNode)
+    for (const childNode of children) {
+      if (childNode?.internal?.type) {
+        childNodeTypes.add(childNode.internal.type)
+      }
+    }
+  }
 
-  Object.keys(childNodesByType).forEach(typeName => {
+  childNodeTypes.forEach(typeName => {
     const childTypeComposer = schemaComposer.getAnyTC(typeName)
     let childOfExtension = childTypeComposer.getExtension(`childOf`)
 
@@ -1225,12 +1237,6 @@ const createChildField = typeName => {
     },
   }
 }
-
-const groupChildNodesByType = ({ nodes }) =>
-  _(nodes)
-    .flatMap(node => (node.children || []).map(getNode).filter(Boolean))
-    .groupBy(node => (node.internal ? node.internal.type : undefined))
-    .value()
 
 const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
   const sortInputTC = getSortInput({
