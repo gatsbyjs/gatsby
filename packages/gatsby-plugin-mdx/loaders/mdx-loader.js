@@ -19,6 +19,12 @@ const {
 // To support yarn PnP, we need them to be required from their direct parent.
 const requireFromMDX = createRequireFromPath(require.resolve(`@mdx-js/mdx`))
 
+const babelPluginSyntaxJSX = requireFromMDX(`@babel/plugin-syntax-jsx`)
+const babelPluginSyntaxObjectRestSpread = requireFromMDX(
+  `@babel/plugin-syntax-object-rest-spread`
+)
+const babelPluginHTMLAttrToJSXAttr = require(`../utils/babel-plugin-html-attr-to-jsx-attr`)
+
 const toMDAST = requireFromMDX(`remark-parse`)
 const squeeze = requireFromMDX(`remark-squeeze-paragraphs`)
 const debug = require(`debug`)(`gatsby-plugin-mdx:mdx-loader`)
@@ -242,9 +248,9 @@ ${contentWithoutFrontmatter}`
     const result = babel.transform(rawMDXOutput, {
       configFile: false,
       plugins: [
-        requireFromMDX(`@babel/plugin-syntax-jsx`),
-        requireFromMDX(`@babel/plugin-syntax-object-rest-spread`),
-        require(`../utils/babel-plugin-html-attr-to-jsx-attr`),
+        babelPluginSyntaxJSX,
+        babelPluginSyntaxObjectRestSpread,
+        babelPluginHTMLAttrToJSXAttr,
       ],
     })
     debugMore(`transformed code`, result.code)
