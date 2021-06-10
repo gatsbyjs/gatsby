@@ -3,7 +3,9 @@ import { cpuCoreCount } from "gatsby-core-utils"
 
 import type { CreateWorkerPoolType } from "./types"
 
-export type GatsbyWorkerPool = CreateWorkerPoolType<typeof import("./child")>
+export type GatsbyWorkerPool = CreateWorkerPoolType<
+  typeof import("./child/index")
+>
 
 export const create = (): GatsbyWorkerPool => {
   process.env.GATSBY_WORKER_POOL_WORKER = `true`
