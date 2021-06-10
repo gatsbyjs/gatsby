@@ -7,6 +7,7 @@ import {
 } from "../../../../redux/types"
 import { ITypeMetadata } from "../../../../schema/infer/inference-metadata"
 import reporter from "gatsby-cli/lib/reporter"
+import apiRunner from "../../../api-runner-node"
 
 // re-export all usual methods from production worker
 export * from "../../child"
@@ -41,4 +42,14 @@ export function getInferenceMetadata(typeName: string): ITypeMetadata {
 export function log(message: string): boolean {
   reporter.log(message)
   return true
+}
+
+// test: config
+export async function runAPI(apiName: string): Promise<any> {
+  return await apiRunner(apiName)
+}
+
+// test: config
+export function getAPIRunResult(): string | undefined {
+  return (global as any).test
 }
