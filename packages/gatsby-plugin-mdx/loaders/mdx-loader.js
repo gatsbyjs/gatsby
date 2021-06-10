@@ -31,13 +31,6 @@ try {
 }
 
 try {
-  babelPluginSyntaxJSX = requireFromMDX(`@babel/plugin-syntax-jsx`)
-} catch (e) {
-  console.log(`failed to load "@babel/plugin-syntax-jsx"`)
-  throw e
-}
-
-try {
   babelPluginSyntaxObjectRestSpread = requireFromMDX(
     `@babel/plugin-syntax-object-rest-spread`
   )
