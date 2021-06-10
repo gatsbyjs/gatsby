@@ -1,5 +1,5 @@
 import { setState } from "./state"
 
-export function setExtractedSlices(): void {
+export function setQueries(): void {
   setState([`components`, `staticQueryComponents`])
 }
