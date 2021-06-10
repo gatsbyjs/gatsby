@@ -10,12 +10,12 @@ const globalPackageRules = [
   {
     groupName: `babel monorepo`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    sourceUrlPrefixes: [`https://github.com/babel/babel`],
+    matchSourceUrlPrefixes: [`https://github.com/babel/babel`],
   },
   {
     groupName: `lodash monorepo`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    sourceUrlPrefixes: [`https://github.com/lodash`],
+    matchSourceUrlPrefixes: [`https://github.com/lodash`],
   },
   {
     groupName: `gatsby monorepo`,
@@ -32,8 +32,8 @@ const globalPackageRules = [
     groupName: `formatting & linting`,
     commitMessageTopic: `Formatting & linting`,
     matchPaths: [`+(package.json)`],
-    packageNames: [`eslint`, `prettier`],
-    packagePatterns: [`^eslint-`],
+    matchPackageNames: [`eslint`, `prettier`],
+    matchPackagePatterns: [`^eslint-`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
@@ -43,7 +43,7 @@ const globalPackageRules = [
   {
     groupName: `cross-env`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    packageNames: [`cross-env`],
+    matchPackageNames: [`cross-env`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
@@ -51,7 +51,7 @@ const globalPackageRules = [
   {
     groupName: `execa`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    packageNames: [`execa`],
+    matchPackageNames: [`execa`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
@@ -59,21 +59,21 @@ const globalPackageRules = [
   {
     groupName: `mini-css-extract-plugin`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    packageNames: [`mini-css-extract-plugin`],
+    matchPackageNames: [`mini-css-extract-plugin`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
   },
   {
     groupName: `sharp`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    packageNames: [`sharp`, `@types/sharp`],
+    matchPackageNames: [`sharp`, `@types/sharp`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
   },
   {
     groupName: `typescript`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    packageNames: [`typescript`],
+    matchPackageNames: [`typescript`],
     matchPackagePatterns: [`^@typescript-eslint/`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
@@ -82,7 +82,7 @@ const globalPackageRules = [
   {
     groupName: `chalk`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    packageNames: [`chalk`],
+    matchPackageNames: [`chalk`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
@@ -90,7 +90,7 @@ const globalPackageRules = [
   {
     groupName: `fs-extra`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    packageNames: [`fs-extra`, `@types/fs-extra`],
+    matchPackageNames: [`fs-extra`, `@types/fs-extra`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
@@ -111,8 +111,8 @@ globalPackageRules.forEach(group => {
   if (group.matchPackagePatterns) {
     globalExcludePackagePatterns.push(...group.matchPackagePatterns)
   }
-  if (group.packageNames) {
-    globalExcludePackages.push(...group.packageNames)
+  if (group.matchPackageNames) {
+    globalExcludePackages.push(...group.matchPackageNames)
   }
 })
 
@@ -120,12 +120,12 @@ globalPackageRules.forEach(group => {
 const defaultPackageRules = [
   // disable engine upgrades
   {
-    depTypeList: [`engines`],
+    matchDepTypes: [`engines`],
     enabled: false,
   },
   // host-error on renovate :shrug:
   // {
-  //   packageNames: [`gatsby-interface`],
+  //   matchPackageNames: [`gatsby-interface`],
   //   // update internal packages immediately after publish instead of waiting 3 days
   //   stabilityDays: 0,
   // },
