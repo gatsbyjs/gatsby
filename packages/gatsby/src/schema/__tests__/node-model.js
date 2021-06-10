@@ -1310,8 +1310,8 @@ describe(`NodeModel`, () => {
         const copiedInlineObject = { ...node.inlineObject }
         nodeModel.trackInlineObjectsInRootNode(copiedInlineObject)
 
-        expect(nodeModel._trackedRootNodes instanceof Set).toBe(true)
-        expect(nodeModel._trackedRootNodes.has(node.id)).toEqual(true)
+        expect(nodeModel._trackedRootNodes instanceof WeakSet).toBe(true)
+        expect(nodeModel._trackedRootNodes.has(node)).toEqual(true)
       })
     })
     describe(`not directly on a node`, () => {
@@ -1354,8 +1354,8 @@ describe(`NodeModel`, () => {
         const copiedInlineObject = { ...node.inlineObject }
         nodeModel.trackInlineObjectsInRootNode(copiedInlineObject)
 
-        expect(nodeModel._trackedRootNodes instanceof Set).toBe(true)
-        expect(nodeModel._trackedRootNodes.has(node.id)).toEqual(true)
+        expect(nodeModel._trackedRootNodes instanceof WeakSet).toBe(true)
+        expect(nodeModel._trackedRootNodes.has(node)).toEqual(true)
       })
     })
   })
