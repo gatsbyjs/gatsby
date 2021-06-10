@@ -10,7 +10,6 @@ jobs:
         name: stale
         id: stale
         with:
-          debug-only: true
           days-before-stale: 20
           days-before-pr-stale: -1 # Don't mark PRs as stale
           days-before-close: 40
