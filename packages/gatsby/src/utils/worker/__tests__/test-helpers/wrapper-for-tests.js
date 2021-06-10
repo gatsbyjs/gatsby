@@ -3,7 +3,7 @@ require(`@babel/register`)({
   extensions: [`.js`, `.ts`],
   configFile: require.resolve(`../../../../../babel.config.js`),
   cache: false,
-  ignore: /node_modules/,
+  ignore: [/node_modules/],
 })
 
 module.exports = require(`./child-for-tests`)
