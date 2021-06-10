@@ -112,7 +112,8 @@
   "private": true,
   "resolutions": {
     "theme-ui": "0.4.0-rc.14",
-    "csstype": "2.6.17"
+    "csstype": "2.6.17",
+    "@babel/plugin-syntax-jsx": "7.14.5"
   },
   "scripts": {
     "bootstrap": "npm-run-all -s check-versions \"lerna-prepare -- --{@}\" --",
