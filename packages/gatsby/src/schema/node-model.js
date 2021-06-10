@@ -75,7 +75,7 @@ class LocalNodeModel {
     this.createPageDependencyActionCreator = createPageDependency
 
     this._rootNodeMap = new WeakMap()
-    this._trackedRootNodes = new Set()
+    this._trackedRootNodes = new WeakSet()
     this._prepareNodesQueues = {}
     this._prepareNodesPromises = {}
     this._preparedNodesCache = new Map()
@@ -431,7 +431,7 @@ class LocalNodeModel {
    * @param {Node} node Root Node
    */
   trackInlineObjectsInRootNode(node) {
-    if (!this._trackedRootNodes.has(node.id)) {
+    if (!this._trackedRootNodes.has(node)) {
       addRootNodeToInlineObject(
         this._rootNodeMap,
         node,
@@ -439,7 +439,7 @@ class LocalNodeModel {
         true,
         new Set()
       )
-      this._trackedRootNodes.add(node.id)
+      this._trackedRootNodes.add(node)
     }
   }
 
