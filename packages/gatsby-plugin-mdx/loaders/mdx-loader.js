@@ -19,11 +19,39 @@ const {
 // To support yarn PnP, we need them to be required from their direct parent.
 const requireFromMDX = createRequireFromPath(require.resolve(`@mdx-js/mdx`))
 
-const babelPluginSyntaxJSX = requireFromMDX(`@babel/plugin-syntax-jsx`)
-const babelPluginSyntaxObjectRestSpread = requireFromMDX(
-  `@babel/plugin-syntax-object-rest-spread`
-)
-const babelPluginHTMLAttrToJSXAttr = require(`../utils/babel-plugin-html-attr-to-jsx-attr`)
+let babelPluginSyntaxJSX
+let babelPluginSyntaxObjectRestSpread
+let babelPluginHTMLAttrToJSXAttr
+
+try {
+  babelPluginSyntaxJSX = requireFromMDX(`@babel/plugin-syntax-jsx`)
+} catch (e) {
+  console.log(`failed to load "@babel/plugin-syntax-jsx"`)
+  throw e
+}
+
+try {
+  babelPluginSyntaxJSX = requireFromMDX(`@babel/plugin-syntax-jsx`)
+} catch (e) {
+  console.log(`failed to load "@babel/plugin-syntax-jsx"`)
+  throw e
+}
+
+try {
+  babelPluginSyntaxObjectRestSpread = requireFromMDX(
+    `@babel/plugin-syntax-object-rest-spread`
+  )
+} catch (e) {
+  console.log(`failed to load "@babel/plugin-syntax-object-rest-spread"`)
+  throw e
+}
+
+try {
+  babelPluginHTMLAttrToJSXAttr = require(`../utils/babel-plugin-html-attr-to-jsx-attr`)
+} catch (e) {
+  console.log(`failed to load "./utils/babel-plugin-html-attr-to-jsx-attr"`)
+  throw e
+}
 
 const toMDAST = requireFromMDX(`remark-parse`)
 const squeeze = requireFromMDX(`remark-squeeze-paragraphs`)
