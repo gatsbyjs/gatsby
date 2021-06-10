@@ -123,11 +123,12 @@ const defaultPackageRules = [
     depTypeList: [`engines`],
     enabled: false,
   },
-  {
-    packageNames: [`gatsby-interface`],
-    // update internal packages immediately after publish instead of waiting 3 days
-    stabilityDays: 0,
-  },
+  // host-error on renovate :shrug:
+  // {
+  //   packageNames: [`gatsby-interface`],
+  //   // update internal packages immediately after publish instead of waiting 3 days
+  //   stabilityDays: 0,
+  // },
 
   // update our examples and starters automatically
   {
