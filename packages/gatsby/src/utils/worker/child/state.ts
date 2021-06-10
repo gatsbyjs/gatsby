@@ -1,8 +1,8 @@
 // Calls loadStateInWorker(slices) and mutates the redux store with the results
-import { GatsbyStateSlices } from "../../../redux/types"
+import { GatsbyStateKeys } from "../../../redux/types"
 import { loadStateInWorker, store } from "../../../redux"
 
-export function setState(slices: Array<GatsbyStateSlices>): void {
+export function setState(slices: Array<GatsbyStateKeys>): void {
   const res = loadStateInWorker(slices)
 
   Object.entries(res).forEach(([key, val]) => {
