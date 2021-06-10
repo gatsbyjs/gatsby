@@ -16,17 +16,6 @@ const GatsbyReporter = {
    */
 
   /**
-   * @callback GatsbyReporterVoidFn
-   * @returns {void}
-   */
-
-  /**
-   * @callback GatsbyReporterActivityTimerFn
-   * @param {string} message Message to display
-   * @returns {{start: GatsbyReporterVoidFn, end: GatsbyReporterVoidFn, setStatus: GatsbyReporterFn}}
-   */
-
-  /**
    * @type {GatsbyReporterFn}
    * @example
    * reporter.info(`text`)
@@ -71,7 +60,14 @@ const GatsbyReporter = {
   verbose: true,
 
   /**
+   * @callback GatsbyReporterActivityTimerFn
+   * @param {string} message Timer message to display
+   * @returns {GatsbyActivityTimer}
+   */
+
+  /**
    * Creates a new activity timer with the provided message.
+   * Check the full [return type definition here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/src/reporter/reporter-timer.ts#L19).
    * @type {GatsbyReporterActivityTimerFn}
    * @example
    * const activity = reporter.activityTimer(`Timer text`)
