@@ -62,7 +62,7 @@ const GatsbyReporter = {
   /**
    * @callback GatsbyReporterActivityTimerFn
    * @param {string} message Timer message to display
-   * @returns {GatsbyActivityTimer}
+   * @returns {ITimerReporter}
    */
 
   /**
