@@ -16,6 +16,17 @@ const GatsbyReporter = {
    */
 
   /**
+   * @callback GatsbyReporterVoidFn
+   * @returns {void}
+   */
+
+  /**
+   * @callback GatsbyReporterActivityTimerFn
+   * @param {string} message Message to display
+   * @returns {{start: GatsbyReporterVoidFn, end: GatsbyReporterVoidFn, setStatus: GatsbyReporterFn}}
+   */
+
+  /**
    * @type {GatsbyReporterFn}
    * @example
    * reporter.info(`text`)
@@ -58,6 +69,18 @@ const GatsbyReporter = {
    * reporter.verbose(`text`)
    */
   verbose: true,
+
+  /**
+   * Creates a new activity timer with the provided message.
+   * @type {GatsbyReporterActivityTimerFn}
+   * @example
+   * const activity = reporter.activityTimer(`Timer text`)
+   *
+   * activity.start()
+   * activity.setStatus(`status text`)
+   * activity.end()
+   */
+  activityTimer: true,
 };
 
 /***/
