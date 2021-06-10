@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-subfont@3.8.0-next.0...gatsby-plugin-subfont@3.8.0-next.1) (2021-06-10)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-plugin-subfont ([#31703](https://github.com/gatsbyjs/gatsby/issues/31703)) ([a479d7d](https://github.com/gatsbyjs/gatsby/commit/a479d7d45312d6184040aeb23e5bc017fb022398))
+
 # [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-subfont@3.7.0-next.2...gatsby-plugin-subfont@3.8.0-next.0) (2021-06-03)
 
 **Note:** Version bump only for package gatsby-plugin-subfont
