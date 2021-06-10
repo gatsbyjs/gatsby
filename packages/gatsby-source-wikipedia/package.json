@@ -34,8 +34,8 @@
     "query-string": "^6.13.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.3",
-    "@babel/core": "^7.14.3",
+    "@babel/cli": "^7.14.0",
+    "@babel/core": "^7.14.0",
     "babel-preset-gatsby-package": "^1.7.0",
     "cross-env": "^7.0.3"
   },
