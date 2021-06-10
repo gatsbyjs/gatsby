@@ -155,7 +155,7 @@ export const reportWebpackWarnings = (
     warningMessages = warnings.map(
       warning => `${warning.moduleName}\n\n${warning.message}`
     )
-  } else if (warnings[0].message) {
+  } else if (warnings[0]?.message) {
     warningMessages = warnings.map(warning => warning.message)
   }
 
