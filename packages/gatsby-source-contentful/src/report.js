@@ -23,9 +23,4 @@ export const ERROR_MAP = {
     level: `ERROR`,
     category: `THIRD_PARTY`,
   },
-  [CODES.FetchContentTypes]: {
-    text: context => context.sourceMessage,
-    level: `ERROR`,
-    category: `THIRD_PARTY`,
-  },
 }
