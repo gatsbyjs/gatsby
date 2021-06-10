@@ -1,1 +1,1 @@
-export { getShopifyImage } from "./get-shopify-image";
+export { getShopifyImage } from "./get-shopify-image"

@@ -2,16 +2,16 @@ import {
   CreateSchemaCustomizationArgs,
   NodePluginSchema,
   GatsbyGraphQLObjectType,
-} from "gatsby";
+} from "gatsby"
 
 function addFields(
   def: GatsbyGraphQLObjectType,
   fields: GatsbyGraphQLObjectType["config"]["fields"]
-) {
+): void {
   def.config.fields = {
     ...(def.config.fields || {}),
     ...fields,
-  };
+  }
 }
 
 function defineImageNode(
@@ -19,72 +19,73 @@ function defineImageNode(
   schema: NodePluginSchema,
   pluginOptions: ShopifyPluginOptions,
   fields: GatsbyGraphQLObjectType["config"]["fields"] = {}
-) {
+): GatsbyGraphQLObjectType {
   const imageDef = schema.buildObjectType({
     name,
-  });
+  })
 
   if (pluginOptions.downloadImages) {
     imageDef.config.fields = {
       localFile: {
-        type: "File",
+        type: `File`,
         extensions: {
           link: {},
         },
       },
-    };
+    }
   }
 
   addFields(imageDef, {
     ...fields,
-    altText: "String",
-    height: "Int",
-    id: "String",
-    originalSrc: "String!",
-    transformedSrc: "String!",
-    width: "Int",
-  });
+    altText: `String`,
+    height: `Int`,
+    id: `String`,
+    originalSrc: `String!`,
+    transformedSrc: `String!`,
+    width: `Int`,
+  })
 
-  return imageDef;
+  return imageDef
 }
 
 export function createSchemaCustomization(
   { actions, schema }: CreateSchemaCustomizationArgs,
   pluginOptions: ShopifyPluginOptions
-) {
+): void {
   const includeCollections = pluginOptions.shopifyConnections?.includes(
-    "collections"
-  );
+    `collections`
+  )
 
-  const includeOrders = pluginOptions.shopifyConnections?.includes("orders");
+  const includeOrders = pluginOptions.shopifyConnections?.includes(`orders`)
 
-  const name = (name: string) => `${pluginOptions.typePrefix || ""}${name}`;
+  const name = (name: string): string =>
+    `${pluginOptions.typePrefix || ``}${name}`
 
   const sharedMetafieldFields: GatsbyGraphQLObjectType["config"]["fields"] = {
-    createdAt: "Date!",
-    description: "String",
-    id: "ID!",
-    key: "String!",
-    namespace: "String!",
-    ownerType: "String!",
-    updatedAt: "Date!",
-    value: "String!",
-    valueType: "String!",
-  };
+    createdAt: `Date!`,
+    description: `String`,
+    id: `ID!`,
+    key: `String!`,
+    namespace: `String!`,
+    ownerType: `String!`,
+    updatedAt: `Date!`,
+    value: `String!`,
+    valueType: `String!`,
+  }
 
   const metafieldInterface = schema.buildInterfaceType({
-    name: name("ShopifyMetafieldInterface"),
+    name: name(`ShopifyMetafieldInterface`),
     fields: sharedMetafieldFields,
-    interfaces: ["Node"],
-  });
+    interfaces: [`Node`],
+  })
 
-  const metafieldOwnerTypes = ["Product", "ProductVariant"];
+  const metafieldOwnerTypes = [`Product`, `ProductVariant`]
   if (includeCollections) {
-    metafieldOwnerTypes.push("Collection");
+    metafieldOwnerTypes.push(`Collection`)
   }
 
   const metafieldTypes = metafieldOwnerTypes.map((ownerType: string) => {
-    const parentKey = ownerType.charAt(0).toLowerCase() + ownerType.slice(1);
+    const parentKey = ownerType.charAt(0).toLowerCase() + ownerType.slice(1)
     return schema.buildObjectType({
       name: name(`Shopify${ownerType}Metafield`),
       fields: {
@@ -94,199 +95,199 @@ export function createSchemaCustomization(
           extensions: {
             link: {
               from: `${parentKey}Id`,
-              by: "id",
+              by: `id`,
             },
           },
         },
       },
-      interfaces: ["Node", name("ShopifyMetafieldInterface")],
-    });
-  });
+      interfaces: [`Node`, name(`ShopifyMetafieldInterface`)],
+    })
+  })
 
   const productDef = schema.buildObjectType({
-    name: name("ShopifyProduct"),
+    name: name(`ShopifyProduct`),
     fields: {
       variants: {
-        type: `[${name("ShopifyProductVariant")}]`,
+        type: `[${name(`ShopifyProductVariant`)}]`,
         extensions: {
           link: {
-            from: "id",
-            by: "productId",
+            from: `id`,
+            by: `productId`,
           },
         },
       },
       metafields: {
-        type: `[${name("ShopifyProductMetafield")}]`,
+        type: `[${name(`ShopifyProductMetafield`)}]`,
         extensions: {
           link: {
-            from: "id",
-            by: "productId",
+            from: `id`,
+            by: `productId`,
           },
         },
       },
       images: {
-        type: `[${name("ShopifyProductImage")}]`,
+        type: `[${name(`ShopifyProductImage`)}]`,
         extensions: {
           link: {
-            from: "id",
-            by: "productId",
+            from: `id`,
+            by: `productId`,
           },
         },
       },
     },
-    interfaces: ["Node"],
-  });
+    interfaces: [`Node`],
+  })
 
   const productImageDef = defineImageNode(
-    name("ShopifyProductImage"),
+    name(`ShopifyProductImage`),
     schema,
     pluginOptions,
     {
       product: {
-        type: name("ShopifyProduct!"),
+        type: name(`ShopifyProduct!`),
         extensions: {
           link: {
-            from: "productId",
-            by: "id",
+            from: `productId`,
+            by: `id`,
           },
         },
       },
     }
-  );
+  )
 
-  productImageDef.config.interfaces = ["Node"];
+  productImageDef.config.interfaces = [`Node`]
 
   if (includeCollections) {
     addFields(productDef, {
       collections: {
-        type: `[${name("ShopifyCollection")}]`,
+        type: `[${name(`ShopifyCollection`)}]`,
         extensions: {
           link: {
-            from: "id",
-            by: "productIds",
+            from: `id`,
+            by: `productIds`,
           },
         },
       },
-    });
+    })
   }
 
   const typeDefs = [
     productDef,
     productImageDef,
     schema.buildObjectType({
-      name: name("ShopifyProductVariant"),
+      name: name(`ShopifyProductVariant`),
       fields: {
         product: {
-          type: name("ShopifyProduct!"),
+          type: name(`ShopifyProduct!`),
           extensions: {
             link: {
-              from: "productId",
-              by: "id",
+              from: `productId`,
+              by: `id`,
             },
           },
         },
         metafields: {
-          type: `[${name("ShopifyProductVariantMetafield")}]`,
+          type: `[${name(`ShopifyProductVariantMetafield`)}]`,
           extensions: {
             link: {
-              from: "id",
-              by: "productVariantId",
+              from: `id`,
+              by: `productVariantId`,
             },
           },
         },
       },
-      interfaces: ["Node"],
+      interfaces: [`Node`],
     }),
     metafieldInterface,
     ...metafieldTypes,
-  ];
+  ]
 
   if (includeCollections) {
     typeDefs.push(
       schema.buildObjectType({
-        name: name("ShopifyCollection"),
+        name: name(`ShopifyCollection`),
         fields: {
           products: {
-            type: `[${name("ShopifyProduct")}]`,
+            type: `[${name(`ShopifyProduct`)}]`,
             extensions: {
               link: {
-                from: "productIds",
-                by: "id",
+                from: `productIds`,
+                by: `id`,
               },
             },
           },
           metafields: {
-            type: `[${name("ShopifyCollectionMetafield")}]`,
+            type: `[${name(`ShopifyCollectionMetafield`)}]`,
             extensions: {
               link: {
-                from: "id",
-                by: "collectionId",
+                from: `id`,
+                by: `collectionId`,
               },
             },
           },
         },
-        interfaces: ["Node"],
+        interfaces: [`Node`],
       })
-    );
+    )
   }
 
   if (includeOrders) {
     typeDefs.push(
       schema.buildObjectType({
-        name: name("ShopifyOrder"),
+        name: name(`ShopifyOrder`),
         fields: {
           lineItems: {
-            type: `[${name("ShopifyLineItem")}]`,
+            type: `[${name(`ShopifyLineItem`)}]`,
             extensions: {
               link: {
-                from: "id",
-                by: "orderId",
+                from: `id`,
+                by: `orderId`,
               },
             },
           },
         },
-        interfaces: ["Node"],
+        interfaces: [`Node`],
       }),
       schema.buildObjectType({
-        name: name("ShopifyLineItem"),
+        name: name(`ShopifyLineItem`),
         fields: {
           product: {
-            type: name("ShopifyProduct"),
+            type: name(`ShopifyProduct`),
             extensions: {
               link: {
-                from: "productId",
-                by: "id",
+                from: `productId`,
+                by: `id`,
               },
             },
           },
           order: {
-            type: name("ShopifyOrder!"),
+            type: name(`ShopifyOrder!`),
             extensions: {
               link: {
-                from: "orderId",
-                by: "id",
+                from: `orderId`,
+                by: `id`,
               },
             },
           },
         },
-        interfaces: ["Node"],
+        interfaces: [`Node`],
       })
-    );
+    )
   }
 
   typeDefs.push(
     ...[
-      "ShopifyProductFeaturedImage",
-      "ShopifyProductFeaturedMediaPreviewImage",
-      "ShopifyProductVariantImage",
-    ].map((typeName) => defineImageNode(name(typeName), schema, pluginOptions))
-  );
+      `ShopifyProductFeaturedImage`,
+      `ShopifyProductFeaturedMediaPreviewImage`,
+      `ShopifyProductVariantImage`,
+    ].map(typeName => defineImageNode(name(typeName), schema, pluginOptions))
+  )
 
   if (includeCollections) {
     typeDefs.push(
-      defineImageNode(name("ShopifyCollectionImage"), schema, pluginOptions)
-    );
+      defineImageNode(name(`ShopifyCollectionImage`), schema, pluginOptions)
+    )
   }
 
-  actions.createTypes(typeDefs);
+  actions.createTypes(typeDefs)
 }

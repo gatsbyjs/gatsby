@@ -42,7 +42,7 @@ npm i gatsby-source-shopify@latest gatsby-plugin-image
 Add the plugin to your `gatsby-config.js`, e.g.
 
 ```js
-require("dotenv").config();
+require("dotenv").config()
 
 module.exports = {
   plugins: [
@@ -56,7 +56,7 @@ module.exports = {
     },
     "gatsby-plugin-image",
   ],
-};
+}
 ```
 
 ### Retrieving API Information from Shopify
@@ -159,7 +159,7 @@ products: allShopifyProduct(
 You could then display the image in your component like this:
 
 ```jsx
-import { GatsbyImage } from "gatsby-plugin-image";
+import { GatsbyImage } from "gatsby-plugin-image"
 
 function ProductListing(product) {
   return (
@@ -167,7 +167,7 @@ function ProductListing(product) {
       image={product.featuredImage.gatsbyImageData}
       alt={product.featuredImage.altText}
     />
-  );
+  )
 }
 ```
 
@@ -178,20 +178,20 @@ If you get Shopify images at runtime that don't have the `gatsbyImageData` resol
 It expects an `image` object that contains the properties `width`, `height` and `originalSrc`, such as [a Storefront API `Image` object](https://shopify.dev/docs/storefront-api/reference/common-objects/image).
 
 ```jsx
-import { GatsbyImage } from "gatsby-plugin-image";
-import { getShopifyImage } from "gatsby-source-shopify";
+import { GatsbyImage } from "gatsby-plugin-image"
+import { getShopifyImage } from "gatsby-source-shopify"
 
 function CartImage(storefrontProduct) {
   // This is data from Storefront, not from Gatsby
-  const image = storefrontProduct.images.edges[0].node;
+  const image = storefrontProduct.images.edges[0].node
   const imageData = getShopifyImage({
     image,
     layout: "fixed",
     width: 200,
     height: 200,
-  });
+  })
 
-  return <GatsbyImage image={imageData} alt={image.altText} />;
+  return <GatsbyImage image={imageData} alt={image.altText} />
 }
 ```
 
@@ -200,7 +200,7 @@ function CartImage(storefrontProduct) {
 If you wish to download your images during the build, you can specify `downloadImages: true` as a plugin option:
 
 ```js
-require("dotenv").config();
+require("dotenv").config()
 
 module.exports = {
   plugins: [
@@ -215,7 +215,7 @@ module.exports = {
     },
     "gatsby-plugin-image",
   ],
-};
+}
 ```
 
 This will make the build take longer but will make images appear on your page faster at runtime. If you use this option, you can query for your image data like this.
@@ -245,12 +245,12 @@ products: allShopifyProduct(
 Then you would use `gatsby-plugin-image` to render the image:
 
 ```js
-import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 function ProductListing(product) {
-  const image = getImage(product.featuredImage.localFile);
+  const image = getImage(product.featuredImage.localFile)
 
-  return <GatsbyImage image={image} alt={product.featuredImage.altText} />;
+  return <GatsbyImage image={image} alt={product.featuredImage.altText} />
 }
 ```
 

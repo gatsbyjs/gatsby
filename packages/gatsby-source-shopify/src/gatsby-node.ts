@@ -1,45 +1,48 @@
-import { createOperations } from "./operations";
-import { eventsApi } from "./events";
+import { createOperations } from "./operations"
+import { eventsApi } from "./events"
 import {
   CreateResolversArgs,
   NodePluginArgs,
   PluginOptionsSchemaArgs,
   SourceNodesArgs,
-} from "gatsby";
-import { makeResolveGatsbyImageData } from "./resolve-gatsby-image-data";
+} from "gatsby"
+import { makeResolveGatsbyImageData } from "./resolve-gatsby-image-data"
 import {
   getGatsbyImageResolver,
   IGatsbyGraphQLResolverArgumentConfig,
-} from "gatsby-plugin-image/graphql-utils";
-import { shiftLeft } from "shift-left";
-import { pluginErrorCodes as errorCodes } from "./errors";
-import { makeSourceFromOperation } from "./make-source-from-operation";
-export { createSchemaCustomization } from "./create-schema-customization";
-import { createNodeId } from "./node-builder";
+} from "gatsby-plugin-image/graphql-utils"
+import { shiftLeft } from "shift-left"
+import { pluginErrorCodes as errorCodes } from "./errors"
+import { makeSourceFromOperation } from "./make-source-from-operation"
+export { createSchemaCustomization } from "./create-schema-customization"
+import { createNodeId } from "./node-builder"
+import { JoiObject } from "joi"
 
-export function pluginOptionsSchema({ Joi }: PluginOptionsSchemaArgs) {
+export function pluginOptionsSchema({
+  Joi,
+}: PluginOptionsSchemaArgs): JoiObject {
   return Joi.object({
     apiKey: Joi.string().required(),
     password: Joi.string().required(),
     storeUrl: Joi.string().required(),
     downloadImages: Joi.boolean(),
     typePrefix: Joi.string()
-      .pattern(new RegExp("(^[A-Z]w*)"))
+      .pattern(new RegExp(`(^[A-Z]w*)`))
       .message(
-        '"typePrefix" can only be alphanumeric characters, starting with an uppercase letter'
+        `"typePrefix" can only be alphanumeric characters, starting with an uppercase letter`
       )
-      .default(""),
+      .default(``),
     shopifyConnections: Joi.array()
       .default([])
-      .items(Joi.string().valid("orders", "collections")),
+      .items(Joi.string().valid(`orders`, `collections`)),
     salesChannel: Joi.string(),
-  });
+  })
 }
 
 async function sourceAllNodes(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: ShopifyPluginOptions
-) {
+): Promise<void> {
   const {
     createProductsOperation,
     createOrdersOperation,
@@ -47,15 +50,15 @@ async function sourceAllNodes(
     finishLastOperation,
     completedOperation,
     cancelOperationInProgress,
-  } = createOperations(pluginOptions, gatsbyApi);
+  } = createOperations(pluginOptions, gatsbyApi)
 
-  const operations = [createProductsOperation];
-  if (pluginOptions.shopifyConnections?.includes("orders")) {
-    operations.push(createOrdersOperation);
+  const operations = [createProductsOperation]
+  if (pluginOptions.shopifyConnections?.includes(`orders`)) {
+    operations.push(createOrdersOperation)
   }
 
-  if (pluginOptions.shopifyConnections?.includes("collections")) {
-    operations.push(createCollectionsOperation);
+  if (pluginOptions.shopifyConnections?.includes(`collections`)) {
+    operations.push(createCollectionsOperation)
   }
 
   const sourceFromOperation = makeSourceFromOperation(
@@ -64,10 +67,10 @@ async function sourceAllNodes(
     cancelOperationInProgress,
     gatsbyApi,
     pluginOptions
-  );
+  )
 
   for (const op of operations) {
-    await sourceFromOperation(op);
+    await sourceFromOperation(op)
   }
 }
 
@@ -86,12 +89,12 @@ const shopifyNodeTypes = [
   `ShopifyProductVariantImage`,
   `ShopifyProductVariantPricePair`,
   `ShopifyProductFeaturedMediaPreviewImage`,
-];
+]
 
 async function sourceChangedNodes(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: ShopifyPluginOptions
-) {
+): Promise<void> {
   const {
     incrementalProducts,
     incrementalOrders,
@@ -99,27 +102,27 @@ async function sourceChangedNodes(
     finishLastOperation,
     completedOperation,
     cancelOperationInProgress,
-  } = createOperations(pluginOptions, gatsbyApi);
-  const { typePrefix = "" } = pluginOptions;
+  } = createOperations(pluginOptions, gatsbyApi)
+  const { typePrefix = `` } = pluginOptions
   const lastBuildTime = new Date(
     gatsbyApi.store.getState().status.plugins?.[`gatsby-source-shopify`]?.[
       `lastBuildTime${typePrefix}`
     ]
-  );
+  )
 
   for (const nodeType of shopifyNodeTypes) {
     gatsbyApi
       .getNodesByType(`${typePrefix}${nodeType}`)
-      .forEach((node) => gatsbyApi.actions.touchNode(node));
+      .forEach(node => gatsbyApi.actions.touchNode(node))
   }
 
-  const operations = [incrementalProducts(lastBuildTime)];
-  if (pluginOptions.shopifyConnections?.includes("orders")) {
-    operations.push(incrementalOrders(lastBuildTime));
+  const operations = [incrementalProducts(lastBuildTime)]
+  if (pluginOptions.shopifyConnections?.includes(`orders`)) {
+    operations.push(incrementalOrders(lastBuildTime))
   }
 
-  if (pluginOptions.shopifyConnections?.includes("collections")) {
-    operations.push(incrementalCollections(lastBuildTime));
+  if (pluginOptions.shopifyConnections?.includes(`collections`)) {
+    operations.push(incrementalCollections(lastBuildTime))
   }
 
   const sourceFromOperation = makeSourceFromOperation(
@@ -128,100 +131,100 @@ async function sourceChangedNodes(
     cancelOperationInProgress,
     gatsbyApi,
     pluginOptions
-  );
+  )
 
   for (const op of operations) {
-    await sourceFromOperation(op);
+    await sourceFromOperation(op)
   }
 
-  const { fetchDestroyEventsSince } = eventsApi(pluginOptions);
-  const destroyEvents = await fetchDestroyEventsSince(lastBuildTime);
+  const { fetchDestroyEventsSince } = eventsApi(pluginOptions)
+  const destroyEvents = await fetchDestroyEventsSince(lastBuildTime)
 
   gatsbyApi.reporter.info(
     `${destroyEvents.length} items have been deleted since ${lastBuildTime}`
-  );
+  )
 
   if (destroyEvents.length) {
-    gatsbyApi.reporter.info(`Removing matching nodes from Gatsby`);
-    destroyEvents.forEach((e) => {
-      const id = `${typePrefix}gid://shopify/${e.subject_type}/${e.subject_id}`;
-      gatsbyApi.reporter.info(`Looking up node with ID: ${id}`);
-      const nodeId = createNodeId(id, gatsbyApi, pluginOptions);
-      const node = gatsbyApi.getNode(nodeId);
+    gatsbyApi.reporter.info(`Removing matching nodes from Gatsby`)
+    destroyEvents.forEach(e => {
+      const id = `${typePrefix}gid://shopify/${e.subject_type}/${e.subject_id}`
+      gatsbyApi.reporter.info(`Looking up node with ID: ${id}`)
+      const nodeId = createNodeId(id, gatsbyApi, pluginOptions)
+      const node = gatsbyApi.getNode(nodeId)
 
       if (node) {
         gatsbyApi.reporter.info(
           `Removing ${node.internal.type}: ${node.id} with shopifyId ${e.subject_id}`
-        );
-        gatsbyApi.actions.deleteNode(node);
+        )
+        gatsbyApi.actions.deleteNode(node)
       } else {
-        gatsbyApi.reporter.info(`Couldn't find node with ID: ${id}`);
+        gatsbyApi.reporter.info(`Couldn't find node with ID: ${id}`)
       }
-    });
+    })
   }
 }
 
 export async function sourceNodes(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: ShopifyPluginOptions
-) {
+): Promise<void> {
   const pluginStatus = gatsbyApi.store.getState().status.plugins?.[
     `gatsby-source-shopify`
-  ];
+  ]
 
   const lastBuildTime =
-    pluginStatus?.[`lastBuildTime${pluginOptions.typePrefix || ""}`];
+    pluginStatus?.[`lastBuildTime${pluginOptions.typePrefix || ``}`]
 
   if (lastBuildTime !== undefined) {
-    gatsbyApi.reporter.info(`Cache is warm, running an incremental build`);
-    await sourceChangedNodes(gatsbyApi, pluginOptions);
+    gatsbyApi.reporter.info(`Cache is warm, running an incremental build`)
+    await sourceChangedNodes(gatsbyApi, pluginOptions)
   } else {
-    gatsbyApi.reporter.info(`Cache is cold, running a clean build`);
-    await sourceAllNodes(gatsbyApi, pluginOptions);
+    gatsbyApi.reporter.info(`Cache is cold, running a clean build`)
+    await sourceAllNodes(gatsbyApi, pluginOptions)
   }
 
-  gatsbyApi.reporter.info(`Finished sourcing nodes, caching last build time`);
+  gatsbyApi.reporter.info(`Finished sourcing nodes, caching last build time`)
   gatsbyApi.actions.setPluginStatus(
     pluginStatus !== undefined
       ? {
           ...pluginStatus,
-          [`lastBuildTime${pluginOptions.typePrefix || ""}`]: Date.now(),
+          [`lastBuildTime${pluginOptions.typePrefix || ``}`]: Date.now(),
         }
       : {
-          [`lastBuildTime${pluginOptions.typePrefix || ""}`]: Date.now(),
+          [`lastBuildTime${pluginOptions.typePrefix || ``}`]: Date.now(),
         }
-  );
+  )
 }
 
 export function createResolvers(
   { createResolvers, cache }: CreateResolversArgs,
   {
     downloadImages,
-    typePrefix = "",
+    typePrefix = ``,
     shopifyConnections = [],
   }: ShopifyPluginOptions
-) {
+): void {
   if (!downloadImages) {
     const args = {
       placeholder: {
-        description: "Low resolution version of the image",
-        type: "String",
+        description: `Low resolution version of the image`,
+        type: `String`,
         defaultValue: null,
       } as IGatsbyGraphQLResolverArgumentConfig,
-    };
+    }
     const imageNodeTypes = [
       `ShopifyProductImage`,
       `ShopifyProductVariantImage`,
       `ShopifyProductFeaturedImage`,
       `ShopifyProductFeaturedMediaPreviewImage`,
-    ];
+    ]
 
-    if (shopifyConnections.includes("collections")) {
-      imageNodeTypes.push("ShopifyCollectionImage");
+    if (shopifyConnections.includes(`collections`)) {
+      imageNodeTypes.push(`ShopifyCollectionImage`)
     }
 
-    const resolvers = imageNodeTypes.reduce(
-      (r, nodeType) => ({
+    const resolvers = imageNodeTypes.reduce((r, nodeType) => {
+      return {
         ...r,
         [`${typePrefix}${nodeType}`]: {
           gatsbyImageData: getGatsbyImageResolver(
@@ -229,21 +232,20 @@ export function createResolvers(
             args
           ),
         },
-      }),
-      {}
-    );
+      }
+    }, {})
 
-    createResolvers(resolvers);
+    createResolvers(resolvers)
   }
 }
 
-interface ErrorContext {
-  sourceMessage: string;
+interface IErrorContext {
+  sourceMessage: string
 }
 
-const getErrorText = (context: ErrorContext): string => context.sourceMessage;
+const getErrorText = (context: IErrorContext): string => context.sourceMessage
 
-export function onPreInit({ reporter }: NodePluginArgs) {
+export function onPreInit({ reporter }: NodePluginArgs): void {
   reporter.setErrorMap({
     [errorCodes.bulkOperationFailed]: {
       text: getErrorText,
@@ -251,7 +253,7 @@ export function onPreInit({ reporter }: NodePluginArgs) {
       category: `USER`,
     },
     [errorCodes.apiConflict]: {
-      text: () => shiftLeft`
+      text: (): string => shiftLeft`
         Your operation was canceled. You might have another production site for this Shopify store.
 
         Shopify only allows one bulk operation at a time for a given shop, so we recommend that you
@@ -270,13 +272,13 @@ export function onPreInit({ reporter }: NodePluginArgs) {
      */
     [errorCodes.unknownSourcingFailure]: {
       text: getErrorText,
-      level: "ERROR",
+      level: `ERROR`,
       category: `THIRD_PARTY`,
     },
     [errorCodes.unknownApiError]: {
       text: getErrorText,
-      level: "ERROR",
+      level: `ERROR`,
       category: `THIRD_PARTY`,
     },
-  });
+  })
 }

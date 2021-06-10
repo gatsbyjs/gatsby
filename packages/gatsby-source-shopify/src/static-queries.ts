@@ -13,7 +13,7 @@ export const OPERATION_STATUS_QUERY = `
       query
     }
   }
-`;
+`
 
 export const OPERATION_BY_ID = `
   query OPERATION_BY_ID($id: ID!) {
@@ -32,7 +32,7 @@ export const OPERATION_BY_ID = `
       }
     }
   }
-  `;
+  `
 
 export const CANCEL_OPERATION = `
   mutation CANCEL_OPERATION($id: ID!) {
@@ -46,4 +46,4 @@ export const CANCEL_OPERATION = `
       }
     }
   }
-  `;
+  `

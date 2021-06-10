@@ -1,14 +1,14 @@
-import { BulkQuery } from "./bulk-query";
+import { BulkQuery } from "./bulk-query"
 
 export class OrdersQuery extends BulkQuery {
-  query(date?: Date) {
-    const filters = [];
+  query(date?: Date): string {
+    const filters = []
     if (date) {
-      const isoDate = date.toISOString();
-      filters.push(`created_at:>='${isoDate}' OR updated_at:>='${isoDate}'`);
+      const isoDate = date.toISOString()
+      filters.push(`created_at:>='${isoDate}' OR updated_at:>='${isoDate}'`)
     }
 
-    const queryString = filters.map((f) => `(${f})`).join(" AND ");
+    const queryString = filters.map(f => `(${f})`).join(` AND `)
 
     const query = `
       {
@@ -36,8 +36,8 @@ export class OrdersQuery extends BulkQuery {
             }
           }
         }
-      }`;
+      }`
 
-    return this.bulkOperationQuery(query);
+    return this.bulkOperationQuery(query)
   }
 }

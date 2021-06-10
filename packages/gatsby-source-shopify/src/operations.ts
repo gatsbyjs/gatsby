@@ -1,116 +1,129 @@
-import { NodeInput, SourceNodesArgs } from "gatsby";
-import { shiftLeft } from "shift-left";
-import { createClient } from "./client";
-import { ProductsQuery } from "./query-builders/products-query";
-import { CollectionsQuery } from "./query-builders/collections-query";
-import { OrdersQuery } from "./query-builders/orders-query";
+import { NodeInput, SourceNodesArgs } from "gatsby"
+import { shiftLeft } from "shift-left"
+import { createClient } from "./client"
+import { ProductsQuery } from "./query-builders/products-query"
+import { CollectionsQuery } from "./query-builders/collections-query"
+import { OrdersQuery } from "./query-builders/orders-query"
 import {
   collectionsProcessor,
   incrementalProductsProcessor,
-} from "./processors";
-import { OperationError } from "./errors";
+} from "./processors"
+import { OperationError } from "./errors"
 
 import {
   OPERATION_STATUS_QUERY,
   OPERATION_BY_ID,
   CANCEL_OPERATION,
-} from "./static-queries";
+} from "./static-queries"
 
-export interface ShopifyBulkOperation {
-  execute: () => Promise<BulkOperationRunQueryResponse>;
-  name: string;
+export interface IShopifyBulkOperation {
+  execute: () => Promise<BulkOperationRunQueryResponse>
+  name: string
   process: (
     objects: BulkResults,
     nodeBuilder: NodeBuilder,
-    gatsbyApi: SourceNodesArgs,
-    pluginOptions: ShopifyPluginOptions
-  ) => Promise<NodeInput>[];
+    _gatsbyApi: SourceNodesArgs,
+    _pluginOptions: ShopifyPluginOptions
+  ) => Array<Promise<NodeInput>>
 }
 
-const finishedStatuses = [`COMPLETED`, `FAILED`, `CANCELED`, `EXPIRED`];
-const failedStatuses = [`FAILED`, `CANCELED`];
+interface IOperations {
+  incrementalProducts: (date: Date) => IShopifyBulkOperation
+  incrementalOrders: (date: Date) => IShopifyBulkOperation
+  incrementalCollections: (date: Date) => IShopifyBulkOperation
+  createProductsOperation: IShopifyBulkOperation
+  createOrdersOperation: IShopifyBulkOperation
+  createCollectionsOperation: IShopifyBulkOperation
+  cancelOperationInProgress: Promise<void>
+}
 
-function defaultProcessor(objects: BulkResults, builder: NodeBuilder) {
-  return objects.map(builder.buildNode);
+const finishedStatuses = [`COMPLETED`, `FAILED`, `CANCELED`, `EXPIRED`]
+const failedStatuses = [`FAILED`, `CANCELED`]
+
+function defaultProcessor(
+  objects: BulkResults,
+  builder: NodeBuilder
+): Array<Promise<NodeInput>> {
+  return objects.map(builder.buildNode)
 }
 
 export function createOperations(
   options: ShopifyPluginOptions,
   { reporter }: SourceNodesArgs
-) {
-  const client = createClient(options);
+): IOperations {
+  const client = createClient(options)
 
   function currentOperation(): Promise<CurrentBulkOperationResponse> {
-    return client.request(OPERATION_STATUS_QUERY);
+    return client.request(OPERATION_STATUS_QUERY)
   }
 
   function createOperation(
     operationQuery: string,
     name: string,
-    process?: ShopifyBulkOperation["process"]
-  ): ShopifyBulkOperation {
+    process?: IShopifyBulkOperation["process"]
+  ): IShopifyBulkOperation {
     return {
-      execute: () =>
+      execute: (): Promise<BulkOperationRunQueryResponse> =>
         client.request<BulkOperationRunQueryResponse>(operationQuery),
       name,
       process: process || defaultProcessor,
-    };
-  }
-
-  async function finishLastOperation(): Promise<void> {
-    let { currentBulkOperation } = await currentOperation();
-    if (currentBulkOperation && currentBulkOperation.id) {
-      const timer = reporter.activityTimer(
-        `Waiting for operation ${currentBulkOperation.id} : ${currentBulkOperation.status}`
-      );
-      timer.start();
-
-      while (!finishedStatuses.includes(currentBulkOperation.status)) {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        currentBulkOperation = (await currentOperation()).currentBulkOperation;
-        timer.setStatus(
-          `Polling operation ${currentBulkOperation.id} : ${currentBulkOperation.status}`
-        );
-      }
-
-      timer.end();
     }
   }
 
-  async function cancelOperation(id: string) {
+  async function finishLastOperation(): Promise<void> {
+    let { currentBulkOperation } = await currentOperation()
+    if (currentBulkOperation && currentBulkOperation.id) {
+      const timer = reporter.activityTimer(
+        `Waiting for operation ${currentBulkOperation.id} : ${currentBulkOperation.status}`
+      )
+      timer.start()
+
+      while (!finishedStatuses.includes(currentBulkOperation.status)) {
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        currentBulkOperation = (await currentOperation()).currentBulkOperation
+        timer.setStatus(
+          `Polling operation ${currentBulkOperation.id} : ${currentBulkOperation.status}`
+        )
+      }
+
+      timer.end()
+    }
+  }
+
+  async function cancelOperation(id: string): Promise<any> {
     return client.request<BulkOperationCancelResponse>(CANCEL_OPERATION, {
       id,
-    });
+    })
   }
 
   async function cancelOperationInProgress(): Promise<void> {
-    let { currentBulkOperation: bulkOperation } = await currentOperation();
+    let { currentBulkOperation: bulkOperation } = await currentOperation()
     if (!bulkOperation) {
-      return;
+      return
     }
 
     const cancelTimer = reporter.activityTimer(
       `Canceling previous operation: ${bulkOperation.id}`
-    );
+    )
 
-    cancelTimer.start();
+    cancelTimer.start()
 
     if (bulkOperation.status === `RUNNING`) {
       cancelTimer.setStatus(
         `Canceling a currently running operation: ${bulkOperation.id}, this could take a few moments`
-      );
+      )
 
-      const { bulkOperationCancel } = await cancelOperation(bulkOperation.id);
+      const { bulkOperationCancel } = await cancelOperation(bulkOperation.id)
 
-      bulkOperation = bulkOperationCancel.bulkOperation;
+      bulkOperation = bulkOperationCancel.bulkOperation
 
       while (bulkOperation.status !== `CANCELED`) {
-        await new Promise((resolve) => setTimeout(resolve, 100));
-        const currentOp = await currentOperation();
-        bulkOperation = currentOp.currentBulkOperation;
+        await new Promise(resolve => setTimeout(resolve, 100))
+        const currentOp = await currentOperation()
+        bulkOperation = currentOp.currentBulkOperation
         cancelTimer.setStatus(
           `Waiting for operation to cancel: ${bulkOperation.id}, ${bulkOperation.status}`
-        );
+        )
       }
     } else {
       /**
@@ -119,15 +132,15 @@ export function createOperations(
        * to be officially finished before we start a new one.
        */
       while (!finishedStatuses.includes(bulkOperation.status)) {
-        await new Promise((resolve) => setTimeout(resolve, 100));
-        bulkOperation = (await currentOperation()).currentBulkOperation;
+        await new Promise(resolve => setTimeout(resolve, 100))
+        bulkOperation = (await currentOperation()).currentBulkOperation
         cancelTimer.setStatus(
           `Waiting for operation to cancel: ${bulkOperation.id}, ${bulkOperation.status}`
-        );
+        )
       }
     }
 
-    cancelTimer.end();
+    cancelTimer.end()
   }
 
   /* Maybe the interval should be adjustable, because users
@@ -142,81 +155,87 @@ export function createOperations(
     interval = 1000
   ): Promise<{ node: BulkOperationNode }> {
     let operation = await client.request<{
-      node: BulkOperationNode;
+      node: BulkOperationNode
     }>(OPERATION_BY_ID, {
       id: operationId,
-    });
+    })
 
     const completedTimer = reporter.activityTimer(
       `Waiting for bulk operation to complete`
-    );
+    )
 
-    completedTimer.start();
+    completedTimer.start()
 
-    while (true) {
+    let waitForOperation = true
+
+    while (waitForOperation) {
       if (failedStatuses.includes(operation.node.status)) {
-        completedTimer.end();
-        throw new OperationError(operation.node);
+        completedTimer.end()
+        waitForOperation = false
+        throw new OperationError(operation.node)
       }
 
-      if (operation.node.status === "COMPLETED") {
-        completedTimer.end();
-        return operation;
+      if (operation.node.status === `COMPLETED`) {
+        completedTimer.end()
+        waitForOperation = false
+        return operation
       }
 
-      await new Promise((resolve) => setTimeout(resolve, interval));
+      await new Promise(resolve => setTimeout(resolve, interval))
 
       operation = await client.request<{
-        node: BulkOperationNode;
+        node: BulkOperationNode
       }>(OPERATION_BY_ID, {
         id: operationId,
-      });
+      })
 
       completedTimer.setStatus(shiftLeft`
         Polling bulk operation: ${operation.node.id}
         Status: ${operation.node.status}
         Object count: ${operation.node.objectCount}
-      `);
+      `)
     }
+
+    throw new Error(`It should never reach this error`)
   }
 
   return {
-    incrementalProducts(date: Date) {
+    incrementalProducts(date: Date): IShopifyBulkOperation {
       return createOperation(
         new ProductsQuery(options).query(date),
-        "INCREMENTAL_PRODUCTS",
+        `INCREMENTAL_PRODUCTS`,
         incrementalProductsProcessor
-      );
+      )
     },
 
-    incrementalOrders(date: Date) {
+    incrementalOrders(date: Date): IShopifyBulkOperation {
       return createOperation(
         new OrdersQuery(options).query(date),
-        "INCREMENTAL_ORDERS"
-      );
+        `INCREMENTAL_ORDERS`
+      )
     },
 
-    incrementalCollections(date: Date) {
+    incrementalCollections(date: Date): IShopifyBulkOperation {
       return createOperation(
         new CollectionsQuery(options).query(date),
-        "INCREMENTAL_COLLECTIONS",
+        `INCREMENTAL_COLLECTIONS`,
         collectionsProcessor
-      );
+      )
     },
 
     createProductsOperation: createOperation(
       new ProductsQuery(options).query(),
-      "PRODUCTS"
+      `PRODUCTS`
     ),
 
     createOrdersOperation: createOperation(
       new OrdersQuery(options).query(),
-      "ORDERS"
+      `ORDERS`
     ),
 
     createCollectionsOperation: createOperation(
       new CollectionsQuery(options).query(),
-      "COLLECTIONS",
+      `COLLECTIONS`,
       collectionsProcessor
     ),
 
@@ -224,5 +243,5 @@ export function createOperations(
     cancelOperation,
     finishLastOperation,
     completedOperation,
-  };
+  }
 }

@@ -1,27 +1,27 @@
-import { NodeInput, SourceNodesArgs } from "gatsby";
-import { createRemoteFileNode } from "gatsby-source-filesystem";
+import { NodeInput, SourceNodesArgs } from "gatsby"
+import { createRemoteFileNode } from "gatsby-source-filesystem"
 
 // 'gid://shopify/Metafield/6936247730264'
-export const pattern = /^gid:\/\/shopify\/(\w+)\/(.+)$/;
+export const pattern = /^gid:\/\/shopify\/(\w+)\/(.+)$/
 
 export function createNodeId(
   shopifyId: string,
   gatsbyApi: SourceNodesArgs,
-  { typePrefix = "" }: ShopifyPluginOptions
-) {
-  return gatsbyApi.createNodeId(`${typePrefix}${shopifyId}`);
+  { typePrefix = `` }: ShopifyPluginOptions
+): string {
+  return gatsbyApi.createNodeId(`${typePrefix}${shopifyId}`)
 }
 
 function attachParentId(
   result: BulkResult,
   gatsbyApi: SourceNodesArgs,
   pluginOptions: ShopifyPluginOptions
-) {
+): void {
   if (result.__parentId) {
-    const [fullId, remoteType] = result.__parentId.match(pattern) || [];
-    const field = remoteType.charAt(0).toLowerCase() + remoteType.slice(1);
-    const idField = `${field}Id`;
-    result[idField] = createNodeId(fullId, gatsbyApi, pluginOptions);
+    const [fullId, remoteType] = result.__parentId.match(pattern) || []
+    const field = remoteType.charAt(0).toLowerCase() + remoteType.slice(1)
+    const idField = `${field}Id`
+    result[idField] = createNodeId(fullId, gatsbyApi, pluginOptions)
   }
 }
 
@@ -43,153 +43,152 @@ const downloadImageAndCreateFileNode = async (
     parentNodeId: nodeId,
     store,
     reporter,
-  });
+  })
 
-  return fileNode.id;
-};
+  return fileNode.id
+}
 
-interface ProcessorMap {
+interface IProcessorMap {
   [remoteType: string]: (
     node: NodeInput,
     gatsbyApi: SourceNodesArgs,
     pluginOptions: ShopifyPluginOptions
-  ) => Promise<void>;
+  ) => Promise<void>
 }
 
-interface ImageData {
-  id: string;
-  originalSrc: string;
-  localFile: string | undefined;
+interface IImageData {
+  id: string
+  originalSrc: string
+  localFile: string | undefined
 }
 
 async function processChildImage(
   node: NodeInput,
-  getImageData: (node: NodeInput) => ImageData | undefined,
+  getImageData: (node: NodeInput) => IImageData | undefined,
   gatsbyApi: SourceNodesArgs,
   pluginOptions: ShopifyPluginOptions
-) {
+): Promise<void> {
   if (pluginOptions.downloadImages) {
-    const image = getImageData(node);
+    const image = getImageData(node)
 
     if (image) {
-      const url = image.originalSrc;
+      const url = image.originalSrc
       const fileNodeId = await downloadImageAndCreateFileNode(
         {
           url,
           nodeId: node.id,
         },
         gatsbyApi
-      );
+      )
 
-      image.localFile = fileNodeId;
+      image.localFile = fileNodeId
     }
   }
 }
 
-export const processorMap: ProcessorMap = {
+export const processorMap: IProcessorMap = {
   LineItem: async (node, gatsbyApi, pluginOptions) => {
-    const lineItem = node;
+    const lineItem = node
     if (lineItem.product) {
       lineItem.productId = createNodeId(
         (lineItem.product as BulkResult).id,
         gatsbyApi,
         pluginOptions
-      );
-      delete lineItem.product;
+      )
+      delete lineItem.product
     }
   },
   ProductImage: async (node, gatsbyApi, options) => {
     if (options.downloadImages) {
-      const url = node.originalSrc as string;
+      const url = node.originalSrc as string
       const fileNodeId = await downloadImageAndCreateFileNode(
         {
           url,
           nodeId: node.id,
         },
         gatsbyApi
-      );
+      )
 
-      node.localFile = fileNodeId;
+      node.localFile = fileNodeId
     }
   },
-  Collection: async (node, gatsbyApi, options) => {
-    return processChildImage(
+  Collection: async (node, gatsbyApi, options) =>
+    processChildImage(
       node,
-      (node) => node.image as ImageData,
+      node => node.image as IImageData,
       gatsbyApi,
       options
-    );
-  },
+    ),
   Product: async (node, gatsbyApi, options) => {
     await processChildImage(
       node,
-      (node) => node.featuredImage as ImageData,
+      node => node.featuredImage as IImageData,
       gatsbyApi,
       options
-    );
+    )
     await processChildImage(
       node,
-      (node) => {
+      node => {
         const media = node.featuredMedia as
           | {
               preview?: {
-                image?: ImageData;
-              };
+                image?: IImageData
+              }
             }
-          | undefined;
+          | undefined
 
-        return media?.preview?.image;
+        return media?.preview?.image
       },
       gatsbyApi,
       options
-    );
+    )
   },
-  ProductVariant: async (node, gatsbyApi, options) => {
-    return processChildImage(
+  ProductVariant: async (node, gatsbyApi, options) =>
+    processChildImage(
       node,
-      (node) => node.image as ImageData,
+      node => node.image as IImageData,
       gatsbyApi,
       options
-    );
+    ),
+  Metafield: async (node, _gatsbyApi, { typePrefix = `` }) => {
+    const [, parentType] = (node.__parentId as string).match(pattern) || []
+    const internalType = `${typePrefix}Shopify${parentType}Metafield`
+    node.internal.type = internalType
   },
-  Metafield: async (node, _gatsbyApi, { typePrefix = "" }) => {
-    const [, parentType] = (node.__parentId as string).match(pattern) || [];
-    const internalType = `${typePrefix}Shopify${parentType}Metafield`;
-    node.internal.type = internalType;
-  },
-};
+}
 
 export function nodeBuilder(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: ShopifyPluginOptions
 ): NodeBuilder {
   return {
-    async buildNode(result: BulkResult) {
+    async buildNode(result: BulkResult): Promise<any> {
       if (!pattern.test(result.id)) {
         throw new Error(
           `Expected an ID in the format gid://shopify/<typename>/<id>`
-        );
+        )
       }
 
-      const [, remoteType] = result.id.match(pattern) || [];
+      const [, remoteType] = result.id.match(pattern) || []
 
-      const processor = processorMap[remoteType] || (() => Promise.resolve());
+      const processor =
+        processorMap[remoteType] || ((): Promise<void> => Promise.resolve())
 
-      attachParentId(result, gatsbyApi, pluginOptions);
+      attachParentId(result, gatsbyApi, pluginOptions)
 
       const node = {
         ...result,
         shopifyId: result.id,
         id: createNodeId(result.id, gatsbyApi, pluginOptions),
         internal: {
-          type: `${pluginOptions.typePrefix || ""}Shopify${remoteType}`,
+          type: `${pluginOptions.typePrefix || ``}Shopify${remoteType}`,
           contentDigest: gatsbyApi.createContentDigest(result),
         },
-      };
+      }
 
-      await processor(node, gatsbyApi, pluginOptions);
+      await processor(node, gatsbyApi, pluginOptions)
 
-      return node;
+      return node
     },
-  };
+  }
 }
