@@ -53,14 +53,14 @@ export const pageQuery = graphql`
       date
       formatted: date(formatString: "D.M.YYYY")
     }
-    dateEnglish: contentfulDate(
+    dateEnglish: contentfulContentTypeDate(
       sys: { id: { eq: "1ERWZvDiYELryAZEP1dmKG" }, locale: { eq: "en-US" } }
     ) {
       title
       date: dateLocalized
       formatted: dateLocalized(formatString: "D.M.YYYY - HH:mm:ss")
     }
-    dateGerman: contentfulDate(
+    dateGerman: contentfulContentTypeDate(
       sys: { id: { eq: "1ERWZvDiYELryAZEP1dmKG" }, locale: { eq: "de-DE" } }
     ) {
       title

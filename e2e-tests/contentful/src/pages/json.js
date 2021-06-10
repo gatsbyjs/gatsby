@@ -71,13 +71,13 @@ export const pageQuery = graphql`
     ) {
       json
     }
-    english: contentfulJson(
+    english: contentfulContentTypeJson(
       sys: { id: { eq: "7DvTBEPg5P6TRC7dI9zXuO" }, locale: { eq: "en-US" } }
     ) {
       title
       jsonLocalized
     }
-    german: contentfulJson(
+    german: contentfulContentTypeJson(
       sys: { id: { eq: "7DvTBEPg5P6TRC7dI9zXuO" }, locale: { eq: "de-DE" } }
     ) {
       title

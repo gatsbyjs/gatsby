@@ -1,4 +1,4 @@
-### Type definitions saved at 2021-06-10T13:26:49.703Z ###
+### Type definitions saved at 2021-06-10T16:02:04.333Z ###
 
 type File implements Node @dontInfer {
   sourceInstanceName: String!
@@ -125,7 +125,7 @@ type MarkdownWordCount {
   words: Int
 }
 
-type MarkdownRemark implements Node @childOf(mimeTypes: ["text/markdown", "text/x-markdown"], types: ["ContentfulNodeTypeText"]) @derivedTypes @dontInfer {
+type MarkdownRemark implements Node @childOf(mimeTypes: ["text/markdown", "text/x-markdown"], types: ["ContentfulText"]) @dontInfer {
   frontmatter: MarkdownRemarkFrontmatter
   excerpt: String
   rawMarkdownBody: String
@@ -135,12 +135,12 @@ type MarkdownRemarkFrontmatter {
   title: String
 }
 
-interface ContentfulInternalReference implements Node {
+interface ContentfulReference implements Node {
   id: ID!
-  sys: ContentfulInternalSys
+  sys: ContentfulSys
 }
 
-type ContentfulInternalSys {
+type ContentfulSys {
   type: String!
   id: String!
   spaceId: String!
@@ -152,14 +152,155 @@ type ContentfulInternalSys {
   locale: String!
 }
 
-type ContentfulContentType implements Node @derivedTypes @dontInfer {
+type ContentfulContentType implements Node @dontInfer {
   name: String!
   displayField: String!
   description: String!
-  sys: ContentfulContentTypeSys
 }
 
-type ContentfulContentTypeSys {
+interface ContentfulEntry implements Node {
+  id: ID!
+  sys: ContentfulSys
+}
+
+type ContentfulAsset implements ContentfulReference & Node @dontInfer {
+  sys: ContentfulSys
+  title: String
+  description: String
+  contentType: String
+  fileName: String
+  url: String
+  size: Int
+  width: Int
+  height: Int
+}
+
+type ContentfulRichTextAssets {
+  block: [ContentfulAsset]!
+  hyperlink: [ContentfulAsset]!
+}
+
+type ContentfulRichTextEntries {
+  inline: [ContentfulEntry]!
+  block: [ContentfulEntry]!
+  hyperlink: [ContentfulEntry]!
+}
+
+type ContentfulRichTextLinks {
+  assets: ContentfulRichTextAssets
+  entries: ContentfulRichTextEntries
+}
+
+type ContentfulRichText @dontInfer {
+  json: JSON
+  links: ContentfulRichTextLinks
+}
+
+type ContentfulLocation @dontInfer {
+  lat: Float!
+  lon: Float!
+}
+
+type ContentfulText implements Node @dontInfer {
+  raw: String!
+}
+
+type ContentfulContentTypeNumber implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+  sys: ContentfulSys
+  title: String
+  integer: Int
+  integerLocalized: Int
+  decimal: Float
+  decimalLocalized: Float
+}
+
+type ContentfulContentTypeText implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+  sys: ContentfulSys
+  title: String
+  short: String
+  shortLocalized: String
+  shortList: [String]
+  shortListLocalized: [String]
+  longPlain: ContentfulText @link(by: "id", from: "longPlain___NODE")
+  longMarkdown: ContentfulText @link(by: "id", from: "longMarkdown___NODE")
+  longLocalized: ContentfulText @link(by: "id", from: "longLocalized___NODE")
+}
+
+type ContentfulContentTypeMediaReference implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+  sys: ContentfulSys
+  title: String
+  one: ContentfulAsset @link(by: "id", from: "one___NODE")
+  oneLocalized: ContentfulAsset @link(by: "id", from: "oneLocalized___NODE")
+  many: [ContentfulAsset] @link(by: "id", from: "many___NODE")
+  manyLocalized: [ContentfulAsset] @link(by: "id", from: "manyLocalized___NODE")
+}
+
+type ContentfulContentTypeBoolean implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+  sys: ContentfulSys
+  title: String
+  boolean: Boolean
+  booleanLocalized: Boolean
+}
+
+type ContentfulContentTypeDate implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+  sys: ContentfulSys
+  title: String
+  date: Date @dateformat
+  dateTime: Date @dateformat
+  dateTimeTimezone: Date @dateformat
+  dateLocalized: Date @dateformat
+}
+
+type ContentfulContentTypeLocation implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+  sys: ContentfulSys
+  title: String
+  location: ContentfulLocation
+  locationLocalized: ContentfulLocation
+}
+
+type ContentfulContentTypeJson implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+  sys: ContentfulSys
+  title: String
+  json: JSON
+  jsonLocalized: JSON
+}
+
+type ContentfulContentTypeRichText implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+  sys: ContentfulSys
+  title: String
+  richText: ContentfulRichText
+  richTextLocalized: ContentfulRichText
+  richTextValidated: ContentfulRichText
+}
+
+type ContentfulContentTypeContentReference implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+  sys: ContentfulSys
+  title: String
+  one: ContentfulEntry @link(by: "id", from: "one___NODE")
+  oneLocalized: ContentfulEntry @link(by: "id", from: "oneLocalized___NODE")
+  many: [ContentfulEntry] @link(by: "id", from: "many___NODE")
+  manyLocalized: [ContentfulEntry] @link(by: "id", from: "manyLocalized___NODE")
+}
+
+type ContentfulContentTypeValidatedContentReference implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+  sys: ContentfulSys
+  title: String
+  oneItemSingleType: ContentfulEntry @link(by: "id", from: "oneItemSingleType___NODE")
+  oneItemManyTypes: ContentfulEntry @link(by: "id", from: "oneItemManyTypes___NODE")
+  oneItemAllTypes: ContentfulEntry @link(by: "id", from: "oneItemAllTypes___NODE")
+  multipleItemsSingleType: [ContentfulEntry] @link(by: "id", from: "multipleItemsSingleType___NODE")
+  multipleItemsManyTypes: [ContentfulEntry] @link(by: "id", from: "multipleItemsManyTypes___NODE")
+  multipleItemsAllTypes: [ContentfulEntry] @link(by: "id", from: "multipleItemsAllTypes___NODE")
+}
+
+type ContentfulContentTypeContentType implements Node @dontInfer {
+  name: String
+  displayField: String
+  description: String
+  sys: ContentfulContentTypeContentTypeSys
+}
+
+type ContentfulContentTypeContentTypeSys {
   type: String
   id: String
   locale: String
@@ -168,135 +309,4 @@ type ContentfulContentTypeSys {
   firstPublishedAt: Date @dateformat
   publishedAt: Date @dateformat
   publishedVersion: Int
-}
-
-interface ContentfulEntry implements Node {
-  id: ID!
-  sys: ContentfulInternalSys
-}
-
-type ContentfulAsset implements ContentfulInternalReference & Node @dontInfer {
-  file: ContentfulAssetFile
-  title: String
-  description: String
-  sys: ContentfulInternalSys
-}
-
-type ContentfulAssetFile {
-  url: String
-  details: ContentfulAssetFileDetails
-  fileName: String
-  contentType: String
-}
-
-type ContentfulAssetFileDetails {
-  size: Int
-  image: ContentfulAssetFileDetailsImage
-}
-
-type ContentfulAssetFileDetailsImage {
-  width: Int
-  height: Int
-}
-
-type ContentfulNodeTypeRichText @dontInfer {
-  raw: JSON
-  references: [ContentfulInternalReference]
-}
-
-type ContentfulNodeTypeLocation @dontInfer {
-  lat: Float!
-  lon: Float!
-}
-
-type ContentfulNodeTypeText implements Node @dontInfer {
-  raw: String!
-}
-
-type ContentfulNumber implements ContentfulInternalReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulInternalSys
-  title: String
-  integer: Int
-  integerLocalized: Int
-  decimal: Float
-  decimalLocalized: Float
-}
-
-type ContentfulText implements ContentfulInternalReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulInternalSys
-  title: String
-  short: String
-  shortLocalized: String
-  shortList: [String]
-  shortListLocalized: [String]
-  longPlain: ContentfulNodeTypeText @link(by: "id", from: "longPlain___NODE")
-  longMarkdown: ContentfulNodeTypeText @link(by: "id", from: "longMarkdown___NODE")
-  longLocalized: ContentfulNodeTypeText @link(by: "id", from: "longLocalized___NODE")
-}
-
-type ContentfulMediaReference implements ContentfulInternalReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulInternalSys
-  title: String
-  one: ContentfulAsset @link(by: "id", from: "one___NODE")
-  oneLocalized: ContentfulAsset @link(by: "id", from: "oneLocalized___NODE")
-  many: [ContentfulAsset] @link(by: "id", from: "many___NODE")
-  manyLocalized: [ContentfulAsset] @link(by: "id", from: "manyLocalized___NODE")
-}
-
-type ContentfulBoolean implements ContentfulInternalReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulInternalSys
-  title: String
-  boolean: Boolean
-  booleanLocalized: Boolean
-}
-
-type ContentfulDate implements ContentfulInternalReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulInternalSys
-  title: String
-  date: Date @dateformat
-  dateTime: Date @dateformat
-  dateTimeTimezone: Date @dateformat
-  dateLocalized: Date @dateformat
-}
-
-type ContentfulLocation implements ContentfulInternalReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulInternalSys
-  title: String
-  location: ContentfulNodeTypeLocation
-  locationLocalized: ContentfulNodeTypeLocation
-}
-
-type ContentfulJson implements ContentfulInternalReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulInternalSys
-  title: String
-  json: JSON
-  jsonLocalized: JSON
-}
-
-type ContentfulRichText implements ContentfulInternalReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulInternalSys
-  title: String
-  richText: ContentfulNodeTypeRichText
-  richTextLocalized: ContentfulNodeTypeRichText
-  richTextValidated: ContentfulNodeTypeRichText
-}
-
-type ContentfulContentReference implements ContentfulInternalReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulInternalSys
-  title: String
-  one: ContentfulEntry @link(by: "id", from: "one___NODE")
-  oneLocalized: ContentfulEntry @link(by: "id", from: "oneLocalized___NODE")
-  many: [ContentfulEntry] @link(by: "id", from: "many___NODE")
-  manyLocalized: [ContentfulEntry] @link(by: "id", from: "manyLocalized___NODE")
-}
-
-type ContentfulValidatedContentReference implements ContentfulInternalReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulInternalSys
-  title: String
-  oneItemSingleType: ContentfulEntry @link(by: "id", from: "oneItemSingleType___NODE")
-  oneItemManyTypes: ContentfulEntry @link(by: "id", from: "oneItemManyTypes___NODE")
-  oneItemAllTypes: ContentfulEntry @link(by: "id", from: "oneItemAllTypes___NODE")
-  multipleItemsSingleType: [ContentfulEntry] @link(by: "id", from: "multipleItemsSingleType___NODE")
-  multipleItemsManyTypes: [ContentfulEntry] @link(by: "id", from: "multipleItemsManyTypes___NODE")
-  multipleItemsAllTypes: [ContentfulEntry] @link(by: "id", from: "multipleItemsAllTypes___NODE")
 }
