@@ -168,7 +168,7 @@ describe(`worker (share-state)`, () => {
     `)
   })
 
-  it(`can set slices results into state and access it`, async () => {
+  it(`can set slices results into state and access page & static queries`, async () => {
     worker = createTestWorker()
     const staticQueryID = `1`
 
@@ -231,6 +231,49 @@ describe(`worker (share-state)`, () => {
         "id": "1",
         "name": "foo",
         "query": "I'm a static query",
+      }
+    `)
+  })
+
+  it(`can set slices results into state and access inference metadata`, async () => {
+    worker = createTestWorker()
+
+    store.dispatch({
+      type: `BUILD_TYPE_METADATA`,
+      payload: {
+        typeName: `Test`,
+        nodes: [
+          {
+            id: `1`,
+            parent: null,
+            children: [],
+            foo: `bar`,
+            internal: { type: `Test` },
+          },
+        ],
+      },
+    })
+
+    saveStateForWorkers([`inferenceMetadata`])
+
+    await worker.setInferenceMetadata()
+
+    const inf = await worker.getInferenceMetadata(`Test`)
+
+    expect(inf).toMatchInlineSnapshot(`
+      Object {
+        "dirty": true,
+        "fieldMap": Object {
+          "foo": Object {
+            "string": Object {
+              "example": "bar",
+              "first": "1",
+              "total": 1,
+            },
+          },
+        },
+        "ignoredFields": Object {},
+        "total": 1,
       }
     `)
   })

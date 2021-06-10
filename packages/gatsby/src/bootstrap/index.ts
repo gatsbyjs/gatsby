@@ -61,6 +61,10 @@ export async function bootstrap(
 
   await rebuildSchemaWithSitePage(context)
 
+  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    saveStateForWorkers([`inferenceMetadata`])
+  }
+
   await extractQueries(context)
 
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
