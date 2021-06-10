@@ -13,7 +13,7 @@ import {
   ICachedReduxState,
   IGatsbyNode,
   IGatsbyPage,
-  GatsbyStateSlices,
+  GatsbyStateKeys,
 } from "./types"
 import { sync as globSync } from "glob"
 import { createContentDigest } from "gatsby-core-utils"
@@ -38,7 +38,7 @@ function reduxWorkerSlicesPrefix(dir: string): string {
 }
 
 export function readFromCache(
-  slices?: Array<GatsbyStateSlices>
+  slices?: Array<GatsbyStateKeys>
 ): DeepPartial<ICachedReduxState> {
   // The cache is stored in two steps; the nodes and pages in chunks and the rest
   // First we revive the rest, then we inject the nodes and pages into that obj (if any)
@@ -123,7 +123,7 @@ export function guessSafeChunkSize(
 function prepareCacheFolder(
   targetDir: string,
   contents: DeepPartial<ICachedReduxState>,
-  slices?: Array<GatsbyStateSlices>
+  slices?: Array<GatsbyStateKeys>
 ): void {
   if (slices) {
     writeFileSync(
@@ -215,7 +215,7 @@ function safelyRenameToBak(reduxCacheFolder: string): string {
 
 export function writeToCache(
   contents: DeepPartial<ICachedReduxState>,
-  slices?: Array<GatsbyStateSlices>
+  slices?: Array<GatsbyStateKeys>
 ): void {
   // Note: this should be a transactional operation. So work in a tmp dir and
   // make sure the cache cannot be left in a corruptable state due to errors.

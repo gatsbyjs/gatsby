@@ -5,7 +5,7 @@ import {
   saveStateForWorkers,
   loadStateInWorker,
 } from "../../../redux"
-import { GatsbyStateSlices } from "../../../redux/types"
+import { GatsbyStateKeys } from "../../../redux/types"
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -75,8 +75,8 @@ describe(`worker (share-state)`, () => {
       },
     })
 
-    const slicesOne: Array<GatsbyStateSlices> = [`components`]
-    const slicesTwo: Array<GatsbyStateSlices> = [
+    const slicesOne: Array<GatsbyStateKeys> = [`components`]
+    const slicesTwo: Array<GatsbyStateKeys> = [
       `components`,
       `staticQueryComponents`,
     ]
@@ -139,7 +139,7 @@ describe(`worker (share-state)`, () => {
       },
     })
 
-    const slices: Array<GatsbyStateSlices> = []
+    const slices: Array<GatsbyStateKeys> = []
 
     saveStateForWorkers(slices)
     const result = loadStateInWorker(slices)
@@ -156,7 +156,7 @@ describe(`worker (share-state)`, () => {
       },
     })
 
-    const slices: Array<GatsbyStateSlices> = [`staticQueryComponents`]
+    const slices: Array<GatsbyStateKeys> = [`staticQueryComponents`]
 
     saveStateForWorkers(slices)
     const result = loadStateInWorker(slices)

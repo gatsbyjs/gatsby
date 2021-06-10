@@ -13,7 +13,7 @@ import { mett } from "../utils/mett"
 import thunk, { ThunkMiddleware } from "redux-thunk"
 import * as reducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
-import { IGatsbyState, ActionsUnion, GatsbyStateSlices } from "./types"
+import { IGatsbyState, ActionsUnion, GatsbyStateKeys } from "./types"
 
 // Create event emitter for actions
 export const emitter = mett()
@@ -126,7 +126,7 @@ export const saveState = (): void => {
   })
 }
 
-export const saveStateForWorkers = (slices: Array<GatsbyStateSlices>): void => {
+export const saveStateForWorkers = (slices: Array<GatsbyStateKeys>): void => {
   const state = store.getState()
   const contents = _.pick(state, slices)
 
@@ -134,7 +134,7 @@ export const saveStateForWorkers = (slices: Array<GatsbyStateSlices>): void => {
 }
 
 export const loadStateInWorker = (
-  slices: Array<GatsbyStateSlices>
+  slices: Array<GatsbyStateKeys>
 ): DeepPartial<IGatsbyState> => {
   try {
     return readFromCache(slices) as DeepPartial<IGatsbyState>

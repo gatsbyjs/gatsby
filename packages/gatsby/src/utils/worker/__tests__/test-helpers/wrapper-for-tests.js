@@ -2,6 +2,7 @@
 require(`@babel/register`)({
   extensions: [`.js`, `.ts`],
   configFile: require.resolve(`../../../../../babel.config.js`),
+  ignore: [/node_modules/],
 })
 
 module.exports = require(`./child-for-tests`)
