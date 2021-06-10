@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-preact",
   "description": "A Gatsby plugin which replaces React with Preact",
-  "version": "5.7.0",
+  "version": "5.7.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -15,7 +15,7 @@
     "@babel/cli": "^7.14.0",
     "@babel/core": "^7.14.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
-    "babel-preset-gatsby-package": "^1.7.0",
+    "babel-preset-gatsby-package": "^1.7.1",
     "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-preact#readme",
