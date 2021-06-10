@@ -40,6 +40,8 @@ const DEFAULT_OPTIONS = {
   blocks: [BLOCKS_REGEX],
 }
 
+// dummy comment
+
 /**
  * TODO: Find a way to PR all of this code that was lifted
  * from @mdx-js/mdx back into mdx with the modifications. We
