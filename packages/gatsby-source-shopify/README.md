@@ -23,7 +23,7 @@
 
 A scalable solution for sourcing data from Shopify.
 
-This plugin works by leveraging [Shopify's bulk operations API][bulk-operations], which allows us to process large amounts of data at once. This gives us a more resilient and reliable build process. It also enables incremental builds so that your site can build quickly when you change your data in Shopify.
+This plugin works by leveraging [Shopify's bulk operations API][bulk-operations], which allows it to process large amounts of data at once. This gives it a more resilient and reliable build process. It also enables incremental builds so that your site can build quickly when you change your data in Shopify.
 
 ## Getting started
 
@@ -33,15 +33,15 @@ This takes you through the minimal steps to see your Shopify data in your Gatsby
 
 Install this plugin to your Gatsby site.
 
-```
-npm i gatsby-source-shopify@latest gatsby-plugin-image
+```shell
+npm install gatsby-source-shopify
 ```
 
 ### Configure
 
-Add the plugin to your `gatsby-config.js`, e.g.
+Add the plugin to your `gatsby-config.js`:
 
-```js
+```js:title=gatsby-config.js
 require("dotenv").config()
 
 module.exports = {
@@ -71,11 +71,9 @@ For the Private app name enter `Gatsby` (the name does not really matter). Add t
 - `Read access` for `Product listings` if you want to use Shopify's Product Collections in your Gatsby site
 - `Read access` for `Orders` if you want to use order information in your Gatsby site
 
-**Note: Enabling Cart and Checkout features**
+#### Enabling Cart and Checkout features
 
 If you are planning on managing your cart within Gatsby you will also need to check the box next to `Allow this app to access your storefront data using the Storefront API` and make sure to check `Read and modify checkouts`. This source plugin does not require Shopify Storefront API access to work, however, this is needed to add items to a Shopify checkout before passing the user to Shopify's managed checkout workflow. See [Gatsby Starter Shopify](https://github.com/gatsbyjs/gatsby-starter-shopify) for an example.
-
-Click the Save button and then click Create app to create your Private Shopify App. From there you can copy the API Key and Password from the Private app page and add them to your environment file for `SHOPIFY_ADMIN_API_KEY` and `SHOPIFY_ADMIN_PASSWORD` respectively.
 
 ### Fire it up
 
@@ -138,7 +136,7 @@ We offer two options for displaying Shopify images in your Gatsby site. The defa
 
 This is the default behavior and is intended to be used in conjunction with [gatsby-plugin-image][gatsby-plugin-image]. In this case, querying for image data from your Gatsby site might look like this:
 
-```gql
+```graphql
 products: allShopifyProduct(
   sort: { fields: [publishedAt], order: ASC }
 ) {
@@ -195,11 +193,11 @@ function CartImage(storefrontProduct) {
 }
 ```
 
-### Download up front
+### Download images up front
 
 If you wish to download your images during the build, you can specify `downloadImages: true` as a plugin option:
 
-```js
+```js:title=gatsby-config.js
 require("dotenv").config()
 
 module.exports = {
@@ -220,7 +218,7 @@ module.exports = {
 
 This will make the build take longer but will make images appear on your page faster at runtime. If you use this option, you can query for your image data like this.
 
-```gql
+```graphql
 products: allShopifyProduct(
   sort: { fields: [publishedAt], order: ASC }
 ) {
@@ -257,8 +255,6 @@ function ProductListing(product) {
 ## Limitations
 
 The bulk API was chosen for resiliency, but it comes with some limitations. For a given store + app combination, only one bulk operation can be run at a time, so this plugin will wait for in-progress operations to complete. If your store contains a lot of data and there are multiple developers doing a clean build at the same time, they could be waiting on each other for a significant period of time.
-
-A possible workaround is to use a smaller test store for development so bulk operations finish faster and never compete with production builds.
 
 ## Development
 

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-shopify",
   "version": "5.0.0-rc.x",
-  "description": "",
+  "description": "Gatsby source plugin for building websites using Shopify as a data source.",
   "scripts": {
     "watch": "tsc-watch --outDir .",
     "build": "tsc --outDir .",
@@ -9,14 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gatsbyjs/gatsby-source-shopify.git"
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-source-shopify"
   },
   "author": "Sam Slotsky <sam.slotsky@gatsbyjs.com>, Daniel Lew <daniel.lew@gatsbyjs.com>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby-source-shopify/issues"
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby-source-shopify#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify#readme",
   "dependencies": {
     "gatsby-core-utils": "^2.8.0-next.0",
     "gatsby-source-filesystem": "^3.8.0-next.0",
