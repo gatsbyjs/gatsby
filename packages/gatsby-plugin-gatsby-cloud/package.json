@@ -26,8 +26,9 @@
     "babel-preset-gatsby-package": "^1.12.0-next.0",
     "cross-env": "^7.0.3",
     "jest": "^26.6.3",
-    "msw": "^0.33.2",
-    "node-fetch": "^2.6.1"
+    "msw": "^0.29.0",
+    "node-fetch": "^2.6.1",
+    "shx": "^0.3.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-gatsby-cloud#readme",
   "keywords": [
@@ -49,7 +50,7 @@
   },
   "sideEffects": false,
   "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\" && shx cp src/components/index.d.ts components/index.d.ts",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },

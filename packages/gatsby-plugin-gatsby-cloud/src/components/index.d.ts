@@ -1,5 +1,3 @@
-import React from "react"
-
 export declare module "gatsby-plugin-gatsby-cloud/components" {
   import React from "react"
 
