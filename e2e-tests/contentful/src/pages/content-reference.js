@@ -95,7 +95,7 @@ export default ContentReferencePage
 
 export const pageQuery = graphql`
   query ContentReferenceQuery {
-    default: allContentfulContentReference(
+    default: allContentfulContentTypeContentReference(
       sort: { fields: title }
       filter: {
         sys: { locale: { eq: "en-US" } }
@@ -112,39 +112,39 @@ export const pageQuery = graphql`
           sys {
             id
           }
-          ... on ContentfulText {
+          ... on ContentfulContentTypeText {
             title
             short
           }
-          ... on ContentfulNumber {
+          ... on ContentfulContentTypeNumber {
             title
             integer
           }
-          ... on ContentfulContentReference {
+          ... on ContentfulContentTypeContentReference {
             title
             one {
-              ... on ContentfulText {
+              ... on ContentfulContentTypeText {
                 title
                 short
               }
-              ... on ContentfulNumber {
+              ... on ContentfulContentTypeNumber {
                 title
                 integer
               }
-              ... on ContentfulContentReference {
+              ... on ContentfulContentTypeContentReference {
                 title
               }
             }
             many {
-              ... on ContentfulText {
+              ... on ContentfulContentTypeText {
                 title
                 short
               }
-              ... on ContentfulNumber {
+              ... on ContentfulContentTypeNumber {
                 title
                 integer
               }
-              ... on ContentfulContentReference {
+              ... on ContentfulContentTypeContentReference {
                 title
               }
             }
@@ -155,39 +155,39 @@ export const pageQuery = graphql`
           sys {
             id
           }
-          ... on ContentfulText {
+          ... on ContentfulContentTypeText {
             title
             short
           }
-          ... on ContentfulNumber {
+          ... on ContentfulContentTypeNumber {
             title
             integer
           }
-          ... on ContentfulContentReference {
+          ... on ContentfulContentTypeContentReference {
             title
             one {
-              ... on ContentfulText {
+              ... on ContentfulContentTypeText {
                 title
                 short
               }
-              ... on ContentfulNumber {
+              ... on ContentfulContentTypeNumber {
                 title
                 integer
               }
-              ... on ContentfulContentReference {
+              ... on ContentfulContentTypeContentReference {
                 title
               }
             }
             many {
-              ... on ContentfulText {
+              ... on ContentfulContentTypeText {
                 title
                 short
               }
-              ... on ContentfulNumber {
+              ... on ContentfulContentTypeNumber {
                 title
                 integer
               }
-              ... on ContentfulContentReference {
+              ... on ContentfulContentTypeContentReference {
                 title
               }
             }
@@ -195,7 +195,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    english: allContentfulContentReference(
+    english: allContentfulContentTypeContentReference(
       sort: { fields: title }
       filter: {
         sys: { locale: { eq: "en-US" } }
@@ -209,7 +209,7 @@ export const pageQuery = graphql`
         }
         oneLocalized {
           __typename
-          ... on ContentfulNumber {
+          ... on ContentfulContentTypeNumber {
             title
             decimal
             integer
@@ -217,12 +217,12 @@ export const pageQuery = graphql`
         }
         manyLocalized {
           __typename
-          ... on ContentfulNumber {
+          ... on ContentfulContentTypeNumber {
             title
             decimal
             integer
           }
-          ... on ContentfulText {
+          ... on ContentfulContentTypeText {
             title
             short
             longPlain {
@@ -232,7 +232,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    german: allContentfulContentReference(
+    german: allContentfulContentTypeContentReference(
       sort: { fields: title }
       filter: {
         sys: { locale: { eq: "de-DE" } }
@@ -246,7 +246,7 @@ export const pageQuery = graphql`
         }
         oneLocalized {
           __typename
-          ... on ContentfulNumber {
+          ... on ContentfulContentTypeNumber {
             title
             decimal
             integer
@@ -254,12 +254,12 @@ export const pageQuery = graphql`
         }
         manyLocalized {
           __typename
-          ... on ContentfulNumber {
+          ... on ContentfulContentTypeNumber {
             title
             decimal
             integer
           }
-          ... on ContentfulText {
+          ... on ContentfulContentTypeText {
             title
             short
             longPlain {

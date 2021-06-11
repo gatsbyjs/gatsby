@@ -49,25 +49,25 @@ export async function downloadContentfulAssets(gatsbyFunctions) {
   )
   bar.start()
   await distributeWorkload(
-    assetNodes.map(node => async () => {
+    assetNodes.map(assetNode => async () => {
       let fileNodeID
       const {
         sys: { id, locale },
-      } = node
+      } = assetNode
       const remoteDataCacheKey = `contentful-asset-${id}-${locale}`
       const cacheRemoteData = await cache.get(remoteDataCacheKey)
-      if (!node.file) {
+      if (!assetNode.url) {
         reporter.log(id, locale)
         reporter.warn(`The asset with id: ${id}, contains no file.`)
         return Promise.resolve()
       }
-      if (!node.file.url) {
+      if (!assetNode.url) {
         reporter.warn(
           `The asset with id: ${id} has a file but the file contains no url.`
         )
         return Promise.resolve()
       }
-      const url = createUrl(node.file.url)
+      const url = createUrl(assetNode.url)
 
       // Avoid downloading the asset again if it's been cached
       // Note: Contentful Assets do not provide useful metadata
@@ -97,10 +97,14 @@ export async function downloadContentfulAssets(gatsbyFunctions) {
       }
 
       if (fileNodeID) {
-        createNodeField({ node, name: `localFile`, value: fileNodeID })
+        createNodeField({
+          node: assetNode,
+          name: `localFile`,
+          value: fileNodeID,
+        })
       }
 
-      return node
+      return assetNode
     }),
     assetDownloadWorkers
   )
