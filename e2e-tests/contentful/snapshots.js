@@ -52,7 +52,7 @@ module.exports = {
       "1": "<div data-cy-id=\"rich-text-inline-entry-with-deep-reference-loop\">\n  <h2>Rich Text: Inline entry with deep reference loop</h2>\n  <h1>Inline entry with deep reference loop</h1>\n  <p>Should be rendered after this <span>[Inline-\n      <!-- -->ContentfulContentReference\n      <!-- -->] </span> and before that</p>\n  <p></p>\n  <p></p>\n  <hr>\n</div>"
     },
     "rich-text: Inline Entry With Reference Loop": {
-      "1": "<div data-cy-id=\"rich-text-inline-entry-with-reference-loop\">\n  <h2>Rich Text: Inline entry with reference loop</h2>\n  <h1>Inline entry with reference loop</h1>\n  <p>Should be rendered after this <span>[Inline-\n      <!-- -->ContentfulContentReference\n      <!-- -->] </span> and before that</p>\n  <p></p>\n  <p></p>\n  <hr>\n</div>"
+      "1": "<div data-cy-id=\"rich-text-inline-entry-with-reference-loop\">\n  <h2>Rich Text: Inline entry with reference loop</h2>\n  <h1>Inline entry with reference loop</h1>\n  <p>Should be rendered after this <span>[Inline-\n      <!-- -->ContentfulContentReference\n      <!-- -->] </span> and before that</p>\n  <p></p>\n  <p></p>\n  <hr>\n</div>",
     },
     "rich-text: Localized": {
       "1": "<div data-cy-id=\"english-rich-text-localized\">\n  <h2>Rich Text: Localized</h2>\n  <p>Rich Text in <strong data-cy-strong=\"true\">English</strong></p>\n  <hr>\n</div>",
