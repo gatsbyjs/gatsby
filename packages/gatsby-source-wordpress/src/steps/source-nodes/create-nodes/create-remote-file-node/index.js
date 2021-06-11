@@ -55,10 +55,16 @@ let totalJobs = 0
  * @param  {Reporter} [options.reporter]
  */
 
-const STALL_RETRY_LIMIT = process.env.GATSBY_STALL_RETRY_LIMIT || 3
-const STALL_TIMEOUT = process.env.GATSBY_STALL_TIMEOUT || 30000
+const STALL_RETRY_LIMIT = process.env.GATSBY_STALL_RETRY_LIMIT
+  ? parseInt(process.env.GATSBY_STALL_RETRY_LIMIT, 10)
+  : 3
+const STALL_TIMEOUT = process.env.GATSBY_STALL_TIMEOUT
+  ? parseInt(process.env.GATSBY_STALL_TIMEOUT, 10)
+  : 3
 
-const CONNECTION_TIMEOUT = process.env.GATSBY_CONNECTION_TIMEOUT || 30000
+const CONNECTION_TIMEOUT = process.env.GATSBY_CONNECTION_TIMEOUT
+  ? parseInt(process.env.GATSBY_CONNECTION_TIMEOUT, 10)
+  : 3
 
 /********************
  * Queue Management *
