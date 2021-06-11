@@ -1,6 +1,13 @@
 import { getRichTextEntityLinks } from "@contentful/rich-text-links"
+import { stripIndent } from "common-tags"
+import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
 
+import {
+  getGatsbyImageFieldConfig,
+  resolveGatsbyImageData,
+} from "./gatsby-plugin-image"
 import { makeTypeName } from "./normalize"
+import { ImageCropFocusType, ImageResizingBehavior } from "./schemes"
 
 // Contentful content type schemas
 const ContentfulDataTypes = new Map([
@@ -14,7 +21,7 @@ const ContentfulDataTypes = new Map([
     `Text`,
     field => {
       return {
-        type: `ContentfulNodeTypeText`,
+        type: `ContentfulText`,
         extensions: {
           link: { by: `id`, from: `${field.id}___NODE` },
         },
@@ -59,13 +66,13 @@ const ContentfulDataTypes = new Map([
   [
     `Location`,
     () => {
-      return { type: `ContentfulNodeTypeLocation` }
+      return { type: `ContentfulLocation` }
     },
   ],
   [
     `RichText`,
     () => {
-      return { type: `ContentfulNodeTypeRichText` }
+      return { type: `ContentfulRichText` }
     },
   ],
 ])
@@ -104,34 +111,19 @@ const translateFieldType = field => {
   return fieldType
 }
 
-function generateAssetTypes({ createTypes }) {
-  createTypes(`
-    type ContentfulAsset implements ContentfulInternalReference & Node {
-      sys: ContentfulInternalSys
-      id: ID!
-      title: String
-      description: String
-      contentType: String
-      fileName: String
-      url: String
-      size: Int
-      width: Int
-      height: Int
-    }
-  `)
-}
-
 export function generateSchema({
   createTypes,
   schema,
   pluginConfig,
   contentTypeItems,
+  cache,
+  actions,
 }) {
   // Generic Types
   createTypes(`
-    interface ContentfulInternalReference implements Node {
+    interface ContentfulReference implements Node {
       id: ID!
-      sys: ContentfulInternalSys
+      sys: ContentfulSys
     }
   `)
 
@@ -145,7 +137,7 @@ export function generateSchema({
   `)
 
   createTypes(`
-    type ContentfulInternalSys @dontInfer {
+    type ContentfulSys @dontInfer {
       type: String!
       id: String!
       spaceId: String!
@@ -161,12 +153,74 @@ export function generateSchema({
   createTypes(`
     interface ContentfulEntry implements Node @dontInfer {
       id: ID!
-      sys: ContentfulInternalSys
+      sys: ContentfulSys
     }
   `)
 
   // Assets
-  generateAssetTypes({ createTypes })
+  createTypes(
+    ...addRemoteFilePolyfillInterface(
+      schema.buildObjectType({
+        name: `ContentfulAsset`,
+        fields: {
+          contentful_id: { type: `String!` },
+          id: { type: `ID!` },
+          gatsbyImageData: getGatsbyImageFieldConfig(
+            async (...args) => resolveGatsbyImageData(...args, { cache }),
+            {
+              jpegProgressive: {
+                type: `Boolean`,
+                defaultValue: true,
+              },
+              resizingBehavior: {
+                type: ImageResizingBehavior,
+              },
+              cropFocus: {
+                type: ImageCropFocusType,
+              },
+              cornerRadius: {
+                type: `Int`,
+                defaultValue: 0,
+                description: stripIndent`
+                 Desired corner radius in pixels. Results in an image with rounded corners.
+                 Pass \`-1\` for a full circle/ellipse.`,
+              },
+              quality: {
+                type: `Int`,
+                defaultValue: 50,
+              },
+            }
+          ),
+          ...(pluginConfig.get(`downloadLocal`)
+            ? {
+                localFile: {
+                  type: `File`,
+                  extensions: {
+                    link: {
+                      from: `fields.localFile`,
+                    },
+                  },
+                },
+              }
+            : {}),
+          sys: { type: `ContentfulSys` },
+          title: { type: `String` },
+          description: { type: `String` },
+          contentType: { type: `String` },
+          fileName: { type: `String` },
+          url: { type: `String` },
+          size: { type: `Int` },
+          width: { type: `Int` },
+          height: { type: `Int` },
+        },
+        interfaces: [`ContentfulReference`, `Node`],
+      }),
+      {
+        schema,
+        actions,
+      }
+    )
+  )
 
   // Rich Text
   const makeRichTextLinksResolver =
@@ -203,7 +257,7 @@ export function generateSchema({
 
   createTypes(
     schema.buildObjectType({
-      name: `ContentfulNodeTypeRichTextAssets`,
+      name: `ContentfulRichTextAssets`,
       fields: {
         block: {
           type: `[ContentfulAsset]!`,
@@ -219,7 +273,7 @@ export function generateSchema({
 
   createTypes(
     schema.buildObjectType({
-      name: `ContentfulNodeTypeRichTextEntries`,
+      name: `ContentfulRichTextEntries`,
       fields: {
         inline: {
           type: `[ContentfulEntry]!`,
@@ -239,16 +293,16 @@ export function generateSchema({
 
   createTypes(
     schema.buildObjectType({
-      name: `ContentfulNodeTypeRichTextLinks`,
+      name: `ContentfulRichTextLinks`,
       fields: {
         assets: {
-          type: `ContentfulNodeTypeRichTextAssets`,
+          type: `ContentfulRichTextAssets`,
           resolve(source) {
             return source
           },
         },
         entries: {
-          type: `ContentfulNodeTypeRichTextEntries`,
+          type: `ContentfulRichTextEntries`,
           resolve(source) {
             return source
           },
@@ -259,7 +313,7 @@ export function generateSchema({
 
   createTypes(
     schema.buildObjectType({
-      name: `ContentfulNodeTypeRichText`,
+      name: `ContentfulRichText`,
       fields: {
         json: {
           type: `JSON`,
@@ -268,7 +322,7 @@ export function generateSchema({
           },
         },
         links: {
-          type: `ContentfulNodeTypeRichTextLinks`,
+          type: `ContentfulRichTextLinks`,
           resolve(source) {
             return source
           },
@@ -281,7 +335,7 @@ export function generateSchema({
   // Location
   createTypes(
     schema.buildObjectType({
-      name: `ContentfulNodeTypeLocation`,
+      name: `ContentfulLocation`,
       fields: {
         lat: { type: `Float!` },
         lon: { type: `Float!` },
@@ -296,7 +350,7 @@ export function generateSchema({
   // @todo Is there a way to have this as string and let transformer-remark replace it with an object?
   createTypes(
     schema.buildObjectType({
-      name: `ContentfulNodeTypeText`,
+      name: `ContentfulText`,
       fields: {
         raw: `String!`,
       },
@@ -322,22 +376,18 @@ export function generateSchema({
         ? contentTypeItem.name
         : contentTypeItem.sys.id
 
-      createTypes(
-        schema.buildObjectType({
-          name: makeTypeName(type),
-          fields: {
-            id: { type: `ID!` },
-            sys: { type: `ContentfulInternalSys` },
-            ...fields,
-          },
-          interfaces: [
-            `ContentfulInternalReference`,
-            `ContentfulEntry`,
-            `Node`,
-          ],
-          extensions: { dontInfer: {} },
-        })
-      )
+      const contentTypeType = {
+        name: makeTypeName(type),
+        fields: {
+          id: { type: `ID!` },
+          sys: { type: `ContentfulSys` },
+          ...fields,
+        },
+        interfaces: [`ContentfulReference`, `ContentfulEntry`, `Node`],
+        extensions: { dontInfer: {} },
+      }
+
+      createTypes(schema.buildObjectType(contentTypeType))
     } catch (err) {
       err.message = `Unable to create schema for Contentful Content Type ${
         contentTypeItem.name || contentTypeItem.sys.id

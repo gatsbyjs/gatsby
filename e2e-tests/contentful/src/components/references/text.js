@@ -1,5 +1,5 @@
 import React from "react"
 
-export const ContentfulText = ({ short, longPlain }) => (
-  <p data-cy-id="text">[ContentfulText] {short || longPlain?.raw}</p>
+export const ContentfulContentTypeText = ({ short, longPlain }) => (
+  <p data-cy-id="text">[ContentfulContentTypeText] {short || longPlain?.raw}</p>
 )

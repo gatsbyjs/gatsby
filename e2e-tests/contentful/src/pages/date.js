@@ -32,31 +32,35 @@ export default DatePage
 
 export const pageQuery = graphql`
   query DateQuery {
-    dateTime: contentfulDate(sys: { id: { eq: "38akBjGb3T1t4AjB87wQjo" } }) {
+    dateTime: contentfulContentTypeDate(
+      sys: { id: { eq: "38akBjGb3T1t4AjB87wQjo" } }
+    ) {
       title
       date: dateTime
       formatted: dateTime(formatString: "D.M.YYYY - hh:mm")
     }
-    dateTimeTimezone: contentfulDate(
+    dateTimeTimezone: contentfulContentTypeDate(
       sys: { id: { eq: "6dZ8pK4tFWZDZPHgSC0tNS" } }
     ) {
       title
       date: dateTimeTimezone
       formatted: dateTimeTimezone(formatString: "D.M.YYYY - hh:mm (z)")
     }
-    date: contentfulDate(sys: { id: { eq: "5FuULz0jl0rKoKUKp2rshf" } }) {
+    date: contentfulContentTypeDate(
+      sys: { id: { eq: "5FuULz0jl0rKoKUKp2rshf" } }
+    ) {
       title
       date
       formatted: date(formatString: "D.M.YYYY")
     }
-    dateEnglish: contentfulDate(
+    dateEnglish: contentfulContentTypeDate(
       sys: { id: { eq: "1ERWZvDiYELryAZEP1dmKG" }, locale: { eq: "en-US" } }
     ) {
       title
       date: dateLocalized
       formatted: dateLocalized(formatString: "D.M.YYYY - HH:mm:ss")
     }
-    dateGerman: contentfulDate(
+    dateGerman: contentfulContentTypeDate(
       sys: { id: { eq: "1ERWZvDiYELryAZEP1dmKG" }, locale: { eq: "de-DE" } }
     ) {
       title
