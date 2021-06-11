@@ -61,19 +61,23 @@ export default JSONPage
 
 export const pageQuery = graphql`
   query JSONQuery {
-    simple: contentfulJson(sys: { id: { eq: "2r6tNjP8brkyy5yLR39hhh" } }) {
+    simple: contentfulContentTypeJson(
+      sys: { id: { eq: "2r6tNjP8brkyy5yLR39hhh" } }
+    ) {
       json
     }
-    complex: contentfulJson(sys: { id: { eq: "2y71nV0cpW9vzTmJybq571" } }) {
+    complex: contentfulContentTypeJson(
+      sys: { id: { eq: "2y71nV0cpW9vzTmJybq571" } }
+    ) {
       json
     }
-    english: contentfulJson(
+    english: contentfulContentTypeJson(
       sys: { id: { eq: "7DvTBEPg5P6TRC7dI9zXuO" }, locale: { eq: "en-US" } }
     ) {
       title
       jsonLocalized
     }
-    german: contentfulJson(
+    german: contentfulContentTypeJson(
       sys: { id: { eq: "7DvTBEPg5P6TRC7dI9zXuO" }, locale: { eq: "de-DE" } }
     ) {
       title

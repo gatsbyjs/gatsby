@@ -86,7 +86,6 @@ describe(`gatsby-node`, () => {
         getCache,
         reporter,
         parentSpan,
-        schema,
       },
       pluginOptions
     )

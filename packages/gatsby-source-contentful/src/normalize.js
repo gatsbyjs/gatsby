@@ -3,7 +3,7 @@ import _ from "lodash"
 import { getGatsbyVersion } from "gatsby-core-utils"
 import { lt, prerelease } from "semver"
 
-const typePrefix = `Contentful`
+const typePrefix = `ContentfulContentType`
 export const makeTypeName = type =>
   _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
@@ -188,7 +188,7 @@ function prepareTextNode(id, node, key, text) {
     parent: node.id,
     raw: str,
     internal: {
-      type: `ContentfulNodeTypeText`,
+      type: `ContentfulText`,
       mediaType: `text/markdown`,
       content: str,
       // entryItem.sys.publishedAt is source of truth from contentful
@@ -540,7 +540,7 @@ export const createNodesForContentType = ({
         }
 
         // Link tags
-        if (pluginConfig.get(`enableTags`)) {
+        if (pluginConfig.get(`enableTags`) && entryItem.metadata.tags.length) {
           entryNode.metadata = {
             tags___NODE: entryItem.metadata.tags.map(tag =>
               createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
@@ -592,7 +592,7 @@ export const createAssetNodes = ({
       parent: null,
       children: [],
       internal: {
-        type: `${makeTypeName(`Asset`)}`,
+        type: `ContentfulAsset`,
         // The content of an asset is guaranteed to be updated if and only if the .sys.updatedAt field changed
         contentDigest: assetItem.sys.updatedAt,
       },
