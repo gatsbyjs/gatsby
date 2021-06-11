@@ -49,9 +49,9 @@
   },
   "sideEffects": false,
   "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\" --copy-files \"src/components/index.d.ts\"",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --copy-files \"src/components/index.d.ts\""
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
     "node": ">=12.13.0"
