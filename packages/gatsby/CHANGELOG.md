@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.8.0-next.0...gatsby@3.8.0-next.1) (2021-06-10)
+
+### Bug Fixes
+
+- **gatsby:** do not add global id to style tag ([#31813](https://github.com/gatsbyjs/gatsby/issues/31813)) ([132d829](https://github.com/gatsbyjs/gatsby/commit/132d829e01b3b2ca50bfbe4533ae47b57b55a50c))
+- **gatsby:** do not use domready package ([#31368](https://github.com/gatsbyjs/gatsby/issues/31368)) ([7a9a50c](https://github.com/gatsbyjs/gatsby/commit/7a9a50c9492c1c523daa64cf891b3de82635a632))
+- **gatsby:** fix signature for latest experimental version of react-dom ([#31750](https://github.com/gatsbyjs/gatsby/issues/31750)) ([087cdd5](https://github.com/gatsbyjs/gatsby/commit/087cdd590929e1e29f5a658ffb3910292a8ca948))
+
+### Features
+
+- **gatsby:** remove concurrent-features flag and depend on export ([#31818](https://github.com/gatsbyjs/gatsby/issues/31818)) ([34b6d47](https://github.com/gatsbyjs/gatsby/commit/34b6d476f84c647f82c0b7e641caf4f64d48491a))
+- **gatsby:** switch from arrays to node iterators ([#31718](https://github.com/gatsbyjs/gatsby/issues/31718)) ([5278e1e](https://github.com/gatsbyjs/gatsby/commit/5278e1e3a5148fb17b65310e6333d457db7e8446))
+- **gatsby:** Turn on Functions experiment for everybody ([#31807](https://github.com/gatsbyjs/gatsby/issues/31807)) ([a485415](https://github.com/gatsbyjs/gatsby/commit/a4854150cb2d10501e0bafbbb86753c7905ff45f))
+
 # [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.7.0-next.2...gatsby@3.8.0-next.0) (2021-06-03)
 
 ### Bug Fixes
