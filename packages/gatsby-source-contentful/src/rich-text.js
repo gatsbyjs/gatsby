@@ -17,27 +17,27 @@ exports.renderRichText = renderRichText
  */
 function generateLinkMaps(links) {
   const assetBlockMap = new Map()
-  for (const asset of links.assets.block || []) {
+  for (const asset of links?.assets.block || []) {
     assetBlockMap.set(asset.sys.id, asset)
   }
 
   const assetHyperlinkMap = new Map()
-  for (const asset of links.assets.hyperlink || []) {
+  for (const asset of links?.assets.hyperlink || []) {
     assetHyperlinkMap.set(asset.sys.id, asset)
   }
 
   const entryBlockMap = new Map()
-  for (const entry of links.entries.block || []) {
+  for (const entry of links?.entries.block || []) {
     entryBlockMap.set(entry.sys.id, entry)
   }
 
   const entryInlineMap = new Map()
-  for (const entry of links.entries.inline || []) {
+  for (const entry of links?.entries.inline || []) {
     entryInlineMap.set(entry.sys.id, entry)
   }
 
   const entryHyperlinkMap = new Map()
-  for (const entry of links.entries.hyperlink || []) {
+  for (const entry of links?.entries.hyperlink || []) {
     entryHyperlinkMap.set(entry.sys.id, entry)
   }
 
