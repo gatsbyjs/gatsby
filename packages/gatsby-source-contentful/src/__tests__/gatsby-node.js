@@ -748,38 +748,4 @@ describe(`gatsby-node`, () => {
       })
     )
   })
-
-  it(`panics when response contains restricted content types`, async () => {
-    cache.get.mockClear()
-    cache.set.mockClear()
-    fetch.mockImplementationOnce(restrictedContentTypeFixture.initialSync)
-
-    const mockPanicReporter = {
-      ...reporter,
-      panic: jest.fn(),
-    }
-
-    await gatsbyNode.sourceNodes(
-      {
-        actions,
-        store,
-        getNodes,
-        getNode,
-        reporter: mockPanicReporter,
-        createNodeId,
-        cache,
-        getCache,
-        schema,
-      },
-      pluginOptions
-    )
-
-    expect(mockPanicReporter.panic).toBeCalledWith(
-      expect.objectContaining({
-        context: {
-          sourceMessage: `Restricted ContentType name found. The name "reference" is not allowed.`,
-        },
-      })
-    )
-  })
 })
