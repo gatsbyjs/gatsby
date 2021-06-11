@@ -53,7 +53,7 @@ export default NumberPage
 
 export const pageQuery = graphql`
   query NumberQuery {
-    default: allContentfulNumber(
+    default: allContentfulContentTypeNumber(
       sort: { fields: sys___id }
       filter: {
         title: { glob: "!*Localized*" }
@@ -66,7 +66,7 @@ export const pageQuery = graphql`
         decimal
       }
     }
-    english: allContentfulNumber(
+    english: allContentfulContentTypeNumber(
       sort: { fields: sys___id }
       filter: {
         title: { glob: "*Localized*" }
@@ -79,7 +79,7 @@ export const pageQuery = graphql`
         decimalLocalized
       }
     }
-    german: allContentfulNumber(
+    german: allContentfulContentTypeNumber(
       sort: { fields: sys___id }
       filter: {
         title: { glob: "*Localized*" }

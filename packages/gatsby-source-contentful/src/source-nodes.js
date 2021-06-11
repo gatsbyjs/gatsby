@@ -5,7 +5,6 @@ import _ from "lodash"
 
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
-import { generateSchema } from "./generate-schema"
 import {
   buildEntryList,
   buildForeignReferenceMap,
@@ -52,17 +51,11 @@ export async function sourceNodes(
     getCache,
     reporter,
     parentSpan,
-    schema,
   },
   pluginOptions
 ) {
-  const {
-    createNode,
-    touchNode,
-    deleteNode,
-    unstable_createNodeManifest,
-    createTypes,
-  } = actions
+  const { createNode, touchNode, deleteNode, unstable_createNodeManifest } =
+    actions
   const online = await isOnline()
 
   if (
@@ -238,9 +231,6 @@ export async function sourceNodes(
     }
   )
   processingActivity.start()
-
-  // Generate schemas based on Contentful content model
-  generateSchema({ createTypes, schema, pluginConfig, contentTypeItems })
 
   // Store a raw and unresolved copy of the data for caching
   const mergedSyncDataRaw = _.cloneDeep(mergedSyncData)

@@ -38,8 +38,14 @@ const fixtures = [
     fields: {
       title: { "en-US": `TundraUS`, fr: `TundraFR` },
       file: {
-        "en-US": { url: `//images.ctfassets.net/testing/us-image.jpeg` },
-        fr: { url: `//images.ctfassets.net/testing/fr-image.jpg` },
+        "en-US": {
+          url: `//images.ctfassets.net/testing/us-image.jpeg`,
+          details: { size: 123, image: { width: 123, height: 123 } },
+        },
+        fr: {
+          url: `//images.ctfassets.net/testing/fr-image.jpg`,
+          details: { size: 123, image: { width: 123, height: 123 } },
+        },
       },
     },
     sys: {

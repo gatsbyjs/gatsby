@@ -623,25 +623,4 @@ describe(`gatsby-node`, () => {
       })
     )
   })
-
-  it(`panics when response contains restricted content types`, async () => {
-    // @ts-ignore
-    fetchContent.mockImplementationOnce(
-      restrictedContentTypeFixture.initialSync
-    )
-    // @ts-ignore
-    fetchContentTypes.mockImplementationOnce(
-      restrictedContentTypeFixture.contentTypeItems
-    )
-
-    await simulateGatsbyBuild()
-
-    expect(reporter.panic).toBeCalledWith(
-      expect.objectContaining({
-        context: {
-          sourceMessage: `Restricted ContentType name found. The name "reference" is not allowed.`,
-        },
-      })
-    )
-  })
 })

@@ -11,7 +11,7 @@ Object {
   "internal": Object {
     "contentDigest": "2020-06-03T14:22:37.720Z",
     "owner": "gatsby-source-contentful",
-    "type": "ContentfulBlogPost",
+    "type": "ContentfulContentTypeBlogPost",
   },
   "parent": "Blog Post",
   "publishDate": "2020-04-01T00:00+02:00",
@@ -49,7 +49,7 @@ Object {
   "internal": Object {
     "contentDigest": "2020-06-03T14:17:31.246Z",
     "owner": "gatsby-source-contentful",
-    "type": "ContentfulPerson",
+    "type": "ContentfulContentTypePerson",
   },
   "name": "John Doe",
   "parent": "Person",
@@ -82,7 +82,7 @@ Object {
   "internal": Object {
     "contentDigest": "2020-06-03T14:22:37.720Z",
     "owner": "gatsby-source-contentful",
-    "type": "ContentfulBlogPost",
+    "type": "ContentfulContentTypeBlogPost",
   },
   "parent": "Blog Post",
   "publishDate": "2020-04-01T00:00+02:00",
@@ -120,7 +120,7 @@ Object {
   "internal": Object {
     "contentDigest": "2020-06-03T14:17:31.246Z",
     "owner": "gatsby-source-contentful",
-    "type": "ContentfulPerson",
+    "type": "ContentfulContentTypePerson",
   },
   "name": "John Doe",
   "parent": "Person",
@@ -159,7 +159,7 @@ Object {
   "internal": Object {
     "contentDigest": "2020-06-03T14:17:31.246Z",
     "owner": "gatsby-source-contentful",
-    "type": "ContentfulPerson",
+    "type": "ContentfulContentTypePerson",
   },
   "name": "John Doe",
   "parent": "Person",
@@ -198,7 +198,7 @@ Object {
   "internal": Object {
     "contentDigest": "2020-06-03T14:17:31.246Z",
     "owner": "gatsby-source-contentful",
-    "type": "ContentfulPerson",
+    "type": "ContentfulContentTypePerson",
   },
   "name": "John Doe",
   "parent": "Person",
@@ -231,7 +231,7 @@ Object {
   "internal": Object {
     "contentDigest": "2020-06-03T14:27:24.359Z",
     "owner": "gatsby-source-contentful",
-    "type": "ContentfulBlogPost",
+    "type": "ContentfulContentTypeBlogPost",
   },
   "parent": "Blog Post",
   "publishDate": "2020-05-15T00:00+02:00",
@@ -269,7 +269,7 @@ Object {
   "internal": Object {
     "contentDigest": "2020-06-03T14:17:31.246Z",
     "owner": "gatsby-source-contentful",
-    "type": "ContentfulPerson",
+    "type": "ContentfulContentTypePerson",
   },
   "name": "John Doe",
   "parent": "Person",
@@ -302,7 +302,7 @@ Object {
   "internal": Object {
     "contentDigest": "2020-06-03T14:27:24.359Z",
     "owner": "gatsby-source-contentful",
-    "type": "ContentfulBlogPost",
+    "type": "ContentfulContentTypeBlogPost",
   },
   "parent": "Blog Post",
   "publishDate": "2020-05-15T00:00+02:00",
@@ -340,7 +340,7 @@ Object {
   "internal": Object {
     "contentDigest": "2020-06-03T14:17:31.246Z",
     "owner": "gatsby-source-contentful",
-    "type": "ContentfulPerson",
+    "type": "ContentfulContentTypePerson",
   },
   "name": "John Doe",
   "parent": "Person",

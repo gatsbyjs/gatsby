@@ -112,7 +112,7 @@ export default MediaReferencePage
 
 export const pageQuery = graphql`
   query MediaReferenceQuery {
-    default: allContentfulMediaReference(
+    default: allContentfulContentTypeMediaReference(
       sort: { fields: title }
       filter: {
         title: { glob: "!*Localized*" }
@@ -132,7 +132,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    english: allContentfulMediaReference(
+    english: allContentfulContentTypeMediaReference(
       sort: { fields: title }
       filter: {
         title: { glob: "*Localized*" }
@@ -158,7 +158,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    german: allContentfulMediaReference(
+    german: allContentfulContentTypeMediaReference(
       sort: { fields: title }
       filter: {
         title: { glob: "*Localized*" }
