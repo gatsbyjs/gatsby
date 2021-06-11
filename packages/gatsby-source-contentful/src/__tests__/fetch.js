@@ -1,11 +1,3 @@
-/**
- * @jest-environment node
- */
-
-import nock from "nock"
-
-nock.disableNetConnect()
-
 // disable output coloring for tests
 process.env.FORCE_COLOR = 0
 
@@ -37,6 +29,12 @@ const mockClient = {
     }
   }),
   getContentTypes: jest.fn(async () => {
+    return {
+      items: [],
+      total: 0,
+    }
+  }),
+  getTags: jest.fn(async () => {
     return {
       items: [],
       total: 0,
@@ -114,7 +112,6 @@ beforeEach(() => {
   mockClient.getLocales.mockClear()
   formatPluginOptionsForCLI.mockClear()
   contentful.createClient.mockClear()
-  nock.cleanAll()
 })
 
 afterAll(() => {
@@ -122,11 +119,6 @@ afterAll(() => {
 })
 
 it(`calls contentful.createClient with expected params`, async () => {
-  const scope = nock(`https://${options.host}`)
-    .get(`/spaces/rocybtov1ozk/environments/env/tags`)
-    .reply(200, {
-      items: [],
-    })
   await fetchData({ pluginConfig, reporter })
   expect(reporter.panic).not.toBeCalled()
   expect(contentful.createClient).toBeCalledWith(
@@ -138,15 +130,9 @@ it(`calls contentful.createClient with expected params`, async () => {
       proxy: proxyOption,
     })
   )
-  expect(scope.isDone()).toBeTruthy()
 })
 
 it(`calls contentful.createClient with expected params and default fallbacks`, async () => {
-  const scope = nock(`https://cdn.contentful.com`)
-    .get(`/spaces/rocybtov1ozk/environments/master/tags`)
-    .reply(200, {
-      items: [],
-    })
   await fetchData({
     pluginConfig: createPluginConfig({
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
@@ -164,15 +150,9 @@ it(`calls contentful.createClient with expected params and default fallbacks`, a
       space: `rocybtov1ozk`,
     })
   )
-  expect(scope.isDone()).toBeTruthy()
 })
 
 it(`calls contentful.getContentTypes with default page limit`, async () => {
-  const scope = nock(`https://cdn.contentful.com`)
-    .get(`/spaces/rocybtov1ozk/environments/master/tags`)
-    .reply(200, {
-      items: [],
-    })
   await fetchData({
     pluginConfig: createPluginConfig({
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
@@ -187,15 +167,9 @@ it(`calls contentful.getContentTypes with default page limit`, async () => {
     order: `sys.createdAt`,
     skip: 0,
   })
-  expect(scope.isDone()).toBeTruthy()
 })
 
 it(`calls contentful.getContentTypes with custom plugin option page limit`, async () => {
-  const scope = nock(`https://cdn.contentful.com`)
-    .get(`/spaces/rocybtov1ozk/environments/master/tags`)
-    .reply(200, {
-      items: [],
-    })
   await fetchData({
     pluginConfig: createPluginConfig({
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
@@ -211,21 +185,9 @@ it(`calls contentful.getContentTypes with custom plugin option page limit`, asyn
     order: `sys.createdAt`,
     skip: 0,
   })
-  expect(scope.isDone()).toBeTruthy()
 })
 
 describe(`Displays troubleshooting tips and detailed plugin options on contentful client error`, () => {
-  beforeEach(() => {
-    nock(`https://${options.host}`)
-      .get(`/spaces/rocybtov1ozk/environments/env/tags`)
-      .reply(200, {
-        items: [],
-      })
-      .get(`/spaces/rocybtov1ozk/environments/master/tags`)
-      .reply(200, {
-        items: [],
-      })
-  })
   it(`Generic fallback error`, async () => {
     mockClient.getLocales.mockImplementation(() => {
       throw new Error(`error`)
