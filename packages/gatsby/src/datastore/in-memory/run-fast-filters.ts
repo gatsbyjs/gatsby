@@ -1,22 +1,22 @@
 import { IGatsbyNode } from "../../redux/types"
 import { GatsbyGraphQLType } from "../../.."
-import { prepareRegex } from "../../utils/prepare-regex"
-import { makeRe } from "micromatch"
 import { getValueAt } from "../../utils/get-value-at"
 import _ from "lodash"
 import {
   DbQuery,
   IDbQueryQuery,
   IDbQueryElemMatch,
+  IInputQuery,
+  FilterValueNullable,
   objectToDottedField,
   createDbQueriesFromObject,
   prefixResolvedFields,
+  prepareQueryArgs,
 } from "../common/query"
 import {
   FilterOp,
   FilterCacheKey,
   FiltersCache,
-  FilterValueNullable,
   ensureEmptyFilterCache,
   ensureIndexByQuery,
   ensureIndexByElemMatch,
@@ -26,18 +26,7 @@ import {
 } from "./indexing"
 import { IGraphQLRunnerStats } from "../../query/types"
 
-// The value is an object with arbitrary keys that are either filter values or,
-// recursively, an object with the same struct. Ie. `{a: {a: {a: 2}}}`
-interface IInputQuery {
-  [key: string]: FilterValueNullable | IInputQuery
-}
-// Similar to IInputQuery except the comparator leaf nodes will have their
-// key prefixed with `$` and their value, in some cases, normalized.
-interface IPreparedQueryArg {
-  [key: string]: FilterValueNullable | IPreparedQueryArg
-}
-
-interface IRunFilterArg {
+export interface IRunFilterArg {
   gqlType: GatsbyGraphQLType
   queryArgs: {
     filter: Array<IInputQuery> | undefined
@@ -81,37 +70,6 @@ function createFilterCacheKey(
 
   // Note: the separators (`,` and `/`) are arbitrary but must be different
   return typeNames.join(`,`) + `/` + paths.join(`,`) + `/` + comparator
-}
-
-function prepareQueryArgs(
-  filterFields: Array<IInputQuery> | IInputQuery = {}
-): IPreparedQueryArg {
-  const filters = {}
-  Object.keys(filterFields).forEach(key => {
-    const value = filterFields[key]
-    if (_.isPlainObject(value)) {
-      filters[key === `elemMatch` ? `$elemMatch` : key] = prepareQueryArgs(
-        value as IInputQuery
-      )
-    } else {
-      switch (key) {
-        case `regex`:
-          if (typeof value !== `string`) {
-            throw new Error(
-              `The $regex comparator is expecting the regex as a string, not an actual regex or anything else`
-            )
-          }
-          filters[`$regex`] = prepareRegex(value)
-          break
-        case `glob`:
-          filters[`$regex`] = makeRe(value)
-          break
-        default:
-          filters[`$${key}`] = value
-      }
-    }
-  })
-  return filters
 }
 
 /**
