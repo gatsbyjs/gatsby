@@ -1,4 +1,4 @@
-import JestWorker from "jest-worker"
+import { Worker as JestWorker } from "jest-worker"
 import fs from "fs-extra"
 import nodePath from "path"
 import report from "gatsby-cli/lib/reporter"

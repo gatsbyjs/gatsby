@@ -37,7 +37,7 @@
     "chalk": "^4.1.0",
     "gatsby-node-helpers": "^0.3.0",
     "gatsby-source-filesystem": "^3.8.0-next.1",
-    "graphql-request": "^1.8.2",
+    "graphql-request": "^3.4.0",
     "lodash": "^4.17.21",
     "p-iteration": "^1.1.8",
     "prettyjson": "^1.2.1"

@@ -1,4 +1,4 @@
-import Worker from "jest-worker"
+import { Worker } from "jest-worker"
 import { cpuCoreCount } from "gatsby-core-utils"
 
 import type { CreateWorkerPoolType } from "./types"
