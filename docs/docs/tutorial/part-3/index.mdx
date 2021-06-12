@@ -1,9 +1,9 @@
 ---
-title: Add Features with Plugins
+title: "Part 3: Add Features with Plugins"
 tableOfContentsDepth: 2
 ---
 
-import { Announcement, Notification } from 'gatsby-interface'
+import { Announcement, Notification, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
 import { MdInfo } from 'react-icons/md'
 
@@ -126,7 +126,7 @@ The specifics of this step will be different based on what the plugin does. Some
 
 ![The general process for using a plugin: Install with npm, configure in your gatsby-config.js file, and use in your site (when needed).](./plugin-process.png)
 
-The next few sections will walk you through the process of adding a plugin to your site. You'll use the `gatsby-plugin-image` to add performant images to your site.
+The next few sections will walk you through the process of adding a plugin to your site. You'll use the `gatsby-plugin-image` plugin to add performant images to your site.
 
 ### Task: Use `gatsby-plugin-image` to add a static image to your home page
 
@@ -204,6 +204,8 @@ const IndexPage = () => {
     </Layout>
   )
 }
+
+export default IndexPage
 ```
 
 4. In your web browser, go to `localhost:8000` to see your home page. There should now be a photo at the bottom of the page:
@@ -246,6 +248,8 @@ const IndexPage = () => {
     </Layout>
   )
 }
+
+export default IndexPage
 ```
 3. In your web browser, go to `localhost:8000`. Your image should still appear on the home page.
 
@@ -268,7 +272,7 @@ First, run the following commands in a terminal to push your changes to your Git
 
 ```shell
 git add .
-git commit -m "Finished Gatsby Tutorial Part 2"
+git commit -m "Finished Gatsby Tutorial Part 3"
 git push
 ```
 
@@ -297,24 +301,10 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 
 In Part 4, you'll learn about a specific category of plugins that let you pull data into your site: source plugins.
 
-<Notification
-  Icon={MdInfo}
-  tone="WARNING"
+<LinkButton
+  to="/docs/tutorial/part-4/"
+  rightIcon={<MdArrowForward />}
   variant="SECONDARY"
-  content={
-    <div>
-      <p>
-        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
-        You've reached the end of the new content we've released so far. Subsequent parts
-        will be added as we finish them.
-      </p>
-      <p style={{ marginBottom: 0 }}>
-        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
-        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
-          <strong>Gatsby v2 Tutorial</strong>
-        </a>
-        .
-      </p>
-    </div>
-  }
-/>
+>
+  Continue to Part 4
+</LinkButton>

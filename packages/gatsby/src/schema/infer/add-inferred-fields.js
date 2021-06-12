@@ -8,8 +8,7 @@ import { isFile } from "./is-file"
 import { isDate } from "../types/date"
 import { addDerivedType } from "../types/derived-types"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
-import { printDirectives } from "../print"
-const { getNode, getNodes } = require(`../../datastore`)
+const { getDataStore } = require(`../../datastore`)
 
 const addInferredFields = ({
   schemaComposer,
@@ -212,17 +211,30 @@ const getFieldConfigFromFieldNameConvention = ({
   const path = key.split(`___NODE___`)[1]
   // Allow linking by nested fields, e.g. `author___NODE___contact___email`
   const foreignKey = path && path.replace(/___/g, `.`)
+  const linkedTypesSet = new Set()
 
-  const getNodeBy = value =>
-    foreignKey
-      ? getNodes().find(node => _.get(node, foreignKey) === value)
-      : getNode(value)
+  if (foreignKey) {
+    // TODO: deprecate foreign keys like this (e.g. author___NODE___contact___email)
+    //  and recommend using schema customization instead
+    const linkedValues = new Set(value.linkedNodes)
+    getDataStore()
+      .iterateNodes()
+      .forEach(node => {
+        const value = _.get(node, foreignKey)
+        if (linkedValues.has(value)) {
+          linkedTypesSet.add(node.internal.type)
+        }
+      })
+  } else {
+    value.linkedNodes.forEach(id => {
+      const node = getDataStore().getNode(id)
+      if (node) {
+        linkedTypesSet.add(node.internal.type)
+      }
+    })
+  }
 
-  const linkedNodes = value.linkedNodes.map(getNodeBy)
-
-  const linkedTypes = _.uniq(
-    linkedNodes.filter(Boolean).map(node => node.internal.type)
-  )
+  const linkedTypes = [...linkedTypesSet]
 
   invariant(
     linkedTypes.length,
