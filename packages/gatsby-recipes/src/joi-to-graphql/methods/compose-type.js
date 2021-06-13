@@ -1,10 +1,10 @@
 import Hoek from "@hapi/hoek"
-import * as Joi from "@hapi/joi"
+import * as Joi from "joi"
 import { joiToGraphql } from "../helpers"
 
 const internals = {}
 
-internals.configSchema = Joi.object().keys({
+internals.configSchema = Joi.object({
   name: Joi.string().default(`Anon`),
   args: Joi.object(),
   resolve: Joi.func(),
