@@ -25,7 +25,7 @@ module.exports.onCreateNode = async function onCreateNode(
   }
 
   const { createNode, createParentChildLink } = actions
-
+  console.warn(`HELLO_GATSBY_DEVELOPMENT`);
   const content = await loadNodeContent(node)
 
   try {
