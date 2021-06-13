@@ -1,5 +1,5 @@
 import resourceSchema from "./resource-schema"
-const Joi = require(`@hapi/joi`)
+const Joi = require(`joi`)
 
 module.exports = async ({
   resourceModule: resource,
@@ -16,10 +16,8 @@ module.exports = async ({
 
   // Test creating the resource
   const createResponse = await resource.create(context, initialObject)
-  const validateResult = Joi.validate(createResponse, {
-    ...resource.schema,
-    ...resourceSchema,
-  })
+  const schema = Joi.object(resourceSchema).append(resource.schema)
+  const validateResult = schema.validate(createResponse)
   expect(validateResult.error).toBeNull()
   expect(createResponse).toMatchSnapshot(`${resourceName} create`)
 
