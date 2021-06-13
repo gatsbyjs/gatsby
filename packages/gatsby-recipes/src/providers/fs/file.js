@@ -1,7 +1,7 @@
 import fs from "fs-extra"
 import path from "path"
 import mkdirp from "mkdirp"
-import * as Joi from "@hapi/joi"
+import * as Joi from "joi"
 import isUrl from "is-url"
 import fetch from "node-fetch"
 import isBinaryPath from "is-binary-path"
@@ -111,13 +111,13 @@ export const plan = async (context, { id, path: filePath, content }) => {
 
 const message = resource => `Wrote file ${resource.path}`
 
-const schema = {
+const schema = Joi.object({
   path: Joi.string(),
   content: Joi.string(),
   ...resourceSchema,
-}
+})
 
 export const validate = resource =>
-  Joi.validate(resource, schema, { abortEarly: false })
+  schema.validate(resource, { abortEarly: false })
 
 export { schema, fileExists as exists, create, update, read, destroy }
