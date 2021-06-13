@@ -1,6 +1,6 @@
 import execa from "execa"
 import _ from "lodash"
-import * as Joi from "@hapi/joi"
+import * as Joi from "joi"
 import path from "path"
 import fs from "fs-extra"
 import { getConfigStore } from "gatsby-core-utils"
@@ -149,7 +149,7 @@ const read = async ({ root }, id) => {
   }
 }
 
-const schema = {
+const schema = Joi.object({
   name: Joi.string().required(),
   version: Joi.string().default(`latest`, `Defaults to "latest"`),
   dependencyType: Joi.string().default(
@@ -158,10 +158,10 @@ const schema = {
   ),
   description: Joi.string(),
   ...resourceSchema,
-}
+})
 
 export const validate = resource =>
-  Joi.validate(resource, schema, { abortEarly: false })
+  schema.validate(resource, { abortEarly: false })
 
 const destroy = async ({ root }, resource) => {
   const readResource = await read({ root }, resource.id)
