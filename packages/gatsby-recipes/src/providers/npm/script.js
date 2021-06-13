@@ -1,6 +1,6 @@
 import fs from "fs-extra"
 import path from "path"
-import * as Joi from "@hapi/joi"
+import * as Joi from "joi"
 import lock from "../lock"
 
 import getDiff from "../utils/get-diff"
@@ -52,13 +52,13 @@ const destroy = async ({ root }, { name }) => {
   await writePackageJson(root, pkg)
 }
 
-const schema = {
+const schema = Joi.object({
   name: Joi.string(),
   command: Joi.string(),
   ...resourceSchema,
-}
+})
 const validate = resource =>
-  Joi.validate(resource, schema, { abortEarly: false })
+  schema.validate(resource, { abortEarly: false })
 
 export { schema, validate }
 
