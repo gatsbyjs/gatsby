@@ -2,7 +2,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const tmp = require(`tmp-promise`)
 const resourceSchema = require(`../resource-schema`)
-const Joi = require(`@hapi/joi`)
+const Joi = require(`joi`)
 const plugin = require(`./plugin`)
 jest.mock(`node-fetch`, () => require(`fetch-mock-jest`).sandbox())
 const { mockReadmeLoader } = require(`../../test-helper`)
@@ -50,10 +50,8 @@ async function testPluginResource(root) {
 
   // Test creating the resource
   const createResponse = await plugin.create(context, initialObject)
-  const validateResult = Joi.validate(createResponse, {
-    ...plugin.schema,
-    ...resourceSchema,
-  })
+  const schema = Joi.object(resourceSchema).append(plugin.schema)
+  const validateResult = schema.validate(createResponse) 
   expect(validateResult.error).toBeNull()
   expect(createResponse).toMatchSnapshot(
     pluginSnapshotMatcher,
