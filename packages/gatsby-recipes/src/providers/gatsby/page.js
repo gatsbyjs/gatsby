@@ -1,4 +1,4 @@
-import * as Joi from "@hapi/joi"
+import * as Joi from "joi"
 import { getService } from "gatsby-core-utils"
 import fetch from "node-fetch"
 
@@ -107,7 +107,7 @@ const validate = resource => {
     }
   }
 
-  return Joi.validate(resource, schema, { abortEarly: false })
+  return schema.validate(resource, { abortEarly: false })
 }
 
 export { schema, validate }
