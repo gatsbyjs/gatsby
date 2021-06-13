@@ -15,7 +15,7 @@ import apiRunnerNode from "../utils/api-runner-node"
 import { GraphQLRunner } from "../query/graphql-runner"
 import { copyStaticDirs } from "../utils/get-static-dir"
 import { initTracer, stopTracer } from "../utils/tracer"
-import db from "../db"
+import * as db from "../redux/save-state"
 import { store } from "../redux"
 import * as appDataUtil from "../utils/app-data"
 import { flush as flushPendingPageDataWrites } from "../utils/page-data"
@@ -73,7 +73,9 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   telemetry.trackCli(`BUILD_START`)
   signalExit(exitCode => {
-    telemetry.trackCli(`BUILD_END`, { exitCode })
+    telemetry.trackCli(`BUILD_END`, {
+      exitCode: exitCode as number | undefined,
+    })
   })
 
   const buildSpan = buildActivity.span
@@ -196,7 +198,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     { parentSpan: buildSpan }
   )
   buildSSRBundleActivityProgress.start()
-  let pageRenderer: string
+  let pageRenderer = ``
   let waitForCompilerCloseBuildHtml
   try {
     const result = await buildRenderer(program, Stage.BuildHTML, buildSpan)

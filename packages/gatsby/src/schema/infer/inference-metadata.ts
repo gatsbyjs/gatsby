@@ -474,10 +474,17 @@ const addNode = (metadata: ITypeMetadata, node: Node): ITypeMetadata =>
 
 const deleteNode = (metadata: ITypeMetadata, node: Node): ITypeMetadata =>
   updateTypeMetadata(metadata, `del`, node)
+
 const addNodes = (
   metadata = initialMetadata(),
-  nodes: Array<Node>
-): ITypeMetadata => nodes.reduce(addNode, metadata)
+  nodes: Iterable<Node>
+): ITypeMetadata => {
+  let state = metadata
+  for (const node of nodes) {
+    state = addNode(state, node)
+  }
+  return state
+}
 
 const possibleTypes = (descriptor: IValueDescriptor = {}): Array<ValueType> =>
   Object.keys(descriptor).filter(type => descriptor[type].total > 0) as Array<

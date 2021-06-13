@@ -45,4 +45,8 @@ describe(`rich-text`, () => {
       `[data-cy-id="rich-text-inline-entry-with-reference-loop"]`
     ).snapshot()
   })
+  it(`rich-text: Localized`, () => {
+    cy.get(`[data-cy-id="english-rich-text-localized"]`).snapshot()
+    cy.get(`[data-cy-id="german-rich-text-localized"]`).snapshot()
+  })
 })

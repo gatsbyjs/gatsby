@@ -26,6 +26,10 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   }
 })
 
+beforeAll(() => {
+  store.dispatch({ type: `DELETE_CACHE` })
+})
+
 const reporter = require(`gatsby-cli/lib/reporter`)
 afterEach(() => {
   reporter.error.mockClear()

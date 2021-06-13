@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.8.0-next.0...gatsby-source-contentful@5.8.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.7.0-next.2...gatsby-source-contentful@5.8.0-next.0) (2021-06-03)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.7.0-next.1...gatsby-source-contentful@5.7.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.7.0-next.0...gatsby-source-contentful@5.7.0-next.1) (2021-05-31)
+
+### Bug Fixes
+
+- **contentful:** pass reporter to retry function ([#31608](https://github.com/gatsbyjs/gatsby/issues/31608)) ([26dbe09](https://github.com/gatsbyjs/gatsby/commit/26dbe0913e19db50c8371a1c0b1277b09759f224))
+- **gatsby-source-contentful:** fix progress bar ([#31467](https://github.com/gatsbyjs/gatsby/issues/31467)) ([2e1f7e3](https://github.com/gatsbyjs/gatsby/commit/2e1f7e325adfe055f828336c247d71404f461be5))
+
+# [5.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.6.0-next.0...gatsby-source-contentful@5.7.0-next.0) (2021-05-21)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 # [5.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.5.0-next.0...gatsby-source-contentful@5.6.0-next.0) (2021-05-06)
 
 **Note:** Version bump only for package gatsby-source-contentful

@@ -1,10 +1,10 @@
 ---
-title: Create and Deploy Your First Gatsby Site
+title: "Part 1: Create and Deploy Your First Gatsby Site"
 ---
 
-import { Announcement, Notification } from 'gatsby-interface'
+import { Announcement, Notification, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
-import { MdInfo } from 'react-icons/md'
+import { MdInfo, MdArrowForward } from 'react-icons/md'
 
 <Notification
   Icon={MdInfo}
@@ -58,6 +58,22 @@ First, you write the code for your Gatsby site from your computer. When you're r
 To create your first Gatsby site, you're going to use a command from the Gatsby command line interface (CLI): `gatsby new`. This command brings up an interactive prompt that asks you questions about the site you want to build. After you enter all the information, the CLI uses your answers to automatically generate your new Gatsby site.
 
 ![The welcome message for the interactive "gatsby new" command.](./gatsby-new-cli.png)
+
+<Announcement>
+
+**Note:** For this Tutorial, your Gatsby CLI should be v3 or newer. To check what version you have installed, run the following command:
+
+```shell
+gatsby --version
+```
+
+Need to update? Run the command below to get the latest version of the Gatsby CLI:
+
+```shell
+npm install -g gatsby-cli
+```
+
+</Announcement>
 
 Let's take a closer look at the process:
 
@@ -304,10 +320,6 @@ First, you write the code for your Gatsby site from your computer. When you're r
 
 </Collapsible>
 
-### What's coming next?
-
-Now that you have a default Gatsby site up and running, it's time to make it your own. In the next section, you'll learn how to use React to customize the design and contents of your site.
-
 <Announcement style={{marginBottom: "1.5rem"}}>
 
 **Share Your Feedback!**
@@ -317,3 +329,15 @@ Our goal is for this Tutorial to be helpful and easy to follow. We'd love to hea
 Use the "Was this doc helpful to you?" form at the bottom of this page to let us know what worked well and what we can improve.
 
 </Announcement>
+
+### What's coming next?
+
+Now that you have a default Gatsby site up and running, it's time to make it your own. In Part 2 of the Tutorial, you'll learn how to use React to customize the design and contents of your site.
+
+<LinkButton
+  to="/docs/tutorial/part-2/"
+  rightIcon={<MdArrowForward />}
+  variant="SECONDARY"
+>
+  Continue to Part 2
+</LinkButton>

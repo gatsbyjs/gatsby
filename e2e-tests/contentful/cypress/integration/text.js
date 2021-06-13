@@ -29,4 +29,13 @@ describe(`text`, () => {
   it(`text: Long Markdown Complex`, () => {
     cy.get(`[data-cy-id="long-markdown-complex"]`).snapshot()
   })
+
+  it(`text: Short Localized`, () => {
+    cy.get(`[data-cy-id="english-short"]`).should("have.text", "Short text")
+    cy.get(`[data-cy-id="german-short"]`).should("have.text", "Kurzer Text")
+  })
+  it(`text: Long Localized`, () => {
+    cy.get(`[data-cy-id="english-long"]`).snapshot()
+    cy.get(`[data-cy-id="german-long"]`).snapshot()
+  })
 })

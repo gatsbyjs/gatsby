@@ -14,7 +14,7 @@ import {
 import { Runner, createGraphQLRunner } from "./create-graphql-runner"
 import reporter from "gatsby-cli/lib/reporter"
 import { globalTracer } from "opentracing"
-import JestWorker from "jest-worker"
+import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { handleStalePageData } from "../utils/page-data"
 
 const tracer = globalTracer()
@@ -23,7 +23,7 @@ export async function bootstrap(
   initialContext: Partial<IBuildContext>
 ): Promise<{
   gatsbyNodeGraphQLFunction: Runner
-  workerPool: JestWorker
+  workerPool: GatsbyWorkerPool
 }> {
   const spanArgs = initialContext.parentSpan
     ? { childOf: initialContext.parentSpan }
