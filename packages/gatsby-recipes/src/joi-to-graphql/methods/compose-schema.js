@@ -4,7 +4,7 @@ import * as Joi from "joi"
 import { typeDictionary } from "../helpers"
 const internals = {}
 
-internals.inputSchema = Joi.object({
+internals.inputSchema = Joi.object().keys({
   query: Joi.object(),
   mutation: Joi.object(),
   subscription: Joi.object(),

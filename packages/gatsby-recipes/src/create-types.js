@@ -24,7 +24,7 @@ export default function createTypes() {
       const queryTypes = []
       const mutationTypes = {}
 
-      const joiSchema = Joi.object({
+      const joiSchema = Joi.object().keys({
         ...resource.schema,
         _typeName: Joi.string(),
       })

@@ -4,7 +4,7 @@ import { joiToGraphql } from "../helpers"
 
 const internals = {}
 
-internals.configSchema = Joi.object({
+internals.configSchema = Joi.object().keys({
   name: Joi.string().default(`Anon`),
   args: Joi.object(),
   resolve: Joi.func(),
