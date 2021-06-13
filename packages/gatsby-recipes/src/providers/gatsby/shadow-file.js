@@ -1,6 +1,6 @@
 import path from "path"
 import fs from "fs-extra"
-import * as Joi from "@hapi/joi"
+import * as Joi from "joi"
 
 import { slash } from "gatsby-core-utils"
 
@@ -87,15 +87,15 @@ const destroy = async ({ root }, { id }) => {
   return resource
 }
 
-const schema = {
+const schema = Joi.object({
   theme: Joi.string(),
   path: Joi.string(),
   contents: Joi.string(),
   ...resourceSchema,
-}
+})
 
 export const validate = resource =>
-  Joi.validate(resource, schema, { abortEarly: false })
+  schema.validate(resource, { abortEarly: false })
 
 export { schema, create, create as update, read, destroy }
 

@@ -3,7 +3,7 @@ import path from "path"
 import { transform } from "@babel/core"
 import * as t from "@babel/types"
 import { declare } from "@babel/helper-plugin-utils"
-import * as Joi from "@hapi/joi"
+import * as Joi from "joi"
 import prettier from "prettier"
 
 import lock from "../lock"
