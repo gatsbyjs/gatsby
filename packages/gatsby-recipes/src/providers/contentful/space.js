@@ -52,10 +52,10 @@ const all = async () => {
   return spaces.items
 }
 
-const schema = {
+const schema = Joi.object({
   name: Joi.string(),
   ...resourceSchema,
-}
+})
 
 const validate = resource =>
   schema.validate(resource, { abortEarly: false })

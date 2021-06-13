@@ -30,10 +30,10 @@ const destroy = async (_context, id) => {}
 
 const all = async () => {}
 
-const schema = {
+const schema = Joi.object({
   schema: Joi.string(),
   ...resourceSchema,
-}
+})
 
 const validate = resource =>
   schema.validate(resource, { abortEarly: false })
