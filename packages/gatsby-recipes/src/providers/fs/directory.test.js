@@ -1,6 +1,6 @@
 import * as directory from "./directory"
 import resourceSchema from "../resource-schema"
-import Joi from "@hapi/joi"
+import Joi from "joi"
 import fs from "fs-extra"
 import path from "path"
 jest.mock(`fs-extra`)
@@ -26,10 +26,8 @@ describe(`directory resource`, () => {
 
     // Test creating the resource
     const createResponse = await directory.create(context, initialObject)
-    const validateResult = Joi.validate(createResponse, {
-      ...directory.schema,
-      ...resourceSchema,
-    })
+    const schema = Joi.object(resourceSchema).append(directory.schema)
+    const validateResult = schema.validate(createResponse) 
     expect(validateResult.error).toBeNull()
     expect(fs.ensureDir).toHaveBeenCalledWith(fullPath)
 
