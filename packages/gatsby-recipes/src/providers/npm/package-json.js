@@ -1,6 +1,6 @@
 import fs from "fs-extra"
 import path from "path"
-import * as Joi from "@hapi/joi"
+import * as Joi from "joi"
 import getDiff from "../utils/get-diff"
 import lock from "../lock"
 
@@ -53,16 +53,16 @@ const destroy = async ({ root }, { id }) => {
   await writePackageJson(root, pkg)
 }
 
-const schema = {
+const schema = Joi.object({
   name: Joi.string(),
   value: Joi.string(),
   ...resourceSchema,
-}
+})
 const validate = resource => {
   // value can be both a string or an object. Internally we
   // always just treat it as a string to simplify handling it.
   resource.value = JSON.stringify(resource.value)
-  return Joi.validate(resource, schema, { abortEarly: false })
+  return schema.validate(resource, { abortEarly: false })
 }
 
 export { schema, validate }
