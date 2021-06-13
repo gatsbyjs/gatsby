@@ -44,7 +44,7 @@ const schema = {
 }
 
 const validate = resource =>
-  Joi.validate(resource, schema, { abortEarly: false })
+  schema.validate(resource, { abortEarly: false })
 
 const plan = async (context, { id, fields }) => {
   // const currentResource = await read(context, id)
