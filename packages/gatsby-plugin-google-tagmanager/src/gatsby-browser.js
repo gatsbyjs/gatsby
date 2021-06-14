@@ -1,12 +1,10 @@
 function sendWebVitals(dataLayerName = `dataLayer`) {
   const win = window
-  return import(/* webpackMode: "lazy-once" */ `web-vitals`).then(
-    ({ getLCP, getFID, getCLS }) => {
-      getCLS(data => sendToGoogleAnalytics(data, win[dataLayerName]))
-      getFID(data => sendToGoogleAnalytics(data, win[dataLayerName]))
-      getLCP(data => sendToGoogleAnalytics(data, win[dataLayerName]))
-    }
-  )
+  return import(`web-vitals/base`).then(({ getLCP, getFID, getCLS }) => {
+    getCLS(data => sendToGoogleAnalytics(data, win[dataLayerName]))
+    getFID(data => sendToGoogleAnalytics(data, win[dataLayerName]))
+    getLCP(data => sendToGoogleAnalytics(data, win[dataLayerName]))
+  })
 }
 
 function sendToGoogleAnalytics({ name, delta, id }, dataLayer) {

@@ -1,11 +1,9 @@
 function sendWebVitals() {
-  return import(/* webpackMode: "lazy-once" */ `web-vitals`).then(
-    ({ getLCP, getFID, getCLS }) => {
-      getCLS(sendToGoogleAnalytics)
-      getFID(sendToGoogleAnalytics)
-      getLCP(sendToGoogleAnalytics)
-    }
-  )
+  return import(`web-vitals/base`).then(({ getLCP, getFID, getCLS }) => {
+    getCLS(sendToGoogleAnalytics)
+    getFID(sendToGoogleAnalytics)
+    getLCP(sendToGoogleAnalytics)
+  })
 }
 
 function sendToGoogleAnalytics({ name, delta, id }) {

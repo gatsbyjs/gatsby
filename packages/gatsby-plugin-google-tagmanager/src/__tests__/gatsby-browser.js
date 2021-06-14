@@ -1,6 +1,6 @@
 import { getLCP, getFID, getCLS } from "web-vitals"
 
-jest.mock(`web-vitals`, () => {
+jest.mock(`web-vitals/base`, () => {
   function createEntry(type, id, delta) {
     return { name: type, id, delta }
   }

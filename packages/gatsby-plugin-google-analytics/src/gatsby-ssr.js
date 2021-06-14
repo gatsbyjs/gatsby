@@ -69,6 +69,8 @@ export const onRenderBody = (
 
   const inlineScripts = []
   if (pluginOptions.enableWebVitalsTracking) {
+    // web-vitals/polyfill (necessary for non chromium browsers)
+    // @seehttps://www.npmjs.com/package/web-vitals#how-the-polyfill-works
     inlineScripts.push(
       <script
         key={`gatsby-plugin-google-analytics-web-vitals`}
