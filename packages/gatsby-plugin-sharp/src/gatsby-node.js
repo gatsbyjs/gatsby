@@ -7,9 +7,14 @@ const {
 } = require(`./index`)
 const { pathExists } = require(`fs-extra`)
 const { slash } = require(`gatsby-core-utils`)
+const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
 
 const { setPluginOptions } = require(`./plugin-options`)
 const path = require(`path`)
+
+const coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(
+  `unstable_onPluginInit`
+)
 
 exports.onCreateDevServer = async ({ app, cache, reporter }) => {
   if (!_lazyJobsEnabled()) {
@@ -104,9 +109,18 @@ exports.onPostBootstrap = async ({ reporter, cache, store }) => {
   }
 }
 
+if (coreSupportsOnPluginInit) {
+  exports.unstable_onPluginInit = async ({ actions }, pluginOptions) => {
+    setActions(actions)
+    setPluginOptions(pluginOptions)
+  }
+}
+
 exports.onPreBootstrap = async ({ actions, emitter, cache }, pluginOptions) => {
-  setActions(actions)
-  setPluginOptions(pluginOptions)
+  if (!coreSupportsOnPluginInit) {
+    setActions(actions)
+    setPluginOptions(pluginOptions)
+  }
 
   // below is a hack / hot fix for confusing progress bar behaviour
   // that doesn't recognize duplicate jobs, as it's now

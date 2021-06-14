@@ -13,6 +13,7 @@
     "filenamify": "^4.2.0",
     "fs-extra": "^9.1.0",
     "gatsby-core-utils": "^2.8.0-next.1",
+    "gatsby-plugin-utils": "^1.8.0-next.1",
     "gatsby-telemetry": "^2.8.0-next.1",
     "got": "^10.7.0",
     "imagemin": "^7.0.1",
@@ -34,8 +35,7 @@
     "@types/sharp": "^0.27.1",
     "babel-preset-gatsby-package": "^1.8.0-next.1",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-image": "^1.8.0-next.1",
-    "gatsby-plugin-utils": "^1.8.0-next.1"
+    "gatsby-plugin-image": "^1.8.0-next.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp#readme",
   "keywords": [
