@@ -62,10 +62,11 @@ module.exports = (
   }
 
   const grammar = Prism.languages[language]
+  const lineNumbersOutputSet = new Set(lineNumbersOutput)
   const highlighted = code
     .split(`\n`)
     .map((codeLine, index) =>
-      lineNumbersOutput.includes(index + 1)
+      lineNumbersOutputSet.has(index + 1)
         ? codeLine
         : Prism.highlight(
             codeLine,
