@@ -73,6 +73,7 @@ export default Counter
         code,
         {},
         lineNumbersHighlight,
+        [],
         false,
         diffLanguage
       )
@@ -86,7 +87,7 @@ export default Counter
       const highlightCode = require(`../highlight-code`)
       const language = `text`
       const code = `<button />`
-      expect(highlightCode(language, code, {}, [], true)).toMatch(
+      expect(highlightCode(language, code, {}, [], [], true)).toMatch(
         `&lt;button /&gt;`
       )
       expect(console.warn).toHaveBeenCalledWith(
