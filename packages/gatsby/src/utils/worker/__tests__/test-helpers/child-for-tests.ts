@@ -5,6 +5,7 @@ import {
   IGatsbyPageComponent,
   IGatsbyStaticQueryComponents,
 } from "../../../../redux/types"
+import { ITypeMetadata } from "../../../../schema/infer/inference-metadata"
 import reporter from "gatsby-cli/lib/reporter"
 import apiRunner from "../../../api-runner-node"
 
@@ -32,6 +33,9 @@ export function getStaticQueryComponent(
   id: IGatsbyStaticQueryComponents["id"]
 ): IGatsbyStaticQueryComponents | undefined {
   return store.getState().staticQueryComponents.get(id)
+}
+export function getInferenceMetadata(typeName: string): ITypeMetadata {
+  return store.getState().inferenceMetadata.typeMap[typeName]
 }
 
 // test: reporter
