@@ -278,7 +278,6 @@ export function getMainProps(
       left: 0,
       position: `absolute`,
       top: 0,
-      transform: `translateZ(0)`,
       transition: `opacity 250ms linear`,
       width: `100%`,
       willChange: `opacity`,

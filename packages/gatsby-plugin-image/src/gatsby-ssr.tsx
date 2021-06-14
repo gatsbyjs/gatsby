@@ -36,7 +36,6 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
   }
   .gatsby-image-wrapper [data-main-image] {
     opacity: 0;
-    transform: translateZ(0px);
     transition: opacity 250ms linear;
     will-change: opacity;
   }
