@@ -53,6 +53,9 @@ export interface ISharpGatsbyImageArgs {
       shadow: string,
       opacity?: number
     }
+    grayscale?: boolean
+    rotate?: number
+    trim?: number
   }
   jpgOptions?: Record<string, unknown>
   pngOptions?: Record<string, unknown>
