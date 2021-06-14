@@ -208,7 +208,7 @@ describe(`worker (share-state)`, () => {
 
     saveStateForWorkers([`components`, `staticQueryComponents`])
 
-    await worker.setExtractedSlices()
+    await worker.setQueries()
 
     const components = await worker.getComponent(dummyPagePayload.component)
     const staticQueryComponents = await worker.getStaticQueryComponent(
