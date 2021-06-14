@@ -151,10 +151,10 @@ describe(`highlighting lines`, () => {
 
     expect(highlights).toMatchInlineSnapshot(`
       "<span class=\\"token keyword\\">class</span> <span class=\\"token class-name\\">bbueModule</span><span class=\\"token punctuation\\">(</span>cda<span class=\\"token punctuation\\">.</span>Module<span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">:</span>
-      <span class=\\"gatsby-highlight-code-line\\">    <span class=\\"token string\\">\\"\\"</span>\\"</span><span class=\\"gatsby-highlight-code-line\\">    This <span class=\\"token keyword\\">is</span> a one line description of the bbue CDA Module<span class=\\"token punctuation\\">.</span></span>    
-          his text will be used <span class=\\"token keyword\\">for</span> the GDB <span class=\\"token builtin\\">help</span> command <span class=\\"token keyword\\">and</span>
-          also <span class=\\"token keyword\\">for</span> the module description <span class=\\"token keyword\\">in</span> the cdae html report<span class=\\"token punctuation\\">.</span>
-          <span class=\\"token string\\">\\"\\"</span>\\"
+      <span class=\\"gatsby-highlight-code-line\\">    <span class=\\"token triple-quoted-string string\\">\\"\\"\\"</span></span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token triple-quoted-string string\\">    This is a one line description of the bbue CDA Module.</span></span><span class=\\"token triple-quoted-string string\\">    </span>
+      <span class=\\"token triple-quoted-string string\\">    his text will be used for the GDB help command and</span>
+      <span class=\\"token triple-quoted-string string\\">    also for the module description in the cdae html report.</span>
+      <span class=\\"token triple-quoted-string string\\">    \\"\\"\\"</span>
           <span class=\\"token keyword\\">def</span> <span class=\\"token function\\">__init__</span><span class=\\"token punctuation\\">(</span>self<span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">:</span>
              <span class=\\"token builtin\\">super</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">.</span>__init__<span class=\\"token punctuation\\">(</span><span class=\\"token string\\">'bbue'</span><span class=\\"token punctuation\\">)</span>"
     `)
@@ -162,7 +162,7 @@ describe(`highlighting lines`, () => {
     // Each line need to have same amount of opening and closing spans, otherwise formatting can produce
     // weird results. If there is multiline span (like triple-quote-string or plain-text) and we highlight some of it
     // we add closing spans on line ends and add opening tags on new lines to avoid broken markup
-    const numberOfSpansInLines = [6, 5, 3, 3, 1, 5, 7]
+    const numberOfSpansInLines = [6, 5, 1, 1, 1, 5, 7]
     const lines = highlights.split(`\n`)
     lines.forEach((line, index) => {
       const numberOfOpeningSpanTags = (line.match(/<span/gi) || []).length

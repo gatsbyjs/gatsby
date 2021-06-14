@@ -63,18 +63,25 @@ module.exports = (
 
   const grammar = Prism.languages[language]
   const lineNumbersOutputSet = new Set(lineNumbersOutput)
-  const highlighted = code
-    .split(`\n`)
-    .map((codeLine, index) =>
-      lineNumbersOutputSet.has(index + 1)
-        ? codeLine
-        : Prism.highlight(
-            codeLine,
-            grammar,
-            diffLanguage ? `${language}-${diffLanguage}` : language
+  const highlighted =
+    lineNumbersOutput.length === 0
+      ? Prism.highlight(
+          code,
+          grammar,
+          diffLanguage ? `${language}-${diffLanguage}` : language
+        )
+      : code
+          .split(`\n`)
+          .map((codeLine, index) =>
+            lineNumbersOutputSet.has(index + 1)
+              ? codeLine
+              : Prism.highlight(
+                  codeLine,
+                  grammar,
+                  diffLanguage ? `${language}-${diffLanguage}` : language
+                )
           )
-    )
-    .join(`\n`)
+          .join(`\n`)
 
   const codeSplits = handleDirectives(highlighted, lineNumbersHighlight)
 
