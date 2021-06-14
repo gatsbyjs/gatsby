@@ -1,7 +1,7 @@
 {
   "name": "get-npm-dependencies-for-file",
   "version": "1.0.0",
-  "description": "Analyze a file's requires/imports to return NPM dependencies",
+  "description": "Analyze a file's requires/imports and returns an array of NPM dependencies",
   "main": "index.js",
   "jest": {
     "testPathIgnorePatterns": [
