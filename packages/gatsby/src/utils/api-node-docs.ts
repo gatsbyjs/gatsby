@@ -411,6 +411,12 @@ export const onCreateWebpackConfig = true
 export const onPreInit = true
 
 /**
+ * Lifecycle executed in each process (one time per process). Used to store actions etc for later use.
+ */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const unstable_onPluginInit = true
+
+/**
  * Called once Gatsby has initialized itself and is ready to bootstrap your site.
  */
 export const onPreBootstrap = true
