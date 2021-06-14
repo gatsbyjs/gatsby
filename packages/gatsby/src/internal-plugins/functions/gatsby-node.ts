@@ -407,7 +407,7 @@ export async function onPreBootstrap({
             compiledFunctionsDir,
             `manifest.json`
           )
-          const manifest = JSON.parse(fs.readFileSync(pathToManifest))
+          const manifest = JSON.parse(fs.readFileSync(pathToManifest, `utf-8`))
 
           manifest.forEach((func, i) => {
             const dependencies = getDependenciesForFile(
