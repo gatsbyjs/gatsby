@@ -27,6 +27,8 @@
     "start-server-and-test": "^1.11.3"
   },
   "dependencies": {
+    "chrome-aws-lambda": "^10.0.0",
+    "dependency-tree": "^8.1.1",
     "gatsby": "3.8.0-next.0-dev-1623259474078",
     "gatsby-plugin-gatsby-cloud": "^2.5.0-next.0",
     "react": "^17.0.1",
