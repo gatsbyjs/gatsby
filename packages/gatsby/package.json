@@ -86,6 +86,7 @@
     "gatsby-plugin-utils": "^1.8.0-next.1",
     "gatsby-react-router-scroll": "^4.8.0-next.1",
     "gatsby-telemetry": "^2.8.0-next.1",
+    "get-npm-dependencies-for-file": "^1.0.0",
     "glob": "^7.1.6",
     "got": "8.3.2",
     "graphql": "^15.4.0",
