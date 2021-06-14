@@ -414,7 +414,7 @@ query {
     remoteImage {
       childImageSharp {
         gatsbyImageData(
-          # fluid or fixed fields for optimized images
+          # arguments for optimized images
         )
       }
     }
