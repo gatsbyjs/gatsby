@@ -109,6 +109,34 @@ export default Counter
       )
     })
 
+    it(`for language shell with output lines`, () => {
+      const highlightCode = require(`../highlight-code`)
+      const language = `shell`
+      const lineNumbersOutput = [2, 4]
+      const lineNumbersHighlight = [5, 6, 8]
+      const code = `echo -n "Hello World"
+Hello World%
+echo -n 123
+123%
+echo 456
+456
+echo x=y
+x=y`
+      const processed = highlightCode(
+        language,
+        code,
+        {},
+        lineNumbersHighlight,
+        lineNumbersOutput
+      )
+
+      expect(processed).toMatchSnapshot()
+      // expect spans to not contain \n as it would break line highlighting
+      expect(
+        /<span[^>]*>[^<]*\n[^<]*<\/span>/g.exec(processed)
+      ).not.toBeTruthy()
+    })
+
     it(`warns once per language`, () => {
       spyOn(console, `warn`)
 

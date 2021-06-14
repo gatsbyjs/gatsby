@@ -41,3 +41,12 @@ exports[`highlight code and lines with PrismJS for language jsx 1`] = `
 <span class=\\"token keyword\\">export</span> <span class=\\"token keyword\\">default</span> Counter
 "
 `;
+
+exports[`highlight code and lines with PrismJS with language-text for language shell with output lines 1`] = `
+"<span class=\\"token builtin class-name\\">echo</span> -n <span class=\\"token string\\">\\"Hello World\\"</span>
+Hello World%
+<span class=\\"token builtin class-name\\">echo</span> -n <span class=\\"token number\\">123</span>
+123%
+<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token builtin class-name\\">echo</span> <span class=\\"token number\\">456</span></span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token number\\">456</span></span><span class=\\"token builtin class-name\\">echo</span> <span class=\\"token assign-left variable\\">x</span><span class=\\"token operator\\">=</span>y
+<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token assign-left variable\\">x</span><span class=\\"token operator\\">=</span>y</span>"
+`;
