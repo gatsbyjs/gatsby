@@ -1,5 +1,5 @@
 import { GatsbyFunctionResponse, GatsbyFunctionRequest } from "gatsby"
-import chromium from "../chromium"
+import chromium from "chrome-aws-lambda"
 
 export default async function topLevel(
   req: GatsbyFunctionRequest,

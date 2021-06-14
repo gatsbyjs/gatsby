@@ -11,6 +11,7 @@ import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
 import chokidar from "chokidar"
 import nodeExternals from "webpack-node-externals"
+import getDependenciesForFile from "get-npm-dependencies-for-file"
 // We use an ancient version of path-to-regexp as it has breaking changes to express v4
 // see: https://github.com/pillarjs/path-to-regexp/tree/77df63869075cfa5feda1988642080162c584427#compatibility-with-express--4x
 import pathToRegexp from "path-to-regexp"
@@ -396,6 +397,25 @@ export async function onPreBootstrap({
             warnings: [],
           })
           reporter.error(formatted.errors)
+        }
+
+        // After the production build, we scan compiled functions for NPM
+        // dependencies and add those to the manifest.json to aid deployment
+        // packaging.
+        if (isProductionEnv) {
+          const pathToManifest = path.join(
+            compiledFunctionsDir,
+            `manifest.json`
+          )
+          const manifest = JSON.parse(fs.readFileSync(pathToManifest))
+
+          manifest.forEach((func, i) => {
+            const dependencies = getDependenciesForFile(
+              func.absoluteCompiledFilePath
+            )
+            manifest[i].dependencies = dependencies
+          })
+          fs.writeFileSync(pathToManifest, JSON.stringify(manifest, null, 4))
         }
 
         // Log success in dev
