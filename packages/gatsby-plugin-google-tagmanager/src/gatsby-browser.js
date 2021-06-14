@@ -47,7 +47,7 @@ export function onRouteUpdate(_, pluginOptions) {
 }
 
 export function onClientEntry(_, pluginOptions) {
-  if (!pluginOptions.disableWebVitalsTracking) {
+  if (pluginOptions.enableWebVitalsTracking) {
     sendWebVitals(pluginOptions.dataLayerName)
   }
 }

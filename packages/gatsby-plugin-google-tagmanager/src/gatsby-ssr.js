@@ -40,7 +40,7 @@ exports.onRenderBody = (
     gtmPreview,
     defaultDataLayer,
     dataLayerName = `dataLayer`,
-    disableWebVitalsTracking = true,
+    enableWebVitalsTracking = false,
   }
 ) => {
   if (process.env.NODE_ENV === `production` || includeInDevelopment) {
@@ -61,7 +61,7 @@ exports.onRenderBody = (
     }
 
     const inlineScripts = []
-    if (!disableWebVitalsTracking) {
+    if (enableWebVitalsTracking) {
       inlineScripts.push(
         <script
           key={`gatsby-plugin-google-tagmanager-web-vitals`}

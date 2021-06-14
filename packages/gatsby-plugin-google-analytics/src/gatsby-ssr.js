@@ -68,7 +68,7 @@ export const onRenderBody = (
     : setPostBodyComponents
 
   const inlineScripts = []
-  if (!pluginOptions.disableWebVitalsTracking) {
+  if (pluginOptions.enableWebVitalsTracking) {
     inlineScripts.push(
       <script
         key={`gatsby-plugin-google-analytics-web-vitals`}

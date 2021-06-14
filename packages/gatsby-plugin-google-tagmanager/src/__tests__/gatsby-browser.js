@@ -143,7 +143,7 @@ describe(`onRouteUpdate`, () => {
     const { onClientEntry } = getAPI(() => {
       process.env.NODE_ENV = `production`
     })
-    onClientEntry({}, { disableWebVitalsTracking: false })
+    onClientEntry({}, { enableWebVitalsTracking: true })
 
     // wait 2 ticks to wait for dynamic import to resolve
     await Promise.resolve()
@@ -199,7 +199,7 @@ describe(`onRouteUpdate`, () => {
     const { onClientEntry } = getAPI(() => {
       process.env.NODE_ENV = `production`
     })
-    onClientEntry({}, { disableWebVitalsTracking: true })
+    onClientEntry({}, { enableWebVitalsTracking: false })
 
     // wait 2 ticks to wait for dynamic import to resolve
     await Promise.resolve()

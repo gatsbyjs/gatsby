@@ -54,5 +54,5 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     queueTime: Joi.number(),
     forceSSL: Joi.boolean(),
     transport: Joi.string(),
-    disableWebVitalsTracking: Joi.boolean().default(true),
+    enableWebVitalsTracking: Joi.boolean().default(false),
   })

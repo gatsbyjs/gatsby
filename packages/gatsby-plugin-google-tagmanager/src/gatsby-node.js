@@ -40,5 +40,5 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       .description(
         `Name of the event that is triggered on every Gatsby route change.`
       ),
-    disableWebVitalsTracking: Joi.boolean().default(true),
+    enableWebVitalsTracking: Joi.boolean().default(false),
   })

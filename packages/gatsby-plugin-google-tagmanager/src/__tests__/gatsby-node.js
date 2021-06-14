@@ -11,7 +11,7 @@ describe(`pluginOptionsSchema`, () => {
       gtmPreview: `YOUR_GOOGLE_TAGMANAGER_ENVIRONMENT_PREVIEW_NAME`,
       dataLayerName: `YOUR_DATA_LAYER_NAME`,
       routeChangeEventName: `YOUR_ROUTE_CHANGE_EVENT_NAME`,
-      disableWebVitalsTracking: false,
+      enableWebVitalsTracking: true,
     })
 
     expect(isValid).toEqual(true)

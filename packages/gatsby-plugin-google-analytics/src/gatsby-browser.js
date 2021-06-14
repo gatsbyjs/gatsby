@@ -59,7 +59,7 @@ export const onRouteUpdate = ({ location }, pluginOptions = {}) => {
 }
 
 export function onClientEntry(_, pluginOptions) {
-  if (!pluginOptions.disableWebVitalsTracking) {
+  if (pluginOptions.enableWebVitalsTracking) {
     sendWebVitals()
   }
 }
