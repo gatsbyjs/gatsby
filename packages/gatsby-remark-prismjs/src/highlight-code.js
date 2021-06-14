@@ -11,8 +11,8 @@ module.exports = (
   language,
   code,
   additionalEscapeCharacters = {},
-  lineNumbersOutput = [],
   lineNumbersHighlight = [],
+  lineNumbersOutput = [],
   noInlineHighlight = false,
   diffLanguage = null
 ) => {

@@ -93,8 +93,8 @@ module.exports = (
       languageName,
       node.value,
       escapeEntities,
-      outputLines,
       highlightLines,
+      outputLines,
       noInlineHighlight,
       diffLanguage
     )
