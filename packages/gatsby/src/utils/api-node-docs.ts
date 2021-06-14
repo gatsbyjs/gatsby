@@ -412,6 +412,8 @@ export const onPreInit = true
 
 /**
  * Lifecycle executed in each process (one time per process). Used to store actions etc for later use.
+ *
+ * @gatsbyVersion 3.X.0
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const unstable_onPluginInit = true
