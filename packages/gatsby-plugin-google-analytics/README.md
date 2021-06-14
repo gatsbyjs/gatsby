@@ -137,7 +137,7 @@ Besides the experiment ID you also need the variation ID for SERVER_SIDE experim
 
 ### `enableWebVitalsTracking`
 
-Optimizing for the quality of user experience is key to the long-term success of any site on the web. Capturing Real user metrics (RUM) helps you understand the experience of your user/customer. By setting `enableWebVitalsTracking` to false, Google Analytics will get "core-web-vitals" events with their values.
+Optimizing for the quality of user experience is key to the long-term success of any site on the web. Capturing Real user metrics (RUM) helps you understand the experience of your user/customer. By setting `enableWebVitalsTracking` to true, Google Analytics will get "core-web-vitals" events with their values.
 
 ## Optional Fields
 
