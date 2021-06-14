@@ -22935,6 +22935,208 @@
       ],
       "commitMessageSuffix": "{{#unless groupName}} for gatsby{{/unless}}",
       "dependencyDashboardApproval": true
+    },
+    {
+      "matchPaths": [
+        "packages/get-npm-dependencies-for-file/package.json"
+      ],
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "[DEV] minor and patch dependencies for get-npm-dependencies-for-file",
+      "groupSlug": "get-npm-dependencies-for-file-dev-minor",
+      "automerge": true,
+      "excludePackageNames": [
+        "eslint",
+        "prettier",
+        "cross-env",
+        "execa",
+        "mini-css-extract-plugin",
+        "sharp",
+        "@types/sharp",
+        "typescript",
+        "chalk",
+        "fs-extra",
+        "@types/fs-extra"
+      ],
+      "excludePackagePatterns": [
+        "^eslint-",
+        "^@typescript-eslint/",
+        "^@testing-library/"
+      ],
+      "commitMessageSuffix": "{{#unless groupName}} for get-npm-dependencies-for-file{{/unless}}"
+    },
+    {
+      "matchPaths": [
+        "packages/get-npm-dependencies-for-file/package.json"
+      ],
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "[DEV] major dependencies for get-npm-dependencies-for-file",
+      "groupSlug": "get-npm-dependencies-for-file-dev-major",
+      "automerge": true,
+      "dependencyDashboardApproval": false,
+      "excludePackageNames": [
+        "eslint",
+        "prettier",
+        "cross-env",
+        "execa",
+        "mini-css-extract-plugin",
+        "sharp",
+        "@types/sharp",
+        "typescript",
+        "chalk",
+        "fs-extra",
+        "@types/fs-extra"
+      ],
+      "excludePackagePatterns": [
+        "^eslint-",
+        "^@typescript-eslint/",
+        "^@testing-library/"
+      ],
+      "commitMessageSuffix": "{{#unless groupName}} for get-npm-dependencies-for-file{{/unless}}"
+    },
+    {
+      "matchPaths": [
+        "packages/get-npm-dependencies-for-file/package.json"
+      ],
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "minor and patch dependencies for get-npm-dependencies-for-file",
+      "groupSlug": "get-npm-dependencies-for-file-prod-minor",
+      "excludePackageNames": [
+        "eslint",
+        "prettier",
+        "cross-env",
+        "execa",
+        "mini-css-extract-plugin",
+        "sharp",
+        "@types/sharp",
+        "typescript",
+        "chalk",
+        "fs-extra",
+        "@types/fs-extra"
+      ],
+      "excludePackagePatterns": [
+        "^eslint-",
+        "^@typescript-eslint/",
+        "^@testing-library/"
+      ],
+      "commitMessageSuffix": "{{#unless groupName}} for get-npm-dependencies-for-file{{/unless}}"
+    },
+    {
+      "matchPaths": [
+        "packages/get-npm-dependencies-for-file/package.json"
+      ],
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "major dependencies for get-npm-dependencies-for-file",
+      "groupSlug": "get-npm-dependencies-for-file-prod-major",
+      "excludePackageNames": [
+        "eslint",
+        "prettier",
+        "cross-env",
+        "execa",
+        "mini-css-extract-plugin",
+        "sharp",
+        "@types/sharp",
+        "typescript",
+        "chalk",
+        "fs-extra",
+        "@types/fs-extra"
+      ],
+      "excludePackagePatterns": [
+        "^eslint-",
+        "^@typescript-eslint/",
+        "^@testing-library/"
+      ],
+      "commitMessageSuffix": "{{#unless groupName}} for get-npm-dependencies-for-file{{/unless}}",
+      "dependencyDashboardApproval": true
+    },
+    {
+      "matchPaths": [
+        "packages/get-npm-dependencies-for-file/package.json"
+      ],
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "groupName": "minor and patch dependencies for get-npm-dependencies-for-file",
+      "groupSlug": "get-npm-dependencies-for-file-prod-minor",
+      "matchPackageNames": [],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "excludePackageNames": [
+        "eslint",
+        "prettier",
+        "cross-env",
+        "execa",
+        "mini-css-extract-plugin",
+        "sharp",
+        "@types/sharp",
+        "typescript",
+        "chalk",
+        "fs-extra",
+        "@types/fs-extra"
+      ],
+      "excludePackagePatterns": [
+        "^eslint-",
+        "^@typescript-eslint/",
+        "^@testing-library/"
+      ],
+      "commitMessageSuffix": "{{#unless groupName}} for get-npm-dependencies-for-file{{/unless}}"
+    },
+    {
+      "matchPaths": [
+        "packages/get-npm-dependencies-for-file/package.json"
+      ],
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "groupName": "major dependencies for get-npm-dependencies-for-file",
+      "groupSlug": "get-npm-dependencies-for-file-prod-major",
+      "matchPackageNames": [],
+      "matchUpdateTypes": [
+        "major",
+        "minor"
+      ],
+      "excludePackageNames": [
+        "eslint",
+        "prettier",
+        "cross-env",
+        "execa",
+        "mini-css-extract-plugin",
+        "sharp",
+        "@types/sharp",
+        "typescript",
+        "chalk",
+        "fs-extra",
+        "@types/fs-extra"
+      ],
+      "excludePackagePatterns": [
+        "^eslint-",
+        "^@typescript-eslint/",
+        "^@testing-library/"
+      ],
+      "commitMessageSuffix": "{{#unless groupName}} for get-npm-dependencies-for-file{{/unless}}",
+      "dependencyDashboardApproval": true
     }
   ]
 }
