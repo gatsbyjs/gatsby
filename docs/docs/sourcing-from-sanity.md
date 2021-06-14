@@ -78,7 +78,7 @@ import { GatsbyImage } from "gatsby-plugin-image"
 const Person = ({ data }) => (
   <article>
     <h2>{data.sanityPerson.name}</h2>
-    <GatsbyImage fluid={data.sanityPerson.profileImage.asset.gatsbyImageData} />
+    <GatsbyImage image={data.sanityPerson.profileImage.asset.gatsbyImageData} />
   </article>
 )
 
@@ -107,7 +107,7 @@ import { GatsbyImage } from "gatsby-plugin-image"
 const Person = ({ data }) => (
   <article>
     <h2>{data.sanityPerson.name}</h2>
-    <Img fixed={data.sanityPerson.profileImage.asset.gatsbyImageData} />
+    <GatsbyImage image={data.sanityPerson.profileImage.asset.gatsbyImageData} />
   </article>
 )
 
