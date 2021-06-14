@@ -1,6 +1,10 @@
 import { getNode } from "../../../../datastore"
 import { store } from "../../../../redux"
-import { IGatsbyPage, IGatsbyPageComponent } from "../../../../redux/types"
+import {
+  IGatsbyPage,
+  IGatsbyPageComponent,
+  IGatsbyStaticQueryComponents,
+} from "../../../../redux/types"
 import reporter from "gatsby-cli/lib/reporter"
 import apiRunner from "../../../api-runner-node"
 
@@ -23,6 +27,11 @@ export function getComponent(
   componentPath: IGatsbyPageComponent["componentPath"]
 ): IGatsbyPageComponent | undefined {
   return store.getState().components.get(componentPath)
+}
+export function getStaticQueryComponent(
+  id: IGatsbyStaticQueryComponents["id"]
+): IGatsbyStaticQueryComponents | undefined {
+  return store.getState().staticQueryComponents.get(id)
 }
 
 // test: reporter
