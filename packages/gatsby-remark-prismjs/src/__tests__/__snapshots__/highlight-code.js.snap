@@ -47,6 +47,6 @@ exports[`highlight code and lines with PrismJS with language-text for language s
 Hello World%
 <span class=\\"token builtin class-name\\">echo</span> -n <span class=\\"token number\\">123</span>
 123%
-<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token builtin class-name\\">echo</span> <span class=\\"token number\\">456</span></span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token number\\">456</span></span><span class=\\"token builtin class-name\\">echo</span> <span class=\\"token assign-left variable\\">x</span><span class=\\"token operator\\">=</span>y
-<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token assign-left variable\\">x</span><span class=\\"token operator\\">=</span>y</span>"
+<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token builtin class-name\\">echo</span> <span class=\\"token number\\">456</span></span><span class=\\"gatsby-highlight-code-line\\">456</span><span class=\\"token builtin class-name\\">echo</span> <span class=\\"token assign-left variable\\">x</span><span class=\\"token operator\\">=</span>y
+<span class=\\"gatsby-highlight-code-line\\">x=y</span>"
 `;

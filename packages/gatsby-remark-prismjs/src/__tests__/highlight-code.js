@@ -112,7 +112,7 @@ export default Counter
     it(`for language shell with output lines`, () => {
       const highlightCode = require(`../highlight-code`)
       const language = `shell`
-      const lineNumbersOutput = [2, 4]
+      const lineNumbersOutput = [2, 4, 6, 8]
       const lineNumbersHighlight = [5, 6, 8]
       const code = `echo -n "Hello World"
 Hello World%
