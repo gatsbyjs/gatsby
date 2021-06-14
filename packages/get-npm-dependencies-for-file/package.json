@@ -1,0 +1,30 @@
+{
+  "name": "get-npm-dependencies-for-file",
+  "version": "1.0.0",
+  "description": "Analyze a file's requires/imports to return NPM dependencies",
+  "main": "index.js",
+  "jest": {
+    "testPathIgnorePatterns": [
+      "fixtures"
+    ]
+  },
+  "scripts": {
+    "test": "npm run test"
+  },
+  "keywords": [
+    "webpack",
+    "dependencies"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "chrome-aws-lambda": "^10.0.0",
+    "jest": "^27.0.4"
+  },
+  "dependencies": {
+    "precinct": "^8.1.0",
+    "read-pkg-up": "^8.0.0",
+    "require-package-name": "^2.0.1",
+    "resolve": "^1.20.0"
+  }
+}
