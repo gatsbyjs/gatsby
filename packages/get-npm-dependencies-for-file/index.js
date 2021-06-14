@@ -7,7 +7,7 @@ const requirePackageName = require("require-package-name")
 const isLocalFile = filePath => filePath.slice(0, 1) === `.`
 
 module.exports = filePath => {
-  let dependencies = []
+  let dependencies = {}
   const localFilesToProcess = [filePath]
 
   while (localFilesToProcess.length) {
@@ -35,7 +35,7 @@ module.exports = filePath => {
           const pkg = readPkgUp.sync({ cwd: pathToModule })
 
           if (pkg) {
-            dependencies.push({ name: moduleName, version: pkg.pkg.version })
+            dependencies[moduleName] = pkg.packageJson.version
           }
         } catch (e) {
           if (e.code === "MODULE_NOT_FOUND") {

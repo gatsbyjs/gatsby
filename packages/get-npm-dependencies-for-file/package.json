@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "precinct": "^8.1.0",
-    "read-pkg-up": "^8.0.0",
+    "read-pkg-up": "^7.0.1",
     "require-package-name": "^2.0.1",
     "resolve": "^1.20.0"
   }

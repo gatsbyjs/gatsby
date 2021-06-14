@@ -5,27 +5,29 @@ describe(`resolve-dependencies`, () => {
   it(`returns empty array if the file has no dependencies`, () => {
     expect(
       findDependencies(path.resolve(__dirname, `./fixtures/no-dependencies.js`))
-    ).toEqual([])
+    ).toEqual({})
   })
   it(`handles typescript files`, () => {
     expect(
       findDependencies(
         path.resolve(__dirname, `./fixtures/no-dependencies-typescript.ts`)
       )
-    ).toEqual([])
+    ).toEqual({})
   })
   it(`handles mjs files`, () => {
     expect(
       findDependencies(
         path.resolve(__dirname, `./fixtures/no-dependencies-mjs.mjs`)
       )
-    ).toEqual([])
+    ).toEqual({})
   })
   it(`returns array of package names if the file has dependencies`, () => {
     expect(
-      findDependencies(
-        path.resolve(__dirname, `./fixtures/one-dependency.ts`)
-      )[0].name
+      Object.keys(
+        findDependencies(
+          path.resolve(__dirname, `./fixtures/one-dependency.ts`)
+        )
+      )[0]
     ).toEqual(`chrome-aws-lambda`)
   })
   it(`ignores local dependencies`, () => {
@@ -33,20 +35,20 @@ describe(`resolve-dependencies`, () => {
       findDependencies(
         path.resolve(__dirname, `./fixtures/local-dependency.ts`)
       )
-    ).toEqual([])
+    ).toEqual({})
   })
   it(`ignores dependencies it can't resolve`, () => {
     expect(
       findDependencies(
         path.resolve(__dirname, `./fixtures/not-resolvable-dependency.ts`)
       )
-    ).toEqual([])
+    ).toEqual({})
   })
   it(`traverses the file's local dependencies`, () => {
     const dependencies = findDependencies(
       path.resolve(__dirname, `./fixtures/local-dependency-with-dependency.ts`)
     )
-    expect(dependencies[0].name).toEqual(`chrome-aws-lambda`)
-    expect(dependencies[0].version).toBeTruthy()
+    expect(Object.keys(dependencies)[0]).toEqual(`chrome-aws-lambda`)
+    expect(Object.values(dependencies)[0]).toBeTruthy()
   })
 })
