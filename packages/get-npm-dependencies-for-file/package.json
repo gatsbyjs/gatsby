@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "description": "Analyze a file's requires/imports and returns an array of NPM dependencies",
   "main": "index.js",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/get-npm-dependencies-for-file#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/get-npm-dependencies-for-file"
+  },
   "jest": {
     "testPathIgnorePatterns": [
       "fixtures"
