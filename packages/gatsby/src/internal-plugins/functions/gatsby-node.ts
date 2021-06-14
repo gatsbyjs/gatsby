@@ -470,6 +470,13 @@ export async function onCreateDevServer({
 
       return next()
     },
+    (req, res, next) => {
+      const ALLOW_REGEX = /^x-gatsby-(A-Za-z)*/
+
+      req.headers = _.pickBy(req.headers, (value, key) => ALLOW_REGEX.test(key))
+
+      return next()
+    },
     express.text(),
     express.json(),
     express.raw(),
