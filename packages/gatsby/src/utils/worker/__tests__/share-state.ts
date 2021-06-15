@@ -17,10 +17,10 @@ const dummyPagePayload = {
 }
 
 describe(`worker (share-state)`, () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     const fileDir = path.join(process.cwd(), `.cache/redux`)
-    fs.emptyDirSync(fileDir)
+    await fs.emptyDir(fileDir)
   })
 
   afterEach(() => {

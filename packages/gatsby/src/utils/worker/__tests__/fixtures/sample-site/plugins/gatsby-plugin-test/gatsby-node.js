@@ -16,6 +16,21 @@ exports.createSchemaCustomization = ({ actions }, pluginOptions) => {
   `)
 }
 
+exports.createResolvers = ({ createResolvers }) => {
+  const resolvers = {
+    NodeTypeOne: {
+      resolverField: {
+        type: "String",
+        resolve() {
+          return `Custom String`
+        }
+      }
+    }
+  }
+
+  createResolvers(resolvers)
+}
+
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const { createNode } = actions
 

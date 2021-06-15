@@ -2,26 +2,33 @@ import * as path from "path"
 import fs from "fs-extra"
 import { DocumentNode } from "graphql"
 import { build } from "../../../schema"
+import sourceNodesAndRemoveStaleNodes from "../../source-nodes"
 import { saveStateForWorkers, store } from "../../../redux"
 import { loadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
-import { createTestWorker, GatsbyTestWorkerPool } from "./test-helpers"
+import {
+  createTestWorker,
+  describeWhenLMDB,
+  GatsbyTestWorkerPool,
+} from "./test-helpers"
+import { getDataStore } from "../../../datastore"
 
 let worker: GatsbyTestWorkerPool | undefined
 
-describe(`worker (schema)`, () => {
+describeWhenLMDB(`worker (schema)`, () => {
   let state
 
   beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     const fileDir = path.join(process.cwd(), `.cache/redux`)
-    fs.emptyDirSync(fileDir)
+    await fs.emptyDir(fileDir)
 
     worker = createTestWorker()
 
     const siteDirectory = path.join(__dirname, `fixtures`, `sample-site`)
     await loadConfigAndPlugins({ siteDirectory })
     await worker.loadConfigAndPlugins({ siteDirectory })
-    await worker.runAPI(`sourceNodes`)
+    await sourceNodesAndRemoveStaleNodes({ webhookBody: {} })
+    await getDataStore().ready()
 
     await build({ parentSpan: {} })
 
@@ -86,7 +93,10 @@ describe(`worker (schema)`, () => {
     )
   })
 
-  // TODO: Really flaky locally! Trigger
+  it.skip(`should have resolverField from createResolvers`, async () => {
+    // TODO
+  })
+
   it(`should have inferenceMetadata`, async () => {
     expect(state.inferenceMetadata).toEqual(
       expect.objectContaining({
