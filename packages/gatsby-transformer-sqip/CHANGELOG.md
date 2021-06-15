@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@3.8.0-next.0...gatsby-transformer-sqip@3.8.0-next.1) (2021-06-10)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-transformer-sqip ([#31707](https://github.com/gatsbyjs/gatsby/issues/31707)) ([58f1880](https://github.com/gatsbyjs/gatsby/commit/58f188028ca8d483131f86d7679ef0644c2eab98))
+
+# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@3.7.0-next.2...gatsby-transformer-sqip@3.8.0-next.0) (2021-06-03)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
 # [3.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@3.7.0-next.1...gatsby-transformer-sqip@3.7.0-next.2) (2021-06-02)
 
 **Note:** Version bump only for package gatsby-transformer-sqip

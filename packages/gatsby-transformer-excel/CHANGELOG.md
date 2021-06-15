@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@3.8.0-next.0...gatsby-transformer-excel@3.8.0-next.1) (2021-06-10)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-transformer-excel ([#31705](https://github.com/gatsbyjs/gatsby/issues/31705)) ([eb5729a](https://github.com/gatsbyjs/gatsby/commit/eb5729a48f2375a0a25125016188f7e2305ac05a))
+
+# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@3.7.0-next.2...gatsby-transformer-excel@3.8.0-next.0) (2021-06-03)
+
+**Note:** Version bump only for package gatsby-transformer-excel
+
 # [3.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@3.7.0-next.1...gatsby-transformer-excel@3.7.0-next.2) (2021-06-02)
 
 **Note:** Version bump only for package gatsby-transformer-excel

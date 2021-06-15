@@ -1,14 +1,16 @@
-import { ArrayLikeIterable, RootDatabase, open } from "lmdb-store"
+import { RootDatabase, open } from "lmdb-store"
 // import { performance } from "perf_hooks"
 import { ActionsUnion, IGatsbyNode } from "../../redux/types"
 import { updateNodes } from "./updates/nodes"
 import { updateNodesByType } from "./updates/nodes-by-type"
-import { IDataStore, ILmdbDatabases } from "../types"
+import { IDataStore, IGatsbyIterable, ILmdbDatabases } from "../types"
 import { emitter, replaceReducer } from "../../redux"
 
 const rootDbFile =
   process.env.NODE_ENV === `test`
-    ? `test-datastore-${process.env.JEST_WORKER_ID}`
+    ? `test-datastore-${
+        process.env.FORCE_TEST_DATABASE_ID ?? process.env.JEST_WORKER_ID
+      }`
     : `datastore`
 
 let rootDb
@@ -71,7 +73,7 @@ function getNodesByType(type: string): Array<IGatsbyNode> {
   return result ?? []
 }
 
-function iterateNodes(): ArrayLikeIterable<IGatsbyNode> {
+function iterateNodes(): IGatsbyIterable<IGatsbyNode> {
   // Additionally fetching items by id to leverage lmdb-store cache
   const nodesDb = getDatabases().nodes
   return nodesDb
@@ -80,7 +82,7 @@ function iterateNodes(): ArrayLikeIterable<IGatsbyNode> {
     .filter(Boolean)
 }
 
-function iterateNodesByType(type: string): ArrayLikeIterable<IGatsbyNode> {
+function iterateNodesByType(type: string): IGatsbyIterable<IGatsbyNode> {
   const nodesByType = getDatabases().nodesByType
   return nodesByType
     .getValues(type)

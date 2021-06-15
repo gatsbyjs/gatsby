@@ -1,5 +1,6 @@
 import React from "react"
 
+import trackEvent from "../utils/trackEvent"
 import IndicatorButton from "./IndicatorButton"
 
 const gatsbyIcon = (
@@ -45,10 +46,29 @@ const failedIcon = (
   </svg>
 )
 
-const newPreviewAvailableClick = ({ isOnPrettyUrl, sitePrefix }) => {
+const waitForTrackEventToFire = ms =>
+  new Promise(resolve => setTimeout(resolve, ms || 50))
+
+const newPreviewAvailableClick = async ({
+  isOnPrettyUrl,
+  sitePrefix,
+  orgId,
+  siteId,
+  buildId,
+}) => {
   // Grabs domain that preview is hosted on https://preview-sitePrefix.gtsb.io
   // This will match `gtsb.io`
   const previewDomain = window.location.hostname.split(`.`).slice(-2).join(`.`)
+
+  trackEvent({
+    eventType: `PREVIEW_INDICATOR_CLICK`,
+    orgId,
+    siteId,
+    buildId,
+    name: `new preview`,
+  })
+
+  await waitForTrackEventToFire(75)
 
   if (isOnPrettyUrl || window.location.hostname === `localhost`) {
     window.location.reload()
@@ -59,9 +79,17 @@ const newPreviewAvailableClick = ({ isOnPrettyUrl, sitePrefix }) => {
   }
 }
 
-const viewLogsClick = ({ orgId, siteId, errorBuildId }) => {
+const viewLogsClick = ({ orgId, siteId, buildId, errorBuildId }) => {
   const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/builds/${errorBuildId}/details`
   const returnTo = encodeURIComponent(pathToBuildLogs)
+
+  trackEvent({
+    eventType: `PREVIEW_INDICATOR_CLICK`,
+    orgId,
+    siteId,
+    buildId,
+    name: `error logs`,
+  })
 
   window.open(`${pathToBuildLogs}?returnTo=${returnTo}`)
 }
@@ -70,6 +98,7 @@ const getButtonProps = ({
   status,
   orgId,
   siteId,
+  buildId,
   errorBuildId,
   isOnPrettyUrl,
   sitePrefix,
@@ -80,7 +109,14 @@ const getButtonProps = ({
         tooltipText: `New preview available`,
         overrideShowTooltip: true,
         active: true,
-        onClick: () => newPreviewAvailableClick({ isOnPrettyUrl, sitePrefix }),
+        onClick: () =>
+          newPreviewAvailableClick({
+            isOnPrettyUrl,
+            sitePrefix,
+            orgId,
+            siteId,
+            buildId,
+          }),
         tooltipLink: `Click to view`,
       }
     }
@@ -92,7 +128,7 @@ const getButtonProps = ({
         tooltipIcon: failedIcon,
         tooltipLink: `View logs`,
         tooltipLinkImage: logsIcon,
-        onClick: () => viewLogsClick({ orgId, siteId, errorBuildId }),
+        onClick: () => viewLogsClick({ orgId, siteId, buildId, errorBuildId }),
       }
     }
     case `BUILDING`: {
@@ -123,6 +159,7 @@ export default function GatsbyIndicatorButton({
   status,
   orgId,
   siteId,
+  buildId,
   errorBuildId,
   isOnPrettyUrl,
   sitePrefix,
@@ -131,6 +168,7 @@ export default function GatsbyIndicatorButton({
     status,
     orgId,
     siteId,
+    buildId,
     errorBuildId,
     isOnPrettyUrl,
     sitePrefix,

@@ -8,6 +8,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     error: jest.fn(),
     panic: jest.fn(),
+    panicOnBuild: jest.fn(),
     log: jest.fn(),
     warn: jest.fn(),
     success: jest.fn(),

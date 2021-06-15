@@ -1,7 +1,7 @@
 import { store } from "../../redux"
 import { IGatsbyNode } from "../../redux/types"
 import { IDbQueryElemMatch } from "../common/query"
-import { getNodes, getNodesByType } from "../"
+import { getDataStore } from "../"
 
 // Only list supported ops here. "CacheableFilterOp"
 export type FilterOp =  // TODO: merge with DbComparator ?
@@ -205,19 +205,23 @@ export const ensureIndexByQuery = (
   // it's probably faster to loop through all nodes. Perhaps. Maybe.
 
   if (nodeTypeNames.length === 1) {
-    getNodesByType(nodeTypeNames[0]).forEach(node => {
-      addNodeToFilterCache(node, filterPath, filterCache, resolvedNodesCache)
-    })
+    getDataStore()
+      .iterateNodesByType(nodeTypeNames[0])
+      .forEach(node => {
+        addNodeToFilterCache(node, filterPath, filterCache, resolvedNodesCache)
+      })
   } else {
     // Here we must first filter for the node type
     // This loop is expensive at scale (!)
-    getNodes().forEach(node => {
-      if (!nodeTypeNames.includes(node.internal.type)) {
-        return
-      }
+    getDataStore()
+      .iterateNodes()
+      .forEach(node => {
+        if (!nodeTypeNames.includes(node.internal.type)) {
+          return
+        }
 
-      addNodeToFilterCache(node, filterPath, filterCache, resolvedNodesCache)
-    })
+        addNodeToFilterCache(node, filterPath, filterCache, resolvedNodesCache)
+      })
   }
 
   postIndexingMetaSetup(filterCache, op)
@@ -245,22 +249,9 @@ export function ensureEmptyFilterCache(
   })
 
   if (nodeTypeNames.length === 1) {
-    getNodesByType(nodeTypeNames[0]).forEach(node => {
-      if (!node.__gatsby_resolved) {
-        const typeName = node.internal.type
-        const resolvedNodes = resolvedNodesCache.get(typeName)
-        const resolved = resolvedNodes?.get(node.id)
-        if (resolved !== undefined) {
-          node.__gatsby_resolved = resolved
-        }
-      }
-      orderedByCounter.push(node)
-    })
-  } else {
-    // Here we must first filter for the node type
-    // This loop is expensive at scale (!)
-    getNodes().forEach(node => {
-      if (nodeTypeNames.includes(node.internal.type)) {
+    getDataStore()
+      .iterateNodesByType(nodeTypeNames[0])
+      .forEach(node => {
         if (!node.__gatsby_resolved) {
           const typeName = node.internal.type
           const resolvedNodes = resolvedNodesCache.get(typeName)
@@ -270,8 +261,25 @@ export function ensureEmptyFilterCache(
           }
         }
         orderedByCounter.push(node)
-      }
-    })
+      })
+  } else {
+    // Here we must first filter for the node type
+    // This loop is expensive at scale (!)
+    getDataStore()
+      .iterateNodes()
+      .forEach(node => {
+        if (nodeTypeNames.includes(node.internal.type)) {
+          if (!node.__gatsby_resolved) {
+            const typeName = node.internal.type
+            const resolvedNodes = resolvedNodesCache.get(typeName)
+            const resolved = resolvedNodes?.get(node.id)
+            if (resolved !== undefined) {
+              node.__gatsby_resolved = resolved
+            }
+          }
+          orderedByCounter.push(node)
+        }
+      })
   }
 
   // Since each node can only have one type, we shouldn't have to be concerned
@@ -363,30 +371,34 @@ export const ensureIndexByElemMatch = (
   filtersCache.set(filterCacheKey, filterCache)
 
   if (nodeTypeNames.length === 1) {
-    getNodesByType(nodeTypeNames[0]).forEach(node => {
-      addNodeToBucketWithElemMatch(
-        node,
-        node,
-        filter,
-        filterCache,
-        resolvedNodesCache
-      )
-    })
+    getDataStore()
+      .iterateNodesByType(nodeTypeNames[0])
+      .forEach(node => {
+        addNodeToBucketWithElemMatch(
+          node,
+          node,
+          filter,
+          filterCache,
+          resolvedNodesCache
+        )
+      })
   } else {
     // Expensive at scale
-    getNodes().forEach(node => {
-      if (!nodeTypeNames.includes(node.internal.type)) {
-        return
-      }
+    getDataStore()
+      .iterateNodes()
+      .forEach(node => {
+        if (!nodeTypeNames.includes(node.internal.type)) {
+          return
+        }
 
-      addNodeToBucketWithElemMatch(
-        node,
-        node,
-        filter,
-        filterCache,
-        resolvedNodesCache
-      )
-    })
+        addNodeToBucketWithElemMatch(
+          node,
+          node,
+          filter,
+          filterCache,
+          resolvedNodesCache
+        )
+      })
   }
 
   postIndexingMetaSetup(filterCache, op)

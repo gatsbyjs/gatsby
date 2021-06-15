@@ -1,5 +1,5 @@
 ---
-title: Use and Style React Components
+title: "Part 2: Use and Style React Components"
 ---
 
 import { Announcement, Notification, LinkButton } from 'gatsby-interface'
@@ -170,7 +170,7 @@ wrapped in an enclosing tag. Did you want a JSX fragment
 
 ### Task: Update the home page content
 
-Now that you've gotten a high-level introduction to React, it's time to your hands at writing some React components. To start, you'll update the content for the home page.
+Now that you've gotten a high-level introduction to React, it's time to try your hands at writing some React components. To start, you'll update the content for the home page.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -608,7 +608,7 @@ Then, in your component `.js` file, import each class separately and apply it to
 
 ```javascript:title=src/components/my-component.js
 import * as React from 'react'
-import { title } from './layout.module.css' // highlight-line
+import { title } from './my-component.module.css' // highlight-line
 
 const MyComponent = () => {
   return (
@@ -749,6 +749,14 @@ const Layout = ({ pageTitle, children }) => {
 
 export default Layout
 ```
+
+<Announcement>
+
+**Syntax Hint:** In CSS, the convention is to name classes using kebab case (like `.nav-links`). But in JavaScript, the convention is to name variables using camel case (like `navLinks`).
+
+Luckily, when you use CSS Modules with Gatsby, you can have both! Your kebab-case class names in your `.modules.css` files will automatically be converted to camel-case variables that you can import in your `.js` files.
+
+</Announcement>
 
 7. Once your development server finishes rebuilding your site, you should see your new styles applied in your web browser:
 

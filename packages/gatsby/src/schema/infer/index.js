@@ -4,7 +4,7 @@ const { hasNodes } = require(`./inference-metadata`)
 const { getExampleObject } = require(`./build-example-data`)
 const { addNodeInterface } = require(`../types/node-interface`)
 const { addInferredFields } = require(`./add-inferred-fields`)
-const { getNodesByType } = require(`../../datastore`)
+const { getDataStore } = require(`../../datastore`)
 
 const addInferredTypes = ({
   schemaComposer,
@@ -88,8 +88,14 @@ const addInferredType = ({
     typeComposer.getExtension(`createdFrom`) === `inference` &&
     hasNodes(inferenceMetadata.typeMap[typeName])
   ) {
-    const nodes = getNodesByType(typeName)
-    typeComposer.setExtension(`plugin`, nodes[0].internal.owner)
+    let firstNode
+    for (const node of getDataStore().iterateNodesByType(typeName)) {
+      firstNode = node
+      break
+    }
+    if (firstNode) {
+      typeComposer.setExtension(`plugin`, firstNode.internal.owner)
+    }
   }
 
   const exampleValue = getExampleObject({
