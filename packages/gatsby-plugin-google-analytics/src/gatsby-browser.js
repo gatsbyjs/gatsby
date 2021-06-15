@@ -20,7 +20,7 @@ function sendWebVitals() {
     }
     listOfMetricsSend.add(data.name)
 
-    sendToGoogleAnalytics(data, win[dataLayerName])
+    sendToGoogleAnalytics(data)
   }
 
   return import(`web-vitals/base`).then(({ getLCP, getFID, getCLS }) => {
