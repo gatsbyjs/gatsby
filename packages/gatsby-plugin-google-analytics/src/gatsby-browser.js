@@ -12,8 +12,7 @@ function debounce(fn, timeout) {
   }
 }
 
-function sendWebVitals(dataLayerName = `dataLayer`) {
-  const win = window
+function sendWebVitals() {
 
   function sendData(data) {
     if (listOfMetricsSend.has(data.name)) {
