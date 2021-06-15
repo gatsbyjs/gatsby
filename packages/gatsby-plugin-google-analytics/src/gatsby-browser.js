@@ -13,7 +13,6 @@ function debounce(fn, timeout) {
 }
 
 function sendWebVitals() {
-
   function sendData(data) {
     if (listOfMetricsSend.has(data.name)) {
       return
