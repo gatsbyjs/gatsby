@@ -1,8 +1,8 @@
 import { getLCP, getFID, getCLS } from "web-vitals/base"
 
 jest.mock(`web-vitals/base`, () => {
-  function createEntry(type, id, delta) {
-    return { name: type, id, delta }
+  function createEntry(type, id, value) {
+    return { name: type, id, value }
   }
 
   return {
@@ -139,23 +139,25 @@ describe(`onRouteUpdate`, () => {
   })
 
   it(`sends core web vitals when enabled`, async () => {
-    jest.useRealTimers()
-    const { onClientEntry } = getAPI(() => {
+    jest.useFakeTimers()
+    const { onInitialClientRender } = getAPI(() => {
       process.env.NODE_ENV = `production`
     })
-    onClientEntry({}, { enableWebVitalsTracking: true })
+    onInitialClientRender({}, { enableWebVitalsTracking: true })
 
     // wait 2 ticks to wait for dynamic import to resolve
     await Promise.resolve()
     await Promise.resolve()
 
+    jest.runAllTimers()
+
     expect(window.dataLayer.length).toBe(3)
     expect(window.dataLayer).toContainEqual({
       event: `core-web-vitals`,
       webVitalsMeasurement: {
-        name: `CLS`,
-        id: `3`,
-        value: 100,
+        name: `LCP`,
+        id: `1`,
+        value: 300,
       },
     })
     expect(window.dataLayer).toContainEqual({
@@ -166,40 +168,24 @@ describe(`onRouteUpdate`, () => {
         value: 150,
       },
     })
-    expect(window.dataLayer).toEqual([
-      {
-        event: `core-web-vitals`,
-        webVitalsMeasurement: {
-          name: `CLS`,
-          id: `3`,
-          value: 100,
-        },
+    expect(window.dataLayer).toContainEqual({
+      event: `core-web-vitals`,
+      webVitalsMeasurement: {
+        name: `CLS`,
+        id: `3`,
+        value: 100,
       },
-      {
-        event: `core-web-vitals`,
-        webVitalsMeasurement: {
-          name: `FID`,
-          id: `2`,
-          value: 150,
-        },
-      },
-      {
-        event: `core-web-vitals`,
-        webVitalsMeasurement: {
-          name: `LCP`,
-          id: `1`,
-          value: 300,
-        },
-      },
-    ])
+    })
   })
 
   it(`sends nothing when web vitals tracking is disabled`, async () => {
-    jest.useRealTimers()
-    const { onClientEntry } = getAPI(() => {
+    jest.useFakeTimers()
+    const { onInitialClientRender } = getAPI(() => {
       process.env.NODE_ENV = `production`
     })
-    onClientEntry({}, { enableWebVitalsTracking: false })
+    onInitialClientRender({}, { enableWebVitalsTracking: false })
+
+    jest.runAllTimers()
 
     // wait 2 ticks to wait for dynamic import to resolve
     await Promise.resolve()

@@ -1,10 +1,10 @@
-import { onClientEntry, onRouteUpdate } from "../gatsby-browser"
+import { onInitialClientRender, onRouteUpdate } from "../gatsby-browser"
 import { Minimatch } from "minimatch"
 import { getLCP, getFID, getCLS } from "web-vitals/base"
 
 jest.mock(`web-vitals/base`, () => {
-  function createEntry(type, id, delta) {
-    return { name: type, id, delta }
+  function createEntry(type, id, value) {
+    return { name: type, id, value }
   }
 
   return {
@@ -107,12 +107,14 @@ describe(`gatsby-plugin-google-analytics`, () => {
         })
 
         it(`sends core web vitals when enabled`, async () => {
-          jest.useRealTimers()
-          onClientEntry({}, { enableWebVitalsTracking: true })
+          jest.useFakeTimers()
+          onInitialClientRender({}, { enableWebVitalsTracking: true })
 
           // wait 2 ticks to wait for dynamic import to resolve
           await Promise.resolve()
           await Promise.resolve()
+
+          jest.runAllTimers()
 
           expect(window.ga).toBeCalledTimes(3)
           expect(window.ga).toBeCalledWith(
@@ -148,12 +150,14 @@ describe(`gatsby-plugin-google-analytics`, () => {
         })
 
         it(`sends nothing when web vitals tracking is disabled`, async () => {
-          jest.useRealTimers()
-          onClientEntry({}, { enableWebVitalsTracking: false })
+          jest.useFakeTimers()
+          onInitialClientRender({}, { enableWebVitalsTracking: false })
 
           // wait 2 ticks to wait for dynamic import to resolve
           await Promise.resolve()
           await Promise.resolve()
+
+          jest.runAllTimers()
 
           expect(getLCP).not.toBeCalled()
           expect(getFID).not.toBeCalled()
