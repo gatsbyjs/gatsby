@@ -107,7 +107,6 @@ describe(`gatsby-plugin-google-analytics`, () => {
         })
 
         it(`sends core web vitals when enabled`, async () => {
-          jest.useFakeTimers()
           onInitialClientRender({}, { enableWebVitalsTracking: true })
 
           // wait 2 ticks to wait for dynamic import to resolve
@@ -150,7 +149,6 @@ describe(`gatsby-plugin-google-analytics`, () => {
         })
 
         it(`sends nothing when web vitals tracking is disabled`, async () => {
-          jest.useFakeTimers()
           onInitialClientRender({}, { enableWebVitalsTracking: false })
 
           // wait 2 ticks to wait for dynamic import to resolve

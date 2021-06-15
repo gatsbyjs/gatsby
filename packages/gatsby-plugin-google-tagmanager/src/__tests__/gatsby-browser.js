@@ -139,7 +139,6 @@ describe(`onRouteUpdate`, () => {
   })
 
   it(`sends core web vitals when enabled`, async () => {
-    jest.useFakeTimers()
     const { onInitialClientRender } = getAPI(() => {
       process.env.NODE_ENV = `production`
     })
@@ -179,7 +178,6 @@ describe(`onRouteUpdate`, () => {
   })
 
   it(`sends nothing when web vitals tracking is disabled`, async () => {
-    jest.useFakeTimers()
     const { onInitialClientRender } = getAPI(() => {
       process.env.NODE_ENV = `production`
     })

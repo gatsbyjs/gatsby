@@ -146,5 +146,39 @@ describe(`gatsby-plugin-google-tagmanager`, () => {
         `window.${dataLayerName}`
       )
     })
+
+    it(`adds the web-vitals polyfill to the head`, () => {
+      const mocks = {
+        setHeadComponents: jest.fn(),
+        setPreBodyComponents: jest.fn(),
+      }
+      const pluginOptions = {
+        includeInDevelopment: true,
+        enableWebVitalsTracking: true,
+      }
+
+      onRenderBody(mocks, pluginOptions)
+
+      const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
+      expect(mocks.setHeadComponents.mock.calls[0][0].length).toBe(2)
+      expect(headConfig.key).toBe(`gatsby-plugin-google-tagmanager-web-vitals`)
+    })
+
+    it(`should not add the web-vitals polyfill when enableWebVitalsTracking is false `, () => {
+      const mocks = {
+        setHeadComponents: jest.fn(),
+        setPreBodyComponents: jest.fn(),
+      }
+      const pluginOptions = {
+        includeInDevelopment: true,
+        enableWebVitalsTracking: false,
+      }
+
+      onRenderBody(mocks, pluginOptions)
+
+      const [headConfig] = mocks.setHeadComponents.mock.calls[0][0]
+      expect(mocks.setHeadComponents.mock.calls[0].length).toBe(1)
+      expect(headConfig.key).toBe(`plugin-google-tagmanager`)
+    })
   })
 })
