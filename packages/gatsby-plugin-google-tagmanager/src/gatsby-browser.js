@@ -76,7 +76,11 @@ export function onRouteUpdate(_, pluginOptions) {
 }
 
 export function onInitialClientRender(_, pluginOptions) {
-  if (pluginOptions.enableWebVitalsTracking) {
+  // we only load the polyfill in production so we can't enable it in development
+  if (
+    process.env.NODE_ENV === `production` &&
+    pluginOptions.enableWebVitalsTracking
+  ) {
     sendWebVitals(pluginOptions.dataLayerName)
   }
 }

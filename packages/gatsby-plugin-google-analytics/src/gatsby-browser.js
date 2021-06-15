@@ -87,7 +87,11 @@ export const onRouteUpdate = ({ location }, pluginOptions = {}) => {
 }
 
 export function onInitialClientRender(_, pluginOptions) {
-  if (pluginOptions.enableWebVitalsTracking) {
+  if (
+    process.env.NODE_ENV === `production` &&
+    typeof ga === `function` &&
+    pluginOptions.enableWebVitalsTracking
+  ) {
     sendWebVitals()
   }
 }
