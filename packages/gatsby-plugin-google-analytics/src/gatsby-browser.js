@@ -89,6 +89,6 @@ export const onRouteUpdate = ({ location }, pluginOptions = {}) => {
 
 export function onInitialClientRender(_, pluginOptions) {
   if (pluginOptions.enableWebVitalsTracking) {
-    sendWebVitals(pluginOptions.dataLayerName)
+    sendWebVitals()
   }
 }
