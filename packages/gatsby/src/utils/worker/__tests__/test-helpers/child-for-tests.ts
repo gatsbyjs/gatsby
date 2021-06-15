@@ -1,8 +1,10 @@
+import { CombinedState } from "redux"
 import { getNode } from "../../../../datastore"
 import { store } from "../../../../redux"
 import {
   IGatsbyPage,
   IGatsbyPageComponent,
+  IGatsbyState,
   IGatsbyStaticQueryComponents,
 } from "../../../../redux/types"
 import { ITypeMetadata } from "../../../../schema/infer/inference-metadata"
@@ -54,6 +56,6 @@ export function getAPIRunResult(): string | undefined {
   return (global as any).test
 }
 
-export function getState() {
+export function getState(): CombinedState<IGatsbyState> {
   return store.getState()
 }
