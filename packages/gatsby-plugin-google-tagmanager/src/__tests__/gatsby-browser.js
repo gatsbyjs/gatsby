@@ -183,11 +183,11 @@ describe(`onRouteUpdate`, () => {
     })
     onInitialClientRender({}, { enableWebVitalsTracking: false })
 
-    jest.runAllTimers()
-
     // wait 2 ticks to wait for dynamic import to resolve
     await Promise.resolve()
     await Promise.resolve()
+
+    jest.runAllTimers()
 
     expect(getLCP).not.toBeCalled()
     expect(getFID).not.toBeCalled()
