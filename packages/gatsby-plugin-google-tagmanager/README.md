@@ -84,7 +84,7 @@ This tag will now catch every route change in Gatsby, and you can add Google tag
 
 #### Tracking Core Web Vitals
 
-Optimizing for the quality of user experience is key to the long-term success of any site on the web. Capturing Real user metrics (RUM) helps you understand the experience of your user/customer. By setting `enableWebVitalsTracking` to true, GTM will get "core-web-vitals" events with their values.
+Optimizing for the quality of user experience is key to the long-term success of any site on the web. Capturing Real user metrics (RUM) helps you understand the experience of your user/customer. By setting `enableWebVitalsTracking` to `true`, GTM will get "core-web-vitals" events with their values.
 
 You can save this data in Google Analytics or any database of your choosing.
 
