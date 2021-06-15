@@ -86,7 +86,7 @@ describe(`worker (schema)`, () => {
     )
   })
 
-  // TODO: Really flaky locally!
+  // TODO: Really flaky locally! Trigger
   it(`should have inferenceMetadata`, async () => {
     expect(state.inferenceMetadata).toEqual(
       expect.objectContaining({
