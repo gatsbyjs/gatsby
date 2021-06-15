@@ -31,7 +31,7 @@ function sendWebVitals(dataLayerName = `dataLayer`) {
     // LCP can occur multiple times so we debounce it
     const debouncedLCP = debounce(sendData, 3000)
 
-    // With the true flag, we meausre all previous occurences too, in case we start listening to late.
+    // With the true flag, we measure all previous occurences too, in case we start listening to late.
     getCLS(debouncedCLS, true)
     getFID(debouncedFID, true)
     getLCP(debouncedLCP, true)
