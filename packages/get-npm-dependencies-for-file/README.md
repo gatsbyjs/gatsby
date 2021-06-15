@@ -1,6 +1,6 @@
 # get-npm-dependencies-for-file
 
-Analyze a file's requires/imports with [precinct](https://github.com/dependents/node-precinct) and returns an array of NPM dependencies.
+Analyze a file's requires/imports with [precinct](https://github.com/dependents/node-precinct) and returns an object of NPM dependencies.
 
 Typescript, ES6, and commonjs modules are all supported.
 

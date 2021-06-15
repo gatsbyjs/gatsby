@@ -1,7 +1,7 @@
 {
   "name": "get-npm-dependencies-for-file",
   "version": "1.0.0",
-  "description": "Analyze a file's requires/imports and returns an array of NPM dependencies",
+  "description": "Analyze a file's requires/imports and returns an object of NPM dependencies",
   "main": "index.js",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/get-npm-dependencies-for-file#readme",
   "repository": {

@@ -2,7 +2,7 @@ const findDependencies = require(`../`)
 const path = require(`path`)
 
 describe(`resolve-dependencies`, () => {
-  it(`returns empty array if the file has no dependencies`, () => {
+  it(`returns empty object if the file has no dependencies`, () => {
     expect(
       findDependencies(path.resolve(__dirname, `./fixtures/no-dependencies.js`))
     ).toEqual({})
@@ -21,7 +21,7 @@ describe(`resolve-dependencies`, () => {
       )
     ).toEqual({})
   })
-  it(`returns array of package names if the file has dependencies`, () => {
+  it(`returns object of package names and versions if the file has dependencies`, () => {
     expect(
       Object.keys(
         findDependencies(
