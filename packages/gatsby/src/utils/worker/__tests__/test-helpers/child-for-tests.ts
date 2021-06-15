@@ -53,3 +53,7 @@ export async function runAPI(apiName: string): Promise<any> {
 export function getAPIRunResult(): string | undefined {
   return (global as any).test
 }
+
+export function getState() {
+  return store.getState()
+}

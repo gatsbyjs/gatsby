@@ -1,3 +1,5 @@
+import * as path from "path"
+import fs from "fs-extra"
 import { createTestWorker, GatsbyTestWorkerPool } from "./test-helpers"
 import {
   store,
@@ -17,6 +19,8 @@ const dummyPagePayload = {
 describe(`worker (share-state)`, () => {
   beforeEach(() => {
     store.dispatch({ type: `DELETE_CACHE` })
+    const fileDir = path.join(process.cwd(), `.cache/redux`)
+    fs.emptyDirSync(fileDir)
   })
 
   afterEach(() => {
