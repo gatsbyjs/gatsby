@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.7.1...gatsby@3.7.2) (2021-06-15)
+
+### Bug Fixes
+
+- **gatsby:** infer shape of warning object ([#31489](https://github.com/gatsbyjs/gatsby/issues/31489)) ([#31931](https://github.com/gatsbyjs/gatsby/issues/31931)) ([559c5f2](https://github.com/gatsbyjs/gatsby/commit/559c5f20035c258163b912fbdfb2bc5664b9b38f))
+
 ## [3.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.7.0...gatsby@3.7.1) (2021-06-10)
 
 **Note:** Version bump only for package gatsby
