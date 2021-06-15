@@ -9,7 +9,9 @@ import { createTestWorker, GatsbyTestWorkerPool } from "./test-helpers"
 let worker: GatsbyTestWorkerPool | undefined
 
 describe(`worker (schema)`, () => {
-  beforeEach(async () => {
+  let state
+
+  beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     const fileDir = path.join(process.cwd(), `.cache/redux`)
     fs.emptyDirSync(fileDir)
@@ -23,12 +25,13 @@ describe(`worker (schema)`, () => {
 
     await build({ parentSpan: {} })
 
+    saveStateForWorkers([`inferenceMetadata`])
     await worker.buildSchema()
 
-    saveStateForWorkers([`inferenceMetadata`])
+    state = await worker.getState()
   })
 
-  afterEach(() => {
+  afterAll(() => {
     if (worker) {
       worker.end()
       worker = undefined
@@ -36,8 +39,6 @@ describe(`worker (schema)`, () => {
   })
 
   it(`should have functioning createSchemaCustomization`, async () => {
-    const state = await worker!.getState()
-
     const typeDefinitions = (state.schemaCustomization.types[0] as {
       typeOrTypeDef: DocumentNode
     }).typeOrTypeDef.definitions
@@ -73,6 +74,26 @@ describe(`worker (schema)`, () => {
           ]),
         }),
       ])
+    )
+  })
+
+  it(`should have NodeTypeOne & NodeTypeTwo in schema`, async () => {
+    expect(state.schema[`_typeMap`]).toEqual(
+      expect.objectContaining({
+        NodeTypeOne: `NodeTypeOne`,
+        NodeTypeTwo: `NodeTypeTwo`,
+      })
+    )
+  })
+
+  // TODO: Really flaky locally!
+  it(`should have inferenceMetadata`, async () => {
+    expect(state.inferenceMetadata).toEqual(
+      expect.objectContaining({
+        typeMap: expect.objectContaining({
+          NodeTypeOne: expect.anything(),
+        }),
+      })
     )
   })
 })
