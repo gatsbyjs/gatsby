@@ -1,12 +1,44 @@
-function sendWebVitals() {
+const listOfMetricsSend = new Set()
+
+function debounce(fn, timeout) {
+  let timer = null
+
+  return function (...args) {
+    if (timer) {
+      clearTimeout(timer)
+    }
+
+    timer = setTimeout(fn, timeout, ...args)
+  }
+}
+
+function sendWebVitals(dataLayerName = `dataLayer`) {
+  const win = window
+
+  function sendData(data) {
+    if (listOfMetricsSend.has(data.name)) {
+      return
+    }
+    listOfMetricsSend.add(data.name)
+
+    sendToGoogleAnalytics(data, win[dataLayerName])
+  }
+
   return import(`web-vitals/base`).then(({ getLCP, getFID, getCLS }) => {
-    getCLS(sendToGoogleAnalytics)
-    getFID(sendToGoogleAnalytics)
-    getLCP(sendToGoogleAnalytics)
+    const debouncedCLS = debounce(sendData, 3000)
+    // we don't need to debounce FID - we send it when it happens
+    const debouncedFID = sendData
+    // LCP can occur multiple times so we debounce it
+    const debouncedLCP = debounce(sendData, 3000)
+
+    // With the true flag, we meausre all previous occurences too, in case we start listening to late.
+    getCLS(debouncedCLS, true)
+    getFID(debouncedFID, true)
+    getLCP(debouncedLCP, true)
   })
 }
 
-function sendToGoogleAnalytics({ name, delta, id }) {
+function sendToGoogleAnalytics({ name, value, id }) {
   window.ga(`send`, `event`, {
     eventCategory: `Web Vitals`,
     eventAction: name,
@@ -18,7 +50,7 @@ function sendToGoogleAnalytics({ name, delta, id }) {
     // Google Analytics metrics must be integers, so the value is rounded.
     // For CLS the value is first multiplied by 1000 for greater precision
     // (note: increase the multiplier for greater precision if needed).
-    eventValue: Math.round(name === `CLS` ? delta * 1000 : delta),
+    eventValue: Math.round(name === `CLS` ? value * 1000 : value),
     // Use a non-interaction event to avoid affecting bounce rate.
     nonInteraction: true,
     // Use `sendBeacon()` if the browser supports it.
@@ -56,8 +88,8 @@ export const onRouteUpdate = ({ location }, pluginOptions = {}) => {
   return null
 }
 
-export function onClientEntry(_, pluginOptions) {
+export function onInitialClientRender(_, pluginOptions) {
   if (pluginOptions.enableWebVitalsTracking) {
-    sendWebVitals()
+    sendWebVitals(pluginOptions.dataLayerName)
   }
 }
