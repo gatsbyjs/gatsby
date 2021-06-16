@@ -13,6 +13,7 @@ export class ProductsQuery extends BulkQuery {
     }
 
     const ProductVariantSortKey = `POSITION`
+    const ProductImageSortKey = `POSITION`
 
     const queryString = filters.map(f => `(${f})`).join(` AND `)
 
@@ -111,7 +112,7 @@ export class ProductsQuery extends BulkQuery {
               tracksInventory
               updatedAt
               vendor
-              images {
+              images(sortKey: ${ProductImageSortKey}) {
                 edges {
                   node {
                     id
