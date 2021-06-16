@@ -1,8 +1,8 @@
 {
-  "name": "google-auth",
+  "name": "google-gmail",
   "version": "1.0.0",
   "private": true,
-  "description": "Google Auth",
+  "description": "Google Gmail",
   "author": "Polina Vorozheykina",
   "keywords": [
     "gatsby"

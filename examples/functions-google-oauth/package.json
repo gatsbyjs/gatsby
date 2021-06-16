@@ -1,8 +1,8 @@
 {
-  "name": "gatsby-loadable-components-example",
+  "name": "gatsby-functions-google-oauth-example",
   "version": "1.0.0",
   "private": true,
-  "description": "Example of using Gatsby with loadable-components",
+  "description": "Example of using Gatsby Functions with Google OAuth",
   "author": "Grayson Hicks",
   "keywords": [
     "gatsby"

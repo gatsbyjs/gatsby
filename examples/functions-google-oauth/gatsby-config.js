@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: "Gatsby with Loadable Components Example",
+    title: "Gatsby Functions with Google OAuth Example",
   },
   // Only need for < 3.7.0 Gatsby
   // flags: {
@@ -14,4 +14,4 @@ module.exports = {
       options: { prefixes: [`/app/*`] },
     },
   ],
-};
+}

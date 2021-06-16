@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby Functions Google Auth Examples
+  Gatsby Functions Google Gmail Examples
 </h1>
 
 ## 🚀 Quick start
@@ -31,7 +31,7 @@
     When developing locally, you include environment variables to your `.env.development`. Read more about how Gatsby handles `.env` files and environment variables in the [Gatsby Docs](https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/)
 
     ```shell
-    cd google-auth
+    cd google-gmail
     yarn
     yarn run develop
     ```
