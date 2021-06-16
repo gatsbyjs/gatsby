@@ -1,18 +1,18 @@
-import Worker from "jest-worker"
+import { WorkerPool } from "gatsby-worker"
 import { cpuCoreCount } from "gatsby-core-utils"
 
-import type { CreateWorkerPoolType } from "./types"
-
-export type GatsbyWorkerPool = CreateWorkerPoolType<typeof import("./child")>
+export type GatsbyWorkerPool = WorkerPool<typeof import("./child")>
 
 export const create = (): GatsbyWorkerPool => {
-  process.env.GATSBY_WORKER_POOL_WORKER = `true`
-  const worker = new Worker(require.resolve(`./child`), {
-    numWorkers: Math.max(1, cpuCoreCount() - 1),
-    forkOptions: {
-      silent: false,
-    },
-  }) as GatsbyWorkerPool
-  delete process.env.GATSBY_WORKER_POOL_WORKER
+  const worker = new WorkerPool<typeof import("./child")>(
+    require.resolve(`./child`),
+    {
+      numWorkers: Math.max(1, cpuCoreCount() - 1),
+      env: {
+        GATSBY_WORKER_POOL_WORKER: `true`,
+      },
+    }
+  )
+
   return worker
 }

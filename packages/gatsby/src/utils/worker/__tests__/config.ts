@@ -21,11 +21,14 @@ it(`can load config and execute node API in worker`, async () => {
   const siteDirectory = path.join(__dirname, `fixtures`, `sample-site`)
 
   // plugin options for custom local plugin contains function (() => `foo`)
-  await worker.loadConfigAndPlugins({ siteDirectory })
+  await worker.single.loadConfigAndPlugins({
+    siteDirectory,
+    processFlags: false,
+  })
 
   // plugin API execute function from plugin options and store result in `global`
-  await worker.runAPI(`createSchemaCustomization`)
+  await worker.single.runAPI(`createSchemaCustomization`)
 
   // getting result stored in `global`
-  expect(await worker.getAPIRunResult()).toEqual(`foo`)
+  expect(await worker.single.getAPIRunResult()).toEqual(`foo`)
 })

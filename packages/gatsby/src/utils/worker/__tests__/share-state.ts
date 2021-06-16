@@ -48,9 +48,9 @@ describe(`worker (share-state)`, () => {
 
     worker = createTestWorker()
 
-    const result = await worker.getPage(dummyPagePayload.path)
+    const result = await worker.single.getPage(dummyPagePayload.path)
 
-    expect(result).toBe(null)
+    expect(result).toBe(undefined)
   })
 
   it(`saves and retrieves state for workers correctly`, () => {
@@ -208,18 +208,23 @@ describe(`worker (share-state)`, () => {
 
     saveStateForWorkers([`components`, `staticQueryComponents`])
 
-    await worker.setQueries()
+    await worker.single.setQueries()
 
-    const components = await worker.getComponent(dummyPagePayload.component)
-    const staticQueryComponents = await worker.getStaticQueryComponent(
+    const components = await worker.single.getComponent(
+      dummyPagePayload.component
+    )
+    const staticQueryComponents = await worker.single.getStaticQueryComponent(
       staticQueryID
     )
 
     expect(components).toMatchInlineSnapshot(`
       Object {
+        "componentChunkName": undefined,
         "componentPath": "/foo",
         "isInBootstrap": true,
-        "pages": Object {},
+        "pages": Set {
+          "/foo/",
+        },
         "query": "I'm a page query",
       }
     `)
@@ -256,9 +261,9 @@ describe(`worker (share-state)`, () => {
 
     saveStateForWorkers([`inferenceMetadata`])
 
-    await worker.setInferenceMetadata()
+    await worker.single.setInferenceMetadata()
 
-    const inf = await worker.getInferenceMetadata(`Test`)
+    const inf = await worker.single.getInferenceMetadata(`Test`)
 
     expect(inf).toMatchInlineSnapshot(`
       Object {
@@ -272,7 +277,13 @@ describe(`worker (share-state)`, () => {
             },
           },
         },
-        "ignoredFields": Object {},
+        "ignoredFields": Set {
+          "id",
+          "parent",
+          "children",
+          "internal",
+          "__gatsby_resolved",
+        },
         "total": 1,
       }
     `)

@@ -85,6 +85,7 @@
     "gatsby-plugin-utils": "^1.8.0-next.1",
     "gatsby-react-router-scroll": "^4.8.0-next.1",
     "gatsby-telemetry": "^2.8.0-next.1",
+    "gatsby-worker": "0.0.0-next.0",
     "glob": "^7.1.6",
     "got": "8.3.2",
     "graphql": "^15.4.0",
@@ -242,7 +243,7 @@
   },
   "scripts": {
     "build": "npm run build:types && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
-    "postbuild": "node scripts/output-api-file.js && yarn workspace gatsby-admin build",
+    "postbuild": "node scripts/output-api-file.js",
     "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
     "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
     "build:cjs": "babel cache-dir --out-dir cache-dir/commonjs --ignore \"**/__tests__\" --ignore \"**/__mocks__\" && copyfiles -u 1 cache-dir/**/*.json cache-dir/commonjs",
