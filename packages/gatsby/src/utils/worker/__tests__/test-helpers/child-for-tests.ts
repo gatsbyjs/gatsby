@@ -104,7 +104,3 @@ export async function getRunQueryResult(): Promise<ExecutionResult> {
     `
   )
 }
-
-// Assert valid schema
-
-// runQuery

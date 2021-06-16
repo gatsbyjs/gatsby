@@ -121,7 +121,6 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
     type: `SET_SCHEMA_COMPOSER`,
     payload: schemaComposer,
   })
-
   store.dispatch({
     type: `SET_SCHEMA`,
     payload: schema,
