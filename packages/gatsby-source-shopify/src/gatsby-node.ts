@@ -24,7 +24,10 @@ export function pluginOptionsSchema({
   return Joi.object({
     apiKey: Joi.string().required(),
     password: Joi.string().required(),
-    storeUrl: Joi.string().required(),
+    storeUrl: Joi.string()
+       .pattern(/^[a-z\-]+\.myshopify\.com$/)
+       .message(`The storeUrl value should be your store's myshopify.com URL in the form "my-site.myshopify.com", without https or slashes`)
+       .required(),
     downloadImages: Joi.boolean(),
     typePrefix: Joi.string()
       .pattern(new RegExp(`(^[A-Z]w*)`))
