@@ -1,5 +1,5 @@
-import React from "react";
-import * as indexStyles from "./index.module.scss";
+import React from "react"
+import * as indexStyles from "./index.module.scss"
 
 const GatsbyIcon = (
   <svg
@@ -22,41 +22,40 @@ const GatsbyIcon = (
       fill="#7026B9"
     />
   </svg>
-);
+)
 
 const IndexPage = () => {
   return (
-      <section className={indexStyles.landingPage}>
-        <div className={indexStyles.landingHeader}>
-            <p className={indexStyles.poweredBy}>
-              Powered by{" "}
-              <a
-                href="https://www.gatsbyjs.com/functions/"
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  fontWeight: `bold`,
-                  color: `#7026B9`,
-                  textDecoration: `none`,
-                }}
-              >
-                Gatsby Functions
-              </a>
-            </p>
-          </div>
-          <div className={indexStyles.gatsbyIcon}>{GatsbyIcon}</div>
-        <button
-          className={indexStyles.signInButton}
-          onClick={() => {
-            // Functions are not a client-side route, so we hit the server-side route to login.
-            window.location.assign("/api/login");
-          }}
-        >
-          Sign in with Google
-        </button>
-      </section>
-    
-  );
-};
+    <section className={indexStyles.landingPage}>
+      <div className={indexStyles.landingHeader}>
+        <p className={indexStyles.poweredBy}>
+          Powered by{" "}
+          <a
+            href="https://www.gatsbyjs.com/functions/"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              fontWeight: `bold`,
+              color: `#7026B9`,
+              textDecoration: `none`,
+            }}
+          >
+            Gatsby Functions
+          </a>
+        </p>
+      </div>
+      <div className={indexStyles.gatsbyIcon}>{GatsbyIcon}</div>
+      <button
+        className={indexStyles.signInButton}
+        onClick={() => {
+          // Functions are not a client-side route, so we hit the server-side route to login.
+          window.location.assign("/api/login")
+        }}
+      >
+        Sign in with Google
+      </button>
+    </section>
+  )
+}
 
-export default IndexPage;
+export default IndexPage
