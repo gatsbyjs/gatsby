@@ -10,6 +10,8 @@ import { CreateDevServerArgs, ParentSpanPluginArgs } from "gatsby"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
 import chokidar from "chokidar"
+import nodeExternals from "webpack-node-externals"
+import getDependenciesForFile from "get-npm-dependencies-for-file"
 // We use an ancient version of path-to-regexp as it has breaking changes to express v4
 // see: https://github.com/pillarjs/path-to-regexp/tree/77df63869075cfa5feda1988642080162c584427#compatibility-with-express--4x
 import pathToRegexp from "path-to-regexp"
@@ -230,6 +232,23 @@ const createWebpackConfig = async ({
     return acc
   }, {} as Record<string, string>)
 
+  // Delete env variables commonly used in Node so we don't accidentally break
+  // libraries.
+  delete varsFromProcessEnv[`HOME`]
+  delete varsFromProcessEnv[`USER`]
+  delete varsFromProcessEnv[`LANG`]
+  delete varsFromProcessEnv[`DISPLAY`]
+  delete varsFromProcessEnv[`SHELL`]
+  delete varsFromProcessEnv[`SSH_AUTH_SOCK`]
+  delete varsFromProcessEnv[`TMPDIR`]
+  delete varsFromProcessEnv[`TERM`]
+  delete varsFromProcessEnv[`COLORTERM`]
+  delete varsFromProcessEnv[`PWD`]
+  delete varsFromProcessEnv[`TERMINFO`]
+  delete varsFromProcessEnv[`EDITOR`]
+  delete varsFromProcessEnv[`PAGER`]
+  delete varsFromProcessEnv[`VISUAL`]
+
   // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
   envObject.NODE_ENV = JSON.stringify(nodeEnv)
   envObject.PUBLIC_DIR = JSON.stringify(`${siteDirectoryPath}/public`)
@@ -274,16 +293,20 @@ const createWebpackConfig = async ({
       filename: `[name].js`,
       libraryTarget: `commonjs2`,
     },
-    target: `node`,
 
-    // Minification is expensive and not as helpful for serverless functions.
     optimization: {
+      // Minification is expensive and not as helpful for serverless functions.
       minimize: false,
+      moduleIds: `deterministic`,
+      chunkIds: `deterministic`,
+      concatenateModules: true,
+      innerGraph: true,
+      sideEffects: true,
     },
 
     // Resolve files ending with .ts and the default extensions of .js, .json, .wasm
     resolve: {
-      extensions: [`.ts`, `...`],
+      extensions: [`.ts`, `.mjs`, `...`],
     },
 
     // Have webpack save its cache to the .cache/webpack directory
@@ -298,13 +321,17 @@ const createWebpackConfig = async ({
       ),
     },
 
+    externalsPresets: { node: true }, // in order to ignore built-in modules like path, fs, etc.
+    externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
+
+    devtool: false,
     mode: isProductionEnv ? `production` : `development`,
-    // watch: !isProductionEnv,
     module: {
       rules: [
         {
-          test: [/.js$/, /.ts$/],
+          test: [/.m?js$/, /.ts$/],
           exclude: /node_modules/,
+          parser: { amd: false },
           use: {
             loader: `babel-loader`,
             options: {
@@ -372,6 +399,25 @@ export async function onPreBootstrap({
           reporter.error(formatted.errors)
         }
 
+        // After the production build, we scan compiled functions for NPM
+        // dependencies and add those to the manifest.json to aid deployment
+        // packaging.
+        if (isProductionEnv) {
+          const pathToManifest = path.join(
+            compiledFunctionsDir,
+            `manifest.json`
+          )
+          const manifest = JSON.parse(fs.readFileSync(pathToManifest, `utf-8`))
+
+          manifest.forEach((func, i) => {
+            const dependencies = getDependenciesForFile(
+              func.absoluteCompiledFilePath
+            )
+            manifest[i].dependencies = dependencies
+          })
+          fs.writeFileSync(pathToManifest, JSON.stringify(manifest, null, 4))
+        }
+
         // Log success in dev
         if (!isProductionEnv) {
           if (isFirstBuild) {
@@ -396,6 +442,8 @@ export async function onPreBootstrap({
         )
 
         // Watch for env files to change and restart the webpack watcher.
+        // We need to restart the webpack watcher when env variables change
+        // or functions files are added or removed.
         chokidar
           .watch(
             [
@@ -531,7 +579,11 @@ export async function onCreateDevServer({
           if (e.message.includes(`fnToExecute is not a function`)) {
             e.message = `${functionObj.originalAbsoluteFilePath} does not export a function.`
           }
+
+          // Sometimes errors will have this and that causes trouble for the reporter
+          delete e.type
           reporter.error(e)
+
           // Don't send the error if that would cause another error.
           if (!res.headersSent) {
             res
