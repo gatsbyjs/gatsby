@@ -18568,7 +18568,8 @@
       "groupName": "minor and patch dependencies for gatsby-source-shopify",
       "groupSlug": "gatsby-source-shopify-prod-minor",
       "matchPackageNames": [
-        "gatsby-node-helpers"
+        "sharp",
+        "shift-left"
       ],
       "matchUpdateTypes": [
         "patch"
@@ -18603,7 +18604,8 @@
       "groupName": "major dependencies for gatsby-source-shopify",
       "groupSlug": "gatsby-source-shopify-prod-major",
       "matchPackageNames": [
-        "gatsby-node-helpers"
+        "sharp",
+        "shift-left"
       ],
       "matchUpdateTypes": [
         "major",
