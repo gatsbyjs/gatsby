@@ -31,6 +31,21 @@ exports.createResolvers = ({ createResolvers }) => {
   createResolvers(resolvers)
 }
 
+exports.setFieldsOnGraphQLNodeType = ({ type }) => {
+  if (type.name === `NodeTypeOne`) {
+    return {
+      fieldsOnGraphQL: {
+        type: `String`,
+        resolve: () => {
+          return `Another Custom String`
+        }
+      }
+    }
+  }
+
+  return {}
+}
+
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const { createNode } = actions
 

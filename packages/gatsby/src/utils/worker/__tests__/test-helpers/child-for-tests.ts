@@ -1,4 +1,5 @@
 import { CombinedState } from "redux"
+import { ExecutionResult, graphql, GraphQLSchema } from "graphql"
 import { getNode } from "../../../../datastore"
 import { store } from "../../../../redux"
 import {
@@ -10,6 +11,7 @@ import {
 import { ITypeMetadata } from "../../../../schema/infer/inference-metadata"
 import reporter from "gatsby-cli/lib/reporter"
 import apiRunner from "../../../api-runner-node"
+import withResolverContext from "../../../../schema/context"
 
 // re-export all usual methods from production worker
 export * from "../../child"
@@ -59,3 +61,50 @@ export function getAPIRunResult(): string | undefined {
 export function getState(): CombinedState<IGatsbyState> {
   return store.getState()
 }
+
+const runQuery = (
+  schema: GraphQLSchema,
+  schemaComposer,
+  query: string
+): Promise<ExecutionResult> =>
+  graphql(
+    schema,
+    query,
+    undefined,
+    withResolverContext({
+      schema,
+      schemaComposer,
+      context: {},
+      customContext: {},
+    })
+  )
+
+// test: schema
+export async function getRunQueryResult(): Promise<ExecutionResult> {
+  const state = store.getState()
+
+  return await runQuery(
+    state.schema,
+    state.schemaCustomization.composer,
+    `
+      {
+        one: nodeTypeOne {
+          number
+        }
+        two: nodeTypeTwo {
+          thisIsANumber
+        }
+        three: nodeTypeOne {
+          resolverField
+        }
+        four: nodeTypeOne {
+          fieldsOnGraphQL
+        }
+      }
+    `
+  )
+}
+
+// Assert valid schema
+
+// runQuery

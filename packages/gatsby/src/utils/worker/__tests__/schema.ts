@@ -1,6 +1,6 @@
 import * as path from "path"
 import fs from "fs-extra"
-import { DocumentNode, graphql, GraphQLSchema } from "graphql"
+import { DocumentNode } from "graphql"
 import { build } from "../../../schema"
 import sourceNodesAndRemoveStaleNodes from "../../source-nodes"
 import { saveStateForWorkers, store } from "../../../redux"
@@ -11,7 +11,6 @@ import {
   GatsbyTestWorkerPool,
 } from "./test-helpers"
 import { getDataStore } from "../../../datastore"
-import withResolverContext from "../../../schema/context"
 import { CombinedState } from "redux"
 import { IGatsbyState } from "../../../redux/types"
 
@@ -19,21 +18,6 @@ let worker: GatsbyTestWorkerPool | undefined
 
 describeWhenLMDB(`worker (schema)`, () => {
   let state: CombinedState<IGatsbyState>
-  let schema: GraphQLSchema
-  let schemaComposer
-
-  const runQuery = (query: string): any =>
-    graphql(
-      schema,
-      query,
-      undefined,
-      withResolverContext({
-        schema,
-        schemaComposer,
-        context: {},
-        customContext: {},
-      })
-    )
 
   beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
@@ -50,16 +34,10 @@ describeWhenLMDB(`worker (schema)`, () => {
 
     await build({ parentSpan: {} })
 
-    // console.log({ mainSchema: store.getState().schema })
-
     saveStateForWorkers([`inferenceMetadata`])
     await worker.buildSchema()
 
     state = await worker.getState()
-
-    console.log({ s: state.lastAction })
-
-    // console.log({ workerSchema: state.schema })
   })
 
   afterAll(() => {
@@ -128,20 +106,18 @@ describeWhenLMDB(`worker (schema)`, () => {
   })
 
   it(`should have resolverField from createResolvers`, async () => {
-    schema = state.schema
-    schemaComposer = state.schemaCustomization.composer
+    // @ts-ignore - it exists
+    const { data } = await worker?.getRunQueryResult()
 
-    const test = await runQuery(`
-      {
-        one: allNodeTypeOne {
-          nodes {
-            id
-            number
-          }
-        }
-      }
-    `)
+    expect(data.one.number).toBe(123)
+    expect(data.two).toBe(null)
+    expect(data.three.resolverField).toBe(`Custom String`)
+  })
 
-    console.log({ test })
+  it(`should have fieldsOnGraphQL from setFieldsOnGraphQLNodeType`, async () => {
+    // @ts-ignore - it exists
+    const { data } = await worker?.getRunQueryResult()
+
+    expect(data.four.fieldsOnGraphQL).toBe(`Another Custom String`)
   })
 })
