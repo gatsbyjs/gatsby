@@ -21,13 +21,18 @@ import { JoiObject } from "joi"
 export function pluginOptionsSchema({
   Joi,
 }: PluginOptionsSchemaArgs): JoiObject {
+  // @ts-ignore TODO: When Gatsby updates Joi version, update type
+  // Vague type error that we're not able to figure out related to isJoi missing
+  // Probably related to Joi being outdated
   return Joi.object({
     apiKey: Joi.string().required(),
     password: Joi.string().required(),
     storeUrl: Joi.string()
-       .pattern(/^[a-z\-]+\.myshopify\.com$/)
-       .message(`The storeUrl value should be your store's myshopify.com URL in the form "my-site.myshopify.com", without https or slashes`)
-       .required(),
+      .pattern(/^[a-z-]+\.myshopify\.com$/)
+      .message(
+        `The storeUrl value should be your store's myshopify.com URL in the form "my-site.myshopify.com", without https or slashes`
+      )
+      .required(),
     downloadImages: Joi.boolean(),
     typePrefix: Joi.string()
       .pattern(new RegExp(`(^[A-Z]w*)`))

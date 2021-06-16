@@ -4,7 +4,7 @@ import { createInterface } from "readline"
 import { shiftLeft } from "shift-left"
 
 import { nodeBuilder } from "./node-builder"
-import { ShopifyBulkOperation } from "./operations"
+import { IShopifyBulkOperation } from "./operations"
 import {
   OperationError,
   HttpError,
@@ -19,7 +19,7 @@ export function makeSourceFromOperation(
   pluginOptions: ShopifyPluginOptions
 ) {
   return async function sourceFromOperation(
-    op: ShopifyBulkOperation,
+    op: IShopifyBulkOperation,
     isPriorityBuild = process.env.IS_PRODUCTION_BRANCH === `true`
   ): Promise<void> {
     const { reporter, actions } = gatsbyApi

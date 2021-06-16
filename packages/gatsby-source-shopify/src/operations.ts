@@ -34,7 +34,13 @@ interface IOperations {
   createProductsOperation: IShopifyBulkOperation
   createOrdersOperation: IShopifyBulkOperation
   createCollectionsOperation: IShopifyBulkOperation
-  cancelOperationInProgress: Promise<void>
+  cancelOperationInProgress: () => Promise<void>
+  cancelOperation: (id: string) => Promise<BulkOperationCancelResponse>
+  finishLastOperation: () => Promise<void>
+  completedOperation: (
+    operationId: string,
+    interval?: number
+  ) => Promise<{ node: BulkOperationNode }>
 }
 
 const finishedStatuses = [`COMPLETED`, `FAILED`, `CANCELED`, `EXPIRED`]
@@ -90,7 +96,9 @@ export function createOperations(
     }
   }
 
-  async function cancelOperation(id: string): Promise<any> {
+  async function cancelOperation(
+    id: string
+  ): Promise<BulkOperationCancelResponse> {
     return client.request<BulkOperationCancelResponse>(CANCEL_OPERATION, {
       id,
     })

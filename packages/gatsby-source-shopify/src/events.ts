@@ -7,11 +7,13 @@ interface IEvent {
 
 export function eventsApi(
   options: ShopifyPluginOptions
-): Record<string, unknown> {
+): {
+  fetchDestroyEventsSince: (date: Date) => Promise<Array<IEvent>>
+} {
   const shopifyFetch = makeShopifyFetch(options)
 
   return {
-    async fetchDestroyEventsSince(date: Date): Promise<Array<IEvent>> {
+    async fetchDestroyEventsSince(date): Promise<Array<IEvent>> {
       let resp = await shopifyFetch(
         `/events.json?limit=250&verb=destroy&created_at_min=${date.toISOString()}`
       )

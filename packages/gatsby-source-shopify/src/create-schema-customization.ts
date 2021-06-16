@@ -2,7 +2,7 @@ import {
   CreateSchemaCustomizationArgs,
   NodePluginSchema,
   GatsbyGraphQLObjectType,
-} from "gatsby"
+} from "../../gatsby"
 
 function addFields(
   def: GatsbyGraphQLObjectType,
@@ -76,6 +76,8 @@ export function createSchemaCustomization(
   const metafieldInterface = schema.buildInterfaceType({
     name: name(`ShopifyMetafieldInterface`),
     fields: sharedMetafieldFields,
+    // @ts-ignore TODO: Once Gatsby Core updates its graphql-compose package to a version that has the right
+    // types to support interfaces implementing other interfaces, remove the ts-ignore
     interfaces: [`Node`],
   })
 
