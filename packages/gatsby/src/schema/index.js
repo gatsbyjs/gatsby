@@ -78,11 +78,7 @@ const buildInferenceMetadata = ({ types }) =>
     processNextType()
   })
 
-const build = async ({
-  parentSpan,
-  fullMetadataBuild = true,
-  place = `internal`,
-}) => {
+const build = async ({ parentSpan, fullMetadataBuild = true }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
   await getDataStore().ready()
@@ -126,14 +122,9 @@ const build = async ({
     payload: schemaComposer,
   })
 
-  console.log({ buildFunc: schema, place })
-
   store.dispatch({
     type: `SET_SCHEMA`,
-    payload: {
-      ...schema,
-      place,
-    },
+    payload: schema,
   })
 
   span.finish()

@@ -6,10 +6,8 @@ export const schemaReducer = (
   action: ActionsUnion
 ): IGatsbyState["schema"] => {
   switch (action.type) {
-    case `SET_SCHEMA`: {
-      console.trace({ payload: action.payload })
+    case `SET_SCHEMA`:
       return action.payload
-    }
     default:
       return state
   }
