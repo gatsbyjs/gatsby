@@ -1,4 +1,8 @@
 <p align="center">
+  <img width="560" height="328" src="https://user-images.githubusercontent.com/51924260/122227148-a38f1400-ce84-11eb-945c-e51e896b519b.png">
+</p>
+
+<p align="center">
   <a href="https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-shopify/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Gatsby and gatsby-source-shopify are released under the MIT license." />
   </a>
@@ -19,15 +23,36 @@
   </a>
 </p>
 
+<br />
+
+- 🏃‍ [Getting started](#getting-started)
+  * 🔩 [Install](#install)
+  * 🔑 [Configure](#configure)
+  * 🙌 [Retrieving API Information from Shopify](#retrieving-api-information-from-shopify)
+    + 🛒 [Enabling Cart and Checkout features](#enabling-cart-and-checkout-features)
+  * 🔥 [Fire it up](#fire-it-up)
+- 🔌 [Plugin options](#plugin-options)
+- 🎨 [Images](#images)
+  * 🚀 [Use Shopify CDN](#use-shopify-cdn)
+  * 🚥 [Use runtime images](#use-runtime-images)
+  * 🖼️ [Download images up front](#download-images-up-front)
+- 🚨 [Limitations](#limitations)
+- 🛠 [Development](#development)
+- 💾 [Migrating from v4 to v5](#migrating-from-v4-to-v5)
+
 # gatsby-source-shopify
 
 A scalable solution for sourcing data from Shopify.
 
 This plugin works by leveraging [Shopify's bulk operations API][bulk-operations], which allows it to process large amounts of data at once. This gives it a more resilient and reliable build process. It also enables incremental builds so that your site can build quickly when you change your data in Shopify.
 
+<div id="getting-started"></div>
+
 ## Getting started
 
 This takes you through the minimal steps to see your Shopify data in your Gatsby site's GraphiQL explorer.
+
+<div id="install"></div>
 
 ### Install
 
@@ -36,6 +61,8 @@ Install this plugin to your Gatsby site.
 ```shell
 npm install gatsby-source-shopify
 ```
+
+<div id="configure"></div>
 
 ### Configure
 
@@ -59,6 +86,8 @@ module.exports = {
 }
 ```
 
+<div id="retrieving-api-information-from-shopify"></div>
+
 ### Retrieving API Information from Shopify
 
 In Shopify admin, `SHOPIFY_STORE_URL` is the Store address you enter when logging into your Shopify account. This typically is in the format of `myshop.myshopify.com`.
@@ -71,9 +100,13 @@ For the Private app name enter `Gatsby` (the name does not really matter). Add t
 - `Read access` for `Product listings` if you want to use Shopify's Product Collections in your Gatsby site
 - `Read access` for `Orders` if you want to use order information in your Gatsby site
 
+<div id="enabling-cart-and-checkout-features"></div>
+
 #### Enabling Cart and Checkout features
 
 If you are planning on managing your cart within Gatsby you will also need to check the box next to `Allow this app to access your storefront data using the Storefront API` and make sure to check `Read and modify checkouts`. This source plugin does not require Shopify Storefront API access to work, however, this is needed to add items to a Shopify checkout before passing the user to Shopify's managed checkout workflow. See [Gatsby Starter Shopify](https://github.com/gatsbyjs/gatsby-starter-shopify) for an example.
+
+<div id="fire-it-up"></div>
 
 ### Fire it up
 
@@ -93,6 +126,8 @@ To create a production build, use gatsby build
 ```
 
 Now follow the second link to explore your Shopify data!
+
+<div id="plugin-options"></div>
 
 ## Plugin options
 
@@ -126,11 +161,15 @@ Not set by default. If set to a string (example `MyStore`) node names will be `a
 
 `salesChannel: string`
 
-Not set by default. If set to a string (example `My Private App Channel`), only products and collections that are active in that channel will be sourced. If no sales channel is provided, the default behavior is to source products that are available in the online store.
+Not set by default. If set to a string (example `My Sales Channel`), only products and collections that are active in that channel will be sourced. If no sales channel is provided, the default behavior is to source products that are available in the online store.
+
+<div id="images"></div>
 
 ## Images
 
 We offer two options for displaying Shopify images in your Gatsby site. The default option is to use the Shopify CDN along with [gatsby-plugin-image][gatsby-plugin-image], but you can also opt-in to downloading the images as part of the build process. Your choice will result in differences to the schema. Both options are explained below.
+
+<div id="use-shopify-cdn"></div>
 
 ### Use Shopify CDN
 
@@ -169,6 +208,8 @@ function ProductListing(product) {
 }
 ```
 
+<div id="use-runtime-images"></div>
+
 ### Use runtime images
 
 If you get Shopify images at runtime that don't have the `gatsbyImageData` resolver, for example from the cart or Storefront API, you can use the `getShopifyImage` function to create an imagedata object to use with `<GatsbyImage>`.
@@ -192,6 +233,8 @@ function CartImage(storefrontProduct) {
   return <GatsbyImage image={imageData} alt={image.altText} />
 }
 ```
+
+<div id="download-images-up-front"></div>
 
 ### Download images up front
 
@@ -252,9 +295,13 @@ function ProductListing(product) {
 }
 ```
 
+<div id="limitations"></div>
+
 ## Limitations
 
 The bulk API was chosen for resiliency, but it comes with some limitations. For a given store + app combination, only one bulk operation can be run at a time, so this plugin will wait for in-progress operations to complete. If your store contains a lot of data and there are multiple developers doing a clean build at the same time, they could be waiting on each other for a significant period of time.
+
+<div id="development"></div>
 
 ## Development
 
@@ -272,6 +319,8 @@ You can also test an incremental build without restarting the test site by runni
 
 [bulk-operations]: https://shopify.dev/tutorials/perform-bulk-operations-with-admin-api
 [gatsby-plugin-image]: https://www.npmjs.com/package/gatsby-plugin-image
+
+<div id="migrating-from-v4-to-v5"></div>
 
 ## Migrating from v4 to v5
 
