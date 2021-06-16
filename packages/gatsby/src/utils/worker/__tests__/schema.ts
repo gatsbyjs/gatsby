@@ -1,6 +1,6 @@
 import * as path from "path"
 import fs from "fs-extra"
-import { DocumentNode } from "graphql"
+import { DocumentNode, graphql, GraphQLSchema } from "graphql"
 import { build } from "../../../schema"
 import sourceNodesAndRemoveStaleNodes from "../../source-nodes"
 import { saveStateForWorkers, store } from "../../../redux"
@@ -11,11 +11,29 @@ import {
   GatsbyTestWorkerPool,
 } from "./test-helpers"
 import { getDataStore } from "../../../datastore"
+import withResolverContext from "../../../schema/context"
+import { CombinedState } from "redux"
+import { IGatsbyState } from "../../../redux/types"
 
 let worker: GatsbyTestWorkerPool | undefined
 
 describeWhenLMDB(`worker (schema)`, () => {
-  let state
+  let state: CombinedState<IGatsbyState>
+  let schema: GraphQLSchema
+  let schemaComposer
+
+  const runQuery = (query: string): any =>
+    graphql(
+      schema,
+      query,
+      undefined,
+      withResolverContext({
+        schema,
+        schemaComposer,
+        context: {},
+        customContext: {},
+      })
+    )
 
   beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
@@ -32,10 +50,16 @@ describeWhenLMDB(`worker (schema)`, () => {
 
     await build({ parentSpan: {} })
 
+    // console.log({ mainSchema: store.getState().schema })
+
     saveStateForWorkers([`inferenceMetadata`])
     await worker.buildSchema()
 
     state = await worker.getState()
+
+    console.log({ s: state.lastAction })
+
+    // console.log({ workerSchema: state.schema })
   })
 
   afterAll(() => {
@@ -93,10 +117,6 @@ describeWhenLMDB(`worker (schema)`, () => {
     )
   })
 
-  it.skip(`should have resolverField from createResolvers`, async () => {
-    // TODO
-  })
-
   it(`should have inferenceMetadata`, async () => {
     expect(state.inferenceMetadata).toEqual(
       expect.objectContaining({
@@ -105,5 +125,23 @@ describeWhenLMDB(`worker (schema)`, () => {
         }),
       })
     )
+  })
+
+  it(`should have resolverField from createResolvers`, async () => {
+    schema = state.schema
+    schemaComposer = state.schemaCustomization.composer
+
+    const test = await runQuery(`
+      {
+        one: allNodeTypeOne {
+          nodes {
+            id
+            number
+          }
+        }
+      }
+    `)
+
+    console.log({ test })
   })
 })
