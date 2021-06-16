@@ -15,5 +15,5 @@ export async function buildSchema(): Promise<void> {
 
   await apiRunnerNode(`createSchemaCustomization`)
 
-  await build({ fullMetadataBuild: false })
+  await build({ fullMetadataBuild: false, parentSpan: {} })
 }
