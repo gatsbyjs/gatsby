@@ -3,7 +3,7 @@ import qs from "query-string"
 
 import * as styles from "./auth-redirect.module.scss"
 
-export default function AuthRedirect({ location, navigate }) {
+export default function AuthRedirect({ location }) {
   // Get the code set as the token in the query params from googleAccessToken function.
   const query = qs.parse(location?.search)
 

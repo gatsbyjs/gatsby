@@ -6,8 +6,6 @@
   line-height: 60px;
   letter-spacing: -1px;
   text-align: center;
-  color: #d65108;
-  margin: 0;
 }
 
 .poweredBy {
@@ -37,7 +35,7 @@
 
 .link {
   font-weight: bold;
-  color: #7026B9;
+  color: #7026b9;
   text-decoration: none;
 }
 
@@ -55,6 +53,7 @@
 }
 
 .gatsby-icon svg {
+  margin-bottom: 40px;
   @media only screen and (max-width: 500px) {
     width: 30px;
     height: 30px;
@@ -78,17 +77,8 @@
   }
 }
 
-.landingHeader {
-  display: flex;
-  margin-bottom: 70px;
-
-  @media only screen and (max-width: 500px) {
-    flex-direction: column;
-  }
-}
-
 .sign-in-button {
-  background-color: #d65108;
+  background-color: #7100b6;
   color: white;
   border-radius: 100px;
   font-weight: 600;
@@ -96,7 +86,9 @@
   font-size: 14px;
   cursor: pointer;
   line-height: 21px;
-  border: 1px solid #d65108;
+  border: 1px solid #7100b6;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
 
   @media only screen and (max-width: 500px) {
     font-size: 1.5rem;
@@ -107,7 +99,6 @@
 
 .sign-in-button:hover {
   background-color: white;
-  color: #d65108;
+  color: #7100b6;
   transition: all 0.3s ease-in-out;
 }
-

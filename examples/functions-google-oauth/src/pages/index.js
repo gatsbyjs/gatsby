@@ -1,5 +1,5 @@
 import React from "react"
-import * as indexStyles from "./index.module.scss"
+import * as styles from "./index.module.scss"
 
 const GatsbyIcon = (
   <svg
@@ -26,27 +26,24 @@ const GatsbyIcon = (
 
 const IndexPage = () => {
   return (
-    <section className={indexStyles.landingPage}>
-      <div className={indexStyles.landingHeader}>
-        <p className={indexStyles.poweredBy}>
+    <section className={styles.landingPage}>
+      <div>
+        <h1 className={styles.title}>Google OAuth</h1>
+        <p className={styles.poweredBy}>
           Powered by{" "}
           <a
             href="https://www.gatsbyjs.com/functions/"
             target="_blank"
             rel="noreferrer"
-            style={{
-              fontWeight: `bold`,
-              color: `#7026B9`,
-              textDecoration: `none`,
-            }}
+            className={styles.link}
           >
             Gatsby Functions
           </a>
         </p>
       </div>
-      <div className={indexStyles.gatsbyIcon}>{GatsbyIcon}</div>
+      <div className={styles.gatsbyIcon}>{GatsbyIcon}</div>
       <button
-        className={indexStyles.signInButton}
+        className={styles.signInButton}
         onClick={() => {
           // Functions are not a client-side route, so we hit the server-side route to login.
           window.location.assign("/api/login")
