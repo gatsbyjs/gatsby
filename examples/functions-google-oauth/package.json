@@ -1,0 +1,33 @@
+{
+  "name": "gatsby-loadable-components-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Example of using Gatsby with loadable-components",
+  "author": "Grayson Hicks",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "babel-preset-gatsby": "^1.5.0",
+    "gatsby": "^3.7.0",
+    "gatsby-plugin-create-client-paths": "^3.5.0",
+    "gatsby-plugin-gatsby-cloud": "^2.5.0",
+    "gatsby-plugin-sass": "^4.5.0",
+    "googleapis": "^73.0.0",
+    "node-fetch": "^2.6.1",
+    "query-string": "^7.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "sass": "^1.32.13"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.13.13"
+  }
+}
