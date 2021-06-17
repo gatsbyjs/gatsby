@@ -16733,9 +16733,7 @@
       ],
       "groupName": "minor and patch dependencies for gatsby-source-drupal",
       "groupSlug": "gatsby-source-drupal-prod-minor",
-      "matchPackageNames": [
-        "axios"
-      ],
+      "matchPackageNames": [],
       "matchUpdateTypes": [
         "patch"
       ],
@@ -16768,9 +16766,7 @@
       ],
       "groupName": "major dependencies for gatsby-source-drupal",
       "groupSlug": "gatsby-source-drupal-prod-major",
-      "matchPackageNames": [
-        "axios"
-      ],
+      "matchPackageNames": [],
       "matchUpdateTypes": [
         "major",
         "minor"
