@@ -13,8 +13,29 @@ import {
 import { getDataStore } from "../../../datastore"
 import { CombinedState } from "redux"
 import { IGatsbyState } from "../../../redux/types"
+import type { watch as ChokidarWatchType } from "chokidar"
 
 let worker: GatsbyTestWorkerPool | undefined
+
+// when we load config and run sourceNodes on "main process" we start file watchers
+// because of default `gatsby-plugin-page-creator` which would prevent test process from
+// exiting gracefully without forcing exit
+// to prevent that we keep track of created watchers and close them after all tests are done
+const mockWatchersToClose = new Set<ReturnType<typeof ChokidarWatchType>>()
+jest.mock(`chokidar`, () => {
+  const chokidar = jest.requireActual(`chokidar`)
+  const originalChokidarWatch = chokidar.watch
+
+  chokidar.watch = (
+    ...args: Parameters<typeof ChokidarWatchType>
+  ): ReturnType<typeof ChokidarWatchType> => {
+    const watcher = originalChokidarWatch.call(chokidar, ...args)
+    mockWatchersToClose.add(watcher)
+    return watcher
+  }
+
+  return chokidar
+})
 
 describeWhenLMDB(`worker (schema)`, () => {
   let state: CombinedState<IGatsbyState>
@@ -44,6 +65,9 @@ describeWhenLMDB(`worker (schema)`, () => {
     if (worker) {
       worker.end()
       worker = undefined
+    }
+    for (const watcher of mockWatchersToClose) {
+      watcher.close()
     }
   })
 
