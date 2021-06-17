@@ -153,14 +153,14 @@ const GatsbyTracing = {
  * @param {string} id Test
  * @returns {GatsbyCache} See [`cache`](#cache) section for reference.
  */
-module.exports.getCache = true;
+export const getCache = true;
 
 /**
  * Key-value store used to persist results of time/memory/cpu intensive
  * tasks. All functions are async and return promises.
  * @type {GatsbyCache}
  */
-module.exports.cache = true;
+export const cache = true;
 
 /**
  * Create a stable content digest from a string or object, you can use the
@@ -178,7 +178,7 @@ module.exports.cache = true;
  *   }
  * }
  */
-module.exports.createContentDigest = true;
+export const createContentDigest = true;
 
 /**
  * Collection of functions used to programmatically modify Gatsby’s internal state.
@@ -186,7 +186,7 @@ module.exports.createContentDigest = true;
  * See [`actions`](/docs/actions/) reference.
  * @type {Actions}
  */
-module.exports.actions = true;
+export const actions = true;
 
 /**
  * Get content for a node from the plugin that created it.
@@ -203,7 +203,7 @@ module.exports.actions = true;
  *   }
  * }
  */
-module.exports.loadNodeContent = true;
+export const loadNodeContent = true;
 
 /**
  * Internal redux state used for application state. Do not use, unless you
@@ -211,14 +211,14 @@ module.exports.loadNodeContent = true;
  * any version.
  * @type {Redux.Store}
  */
-module.exports.store = true;
+export const store = true;
 
 /**
  * Internal event emitter / listener.  Do not use, unless you absolutely
  * must. Emitter is considered a private API and can change with any version.
  * @type {Emitter}
  */
-module.exports.emitter = true;
+export const emitter = true;
 
 /**
  * Get array of all nodes.
@@ -226,7 +226,7 @@ module.exports.emitter = true;
  * @example
  * const allNodes = getNodes()
  */
-module.exports.getNodes = true;
+export const getNodes = true;
 
 /**
  * Get single node by given ID.
@@ -237,7 +237,7 @@ module.exports.getNodes = true;
  * @example
  * const node = getNode(id)
  */
-module.exports.getNode = true;
+export const getNode = true;
 
 /**
  * Get array of nodes of given type.
@@ -246,13 +246,13 @@ module.exports.getNode = true;
  * @example
  * const markdownNodes = getNodesByType(`MarkdownRemark`)
  */
-module.exports.getNodesByType = true;
+export const getNodesByType = true;
 
 /**
  * Set of utilities to output information to user
  * @type {GatsbyReporter}
  */
-module.exports.reporter = true;
+export const reporter = true;
 
 /**
  * Get single node by given ID and create dependency for given path.
@@ -265,7 +265,7 @@ module.exports.reporter = true;
  * @param {string} path of the node.
  * @returns {Node} Single node instance.
  */
-module.exports.getNodeAndSavePathDependency = true;
+export const getNodeAndSavePathDependency = true;
 
 /**
  * Utility function useful to generate globally unique and stable node IDs.
@@ -280,7 +280,7 @@ module.exports.getNodeAndSavePathDependency = true;
  *   ...restOfNodeData
  * }
  */
-module.exports.createNodeId = true;
+export const createNodeId = true;
 
 /**
  * Set of utilities that allow adding more detailed tracing for plugins.
@@ -289,7 +289,7 @@ module.exports.createNodeId = true;
  * page for more details.
  * @type {GatsbyTracing}
  */
-module.exports.tracing = true;
+export const tracing = true;
 
 /**
  * Use to prefix resources URLs. `pathPrefix` will be either empty string or
@@ -298,4 +298,4 @@ module.exports.tracing = true;
  * page for details about path prefixing.
  * @type {string}
  */
-module.exports.pathPrefix = true;
+export const pathPrefix = true;
