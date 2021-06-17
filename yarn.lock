@@ -12775,20 +12775,6 @@ gather-stream@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gather-stream/-/gather-stream-1.0.0.tgz#b33994af457a8115700d410f317733cbe7a0904b"
 
-gatsby-core-utils@^2.6.0-next.0:
-  version "2.6.0-next.0"
-  resolved "https://registry.yarnpkg.com/gatsby-core-utils/-/gatsby-core-utils-2.6.0-next.0.tgz#78c32315a734f44ef4735d6734d17c4fc3dca2a9"
-  integrity sha512-Vf1CMWE5k6flSodtecA+A/48FtVYp5WehJ3eXEr+bQdI1N0MbqMDv6E5ngPGJnscjQt48WzQxef4yqH0ZesSEA==
-  dependencies:
-    ci-info "2.0.0"
-    configstore "^5.0.1"
-    file-type "^16.2.0"
-    fs-extra "^8.1.0"
-    node-object-hash "^2.0.0"
-    proper-lockfile "^4.1.1"
-    tmp "^0.2.1"
-    xdg-basedir "^4.0.0"
-
 gatsby-design-tokens@^2.0.2:
   version "2.0.13"
   resolved "https://registry.yarnpkg.com/gatsby-design-tokens/-/gatsby-design-tokens-2.0.13.tgz#33f5fa84a399b821ae224b9921847d7b37c45600"
@@ -12838,25 +12824,6 @@ gatsby-plugin-webfonts@^1.1.4:
     lodash.isempty "^4.4.0"
     postcss "^8.2.2"
     postcss-js "^3.0.3"
-
-gatsby-source-filesystem@^3.6.0-next.0:
-  version "3.6.0-next.0"
-  resolved "https://registry.yarnpkg.com/gatsby-source-filesystem/-/gatsby-source-filesystem-3.6.0-next.0.tgz#4cec8af2fc0135bbdc79fcb0b8daaae6b26f7e72"
-  integrity sha512-+1k27014tTP9yTPNXByn4K2G6T8RCDTt+HsFJe2vV/g+lNvyRvODGgPg18j8H+GSreHN/ZSasPc5aHPSDNYJ4w==
-  dependencies:
-    "@babel/runtime" "^7.12.5"
-    better-queue "^3.8.10"
-    chokidar "^3.4.3"
-    file-type "^16.0.0"
-    fs-extra "^8.1.0"
-    gatsby-core-utils "^2.6.0-next.0"
-    got "^9.6.0"
-    md5-file "^5.0.0"
-    mime "^2.4.6"
-    pretty-bytes "^5.4.1"
-    progress "^2.0.3"
-    valid-url "^1.0.9"
-    xstate "^4.14.0"
 
 gauge@~2.7.3:
   version "2.7.4"
