@@ -54,13 +54,13 @@
     "ast-pretty-print": "^2.0.1",
     "babel-plugin-macros": "^2.8.0",
     "cross-env": "^7.0.3",
-    "cssnano": "^4.1.10",
+    "cssnano": "^4.1.11",
     "del-cli": "^3.0.1",
     "do-sync": "^2.2.0",
-    "microbundle": "^0.13.0",
+    "microbundle": "^0.13.3",
     "npm-run-all": "^4.1.5",
-    "postcss": "^8.2.9",
-    "terser": "^5.3.8",
+    "postcss": "^8.3.4",
+    "terser": "^5.7.0",
     "typescript": "^4.1.5"
   },
   "peerDependencies": {
