@@ -4,8 +4,7 @@
   "description": "Gatsby source plugin for building websites using Shopify as a data source.",
   "scripts": {
     "watch": "tsc-watch --outDir .",
-    "build": "tsc --outDir .",
-    "prepublish": "yarn build && cp ../README.md ."
+    "build": "tsc --outDir ."
   },
   "repository": {
     "type": "git",
