@@ -10,9 +10,9 @@ const Header = loadable(() => import("./header"))
 <Header siteTitle="My Title" />
 ```
 
-## Why?
+**For a full breakdown of this pattern, [check out this blog post]().**
 
-For a full breakdown of this pattern, [check out this blog post]().
+## Why?
 
 Why do you need to do this when Gatsby already has excellent out-of-the-box code-splitting configuration?
 
