@@ -6,13 +6,13 @@ const Header = ({ siteTitle }) => (
   <header
     style={{
       background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
+      marginBottom: `1.5orem`,
     }}
   >
     <div
       style={{
         margin: `0 auto`,
-        maxWidth: 960,
+        maxWidth: 900,
         padding: `1.45rem 1.0875rem`,
       }}
     >
@@ -22,6 +22,7 @@ const Header = ({ siteTitle }) => (
           style={{
             color: `white`,
             textDecoration: `none`,
+            background: `rebeccapurple`,     
           }}
         >
           {siteTitle}
