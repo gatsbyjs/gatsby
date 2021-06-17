@@ -20,19 +20,8 @@ const agent = {
   https: new HttpsAgent(),
 }
 
-let urlCount = 0
-let start = 0
 async function worker([url, options]) {
-  if (start === 0) {
-    start = Date.now()
-  }
-  urlCount += 1
-  if (urlCount % 10 === 0) {
-    const now = Date.now()
-    const rate = (urlCount / (now - start)) * 1000
-    console.log({ urlCount, rate })
-  }
-  return got(url, { agent, ...options })
+  return got(url, { agent, http2: true, ...options })
 }
 
 const requestQueue = require(`fastq`).promise(worker, 5)
