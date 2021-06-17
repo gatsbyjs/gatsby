@@ -2,6 +2,5 @@
 *.js.map
 *.d.ts
 !/types/*.d.ts
-README.md
 
 !jest.config.js
