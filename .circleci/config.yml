@@ -78,7 +78,7 @@ aliases:
       - run: yarn list react
       - run: yarn why lmdb-store
       - run:
-          command: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
+          command: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci --detectOpenHandles
           environment:
             GENERATE_JEST_REPORT: true
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
