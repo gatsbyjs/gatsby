@@ -1543,6 +1543,36 @@ exports[`build and update individual types creates derived types 8`] = `
 }"
 `;
 
+exports[`compatibility with createTypes should rebuild types with inference enabled and keep explicit schema in place 1`] = `
+"type Foo implements Node {
+  foo: Int
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}"
+`;
+
+exports[`compatibility with createTypes should rebuild types with inference enabled and keep explicit schema in place 2`] = `
+"type Bar implements Node {
+  bar: String
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}"
+`;
+
+exports[`compatibility with createTypes should rebuild types with inference enabled and keep explicit schema in place 3`] = `
+"type Baz implements Node {
+  baz: Int!
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}"
+`;
+
 exports[`rebuilds node types having existing relations rebuilds bi-directional relations 1`] = `
 "type Foo implements Node {
   id: ID!

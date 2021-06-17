@@ -63,7 +63,7 @@ function isDbComparator(value: string): value is DbComparator {
   return DB_COMPARATOR_VALUES.has(value)
 }
 
-type DbComparatorValue = string | number | boolean | RegExp | null
+export type DbComparatorValue = string | number | boolean | RegExp | null
 
 export interface IDbFilterStatement {
   comparator: DbComparator
@@ -114,6 +114,38 @@ function createDbQueriesFromObjectNested(
       }
     }
   )
+}
+
+/**
+ * Takes a DbQuery structure and returns a dotted representation of a field referenced in this query.
+ *
+ * Example:
+ * ```js
+ *   const query = createDbQueriesFromObject({
+ *     foo: { $elemMatch: { id: { $eq: 5 }, test: { $gt: 42 } } },
+ *     bar: { $in: [`bar`] }
+ *   })
+ *   const result = query.map(dbQueryToDottedField)
+ * ```
+ * Returns:
+ *   [`foo.id`, `foo.test`, `bar`]
+ */
+export function dbQueryToDottedField(query: DbQuery): string {
+  const path: Array<string> = [...query.path]
+  let currentQuery = query
+  while (currentQuery.type === `elemMatch`) {
+    currentQuery = currentQuery.nestedQuery
+    path.push(...currentQuery.path)
+  }
+  return path.join(`.`)
+}
+
+export function getFilterStatement(dbQuery: DbQuery): IDbFilterStatement {
+  let currentQuery = dbQuery
+  while (currentQuery.type !== `query`) {
+    currentQuery = currentQuery.nestedQuery
+  }
+  return currentQuery.query
 }
 
 export function prefixResolvedFields(

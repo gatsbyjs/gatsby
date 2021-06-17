@@ -20,7 +20,6 @@ import {
   getNodesByType,
   getTypes,
 } from "../datastore"
-import { runFastFiltersAndSort } from "../datastore/in-memory/run-fast-filters"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -283,7 +282,7 @@ class LocalNodeModel {
       runQueryActivity.start()
     }
 
-    const queryResult = runFastFiltersAndSort({
+    const queryResult = await getDataStore().runQuery({
       queryArgs: query,
       firstOnly,
       gqlSchema: this.schema,
