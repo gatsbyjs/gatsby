@@ -222,8 +222,8 @@ module.exports = {
           pngOptions: {},
           webpOptions: {},
           avifOptions: {},
-        }
-      }
+        },
+      },
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-image`,
