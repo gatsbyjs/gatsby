@@ -23,7 +23,7 @@ export class GatsbyWebpackStatsExtractor {
             .filter(
               f =>
                 f.slice(-4) !== `.map` &&
-                f.slice(0, chunkGroup.name.length) === chunkGroup.name
+                f.slice(0, chunkGroup.name?.length) === chunkGroup.name
             )
             .map(filename => `/${filename}`)
 
@@ -37,7 +37,7 @@ export class GatsbyWebpackStatsExtractor {
               childAssets[chunkGroup.name] = {}
             }
 
-            const childFiles = []
+            const childFiles: Array<string> = []
             for (const childChunkGroup of childChunkGroups) {
               for (const chunk of childChunkGroup.chunks) {
                 childFiles.push(...chunk.files)

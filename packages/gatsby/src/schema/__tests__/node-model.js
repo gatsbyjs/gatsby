@@ -3,6 +3,7 @@ const { actions } = require(`../../redux/actions`)
 const { LocalNodeModel } = require(`../node-model`)
 const { build } = require(`..`)
 const typeBuilders = require(`../types/type-builders`)
+const { isLmdbStore } = require(`../../datastore`)
 
 const nodes = require(`./fixtures/node-model`)
 
@@ -1256,6 +1257,10 @@ describe(`NodeModel`, () => {
   })
 
   describe(`circular references`, () => {
+    if (isLmdbStore()) {
+      // Circular references are disallowed in the strict mode, this tests are expected to fail
+      return
+    }
     describe(`directly on a node`, () => {
       beforeEach(async () => {
         // This tests whether addRootNodeToInlineObject properly prevents re-traversing the same key-value pair infinitely

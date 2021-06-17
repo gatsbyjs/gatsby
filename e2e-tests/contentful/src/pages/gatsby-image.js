@@ -12,7 +12,7 @@ const GatsbyImagePage = ({ data }) => {
       <h1>Test legacy gatsby-image</h1>
       <h2>gatsby-image: fluid</h2>
       <Grid data-cy="fluid">
-        {data.allContentfulAsset.nodes.map(node => (
+        {data.default.nodes.map(node => (
           <div>
             <p>
               <strong>
@@ -31,7 +31,7 @@ const GatsbyImagePage = ({ data }) => {
 
       <h2>gatsby-image: fixed</h2>
       <Grid data-cy="fixed">
-        {data.allContentfulAsset.nodes.map(node => (
+        {data.default.nodes.map(node => (
           <div>
             <p>
               <strong>
@@ -50,7 +50,7 @@ const GatsbyImagePage = ({ data }) => {
 
       <h2>gatsby-image: WebP</h2>
       <Grid data-cy="webp">
-        {data.allContentfulAsset.nodes.map(node => (
+        {data.default.nodes.map(node => (
           <div>
             <p>
               <strong>
@@ -69,7 +69,7 @@ const GatsbyImagePage = ({ data }) => {
 
       <h2>gatsby-image: Traced SVG Placeholder</h2>
       <Grid data-cy="traced">
-        {data.allContentfulAsset.nodes.map(node => (
+        {data.default.nodes.map(node => (
           <div>
             <p>
               <strong>
@@ -88,7 +88,7 @@ const GatsbyImagePage = ({ data }) => {
 
       <h2>gatsby-image: SQIP Placeholder</h2>
       <Grid data-cy="sqip">
-        {data.allContentfulAsset.nodes.map(node => (
+        {data.default.nodes.map(node => (
           <div>
             <p>
               <strong>
@@ -109,6 +109,44 @@ const GatsbyImagePage = ({ data }) => {
           </div>
         ))}
       </Grid>
+
+      <h2>gatsby-image: English</h2>
+      <Grid data-cy="english">
+        {data.english.nodes.map(node => (
+          <div>
+            <p>
+              <strong>
+                {node.title} ({node.file.fileName.split(".").pop()})
+              </strong>
+            </p>
+            {node.description && <p>{node.description}</p>}
+            {node.fluid ? (
+              <GatsbyImage fluid={node.fluid} />
+            ) : (
+              <SvgImage src={node.file.url} />
+            )}
+          </div>
+        ))}
+      </Grid>
+
+      <h2>gatsby-image: German</h2>
+      <Grid data-cy="german">
+        {data.german.nodes.map(node => (
+          <div>
+            <p>
+              <strong>
+                {node.title} ({node.file.fileName.split(".").pop()})
+              </strong>
+            </p>
+            {node.description && <p>{node.description}</p>}
+            {node.fluid ? (
+              <GatsbyImage fluid={node.fluid} />
+            ) : (
+              <SvgImage src={node.file.url} />
+            )}
+          </div>
+        ))}
+      </Grid>
     </Layout>
   )
 }
@@ -117,7 +155,7 @@ export default GatsbyImagePage
 
 export const pageQuery = graphql`
   query GatsbyImageQuery {
-    allContentfulAsset(
+    default: allContentfulAsset(
       filter: {
         contentful_id: {
           in: [
@@ -126,6 +164,7 @@ export const pageQuery = graphql`
             "65syuRuRVeKi03HvRsOkkb"
           ]
         }
+        node_locale: { eq: "en-US" }
       }
       sort: { fields: contentful_id }
     ) {
@@ -150,6 +189,44 @@ export const pageQuery = graphql`
         }
         sqip(numberOfPrimitives: 12, blur: 0, mode: 1) {
           dataURI
+        }
+      }
+    }
+    english: allContentfulAsset(
+      filter: {
+        contentful_id: { in: ["4FwygYxkL3rAteERtoxxNC"] }
+        node_locale: { eq: "en-US" }
+      }
+      sort: { fields: contentful_id }
+    ) {
+      nodes {
+        title
+        description
+        file {
+          fileName
+          url
+        }
+        fluid(maxWidth: 420) {
+          ...GatsbyContentfulFluid
+        }
+      }
+    }
+    german: allContentfulAsset(
+      filter: {
+        contentful_id: { in: ["4FwygYxkL3rAteERtoxxNC"] }
+        node_locale: { eq: "de-DE" }
+      }
+      sort: { fields: contentful_id }
+    ) {
+      nodes {
+        title
+        description
+        file {
+          fileName
+          url
+        }
+        fluid(maxWidth: 420) {
+          ...GatsbyContentfulFluid
         }
       }
     }

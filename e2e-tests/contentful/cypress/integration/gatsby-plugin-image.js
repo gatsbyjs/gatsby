@@ -43,7 +43,7 @@ function testGatsbyPluginImage(type, testPlaceholder) {
 
   cy.get(`[data-cy="${type}"]`).scrollIntoView({ duration: 500 })
 
-  // Wait for load
+  // Wait images for load
   cy.wait(1000)
 
   cy.get(`[data-cy="${type}"]`)
@@ -80,4 +80,19 @@ describe(`gatsby-plugin-image`, () => {
     testGatsbyPluginImage(`blurred`, hasJPEGPlaceholder)
   )
   it(`sqip`, testConfig, () => testGatsbyPluginImage(`sqip`, hasSVGPlaceholder))
+
+  it(`english`, testConfig, () => {
+    testGatsbyPluginImage(`english`, hasColorPlaceholder)
+    cy.get(`[data-cy="english"] p strong`).should(
+      "have.text",
+      "Locale - American English (png)"
+    )
+  })
+  it(`german`, testConfig, () => {
+    testGatsbyPluginImage(`german`, hasColorPlaceholder)
+    cy.get(`[data-cy="german"] p strong`).should(
+      "have.text",
+      "Locale - German (png)"
+    )
+  })
 })

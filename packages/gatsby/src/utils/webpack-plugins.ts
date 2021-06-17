@@ -1,10 +1,12 @@
-import webpack, { Plugin } from "webpack"
+import webpack, { WebpackPluginInstance } from "webpack"
 
 const plugin = (
   name: string,
   optimize?: boolean,
   deprecationReason?: string
-): ((...args: any) => Plugin) => (...args: any): Plugin => {
+): ((...args: any) => WebpackPluginInstance) => (
+  ...args: any
+): WebpackPluginInstance => {
   if (deprecationReason) {
     // TODO add proper deprecation function to reporter
     console.warn(`[deprecated]: ${deprecationReason}`)

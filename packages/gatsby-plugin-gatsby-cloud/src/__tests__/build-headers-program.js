@@ -28,6 +28,32 @@ describe(`build-headers-program`, () => {
     )
 
     return {
+      components: new Map([
+        [
+          1,
+          {
+            componentChunkName: `component---node-modules-gatsby-plugin-offline-app-shell-js`,
+          },
+        ],
+        [
+          2,
+          {
+            componentChunkName: `component---src-templates-blog-post-js`,
+          },
+        ],
+        [
+          3,
+          {
+            componentChunkName: `component---src-pages-404-js`,
+          },
+        ],
+        [
+          4,
+          {
+            componentChunkName: `component---src-pages-index-js`,
+          },
+        ],
+      ]),
       pages: new Map([
         [
           `/offline-plugin-app-shell-fallback/`,

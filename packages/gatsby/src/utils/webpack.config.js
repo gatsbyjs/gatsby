@@ -6,6 +6,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const { CoreJSResolver } = require(`./webpack/corejs-resolver`)
+const { CacheFolderResolver } = require(`./webpack/cache-folder-resolver`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const { getPublicPath } = require(`./get-public-path`)
@@ -442,7 +443,10 @@ module.exports = async (
         ),
         $virtual: getAbsolutePathForVirtualModule(`$virtual`),
       },
-      plugins: [new CoreJSResolver()],
+      plugins: [
+        new CoreJSResolver(),
+        new CacheFolderResolver(path.join(program.directory, `.cache`)),
+      ],
     }
 
     const target =
@@ -819,14 +823,19 @@ module.exports = async (
     const fastRefreshIncludes = []
     const babelLoaderLoc = require.resolve(`./babel-loader`)
     for (const rule of getConfig().module.rules) {
-      if (!rule.use) {
+      if (!rule.use && !rule.loader) {
         continue
       }
 
-      const hasBabelLoader = (Array.isArray(rule.use)
-        ? rule.use
-        : [rule.use]
-      ).some(loaderConfig => loaderConfig.loader === babelLoaderLoc)
+      const ruleLoaders = Array.isArray(rule.use)
+        ? rule.use.map(useEntry =>
+            typeof useEntry === `string` ? useEntry : useEntry.loader
+          )
+        : [rule.use?.loader ?? rule.loader]
+
+      const hasBabelLoader = ruleLoaders.some(
+        loader => loader === babelLoaderLoc
+      )
 
       if (hasBabelLoader) {
         fastRefreshIncludes.push(rule.test)

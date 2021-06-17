@@ -58,6 +58,25 @@ const GatsbyReporter = {
    * reporter.verbose(`text`)
    */
   verbose: true,
+
+  /**
+   * @callback GatsbyReporterActivityTimerFn
+   * @param {string} message Timer message to display
+   * @returns {ITimerReporter}
+   */
+
+  /**
+   * Creates a new activity timer with the provided message.
+   * Check the full [return type definition here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/src/reporter/reporter-timer.ts#L19).
+   * @type {GatsbyReporterActivityTimerFn}
+   * @example
+   * const activity = reporter.activityTimer(`Timer text`)
+   *
+   * activity.start()
+   * activity.setStatus(`status text`)
+   * activity.end()
+   */
+  activityTimer: true,
 };
 
 /***/

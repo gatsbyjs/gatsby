@@ -27,11 +27,16 @@ const Style = () => (
             0px 4px 8px rgba(71, 63, 79, 0.16);
         }
 
+        [data-gatsby-preview-indicator="tooltip"] svg {
+          display: inline;
+        }
+
         [data-gatsby-preview-indicator="root"] {
           font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
             Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
             "Segoe UI Symbol" !important;
           background: white;
+          box-sizing: border-box;
           position: fixed;
           top: 50%;
           -ms-transform: translateY(-50%);
@@ -52,6 +57,7 @@ const Style = () => (
           height: 32px;
           padding: 4px;
           border-radius: 4px;
+          box-sizing: border-box;
         }
 
         [data-gatsby-preview-indicator-hoverable="true"]:hover {
@@ -98,11 +104,11 @@ const Style = () => (
           color: white;
           position: fixed;
           display: inline;
-          width: max-content;
           padding: 10px 13px;
           margin-top: -4px;
           border-radius: 4px;
           user-select: none;
+          white-space: nowrap;
         }
 
         [data-gatsby-preview-indicator="tooltip-link"] {
