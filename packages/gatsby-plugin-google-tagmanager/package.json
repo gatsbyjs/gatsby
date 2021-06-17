@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-google-tagmanager",
   "description": "Gatsby plugin to add google tagmanager onto a site",
-  "version": "3.8.0-next.1",
+  "version": "3.8.0-next.2",
   "author": "Thijs Koerselman <thijs@vauxlab.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"

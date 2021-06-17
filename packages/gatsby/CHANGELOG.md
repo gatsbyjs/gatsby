@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.8.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.8.0-next.1...gatsby@3.8.0-next.2) (2021-06-17)
+
+### Bug Fixes
+
+- **gatsby:** infer shape of warning object ([#31489](https://github.com/gatsbyjs/gatsby/issues/31489)) ([96dc88a](https://github.com/gatsbyjs/gatsby/commit/96dc88aa8cef36a16d41f16e415c0e82606806e1))
+- **gatsby:** Update eslint a11y config ([#31896](https://github.com/gatsbyjs/gatsby/issues/31896)) ([28ca867](https://github.com/gatsbyjs/gatsby/commit/28ca8676d6bddfef117a1361b1dad0973b700e57))
+
+### Features
+
+- **gatsby:** Main process can save slices of state & worker can access it ([#31822](https://github.com/gatsbyjs/gatsby/issues/31822)) ([7aa9c85](https://github.com/gatsbyjs/gatsby/commit/7aa9c85b01e12c48d73a69d89b7f1fa7c62ef7c3))
+- **gatsby:** PQR workers can access inference metadata ([#31858](https://github.com/gatsbyjs/gatsby/issues/31858)) ([315b694](https://github.com/gatsbyjs/gatsby/commit/315b69454222e2b079ce891616687c084b86487b))
+- **gatsby:** PQR workers can access page & static queries ([#31852](https://github.com/gatsbyjs/gatsby/issues/31852)) ([222a5ed](https://github.com/gatsbyjs/gatsby/commit/222a5edde3fcce0a71e14781ed62cc150ad1f8d7))
+- **gatsby-plugin-google-analytics:** enable core webvitals tracking ([#31665](https://github.com/gatsbyjs/gatsby/issues/31665)) ([1ecd6e1](https://github.com/gatsbyjs/gatsby/commit/1ecd6e12eeedcabc54f3be00137a5d092978de58))
+
 # [3.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.8.0-next.0...gatsby@3.8.0-next.1) (2021-06-10)
 
 ### Bug Fixes
