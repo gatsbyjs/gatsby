@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.0",
-    "minimatch": "3.0.4"
+    "minimatch": "3.0.4",
+    "web-vitals": "^1.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.0",

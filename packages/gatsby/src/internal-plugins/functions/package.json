@@ -2,7 +2,7 @@
   "name": "functions",
   "version": "1.0.0",
   "description": "An internal Gatsby plugin which lets one write serverless functions",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

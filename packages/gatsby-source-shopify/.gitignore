@@ -1,3 +1,7 @@
-/__tests__
-/yarn.lock
-/*.js
+*.js
+*.js.map
+*.d.ts
+!/types/*.d.ts
+README.md
+
+!jest.config.js
