@@ -119,7 +119,7 @@ const activeFlags: Array<IFlag> = [
     command: `develop`,
     telemetryId: false,
     experimental: false,
-    description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server. Requires gatsby-plugin-sharp@2.10.0 or above.`,
+    description: `Doesn't process images during development until they're requested from the browser. Speeds starting the develop server. Requires gatsby-plugin-sharp@2.10.0 or above.`,
     umbrellaIssue: `https://gatsby.dev/lazy-images-feedback`,
     noCI: true,
     testFitness: (): fitnessEnum => {
@@ -158,7 +158,7 @@ const activeFlags: Array<IFlag> = [
     command: `all`,
     telemetryId: `PreserveFileDownloadCache`,
     experimental: false,
-    description: `Don't delete the downloaded files cache when changing gatsby-node.js & gatsby-config.js files.`,
+    description: `Doesn't delete the downloaded files cache when changing gatsby-node.js & gatsby-config.js files.`,
     umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
     testFitness: (): fitnessEnum => true,
   },
