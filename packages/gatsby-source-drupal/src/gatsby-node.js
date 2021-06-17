@@ -21,7 +21,7 @@ const agent = {
 }
 
 async function worker([url, options]) {
-  return got(url, { agent, http2: true, ...options })
+  return got(url, { agent, ...options })
 }
 
 const requestQueue = require(`fastq`).promise(worker, 5)

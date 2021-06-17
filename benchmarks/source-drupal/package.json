@@ -22,7 +22,7 @@
     "gatsby-image": "^3.5.0",
     "gatsby-plugin-benchmark-reporting": "*",
     "gatsby-plugin-sharp": "^3.5.0",
-    "gatsby-source-drupal": "4.7.0-next.0-dev-1621619567053",
+    "gatsby-source-drupal": "^4.7.2",
     "gatsby-source-filesystem": "^3.5.0",
     "gatsby-transformer-sharp": "^3.5.0",
     "lodash.kebabcase": "^4.1.1",
