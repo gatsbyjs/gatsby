@@ -129,7 +129,7 @@ An asterix, `*`, will match anything that follows. i.e. `/packages/gatsby-plugin
 
 [HSTS Cheatsheet](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html)
 
-Since this header is an opt-in security enhancement with permanent consequences we don't include it as a default feature but use can use the `allPagesHeaders` to include it.
+Since this header is an opt-in security enhancement with permanent consequences we don't include it as a default feature but use the `allPagesHeaders` to include it.
 
 ```javascript
 {
