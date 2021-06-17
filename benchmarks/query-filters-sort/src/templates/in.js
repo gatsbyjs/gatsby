@@ -3,7 +3,7 @@ import { graphql } from "gatsby"
 
 export default ({ data }) => {
   if (!data?.allTest?.nodes?.length) {
-    throw new Error("Wrong data")
+    throw new Error("Wrong data: " + JSON.stringify(data))
   }
   return <div>{JSON.stringify(data)}</div>
 }
@@ -14,6 +14,7 @@ export const query = graphql`
       nodes {
         nodeNum
         text
+        testIn
       }
     }
   }

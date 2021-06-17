@@ -9,7 +9,7 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "gatsby": "^3.4.1",
+    "gatsby": "3.8.0-next.1-dev-1623881736646",
     "process-top": "^1.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

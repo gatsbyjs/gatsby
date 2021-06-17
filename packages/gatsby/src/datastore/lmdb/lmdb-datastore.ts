@@ -5,6 +5,22 @@ import { updateNodes } from "./updates/nodes"
 import { updateNodesByType } from "./updates/nodes-by-type"
 import { IDataStore, IGatsbyIterable, ILmdbDatabases } from "../types"
 import { emitter, replaceReducer } from "../../redux"
+import { IRunFilterArg } from "../in-memory/run-fast-filters"
+import { doRunQuery } from "./query/run-query"
+
+const lmdbDatastore = {
+  getNode,
+  getTypes,
+  countNodes,
+  iterateNodes,
+  iterateNodesByType,
+  runQuery,
+  ready,
+
+  // deprecated:
+  getNodes,
+  getNodesByType,
+}
 
 const rootDbFile =
   process.env.NODE_ENV === `test`
@@ -39,6 +55,15 @@ function getDatabases(): ILmdbDatabases {
       nodesByType: rootDb.openDB({
         name: `nodesByType`,
         dupSort: true,
+      }),
+      metadata: rootDb.openDB({
+        name: `metadata`,
+        useVersions: true,
+      }),
+      indexes: rootDb.openDB({
+        name: `indexes`,
+        // TODO: use dupSort instead
+        // dupSort: true
       }),
     }
   }
@@ -115,6 +140,21 @@ function countNodes(typeName?: string): number {
   return count
 }
 
+async function runQuery(
+  args: IRunFilterArg
+): Promise<Array<IGatsbyNode> | null> {
+  const result = await doRunQuery({
+    datastore: lmdbDatastore,
+    databases: getDatabases(),
+    ...args,
+  })
+  // Array.from() is optimized in V8 to work with iterables.
+  // In other words, it won't immediately convert it to array but will
+  // do it lazily under the hood as needed
+  // https://v8.dev/blog/spread-elements#improving-array.from-performance
+  return Array.from(result)
+}
+
 let lastOperationPromise: Promise<any> = Promise.resolve()
 
 function updateDataStore(action: ActionsUnion): void {
@@ -125,6 +165,8 @@ function updateDataStore(action: ActionsUnion): void {
       dbs.nodes.transactionSync(() => {
         dbs.nodes.clear()
         dbs.nodesByType.clear()
+        dbs.metadata.clear()
+        dbs.indexes.clear()
       })
       break
     }
@@ -149,19 +191,6 @@ async function ready(): Promise<void> {
 }
 
 export function setupLmdbStore(): IDataStore {
-  const lmdbDatastore = {
-    getNode,
-    getTypes,
-    countNodes,
-    iterateNodes,
-    iterateNodesByType,
-    updateDataStore,
-    ready,
-
-    // deprecated:
-    getNodes,
-    getNodesByType,
-  }
   replaceReducer({
     nodes: (state = new Map(), action) =>
       action.type === `DELETE_CACHE` ? new Map() : state,

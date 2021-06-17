@@ -544,6 +544,7 @@ describe(`Queryable Node interfaces with @nodeInterface`, () => {
         internal: {
           type: `FooConcrete`,
           contentDigest: `0`,
+          counter: 0,
         },
       },
     ]
@@ -1080,6 +1081,7 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
         internal: {
           type: `FooConcrete`,
           contentDigest: `0`,
+          counter: 0,
         },
       },
     ]
