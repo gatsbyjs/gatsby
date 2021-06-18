@@ -29,8 +29,6 @@ const requestQueue = require(`fastq`).promise(worker, 20)
 const asyncPool = require(`tiny-async-pool`)
 const bodyParser = require(`body-parser`)
 
-const inMemoryHTTPCache = new Map()
-
 function gracefullyRethrow(activity, error) {
   // activity.panicOnBuild was implemented at some point in gatsby@2
   // but plugin can still be used with older version of gatsby core
@@ -172,7 +170,7 @@ exports.sourceNodes = async (
           headers,
           searchParams: params,
           responseType: `json`,
-          cache: inMemoryHTTPCache,
+          cache,
         },
       ])
 
@@ -269,7 +267,7 @@ exports.sourceNodes = async (
         headers,
         searchParams: params,
         responseType: `json`,
-        cache: inMemoryHTTPCache,
+        cache,
       },
     ])
     allData = await Promise.all(
@@ -317,7 +315,7 @@ exports.sourceNodes = async (
                 password: basicAuth.password,
                 headers,
                 responseType: `json`,
-                cache: inMemoryHTTPCache,
+                cache,
               },
             ])
           } catch (error) {
