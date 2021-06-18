@@ -142,9 +142,6 @@ describeWhenLMDB(`worker (schema)`, () => {
       three: nodeTypeOne {
         resolverField
       }
-      four: nodeTypeOne {
-        fieldsOnGraphQL
-      }
     }
   `)
 
@@ -157,15 +154,6 @@ describeWhenLMDB(`worker (schema)`, () => {
     // @ts-ignore - it exists
     const { data } = await worker?.getRunQueryResult(`
     {
-      one: nodeTypeOne {
-        number
-      }
-      two: nodeTypeTwo {
-        thisIsANumber
-      }
-      three: nodeTypeOne {
-        resolverField
-      }
       four: nodeTypeOne {
         fieldsOnGraphQL
       }
