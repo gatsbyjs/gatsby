@@ -1,4 +1,5 @@
 import apiRunnerNode from "../../api-runner-node"
+import { store } from "../../../redux"
 import { build } from "../../../schema"
 import { setState } from "./state"
 
@@ -11,6 +12,15 @@ export function setQueries(): void {
 }
 
 export async function buildSchema(): Promise<void> {
+  const workerStore = store.getState()
+
+  if (!workerStore?.config?.plugins) {
+    console.error(
+      `Config loading didn't finish before attempting to build schema in worker`
+    )
+    return
+  }
+
   setInferenceMetadata()
 
   await apiRunnerNode(`createSchemaCustomization`)
