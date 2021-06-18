@@ -23,11 +23,14 @@ export const GatsbyCLI = {
             env: { NODE_ENV, CI: 1, GATSBY_LOGGER: `ink` },
           })
 
+          console.log({ results })
+
           return [
             results.exitCode,
             createLogsMatcher(strip(results.stdout.toString())),
           ]
         } catch (err) {
+          console.log({ err })
           return [
             err.exitCode,
             createLogsMatcher(strip(err.stdout?.toString() || ``)),
