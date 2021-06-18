@@ -136,7 +136,14 @@ export async function flush(): Promise<void> {
 
   const { pagePaths } = pendingPageDataWrites
 
-  const pagesToWrite = pagePaths.values()
+  const pagesToWrite = Array.from(pagePaths.values())
+
+  const writePageDataActivity = reporter.createProgress(
+    `Writing page-data.json files to public directory`,
+    pagesToWrite.length,
+    0
+  )
+  writePageDataActivity.start()
 
   const flushQueue = fastq(async (pagePath, cb) => {
     const page = pages.get(pagePath)
@@ -181,6 +188,8 @@ export async function flush(): Promise<void> {
         }
       )
 
+      writePageDataActivity.tick()
+
       if (program?._?.[0] === `develop`) {
         websocketManager.emitPageData({
           id: pagePath,
@@ -209,6 +218,7 @@ export async function flush(): Promise<void> {
     })
   }
 
+  writePageDataActivity.end()
   isFlushing = false
   return
 }
