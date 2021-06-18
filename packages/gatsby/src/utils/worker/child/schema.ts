@@ -15,10 +15,9 @@ export async function buildSchema(): Promise<void> {
   const workerStore = store.getState()
 
   if (!workerStore?.config?.plugins) {
-    console.error(
+    throw Error(
       `Config loading didn't finish before attempting to build schema in worker`
     )
-    return
   }
 
   setInferenceMetadata()
