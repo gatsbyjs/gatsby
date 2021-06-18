@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.0",
-    "axios": "^0.21.1",
+    "got": "^11.8.2",
+    "agentkeepalive": "^4.1.1",
+    "fastq": "^1.11.0",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "gatsby-source-filesystem": "^3.8.0-next.1",
@@ -23,11 +25,7 @@
     "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme",
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "gatsby-source-plugin"
-  ],
+  "keywords": ["gatsby", "gatsby-plugin", "gatsby-source-plugin"],
   "license": "MIT",
   "peerDependencies": {
     "gatsby": "^3.0.0-next.0"
