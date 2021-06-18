@@ -38,7 +38,7 @@ jest.mock(`chokidar`, () => {
 })
 
 describeWhenLMDB(`worker (schema)`, () => {
-  let state: CombinedState<IGatsbyState>
+  let stateFromWorker: CombinedState<IGatsbyState>
 
   beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
@@ -58,7 +58,7 @@ describeWhenLMDB(`worker (schema)`, () => {
     saveStateForWorkers([`inferenceMetadata`])
     await worker.buildSchema()
 
-    state = await worker.getState()
+    stateFromWorker = await worker.getState()
   })
 
   afterAll(() => {
@@ -72,7 +72,7 @@ describeWhenLMDB(`worker (schema)`, () => {
   })
 
   it(`should have functioning createSchemaCustomization`, async () => {
-    const typeDefinitions = (state.schemaCustomization.types[0] as {
+    const typeDefinitions = (stateFromWorker.schemaCustomization.types[0] as {
       typeOrTypeDef: DocumentNode
     }).typeOrTypeDef.definitions
 
@@ -111,7 +111,7 @@ describeWhenLMDB(`worker (schema)`, () => {
   })
 
   it(`should have NodeTypeOne & NodeTypeTwo in schema`, async () => {
-    expect(state.schema[`_typeMap`]).toEqual(
+    expect(stateFromWorker.schema[`_typeMap`]).toEqual(
       expect.objectContaining({
         NodeTypeOne: `NodeTypeOne`,
         NodeTypeTwo: `NodeTypeTwo`,
@@ -120,7 +120,7 @@ describeWhenLMDB(`worker (schema)`, () => {
   })
 
   it(`should have inferenceMetadata`, async () => {
-    expect(state.inferenceMetadata).toEqual(
+    expect(stateFromWorker.inferenceMetadata).toEqual(
       expect.objectContaining({
         typeMap: expect.objectContaining({
           NodeTypeOne: expect.anything(),
@@ -131,7 +131,22 @@ describeWhenLMDB(`worker (schema)`, () => {
 
   it(`should have resolverField from createResolvers`, async () => {
     // @ts-ignore - it exists
-    const { data } = await worker?.getRunQueryResult()
+    const { data } = await worker?.getRunQueryResult(`
+    {
+      one: nodeTypeOne {
+        number
+      }
+      two: nodeTypeTwo {
+        thisIsANumber
+      }
+      three: nodeTypeOne {
+        resolverField
+      }
+      four: nodeTypeOne {
+        fieldsOnGraphQL
+      }
+    }
+  `)
 
     expect(data.one.number).toBe(123)
     expect(data.two).toBe(null)
@@ -140,7 +155,22 @@ describeWhenLMDB(`worker (schema)`, () => {
 
   it(`should have fieldsOnGraphQL from setFieldsOnGraphQLNodeType`, async () => {
     // @ts-ignore - it exists
-    const { data } = await worker?.getRunQueryResult()
+    const { data } = await worker?.getRunQueryResult(`
+    {
+      one: nodeTypeOne {
+        number
+      }
+      two: nodeTypeTwo {
+        thisIsANumber
+      }
+      three: nodeTypeOne {
+        resolverField
+      }
+      four: nodeTypeOne {
+        fieldsOnGraphQL
+      }
+    }
+  `)
 
     expect(data.four.fieldsOnGraphQL).toBe(`Another Custom String`)
   })

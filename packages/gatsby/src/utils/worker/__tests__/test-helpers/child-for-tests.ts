@@ -80,27 +80,10 @@ const runQuery = (
   )
 
 // test: schema
-export async function getRunQueryResult(): Promise<ExecutionResult> {
+export async function getRunQueryResult(
+  query: string
+): Promise<ExecutionResult> {
   const state = store.getState()
 
-  return await runQuery(
-    state.schema,
-    state.schemaCustomization.composer,
-    `
-      {
-        one: nodeTypeOne {
-          number
-        }
-        two: nodeTypeTwo {
-          thisIsANumber
-        }
-        three: nodeTypeOne {
-          resolverField
-        }
-        four: nodeTypeOne {
-          fieldsOnGraphQL
-        }
-      }
-    `
-  )
+  return await runQuery(state.schema, state.schemaCustomization.composer, query)
 }
