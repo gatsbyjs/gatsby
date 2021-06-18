@@ -24,7 +24,7 @@ async function worker([url, options]) {
   return got(url, { agent, ...options })
 }
 
-const requestQueue = require(`fastq`).promise(worker, 5)
+const requestQueue = require(`fastq`).promise(worker, 20)
 
 const asyncPool = require(`tiny-async-pool`)
 const bodyParser = require(`body-parser`)
@@ -74,6 +74,7 @@ exports.sourceNodes = async (
     headers,
     params = {},
     concurrentFileRequests = 20,
+    concurrentAPIRequests = 20,
     disallowedLinkTypes = [
       `self`,
       `describedby`,
@@ -90,6 +91,9 @@ exports.sourceNodes = async (
     },
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
+
+  // Update the concurrency limit from the plugin options
+  requestQueue.concurrency = concurrentAPIRequests
 
   if (webhookBody && Object.keys(webhookBody).length) {
     const changesActivity = reporter.activityTimer(
@@ -531,6 +535,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     ),
     params: Joi.object().description(`Append optional GET params to requests`),
     concurrentFileRequests: Joi.number().integer().default(20).min(1),
+    concurrentAPIRequests: Joi.number().integer().default(20).min(1),
     disallowedLinkTypes: Joi.array().items(Joi.string()),
     skipFileDownloads: Joi.boolean(),
     fastBuilds: Joi.boolean(),
