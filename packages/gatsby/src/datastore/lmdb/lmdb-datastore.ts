@@ -37,7 +37,6 @@ function getRootDb(): RootDatabase {
     rootDb = open({
       name: `root`,
       path: process.cwd() + `/.cache/data/` + rootDbFile,
-      sharedStructuresKey: Symbol.for(`structures`),
       compression: true,
     })
   }
@@ -50,7 +49,9 @@ function getDatabases(): ILmdbDatabases {
     databases = {
       nodes: rootDb.openDB({
         name: `nodes`,
-        cache: true,
+        sharedStructuresKey: Symbol.for(`structures`),
+        // @ts-ignore
+        cache: { cacheSize: 5000 },
       }),
       nodesByType: rootDb.openDB({
         name: `nodesByType`,
@@ -103,7 +104,7 @@ function iterateNodes(): IGatsbyIterable<IGatsbyNode> {
   const nodesDb = getDatabases().nodes
   return nodesDb
     .getKeys({ snapshot: false })
-    .map(nodeId => getNode(nodeId)!)
+    .map(nodeId => (typeof nodeId === `string` ? getNode(nodeId) : undefined)!)
     .filter(Boolean)
 }
 
@@ -129,7 +130,7 @@ function countNodes(typeName?: string): number {
   if (!typeName) {
     const stats = getDatabases().nodes.getStats()
     // @ts-ignore
-    return Number(stats.entryCount || 0)
+    return Number(stats.entryCount - 1 || 0)
   }
 
   const { nodesByType } = getDatabases()

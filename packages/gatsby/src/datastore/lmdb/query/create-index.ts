@@ -31,18 +31,31 @@ export async function createIndex(
   indexFields: IIndexFields
 ): Promise<boolean> {
   const indexName = buildIndexName(typeName, indexFields)
+  const metadataKey = `index:${indexName}`
 
-  try {
-    await lockIndex(context, indexName)
-  } catch (err) {
-    // Index is being updated in some other process.
-    // Wait and assume it's in a good state when done
-    await indexReady(context, indexName)
-    return true
+  const { state } = context.databases.metadata.get(metadataKey) ?? {}
+
+  switch (state) {
+    case `ready`:
+      return true
+    case `building`: {
+      await indexReady(context, metadataKey)
+      return true
+    }
+    default: {
+      try {
+        await lockIndex(context, metadataKey)
+      } catch (err) {
+        // Index is being updated in some other process.
+        // Wait and assume it's in a good state when done
+        await indexReady(context, metadataKey)
+        return true
+      }
+      await doCreateIndex(context, typeName, indexFields)
+      await markIndexReady(context, metadataKey)
+      return true
+    }
   }
-  await doCreateIndex(context, typeName, indexFields)
-  // await unlockIndex(context, indexName)
-  return true
 }
 
 async function doCreateIndex(
@@ -76,7 +89,7 @@ async function doCreateIndex(
     )
     for (const indexKey of indexKeys) {
       // assertAllowedIndexValue(typeName, fieldSelector, value, node.id)
-      console.log(indexKey, node.id)
+      // console.log(indexKey, node.id)
       promise = indexes.put(indexKey, node.id)
     }
   }
@@ -129,48 +142,44 @@ function prepareIndexKeys(
 
 async function lockIndex(
   context: IDataStoreContext,
-  indexName: string
+  indexKey: string
 ): Promise<void> {
   const { metadata } = context.databases
-  const indexLock = `index-lock:${indexName}`
 
-  const justLocked = await metadata.ifNoExists(indexLock, () => {
-    metadata.put(indexLock, Date.now())
+  const justLocked = await metadata.ifNoExists(indexKey, () => {
+    metadata.put(indexKey, { state: `building` })
   })
-  if (!justLocked) {
+  if (!justLocked && metadata.get(indexKey)?.state === `building`) {
     throw new Error(`Index is already locked`)
   }
 }
 
-async function unlockIndex(
+async function markIndexReady(
   context: IDataStoreContext,
   indexName: string
 ): Promise<void> {
   const { metadata } = context.databases
-  await metadata.remove(`index-lock:${indexName}`)
+  await metadata.put(indexName, { state: `ready` })
 }
 
 async function indexReady(
   context: IDataStoreContext,
-  indexName: string
+  indexKey: string
 ): Promise<void> {
   return new Promise((resolve, reject) => {
     const { metadata } = context.databases
-    const indexLock = `index-lock:${indexName}`
 
     let retries = 0
     function poll(): void {
-      if (metadata.get(indexLock)) {
+      if (metadata.get(indexKey)?.state === `ready`) {
         resolve()
         return
       }
       if (retries++ > 3000) {
-        reject(
-          new Error(`Index ${indexName} is locked for more than 5 minutes`)
-        )
+        reject(new Error(`Index ${indexKey} is locked for more than 5 minutes`))
         return
       }
-      setTimeout(poll, 500)
+      setTimeout(poll, 100)
     }
     poll()
   })

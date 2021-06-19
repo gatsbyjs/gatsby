@@ -18,6 +18,7 @@ import {
 } from "./filter-using-index"
 import { store } from "../../../redux"
 import { resolveFieldValue, shouldFilter } from "./common"
+import { toDottedObject } from "graphql-compose"
 
 // Before running a query we create a separate index for all filter fields (unless it already exists)
 //   Each index has exactly the same sort order (so technically the index key is [filterField, ...sortFields]).
@@ -163,22 +164,53 @@ export interface IRunQueryArgs extends IRunFilterArg {
   datastore: IDataStore
 }
 
+export const stats = new Map()
+let interval
+
 export async function doRunQuery(
   args: IRunQueryArgs
 ): Promise<GatsbyIterable<IGatsbyNode>> {
-  const { queryArgs: { sort, limit, skip } = {} } = args
+  const {
+    nodeTypeNames,
+    queryArgs: { filter, sort, limit, skip = 0 } = {},
+    firstOnly,
+  } = args
   const sortFields = sort?.fields ?? []
 
+  const queryKey =
+    nodeTypeNames.join(`,`) +
+    `;filter: ${JSON.stringify(filter)}; sort: ${JSON.stringify(sort)}`
+
+  const start = Date.now()
   let result =
     sortFields.length > 0
       ? await runQueryWithSort(args)
       : await runQueryWithoutSort(args)
 
-  if (limit || skip) {
-    const normSkip = skip ?? 0
-    // result = result.slice(normSkip, normSkip + limit)
+  if (firstOnly) {
+    result = result.slice(0, 1)
+  } else if (limit) {
+    // console.log(`zzz`, skip, limit, Array.from(result))
+    result = result.slice(0, skip + limit + 1)
   }
+  const end = Date.now() - start
+  const time = stats.get(queryKey) ?? 0
+  stats.set(queryKey, time + (end - start))
+
+  if (!interval) {
+    interval = setInterval(output, 10000)
+  }
+
+  // console.log(r)
   return result
+}
+
+function output(): void {
+  stats.forEach((time, key) => {
+    if (time > 5 * 1000) {
+      console.log(`[long] ${key}:`, time)
+    }
+  })
 }
 
 async function runQueryWithSort(
@@ -201,7 +233,7 @@ async function runQueryWithSort(
   }
 
   // 1.2 section (see head of the file)
-  const eqOrInQueries = getEqOrInQueries(dbQueries)
+  const eqOrInQueries = getEqQueries(dbQueries)
   const filterFields = eqOrInQueries.length
     ? [dbQueryToDottedField(eqOrInQueries[0])]
     : []
@@ -276,7 +308,9 @@ async function runQueryWithoutSort(
         dbQueries
       )
       const intermediateResult = matches
-        .deduplicateSorted((prev, current) => prev.value === current.value)
+        .deduplicateSorted((prev, current) =>
+          prev.value === current.value ? 0 : -1
+        )
         .map(({ value }) => datastore.getNode(value))
         .filter(Boolean) as GatsbyIterable<IGatsbyNode>
 
@@ -290,7 +324,7 @@ async function runQueryWithoutSort(
   // 2.2 section
   // TODO: 2.2.1 try to find existing index and use index data for initial filtering
   // TODO: 2.2.2 iterate nodes by type (do not fall back to fast filters)
-  console.warn(`Fallback to full scan :/`)
+  console.warn(`Fallback to full scan :/ ${nodeTypeNames[0]} ${filter}`)
   let result = new GatsbyIterable<IGatsbyNode>([])
   for (const typeName of nodeTypeNames) {
     result = result.concat(
@@ -323,9 +357,23 @@ function completeResult(
 
   // console.log(`have to complete results`, filtersToApply)
 
+  let items = 0
+  const start = Date.now()
+  let shown = true
+
   return intermediateResult.filter(node => {
     const resolvedFields = resolvedNodes?.get(node.id)
     for (const [dottedField, filter] of filtersToApply) {
+      ++items
+      if (items % 1000 === 0) shown = false
+      if (!shown) {
+        shown = true
+        console.log(
+          `Completing huge dataset (${items} items so far) for: ${typeName}.${dottedField}; spent: ${
+            Date.now() - start
+          }ms;`
+        )
+      }
       const tmp = resolveFieldValue(dottedField, node, resolvedFields)
       const value = Array.isArray(tmp) ? tmp : [tmp]
       if (value.some(v => !shouldFilter(filter, v))) {
@@ -367,11 +415,9 @@ function buildIndexFields(
   )
 }
 
-const eqOrInComparators = new Set([DbComparator.EQ, DbComparator.IN])
-
-function getEqOrInQueries(dbQueries: Array<DbQuery>): Array<DbQuery> {
-  return dbQueries.filter(q =>
-    eqOrInComparators.has(getFilterStatement(q).comparator)
+function getEqQueries(dbQueries: Array<DbQuery>): Array<DbQuery> {
+  return dbQueries.filter(
+    q => getFilterStatement(q).comparator === DbComparator.EQ
   )
 }
 

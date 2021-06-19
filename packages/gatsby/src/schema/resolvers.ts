@@ -25,6 +25,7 @@ import {
   IGatsbyResolverContext,
 } from "./type-definitions"
 import { IGatsbyNode } from "../redux/types"
+import { GatsbyIterable } from "../datastore/common/iterable"
 
 type ResolvedLink = IGatsbyNode | Array<IGatsbyNode> | null
 
@@ -255,27 +256,49 @@ export const group: GatsbyResolver<
 }
 
 export function paginate<NodeType>(
-  results: Array<NodeType> = [],
+  results: Iterable<NodeType> = [],
   { skip = 0, limit }: { skip?: number; limit?: number }
 ): IGatsbyConnection<NodeType> {
   if (results === null) {
     results = []
   }
+  let count: number
+  let items: Array<NodeType>
+  let hasNextPage = false
+  if (limit) {
+    if (results instanceof GatsbyIterable) {
+      items = Array.from(results.slice(skip, skip + limit + 1)) // + 1 to check for hasNextPage below
+    } else {
+      items = Array.from(results).slice(skip, skip + limit + 1)
+    }
+    if (items.length > limit) {
+      hasNextPage = true
+      items.length -= 1
+    }
+  } else {
+    items = Array.from(results)
+  }
 
-  const count = results.length
-  const items = results.slice(skip, limit && skip + limit)
+  // Total count and page count are __very__ expensive, so resolving lazily when requested in GraphQL
+  function totalCount(): number {
+    if (!count) {
+      count = Array.from(results).length
+    }
+    return count
+  }
+  function pageCount(): number {
+    return limit
+      ? Math.ceil(skip / limit) + Math.ceil((totalCount() - skip) / limit)
+      : skip
+      ? 2
+      : 1
+  }
 
-  const pageCount = limit
-    ? Math.ceil(skip / limit) + Math.ceil((count - skip) / limit)
-    : skip
-    ? 2
-    : 1
   const currentPage = limit ? Math.ceil(skip / limit) + 1 : skip ? 2 : 1
   const hasPreviousPage = currentPage > 1
-  const hasNextPage = skip + (limit || NaN) < count
 
   return {
-    totalCount: count,
+    totalCount,
     edges: items.map((item, i, arr) => {
       return {
         node: item,
@@ -291,7 +314,7 @@ export function paginate<NodeType>(
       itemCount: items.length,
       pageCount,
       perPage: limit,
-      totalCount: count,
+      totalCount,
     },
   }
 }

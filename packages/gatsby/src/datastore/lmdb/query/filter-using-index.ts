@@ -90,7 +90,13 @@ export async function filterUsingIndex(
     return { usedQueries, result }
   }
 
-  return narrowResultsIfPossible(result, indexFields, dbQueries, usedQueries)
+  return narrowResultsIfPossible(
+    result,
+    indexName,
+    indexFields,
+    dbQueries,
+    usedQueries
+  )
 }
 
 function performRangeScan(
@@ -99,38 +105,35 @@ function performRangeScan(
   ranges: Array<IIndexRange>,
   reverse: boolean = false
 ): GatsbyIterable<IIndexEntry> {
-  console.log(`range scan`)
+  // console.log(`range scan`)
 
   const {
     databases: { indexes },
-    queryArgs: { limit, skip = 0 },
+    queryArgs,
   } = context
 
   // console.log(`limit`, skip, limit)
   // process.exit(1)
+
+  const limit = queryArgs.limit
+    ? (queryArgs.skip ?? 0) + queryArgs.limit + 1
+    : undefined
 
   let result = new GatsbyIterable<IIndexEntry>([])
   for (let { start, end } of ranges) {
     start = [indexName, ...start]
     end = [indexName, ...end]
     const range = !reverse
-      ? { start, end, snapshot: false }
-      : { start: end, end: start, reverse, snapshot: false }
+      ? { start, end, limit, snapshot: false }
+      : { start: end, end: start, limit, reverse, snapshot: false }
 
-    console.log(range)
+    // console.log(range)
 
     // Deduplicate by node counter which is the last element in the key
     const matches = indexes.getRange(range as any)
-    result = result
-      .mergeSorted(matches, compareByIndexKey)
-      .deduplicate(getNodeCounter)
-      .map(e => {
-        console.log(`found: `, e)
-        return e
-      })
-    // .slice(skip, skip + limit)
+    result = result.concat(matches).mergeSorted(matches, compareByCounter)
   }
-  return result
+  return result.deduplicate(getNodeCounter)
 }
 
 function performFullScan(
@@ -145,7 +148,7 @@ function performFullScan(
   const {
     databases: { indexes },
   } = context
-  console.log(`full scan`)
+  // console.log(`full scan`)
 
   let start: RangeBoundary = [indexName, getValueEdgeAfter(undefinedSymbol)]
   let end: RangeBoundary = [getValueEdgeAfter(indexName)]
@@ -154,7 +157,7 @@ function performFullScan(
     : { start: end, end: start, reverse, snapshot: false }
   const undefinedToEnd: any = indexes.getRange(range as any) // FIXME: lmdb-store typing seems outdated
 
-  console.log(`range1`, range, Array.from(undefinedToEnd))
+  // console.log(`range1`, range, Array.from(undefinedToEnd))
 
   // Concat null/undefined values
   end = start
@@ -164,7 +167,7 @@ function performFullScan(
     : { start: end, end: start, reverse, snapshot: false }
   const topToUndefined: any = indexes.getRange(range as any)
 
-  console.log(`range2`, range, Array.from(topToUndefined))
+  // console.log(`range2`, range, Array.from(topToUndefined))
 
   const result = new GatsbyIterable<IIndexEntry>(
     !reverse
@@ -195,6 +198,7 @@ function performFullScan(
  */
 function narrowResultsIfPossible(
   result: GatsbyIterable<IIndexEntry>,
+  indexName: string,
   indexFields: IIndexFields,
   dbQueries: Array<DbQuery>,
   usedQueries: Set<DbQuery>
@@ -220,7 +224,10 @@ function narrowResultsIfPossible(
     filtersToApply.push([getFilterStatement(query), fieldPositionInIndex])
   }
 
-  console.log(`Narrowing result: `, filtersToApply)
+  // console.log(`Narrowing result: `, filtersToApply)
+  let items = 0
+  const start = Date.now()
+  let shown = false
 
   return {
     usedQueries,
@@ -228,6 +235,14 @@ function narrowResultsIfPossible(
       filtersToApply.length === 0
         ? result
         : result.filter(({ key }) => {
+            if (!shown && items++ > 5000) {
+              shown = true
+              console.log(
+                `Narrowing huge dataset for: ${indexName}; spent: ${
+                  Date.now() - start
+                }ms`
+              )
+            }
             for (const [filter, fieldPositionInIndex] of filtersToApply) {
               const value =
                 key[fieldPositionInIndex] === undefinedSymbol
@@ -530,9 +545,9 @@ function toIndexFieldValue(
   return filterValue
 }
 
-function compareByIndexKey(a: IIndexEntry, b: IIndexEntry): number {
+function compareByCounter(a: IIndexEntry, b: IIndexEntry): number {
   // @ts-ignore
-  return compareKey(a.key, b.key)
+  return compareKey(getNodeCounter(a), getNodeCounter(b))
 }
 
 function getNodeCounter(entry: IIndexEntry): number {

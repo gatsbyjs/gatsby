@@ -19,26 +19,16 @@ export class GatsbyIterable<T> implements IGatsbyIterable<T> {
     return new GatsbyIterable<T>(filterSequence(this, predicate))
   }
 
-  slice(start: number, end: number) {
-    const source = this.source
-    return new GatsbyIterable(
-      (function* (): Generator<T> {
-        let index = 0
-        for (const item of source) {
-          if (index++ < start) {
-            continue
-          }
-          if (index > end) {
-            return
-          }
-          yield item
-        }
-      })()
-    )
+  flatMap<U>(fn: (entry: T) => U): GatsbyIterable<U> {
+    return new GatsbyIterable(flatMapSequence(this, fn))
+  }
+
+  slice(start: number, end: number): GatsbyIterable<T> {
+    return new GatsbyIterable<T>(sliceSequence(this, start, end))
   }
 
   deduplicate(keyFn?: (entry: T) => unknown): GatsbyIterable<T> {
-    return new GatsbyIterable<T>(deduplicate(this, keyFn))
+    return new GatsbyIterable<T>(deduplicateSequence(this, keyFn))
   }
 
   forEach(callback: (entry: T) => unknown): void {
@@ -76,14 +66,15 @@ export class GatsbyIterable<T> implements IGatsbyIterable<T> {
 
   /**
    * Assuming this iterable is sorted, removes duplicates from it
-   * by applying isEqual(prev, current) comparator to sibling iterable values.
+   * by applying comparator(prev, current) to sibling iterable values.
    *
-   * If isEqual comparator is not set, uses strict === comparison
+   * Comparator function is expected to return 0 when items are equal,
+   * similar to Array.prototype.sort() argument.
+   *
+   * If comparator is not set, uses strict === comparison
    */
-  deduplicateSorted(
-    isEqual?: (prev: T, current: T) => boolean
-  ): GatsbyIterable<T> {
-    return new GatsbyIterable<T>(deduplicateSorted(this, isEqual))
+  deduplicateSorted(comparator?: (a: T, b: T) => number): GatsbyIterable<T> {
+    return new GatsbyIterable<T>(deduplicateSorted(this, comparator))
   }
 }
 
@@ -94,6 +85,48 @@ function* mapSequence<T, U>(
   for (const value of source) {
     yield fn(value)
   }
+}
+
+function* flatMapSequence<T, U>(
+  source: Iterable<T>,
+  fn: (arg: T) => U | Iterable<U>
+): Generator<U> {
+  for (const value of source) {
+    const mapped = fn(value)
+    if (isNonArrayIterable(mapped)) {
+      // @ts-ignore
+      yield* mapped
+    } else {
+      yield mapped
+    }
+  }
+}
+
+function* sliceSequence<T>(
+  source: Iterable<T>,
+  start: number,
+  end: number
+): Generator<T> {
+  if (end < start || start < 0)
+    throw new Error(
+      `Negative offsets for slice() is not supported for iterables`
+    )
+  let index = -1
+  for (const item of source) {
+    index++
+    if (index < start) continue
+    if (index >= end) break
+    yield item
+  }
+}
+
+function isNonArrayIterable<T>(value: unknown): value is Iterable<T> {
+  return (
+    typeof value === `object` &&
+    value !== null &&
+    value[Symbol.iterator] &&
+    !Array.isArray(value)
+  )
 }
 
 function* filterSequence<T>(
@@ -119,7 +152,7 @@ function* concatSequence<T, U = T>(
   }
 }
 
-function* deduplicate<T>(
+function* deduplicateSequence<T>(
   source: Iterable<T>,
   keyFn?: (entry: T) => unknown
 ): Generator<T> {
@@ -136,11 +169,11 @@ function* deduplicate<T>(
 
 function* deduplicateSorted<T>(
   source: Iterable<T>,
-  isEqual: (prev: T, current: T) => boolean = defaultIsEqual
+  comparator: (a: T, b: T) => number = defaultComparator
 ): Generator<T> {
   let prev
   for (const current of source) {
-    if (typeof prev === `undefined` || !isEqual(prev, current)) {
+    if (typeof prev === `undefined` || comparator(prev, current) !== 0) {
       yield current
     }
     prev = current
@@ -207,8 +240,4 @@ function defaultComparator<T, U = T>(a: T | U, b: T | U): number {
     return 0
   }
   return a > b ? 1 : -1
-}
-
-function defaultIsEqual<T, U = T>(a: T | U, b: T | U): boolean {
-  return a === b
 }
