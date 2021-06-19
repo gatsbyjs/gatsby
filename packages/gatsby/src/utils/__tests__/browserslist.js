@@ -31,7 +31,7 @@ describe(`browserslist`, () => {
     expect(list).toEqual([`>0.25%`, `not dead`])
   })
 
-  it(`hasModuleSupport returns true if all browsers support es6 modules`, () => {
+  it(`hasES6ModuleSupport returns true if all browsers support es6 modules`, () => {
     const defaults = [`chrome 90`]
     mockedFindConfig.mockReturnValueOnce({
       defaults,
@@ -40,7 +40,7 @@ describe(`browserslist`, () => {
     expect(hasES6ModuleSupport(BASE)).toBe(true)
   })
 
-  it(`hasModuleSupport returns false if any browser does not support es6 modules`, () => {
+  it(`hasES6ModuleSupport returns false if any browser does not support es6 modules`, () => {
     const defaults = [`IE 11`]
     mockedFindConfig.mockReturnValueOnce({
       defaults,
