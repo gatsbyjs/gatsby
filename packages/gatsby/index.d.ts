@@ -477,8 +477,8 @@ export interface GatsbyNode<
    */
   createResolvers?(
     args: CreateResolversArgs,
-    options: PluginOptions,
-    callback: PluginCallback<void>
+    options?: PluginOptions,
+    callback?: PluginCallback<void>
   ): void | Promise<void>
 
   /**
