@@ -40,6 +40,36 @@ module.exports = {
 }
 ```
 
+And when making a `fetch` request in the browser:
+
+```javascript:title=src/pages/index.js
+import React, { useState, useEffect } from "react"
+
+function App() {
+  const [data, setData] = useState()
+
+  useEffect(async () => {
+    const result = await fetch(
+      "${process.env.GATSBY_API_URL}/users"
+    ).then(res => res.json())
+
+    setData(result.data)
+  })
+
+  return (
+    <ul>
+      {data.map(user => (
+        <li key={user.id}>
+          <a href={user.url}>{user.name}</a>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+export default App
+```
+
 ## Accessing Environment Variables in the browser.
 
 By default, environment variables are only available in Node.js code and are not available in the browser as some
