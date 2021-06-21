@@ -2,13 +2,13 @@
 title: Environment Variables
 ---
 
-Gatsby has built-in support for loading environment variables into the browser and functions.
+Gatsby has built-in support for loading environment variables into the browser and Functions.
 Loading environment variables into Node.js requires a small code snippet.
 
 In development, Gatsby will load environment variables from a file named `.env.development`.
 For builds, it will load from `.env.production`.
 
-A file could look like:
+A `.env` file could look like:
 
 ```text:title=.env.development
 GATSBY_API_URL=https://dev.example.com/api
@@ -28,6 +28,10 @@ This loads `process.env.GATSBY_API_URL` and `process.env.API_KEY` for use in `ga
 For example, when configuring a plugin in `gatsby-config.js`:
 
 ```javascript:title=gatsby-config.js
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   plugins: [
     {
@@ -40,7 +44,16 @@ module.exports = {
 }
 ```
 
-And when making a `fetch` request in the browser:
+## Accessing Environment Variables in the browser.
+
+By default, environment variables are only available in Node.js code and are not available in the browser as some
+variables should be kept secret and not exposed to anyone visiting the site.
+
+To expose a variable in the browser, you must preface its name with `GATSBY_`. So `GATSBY_API_URL` will be available in
+browser code but `API_KEY` will not.
+
+Variables are set when JavaScript is compiled so when the development server is started
+or you build your site.
 
 ```javascript:title=src/pages/index.js
 import React, { useState, useEffect } from "react"
@@ -69,17 +82,6 @@ function App() {
 
 export default App
 ```
-
-## Accessing Environment Variables in the browser.
-
-By default, environment variables are only available in Node.js code and are not available in the browser as some
-variables should be kept secret and not exposed to anyone visiting the site.
-
-To expose a variable in the browser, you must preface its name with `GATSBY_`. So `GATSBY_API_URL` will be available in
-browser code but `API_KEY` will not.
-
-Variables are set when JavaScript is compiled so when the development server is started
-or you build your site.
 
 ## Add `.env*` files to .gitignore
 
