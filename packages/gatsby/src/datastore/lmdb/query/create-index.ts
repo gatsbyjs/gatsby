@@ -42,6 +42,7 @@ export async function createIndex(
       await indexReady(context, metadataKey)
       return true
     }
+    case `initial`:
     default: {
       try {
         await lockIndex(context, metadataKey)
