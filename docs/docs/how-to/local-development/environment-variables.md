@@ -117,8 +117,7 @@ if (process.env.STAGING) {
 
 ## Reserved Environment Variables:
 
-You can not override certain environment variables as some are used internally
-for optimizations during build, such as:
+You can not override certain environment variables that are used internally:
 
 - `NODE_ENV`
 - `PUBLIC_DIR`
