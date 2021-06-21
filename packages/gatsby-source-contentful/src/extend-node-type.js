@@ -698,10 +698,21 @@ exports.extendNodeType = ({ type, store, reporter }) => {
   }
 
   const getDominantColor = async ({ image, options }) => {
+    let pluginSharp
+
+    try {
+      pluginSharp = require(`gatsby-plugin-sharp`)
+    } catch (e) {
+      console.error(
+        `[gatsby-source-contentful] Please install gatsby-plugin-sharp`,
+        e
+      )
+      return `rgba(0,0,0,0.5)`
+    }
+
     try {
       const absolutePath = await cacheImage(store, image, options, reporter)
 
-      const pluginSharp = require(`gatsby-plugin-sharp`)
       if (!(`getDominantColor` in pluginSharp)) {
         console.error(
           `[gatsby-source-contentful] Please upgrade gatsby-plugin-sharp`
@@ -712,7 +723,8 @@ exports.extendNodeType = ({ type, store, reporter }) => {
       return pluginSharp.getDominantColor(absolutePath)
     } catch (e) {
       console.error(
-        `[gatsby-source-contentful] Please install gatsby-plugin-sharp`
+        `[gatsby-source-contentful] Could not getDominantColor from image`,
+        e
       )
       return `rgba(0,0,0,0.5)`
     }
@@ -810,7 +822,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
         type: ImageLayoutType,
         description: stripIndent`
             The layout for the image.
-            CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size. 
+            CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
             FIXED: A static image size, that does not resize according to the screen width
             FULL_WIDTH: The image resizes to fit its container, even if that is larger than the source image.
             Pass a value to "sizes" if the container is not the full width of the screen.

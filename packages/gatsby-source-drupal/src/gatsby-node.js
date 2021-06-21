@@ -1,6 +1,9 @@
-const axios = require(`axios`)
+const got = require(`got`)
 const _ = require(`lodash`)
 const urlJoin = require(`url-join`)
+import HttpAgent from "agentkeepalive"
+
+const { HttpsAgent } = HttpAgent
 
 const { setOptions, getOptions } = require(`./plugin-options`)
 
@@ -11,6 +14,17 @@ const {
   createNodeIdWithVersion,
 } = require(`./normalize`)
 const { handleReferences, handleWebhookUpdate } = require(`./utils`)
+
+const agent = {
+  http: new HttpAgent(),
+  https: new HttpsAgent(),
+}
+
+async function worker([url, options]) {
+  return got(url, { agent, ...options })
+}
+
+const requestQueue = require(`fastq`).promise(worker, 20)
 
 const asyncPool = require(`tiny-async-pool`)
 const bodyParser = require(`body-parser`)
@@ -53,12 +67,18 @@ exports.sourceNodes = async (
   const {
     baseUrl,
     apiBase = `jsonapi`,
-    basicAuth,
+    basicAuth = {},
     filters,
     headers,
-    params,
+    params = {},
     concurrentFileRequests = 20,
-    disallowedLinkTypes = [`self`, `describedby`],
+    concurrentAPIRequests = 20,
+    disallowedLinkTypes = [
+      `self`,
+      `describedby`,
+      `contact_message--feedback`,
+      `contact_message--personal`,
+    ],
     skipFileDownloads = false,
     fastBuilds = false,
     entityReferenceRevisions = [],
@@ -69,6 +89,9 @@ exports.sourceNodes = async (
     },
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
+
+  // Update the concurrency limit from the plugin options
+  requestQueue.concurrency = concurrentAPIRequests
 
   if (webhookBody && Object.keys(webhookBody).length) {
     const changesActivity = reporter.activityTimer(
@@ -139,19 +162,22 @@ exports.sourceNodes = async (
 
     try {
       // Hit fastbuilds endpoint with the lastFetched date.
-      const data = await axios.get(
+      const res = await requestQueue.push([
         urlJoin(baseUrl, `gatsby-fastbuilds/sync/`, lastFetched.toString()),
         {
-          auth: basicAuth,
+          username: basicAuth.username,
+          password: basicAuth.password,
           headers,
-          params,
-        }
-      )
+          searchParams: params,
+          responseType: `json`,
+          cache,
+        },
+      ])
 
-      if (data.data.status === -1) {
+      if (res.body.status === -1) {
         // The incremental data is expired or this is the first fetch.
         reporter.info(`Unable to pull incremental data changes from Drupal`)
-        setPluginStatus({ lastFetched: data.data.timestamp })
+        setPluginStatus({ lastFetched: res.body.timestamp })
         requireFullRebuild = true
       } else {
         // Touch nodes so they are not garbage collected by Gatsby.
@@ -162,7 +188,7 @@ exports.sourceNodes = async (
         })
 
         // Process sync data from Drupal.
-        const nodesToSync = data.data.entities
+        const nodesToSync = res.body.entities
         for (const nodeSyncData of nodesToSync) {
           if (nodeSyncData.action === `delete`) {
             actions.deleteNode(
@@ -208,7 +234,7 @@ exports.sourceNodes = async (
           }
         }
 
-        setPluginStatus({ lastFetched: data.data.timestamp })
+        setPluginStatus({ lastFetched: res.body.timestamp })
       }
     } catch (e) {
       gracefullyRethrow(drupalFetchIncrementalActivity, e)
@@ -233,13 +259,19 @@ exports.sourceNodes = async (
 
   let allData
   try {
-    const data = await axios.get(urlJoin(baseUrl, apiBase), {
-      auth: basicAuth,
-      headers,
-      params,
-    })
+    const res = await requestQueue.push([
+      urlJoin(baseUrl, apiBase),
+      {
+        username: basicAuth.username,
+        password: basicAuth.password,
+        headers,
+        searchParams: params,
+        responseType: `json`,
+        cache,
+      },
+    ])
     allData = await Promise.all(
-      _.map(data.data.links, async (url, type) => {
+      _.map(res.body.links, async (url, type) => {
         if (disallowedLinkTypes.includes(type)) return
         if (!url) return
         if (!type) return
@@ -276,31 +308,36 @@ exports.sourceNodes = async (
 
           let d
           try {
-            d = await axios.get(url, {
-              auth: basicAuth,
-              headers,
-              params,
-            })
+            d = await requestQueue.push([
+              url,
+              {
+                username: basicAuth.username,
+                password: basicAuth.password,
+                headers,
+                responseType: `json`,
+                cache,
+              },
+            ])
           } catch (error) {
-            if (error.response && error.response.status == 405) {
+            if (error.response && error.response.statusCode == 405) {
               // The endpoint doesn't support the GET method, so just skip it.
               return []
             } else {
               console.error(`Failed to fetch ${url}`, error.message)
-              console.log(error.data)
+              console.log(error)
               throw error
             }
           }
-          data = data.concat(d.data.data)
+          data = data.concat(d.body.data)
           // Add support for includes. Includes allow entity data to be expanded
           // based on relationships. The expanded data is exposed as `included`
           // in the JSON API response.
           // See https://www.drupal.org/docs/8/modules/jsonapi/includes
-          if (d.data.included) {
-            data = data.concat(d.data.included)
+          if (d.body.included) {
+            data = data.concat(d.body.included)
           }
-          if (d.data.links && d.data.links.next) {
-            data = await getNext(d.data.links.next, data)
+          if (d.body.links && d.body.links.next) {
+            data = await getNext(d.body.links.next, data)
           }
 
           return data
@@ -485,8 +522,8 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       `The path to the root of the JSONAPI — defaults to "jsonapi"`
     ),
     basicAuth: Joi.object({
-      username: Joi.string(),
-      password: Joi.string(),
+      username: Joi.string().required(),
+      password: Joi.string().required(),
     }).description(`Enables basicAuth`),
     filters: Joi.object().description(
       `Pass filters to the JSON API for specific collections`
@@ -496,6 +533,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     ),
     params: Joi.object().description(`Append optional GET params to requests`),
     concurrentFileRequests: Joi.number().integer().default(20).min(1),
+    concurrentAPIRequests: Joi.number().integer().default(20).min(1),
     disallowedLinkTypes: Joi.array().items(Joi.string()),
     skipFileDownloads: Joi.boolean(),
     fastBuilds: Joi.boolean(),
