@@ -3,6 +3,13 @@ export abstract class BulkQuery {
 
   constructor(pluginOptions: ShopifyPluginOptions) {
     this.pluginOptions = pluginOptions
+
+    if (
+      process.env.GATSBY_SHOPIFY_SALES_CHANNEL &&
+      !this.pluginOptions.salesChannel
+    ) {
+      this.pluginOptions.salesChannel = process.env.GATSBY_SHOPIFY_SALES_CHANNEL
+    }
   }
 
   abstract query(date?: Date): string
