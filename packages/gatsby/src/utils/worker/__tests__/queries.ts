@@ -124,25 +124,22 @@ describeWhenLMDB(`worker (queries)`, () => {
     }
   })
 
-  it(`should have expected initial state for state.queries`, async () => {
-    const stateFromWorker = await worker!.getState()
-    expect(stateFromWorker.queries).toMatchInlineSnapshot(`
-      Object {
-        "byConnection": Object {},
-        "byNode": Object {},
-        "deletedQueries": Object {},
-        "dirtyQueriesListToEmitViaWebsocket": Array [],
-        "queryNodes": Object {},
-        "trackedComponents": Object {},
-        "trackedQueries": Object {},
-      }
-    `)
-  })
-
-  it(`should work`, async () => {
+  it(`should execute static queries`, async () => {
     await worker?.runQueries(queryIds)
     const stateFromWorker = await worker!.getState()
 
-    console.log({ stateFromWorker })
+    const staticQueryResult = await fs.readJson(
+      `${stateFromWorker.program.directory}/public/page-data/sq/d/${dummyStaticQuery.hash}.json`
+    )
+
+    expect(staticQueryResult).toMatchInlineSnapshot(`
+      Object {
+        "data": Object {
+          "nodeTypeOne": Object {
+            "resolverField": "Custom String",
+          },
+        },
+      }
+    `)
   })
 })
