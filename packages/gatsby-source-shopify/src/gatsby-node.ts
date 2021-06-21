@@ -28,7 +28,7 @@ export function pluginOptionsSchema({
     apiKey: Joi.string().required(),
     password: Joi.string().required(),
     storeUrl: Joi.string()
-      .pattern(/^[a-z-]+\.myshopify\.com$/)
+      .pattern(/^[a-z0-9-]+\.myshopify\.com$/)
       .message(
         `The storeUrl value should be your store's myshopify.com URL in the form "my-site.myshopify.com", without https or slashes`
       )
