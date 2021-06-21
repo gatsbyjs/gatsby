@@ -92,3 +92,46 @@ setup the environment variables manually on Gatsby Cloud and locally.
 ## Environment variables on Gatsby Cloud
 
 In Gatsby Cloud you can configure environment variables in each site's "Site Settings".
+
+## Additional Environments (Staging, Test, etc.)
+
+You can create additional environments beyond `development` and `production` through
+customizing `dotenv`'s `path` configuration. E.g. to add a staging environment you could
+run the Gatsby build command like:
+
+`STAGING=true gatsby build`
+
+and then in your `gatsby-config.js` file:
+
+```javascript:title=gatsby-config.js
+if (process.env.STAGING) {
+  require("dotenv").config({
+    path: `.env.${process.env.NODE_ENV}.staging`,
+  })
+} else {
+  require("dotenv").config({
+    path: `.env.${process.env.NODE_ENV}`,
+  })
+}
+```
+
+## Reserved Environment Variables:
+
+> You can not override certain environment variables as some are used internally
+> for optimizations during build, such as:
+
+- `NODE_ENV`
+- `PUBLIC_DIR`
+
+Gatsby also allows you to specify another environment variable when running the
+local development server (e.g. `npm run develop`):
+
+- `ENABLE_GATSBY_REFRESH_ENDPOINT`
+
+This allows you to refresh your sourced content. See [Refreshing Content](/docs/refreshing-content/).
+
+Gatsby detects an optimal level of CPU cores to use during `gatsby build` based
+on the OS reported number of physical CPUs. For builds that are run in virtual
+environments, you may need to adjust the number of worker parallelism with the
+`GATSBY_CPU_COUNT` environment variable. See [Multi-core
+builds](/docs/multi-core-builds/).
