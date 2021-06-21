@@ -16,6 +16,7 @@ import crypto from "crypto"
 import { reporter } from "./reporter"
 import { setSiteMetadata } from "./site-metadata"
 import { makeNpmSafe } from "./utils"
+import { requireResolve } from "./require-utils"
 
 const sha256 = (str: string): string =>
   crypto.createHash(`sha256`).update(str).digest(`hex`)
@@ -60,6 +61,9 @@ export const validateProjectName = async (
   value = value.trim()
   if (INVALID_FILENAMES.test(value)) {
     return `The destination "${value}" is not a valid filename. Please try again, avoiding special characters.`
+  }
+  if (value === '.') {
+    return true;
   }
   if (process.platform === `win32` && INVALID_WINDOWS.test(value)) {
     return `The destination "${value}" is not a valid Windows filename. Please try another name`
