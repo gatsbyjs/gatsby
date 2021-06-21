@@ -212,18 +212,18 @@ module.exports = {
       options: {
         defaults: {
           formats: [`auto`, `webp`],
-          placeholder: `dominantColor`
-          quality: 50
-          breakpoints: [750, 1080, 1366, 1920]
-          backgroundColor: `transparent`
-          tracedSVGOptions: {}
-          blurredOptions: {}
-          jpgOptions: {}
-          pngOptions: {}
-          webpOptions: {}
-          avifOptions: {}
-        }
-      }
+          placeholder: `dominantColor`,
+          quality: 50,
+          breakpoints: [750, 1080, 1366, 1920],
+          backgroundColor: `transparent`,
+          tracedSVGOptions: {},
+          blurredOptions: {},
+          jpgOptions: {},
+          pngOptions: {},
+          webpOptions: {},
+          avifOptions: {},
+        },
+      },
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-image`,
