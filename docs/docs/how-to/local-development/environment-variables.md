@@ -23,7 +23,7 @@ require("dotenv").config({
 })
 ```
 
-This loads `process.env.GATSBY_API_URL` and `process.env.API_KEY` for use in gatsby-\*.js files and functions.
+This loads `process.env.GATSBY_API_URL` and `process.env.API_KEY` for use in `gatsby-*.js` files and functions.
 
 For example, when configuring a plugin in `gatsby-config.js`:
 
