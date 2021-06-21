@@ -28,8 +28,9 @@ packages/gatsby-admin/public
 packages/gatsby/gatsby-admin-public
 packages/gatsby-codemods/transforms
 packages/gatsby-source-graphql/batching
-packages/gatsby-plugin-gatsby-cloud
-packages/gatsby-plugin-preact
+packages/gatsby-plugin-gatsby-cloud/components
+packages/gatsby-plugin-gatsby-cloud/utils
+packages/gatsby-plugin-preact/fast-refresh
 
 packages/gatsby-source-wordpress/test-site/**
 !packages/gatsby-source-wordpress/test-site/__tests__
