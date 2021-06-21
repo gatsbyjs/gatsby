@@ -15,15 +15,16 @@ Table of contents:
 - [Creating an index](#creating-an-index)
   - [Caveat: materialization](#caveat-materialization)
   - [Caveat: concurrent `createIndex` calls](#caveat-concurrent-createindex-calls)
-- [Selecting an index for query](#selecting-an-index-for-query)
+- [Queries that can use index](#queries-that-can-use-index)
+- [Selecting index for a query](#selecting-index-for-a-query)
 - [Querying](#querying)
   - [Index scans](#scans)
   - [Completing results](#)
 
-## Index structure
+# Index structure
 
 Conceptually an index is a huge flat map where keys are _sorted_ tuples of node attributes and values
-contain unique id of the indexed objects.
+contain unique id of the indexed objects (and maybe some additional attributes).
 
 For example, imagine a node like this:
 
@@ -40,8 +41,8 @@ A secondary index for fields `{ a: 1, b: 1 }` will include **2** entries for thi
 (sorted by key):
 
 ```
-["A/a:1/b:1", "foo", "bar", "a1"]: "a1"
-["A/a:1/b:1", "foo", "baz", "a1"]: "a1"
+["A/a:1/b:1", "foo", "bar", "a1"]: ["a1"]
+["A/a:1/b:1", "foo", "baz", "a1"]: ["a1"]
 ```
 
 The **first** column is index id: `"A/a:1/b:1`
@@ -83,7 +84,7 @@ const a3 = {
 ```
 
 We cannot exclude it from the index because it still has value for `a` field and should
-be returned for a query like this: `{ filter: { a: { in: [null, "foo"] } }, sort: ["b"] }`.
+be returned for a query like this: `{ filter: { a: { in: [null, "foo"] } } }`.
 
 So it has to be added to index too. [lmdb-store][3] supports `null` values in keys but not `undefined`.
 Thankfully it also supports symbols! So we have a `Symbol("undef")` to represent `undefined`:
@@ -192,12 +193,9 @@ it will throw. In this case indexing will fail and index will get `error` state.
 
 Query can still run but will have to fallback to full scan.
 
-# Selecting an index for query
+# Queries that can use index
 
-> Unlike databases that have to pick from existing indexes created by users,
-> we actually decide which index to _create_ (and then use) for a given query.
-
-Not all filters can use indexes. The following Gatsby filters **can** be used to scan the index:
+Not all filters can use indexes. The following Gatsby filters **can**:
 
 ```
 eq, in, gt, gte, lt, lte
@@ -209,55 +207,109 @@ Those filters **can not**:
 ne, nin, regex, glob
 ```
 
-Furthermore, only _some_ combinations of `filters` + `sort` can use index together.
+Furthermore, only _some_ combinations of `filters` + `sort` can use index.
+
 Let's say we have an index `{ a: 1, b: 1 }`.
 
-Only the following queries can be fully resolved using this index:
+Only the following combinations can be fully resolved using this index:
 
-1. Queries using `eq` filter:
+**1. Queries using `eq` filter:**
 
-```
+```js
 { filter: { a: { eq: "foo" } }, sort: { fields: ["a"] } }
 { filter: { a: { eq: "foo" } }, sort: { fields: ["a", "b"] } }
 { filter: { a: { eq: "foo" } }, sort: { fields: ["b"] } }
-{ filter: { a: { eq: "foo" }, b: { eq: "bar" } }, sort: { fields: ["a"] } }
-{ filter: { a: { eq: "foo" }, b: { eq: "bar" } }, sort: { fields: ["a", "b"] } }
 ```
 
-2. Queries using `in`, `gt`, `gte`, `lt`, `lte` filters:
+**Plus** queries with any additional filter on field `b` (i.e., `eq`, `in`, `gt`, `gte`, `lt`, `lte`):
+
+```js
+{ filter: { a: { eq: "foo" }, b: { gt: "bar" } }, sort: { fields: ["a"] } }
+{ filter: { a: { eq: "foo" }, b: { in: ["bar"] } }, sort: { fields: ["a", "b"] } }
+{ filter: { a: { eq: "foo" }, b: { lte: "bar" } }, sort: { fields: ["b"] } }
+```
+
+etc
+
+**2. Queries using `in`, `gt`, `gte`, `lt`, `lte` filters, e.g.:**
 
 ```js
 { filter: { a: { gt: "foo" } }, sort: { fields: ["a"] } }
 { filter: { a: { gt: "foo" } }, sort: { fields: ["a", "b"] } }
 ```
 
-Generally speaking, there are many variations for a query:
+**Plus** any other filter on field `b` (`eq, in, gt, gte, lt, lte`).
 
-1. Can be fully satisfied by index (i.e., all `filter` and `sort` fields can use the same index)
-2. Can be partially satisfied by index (i.e. some `filter` fields and some `sort` fields)
-3. Can use index for `filter` statements only
-   3.1. Can filter by _all_ fields in query
-   3.2. Can filter by _some_ fields but not others
-4. Can use index for `sort` statements only
-   4.1. Can sort by all fields
-   4.2. Can sort by _some_ fields but not others
+**That's it.**
 
-Other limitations also apply:
+Any other combinations **can not** use index for both `filter` and `sort` (only for one of those).
 
-- Some combination of fields will produce MultiKey index (which requires deduplication),
-  while other - plain single key index;
+For example, the following queries can only use index `{ a: 1, b: 1 }` for `filter` (but not `sort`):
 
-- Some filter may filter nothing (and return full dataset),
-  while other may filter out almost everything and make in-memory sorting efficient.
+```
+{ filter: { a: { gt: "foo" } }, sort: { fields: ["b"] } }
+{ filter: { a: { gt: "foo" }, b: { eq: "bar" } }, sort: { fields: ["b"] } }
+```
 
-Ideally, we need statistics about node values to make the best choice (TBD).
+While those queries can only use index for `sort`:
 
-But for now we just rely on several assumptions
+```
+{ filter: { b: { eq: "foo" } }, sort: { fields: ["a"] } }
+{ filter: { b: { eq: "foo" } }, sort: { fields: ["a", "b"] } }
+{ filter: { b: { gt: "foo" } }, sort: { fields: ["a"] } }
+```
 
-the following
-**simple and dumb™** algorithm is used:
+etc.
 
-1. All `eq` filters are the most specific
+# Selecting index for a query
+
+Unlike databases that must select one of the existing indexes created by users,
+we actually decide which index to **create** for a given query (and then use).
+
+For now, the general algorithm is simple:
+
+1. Pick fields that work both for `filter` and `sort`
+   (as described in the [section](#queries-that-can-use-index) above)
+2. When it's not possible - pick `filter` fields (sorted by comparator specificity) if:
+   1. there are filters on multiple fields
+   2. there is a single `eq` or `in` filter
+   3. there is a filter with two comparators (e.g. `gt` and `lt`)
+3. In all other cases - pick `sort` fields for index
+
+TODO: try to avoid fields on array values (so avoid MultiKey indexes when possible).
+
+TODO: Filter and sort fields that can not be used for range scans directly are added to index
+_values_. This allows us to avoid additional expensive `getNode` operations.
+
+> In general, selecting the best index to build and use is _exceptionally_ hard.
+> Databases use sophisticated heuristics and statistics as a part of this process.
+> Our current approach is rather naive and has plenty of room for improvement.
+
+# Running a query
+
+Running a query consists of several steps:
+
+1. Select an index
+2. Create this index (if it does not exist yet)
+3. Scan the index
+   1. Generate ranges for index scan from the query (sorted according to requested sorting)
+   2. Fetch ranges and concat them
+   3. If index is a `MultiKey` index - additionally deduplicate results
+   4. Apply remaining filters (if any) that may use the data stored in the index
+   5. If sorting is not satisfied by the index itself but index contains data needed for sorting -
+      load the data into memory and run in-memory sort.
+4. Complete query results
+   1. For each index entry - load full node object
+   2. Apply any remaining unapplied filter
+   3. If sorting is not satisfied by the index - traverse all resulting nodes and sort in-memory.
+
+Every step uses iterators and generators, so essentially it is a single traversal defined
+lazily. It doesn't actually require double traversal (except when in-memory sorting is actually needed).
+
+## Caveat: mixed sort order
+
+Currently, we cannot scan index in mixed order. This feature requires binary inversion for key elements
+in `lmdb-store` which is [not yet available][6].
 
 # Limitations
 
@@ -290,6 +342,7 @@ and ensures consistent ordering when query has no sort order set.
 [3]: https://github.com/DoctorEvidence/lmdb-store
 [4]: https://github.com/DoctorEvidence/lmdb-store#keys
 [5]: https://github.com/DoctorEvidence/lmdb-store#concurrency-and-versioning
+[6]: https://github.com/DoctorEvidence/lmdb-store/discussions/62#discussioncomment-898949
 
 > Yet we should seriously consider using for multi-pass
 > index scans when [this feature](https://github.com/DoctorEvidence/lmdb-store/issues/64)
