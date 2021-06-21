@@ -21,12 +21,11 @@ export const jobsV2Reducer = (
       return action.cacheIsCorrupt ? initialState() : state
 
     case `CREATE_JOB_V2`: {
-      const { job, plugin } = action.payload
+      const { job } = action.payload
 
       state.incomplete.set(job.contentDigest, {
         job,
-        plugin,
-      } as IGatsbyIncompleteJobV2)
+      })
 
       return state
     }

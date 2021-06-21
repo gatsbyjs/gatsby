@@ -17,13 +17,14 @@ if (!parentPort) {
 }
 
 const listeners: Array<(msg: unknown) => void> = []
-process.onWat = function (listener: (msg: unknown) => void): void {
-  listeners.push(listener)
-}
-
-process.sendWat = function (msg: unknown): void {
-  const poolMsg = [CUSTOM_MESSAGE, msg]
-  ensuredParentPort.postMessage(poolMsg)
+process.gatsbyWorker = {
+  onMessage(listener: (msg: unknown) => void): void {
+    listeners.push(listener)
+  },
+  sendMessage(msg: unknown): void {
+    const poolMsg = [CUSTOM_MESSAGE, msg]
+    ensuredParentPort.postMessage(poolMsg)
+  },
 }
 
 const child = require(workerData.moduleToExecute)

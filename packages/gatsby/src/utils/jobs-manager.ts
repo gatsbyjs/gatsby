@@ -373,3 +373,49 @@ export function isJobStale(
 
   return areInputPathsStale
 }
+
+const crossProcessJobPromises = new Map<
+  string,
+  pDefer.DeferredPromise<Record<string, unknown>>
+>()
+
+export async function sendJobToMainProcess(
+  job: InternalJob
+): Promise<Record<string, unknown>> {
+  const crossProcessJobPromise = pDefer<Record<string, unknown>>()
+
+  const msgToParent = {
+    type: `JOB:CREATE`,
+    payload: job,
+  }
+
+  // console.log({ msgToParent, crossProcessJobPromise })
+  // @ts-ignore TODO: figure out nicer way to access sending messages to parent
+  process.gatsbyWorker.sendMessage(msgToParent)
+
+  // using WeakRef so that we only retain it if caller of `createJobV2` actually
+  // holds on to promise
+  crossProcessJobPromises.set(job.id, crossProcessJobPromise)
+
+  return crossProcessJobPromise.promise
+}
+
+if (process.env.GATSBY_WORKER_POOL_WORKER) {
+  // @ts-ignore TODO: figure out nicer way to access listening to messages from parent
+  process?.gatsbyWorker?.onMessage(msg => {
+    // @ts-ignore TODO: figure out nicer way to access listening to messages from parent
+    if (msg.type === `JOB:SUCCESS`) {
+      // @ts-ignore TODO: figure out nicer way to access listening to messages from parent
+      const { result, jobId } = msg.payload
+      const crossProcessJobPromise = crossProcessJobPromises.get(jobId)
+      if (crossProcessJobPromise) {
+        if (crossProcessJobPromise.resolve) {
+          crossProcessJobPromise.resolve(result)
+        }
+        crossProcessJobPromises.delete(jobId)
+      }
+    } else {
+      // TODO: errors
+    }
+  })
+}

@@ -13,8 +13,10 @@ declare global {
   namespace NodeJS {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     interface Process {
-      onWat?: (listener: (msg: unknown) => void) => void
-      sendWat?: (msg: unknown) => void
+      gatsbyWorker?: {
+        onMessage: (listener: (msg: unknown) => void) => void
+        sendMessage: (msg: unknown) => void
+      }
     }
   }
 }

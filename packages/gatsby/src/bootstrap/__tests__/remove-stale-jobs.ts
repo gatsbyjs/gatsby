@@ -1,9 +1,10 @@
 jest.mock(`../../utils/jobs-manager`)
 
-import { isJobStale } from "../../utils/jobs-manager"
-import { internalActions, publicActions } from "../../redux/actions"
+import { isJobStale, enqueueJob } from "../../utils/jobs-manager"
+import { internalActions } from "../../redux/actions"
 
 jest.spyOn(internalActions, `removeStaleJob`)
+jest.spyOn(internalActions, `createJobV2FromInternalJob`)
 
 import { removeStaleJobs } from "../remove-stale-jobs"
 
@@ -17,8 +18,7 @@ describe(`remove-stale-jobs`, () => {
         incomplete: new Map(),
       },
     }
-
-    publicActions.createJobV2 = jest.fn()
+    ;(internalActions.createJobV2FromInternalJob as jest.Mock).mockClear()
     ;(internalActions.removeStaleJob as jest.Mock).mockClear()
   })
 
@@ -34,7 +34,7 @@ describe(`remove-stale-jobs`, () => {
     expect(removeStaleJobs(state)).toMatchSnapshot()
     expect(internalActions.removeStaleJob).toHaveBeenCalledTimes(1)
     expect(internalActions.removeStaleJob).toHaveBeenCalledWith(`1234`)
-    expect(publicActions.createJobV2).not.toHaveBeenCalled()
+    expect(internalActions.createJobV2FromInternalJob).not.toHaveBeenCalled()
   })
 
   it(`should remove stale jobs from pending cache`, () => {
@@ -56,7 +56,7 @@ describe(`remove-stale-jobs`, () => {
     expect(removeStaleJobs(state)).toMatchSnapshot()
     expect(internalActions.removeStaleJob).toHaveBeenCalledTimes(1)
     expect(internalActions.removeStaleJob).toHaveBeenCalledWith(`1234`)
-    expect(publicActions.createJobV2).not.toHaveBeenCalled()
+    expect(internalActions.createJobV2FromInternalJob).not.toHaveBeenCalled()
   })
 
   it(`should enqueue pending jobs`, () => {
@@ -64,23 +64,37 @@ describe(`remove-stale-jobs`, () => {
       job: {
         inputPaths: [`/src/myfile.js`],
         contentDigest: `1234`,
-      },
-      plugin: {
-        name: `test`,
-        version: `1.0.0`,
+        plugin: { name: `test` },
       },
     }
 
     state.jobsV2.incomplete.set(`1234`, data)
 
     isJobStale.mockReturnValue(false)
+    enqueueJob.mockReturnValue(Promise.resolve({ result: true }))
 
-    expect(removeStaleJobs(state)).toMatchSnapshot()
+    const toDispatch = removeStaleJobs(state)
+    const actions = []
+    for (const actionOrThunk of toDispatch) {
+      if (typeof actionOrThunk === `function`) {
+        actionOrThunk(
+          actionToDispatch => {
+            actions.push(actionToDispatch)
+          },
+          () => state
+        )
+      } else {
+        actions.push(actionOrThunk)
+      }
+    }
+
+    expect(actions).toMatchSnapshot()
+
+    // expect(removeStaleJobs(state)).toMatchSnapshot()
     expect(internalActions.removeStaleJob).toHaveBeenCalledTimes(0)
-    expect(publicActions.createJobV2).toHaveBeenCalledTimes(1)
-    expect(publicActions.createJobV2).toHaveBeenCalledWith(
-      data.job,
-      data.plugin
+    expect(internalActions.createJobV2FromInternalJob).toHaveBeenCalledTimes(1)
+    expect(internalActions.createJobV2FromInternalJob).toHaveBeenCalledWith(
+      data.job
     )
   })
 })

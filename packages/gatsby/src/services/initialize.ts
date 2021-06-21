@@ -542,6 +542,15 @@ export async function initialize({
 
   const workerPool = WorkerPool.create()
 
+  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    await Promise.all(
+      workerPool.all.loadConfigAndPlugins({
+        siteDirectory: program.directory,
+        processFlags: false,
+      })
+    )
+  }
+
   return {
     store,
     workerPool,

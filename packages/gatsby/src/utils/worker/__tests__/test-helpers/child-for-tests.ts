@@ -53,3 +53,20 @@ export async function runAPI(apiName: string): Promise<any> {
 export function getAPIRunResult(): string | undefined {
   return (global as any).test
 }
+
+;(global as any).jobs = {
+  executedOnThisThread: [],
+  createdOnThisThread: [],
+}
+
+// test: jobs
+interface ITestJobArgs {
+  description: string
+}
+
+export function getJobsMeta(): {
+  executedOnThisThread: Array<ITestJobArgs>
+  createdOnThisThread: Array<ITestJobArgs>
+} {
+  return (global as any).jobs
+}

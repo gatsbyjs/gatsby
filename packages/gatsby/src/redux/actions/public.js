@@ -23,6 +23,7 @@ const {
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+import { createJobV2FromInternalJob } from "./internal"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
@@ -37,10 +38,8 @@ const shadowCreatePagePath = _.memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 )
 const {
-  enqueueJob,
   createInternalJob,
-  removeInProgressJob,
-  getInProcessJobPromise,
+  sendJobToMainProcess,
 } = require(`../../utils/jobs-manager`)
 
 const actions = {}
@@ -1255,54 +1254,12 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
  * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
  */
 actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
-  const currentState = getState()
   const internalJob = createInternalJob(job, plugin)
-  const jobContentDigest = internalJob.contentDigest
-
-  // Check if we already ran this job before, if yes we return the result
-  // We have an inflight (in progress) queue inside the jobs manager to make sure
-  // we don't waste resources twice during the process
-  if (
-    currentState.jobsV2 &&
-    currentState.jobsV2.complete.has(jobContentDigest)
-  ) {
-    return Promise.resolve(
-      currentState.jobsV2.complete.get(jobContentDigest).result
-    )
+  if (process.env.GATSBY_WORKER_POOL_WORKER) {
+    return sendJobToMainProcess(internalJob)
   }
 
-  const inProgressJobPromise = getInProcessJobPromise(jobContentDigest)
-  if (inProgressJobPromise) {
-    return inProgressJobPromise
-  }
-
-  dispatch({
-    type: `CREATE_JOB_V2`,
-    plugin,
-    payload: {
-      job: internalJob,
-      plugin,
-    },
-  })
-
-  const enqueuedJobPromise = enqueueJob(internalJob)
-  return enqueuedJobPromise.then(result => {
-    // store the result in redux so we have it for the next run
-    dispatch({
-      type: `END_JOB_V2`,
-      plugin,
-      payload: {
-        jobContentDigest,
-        result,
-      },
-    })
-
-    // remove the job from our inProgressJobQueue as it's available in our done state.
-    // this is a perf optimisations so we don't grow our memory too much when using gatsby preview
-    removeInProgressJob(jobContentDigest)
-
-    return result
-  })
+  return createJobV2FromInternalJob(internalJob)(dispatch, getState)
 }
 
 /**
