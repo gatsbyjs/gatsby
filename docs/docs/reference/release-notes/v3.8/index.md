@@ -10,7 +10,7 @@ Welcome to `gatsby@3.8.0` release (June 2021 #2)
 
 Key highlights of this release:
 
-- [name1](#link1) - one-line description
+- [Web Vitals Tracking](#web-vitals-tracking) - Analytics Plugins now support tracking Web Vitals
 - [name2](#link2) - one-line description
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
@@ -24,9 +24,20 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ---
 
+## Web Vitals Tracking
+
+By using the [`web-vitals`](https://github.com/GoogleChrome/web-vitals) package we've added support for tracking Web Vitals to `gatsby-plugin-google-analytics` & `gatsby-plugin-google-tagmanager` ([PR #31665](https://github.com/gatsbyjs/gatsby/pull/31665)). They send three metrics:
+
+- **Largest Contentful Paint (LCP)**: measures loading performance. To provide a good user experience, LCP should occur within 2.5 seconds of when the page first starts loading.
+- **First Input Delay (FID)**: measures interactivity. To provide a good user experience, pages should have a FID of 100 milliseconds or less.
+- **Cumulative Layout Shift (CLS)**: measures visual stability. To provide a good user experience, pages should maintain a CLS of 1 or less.
+
+You can activate the tracking by setting `enableWebVitalsTracking` to `true`.
+
 ## Notable bugfixes & improvements
 
-TODO
+- `gatsby-plugin-sitemap`: Properly throw error on missing siteUrl via [PR #31963](https://github.com/gatsbyjs/gatsby/pull/31963)
+- `gatsby`: Removed outdated ESLint rules `jsx-a11y/no-onchange` and `jsx-a11y/accessible-emoji` via [PR #31896](https://github.com/gatsbyjs/gatsby/pull/31896)
 
 ## Contributors
 
