@@ -18,7 +18,6 @@ import {
 } from "./filter-using-index"
 import { store } from "../../../redux"
 import { resolveFieldValue, shouldFilter } from "./common"
-import { toDottedObject } from "graphql-compose"
 
 // Before running a query we create a separate index for all filter fields (unless it already exists)
 //   Each index has exactly the same sort order (so technically the index key is [filterField, ...sortFields]).
@@ -233,9 +232,9 @@ async function runQueryWithSort(
   }
 
   // 1.2 section (see head of the file)
-  const eqOrInQueries = getEqQueries(dbQueries)
-  const filterFields = eqOrInQueries.length
-    ? [dbQueryToDottedField(eqOrInQueries[0])]
+  const eqOrQueries = getEqQueries(dbQueries)
+  const filterFields = eqOrQueries.length
+    ? [dbQueryToDottedField(eqOrQueries[0])]
     : []
 
   // 1.3 section (see head of the file)
