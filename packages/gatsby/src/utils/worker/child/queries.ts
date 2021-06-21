@@ -23,6 +23,7 @@ export async function runQueries(queryIds: IGroupedQueryIds): Promise<void> {
 
   setQueries()
 
+  /*
   const graphqlRunner = new GraphQLRunner(store, {
     collectStats: true,
     graphqlTracing: workerStore.program.graphqlTracing,
@@ -39,6 +40,7 @@ export async function runQueries(queryIds: IGroupedQueryIds): Promise<void> {
     store,
     graphqlRunner,
   })
+  */
 
   await getDataStore().ready()
 }

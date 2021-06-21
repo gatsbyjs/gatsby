@@ -1,7 +1,6 @@
 import * as path from "path"
 import fs from "fs-extra"
 import type { watch as ChokidarWatchType } from "chokidar"
-import { CombinedState } from "redux"
 import { build } from "../../../schema"
 import sourceNodesAndRemoveStaleNodes from "../../source-nodes"
 import { saveStateForWorkers, store } from "../../../redux"
@@ -12,8 +11,6 @@ import {
   GatsbyTestWorkerPool,
 } from "./test-helpers"
 import { getDataStore } from "../../../datastore"
-import { IGatsbyState } from "../../../redux/types"
-import { extractQueries } from "../../../services"
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -37,9 +34,27 @@ jest.mock(`chokidar`, () => {
   return chokidar
 })
 
-describeWhenLMDB(`worker (queries)`, () => {
-  let stateFromWorker: CombinedState<IGatsbyState>
+const dummyPage = {
+  path: `/foo`,
+  componentPath: `/foo.js`,
+  component: `/foo.js`,
+  query: `{ nodeTypeOne { number } }`,
+}
 
+const dummyStaticQuery = {
+  id: `sq--q1`,
+  name: `q1-name`,
+  componentPath: `/static-query-component.js`,
+  query: `{ nodeTypeOne { resolverField } }`,
+  hash: `q1-hash`,
+}
+
+const queryIds = {
+  pageQueryIds: [dummyPage.path],
+  staticQueryIds: [dummyStaticQuery.id],
+}
+
+describeWhenLMDB(`worker (queries)`, () => {
   beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     const fileDir = path.join(process.cwd(), `.cache/redux`)
@@ -56,13 +71,47 @@ describeWhenLMDB(`worker (queries)`, () => {
     await build({ parentSpan: {} })
 
     saveStateForWorkers([`inferenceMetadata`])
-    await extractQueries({})
+
+    store.dispatch({
+      type: `CREATE_PAGE`,
+      plugin: {
+        id: `gatsby-plugin-test`,
+        name: `gatsby-plugin-test`,
+        version: `1.0.0`,
+      },
+      payload: {
+        path: dummyPage.path,
+        componentPath: dummyPage.componentPath,
+        component: dummyPage.component,
+      },
+    })
+
+    store.dispatch({
+      type: `QUERY_EXTRACTED`,
+      plugin: {
+        id: `gatsby-plugin-test`,
+        name: `gatsby-plugin-test`,
+        version: `1.0.0`,
+      },
+      payload: {
+        componentPath: dummyPage.componentPath,
+        query: dummyPage.query,
+      },
+    })
+
+    store.dispatch({
+      type: `REPLACE_STATIC_QUERY`,
+      plugin: {
+        id: `gatsby-plugin-test`,
+        name: `gatsby-plugin-test`,
+        version: `1.0.0`,
+      },
+      payload: dummyStaticQuery,
+    })
+
     saveStateForWorkers([`components`, `staticQueryComponents`])
+
     await worker.buildSchema()
-
-    stateFromWorker = await worker.getState()
-
-    console.log(stateFromWorker)
   })
 
   afterAll(() => {
@@ -75,7 +124,8 @@ describeWhenLMDB(`worker (queries)`, () => {
     }
   })
 
-  it(`should have expected initial state for state.queries`, () => {
+  it(`should have expected initial state for state.queries`, async () => {
+    const stateFromWorker = await worker!.getState()
     expect(stateFromWorker.queries).toMatchInlineSnapshot(`
       Object {
         "byConnection": Object {},
@@ -87,5 +137,12 @@ describeWhenLMDB(`worker (queries)`, () => {
         "trackedQueries": Object {},
       }
     `)
+  })
+
+  it(`should work`, async () => {
+    await worker?.runQueries(queryIds)
+    const stateFromWorker = await worker!.getState()
+
+    console.log({ stateFromWorker })
   })
 })

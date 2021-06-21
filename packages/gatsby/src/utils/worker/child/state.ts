@@ -5,6 +5,8 @@ import { loadStateInWorker, store } from "../../../redux"
 export function setState(slices: Array<GatsbyStateKeys>): void {
   const res = loadStateInWorker(slices)
 
+  console.log({ res })
+
   Object.entries(res).forEach(([key, val]) => {
     store.getState()[key] = val
   })
