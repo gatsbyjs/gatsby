@@ -3,9 +3,13 @@ import { RootDatabase, open } from "lmdb-store"
 import { ActionsUnion, IGatsbyNode } from "../../redux/types"
 import { updateNodes } from "./updates/nodes"
 import { updateNodesByType } from "./updates/nodes-by-type"
-import { IDataStore, IGatsbyIterable, ILmdbDatabases } from "../types"
+import {
+  IDataStore,
+  IGatsbyIterable,
+  ILmdbDatabases,
+  IRunQueryArgs,
+} from "../types"
 import { emitter, replaceReducer } from "../../redux"
-import { IRunFilterArg } from "../in-memory/run-fast-filters"
 import { doRunQuery } from "./query/run-query"
 
 const lmdbDatastore = {
@@ -142,8 +146,8 @@ function countNodes(typeName?: string): number {
 }
 
 async function runQuery(
-  args: IRunFilterArg
-): Promise<Array<IGatsbyNode> | null> {
+  args: IRunQueryArgs
+): Promise<Iterable<IGatsbyNode> | null> {
   const result = await doRunQuery({
     datastore: lmdbDatastore,
     databases: getDatabases(),

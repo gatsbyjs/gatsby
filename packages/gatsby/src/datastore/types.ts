@@ -1,6 +1,8 @@
 import { Database } from "lmdb-store"
 import { IGatsbyNode } from "../redux/types"
-import { IRunFilterArg } from "./in-memory/run-fast-filters"
+import { GatsbyGraphQLType } from "../../index"
+import { IInputQuery } from "./common/query"
+import { IGraphQLRunnerStats } from "../query/types"
 
 export type NodeId = string
 export type NodeType = string
@@ -10,6 +12,25 @@ export interface ILmdbDatabases {
   nodesByType: Database<NodeId, NodeType>
   indexes: Database<NodeId, Array<any>>
   metadata: Database<any, string>
+}
+
+export interface IRunQueryArgs {
+  gqlType: GatsbyGraphQLType
+  queryArgs: {
+    filter: IInputQuery | undefined
+    sort:
+      | {
+          fields: Array<string>
+          order: Array<boolean | "asc" | "desc" | "ASC" | "DESC">
+        }
+      | undefined
+    limit?: number
+    skip?: number
+  }
+  firstOnly: boolean
+  resolvedFields: Record<string, any>
+  nodeTypeNames: Array<string>
+  stats: IGraphQLRunnerStats
 }
 
 // Note: this type is compatible with lmdb-store ArrayLikeIterable
@@ -40,7 +61,7 @@ export interface IDataStore {
   ready(): Promise<void>
   iterateNodes(): IGatsbyIterable<IGatsbyNode>
   iterateNodesByType(type: string): IGatsbyIterable<IGatsbyNode>
-  runQuery(args: IRunFilterArg): Promise<Array<IGatsbyNode> | null> // TODO: switch Array to IGatsbyIterable
+  runQuery(args: IRunQueryArgs): Promise<Iterable<IGatsbyNode> | null>
 
   /** @deprecated */
   getNodes(): Array<IGatsbyNode>

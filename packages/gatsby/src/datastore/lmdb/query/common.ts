@@ -3,6 +3,12 @@ import { DbComparator, IDbFilterStatement } from "../../common/query"
 import { IGatsbyNode } from "../../../redux/types"
 import { getValueAt } from "../../../utils/get-value-at"
 
+export function isDesc(
+  sortOrder: "asc" | "desc" | "ASC" | "DESC" | boolean | void
+): boolean {
+  return sortOrder === `desc` || sortOrder === `DESC` || sortOrder === false
+}
+
 /**
  * Given dotted field selector (e.g. `foo.bar`) returns a plain list of values matching this selector.
  * It is possible that the path maps to several values when one of the intermediate values is an array.

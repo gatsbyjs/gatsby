@@ -16,7 +16,7 @@ Table of contents:
   - [Caveat: materialization](#caveat-materialization)
   - [Caveat: concurrent `createIndex` calls](#caveat-concurrent-createindex-calls)
 - [Queries that can use index](#queries-that-can-use-index)
-- [Selecting index for a query](#selecting-index-for-a-query)
+- [Suggest index for a query](#suggest-index-for-a-query)
 - [Querying](#querying)
   - [Index scans](#scans)
   - [Completing results](#)
@@ -98,6 +98,8 @@ Thankfully it also supports symbols! So we have a `Symbol("undef")` to represent
 
 We add a node to index even if the very first attribute `a` is `undefined` because
 index may be also used just for sorting: `{ sort: { fields: ["a"] } }`.
+
+> Our indexes are essentially similar to [non-sparse][7] MongoDB indexes
 
 ### Caveat: sort order for `null` and `undefined`
 
@@ -261,7 +263,7 @@ While those queries can only use index for `sort`:
 
 etc.
 
-# Selecting index for a query
+# Suggest index for a query
 
 Unlike databases that must select one of the existing indexes created by users,
 we actually decide which index to **create** for a given query (and then use).
@@ -343,6 +345,7 @@ and ensures consistent ordering when query has no sort order set.
 [4]: https://github.com/DoctorEvidence/lmdb-store#keys
 [5]: https://github.com/DoctorEvidence/lmdb-store#concurrency-and-versioning
 [6]: https://github.com/DoctorEvidence/lmdb-store/discussions/62#discussioncomment-898949
+[7]: https://docs.mongodb.com/manual/core/index-sparse/
 
 > Yet we should seriously consider using for multi-pass
 > index scans when [this feature](https://github.com/DoctorEvidence/lmdb-store/issues/64)

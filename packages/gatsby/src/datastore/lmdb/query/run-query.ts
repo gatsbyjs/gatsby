@@ -1,4 +1,9 @@
-import { IDataStore, IGatsbyIterable, ILmdbDatabases } from "../../types"
+import {
+  IDataStore,
+  IGatsbyIterable,
+  ILmdbDatabases,
+  IRunQueryArgs,
+} from "../../types"
 import { IGatsbyNode } from "../../../redux/types"
 import { GatsbyIterable } from "../../common/iterable"
 import {
@@ -10,7 +15,6 @@ import {
   IDbFilterStatement,
   prepareQueryArgs,
 } from "../../common/query"
-import { IRunFilterArg } from "../../in-memory/run-fast-filters"
 import { createIndex, IIndexFields } from "./create-index"
 import {
   filterUsingIndex,
@@ -18,6 +22,7 @@ import {
 } from "./filter-using-index"
 import { store } from "../../../redux"
 import { resolveFieldValue, shouldFilter } from "./common"
+import { suggestIndex } from "./suggest-index"
 
 // Before running a query we create a separate index for all filter fields (unless it already exists)
 //   Each index has exactly the same sort order (so technically the index key is [filterField, ...sortFields]).
@@ -158,7 +163,7 @@ import { resolveFieldValue, shouldFilter } from "./common"
 //    our current solution ASC: number, null, undefined
 //    lmdb-store ASC: null, undefined, number
 
-export interface IRunQueryArgs extends IRunFilterArg {
+interface IRunQueryContext extends IRunQueryArgs {
   databases: ILmdbDatabases
   datastore: IDataStore
 }
@@ -167,13 +172,16 @@ export const stats = new Map()
 let interval
 
 export async function doRunQuery(
-  args: IRunQueryArgs
+  context: IRunQueryContext
 ): Promise<GatsbyIterable<IGatsbyNode>> {
   const {
     nodeTypeNames,
     queryArgs: { filter, sort, limit, skip = 0 } = {},
     firstOnly,
-  } = args
+  } = context
+
+  const indexFields = suggestIndex(context)
+
   const sortFields = sort?.fields ?? []
 
   const queryKey =
@@ -183,8 +191,8 @@ export async function doRunQuery(
   const start = Date.now()
   let result =
     sortFields.length > 0
-      ? await runQueryWithSort(args)
-      : await runQueryWithoutSort(args)
+      ? await runQueryWithSort(context)
+      : await runQueryWithoutSort(context)
 
   if (firstOnly) {
     result = result.slice(0, 1)
@@ -213,7 +221,7 @@ function output(): void {
 }
 
 async function runQueryWithSort(
-  args: IRunQueryArgs
+  args: IRunQueryContext
 ): Promise<GatsbyIterable<IGatsbyNode>> {
   const {
     nodeTypeNames,
@@ -275,7 +283,7 @@ async function runQueryWithSort(
 }
 
 async function runQueryWithoutSort(
-  args: IRunQueryArgs
+  args: IRunQueryContext
 ): Promise<GatsbyIterable<IGatsbyNode>> {
   const { nodeTypeNames, queryArgs: { filter } = {}, datastore } = args
   const dbQueries = createDbQueriesFromObject(prepareQueryArgs(filter))

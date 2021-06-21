@@ -1,5 +1,4 @@
 import { IGatsbyNode } from "../../redux/types"
-import { GatsbyGraphQLType } from "../../.."
 import { getValueAt } from "../../utils/get-value-at"
 import _ from "lodash"
 import {
@@ -25,20 +24,10 @@ import {
   IFilterCache,
 } from "./indexing"
 import { IGraphQLRunnerStats } from "../../query/types"
+import { IRunQueryArgs } from "../types"
 
-export interface IRunFilterArg {
-  gqlType: GatsbyGraphQLType
-  queryArgs: {
-    filter: Array<IInputQuery> | undefined
-    sort:
-      | { fields: Array<string>; order: Array<boolean | "asc" | "desc"> }
-      | undefined
-  }
-  firstOnly: boolean
-  resolvedFields: Record<string, any>
-  nodeTypeNames: Array<string>
+export interface IRunFilterArg extends IRunQueryArgs {
   filtersCache: FiltersCache
-  stats: IGraphQLRunnerStats
 }
 
 /**
@@ -407,7 +396,10 @@ function filterToStats(
 function sortNodes(
   nodes: Array<IGatsbyNode> | null,
   sort:
-    | { fields: Array<string>; order: Array<boolean | "asc" | "desc"> }
+    | {
+        fields: Array<string>
+        order: Array<boolean | "asc" | "desc" | "ASC" | "DESC">
+      }
     | undefined,
   resolvedFields: any,
   stats: IGraphQLRunnerStats
