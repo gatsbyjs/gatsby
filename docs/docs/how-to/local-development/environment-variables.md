@@ -81,7 +81,7 @@ browser code but `API_KEY` will not.
 Variables are set when JavaScript is compiled so when the development server is started
 or you build your site.
 
-## Add .env\* files to .gitignore
+## Add `.env*` files to .gitignore
 
 Environment variable files should not be committed to Git as they often contain secrets
 which are not safe to add to Git. Instead, add `.env.*` to your `.gitignore` file and
