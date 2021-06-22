@@ -34,6 +34,13 @@ jest.mock(`chokidar`, () => {
   return chokidar
 })
 
+const dummyPage = {
+  path: `/foo`,
+  componentPath: `/foo.js`,
+  component: `/foo.js`,
+  query: `{ nodeTypeOne { number } }`,
+}
+
 const dummyStaticQuery = {
   id: `sq--q1`,
   name: `q1-name`,
@@ -43,7 +50,7 @@ const dummyStaticQuery = {
 }
 
 const queryIds = {
-  pageQueryIds: [],
+  pageQueryIds: [dummyPage.path],
   staticQueryIds: [dummyStaticQuery.id],
 }
 
@@ -64,6 +71,33 @@ describeWhenLMDB(`worker (queries)`, () => {
     await build({ parentSpan: {} })
 
     saveStateForWorkers([`inferenceMetadata`])
+
+    store.dispatch({
+      type: `CREATE_PAGE`,
+      plugin: {
+        id: `gatsby-plugin-test`,
+        name: `gatsby-plugin-test`,
+        version: `1.0.0`,
+      },
+      payload: {
+        path: dummyPage.path,
+        componentPath: dummyPage.componentPath,
+        component: dummyPage.component,
+      },
+    })
+
+    store.dispatch({
+      type: `QUERY_EXTRACTED`,
+      plugin: {
+        id: `gatsby-plugin-test`,
+        name: `gatsby-plugin-test`,
+        version: `1.0.0`,
+      },
+      payload: {
+        componentPath: dummyPage.componentPath,
+        query: dummyPage.query,
+      },
+    })
 
     store.dispatch({
       type: `REPLACE_STATIC_QUERY`,
