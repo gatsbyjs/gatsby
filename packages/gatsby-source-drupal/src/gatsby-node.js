@@ -326,7 +326,7 @@ exports.sourceNodes = async (
           } catch (error) {
             if (error.response && error.response.statusCode == 405) {
               // The endpoint doesn't support the GET method, so just skip it.
-              return []
+              return
             } else {
               console.error(`Failed to fetch ${url}`, error.message)
               console.log(error)
