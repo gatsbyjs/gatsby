@@ -43,7 +43,7 @@ You can activate the tracking by setting `enableWebVitalsTracking` to `true`.
 
 ## webpack caching
 
-In the [previous 3.7 release](/docs/reference/release-notes/v3.7) we started a gradual rollout of webpack 5 built-in persistent caching. It allows webpack to reuse results of previous compilations and significantly speed up compilation steps. With Gatsby v3.8 it's not enabled for everyone.
+In the [previous 3.7 release](/docs/reference/release-notes/v3.7) we started a gradual rollout of webpack 5 built-in persistent caching. It allows webpack to reuse results of previous compilations and significantly speed up compilation steps. With Gatsby v3.8 it's now enabled for everyone.
 
 ## Notable bugfixes & improvements
 
