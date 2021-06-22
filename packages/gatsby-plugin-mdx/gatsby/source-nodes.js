@@ -191,14 +191,17 @@ module.exports = (
             if (node.type === `text` || node.type === `inlineCode`) {
               excerptNodes.push(node.value)
             }
+            if (node.type === `image`) {
+              excerptNodes.push(node.alt)
+            }
             return
           })
 
           if (!truncate) {
-            return prune(excerptNodes.join(` `), pruneLength, `…`)
+            return prune(excerptNodes.join(``), pruneLength, `…`)
           }
 
-          return _.truncate(excerptNodes.join(` `), {
+          return _.truncate(excerptNodes.join(``), {
             length: pruneLength,
             omission: `…`,
           })
