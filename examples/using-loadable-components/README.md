@@ -1,6 +1,6 @@
 # Gatsby + loadable-components
 
-This repo is meant to illustrate the pattern of adding loadable-components to a Gatsby project. In this case, the Header component is being code-split out while mainting SSR.
+This repo is meant to illustrate the pattern of adding [loadable-components](https://loadable-components.com/docs/getting-started/) to a Gatsby project. In this case, the Header component is being code-split out while mainting SSR.
 
 ```jsx
 // layout.js
@@ -9,8 +9,6 @@ const Header = loadable(() => import("./header"))
 
 <Header siteTitle="My Title" />
 ```
-
-**For a full breakdown of this pattern, [check out this blog post]().**
 
 ## Why?
 
