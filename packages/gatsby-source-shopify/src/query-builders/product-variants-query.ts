@@ -53,16 +53,6 @@ export class ProductVariantsQuery extends BulkQuery {
               updatedAt
               weight
               weightUnit
-              presentmentPrices {
-                compareAtPrice {
-                  amount
-                  currencyCode
-                }
-                price {
-                  amount
-                  currencyCode
-                }
-              }
               metafields {
                 edges {
                   node {
