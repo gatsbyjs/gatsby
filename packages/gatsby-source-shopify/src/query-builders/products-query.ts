@@ -12,7 +12,6 @@ export class ProductsQuery extends BulkQuery {
       filters.push(`created_at:>='${isoDate}' OR updated_at:>='${isoDate}'`)
     }
 
-    const ProductVariantSortKey = `POSITION`
     const ProductImageSortKey = `POSITION`
 
     const queryString = filters.map(f => `(${f})`).join(` AND `)
@@ -137,60 +136,6 @@ export class ProductsQuery extends BulkQuery {
                     updatedAt
                     value
                     valueType
-                  }
-                }
-              }
-              variants(sortKey: ${ProductVariantSortKey}) {
-                edges {
-                  node {
-                    availableForSale
-                    barcode
-                    compareAtPrice
-                    createdAt
-                    displayName
-                    id
-                    image {
-                      id
-                      altText
-                      height
-                      width
-                      originalSrc
-                      transformedSrc
-                    }
-                    inventoryPolicy
-                    inventoryQuantity
-                    legacyResourceId
-                    position
-                    price
-                    selectedOptions {
-                      name
-                      value
-                    }
-                    sellingPlanGroupCount
-                    sku
-                    storefrontId
-                    taxCode
-                    taxable
-                    title
-                    updatedAt
-                    weight
-                    weightUnit
-                    metafields {
-                      edges {
-                        node {
-                          createdAt
-                          description
-                          id
-                          key
-                          legacyResourceId
-                          namespace
-                          ownerType
-                          updatedAt
-                          value
-                          valueType
-                        }
-                      }
-                    }
                   }
                 }
               }

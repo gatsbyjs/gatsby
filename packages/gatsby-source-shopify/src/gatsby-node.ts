@@ -54,6 +54,7 @@ async function sourceAllNodes(
 ): Promise<void> {
   const {
     createProductsOperation,
+    createProductVariantsOperation,
     createOrdersOperation,
     createCollectionsOperation,
     finishLastOperation,
@@ -61,7 +62,7 @@ async function sourceAllNodes(
     cancelOperationInProgress,
   } = createOperations(pluginOptions, gatsbyApi)
 
-  const operations = [createProductsOperation]
+  const operations = [createProductsOperation, createProductVariantsOperation]
   if (pluginOptions.shopifyConnections?.includes(`orders`)) {
     operations.push(createOrdersOperation)
   }
@@ -106,6 +107,7 @@ async function sourceChangedNodes(
 ): Promise<void> {
   const {
     incrementalProducts,
+    incrementalProductVariants,
     incrementalOrders,
     incrementalCollections,
     finishLastOperation,
@@ -125,7 +127,11 @@ async function sourceChangedNodes(
       .forEach(node => gatsbyApi.actions.touchNode(node))
   }
 
-  const operations = [incrementalProducts(lastBuildTime)]
+  const operations = [
+    incrementalProducts(lastBuildTime),
+    incrementalProductVariants(lastBuildTime),
+  ]
+
   if (pluginOptions.shopifyConnections?.includes(`orders`)) {
     operations.push(incrementalOrders(lastBuildTime))
   }
