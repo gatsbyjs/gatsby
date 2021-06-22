@@ -31,7 +31,12 @@ Gatsby supports [React 18 Alpha](https://reactjs.org/blog/2021/06/08/the-plan-fo
 
 ## `gatsby-source-shopify` v5
 
-TODO
+Gatsby's new Shopify integration which [we announced at GatsbyConf](https://www.youtube.com/watch?v=43fJTO9gMUE) earlier this year is now generally available.
+- Incremental data updates are now 16x faster than previous versions
+- v5 uses Shopify's Admin API and bulk operation to overcome API rate limits of the Storefront API
+- Gatsby Cloud now offers Quick Connect for Shopify
+
+[Read more](https://www.gatsbyjs.com/solutions/shopify/)
 
 ## Web Vitals Tracking
 
