@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.0.0-next.0...gatsby-source-shopify@5.0.0) (2021-06-22)
+
+### Features
+
+- **gatsby-source-shopify:** add default sales channel when using shopify app integration ([#32010](https://github.com/gatsbyjs/gatsby/issues/32010)) ([#32030](https://github.com/gatsbyjs/gatsby/issues/32030)) ([cb914ae](https://github.com/gatsbyjs/gatsby/commit/cb914aef2a99c63ffa8f33a5951daeeba3d299fc))
+
 # [5.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@4.8.0-next.1...gatsby-source-shopify@5.0.0-next.0) (2021-06-17)
 
 ### Bug Fixes

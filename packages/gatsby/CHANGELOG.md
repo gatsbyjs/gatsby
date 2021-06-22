@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.8.0-next.2...gatsby@3.8.0) (2021-06-22)
+
+### Features
+
+- **gatsby:** enable webpack caching for all ([#32018](https://github.com/gatsbyjs/gatsby/issues/32018)) ([#32032](https://github.com/gatsbyjs/gatsby/issues/32032)) ([65e04d2](https://github.com/gatsbyjs/gatsby/commit/65e04d22ae0fcb1fae3a8bceb769772c2a1b0f8f))
+
 # [3.8.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.8.0-next.1...gatsby@3.8.0-next.2) (2021-06-17)
 
 ### Bug Fixes
