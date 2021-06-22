@@ -9,7 +9,7 @@ Welcome to `gatsby@3.8.0` release (June 2021 #2)
 Key highlights of this release:
 
 - [React 18 - Alpha](#react-18---alpha) - React 18 Alpha is available in Gatsby
-- [`gatsby-source-shopify` v5](#gatsby-source-shopify-v5) - TODO
+- [`gatsby-source-shopify` v5](#gatsby-source-shopify-v5) - brand new version
 - [Web Vitals Tracking](#web-vitals-tracking) - Analytics Plugins now support tracking Web Vitals
 - [webpack caching](#webpack-caching) - built-in persistent caching activated for everyone
 - [Improvements to Drupal integration](#drupal-integration) — Sourcing is up to 30%+ faster and much more reliable
