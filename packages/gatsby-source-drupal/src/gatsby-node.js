@@ -19,31 +19,14 @@ const { handleReferences, handleWebhookUpdate } = require(`./utils`)
 const agent = {
   http: new HttpAgent(),
   https: new HttpsAgent(),
+  http2: new http2wrapper.Agent(),
 }
 
 async function worker([url, options]) {
   return got(url, {
     agent,
+    cache: false,
     ...options,
-    cache: {
-      get: key => options.cache.get(key),
-      set: (key, value) => {
-        const parsed = JSON.parse(value)
-        // Drupal users often set very long max-age as they want to maximize
-        // the max-age of their varnish cache. This would make gatsby-source-drupal
-        // cache API calls for hours or days and people would wonder why
-        // their content doesn't update. We'll change `cache-control` so every request
-        // must revalidate.
-        try {
-          delete parsed.value.cachePolicy.rescc[`max-age`]
-          delete parsed.value.cachePolicy.resh[`cache-control`]
-          parsed.value.cachePolicy.rescc[`must-revalidate`] = true
-        } catch (e) {
-          console.log(e)
-        }
-        return options.cache.set(key, JSON.stringify(parsed))
-      },
-    },
   })
 }
 
@@ -193,10 +176,10 @@ exports.sourceNodes = async (
           headers,
           searchParams: params,
           responseType: `json`,
-          cache,
         },
       ])
 
+      // TODO this isn't updated — what does this mean in Axios
       if (res.body.status === -1) {
         // The incremental data is expired or this is the first fetch.
         reporter.info(`Unable to pull incremental data changes from Drupal`)
