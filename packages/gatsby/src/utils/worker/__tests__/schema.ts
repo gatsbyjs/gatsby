@@ -1,6 +1,8 @@
 import * as path from "path"
 import fs from "fs-extra"
+import type { watch as ChokidarWatchType } from "chokidar"
 import { DocumentNode } from "graphql"
+import { CombinedState } from "redux"
 import { build } from "../../../schema"
 import sourceNodesAndRemoveStaleNodes from "../../source-nodes"
 import { saveStateForWorkers, store } from "../../../redux"
@@ -11,9 +13,7 @@ import {
   GatsbyTestWorkerPool,
 } from "./test-helpers"
 import { getDataStore } from "../../../datastore"
-import { CombinedState } from "redux"
 import { IGatsbyState } from "../../../redux/types"
-import type { watch as ChokidarWatchType } from "chokidar"
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -54,7 +54,6 @@ describeWhenLMDB(`worker (schema)`, () => {
     await getDataStore().ready()
 
     await build({ parentSpan: {} })
-
     saveStateForWorkers([`inferenceMetadata`])
     await worker.buildSchema()
 
