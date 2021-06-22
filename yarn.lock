@@ -14446,6 +14446,14 @@ http2-wrapper@^1.0.0-beta.5.2:
     quick-lru "^5.1.1"
     resolve-alpn "^1.0.0"
 
+http2-wrapper@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/http2-wrapper/-/http2-wrapper-2.0.5.tgz#d4464509df69b6f82125b6cb337dbb80101f406c"
+  integrity sha512-W8+pfYl0iQ27NjvhDrbuQKaMBjBAWIZRHdKvmctV2c8a/naI7SsZgU3e04lCYrgxqnJ2sNPsBBrVI8kBeE/Pig==
+  dependencies:
+    quick-lru "^5.1.1"
+    resolve-alpn "^1.1.1"
+
 httperrors@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/httperrors/-/httperrors-2.0.1.tgz#02febcaec8d9d6a9e1ae3773915b9fdaa2204672"
@@ -24366,6 +24374,11 @@ resolve-alpn@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/resolve-alpn/-/resolve-alpn-1.0.0.tgz#745ad60b3d6aff4b4a48e01b8c0bdc70959e0e8c"
   integrity sha512-rTuiIEqFmGxne4IovivKSDzld2lWW9QCjqv80SYjPgf+gS35eaCAjaP54CCwGAwBtnCsvNLYtqxe1Nw+i6JEmA==
+
+resolve-alpn@^1.1.1:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/resolve-alpn/-/resolve-alpn-1.1.2.tgz#30b60cfbb0c0b8dc897940fe13fe255afcdd4d28"
+  integrity sha512-8OyfzhAtA32LVUsJSke3auIyINcwdh5l3cvYKdKO0nvsYSKuiLfTM5i78PJswFPT8y6cPW+L1v6/hE95chcpDA==
 
 resolve-cwd@^2.0.0:
   version "2.0.0"

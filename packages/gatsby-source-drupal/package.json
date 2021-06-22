@@ -14,6 +14,7 @@
     "fastq": "^1.11.0",
     "gatsby-source-filesystem": "^3.9.0-next.0",
     "got": "^11.8.2",
+    "http2-wrapper": "^2.0.5",
     "lodash": "^4.17.21",
     "tiny-async-pool": "^1.2.0",
     "url-join": "^4.0.1"
@@ -23,6 +24,9 @@
     "@babel/core": "^7.14.0",
     "babel-preset-gatsby-package": "^1.9.0-next.0",
     "cross-env": "^7.0.3"
+  },
+  "engines": {
+    "node": ">=12.13.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme",
   "keywords": [
@@ -43,8 +47,5 @@
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
-  },
-  "engines": {
-    "node": ">=12.13.0"
   }
 }

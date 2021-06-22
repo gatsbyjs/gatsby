@@ -2,6 +2,7 @@ const got = require(`got`)
 const _ = require(`lodash`)
 const urlJoin = require(`url-join`)
 import HttpAgent from "agentkeepalive"
+const http2wrapper = require(`http2-wrapper`)
 
 const { HttpsAgent } = HttpAgent
 
