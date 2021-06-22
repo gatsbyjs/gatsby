@@ -44,6 +44,7 @@ import {
 } from "../utils/webpack-status"
 import { updateSiteMetadata, isTruthy } from "gatsby-core-utils"
 import { showExperimentNotices } from "../utils/show-experiment-notice"
+import { runQueriesInWorkersQueue } from "../utils/worker/pool"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (isTruthy(process.env.VERBOSE)) {
@@ -93,19 +94,23 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const { queryIds } = await calculateDirtyQueries({ store })
 
-  await runStaticQueries({
-    queryIds,
-    parentSpan: buildSpan,
-    store,
-    graphqlRunner,
-  })
+  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    await runQueriesInWorkersQueue(workerPool, queryIds)
+  } else {
+    await runStaticQueries({
+      queryIds,
+      parentSpan: buildSpan,
+      store,
+      graphqlRunner,
+    })
 
-  await runPageQueries({
-    queryIds,
-    graphqlRunner,
-    parentSpan: buildSpan,
-    store,
-  })
+    await runPageQueries({
+      queryIds,
+      graphqlRunner,
+      parentSpan: buildSpan,
+      store,
+    })
+  }
 
   await writeOutRequires({
     store,
