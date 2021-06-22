@@ -12,7 +12,7 @@ Key highlights of this release:
 
 - [React 18 - Alpha](#react-18---alpha) - React 18 Alpha is available in Gatsby
 - [Web Vitals Tracking](#web-vitals-tracking) - Analytics Plugins now support tracking Web Vitals
-- [name2](#link2) - one-line description
+- [webpack caching](#webpack-caching) - built-in persistent caching activated for everyone
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -40,6 +40,10 @@ They send three metrics:
 - **Cumulative Layout Shift (CLS)**: measures visual stability. To provide a good user experience, pages should maintain a CLS of 1 or less.
 
 You can activate the tracking by setting `enableWebVitalsTracking` to `true`.
+
+## webpack caching
+
+In the [previous 3.7 release](/docs/reference/release-notes/v3.7) we started a gradual rollout of webpack 5 built-in persistent caching. It allows webpack to reuse results of previous compilations and significantly speed up compilation steps. With Gatsby v3.8 it's not enabled for everyone.
 
 ## Notable bugfixes & improvements
 
