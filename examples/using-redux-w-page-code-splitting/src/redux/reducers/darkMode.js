@@ -9,7 +9,7 @@ export const toggleDarkMode = isDarkMode => ({
   isDarkMode,
 })
 
-export default (state = initialState, action) => {
+const darkModeReducer = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_DARKMODE:
       return { ...state, isDarkMode: action.isDarkMode }
@@ -17,3 +17,5 @@ export default (state = initialState, action) => {
       return state
   }
 }
+
+export default darkModeReducer

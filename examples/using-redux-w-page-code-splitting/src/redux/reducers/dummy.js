@@ -14,7 +14,7 @@ export const loadData = isLoaded => ({
   isLoaded,
 })
 
-export default (state = initialState, action) => {
+const dummyDataReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_DATA:
       // Set isLoaded value and attached expensive JSON file.
@@ -23,3 +23,5 @@ export default (state = initialState, action) => {
       return state
   }
 }
+
+export default dummyDataReducer

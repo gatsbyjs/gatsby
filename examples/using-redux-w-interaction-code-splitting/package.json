@@ -6,13 +6,10 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "gatsby": "^3.0.0",
-    "gatsby-image": "^3.0.0",
     "gatsby-plugin-manifest": "^3.0.0",
-    "gatsby-plugin-offline": "^3.4.0",
     "gatsby-plugin-perf-budgets": "0.0.17",
     "gatsby-plugin-react-helmet": "^3.4.0",
     "gatsby-plugin-sharp": "^3.0.0",
-    "gatsby-source-filesystem": "^3.0.0",
     "gatsby-transformer-sharp": "^3.0.0",
     "node-libs-browser": "^2.2.1",
     "prop-types": "^15.7.2",
