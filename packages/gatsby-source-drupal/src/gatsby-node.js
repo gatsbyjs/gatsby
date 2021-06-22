@@ -26,6 +26,8 @@ async function worker([url, options]) {
   return got(url, {
     agent,
     cache: false,
+    request: http2wrapper.auto,
+    http2: true,
     ...options,
   })
 }
