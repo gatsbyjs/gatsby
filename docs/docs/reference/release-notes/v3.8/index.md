@@ -30,7 +30,7 @@ By using the [`web-vitals`](https://github.com/GoogleChrome/web-vitals) package 
 
 - **Largest Contentful Paint (LCP)**: measures loading performance. To provide a good user experience, LCP should occur within 2.5 seconds of when the page first starts loading.
 - **First Input Delay (FID)**: measures interactivity. To provide a good user experience, pages should have a FID of 100 milliseconds or less.
-- **Cumulative Layout Shift (CLS)**: measures visual stability. To provide a good user experience, pages should maintain a CLS of 1 or less.
+- **Cumulative Layout Shift (CLS)**: measures visual stability. To provide a good user experience, pages should maintain a CLS of 0.1 or less.
 
 You can activate the tracking by setting `enableWebVitalsTracking` to `true`.
 
