@@ -26,7 +26,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## React 18 - Alpha
 
-Gatsby supports [React 18 Alpha](https://reactjs.org/blog/2021/06/08/the-plan-for-react-18.html). It's still very early days but we like to be ahead of the pack. You can use `startTransition` and `stateBatching` today by installing react@alpha & react-dom@alpha. We love to get feedback at https://github.com/gatsbyjs/gatsby/discussions/31943.
+Gatsby supports [React 18 Alpha](https://reactjs.org/blog/2021/06/08/the-plan-for-react-18.html). It's still very early days but we like to be ahead of the pack. You can use `startTransition` and `stateBatching` today by installing `react@alpha` & `react-dom@alpha`. We love to get feedback in the [Umbrella Discussion](https://github.com/gatsbyjs/gatsby/discussions/31943).
 
 ## `gatsby-source-shopify` v5
 
