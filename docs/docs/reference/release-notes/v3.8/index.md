@@ -24,13 +24,19 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ---
 
+## React 18 - Alpha
+
+Gatsby supports [React 18 Alpha](https://reactjs.org/blog/2021/06/08/the-plan-for-react-18.html). It's still very early days but we like to be ahead of the pack. You can use `startTransition` and `stateBatching` today by installing react@alpha & react-dom@alpha. We love to get feedback at https://github.com/gatsbyjs/gatsby/discussions/31943.
+
 ## Web Vitals Tracking
 
-By using the [`web-vitals`](https://github.com/GoogleChrome/web-vitals) package we've added support for tracking Web Vitals to `gatsby-plugin-google-analytics` & `gatsby-plugin-google-tagmanager` ([PR #31665](https://github.com/gatsbyjs/gatsby/pull/31665)). They send three metrics:
+By using the [`web-vitals`](https://github.com/GoogleChrome/web-vitals) package we've added support for tracking Web Vitals to `gatsby-plugin-google-analytics` & `gatsby-plugin-google-tagmanager` ([PR #31665](https://github.com/gatsbyjs/gatsby/pull/31665)).
+
+They send three metrics:
 
 - **Largest Contentful Paint (LCP)**: measures loading performance. To provide a good user experience, LCP should occur within 2.5 seconds of when the page first starts loading.
 - **First Input Delay (FID)**: measures interactivity. To provide a good user experience, pages should have a FID of 100 milliseconds or less.
-- **Cumulative Layout Shift (CLS)**: measures visual stability. To provide a good user experience, pages should maintain a CLS of 0.1 or less.
+- **Cumulative Layout Shift (CLS)**: measures visual stability. To provide a good user experience, pages should maintain a CLS of 1 or less.
 
 You can activate the tracking by setting `enableWebVitalsTracking` to `true`.
 
