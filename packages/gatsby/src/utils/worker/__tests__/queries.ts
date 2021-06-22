@@ -123,6 +123,7 @@ describeWhenLMDB(`worker (queries)`, () => {
     saveStateForWorkers([`components`, `staticQueryComponents`])
 
     await worker.buildSchema()
+    await worker.runQueries(queryIds)
   })
 
   afterAll(() => {
@@ -136,7 +137,6 @@ describeWhenLMDB(`worker (queries)`, () => {
   })
 
   it(`should execute static queries`, async () => {
-    await worker?.runQueries(queryIds)
     const stateFromWorker = await worker!.getState()
 
     const staticQueryResult = await fs.readJson(
@@ -149,6 +149,28 @@ describeWhenLMDB(`worker (queries)`, () => {
           "nodeTypeOne": Object {
             "resolverField": "Custom String",
           },
+        },
+      }
+    `)
+  })
+
+  it(`should execute page queries`, async () => {
+    const stateFromWorker = await worker!.getState()
+
+    const pageQueryResult = await fs.readJson(
+      `${stateFromWorker.program.directory}/.cache/json/_foo.json`
+    )
+
+    expect(pageQueryResult).toMatchInlineSnapshot(`
+      Object {
+        "data": Object {
+          "nodeTypeOne": Object {
+            "number": 123,
+          },
+        },
+        "pageContext": Object {
+          "ownerNodeId": "foo",
+          "query": "{ nodeTypeOne { number } }",
         },
       }
     `)
