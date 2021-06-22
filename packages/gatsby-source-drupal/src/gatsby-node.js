@@ -179,8 +179,11 @@ exports.sourceNodes = async (
         },
       ])
 
-      // TODO this isn't updated — what does this mean in Axios
-      if (res.body.status === -1) {
+      // Fastbuilds returns a -1 if:
+      // - the timestamp has expired
+      // - if old fastbuild logs were purged
+      // - it's been a really long time since you synced so you just do a full fetch.
+      if (res.statusCode === -1) {
         // The incremental data is expired or this is the first fetch.
         reporter.info(`Unable to pull incremental data changes from Drupal`)
         setPluginStatus({ lastFetched: res.body.timestamp })
