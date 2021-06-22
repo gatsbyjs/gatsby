@@ -1,10 +1,21 @@
-const _ = require(`lodash`)
-const fastq = require(`fastq`)
-const { store } = require(`../redux`)
-const { hasFlag, FLAG_ERROR_EXTRACTION } = require(`../redux/reducers/queries`)
-const { queryRunner } = require(`./query-runner`)
-const { websocketManager } = require(`../utils/websocket-manager`)
-const { GraphQLRunner } = require(`./graphql-runner`)
+import _ from "lodash"
+import fastq from "fastq"
+import { IProgressReporter } from "gatsby-cli/lib/reporter/reporter-progress"
+import { store } from "../redux"
+import {
+  IGatsbyPage,
+  IGatsbyPageComponent,
+  IGatsbyState,
+  IGatsbyStaticQueryComponents,
+} from "../redux/types"
+import { hasFlag, FLAG_ERROR_EXTRACTION } from "../redux/reducers/queries"
+import { IQueryJob, queryRunner } from "./query-runner"
+import {
+  IStaticQueryResult,
+  websocketManager,
+} from "../utils/websocket-manager"
+import { GraphQLRunner } from "./graphql-runner"
+import { IGroupedQueryIds } from "../services"
 
 if (process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) {
   console.info(
@@ -21,7 +32,7 @@ const concurrency =
  * Dirty state is tracked in `queries` reducer, here we simply filter
  * them from all tracked queries.
  */
-function calcDirtyQueryIds(state) {
+export function calcDirtyQueryIds(state: IGatsbyState): Array<string> {
   const { trackedQueries, trackedComponents, deletedQueries } = state.queries
 
   const queriesWithBabelErrors = new Set()
@@ -33,7 +44,7 @@ function calcDirtyQueryIds(state) {
     }
   }
   // Note: trackedQueries contains both - page and static query ids
-  const dirtyQueryIds = []
+  const dirtyQueryIds: Array<string> = []
   for (const [queryId, query] of trackedQueries) {
     if (deletedQueries.has(queryId)) {
       continue
@@ -46,15 +57,21 @@ function calcDirtyQueryIds(state) {
 }
 
 /**
- * groups queryIds by whether they are static or page queries.
+ * Groups queryIds by whether they are static or page queries.
  */
-function groupQueryIds(queryIds) {
+export function groupQueryIds(queryIds: Array<string>): IGroupedQueryIds {
   const grouped = _.groupBy(queryIds, p =>
     p.slice(0, 4) === `sq--` ? `static` : `page`
   )
+
+  const { pages } = store.getState()
+
   return {
     staticQueryIds: grouped.static || [],
-    pageQueryIds: grouped.page || [],
+    pageQueryIds:
+      grouped.page
+        .map(path => pages.get(path) as IGatsbyPage)
+        .filter(Boolean) || [],
   }
 }
 
@@ -64,13 +81,19 @@ function createQueue({
   activity,
   graphqlRunner,
   graphqlTracing,
-}) {
+}: {
+  createJobFn: (state: IGatsbyState, queryId: string) => IQueryJob
+  state: IGatsbyState
+  activity: IProgressReporter
+  graphqlRunner: GraphQLRunner
+  graphqlTracing: boolean
+}): fastq.queue<string, any> {
   if (!graphqlRunner) {
     graphqlRunner = new GraphQLRunner(store, { graphqlTracing })
   }
   state = state || store.getState()
 
-  function worker(queryId, cb) {
+  function worker(queryId: string, cb): void {
     const job = createJobFn(state, queryId)
     if (!job) {
       cb(null, undefined)
@@ -99,7 +122,17 @@ async function processQueries({
   activity,
   graphqlRunner,
   graphqlTracing,
-}) {
+}: {
+  queryIds:
+    | IGroupedQueryIds["staticQueryIds"]
+    | IGroupedQueryIds["pageQueryIds"]
+  createJobFn: any
+  onQueryDone: any
+  state: IGatsbyState
+  activity: IProgressReporter
+  graphqlRunner: GraphQLRunner
+  graphqlTracing: boolean
+}): Promise<void> {
   return new Promise((resolve, reject) => {
     const fastQueue = createQueue({
       createJobFn,
@@ -123,19 +156,35 @@ async function processQueries({
     })
 
     if (!fastQueue.idle()) {
-      fastQueue.drain = () => resolve()
+      fastQueue.drain = (): any => resolve()
     } else {
       resolve()
     }
   })
 }
 
-function createStaticQueryJob(state, queryId) {
+interface ICreateStaticQueryJobResult {
+  id: string
+  hash: IGatsbyStaticQueryComponents["hash"]
+  query: IGatsbyStaticQueryComponents["query"]
+  componentPath: IGatsbyStaticQueryComponents["componentPath"]
+  context: {
+    path: IGatsbyStaticQueryComponents["id"]
+  }
+}
+
+function createStaticQueryJob(
+  state: IGatsbyState,
+  queryId: string
+): ICreateStaticQueryJobResult | undefined {
   const component = state.staticQueryComponents.get(queryId)
+
   if (!component) {
     return undefined
   }
+
   const { hash, id, query, componentPath } = component
+
   return {
     id: queryId,
     hash,
@@ -145,17 +194,23 @@ function createStaticQueryJob(state, queryId) {
   }
 }
 
-function onDevelopStaticQueryDone({ job, result }) {
+function onDevelopStaticQueryDone({
+  job,
+  result,
+}: {
+  job: IQueryJob
+  result: IStaticQueryResult["result"]
+}): void {
   websocketManager.emitStaticQueryData({
     result,
-    id: job.hash,
+    id: job.hash as string,
   })
 }
 
-async function processStaticQueries(
-  queryIds,
+export async function processStaticQueries(
+  queryIds: IGroupedQueryIds["staticQueryIds"],
   { state, activity, graphqlRunner, graphqlTracing }
-) {
+): Promise<void> {
   return processQueries({
     queryIds,
     createJobFn: createStaticQueryJob,
@@ -170,13 +225,14 @@ async function processStaticQueries(
   })
 }
 
-async function processPageQueries(
-  queryIds,
+export async function processPageQueries(
+  queryIds: IGroupedQueryIds["pageQueryIds"],
   { state, activity, graphqlRunner, graphqlTracing }
-) {
+): Promise<void> {
   return processQueries({
     queryIds,
     createJobFn: createPageQueryJob,
+    onQueryDone: undefined,
     state,
     activity,
     graphqlRunner,
@@ -184,19 +240,30 @@ async function processPageQueries(
   })
 }
 
-function createPageQueryJob(state, queryId) {
-  const page = state.pages.get(queryId)
+interface ICreatePageQueryJobResult {
+  id: IGatsbyPage["path"]
+  query: IGatsbyPageComponent["query"]
+  isPage: boolean
+  componentPath: IGatsbyPage["componentPath"]
+  context: {
+    // TODO: This type can be better
+    [key: string]: any
+  }
+}
 
-  // Make sure we filter out pages that don't exist. An example is
-  // /dev-404-page/, whose SitePage node is created via
-  // `internal-data-bridge`, but the actual page object is only
-  // created during `gatsby develop`.
-  if (!page) {
+function createPageQueryJob(
+  state: IGatsbyState,
+  page: IGatsbyPage
+): ICreatePageQueryJobResult | undefined {
+  const component = state.components.get(page.componentPath)
+
+  if (!component) {
     return undefined
   }
-  const component = state.components.get(page.componentPath)
+
   const { path, componentPath, context } = page
   const { query } = component
+
   return {
     id: path,
     query,
@@ -207,12 +274,4 @@ function createPageQueryJob(state, queryId) {
       ...context,
     },
   }
-}
-
-module.exports = {
-  calcInitialDirtyQueryIds: calcDirtyQueryIds,
-  calcDirtyQueryIds,
-  processPageQueries,
-  processStaticQueries,
-  groupQueryIds,
 }
