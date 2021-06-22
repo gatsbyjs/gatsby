@@ -163,6 +163,8 @@ Not set by default. If set to a string (example `MyStore`) node names will be `a
 
 Not set by default. If set to a string (example `My Sales Channel`), only products and collections that are active in that channel will be sourced. If no sales channel is provided, the default behavior is to source products that are available in the online store.
 
+Note: If you set up your site with the Gatsby Cloud Public App integration, `salesChannel` is set for you.
+
 <div id="images"></div>
 
 ## Images
