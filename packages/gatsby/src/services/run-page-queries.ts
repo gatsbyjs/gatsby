@@ -32,7 +32,11 @@ export async function runPageQueries({
   }
 
   const activity = reporter.createProgress(
-    `run page queries`,
+    `run page queries (${
+      process.env.JEST_WORKER_ID
+        ? `worker ${process.env.JEST_WORKER_ID}`
+        : `main`
+    })`,
     pageQueryIds.length,
     0,
     {

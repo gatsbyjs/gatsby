@@ -56,6 +56,11 @@ export function calcDirtyQueryIds(state: IGatsbyState): Array<string> {
   return dirtyQueryIds
 }
 
+// TODO: Possibly remove? Used in inc-build-cli
+export function calcInitialDirtyQueryIds(state: IGatsbyState): Array<string> {
+  return calcDirtyQueryIds(state)
+}
+
 /**
  * Groups queryIds by whether they are static or page queries.
  */
