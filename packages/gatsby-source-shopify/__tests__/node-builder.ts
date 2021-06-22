@@ -56,7 +56,6 @@ describe(`When a variant has an image set`, () => {
 
   describe(`and options are set, not to download images`, () => {
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
     }
@@ -70,7 +69,6 @@ describe(`When a variant has an image set`, () => {
 
   describe(`and options are set to download images`, () => {
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
       downloadImages: true,
