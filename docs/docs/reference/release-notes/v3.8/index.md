@@ -35,15 +35,15 @@ TODO
 
 ## Web Vitals Tracking
 
-By using the [`web-vitals`](https://github.com/GoogleChrome/web-vitals) package we've added support for tracking Web Vitals to `gatsby-plugin-google-analytics` & `gatsby-plugin-google-tagmanager` ([PR #31665](https://github.com/gatsbyjs/gatsby/pull/31665)).
+We've added support for tracking Web Vitals to `gatsby-plugin-google-analytics` & `gatsby-plugin-google-tagmanager` by using the [`web-vitals`](https://github.com/GoogleChrome/web-vitals) package ([PR #31665](https://github.com/gatsbyjs/gatsby/pull/31665)).
 
-They send three metrics:
+The plugins now send three metrics:
 
 - **Largest Contentful Paint (LCP)**: measures loading performance. To provide a good user experience, LCP should occur within 2.5 seconds of when the page first starts loading.
 - **First Input Delay (FID)**: measures interactivity. To provide a good user experience, pages should have a FID of 100 milliseconds or less.
 - **Cumulative Layout Shift (CLS)**: measures visual stability. To provide a good user experience, pages should maintain a CLS of 1 or less.
 
-You can activate the tracking by setting `enableWebVitalsTracking` to `true`.
+You can activate the tracking in your `gatsby-config.js` by setting `enableWebVitalsTracking` to `true`.
 
 ## webpack caching
 
