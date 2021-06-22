@@ -43,7 +43,7 @@ export function pluginOptionsSchema({
       .default([])
       .items(Joi.string().valid(`orders`, `collections`)),
     salesChannel: Joi.string().default(
-      process.env.GATSBY_SHOPIFY_SALES_CHANNEL
+      process.env.GATSBY_SHOPIFY_SALES_CHANNEL || ``
     ),
   })
 }
