@@ -1,5 +1,10 @@
 ---
 title: Client-only Routes & User Authentication
+examples:
+  - label: Client-only Paths
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/client-only-paths"
+  - label: Simple Authentication
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/simple-auth"
 ---
 
 Often you want to create a site with client-only portions, which allows you to gate them by authentication or load different content based on URL parameters.
@@ -20,9 +25,9 @@ Gatsby converts components in the `pages` folder into static HTML files for the 
 
 Gatsby uses [@reach/router](https://reach.tech/router/) under the hood so we'll use it to setup client-only routes within our app.
 
-You first need to set up routes on a page that is built by Gatsby. You can see the routes added to `src/pages/[app].js` in the code example below:
+You first need to set up routes on a page that is built by Gatsby. You can see the routes added to `src/pages/app/[...].js` in the code example below:
 
-```jsx:title=src/pages/[app].js
+```jsx:title=src/pages/app/[...].js
 import React from "react"
 import { Router } from "@reach/router" // highlight-line
 import Layout from "../components/Layout"
@@ -55,7 +60,7 @@ Briefly, when a page loads, Reach Router looks at the `path` prop of each compon
 
 With [authentication set up](/docs/how-to/adding-common-features/building-a-site-with-authentication) on your site, you can create a component like a `<PrivateRoute/>` to extend the example above and gate content:
 
-```jsx:title=src/pages/[app].js
+```jsx:title=src/pages/app/[...].js
 import React from "react"
 import { Router } from "@reach/router"
 import Layout from "../components/Layout"
@@ -114,7 +119,7 @@ Popular hosting services like Gatsby Cloud, Netlify, and Vercel have plugins tha
 - [Netlify](https://www.gatsbyjs.com/plugins/gatsby-plugin-netlify/?=netlif)
 - Vercel automatically adds its Gatsby plugin.
 
-### Self-hosting with Ngninx and Apache
+### Self-hosting with NGINX and Apache
 
 Your server configuration should handle `GET` requests to `/app/*` e.g. `/app/why-gatsby-is-awesome` with `/app/index.html` and let the client handle the rendering of the route with the matching path. It is important to note that the response code should be a **200** (an OK) and not a **301** (a redirect). This can be done with NGINX using [`try_files`](https://docs.nginx.com/nginx/admin-guide/web-server/serving-static-content/#trying-several-options), or an [equivalent directive](https://serverfault.com/questions/290784/what-is-apaches-equivalent-of-nginxs-try-files) if using Apache.
 

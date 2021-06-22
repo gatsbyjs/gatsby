@@ -7,9 +7,10 @@ const { platform } = require(`os`)
 const path = require(`path`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
-const { slash } = require(`gatsby-core-utils`)
-const { hasNodeChanged, getNode } = require(`../../redux/nodes`)
-const sanitizeNode = require(`../../db/sanitize-node`)
+const { slash, createContentDigest } = require(`gatsby-core-utils`)
+const { hasNodeChanged } = require(`../../utils/nodes`)
+const { getNode } = require(`../../datastore`)
+const sanitizeNode = require(`../../utils/sanitize-node`)
 const { store } = require(`..`)
 const { validatePageComponent } = require(`../../utils/validate-page-component`)
 import { nodeSchema } from "../../joi-schemas/joi"
@@ -22,6 +23,9 @@ const {
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+
+const isNotTestEnv = process.env.NODE_ENV !== `test`
+const isTestEnv = process.env.NODE_ENV === `test`
 
 /**
  * Memoize function used to pick shadowed page components to avoid expensive I/O.
@@ -95,6 +99,7 @@ type PageInput = {
   path: string,
   component: string,
   context?: Object,
+  ownerNodeId?: string,
 }
 
 type Page = {
@@ -105,6 +110,7 @@ type Page = {
   internalComponentName: string,
   componentChunkName: string,
   updatedAt: number,
+  ownerNodeId?: string,
 }
 
 type ActionOptions = {
@@ -137,11 +143,10 @@ actions.deletePage = (page: PageInput) => {
   }
 }
 
-const pascalCase = _.flow(_.camelCase, _.upperFirst)
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
 const hasErroredBecauseOfNodeValidation = new Set()
-const pageComponentCache = {}
+const pageComponentCache = new Map()
 const reservedFields = [
   `path`,
   `matchPath`,
@@ -157,6 +162,7 @@ const reservedFields = [
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
  * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
+ * @param {string} page.ownerNodeId The id of the node that owns this page. This is used for routing users to previews via the unstable_createNodeManifest public action. Since multiple nodes can be queried on a single page, this allows the user to tell us which node is the main node for the page.
  * @param {string} page.component The absolute path to the component for this page
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pageContext` as well as to the graphql query
@@ -165,6 +171,7 @@ const reservedFields = [
  * createPage({
  *   path: `/my-sweet-new-page/`,
  *   component: path.resolve(`./src/templates/my-sweet-new-page.js`),
+ *   ownerNodeId: `123456`,
  *   // The context is passed as props to the component as well
  *   // as into the component's GraphQL query.
  *   context: {
@@ -184,7 +191,7 @@ actions.createPage = (
   if (!page.path) {
     const message = `${name} must set the page path when creating a page`
     // Don't log out when testing
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       report.panic({
         id: `11323`,
         context: {
@@ -231,7 +238,7 @@ The following fields are used by the page object and should be avoided.
 ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
             `
-      if (process.env.NODE_ENV === `test`) {
+      if (isTestEnv) {
         return error
         // Only error if the context version is different than the page
         // version.  People in v1 often thought that they needed to also pass
@@ -254,7 +261,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   // Check if a component is set.
   if (!page.component) {
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       report.panic({
         id: `11322`,
         context: {
@@ -280,7 +287,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   )
 
   if (error) {
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       if (panicOnBuild) {
         report.panicOnBuild(error)
       } else {
@@ -295,9 +302,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // operation
   //
   // Skip during testing as the paths don't exist on disk.
-  if (process.env.NODE_ENV !== `test`) {
-    if (pageComponentCache[page.component]) {
-      page.component = pageComponentCache[page.component]
+  if (isNotTestEnv) {
+    if (pageComponentCache.has(page.component)) {
+      page.component = pageComponentCache.get(page.component)
     } else {
       const originalPageComponent = page.component
 
@@ -357,7 +364,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         page.component = trueComponentPath
       }
 
-      pageComponentCache[originalPageComponent] = page.component
+      pageComponentCache.set(originalPageComponent, page.component)
     }
   }
 
@@ -365,7 +372,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   if (page.path === `/`) {
     internalComponentName = `ComponentIndex`
   } else {
-    internalComponentName = `Component${pascalCase(page.path)}`
+    internalComponentName = `Component${page.path}`
   }
 
   const invalidPathSegments = tooLongSegmentsInPath(page.path)
@@ -397,6 +404,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),
+
+    // Link page to its plugin.
+    pluginCreator___NODE: plugin.id ?? ``,
+    pluginCreatorId: plugin.id ?? ``,
+  }
+
+  if (page.ownerNodeId) {
+    internalPage.ownerNodeId = page.ownerNodeId
   }
 
   // If the path doesn't have an initial forward slash, add it.
@@ -422,13 +437,70 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     )
   }
 
-  return {
-    ...actionOptions,
-    type: `CREATE_PAGE`,
-    contextModified,
-    plugin,
-    payload: internalPage,
+  // just so it's easier to c&p from createPage action creator for now - ideally it's DRYed
+  const { updatedAt, ...node } = internalPage
+  node.children = []
+  node.internal = {
+    type: `SitePage`,
+    contentDigest: createContentDigest(node),
   }
+  node.id = `SitePage ${internalPage.path}`
+  const oldNode = getNode(node.id)
+
+  let deleteActions
+  let updateNodeAction
+  if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
+    updateNodeAction = {
+      ...actionOptions,
+      plugin,
+      type: `TOUCH_NODE`,
+      payload: node.id,
+    }
+  } else {
+    // Remove any previously created descendant nodes as they're all due
+    // to be recreated.
+    if (oldNode) {
+      const createDeleteAction = node => {
+        return {
+          ...actionOptions,
+          type: `DELETE_NODE`,
+          plugin,
+          payload: node,
+        }
+      }
+      deleteActions = findChildren(oldNode.children)
+        .map(getNode)
+        .map(createDeleteAction)
+    }
+
+    node.internal.counter = getNextNodeCounter()
+
+    updateNodeAction = {
+      ...actionOptions,
+      type: `CREATE_NODE`,
+      plugin,
+      oldNode,
+      payload: node,
+    }
+  }
+
+  const actions = [
+    {
+      ...actionOptions,
+      type: `CREATE_PAGE`,
+      contextModified,
+      plugin,
+      payload: internalPage,
+    },
+  ]
+
+  if (deleteActions && deleteActions.length) {
+    actions.push(...deleteActions)
+  }
+
+  actions.push(updateNodeAction)
+
+  return actions
 }
 
 const deleteNodeDeprecationWarningDisplayedMessages = new Set()
@@ -1044,7 +1116,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
   if (!_.isObject(options)) {
     console.log(`${name} must pass an object to "setBabelOptions"`)
     console.log(JSON.stringify(options, null, 4))
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       process.exit(1)
     }
   }
@@ -1052,7 +1124,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
   if (!_.isObject(options.options)) {
     console.log(`${name} must pass options to "setBabelOptions"`)
     console.log(JSON.stringify(options, null, 4))
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       process.exit(1)
     }
   }
@@ -1086,7 +1158,7 @@ actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
   if (!config.name) {
     console.log(`${name} must set the name of the Babel plugin`)
     console.log(JSON.stringify(config, null, 4))
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       process.exit(1)
     }
   }
@@ -1122,7 +1194,7 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
   if (!config.name) {
     console.log(`${name} must set the name of the Babel preset`)
     console.log(JSON.stringify(config, null, 4))
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       process.exit(1)
     }
   }
@@ -1415,6 +1487,43 @@ actions.createServerVisitedPage = (chunkName: string) => {
   return {
     type: `CREATE_SERVER_VISITED_PAGE`,
     payload: { componentChunkName: chunkName },
+  }
+}
+
+/**
+ * Creates an individual node manifest.
+ * This is used to tie the unique revision state within a data source at the current point in time to a page generated from the provided node when it's node manifest is processed.
+ *
+ * @param {Object} manifest a page object
+ * @param {string} manifest.manifestId An id which ties the revision unique state of this manifest to the unique revision state of a data source.
+ * @param {string} manifest.node The Gatsyby node to tie the manifestId to
+ * @example
+ * unstable_createNodeManifest({
+ *   manifestId: `post-id-1--updated-53154315`,
+ *   node: {
+ *      id: `post-id-1`
+ *   },
+ * })
+ */
+actions.unstable_createNodeManifest = (
+  {
+    manifestId,
+    node,
+  }: {
+    manifestId: string,
+    node: {
+      id: string,
+    },
+  },
+  plugin: Plugin
+) => {
+  return {
+    type: `CREATE_NODE_MANIFEST`,
+    payload: {
+      manifestId,
+      node,
+      pluginName: plugin.name,
+    },
   }
 }
 

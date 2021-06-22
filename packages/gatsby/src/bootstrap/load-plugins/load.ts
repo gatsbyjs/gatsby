@@ -18,6 +18,10 @@ import {
 } from "./types"
 import { PackageJson } from "../../.."
 import reporter from "gatsby-cli/lib/reporter"
+import { silent as resolveFromSilent } from "resolve-from"
+
+const GATSBY_CLOUD_PLUGIN_NAME = `gatsby-plugin-gatsby-cloud`
+const TYPESCRIPT_PLUGIN_NAME = `gatsby-plugin-typescript`
 
 function createFileContentHash(root: string, globPattern: string): string {
   const hash = crypto.createHash(`md5`)
@@ -47,21 +51,29 @@ const createPluginId = (
   )
 
 /**
- * @param pluginName
- * This can be a name of a local plugin, the name of a plugin located in
- * node_modules, or a Gatsby internal plugin. In the last case the pluginName
- * will be an absolute path.
+ * @param plugin
+ * This should be a plugin spec object where possible but can also be the
+ * name of a plugin.
+ *
+ * When it is a name, it can be a name of a local plugin, the name of a plugin
+ * located in node_modules, or a Gatsby internal plugin. In the last case the
+ * plugin will be an absolute path.
  * @param rootDir
  * This is the project location, from which are found the plugins
  */
 export function resolvePlugin(
-  pluginName: string,
+  plugin: PluginRef,
   rootDir: string | null
 ): IPluginInfo {
+  const pluginName = _.isString(plugin) ? plugin : plugin.resolve
+
+  // Respect the directory that the plugin was sourced from initially
+  rootDir = (!_.isString(plugin) && plugin.parentDir) || rootDir
+
   // Only find plugins when we're not given an absolute path
-  if (!existsSync(pluginName)) {
+  if (!existsSync(pluginName) && rootDir) {
     // Find the plugin in the local plugins folder
-    const resolvedPath = slash(path.resolve(`./plugins/${pluginName}`))
+    const resolvedPath = slash(path.join(rootDir, `plugins/${pluginName}`))
 
     if (existsSync(resolvedPath)) {
       if (existsSync(`${resolvedPath}/package.json`)) {
@@ -133,12 +145,33 @@ export function resolvePlugin(
   }
 }
 
+function addGatsbyPluginCloudPluginWhenInstalled(
+  plugins: Array<IPluginInfo>,
+  processPlugin: (plugin: PluginRef) => IPluginInfo,
+  rootDir: string
+): void {
+  const cloudPluginLocation = resolveFromSilent(
+    rootDir,
+    GATSBY_CLOUD_PLUGIN_NAME
+  )
+
+  if (cloudPluginLocation) {
+    plugins.push(
+      processPlugin({
+        resolve: cloudPluginLocation,
+        options: {},
+      })
+    )
+  }
+}
+
 export function loadPlugins(
   config: ISiteConfig = {},
-  rootDir: string | null = null
+  rootDir: string
 ): Array<IPluginInfo> {
   // Instantiate plugins.
   const plugins: Array<IPluginInfo> = []
+  const configuredPluginNames = new Set()
 
   // Create fake little site with a plugin for testing this
   // w/ snapshots. Move plugin processing to its own module.
@@ -192,7 +225,7 @@ export function loadPlugins(
         }
       }
 
-      const info = resolvePlugin(plugin.resolve, plugin.parentDir || rootDir)
+      const info = resolvePlugin(plugin, rootDir)
 
       return {
         ...info,
@@ -210,7 +243,8 @@ export function loadPlugins(
     `../../internal-plugins/prod-404`,
     `../../internal-plugins/webpack-theme-component-shadowing`,
     `../../internal-plugins/bundle-optimisations`,
-  ]
+    `../../internal-plugins/functions`,
+  ].filter(Boolean) as Array<string>
   internalPlugins.forEach(relPath => {
     const absPath = path.join(__dirname, relPath)
     plugins.push(processPlugin(absPath))
@@ -219,7 +253,9 @@ export function loadPlugins(
   // Add plugins from the site config.
   if (config.plugins) {
     config.plugins.forEach(plugin => {
-      plugins.push(processPlugin(plugin))
+      const processedPlugin = processPlugin(plugin)
+      plugins.push(processedPlugin)
+      configuredPluginNames.add(processedPlugin.name)
     })
   }
 
@@ -240,15 +276,18 @@ export function loadPlugins(
     )
   })
 
-  // TypeScript support by default! use the user-provided one if it exists
-  const typescriptPlugin = (config.plugins || []).find(
-    plugin => plugin.resolve === `gatsby-plugin-typescript`
-  )
+  if (
+    !configuredPluginNames.has(GATSBY_CLOUD_PLUGIN_NAME) &&
+    (process.env.GATSBY_CLOUD === `true` || process.env.GATSBY_CLOUD === `1`)
+  ) {
+    addGatsbyPluginCloudPluginWhenInstalled(plugins, processPlugin, rootDir)
+  }
 
-  if (typescriptPlugin === undefined) {
+  // Suppor Typescript by default but allow users to override it
+  if (!configuredPluginNames.has(TYPESCRIPT_PLUGIN_NAME)) {
     plugins.push(
       processPlugin({
-        resolve: require.resolve(`gatsby-plugin-typescript`),
+        resolve: require.resolve(TYPESCRIPT_PLUGIN_NAME),
         options: {
           // TODO(@mxstbr): Do not hard-code these defaults but infer them from the
           // pluginOptionsSchema of gatsby-plugin-typescript

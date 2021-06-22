@@ -164,18 +164,16 @@ const fakeComponentsPluginFactory = type => {
   }
 }
 
+const publicDir = join(process.cwd(), `public`)
 const SSR_DEV_MOCK_FILE_INFO = {
-  [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
-  [join(
-    process.cwd(),
-    `/public/page-data/about/page-data.json`
-  )]: JSON.stringify({
+  [join(publicDir, `webpack.stats.json`)]: `{}`,
+  [join(publicDir, `page-data/about/page-data.json`)]: JSON.stringify({
     componentChunkName: `page-component---src-pages-about-js`,
     path: `/about/`,
     webpackCompilationHash: `1234567890abcdef1234`,
     staticQueryHashes: [],
   }),
-  [join(process.cwd(), `/public/page-data/app-data.json`)]: JSON.stringify({
+  [join(publicDir, `page-data/app-data.json`)]: JSON.stringify({
     webpackCompilationHash: `1234567890abcdef1234`,
   }),
 }
@@ -197,7 +195,7 @@ describe(`develop-static-entry`, () => {
   test(`SSR: onPreRenderHTML can be used to replace headComponents`, done => {
     global.plugins = [fakeStylesPlugin, reverseHeadersPlugin]
 
-    ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
+    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
@@ -209,7 +207,7 @@ describe(`develop-static-entry`, () => {
       reverseBodyComponentsPluginFactory(`Post`),
     ]
 
-    ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
+    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
@@ -221,14 +219,14 @@ describe(`develop-static-entry`, () => {
       reverseBodyComponentsPluginFactory(`Pre`),
     ]
 
-    ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
+    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
   })
 
   test(`SSR: onPreRenderHTML adds metatag note for development environment`, done => {
-    ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
+    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
       expect(html).toContain(
         `<meta name="note" content="environment=development"/>`
       )
@@ -239,7 +237,7 @@ describe(`develop-static-entry`, () => {
   test(`SSR: onPreRenderHTML adds metatag note for development environment after replaceHeadComponents`, done => {
     global.plugins = [reverseHeadersPlugin]
 
-    ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
+    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
       expect(html).toContain(
         `<meta name="note" content="environment=development"/>`
       )

@@ -3,6 +3,86 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.8.0-next.2...gatsby-source-drupal@4.9.0-next.0) (2021-06-18)
+
+### Features
+
+- **gatsby-source-drupal:** Use Got instead of Axios for retries & caching support + restrict to 20 concurrent requests ([#31514](https://github.com/gatsbyjs/gatsby/issues/31514)) ([b0de8f8](https://github.com/gatsbyjs/gatsby/commit/b0de8f8d72005387a89fbb2072304ce9fbbaeb0f))
+
+# [4.8.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.8.0-next.1...gatsby-source-drupal@4.8.0-next.2) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [4.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.8.0-next.0...gatsby-source-drupal@4.8.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [4.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.7.0-next.2...gatsby-source-drupal@4.8.0-next.0) (2021-06-03)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [4.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.7.0-next.1...gatsby-source-drupal@4.7.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [4.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.7.0-next.0...gatsby-source-drupal@4.7.0-next.1) (2021-05-31)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [4.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.6.0-next.3...gatsby-source-drupal@4.7.0-next.0) (2021-05-21)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [4.6.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.6.0-next.2...gatsby-source-drupal@4.6.0-next.3) (2021-05-19)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [4.6.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.6.0-next.1...gatsby-source-drupal@4.6.0-next.2) (2021-05-19)
+
+### Features
+
+- **gatsby-source-drupal:** Add option validation ([#31468](https://github.com/gatsbyjs/gatsby/issues/31468)) ([089c5c5](https://github.com/gatsbyjs/gatsby/commit/089c5c5cd159d63808280b9e976952c920b5c21e))
+
+# [4.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.6.0-next.0...gatsby-source-drupal@4.6.0-next.1) (2021-05-18)
+
+### Features
+
+- **gatsby-source-drupal:** Add toggleable multilingual support by prefixing nodes with their langcode ([#26720](https://github.com/gatsbyjs/gatsby/issues/26720)) ([408ba7b](https://github.com/gatsbyjs/gatsby/commit/408ba7b721d7e92dfec3a77537c60bab4a09294b))
+
+# [4.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.5.0-next.1...gatsby-source-drupal@4.6.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [4.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.5.0-next.0...gatsby-source-drupal@4.5.0-next.1) (2021-04-29)
+
+### Bug Fixes
+
+- **gatsby-source-drupal:** remove computed fields before running createNode on existing node ([#28682](https://github.com/gatsbyjs/gatsby/issues/28682)) ([76f84aa](https://github.com/gatsbyjs/gatsby/commit/76f84aa726f961783510715f714eb1c348ebad11))
+
+# [4.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.4.0-next.3...gatsby-source-drupal@4.5.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [4.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.4.0-next.2...gatsby-source-drupal@4.4.0-next.3) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [4.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.4.0-next.1...gatsby-source-drupal@4.4.0-next.2) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [4.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.4.0-next.0...gatsby-source-drupal@4.4.0-next.1) (2021-04-16)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [4.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.3.0-next.1...gatsby-source-drupal@4.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [4.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.3.0-next.0...gatsby-source-drupal@4.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
 # [4.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.2.0-next.1...gatsby-source-drupal@4.3.0-next.0) (2021-03-25)
 
 ### Bug Fixes

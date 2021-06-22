@@ -14,8 +14,6 @@ export default (() => {
 exports[`babel-plugin-remove-graphql-queries Allow alternative import of useStaticQuery 2`] = `
 "\\"use strict\\";
 
-var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
-
 var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
 
 exports.__esModule = true;
@@ -26,6 +24,10 @@ var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\
 var React = _interopRequireWildcard(require(\\"react\\"));
 
 var Gatsby = _interopRequireWildcard(require(\\"gatsby\\"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== \\"function\\") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== \\"object\\" && typeof obj !== \\"function\\") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== \\"default\\" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var _default = () => {
   const query = \\"426988268\\";
@@ -54,8 +56,6 @@ const fragment = \\"4176178832\\";"
 exports[`babel-plugin-remove-graphql-queries Doesn't add data import for non static queries 2`] = `
 "\\"use strict\\";
 
-var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
-
 var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
 
 exports.__esModule = true;
@@ -66,6 +66,10 @@ var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\
 var React = _interopRequireWildcard(require(\\"react\\"));
 
 var _gatsby = require(\\"gatsby\\");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== \\"function\\") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== \\"object\\" && typeof obj !== \\"function\\") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== \\"default\\" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const Test = () => /*#__PURE__*/React.createElement(_gatsby.StaticQuery, {
   query: \\"426988268\\",
@@ -91,8 +95,6 @@ export default (() => /*#__PURE__*/React.createElement(StaticQuery, {
 exports[`babel-plugin-remove-graphql-queries Handles closing StaticQuery tag 2`] = `
 "\\"use strict\\";
 
-var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
-
 var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
 
 exports.__esModule = true;
@@ -103,6 +105,10 @@ var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\
 var React = _interopRequireWildcard(require(\\"react\\"));
 
 var _gatsby = require(\\"gatsby\\");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== \\"function\\") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== \\"object\\" && typeof obj !== \\"function\\") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== \\"default\\" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var _default = () => /*#__PURE__*/React.createElement(_gatsby.StaticQuery, {
   query: \\"426988268\\",
@@ -126,14 +132,16 @@ export const query = graphql\`
 exports[`babel-plugin-remove-graphql-queries Leaves other graphql tags alone 2`] = `
 "\\"use strict\\";
 
-var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
-
 exports.__esModule = true;
 exports.query = exports.default = void 0;
 
 var React = _interopRequireWildcard(require(\\"react\\"));
 
 var _relay = require(\\"relay\\");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== \\"function\\") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== \\"object\\" && typeof obj !== \\"function\\") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== \\"default\\" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var _default = () => /*#__PURE__*/React.createElement(\\"div\\", null, data.site.siteMetadata.title);
 
@@ -158,12 +166,14 @@ export default (() => {
 exports[`babel-plugin-remove-graphql-queries Only runs transforms if useStaticQuery is imported from gatsby 2`] = `
 "\\"use strict\\";
 
-var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
-
 exports.__esModule = true;
 exports.default = void 0;
 
 var React = _interopRequireWildcard(require(\\"react\\"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== \\"function\\") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== \\"object\\" && typeof obj !== \\"function\\") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== \\"default\\" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var _default = () => {
   const query = \\"426988268\\";
@@ -246,8 +256,6 @@ export const query = \\"426988268\\";"
 exports[`babel-plugin-remove-graphql-queries Transforms exported queries in useStaticQuery 2`] = `
 "\\"use strict\\";
 
-var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
-
 var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
 
 exports.__esModule = true;
@@ -256,6 +264,10 @@ exports.query = exports.default = void 0;
 var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
 
 var React = _interopRequireWildcard(require(\\"react\\"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== \\"function\\") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== \\"object\\" && typeof obj !== \\"function\\") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== \\"default\\" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var _default = () => {
   const data = _.default.data;
@@ -320,8 +332,6 @@ export default (() => {
 exports[`babel-plugin-remove-graphql-queries Transforms queries and preserves destructuring in useStaticQuery 2`] = `
 "\\"use strict\\";
 
-var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
-
 var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
 
 exports.__esModule = true;
@@ -330,6 +340,10 @@ exports.default = void 0;
 var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
 
 var React = _interopRequireWildcard(require(\\"react\\"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== \\"function\\") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== \\"object\\" && typeof obj !== \\"function\\") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== \\"default\\" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var _default = () => {
   const query = \\"426988268\\";
@@ -357,8 +371,6 @@ export default (() => {
 exports[`babel-plugin-remove-graphql-queries Transforms queries and preserves variable type in useStaticQuery 2`] = `
 "\\"use strict\\";
 
-var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
-
 var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
 
 exports.__esModule = true;
@@ -367,6 +379,10 @@ exports.default = void 0;
 var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
 
 var React = _interopRequireWildcard(require(\\"react\\"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== \\"function\\") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== \\"object\\" && typeof obj !== \\"function\\") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== \\"default\\" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var _default = () => {
   const query = \\"426988268\\";
@@ -394,8 +410,6 @@ export default (() => /*#__PURE__*/React.createElement(StaticQuery, {
 exports[`babel-plugin-remove-graphql-queries Transforms queries defined in own variable in <StaticQuery> 2`] = `
 "\\"use strict\\";
 
-var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
-
 var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
 
 exports.__esModule = true;
@@ -406,6 +420,10 @@ var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\
 var React = _interopRequireWildcard(require(\\"react\\"));
 
 var _gatsby = require(\\"gatsby\\");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== \\"function\\") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== \\"object\\" && typeof obj !== \\"function\\") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== \\"default\\" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const query = \\"426988268\\";
 
@@ -431,8 +449,6 @@ export default (() => {
 exports[`babel-plugin-remove-graphql-queries Transforms queries defined in own variable in useStaticQuery 2`] = `
 "\\"use strict\\";
 
-var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
-
 var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
 
 exports.__esModule = true;
@@ -441,6 +457,10 @@ exports.default = void 0;
 var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
 
 var React = _interopRequireWildcard(require(\\"react\\"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== \\"function\\") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== \\"object\\" && typeof obj !== \\"function\\") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== \\"default\\" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var _default = () => {
   const query = \\"426988268\\";
@@ -465,8 +485,6 @@ export default (() => /*#__PURE__*/React.createElement(StaticQuery, {
 exports[`babel-plugin-remove-graphql-queries Transforms queries in <StaticQuery> 2`] = `
 "\\"use strict\\";
 
-var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
-
 var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
 
 exports.__esModule = true;
@@ -477,6 +495,10 @@ var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\
 var React = _interopRequireWildcard(require(\\"react\\"));
 
 var _gatsby = require(\\"gatsby\\");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== \\"function\\") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== \\"object\\" && typeof obj !== \\"function\\") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== \\"default\\" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var _default = () => /*#__PURE__*/React.createElement(_gatsby.StaticQuery, {
   query: \\"426988268\\",
@@ -507,8 +529,6 @@ export default (() => {
 exports[`babel-plugin-remove-graphql-queries Transforms queries in useStaticQuery 2`] = `
 "\\"use strict\\";
 
-var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
-
 var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
 
 exports.__esModule = true;
@@ -518,12 +538,44 @@ var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\
 
 var React = _interopRequireWildcard(require(\\"react\\"));
 
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== \\"function\\") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== \\"object\\" && typeof obj !== \\"function\\") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== \\"default\\" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 var _default = () => {
   const siteTitle = _.default.data;
   return /*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
 };
 
 exports.default = _default;"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Transforms queries in useStaticQuery that use commonjs 1`] = `
+"const React = require(\\"react\\");
+
+const {
+  useStaticQuery
+} = require(\\"gatsby\\");
+
+module.exports = () => {
+  const siteTitle = useStaticQuery(\\"426988268\\");
+  return /*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
+};"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Transforms queries in useStaticQuery that use commonjs 2`] = `
+"\\"use strict\\";
+
+const React = require(\\"react\\");
+
+const {
+  useStaticQuery
+} = require(\\"gatsby\\");
+
+module.exports = () => {
+  const siteTitle = useStaticQuery(\\"426988268\\");
+  return /*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
+};"
 `;
 
 exports[`babel-plugin-remove-graphql-queries allows the global tag 1`] = `"const query = \\"426988268\\";"`;
@@ -637,8 +689,6 @@ export default (() => /*#__PURE__*/React.createElement(StaticQuery, {
 exports[`babel-plugin-remove-graphql-queries transforms exported variable queries in <StaticQuery> 2`] = `
 "\\"use strict\\";
 
-var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
-
 var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
 
 exports.__esModule = true;
@@ -649,6 +699,10 @@ var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\
 var React = _interopRequireWildcard(require(\\"react\\"));
 
 var _gatsby = require(\\"gatsby\\");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== \\"function\\") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== \\"object\\" && typeof obj !== \\"function\\") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== \\"default\\" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const query = \\"426988268\\";
 exports.query = query;

@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`develop functions can parse different ways of sending data file in multipart/form 1`] = `
+Array [
+  Object {
+    "buffer": Object {
+      "data": Array [
+        104,
+        105,
+        32,
+        102,
+        114,
+        105,
+        101,
+        110,
+        100,
+        115,
+        10,
+      ],
+      "type": "Buffer",
+    },
+    "encoding": "7bit",
+    "fieldname": "file",
+    "mimetype": "text/plain",
+    "originalname": "test.txt",
+    "size": 11,
+  },
+]
+`;
+
+exports[`develop functions can parse different ways of sending data form data 1`] = `
+Object {
+  "a": "form-data",
+}
+`;
+
+exports[`develop functions can parse different ways of sending data form parameters 1`] = `
+Object {
+  "a": "form parameters",
+}
+`;
+
+exports[`develop functions can parse different ways of sending data json body 1`] = `
+Object {
+  "a": "json",
+}
+`;
+
+exports[`develop functions can parse different ways of sending data query string 1`] = `
+Object {
+  "amIReal": "true",
+}
+`;
+
+exports[`develop functions get parsed cookies cookie 1`] = `
+Object {
+  "foo": "blue",
+}
+`;
+
+exports[`develop response formats returns json correctly 1`] = `
+Object {
+  "amIJSON": true,
+}
+`;
+
+exports[`develop response formats returns json correctly 2`] = `
+Object {
+  "access-control-allow-origin": "*",
+  "connection": "close",
+  "content-length": "16",
+  "content-type": "application/json; charset=utf-8",
+  "etag": "W/\\"10-R6td1pV+B+Xz9CJkNeaEI2kP+QY\\"",
+  "vary": "Accept-Encoding",
+  "x-powered-by": "Express",
+}
+`;
+
+exports[`develop response formats returns text correctly 1`] = `"I am typescript"`;
+
+exports[`develop response formats returns text correctly 2`] = `
+Object {
+  "access-control-allow-origin": "*",
+  "connection": "close",
+  "content-length": "15",
+  "content-type": "text/html; charset=utf-8",
+  "etag": "W/\\"f-zwggT56l/fnWBm4dI0PkA4E3i4E\\"",
+  "vary": "Accept-Encoding",
+  "x-powered-by": "Express",
+}
+`;
+
+exports[`develop routing dynamic routes 1`] = `
+Object {
+  "super": "additional",
+  "userId": "23",
+}
+`;
+
+exports[`develop routing dynamic routes 2`] = `
+Object {
+  "0": "super",
+}
+`;
+
+exports[`develop routing routes with special characters 1`] = `"I-Am-Capitalized.js"`;
+
+exports[`develop routing routes with special characters 2`] = `"some whitespace.js"`;
+
+exports[`develop routing routes with special characters 3`] = `"with-äöü-umlaut.js"`;
+
+exports[`develop routing routes with special characters 4`] = `"some-àè-french.js"`;
+
+exports[`develop routing routes with special characters 5`] = `"some-אודות.js"`;
+
+exports[`develop routing secondary-level API 1`] = `"I am at a secondary-level"`;
+
+exports[`develop routing secondary-level API 2`] = `"I am another sub-directory function"`;
+
+exports[`develop routing secondary-level API with index.js 1`] = `"I am an index.js in a sub-directory!"`;
+
+exports[`develop routing top-level API 1`] = `"I am at the top-level"`;
+
+exports[`develop typescript typescript functions work 1`] = `"I am typescript"`;

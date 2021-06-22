@@ -15,11 +15,10 @@ import apiRunnerNode from "../utils/api-runner-node"
 import { GraphQLRunner } from "../query/graphql-runner"
 import { copyStaticDirs } from "../utils/get-static-dir"
 import { initTracer, stopTracer } from "../utils/tracer"
-import db from "../db"
+import * as db from "../redux/save-state"
 import { store } from "../redux"
 import * as appDataUtil from "../utils/app-data"
 import { flush as flushPendingPageDataWrites } from "../utils/page-data"
-import * as WorkerPool from "../utils/worker/pool"
 import {
   structureWebpackErrors,
   reportWebpackWarnings,
@@ -44,6 +43,7 @@ import {
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
 import { updateSiteMetadata, isTruthy } from "gatsby-core-utils"
+import { showExperimentNotices } from "../utils/show-experiment-notice"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (isTruthy(process.env.VERBOSE)) {
@@ -73,13 +73,15 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   telemetry.trackCli(`BUILD_START`)
   signalExit(exitCode => {
-    telemetry.trackCli(`BUILD_END`, { exitCode })
+    telemetry.trackCli(`BUILD_END`, {
+      exitCode: exitCode as number | undefined,
+    })
   })
 
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
 
-  const { gatsbyNodeGraphQLFunction } = await bootstrap({
+  const { gatsbyNodeGraphQLFunction, workerPool } = await bootstrap({
     program,
     parentSpan: buildSpan,
   })
@@ -125,19 +127,21 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   )
   buildActivityTimer.start()
   let stats
+  let waitForCompilerClose
   try {
-    stats = await buildProductionBundle(program, buildActivityTimer.span)
+    const result = await buildProductionBundle(program, buildActivityTimer.span)
+    stats = result.stats
+    waitForCompilerClose = result.waitForCompilerClose
 
     if (stats.hasWarnings()) {
-      reportWebpackWarnings(stats.compilation.warnings, report)
+      const rawMessages = stats.toJson({ moduleTrace: false })
+      reportWebpackWarnings(rawMessages.warnings, report)
     }
   } catch (err) {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildJavascript, err))
   } finally {
     buildActivityTimer.end()
   }
-
-  const workerPool = WorkerPool.create()
 
   const webpackCompilationHash = stats.hash
   if (
@@ -194,9 +198,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     { parentSpan: buildSpan }
   )
   buildSSRBundleActivityProgress.start()
-  let pageRenderer: string
+  let pageRenderer = ``
+  let waitForCompilerCloseBuildHtml
   try {
-    pageRenderer = await buildRenderer(program, Stage.BuildHTML, buildSpan)
+    const result = await buildRenderer(program, Stage.BuildHTML, buildSpan)
+    pageRenderer = result.rendererPath
+    waitForCompilerCloseBuildHtml = result.waitForCompilerClose
   } catch (err) {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
   } finally {
@@ -234,6 +241,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   // Make sure we saved the latest state so we have all jobs cached
   await db.saveState()
+
+  await Promise.all([waitForCompilerClose, waitForCompilerCloseBuildHtml])
 
   report.info(`Done building in ${process.uptime()} sec`)
 
@@ -283,6 +292,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
     report.info(`.cache/deletedPages.txt created`)
   }
+
+  showExperimentNotices()
 
   if (await userGetsSevenDayFeedback()) {
     showSevenDayFeedbackRequest()

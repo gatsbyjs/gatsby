@@ -22,7 +22,7 @@ export const eslintRequiredConfig: ESLint.Options = {
       // TODO proper check for custom babel & plugins config
       // Currently when a babelrc is added to the project, it will override our babelOptions
       babelOptions: {
-        presets: [`babel-preset-gatsby`],
+        presets: [require.resolve(`babel-preset-gatsby`)],
       },
       requireConfigFile: false,
     },
@@ -63,7 +63,7 @@ export const eslintConfig = (
         // TODO proper check for custom babel & plugins config
         // Currently when a babelrc is added to the project, it will override our babelOptions
         babelOptions: {
-          presets: [`babel-preset-gatsby`],
+          presets: [require.resolve(`babel-preset-gatsby`)],
         },
         requireConfigFile: false,
       },
@@ -91,7 +91,7 @@ export const eslintConfig = (
           },
         ],
         // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/tree/master/docs/rules
-        "jsx-a11y/accessible-emoji": `warn`,
+        // "jsx-a11y/accessible-emoji": `warn`, Deprecated
         "jsx-a11y/alt-text": `warn`,
         "jsx-a11y/anchor-has-content": `warn`,
         "jsx-a11y/anchor-is-valid": `warn`,
@@ -173,7 +173,7 @@ export const eslintConfig = (
         ],
         "jsx-a11y/no-noninteractive-element-to-interactive-role": `warn`,
         "jsx-a11y/no-noninteractive-tabindex": `warn`,
-        "jsx-a11y/no-onchange": `warn`,
+        // "jsx-a11y/no-onchange": `warn`, Deprecated
         "jsx-a11y/no-redundant-roles": `warn`,
         "jsx-a11y/no-static-element-interactions": `warn`,
         "jsx-a11y/role-has-required-aria-props": `warn`,

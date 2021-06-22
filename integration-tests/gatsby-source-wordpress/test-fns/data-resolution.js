@@ -6,12 +6,22 @@ const {
   default: fetchGraphql,
 } = require("gatsby-source-wordpress/dist/utils/fetch-graphql")
 
+const gatsbyConfig = require("../gatsby-config")
+
 const { testResolvedData } = require("./test-utils/test-resolved-data")
 const { queries } = require("./test-utils/queries")
 
+const { incrementalIt } = require(`./test-utils/incremental-it`)
+
 jest.setTimeout(100000)
 
+const isWarmCache = process.env.WARM_CACHE
 const url = `http://localhost:8000/___graphql`
+
+const getPluginConfig = () =>
+  gatsbyConfig.plugins.find(
+    plugin => typeof plugin === 'object' && plugin.resolve === `gatsby-source-wordpress`
+  )
 
 describe(`data resolution`, () => {
   it(`resolves correct number of nodes`, async () => {
@@ -22,12 +32,12 @@ describe(`data resolution`, () => {
 
     expect(data[`allWpMediaItem`].nodes).toBeTruthy()
     expect(data[`allWpMediaItem`].nodes).toMatchSnapshot()
-    expect(data[`allWpMediaItem`].totalCount).toBe(7)
+    expect(data[`allWpMediaItem`].totalCount).toBe(17)
 
     expect(data[`allWpTag`].totalCount).toBe(5)
     expect(data[`allWpUser`].totalCount).toBe(1)
-    expect(data[`allWpPage`].totalCount).toBe(1)
-    expect(data[`allWpPost`].totalCount).toBe(1)
+    expect(data[`allWpPage`].totalCount).toBe(5)
+    expect(data[`allWpPost`].totalCount).toBe(5)
     expect(data[`allWpComment`].totalCount).toBe(1)
     expect(data[`allWpTaxonomy`].totalCount).toBe(3)
     expect(data[`allWpCategory`].totalCount).toBe(9)
@@ -75,7 +85,7 @@ describe(`data resolution`, () => {
     })
 
     expect(gatsbyResult.data.allWpTermNode.nodes.length).toBe(14)
-    expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(12)
+    expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(30)
   })
 
   it(`resolves interface fields which are a mix of Gatsby nodes and regular object data with no node`, async () => {
@@ -157,7 +167,7 @@ describe(`data resolution`, () => {
     expect(categoryNames.includes(`h4`)).toBeTruthy()
   })
 
-  it(`resolves menus`, async () => {
+  incrementalIt(`resolves menus`, async () => {
     const result = await fetchGraphql({
       url,
       query: queries.menus,
@@ -166,7 +176,7 @@ describe(`data resolution`, () => {
     expect(result).toMatchSnapshot()
   })
 
-  it(`resolves pages`, async () => {
+  incrementalIt(`resolves pages`, async () => {
     const result = await fetchGraphql({
       url,
       query: queries.pages,
@@ -174,10 +184,12 @@ describe(`data resolution`, () => {
 
     expect(result).toMatchSnapshot()
 
-    // expect(result.data.testPage.title).toEqual(`Sample Page`)
+    expect(result.data.testPage.title).toEqual(
+      isWarmCache ? `Sample Page DELTA SYNC` : `Sample Page`
+    )
   })
 
-  it(`resolves posts`, async () => {
+  incrementalIt(`resolves posts`, async () => {
     const result = await fetchGraphql({
       url,
       query: queries.posts,
@@ -185,10 +197,12 @@ describe(`data resolution`, () => {
 
     expect(result).toMatchSnapshot()
 
-    expect(result.data.testPost.title).toEqual(`Hello world!`)
+    expect(result.data.testPost.title).toEqual(
+      isWarmCache ? `Hello world! DELTA SYNC` : `Hello world!`
+    )
   })
 
-  it(`resolves users`, async () => {
+  incrementalIt(`resolves users`, async () => {
     const result = await fetchGraphql({
       url,
       query: queries.users,
@@ -196,7 +210,7 @@ describe(`data resolution`, () => {
 
     expect(result).toMatchSnapshot()
 
-    expect(result.data.testUser.firstName).toEqual(`Tyler`)
+    expect(result.data.testUser.name).toEqual(`admin`)
   })
 
   it(`resolves root fields`, async () => {
@@ -206,5 +220,227 @@ describe(`data resolution`, () => {
     })
 
     expect(result).toMatchSnapshot()
+  })
+
+  testResolvedData({
+    url,
+    title: `resolves wp-graphql-gutenberg columns`,
+    gatsbyQuery: queries.gutenbergColumns,
+    queryReplace: {
+      from: `wpPost(title: { eq: "Gutenberg: Columns" }) {`,
+      to: `post(id: "cG9zdDoxMjg=") {`,
+    },
+    fields: {
+      gatsby: `wpPost`,
+      wpgql: `post`,
+    },
+  })
+
+  testResolvedData({
+    url,
+    title: `resolves wp-graphql-gutenberg layout elements`,
+    gatsbyQuery: queries.gutenbergLayoutElements,
+    queryReplace: {
+      from: `wpPost(id: { eq: "cG9zdDoxMjU=" }) {`,
+      to: `post(id: "cG9zdDoxMjU=") {`,
+    },
+    fields: {
+      gatsby: `wpPost`,
+      wpgql: `post`,
+    },
+  })
+
+  testResolvedData({
+    url,
+    title: `resolves wp-graphql-gutenberg formatting blocks`,
+    gatsbyQuery: queries.gutenbergFormattingBlocks,
+    queryReplace: {
+      from: `wpPost(id: { eq: "cG9zdDoxMjI=" }) {`,
+      to: `post(id: "cG9zdDoxMjI=") {`,
+    },
+    fields: {
+      gatsby: `wpPost`,
+      wpgql: `post`,
+    },
+  })
+
+  testResolvedData({
+    url,
+    title: `resolves wp-graphql-gutenberg common blocks`,
+    gatsbyQuery: queries.gutenbergCommonBlocks,
+    queryReplace: {
+      from: `wpPost(id: { eq: "cG9zdDo5NA==" }) {`,
+      to: `post(id: "cG9zdDo5NA==") {`,
+    },
+    fields: {
+      gatsby: `wpPost`,
+      wpgql: `post`,
+    },
+  })
+
+  it(`resolves Yoast SEO data`, async () => {
+    const gatsbyResult = await fetchGraphql({
+      url,
+      query: /* GraphQL */ `
+        {
+          wp {
+            ${queries.yoastRootFields}
+          }
+          wpPage(title: {eq: "Yoast SEO"}) {
+            ${queries.pageYoastFields}
+          }
+        }
+      `,
+    })
+
+    const { data: WPGraphQLData } = await fetchGraphql({
+      url: process.env.WPGRAPHQL_URL,
+      query: /* GraphQL */ `
+      {
+        ${queries.yoastRootFields}
+        page(id: "cG9zdDo3ODY4") {
+          ${queries.pageYoastFields}
+        }
+      }
+    `,
+    })
+
+    const wpGraphQLPageNormalizedPaths = JSON.parse(
+      JSON.stringify(WPGraphQLData.page).replace(
+        /http:\/\/localhost:8001/gm,
+        ``
+      )
+    )
+
+    expect(gatsbyResult.data.wpPage).toStrictEqual(wpGraphQLPageNormalizedPaths)
+    expect(gatsbyResult.data.wp.seo).toStrictEqual(WPGraphQLData.seo)
+  })
+
+  it(`Does not download files whose size exceed the maxFileSizeBytes option`, async () => {
+    const wpPluginOpts = getPluginConfig()
+    const { maxFileSizeBytes } = wpPluginOpts.options.type.MediaItem.localFile
+    /**
+     * Ensure that the fileSize "gt" filter value matches the maxFileSizeBytes value in gatsby-config
+     */
+    const { data: { allWpMediaItem: { nodes }}} = await fetchGraphql({
+      url,
+      query: /* GraphQL */`
+        query tooLargeFiles($maxFileSizeBytes: Int!, $includedMimeTypes: [String]!) {
+          allWpMediaItem(filter: { fileSize: { gt: $maxFileSizeBytes }, mimeType: {in: $includedMimeTypes } }) {
+            nodes {
+              id
+              sourceUrl
+              fileSize
+              localFile {
+                absolutePath
+                size
+              }
+            }
+          }
+        } 
+      `,
+      variables: {
+        maxFileSizeBytes,
+        includedMimeTypes: ['image/jpeg'],
+      }
+    })
+
+    expect(nodes.length).toEqual(1)
+    nodes.forEach(node => {
+      expect(node.localFile).toEqual(null)
+    })
+  })
+
+  it(`Downloads files and creates a local file node for files whose size are <= maxFileSizeBytes`, async () => {
+    const wpPluginOpts = getPluginConfig()
+    const { maxFileSizeBytes } = wpPluginOpts.options.type.MediaItem.localFile
+    /**
+     * Ensure that the fileSize "gt" filter value matches the maxFileSizeBytes value in gatsby-config
+     */
+    const { data: { allWpMediaItem: { nodes }}} = await fetchGraphql({
+      url,
+      query: /* GraphQL */`
+        query tooLargeFiles($maxFileSizeBytes: Int!, $includedMimeTypes: [String]!) {
+          allWpMediaItem(filter: { fileSize: { lte: $maxFileSizeBytes }, mimeType: {in: $includedMimeTypes } }) {
+            nodes {
+              id
+              sourceUrl
+              fileSize
+              localFile {
+                absolutePath
+                size
+              }
+            }
+          }
+        } 
+      `,
+      variables: {
+        maxFileSizeBytes,
+        includedMimeTypes: ['image/jpeg'],
+      }
+    })
+
+    nodes.forEach(node => {
+      expect(node.localFile).toBeDefined()
+    })
+  })
+
+  it(`Does not download files whose mime types are excluded`, async () => {
+    const wpPluginOpts = getPluginConfig()
+    const { excludeByMimeTypes } = wpPluginOpts.options.type.MediaItem.localFile
+
+    const { data: { allWpMediaItem: { nodes }}} = await fetchGraphql({
+      url,
+      query: /* GraphQL */`
+        query excludedMimeType($excludeByMimeTypes: [String]) {
+          allWpMediaItem(filter: { mimeType: { in: $excludeByMimeTypes }}) {
+            nodes {
+              id
+              mimeType
+              localFile {
+                size
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        excludeByMimeTypes,
+      },
+    })
+
+    expect(nodes.length).toEqual(2)
+    nodes.forEach(node => {
+      expect(node.localFile).toEqual(null)
+    })
+  })
+
+  it(`Creats a local file node for files not excluded by the "excludedByMimeTypes" option`, async () => {
+    const wpPluginOpts = getPluginConfig()
+    const { excludeByMimeTypes } = wpPluginOpts.options.type.MediaItem.localFile
+
+    const { data: { allWpMediaItem: { nodes }}} = await fetchGraphql({
+      url,
+      query: /* GraphQL */`
+        query excludedMimeType($excludeByMimeTypes: [String]) {
+          allWpMediaItem(filter: { mimeType: { nin: $excludeByMimeTypes }}) {
+            nodes {
+              id
+              mimeType
+              localFile {
+                size
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        excludeByMimeTypes,
+      },
+    })
+
+    nodes.forEach(node => {
+      expect(node.localFile).toBeDefined()
+    })
   })
 })

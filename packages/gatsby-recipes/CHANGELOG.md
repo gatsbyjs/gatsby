@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.19.0-next.1...gatsby-recipes@0.20.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.19.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.19.0-next.0...gatsby-recipes@0.19.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.19.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.18.0-next.2...gatsby-recipes@0.19.0-next.0) (2021-06-03)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.18.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.18.0-next.1...gatsby-recipes@0.18.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.18.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.18.0-next.0...gatsby-recipes@0.18.0-next.1) (2021-05-31)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.18.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.17.0-next.0...gatsby-recipes@0.18.0-next.0) (2021-05-21)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.17.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.16.0-next.1...gatsby-recipes@0.17.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.16.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.16.0-next.0...gatsby-recipes@0.16.0-next.1) (2021-05-05)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.16.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.15.0-next.3...gatsby-recipes@0.16.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.15.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.15.0-next.2...gatsby-recipes@0.15.0-next.3) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.15.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.15.0-next.1...gatsby-recipes@0.15.0-next.2) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.15.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.15.0-next.0...gatsby-recipes@0.15.0-next.1) (2021-04-16)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.15.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.14.0-next.1...gatsby-recipes@0.15.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.14.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.14.0-next.0...gatsby-recipes@0.14.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-recipes
+
 # [0.14.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.13.0-next.0...gatsby-recipes@0.14.0-next.0) (2021-03-25)
 
 **Note:** Version bump only for package gatsby-recipes

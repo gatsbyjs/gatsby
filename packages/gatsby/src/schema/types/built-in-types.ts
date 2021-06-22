@@ -36,6 +36,18 @@ const fileType = `
   }
 `
 
+const siteFunctionType = `
+  type SiteFunction implements Node @infer {
+    functionRoute: String!
+    pluginName: String!
+    originalAbsoluteFilePath: String!
+    originalRelativeFilePath: String!
+    relativeCompiledFilePath: String!
+    absoluteCompiledFilePath: String!
+    matchPath: String
+  }
+`
+
 const directoryType = `
   type Directory implements Node @infer {
     sourceInstanceName: String!
@@ -101,6 +113,7 @@ const allSdlTypes = [
   directoryType,
   site,
   siteSiteMetadata,
+  siteFunctionType,
   sitePageType,
 ]
 

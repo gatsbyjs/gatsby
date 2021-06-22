@@ -14,12 +14,23 @@ exports.onCreateBabelConfig = ({ actions, stage }) => {
 exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
   const webpackPlugins = []
   if (stage === `develop`) {
-    webpackPlugins.push(new PreactRefreshPlugin())
+    webpackPlugins.push(
+      new PreactRefreshPlugin({
+        overlay: {
+          module: require.resolve(`gatsby/dist/utils/fast-refresh-module`),
+        },
+      })
+    )
 
     // remove React refresh plugin, we want to add preact refresh instead.
     const webpackConfig = getConfig()
     webpackConfig.plugins = webpackConfig.plugins.filter(
       plugin => plugin.constructor.name !== `ReactRefreshPlugin`
+    )
+
+    // add webpack-hot-middleware/client to the commons entry
+    webpackConfig.entry.commons.unshift(
+      `@gatsbyjs/webpack-hot-middleware/client`
     )
     actions.replaceWebpackConfig(webpackConfig)
   }

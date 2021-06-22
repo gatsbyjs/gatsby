@@ -3,6 +3,95 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.8.0-next.2...gatsby-cli@3.9.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [3.8.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.8.0-next.1...gatsby-cli@3.8.0-next.2) (2021-06-17)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [3.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.8.0-next.0...gatsby-cli@3.8.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.7.0-next.2...gatsby-cli@3.8.0-next.0) (2021-06-03)
+
+### Features
+
+- **gatsby:** add createNodeManifest action ([#31127](https://github.com/gatsbyjs/gatsby/issues/31127)) ([eed6108](https://github.com/gatsbyjs/gatsby/commit/eed610813da645356316826a4558640ecc4365b5))
+
+# [3.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.7.0-next.1...gatsby-cli@3.7.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [3.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.7.0-next.0...gatsby-cli@3.7.0-next.1) (2021-05-31)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [3.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.6.0-next.2...gatsby-cli@3.7.0-next.0) (2021-05-21)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [3.6.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.6.0-next.1...gatsby-cli@3.6.0-next.2) (2021-05-18)
+
+### Bug Fixes
+
+- **gatsby-cli:** Switch host env to GATSBY\_ prefix ([#31426](https://github.com/gatsbyjs/gatsby/issues/31426)) ([7c587bf](https://github.com/gatsbyjs/gatsby/commit/7c587bff2041d1b0da79dad5eccab68cbd44fdf0))
+
+### Features
+
+- **gatsby:** Only load gatsby-recipes in develop if Admin is enabled ([#31401](https://github.com/gatsbyjs/gatsby/issues/31401)) ([3ee94dc](https://github.com/gatsbyjs/gatsby/commit/3ee94dcb5237f3ed1a05f2e53be964c735bd9e1c))
+
+# [3.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.6.0-next.0...gatsby-cli@3.6.0-next.1) (2021-05-12)
+
+### Features
+
+- **gatsby:** New overlay for DEV_SSR ([#31061](https://github.com/gatsbyjs/gatsby/issues/31061)) ([7110189](https://github.com/gatsbyjs/gatsby/commit/7110189fda3942aba27cf35f577ce14d7b252d0b))
+
+# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.5.0-next.1...gatsby-cli@3.6.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [3.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.5.0-next.0...gatsby-cli@3.5.0-next.1) (2021-05-05)
+
+### Features
+
+- **gatsby:** speedup cli startup by lazily requiring modules ([#31134](https://github.com/gatsbyjs/gatsby/issues/31134)) ([5105390](https://github.com/gatsbyjs/gatsby/commit/51053902082608e1effe824e66d7b68468dcf06c))
+
+# [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.4.0-next.4...gatsby-cli@3.5.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [3.4.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.4.0-next.3...gatsby-cli@3.4.0-next.4) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [3.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.4.0-next.2...gatsby-cli@3.4.0-next.3) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [3.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.4.0-next.1...gatsby-cli@3.4.0-next.2) (2021-04-19)
+
+### Bug Fixes
+
+- **gatsby-cli:** added HOST environment variable ([#26712](https://github.com/gatsbyjs/gatsby/issues/26712)) ([b1990c9](https://github.com/gatsbyjs/gatsby/commit/b1990c996a1b061ad1b2bc7dfc1a45c07f459485))
+
+# [3.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.4.0-next.0...gatsby-cli@3.4.0-next.1) (2021-04-16)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.3.0-next.1...gatsby-cli@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.3.0-next.0...gatsby-cli@3.3.0-next.1) (2021-04-07)
+
+### Bug Fixes
+
+- **docs:** edit copy for gatsby cli docs ([#30692](https://github.com/gatsbyjs/gatsby/issues/30692)) ([30789d9](https://github.com/gatsbyjs/gatsby/commit/30789d95e44d7abd74a717a765abc357bd259668))
+- **gatsby-cli:** Update docs links in error-map ([#30493](https://github.com/gatsbyjs/gatsby/issues/30493)) ([a777367](https://github.com/gatsbyjs/gatsby/commit/a7773678cd5c8e492e047193b20451eeb1ade541))
+
 # [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.2.0-next.1...gatsby-cli@3.3.0-next.0) (2021-03-25)
 
 ### Bug Fixes

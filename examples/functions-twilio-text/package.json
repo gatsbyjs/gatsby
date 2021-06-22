@@ -1,0 +1,25 @@
+{
+  "name": "twilio-text",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Twilio Text",
+  "author": "Polina Vorozheykina",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "gatsby": "^3.4.1",
+    "gatsby-plugin-functions": "^0.1.0-7",
+    "gatsby-plugin-gatsby-cloud": "^2.3.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "twilio": "^3.61.0"
+  }
+}

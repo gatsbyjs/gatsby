@@ -5,12 +5,14 @@ import { assertStore } from "../utils/assert-store"
 import { IGatsbyPage } from "../redux/types"
 import { actions } from "../redux/actions"
 import { deleteUntouchedPages, findChangedPages } from "../utils/changed-pages"
+import { getDataStore } from "../datastore"
 
 export async function createPages({
   parentSpan,
   gatsbyNodeGraphQLFunction,
   store,
   deferNodeMutation,
+  shouldRunCreatePagesStatefully,
 }: Partial<IDataLayerContext>): Promise<{
   deletedPages: Array<string>
   changedPages: Array<string>
@@ -33,28 +35,53 @@ export async function createPages({
     },
     { activity }
   )
+  activity.end()
 
+  if (shouldRunCreatePagesStatefully) {
+    const activity = reporter.activityTimer(`createPagesStatefully`, {
+      parentSpan,
+    })
+    activity.start()
+    await apiRunnerNode(
+      `createPagesStatefully`,
+      {
+        graphql: gatsbyNodeGraphQLFunction,
+        traceId: `initial-createPagesStatefully`,
+        waitForCascadingActions: true,
+        parentSpan: activity.span,
+        deferNodeMutation,
+      },
+      {
+        activity,
+      }
+    )
+    activity.end()
+  }
+
+  const dataStore = getDataStore()
   reporter.info(
-    `Total nodes: ${store.getState().nodes.size}, SitePage nodes: ${
-      store.getState().nodesByType?.get(`SitePage`)?.size
-    } (use --verbose for breakdown)`
+    `Total nodes: ${dataStore.countNodes()}, ` +
+      `SitePage nodes: ${
+        store.getState().pages.size
+      } (use --verbose for breakdown)`
   )
 
   if (process.env.gatsby_log_level === `verbose`) {
+    const types = dataStore.getTypes()
     reporter.verbose(
-      `Number of node types: ${
-        store.getState().nodesByType.size
-      }. Nodes per type: ${[...store.getState().nodesByType.entries()]
-        .map(([type, nodes]) => type + `: ` + nodes.size)
+      `Number of node types: ${types.length}. Nodes per type: ${types
+        .map(type => type + `: ` + dataStore.countNodes(type))
         .join(`, `)}`
     )
   }
 
-  activity.end()
-
   reporter.verbose(`Checking for deleted pages`)
 
-  const deletedPages = deleteUntouchedPages(store.getState().pages, timestamp)
+  const deletedPages = deleteUntouchedPages(
+    store.getState().pages,
+    timestamp,
+    !!shouldRunCreatePagesStatefully
+  )
 
   reporter.verbose(
     `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
@@ -73,6 +100,7 @@ export async function createPages({
       changedPages.length === 1 ? `` : `s`
     }`
   )
+
   tim.end()
 
   store.dispatch(actions.apiFinished({ apiName: `createPages` }))

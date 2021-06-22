@@ -1,5 +1,5 @@
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
-import { WebpackError, Module, NormalModule } from "webpack"
+import { WebpackError, StatsCompilation, Module, NormalModule } from "webpack"
 import { Stage as StageEnum } from "../commands/types"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 
@@ -145,10 +145,19 @@ export const structureWebpackErrors = (
 }
 
 export const reportWebpackWarnings = (
-  warnings: Array<WebpackError>,
+  warnings: StatsCompilation["warnings"] = [],
   reporter: Reporter
 ): void => {
-  const warningMessages = warnings.map(warning => warning.message)
+  let warningMessages: Array<string> = []
+  if (typeof warnings[0] === `string`) {
+    warningMessages = (warnings as unknown) as Array<string>
+  } else if (warnings[0]?.message && warnings[0]?.moduleName) {
+    warningMessages = warnings.map(
+      warning => `${warning.moduleName}\n\n${warning.message}`
+    )
+  } else if (warnings[0]?.message) {
+    warningMessages = warnings.map(warning => warning.message)
+  }
 
   formatWebpackMessages({
     errors: [],

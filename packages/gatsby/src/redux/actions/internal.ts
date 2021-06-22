@@ -1,3 +1,4 @@
+import { IDeleteNodeManifests } from "./../types"
 import reporter from "gatsby-cli/lib/reporter"
 
 import {
@@ -16,6 +17,8 @@ import {
   IPageQueryRunAction,
   IRemoveStaleJobAction,
   ISetSiteConfig,
+  ISetSiteFunctions,
+  IGatsbyState,
   IDefinitionMeta,
   ISetGraphQLDefinitionsAction,
   IQueryStartAction,
@@ -326,5 +329,24 @@ export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
   return {
     type: `SET_SITE_CONFIG`,
     payload: normalizedPayload,
+  }
+}
+
+/**
+ * Set gatsby functions
+ * @private
+ */
+export const setFunctions = (
+  functions: IGatsbyState["functions"]
+): ISetSiteFunctions => {
+  return {
+    type: `SET_SITE_FUNCTIONS`,
+    payload: functions,
+  }
+}
+
+export const deleteNodeManifests = (): IDeleteNodeManifests => {
+  return {
+    type: `DELETE_NODE_MANIFESTS`,
   }
 }

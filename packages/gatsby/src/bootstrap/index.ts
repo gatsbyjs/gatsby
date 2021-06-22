@@ -6,7 +6,6 @@ import {
   sourceNodes,
   buildSchema,
   createPages,
-  createPagesStatefully,
   extractQueries,
   writeOutRedirects,
   postBootstrap,
@@ -15,8 +14,9 @@ import {
 import { Runner, createGraphQLRunner } from "./create-graphql-runner"
 import reporter from "gatsby-cli/lib/reporter"
 import { globalTracer } from "opentracing"
-import JestWorker from "jest-worker"
+import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { handleStalePageData } from "../utils/page-data"
+import { saveStateForWorkers } from "../redux"
 
 const tracer = globalTracer()
 
@@ -24,7 +24,7 @@ export async function bootstrap(
   initialContext: Partial<IBuildContext>
 ): Promise<{
   gatsbyNodeGraphQLFunction: Runner
-  workerPool: JestWorker
+  workerPool: GatsbyWorkerPool
 }> {
   const spanArgs = initialContext.parentSpan
     ? { childOf: initialContext.parentSpan }
@@ -32,9 +32,12 @@ export async function bootstrap(
 
   const parentSpan = tracer.startSpan(`bootstrap`, spanArgs)
 
-  const bootstrapContext: IBuildContext = {
+  const bootstrapContext: IBuildContext & {
+    shouldRunCreatePagesStatefully: boolean
+  } = {
     ...initialContext,
     parentSpan,
+    shouldRunCreatePagesStatefully: true,
   }
 
   const context = {
@@ -54,13 +57,19 @@ export async function bootstrap(
 
   await createPages(context)
 
-  await createPagesStatefully(context)
-
   await handleStalePageData()
 
   await rebuildSchemaWithSitePage(context)
 
+  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    saveStateForWorkers([`inferenceMetadata`])
+  }
+
   await extractQueries(context)
+
+  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    saveStateForWorkers([`components`, `staticQueryComponents`])
+  }
 
   await writeOutRedirects(context)
 

@@ -1,7 +1,19 @@
 const _ = require(`lodash`)
+const fastq = require(`fastq`)
 const { store } = require(`../redux`)
 const { hasFlag, FLAG_ERROR_EXTRACTION } = require(`../redux/reducers/queries`)
-const queryQueue = require(`./queue`)
+const { queryRunner } = require(`./query-runner`)
+const { websocketManager } = require(`../utils/websocket-manager`)
+const { GraphQLRunner } = require(`./graphql-runner`)
+
+if (process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) {
+  console.info(
+    `GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY: Running with concurrency set to \`${process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY}\``
+  )
+}
+
+const concurrency =
+  Number(process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) || 4
 
 /**
  * Calculates the set of dirty query IDs (page.paths, or staticQuery.id's).
@@ -9,7 +21,7 @@ const queryQueue = require(`./queue`)
  * Dirty state is tracked in `queries` reducer, here we simply filter
  * them from all tracked queries.
  */
-const calcDirtyQueryIds = state => {
+function calcDirtyQueryIds(state) {
   const { trackedQueries, trackedComponents, deletedQueries } = state.queries
 
   const queriesWithBabelErrors = new Set()
@@ -36,7 +48,7 @@ const calcDirtyQueryIds = state => {
 /**
  * groups queryIds by whether they are static or page queries.
  */
-const groupQueryIds = queryIds => {
+function groupQueryIds(queryIds) {
   const grouped = _.groupBy(queryIds, p =>
     p.slice(0, 4) === `sq--` ? `static` : `page`
   )
@@ -46,18 +58,83 @@ const groupQueryIds = queryIds => {
   }
 }
 
-const processQueries = async (
-  queryJobs,
-  { activity, graphqlRunner, graphqlTracing }
-) => {
-  const queue = queryQueue.createAppropriateQueue(graphqlRunner, {
-    graphqlTracing,
-  })
-  return queryQueue.processBatch(queue, queryJobs, activity)
+function createQueue({
+  createJobFn,
+  state,
+  activity,
+  graphqlRunner,
+  graphqlTracing,
+}) {
+  if (!graphqlRunner) {
+    graphqlRunner = new GraphQLRunner(store, { graphqlTracing })
+  }
+  state = state || store.getState()
+
+  function worker(queryId, cb) {
+    const job = createJobFn(state, queryId)
+    if (!job) {
+      cb(null, undefined)
+      return
+    }
+    queryRunner(graphqlRunner, job, activity?.span)
+      .then(result => {
+        if (activity.tick) {
+          activity.tick()
+        }
+        cb(null, { job, result })
+      })
+      .catch(error => {
+        cb(error)
+      })
+  }
+  // Note: fastq.promise version is much slower
+  return fastq(worker, concurrency)
 }
 
-const createStaticQueryJob = (state, queryId) => {
+async function processQueries({
+  queryIds,
+  createJobFn,
+  onQueryDone,
+  state,
+  activity,
+  graphqlRunner,
+  graphqlTracing,
+}) {
+  return new Promise((resolve, reject) => {
+    const fastQueue = createQueue({
+      createJobFn,
+      state,
+      activity,
+      graphqlRunner,
+      graphqlTracing,
+    })
+
+    queryIds.forEach(queryId => {
+      fastQueue.push(queryId, (err, res) => {
+        if (err) {
+          fastQueue.kill()
+          reject(err)
+          return
+        }
+        if (res && onQueryDone) {
+          onQueryDone(res)
+        }
+      })
+    })
+
+    if (!fastQueue.idle()) {
+      fastQueue.drain = () => resolve()
+    } else {
+      resolve()
+    }
+  })
+}
+
+function createStaticQueryJob(state, queryId) {
   const component = state.staticQueryComponents.get(queryId)
+  if (!component) {
+    return undefined
+  }
   const { hash, id, query, componentPath } = component
   return {
     id: queryId,
@@ -68,48 +145,55 @@ const createStaticQueryJob = (state, queryId) => {
   }
 }
 
-const processStaticQueries = async (
-  queryIds,
-  { state, activity, graphqlRunner, graphqlTracing }
-) => {
-  state = state || store.getState()
-  await processQueries(
-    queryIds.map(id => createStaticQueryJob(state, id)),
-    {
-      activity,
-      graphqlRunner,
-      graphqlTracing,
-    }
-  )
+function onDevelopStaticQueryDone({ job, result }) {
+  websocketManager.emitStaticQueryData({
+    result,
+    id: job.hash,
+  })
 }
 
-const processPageQueries = async (
+async function processStaticQueries(
   queryIds,
   { state, activity, graphqlRunner, graphqlTracing }
-) => {
-  state = state || store.getState()
-  // Make sure we filter out pages that don't exist. An example is
-  // /dev-404-page/, whose SitePage node is created via
-  // `internal-data-bridge`, but the actual page object is only
-  // created during `gatsby develop`.
-
-  const jobs = []
-  queryIds.forEach(id => {
-    const page = state.pages.get(id)
-    if (page) {
-      const job = createPageQueryJob(state, page)
-      jobs.push(job)
-    }
-  })
-
-  await processQueries(jobs, {
+) {
+  return processQueries({
+    queryIds,
+    createJobFn: createStaticQueryJob,
+    onQueryDone:
+      process.env.NODE_ENV === `production`
+        ? undefined
+        : onDevelopStaticQueryDone,
+    state,
     activity,
     graphqlRunner,
     graphqlTracing,
   })
 }
 
-const createPageQueryJob = (state, page) => {
+async function processPageQueries(
+  queryIds,
+  { state, activity, graphqlRunner, graphqlTracing }
+) {
+  return processQueries({
+    queryIds,
+    createJobFn: createPageQueryJob,
+    state,
+    activity,
+    graphqlRunner,
+    graphqlTracing,
+  })
+}
+
+function createPageQueryJob(state, queryId) {
+  const page = state.pages.get(queryId)
+
+  // Make sure we filter out pages that don't exist. An example is
+  // /dev-404-page/, whose SitePage node is created via
+  // `internal-data-bridge`, but the actual page object is only
+  // created during `gatsby develop`.
+  if (!page) {
+    return undefined
+  }
   const component = state.components.get(page.componentPath)
   const { path, componentPath, context } = page
   const { query } = component

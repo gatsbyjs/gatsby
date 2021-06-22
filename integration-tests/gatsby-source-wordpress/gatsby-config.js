@@ -8,8 +8,12 @@ const requestConcurrency = 1
 
 const mediaItemTypeSettings = {
   localFile: {
-    requestConcurrency,
-    maxFileSizeBytes: 10485760,
+    excludeByMimeTypes: ['video/mp4'],
+    /** 
+     * This is set to one byte smaller than the largest image in the Gatsby site so that we will have exactly one image that isn't fetched
+     * during the site build
+     */
+    maxFileSizeBytes: 740690,
   },
 }
 
@@ -59,11 +63,15 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
               : // and we don't actually need more than 1000 in production
                 1000,
         },
+        // excluding this because it causes Gatsby to throw errors
+        BlockEditorContentNode: { exclude: true },
       },
     }
   : {
       type: {
         MediaItem: mediaItemTypeSettings,
+        // excluding this because it causes Gatsby to throw errors
+        BlockEditorContentNode: { exclude: true },
       },
     }
 
@@ -83,7 +91,7 @@ module.exports = {
       options: {
         url: process.env.WPGRAPHQL_URL,
         schema: {
-          requestConcurrency: 10,
+          requestConcurrency: 7,
         },
         production: {
           hardCacheMediaFiles: true,

@@ -12,14 +12,15 @@ const {
 } = require(`graphql`)
 const invariant = require(`invariant`)
 const reporter = require(`gatsby-cli/lib/reporter`)
+import { store } from "../redux"
 import {
+  getDataStore,
   getNode,
   getNodes,
   getNodesByType,
   getTypes,
-  saveResolvedNodes,
-} from "../redux/nodes"
-import { runFastFiltersAndSort } from "../redux/run-fast-filters"
+} from "../datastore"
+import { runFastFiltersAndSort } from "../datastore/in-memory/run-fast-filters"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -253,6 +254,9 @@ class LocalNodeModel {
       sort: query.sort,
       group: query.group,
       distinct: query.distinct,
+      max: query.max,
+      min: query.min,
+      sum: query.sum,
     })
     const fieldsToResolve = determineResolvableFields(
       this.schemaComposer,
@@ -593,7 +597,7 @@ const toNodeTypeNames = (schema, gqlTypeName) => {
     .map(type => type.name)
 }
 
-const getQueryFields = ({ filter, sort, group, distinct }) => {
+const getQueryFields = ({ filter, sort, group, distinct, max, min, sum }) => {
   const filterFields = filter ? dropQueryOperators(filter) : {}
   const sortFields = (sort && sort.fields) || []
 
@@ -609,11 +613,32 @@ const getQueryFields = ({ filter, sort, group, distinct }) => {
     distinct = []
   }
 
+  if (max && !Array.isArray(max)) {
+    max = [max]
+  } else if (max == null) {
+    max = []
+  }
+
+  if (min && !Array.isArray(min)) {
+    min = [min]
+  } else if (min == null) {
+    min = []
+  }
+
+  if (sum && !Array.isArray(sum)) {
+    sum = [sum]
+  } else if (sum == null) {
+    sum = []
+  }
+
   return _.merge(
     filterFields,
     ...sortFields.map(pathToObject),
     ...group.map(pathToObject),
-    ...distinct.map(pathToObject)
+    ...distinct.map(pathToObject),
+    ...max.map(pathToObject),
+    ...min.map(pathToObject),
+    ...sum.map(pathToObject)
   )
 }
 
@@ -840,6 +865,25 @@ const addRootNodeToInlineObject = (
     if (!isNode) {
       rootNodeMap.set(data, nodeId)
     }
+  }
+}
+
+const saveResolvedNodes = async (nodeTypeNames, resolver) => {
+  for (const typeName of nodeTypeNames) {
+    const resolvedNodes = new Map()
+    for (const node of getDataStore().iterateNodesByType(typeName)) {
+      const resolved = await resolver(node)
+      resolvedNodes.set(node.id, resolved)
+    }
+    if (!resolvedNodes.size) continue
+
+    store.dispatch({
+      type: `SET_RESOLVED_NODES`,
+      payload: {
+        key: typeName,
+        nodes: resolvedNodes,
+      },
+    })
   }
 }
 

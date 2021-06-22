@@ -21,7 +21,9 @@ export const startLogger = (): void => {
     }
   }
   // if child process - use ipc logger
-  if (process.send) {
+  if (process.send && !process.env.GATSBY_WORKER_POOL_WORKER) {
+    // FIXME: disable IPC logger when inside worker. IPC messages crash jest-worker.
+    // This is just workaround to not crash process when reporter is used in worker context.
     // process.env.FORCE_COLOR = `0`
 
     initializeIPCLogger()

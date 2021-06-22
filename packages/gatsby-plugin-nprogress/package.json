@@ -1,19 +1,19 @@
 {
   "name": "gatsby-plugin-nprogress",
   "description": "Shows page loading indicator when loading page resources is delayed",
-  "version": "3.3.0-next.0",
+  "version": "3.9.0-next.0",
   "author": "Kyle Mathews<mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
+    "@babel/runtime": "^7.14.0",
     "nprogress": "^0.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^1.3.0-next.0",
+    "@babel/cli": "^7.14.0",
+    "@babel/core": "^7.14.0",
+    "babel-preset-gatsby-package": "^1.9.0-next.0",
     "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-nprogress#readme",

@@ -1,6 +1,7 @@
 ---
 date: "2021-03-02"
 version: "3.0.0"
+title: "v3 Release Notes"
 ---
 
 # v3.0 (March 2021 #1)

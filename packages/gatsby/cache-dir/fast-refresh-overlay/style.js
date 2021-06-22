@@ -1,12 +1,5 @@
 import * as React from "react"
-
-function css(strings, ...keys) {
-  const lastIndex = strings.length - 1
-  return (
-    strings.slice(0, lastIndex).reduce((p, s, i) => p + s + keys[i], ``) +
-    strings[lastIndex]
-  )
-}
+import { css } from "../css-to-object"
 
 export const Style = () => (
   <style
@@ -46,8 +39,8 @@ export const Style = () => (
           --codeFrame-color: #414141;
           --codeFrame-button-bg: white;
           --radii: 5px;
-          --z-index-backdrop: 8000;
-          --z-index-overlay: 9000;
+          --z-index-backdrop: 9000;
+          --z-index-overlay: 10000;
           --space: 1.5em;
           --space-sm: 1em;
           --space-lg: 2.5em;
@@ -190,7 +183,7 @@ export const Style = () => (
           font-weight: 500;
         }
 
-        [data-gatsby-overlay="header__open-in-editor"] {
+        [data-gatsby-overlay="primary-button"] {
           --ring-opacity: 0.9;
           --ring-color: rgba(54, 32, 102, var(--ring-opacity));
           align-items: center;
@@ -241,7 +234,7 @@ export const Style = () => (
           margin-bottom: 0.5em;
         }
 
-        [data-gatsby-overlay="header__close-button"] {
+        [data-gatsby-overlay="close-button"] {
           --ring-opacity: 0.9;
           --ring-color: rgba(54, 32, 102, var(--ring-opacity));
           cursor: pointer;
@@ -409,8 +402,8 @@ export const Style = () => (
             --ring-color: rgba(217, 186, 232, var(--ring-opacity));
           }
 
-          [data-gatsby-overlay="header__close-button"],
-          [data-gatsby-overlay="header__open-in-editor"] {
+          [data-gatsby-overlay="close-button"],
+          [data-gatsby-overlay="primary-button"] {
             --ring-color: rgba(177, 122, 204, var(--ring-opacity));
           }
         }

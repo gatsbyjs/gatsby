@@ -22,7 +22,6 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
     overflow: hidden;
   }
   .gatsby-image-wrapper img {
-    all: inherit;
     bottom: 0;
     height: 100%;
     left: 0;
@@ -43,6 +42,7 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
   }
   .gatsby-image-wrapper-constrained {
     display: inline-block;
+    vertical-align: top;
   }
     `)}
     />,

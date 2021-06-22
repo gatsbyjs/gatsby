@@ -37,6 +37,24 @@ export interface IGatsbyPage {
   pluginCreator___NODE: Identifier
   pluginCreatorId: Identifier
   componentPath: SystemPath
+  ownerNodeId: Identifier
+}
+
+export interface IGatsbyFunction {
+  /** The route in the browser to access the function **/
+  functionRoute: string
+  /** The absolute path to the original function **/
+  originalAbsoluteFilePath: string
+  /** The relative path to the original function **/
+  originalRelativeFilePath: string
+  /** The relative path to the compiled function (always ends with .js) **/
+  relativeCompiledFilePath: string
+  /** The absolute path to the compiled function (doesn't transfer across machines) **/
+  absoluteCompiledFilePath: string
+  /** The matchPath regex created by path-to-regexp. Only created if the function is dynamic. **/
+  matchPath: string | undefined
+  /** The plugin that owns this function route **/
+  pluginName: string
 }
 
 export interface IGatsbyConfig {
@@ -102,6 +120,7 @@ export interface IGatsbyStaticQueryComponents {
 
 export interface IGatsbyPageComponent {
   componentPath: SystemPath
+  componentChunkName: string
   query: string
   pages: Set<string>
   isInBootstrap: boolean
@@ -190,6 +209,7 @@ export type GatsbyNodeAPI =
   | "onPostBoostrap"
   | "onCreateWebpackConfig"
   | "onCreatePage"
+  | "onCreateNode"
   | "sourceNodes"
   | "createPagesStatefully"
   | "createPages"
@@ -201,6 +221,7 @@ export interface IGatsbyState {
   nodesByType: Map<string, GatsbyNodes>
   resolvedNodesCache: Map<string, any> // TODO
   nodesTouched: Set<string>
+  nodeManifests: Array<INodeManifest>
   lastAction: ActionsUnion
   flattenedPlugins: Array<{
     resolve: SystemPath
@@ -222,6 +243,7 @@ export interface IGatsbyState {
     pluginFilepath: SystemPath
   }>
   config: IGatsbyConfig
+  functions: Array<IGatsbyFunction>
   pages: Map<string, IGatsbyPage>
   schema: GraphQLSchema
   definitions: Map<string, IDefinitionMeta>
@@ -298,6 +320,8 @@ export interface IGatsbyState {
   }
 }
 
+export type GatsbyStateKeys = keyof IGatsbyState
+
 export interface ICachedReduxState {
   nodes?: IGatsbyState["nodes"]
   status: IGatsbyState["status"]
@@ -306,6 +330,7 @@ export interface ICachedReduxState {
   staticQueryComponents: IGatsbyState["staticQueryComponents"]
   webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
   pageDataStats: IGatsbyState["pageDataStats"]
+  pages?: IGatsbyState["pages"]
   staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
   pendingPageDataWrites: IGatsbyState["pendingPageDataWrites"]
   queries: IGatsbyState["queries"]
@@ -371,7 +396,6 @@ export type ActionsUnion =
   | IDisableTypeInferenceAction
   | ISetProgramAction
   | ISetProgramExtensions
-  | IDeletedStalePageDataFiles
   | IRemovedHtml
   | ITrackedHtmlCleanup
   | IGeneratedHtml
@@ -741,6 +765,11 @@ export interface ISetSiteConfig {
   payload: IGatsbyState["config"]
 }
 
+export interface ISetSiteFunctions {
+  type: `SET_SITE_FUNCTIONS`
+  payload: IGatsbyState["functions"]
+}
+
 export interface ICreateNodeAction {
   type: `CREATE_NODE`
   payload: IGatsbyNode
@@ -819,13 +848,6 @@ interface ISetProgramExtensions {
   payload: Array<string>
 }
 
-interface IDeletedStalePageDataFiles {
-  type: `DELETED_STALE_PAGE_DATA_FILES`
-  payload: {
-    pagePathsToClear: Set<string>
-  }
-}
-
 interface IRemovedHtml {
   type: `HTML_REMOVED`
   payload: string
@@ -851,4 +873,25 @@ interface IMarkHtmlDirty {
 
 interface ISSRUsedUnsafeBuiltin {
   type: `SSR_USED_UNSAFE_BUILTIN`
+}
+
+export interface ICreateNodeManifest {
+  type: `CREATE_NODE_MANIFEST`
+  payload: {
+    manifestId: string
+    node: IGatsbyNode
+    pluginName: string
+  }
+}
+
+export interface IDeleteNodeManifests {
+  type: `DELETE_NODE_MANIFESTS`
+}
+
+export interface INodeManifest {
+  manifestId: string
+  pluginName: string
+  node: {
+    id: string
+  }
 }

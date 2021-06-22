@@ -1,5 +1,10 @@
 ---
 title: Sourcing from WordPress
+examples:
+  - label: Using WordPress
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress"
+  - label: Using WordPress with ACF
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress-with-acf"
 ---
 
 This guide will walk you through the process of using Gatsby with WordPress and [WPGraphQL](https://www.wpgraphql.com/).
@@ -31,7 +36,7 @@ module.exports = {
 
 ### Gatsby Plugin: gatsby-source-wordpress
 
-Now that you have some understanding of project structure let's add fetching WordPress data functionality. There's a plugin for that. [`gatsby-source-wordpress`](https://github.com/gatsbyjs/gatsby-source-wordpress) is Gatsby's plugin for sourcing data from WordPress sites using the WPGraphQL API. You can install it by running the following command:
+Now that you have some understanding of project structure let's add fetching WordPress data functionality. There's a plugin for that. [`gatsby-source-wordpress`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress) is Gatsby's plugin for sourcing data from WordPress sites using the WPGraphQL API. You can install it by running the following command:
 
 ```shell
 npm install gatsby-source-wordpress

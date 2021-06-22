@@ -9,9 +9,16 @@ import {
   removeSync,
   writeFileSync,
 } from "fs-extra"
-import { IGatsbyNode, ICachedReduxState } from "./types"
+import {
+  ICachedReduxState,
+  IGatsbyNode,
+  IGatsbyPage,
+  GatsbyStateKeys,
+} from "./types"
 import { sync as globSync } from "glob"
+import { createContentDigest } from "gatsby-core-utils"
 import report from "gatsby-cli/lib/reporter"
+import { DeepPartial } from "redux"
 
 const getReduxCacheFolder = (): string =>
   // This is a function for the case that somebody does a process.chdir (#19800)
@@ -23,41 +30,68 @@ function reduxSharedFile(dir: string): string {
 function reduxChunkedNodesFilePrefix(dir: string): string {
   return path.join(dir, `redux.node.state_`)
 }
+function reduxChunkedPagesFilePrefix(dir: string): string {
+  return path.join(dir, `redux.page.state_`)
+}
+function reduxWorkerSlicesPrefix(dir: string): string {
+  return path.join(dir, `redux.worker.slices_`)
+}
 
-export function readFromCache(): ICachedReduxState {
-  // The cache is stored in two steps; the nodes in chunks and the rest
-  // First we revive the rest, then we inject the nodes into that obj (if any)
+export function readFromCache(
+  slices?: Array<GatsbyStateKeys>
+): DeepPartial<ICachedReduxState> {
+  // The cache is stored in two steps; the nodes and pages in chunks and the rest
+  // First we revive the rest, then we inject the nodes and pages into that obj (if any)
   // Each chunk is stored in its own file, this circumvents max buffer lengths
-  // for sites with a _lot_ of content. Since all nodes go into a Map, the order
+  // for sites with a _lot_ of content. Since all nodes / pages go into a Map, the order
   // of reading them is not relevant.
 
   const reduxCacheFolder = getReduxCacheFolder()
+
+  if (slices) {
+    return v8.deserialize(
+      readFileSync(
+        reduxWorkerSlicesPrefix(reduxCacheFolder) + createContentDigest(slices)
+      )
+    )
+  }
 
   const obj: ICachedReduxState = v8.deserialize(
     readFileSync(reduxSharedFile(reduxCacheFolder))
   )
 
   // Note: at 1M pages, this will be 1M/chunkSize chunks (ie. 1m/10k=100)
-  const chunks = globSync(
+  const nodesChunks = globSync(
     reduxChunkedNodesFilePrefix(reduxCacheFolder) + `*`
   ).map(file => v8.deserialize(readFileSync(file)))
 
-  const nodes: Array<[string, IGatsbyNode]> = [].concat(...chunks)
+  const nodes: Array<[string, IGatsbyNode]> = [].concat(...nodesChunks)
 
-  if (!chunks.length) {
+  if (!nodesChunks.length) {
     report.info(
       `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
     )
-    // TODO: this is a DeepPartial<ICachedReduxState> but requires a big change
-    return {} as ICachedReduxState
+    return {} as DeepPartial<ICachedReduxState>
   }
 
   obj.nodes = new Map(nodes)
 
+  // Note: at 1M pages, this will be 1M/chunkSize chunks (ie. 1m/10k=100)
+  const pagesChunks = globSync(
+    reduxChunkedPagesFilePrefix(reduxCacheFolder) + `*`
+  ).map(file => v8.deserialize(readFileSync(file)))
+
+  const pages: Array<[string, IGatsbyPage]> = [].concat(...pagesChunks)
+
+  obj.pages = new Map(pages)
+
   return obj
 }
 
-function guessSafeChunkSize(values: Array<[string, IGatsbyNode]>): number {
+export function guessSafeChunkSize(
+  values: Array<[string, IGatsbyNode]> | Array<[string, IGatsbyPage]>,
+  showMaxSizeWarning: boolean = false
+): number {
   // Pick a few random elements and measure their size then pick a chunk size
   // ceiling based on the worst case. Each test takes time so there's trade-off.
   // This attempts to prevent small sites with very large pages from OOMing.
@@ -74,7 +108,7 @@ function guessSafeChunkSize(values: Array<[string, IGatsbyNode]>): number {
   }
 
   // Sends a warning once if any of the chunkSizes exceeds approx 500kb limit
-  if (maxSize > 500000) {
+  if (showMaxSizeWarning && maxSize > 500000) {
     report.warn(
       `The size of at least one page context chunk exceeded 500kb, which could lead to degraded performance. Consider putting less data in the page context.`
     )
@@ -88,26 +122,75 @@ function guessSafeChunkSize(values: Array<[string, IGatsbyNode]>): number {
 
 function prepareCacheFolder(
   targetDir: string,
-  contents: ICachedReduxState
+  contents: DeepPartial<ICachedReduxState>,
+  slices?: Array<GatsbyStateKeys>
 ): void {
-  // Temporarily save the nodes and remove them from the main redux store
+  if (slices) {
+    writeFileSync(
+      reduxWorkerSlicesPrefix(targetDir) + createContentDigest(slices),
+      v8.serialize(contents)
+    )
+    return
+  }
+
+  // Temporarily save the nodes and pages and remove them from the main redux store
   // This prevents an OOM when the page nodes collectively contain to much data
-  const map = contents.nodes
+  const nodesMap = contents.nodes
   contents.nodes = undefined
 
-  writeFileSync(reduxSharedFile(targetDir), v8.serialize(contents))
-  // Now restore them on the redux store
-  contents.nodes = map
+  const pagesMap = contents.pages
+  contents.pages = undefined
 
-  if (map) {
+  writeFileSync(reduxSharedFile(targetDir), v8.serialize(contents))
+
+  // Now restore them on the redux store
+  contents.nodes = nodesMap
+  contents.pages = pagesMap
+
+  if (nodesMap) {
+    if (nodesMap.size === 0 && process.env.GATSBY_EXPERIMENTAL_LMDB_STORE) {
+      // Nodes are actually stored in LMDB.
+      //  But we need at least one node in redux state to workaround the warning above:
+      //  "Cache exists but contains no nodes..." (when loading cache).
+      // Sadly, cannot rely on GATSBY_EXPERIMENTAL_LMDB_STORE env variable at cache load time
+      //  because it is not initialized at this point (when set via flags in config)
+      const dummyNode: IGatsbyNode = {
+        id: `dummy-node-id`,
+        parent: ``,
+        children: [],
+        internal: {
+          type: `DummyNode`,
+          contentDigest: `dummy-node`,
+          counter: 0,
+          owner: ``,
+        },
+        __gatsby_resolved: {},
+        fields: [],
+      }
+      nodesMap.set(dummyNode.id, dummyNode)
+    }
     // Now store the nodes separately, chunk size determined by a heuristic
-    const values: Array<[string, IGatsbyNode]> = [...map.entries()]
+    const values: Array<[string, IGatsbyNode]> = [...nodesMap.entries()]
     const chunkSize = guessSafeChunkSize(values)
     const chunks = Math.ceil(values.length / chunkSize)
 
     for (let i = 0; i < chunks; ++i) {
       writeFileSync(
         reduxChunkedNodesFilePrefix(targetDir) + i,
+        v8.serialize(values.slice(i * chunkSize, i * chunkSize + chunkSize))
+      )
+    }
+  }
+
+  if (pagesMap) {
+    // Now store the nodes separately, chunk size determined by a heuristic
+    const values: Array<[string, IGatsbyPage]> = [...pagesMap.entries()]
+    const chunkSize = guessSafeChunkSize(values, true)
+    const chunks = Math.ceil(values.length / chunkSize)
+
+    for (let i = 0; i < chunks; ++i) {
+      writeFileSync(
+        reduxChunkedPagesFilePrefix(targetDir) + i,
         v8.serialize(values.slice(i * chunkSize, i * chunkSize + chunkSize))
       )
     }
@@ -130,13 +213,16 @@ function safelyRenameToBak(reduxCacheFolder: string): string {
   return bakName
 }
 
-export function writeToCache(contents: ICachedReduxState): void {
+export function writeToCache(
+  contents: DeepPartial<ICachedReduxState>,
+  slices?: Array<GatsbyStateKeys>
+): void {
   // Note: this should be a transactional operation. So work in a tmp dir and
   // make sure the cache cannot be left in a corruptable state due to errors.
 
   const tmpDir = mkdtempSync(path.join(os.tmpdir(), `reduxcache`)) // linux / windows
 
-  prepareCacheFolder(tmpDir, contents)
+  prepareCacheFolder(tmpDir, contents, slices)
 
   // Replace old cache folder with new. If the first rename fails, the cache
   // is just stale. If the second rename fails, the cache is empty. In either

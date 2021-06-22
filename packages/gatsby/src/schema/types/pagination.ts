@@ -3,11 +3,11 @@ import {
   ObjectTypeComposer,
   InputTypeComposer,
   InterfaceTypeComposer,
-  ComposeFieldConfigMap,
+  ObjectTypeComposerFieldConfigMapDefinition,
 } from "graphql-compose"
 import { getFieldsEnum } from "./sort"
 import { addDerivedType } from "./derived-types"
-import { distinct, group } from "../resolvers"
+import { distinct, group, max, min, sum } from "../resolvers"
 
 export const getPageInfo = <TContext = any>({
   schemaComposer,
@@ -52,7 +52,7 @@ const createPagination = <TSource = any, TContext = any>({
 }: {
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
-  fields: ComposeFieldConfigMap<TSource, TContext>
+  fields: ObjectTypeComposerFieldConfigMapDefinition<TSource, TContext>
   typeName: string
 }): ObjectTypeComposer => {
   const paginationTypeComposer: ObjectTypeComposer = schemaComposer.getOrCreateOTC(
@@ -109,6 +109,27 @@ export const getPagination = <TContext = any>({
         field: fieldsEnumTC.getTypeNonNull(),
       },
       resolve: distinct,
+    },
+    max: {
+      type: `Float`,
+      args: {
+        field: fieldsEnumTC.getTypeNonNull(),
+      },
+      resolve: max,
+    },
+    min: {
+      type: `Float`,
+      args: {
+        field: fieldsEnumTC.getTypeNonNull(),
+      },
+      resolve: min,
+    },
+    sum: {
+      type: `Float`,
+      args: {
+        field: fieldsEnumTC.getTypeNonNull(),
+      },
+      resolve: sum,
     },
     group: {
       type: [getGroup({ schemaComposer, typeComposer }).getTypeNonNull()],

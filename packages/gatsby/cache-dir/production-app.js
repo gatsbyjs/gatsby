@@ -3,7 +3,6 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import domReady from "@mikaelkristiansson/domready"
 import { StaticQueryContext } from "gatsby"
 import {
   shouldUpdateScroll,
@@ -39,7 +38,7 @@ navigationInit()
 apiRunnerAsync(`onClientEntry`).then(() => {
   // Let plugins register a service worker. The plugin just needs
   // to return true.
-  if (apiRunner(`registerServiceWorker`).length > 0) {
+  if (apiRunner(`registerServiceWorker`).filter(Boolean).length > 0) {
     require(`./register-service-worker`)
   }
 
@@ -175,24 +174,62 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       }
     ).pop()
 
-    const App = () => <GatsbyRoot>{SiteRoot}</GatsbyRoot>
+    const App = function App() {
+      const onClientEntryRanRef = React.useRef(false)
+
+      React.useEffect(() => {
+        if (!onClientEntryRanRef.current) {
+          onClientEntryRanRef.current = true
+          performance.mark(`onInitialClientRender`)
+
+          apiRunner(`onInitialClientRender`)
+        }
+      }, [])
+
+      return <GatsbyRoot>{SiteRoot}</GatsbyRoot>
+    }
 
     const renderer = apiRunner(
       `replaceHydrateFunction`,
       undefined,
-      ReactDOM.hydrate
+      ReactDOM.createRoot ? ReactDOM.createRoot : ReactDOM.hydrate
     )[0]
 
-    domReady(() => {
-      renderer(
-        <App />,
+    function runRender() {
+      const rootElement =
         typeof window !== `undefined`
           ? document.getElementById(`___gatsby`)
-          : void 0,
-        () => {
-          apiRunner(`onInitialClientRender`)
-        }
-      )
-    })
+          : null
+
+      if (renderer === ReactDOM.createRoot) {
+        renderer(rootElement, {
+          hydrate: true,
+        }).render(<App />)
+      } else {
+        renderer(<App />, rootElement)
+      }
+    }
+
+    // https://github.com/madrobby/zepto/blob/b5ed8d607f67724788ec9ff492be297f64d47dfc/src/zepto.js#L439-L450
+    // TODO remove IE 10 support
+    const doc = document
+    if (
+      doc.readyState === `complete` ||
+      (doc.readyState !== `loading` && !doc.documentElement.doScroll)
+    ) {
+      setTimeout(function () {
+        runRender()
+      }, 0)
+    } else {
+      const handler = function () {
+        doc.removeEventListener(`DOMContentLoaded`, handler, false)
+        window.removeEventListener(`load`, handler, false)
+
+        runRender()
+      }
+
+      doc.addEventListener(`DOMContentLoaded`, handler, false)
+      window.addEventListener(`load`, handler, false)
+    }
   })
 })
