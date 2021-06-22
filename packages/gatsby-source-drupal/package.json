@@ -8,12 +8,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.0",
-    "got": "^11.8.2",
     "agentkeepalive": "^4.1.1",
-    "fastq": "^1.11.0",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
+    "fastq": "^1.11.0",
     "gatsby-source-filesystem": "^3.8.0-next.1",
+    "got": "^11.8.2",
+    "http2-wrapper": "^2.0.5",
     "lodash": "^4.17.21",
     "tiny-async-pool": "^1.2.0",
     "url-join": "^4.0.1"
@@ -24,8 +25,15 @@
     "babel-preset-gatsby-package": "^1.8.0-next.1",
     "cross-env": "^7.0.3"
   },
+  "engines": {
+    "node": ">=12.13.0"
+  },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme",
-  "keywords": ["gatsby", "gatsby-plugin", "gatsby-source-plugin"],
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-source-plugin"
+  ],
   "license": "MIT",
   "peerDependencies": {
     "gatsby": "^3.0.0-next.0"
@@ -39,8 +47,5 @@
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
-  },
-  "engines": {
-    "node": ">=12.13.0"
   }
 }
