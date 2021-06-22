@@ -50,7 +50,7 @@ async function getCounts({ mdast }) {
   }
 }
 
-module.exports = (
+module.exports = function createSchemaCustomization(
   {
     store,
     pathPrefix,
@@ -63,32 +63,12 @@ module.exports = (
     ...helpers
   },
   pluginOptions
-) => {
+) {
   let mdxHTMLLoader
   const { createTypes } = actions
 
   const options = defaultOptions(pluginOptions)
   const headingsMdx = [`h1`, `h2`, `h3`, `h4`, `h5`, `h6`]
-  createTypes(`
-    type MdxFrontmatter {
-      title: String!
-    }
-
-    type MdxHeadingMdx {
-      value: String
-      depth: Int
-    }
-
-    enum HeadingsMdx {
-      ${headingsMdx}
-    }
-
-    type MdxWordCount {
-      paragraphs: Int
-      sentences: Int
-      words: Int
-    }
-  `)
 
   /**
    * Support gatsby-remark parser plugins
@@ -303,5 +283,28 @@ ${e}`
       },
     },
   })
-  createTypes(MdxType)
+
+  createTypes([
+    `
+  type MdxFrontmatter {
+    title: String!
+  }
+
+  type MdxHeadingMdx {
+    value: String
+    depth: Int
+  }
+
+  enum HeadingsMdx {
+    ${headingsMdx}
+  }
+
+  type MdxWordCount {
+    paragraphs: Int
+    sentences: Int
+    words: Int
+  }
+`,
+    MdxType,
+  ])
 }
