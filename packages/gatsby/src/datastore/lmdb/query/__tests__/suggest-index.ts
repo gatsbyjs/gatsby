@@ -18,7 +18,7 @@ describe(`suggestIndex`, () => {
         const filter = {
           a: { [comparator]: `foo` },
         }
-        expect(suggestIndex({ filter, sort })).toEqual({ a: 1 })
+        expect(suggestIndex({ filter, sort })).toEqual([[`a`, 1]])
       }
     )
 
@@ -33,23 +33,18 @@ describe(`suggestIndex`, () => {
     )
 
     it.each([
-      [
-        { a: { in: 1 }, b: { eq: 1 }, c: { gt: 1 } },
-        { b: 1, a: 1, c: 1 },
-      ],
-      [
-        { a: { ne: 1 }, b: { in: 1 }, c: { gt: 1 } },
-        { b: 1, c: 1 },
-      ],
+      [{ a: { in: 1 }, b: { eq: 1 }, c: { gt: 1 } }, [`b`, `a`, `c`]],
+      [{ a: { ne: 1 }, b: { in: 1 }, c: { gt: 1 } }, [`b`, `c`]],
       [
         { a: { gt: 1 }, b: { gte: 1 }, c: { lte: 1 }, d: { lt: 1 } },
-        { b: 1, c: 1, a: 1, d: 1 },
+        [`b`, `c`, `a`, `d`],
       ],
     ])(
       `includes fields in index by comparator specificity: %#`,
-      (filter, expectedIndex) => {
+      (filter, expectedFields) => {
         // expected specificity: eq, in, gte, lte, gt, lt
-        expect(suggestIndex({ filter, sort })).toEqual(expectedIndex)
+        const expected = expectedFields.map(f => [f, 1])
+        expect(suggestIndex({ filter, sort })).toEqual(expected)
       }
     )
 
@@ -62,7 +57,12 @@ describe(`suggestIndex`, () => {
         e: { eq: 5 },
       }
       // expected specificity: eq, in, gte, lte, gt, lt
-      expect(suggestIndex({ filter, sort })).toEqual({ a: 1, b: 1, c: 1, d: 1 })
+      expect(suggestIndex({ filter, sort })).toEqual([
+        [`a`, 1],
+        [`b`, 1],
+        [`c`, 1],
+        [`d`, 1],
+      ])
     })
   })
 
@@ -71,7 +71,7 @@ describe(`suggestIndex`, () => {
 
     it(`adds a single sort field to index`, () => {
       const sort = { fields: [`a`], order: [] }
-      expect(suggestIndex({ filter, sort })).toEqual({ a: 1 })
+      expect(suggestIndex({ filter, sort })).toEqual([[`a`, 1]])
     })
 
     it.each([
@@ -86,13 +86,16 @@ describe(`suggestIndex`, () => {
       `supports sort order defined as %p`,
       (order, expected) => {
         const sort = { fields: [`a`], order }
-        expect(suggestIndex({ filter, sort })).toEqual({ a: expected })
+        expect(suggestIndex({ filter, sort })).toEqual([[`a`, expected]])
       }
     )
 
     it(`adds multiple sort fields to index`, () => {
       const sort = { fields: [`a`, `b`], order: [] }
-      expect(suggestIndex({ filter, sort })).toEqual({ a: 1, b: 1 })
+      expect(suggestIndex({ filter, sort })).toEqual([
+        [`a`, 1],
+        [`b`, 1],
+      ])
     })
 
     it(`adds at most 4 sort fields to index`, () => {
@@ -100,7 +103,12 @@ describe(`suggestIndex`, () => {
         fields: [`a`, `b`, `c`, `d`, `e`],
         order: [],
       }
-      expect(suggestIndex({ filter, sort })).toEqual({ a: 1, b: 1, c: 1, d: 1 })
+      expect(suggestIndex({ filter, sort })).toEqual([
+        [`a`, 1],
+        [`b`, 1],
+        [`c`, 1],
+        [`d`, 1],
+      ])
     })
 
     it(`supports mixed sort order`, () => {
@@ -108,7 +116,11 @@ describe(`suggestIndex`, () => {
         fields: [`a`, `b`, `c`],
         order: [`desc`, `asc`, `DESC`],
       }
-      expect(suggestIndex({ filter, sort })).toEqual({ a: -1, b: 1, c: -1 })
+      expect(suggestIndex({ filter, sort })).toEqual([
+        [`a`, -1],
+        [`b`, 1],
+        [`c`, -1],
+      ])
     })
   })
 
@@ -118,28 +130,96 @@ describe(`suggestIndex`, () => {
         const filter = { a: { eq: `foo` } }
         const sort = { fields: [`b`, `c`], order: [] }
 
-        expect(suggestIndex({ filter, sort })).toEqual({ a: 1, b: 1, c: 1 })
+        expect(suggestIndex({ filter, sort })).toEqual([
+          [`a`, 1],
+          [`b`, 1],
+          [`c`, 1],
+        ])
       })
 
       it(`merges "eq" filter with sibling "sort" field`, () => {
         const filter = { a: { eq: `foo` } }
         const sort: Sort = { fields: [`a`, `b`], order: [`desc`, `desc`] }
 
-        expect(suggestIndex({ filter, sort })).toEqual({ a: -1, b: -1 })
+        expect(suggestIndex({ filter, sort })).toEqual([
+          [`a`, -1],
+          [`b`, -1],
+        ])
       })
 
       it(`removes "eq" filter from "sort" tail`, () => {
         const filter = { b: { eq: `foo` } }
         const sort: Sort = { fields: [`a`, `b`], order: [] }
 
-        expect(suggestIndex({ filter, sort })).toEqual({ b: 1, a: 1 })
+        expect(suggestIndex({ filter, sort })).toEqual([
+          [`b`, 1],
+          [`a`, 1],
+        ])
       })
 
-      it(`clears "sort" tail after "eq" field`, () => {
+      it(`removes "eq" field from the middle of "sort" list`, () => {
         const filter = { b: { eq: `foo` } }
         const sort: Sort = { fields: [`a`, `b`, `c`], order: [] }
 
-        expect(suggestIndex({ filter, sort })).toEqual({ b: 1, a: 1 })
+        expect(suggestIndex({ filter, sort })).toEqual([
+          [`b`, 1],
+          [`a`, 1],
+          [`c`, 1],
+        ])
+      })
+    })
+
+    describe(`multiple "eq" filters`, () => {
+      it(`uses "eq" filters for index prefix and "sort" fields as suffix`, () => {
+        const filter = { a: { eq: `foo` }, b: { eq: `bar` } }
+        const sort = { fields: [`c`, `d`], order: [] }
+
+        expect(suggestIndex({ filter, sort })).toEqual([
+          [`a`, 1],
+          [`b`, 1],
+          [`c`, 1],
+          [`d`, 1],
+        ])
+      })
+
+      it(`merges "eq" filters with overlapping "sort" fields`, () => {
+        const filter = { a: { eq: `foo` }, b: { eq: `bar` }, c: { eq: `baz` } }
+        const sort = { fields: [`c`, `b`], order: [] }
+
+        // TODO: consider sorting "eq" fields in the order they appear in "sort"
+        //  The assumption here is that the same sort order may be used somewhere else,
+        //  so maybe this index can be re-used more often
+
+        expect(suggestIndex({ filter, sort })).toEqual([
+          [`a`, 1],
+          [`c`, 1],
+          [`b`, 1],
+        ])
+      })
+
+      it(`removes "eq" filters from "sort" tail`, () => {
+        const filter = { b: { eq: `foo` }, c: { eq: `bar` } }
+        const sort: Sort = {
+          fields: [`a`, `b`, `c`],
+          order: [`desc`, `desc`, `desc`],
+        }
+        expect(suggestIndex({ filter, sort })).toEqual([
+          [`b`, -1],
+          [`c`, -1],
+          [`a`, -1],
+        ])
+      })
+
+      it(`removes "eq" fields from the middle of "sort" list`, () => {
+        const filter = { b: { eq: `bar` }, c: { eq: `bar` } }
+        const sort: Sort = { fields: [`a`, `c`, `b`, `d`], order: [] }
+
+        expect(suggestIndex({ filter, sort })).toEqual([
+          [`b`, 1],
+          [`c`, 1],
+          [`a`, 1],
+          [`d`, 1],
+        ])
       })
     })
 
@@ -156,40 +236,68 @@ describe(`suggestIndex`, () => {
         //  Can be costly if "in" has too many values (but probably not costlier than in-memory sort anyway)
         const filter = { a: { in: [1, 2] } }
         const sort = { fields: [`b`, `c`], order: [] }
-
-        expect(suggestIndex({ filter, sort })).toEqual({ a: 1 })
+        expect(suggestIndex({ filter, sort })).toEqual([[`a`, 1]]) // TODO: .toEqual([[`a`, 1], [`b`, 1], [`c`, 1]]])
       })
 
       it(`merges "in" filter with sibling "sort" field`, () => {
         const filter = { a: { in: `foo` } }
         const sort: Sort = { fields: [`a`, `b`], order: [`desc`, `desc`] }
-
-        expect(suggestIndex({ filter, sort })).toEqual({ a: -1, b: -1 })
+        expect(suggestIndex({ filter, sort })).toEqual([
+          [`a`, -1],
+          [`b`, -1],
+        ])
       })
 
-      it(`removes "in" filter from "sort" tail`, () => {
+      it(`discards "sort" fields that do not overlap with "in" filter`, () => {
         const filter = { b: { in: [`foo`] } }
-        const sort: Sort = { fields: [`a`, `b`], order: [] }
-
-        expect(suggestIndex({ filter, sort })).toEqual({ b: 1 })
+        const sort: Sort = { fields: [`a`, `b`, `c`], order: [] }
+        expect(suggestIndex({ filter, sort })).toEqual([[`b`, 1]])
       })
     })
 
     describe.each([`lt`, `lte`, `gt`, `gte`])(
       `single "%s" filter`,
       comparator => {
-        it(`does this`, () => {
-          expect(false).toEqual(true)
+        it(`prefers "sort" fields to single "${comparator}" filter`, () => {
+          const filter = { a: { [comparator]: [1, 2] } }
+          const sort = { fields: [`b`, `c`], order: [] }
+          expect(suggestIndex({ filter, sort })).toEqual([
+            [`b`, 1],
+            [`c`, 1],
+          ])
+        })
+
+        it(`merges "${comparator}" filter with sibling "sort" field`, () => {
+          const filter = { a: { [comparator]: `foo` } }
+          const sort: Sort = { fields: [`a`, `b`], order: [`desc`, `desc`] }
+          expect(suggestIndex({ filter, sort })).toEqual([
+            [`a`, -1],
+            [`b`, -1],
+          ])
         })
       }
     )
 
-    describe.skip(`multiple "eq" filters`, function () {
-      it(`merges multiple "eq" filters with sibling "sort" fields`, () => {
-        const filter = { b: { eq: `foo` }, a: { eq: `bar` } }
-        const sort: Sort = { fields: [`a`, `b`], order: [`desc`, `desc`] }
+    describe.each([
+      [`gt`, `lt`],
+      [`gt`, `lte`],
+      [`lt`, `gt`],
+      [`lte`, `gt`],
+      [`lt`, `gt`],
+    ])(`single enclosed "%s - %s" filter`, (left, right) => {
+      it(`prefers enclosed filter to non-overlapping "sort" fields`, () => {
+        const filter = { a: { [left]: `foo`, [right]: `bar` } }
+        const sort = { fields: [`b`, `c`], order: [] }
+        expect(suggestIndex({ filter, sort })).toEqual([[`a`, 1]])
+      })
 
-        expect(suggestIndex({ filter, sort })).toEqual({ a: -1, b: -1 })
+      it(`merges field with enclosed filter with sibling "sort" field`, () => {
+        const filter = { a: { [left]: `foo`, [right]: `bar` } }
+        const sort: Sort = { fields: [`a`, `b`], order: [`desc`, `desc`] }
+        expect(suggestIndex({ filter, sort })).toEqual([
+          [`a`, -1],
+          [`b`, -1],
+        ])
       })
     })
   })

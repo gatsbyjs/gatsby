@@ -1,4 +1,3 @@
-import { IIndexFields } from "./create-index"
 import { IRunQueryArgs } from "../../types"
 import {
   createDbQueriesFromObject,
@@ -16,69 +15,88 @@ interface ISelectIndexArgs {
   maxFields?: number
 }
 
+type IndexField = [fieldName: string, orderDirection: number]
+type IndexFields = Array<IndexField>
+
 export function suggestIndex({
   filter,
-  sort,
+  sort = { fields: [], order: [] },
   maxFields = 4,
-}: ISelectIndexArgs): IIndexFields | undefined {
+}: ISelectIndexArgs): IndexFields | undefined {
   const dbQueries = createDbQueriesFromObject(prepareQueryArgs(filter))
-  const canUseIndex = getQueriesThatCanUseIndex(dbQueries)
+  const queriesThatCanUseIndex = getQueriesThatCanUseIndex(dbQueries)
 
-  if (!canUseIndex.length && !sort?.fields.length) {
+  const sortFields: Array<IndexField> = sort.fields.map((field, i) => [
+    field,
+    isDesc(sort?.order[i]) ? -1 : 1,
+  ])
+
+  if (!sortFields.length && !queriesThatCanUseIndex.length) {
     return undefined
   }
-
-  if (canUseIndex.length && sort?.fields.length) {
+  if (!queriesThatCanUseIndex.length) {
+    return dedupeAndTrim(sortFields, maxFields)
+  }
+  if (!sortFields.length) {
+    return dedupeAndTrim(toIndexFields(queriesThatCanUseIndex), maxFields)
   }
 
-  const indexFields: Array<[fieldName: string, direction: number]> = []
-
-  canUseIndex.slice(0, 4).forEach(dbQuery => {
-    indexFields.push([dbQueryToDottedField(dbQuery), 1])
-  })
-  sort?.fields.slice(0, 4).forEach((name, index) => {
-    indexFields.push([name, isDesc(sort?.order[index]) ? -1 : 1])
-  })
-
-  return indexFields.reduce(
-    (acc, [name, sort]) => Object.assign(acc, { [name]: sort }),
-    Object.create(null)
+  const eqFields = new Set<string>(
+    queriesThatCanUseIndex
+      .filter(
+        dbQuery => getFilterStatement(dbQuery).comparator === DbComparator.EQ
+      )
+      .map(dbQuery => dbQueryToDottedField(dbQuery))
   )
+
+  // Remove sort fields having "eq" filter - they don't make any sense (TODO: maybe also remove fields having IN)
+  // sortFields = sortFields.filter(([fieldName]) => !eqFields.has(fieldName))
+
+  // Split sort fields into 2 parts: [...overlapping, ...nonOverlapping]
+  const overlap = new Set()
+  for (const [fieldName] of sortFields) {
+    const dbQuery = queriesThatCanUseIndex.find(
+      q => dbQueryToDottedField(q) === fieldName
+    )
+    if (!dbQuery) {
+      break
+    }
+    overlap.add(fieldName)
+  }
+
+  if (!overlap.size) {
+    // No overlap - in this case filter+sort only makes sense when all filters have `eq` comparator
+    if (eqFields.size === queriesThatCanUseIndex.length) {
+      const eqFilterFields: Array<IndexField> = [...eqFields].map(f => [f, 1])
+      return dedupeAndTrim([...eqFilterFields, ...sortFields], maxFields)
+    }
+    // Single unbound range filter: lt, gt, gte, lte: prefer sort fields
+    if (
+      queriesThatCanUseIndex.length === 1 &&
+      getFilterStatement(queriesThatCanUseIndex[0]).comparator !==
+        DbComparator.IN
+    ) {
+      return dedupeAndTrim(sortFields, maxFields)
+    }
+    // Otherwise prefer filter fields
+    return dedupeAndTrim(toIndexFields(queriesThatCanUseIndex), maxFields)
+  }
+
+  // There is an overlap:
+  // First add all non-overlapping filter fields to index prefix, then all sort fields (including overlapping)
+  const filterFields = queriesThatCanUseIndex
+    .map((q): IndexField => [dbQueryToDottedField(q), 1])
+    .filter(([name]) => !overlap.has(name))
+
+  return dedupeAndTrim([...filterFields, ...sortFields], maxFields)
 }
 
-const rangeComparators = new Set<DbComparator>([
-  DbComparator.IN,
-  DbComparator.GT,
-  DbComparator.LT,
-  DbComparator.GTE,
-  DbComparator.LTE,
-])
+function toIndexFields(queries: Array<DbQuery>): IndexFields {
+  return queries.map((q): IndexField => [dbQueryToDottedField(q), 1])
+}
 
-function buildIdealIndex(
-  dbQueries: Array<DbQuery>,
-  sort: ISelectIndexArgs["sort"]
-): void {
-  // The ideal scenario:
-  // 1. All sort fields in the index tail
-  // 2. Range fields overlapping with
-  const indexSuffix = sort?.fields ?? []
-
-  for (const sortField of indexSuffix) {
-
-  }
-
-  // Remove all range and `eq` queries that can be resolved using this suffix
-  const potentialPrefix: Array<DbQuery> = dbQueries.filter(
-    q =>
-      rangeComparators.has(getFilterStatement(q).comparator) &&
-      indexSuffix.includes(dbQueryToDottedField(q))
-  )
-
-  // Find as many `eq` filters
-
-
-
-  // Use any
+function dedupeAndTrim(fields: IndexFields, maxFields: number): IndexFields {
+  return [...new Map(fields)].slice(0, maxFields)
 }
 
 function isDesc(

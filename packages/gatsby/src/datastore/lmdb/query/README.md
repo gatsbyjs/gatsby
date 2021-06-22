@@ -327,6 +327,11 @@ in `lmdb-store` which is [not yet available][6].
 - tracking inline objects
 - counts and any aggregations...!
 
+Fast counts are only possible for plain indexes (non-MuliKey) +
+when all filter fields are included in index.
+
+So for fast counts FILTER fields are more important than SORT fields.
+
 and ensures consistent ordering when query has no sort order set.
 
 > In databases the last column is usually the same as primary key (in our example "a1").
