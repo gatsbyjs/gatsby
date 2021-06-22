@@ -10,6 +10,7 @@ Welcome to `gatsby@3.8.0` release (June 2021 #2)
 
 Key highlights of this release:
 
+- [React 18 - Alpha](#react-18---alpha) - React 18 Alpha is available in Gatsby
 - [Web Vitals Tracking](#web-vitals-tracking) - Analytics Plugins now support tracking Web Vitals
 - [name2](#link2) - one-line description
 
