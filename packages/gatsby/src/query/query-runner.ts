@@ -17,7 +17,7 @@ import { pageDataExists } from "../utils/page-data"
 
 const resultHashes = new Map()
 
-interface IQueryJob {
+export interface IQueryJob {
   id: string
   hash?: string
   query: string
