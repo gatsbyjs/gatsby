@@ -25,10 +25,9 @@ export function pluginOptionsSchema({
   // Vague type error that we're not able to figure out related to isJoi missing
   // Probably related to Joi being outdated
   return Joi.object({
-    apiKey: Joi.string().required(),
     password: Joi.string().required(),
     storeUrl: Joi.string()
-      .pattern(/^[a-z-]+\.myshopify\.com$/)
+      .pattern(/^[a-z0-9-]+\.myshopify\.com$/)
       .message(
         `The storeUrl value should be your store's myshopify.com URL in the form "my-site.myshopify.com", without https or slashes`
       )
@@ -43,7 +42,9 @@ export function pluginOptionsSchema({
     shopifyConnections: Joi.array()
       .default([])
       .items(Joi.string().valid(`orders`, `collections`)),
-    salesChannel: Joi.string(),
+    salesChannel: Joi.string().default(
+      process.env.GATSBY_SHOPIFY_SALES_CHANNEL
+    ),
   })
 }
 
