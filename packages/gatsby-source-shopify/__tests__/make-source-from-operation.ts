@@ -133,7 +133,6 @@ describe(`The collections operation`, () => {
 
     const gatsbyApi = gatsbyApiMock as jest.Mock<SourceNodesArgs>
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
       downloadImages: true,
@@ -248,7 +247,6 @@ describe(`When polling an operation`, () => {
 
     const gatsbyApi = gatsbyApiMock as jest.Mock<SourceNodesArgs>
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
       downloadImages: true,
@@ -339,7 +337,6 @@ describe(`When downloading images`, () => {
 
     const gatsbyApi = gatsbyApiMock as jest.Mock<SourceNodesArgs>
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
       downloadImages: true,
@@ -446,7 +443,6 @@ describe(`A production build`, () => {
 
     const gatsbyApi = gatsbyApiMock as jest.Mock<SourceNodesArgs>
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
     }
@@ -513,7 +509,6 @@ describe(`A production build`, () => {
 
     const gatsbyApi = gatsbyApiMock as jest.Mock<SourceNodesArgs>
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
     }
@@ -604,7 +599,6 @@ describe(`When an operation gets canceled`, () => {
 
     const gatsbyApi = gatsbyApiMock as jest.Mock<SourceNodesArgs>
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
     }
@@ -677,7 +671,6 @@ describe(`When an operation fails with bad credentials`, () => {
 
     const gatsbyApi = gatsbyApiMock as jest.Mock<SourceNodesArgs>
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
     }
@@ -827,7 +820,6 @@ describe(`The incremental products processor`, () => {
 
     const gatsbyApi = gatsbyApiMock as jest.Mock<SourceNodesArgs>
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
       downloadImages: true,

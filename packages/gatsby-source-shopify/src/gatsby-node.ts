@@ -25,7 +25,6 @@ export function pluginOptionsSchema({
   // Vague type error that we're not able to figure out related to isJoi missing
   // Probably related to Joi being outdated
   return Joi.object({
-    apiKey: Joi.string().required(),
     password: Joi.string().required(),
     storeUrl: Joi.string()
       .pattern(/^[a-z0-9-]+\.myshopify\.com$/)
