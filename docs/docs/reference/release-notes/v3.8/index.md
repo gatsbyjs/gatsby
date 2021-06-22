@@ -12,6 +12,7 @@ Key highlights of this release:
 - [`gatsby-source-shopify` v5](#gatsby-source-shopify-v5) - TODO
 - [Web Vitals Tracking](#web-vitals-tracking) - Analytics Plugins now support tracking Web Vitals
 - [webpack caching](#webpack-caching) - built-in persistent caching activated for everyone
+- [Improvements to Drupal integration](#drupal-integration) — Sourcing is up to 30%+ faster and much more reliable
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -47,6 +48,13 @@ You can activate the tracking by setting `enableWebVitalsTracking` to `true`.
 ## webpack caching
 
 In the [previous 3.7 release](/docs/reference/release-notes/v3.7) we started a gradual rollout of webpack 5 built-in persistent caching. It allows webpack to reuse results of previous compilations and significantly speed up compilation steps. With Gatsby v3.8 it's now enabled for everyone.
+
+## Drupal integration
+
+[gatsby-source-drupal](https://www.gatsbyjs.com/plugins/gatsby-source-drupal/?=drupal) is now a lot faster and more reliable when sourcing data from Drupal. We switched to use [Got](https://github.com/sindresorhus/got) for HTTP requests plus added an optimized http agent and http/2 support.
+
+- [#31514](https://github.com/gatsbyjs/gatsby/pull/31514)
+- [#32012](https://github.com/gatsbyjs/gatsby/pull/32012)
 
 ## Notable bugfixes & improvements
 
