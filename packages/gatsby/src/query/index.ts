@@ -67,11 +67,11 @@ export function groupQueryIds(queryIds: Array<string>): IGroupedQueryIds {
   const { pages } = store.getState()
 
   return {
-    staticQueryIds: grouped.static || [],
+    staticQueryIds: grouped?.static || [],
     pageQueryIds:
-      grouped.page
-        .map(path => pages.get(path) as IGatsbyPage)
-        .filter(Boolean) || [],
+      grouped?.page
+        ?.map(path => pages.get(path) as IGatsbyPage)
+        ?.filter(Boolean) || [],
   }
 }
 

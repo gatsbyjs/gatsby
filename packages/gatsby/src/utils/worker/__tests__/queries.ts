@@ -35,7 +35,7 @@ jest.mock(`chokidar`, () => {
   return chokidar
 })
 
-const dummyPage = {
+const dummyPageFoo = {
   path: `/foo`,
   componentPath: `/foo.js`,
   component: `/foo.js`,
@@ -52,6 +52,25 @@ const dummyPage = {
   ownerNodeId: `foo`,
 }
 
+const dummyPageBar = {
+  path: `/bar`,
+  componentPath: `/bar.js`,
+  component: `/bar.js`,
+  query: `query($var: Boolean) { nodeTypeOne { default: fieldWithArg, fieldWithArg(isCool: true), withVar: fieldWithArg(isCool: $var) } }`,
+  internalComponentName: `Component/bar/`,
+  matchPath: undefined,
+  componentChunkName: `component--bar`,
+  isCreatedByStatefulCreatePages: true,
+  context: {
+    var: true,
+  },
+  updatedAt: 1,
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  pluginCreator___NODE: `bar`,
+  pluginCreatorId: `bar`,
+  ownerNodeId: `bar`,
+}
+
 const dummyStaticQuery = {
   id: `sq--q1`,
   name: `q1-name`,
@@ -61,7 +80,7 @@ const dummyStaticQuery = {
 }
 
 const queryIds: IGroupedQueryIds = {
-  pageQueryIds: [dummyPage],
+  pageQueryIds: [dummyPageFoo, dummyPageBar],
   staticQueryIds: [dummyStaticQuery.id],
 }
 
@@ -89,9 +108,23 @@ describeWhenLMDB(`worker (queries)`, () => {
         version: `1.0.0`,
       },
       payload: {
-        path: dummyPage.path,
-        componentPath: dummyPage.componentPath,
-        component: dummyPage.component,
+        path: dummyPageFoo.path,
+        componentPath: dummyPageFoo.componentPath,
+        component: dummyPageFoo.component,
+      },
+    })
+
+    store.dispatch({
+      type: `CREATE_PAGE`,
+      plugin: {
+        id: `gatsby-plugin-test`,
+        name: `gatsby-plugin-test`,
+        version: `1.0.0`,
+      },
+      payload: {
+        path: dummyPageBar.path,
+        componentPath: dummyPageBar.componentPath,
+        component: dummyPageBar.component,
       },
     })
 
@@ -105,8 +138,21 @@ describeWhenLMDB(`worker (queries)`, () => {
         version: `1.0.0`,
       },
       payload: {
-        componentPath: dummyPage.componentPath,
-        query: dummyPage.query,
+        componentPath: dummyPageFoo.componentPath,
+        query: dummyPageFoo.query,
+      },
+    })
+
+    store.dispatch({
+      type: `QUERY_EXTRACTED`,
+      plugin: {
+        id: `gatsby-plugin-test`,
+        name: `gatsby-plugin-test`,
+        version: `1.0.0`,
+      },
+      payload: {
+        componentPath: dummyPageBar.componentPath,
+        query: dummyPageBar.query,
       },
     })
 
@@ -143,15 +189,13 @@ describeWhenLMDB(`worker (queries)`, () => {
       `${stateFromWorker.program.directory}/public/page-data/sq/d/${dummyStaticQuery.hash}.json`
     )
 
-    expect(staticQueryResult).toMatchInlineSnapshot(`
-      Object {
-        "data": Object {
-          "nodeTypeOne": Object {
-            "resolverField": "Custom String",
-          },
+    expect(staticQueryResult).toStrictEqual({
+      data: {
+        nodeTypeOne: {
+          resolverField: `Custom String`,
         },
-      }
-    `)
+      },
+    })
   })
 
   it(`should execute page queries`, async () => {
@@ -161,18 +205,26 @@ describeWhenLMDB(`worker (queries)`, () => {
       `${stateFromWorker.program.directory}/.cache/json/_foo.json`
     )
 
-    expect(pageQueryResult).toMatchInlineSnapshot(`
-      Object {
-        "data": Object {
-          "nodeTypeOne": Object {
-            "number": 123,
-          },
-        },
-        "pageContext": Object {
-          "ownerNodeId": "foo",
-          "query": "{ nodeTypeOne { number } }",
-        },
-      }
-    `)
+    expect(pageQueryResult.data).toStrictEqual({
+      nodeTypeOne: {
+        number: 123,
+      },
+    })
+  })
+
+  it(`should execute page queries with context variables`, async () => {
+    const stateFromWorker = await worker!.getState()
+
+    const pageQueryResult = await fs.readJson(
+      `${stateFromWorker.program.directory}/.cache/json/_bar.json`
+    )
+
+    expect(pageQueryResult.data).toStrictEqual({
+      nodeTypeOne: {
+        default: `You are not cool`,
+        fieldWithArg: `You are cool`,
+        withVar: `You are cool`,
+      },
+    })
   })
 })
