@@ -11,6 +11,7 @@ import {
   GatsbyTestWorkerPool,
 } from "./test-helpers"
 import { getDataStore } from "../../../datastore"
+import { IGroupedQueryIds } from "../../../services"
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -39,6 +40,16 @@ const dummyPage = {
   componentPath: `/foo.js`,
   component: `/foo.js`,
   query: `{ nodeTypeOne { number } }`,
+  internalComponentName: `Component/foo/`,
+  matchPath: undefined,
+  componentChunkName: `component--foo`,
+  isCreatedByStatefulCreatePages: true,
+  context: {},
+  updatedAt: 1,
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  pluginCreator___NODE: `foo`,
+  pluginCreatorId: `foo`,
+  ownerNodeId: `foo`,
 }
 
 const dummyStaticQuery = {
@@ -49,8 +60,8 @@ const dummyStaticQuery = {
   hash: `q1-hash`,
 }
 
-const queryIds = {
-  pageQueryIds: [dummyPage.path],
+const queryIds: IGroupedQueryIds = {
+  pageQueryIds: [dummyPage],
   staticQueryIds: [dummyStaticQuery.id],
 }
 
@@ -70,8 +81,6 @@ describeWhenLMDB(`worker (queries)`, () => {
 
     await build({ parentSpan: {} })
 
-    saveStateForWorkers([`inferenceMetadata`])
-
     store.dispatch({
       type: `CREATE_PAGE`,
       plugin: {
@@ -85,6 +94,8 @@ describeWhenLMDB(`worker (queries)`, () => {
         component: dummyPage.component,
       },
     })
+
+    saveStateForWorkers([`inferenceMetadata`])
 
     store.dispatch({
       type: `QUERY_EXTRACTED`,
