@@ -32,6 +32,7 @@ Gatsby supports [React 18 Alpha](https://reactjs.org/blog/2021/06/08/the-plan-fo
 ## `gatsby-source-shopify` v5
 
 Gatsby's new Shopify integration which [we announced at GatsbyConf](https://www.youtube.com/watch?v=43fJTO9gMUE) earlier this year is now generally available.
+
 - Incremental data updates are now 16x faster than previous versions
 - v5 uses Shopify's Admin API and bulk operation to overcome API rate limits of the Storefront API
 - Gatsby Cloud now offers Quick Connect for Shopify
@@ -70,4 +71,16 @@ In the [previous 3.7 release](/docs/reference/release-notes/v3.7) we started a g
 
 A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.8.0-next.0...gatsby@3.8.0) to this release 💜
 
-TODO
+- [prajapati-parth](https://github.com/prajapati-parth): docs(gatsby-plugin-image): fix minor typo [PR #31751](https://github.com/gatsbyjs/gatsby/pull/31751)
+- [cometkim](https://github.com/cometkim): fix(gatsby): fix signature for latest experimental version of react-dom [PR #31750](https://github.com/gatsbyjs/gatsby/pull/31750)
+- [lqze](https://github.com/lqze): chore(docs): Update gatsby-plugin-image typos [PR #31790](https://github.com/gatsbyjs/gatsby/pull/31790)
+- [dhrumilp15](https://github.com/dhrumilp15): chore(docs): Update digitalocean certbot instructions [PR #31796](https://github.com/gatsbyjs/gatsby/pull/31796)
+- [DanailMinchev](https://github.com/DanailMinchev): chore(docs): Add `testEnvironment` to RTL doc [PR #31793](https://github.com/gatsbyjs/gatsby/pull/31793)
+- [gmanfunky](https://github.com/gmanfunky): chore(docs): Add link to latest migration doc [PR #31798](https://github.com/gatsbyjs/gatsby/pull/31798)
+- [lee1409](https://github.com/lee1409): fix(gatsby-remark-copy-linked-files): replace checking parent node type to 'dir' [PR #31780](https://github.com/gatsbyjs/gatsby/pull/31780)
+- [smurrayatwork](https://github.com/smurrayatwork): Fixes bug where datum have no attributes and attributes have no langcode. [PR #31864](https://github.com/gatsbyjs/gatsby/pull/31864)
+- [ThyNameIsMud](https://github.com/ThyNameIsMud): fix(gatsby-source-wordpress) Use send property for timeout (#31737) [PR #31847](https://github.com/gatsbyjs/gatsby/pull/31847)
+- [eligundry](https://github.com/eligundry): fix(gatsby-source-contentful): improve error message when dominant color can't be generated [PR #31879](https://github.com/gatsbyjs/gatsby/pull/31879)
+- [NikSchaefer](https://github.com/NikSchaefer): chore(docs): Fix grammar issue [PR #31937](https://github.com/gatsbyjs/gatsby/pull/31937)
+- [amaaniqbal](https://github.com/amaaniqbal): chore(docs): Fix multiple grammar issues [PR #31946](https://github.com/gatsbyjs/gatsby/pull/31946)
+- [nikolaik](https://github.com/nikolaik): docs: Fix missing commas in plugin-image defaults [PR #31961](https://github.com/gatsbyjs/gatsby/pull/31961)
