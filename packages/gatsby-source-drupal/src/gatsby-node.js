@@ -37,7 +37,6 @@ async function worker([url, options]) {
           delete parsed.value.cachePolicy.rescc[`max-age`]
           delete parsed.value.cachePolicy.resh[`cache-control`]
           parsed.value.cachePolicy.rescc[`must-revalidate`] = true
-          parsed.value.cachePolicy.rescc = {}
         } catch (e) {
           console.log(e)
         }
