@@ -19,9 +19,6 @@ const LoggedIn = () => {
         <button
           className={styles.signInButton}
           onClick={() => {
-            const token = JSON.parse(window.localStorage["google:tokens"])[
-              "access_token"
-            ]
             fetch(`/api/logout?token=${window.localStorage["google:tokens"]}`, {
               method: "POST",
             })

@@ -16,7 +16,7 @@ google.options({ auth: oauth2Client })
 
 const scopes = ["profile"]
 
-export default async (req, res) => {
+const login = async (req, res) => {
   // Generate the callback URL with options.
   const authorizeUrl = oauth2Client.generateAuthUrl({
     access_type: "offline",
@@ -27,3 +27,5 @@ export default async (req, res) => {
   // Redirects to next Gatsby Function.
   return res.redirect(authorizeUrl)
 }
+
+export default login

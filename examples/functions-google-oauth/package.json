@@ -17,7 +17,6 @@
   "dependencies": {
     "babel-preset-gatsby": "^1.5.0",
     "gatsby": "^3.7.0",
-    "gatsby-plugin-create-client-paths": "^3.5.0",
     "gatsby-plugin-gatsby-cloud": "^2.5.0",
     "gatsby-plugin-sass": "^4.5.0",
     "googleapis": "^73.0.0",

@@ -25,14 +25,14 @@ For a full walkthrough of setting up this example, including the Google Cloud OA
 
 3.  **Start developing.**
 
-    To get started, run `yarn` to add all necessary packages.
+    To get started, run `npm install` to add all necessary packages.
 
     When developing locally, you include environment variables to your `.env.development`. Read more about how Gatsby handles `.env` files and environment variables in the [Gatsby Docs](https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/)
 
     ```shell
-    cd functions-google-oauth
-    yarn
-    yarn run develop
+    cd examples/functions-google-oauth
+    npm install
+    npm run develop
     ```
 
 4.  **Open the code and start customizing!**

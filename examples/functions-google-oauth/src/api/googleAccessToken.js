@@ -12,7 +12,7 @@ const oauth2Client = new google.auth.OAuth2(
 
 google.options({ auth: oauth2Client })
 
-export default async (req, res) => {
+const googleAccessToken = async (req, res) => {
   // Get the code appended from Google generateAuthUrl.
   const code = req.query.code
 
@@ -25,3 +25,5 @@ export default async (req, res) => {
     `${process.env.APP_REDIRECT_URI}?token=${JSON.stringify(token?.tokens)}`
   )
 }
+
+export default googleAccessToken
