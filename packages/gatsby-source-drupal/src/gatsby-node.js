@@ -273,11 +273,11 @@ exports.sourceNodes = async (
         headers,
         searchParams: params,
         responseType: `json`,
-        cache,
       },
     ])
     allData = await Promise.all(
       _.map(res.body.links, async (url, type) => {
+        const dataArray = []
         if (disallowedLinkTypes.includes(type)) return
         if (!url) return
         if (!type) return
@@ -287,7 +287,7 @@ exports.sourceNodes = async (
           entityType => entityType === type
         )
 
-        const getNext = async (url, data = []) => {
+        const getNext = async url => {
           if (typeof url === `object`) {
             // url can be string or object containing href field
             url = url.href
@@ -321,7 +321,6 @@ exports.sourceNodes = async (
                 password: basicAuth.password,
                 headers,
                 responseType: `json`,
-                cache,
               },
             ])
           } catch (error) {
@@ -334,24 +333,21 @@ exports.sourceNodes = async (
               throw error
             }
           }
-          data = data.concat(d.body.data)
+          dataArray.push(...d.body.data)
           // Add support for includes. Includes allow entity data to be expanded
           // based on relationships. The expanded data is exposed as `included`
           // in the JSON API response.
           // See https://www.drupal.org/docs/8/modules/jsonapi/includes
           if (d.body.included) {
-            data = data.concat(d.body.included)
+            dataArray.push(...d.body.included)
           }
           if (d.body.links && d.body.links.next) {
-            data = await getNext(d.body.links.next, data)
+            await getNext(d.body.links.next)
           }
-
-          return data
         }
 
-        let data = []
         if (isTranslatable === false) {
-          data = await getNext(url)
+          await getNext(url)
         } else {
           for (let i = 0; i < languageConfig.enabledLanguages.length; i++) {
             let currentLanguage = languageConfig.enabledLanguages[i]
@@ -374,13 +370,13 @@ exports.sourceNodes = async (
             )
             const dataForLanguage = await getNext(joinedUrl)
 
-            data = data.concat(dataForLanguage)
+            dataArray.push(...dataForLanguage)
           }
         }
 
         const result = {
           type,
-          data,
+          data: dataArray,
         }
 
         // eslint-disable-next-line consistent-return
