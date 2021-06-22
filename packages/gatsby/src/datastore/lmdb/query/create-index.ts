@@ -9,8 +9,15 @@ interface IDataStoreContext {
   datastore: IDataStore
 }
 
-export interface IIndexFields {
-  [dottedField: string]: number
+export type IndexFields = Map<string, number> // name, direction
+
+export interface IIndexMetadata {
+  typeName: string
+  indexFields: Array<[fieldName: string, orderDirection: number]>
+  keyPrefix: number
+  valueFields: Array<string> // additional data to filter/sort without loading full node contents
+  multiKeyFields: Array<string>
+  maxKeysPerItem: number // for multi-key indexes stores maximum number of items seen in this index
 }
 
 export const undefinedSymbol = Symbol(`undef`)
@@ -28,19 +35,20 @@ export type IndexKey = Array<IndexFieldValue>
 export async function createIndex(
   context: IDataStoreContext,
   typeName: string,
-  indexFields: IIndexFields
-): Promise<boolean> {
+  indexFields: IndexFields
+): Promise<void> {
   const indexName = buildIndexName(typeName, indexFields)
   const metadataKey = `index:${indexName}`
 
-  const { state } = context.databases.metadata.get(metadataKey) ?? {}
+  const { state = `initial` } =
+    context.databases.metadata.get(metadataKey) ?? {}
 
   switch (state) {
     case `ready`:
-      return true
+      return
     case `building`: {
       await indexReady(context, metadataKey)
-      return true
+      return
     }
     case `initial`:
     default: {
@@ -50,11 +58,11 @@ export async function createIndex(
         // Index is being updated in some other process.
         // Wait and assume it's in a good state when done
         await indexReady(context, metadataKey)
-        return true
+        return
       }
       await doCreateIndex(context, typeName, indexFields)
       await markIndexReady(context, metadataKey)
-      return true
+      return
     }
   }
 }
@@ -62,7 +70,7 @@ export async function createIndex(
 async function doCreateIndex(
   context: IDataStoreContext,
   typeName: string,
-  indexFields: IIndexFields
+  indexFields: IndexFields
 ): Promise<void> {
   const { datastore, databases } = context
   const { indexes } = databases
@@ -72,7 +80,6 @@ async function doCreateIndex(
   console.time(label)
   let promise
 
-  const indexFieldNames = Object.keys(indexFields)
   const resolvedNodes = store.getState().resolvedNodesCache.get(typeName)
 
   // console.log(`index entries:`)
@@ -86,7 +93,7 @@ async function doCreateIndex(
       node,
       resolvedFields,
       indexName,
-      indexFieldNames
+      indexFields
     )
     for (const indexKey of indexKeys) {
       // assertAllowedIndexValue(typeName, fieldSelector, value, node.id)
@@ -115,17 +122,17 @@ function prepareIndexKeys(
   node: IGatsbyNode,
   resolvedFields: { [field: string]: unknown } | undefined,
   indexName: string,
-  indexFieldNames: Array<string>
+  indexFields: IndexFields
 ): Array<IndexKey> {
   // TODO: use index id vs index name (shorter)
   const indexKeyElements: Array<Array<IndexFieldValue>> = []
 
   indexKeyElements.push([indexName])
-  for (const dottedField of indexFieldNames) {
+  for (const dottedField of indexFields.keys()) {
     const fieldValue = resolveFieldValue(dottedField, node, resolvedFields)
     let indexFieldValue = jsValueToLmdbKey(fieldValue)
 
-    // Got value that can't be stored in lmdb key (e.g. contains arbitrary object)
+    // Got value that can't be stored in lmdb key
     if (typeof indexFieldValue === `undefined`) {
       const path = `${node.internal.type}.${dottedField} (id: ${node.id})`
       throw new Error(`Bad value at ${path}: ${inspect(fieldValue)}`)
@@ -209,13 +216,10 @@ async function indexReady(
  *
  * buildIndexName(`Foo`, { foo: 1, bar: -1 }) -> `Foo/foo:1/bar:-1
  */
-function buildIndexName(
-  typeName: string,
-  fields: { [key: string]: number }
-): string {
+function buildIndexName(typeName: string, fields: IndexFields): string {
   const tokens: Array<string> = [typeName]
 
-  for (const field of Object.keys(fields)) {
+  for (const field of fields.keys()) {
     const sortOrder = fields[field]
     tokens.push(`${field}:${sortOrder}`)
   }
@@ -236,6 +240,8 @@ function jsValueToLmdbKey(value: unknown): IndexFieldValue | undefined {
     // Array keys containing `undefined` are not supported by lmdb-store
     //  But we can't exclude those nodes from an index because
     //  filters { eq: null, gte: null, lte: null } are expected to return such nodes
+    // Furthermore, lmdb-store puts those keys before others and we want them to be below
+    //  so need to add additional padding
     return undefinedSymbol
   }
   if (Array.isArray(value)) {

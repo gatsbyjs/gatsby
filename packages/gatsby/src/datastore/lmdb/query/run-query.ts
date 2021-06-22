@@ -15,13 +15,13 @@ import {
   IDbFilterStatement,
   prepareQueryArgs,
 } from "../../common/query"
-import { createIndex, IIndexFields } from "./create-index"
+import { createIndex, IIndexMetadata, IndexFields } from "./create-index"
 import {
   filterUsingIndex,
   getQueriesThatCanUseIndex,
 } from "./filter-using-index"
 import { store } from "../../../redux"
-import { resolveFieldValue, shouldFilter } from "./common"
+import { isDesc, resolveFieldValue, shouldFilter } from "./common"
 import { suggestIndex } from "./suggest-index"
 
 // Before running a query we create a separate index for all filter fields (unless it already exists)
@@ -163,52 +163,138 @@ import { suggestIndex } from "./suggest-index"
 //    our current solution ASC: number, null, undefined
 //    lmdb-store ASC: null, undefined, number
 
-interface IRunQueryContext extends IRunQueryArgs {
+interface IDoRunQueryArgs extends IRunQueryArgs {
   databases: ILmdbDatabases
   datastore: IDataStore
 }
 
-export const stats = new Map()
-let interval
+interface IQueryContext {
+  datastore: IDataStore
+  databases: ILmdbDatabases
+  dbQueries: Array<DbQuery>
+  sortFields: Map<string, number>
+  nodeTypeNames: Array<string>
+  suggestedIndexFields: IndexFields
+  indexMetadata?: IIndexMetadata
+  limit?: number
+  skip?: number
+}
 
 export async function doRunQuery(
-  context: IRunQueryContext
+  args: IDoRunQueryArgs
 ): Promise<GatsbyIterable<IGatsbyNode>> {
   const {
+    datastore,
+    databases,
     nodeTypeNames,
     queryArgs: { filter, sort, limit, skip = 0 } = {},
     firstOnly,
-  } = context
+  } = args
 
-  const indexFields = suggestIndex(context)
-
-  const sortFields = sort?.fields ?? []
-
-  const queryKey =
-    nodeTypeNames.join(`,`) +
-    `;filter: ${JSON.stringify(filter)}; sort: ${JSON.stringify(sort)}`
-
-  const start = Date.now()
-  let result =
-    sortFields.length > 0
-      ? await runQueryWithSort(context)
-      : await runQueryWithoutSort(context)
-
-  if (firstOnly) {
-    result = result.slice(0, 1)
-  } else if (limit) {
-    // console.log(`zzz`, skip, limit, Array.from(result))
-    result = result.slice(0, skip + limit + 1)
-  }
-  const end = Date.now() - start
-  const time = stats.get(queryKey) ?? 0
-  stats.set(queryKey, time + (end - start))
-
-  if (!interval) {
-    interval = setInterval(output, 10000)
+  const context: IQueryContext = {
+    datastore,
+    databases,
+    nodeTypeNames,
+    dbQueries: createDbQueriesFromObject(prepareQueryArgs(filter)),
+    sortFields: new Map<string, number>(
+      sort?.fields.map((field, i) => [field, isDesc(sort?.order[i]) ? -1 : 1])
+    ),
+    suggestedIndexFields: new Map(suggestIndex({ filter, sort })),
+    limit,
+    skip,
   }
 
-  // console.log(r)
+  if (context.suggestedIndexFields.size) {
+    try {
+      return performIndexScan(context)
+    } catch (e) {
+      console.warn(`Failed to run query with index: ${String(e)}`)
+    }
+  }
+
+  console.warn(`Fallback to full scan :/ ${nodeTypeNames[0]} ${filter}`)
+  return performFullTableScan(context)
+}
+
+async function performIndexScan(
+  context: IQueryContext
+): GatsbyIterable<IGatsbyNode> {
+  const { nodeTypeNames, suggestedIndexFields, sortFields } = context
+  const reverse = Array.from(sortFields.values())[0] === -1
+
+  const runForTypeName = async (typeName: string) => {
+    await createIndex(context, typeName, suggestedIndexFields)
+
+    // In 99% of cases `nodeTypeNames` contains a single type.
+    // It may contain multiple in case of Node interface
+    let result = new GatsbyIterable<IGatsbyNode>([])
+    const { result: matches, usedQueries } = await filterUsingIndex(
+      context,
+      typeName,
+      suggestedIndexFields,
+      context.dbQueries,
+      reverse
+    )
+    const intermediateResult = matches
+      .map(({ value }) => datastore.getNode(value))
+      .filter(Boolean) as GatsbyIterable<IGatsbyNode>
+
+    result = result.mergeSorted(
+      completeFiltering(typeName, intermediateResult, dbQueries, usedQueries)
+    )
+  }
+
+  // Create indexes concurrently to spread the work across query workers
+  const promises = nodeTypeNames.map(
+    async (typeName): Promise<[string, boolean]> => [
+      typeName,
+      await createIndex(context, typeName, suggestedIndexFields),
+    ]
+  )
+
+  const reverse = Array.from(sortFields.values())[0] === -1
+  // console.log(`reverse?`, reverse)
+
+  // In 99% of cases `nodeTypeNames` contains a single type.
+  // It may contain multiple in case of Node interface
+  let result = new GatsbyIterable<IGatsbyNode>([])
+  for await (const [typeName, canUseIndex] of promises) {
+    if (!canUseIndex) throw new Error(`TODO`)
+    const { result: matches, usedQueries } = await filterUsingIndex(
+      args,
+      typeName,
+      indexFields,
+      dbQueries,
+      reverse
+    )
+    const intermediateResult = matches
+      .map(({ value }) => datastore.getNode(value))
+      .filter(Boolean) as GatsbyIterable<IGatsbyNode>
+
+    result = result.mergeSorted(
+      completeFiltering(typeName, intermediateResult, dbQueries, usedQueries)
+    )
+  }
+  return result
+}
+
+function performFullTableScan(
+  context: IQueryContext
+): GatsbyIterable<IGatsbyNode> {
+  const { datastore, nodeTypeNames, dbQueries, firstOnly } = context
+
+  let result = new GatsbyIterable<IGatsbyNode>([])
+  for (const typeName of nodeTypeNames) {
+    result = result.concat(
+      completeFiltering(
+        typeName,
+        datastore.iterateNodesByType(typeName),
+        dbQueries,
+        new Set()
+      )
+    )
+  }
+  // TODO: full sort!
   return result
 }
 
@@ -219,6 +305,8 @@ function output(): void {
     }
   })
 }
+
+function planQuery(args: IRunQueryArgs): IQueryPlan {}
 
 async function runQueryWithSort(
   args: IRunQueryContext
@@ -276,7 +364,7 @@ async function runQueryWithSort(
       .filter(Boolean) as GatsbyIterable<IGatsbyNode>
 
     result = result.mergeSorted(
-      completeResult(typeName, intermediateResult, dbQueries, usedQueries)
+      completeFiltering(typeName, intermediateResult, dbQueries, usedQueries)
     )
   }
   return result
@@ -322,7 +410,7 @@ async function runQueryWithoutSort(
         .filter(Boolean) as GatsbyIterable<IGatsbyNode>
 
       result = result.concat(
-        completeResult(typeName, intermediateResult, dbQueries, usedQueries)
+        completeFiltering(typeName, intermediateResult, dbQueries, usedQueries)
       )
     }
     return result
@@ -335,7 +423,7 @@ async function runQueryWithoutSort(
   let result = new GatsbyIterable<IGatsbyNode>([])
   for (const typeName of nodeTypeNames) {
     result = result.concat(
-      completeResult(
+      completeFiltering(
         typeName,
         datastore.iterateNodesByType(typeName),
         dbQueries,
@@ -346,7 +434,7 @@ async function runQueryWithoutSort(
   return result
 }
 
-function completeResult(
+function completeFiltering(
   typeName: string,
   intermediateResult: IGatsbyIterable<IGatsbyNode>,
   dbQueries: Array<DbQuery>,
@@ -392,6 +480,10 @@ function completeResult(
   })
 }
 
+function completeSorting() {
+  // if IndexResults.
+}
+
 /**
  * Given filter and sort fields (in dotted notation), as well as a sort order,
  * returns an object describing index fields.
@@ -434,10 +526,4 @@ function isMixedSortOrder(
 ): boolean {
   const first = isDesc(sortOrder[0])
   return sortFields.some((_, index) => isDesc(sortOrder[index]) !== first)
-}
-
-function isDesc(
-  sortOrder: "asc" | "desc" | "ASC" | "DESC" | boolean | void
-): boolean {
-  return sortOrder === `desc` || sortOrder === `DESC` || sortOrder === false
 }

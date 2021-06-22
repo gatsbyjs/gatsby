@@ -7,6 +7,7 @@ import {
   getFilterStatement,
   prepareQueryArgs,
 } from "../../common/query"
+import { isDesc } from "./common"
 import { getQueriesThatCanUseIndex } from "./filter-using-index"
 
 interface ISelectIndexArgs {
@@ -22,17 +23,25 @@ export function suggestIndex({
   filter,
   sort = { fields: [], order: [] },
   maxFields = 4,
-}: ISelectIndexArgs): IndexFields | undefined {
+}: ISelectIndexArgs): Array<IndexField> {
   const dbQueries = createDbQueriesFromObject(prepareQueryArgs(filter))
   const queriesThatCanUseIndex = getQueriesThatCanUseIndex(dbQueries)
 
-  const sortFields: Array<IndexField> = sort.fields.map((field, i) => [
-    field,
-    isDesc(sort?.order[i]) ? -1 : 1,
-  ])
+  // Mixed sort order is not supported by our indexes :/
+  const sortFields: Array<IndexField> = []
+  const initialOrder = isDesc(sort.order[0]) ? -1 : 1
+
+  for (let i = 0; i < sort.fields.length; i++) {
+    const field = sort.fields[i]
+    const order = isDesc(sort.order[i]) ? -1 : 1
+    if (order !== initialOrder) {
+      break
+    }
+    sortFields.push([field, order])
+  }
 
   if (!sortFields.length && !queriesThatCanUseIndex.length) {
-    return undefined
+    return []
   }
   if (!queriesThatCanUseIndex.length) {
     return dedupeAndTrim(sortFields, maxFields)
@@ -66,6 +75,7 @@ export function suggestIndex({
 
   if (!overlap.size) {
     // No overlap - in this case filter+sort only makes sense when all filters have `eq` comparator
+    // Same as https://docs.mongodb.com/manual/tutorial/sort-results-with-indexes/#sort-and-non-prefix-subset-of-an-index
     if (eqFields.size === queriesThatCanUseIndex.length) {
       const eqFilterFields: Array<IndexField> = [...eqFields].map(f => [f, 1])
       return dedupeAndTrim([...eqFilterFields, ...sortFields], maxFields)
@@ -97,10 +107,4 @@ function toIndexFields(queries: Array<DbQuery>): IndexFields {
 
 function dedupeAndTrim(fields: IndexFields, maxFields: number): IndexFields {
   return [...new Map(fields)].slice(0, maxFields)
-}
-
-function isDesc(
-  sortOrder: "asc" | "desc" | "ASC" | "DESC" | boolean | undefined
-): boolean {
-  return sortOrder === `desc` || sortOrder === `DESC` || sortOrder === false
 }

@@ -9,7 +9,13 @@ import {
   IDbFilterStatement,
 } from "../../common/query"
 import { IDataStore, ILmdbDatabases, NodeId } from "../../types"
-import { IndexFieldValue, IndexKey, undefinedSymbol } from "./create-index"
+import {
+  IIndexMetadata,
+  IndexFields,
+  IndexFieldValue,
+  IndexKey,
+  undefinedSymbol,
+} from "./create-index"
 import { cartesianProduct, shouldFilter } from "./common"
 import { inspect } from "util"
 
@@ -48,10 +54,6 @@ interface IDataStoreContext {
   datastore: IDataStore
 }
 
-interface IIndexFields {
-  [dottedField: string]: number
-}
-
 const canUseIndex = new Set([
   DbComparator.EQ,
   DbComparator.IN,
@@ -64,76 +66,139 @@ const canUseIndex = new Set([
   // DbComparator.NIN
 ])
 
+interface IFilterContext {
+  datastore: IDataStore
+  databases: ILmdbDatabases
+  dbQueries: Array<DbQuery>
+  indexFields: IndexFields
+  indexMetadata: IIndexMetadata
+  limit?: number
+  offset?: number
+  reverse: boolean
+}
+
+interface IFilterResult {
+  entries: GatsbyIterable<IIndexEntry>
+  usedQueries: Set<DbQuery>
+  usedOffset: number
+  usedLimit: number | undefined
+}
+
 /**
  * Note: since it returns full index entries - it may contain duplicates
  */
 export async function filterUsingIndex(
-  context: IDataStoreContext,
-  typeName: string,
-  indexFields: IIndexFields,
-  dbQueries: Array<DbQuery>,
-  reverse: boolean = false
-): Promise<{
-  usedQueries: Set<DbQuery>
-  result: GatsbyIterable<IIndexEntry>
-}> {
-  const indexName = buildIndexName(typeName, indexFields)
+  context: IFilterContext
+): Promise<IFilterResult> {
+  const { dbQueries, indexFields } = context
   const { ranges, usedQueries } = getIndexRanges(dbQueries, indexFields)
 
   const result =
     ranges.length > 0
-      ? performRangeScan(context, indexName, ranges, reverse)
-      : performFullScan(context, indexName, reverse)
+      ? performRangeScan(context, ranges, usedQueries)
+      : performFullScan(context)
 
   if (usedQueries.size === dbQueries.length) {
     // Query is fully satisfied by the index, yay
     return { usedQueries, result }
   }
 
-  return narrowResultsIfPossible(
-    result,
-    indexName,
-    indexFields,
+  return narrowResultsIfPossible(context, result, usedQueries)
+}
+
+export async function countUsingIndex(
+  context: IFilterContext
+): Promise<number> {
+  const {
+    databases: { indexes },
     dbQueries,
-    usedQueries
-  )
+    indexFields,
+    indexMetadata: { keyPrefix, maxKeysPerItem },
+  } = context
+
+  const { ranges, usedQueries } = getIndexRanges(dbQueries, indexFields)
+
+  if (usedQueries.size !== dbQueries.length) {
+    throw new Error(
+      `Cannot count using index. Some field filters cannot be resolved by index.`
+    )
+  }
+  if (maxKeysPerItem > 1) {
+    // TODO: we probably can count in this case if all indexMetadata.multiKeyFields have `eq` filters in usedQueries
+    throw new Error(`Cannot count using MultiKey index.`)
+  }
+  if (ranges.length === 0) {
+    return indexes.getKeysCount({
+      start: [keyPrefix],
+      end: [getValueEdgeAfter(keyPrefix)],
+      snapshot: false,
+    } as any)
+  }
+  let count = 0
+  for (let { start, end } of ranges) {
+    start = [keyPrefix, ...start]
+    end = [keyPrefix, ...end]
+    // Assuming ranges are not overlapping
+    count += indexes.getKeysCount({ start, end, snapshot: false } as any)
+  }
+  return count
 }
 
 function performRangeScan(
-  context: IDataStoreContext,
-  indexName: string,
+  context: IFilterContext,
   ranges: Array<IIndexRange>,
-  reverse: boolean = false
-): GatsbyIterable<IIndexEntry> {
-  // console.log(`range scan`)
-
+  usedQueries: Set<DbQuery>
+): IFilterResult {
   const {
     databases: { indexes },
-    queryArgs,
+    indexMetadata: { keyPrefix, maxKeysPerItem },
+    reverse,
   } = context
 
-  // console.log(`limit`, skip, limit)
-  // process.exit(1)
+  let { limit, offset = 0 } = context
 
-  const limit = queryArgs.limit
-    ? (queryArgs.skip ?? 0) + queryArgs.limit + 1
-    : undefined
-
-  let result = new GatsbyIterable<IIndexEntry>([])
-  for (let { start, end } of ranges) {
-    start = [indexName, ...start]
-    end = [indexName, ...end]
-    const range = !reverse
-      ? { start, end, limit, snapshot: false }
-      : { start: end, end: start, limit, reverse, snapshot: false }
-
-    // console.log(range)
-
-    // Deduplicate by node counter which is the last element in the key
-    const matches = indexes.getRange(range as any)
-    result = result.concat(matches).mergeSorted(matches, compareByCounter)
+  if (limit) {
+    if (ranges.length > 1) {
+      // e.g. { in: [1, 2] }
+      // Cannot use offset: we will run several range queries and it's not clear which one to offset
+      // TODO: assuming ranges are sorted and not overlapping it should be possible to use offsets in this case
+      //   by running first range query, counting results while lazily iterating and
+      //   running the next range query when the previous iterator is done (and count is known)
+      //   with offset = offset - previousRangeCount, limit = limit - previousRangeCount
+      offset = 0
+    }
+    if (maxKeysPerItem > 1) {
+      // Cannot use limit:
+      // MultiKey index may contain duplicates - we can only set a safe upper bound
+      // TODO: we probably can use proper limit if all indexMetadata.multiKeyFields have `eq` filters in usedQueries
+      limit *= maxKeysPerItem
+    }
   }
-  return result.deduplicate(getNodeCounter)
+
+  let entries = new GatsbyIterable<IIndexEntry>([])
+  for (let { start, end } of ranges) {
+    start = [keyPrefix, ...start]
+    end = [keyPrefix, ...end]
+    const range = !reverse
+      ? { start, end, limit, offset, snapshot: false }
+      : { start: end, end: start, limit, offset, reverse, snapshot: false }
+
+    // Assuming ranges are sorted and not overlapping, we can concat results
+    const matches = indexes.getRange(range as any)
+    entries = entries.concat(matches)
+  }
+  if (maxKeysPerItem > 1) {
+    // MultiKey indexes require additional deduplication step :/
+    // TODO: probably no need if all indexMetadata.multiKeyFields have `eq` filters in usedQueries
+    entries = entries.deduplicate(getIdentifier)
+  }
+
+  return {
+    entries,
+    usedLimit: limit,
+    usedOffset: offset,
+    usedQueries,
+  }
 }
 
 function performFullScan(
@@ -175,7 +240,7 @@ function performFullScan(
       : topToUndefined.concat(undefinedToEnd)
   )
 
-  return result.deduplicate(getNodeCounter)
+  return result.deduplicate(getIdentifier)
 }
 
 /**
@@ -271,7 +336,7 @@ export function getQueriesThatCanUseIndex(all: Array<DbQuery>): Array<DbQuery> {
 
 export function getIndexRanges(
   dbQueries: Array<DbQuery>,
-  indexFields: IIndexFields
+  indexFields: IndexFields
 ): { usedQueries: Set<DbQuery>; ranges: Array<IIndexRange> } {
   const queriesThatCanUseIndex = getQueriesThatCanUseIndex(dbQueries)
 
@@ -279,7 +344,7 @@ export function getIndexRanges(
   const rangeStarts: Array<RangeBoundary> = []
   const rangeEndings: Array<RangeBoundary> = []
 
-  for (const indexField of Object.keys(indexFields)) {
+  for (const indexField of indexFields.keys()) {
     const result = extractRanges(queriesThatCanUseIndex, indexField)
     if (!result.rangeStarts.length) {
       // No point to continue - just use index prefix, not all index fields
@@ -493,27 +558,6 @@ function getValueEdgeBefore(value: IndexFieldValue): RangeEdgeBefore {
   return [undefinedSymbol, value]
 }
 
-/**
- * Autogenerate index name based on parameters.
- *
- * Example:
- *
- * buildIndexName(`Foo`, { foo: 1, bar: -1 }) -> `Foo/foo:1/bar:-1
- */
-function buildIndexName(
-  typeName: string,
-  fields: { [key: string]: number }
-): string {
-  const tokens: Array<string> = [typeName]
-
-  for (const field of Object.keys(fields)) {
-    const sortOrder = fields[field]
-    tokens.push(`${field}:${sortOrder}`)
-  }
-
-  return tokens.join(`/`)
-}
-
 function sortByFilterSpecificity(a: DbQuery, b: DbQuery): number {
   const aComparator = getFilterStatement(a).comparator
   const bComparator = getFilterStatement(b).comparator
@@ -545,18 +589,22 @@ function toIndexFieldValue(
   return filterValue
 }
 
-function compareByCounter(a: IIndexEntry, b: IIndexEntry): number {
-  // @ts-ignore
-  return compareKey(getNodeCounter(a), getNodeCounter(b))
+function compareByKeySuffix(prefixLength: number) {
+  return function (a: IIndexEntry, b: IIndexEntry): number {
+    const aSuffix = a.key.slice(prefixLength - 1)
+    const bSuffix = b.key.slice(prefixLength - 1)
+    // @ts-ignore
+    return compareKey(aSuffix, bSuffix)
+  }
 }
 
-function getNodeCounter(entry: IIndexEntry): number {
-  const counter = entry.key[entry.key.length - 1]
-  if (typeof counter !== `number`) {
-    const out = inspect(counter)
+function getIdentifier(entry: IIndexEntry): number | string {
+  const id = entry.key[entry.key.length - 1]
+  if (typeof id !== `number` && typeof id !== `string`) {
+    const out = inspect(id)
     throw new Error(
-      `Last element of index key is expected to be numeric node counter, got ${out}`
+      `Last element of index key is expected to be numeric or string id, got ${out}`
     )
   }
-  return counter
+  return id
 }
