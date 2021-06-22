@@ -12,7 +12,7 @@ Key highlights of this release:
 - [`gatsby-source-shopify` v5](#gatsby-source-shopify-v5) - brand new version
 - [Web Vitals Tracking](#web-vitals-tracking) - Analytics Plugins now support tracking Web Vitals
 - [webpack caching](#webpack-caching) - built-in persistent caching activated for everyone
-- [Improvements to Drupal integration](#drupal-integration) — Sourcing is up to 30%+ faster and much more reliable
+- [Improvements to Drupal integration](#drupal-integration) — Sourcing is up to 30%+ faster and more reliable
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
