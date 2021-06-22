@@ -76,7 +76,6 @@ module.exports = {
     {
       resolve: "gatsby-source-shopify",
       options: {
-        apiKey: process.env.SHOPIFY_ADMIN_API_KEY,
         password: process.env.SHOPIFY_ADMIN_PASSWORD,
         storeUrl: process.env.SHOPIFY_STORE_URL,
       },
@@ -130,10 +129,6 @@ Now follow the second link to explore your Shopify data!
 <div id="plugin-options"></div>
 
 ## Plugin options
-
-`apiKey: string`
-
-The admin API key for the Shopify store + app you're using
 
 `password: string`
 
@@ -250,7 +245,6 @@ module.exports = {
     {
       resolve: "gatsby-source-shopify",
       options: {
-        apiKey: process.env.SHOPIFY_ADMIN_API_KEY,
         password: process.env.SHOPIFY_ADMIN_PASSWORD,
         storeUrl: process.env.SHOPIFY_STORE_URL,
         downloadImages: true,
