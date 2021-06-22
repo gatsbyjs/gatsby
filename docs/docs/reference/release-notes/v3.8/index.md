@@ -4,13 +4,12 @@ version: "3.8.0"
 title: "v3.8 Release Notes"
 ---
 
-# [v3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.8.0-next.0...gatsby@3.8.0) (June 2021 #2)
-
 Welcome to `gatsby@3.8.0` release (June 2021 #2)
 
 Key highlights of this release:
 
 - [React 18 - Alpha](#react-18---alpha) - React 18 Alpha is available in Gatsby
+- [`gatsby-source-shopify` v5](#gatsby-source-shopify-v5) - TODO
 - [Web Vitals Tracking](#web-vitals-tracking) - Analytics Plugins now support tracking Web Vitals
 - [webpack caching](#webpack-caching) - built-in persistent caching activated for everyone
 
@@ -28,6 +27,10 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 ## React 18 - Alpha
 
 Gatsby supports [React 18 Alpha](https://reactjs.org/blog/2021/06/08/the-plan-for-react-18.html). It's still very early days but we like to be ahead of the pack. You can use `startTransition` and `stateBatching` today by installing react@alpha & react-dom@alpha. We love to get feedback at https://github.com/gatsbyjs/gatsby/discussions/31943.
+
+## `gatsby-source-shopify` v5
+
+TODO
 
 ## Web Vitals Tracking
 
