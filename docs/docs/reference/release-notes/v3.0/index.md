@@ -4,10 +4,6 @@ version: "3.0.0"
 title: "v3 Release Notes"
 ---
 
-# v3.0 (March 2021 #1)
-
----
-
 Welcome to `gatsby@3.0.0` release (March 2021 #1).
 
 This is the first major bump of Gatsby since [September 2018](https://www.npmjs.com/package/gatsby/v/2.0.0)!

@@ -4,8 +4,6 @@ version: "3.6.0"
 title: "v3.6 Release Notes"
 ---
 
-# [v3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.6.0-next.0...gatsby@3.6.0) (May 2021 #2)
-
 Welcome to `gatsby@3.6.0` release (May 2021 #2)
 
 Key highlights of this release:
