@@ -17,7 +17,6 @@ export function productVariantsProcessor(
     const { product, ...rest } = obj
     const productId = createNodeId(product.id, gatsbyApi, pluginOptions)
 
-    console.info(`About to build a variant node`, rest)
     return builder.buildNode({
       ...rest,
       productId,

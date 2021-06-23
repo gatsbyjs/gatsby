@@ -41,7 +41,6 @@ export function incrementalProductsProcessor(
           .map(v => createNodeId(v.id, gatsbyApi, pluginOptions))
 
         if (!variantIds.includes(node.id)) {
-          console.info(`Found a variant to delete!`, node, product)
           return true
         }
       }
