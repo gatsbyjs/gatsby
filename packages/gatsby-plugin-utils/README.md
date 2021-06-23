@@ -44,3 +44,22 @@ it(`should partially validate one value of a schema`, async () => {
   expect(errors).toEqual([`"toVerify" must be a boolean`])
 })
 ```
+
+### `isGatsbyNodeLifecycleSupported`
+
+Utility to be used by plugins to do runtime check against `gatsby` core package checking wether particular `gatsby-node` lifecycle API is supported. Useful for plugins to be able to support multiple `gatsby` core versions.
+
+#### Example
+
+```js
+import { isGatsbyNodeLifecycleSupported } from "gatsby-plugin-utils"
+
+// only use createSchemaCustomization lifecycle only when it's available.
+if (isGatsbyNodeLifecycleSupported(`createSchemaCustomization`)) {
+  exports.createSchemaCustomization = function createSchemaCustomization({
+    actions,
+  }) {
+    // customize schema
+  }
+}
+```
