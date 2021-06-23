@@ -10,6 +10,7 @@
     "@babel/runtime": "^7.14.0",
     "date-fns": "^2.22.1",
     "fs-extra": "^8.1.0",
+    "gatsby-telemetry": "^2.8.0",
     "kebab-hash": "^0.1.2",
     "lodash": "^4.17.21",
     "webpack-assets-manifest": "^5.0.6"
