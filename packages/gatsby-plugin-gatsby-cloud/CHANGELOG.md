@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.8.0...gatsby-plugin-gatsby-cloud@2.8.1) (2021-06-23)
+
+### Bug Fixes
+
+- **gatsby-plugin-gatsby-cloud:** add gatsby-telemetry as a dependency ([#32047](https://github.com/gatsbyjs/gatsby/issues/32047)) ([#32049](https://github.com/gatsbyjs/gatsby/issues/32049)) ([ba65e27](https://github.com/gatsbyjs/gatsby/commit/ba65e272993ba15117e5944dba77dcafb9df80e9))
+
 # [2.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.8.0-next.2...gatsby-plugin-gatsby-cloud@2.8.0) (2021-06-22)
 
 **Note:** Version bump only for package gatsby-plugin-gatsby-cloud
