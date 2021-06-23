@@ -16733,9 +16733,7 @@
       ],
       "groupName": "minor and patch dependencies for gatsby-source-drupal",
       "groupSlug": "gatsby-source-drupal-prod-minor",
-      "matchPackageNames": [
-        "axios"
-      ],
+      "matchPackageNames": [],
       "matchUpdateTypes": [
         "patch"
       ],
@@ -16768,9 +16766,7 @@
       ],
       "groupName": "major dependencies for gatsby-source-drupal",
       "groupSlug": "gatsby-source-drupal-prod-major",
-      "matchPackageNames": [
-        "axios"
-      ],
+      "matchPackageNames": [],
       "matchUpdateTypes": [
         "major",
         "minor"
@@ -18568,7 +18564,8 @@
       "groupName": "minor and patch dependencies for gatsby-source-shopify",
       "groupSlug": "gatsby-source-shopify-prod-minor",
       "matchPackageNames": [
-        "gatsby-node-helpers"
+        "sharp",
+        "shift-left"
       ],
       "matchUpdateTypes": [
         "patch"
@@ -18603,7 +18600,8 @@
       "groupName": "major dependencies for gatsby-source-shopify",
       "groupSlug": "gatsby-source-shopify-prod-major",
       "matchPackageNames": [
-        "gatsby-node-helpers"
+        "sharp",
+        "shift-left"
       ],
       "matchUpdateTypes": [
         "major",
