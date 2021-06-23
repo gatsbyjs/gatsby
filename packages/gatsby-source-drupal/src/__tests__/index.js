@@ -1,16 +1,14 @@
-jest.mock(`axios`, () => {
-  return {
-    get: jest.fn(path => {
-      const last = path.split(`/`).pop()
-      try {
-        return { data: require(`./fixtures/${last}.json`) }
-      } catch (e) {
-        console.log(`Error`, e)
-        return null
-      }
-    }),
-  }
-})
+jest.mock(`got`, () =>
+  jest.fn(path => {
+    const last = path.split(`/`).pop()
+    try {
+      return { body: require(`./fixtures/${last}.json`) }
+    } catch (e) {
+      console.log(`Error`, e)
+      return null
+    }
+  })
+)
 
 jest.mock(`gatsby-source-filesystem`, () => {
   return {
@@ -506,18 +504,18 @@ describe(`gatsby-source-drupal`, () => {
 
   describe(`Error handling`, () => {
     describe(`Does end activities if error is thrown`, () => {
-      const axios = require(`axios`)
+      const got = require(`got`)
       beforeEach(() => {
         nodes = {}
         reporter.activityTimer.mockClear()
         activity.start.mockClear()
         activity.end.mockClear()
-        axios.get.mockClear()
+        got.mockClear()
         downloadFileSpy.mockClear()
       })
 
       it(`during data fetching`, async () => {
-        axios.get.mockImplementationOnce(() => {
+        got.mockImplementationOnce(() => {
           throw new Error(`data fetching failed`)
         })
         expect.assertions(5)

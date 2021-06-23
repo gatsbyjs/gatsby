@@ -76,25 +76,21 @@ const downloadContentfulAssets = async gatsbyFunctions => {
 
       // If we don't have cached data, download the file
       if (!fileNodeID) {
-        try {
-          const fileNode = await createRemoteFileNode({
-            url,
-            store,
-            cache,
-            createNode,
-            createNodeId,
-            getCache,
-            reporter,
-          })
+        const fileNode = await createRemoteFileNode({
+          url,
+          store,
+          cache,
+          createNode,
+          createNodeId,
+          getCache,
+          reporter,
+        })
 
-          if (fileNode) {
-            bar.tick()
-            fileNodeID = fileNode.id
+        if (fileNode) {
+          bar.tick()
+          fileNodeID = fileNode.id
 
-            await cache.set(remoteDataCacheKey, { fileNodeID })
-          }
-        } catch (err) {
-          // Ignore
+          await cache.set(remoteDataCacheKey, { fileNodeID })
         }
       }
 
