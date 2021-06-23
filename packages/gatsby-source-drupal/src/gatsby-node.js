@@ -2,7 +2,7 @@ const got = require(`got`)
 const _ = require(`lodash`)
 const urlJoin = require(`url-join`)
 import HttpAgent from "agentkeepalive"
-const http2wrapper = require(`http2-wrapper`)
+// const http2wrapper = require(`http2-wrapper`)
 
 const { HttpsAgent } = HttpAgent
 
@@ -19,15 +19,15 @@ const { handleReferences, handleWebhookUpdate } = require(`./utils`)
 const agent = {
   http: new HttpAgent(),
   https: new HttpsAgent(),
-  http2: new http2wrapper.Agent(),
+  // http2: new http2wrapper.Agent(),
 }
 
 async function worker([url, options]) {
   return got(url, {
     agent,
     cache: false,
-    request: http2wrapper.auto,
-    http2: true,
+    // request: http2wrapper.auto,
+    // http2: true,
     ...options,
   })
 }
