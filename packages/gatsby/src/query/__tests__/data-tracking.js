@@ -229,7 +229,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
     }
   })
 
-  const queryIds = queryUtil.calcDirtyQueryIds(store.getState())
+  const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
   const { staticQueryIds, pageQueryIds } = queryUtil.groupQueryIds(queryIds)
   const activity = reporter.activityTimer(`query running`)
   activity.start()

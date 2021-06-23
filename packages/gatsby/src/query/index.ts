@@ -56,10 +56,7 @@ export function calcDirtyQueryIds(state: IGatsbyState): Array<string> {
   return dirtyQueryIds
 }
 
-// TODO: Possibly remove? Used in inc-build-cli
-export function calcInitialDirtyQueryIds(state: IGatsbyState): Array<string> {
-  return calcDirtyQueryIds(state)
-}
+export { calcDirtyQueryIds as calcInitialDirtyQueryIds }
 
 /**
  * Groups queryIds by whether they are static or page queries.
@@ -206,9 +203,13 @@ function onDevelopStaticQueryDone({
   job: IQueryJob
   result: IStaticQueryResult["result"]
 }): void {
+  if (!job.hash) {
+    return
+  }
+
   websocketManager.emitStaticQueryData({
     result,
-    id: job.hash as string,
+    id: job.hash,
   })
 }
 
