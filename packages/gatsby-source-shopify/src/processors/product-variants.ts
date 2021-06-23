@@ -5,12 +5,13 @@ export function productVariantsProcessor(
   objects: BulkResults,
   builder: NodeBuilder
 ): Array<Promise<NodeInput>> {
-  const objectsToBuild = objects.filter(obj => {
-    const [, remoteType] = obj.id.match(idPattern) || []
+  return [...process(objects, builder)]
+}
 
-    return remoteType !== `Product`
-  })
-
+function* process(
+  objects: BulkResults,
+  builder: NodeBuilder
+): Generator<Promise<NodeInput>> {
   /**
    * We will need to attach presentmentPrices here as a simple array.
    * To achieve that, we could go through the results backwards and
@@ -22,5 +23,11 @@ export function productVariantsProcessor(
    * so please see the processors/collections.ts for reference.
    */
 
-  return objectsToBuild.map(builder.buildNode)
+  for (const obj of objects) {
+    const [, remoteType] = obj.id.match(idPattern) || []
+
+    if (remoteType !== `Product`) {
+      yield builder.buildNode(obj)
+    }
+  }
 }

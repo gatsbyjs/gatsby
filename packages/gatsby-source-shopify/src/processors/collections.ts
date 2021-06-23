@@ -7,7 +7,15 @@ export function collectionsProcessor(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: ShopifyPluginOptions
 ): Array<Promise<NodeInput>> {
-  const promises = []
+  return [...process(objects, builder, gatsbyApi, pluginOptions)]
+}
+
+function* process(
+  objects: BulkResults,
+  builder: NodeBuilder,
+  gatsbyApi: SourceNodesArgs,
+  pluginOptions: ShopifyPluginOptions
+): Generator<Promise<NodeInput>> {
   const collectionProductIndex: { [collectionId: string]: Array<string> } = {}
 
   /**
@@ -36,14 +44,12 @@ export function collectionsProcessor(
     }
 
     if (remoteType === `Metafield`) {
-      promises.push(builder.buildNode(result))
+      yield builder.buildNode(result)
     }
 
     if (remoteType == `Collection`) {
       result.productIds = collectionProductIndex[result.id] || []
-      promises.push(builder.buildNode(result))
+      yield builder.buildNode(result)
     }
   }
-
-  return promises
 }
