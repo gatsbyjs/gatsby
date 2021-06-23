@@ -16,9 +16,9 @@
   },
   "dependencies": {
     "babel-preset-gatsby": "^1.5.0",
-    "gatsby": "^3.7.0",
-    "gatsby-plugin-gatsby-cloud": "^2.5.0",
-    "gatsby-plugin-sass": "^4.5.0",
+    "gatsby": "next",
+    "gatsby-plugin-gatsby-cloud": "next",
+    "gatsby-plugin-sass": "next",
     "googleapis": "^73.0.0",
     "node-fetch": "^2.6.1",
     "query-string": "^7.0.0",

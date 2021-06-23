@@ -3,7 +3,7 @@ const { google } = require("googleapis")
 const clientId = process.env.GOOGLE_CLIENT_ID
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET
 
-// Intialize our Google OAuth client, same as in login function.
+// Initialize our Google OAuth client, same as in login function.
 const oauth2Client = new google.auth.OAuth2(
   clientId,
   clientSecret,
