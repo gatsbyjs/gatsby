@@ -1,13 +1,13 @@
 # Gatsby + loadable-components
 
-This repo is meant to illustrate the pattern of adding [loadable-components](https://loadable-components.com/docs/getting-started/) to a Gatsby project. In this case, the Header component is being code-split out while mainting SSR.
+This repo is meant to illustrate the pattern of adding [loadable-components](https://loadable-components.com/docs/getting-started/) to a Gatsby project. In this case, the Header component is being code-split out while maintaining SSR.
 
 ```jsx
-// layout.js
+// src/components/layout.jsx
+import * as React from "react"
 
 const Header = loadable(() => import("./header"))
-
-<Header siteTitle="My Title" />
+export default Header
 ```
 
 ## Why?
@@ -28,29 +28,38 @@ When you build a page with a headless CMS, parts of your site may have a structu
 The most common pattern is a switch case or series of if statements checking the component’s type, rendering the correct one and passing in its props.
 
 ```jsx
+// src/components/flex-page.jsx
+import * as React from "react"
+
 const FlexPage = ({ components }) => {
- return (
-		<>
-		{components.map((component) => {
-			switch (component.type) {
-				case ‘header’:
-					return <Header {...component} />
-				case ‘text’:
-					return <Text {...component} />
-				case ‘carousel’:
-					return <Carousel {...component} />
-			}
-		)}
-	</>
- );
-};
+  return (
+    <>
+      {components.map(component => {
+        switch (component.type) {
+          case "header":
+            return <Header {...component} />
+          case "text":
+            return <Text {...component} />
+          case "carousel":
+            return <Carousel {...component} />
+          default:
+            return <div>empty</div>
+        }
+      })}
+    </>
+  )
+}
+
+export default FlexPage
 ```
 
 ### Logical Checks in Render
 
-This is basically the abvoe pattern but on a smaller scale.
+This is basically the above pattern but on a smaller scale.
 
 ```jsx
+import * as React from "react"
+
 const FlexPage = ({ hasCarousel }) => {
   return (
     <div>
@@ -60,6 +69,8 @@ const FlexPage = ({ hasCarousel }) => {
     </div>
   )
 }
+
+export default FlexPage
 ```
 
 ### The Conditional Drawback
@@ -80,6 +91,6 @@ After building the site and serving locally, refresh the page with DevTools open
 
 First, verify the code-splitting by looking for a JS bundle in the Network tab with the naming pattern: `component--[my-component]-[hash].js`.
 
-Then, to verify SSR is still working, click the 'All' option in the Network tab and look for the first item `localhost`. This is the initial HTML sent by Gatsby. Verify that you can see the code-split component in this intial HTML.
+Then, to verify SSR is still working, click the 'All' option in the Network tab and look for the first item `localhost`. This is the initial HTML sent by Gatsby. Verify that you can see the code-split component in this initial HTML.
 
 That's it, happy building! 🎉
