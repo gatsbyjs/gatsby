@@ -31,9 +31,6 @@ export class ProductVariantsQuery extends BulkQuery {
                     createdAt
                     displayName
                     id
-                    product {
-                      id
-                    }
                     image {
                       id
                       altText
