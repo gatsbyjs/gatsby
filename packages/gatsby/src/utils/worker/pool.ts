@@ -22,10 +22,11 @@ export const create = (): GatsbyWorkerPool => {
 
 export async function runQueriesInWorkersQueue(
   pool: GatsbyWorkerPool,
-  queryIds: IGroupedQueryIds
+  queryIds: IGroupedQueryIds,
+  chunkSize = 50
 ): Promise<void> {
-  const staticQuerySegments = chunk(queryIds.staticQueryIds, 50)
-  const pageQuerySegments = chunk(queryIds.pageQueryIds, 50)
+  const staticQuerySegments = chunk(queryIds.staticQueryIds, chunkSize)
+  const pageQuerySegments = chunk(queryIds.pageQueryIds, chunkSize)
 
   const activity = reporter.createProgress(
     `run queries in workers`,

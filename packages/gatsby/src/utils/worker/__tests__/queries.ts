@@ -12,6 +12,7 @@ import {
 } from "./test-helpers"
 import { getDataStore } from "../../../datastore"
 import { IGroupedQueryIds } from "../../../services"
+import { IGatsbyPage } from "../../../redux/types"
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -35,40 +36,47 @@ jest.mock(`chokidar`, () => {
   return chokidar
 })
 
+const dummyKeys = `a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z`.split(
+  `,`
+)
+
+function pagePlaceholders(key): any {
+  return {
+    path: `/${key}`,
+    componentPath: `/${key}.js`,
+    component: `/${key}.js`,
+    internalComponentName: `Component/${key}/`,
+    matchPath: undefined,
+    componentChunkName: `component--${key}`,
+    isCreatedByStatefulCreatePages: true,
+    updatedAt: 1,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    pluginCreator___NODE: key,
+    pluginCreatorId: key,
+    ownerNodeId: key,
+  }
+}
+
+const dummyPages: Array<IGatsbyPage> = dummyKeys.map(name => {
+  return {
+    ...pagePlaceholders(name),
+    query: `{ nodeTypeOne { number } }`,
+    context: {},
+  }
+})
+
 const dummyPageFoo = {
-  path: `/foo`,
-  componentPath: `/foo.js`,
-  component: `/foo.js`,
+  ...pagePlaceholders(`foo`),
   query: `{ nodeTypeOne { number } }`,
-  internalComponentName: `Component/foo/`,
-  matchPath: undefined,
-  componentChunkName: `component--foo`,
-  isCreatedByStatefulCreatePages: true,
   context: {},
-  updatedAt: 1,
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  pluginCreator___NODE: `foo`,
-  pluginCreatorId: `foo`,
-  ownerNodeId: `foo`,
 }
 
 const dummyPageBar = {
-  path: `/bar`,
-  componentPath: `/bar.js`,
-  component: `/bar.js`,
+  ...pagePlaceholders(`bar`),
   query: `query($var: Boolean) { nodeTypeOne { default: fieldWithArg, fieldWithArg(isCool: true), withVar: fieldWithArg(isCool: $var) } }`,
-  internalComponentName: `Component/bar/`,
-  matchPath: undefined,
-  componentChunkName: `component--bar`,
-  isCreatedByStatefulCreatePages: true,
   context: {
     var: true,
   },
-  updatedAt: 1,
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  pluginCreator___NODE: `bar`,
-  pluginCreatorId: `bar`,
-  ownerNodeId: `bar`,
 }
 
 const dummyStaticQuery = {
@@ -79,15 +87,22 @@ const dummyStaticQuery = {
   hash: `q1-hash`,
 }
 
-const queryIds: IGroupedQueryIds = {
+const pageQueryIds = [dummyPageFoo, dummyPageBar, ...dummyPages]
+
+const queryIdsSmall: IGroupedQueryIds = {
   pageQueryIds: [dummyPageFoo, dummyPageBar],
+  staticQueryIds: [dummyStaticQuery.id],
+}
+
+const queryIdsBig: IGroupedQueryIds = {
+  pageQueryIds,
   staticQueryIds: [dummyStaticQuery.id],
 }
 
 describeWhenLMDB(`worker (queries)`, () => {
   beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
-    const fileDir = path.join(process.cwd(), `.cache/redux`)
+    const fileDir = path.join(process.cwd(), `.cache/worker`)
     await fs.emptyDir(fileDir)
 
     worker = createTestWorker()
@@ -100,60 +115,37 @@ describeWhenLMDB(`worker (queries)`, () => {
 
     await build({ parentSpan: {} })
 
-    store.dispatch({
-      type: `CREATE_PAGE`,
-      plugin: {
-        id: `gatsby-plugin-test`,
-        name: `gatsby-plugin-test`,
-        version: `1.0.0`,
-      },
-      payload: {
-        path: dummyPageFoo.path,
-        componentPath: dummyPageFoo.componentPath,
-        component: dummyPageFoo.component,
-      },
-    })
-
-    store.dispatch({
-      type: `CREATE_PAGE`,
-      plugin: {
-        id: `gatsby-plugin-test`,
-        name: `gatsby-plugin-test`,
-        version: `1.0.0`,
-      },
-      payload: {
-        path: dummyPageBar.path,
-        componentPath: dummyPageBar.componentPath,
-        component: dummyPageBar.component,
-      },
+    pageQueryIds.forEach(page => {
+      store.dispatch({
+        type: `CREATE_PAGE`,
+        plugin: {
+          id: `gatsby-plugin-test`,
+          name: `gatsby-plugin-test`,
+          version: `1.0.0`,
+        },
+        payload: {
+          path: page.path,
+          componentPath: page.componentPath,
+          component: page.component,
+        },
+      })
     })
 
     saveStateForWorkers([`inferenceMetadata`])
 
-    store.dispatch({
-      type: `QUERY_EXTRACTED`,
-      plugin: {
-        id: `gatsby-plugin-test`,
-        name: `gatsby-plugin-test`,
-        version: `1.0.0`,
-      },
-      payload: {
-        componentPath: dummyPageFoo.componentPath,
-        query: dummyPageFoo.query,
-      },
-    })
-
-    store.dispatch({
-      type: `QUERY_EXTRACTED`,
-      plugin: {
-        id: `gatsby-plugin-test`,
-        name: `gatsby-plugin-test`,
-        version: `1.0.0`,
-      },
-      payload: {
-        componentPath: dummyPageBar.componentPath,
-        query: dummyPageBar.query,
-      },
+    pageQueryIds.forEach(page => {
+      store.dispatch({
+        type: `QUERY_EXTRACTED`,
+        plugin: {
+          id: `gatsby-plugin-test`,
+          name: `gatsby-plugin-test`,
+          version: `1.0.0`,
+        },
+        payload: {
+          componentPath: page.componentPath,
+          query: page.query,
+        },
+      })
     })
 
     store.dispatch({
@@ -169,7 +161,7 @@ describeWhenLMDB(`worker (queries)`, () => {
     saveStateForWorkers([`components`, `staticQueryComponents`])
 
     await worker.buildSchema()
-    await worker.runQueries(queryIds)
+    await worker.runQueries(queryIdsSmall)
   })
 
   afterAll(() => {
