@@ -40,11 +40,6 @@ export const onRenderBody = (
       key="preconnect-google-analytics"
       href="https://www.google-analytics.com"
     />,
-    <link
-      rel="dns-prefetch"
-      key="dns-prefetch-google-analytics"
-      href="https://www.google-analytics.com"
-    />,
   ])
 
   const excludeGAPaths = []
