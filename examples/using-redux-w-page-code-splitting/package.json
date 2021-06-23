@@ -9,6 +9,7 @@
     "gatsby-plugin-manifest": "next",
     "gatsby-plugin-perf-budgets": "0.0.17",
     "gatsby-plugin-react-helmet": "next",
+    "gatsby-source-filesystem": "next",
     "gatsby-transformer-json": "next",
     "node-libs-browser": "^2.2.1",
     "prop-types": "^15.7.2",
