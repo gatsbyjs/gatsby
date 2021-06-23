@@ -18,57 +18,64 @@ export class ProductVariantsQuery extends BulkQuery {
 
     const query = `
       {
-        productVariants(query: "${queryString}", sortKey: ${ProductVariantSortKey}) {
+        products(query: "${queryString}") {
           edges {
             node {
-              availableForSale
-              barcode
-              compareAtPrice
-              createdAt
-              displayName
               id
-              product {
-                id
-              }
-              image {
-                id
-                altText
-                height
-                width
-                originalSrc
-                transformedSrc
-              }
-              inventoryPolicy
-              inventoryQuantity
-              legacyResourceId
-              position
-              price
-              selectedOptions {
-                name
-                value
-              }
-              sellingPlanGroupCount
-              sku
-              storefrontId
-              taxCode
-              taxable
-              title
-              updatedAt
-              weight
-              weightUnit
-              metafields {
+              variants(sortKey: ${ProductVariantSortKey}) {
                 edges {
                   node {
+                    availableForSale
+                    barcode
+                    compareAtPrice
                     createdAt
-                    description
+                    displayName
                     id
-                    key
+                    product {
+                      id
+                    }
+                    image {
+                      id
+                      altText
+                      height
+                      width
+                      originalSrc
+                      transformedSrc
+                    }
+                    inventoryPolicy
+                    inventoryQuantity
                     legacyResourceId
-                    namespace
-                    ownerType
+                    position
+                    price
+                    selectedOptions {
+                      name
+                      value
+                    }
+                    sellingPlanGroupCount
+                    sku
+                    storefrontId
+                    taxCode
+                    taxable
+                    title
                     updatedAt
-                    value
-                    valueType
+                    weight
+                    weightUnit
+                    metafields {
+                      edges {
+                        node {
+                          createdAt
+                          description
+                          id
+                          key
+                          legacyResourceId
+                          namespace
+                          ownerType
+                          updatedAt
+                          value
+                          valueType
+                        }
+                      }
+                    }
                   }
                 }
               }

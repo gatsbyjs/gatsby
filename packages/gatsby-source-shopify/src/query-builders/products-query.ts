@@ -123,6 +123,13 @@ export class ProductsQuery extends BulkQuery {
                   }
                 }
               }
+              variants {
+                edges {
+                  node {
+                    id
+                  }
+                }
+              }
               metafields {
                 edges {
                   node {

@@ -14,7 +14,13 @@ export function incrementalProductsProcessor(
     return remoteType === `Product`
   })
 
-  const nodeIds = products.map(product =>
+  const variants = objects.filter(obj => {
+    const [, remoteType] = obj.id.match(idPattern) || []
+
+    return remoteType === `ProductVariant`
+  })
+
+  const productNodeIds = products.map(product =>
     createNodeId(product.id, gatsbyApi, pluginOptions)
   )
 
@@ -26,7 +32,22 @@ export function incrementalProductsProcessor(
    */
   const variantsToDelete = gatsbyApi
     .getNodesByType(`${typePrefix}ShopifyProductVariant`)
-    .filter(node => nodeIds.includes(node.productId as string))
+    .filter(node => {
+      const index = productNodeIds.indexOf(node.productId as string)
+      if (index >= 0) {
+        const product = products[index]
+        const variantIds = variants
+          .filter(v => v.__parentId === product.id)
+          .map(v => createNodeId(v.id, gatsbyApi, pluginOptions))
+
+        if (!variantIds.includes(node.id)) {
+          console.info(`Found a variant to delete!`, node, product)
+          return true
+        }
+      }
+
+      return false
+    })
 
   variantsToDelete.forEach(variant => {
     gatsbyApi.actions.deleteNode(variant)
@@ -34,7 +55,7 @@ export function incrementalProductsProcessor(
 
   const imagesToDelete = gatsbyApi
     .getNodesByType(`${typePrefix}ShopifyProductImage`)
-    .filter(node => nodeIds.includes(node.productId as string))
+    .filter(node => productNodeIds.includes(node.productId as string))
 
   imagesToDelete.forEach(image => {
     gatsbyApi.actions.deleteNode(image)
@@ -54,5 +75,11 @@ export function incrementalProductsProcessor(
       }
     })
 
-  return objects.map(builder.buildNode)
+  const objectsToBuild = objects.filter(obj => {
+    const [, remoteType] = obj.id.match(idPattern) || []
+
+    return remoteType !== `ProductVariant`
+  })
+
+  return objectsToBuild.map(builder.buildNode)
 }

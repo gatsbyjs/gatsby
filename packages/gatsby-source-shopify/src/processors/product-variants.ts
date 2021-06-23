@@ -1,5 +1,5 @@
 import { NodeInput, SourceNodesArgs } from "gatsby"
-import { createNodeId } from "../node-builder"
+import { createNodeId, pattern as idPattern } from "../node-builder"
 
 export function productVariantsProcessor(
   objects: BulkResults,
@@ -7,9 +7,17 @@ export function productVariantsProcessor(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: ShopifyPluginOptions
 ): Array<Promise<NodeInput>> {
-  return objects.map(obj => {
+  const objectsToBuild = objects.filter(obj => {
+    const [, remoteType] = obj.id.match(idPattern) || []
+
+    return remoteType !== `Product`
+  })
+
+  return objectsToBuild.map(obj => {
     const { product, ...rest } = obj
     const productId = createNodeId(product.id, gatsbyApi, pluginOptions)
+
+    console.info(`About to build a variant node`, rest)
     return builder.buildNode({
       ...rest,
       productId,
