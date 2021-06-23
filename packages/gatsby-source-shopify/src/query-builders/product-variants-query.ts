@@ -26,10 +26,10 @@ export class ProductVariantsQuery extends BulkQuery {
               compareAtPrice
               createdAt
               displayName
-	      id
-	      product {
-		id
-	      }
+              id
+              product {
+                id
+              }
               image {
                 id
                 altText
