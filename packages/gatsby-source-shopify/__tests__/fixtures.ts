@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   GraphQLContext,
   GraphQLRequest,
   ResponseResolver,
   graphql,
-  ResponseComposition,
+  GraphQLHandler,
   MockedResponse,
 } from "msw"
 
@@ -25,7 +26,7 @@ export function resolve<T>(data: T): Resolver<T> {
 
 export function currentBulkOperation(
   status: BulkOperationStatus
-): Record<string, unknown> {
+): CurrentBulkOperationResponse {
   return {
     currentBulkOperation: {
       id: ``,
@@ -38,7 +39,9 @@ type BulkNodeOverrides = {
   [key in keyof BulkOperationNode]?: BulkOperationNode[key]
 }
 
-export const startOperation = (overrides: BulkNodeOverrides = {}): any => {
+export const startOperation = (
+  overrides: BulkNodeOverrides = {}
+): GraphQLHandler<GraphQLRequest<BulkOperationRunQueryResponse>> => {
   const { id = `12345` } = overrides
 
   return graphql.mutation<BulkOperationRunQueryResponse>(
