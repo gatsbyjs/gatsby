@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby Functions Google Auth Examples
+  Gatsby Functions Google Gmail Examples
 </h1>
 
 ## 🚀 Quick start
@@ -26,14 +26,14 @@
 
 3.  **Start developing.**
 
-    To get started, run `yarn` to add all necessary packages.
+    To get started, run `npm install` to add all necessary packages.
 
     When developing locally, you include environment variables to your `.env.development`. Read more about how Gatsby handles `.env` files and environment variables in the [Gatsby Docs](https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/)
 
     ```shell
-    cd google-auth
-    yarn
-    yarn run develop
+    cd examples/functions-google-gmail
+    npm install
+    npm run develop
     ```
 
 4.  **Open the code and start customizing!**
@@ -45,15 +45,3 @@
 5.  **Deploy**
 
 You can deploy this example on Gatsby Cloud by copying the example into a new repo and [connecting that to Gatsby Cloud](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/deploying-to-gatsby-cloud/#set-up-an-existing-gatsby-site).
-
-<!--- Working on improving deploy now to use subdirectories
-
-4.  **Deploy**
-    You can directly deploy this example by using the Deploy button below and select the directory for the Google Auth example. Otherwise, fork this repo and create your own repo and [connect that to Gatsby Cloud](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/deploying-to-gatsby-cloud/#set-up-an-existing-gatsby-site).
-
-    [<img src="https://www.gatsbyjs.com/deploynow.svg">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-functions-beta/)
-
-
-
-    [<img src="https://www.gatsbyjs.com/deploynow.svg">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/airtable-form)
--->

@@ -15,8 +15,8 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
-    "gatsby": "^3.4.1",
-    "gatsby-plugin-gatsby-cloud": "^2.3.0",
+    "gatsby": "next",
+    "gatsby-plugin-gatsby-cloud": "next",
     "google-spreadsheet": "^3.1.15",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
