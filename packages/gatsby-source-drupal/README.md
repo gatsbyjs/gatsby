@@ -194,6 +194,27 @@ module.exports = {
 }
 ```
 
+You can also filter out temporary files. This will help to avoid Gatsby throwing an error when a 404 is returned from a file that does not exist:
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`,
+        filters: {
+          // collection : filter
+          "file--file": "filter[status][value]=1",
+        },
+      },
+    },
+  ],
+}
+```
+
 ## Concurrent File Requests
 
 You can use the `concurrentFileRequests` option to change how many simultaneous file requests are made to the server/service. This benefits build speed, however too many concurrent file request could cause memory exhaustion depending on the server's memory size so change with caution.
