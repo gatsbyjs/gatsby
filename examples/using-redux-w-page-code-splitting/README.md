@@ -14,8 +14,11 @@ Moving the reducer out of the root store and in to a Provider that just wraps th
 
 ## Try it out
 
-- Clone this repo
-- `npm install`
-- `npm run build`
-- `npm run serve`
-- Visit `/`, `/page-1`, and `other/page-1` in the browser and see how the large amount of Redux JS only ends up on `/page-1`.
+```shell
+cd examples/using-redux-w-page-code-splitting
+npm install
+npm run build
+npm run serve
+```
+
+Visit `/`, `/page-1`, and `other/page-1` in the browser and see how the large amount of Redux JS only ends up on `/page-1`.

@@ -1,4 +1,3 @@
-// import pages from "./pages.json"
 const path = require("path")
 
 exports.createPages = async ({ graphql, actions }) => {

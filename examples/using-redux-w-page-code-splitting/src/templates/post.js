@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 import { graphql } from "gatsby"
 import ReduxWrapper from "../redux/reduxWrapper"
 import ReduxButton from "../components/redux-button"

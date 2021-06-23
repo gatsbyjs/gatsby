@@ -10,7 +10,6 @@ The goal is to show a pattern of _not_ just loading a slice of a Redux store whe
 This is very useful for parts of the store that are:
 
 - not present on every page
-  or
 - not present on a page without a certain user action
 
 For less expensive slices of the store, this pattern may be overkill, but for expensive parts it is worth it.
@@ -25,8 +24,11 @@ The app works based on the [implementation of the Redux Modules or Reducer Regis
 
 ## Running Locally
 
-`npm install`
-`npm run start`
+```shell
+cd examples/using-redux-w-interaction-code-splitting
+npm install
+npm run start
+```
 
 ## Live demo:
 
