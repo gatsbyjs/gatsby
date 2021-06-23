@@ -8,6 +8,7 @@ import { OrdersQuery } from "./query-builders/orders-query"
 import {
   collectionsProcessor,
   incrementalProductsProcessor,
+  productVariantsProcessor,
 } from "./processors"
 import { OperationError } from "./errors"
 
@@ -223,7 +224,7 @@ export function createOperations(
       return createOperation(
         new ProductVariantsQuery(options).query(date),
         `INCREMENTAL_PRODUCT_VARIANTS`,
-        incrementalProductsProcessor
+        productVariantsProcessor
       )
     },
 
@@ -249,7 +250,8 @@ export function createOperations(
 
     createProductVariantsOperation: createOperation(
       new ProductVariantsQuery(options).query(),
-      `PRODUCT_VARIANTS`
+      `PRODUCT_VARIANTS`,
+      productVariantsProcessor
     ),
 
     createOrdersOperation: createOperation(
