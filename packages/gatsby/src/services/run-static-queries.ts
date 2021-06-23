@@ -22,11 +22,9 @@ export async function runStaticQueries({
 
   const state = store.getState()
   const activity = reporter.createProgress(
-    `run static queries (${
-      process.env.JEST_WORKER_ID
-        ? `worker ${process.env.JEST_WORKER_ID}`
-        : `main`
-    })`,
+    `run static queries ${
+      process.env.JEST_WORKER_ID && `(worker ${process.env.JEST_WORKER_ID})`
+    }`,
     staticQueryIds.length,
     0,
     {
