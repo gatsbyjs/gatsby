@@ -8,6 +8,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     error: jest.fn(),
     panic: jest.fn(),
+    panicOnBuild: jest.fn(),
     log: jest.fn(),
     warn: jest.fn(),
     success: jest.fn(),
@@ -482,6 +483,7 @@ describe(`Load plugins`, () => {
       ).toEqual({
         // All the options that have defaults are defined
         anonymize: false,
+        enableWebVitalsTracking: false,
         exclude: [],
         head: false,
         pageTransitionDelay: 0,

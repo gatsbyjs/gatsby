@@ -1,9 +1,8 @@
 ---
 date: "2021-05-11"
 version: "3.5.0"
+title: "v3.5 Release Notes"
 ---
-
-# [v3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0-next.0...gatsby@3.5.0) (May 2021 #1)
 
 Welcome to `gatsby@3.5.0` release (May 2021 #1)
 

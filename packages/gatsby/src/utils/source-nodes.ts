@@ -2,7 +2,7 @@ import report from "gatsby-cli/lib/reporter"
 import { Span } from "opentracing"
 import apiRunner from "./api-runner-node"
 import { store } from "../redux"
-import { getNode, getNodes } from "../redux/nodes"
+import { getDataStore, getNode, getNodes } from "../datastore"
 import { actions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 const { deleteNode } = actions
@@ -93,8 +93,8 @@ export default async ({
 }: {
   webhookBody: unknown
   pluginName?: string
-  parentSpan: Span
-  deferNodeMutation: boolean
+  parentSpan?: Span
+  deferNodeMutation?: boolean
 }): Promise<void> => {
   await apiRunner(`sourceNodes`, {
     traceId: `initial-sourceNodes`,
@@ -104,6 +104,7 @@ export default async ({
     webhookBody: webhookBody || {},
     pluginName,
   })
+  await getDataStore().ready()
 
   const state = store.getState()
   const nodes = getNodes()

@@ -6,8 +6,8 @@ module.exports = {
     {
       resolve: `gatsby-source-drupal`,
       options: {
-        baseUrl: `https://using-drupal.amazee.io/`,
-        apiBase: `jsonapi`,
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`,
       },
     },
     {
