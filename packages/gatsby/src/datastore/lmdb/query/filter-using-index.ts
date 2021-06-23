@@ -1,4 +1,3 @@
-import { compareKey } from "lmdb-store"
 import { GatsbyIterable } from "../../common/iterable"
 import {
   DbComparator,
@@ -33,7 +32,7 @@ type RangeValue =
   | typeof BinaryInfinityNegative
 type RangeBoundary = Array<RangeValue>
 
-interface IIndexEntry {
+export interface IIndexEntry {
   key: IndexKey
   value: NodeId
 }
@@ -70,18 +69,15 @@ interface IFilterContext {
   datastore: IDataStore
   databases: ILmdbDatabases
   dbQueries: Array<DbQuery>
-  indexFields: IndexFields
   indexMetadata: IIndexMetadata
   limit?: number
-  offset?: number
-  reverse: boolean
+  skip?: number
+  reverse?: boolean
 }
 
-interface IFilterResult {
+export interface IFilterResult {
   entries: GatsbyIterable<IIndexEntry>
   usedQueries: Set<DbQuery>
-  usedOffset: number
-  usedLimit: number | undefined
 }
 
 /**
@@ -90,7 +86,8 @@ interface IFilterResult {
 export async function filterUsingIndex(
   context: IFilterContext
 ): Promise<IFilterResult> {
-  const { dbQueries, indexFields } = context
+  const { dbQueries, indexMetadata } = context
+  const indexFields = new Map(indexMetadata.keyFields)
   const { ranges, usedQueries } = getIndexRanges(dbQueries, indexFields)
 
   const result =
@@ -100,21 +97,22 @@ export async function filterUsingIndex(
 
   if (usedQueries.size === dbQueries.length) {
     // Query is fully satisfied by the index, yay
-    return { usedQueries, result }
+    return result
   }
 
-  return narrowResultsIfPossible(context, result, usedQueries)
+  return narrowResultsIfPossible(context, result)
 }
 
-export async function countUsingIndex(
-  context: IFilterContext
-): Promise<number> {
+export function countUsingIndexFast(context: IFilterContext): number {}
+
+export function countUsingIndex(context: IFilterContext): number {
   const {
     databases: { indexes },
     dbQueries,
-    indexFields,
-    indexMetadata: { keyPrefix, maxKeysPerItem },
+    indexMetadata: { keyPrefix, keyFields, stats },
   } = context
+
+  const indexFields = new Map(keyFields)
 
   const { ranges, usedQueries } = getIndexRanges(dbQueries, indexFields)
 
@@ -123,8 +121,9 @@ export async function countUsingIndex(
       `Cannot count using index. Some field filters cannot be resolved by index.`
     )
   }
-  if (maxKeysPerItem > 1) {
+  if (stats.maxKeysPerItem > 1) {
     // TODO: we probably can count in this case if all indexMetadata.multiKeyFields have `eq` filters in usedQueries
+    //   Also for range-less queries by doing count/avgKeysPerItem
     throw new Error(`Cannot count using MultiKey index.`)
   }
   if (ranges.length === 0) {
@@ -151,11 +150,11 @@ function performRangeScan(
 ): IFilterResult {
   const {
     databases: { indexes },
-    indexMetadata: { keyPrefix, maxKeysPerItem },
+    indexMetadata: { keyPrefix, stats },
     reverse,
   } = context
 
-  let { limit, offset = 0 } = context
+  let { limit, skip: offset = 0 } = context
 
   if (limit) {
     if (ranges.length > 1) {
@@ -167,11 +166,11 @@ function performRangeScan(
       //   with offset = offset - previousRangeCount, limit = limit - previousRangeCount
       offset = 0
     }
-    if (maxKeysPerItem > 1) {
+    if (stats.maxKeysPerItem > 1) {
       // Cannot use limit:
       // MultiKey index may contain duplicates - we can only set a safe upper bound
       // TODO: we probably can use proper limit if all indexMetadata.multiKeyFields have `eq` filters in usedQueries
-      limit *= maxKeysPerItem
+      limit *= stats.maxKeysPerItem
     }
   }
 
@@ -187,7 +186,7 @@ function performRangeScan(
     const matches = indexes.getRange(range as any)
     entries = entries.concat(matches)
   }
-  if (maxKeysPerItem > 1) {
+  if (stats.maxKeysPerItem > 1) {
     // MultiKey indexes require additional deduplication step :/
     // TODO: probably no need if all indexMetadata.multiKeyFields have `eq` filters in usedQueries
     entries = entries.deduplicate(getIdentifier)
@@ -195,8 +194,6 @@ function performRangeScan(
 
   return {
     entries,
-    usedLimit: limit,
-    usedOffset: offset,
     usedQueries,
   }
 }
@@ -205,7 +202,7 @@ function performFullScan(
   context: IDataStoreContext,
   indexName: string,
   reverse: boolean = false
-): GatsbyIterable<IIndexEntry> {
+): IFilterResult {
   // *Caveat*: our old query implementation was putting undefined and null values at the end
   //   of the list when ordered ascending. But lmdb-store keeps them at the top.
   //   So in LMDB case, need to concat two ranges to conform to our old format:
@@ -220,6 +217,7 @@ function performFullScan(
   let range = !reverse
     ? { start, end, snapshot: false }
     : { start: end, end: start, reverse, snapshot: false }
+
   const undefinedToEnd: any = indexes.getRange(range as any) // FIXME: lmdb-store typing seems outdated
 
   // console.log(`range1`, range, Array.from(undefinedToEnd))
@@ -240,7 +238,10 @@ function performFullScan(
       : topToUndefined.concat(undefinedToEnd)
   )
 
-  return result.deduplicate(getIdentifier)
+  return {
+    entries: result.deduplicate(getIdentifier),
+    usedQueries: new Set(),
+  }
 }
 
 /**
@@ -262,19 +263,15 @@ function performFullScan(
  * so can filter by this value without loading the full node contents.
  */
 function narrowResultsIfPossible(
-  result: GatsbyIterable<IIndexEntry>,
-  indexName: string,
-  indexFields: IIndexFields,
-  dbQueries: Array<DbQuery>,
-  usedQueries: Set<DbQuery>
-): {
-  usedQueries: Set<DbQuery>
-  result: GatsbyIterable<IIndexEntry>
-} {
-  const firstFieldOffset = 1 // the very first item in the index key is index id
-  const indexFieldPositions = new Map<string, number>()
-  Object.keys(indexFields).forEach((fieldName, position) => {
-    indexFieldPositions.set(fieldName, firstFieldOffset + position)
+  context: IFilterContext,
+  result: IFilterResult
+): IFilterResult {
+  const { indexMetadata, dbQueries } = context
+  const usedQueries = new Set([...result.usedQueries])
+
+  const fieldIndexInKey = new Map<string, number>()
+  indexMetadata.keyFields.forEach(([fieldName], position) => {
+    fieldIndexInKey.set(fieldName, position + 1) // +1 to offset index id at the beginning of the index
   })
 
   type Filter = [filter: IDbFilterStatement, fieldPositionInIndex: number]
@@ -283,10 +280,10 @@ function narrowResultsIfPossible(
   for (const query of dbQueries) {
     if (usedQueries.has(query)) continue
     const fieldName = dbQueryToDottedField(query)
-    const fieldPositionInIndex = indexFieldPositions.get(fieldName)
-    if (typeof fieldPositionInIndex === `undefined`) continue
+    const indexInKey = fieldIndexInKey.get(fieldName)
+    if (typeof indexInKey === `undefined`) continue
     usedQueries.add(query)
-    filtersToApply.push([getFilterStatement(query), fieldPositionInIndex])
+    filtersToApply.push([getFilterStatement(query), indexInKey])
   }
 
   // console.log(`Narrowing result: `, filtersToApply)
@@ -296,16 +293,16 @@ function narrowResultsIfPossible(
 
   return {
     usedQueries,
-    result:
+    entries:
       filtersToApply.length === 0
-        ? result
-        : result.filter(({ key }) => {
+        ? result.entries
+        : result.entries.filter(({ key }) => {
             if (!shown && items++ > 5000) {
               shown = true
               console.log(
-                `Narrowing huge dataset for: ${indexName}; spent: ${
-                  Date.now() - start
-                }ms`
+                `Narrowing huge dataset for: ${
+                  indexMetadata.keyPrefix
+                }; spent: ${Date.now() - start}ms`
               )
             }
             for (const [filter, fieldPositionInIndex] of filtersToApply) {
@@ -385,7 +382,8 @@ export function getIndexRanges(
       end: rangeEndingsProduct[i],
     })
   }
-  // TODO: sort ranges
+  // TODO: sort ranges. Also, we may want this at some point:
+  //   https://docs.mongodb.com/manual/core/multikey-index-bounds/
   return { usedQueries, ranges }
 }
 
@@ -587,15 +585,6 @@ function toIndexFieldValue(
     )
   }
   return filterValue
-}
-
-function compareByKeySuffix(prefixLength: number) {
-  return function (a: IIndexEntry, b: IIndexEntry): number {
-    const aSuffix = a.key.slice(prefixLength - 1)
-    const bSuffix = b.key.slice(prefixLength - 1)
-    // @ts-ignore
-    return compareKey(aSuffix, bSuffix)
-  }
 }
 
 function getIdentifier(entry: IIndexEntry): number | string {

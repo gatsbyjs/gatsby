@@ -16,14 +16,14 @@ export class GatsbyIterable<T> implements IGatsbyIterable<T> {
   }
 
   filter(predicate: (entry: T) => unknown): GatsbyIterable<T> {
-    return new GatsbyIterable<T>(filterSequence(this, predicate))
+    return new GatsbyIterable(filterSequence(this, predicate))
   }
 
   flatMap<U>(fn: (entry: T) => U): GatsbyIterable<U> {
     return new GatsbyIterable(flatMapSequence(this, fn))
   }
 
-  slice(start: number, end: number): GatsbyIterable<T> {
+  slice(start: number, end: number | undefined): GatsbyIterable<T> {
     return new GatsbyIterable<T>(sliceSequence(this, start, end))
   }
 
@@ -105,9 +105,9 @@ function* flatMapSequence<T, U>(
 function* sliceSequence<T>(
   source: Iterable<T>,
   start: number,
-  end: number
+  end: number | undefined
 ): Generator<T> {
-  if (end < start || start < 0)
+  if ((typeof end !== `undefined` && end < start) || start < 0)
     throw new Error(
       `Negative offsets for slice() is not supported for iterables`
     )
@@ -115,7 +115,7 @@ function* sliceSequence<T>(
   for (const item of source) {
     index++
     if (index < start) continue
-    if (index >= end) break
+    if (typeof end !== `undefined` && index >= end) break
     yield item
   }
 }

@@ -25,7 +25,7 @@ export function isDesc(
  */
 export function resolveFieldValue(
   dottedFieldPath: string | Array<string>,
-  node: IGatsbyNode,
+  nodeOrThunk: IGatsbyNode | (() => IGatsbyNode),
   resolvedNodeFields?: { [field: string]: unknown }
 ): unknown {
   let result
@@ -33,6 +33,7 @@ export function resolveFieldValue(
     result = getValueAt(resolvedNodeFields, dottedFieldPath)
   }
   // Note: if result === null we return null
+  const node = typeof nodeOrThunk === `function` ? nodeOrThunk() : nodeOrThunk
   return result ?? getValueAt(node, dottedFieldPath)
 }
 

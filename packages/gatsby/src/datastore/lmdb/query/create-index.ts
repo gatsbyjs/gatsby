@@ -4,7 +4,7 @@ import { IGatsbyNode } from "../../../redux/types"
 import { IDataStore, ILmdbDatabases } from "../../types"
 import { cartesianProduct, resolveFieldValue } from "./common"
 
-interface IDataStoreContext {
+interface IIndexingContext {
   databases: ILmdbDatabases
   datastore: IDataStore
 }
@@ -12,12 +12,20 @@ interface IDataStoreContext {
 export type IndexFields = Map<string, number> // name, direction
 
 export interface IIndexMetadata {
+  state: "ready" | "building" | "stale" | "error" | "initial"
+  error?: string
   typeName: string
-  indexFields: Array<[fieldName: string, orderDirection: number]>
-  keyPrefix: number
-  valueFields: Array<string> // additional data to filter/sort without loading full node contents
+  keyPrefix: number | string
+  keyFields: Array<[fieldName: string, orderDirection: number]>
   multiKeyFields: Array<string>
-  maxKeysPerItem: number // for multi-key indexes stores maximum number of items seen in this index
+
+  // Stats for multi-key indexes
+  // (e.g. when node is { id: `id`, foo: [1,2] } it translates into two index keys: [1,`id`], [2,`id`])
+  stats: {
+    keyCount: number
+    itemCount: number
+    maxKeysPerItem: number
+  }
 }
 
 export const undefinedSymbol = Symbol(`undef`)
@@ -33,22 +41,21 @@ export type IndexFieldValue =
 export type IndexKey = Array<IndexFieldValue>
 
 export async function createIndex(
-  context: IDataStoreContext,
+  context: IIndexingContext,
   typeName: string,
   indexFields: IndexFields
-): Promise<void> {
+): Promise<IIndexMetadata> {
+  const { databases } = context
   const indexName = buildIndexName(typeName, indexFields)
   const metadataKey = `index:${indexName}`
 
-  const { state = `initial` } =
-    context.databases.metadata.get(metadataKey) ?? {}
+  const meta: IIndexMetadata = databases.metadata.get(metadataKey)
 
-  switch (state) {
+  switch (meta?.state) {
     case `ready`:
-      return
+      return meta
     case `building`: {
-      await indexReady(context, metadataKey)
-      return
+      return indexReady(context, metadataKey)
     }
     case `initial`:
     default: {
@@ -57,52 +64,76 @@ export async function createIndex(
       } catch (err) {
         // Index is being updated in some other process.
         // Wait and assume it's in a good state when done
-        await indexReady(context, metadataKey)
-        return
+        return indexReady(context, metadataKey)
       }
-      await doCreateIndex(context, typeName, indexFields)
-      await markIndexReady(context, metadataKey)
-      return
+      return doCreateIndex(context, typeName, indexFields)
     }
   }
 }
 
 async function doCreateIndex(
-  context: IDataStoreContext,
+  context: IIndexingContext,
   typeName: string,
   indexFields: IndexFields
-): Promise<void> {
+): Promise<IIndexMetadata> {
   const { datastore, databases } = context
-  const { indexes } = databases
+  const { indexes, metadata } = databases
   const indexName = buildIndexName(typeName, indexFields)
 
   const label = `Indexing ${indexName}`
   console.time(label)
-  let promise
 
+  // Assuming materialization was run before creating index
   const resolvedNodes = store.getState().resolvedNodesCache.get(typeName)
 
   // console.log(`index entries:`)
   // TODO: iterate only over dirty nodes
   // TODO: wrap in async transaction?
-  for (const node of datastore.iterateNodesByType(typeName)) {
-    // Assuming materialization was run (executing custom resolvers for fields in `filter` and `sort` clauses)
-    //  And materialized values of those fields are stored in resolvedNodes
-    const resolvedFields = resolvedNodes?.get(node.id)
-    const indexKeys = prepareIndexKeys(
-      node,
-      resolvedFields,
-      indexName,
-      indexFields
-    )
-    for (const indexKey of indexKeys) {
-      // assertAllowedIndexValue(typeName, fieldSelector, value, node.id)
-      // console.log(indexKey, node.id)
-      promise = indexes.put(indexKey, node.id)
-    }
+  const stats: IIndexMetadata["stats"] = {
+    maxKeysPerItem: 0,
+    keyCount: 0,
+    itemCount: 0,
   }
-  await promise
-  console.timeEnd(label)
+  const indexMetadata: IIndexMetadata = {
+    state: `building`,
+    typeName,
+    keyFields: [...indexFields],
+    multiKeyFields: [],
+    keyPrefix: indexName, // FIXME
+    stats,
+  }
+
+  try {
+    for (const node of datastore.iterateNodesByType(typeName)) {
+      // Assuming materialization was run (executing custom resolvers for fields in `filter` and `sort` clauses)
+      //  And materialized values of those fields are stored in resolvedNodes
+      const resolvedFields = resolvedNodes?.get(node.id)
+      const { keys, multiKeyFields } = prepareIndexKeys(
+        node,
+        resolvedFields,
+        indexName,
+        indexFields
+      )
+      for (const indexKey of keys) {
+        // Note: this may throw if indexKey exceeds 1978 chars (lmdb limit)
+        indexes.put(indexKey, node.id)
+      }
+      stats.keyCount += keys.length
+      stats.itemCount++
+      stats.maxKeysPerItem = Math.max(stats.maxKeysPerItem, keys.length)
+      indexMetadata.multiKeyFields.push(...multiKeyFields)
+    }
+    indexMetadata.state = `ready`
+    indexMetadata.multiKeyFields = [...new Set(indexMetadata.multiKeyFields)]
+    await metadata.put(indexName, indexMetadata)
+    console.timeEnd(label)
+    return indexMetadata
+  } catch (e) {
+    indexMetadata.state = `error`
+    indexMetadata.error = String(e)
+    await metadata.put(indexName, indexMetadata)
+    throw e
+  }
 }
 
 /**
@@ -123,9 +154,10 @@ function prepareIndexKeys(
   resolvedFields: { [field: string]: unknown } | undefined,
   indexName: string,
   indexFields: IndexFields
-): Array<IndexKey> {
+): { keys: Array<IndexKey>; multiKeyFields: Array<string> } {
   // TODO: use index id vs index name (shorter)
   const indexKeyElements: Array<Array<IndexFieldValue>> = []
+  const multiKeyFields: Array<string> = []
 
   indexKeyElements.push([indexName])
   for (const dottedField of indexFields.keys()) {
@@ -142,14 +174,18 @@ function prepareIndexKeys(
       : [indexFieldValue]
 
     indexKeyElements.push(indexFieldValue)
+
+    if (indexFieldValue.length > 1) {
+      multiKeyFields.push(dottedField)
+    }
   }
   indexKeyElements.push([node.internal.counter])
 
-  return cartesianProduct(...indexKeyElements)
+  return { keys: cartesianProduct(...indexKeyElements), multiKeyFields }
 }
 
 async function lockIndex(
-  context: IDataStoreContext,
+  context: IIndexingContext,
   indexKey: string
 ): Promise<void> {
   const { metadata } = context.databases
@@ -162,25 +198,18 @@ async function lockIndex(
   }
 }
 
-async function markIndexReady(
-  context: IDataStoreContext,
-  indexName: string
-): Promise<void> {
-  const { metadata } = context.databases
-  await metadata.put(indexName, { state: `ready` })
-}
-
 async function indexReady(
-  context: IDataStoreContext,
+  context: IIndexingContext,
   indexKey: string
-): Promise<void> {
+): Promise<IIndexMetadata> {
   return new Promise((resolve, reject) => {
     const { metadata } = context.databases
 
     let retries = 0
     function poll(): void {
-      if (metadata.get(indexKey)?.state === `ready`) {
-        resolve()
+      const indexMetadata = metadata.get(indexKey)
+      if (indexMetadata?.state === `ready`) {
+        resolve(indexMetadata)
         return
       }
       if (retries++ > 3000) {
@@ -192,22 +221,6 @@ async function indexReady(
     poll()
   })
 }
-//
-// switch (indexMetadata?.state) {
-//   default:
-//     //
-//     break
-// }
-//
-// let retries = 0
-// return new Promise((resolve, reject) => {
-//   setTimeout(() => {
-//     if (retries++ > 1000) {
-//       reject(Error(`Could not `))
-//     }
-//   }, 100)
-// })
-// }
 
 /**
  * Autogenerate index name based on parameters.

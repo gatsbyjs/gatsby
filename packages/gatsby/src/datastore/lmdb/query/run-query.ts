@@ -17,12 +17,14 @@ import {
 } from "../../common/query"
 import { createIndex, IIndexMetadata, IndexFields } from "./create-index"
 import {
+  countUsingIndex,
   filterUsingIndex,
-  getQueriesThatCanUseIndex,
+  IIndexEntry,
 } from "./filter-using-index"
 import { store } from "../../../redux"
 import { isDesc, resolveFieldValue, shouldFilter } from "./common"
 import { suggestIndex } from "./suggest-index"
+import { compareKey } from "lmdb-store"
 
 // Before running a query we create a separate index for all filter fields (unless it already exists)
 //   Each index has exactly the same sort order (so technically the index key is [filterField, ...sortFields]).
@@ -168,114 +170,105 @@ interface IDoRunQueryArgs extends IRunQueryArgs {
   datastore: IDataStore
 }
 
+type SortFields = Map<string, number>
+
 interface IQueryContext {
   datastore: IDataStore
   databases: ILmdbDatabases
   dbQueries: Array<DbQuery>
-  sortFields: Map<string, number>
+  sortFields: SortFields
   nodeTypeNames: Array<string>
   suggestedIndexFields: IndexFields
   indexMetadata?: IIndexMetadata
   limit?: number
-  skip?: number
+  skip: number
 }
 
 export async function doRunQuery(
   args: IDoRunQueryArgs
 ): Promise<GatsbyIterable<IGatsbyNode>> {
-  const {
-    datastore,
-    databases,
-    nodeTypeNames,
-    queryArgs: { filter, sort, limit, skip = 0 } = {},
-    firstOnly,
-  } = args
+  const context = createQueryContext(args)
 
-  const context: IQueryContext = {
-    datastore,
-    databases,
-    nodeTypeNames,
-    dbQueries: createDbQueriesFromObject(prepareQueryArgs(filter)),
-    sortFields: new Map<string, number>(
-      sort?.fields.map((field, i) => [field, isDesc(sort?.order[i]) ? -1 : 1])
-    ),
-    suggestedIndexFields: new Map(suggestIndex({ filter, sort })),
-    limit,
-    skip,
-  }
-
-  if (context.suggestedIndexFields.size) {
-    try {
-      return performIndexScan(context)
-    } catch (e) {
-      console.warn(`Failed to run query with index: ${String(e)}`)
-    }
-  }
-
-  console.warn(`Fallback to full scan :/ ${nodeTypeNames[0]} ${filter}`)
-  return performFullTableScan(context)
-}
-
-async function performIndexScan(
-  context: IQueryContext
-): GatsbyIterable<IGatsbyNode> {
-  const { nodeTypeNames, suggestedIndexFields, sortFields } = context
-  const reverse = Array.from(sortFields.values())[0] === -1
-
-  const runForTypeName = async (typeName: string) => {
-    await createIndex(context, typeName, suggestedIndexFields)
-
-    // In 99% of cases `nodeTypeNames` contains a single type.
-    // It may contain multiple in case of Node interface
-    let result = new GatsbyIterable<IGatsbyNode>([])
-    const { result: matches, usedQueries } = await filterUsingIndex(
+  let result = new GatsbyIterable<IGatsbyNode>([])
+  for (const typeName of context.nodeTypeNames) {
+    const indexMetadata = await createIndex(
       context,
       typeName,
-      suggestedIndexFields,
-      context.dbQueries,
-      reverse
+      context.suggestedIndexFields
     )
-    const intermediateResult = matches
-      .map(({ value }) => datastore.getNode(value))
-      .filter(Boolean) as GatsbyIterable<IGatsbyNode>
+    if (!context.sortFields.size) {
+      const nodes = await filterNodes(context, indexMetadata)
+      result = result.concat(nodes)
+      continue
+    }
+    if (canUseIndexForSorting(indexMetadata, context.sortFields)) {
+      const nodes = await filterNodes(context, indexMetadata)
+      // Interleave nodes of different types (not expensive for already sorted chunks)
+      result = result.mergeSorted(
+        nodes,
+        createNodeSortComparator(context.sortFields)
+      )
+      continue
+    }
+    // The sad part - unlimited filter + in-memory sort
+    const unlimited = { ...context, skip: 0, limit: undefined }
+    const nodes = await filterNodes(unlimited, indexMetadata)
+    const sortedNodes = sortNodesInMemory(context, nodes)
 
     result = result.mergeSorted(
-      completeFiltering(typeName, intermediateResult, dbQueries, usedQueries)
+      sortedNodes,
+      createNodeSortComparator(context.sortFields)
     )
   }
+  const { limit, skip = 0 } = context
 
-  // Create indexes concurrently to spread the work across query workers
-  const promises = nodeTypeNames.map(
-    async (typeName): Promise<[string, boolean]> => [
-      typeName,
-      await createIndex(context, typeName, suggestedIndexFields),
-    ]
-  )
-
-  const reverse = Array.from(sortFields.values())[0] === -1
-  // console.log(`reverse?`, reverse)
-
-  // In 99% of cases `nodeTypeNames` contains a single type.
-  // It may contain multiple in case of Node interface
-  let result = new GatsbyIterable<IGatsbyNode>([])
-  for await (const [typeName, canUseIndex] of promises) {
-    if (!canUseIndex) throw new Error(`TODO`)
-    const { result: matches, usedQueries } = await filterUsingIndex(
-      args,
-      typeName,
-      indexFields,
-      dbQueries,
-      reverse
-    )
-    const intermediateResult = matches
-      .map(({ value }) => datastore.getNode(value))
-      .filter(Boolean) as GatsbyIterable<IGatsbyNode>
-
-    result = result.mergeSorted(
-      completeFiltering(typeName, intermediateResult, dbQueries, usedQueries)
-    )
+  if (limit || skip) {
+    result = result.slice(skip, limit ? skip + limit : undefined)
   }
   return result
+}
+
+async function performCount(context: IQueryContext): Promise<number> {
+  let count = 0
+  for (const typeName of context.nodeTypeNames) {
+    const indexMetadata = await createIndex(
+      context,
+      typeName,
+      context.suggestedIndexFields
+    )
+    try {
+      const typeCount = countUsingIndex({
+        ...context,
+        indexMetadata,
+      })
+      count += typeCount
+    } catch (e) {
+      // We cannot reliably count using index - fallback to full iteration :/
+      const entries = await filterNodes(context, indexMetadata)
+      for (const _ of entries) count++
+    }
+  }
+  return count
+}
+
+async function filterNodes(
+  context: IQueryContext,
+  indexMetadata: IIndexMetadata
+): Promise<GatsbyIterable<IGatsbyNode>> {
+  const { entries, usedQueries } = await filterUsingIndex({
+    ...context,
+    indexMetadata,
+    reverse: Array.from(context.sortFields.values())[0] === -1,
+  })
+  const nodes = entries
+    .map(({ value }) => context.datastore.getNode(value))
+    .filter(Boolean)
+
+  return completeFiltering(
+    context,
+    nodes as GatsbyIterable<IGatsbyNode>,
+    usedQueries
+  )
 }
 
 function performFullTableScan(
@@ -298,153 +291,22 @@ function performFullTableScan(
   return result
 }
 
-function output(): void {
-  stats.forEach((time, key) => {
-    if (time > 5 * 1000) {
-      console.log(`[long] ${key}:`, time)
-    }
-  })
-}
-
-function planQuery(args: IRunQueryArgs): IQueryPlan {}
-
-async function runQueryWithSort(
-  args: IRunQueryContext
-): Promise<GatsbyIterable<IGatsbyNode>> {
-  const {
-    nodeTypeNames,
-    queryArgs: { filter, sort } = {},
-    datastore,
-    // firstOnly = false,
-  } = args
-
-  const sortFields = sort?.fields ?? []
-  const sortOrder = sort?.order ?? []
-  const dbQueries = createDbQueriesFromObject(prepareQueryArgs(filter))
-
-  // 1.1 section (see head of the file)
-  if (isMixedSortOrder(sortFields, sortOrder)) {
-    throw new Error(`TODO`)
-  }
-
-  // 1.2 section (see head of the file)
-  const eqOrQueries = getEqQueries(dbQueries)
-  const filterFields = eqOrQueries.length
-    ? [dbQueryToDottedField(eqOrQueries[0])]
-    : []
-
-  // 1.3 section (see head of the file)
-  const indexFields = buildIndexFields(filterFields, sortFields, sortOrder)
-
-  // Create indexes concurrently to spread the work across query workers
-  const promises = nodeTypeNames.map(
-    async (typeName): Promise<[string, boolean]> => [
-      typeName,
-      await createIndex(args, typeName, indexFields),
-    ]
-  )
-
-  const reverse = sortOrder.length > 0 && sortOrder.every(isDesc)
-  // console.log(`reverse?`, reverse)
-
-  // In 99% of cases `nodeTypeNames` contains a single type.
-  // It may contain multiple in case of Node interface
-  let result = new GatsbyIterable<IGatsbyNode>([])
-  for await (const [typeName, canUseIndex] of promises) {
-    if (!canUseIndex) throw new Error(`TODO`)
-    const { result: matches, usedQueries } = await filterUsingIndex(
-      args,
-      typeName,
-      indexFields,
-      dbQueries,
-      reverse
-    )
-    const intermediateResult = matches
-      .map(({ value }) => datastore.getNode(value))
-      .filter(Boolean) as GatsbyIterable<IGatsbyNode>
-
-    result = result.mergeSorted(
-      completeFiltering(typeName, intermediateResult, dbQueries, usedQueries)
-    )
-  }
-  return result
-}
-
-async function runQueryWithoutSort(
-  args: IRunQueryContext
-): Promise<GatsbyIterable<IGatsbyNode>> {
-  const { nodeTypeNames, queryArgs: { filter } = {}, datastore } = args
-  const dbQueries = createDbQueriesFromObject(prepareQueryArgs(filter))
-  const queriesToIndex = getQueriesThatCanUseIndex(dbQueries)
-
-  // 2.1 section
-  if (queriesToIndex.length) {
-    const filterFields = queriesToIndex.map(dbQueryToDottedField)
-    const uniqueFilterFields = [...new Set(filterFields)].slice(0, 3)
-    const indexFields = buildIndexFields(uniqueFilterFields)
-
-    // console.log(`no sort; indexFields: `, indexFields)
-
-    // Create indexes concurrently to spread the work across query workers
-    const promises = nodeTypeNames.map(
-      async (typeName): Promise<[string, boolean]> => [
-        typeName,
-        await createIndex(args, typeName, indexFields),
-      ]
-    )
-
-    let result = new GatsbyIterable<IGatsbyNode>([])
-    for await (const [typeName, canUseIndex] of promises) {
-      if (!canUseIndex) throw new Error(`TODO`)
-      const { result: matches, usedQueries } = await filterUsingIndex(
-        args,
-        typeName,
-        indexFields,
-        dbQueries
-      )
-      const intermediateResult = matches
-        .deduplicateSorted((prev, current) =>
-          prev.value === current.value ? 0 : -1
-        )
-        .map(({ value }) => datastore.getNode(value))
-        .filter(Boolean) as GatsbyIterable<IGatsbyNode>
-
-      result = result.concat(
-        completeFiltering(typeName, intermediateResult, dbQueries, usedQueries)
-      )
-    }
-    return result
-  }
-
-  // 2.2 section
-  // TODO: 2.2.1 try to find existing index and use index data for initial filtering
-  // TODO: 2.2.2 iterate nodes by type (do not fall back to fast filters)
-  console.warn(`Fallback to full scan :/ ${nodeTypeNames[0]} ${filter}`)
-  let result = new GatsbyIterable<IGatsbyNode>([])
-  for (const typeName of nodeTypeNames) {
-    result = result.concat(
-      completeFiltering(
-        typeName,
-        datastore.iterateNodesByType(typeName),
-        dbQueries,
-        new Set()
-      )
-    )
-  }
-  return result
-}
-
+/**
+ * Takes intermediate result and applies any remaining dbQueries.
+ *
+ * If result is already fully filtered - simply returns.
+ */
 function completeFiltering(
-  typeName: string,
-  intermediateResult: IGatsbyIterable<IGatsbyNode>,
-  dbQueries: Array<DbQuery>,
-  usedQueries: Set<DbQuery>
-): IGatsbyIterable<IGatsbyNode> {
-  // Apply remaining filter operations directly (last resort: slow)
-  if (usedQueries.size === dbQueries.length) {
+  context: IQueryContext,
+  intermediateResult: GatsbyIterable<IGatsbyNode>,
+  usedQueries: Set<DbQuery> = new Set()
+): GatsbyIterable<IGatsbyNode> {
+  const { dbQueries } = context
+  if (isFullyFiltered(dbQueries, usedQueries)) {
     return intermediateResult
   }
-  const resolvedNodes = store.getState().resolvedNodesCache.get(typeName)
+  // Apply remaining filter operations directly (last resort: slow)
+  const resolvedNodes = store.getState().resolvedNodesCache
 
   const filtersToApply: Array<[string, IDbFilterStatement]> = dbQueries
     .filter(q => !usedQueries.has(q))
@@ -457,16 +319,17 @@ function completeFiltering(
   let shown = true
 
   return intermediateResult.filter(node => {
-    const resolvedFields = resolvedNodes?.get(node.id)
+    const resolvedFields = resolvedNodes?.get(node.internal.type)?.get(node.id)
+
     for (const [dottedField, filter] of filtersToApply) {
       ++items
       if (items % 1000 === 0) shown = false
       if (!shown) {
         shown = true
         console.log(
-          `Completing huge dataset (${items} items so far) for: ${typeName}.${dottedField}; spent: ${
-            Date.now() - start
-          }ms;`
+          `Completing huge dataset (${items} items so far) for: ${
+            node.internal.type
+          }.${dottedField}; spent: ${Date.now() - start}ms;`
         )
       }
       const tmp = resolveFieldValue(dottedField, node, resolvedFields)
@@ -480,38 +343,55 @@ function completeFiltering(
   })
 }
 
-function completeSorting() {
-  // if IndexResults.
+function sortNodesInMemory(
+  context: IQueryContext,
+  nodes: GatsbyIterable<IGatsbyNode>
+): GatsbyIterable<IGatsbyNode> {
+  // TODO: Nodes can be partially sorted by index prefix - we can (and should) exploit this
+  const arr = Array.from(nodes)
+  arr.sort(createNodeSortComparator(context.sortFields))
+  return new GatsbyIterable(arr)
+}
+
+function createQueryContext(args: IDoRunQueryArgs): IQueryContext {
+  const { queryArgs: { filter, sort, limit, skip = 0 } = {}, firstOnly } = args
+
+  return {
+    datastore: args.datastore,
+    databases: args.databases,
+    nodeTypeNames: args.nodeTypeNames,
+    dbQueries: createDbQueriesFromObject(prepareQueryArgs(filter)),
+    sortFields: new Map<string, number>(
+      sort?.fields.map((field, i) => [field, isDesc(sort?.order[i]) ? -1 : 1])
+    ),
+    suggestedIndexFields: new Map(suggestIndex({ filter, sort })),
+    limit: firstOnly ? 1 : limit,
+    skip,
+  }
 }
 
 /**
- * Given filter and sort fields (in dotted notation), as well as a sort order,
- * returns an object describing index fields.
- *
- * Example:
- *  buildIndexFields([`foo`], [`foo`, `bar`], [`desc`, `desc`])
- *  // returns:
- *  // { `foo` : -1, `bar`: -1 }
+ * Based on assumption that if all sort fields exist in index
+ * then any result received from this index is fully sorted
  */
-function buildIndexFields(
-  filterFields: Array<string>,
-  sortFields: Array<string> = [],
-  sortOrder: Array<"asc" | "desc" | boolean> = []
-): IIndexFields {
-  const indexFields = [
-    ...filterFields
-      .filter(field => !sortFields.includes(field))
-      .map(field => [field, 1]),
+function canUseIndexForSorting(
+  index: IIndexMetadata,
+  sortFields: SortFields
+): boolean {
+  const indexKeyFields = new Map(index.keyFields)
+  for (const [field, sortOrder] of sortFields) {
+    if (indexKeyFields.get(field) !== sortOrder) {
+      return false
+    }
+  }
+  return true
+}
 
-    ...sortFields.map((fieldName, index) => [
-      fieldName,
-      isDesc(sortOrder[index]) ? -1 : 1,
-    ]),
-  ]
-  return indexFields.reduce(
-    (acc, [field, order]) => Object.assign(acc, { [field]: order }),
-    {}
-  )
+function isFullyFiltered(
+  dbQueries: Array<DbQuery>,
+  usedQueries: Set<DbQuery>
+): boolean {
+  return dbQueries.length === usedQueries.size
 }
 
 function getEqQueries(dbQueries: Array<DbQuery>): Array<DbQuery> {
@@ -526,4 +406,34 @@ function isMixedSortOrder(
 ): boolean {
   const first = isDesc(sortOrder[0])
   return sortFields.some((_, index) => isDesc(sortOrder[index]) !== first)
+}
+
+function createNodeSortComparator(sortFields: SortFields): (a, b) => number {
+  const resolvedNodesCache = store.getState().resolvedNodesCache
+
+  return function nodeComparator(a: IGatsbyNode, b: IGatsbyNode): number {
+    const resolvedAFields = resolvedNodesCache?.get(a.internal.type)?.get(a.id)
+    const resolvedBFields = resolvedNodesCache?.get(b.internal.type)?.get(b.id)
+
+    for (const [field, direction] of sortFields) {
+      const valueA: any = resolveFieldValue(field, a, resolvedAFields)
+      const valueB: any = resolveFieldValue(field, b, resolvedBFields)
+
+      if (valueA > valueB) {
+        return direction === 1 ? 1 : -1
+      } else if (valueA < valueB) {
+        return direction === 1 ? -1 : 1
+      }
+    }
+    return 0
+  }
+}
+
+export function compareByKeySuffix(prefixLength: number) {
+  return function (a: IIndexEntry, b: IIndexEntry): number {
+    const aSuffix = a.key.slice(prefixLength)
+    const bSuffix = b.key.slice(prefixLength)
+    // @ts-ignore
+    return compareKey(aSuffix, bSuffix)
+  }
 }

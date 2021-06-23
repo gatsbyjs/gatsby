@@ -308,6 +308,29 @@ Running a query consists of several steps:
 Every step uses iterators and generators, so essentially it is a single traversal defined
 lazily. It doesn't actually require double traversal (except when in-memory sorting is actually needed).
 
+## Caveat: MultiKey indexes and count
+
+Multikey index cannot reliably count the number of elements returned by some query
+The following node has two entries in index `{ a: 1 }`.
+
+```js
+const node = { id: 1, a: [`foo`, `bar`] }
+```
+
+It may show up multiple times in results for range queries (like `in` or `gt`).
+
+The only case when it returns reliable count is when _all_ multikey fields are filtered with `eq`
+predicate (field `a` in this example).
+
+So in the worst case we must traverse all index results and deduplicate to get the actual count.
+
+## Caveat: MultiKey index and limit, offset
+
+Limit and offset are also unreliable with MultiKey indexes
+(also unless all multiKey fields have `eq` predicate).
+
+## Caveat: counts
+
 ## Caveat: mixed sort order
 
 Currently, we cannot scan index in mixed order. This feature requires binary inversion for key elements
