@@ -48,9 +48,9 @@ export interface ISharpGatsbyImageArgs {
   transformOptions?: {
     fit?: Fit
     cropFocus?: number | string
-    duotone?: { 
-      highlight:string,
-      shadow: string,
+    duotone?: {
+      highlight: string
+      shadow: string
       opacity?: number
     }
     grayscale?: boolean
