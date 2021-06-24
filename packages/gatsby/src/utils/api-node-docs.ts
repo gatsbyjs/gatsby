@@ -413,6 +413,12 @@ export const onPreInit = true
 /**
  * Lifecycle executed in each process (one time per process). Used to store actions etc for later use.
  *
+ * @example
+ * let createJobV2
+ * exports.unstable_onPluginInit = ({ actions }) => {
+ *   // store job creation action to use it later
+ *   createJobV2 = actions.createJobV2
+ * }
  * @gatsbyVersion 3.X.0
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
