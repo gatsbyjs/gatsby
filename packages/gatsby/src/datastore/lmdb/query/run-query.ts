@@ -10,7 +10,12 @@ import {
   IDbFilterStatement,
   prepareQueryArgs,
 } from "../../common/query"
-import { createIndex, IIndexMetadata, IndexFields } from "./create-index"
+import {
+  createIndex,
+  getIndexMetadata,
+  IIndexMetadata,
+  IndexFields,
+} from "./create-index"
 import {
   countUsingIndex,
   filterUsingIndex,
@@ -181,48 +186,55 @@ interface IQueryContext {
 
 export async function doRunQuery(
   args: IDoRunQueryArgs
-): Promise<{ entries: GatsbyIterable<IGatsbyNode> }> {
+): Promise<GatsbyIterable<IGatsbyNode>> {
   const context = createQueryContext(args)
 
-  const entries = canUseIndex(context)
-    ? await performIndexScan(context)
-    : await performFullTableScan(context)
+  // Keeping doRunQuery method the only async method in chain
+  await Promise.all(
+    context.nodeTypeNames.map(typeName =>
+      createIndex(context, typeName, context.suggestedIndexFields)
+    )
+  )
 
-  return { entries }
+  // Make resulting iterable re-entrable
+  return new GatsbyIterable<IGatsbyNode>(
+    () =>
+      canUseIndex(context)
+        ? performIndexScan(context)
+        : performFullTableScan(context),
+    () => runCount(context)
+  )
 }
 
-export async function performIndexScan(
-  context: IQueryContext
-): Promise<GatsbyIterable<IGatsbyNode>> {
+function performIndexScan(context: IQueryContext): GatsbyIterable<IGatsbyNode> {
+  const { suggestedIndexFields, sortFields } = context
+
   let result = new GatsbyIterable<IGatsbyNode>([])
   for (const typeName of context.nodeTypeNames) {
-    const indexMetadata = await createIndex(
+    const indexMetadata = getIndexMetadata(
       context,
       typeName,
-      context.suggestedIndexFields
+      suggestedIndexFields
     )
     if (!needsSorting(context)) {
-      const nodes = await filterNodes(context, indexMetadata)
+      const nodes = filterNodes(context, indexMetadata)
       result = result.concat(nodes)
       continue
     }
-    if (canUseIndexForSorting(indexMetadata, context.sortFields)) {
-      const nodes = await filterNodes(context, indexMetadata)
+    if (canUseIndexForSorting(indexMetadata, sortFields)) {
+      const nodes = filterNodes(context, indexMetadata)
       // Interleave nodes of different types (not expensive for already sorted chunks)
-      result = result.mergeSorted(
-        nodes,
-        createNodeSortComparator(context.sortFields)
-      )
+      result = result.mergeSorted(nodes, createNodeSortComparator(sortFields))
       continue
     }
     // The sad part - unlimited filter + in-memory sort
     const unlimited = { ...context, skip: 0, limit: undefined }
-    const nodes = await filterNodes(unlimited, indexMetadata)
+    const nodes = filterNodes(unlimited, indexMetadata)
     const sortedNodes = sortNodesInMemory(context, nodes)
 
     result = result.mergeSorted(
       sortedNodes,
-      createNodeSortComparator(context.sortFields)
+      createNodeSortComparator(sortFields)
     )
   }
   const { limit, skip = 0 } = context
@@ -233,10 +245,10 @@ export async function performIndexScan(
   return result
 }
 
-async function performCount(context: IQueryContext): Promise<number> {
+export function runCount(context: IQueryContext): number {
   let count = 0
   for (const typeName of context.nodeTypeNames) {
-    const indexMetadata = await createIndex(
+    const indexMetadata = getIndexMetadata(
       context,
       typeName,
       context.suggestedIndexFields
@@ -249,16 +261,15 @@ async function performCount(context: IQueryContext): Promise<number> {
       count += typeCount
     } catch (e) {
       // We cannot reliably count using index - fallback to full iteration :/
-      const entries = await filterNodes(context, indexMetadata)
-      for (const _ of entries) count++
+      for (const _ of filterNodes(context, indexMetadata)) count++
     }
   }
   return count
 }
 
-async function performFullTableScan(
+function performFullTableScan(
   context: IQueryContext
-): Promise<GatsbyIterable<IGatsbyNode>> {
+): GatsbyIterable<IGatsbyNode> {
   console.warn(`Fallback to full table scan :/`)
 
   const { datastore, nodeTypeNames } = context
@@ -286,11 +297,11 @@ async function performFullTableScan(
   return result
 }
 
-async function filterNodes(
+function filterNodes(
   context: IQueryContext,
   indexMetadata: IIndexMetadata
-): Promise<GatsbyIterable<IGatsbyNode>> {
-  const { entries, usedQueries } = await filterUsingIndex({
+): GatsbyIterable<IGatsbyNode> {
+  const { entries, usedQueries } = filterUsingIndex({
     ...context,
     indexMetadata,
     reverse: Array.from(context.sortFields.values())[0] === -1,
@@ -371,7 +382,10 @@ function sortNodesInMemory(
 }
 
 function createQueryContext(args: IDoRunQueryArgs): IQueryContext {
-  const { queryArgs: { filter, sort, limit, skip = 0 } = {}, firstOnly } = args
+  const {
+    queryArgs: { filter, sort /* limit, skip = 0*/ } = {},
+    firstOnly,
+  } = args
 
   return {
     datastore: args.datastore,
@@ -382,8 +396,10 @@ function createQueryContext(args: IDoRunQueryArgs): IQueryContext {
       sort?.fields.map((field, i) => [field, isDesc(sort?.order[i]) ? -1 : 1])
     ),
     suggestedIndexFields: new Map(suggestIndex({ filter, sort })),
-    limit: firstOnly ? 1 : limit,
-    skip,
+    // limit: firstOnly ? 1 : limit,
+    // skip,
+    limit: firstOnly ? 1 : undefined,
+    skip: 0,
   }
 }
 

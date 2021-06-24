@@ -48,11 +48,6 @@ enum ValueEdges {
   AFTER = 1,
 }
 
-interface IDataStoreContext {
-  databases: ILmdbDatabases
-  datastore: IDataStore
-}
-
 const canUseIndex = new Set([
   DbComparator.EQ,
   DbComparator.IN,
@@ -83,9 +78,7 @@ export interface IFilterResult {
 /**
  * Note: since it returns full index entries - it may contain duplicates
  */
-export async function filterUsingIndex(
-  context: IFilterContext
-): Promise<IFilterResult> {
+export function filterUsingIndex(context: IFilterContext): IFilterResult {
   const { dbQueries, indexMetadata } = context
   const indexFields = new Map(indexMetadata.keyFields)
   const { ranges, usedQueries } = getIndexRanges(dbQueries, indexFields)
@@ -102,8 +95,6 @@ export async function filterUsingIndex(
 
   return narrowResultsIfPossible(context, result)
 }
-
-export function countUsingIndexFast(context: IFilterContext): number {}
 
 export function countUsingIndex(context: IFilterContext): number {
   const {
@@ -329,7 +320,7 @@ function narrowResultsIfPossible(
 export function getQueriesThatCanUseIndex(all: Array<DbQuery>): Array<DbQuery> {
   return all
     .filter(q => canUseIndex.has(getFilterStatement(q).comparator))
-    .sort(sortByFilterSpecificity)
+    .sort(compareByPredicateSpecificity)
 }
 
 export function getIndexRanges(
@@ -342,7 +333,7 @@ export function getIndexRanges(
   const rangeStarts: Array<RangeBoundary> = []
   const rangeEndings: Array<RangeBoundary> = []
 
-  for (const indexField of indexFields.keys()) {
+  for (const indexField of indexFields) {
     const result = extractRanges(queriesThatCanUseIndex, indexField)
     if (!result.rangeStarts.length) {
       // No point to continue - just use index prefix, not all index fields
@@ -390,7 +381,7 @@ export function getIndexRanges(
 
 function extractRanges(
   queries: Array<DbQuery>,
-  indexField: string
+  [indexField, sortDirection]: [fieldName: string, sortDirection: number]
 ): {
   usedQueries: Set<DbQuery>
   rangeStarts: RangeBoundary
@@ -423,14 +414,22 @@ function extractRanges(
   switch (filter.comparator) {
     case DbComparator.EQ:
     case DbComparator.IN: {
+      const arr = Array.isArray(filter.value)
+        ? [...filter.value]
+        : [filter.value]
+
+      // Sort ranges by index sort direction
+      arr.sort((a: any, b: any): number => {
+        if (a === b) return 0
+        if (sortDirection === 1) return a > b ? 1 : -1
+        return a < b ? 1 : -1
+      })
       // TODO: ideally do range intersections with other queries (e.g. $in + $gt + $lt)
       //  although it is likely something like 0.1% of cases
       //  (right now it applies additional filters in runQuery.completeFiltering)
-      const arr = new Set(
-        Array.isArray(filter.value) ? filter.value : [filter.value]
-      )
+
       let hasNull = false
-      for (const item of arr) {
+      for (const item of new Set(arr)) {
         const value = toIndexFieldValue(item, filter)
         if (value === null) hasNull = true
         rangeStarts.push(value)
@@ -560,21 +559,21 @@ function getValueEdgeBefore(value: IndexFieldValue): RangeEdgeBefore {
   return [undefinedSymbol, value]
 }
 
-function sortByFilterSpecificity(a: DbQuery, b: DbQuery): number {
-  const aComparator = getFilterStatement(a).comparator
-  const bComparator = getFilterStatement(b).comparator
-  if (aComparator === bComparator) {
+function compareByPredicateSpecificity(a: DbQuery, b: DbQuery): number {
+  const aPredicate = getFilterStatement(a).comparator
+  const bPredicate = getFilterStatement(b).comparator
+  if (aPredicate === bPredicate) {
     return 0
   }
   for (const comparator of canUseIndex) {
-    if (comparator === aComparator) {
+    if (comparator === aPredicate) {
       return -1
     }
-    if (comparator === bComparator) {
+    if (comparator === bPredicate) {
       return 1
     }
   }
-  throw new Error(`Unexpected comparator pair: ${aComparator}, ${bComparator}`)
+  throw new Error(`Unexpected predicate pair: ${aPredicate}, ${bPredicate}`)
 }
 
 function toIndexFieldValue(

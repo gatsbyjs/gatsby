@@ -93,7 +93,7 @@ const addInferredType = ({
       firstNode = node
       break
     }
-    if (firstNode) {
+    if (firstNode.internal?.owner) {
       typeComposer.setExtension(`plugin`, firstNode.internal.owner)
     }
   }

@@ -360,9 +360,42 @@ and ensures consistent ordering when query has no sort order set.
 > In databases the last column is usually the same as primary key (in our example "a1").
 > But Gatsby uses UUID for the actual id value which is 16 bytes uncompressed.
 
+# Breaking changes:
+
+### `runQuery` return value and args
+
+Currently, `nodeModel.runQuery` returns an array with ALL filtered values, without any `limit`/`skip` applied
+(this array is sliced by `limit` and `skip` in resolvers)
+
+With LMDB (or any db) this has to change: `runQuery` must support `limit` and `offset` and return
+only the slice. Returned value should be an array-like object containing `totalCount` method
+that returns count of elements. You won't be able to do:
+
+```js
+const result = await nodeModel.runQuery({ filter: { foo: { gt: 1 } } })
+const currentPage = result.slice(0, 20)
+const totalCount = result.length
+```
+
+In the new world you'll have to do something like this:
+
+```js
+const result = await nodeModel.runQuery({ /* filter:... */ skip: 0, limit: 20 })
+const currentPage = Array.from(result) // or better use result iterable directly
+const totalCount = result.totalCount()
+```
+
+We likely can support old-style model by returning array-like iterable object,
+but it will be less efficient with LMDB (or any db) because you _really_ want to
+apply `limit`/`skip` at the DB query/cursor level.
+
 # Gatsby-specific
 
+What to do with `{ eq: null }` including undefined values.
+
 # Problems and potential improvements
+
+Avoiding async iterators: https://github.com/nodejs/node/issues/31979
 
 - pagination
 - aggregation (count, min, max, etc)

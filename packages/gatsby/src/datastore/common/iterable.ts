@@ -1,12 +1,30 @@
 import { IGatsbyIterable } from "../types"
 
+/**
+ * Note: avoiding async iterators due to https://github.com/nodejs/node/issues/31979
+ * (fortunately lmdb can traverse stuff in sync manner very fast)
+ */
 export class GatsbyIterable<T> implements IGatsbyIterable<T> {
-  constructor(private source: Iterable<T> | (() => Iterable<T>)) {}
+  constructor(
+    private source: Iterable<T> | (() => Iterable<T>),
+    private size?: number | (() => number)
+  ) {}
 
   [Symbol.iterator](): Iterator<T> {
     const source =
       typeof this.source === `function` ? this.source() : this.source
     return source[Symbol.iterator]()
+  }
+
+  get length(): number {
+    if (typeof this.size === `function`) {
+      this.size = this.size()
+    }
+    if (typeof this.size !== `number`) {
+      // TODO: fully iterate maybe?
+      throw new Error(`Non-countable iterable`)
+    }
+    return this.size
   }
 
   concat<U = T>(other: Iterable<U>): GatsbyIterable<T | U> {

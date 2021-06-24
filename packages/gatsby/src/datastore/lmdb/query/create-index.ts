@@ -45,30 +45,47 @@ export async function createIndex(
   typeName: string,
   indexFields: IndexFields
 ): Promise<IIndexMetadata> {
-  const { databases } = context
   const indexName = buildIndexName(typeName, indexFields)
-  const metadataKey = `index:${indexName}`
-
-  const meta: IIndexMetadata = databases.metadata.get(metadataKey)
+  const meta = getIndexMetadata(context, typeName, indexFields, false)
 
   switch (meta?.state) {
     case `ready`:
       return meta
     case `building`: {
-      return indexReady(context, metadataKey)
+      return indexReady(context, indexName)
     }
     case `initial`:
     default: {
       try {
-        await lockIndex(context, metadataKey)
+        await lockIndex(context, indexName)
       } catch (err) {
         // Index is being updated in some other process.
         // Wait and assume it's in a good state when done
-        return indexReady(context, metadataKey)
+        return indexReady(context, indexName)
       }
       return doCreateIndex(context, typeName, indexFields)
     }
   }
+}
+
+export function getIndexMetadata(
+  context: IIndexingContext,
+  typeName: string,
+  indexFields: IndexFields,
+  assertReady = true
+): IIndexMetadata {
+  const { databases } = context
+  const indexName = buildIndexName(typeName, indexFields)
+
+  const meta: IIndexMetadata = databases.metadata.get(toMetadataKey(indexName))
+
+  if (assertReady && meta?.state !== `ready`) {
+    throw new Error(
+      `Index ${indexName} is not ready yet. State: ${meta?.state ?? `unknown`}`
+    )
+  }
+
+  return meta
 }
 
 async function doCreateIndex(
@@ -86,7 +103,6 @@ async function doCreateIndex(
   // Assuming materialization was run before creating index
   const resolvedNodes = store.getState().resolvedNodesCache.get(typeName)
 
-  console.log(`index entries:`)
   // TODO: iterate only over dirty nodes
   // TODO: wrap in async transaction?
   const stats: IIndexMetadata["stats"] = {
@@ -128,13 +144,19 @@ async function doCreateIndex(
     indexMetadata.state = `ready`
     indexMetadata.multiKeyFields = [...new Set(indexMetadata.multiKeyFields)]
 
-    await metadata.put(indexName, indexMetadata)
+    await metadata.put(toMetadataKey(indexName), indexMetadata)
     console.timeEnd(label)
+
+    console.log(`index entries:`)
+    indexes
+      .getRange({ start: indexName })
+      .forEach(entry => console.log(entry.key, entry.value))
+
     return indexMetadata
   } catch (e) {
     indexMetadata.state = `error`
     indexMetadata.error = String(e)
-    await metadata.put(indexName, indexMetadata)
+    await metadata.put(toMetadataKey(indexName), indexMetadata)
     throw e
   }
 }
@@ -189,37 +211,43 @@ function prepareIndexKeys(
 
 async function lockIndex(
   context: IIndexingContext,
-  indexKey: string
+  indexName: string
 ): Promise<void> {
   const { metadata } = context.databases
+  const indexKey = toMetadataKey(indexName)
 
   const justLocked = await metadata.ifNoExists(indexKey, () => {
-    metadata.put(indexKey, { state: `building` })
+    metadata.put(indexKey, null)
   })
-  if (!justLocked && metadata.get(indexKey)?.state === `building`) {
+  if (!justLocked) {
     throw new Error(`Index is already locked`)
   }
 }
 
 async function indexReady(
   context: IIndexingContext,
-  indexKey: string
+  indexName: string
 ): Promise<IIndexMetadata> {
   return new Promise((resolve, reject) => {
     const { metadata } = context.databases
 
     let retries = 0
+    let timeout = 16
     function poll(): void {
-      const indexMetadata = metadata.get(indexKey)
+      const indexMetadata = metadata.get(toMetadataKey(indexName))
       if (indexMetadata?.state === `ready`) {
         resolve(indexMetadata)
         return
       }
-      if (retries++ > 3000) {
-        reject(new Error(`Index ${indexKey} is locked for more than 5 minutes`))
+      console.log(`polling for `, indexName)
+      if (retries++ > 1000) {
+        reject(
+          new Error(`Index ${indexName} is locked for more than 5 minutes`)
+        )
         return
       }
-      setTimeout(poll, 100)
+      setTimeout(poll, timeout)
+      timeout = Math.min(100, timeout * 1.5)
     }
     poll()
   })
@@ -240,6 +268,10 @@ function buildIndexName(typeName: string, fields: IndexFields): string {
   }
 
   return tokens.join(`/`)
+}
+
+function toMetadataKey(indexName: string): string {
+  return `index:${indexName}`
 }
 
 function jsValueToLmdbKey(value: unknown): IndexFieldValue | undefined {

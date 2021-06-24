@@ -11,6 +11,7 @@ import {
 } from "../types"
 import { emitter, replaceReducer } from "../../redux"
 import { doRunQuery } from "./query/run-query"
+import { GatsbyIterable } from "../common/iterable"
 
 const lmdbDatastore = {
   getNode,
@@ -145,18 +146,16 @@ function countNodes(typeName?: string): number {
   return count
 }
 
-async function runQuery(
-  args: IRunQueryArgs
-): Promise<Iterable<IGatsbyNode> | null> {
-  const { entries } = await doRunQuery({
-    datastore: lmdbDatastore,
-    databases: getDatabases(),
-    ...args,
-  })
+async function runQuery(args: IRunQueryArgs): Promise<Iterable<IGatsbyNode>> {
   // Array.from() is optimized in V8 to work with iterables.
   // In other words, it won't immediately convert it to array but will
   // do it lazily under the hood as needed
   // https://v8.dev/blog/spread-elements#improving-array.from-performance
+  const entries = await doRunQuery({
+    datastore: lmdbDatastore,
+    databases: getDatabases(),
+    ...args,
+  })
   return Array.from(entries)
 }
 
