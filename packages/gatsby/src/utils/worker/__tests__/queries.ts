@@ -2,6 +2,7 @@ import * as path from "path"
 import fs from "fs-extra"
 import type { watch as ChokidarWatchType } from "chokidar"
 import { build } from "../../../schema"
+import reporter from "gatsby-cli/lib/reporter"
 import sourceNodesAndRemoveStaleNodes from "../../source-nodes"
 import { saveStateForWorkers, store } from "../../../redux"
 import { loadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
@@ -13,6 +14,7 @@ import {
 import { getDataStore } from "../../../datastore"
 import { IGroupedQueryIds } from "../../../services"
 import { IGatsbyPage } from "../../../redux/types"
+import { runQueriesInWorkersQueue } from "../pool"
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -218,5 +220,39 @@ describeWhenLMDB(`worker (queries)`, () => {
         withVar: `You are cool`,
       },
     })
+  })
+
+  it(`should chunk work in runQueriesInWorkersQueue`, async () => {
+    const spy = jest.spyOn(reporter, `createProgress`)
+
+    // @ts-ignore - worker is defined
+    await runQueriesInWorkersQueue(worker, queryIdsBig, 10)
+    const stateFromWorker = await worker!.getState()
+
+    // Called the complete ABC so we can test _a
+    const pageQueryResultA = await fs.readJson(
+      `${stateFromWorker.program.directory}/.cache/json/_a.json`
+    )
+
+    expect(pageQueryResultA.data).toStrictEqual({
+      nodeTypeOne: {
+        number: 123,
+      },
+    })
+
+    const pageQueryResultZ = await fs.readJson(
+      `${stateFromWorker.program.directory}/.cache/json/_z.json`
+    )
+
+    expect(pageQueryResultZ.data).toStrictEqual({
+      nodeTypeOne: {
+        number: 123,
+      },
+    })
+
+    expect(spy.mock.calls[0][0]).toBe(`run queries in workers`)
+    // 1 sq + 28 pq (2 normal pq + 26 alphabet pq)
+    expect(spy.mock.calls[0][1]).toBe(29)
+    spy.mockRestore()
   })
 })
