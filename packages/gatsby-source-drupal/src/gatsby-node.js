@@ -191,12 +191,13 @@ exports.sourceNodes = async (
         setPluginStatus({ lastFetched: res.body.timestamp })
         requireFullRebuild = true
       } else {
-        // Touch nodes so they are not garbage collected by Gatsby.
-        getNodes().forEach(node => {
+        const nodes = getNodes()
+        for (let i = 0; i < nodes.length; i++) {
+          const node = nodes[i]
           if (node.internal.owner === `gatsby-source-drupal`) {
             touchNode(node)
           }
-        })
+        }
 
         // Process sync data from Drupal.
         const nodesToSync = res.body.entities

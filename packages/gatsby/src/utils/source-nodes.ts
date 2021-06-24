@@ -18,17 +18,9 @@ function discoverPluginsWithoutNodes(
 ): Array<string> {
   // Find out which plugins own already created nodes
   const nodeOwnerSet = new Set([`default-site-plugin`])
-  nodes.forEach(node => nodeOwnerSet.add(node.internal.owner))
-
-  return storeState.flattenedPlugins
-    .filter(
-      plugin =>
-        // "Can generate nodes"
-        plugin.nodeAPIs.includes(`sourceNodes`) &&
-        // "Has not generated nodes"
-        !nodeOwnerSet.has(plugin.name)
-    )
-    .map(plugin => plugin.name)
+  for (let i = 0; i < nodes.length; i++) {
+    nodeOwnerSet.add(nodes[i].internal.owner)
+  }
 }
 
 /**
@@ -49,9 +41,21 @@ function warnForPluginsWithoutNodes(
 
 /**
  * Return the set of nodes for which its root node has not been touched
+ * as well as plugins which define sourceNodes but didn't create any nodes.
  */
-function getStaleNodes(state: IGatsbyState, nodes: Array<Node>): Array<Node> {
-  return nodes.filter(node => {
+function checkNodes(
+  state: IGatsbyState,
+  nodes: Array<Node>
+): Array<Array<Node> | Array<string>> {
+  const staleNodes: Array<Node> = []
+  const nodeOwnerSet = new Set([`default-site-plugin`])
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i]
+    nodeOwnerSet.add(node.internal.owner)
+
+    // if (node.internal.owner === `gatsby-source-drupal`) {
+    // continue
+    // }
     let rootNode = node
     let next: Node | undefined = undefined
 
@@ -70,19 +74,39 @@ function getStaleNodes(state: IGatsbyState, nodes: Array<Node>): Array<Node> {
       )
     }
 
-    return !state.nodesTouched.has(rootNode.id)
-  })
+    if (!state.nodesTouched.has(rootNode.id)) {
+      staleNodes.push(node)
+    }
+  }
+
+  const noNodesPlugins = state.flattenedPlugins
+    .filter(
+      plugin =>
+        // "Can generate nodes"
+        plugin.nodeAPIs.includes(`sourceNodes`) &&
+        // "Has not generated nodes"
+        !nodeOwnerSet.has(plugin.name)
+    )
+    .map(plugin => plugin.name)
+
+  return [staleNodes, noNodesPlugins]
 }
 
 /**
  * Find all stale nodes and delete them
  */
-function deleteStaleNodes(state: IGatsbyState, nodes: Array<Node>): void {
-  const staleNodes = getStaleNodes(state, nodes)
+function validateAndGCNodes(state: IGatsbyState, nodes: Array<Node>): void {
+  const [staleNodes, pluginsWithNoNodes] = checkNodes(state, nodes)
 
   if (staleNodes.length > 0) {
     staleNodes.forEach(node => store.dispatch(deleteNode(node)))
   }
+
+  pluginsWithNoNodes.map(name =>
+    report.warn(
+      `The ${name} plugin has generated no Gatsby nodes. Do you need it?`
+    )
+  )
 }
 
 export default async ({
@@ -109,7 +133,5 @@ export default async ({
   const state = store.getState()
   const nodes = getNodes()
 
-  warnForPluginsWithoutNodes(state, nodes)
-
-  deleteStaleNodes(state, nodes)
+  validateAndGCNodes(state, nodes)
 }
