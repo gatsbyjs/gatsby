@@ -52,7 +52,7 @@ Utility to be used by plugins to do runtime check against `gatsby` core package 
 #### Example
 
 ```js
-import { isGatsbyNodeLifecycleSupported } from "gatsby-plugin-utils"
+const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
 
 // only use createSchemaCustomization lifecycle only when it's available.
 if (isGatsbyNodeLifecycleSupported(`createSchemaCustomization`)) {
