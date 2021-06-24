@@ -115,6 +115,7 @@ exports.onPostBootstrap = async ({ reporter, cache, store }) => {
 }
 
 if (coreSupportsOnPluginInit) {
+  // to properly initialize plugin in worker (`onPreBootstrap` won't run in workers)
   exports.unstable_onPluginInit = async ({ actions }, pluginOptions) => {
     setActions(actions)
     setPluginOptions(pluginOptions)
@@ -122,10 +123,8 @@ if (coreSupportsOnPluginInit) {
 }
 
 exports.onPreBootstrap = async ({ actions, emitter, cache }, pluginOptions) => {
-  if (!coreSupportsOnPluginInit) {
-    setActions(actions)
-    setPluginOptions(pluginOptions)
-  }
+  setActions(actions)
+  setPluginOptions(pluginOptions)
 
   // below is a hack / hot fix for confusing progress bar behaviour
   // that doesn't recognize duplicate jobs, as it's now
