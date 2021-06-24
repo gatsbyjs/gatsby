@@ -13,15 +13,16 @@ export const withoutTrailingSlash = path =>
 /**
  * @name prefixPath
  *
- * Properly handles prefixing relative path with site domain, Gatsby pathPrefix and AssetPrefix
+ * Properly handles prefixing relative path with site domain and Gatsby basePath
  *
  * @param {string} url - string containing relative path
  * @param {string} siteUrl - results of the resolveSiteUrl function
+ * @param {string} basePath - resolved base path from Gatsby config
  * @returns {string}
  */
-// TODO: Update for v3 - Fix janky path/asset prefixing
-export function prefixPath({ url, siteUrl, pathPrefix = `` }) {
-  return new URL(pathPrefix + url, siteUrl).toString()
+
+export function prefixPath({ url, siteUrl, basePath }) {
+  return new URL(basePath + url, siteUrl).toString()
 }
 
 /**

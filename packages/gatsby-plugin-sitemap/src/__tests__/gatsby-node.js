@@ -12,7 +12,7 @@ jest.mock(`sitemap`, () => {
 
 const schema = pluginOptionsSchema({ Joi })
 
-const pathPrefix = ``
+const basePath = ``
 
 const reporter = {
   verbose: jest.fn(),
@@ -48,7 +48,7 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
       },
     })
     await onPostBuild(
-      { graphql, pathPrefix, reporter },
+      { graphql, basePath, reporter },
       await schema.validateAsync({})
     )
     const {
@@ -106,7 +106,7 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
     }
 
     await onPostBuild(
-      { graphql, pathPrefix, reporter },
+      { graphql, basePath, reporter },
       await schema.validateAsync(options)
     )
 
@@ -147,7 +147,7 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
     }
     const prefix = `/test`
     await onPostBuild(
-      { graphql, pathPrefix: prefix, reporter },
+      { graphql, basePath: prefix, reporter },
       await schema.validateAsync(options)
     )
     const { sourceData } = sitemap.simpleSitemapAndIndex.mock.calls[0][0]
@@ -183,7 +183,7 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
       output: subdir,
     }
     await onPostBuild(
-      { graphql, pathPrefix: prefix, reporter },
+      { graphql, basePath: prefix, reporter },
       await schema.validateAsync(options)
     )
     expect(sitemap.simpleSitemapAndIndex.mock.calls[0][0].publicBasePath).toBe(

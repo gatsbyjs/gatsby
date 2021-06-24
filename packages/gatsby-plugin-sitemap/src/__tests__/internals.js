@@ -31,7 +31,7 @@ describe(`gatsby-plugin-sitemap internals tests`, () => {
     const result = prefixPath({
       url: TestPath,
       siteUrl: SiteUrl,
-      pathPrefix: `/root`,
+      basePath: `/root`,
     })
 
     expect(result).toStrictEqual(`https://example.net/root/test/path/`)
