@@ -1,8 +1,8 @@
+import "jest-extended"
 import * as path from "path"
 import fs from "fs-extra"
 import type { watch as ChokidarWatchType } from "chokidar"
 import { build } from "../../../schema"
-import reporter from "gatsby-cli/lib/reporter"
 import sourceNodesAndRemoveStaleNodes from "../../source-nodes"
 import { saveStateForWorkers, store } from "../../../redux"
 import { loadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
@@ -177,7 +177,8 @@ describeWhenLMDB(`worker (queries)`, () => {
   })
 
   it(`should execute static queries`, async () => {
-    const stateFromWorker = await worker!.getState()
+    if (!worker) fail(`worker not defined`)
+    const stateFromWorker = await worker.getState()
 
     const staticQueryResult = await fs.readJson(
       `${stateFromWorker.program.directory}/public/page-data/sq/d/${dummyStaticQuery.hash}.json`
@@ -193,7 +194,8 @@ describeWhenLMDB(`worker (queries)`, () => {
   })
 
   it(`should execute page queries`, async () => {
-    const stateFromWorker = await worker!.getState()
+    if (!worker) fail(`worker not defined`)
+    const stateFromWorker = await worker.getState()
 
     const pageQueryResult = await fs.readJson(
       `${stateFromWorker.program.directory}/.cache/json/_foo.json`
@@ -207,7 +209,8 @@ describeWhenLMDB(`worker (queries)`, () => {
   })
 
   it(`should execute page queries with context variables`, async () => {
-    const stateFromWorker = await worker!.getState()
+    if (!worker) fail(`worker not defined`)
+    const stateFromWorker = await worker.getState()
 
     const pageQueryResult = await fs.readJson(
       `${stateFromWorker.program.directory}/.cache/json/_bar.json`
@@ -223,11 +226,12 @@ describeWhenLMDB(`worker (queries)`, () => {
   })
 
   it(`should chunk work in runQueriesInWorkersQueue`, async () => {
-    const spy = jest.spyOn(reporter, `createProgress`)
+    if (!worker) fail(`worker not defined`)
+    const spy = jest.spyOn(worker, `runQueries`)
 
     // @ts-ignore - worker is defined
     await runQueriesInWorkersQueue(worker, queryIdsBig, 10)
-    const stateFromWorker = await worker!.getState()
+    const stateFromWorker = await worker.getState()
 
     // Called the complete ABC so we can test _a
     const pageQueryResultA = await fs.readJson(
@@ -250,9 +254,26 @@ describeWhenLMDB(`worker (queries)`, () => {
       },
     })
 
-    expect(spy.mock.calls[0][0]).toBe(`run queries in workers`)
-    // 1 sq + 28 pq (2 normal pq + 26 alphabet pq)
-    expect(spy.mock.calls[0][1]).toBe(29)
+    expect(spy).toHaveBeenNthCalledWith(1, {
+      pageQueryIds: [],
+      staticQueryIds: expect.toBeArrayOfSize(1),
+    })
+
+    expect(spy).toHaveBeenNthCalledWith(2, {
+      pageQueryIds: expect.toBeArrayOfSize(10),
+      staticQueryIds: [],
+    })
+
+    expect(spy).toHaveBeenNthCalledWith(3, {
+      pageQueryIds: expect.toBeArrayOfSize(10),
+      staticQueryIds: [],
+    })
+
+    expect(spy).toHaveBeenNthCalledWith(4, {
+      pageQueryIds: expect.toBeArrayOfSize(8),
+      staticQueryIds: [],
+    })
+
     spy.mockRestore()
   })
 })
