@@ -7,14 +7,19 @@ const {
 } = require(`./index`)
 const { pathExists } = require(`fs-extra`)
 const { slash } = require(`gatsby-core-utils`)
-const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
 
 const { setPluginOptions } = require(`./plugin-options`)
 const path = require(`path`)
 
-const coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(
-  `unstable_onPluginInit`
-)
+let coreSupportsOnPluginInit
+try {
+  const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
+  coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(
+    `unstable_onPluginInit`
+  )
+} catch (e) {
+  coreSupportsOnPluginInit = false
+}
 
 exports.onCreateDevServer = async ({ app, cache, reporter }) => {
   if (!_lazyJobsEnabled()) {
