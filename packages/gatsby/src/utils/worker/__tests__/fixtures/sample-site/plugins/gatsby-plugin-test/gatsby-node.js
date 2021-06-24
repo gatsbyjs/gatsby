@@ -24,6 +24,19 @@ exports.createResolvers = ({ createResolvers }) => {
         resolve() {
           return `Custom String`
         }
+      },
+      fieldWithArg: {
+        type: "String",
+        args: {
+          isCool: "Boolean"
+        },
+        resolve(source, args) {
+          if (args.isCool) {
+            return `You are cool`
+          } else {
+            return `You are not cool`
+          }
+        }
       }
     }
   }
