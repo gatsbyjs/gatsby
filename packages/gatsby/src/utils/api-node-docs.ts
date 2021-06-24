@@ -419,7 +419,7 @@ export const onPreInit = true
  *   // store job creation action to use it later
  *   createJobV2 = actions.createJobV2
  * }
- * @gatsbyVersion 3.X.0
+ * @gatsbyVersion 3.9.0
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const unstable_onPluginInit = true
