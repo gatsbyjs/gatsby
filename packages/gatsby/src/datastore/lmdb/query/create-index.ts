@@ -86,7 +86,7 @@ async function doCreateIndex(
   // Assuming materialization was run before creating index
   const resolvedNodes = store.getState().resolvedNodesCache.get(typeName)
 
-  // console.log(`index entries:`)
+  console.log(`index entries:`)
   // TODO: iterate only over dirty nodes
   // TODO: wrap in async transaction?
   const stats: IIndexMetadata["stats"] = {
@@ -114,17 +114,20 @@ async function doCreateIndex(
         indexName,
         indexFields
       )
-      for (const indexKey of keys) {
-        // Note: this may throw if indexKey exceeds 1978 chars (lmdb limit)
-        indexes.put(indexKey, node.id)
-      }
       stats.keyCount += keys.length
       stats.itemCount++
       stats.maxKeysPerItem = Math.max(stats.maxKeysPerItem, keys.length)
       indexMetadata.multiKeyFields.push(...multiKeyFields)
+
+      for (const indexKey of keys) {
+        // Note: this may throw if indexKey exceeds 1978 chars (lmdb limit) or contain objects/buffers/etc
+        console.log(indexKey, node.id)
+        indexes.put(indexKey, node.id)
+      }
     }
     indexMetadata.state = `ready`
     indexMetadata.multiKeyFields = [...new Set(indexMetadata.multiKeyFields)]
+
     await metadata.put(indexName, indexMetadata)
     console.timeEnd(label)
     return indexMetadata
@@ -232,9 +235,8 @@ async function indexReady(
 function buildIndexName(typeName: string, fields: IndexFields): string {
   const tokens: Array<string> = [typeName]
 
-  for (const field of fields.keys()) {
-    const sortOrder = fields[field]
-    tokens.push(`${field}:${sortOrder}`)
+  for (const [field, sortDirection] of fields) {
+    tokens.push(`${field}:${sortDirection}`)
   }
 
   return tokens.join(`/`)

@@ -1,10 +1,12 @@
 import { IGatsbyIterable } from "../types"
 
 export class GatsbyIterable<T> implements IGatsbyIterable<T> {
-  constructor(private source: Iterable<T>) {}
+  constructor(private source: Iterable<T> | (() => Iterable<T>)) {}
 
   [Symbol.iterator](): Iterator<T> {
-    return this.source[Symbol.iterator]()
+    const source =
+      typeof this.source === `function` ? this.source() : this.source
+    return source[Symbol.iterator]()
   }
 
   concat<U = T>(other: Iterable<U>): GatsbyIterable<T | U> {
@@ -156,6 +158,7 @@ function* deduplicateSequence<T>(
   source: Iterable<T>,
   keyFn?: (entry: T) => unknown
 ): Generator<T> {
+  // TODO: this can be potentially improved by using bloom filters?
   const registered = new Set<unknown>()
 
   for (const current of source) {

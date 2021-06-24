@@ -36,6 +36,10 @@ export function detectLmdbStore(): boolean {
 }
 
 function isLmdbStoreFlagSet(): boolean {
+  if (process.env.NODE_ENV === `test`) {
+    console.info(`IS LMDB`)
+    return true
+  }
   // return true
   return (
     Boolean(process.env.GATSBY_EXPERIMENTAL_LMDB_STORE) &&

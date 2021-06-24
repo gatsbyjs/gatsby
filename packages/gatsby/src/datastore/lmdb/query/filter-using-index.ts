@@ -174,6 +174,7 @@ function performRangeScan(
     }
   }
 
+  console.log(`ranges`)
   let entries = new GatsbyIterable<IIndexEntry>([])
   for (let { start, end } of ranges) {
     start = [keyPrefix, ...start]
@@ -181,6 +182,8 @@ function performRangeScan(
     const range = !reverse
       ? { start, end, limit, offset, snapshot: false }
       : { start: end, end: start, limit, offset, reverse, snapshot: false }
+
+    console.log(`range`, range)
 
     // Assuming ranges are sorted and not overlapping, we can concat results
     const matches = indexes.getRange(range as any)
@@ -198,39 +201,37 @@ function performRangeScan(
   }
 }
 
-function performFullScan(
-  context: IDataStoreContext,
-  indexName: string,
-  reverse: boolean = false
-): IFilterResult {
+function performFullScan(context: IFilterContext): IFilterResult {
   // *Caveat*: our old query implementation was putting undefined and null values at the end
   //   of the list when ordered ascending. But lmdb-store keeps them at the top.
   //   So in LMDB case, need to concat two ranges to conform to our old format:
   //     concat(undefinedToEnd, topToUndefined)
   const {
     databases: { indexes },
+    reverse,
+    indexMetadata: { keyPrefix },
   } = context
   // console.log(`full scan`)
 
-  let start: RangeBoundary = [indexName, getValueEdgeAfter(undefinedSymbol)]
-  let end: RangeBoundary = [getValueEdgeAfter(indexName)]
+  let start: RangeBoundary = [keyPrefix, getValueEdgeAfter(undefinedSymbol)]
+  let end: RangeBoundary = [getValueEdgeAfter(keyPrefix)]
   let range = !reverse
     ? { start, end, snapshot: false }
     : { start: end, end: start, reverse, snapshot: false }
 
-  const undefinedToEnd: any = indexes.getRange(range as any) // FIXME: lmdb-store typing seems outdated
+  // console.log(`full-scan-range1`, range)
 
-  // console.log(`range1`, range, Array.from(undefinedToEnd))
+  const undefinedToEnd: any = indexes.getRange(range as any) // FIXME: lmdb-store typing seems outdated
 
   // Concat null/undefined values
   end = start
-  start = [indexName, null]
+  start = [keyPrefix, null]
   range = !reverse
     ? { start, end, snapshot: false }
     : { start: end, end: start, reverse, snapshot: false }
   const topToUndefined: any = indexes.getRange(range as any)
 
-  // console.log(`range2`, range, Array.from(topToUndefined))
+  // console.log(`full-scan-range2`, range, Array.from(topToUndefined))
 
   const result = new GatsbyIterable<IIndexEntry>(
     !reverse
@@ -423,8 +424,11 @@ function extractRanges(
     case DbComparator.EQ:
     case DbComparator.IN: {
       // TODO: ideally do range intersections with other queries (e.g. $in + $gt + $lt)
-      //  although it is likely less than 1% of cases
-      const arr = Array.isArray(filter.value) ? filter.value : [filter.value]
+      //  although it is likely something like 0.1% of cases
+      //  (right now it applies additional filters in runQuery.completeFiltering)
+      const arr = new Set(
+        Array.isArray(filter.value) ? filter.value : [filter.value]
+      )
       let hasNull = false
       for (const item of arr) {
         const value = toIndexFieldValue(item, filter)

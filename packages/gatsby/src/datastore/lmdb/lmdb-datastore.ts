@@ -148,7 +148,7 @@ function countNodes(typeName?: string): number {
 async function runQuery(
   args: IRunQueryArgs
 ): Promise<Iterable<IGatsbyNode> | null> {
-  const result = await doRunQuery({
+  const { entries } = await doRunQuery({
     datastore: lmdbDatastore,
     databases: getDatabases(),
     ...args,
@@ -157,7 +157,7 @@ async function runQuery(
   // In other words, it won't immediately convert it to array but will
   // do it lazily under the hood as needed
   // https://v8.dev/blog/spread-elements#improving-array.from-performance
-  return Array.from(result)
+  return Array.from(entries)
 }
 
 let lastOperationPromise: Promise<any> = Promise.resolve()
