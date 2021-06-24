@@ -24,7 +24,7 @@ export interface IQueryJob {
   componentPath: string
   context: PageContext
   isPage: boolean
-  pluginCreatorId: string
+  pluginCreatorId?: string
 }
 
 function reportLongRunningQueryJob(queryJob): void {

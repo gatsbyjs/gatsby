@@ -2,12 +2,7 @@ import _ from "lodash"
 import fastq from "fastq"
 import { IProgressReporter } from "gatsby-cli/lib/reporter/reporter-progress"
 import { store } from "../redux"
-import {
-  IGatsbyPage,
-  IGatsbyPageComponent,
-  IGatsbyState,
-  IGatsbyStaticQueryComponents,
-} from "../redux/types"
+import { IGatsbyPage, IGatsbyState } from "../redux/types"
 import { hasFlag, FLAG_ERROR_EXTRACTION } from "../redux/reducers/queries"
 import { IQueryJob, queryRunner } from "./query-runner"
 import {
@@ -77,25 +72,28 @@ export function groupQueryIds(queryIds: Array<string>): IGroupedQueryIds {
   }
 }
 
-function createQueue({
+function createQueue<QueryIDType>({
   createJobFn,
   state,
   activity,
   graphqlRunner,
   graphqlTracing,
 }: {
-  createJobFn: (state: IGatsbyState, queryId: string) => IQueryJob
+  createJobFn: (
+    state: IGatsbyState,
+    queryId: QueryIDType
+  ) => IQueryJob | undefined
   state: IGatsbyState
   activity: IProgressReporter
   graphqlRunner: GraphQLRunner
   graphqlTracing: boolean
-}): fastq.queue<string, any> {
+}): fastq.queue<QueryIDType, any> {
   if (!graphqlRunner) {
     graphqlRunner = new GraphQLRunner(store, { graphqlTracing })
   }
   state = state || store.getState()
 
-  function worker(queryId: string, cb): void {
+  function worker(queryId: QueryIDType, cb): void {
     const job = createJobFn(state, queryId)
     if (!job) {
       cb(null, undefined)
@@ -116,7 +114,7 @@ function createQueue({
   return fastq(worker, concurrency)
 }
 
-async function processQueries({
+async function processQueries<QueryIDType>({
   queryIds,
   createJobFn,
   onQueryDone,
@@ -125,11 +123,14 @@ async function processQueries({
   graphqlRunner,
   graphqlTracing,
 }: {
-  queryIds:
-    | IGroupedQueryIds["staticQueryIds"]
-    | IGroupedQueryIds["pageQueryIds"]
-  createJobFn: any
-  onQueryDone: any
+  queryIds: Array<QueryIDType>
+  createJobFn: (
+    state: IGatsbyState,
+    queryId: QueryIDType
+  ) => IQueryJob | undefined
+  onQueryDone:
+    | (({ job, result }: { job: IQueryJob; result: unknown }) => void)
+    | undefined
   state: IGatsbyState
   activity: IProgressReporter
   graphqlRunner: GraphQLRunner
@@ -144,7 +145,7 @@ async function processQueries({
       graphqlTracing,
     })
 
-    queryIds.forEach(queryId => {
+    queryIds.forEach((queryId: QueryIDType) => {
       fastQueue.push(queryId, (err, res) => {
         if (err) {
           fastQueue.kill()
@@ -165,20 +166,10 @@ async function processQueries({
   })
 }
 
-interface ICreateStaticQueryJobResult {
-  id: string
-  hash: IGatsbyStaticQueryComponents["hash"]
-  query: IGatsbyStaticQueryComponents["query"]
-  componentPath: IGatsbyStaticQueryComponents["componentPath"]
-  context: {
-    path: IGatsbyStaticQueryComponents["id"]
-  }
-}
-
 function createStaticQueryJob(
   state: IGatsbyState,
   queryId: string
-): ICreateStaticQueryJobResult | undefined {
+): IQueryJob | undefined {
   const component = state.staticQueryComponents.get(queryId)
 
   if (!component) {
@@ -189,8 +180,9 @@ function createStaticQueryJob(
 
   return {
     id: queryId,
-    hash,
     query,
+    isPage: false,
+    hash,
     componentPath,
     context: { path: id },
   }
@@ -217,7 +209,7 @@ export async function processStaticQueries(
   queryIds: IGroupedQueryIds["staticQueryIds"],
   { state, activity, graphqlRunner, graphqlTracing }
 ): Promise<void> {
-  return processQueries({
+  return processQueries<string>({
     queryIds,
     createJobFn: createStaticQueryJob,
     onQueryDone:
@@ -235,7 +227,7 @@ export async function processPageQueries(
   queryIds: IGroupedQueryIds["pageQueryIds"],
   { state, activity, graphqlRunner, graphqlTracing }
 ): Promise<void> {
-  return processQueries({
+  return processQueries<IGatsbyPage>({
     queryIds,
     createJobFn: createPageQueryJob,
     onQueryDone: undefined,
@@ -246,21 +238,10 @@ export async function processPageQueries(
   })
 }
 
-interface ICreatePageQueryJobResult {
-  id: IGatsbyPage["path"]
-  query: IGatsbyPageComponent["query"]
-  isPage: boolean
-  componentPath: IGatsbyPage["componentPath"]
-  context: {
-    // TODO: This type can be better
-    [key: string]: any
-  }
-}
-
 function createPageQueryJob(
   state: IGatsbyState,
   page: IGatsbyPage
-): ICreatePageQueryJobResult | undefined {
+): IQueryJob | undefined {
   const component = state.components.get(page.componentPath)
 
   if (!component) {
