@@ -174,7 +174,7 @@ module.exports = async (
   function getEntry() {
     switch (stage) {
       case `develop`:
-        return hasES6ModuleSupport(process.cwd())
+        return hasES6ModuleSupport(directory)
           ? {
               commons: [directoryPath(`.cache/app`)],
             }
@@ -193,7 +193,7 @@ module.exports = async (
           main: directoryPath(`.cache/static-entry`),
         }
       case `build-javascript`:
-        return hasES6ModuleSupport(process.cwd())
+        return hasES6ModuleSupport(directory)
           ? {
               app: directoryPath(`.cache/production-app`),
             }
@@ -219,6 +219,8 @@ module.exports = async (
         __ASSET_PREFIX__: JSON.stringify(
           program.prefixPaths ? assetPrefix : ``
         ),
+        // TODO Improve asset passing to pages
+        BROWSER_ESM_ONLY: JSON.stringify(hasES6ModuleSupport(directory)),
       }),
 
       plugins.virtualModules(),
