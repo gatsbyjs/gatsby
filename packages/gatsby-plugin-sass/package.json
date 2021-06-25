@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-sass",
   "description": "Gatsby plugin to handle SCSS/Sass files",
-  "version": "4.8.0-next.0",
+  "version": "4.9.0-next.0",
   "author": "Daniel Farrell <daniel@mobelux.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -12,12 +12,12 @@
     "sass-loader": "^10.1.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.3",
-    "@babel/core": "^7.14.3",
+    "@babel/cli": "^7.14.0",
+    "@babel/core": "^7.14.0",
     "autoprefixer": "^10.2.5",
-    "babel-preset-gatsby-package": "^1.8.0-next.0",
+    "babel-preset-gatsby-package": "^1.9.0-next.0",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-utils": "^1.8.0-next.0"
+    "gatsby-plugin-utils": "^1.9.0-next.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass#readme",
   "keywords": [

@@ -24,14 +24,14 @@
 
 3. **Start developing.**
 
-   To get started, run `yarn` to add all necessary packages.
+   To get started, run `npm install` to add all necessary packages.
 
-   When developing locally, you'll want to include the ENV variables in your `.env.development`. Read more about how Gatsby handles `.env` files and environment variables in the [Gatbsy Docs](https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/)
+   When developing locally, you'll want to include the ENV variables in your `.env.development`. Read more about how Gatsby handles `.env` files and environment variables in the [Gatsby Docs](https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/)
 
    ```shell
-   cd airtable-form
-   yarn
-   yarn run develop
+   cd examples/functions-airtable-form
+   npm install
+   npm run develop
    ```
 
 4. **Open the code and start customizing!**
@@ -53,15 +53,3 @@
 5. **Deploy**
 
 You can deploy this example on Gatsby Cloud by copying the example into a new repo and [connecting that to Gatsby Cloud](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/deploying-to-gatsby-cloud/#set-up-an-existing-gatsby-site).
-
-<!--- Working on improving deploy now to use subdirectories
-4.  **Deploy**
-You can directly deploy this example by using the Deploy button below and select the directory for the Airtable example. Otherwise, fork this repo and create your own repo and [connect that to Gatsby Cloud](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/deploying-to-gatsby-cloud/#set-up-an-existing-gatsby-site).
-
-[<img src="https://www.gatsbyjs.com/deploynow.svg">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-functions-beta/)
-
-
-
-[<img src="https://www.gatsbyjs.com/deploynow.svg">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/airtable-form)
-
--->

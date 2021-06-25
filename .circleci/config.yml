@@ -33,6 +33,11 @@ aliases:
       name: Check for dirty lockfile
       command: ./scripts/check-lockfile.sh || exit 1
 
+  validate_renovate: &validate_renovate
+    run:
+      name: Validate renovate-config
+      command: (node scripts/renovate-config-generator.js && (git status --porcelain renovate.json5 | grep "M renovate.json5")) && exit 1 || npx -p renovate renovate-config-validator .
+
   persist_cache: &persist_cache
     save_cache:
       name: Save node modules cache
@@ -197,6 +202,7 @@ jobs:
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *check_lockfile
+      - <<: *validate_renovate
       - <<: *persist_cache
       - run: yarn bootstrap -- concurrency=2
       # Persist the workspace again with all packages already built
@@ -247,6 +253,7 @@ jobs:
       image: "14.17.0"
     environment:
       GATSBY_EXPERIMENTAL_LMDB_STORE: 1
+      GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING: 1
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:

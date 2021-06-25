@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.8.0-next.2...gatsby-source-contentful@5.9.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.8.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.8.0-next.1...gatsby-source-contentful@5.8.0-next.2) (2021-06-17)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** improve error message when dominant color can't be generated ([#31879](https://github.com/gatsbyjs/gatsby/issues/31879)) ([1f89646](https://github.com/gatsbyjs/gatsby/commit/1f89646707c338b1ee93a4c5cf0ee36cb89c2037))
+
+# [5.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.8.0-next.0...gatsby-source-contentful@5.8.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 # [5.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.7.0-next.2...gatsby-source-contentful@5.8.0-next.0) (2021-06-03)
 
 **Note:** Version bump only for package gatsby-source-contentful

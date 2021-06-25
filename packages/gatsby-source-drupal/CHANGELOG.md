@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.8.0-next.2...gatsby-source-drupal@4.9.0-next.0) (2021-06-18)
+
+### Features
+
+- **gatsby-source-drupal:** Use Got instead of Axios for retries & caching support + restrict to 20 concurrent requests ([#31514](https://github.com/gatsbyjs/gatsby/issues/31514)) ([b0de8f8](https://github.com/gatsbyjs/gatsby/commit/b0de8f8d72005387a89fbb2072304ce9fbbaeb0f))
+
+# [4.8.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.8.0-next.1...gatsby-source-drupal@4.8.0-next.2) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [4.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.8.0-next.0...gatsby-source-drupal@4.8.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
 # [4.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.7.0-next.2...gatsby-source-drupal@4.8.0-next.0) (2021-06-03)
 
 **Note:** Version bump only for package gatsby-source-drupal

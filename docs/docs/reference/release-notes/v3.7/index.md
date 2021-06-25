@@ -4,8 +4,6 @@ version: "3.7.0"
 title: "v3.7 Release Notes"
 ---
 
-# [v3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.7.0-next.0...gatsby@3.7.0) (June 2021 #1)
-
 Welcome to `gatsby@3.7.0` release (June 2021 #1)
 
 Key highlights of this release:
@@ -65,7 +63,7 @@ The result is that a source plugin can allow a CMS to create a manifest file usi
 
 ## Experimental: Node persistence in LMDB
 
-This release introduces a new experimental data storage option: LMDB (via the excellent [lmdb-store](github.com/DoctorEvidence/lmdb-store) package).
+This release introduces a new experimental data storage option: LMDB (via the excellent [lmdb-store](https://github.com/DoctorEvidence/lmdb-store) package).
 
 Instead of keeping nodes in memory (as it's in Redux), they are instantly saved to this persistent embeddable storage.
 This will be beneficial for larger sites that can run into OOMs when persisting redux state to disk.
