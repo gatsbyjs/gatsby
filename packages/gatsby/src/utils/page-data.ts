@@ -136,15 +136,13 @@ export async function flush(): Promise<void> {
 
   const { pagePaths } = pendingPageDataWrites
 
-  const pagesToWrite = Array.from(pagePaths.values())
-
   let writePageDataActivity
   // Don't create the activity in tests as it changes
   // behavior for the get-page-data tests.
   if (process.env.NODE_ENV !== `test`) {
     writePageDataActivity = reporter.createProgress(
       `Writing page-data.json files to public directory`,
-      pagesToWrite.size,
+      pagePaths.size,
       0
     )
     writePageDataActivity.start()
@@ -215,7 +213,7 @@ export async function flush(): Promise<void> {
     return cb(null, true)
   }, 25)
 
-  for (const pagePath of pagesToWrite) {
+  for (const pagePath of pagePaths) {
     flushQueue.push(pagePath, () => {})
   }
 
