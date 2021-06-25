@@ -40,5 +40,11 @@
   },
   "peerDependencies": {
     "gatsby-plugin-image": "^1.1.0"
-  }
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-source-shopify",
+    "shopify"
+  ]
 }
