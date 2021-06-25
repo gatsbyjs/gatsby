@@ -48,7 +48,7 @@ describe(`worker (share-state)`, () => {
 
     worker = createTestWorker()
 
-    const result = await worker.getPage(dummyPagePayload.path)
+    const result = await worker.single.getPage(dummyPagePayload.path)
 
     expect(result).toBe(null)
   })
@@ -208,10 +208,12 @@ describe(`worker (share-state)`, () => {
 
     saveStateForWorkers([`components`, `staticQueryComponents`])
 
-    await worker.setQueries()
+    await Promise.all(worker.all.setQueries())
 
-    const components = await worker.getComponent(dummyPagePayload.component)
-    const staticQueryComponents = await worker.getStaticQueryComponent(
+    const components = await worker.single.getComponent(
+      dummyPagePayload.component
+    )
+    const staticQueryComponents = await worker.single.getStaticQueryComponent(
       staticQueryID
     )
 
@@ -256,9 +258,9 @@ describe(`worker (share-state)`, () => {
 
     saveStateForWorkers([`inferenceMetadata`])
 
-    await worker.setInferenceMetadata()
+    await Promise.all(worker.all.setInferenceMetadata())
 
-    const inf = await worker.getInferenceMetadata(`Test`)
+    const inf = await worker.single.getInferenceMetadata(`Test`)
 
     expect(inf).toMatchInlineSnapshot(`
       Object {
