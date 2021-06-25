@@ -37,6 +37,12 @@ jest.mock(`fs-extra`, () => {
   }
 })
 
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    createProgress: jest.fn(),
+  }
+})
+
 describe(`get-page-data-util`, () => {
   const queryResultContent = {
     data: {
