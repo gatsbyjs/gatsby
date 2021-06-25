@@ -25,10 +25,9 @@ export function pluginOptionsSchema({
   // Vague type error that we're not able to figure out related to isJoi missing
   // Probably related to Joi being outdated
   return Joi.object({
-    apiKey: Joi.string().required(),
     password: Joi.string().required(),
     storeUrl: Joi.string()
-      .pattern(/^[a-z-]+\.myshopify\.com$/)
+      .pattern(/^[a-z0-9-]+\.myshopify\.com$/)
       .message(
         `The storeUrl value should be your store's myshopify.com URL in the form "my-site.myshopify.com", without https or slashes`
       )
@@ -43,7 +42,9 @@ export function pluginOptionsSchema({
     shopifyConnections: Joi.array()
       .default([])
       .items(Joi.string().valid(`orders`, `collections`)),
-    salesChannel: Joi.string(),
+    salesChannel: Joi.string().default(
+      process.env.GATSBY_SHOPIFY_SALES_CHANNEL || ``
+    ),
   })
 }
 
@@ -53,6 +54,7 @@ async function sourceAllNodes(
 ): Promise<void> {
   const {
     createProductsOperation,
+    createProductVariantsOperation,
     createOrdersOperation,
     createCollectionsOperation,
     finishLastOperation,
@@ -60,7 +62,7 @@ async function sourceAllNodes(
     cancelOperationInProgress,
   } = createOperations(pluginOptions, gatsbyApi)
 
-  const operations = [createProductsOperation]
+  const operations = [createProductsOperation, createProductVariantsOperation]
   if (pluginOptions.shopifyConnections?.includes(`orders`)) {
     operations.push(createOrdersOperation)
   }
@@ -105,6 +107,7 @@ async function sourceChangedNodes(
 ): Promise<void> {
   const {
     incrementalProducts,
+    incrementalProductVariants,
     incrementalOrders,
     incrementalCollections,
     finishLastOperation,
@@ -124,7 +127,11 @@ async function sourceChangedNodes(
       .forEach(node => gatsbyApi.actions.touchNode(node))
   }
 
-  const operations = [incrementalProducts(lastBuildTime)]
+  const operations = [
+    incrementalProducts(lastBuildTime),
+    incrementalProductVariants(lastBuildTime),
+  ]
+
   if (pluginOptions.shopifyConnections?.includes(`orders`)) {
     operations.push(incrementalOrders(lastBuildTime))
   }

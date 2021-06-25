@@ -16,7 +16,7 @@ import {
 
 const server = setupServer()
 
-// @ts-ignore
+// @ts-ignore because these types will never match
 global.setTimeout = (fn: Promise<void>): Promise<void> => fn()
 
 jest.mock(`gatsby-source-filesystem`, () => {
@@ -69,7 +69,9 @@ describe(`The collections operation`, () => {
     server.use(
       graphql.query<CurrentBulkOperationResponse>(
         `OPERATION_STATUS`,
-        resolveOnce(currentBulkOperation(`COMPLETED`))
+        resolveOnce<CurrentBulkOperationResponse>(
+          currentBulkOperation(`COMPLETED`)
+        )
       ),
       startOperation(),
       graphql.query<{ node: BulkOperationNode }>(
@@ -133,7 +135,6 @@ describe(`The collections operation`, () => {
 
     const gatsbyApi = gatsbyApiMock as jest.Mock<SourceNodesArgs>
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
       downloadImages: true,
@@ -248,7 +249,6 @@ describe(`When polling an operation`, () => {
 
     const gatsbyApi = gatsbyApiMock as jest.Mock<SourceNodesArgs>
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
       downloadImages: true,
@@ -339,7 +339,6 @@ describe(`When downloading images`, () => {
 
     const gatsbyApi = gatsbyApiMock as jest.Mock<SourceNodesArgs>
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
       downloadImages: true,
@@ -446,7 +445,6 @@ describe(`A production build`, () => {
 
     const gatsbyApi = gatsbyApiMock as jest.Mock<SourceNodesArgs>
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
     }
@@ -513,7 +511,6 @@ describe(`A production build`, () => {
 
     const gatsbyApi = gatsbyApiMock as jest.Mock<SourceNodesArgs>
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
     }
@@ -604,7 +601,6 @@ describe(`When an operation gets canceled`, () => {
 
     const gatsbyApi = gatsbyApiMock as jest.Mock<SourceNodesArgs>
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
     }
@@ -677,7 +673,6 @@ describe(`When an operation fails with bad credentials`, () => {
 
     const gatsbyApi = gatsbyApiMock as jest.Mock<SourceNodesArgs>
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
     }
@@ -715,14 +710,6 @@ describe(`The incremental products processor`, () => {
   const bulkResults = [
     {
       id: firstProductId,
-    },
-    {
-      id: firstVariantId,
-      __parentId: firstProductId,
-    },
-    {
-      id: firstMetadataId,
-      __parentId: firstVariantId,
     },
     {
       id: firstImageId,
@@ -827,7 +814,6 @@ describe(`The incremental products processor`, () => {
 
     const gatsbyApi = gatsbyApiMock as jest.Mock<SourceNodesArgs>
     const options = {
-      apiKey: ``,
       password: ``,
       storeUrl: `my-shop.shopify.com`,
       downloadImages: true,
@@ -844,7 +830,7 @@ describe(`The incremental products processor`, () => {
 
     await sourceFromOperation(operations.incrementalProducts(new Date()))
 
-    expect(createNode).toHaveBeenCalledTimes(4)
+    expect(createNode).toHaveBeenCalledTimes(2)
     expect(deleteNode).toHaveBeenCalledTimes(6)
 
     expect(deleteNode).toHaveBeenCalledWith(
@@ -892,20 +878,6 @@ describe(`The incremental products processor`, () => {
     expect(createNode).toHaveBeenCalledWith(
       expect.objectContaining({
         id: firstImageId,
-        productId: firstProductId,
-      })
-    )
-
-    expect(createNode).toHaveBeenCalledWith(
-      expect.objectContaining({
-        id: firstMetadataId,
-        productVariantId: firstVariantId,
-      })
-    )
-
-    expect(createNode).toHaveBeenCalledWith(
-      expect.objectContaining({
-        id: firstVariantId,
         productId: firstProductId,
       })
     )

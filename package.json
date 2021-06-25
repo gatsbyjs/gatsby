@@ -51,6 +51,7 @@
     "ignore": "^5.1.8",
     "jest": "^24.9.0",
     "jest-cli": "^24.9.0",
+    "jest-extended": "^0.11.5",
     "jest-environment-jsdom-fourteen": "^0.1.0",
     "jest-junit": "^10.0.0",
     "jest-serializer-path": "^0.1.15",

@@ -4,8 +4,6 @@ version: "2.32.0"
 title: "v2.32 Release Notes"
 ---
 
-# [v2.32](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.0-next.0...gatsby@2.32.0) (February 2021 #1)
-
 Welcome to `gatsby@2.32.0` release (February 2021 #1)
 
 Key highlights of this release:

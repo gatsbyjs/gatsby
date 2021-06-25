@@ -1,14 +1,10 @@
-import apiRunnerNode from "../../api-runner-node"
 import { store } from "../../../redux"
 import { build } from "../../../schema"
+import apiRunnerNode from "../../api-runner-node"
 import { setState } from "./state"
 
 export function setInferenceMetadata(): void {
   setState([`inferenceMetadata`])
-}
-
-export function setQueries(): void {
-  setState([`components`, `staticQueryComponents`])
 }
 
 export async function buildSchema(): Promise<void> {

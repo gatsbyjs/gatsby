@@ -76,7 +76,6 @@ module.exports = {
     {
       resolve: "gatsby-source-shopify",
       options: {
-        apiKey: process.env.SHOPIFY_ADMIN_API_KEY,
         password: process.env.SHOPIFY_ADMIN_PASSWORD,
         storeUrl: process.env.SHOPIFY_STORE_URL,
       },
@@ -131,10 +130,6 @@ Now follow the second link to explore your Shopify data!
 
 ## Plugin options
 
-`apiKey: string`
-
-The admin API key for the Shopify store + app you're using
-
 `password: string`
 
 The admin password for the Shopify store + app you're using
@@ -162,6 +157,8 @@ Not set by default. If set to a string (example `MyStore`) node names will be `a
 `salesChannel: string`
 
 Not set by default. If set to a string (example `My Sales Channel`), only products and collections that are active in that channel will be sourced. If no sales channel is provided, the default behavior is to source products that are available in the online store.
+
+Note: If you set up your site with the Gatsby Cloud Public App integration, `salesChannel` is set for you.
 
 <div id="images"></div>
 
@@ -248,7 +245,6 @@ module.exports = {
     {
       resolve: "gatsby-source-shopify",
       options: {
-        apiKey: process.env.SHOPIFY_ADMIN_API_KEY,
         password: process.env.SHOPIFY_ADMIN_PASSWORD,
         storeUrl: process.env.SHOPIFY_STORE_URL,
         downloadImages: true,

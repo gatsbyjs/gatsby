@@ -8,6 +8,7 @@ import {
   readFileSync,
   removeSync,
   writeFileSync,
+  outputFileSync,
 } from "fs-extra"
 import {
   ICachedReduxState,
@@ -23,6 +24,10 @@ import { DeepPartial } from "redux"
 const getReduxCacheFolder = (): string =>
   // This is a function for the case that somebody does a process.chdir (#19800)
   path.join(process.cwd(), `.cache/redux`)
+
+const getWorkerSlicesFolder = (): string =>
+  // This is a function for the case that somebody does a process.chdir (#19800)
+  path.join(process.cwd(), `.cache/worker`)
 
 function reduxSharedFile(dir: string): string {
   return path.join(dir, `redux.rest.state`)
@@ -46,23 +51,25 @@ export function readFromCache(
   // for sites with a _lot_ of content. Since all nodes / pages go into a Map, the order
   // of reading them is not relevant.
 
-  const reduxCacheFolder = getReduxCacheFolder()
+  let cacheFolder = getReduxCacheFolder()
 
   if (slices) {
+    cacheFolder = getWorkerSlicesFolder()
+
     return v8.deserialize(
       readFileSync(
-        reduxWorkerSlicesPrefix(reduxCacheFolder) + createContentDigest(slices)
+        reduxWorkerSlicesPrefix(cacheFolder) + createContentDigest(slices)
       )
     )
   }
 
   const obj: ICachedReduxState = v8.deserialize(
-    readFileSync(reduxSharedFile(reduxCacheFolder))
+    readFileSync(reduxSharedFile(cacheFolder))
   )
 
   // Note: at 1M pages, this will be 1M/chunkSize chunks (ie. 1m/10k=100)
   const nodesChunks = globSync(
-    reduxChunkedNodesFilePrefix(reduxCacheFolder) + `*`
+    reduxChunkedNodesFilePrefix(cacheFolder) + `*`
   ).map(file => v8.deserialize(readFileSync(file)))
 
   const nodes: Array<[string, IGatsbyNode]> = [].concat(...nodesChunks)
@@ -78,7 +85,7 @@ export function readFromCache(
 
   // Note: at 1M pages, this will be 1M/chunkSize chunks (ie. 1m/10k=100)
   const pagesChunks = globSync(
-    reduxChunkedPagesFilePrefix(reduxCacheFolder) + `*`
+    reduxChunkedPagesFilePrefix(cacheFolder) + `*`
   ).map(file => v8.deserialize(readFileSync(file)))
 
   const pages: Array<[string, IGatsbyPage]> = [].concat(...pagesChunks)
@@ -122,17 +129,8 @@ export function guessSafeChunkSize(
 
 function prepareCacheFolder(
   targetDir: string,
-  contents: DeepPartial<ICachedReduxState>,
-  slices?: Array<GatsbyStateKeys>
+  contents: DeepPartial<ICachedReduxState>
 ): void {
-  if (slices) {
-    writeFileSync(
-      reduxWorkerSlicesPrefix(targetDir) + createContentDigest(slices),
-      v8.serialize(contents)
-    )
-    return
-  }
-
   // Temporarily save the nodes and pages and remove them from the main redux store
   // This prevents an OOM when the page nodes collectively contain to much data
   const nodesMap = contents.nodes
@@ -197,18 +195,18 @@ function prepareCacheFolder(
   }
 }
 
-function safelyRenameToBak(reduxCacheFolder: string): string {
+function safelyRenameToBak(cacheFolder: string): string {
   // Basically try to work around the potential of previous renamed caches
   // not being removed for whatever reason. _That_ should not be a blocker.
   const tmpSuffix = `.bak`
   let suffixCounter = 0
-  let bakName = reduxCacheFolder + tmpSuffix // Start without number
+  let bakName = cacheFolder + tmpSuffix // Start without number
 
   while (existsSync(bakName)) {
     ++suffixCounter
-    bakName = reduxCacheFolder + tmpSuffix + suffixCounter
+    bakName = cacheFolder + tmpSuffix + suffixCounter
   }
-  moveSync(reduxCacheFolder, bakName)
+  moveSync(cacheFolder, bakName)
 
   return bakName
 }
@@ -217,12 +215,25 @@ export function writeToCache(
   contents: DeepPartial<ICachedReduxState>,
   slices?: Array<GatsbyStateKeys>
 ): void {
+  // Writing the "slices" also to the "redux" folder introduces subtle bugs when
+  // e.g. the whole folder gets replaced some "slices" are lost
+  // Thus they get written to dedicated "worker" folder
+  if (slices) {
+    const cacheFolder = getWorkerSlicesFolder()
+
+    outputFileSync(
+      reduxWorkerSlicesPrefix(cacheFolder) + createContentDigest(slices),
+      v8.serialize(contents)
+    )
+    return
+  }
+
   // Note: this should be a transactional operation. So work in a tmp dir and
   // make sure the cache cannot be left in a corruptable state due to errors.
 
   const tmpDir = mkdtempSync(path.join(os.tmpdir(), `reduxcache`)) // linux / windows
 
-  prepareCacheFolder(tmpDir, contents, slices)
+  prepareCacheFolder(tmpDir, contents)
 
   // Replace old cache folder with new. If the first rename fails, the cache
   // is just stale. If the second rename fails, the cache is empty. In either
