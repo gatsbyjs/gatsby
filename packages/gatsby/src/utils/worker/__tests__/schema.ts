@@ -42,7 +42,7 @@ describeWhenLMDB(`worker (schema)`, () => {
 
   beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
-    const fileDir = path.join(process.cwd(), `.cache/redux`)
+    const fileDir = path.join(process.cwd(), `.cache/worker`)
     await fs.emptyDir(fileDir)
 
     worker = createTestWorker()

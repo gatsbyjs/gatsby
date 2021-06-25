@@ -162,7 +162,7 @@ export function nodeBuilder(
   pluginOptions: ShopifyPluginOptions
 ): NodeBuilder {
   return {
-    async buildNode(result: BulkResult): Promise<any> {
+    async buildNode(result: BulkResult): Promise<NodeInput> {
       if (!pattern.test(result.id)) {
         throw new Error(
           `Expected an ID in the format gid://shopify/<typename>/<id>`
