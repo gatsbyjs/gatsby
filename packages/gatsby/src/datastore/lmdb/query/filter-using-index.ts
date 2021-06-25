@@ -165,7 +165,7 @@ function performRangeScan(
     }
   }
 
-  console.log(`ranges`)
+  // console.log(`ranges`)
   let entries = new GatsbyIterable<IIndexEntry>([])
   for (let { start, end } of ranges) {
     start = [keyPrefix, ...start]
@@ -174,7 +174,7 @@ function performRangeScan(
       ? { start, end, limit, offset, snapshot: false }
       : { start: end, end: start, limit, offset, reverse, snapshot: false }
 
-    console.log(`range`, range)
+    // console.log(`range`, range)
 
     // Assuming ranges are sorted and not overlapping, we can concat results
     const matches = indexes.getRange(range as any)
@@ -291,11 +291,11 @@ function narrowResultsIfPossible(
         : result.entries.filter(({ key }) => {
             if (!shown && items++ > 5000) {
               shown = true
-              console.log(
-                `Narrowing huge dataset for: ${
-                  indexMetadata.keyPrefix
-                }; spent: ${Date.now() - start}ms`
-              )
+              // console.log(
+              //   `Narrowing huge dataset for: ${
+              //     indexMetadata.keyPrefix
+              //   }; spent: ${Date.now() - start}ms`
+              // )
             }
             for (const [filter, fieldPositionInIndex] of filtersToApply) {
               const value =

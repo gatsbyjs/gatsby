@@ -137,7 +137,6 @@ async function doCreateIndex(
 
       for (const indexKey of keys) {
         // Note: this may throw if indexKey exceeds 1978 chars (lmdb limit) or contain objects/buffers/etc
-        console.log(indexKey, node.id)
         indexes.put(indexKey, node.id)
       }
     }
@@ -147,10 +146,10 @@ async function doCreateIndex(
     await metadata.put(toMetadataKey(indexName), indexMetadata)
     console.timeEnd(label)
 
-    console.log(`index entries:`)
-    indexes
-      .getRange({ start: indexName })
-      .forEach(entry => console.log(entry.key, entry.value))
+    // console.log(`index entries:`)
+    // indexes
+    //   .getRange({ start: indexName })
+    //   .forEach(entry => console.log(entry.key, entry.value))
 
     return indexMetadata
   } catch (e) {
@@ -239,7 +238,6 @@ async function indexReady(
         resolve(indexMetadata)
         return
       }
-      console.log(`polling for `, indexName)
       if (retries++ > 1000) {
         reject(
           new Error(`Index ${indexName} is locked for more than 5 minutes`)

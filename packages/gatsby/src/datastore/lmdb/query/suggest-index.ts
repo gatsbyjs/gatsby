@@ -21,15 +21,16 @@ type IndexFields = Array<IndexField>
 
 export function suggestIndex({
   filter,
-  sort = { fields: [], order: [] },
+  sort,
   maxFields = 4,
 }: ISelectIndexArgs): Array<IndexField> {
+  sort = sort || { fields: [], order: [] }
   const dbQueries = createDbQueriesFromObject(prepareQueryArgs(filter))
   const queriesThatCanUseIndex = getQueriesThatCanUseIndex(dbQueries)
 
   // Mixed sort order is not supported by our indexes :/
   const sortFields: Array<IndexField> = []
-  const initialOrder = isDesc(sort.order[0]) ? -1 : 1
+  const initialOrder = isDesc(sort?.order[0]) ? -1 : 1
 
   for (let i = 0; i < sort.fields.length; i++) {
     const field = sort.fields[i]

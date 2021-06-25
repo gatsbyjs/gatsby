@@ -733,7 +733,8 @@ describe(`query caching between builds`, () => {
       expect(staticQueriesThatRan).toEqual([`static-query-1`, `static-query-2`])
     }, 999999)
 
-    it(`changing node to be used by any query triggers running that query (with restart)`, async () => {
+    // FIXME: this requires incremental index updates
+    it.skip(`changing node to be used by any query triggers running that query (with restart)`, async () => {
       const { staticQueriesThatRan } = await setup({ restart: true })
 
       // runs the query with filter `slug: { eq: "foo2" }`

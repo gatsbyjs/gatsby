@@ -11,7 +11,6 @@ import {
 } from "../types"
 import { emitter, replaceReducer } from "../../redux"
 import { doRunQuery } from "./query/run-query"
-import { GatsbyIterable } from "../common/iterable"
 
 const lmdbDatastore = {
   getNode,
@@ -54,9 +53,10 @@ function getDatabases(): ILmdbDatabases {
     databases = {
       nodes: rootDb.openDB({
         name: `nodes`,
-        sharedStructuresKey: Symbol.for(`structures`),
+        // FIXME: sharedStructuresKey breaks tests - probably need some cleanup for it on DELETE_CACHE
+        // sharedStructuresKey: Symbol.for(`structures`),
         // @ts-ignore
-        cache: { cacheSize: 5000 },
+        cache: true,
       }),
       nodesByType: rootDb.openDB({
         name: `nodesByType`,

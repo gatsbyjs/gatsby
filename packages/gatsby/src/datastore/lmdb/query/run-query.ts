@@ -352,11 +352,11 @@ function completeFiltering(
       if (items % 1000 === 0) shown = false
       if (!shown) {
         shown = true
-        console.log(
-          `Completing huge dataset (${items} items so far) for: ${
-            node.internal.type
-          }.${dottedField}; spent: ${Date.now() - start}ms;`
-        )
+        // console.log(
+        //   `Completing huge dataset (${items} items so far) for: ${
+        //     node.internal.type
+        //   }.${dottedField}; spent: ${Date.now() - start}ms;`
+        // )
       }
       const tmp = resolveFieldValue(dottedField, node, resolvedFields)
       const value = Array.isArray(tmp) ? tmp : [tmp]
@@ -373,10 +373,13 @@ function sortNodesInMemory(
   context: IQueryContext,
   nodes: GatsbyIterable<IGatsbyNode>
 ): GatsbyIterable<IGatsbyNode> {
+  // TODO: Sort using index data whenever possible (maybe store data needed for sorting in index values)
   // TODO: Nodes can be partially sorted by index prefix - we can (and should) exploit this
   return new GatsbyIterable(() => {
+    // console.time(`In-memory sort`)
     const arr = Array.from(nodes)
     arr.sort(createNodeSortComparator(context.sortFields))
+    // console.timeEnd(`In-memory sort`, arr.length)
     return arr
   })
 }

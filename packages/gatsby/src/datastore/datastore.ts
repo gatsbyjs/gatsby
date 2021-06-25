@@ -32,6 +32,11 @@ export function detectLmdbStore(): boolean {
     )
   }
   isLmdb = flagIsSet
+  if (isLmdb) {
+    console.info(`IS LMDB!`)
+  } else {
+    console.info(`IN MEMORY STORE`)
+  }
   return flagIsSet
 }
 
