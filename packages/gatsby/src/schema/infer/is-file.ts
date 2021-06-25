@@ -4,7 +4,7 @@ import mime from "mime"
 import isRelative from "is-relative"
 import isRelativeUrl from "is-relative-url"
 import { getValueAt } from "../../utils/get-value-at"
-import { getNode, getNodesByType } from "../../redux/nodes"
+import { getNode, getNodesByType } from "../../datastore"
 import { IGatsbyNode } from "../../redux/types"
 
 const getFirstValueAt = (

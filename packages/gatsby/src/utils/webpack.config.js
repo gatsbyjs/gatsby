@@ -6,6 +6,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const { CoreJSResolver } = require(`./webpack/corejs-resolver`)
+const { CacheFolderResolver } = require(`./webpack/cache-folder-resolver`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const { getPublicPath } = require(`./get-public-path`)
@@ -442,7 +443,10 @@ module.exports = async (
         ),
         $virtual: getAbsolutePathForVirtualModule(`$virtual`),
       },
-      plugins: [new CoreJSResolver()],
+      plugins: [
+        new CoreJSResolver(),
+        new CacheFolderResolver(path.join(program.directory, `.cache`)),
+      ],
     }
 
     const target =

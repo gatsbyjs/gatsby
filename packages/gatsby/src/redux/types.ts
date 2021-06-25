@@ -37,6 +37,7 @@ export interface IGatsbyPage {
   pluginCreator___NODE: Identifier
   pluginCreatorId: Identifier
   componentPath: SystemPath
+  ownerNodeId: Identifier
 }
 
 export interface IGatsbyFunction {
@@ -220,6 +221,7 @@ export interface IGatsbyState {
   nodesByType: Map<string, GatsbyNodes>
   resolvedNodesCache: Map<string, any> // TODO
   nodesTouched: Set<string>
+  nodeManifests: Array<INodeManifest>
   lastAction: ActionsUnion
   flattenedPlugins: Array<{
     resolve: SystemPath
@@ -317,6 +319,8 @@ export interface IGatsbyState {
     unsafeBuiltinWasUsedInSSR: boolean
   }
 }
+
+export type GatsbyStateKeys = keyof IGatsbyState
 
 export interface ICachedReduxState {
   nodes?: IGatsbyState["nodes"]
@@ -869,4 +873,25 @@ interface IMarkHtmlDirty {
 
 interface ISSRUsedUnsafeBuiltin {
   type: `SSR_USED_UNSAFE_BUILTIN`
+}
+
+export interface ICreateNodeManifest {
+  type: `CREATE_NODE_MANIFEST`
+  payload: {
+    manifestId: string
+    node: IGatsbyNode
+    pluginName: string
+  }
+}
+
+export interface IDeleteNodeManifests {
+  type: `DELETE_NODE_MANIFESTS`
+}
+
+export interface INodeManifest {
+  manifestId: string
+  pluginName: string
+  node: {
+    id: string
+  }
 }

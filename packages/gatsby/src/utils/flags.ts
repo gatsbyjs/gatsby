@@ -79,11 +79,7 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `FastDev`,
     experimental: false,
     description: `Enable all experiments aimed at improving develop server start time`,
-    includedFlags: [
-      `DEV_SSR`,
-      `PRESERVE_FILE_DOWNLOAD_CACHE`,
-      `PRESERVE_WEBPACK_CACHE`,
-    ],
+    includedFlags: [`DEV_SSR`, `PRESERVE_FILE_DOWNLOAD_CACHE`],
     testFitness: (): fitnessEnum => true,
   },
   {
@@ -144,7 +140,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Use webpack's persistent caching and don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
     umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => true,
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
   },
   {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
@@ -174,30 +170,19 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Compile Serverless functions in your Gatsby project and write them to disk, ready to deploy to Gatsby Cloud`,
     umbrellaIssue: `https://gatsby.dev/functions-feedback`,
-    testFitness: (): fitnessEnum => true,
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
   },
   {
-    name: `CONCURRENT_FEATURES`,
-    env: `GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES`,
+    name: `LMDB_STORE`,
+    env: `GATSBY_EXPERIMENTAL_LMDB_STORE`,
     command: `all`,
-    telemetryId: `ConcurrentFeatures`,
+    telemetryId: `LmdbStore`,
     experimental: true,
-    description: `Enable React's concurrent features`,
-    // umbrellaIssue: `https://gatsby.dev/concurrent-features`,
+    umbrellaIssue: `https://gatsby.dev/lmdb-feedback`,
+    description: `Store nodes in a persistent embedded database (vs in-memory). Lowers peak memory usage.`,
     testFitness: (): fitnessEnum => {
-      // Because of this, this flag will never show up
-      const semverConstraints = {
-        react: `^0.0.0-experimental-57768ef90`,
-        "react-dom": `^0.0.0-experimental-57768ef90`,
-      }
-
-      if (satisfiesSemvers(semverConstraints)) {
-        return true
-      } else {
-        // react & react-dom is either not installed or not new enough so
-        // just disable — it won't work anyways.
-        return false
-      }
+      const [major, minor] = process.versions.node.split(`.`)
+      return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
     },
   },
 ]

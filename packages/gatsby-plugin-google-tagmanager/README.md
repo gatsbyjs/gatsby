@@ -37,6 +37,8 @@ plugins: [
       //
       // Defaults to gatsby-route-change
       routeChangeEventName: "YOUR_ROUTE_CHANGE_EVENT_NAME",
+      // Defaults to false
+      enableWebVitalsTracking: true,
     },
   },
 ]
@@ -79,6 +81,18 @@ This plugin will fire a new event called `gatsby-route-change` (or as in the `ga
 5. Choose the trigger type by clicking the pencil button and clicking "Custom event". For event name, enter `gatsby-route-change` (or as in the `gatsby-config.js` configured `routeChangeEventName`).
 
 This tag will now catch every route change in Gatsby, and you can add Google tag services as you wish to it.
+
+#### Tracking Core Web Vitals
+
+Optimizing for the quality of user experience is key to the long-term success of any site on the web. Capturing Real user metrics (RUM) helps you understand the experience of your user/customer. By setting `enableWebVitalsTracking` to `true`, GTM will get ["core-web-vitals"](https://web.dev/vitals/) events with their values.
+
+You can save this data in Google Analytics or any database of your choosing.
+
+We send three metrics:
+
+- **Largest Contentful Paint (LCP)**: measures loading performance. To provide a good user experience, LCP should occur within 2.5 seconds of when the page first starts loading.
+- **First Input Delay (FID)**: measures interactivity. To provide a good user experience, pages should have a FID of 100 milliseconds or less.
+- **Cumulative Layout Shift (CLS)**: measures visual stability. To provide a good user experience, pages should maintain a CLS of 0.1. or less.
 
 #### Note
 
