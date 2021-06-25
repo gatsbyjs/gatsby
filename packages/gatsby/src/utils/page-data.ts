@@ -144,7 +144,7 @@ export async function flush(): Promise<void> {
   if (process.env.NODE_ENV !== `test`) {
     writePageDataActivity = reporter.createProgress(
       `Writing page-data.json files to public directory`,
-      pagesToWrite.length,
+      pagesToWrite.size,
       0
     )
     writePageDataActivity.start()
