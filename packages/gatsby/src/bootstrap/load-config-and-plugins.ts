@@ -17,7 +17,7 @@ export async function loadConfigAndPlugins({
   processFlags = false,
 }: {
   siteDirectory: string
-  processFlags: boolean
+  processFlags?: boolean
 }): Promise<{
   config: any
   flattenedPlugins: Array<IFlattenedPlugin>
