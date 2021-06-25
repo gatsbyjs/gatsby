@@ -96,7 +96,6 @@
     "invariant": "^2.2.4",
     "is-relative": "^1.0.0",
     "is-relative-url": "^3.0.0",
-    "jest-worker": "^24.9.0",
     "joi": "^17.2.1",
     "json-loader": "^0.5.7",
     "json-stringify-safe": "^5.0.1",
