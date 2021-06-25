@@ -186,9 +186,7 @@ export async function flush(): Promise<void> {
         }
       )
 
-      if (writePageDataActivity) {
-        writePageDataActivity.tick()
-      }
+      writePageDataActivity.tick()
 
       if (program?._?.[0] === `develop`) {
         websocketManager.emitPageData({
@@ -218,10 +216,9 @@ export async function flush(): Promise<void> {
     })
   }
 
-  if (writePageDataActivity) {
-    writePageDataActivity.end()
-  }
+  writePageDataActivity.end()
   isFlushing = false
+
   return
 }
 
