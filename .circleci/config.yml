@@ -8,7 +8,7 @@ executors:
       image:
         type: string
         # First 10.x LTS release, but old Yarn
-        default: "14.16"
+        default: "14.17"
     docker:
       - image: cimg/node:<< parameters.image >>
 
