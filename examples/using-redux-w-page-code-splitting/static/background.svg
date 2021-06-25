@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg viewBox="0 0 1200 500" xmlns="http://www.w3.org/2000/svg">
-  <path style="fill: rgba(216, 216, 216, 0); stroke: rgb(35, 33, 41);" d="M 0.503 433.111 C 499.799 433.111 964.201 277.596 1230.656 21.169"/>
-  <circle style="fill: rgb(0, 106, 193);" cx="56.983" cy="369.173" r="5.911"/>
-  <circle style="fill: rgb(188, 2, 127);" cx="148.593" cy="425.351" r="3.259" transform="matrix(1.633832, 0, 0, 1.423194, 455.435944, -188.590118)"/>
-  <circle style="fill: rgb(102, 51, 153);" cx="1059.989" cy="360.896" r="25"/>
-  <circle style="fill: rgb(5, 247, 244);" cx="407.888" cy="350.769" r="6.688"/>
-  <circle style="fill: rgb(246, 115, 0);" cx="229.962" cy="495.946" r="27.35"/>
-  <circle style="fill: rgb(219, 240, 255);" cx="459.067" cy="277.979" r="6.566" transform="matrix(1.673, 0, 0, 1.566546, -120.50676, -209.911636)"/>
-  <circle style="fill: rgb(232, 153, 206);" cx="350.995" cy="272.374" r="6.234" transform="matrix(1.691191, 0, 0, 1.692332, 329.478577, -280.25415)"/>
-  <circle style="fill: rgb(121, 205, 117);" cx="1115.702" cy="6.631" r="18.758"/>
+<svg viewBox="0 0 1200 500" xmlns="http://www.w3.org/2000/svg" focusable="false">
+  <path d="M.503 433.111c499.296 0 963.698-155.515 1230.153-411.942" fill="transparent" stroke="#232129"/>
+  <circle cx="56.983" cy="369.173" r="5.911" fill="#006ac1"/>
+  <circle cx="148.593" cy="425.351" r="3.259" transform="matrix(1.63383 0 0 1.4232 455.436 -188.59)" fill="#bc027f"/>
+  <circle cx="1059.989" cy="360.896" r="25" fill="#639"/>
+  <circle cx="407.888" cy="350.769" r="6.688" fill="#05f7f4"/>
+  <circle cx="229.962" cy="495.946" r="27.35" fill="#f67300"/>
+  <circle cx="459.067" cy="277.979" r="6.566" transform="matrix(1.673 0 0 1.56655 -120.507 -209.912)" fill="#dbf0ff"/>
+  <circle cx="350.995" cy="272.374" r="6.234" transform="matrix(1.6912 0 0 1.69233 329.479 -280.254)" fill="#e899ce"/>
+  <circle cx="1115.702" cy="6.631" r="18.758" fill="#79cd75"/>
 </svg>
