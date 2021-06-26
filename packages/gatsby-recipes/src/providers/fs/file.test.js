@@ -62,7 +62,7 @@ describe(`file resource`, () => {
     // Test creating the resource
     const createResponse = await file.create(context, initialObject)
     const schema = Joi.object(resourceSchema).append(file.schema)
-    const validateResult = schema.validate(createResponse) 
+    const validateResult = schema.validate(createResponse)
     expect(validateResult.error).toBeNull()
 
     expect(createResponse).toMatchInlineSnapshot(`
@@ -142,7 +142,7 @@ describe(`file resource`, () => {
     // Test creating the resource
     const createResponse = await file.create(context, initialObject)
     const schema = Joi.object(resourceSchema).append(file.schema)
-    const validateResult = schema.validate(createResponse) 
+    const validateResult = schema.validate(createResponse)
     expect(validateResult.error).toBeNull()
 
     expect(createResponse.content).toEqual(response1)

@@ -51,7 +51,7 @@ async function testPluginResource(root) {
   // Test creating the resource
   const createResponse = await plugin.create(context, initialObject)
   const schema = Joi.object(resourceSchema).append(plugin.schema)
-  const validateResult = schema.validate(createResponse) 
+  const validateResult = schema.validate(createResponse)
   expect(validateResult.error).toBeNull()
   expect(createResponse).toMatchSnapshot(
     pluginSnapshotMatcher,

@@ -27,7 +27,7 @@ describe(`directory resource`, () => {
     // Test creating the resource
     const createResponse = await directory.create(context, initialObject)
     const schema = Joi.object(resourceSchema).append(directory.schema)
-    const validateResult = schema.validate(createResponse) 
+    const validateResult = schema.validate(createResponse)
     expect(validateResult.error).toBeNull()
     expect(fs.ensureDir).toHaveBeenCalledWith(fullPath)
 
