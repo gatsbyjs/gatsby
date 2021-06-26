@@ -39,7 +39,7 @@ jest.mock(`fs-extra`, () => {
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
-    createProgress: () => {
+    createProgress: (): any => {
       return {
         start: jest.fn(),
         tick: jest.fn(),
