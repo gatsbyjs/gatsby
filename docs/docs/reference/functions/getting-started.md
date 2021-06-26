@@ -2,7 +2,7 @@
 title: Getting Started
 examples:
   - label: Authenticate with Google Auth
-    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/functions-google-auth"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/functions-google-oauth"
   - label: Authenticate with Auth0
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/functions-auth0"
   - label: Submit form to Airtable
