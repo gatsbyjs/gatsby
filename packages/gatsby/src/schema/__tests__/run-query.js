@@ -335,7 +335,7 @@ async function runQuery(queryArgs, nodes = makeNodesUneven()) {
     filtersCache: new Map(),
   }
 
-  return runFastFiltersAndSort(args).entries
+  return Array.from(runFastFiltersAndSort(args).entries)
 }
 
 async function runQuery2(queryArgs) {
