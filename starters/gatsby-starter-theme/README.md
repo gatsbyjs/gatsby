@@ -11,16 +11,29 @@ Quickly get started using the Gatsby blog theme, and notes theme, together! This
 
 ## 🚀 Quick start
 
-1.  **Create a Gatsby site.**
+1.  **Install gatsby-cli globally**
 
-    Use the Gatsby CLI to create a new site, specifying this theme starter.
+     The <a href="https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/README.md">Gatsby CLI</a> is available via npm and is installed globally by using npm.
+    
+     ```shell
+    # install gatsby-cli globally 
+    npm install -g gatsby-cli
+    ```
+      ```shell
+    # Verify its installed by running  
+    gatsby -v
+    ```
+    
+2.  **Create a Gatsby site**  
 
+    Use the Gatsby CLI to create a new site, specifying the default starter.
+    
     ```shell
-    # create a new Gatsby site using this theme starter
-    gatsby new my-themed-site https://github.com/gatsbyjs/gatsby-starter-theme
+    # create a new Gatsby site using the default starter
+    gatsby new my-default-starter https://github.com/gatsbyjs/gatsby-starter-default
     ```
 
-2.  **Start developing.**
+3.  **Start developing.**
 
     Navigate into your new site’s directory and start it up.
 
