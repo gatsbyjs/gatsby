@@ -195,14 +195,8 @@ exports.onCreateWebpackConfig = (
       }),
 
       // Exclude CSS from index.html, as any imported styles are assumed to be targeting the editor preview pane.
-      // TODO: switch to string/regex matching once https://github.com/swimmadude66/html-webpack-skip-assets-plugin/pull/7 is fixed
       new HtmlWebpackSkipAssetsPlugin({
-        skipAssets: [
-          a => {
-            const url = a.attributes.src || a.attributes.href
-            return url === `cms.css`
-          },
-        ],
+        skipAssets: [`cms.css`],
       }),
 
       // Pass in needed Gatsby config values.

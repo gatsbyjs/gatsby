@@ -10,7 +10,7 @@
     "@soda/friendly-errors-webpack-plugin": "1.8.0",
     "copy-webpack-plugin": "^7.0.0",
     "html-webpack-plugin": "^5.3.1",
-    "html-webpack-skip-assets-plugin": "^1.0.1",
+    "html-webpack-skip-assets-plugin": "^1.0.2",
     "html-webpack-tags-plugin": "^3.0.1",
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "1.6.0",
