@@ -47,9 +47,10 @@ module.exports = {
   snapshotSerializers: [`jest-serializer-path`],
   collectCoverageFrom: coverageDirs,
   reporters: process.env.CI
-    ? [[`jest-silent-reporter`, { useDots: true }]].concat(
-        useCoverage ? `jest-junit` : []
-      )
+    ? // ? [[`jest-silent-reporter`, { useDots: true }]].concat(
+      //     useCoverage ? `jest-junit` : []
+      //   )
+      [`default`].concat(useCoverage ? `jest-junit` : [])
     : [`default`].concat(useCoverage ? `jest-junit` : []),
   testEnvironment: `jest-environment-jsdom-fourteen`,
   moduleFileExtensions: [`js`, `jsx`, `ts`, `tsx`, `json`],
