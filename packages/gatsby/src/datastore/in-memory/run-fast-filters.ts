@@ -444,7 +444,7 @@ function sortNodes(
   resolvedFields: any,
   stats: IGraphQLRunnerStats
 ): Array<IGatsbyNode> {
-  if (!sort || sort.fields.length === 0 || !nodes || nodes.length === 0) {
+  if (!sort || sort.fields?.length === 0 || !nodes || nodes.length === 0) {
     return nodes
   }
 

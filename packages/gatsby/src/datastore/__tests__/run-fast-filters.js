@@ -146,8 +146,7 @@ describe(`fast filter tests`, () => {
 
       const resultSingular = await runFastFiltersAndSort({
         gqlType,
-        queryArgs,
-        firstOnly: true,
+        queryArgs: { ...queryArgs, limit: 1 },
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -155,7 +154,6 @@ describe(`fast filter tests`, () => {
       const resultMany = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
-        firstOnly: false,
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -173,8 +171,7 @@ describe(`fast filter tests`, () => {
 
       const resultSingular = await runFastFiltersAndSort({
         gqlType,
-        queryArgs,
-        firstOnly: true,
+        queryArgs: { ...queryArgs, limit: 1 },
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -182,7 +179,6 @@ describe(`fast filter tests`, () => {
       const resultMany = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
-        firstOnly: false,
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -201,8 +197,7 @@ describe(`fast filter tests`, () => {
 
       const resultSingular = await runFastFiltersAndSort({
         gqlType,
-        queryArgs,
-        firstOnly: true,
+        queryArgs: { ...queryArgs, limit: 1 },
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -210,7 +205,6 @@ describe(`fast filter tests`, () => {
       const resultMany = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
-        firstOnly: false,
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -222,11 +216,10 @@ describe(`fast filter tests`, () => {
       ])
     })
     it(`return empty array in case of empty nodes`, async () => {
-      const queryArgs = { filter: {}, sort: {} }
+      const queryArgs = { filter: {}, sort: {}, limit: 1 }
       const resultSingular = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
-        firstOnly: true,
         nodeTypeNames: [`NonExistentNodeType`],
         filtersCache: new Map(),
       })
@@ -243,8 +236,7 @@ describe(`fast filter tests`, () => {
 
       const resultSingular = await runFastFiltersAndSort({
         gqlType,
-        queryArgs,
-        firstOnly: true,
+        queryArgs: { ...queryArgs, limit: 1 },
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -266,7 +258,6 @@ describe(`fast filter tests`, () => {
       const resultMany = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
-        firstOnly: false,
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -287,8 +278,7 @@ describe(`fast filter tests`, () => {
 
       const resultSingular = await runFastFiltersAndSort({
         gqlType,
-        queryArgs,
-        firstOnly: true,
+        queryArgs: { ...queryArgs, limit: 1 },
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -310,7 +300,6 @@ describe(`fast filter tests`, () => {
       const resultMany = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
-        firstOnly: false,
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -331,8 +320,7 @@ describe(`fast filter tests`, () => {
 
       const resultSingular = await runFastFiltersAndSort({
         gqlType,
-        queryArgs,
-        firstOnly: true,
+        queryArgs: { ...queryArgs, limit: 1 },
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -350,7 +338,6 @@ describe(`fast filter tests`, () => {
       const resultMany = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
-        firstOnly: false,
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -370,7 +357,6 @@ describe(`fast filter tests`, () => {
       const resultMany = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
-        firstOnly: false,
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
