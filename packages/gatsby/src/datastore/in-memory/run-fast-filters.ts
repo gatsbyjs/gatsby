@@ -25,6 +25,7 @@ import {
   IFilterCache,
 } from "./indexing"
 import { IGraphQLRunnerStats } from "../../query/types"
+import { IQueryResult } from "../types"
 
 // The value is an object with arbitrary keys that are either filter values or,
 // recursively, an object with the same struct. Ie. `{a: {a: {a: 2}}}`
@@ -51,11 +52,6 @@ interface IRunFilterArg {
   nodeTypeNames: Array<string>
   filtersCache: FiltersCache
   stats: IGraphQLRunnerStats
-}
-
-export interface IQueryResult {
-  entries: Iterable<IGatsbyNode>
-  totalCount: number | (() => Promise<number>)
 }
 
 /**
