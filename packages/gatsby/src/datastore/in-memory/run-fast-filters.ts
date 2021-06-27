@@ -53,6 +53,11 @@ interface IRunFilterArg {
   stats: IGraphQLRunnerStats
 }
 
+export interface IQueryResult {
+  entries: Iterable<IGatsbyNode>
+  totalCount: number | (() => Promise<number>)
+}
+
 /**
  * Creates a key for one filterCache inside FiltersCache
  */
@@ -323,7 +328,7 @@ function collectBucketForElemMatch(
  *   This object lives in query/query-runner.js and is passed down runQuery.
  * @returns Collection of results. Collection will be sliced by `skip` and `limit`
  */
-export function runFastFiltersAndSort(args: IRunFilterArg): Array<IGatsbyNode> {
+export function runFastFiltersAndSort(args: IRunFilterArg): IQueryResult {
   const {
     queryArgs: { filter, sort, limit, skip = 0 } = {},
     resolvedFields = {},
@@ -341,10 +346,14 @@ export function runFastFiltersAndSort(args: IRunFilterArg): Array<IGatsbyNode> {
   )
 
   const sortedResult = sortNodes(result, sort, resolvedFields, stats)
+  const totalCount = sortedResult.length
 
-  return skip || limit
-    ? sortedResult.slice(skip, limit ? skip + (limit ?? 0) : undefined)
-    : sortedResult
+  const entries =
+    skip || limit
+      ? sortedResult.slice(skip, limit ? skip + (limit ?? 0) : undefined)
+      : sortedResult
+
+  return { entries, totalCount }
 }
 
 /**

@@ -239,7 +239,8 @@ class LocalNodeModel {
       return this.findOne(args, pageDependencies)
     }
     const { skip, limit, ...query } = args.query
-    return await this.findAll({ ...args, query }, pageDependencies)
+    const result = await this.findAll({ ...args, query }, pageDependencies)
+    return Array.from(result.entries)
   }
 
   async _query(args) {
@@ -293,7 +294,7 @@ class LocalNodeModel {
       runQueryActivity.start()
     }
 
-    const result = runFastFiltersAndSort({
+    const { entries, totalCount } = runFastFiltersAndSort({
       queryArgs: query,
       gqlSchema: this.schema,
       gqlComposer: this.schemaComposer,
@@ -319,12 +320,12 @@ class LocalNodeModel {
       trackInlineObjectsActivity.start()
     }
 
-    result.forEach(node => this.trackInlineObjectsInRootNode(node))
+    entries.forEach(node => this.trackInlineObjectsInRootNode(node))
 
     if (trackInlineObjectsActivity) {
       trackInlineObjectsActivity.end()
     }
-    return { gqlType, result }
+    return { gqlType, entries, totalCount }
   }
 
   /**
@@ -336,16 +337,17 @@ class LocalNodeModel {
    * @param {Object} args.query Query arguments (`filter`, `sort`, `skip`, `limit`)
    * @param {(string|GraphQLOutputType)} args.type Type
    * @param {PageDependencies} [pageDependencies]
-   * @returns {Promise<Node[]>}
+   * @returns {Promise<IQueryResult>}
    */
   async findAll(args, pageDependencies = {}) {
-    const { gqlType, result } = await this._query(args, pageDependencies)
+    const { gqlType, ...result } = await this._query(args, pageDependencies)
 
     // Tracking connections by default:
     if (typeof pageDependencies.connectionType === `undefined`) {
       pageDependencies.connectionType = gqlType.name
     }
-    return this.trackPageDependencies(result, pageDependencies)
+    this.trackPageDependencies(result.entries, pageDependencies)
+    return result
   }
 
   /**
@@ -370,10 +372,11 @@ class LocalNodeModel {
       //   `nodeModel.findOne() does not support sorting. Use nodeModel.findAll({ query: { limit: 1 } }) instead`
       // )
     }
-    const { gqlType, result } = await this._query({
+    const { gqlType, entries } = await this._query({
       ...args,
       query: { ...query, skip: 0, limit: 1, sort: undefined },
     })
+    const result = Array.from(entries)
     const first = result[0] ?? null
 
     if (!first) {
