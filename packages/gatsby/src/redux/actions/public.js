@@ -423,14 +423,17 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   const contextModified =
     !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
 
-  const alternateSlashPath = page.path.endsWith(`/`)
-    ? page.path.slice(0, -1)
-    : page.path + `/`
-
-  if (store.getState().pages.has(alternateSlashPath)) {
+  // This should only check against existing pages with
+  // trailing slashes. Creating an alternate page with
+  // a trailing slash can often be fine because
+  // it will get replaced later in the process
+  // by gatsby-plugin-trailing-slashes.
+  if (!page.path.endsWith(`/`) && store.getState().pages.has(page.path + `/`)) {
     report.warn(
       chalk.bold.yellow(`Non-deterministic routing danger: `) +
-        `Attempting to create page: "${page.path}", but page "${alternateSlashPath}" already exists\n` +
+        `Attempting to create page: "${page.path}", but page "${
+          page.path + `/`
+        }" already exists\n` +
         chalk.bold.yellow(
           `This could lead to non-deterministic routing behavior`
         )
