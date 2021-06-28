@@ -8,24 +8,18 @@ import path from "path"
 import telemetry from "gatsby-telemetry"
 
 import apiRunnerNode from "../utils/api-runner-node"
-import handleFlags from "../utils/handle-flags"
 import { getBrowsersList } from "../utils/browserslist"
 import { Store, AnyAction } from "redux"
-import { preferDefault } from "../bootstrap/prefer-default"
 import * as WorkerPool from "../utils/worker/pool"
-import JestWorker from "jest-worker"
 import { startPluginRunner } from "../redux/plugin-runner"
-import { loadPlugins } from "../bootstrap/load-plugins"
 import { store, emitter } from "../redux"
-import loadThemes from "../bootstrap/load-themes"
 import reporter from "gatsby-cli/lib/reporter"
-import { getConfigFile } from "../bootstrap/get-config-file"
 import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
-import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
-import availableFlags from "../utils/flags"
+import { detectLmdbStore } from "../datastore"
+import { loadConfigAndPlugins } from "../bootstrap/load-config-and-plugins"
 
 interface IPluginResolution {
   resolve: string
@@ -75,7 +69,7 @@ export async function initialize({
   parentSpan,
 }: IBuildContext): Promise<{
   store: Store<IGatsbyState, AnyAction>
-  workerPool: JestWorker
+  workerPool: WorkerPool.GatsbyWorkerPool
 }> {
   if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
     reporter.info(
@@ -103,10 +97,6 @@ export async function initialize({
   if (args.setStore) {
     args.setStore(store)
   }
-
-  // Start plugin runner which listens to the store
-  // and invokes Gatsby API based on actions.
-  startPluginRunner()
 
   const directory = slash(args.directory)
 
@@ -141,61 +131,18 @@ export async function initialize({
   emitter.on(`END_JOB`, onEndJob)
 
   // Try opening the site's gatsby-config.js file.
-  let activity = reporter.activityTimer(`open and validate gatsby-configs`, {
-    parentSpan,
-  })
-  activity.start()
-  const { configModule, configFilePath } = await getConfigFile(
-    program.directory,
-    `gatsby-config`
+  let activity = reporter.activityTimer(
+    `open and validate gatsby-configs, load plugins`,
+    {
+      parentSpan,
+    }
   )
-  let config = preferDefault(configModule)
+  activity.start()
 
-  // The root config cannot be exported as a function, only theme configs
-  if (typeof config === `function`) {
-    reporter.panic({
-      id: `10126`,
-      context: {
-        configName: `gatsby-config`,
-        path: program.directory,
-      },
-    })
-  }
-
-  // Setup flags
-  if (config) {
-    // Get flags
-    const { enabledConfigFlags, unknownFlagMessage, message } = handleFlags(
-      availableFlags,
-      config.flags
-    )
-
-    if (unknownFlagMessage !== ``) {
-      reporter.warn(unknownFlagMessage)
-    }
-
-    //  set process.env for each flag
-    enabledConfigFlags.forEach(flag => {
-      process.env[flag.env] = `true`
-    })
-
-    // Print out message.
-    if (message !== ``) {
-      reporter.info(message)
-    }
-
-    //  track usage of feature
-    enabledConfigFlags.forEach(flag => {
-      if (flag.telemetryId) {
-        telemetry.trackFeatureIsUsed(flag.telemetryId)
-      }
-    })
-
-    // Track the usage of config.flags
-    if (config.flags) {
-      telemetry.trackFeatureIsUsed(`ConfigFlags`)
-    }
-  }
+  const { config, flattenedPlugins } = await loadConfigAndPlugins({
+    siteDirectory: program.directory,
+    processFlags: true,
+  })
 
   // TODO: figure out proper way of disabling loading indicator
   // for now GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
@@ -208,23 +155,13 @@ export async function initialize({
     // enable loading indicator
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `true`
   }
-
-  // theme gatsby configs can be functions or objects
-  if (config) {
-    const plugins = await loadThemes(config, {
-      configFilePath,
-      rootDir: program.directory,
-    })
-    config = plugins.config
-  }
+  detectLmdbStore()
 
   if (config && config.polyfill) {
     reporter.warn(
       `Support for custom Promise polyfills has been removed in Gatsby v2. We only support Babel 7's new automatic polyfilling behavior.`
     )
   }
-
-  store.dispatch(internalActions.setSiteConfig(config))
 
   activity.end()
 
@@ -244,13 +181,6 @@ export async function initialize({
   // run stale jobs
   store.dispatch(removeStaleJobs(store.getState()))
 
-  activity = reporter.activityTimer(`load plugins`, {
-    parentSpan,
-  })
-  activity.start()
-  const flattenedPlugins = await loadPlugins(config, program.directory)
-  activity.end()
-
   // Multiple occurrences of the same name-version-pair can occur,
   // so we report an array of unique pairs
   const pluginsStr = _.uniq(flattenedPlugins.map(p => `${p.name}@${p.version}`))
@@ -261,6 +191,10 @@ export async function initialize({
   telemetry.decorateEvent(`DEVELOP_STOP`, {
     plugins: pluginsStr,
   })
+
+  // Start plugin runner which listens to the store
+  // and invokes Gatsby API based on actions.
+  startPluginRunner()
 
   // onPreInit
   activity = reporter.activityTimer(`onPreInit`, {

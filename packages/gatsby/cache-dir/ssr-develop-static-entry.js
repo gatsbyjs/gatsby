@@ -47,7 +47,7 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-export default (pagePath, isClientOnlyPage, publicDir, callback) => {
+export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
   let bodyHtml = ``
   let headComponents = [
     <meta key="environment" name="note" content="environment=development" />,
@@ -57,6 +57,32 @@ export default (pagePath, isClientOnlyPage, publicDir, callback) => {
   let preBodyComponents = []
   let postBodyComponents = []
   let bodyProps = {}
+
+  if (error) {
+    postBodyComponents.push([
+      <script
+        key="dev-ssr-error"
+        dangerouslySetInnerHTML={{
+          __html: `window._gatsbyEvents = window._gatsbyEvents || []; window._gatsbyEvents.push(["FAST_REFRESH", { action: "SHOW_DEV_SSR_ERROR", payload: ${JSON.stringify(
+            error
+          )} }])`,
+        }}
+      />,
+      <noscript key="dev-ssr-error-noscript">
+        <h1>Failed to Server Render (SSR)</h1>
+        <h2>Error message:</h2>
+        <p>{error.sourceMessage}</p>
+        <h2>File:</h2>
+        <p>
+          {error.source}:{error.line}:{error.column}
+        </p>
+        <h2>Stack:</h2>
+        <pre>
+          <code>{error.stack}</code>
+        </pre>
+      </noscript>,
+    ])
+  }
 
   const generateBodyHTML = () => {
     const setHeadComponents = components => {

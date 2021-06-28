@@ -91,8 +91,10 @@ type SiteSiteMetadata {
 }
 
 type SiteFunction implements Node @dontInfer {
-  apiRoute: String!
-  originalFilePath: String!
+  functionRoute: String!
+  pluginName: String!
+  originalAbsoluteFilePath: String!
+  originalRelativeFilePath: String!
   relativeCompiledFilePath: String!
   absoluteCompiledFilePath: String!
   matchPath: String
@@ -132,12 +134,12 @@ type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
   bar: String
 }
 
-type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
-  bar: String
-}
-
 type Test implements Node @dontInfer {
   foo: Int
+}
+
+type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
 }"
 `;
 
@@ -253,8 +255,10 @@ type SiteSiteMetadata {
 }
 
 type SiteFunction implements Node @dontInfer {
-  apiRoute: String!
-  originalFilePath: String!
+  functionRoute: String!
+  pluginName: String!
+  originalAbsoluteFilePath: String!
+  originalRelativeFilePath: String!
   relativeCompiledFilePath: String!
   absoluteCompiledFilePath: String!
   matchPath: String
@@ -311,12 +315,12 @@ type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
   bar: String
 }
 
-type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
-  bar: String
-}
-
 type Test implements Node @dontInfer {
   foo: Int
+}
+
+type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
 }"
 `;
 
@@ -426,8 +430,10 @@ type SiteSiteMetadata {
 }
 
 type SiteFunction implements Node @dontInfer {
-  apiRoute: String!
-  originalFilePath: String!
+  functionRoute: String!
+  pluginName: String!
+  originalAbsoluteFilePath: String!
+  originalRelativeFilePath: String!
   relativeCompiledFilePath: String!
   absoluteCompiledFilePath: String!
   matchPath: String
@@ -489,11 +495,11 @@ type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
   bar: String
 }
 
-type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
-  bar: String
-}
-
 type Test implements Node @dontInfer {
   foo: Int
+}
+
+type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
 }"
 `;

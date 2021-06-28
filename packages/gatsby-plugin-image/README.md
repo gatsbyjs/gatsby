@@ -10,6 +10,7 @@ For full documentation on all configuration options, see [the Gatsby Image Plugi
 - [Using the Gatsby Image components](#using-the-gatsby-image-components)
   - [Static images](#static-images)
   - [Dynamic images](#dynamic-images)
+- [Customizing the default options](#customizing-the-default-options)
 - [Migrating to gatsby-plugin-image](#migrating)
 
 ## Installation
@@ -150,7 +151,7 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
 
 3. **Display the image.**
 
-   You can then use the `GatbsyImage` component to display the image on the page. The `getImage()` function is an optional helper to make your code easier to read. It takes a `File` and returns `file.childImageSharp.gatsbyImageData`, which can be passed to the `GatsbyImage` component.
+   You can then use the `GatsbyImage` component to display the image on the page. The `getImage()` function is an optional helper to make your code easier to read. It takes a `File` and returns `file.childImageSharp.gatsbyImageData`, which can be passed to the `GatsbyImage` component.
 
    ```jsx
    import { graphql } from "gatsby"
@@ -188,6 +189,40 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    ```
 
 For full APIs, see [Gatsby Image plugin reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image).
+
+## Customizing the default options
+
+You might find yourself using the same options (like `placeholder`, `formats` etc.) with most of your `GatsbyImage` and `StaticImage` instances.
+You can customize the default options with `gatsby-plugin-sharp`.
+
+The following configuration describes the options that can be customized along with their default values:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          formats: [`auto`, `webp`],
+          placeholder: `dominantColor`
+          quality: 50
+          breakpoints: [750, 1080, 1366, 1920]
+          backgroundColor: `transparent`
+          tracedSVGOptions: {}
+          blurredOptions: {}
+          jpgOptions: {}
+          pngOptions: {}
+          webpOptions: {}
+          avifOptions: {}
+        }
+      }
+    },
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-image`,
+  ],
+}
+```
 
 ## Migrating
 

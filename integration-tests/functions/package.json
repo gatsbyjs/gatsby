@@ -4,17 +4,17 @@
   "private": true,
   "description": "functions",
   "author": "Kyle Mathews",
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": ["gatsby"],
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
     "serve": "gatsby serve",
-    "start-servers-and-test": "start-server-and-test servers \"8000|9000\" test:jest",
-    "servers": "run-p develop serve",
+    "test-prod": "start-server-and-test serve 9000 jest:prod",
+    "test-dev": "start-server-and-test develop 8000 jest:dev",
+    "jest:prod": "jest __tests__/functions-prod.js",
+    "jest:dev": "jest --runInBand __tests__/functions-dev.js",
     "test:jest": "jest",
-    "test": "npm-run-all -s build start-servers-and-test"
+    "test": "npm-run-all -s build test-prod test-dev"
   },
   "devDependencies": {
     "babel-jest": "^24.0.0",
@@ -25,7 +25,7 @@
     "start-server-and-test": "^1.11.3"
   },
   "dependencies": {
-    "gatsby": "^3.5.0-next.0",
+    "gatsby": "next",
     "gatsby-plugin-gatsby-cloud": "^2.5.0-next.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"

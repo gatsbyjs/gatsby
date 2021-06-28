@@ -2,7 +2,7 @@
 
 const tracer = require(`opentracing`).globalTracer()
 const { store } = require(`../redux`)
-const { getNodesByType, getTypes } = require(`../redux/nodes`)
+const { getDataStore, getTypes } = require(`../datastore`)
 const { createSchemaComposer } = require(`./schema-composer`)
 const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
 const { builtInFieldExtensions } = require(`./extensions`)
@@ -65,7 +65,7 @@ const buildInferenceMetadata = ({ types }) =>
         type: `BUILD_TYPE_METADATA`,
         payload: {
           typeName,
-          nodes: getNodesByType(typeName),
+          nodes: getDataStore().iterateNodesByType(typeName),
         },
       })
       if (typeNames.length > 0) {
@@ -81,6 +81,7 @@ const buildInferenceMetadata = ({ types }) =>
 const build = async ({ parentSpan, fullMetadataBuild = true }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
+  await getDataStore().ready()
 
   if (fullMetadataBuild) {
     // Build metadata for type inference and start updating it incrementally
@@ -137,6 +138,7 @@ const rebuildWithSitePage = async ({ parentSpan }) => {
     `rebuild schema with SitePage context`,
     spanArgs
   )
+  await getDataStore().ready()
   await buildInferenceMetadata({ types: [`SitePage`] })
 
   // Disabling incremental inference for SitePage after the initial build

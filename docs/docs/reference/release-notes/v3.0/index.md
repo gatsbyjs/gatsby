@@ -1,10 +1,7 @@
 ---
 date: "2021-03-02"
 version: "3.0.0"
----
-
-# v3.0 (March 2021 #1)
-
+title: "v3 Release Notes"
 ---
 
 Welcome to `gatsby@3.0.0` release (March 2021 #1).

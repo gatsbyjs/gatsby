@@ -3,7 +3,7 @@ import {
   ObjectTypeComposer,
   InputTypeComposer,
   InterfaceTypeComposer,
-  ComposeFieldConfigMap,
+  ObjectTypeComposerFieldConfigMapDefinition,
 } from "graphql-compose"
 import { getFieldsEnum } from "./sort"
 import { addDerivedType } from "./derived-types"
@@ -52,7 +52,7 @@ const createPagination = <TSource = any, TContext = any>({
 }: {
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
-  fields: ComposeFieldConfigMap<TSource, TContext>
+  fields: ObjectTypeComposerFieldConfigMapDefinition<TSource, TContext>
   typeName: string
 }): ObjectTypeComposer => {
   const paginationTypeComposer: ObjectTypeComposer = schemaComposer.getOrCreateOTC(

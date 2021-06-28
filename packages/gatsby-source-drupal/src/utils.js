@@ -1,10 +1,14 @@
 const _ = require(`lodash`)
+
 const {
   nodeFromData,
   downloadFile,
   isFileNode,
+  getHref,
   createNodeIdWithVersion,
 } = require(`./normalize`)
+
+const { getOptions } = require(`./plugin-options`)
 
 const backRefsNamesLookup = new WeakMap()
 const referencedNodesLookup = new WeakMap()
@@ -14,6 +18,7 @@ const handleReferences = (
   { getNode, createNodeId, entityReferenceRevisions = [] }
 ) => {
   const relationships = node.relationships
+  const rootNodeLanguage = getOptions().languageConfig ? node.langcode : `und`
 
   if (node.drupal_relationships) {
     const referencedNodes = []
@@ -27,6 +32,7 @@ const handleReferences = (
               createNodeIdWithVersion(
                 data.id,
                 data.type,
+                rootNodeLanguage,
                 data.meta?.target_version,
                 entityReferenceRevisions
               )
@@ -54,6 +60,7 @@ const handleReferences = (
           createNodeIdWithVersion(
             v.data.id,
             v.data.type,
+            rootNodeLanguage,
             v.data.meta?.target_revision_id,
             entityReferenceRevisions
           )

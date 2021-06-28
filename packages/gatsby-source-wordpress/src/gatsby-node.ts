@@ -24,7 +24,7 @@ module.exports = runApisInSteps({
     steps.onPreExtractQueriesInvokeLeftoverPreviewCallbacks,
   ],
 
-  onPostBuild: [steps.setImageNodeIdCache],
+  onPostBuild: [steps.setImageNodeIdCache, steps.logPostBuildWarnings],
 
   onCreatePage: [
     steps.onCreatepageSavePreviewNodeIdToPageDependency,
@@ -33,6 +33,7 @@ module.exports = runApisInSteps({
 
   onCreateDevServer: [
     steps.setImageNodeIdCache,
+    steps.logPostBuildWarnings,
     steps.startPollingForContentUpdates,
   ],
 })

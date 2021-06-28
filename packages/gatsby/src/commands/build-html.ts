@@ -15,9 +15,9 @@ import * as buildUtils from "./build-utils"
 import { Span } from "opentracing"
 import { IProgram, Stage } from "./types"
 import { PackageJson } from "../.."
+import type { GatsbyWorkerPool } from "../utils/worker/pool"
 
 type IActivity = any // TODO
-type IWorkerPool = any // TODO
 
 export interface IBuildArgs extends IProgram {
   directory: string
@@ -58,7 +58,10 @@ const runWebpack = (
   stage: Stage,
   directory,
   parentSpan?: Span
-): Bluebird<{ stats: webpack.Stats; waitForCompilerClose: Promise<void> }> =>
+): Bluebird<{
+  stats: webpack.Stats | undefined
+  waitForCompilerClose: Promise<void>
+}> =>
   new Bluebird((resolve, reject) => {
     if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR || stage === `build-html`) {
       const compiler = webpack(compilerConfig)
@@ -96,7 +99,7 @@ const runWebpack = (
       stage === `develop-html`
     ) {
       devssrWebpackCompiler = webpack(compilerConfig)
-      devssrWebpackCompiler.hooks.invalid.tap(`ssr file invalidation`, file => {
+      devssrWebpackCompiler.hooks.invalid.tap(`ssr file invalidation`, () => {
         needToRecompileSSRBundle = true
       })
       devssrWebpackWatcher = devssrWebpackCompiler.watch(
@@ -111,7 +114,7 @@ const runWebpack = (
           if (err) {
             return reject(err)
           } else {
-            newHash = stats.hash || ``
+            newHash = stats?.hash || ``
 
             const {
               restartWorker,
@@ -142,17 +145,17 @@ const doBuildRenderer = async (
     directory,
     parentSpan
   )
-  if (stats.hasErrors()) {
+  if (stats?.hasErrors()) {
     reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
   }
 
   if (
     stage === `build-html` &&
-    store.getState().html.ssrCompilationHash !== stats.hash
+    store.getState().html.ssrCompilationHash !== stats?.hash
   ) {
     store.dispatch({
       type: `SET_SSR_WEBPACK_COMPILATION_HASH`,
-      payload: stats.hash,
+      payload: stats?.hash,
     })
   }
 
@@ -190,7 +193,7 @@ export interface IRenderHtmlResult {
 }
 
 const renderHTMLQueue = async (
-  workerPool: IWorkerPool,
+  workerPool: GatsbyWorkerPool,
   activity: IActivity,
   htmlComponentRendererPath: string,
   pages: Array<string>,
@@ -198,7 +201,7 @@ const renderHTMLQueue = async (
 ): Promise<void> => {
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
-  const envVars = [
+  const envVars: Array<[string, string | undefined]> = [
     [`NODE_ENV`, process.env.NODE_ENV],
     [`gatsby_executing_command`, process.env.gatsby_executing_command],
     [`gatsby_log_level`, process.env.gatsby_log_level],
@@ -217,7 +220,7 @@ const renderHTMLQueue = async (
 
   try {
     await Bluebird.map(segments, async pageSegment => {
-      const htmlRenderMeta: IRenderHtmlResult = await renderHTML({
+      const renderHTMLResult = await renderHTML({
         envVars,
         htmlComponentRendererPath,
         paths: pageSegment,
@@ -225,6 +228,7 @@ const renderHTMLQueue = async (
       })
 
       if (stage === `build-html`) {
+        const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult
         store.dispatch({
           type: `HTML_GENERATED`,
           payload: pageSegment,
@@ -301,7 +305,7 @@ export const doBuildPages = async (
   rendererPath: string,
   pagePaths: Array<string>,
   activity: IActivity,
-  workerPool: IWorkerPool,
+  workerPool: GatsbyWorkerPool,
   stage: Stage
 ): Promise<void> => {
   try {
@@ -329,7 +333,7 @@ export const buildHTML = async ({
   stage: Stage
   pagePaths: Array<string>
   activity: IActivity
-  workerPool: IWorkerPool
+  workerPool: GatsbyWorkerPool
 }): Promise<void> => {
   const { rendererPath } = await buildRenderer(program, stage, activity.span)
   await doBuildPages(rendererPath, pagePaths, activity, workerPool, stage)
@@ -343,7 +347,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   program,
 }: {
   pageRenderer: string
-  workerPool: IWorkerPool
+  workerPool: GatsbyWorkerPool
   buildSpan?: Span
   program: IBuildArgs
 }): Promise<{

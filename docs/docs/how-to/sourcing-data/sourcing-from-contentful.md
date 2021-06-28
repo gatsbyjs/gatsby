@@ -1,5 +1,8 @@
 ---
 title: Sourcing from Contentful
+examples:
+  - label: Using Contentful
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful"
 ---
 
 ## What is Contentful? Why choose it?

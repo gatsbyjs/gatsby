@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.0.0-next.0...gatsby-source-shopify@5.1.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [5.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@4.8.0-next.1...gatsby-source-shopify@5.0.0-next.0) (2021-06-17)
+
+### Bug Fixes
+
+- **gatsby-source-shopify:** fix gitignore ([#31967](https://github.com/gatsbyjs/gatsby/issues/31967)) ([9e58577](https://github.com/gatsbyjs/gatsby/commit/9e58577f3dfa0a1414f9f4a93408b14f4bbb1233))
+
+# [4.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@4.8.0-next.0...gatsby-source-shopify@4.8.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [4.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@4.7.0-next.2...gatsby-source-shopify@4.8.0-next.0) (2021-06-03)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [4.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@4.7.0-next.1...gatsby-source-shopify@4.7.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [4.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@4.7.0-next.0...gatsby-source-shopify@4.7.0-next.1) (2021-05-31)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [4.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@4.6.0-next.0...gatsby-source-shopify@4.7.0-next.0) (2021-05-21)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [4.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@4.5.0-next.0...gatsby-source-shopify@4.6.0-next.0) (2021-05-06)
+
+### Bug Fixes
+
+- **gatsby-source-shopify:** fix linting ([#31291](https://github.com/gatsbyjs/gatsby/issues/31291)) ([fbab17b](https://github.com/gatsbyjs/gatsby/commit/fbab17b9260f451be37b8cf0de1ca43878560cbe))
+
 # [4.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@4.4.0-next.3...gatsby-source-shopify@4.5.0-next.0) (2021-04-23)
 
 **Note:** Version bump only for package gatsby-source-shopify
