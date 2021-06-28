@@ -22,22 +22,27 @@ const agent = {
   // http2: new http2wrapper.Agent(),
 }
 
+let lastReport = 0
+const REPORT_EVERY_N = 1000
 async function worker([url, options]) {
-  return got(url, {
+  const result = await got(url, {
     agent,
     cache: false,
     // request: http2wrapper.auto,
     // http2: true,
     ...options,
   })
+  const remainingRequests = requestQueue.length()
+  if (Math.abs(lastReport - remainingRequests) >= REPORT_EVERY_N) {
+    console.log(`Fetching: ${url} (${remainingRequests} requests remaining)`)
+    lastReport = remainingRequests
+  }
+  return result
 }
 
 const requestQueue = require(`fastq`).promise(worker, 20)
-
 const asyncPool = require(`tiny-async-pool`)
 const bodyParser = require(`body-parser`)
-
-const REPORTING_RATE_MS = 10000
 
 function gracefullyRethrow(activity, error) {
   // activity.panicOnBuild was implemented at some point in gatsby@2
@@ -273,91 +278,49 @@ exports.sourceNodes = async (
 
   drupalFetchActivity.start()
 
-  const listResponse = await worker([
+  const listResponse = await requestQueue.push([
     urlJoin(baseUrl, 'gatsby/content-list'),
     {
       headers,
-      responseType: `json`,
     }
   ])
-
-  const requestUrls = []
-  for (let entityTypeAndBundle in listResponse.body) {
+  const listResponseBody = JSON.parse(listResponse.body)
+    
+  const requestPromises = []
+  for (let entityTypeAndBundle in listResponseBody) {
     if (disallowedLinkTypes.indexOf(entityTypeAndBundle) !== -1) continue
-
+    const isTranslatable = languageConfig.translatableEntities.indexOf(entityTypeAndBundle) !== -1
+    const shouldUseAuth = useAuthOn.indexOf(entityTypeAndBundle) !== -1
     const [entityType, entityBundle] = entityTypeAndBundle.split('--')
 
-    for (let entityUuid of listResponse.body[entityTypeAndBundle]) {
-      const isTranslatable = languageConfig.translatableEntities.some(
-        translatableEntityType => translatableEntityType === entityTypeAndBundle
+    for (let entityUuid of listResponseBody[entityTypeAndBundle]) {
+      requestPromises.push(
+        requestQueue.push([
+          urlJoin(baseUrl, apiBase, `/${entityType}/${entityBundle}/${entityUuid}`),
+          {
+            headers: shouldUseAuth ? headers : undefined,
+          }
+        ]).then(response => JSON.parse(response.body).data).catch(() => {})
       )
-
-      requestUrls.push({
-        language: '',
-        entityType,
-        entityBundle,
-        entityUuid
-      })
 
       if (isTranslatable) {
         for (let language of languageConfig.enabledLanguages) {
           if (language !== languageConfig.defaultLanguage) {
-            requestUrls.push({
-              language,
-              entityType,
-              entityBundle,
-              entityUuid
-            })
+            requestPromises.push(
+              requestQueue.push([
+                urlJoin(baseUrl, language, apiBase, `/${entityType}/${entityBundle}/${entityUuid}`),
+                {
+                  headers: shouldUseAuth ? headers : undefined
+                }
+              ]).then(response => JSON.parse(response.body).data).catch(() => {})
+            )
           }
         }
       }
     }
   }
 
-  let allData = []
-  let nRequests = 0
-  let nCachedRequests = 0
-  let lastReportRequests = 0
-  let lastReportTime = Date.now()
-  let lastFetchedContentType = ''
-  await asyncPool(concurrentAPIRequests, requestUrls, async ({ language, entityType, entityBundle, entityUuid }) => {
-    nRequests++
-
-    if (lastFetchedContentType !== `${entityType}--${entityBundle}`) {
-      lastFetchedContentType = `${entityType}--${entityBundle}`
-      const percentageCompleted = ((nRequests / requestUrls.length) * 100).toFixed(2)
-      const cacheHitRate = ((nCachedRequests / nRequests) * 100).toFixed(2)
-      reporter.info(`Starting ${lastFetchedContentType} (${percentageCompleted}%) (CHR: ${cacheHitRate}%)`)
-    }
-
-    if ((Date.now() - lastReportTime) >= REPORTING_RATE_MS) {
-      const nRequestsDoneThisPeriod = nRequests - lastReportRequests
-      const requestsPerSecond = Math.floor(nRequestsDoneThisPeriod / (REPORTING_RATE_MS / 1000))
-      const percentageCompleted = ((nRequests / requestUrls.length) * 100).toFixed(2)
-      const cacheHitRate = ((nCachedRequests / nRequests) * 100).toFixed(2)
-      reporter.info(`${requestsPerSecond}rps (${nRequests}/${requestUrls.length}) (${percentageCompleted}%) (CHR: ${cacheHitRate}%)`)
-      
-      lastReportTime = Date.now()
-      lastReportRequests = nRequests
-    }
-
-    const shouldUseAuth = useAuthOn.indexOf(`${entityType}--${entityBundle}`) !== -1
-    try {
-      const entityResponse = await worker([
-        urlJoin(baseUrl, language, apiBase, `/${entityType}/${entityBundle}/${entityUuid}`),
-        {
-          headers: shouldUseAuth ? headers : undefined,
-          responseType: `json`,
-        }
-      ])
-
-      if (parseInt(entityResponse.headers.age) > 0) {
-        nCachedRequests++
-      }
-
-      allData.push(entityResponse.body.data)
-    } catch (err) {}
-  })
+  const allData = await Promise.all(requestPromises)
 
   drupalFetchActivity.end()
 
