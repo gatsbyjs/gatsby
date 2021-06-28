@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.9.0-next.0...gatsby-source-drupal@4.9.0-next.1) (2021-06-28)
+
+### Bug Fixes
+
+- **gatsby-source-drupal:** Comment out http2-wrapper ([#32045](https://github.com/gatsbyjs/gatsby/issues/32045)) ([b5f93e9](https://github.com/gatsbyjs/gatsby/commit/b5f93e908c850555c2904505c84d581a11b02e85))
+- **gatsby-source-drupal:** getNext no longer returns a value ([#32125](https://github.com/gatsbyjs/gatsby/issues/32125)) ([2eb57c7](https://github.com/gatsbyjs/gatsby/commit/2eb57c7a9dfeb64c351e7154849652e235767e1b))
+
+### Features
+
+- **gatsby-source-drupal:** Disable caching + add http/2 agent ([#32012](https://github.com/gatsbyjs/gatsby/issues/32012)) ([113e43e](https://github.com/gatsbyjs/gatsby/commit/113e43e19b1086e74c55f7092e4a66b7e9fe7c95))
+
 # [4.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.8.0-next.2...gatsby-source-drupal@4.9.0-next.0) (2021-06-18)
 
 ### Features

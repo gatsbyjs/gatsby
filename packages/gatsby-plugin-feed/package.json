@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-feed",
   "description": "Creates an RSS feed for your Gatsby site.",
-  "version": "3.9.0-next.0",
+  "version": "3.9.0-next.1",
   "author": "Nicholas Young <nicholas@nicholaswyoung.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -11,7 +11,7 @@
     "@hapi/joi": "^15.1.1",
     "common-tags": "^1.8.0",
     "fs-extra": "^9.1.0",
-    "gatsby-plugin-utils": "^1.9.0-next.0",
+    "gatsby-plugin-utils": "^1.9.0-next.1",
     "lodash.merge": "^4.6.2",
     "rss": "^1.2.2"
   },

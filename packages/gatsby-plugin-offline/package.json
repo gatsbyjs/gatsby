@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-offline",
   "description": "Gatsby plugin which sets up a site to be able to run offline",
-  "version": "4.9.0-next.0",
+  "version": "4.9.0-next.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -21,7 +21,7 @@
     "babel-preset-gatsby-package": "^1.9.0-next.0",
     "cpx": "^1.5.0",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-utils": "^1.9.0-next.0",
+    "gatsby-plugin-utils": "^1.9.0-next.1",
     "rewire": "^5.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline#readme",

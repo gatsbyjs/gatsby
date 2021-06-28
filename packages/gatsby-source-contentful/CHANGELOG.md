@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.9.0-next.0...gatsby-source-contentful@5.9.0-next.1) (2021-06-28)
+
+### Bug Fixes
+
+- **contentful:** reenable support for gif images ([#31986](https://github.com/gatsbyjs/gatsby/issues/31986)) ([a30aa0b](https://github.com/gatsbyjs/gatsby/commit/a30aa0b5c8e45e2634eb939e7533230b072eb9bd))
+- **gatsby-source-contentful:** Don't ignore errors thrown when fetching assets ([#24288](https://github.com/gatsbyjs/gatsby/issues/24288)) ([2d4a791](https://github.com/gatsbyjs/gatsby/commit/2d4a791810a7f4baaff8d047324ddbe252db952b))
+
 # [5.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.8.0-next.2...gatsby-source-contentful@5.9.0-next.0) (2021-06-18)
 
 **Note:** Version bump only for package gatsby-source-contentful
