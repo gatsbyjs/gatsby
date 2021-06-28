@@ -215,7 +215,7 @@ _Note: If you need to perform an asynchronous action within `onCreatePage` you c
 const replacePath = path => (path === `/` ? path : path.replace(/\/$/, ``))
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
-exports.onCreatePage = ({ page, actions }) => {
+exports.onCreatePage = async ({ page, actions }) => {
   const { createPage, deletePage } = actions
 
   const oldPage = Object.assign({}, page)
@@ -223,8 +223,8 @@ exports.onCreatePage = ({ page, actions }) => {
   page.path = replacePath(page.path)
   if (page.path !== oldPage.path) {
     // Replace old page with new page
-    deletePage(oldPage)
-    createPage(page)
+    await deletePage(oldPage)
+    await createPage(page)
   }
 }
 ```
