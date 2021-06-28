@@ -20,7 +20,7 @@ export function makeSourceFromOperation(
 ) {
   return async function sourceFromOperation(
     op: IShopifyBulkOperation,
-    isPriorityBuild = process.env.IS_PRODUCTION_BRANCH === `true`
+    isPriorityBuild = process.env.GATSBY_IS_PREVIEW !== `true`
   ): Promise<void> {
     const { reporter, actions } = gatsbyApi
 
