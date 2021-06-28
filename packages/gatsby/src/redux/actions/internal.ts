@@ -375,7 +375,6 @@ export const createJobV2FromInternalJob = (
     currentState.jobsV2.complete.has(jobContentDigest)
   ) {
     return Promise.resolve(
-      // @ts-ignore we check if `complete` map has result
       currentState.jobsV2.complete.get(jobContentDigest)!.result
     )
   }
