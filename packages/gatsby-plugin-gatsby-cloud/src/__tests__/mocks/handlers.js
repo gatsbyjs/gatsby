@@ -9,7 +9,7 @@ export const handlers = [
           buildStatus: `SUCCESS`,
           createdAt: `2021-05-11T14:45:10.263Z`,
         },
-        latestBuild: { id: `123`, buildStatus: `SUCCESS` },
+        latestBuild: { id: `124`, buildStatus: `SUCCESS` },
         siteInfo: { orgId: `999`, siteId: `111`, sitePrefix: `test` },
       })
     )

@@ -255,7 +255,7 @@ export default function Indicator() {
         setBuildId(latestBuild?.id)
       } else {
         // Match UUID from preview build URL https://build-af44185e-b8e5-11eb-8529-0242ac130003.gtsb.io
-        const buildIdMatch = host.match(/build-(.*?(?=\.))/)
+        const buildIdMatch = host?.match(/build-(.*?(?=\.))/)
         if (buildIdMatch) {
           setBuildId(buildIdMatch[1])
         }

@@ -34,13 +34,13 @@ describe(`Preview status indicator`, () => {
     })
 
     if (matcherType === `query`) {
-      await waitFor(() => {
+      waitFor(() => {
         expect(
           screen.queryByText(text, { exact: false })
         ).not.toBeInTheDocument()
       })
     } else if (matcherType === `get`) {
-      await waitFor(() => {
+      waitFor(() => {
         expect(screen.getByText(text, { exact: false })).toBeInTheDocument()
       })
     }
@@ -62,7 +62,7 @@ describe(`Preview status indicator`, () => {
       render(<Indicator />)
     })
 
-    await waitFor(() => {
+    waitFor(() => {
       if (testId) {
         component = screen.getByTestId(testId)
       } else {
@@ -70,7 +70,7 @@ describe(`Preview status indicator`, () => {
       }
     })
 
-    await waitFor(() => {
+    waitFor(() => {
       if (action) {
         userEvent[action](component)
         // Initial poll fetch, initial load trackEvent, and trackEvent after action
@@ -91,9 +91,21 @@ describe(`Preview status indicator`, () => {
     jest.resetModules()
     global.fetch = require(`node-fetch`)
     jest.spyOn(global, `fetch`)
+
+    /**
+     * mock out location.host as described here
+     * https://github.com/facebook/jest/issues/5124#issuecomment-415494099
+     */
+    global.window = Object.create(window)
+    Object.defineProperty(window, `location`, {
+      value: {
+        href: `https://build-123.gtsb.io`,
+      },
+    })
   })
 
   afterEach(() => {
+    jest.runOnlyPendingTimers()
     jest.useRealTimers()
     server.resetHandlers()
   })
@@ -260,11 +272,11 @@ describe(`Preview status indicator`, () => {
         const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/999/sites/111/builds/123/details`
         const returnTo = encodeURIComponent(pathToBuildLogs)
 
-        await act(async () => {
+        act(() => {
           render(<Indicator />)
         })
 
-        await waitFor(() => {
+        waitFor(() => {
           gatsbyButtonTooltip = screen.getByText(errorLogMessage, {
             exact: false,
           })
@@ -330,7 +342,7 @@ describe(`Preview status indicator`, () => {
           render(<Indicator />)
         })
 
-        await waitFor(() => {
+        waitFor(() => {
           copyLinkButton = screen.getByText(copyLinkMessage, { exact: false })
         })
 
