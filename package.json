@@ -115,6 +115,10 @@
     "theme-ui": "0.4.0-rc.14",
     "csstype": "2.6.17"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git"
+  },
   "scripts": {
     "bootstrap": "npm-run-all -s check-versions \"lerna-prepare -- --{@}\" --",
     "check-repo-fields": "babel-node scripts/check-repo-fields.js",
