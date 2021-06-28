@@ -22,18 +22,25 @@ const agent = {
   // http2: new http2wrapper.Agent(),
 }
 
+let lastReport = 0
+const REPORT_EVERY_N = 1000
 async function worker([url, options]) {
-  return got(url, {
+  const result = await got(url, {
     agent,
     cache: false,
     // request: http2wrapper.auto,
     // http2: true,
     ...options,
   })
+  const remainingRequests = requestQueue.length()
+  if (Math.abs(lastReport - remainingRequests) >= REPORT_EVERY_N) {
+    console.log(`Fetching: ${url} (${remainingRequests} requests remaining)`)
+    lastReport = remainingRequests
+  }
+  return result
 }
 
 const requestQueue = require(`fastq`).promise(worker, 20)
-
 const asyncPool = require(`tiny-async-pool`)
 const bodyParser = require(`body-parser`)
 
@@ -77,7 +84,7 @@ exports.sourceNodes = async (
     apiBase = `jsonapi`,
     basicAuth = {},
     filters,
-    headers,
+    headers = {},
     params = {},
     concurrentFileRequests = 20,
     concurrentAPIRequests = 20,
@@ -95,11 +102,16 @@ exports.sourceNodes = async (
       enabledLanguages: [`und`],
       translatableEntities: [],
     },
+    useAuthOn = [],
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
 
   // Update the concurrency limit from the plugin options
   requestQueue.concurrency = concurrentAPIRequests
+
+  if (typeof basicAuth.username === 'string' && typeof basicAuth.password === 'string') {
+    headers['Authorization'] = `Basic ${Buffer.from(`${basicAuth.username}:${basicAuth.password}`).toString('base64')}`
+  }
 
   if (webhookBody && Object.keys(webhookBody).length) {
     const changesActivity = reporter.activityTimer(
@@ -173,8 +185,6 @@ exports.sourceNodes = async (
       const res = await requestQueue.push([
         urlJoin(baseUrl, `gatsby-fastbuilds/sync/`, lastFetched.toString()),
         {
-          username: basicAuth.username,
-          password: basicAuth.password,
           headers,
           searchParams: params,
           responseType: `json`,
@@ -268,143 +278,59 @@ exports.sourceNodes = async (
 
   drupalFetchActivity.start()
 
-  let allData
-  try {
-    const res = await requestQueue.push([
-      urlJoin(baseUrl, apiBase),
-      {
-        username: basicAuth.username,
-        password: basicAuth.password,
-        headers,
-        searchParams: params,
-        responseType: `json`,
-      },
-    ])
-    allData = await Promise.all(
-      _.map(res.body.links, async (url, type) => {
-        const dataArray = []
-        if (disallowedLinkTypes.includes(type)) return
-        if (!url) return
-        if (!type) return
+  const listResponse = await requestQueue.push([
+    urlJoin(baseUrl, 'gatsby/content-list'),
+    {
+      headers,
+    }
+  ])
+  const listResponseBody = JSON.parse(listResponse.body)
+    
+  const requestPromises = []
+  for (let entityTypeAndBundle in listResponseBody) {
+    if (disallowedLinkTypes.indexOf(entityTypeAndBundle) !== -1) continue
+    const isTranslatable = languageConfig.translatableEntities.indexOf(entityTypeAndBundle) !== -1
+    const shouldUseAuth = useAuthOn.indexOf(entityTypeAndBundle) !== -1
+    const [entityType, entityBundle] = entityTypeAndBundle.split('--')
 
-        // Lookup this type in our list of language alterable entities.
-        const isTranslatable = languageConfig.translatableEntities.some(
-          entityType => entityType === type
-        )
-
-        const getNext = async url => {
-          if (typeof url === `object`) {
-            // url can be string or object containing href field
-            url = url.href
-
-            // Apply any filters configured in gatsby-config.js. Filters
-            // can be any valid JSON API filter query string.
-            // See https://www.drupal.org/docs/8/modules/jsonapi/filtering
-            if (typeof filters === `object`) {
-              if (filters.hasOwnProperty(type)) {
-                url = new URL(url)
-                const filterParams = new URLSearchParams(filters[type])
-                const filterKeys = Array.from(filterParams.keys())
-                filterKeys.forEach(filterKey => {
-                  // Only add filter params to url if it has not already been
-                  // added.
-                  if (!url.searchParams.has(filterKey)) {
-                    url.searchParams.set(filterKey, filterParams.get(filterKey))
-                  }
-                })
-                url = url.toString()
-              }
-            }
+    for (let entityUuid of listResponseBody[entityTypeAndBundle]) {
+      requestPromises.push(
+        requestQueue.push([
+          urlJoin(baseUrl, apiBase, `/${entityType}/${entityBundle}/${entityUuid}`),
+          {
+            headers: shouldUseAuth ? headers : undefined,
           }
+        ]).then(response => JSON.parse(response.body).data).catch(() => {})
+      )
 
-          let d
-          try {
-            d = await requestQueue.push([
-              url,
-              {
-                username: basicAuth.username,
-                password: basicAuth.password,
-                headers,
-                responseType: `json`,
-              },
-            ])
-          } catch (error) {
-            if (error.response && error.response.statusCode == 405) {
-              // The endpoint doesn't support the GET method, so just skip it.
-              return
-            } else {
-              console.error(`Failed to fetch ${url}`, error.message)
-              console.log(error)
-              throw error
-            }
-          }
-          dataArray.push(...d.body.data)
-          // Add support for includes. Includes allow entity data to be expanded
-          // based on relationships. The expanded data is exposed as `included`
-          // in the JSON API response.
-          // See https://www.drupal.org/docs/8/modules/jsonapi/includes
-          if (d.body.included) {
-            dataArray.push(...d.body.included)
-          }
-          if (d.body.links && d.body.links.next) {
-            await getNext(d.body.links.next)
-          }
-        }
-
-        if (isTranslatable === false) {
-          await getNext(url)
-        } else {
-          for (let i = 0; i < languageConfig.enabledLanguages.length; i++) {
-            let currentLanguage = languageConfig.enabledLanguages[i]
-            const urlPath = url.href.split(`${apiBase}/`).pop()
-            const baseUrlWithoutTrailingSlash = baseUrl.replace(/\/$/, ``)
-            // The default language's JSON API is at the root.
-            if (
-              currentLanguage === getOptions().languageConfig.defaultLanguage ||
-              baseUrlWithoutTrailingSlash.slice(-currentLanguage.length) ==
-                currentLanguage
-            ) {
-              currentLanguage = ``
-            }
-
-            const joinedUrl = urlJoin(
-              baseUrlWithoutTrailingSlash,
-              currentLanguage,
-              apiBase,
-              urlPath
+      if (isTranslatable) {
+        for (let language of languageConfig.enabledLanguages) {
+          if (language !== languageConfig.defaultLanguage) {
+            requestPromises.push(
+              requestQueue.push([
+                urlJoin(baseUrl, language, apiBase, `/${entityType}/${entityBundle}/${entityUuid}`),
+                {
+                  headers: shouldUseAuth ? headers : undefined
+                }
+              ]).then(response => JSON.parse(response.body).data).catch(() => {})
             )
-            const dataForLanguage = await getNext(joinedUrl)
-
-            dataArray.push(...dataForLanguage)
           }
         }
-
-        const result = {
-          type,
-          data: dataArray,
-        }
-
-        // eslint-disable-next-line consistent-return
-        return result
-      })
-    )
-  } catch (e) {
-    gracefullyRethrow(drupalFetchActivity, e)
-    return
+      }
+    }
   }
+
+  const allData = await Promise.all(requestPromises)
 
   drupalFetchActivity.end()
 
   const nodes = new Map()
 
   // first pass - create basic nodes
-  _.each(allData, contentType => {
-    if (!contentType) return
-    _.each(contentType.data, datum => {
-      if (!datum) return
-      const node = nodeFromData(datum, createNodeId, entityReferenceRevisions)
-      nodes.set(node.id, node)
-    })
+  _.each(allData, datum => {
+    if (!datum) return
+    const node = nodeFromData(datum, createNodeId, entityReferenceRevisions)
+    nodes.set(node.id, node)
   })
 
   // second pass - handle relationships and back references
