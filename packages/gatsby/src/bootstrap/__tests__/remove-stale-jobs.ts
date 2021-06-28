@@ -68,7 +68,7 @@ describe(`remove-stale-jobs`, () => {
     state.jobsV2.incomplete.set(`1234`, data)
 
     isJobStale.mockReturnValue(false)
-    // `enqueueJob` will be called internally and while mocked it just return undefined
+    // `enqueueJob` will be called internally and while mocked it just return a simple job result
     // we need it to return a promise so createJobV2FromInternalJob action creator works correctly
     enqueueJob.mockReturnValue(Promise.resolve({ result: true }))
 
