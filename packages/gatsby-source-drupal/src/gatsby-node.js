@@ -373,9 +373,8 @@ exports.sourceNodes = async (
               apiBase,
               urlPath
             )
-            const dataForLanguage = await getNext(joinedUrl)
 
-            dataArray.push(...dataForLanguage)
+            await getNext(joinedUrl)
           }
         }
 
