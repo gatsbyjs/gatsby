@@ -13,7 +13,6 @@ const {
 } = require(`gatsby/graphql`)
 const { queueImageResizing } = require(`gatsby-plugin-sharp`)
 const { fetchRemoteFile } = require(`gatsby-core-utils`)
-const { createUrl } = require(`gatsby-source-contentful/extend-node-type`)
 const {
   DuotoneGradientType,
   ImageCropFocusType,
@@ -190,6 +189,10 @@ async function sqipContentful({ type, cache, store }) {
         },
       },
       async resolve(asset, fieldArgs, context) {
+        const {
+          createUrl,
+        } = require(`gatsby-source-contentful/extend-node-type`)
+
         const {
           file: { contentType, url: imgUrl },
         } = asset
