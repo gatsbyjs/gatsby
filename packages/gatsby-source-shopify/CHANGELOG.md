@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.0.1...gatsby-source-shopify@5.0.2) (2021-06-29)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
 ## [5.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.0.0...gatsby-source-shopify@5.0.1) (2021-06-23)
 
 **Note:** Version bump only for package gatsby-source-shopify

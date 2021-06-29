@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.8.0...gatsby@3.8.1) (2021-06-29)
+
+### Bug Fixes
+
+- **gatsby:** leave `xmlns` element when optimizing SVGs ([#32123](https://github.com/gatsbyjs/gatsby/issues/32123)) ([#32154](https://github.com/gatsbyjs/gatsby/issues/32154)) ([4d0de6b](https://github.com/gatsbyjs/gatsby/commit/4d0de6b501d5d50eaac818042c323ee79baf7cde))
+
+### Features
+
+- **gatsby:** Add activity for writing out page-data.json files to the public directory ([#31987](https://github.com/gatsbyjs/gatsby/issues/31987)) ([#32153](https://github.com/gatsbyjs/gatsby/issues/32153)) ([ddebfac](https://github.com/gatsbyjs/gatsby/commit/ddebfac664c74bb21e1a152d0e44c767d7190dcc))
+
 # [3.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.8.0-next.2...gatsby@3.8.0) (2021-06-22)
 
 ### Features
