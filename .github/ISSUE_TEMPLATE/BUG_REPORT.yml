@@ -10,6 +10,8 @@ body:
       Thanks for taking the time to fill out this bug report.
       
       Please fill out each section below. This info allows Gatsby maintainers to diagnose (and fix!) your issue as quickly as possible. Otherwise we might need to close the issue without e.g. clear reproduction steps.
+      
+      Also please verify that your issue is present in `gatsby@next`, too. The `next` version is the latest beta version of Gatsby and has any pending changes that are in the next stable release.
 - type: checkboxes
   attributes:
     label: Is there an existing issue for this?
