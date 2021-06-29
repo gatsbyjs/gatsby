@@ -18,7 +18,7 @@ body:
 - type: checkboxes
   attributes:
     label: Preliminary Checks
-    description: Please make sure that you verify each checkbox and follow the instructions in them.
+    description: Please make sure that you verify each checkbox and follow the instructions for them.
     options:
       - label: "This issue is not a duplicate. Before opening a new issue, please search existing issues: https://github.com/gatsbyjs/gatsby/issues"
         required: true
@@ -34,6 +34,7 @@ body:
   id: reproduction-link
   attributes:
     label: Reproduction Link
+    placeholder: "https://github.com/username/repository-name/"
     description: "Link to a reproduction (GitHub repository, Codesandbox, etc.). How to make a minimal reproduction: https://gatsby.dev/reproduction"
   validations:
     required: true
