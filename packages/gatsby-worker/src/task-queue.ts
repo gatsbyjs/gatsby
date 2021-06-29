@@ -41,6 +41,9 @@ export class TaskQueue<ValueType> {
     } else {
       if (taskNode === this.tail) {
         this.tail = taskNode.prev
+      } else {
+        // if node is not the tail then it will have .next
+        taskNode.next!.prev = taskNode.prev
       }
       // if node is not the head then it will have .prev
       taskNode.prev!.next = taskNode.next

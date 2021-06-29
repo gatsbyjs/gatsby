@@ -198,4 +198,41 @@ describe(`Task Queue`, () => {
       ]
     `)
   })
+
+  describe(`Removed node is not referenced in .next or .prev`, () => {
+    let taskQueue: TaskQueue<number>
+    beforeEach(() => {
+      taskQueue = new TaskQueue<number>()
+
+      taskQueue.enqueue(1)
+      taskQueue.enqueue(2)
+      taskQueue.enqueue(3)
+    })
+
+    it.each([
+      [`removed from head`, 1],
+      [`removed from middle`, 2],
+      [`removed from tail`, 3],
+    ])(`%s`, (_label, itemToRemove) => {
+      for (const item of taskQueue) {
+        if (item.value === itemToRemove) {
+          taskQueue.remove(item)
+        }
+      }
+
+      for (const item of taskQueue) {
+        if (item.value === itemToRemove) {
+          fail(`"${itemToRemove}" found as value`)
+        }
+
+        if (item?.prev?.value === itemToRemove) {
+          fail(`"${itemToRemove}" found as value of previous node`)
+        }
+
+        if (item?.next?.value === itemToRemove) {
+          fail(`"${itemToRemove}" found as value of next node`)
+        }
+      }
+    })
+  })
 })
