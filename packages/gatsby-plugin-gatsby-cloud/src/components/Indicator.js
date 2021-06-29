@@ -231,7 +231,8 @@ export default function Indicator() {
   const [buildInfo, setBuildInfo] = useState()
   const timeoutRef = useRef()
   const shouldPoll = useRef(false)
-  const [trackedInitialLoad, setTrackedInitialLoad] = useState(false)
+  const trackedInitialLoad = useRef(false)
+  // const [trackedInitialLoad, setTrackedInitialLoad] = useState(false)
   const [buildId, setBuildId] = useState()
 
   const { siteInfo, currentBuild } = buildInfo || {
@@ -275,7 +276,7 @@ export default function Indicator() {
   }, [])
 
   useEffect(() => {
-    if (buildInfo?.siteInfo && !trackedInitialLoad) {
+    if (buildInfo?.siteInfo && !trackedInitialLoad.current) {
       const { siteInfo } = buildInfo
       trackEvent({
         eventType: `PREVIEW_INDICATOR_LOADED`,
@@ -284,9 +285,9 @@ export default function Indicator() {
         buildId,
       })
 
-      setTrackedInitialLoad(true)
+      trackedInitialLoad.current = true
     }
-  }, [buildInfo, trackedInitialLoad, buildId])
+  }, [buildInfo, buildId])
 
   useEffect(() => {
     shouldPoll.current = true
