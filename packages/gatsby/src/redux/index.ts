@@ -10,7 +10,7 @@ import _ from "lodash"
 import telemetry from "gatsby-telemetry"
 
 import { mett } from "../utils/mett"
-import thunk, { ThunkMiddleware } from "redux-thunk"
+import thunk, { ThunkMiddleware, ThunkAction } from "redux-thunk"
 import * as reducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
 import { IGatsbyState, ActionsUnion, GatsbyStateKeys } from "./types"
@@ -62,7 +62,9 @@ export const readState = (): IGatsbyState => {
 }
 
 export interface IMultiDispatch {
-  <T extends ActionsUnion>(action: Array<T>): Array<T>
+  <T extends ActionsUnion | ThunkAction<any, IGatsbyState, any, ActionsUnion>>(
+    action: Array<T>
+  ): Array<T>
 }
 
 /**
