@@ -166,7 +166,6 @@ export class WorkerPool<WorkerModuleExports = Record<string, unknown>> {
             }
             // remove worker from list of workers
             this.workers.splice(this.workers.indexOf(workerInfo), 1)
-            // console.log(`after exit`, this.workers)
             resolve({ code, signal })
           })
         }),
