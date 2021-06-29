@@ -33,9 +33,6 @@ const {
 // cache is more likely to go stale than the images (which never go stale)
 // Note that the same image might be requested multiple times in the same run
 
-// Supported Image Formats from https://www.contentful.com/developers/docs/references/images-api/#/reference/changing-formats/image-format
-const validImageFormats = new Set([`jpg`, `png`, `webp`, `gif`])
-
 if (process.env.GATSBY_REMOTE_CACHE) {
   console.warn(
     `Note: \`GATSBY_REMOTE_CACHE\` will be removed soon because it has been renamed to \`GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE\``
@@ -61,10 +58,18 @@ const resolvedBase64Cache = new Map()
 // @see https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-width-&-height
 const CONTENTFUL_IMAGE_MAX_SIZE = 4000
 
-const isImage = image =>
-  [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`].includes(
-    image?.file?.contentType
-  )
+// Supported Image Formats from https://www.contentful.com/developers/docs/references/images-api/#/reference/changing-formats/image-format
+const validImageFormats = new Set([`jpg`, `png`, `webp`, `gif`])
+
+const mimeTypeExtensions = new Map([
+  [`image/jpeg`, `jpg`],
+  [`image/jpg`, `jpg`],
+  [`image/gif`, `gif`],
+  [`image/png`, `png`],
+  [`image/webp`, `webp`],
+])
+
+const isImage = image => mimeTypeExtensions.has(image?.file?.contentType)
 
 // Note: this may return a Promise<body>, body (sync), or null
 const getBase64Image = (imageProps, reporter) => {
@@ -684,8 +689,9 @@ exports.extendNodeType = ({ type, cache, reporter }) => {
       return null
     }
 
+    const extension = mimeTypeExtensions.get(contentType)
+
     const url = createUrl(imgUrl, options)
-    const extension = path.extname(imgUrl)
     const absolutePath = await fetchRemoteFile({
       url,
       name,
@@ -728,7 +734,7 @@ exports.extendNodeType = ({ type, cache, reporter }) => {
       }
 
       const url = createUrl(imgUrl, options)
-      const extension = path.extname(imgUrl)
+      const extension = mimeTypeExtensions.get(contentType)
 
       const absolutePath = await fetchRemoteFile({
         url,
