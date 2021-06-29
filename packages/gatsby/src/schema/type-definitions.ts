@@ -26,7 +26,7 @@ export type GatsbyResolver<TSource, TArgs = { [argName: string]: any }> = (
 ) => any
 
 export interface IGatsbyConnection<NodeType> {
-  totalCount: number | (() => Promise<number>)
+  totalCount: () => Promise<number>
   edges: Array<IGatsbyEdge<NodeType>>
   nodes: Array<NodeType>
   pageInfo: IGatsbyPageInfo
@@ -43,9 +43,9 @@ export interface IGatsbyPageInfo {
   hasPreviousPage: boolean
   hasNextPage: boolean
   itemCount: number
-  pageCount: number | (() => Promise<number>)
+  pageCount: () => Promise<number>
   perPage: number | undefined
-  totalCount: number | (() => Promise<number>)
+  totalCount: () => Promise<number>
 }
 
 export interface IGraphQLSpanTracer {

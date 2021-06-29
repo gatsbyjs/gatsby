@@ -342,7 +342,7 @@ export function runFastFiltersAndSort(args: IRunFilterArg): IQueryResult {
   )
 
   const sortedResult = sortNodes(result, sort, resolvedFields, stats)
-  const totalCount = sortedResult.length
+  const totalCount = async (): Promise<number> => sortedResult.length
 
   const entries =
     skip || limit

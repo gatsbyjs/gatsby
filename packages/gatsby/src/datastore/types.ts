@@ -11,7 +11,7 @@ export interface ILmdbDatabases {
 
 export interface IQueryResult {
   entries: Iterable<IGatsbyNode>
-  totalCount: number | (() => Promise<number>)
+  totalCount: () => Promise<number>
 }
 
 // Note: this type is compatible with lmdb-store ArrayLikeIterable

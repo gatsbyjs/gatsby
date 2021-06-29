@@ -2,7 +2,7 @@ const { paginate } = require(`../resolvers`)
 
 describe(`Paginate query results`, () => {
   const nodes = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
-  const results = { entries: nodes, totalCount: nodes.length }
+  const results = { entries: nodes, totalCount: async () => nodes.length }
 
   it(`returns results`, async () => {
     const args = { limit: 1 }

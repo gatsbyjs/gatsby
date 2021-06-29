@@ -248,7 +248,7 @@ export const group: GatsbyResolver<
     .reduce((acc: IGatsbyGroupReturnValue<IGatsbyNode>, fieldValue: string) => {
       const entries = groupedResults[fieldValue] || []
       acc.push({
-        ...paginate({ entries, totalCount: entries.length }, args),
+        ...paginate({ entries, totalCount: async () => entries.length }, args),
         field,
         fieldValue,
       })
@@ -264,19 +264,12 @@ export function paginate(
   if (resultOffset > skip) {
     throw new Error("Result offset cannot be greater than `skip` argument")
   }
-  let countOrThunk = results.totalCount
   const allItems = Array.from(results.entries)
 
   const start = skip - resultOffset
   const items = allItems.slice(start, limit && start + limit)
 
-  const totalCount = async (): Promise<number> => {
-    if (typeof countOrThunk === `function`) {
-      countOrThunk = await countOrThunk()
-    }
-    return countOrThunk
-  }
-
+  const totalCount = results.totalCount
   const pageCount = async (): Promise<number> => {
     const count = await totalCount()
     return limit
