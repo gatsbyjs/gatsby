@@ -1,3 +1,4 @@
+/* global BROWSER_ESM_ONLY */
 import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { merge } from "lodash"
@@ -109,11 +110,15 @@ export default ({ pagePath }) => {
     htmlAttributes,
     bodyAttributes,
     preBodyComponents,
-    postBodyComponents: postBodyComponents.concat([
-      <script key={`polyfill`} src="/polyfill.js" noModule={true} />,
-      <script key={`framework`} src="/framework.js" />,
-      <script key={`commons`} src="/commons.js" />,
-    ]),
+    postBodyComponents: postBodyComponents.concat(
+      [
+        !BROWSER_ESM_ONLY && (
+          <script key={`polyfill`} src="/polyfill.js" noModule={true} />
+        ),
+        <script key={`framework`} src="/framework.js" />,
+        <script key={`commons`} src="/commons.js" />,
+      ].filter(Boolean)
+    ),
   })
   htmlStr = renderToStaticMarkup(htmlElement)
   htmlStr = `<!DOCTYPE html>${htmlStr}`
