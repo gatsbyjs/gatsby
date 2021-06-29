@@ -48,4 +48,7 @@ export const handlers = [
   rest.get(`https://test.com/fetching`, async (req, res, ctx) =>
     res(ctx.json({ currentBuild: {}, latestBuild: {}, siteInfo: {} }))
   ),
+  rest.post(`http://test.com/events`, async (req, res, ctx) =>
+    res(ctx.json({ message: `success` }))
+  ),
 ]
