@@ -68,6 +68,8 @@ body:
     render: shell
     description: Run "gatsby info --clipboard" in your project directory and paste the output here.
     placeholder: |
+      You'll get an output similar to this:
+      
       System:
         OS: Operating System
         CPU: CPU
@@ -88,6 +90,8 @@ body:
     label: Config Flags
     description: Do you use any "flags" inside "gatsby-config.js"? If yes, please paste them here.
     placeholder: |
+      For example:
+      
       DEV_SSR: true
       FAST_DEV: false
   validations:
