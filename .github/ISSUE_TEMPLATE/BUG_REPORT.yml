@@ -64,8 +64,7 @@ body:
     required: true
 - type: textarea
   attributes:
-    label: Your gatsby-config.js
-    render: javascript
-    description: Please paste your gatsby-config.js here (redact any secrets/API keys you might use).
+    label: Config Flags
+    description: Do you use any "flags" inside "gatsby-config.js"? If yes, please paste them here.
   validations:
-    required: true
+    required: false
