@@ -151,6 +151,8 @@ export class WorkerPool<WorkerModuleExports = Record<string, unknown>> {
           GATSBY_WORKER_ID: workerId.toString(),
           GATSBY_WORKER_MODULE_PATH: workerPath,
         },
+        // Suppress --debug / --inspect flags while preserving others (like --harmony).
+        execArgv: process.execArgv.filter(v => !/^--(debug|inspect)/.test(v)),
       })
 
       const workerInfo: IWorkerInfo<keyof WorkerModuleExports> = {
