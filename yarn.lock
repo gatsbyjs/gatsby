@@ -14278,6 +14278,13 @@ html-webpack-plugin@^5.3.1:
     pretty-error "^2.1.1"
     tapable "^2.0.0"
 
+html-webpack-skip-assets-plugin@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/html-webpack-skip-assets-plugin/-/html-webpack-skip-assets-plugin-1.0.2.tgz#02c980309744cc294ae49ab000c8ebf9307555b1"
+  integrity sha512-/dYN+7J+Z99LgWELloJq1Dn98JEfe1v/LvI67kLBovdsO+jiDWtHHKrrE/JsKfyP0we7KULFqhHrPNSNKlq+vA==
+  dependencies:
+    minimatch "3.0.4"
+
 html-webpack-tags-plugin@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/html-webpack-tags-plugin/-/html-webpack-tags-plugin-3.0.1.tgz#52baf2feec879a4108e6955b4e81376581a334dc"
