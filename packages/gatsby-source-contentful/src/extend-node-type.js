@@ -76,7 +76,7 @@ const getBase64Image = (imageProps, reporter) => {
     return null
   }
 
-  const requestUrl = `https:${imageProps.baseUrl}?w=20`
+  const requestUrl = `https:${imageProps.baseUrl}?w=20&fm=jpg`
 
   // Prefer to return data sync if we already have it
   const alreadyFetched = resolvedBase64Cache.get(requestUrl)
