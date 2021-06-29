@@ -86,6 +86,19 @@ const arrayOfPromises = workerPool.all.setupStep(`baz`)
 const arrayOfPromises = workerPool.end()
 ```
 
+### `isWorker`
+
+```ts
+// Determine if current context is executed in worker context. Useful for conditional handling depending on context.
+import { isWorker } from "gatsby-worker"
+
+if (isWorker) {
+  // this is executed in worker context
+} else {
+  // this is NOT executed in worker context
+}
+```
+
 ## Usage with unit tests
 
 If you are working with source files that need transpilation, you will need to make it possible to load untranspiled modules in child processes.
