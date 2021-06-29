@@ -8,23 +8,21 @@ body:
       # Welcome 👋 
       
       Thanks for taking the time to fill out this bug report.
-      
       Please fill out each section below. This info allows Gatsby maintainers to diagnose (and fix!) your issue as quickly as possible. Otherwise we might need to close the issue without e.g. clear reproduction steps.
       
       Also please verify that your issue is present in `gatsby@next`, too. The `next` version is the latest beta version of Gatsby and has any pending changes that are in the next stable release.
+      
+      Useful Links:
+      - Documentation: https://www.gatsbyjs.com/docs/
+      - How to File an Issue: https://www.gatsbyjs.com/contributing/how-to-file-an-issue/
 - type: checkboxes
   attributes:
-    label: Is there an existing issue for this?
-    description: "Before opening a new issue, please search existing issues: https://github.com/gatsbyjs/gatsby/issues"
+    label: Preliminary Checks
+    description: Please make sure that you verify each checkbox and follow the instructions in them.
     options:
-      - label: I verified that this issue is not a duplicate
+      - label: "This issue is not a duplicate. Before opening a new issue, please search existing issues: https://github.com/gatsbyjs/gatsby/issues"
         required: true
-- type: checkboxes
-  attributes:
-    label: Do you intend to post a question, feature request, RFC, or anything other than a bug report?
-    description: "Please post it here: https://github.com/gatsbyjs/gatsby/discussions"
-    options:
-      - label: I verified that this issue does not belong into GitHub Discussions
+      - label: "This issue is not a question, feature request, RFC, or anything other than a bug report. Please post those things in GitHub Discussions: https://github.com/gatsbyjs/gatsby/discussions"
         required: true
 - type: textarea
   attributes:
@@ -43,6 +41,11 @@ body:
   attributes:
     label: Steps to Reproduce
     description: Clear steps describing how to reproduce the issue.
+    value: |
+      1.
+      2.
+      3.
+      ...
   validations:
     required: true
 - type: textarea
