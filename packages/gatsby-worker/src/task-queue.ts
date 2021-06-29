@@ -3,6 +3,10 @@ interface ITaskQueueNode<ValueType> {
   next?: ITaskQueueNode<ValueType>
   prev?: ITaskQueueNode<ValueType>
 }
+
+/**
+ * Task queue implemented with doubly linked list
+ */
 export class TaskQueue<ValueType> {
   private head?: ITaskQueueNode<ValueType>
   private tail?: ITaskQueueNode<ValueType>;
@@ -15,6 +19,10 @@ export class TaskQueue<ValueType> {
     }
   }
 
+  /**
+   * Puts new task at the end of the list
+   * @param task Task to add to the queue
+   */
   enqueue(task: ValueType): void {
     const newNode: ITaskQueueNode<ValueType> = {
       value: task,
@@ -29,6 +37,10 @@ export class TaskQueue<ValueType> {
     this.tail = newNode
   }
 
+  /**
+   * Remove a task node from the queue
+   * @param taskNode Queue's node to remove
+   */
   remove(taskNode: ITaskQueueNode<ValueType>): void {
     if (taskNode === this.head) {
       this.head = taskNode.next

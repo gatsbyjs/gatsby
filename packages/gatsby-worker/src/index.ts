@@ -85,6 +85,14 @@ interface IWorkerInfo<T> {
   currentTask?: TaskInfo<T>
 }
 
+/**
+ * Worker pool is a class that allow you to queue function execution across multiple
+ * child processes, in order to parallelize work. It accepts absolute path to worker module
+ * and will expose exported function of that module as properties on WorkerPool instance.
+ *
+ * Worker pool allows queueing execution of a function on all workers (via `.all` property)
+ * as well as distributing execution across workers (via `.single` property)
+ */
 export class WorkerPool<WorkerModuleExports = Record<string, unknown>> {
   /**
    * Schedule task execution on all workers. Useful for setting up workers
@@ -223,6 +231,10 @@ export class WorkerPool<WorkerModuleExports = Record<string, unknown>> {
     }
   }
 
+  /**
+   * Kills worker processes and rejects and ongoing or pending tasks.
+   * @returns Array of promises for each worker that will resolve once worker did exit.
+   */
   end(): Array<Promise<number | null>> {
     const results = this.workers.map(async workerInfo => {
       // tell worker to end gracefully

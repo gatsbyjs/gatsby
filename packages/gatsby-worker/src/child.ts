@@ -8,6 +8,9 @@ import {
 } from "./types"
 import { isPromise } from "./utils"
 
+/**
+ * Used to check wether current context is executed in worker process
+ */
 let isWorker = false
 
 if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
