@@ -129,7 +129,10 @@ export class WorkerPool<WorkerModuleExports = Record<string, unknown>> {
 
       for (const exportName of exportNames) {
         if (typeof module[exportName] !== `function`) {
-          // we only expose functions
+          // We only expose functions. Exposing other types
+          // would require additional handling which doesn't seem
+          // worth supporting given that consumers can just access
+          // those via require/import instead of WorkerPool interface.
           continue
         }
 
