@@ -34,7 +34,9 @@ import {
   InternalJob,
   removeInProgressJob,
   getInProcessJobPromise,
+  sendJobToMainProcess,
 } from "../../utils/jobs-manager"
+import { isWorker, getMessenger } from "../../utils/worker/messaging"
 
 /**
  * Create a dependency between a page and data. Probably for
@@ -358,12 +360,17 @@ export const deleteNodeManifests = (): IDeleteNodeManifests => {
   }
 }
 
+const gatsbyWorkerMessenger = getMessenger()
 export const createJobV2FromInternalJob = (
   internalJob: InternalJob
 ): ICreateJobV2FromInternalAction => (
   dispatch,
   getState
 ): Promise<Record<string, unknown>> => {
+  if (isWorker && gatsbyWorkerMessenger) {
+    return sendJobToMainProcess(internalJob, gatsbyWorkerMessenger)
+  }
+
   const jobContentDigest = internalJob.contentDigest
   const currentState = getState()
 

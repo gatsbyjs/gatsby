@@ -7,47 +7,30 @@ import _ from "lodash"
 import { createContentDigest, slash } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { IPhantomReporter } from "gatsby-cli"
+import {
+  isWorker,
+  getMessenger,
+  GatsbyWorkerMessenger,
+} from "./worker/messaging"
+import {
+  JobInput,
+  InternalJob,
+  MESSAGE_TYPES,
+  IJobCreatedMessage,
+  IJobCompletedMessage,
+  IJobFailed,
+  IJobNotWhitelisted,
+} from "./jobs-types"
+import type { GatsbyWorkerPool } from "./worker/pool"
+import { store } from "../redux"
+import { internalActions } from "../redux/actions"
 
-enum MESSAGE_TYPES {
-  JOB_CREATED = `JOB_CREATED`,
-  JOB_COMPLETED = `JOB_COMPLETED`,
-  JOB_FAILED = `JOB_FAILED`,
-  JOB_NOT_WHITELISTED = `JOB_NOT_WHITELISTED`,
-}
+type IncomingMessages = IJobCompletedMessage | IJobFailed | IJobNotWhitelisted
 
-interface IBaseJob {
-  name: string
-  outputDir: string
-  args: Record<string, any>
-}
+type OutgoingMessages = IJobCreatedMessage
 
-interface IJobInput {
-  inputPaths: Array<string>
-  plugin: {
-    name: string
-    version: string
-    resolve: string
-  }
-}
-
-interface IInternalJob {
-  id: string
-  contentDigest: string
-  inputPaths: Array<{
-    path: string
-    contentDigest: string
-  }>
-  plugin: {
-    name: string
-    version: string
-    resolve: string
-    isLocal: boolean
-  }
-}
-
+export { InternalJob }
 export type JobResultInterface = Record<string, unknown>
-export type JobInput = IBaseJob & IJobInput
-export type InternalJob = IBaseJob & IInternalJob
 
 export class WorkerError extends Error {
   constructor(error: Error | string) {
@@ -132,15 +115,19 @@ async function runLocalWorker<T>(
   })
 }
 
+function isJobsIPCMessage(msg: any): msg is IncomingMessages {
+  return (
+    msg &&
+    msg.type &&
+    msg.payload &&
+    msg.payload.id &&
+    externalJobsMap.has(msg.payload.id)
+  )
+}
+
 function listenForJobMessages(): void {
   process.on(`message`, msg => {
-    if (
-      msg &&
-      msg.type &&
-      msg.payload &&
-      msg.payload.id &&
-      externalJobsMap.has(msg.payload.id)
-    ) {
+    if (isJobsIPCMessage(msg)) {
       const { job, deferred } = externalJobsMap.get(msg.payload.id)!
 
       switch (msg.type) {
@@ -171,10 +158,12 @@ function runExternalWorker(job: InternalJob): Promise<any> {
     deferred,
   })
 
-  process.send!({
+  const jobCreatedMessage: OutgoingMessages = {
     type: MESSAGE_TYPES.JOB_CREATED,
     payload: job,
-  })
+  }
+
+  process.send!(jobCreatedMessage)
 
   return deferred.promise
 }
@@ -282,14 +271,55 @@ export function createInternalJob(
 }
 
 /**
+ * This map is ONLY used in worker. It's purpose is to keep track of promises returned to plugins
+ * when creating jobs (in worker context), so that we can resolve or reject those once main process
+ * send back their status.
+ */
+const deferredWorkerPromises = new Map<
+  InternalJob["id"],
+  pDefer.DeferredPromise<Record<string, unknown>>
+>()
+
+const gatsbyWorkerMessenger = getMessenger()
+if (isWorker && gatsbyWorkerMessenger) {
+  gatsbyWorkerMessenger.onMessage(msg => {
+    if (msg.type === MESSAGE_TYPES.JOB_COMPLETED) {
+      const { id, result } = msg.payload
+      const deferredPromise = deferredWorkerPromises.get(id)
+
+      if (!deferredPromise) {
+        throw new Error(
+          `Received message about completed job that wasn't scheduled by this worker`
+        )
+      }
+
+      deferredPromise.resolve(result)
+      deferredWorkerPromises.delete(id)
+    } else if (msg.type === MESSAGE_TYPES.JOB_FAILED) {
+      const { id, error } = msg.payload
+      const deferredPromise = deferredWorkerPromises.get(id)
+
+      if (!deferredPromise) {
+        throw new Error(
+          `Received message about failed job that wasn't scheduled by this worker`
+        )
+      }
+
+      deferredPromise.reject(new WorkerError(error))
+      deferredWorkerPromises.delete(id)
+    }
+  })
+}
+
+/**
  * Creates a job
  */
 export async function enqueueJob(
   job: InternalJob
 ): Promise<Record<string, unknown>> {
-  // When we already have a job that's executing, return the same promise.
-  // we have another check in our createJobV2 action to return jobs that have been done in a previous gatsby run
   if (jobsInProcess.has(job.contentDigest)) {
+    // When we already have a job that's executing, return the same promise.
+    // we have another check in our createJobV2 action to return jobs that have been done in a previous gatsby run
     return jobsInProcess.get(job.contentDigest)!.deferred.promise
   }
 
@@ -372,4 +402,56 @@ export function isJobStale(
   })
 
   return areInputPathsStale
+}
+
+export async function sendJobToMainProcess(
+  job: InternalJob,
+  ensuredGatsbyWorkerMessenger: GatsbyWorkerMessenger
+): Promise<Record<string, unknown>> {
+  const deferredWorkerPromise = pDefer<Record<string, unknown>>()
+
+  const msg: IJobCreatedMessage = {
+    type: MESSAGE_TYPES.JOB_CREATED,
+    payload: job,
+  }
+
+  ensuredGatsbyWorkerMessenger.sendMessage(msg)
+
+  // holds on to promise
+  deferredWorkerPromises.set(job.id, deferredWorkerPromise)
+
+  return deferredWorkerPromise.promise
+}
+
+export function initJobsMessaging(workerPool: GatsbyWorkerPool): void {
+  workerPool.onMessage((msg, workerId) => {
+    if (msg.type === MESSAGE_TYPES.JOB_CREATED) {
+      store
+        .dispatch(internalActions.createJobV2FromInternalJob(msg.payload))
+        .then(result => {
+          workerPool.sendMessage(
+            {
+              type: MESSAGE_TYPES.JOB_COMPLETED,
+              payload: {
+                id: msg.payload.id,
+                result,
+              },
+            },
+            workerId
+          )
+        })
+        .catch(error => {
+          workerPool.sendMessage(
+            {
+              type: MESSAGE_TYPES.JOB_FAILED,
+              payload: {
+                id: msg.payload.id,
+                error: error.message,
+              },
+            },
+            workerId
+          )
+        })
+    }
+  })
 }
