@@ -111,7 +111,7 @@ describeWhenLMDB(`worker (queries)`, () => {
 
     const siteDirectory = path.join(__dirname, `fixtures`, `sample-site`)
     await loadConfigAndPlugins({ siteDirectory })
-    await worker.loadConfigAndPlugins({ siteDirectory })
+    await Promise.all(worker.all.loadConfigAndPlugins({ siteDirectory }))
     await sourceNodesAndRemoveStaleNodes({ webhookBody: {} })
     await getDataStore().ready()
 
@@ -162,8 +162,8 @@ describeWhenLMDB(`worker (queries)`, () => {
 
     saveStateForWorkers([`components`, `staticQueryComponents`])
 
-    await worker.buildSchema()
-    await worker.runQueries(queryIdsSmall)
+    await Promise.all(worker.all.buildSchema())
+    await worker.single.runQueries(queryIdsSmall)
   })
 
   afterAll(() => {
@@ -178,7 +178,7 @@ describeWhenLMDB(`worker (queries)`, () => {
 
   it(`should execute static queries`, async () => {
     if (!worker) fail(`worker not defined`)
-    const stateFromWorker = await worker.getState()
+    const stateFromWorker = await worker.single.getState()
 
     const staticQueryResult = await fs.readJson(
       `${stateFromWorker.program.directory}/public/page-data/sq/d/${dummyStaticQuery.hash}.json`
@@ -195,7 +195,7 @@ describeWhenLMDB(`worker (queries)`, () => {
 
   it(`should execute page queries`, async () => {
     if (!worker) fail(`worker not defined`)
-    const stateFromWorker = await worker.getState()
+    const stateFromWorker = await worker.single.getState()
 
     const pageQueryResult = await fs.readJson(
       `${stateFromWorker.program.directory}/.cache/json/_foo.json`
@@ -210,7 +210,7 @@ describeWhenLMDB(`worker (queries)`, () => {
 
   it(`should execute page queries with context variables`, async () => {
     if (!worker) fail(`worker not defined`)
-    const stateFromWorker = await worker.getState()
+    const stateFromWorker = await worker.single.getState()
 
     const pageQueryResult = await fs.readJson(
       `${stateFromWorker.program.directory}/.cache/json/_bar.json`
@@ -227,11 +227,11 @@ describeWhenLMDB(`worker (queries)`, () => {
 
   it(`should chunk work in runQueriesInWorkersQueue`, async () => {
     if (!worker) fail(`worker not defined`)
-    const spy = jest.spyOn(worker, `runQueries`)
+    const spy = jest.spyOn(worker.single, `runQueries`)
 
     // @ts-ignore - worker is defined
     await runQueriesInWorkersQueue(worker, queryIdsBig, 10)
-    const stateFromWorker = await worker.getState()
+    const stateFromWorker = await worker.single.getState()
 
     // Called the complete ABC so we can test _a
     const pageQueryResultA = await fs.readJson(

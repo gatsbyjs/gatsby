@@ -9,6 +9,9 @@ import { emitter, replaceReducer } from "../../redux"
 const rootDbFile =
   process.env.NODE_ENV === `test`
     ? `test-datastore-${
+        // FORCE_TEST_DATABASE_ID will be set if this gets executed in worker context
+        // when running jest tests. JEST_WORKER_ID will be set when this gets executed directly
+        // in test context (jest will use jest-worker internally).
         process.env.FORCE_TEST_DATABASE_ID ?? process.env.JEST_WORKER_ID
       }`
     : `datastore`
