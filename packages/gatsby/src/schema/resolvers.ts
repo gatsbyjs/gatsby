@@ -86,6 +86,7 @@ export function findManyPaginated<TSource, TArgs>(
       skip,
       limit,
     }
+    // Note: stats are passed to telemetry in src/commands/build.ts
     if (context.stats) {
       context.stats.totalRunQuery++
       context.stats.totalPluralRunQuery++
