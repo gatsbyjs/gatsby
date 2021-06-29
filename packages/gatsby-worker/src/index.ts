@@ -173,16 +173,23 @@ export class WorkerPool<WorkerModuleExports = Record<string, unknown>> {
       }
 
       worker.on(`message`, (msg: ChildMessageUnion) => {
-        if (!workerInfo.currentTask) {
-          throw new Error(`worker finished work but no idea what work :shrug:`)
-        }
-
         if (msg[0] === RESULT) {
+          if (!workerInfo.currentTask) {
+            throw new Error(
+              `Invariant: gatsby-worker received execution result, but it wasn't expecting it.`
+            )
+          }
           const task = workerInfo.currentTask
           workerInfo.currentTask = undefined
           this.checkForWork(workerInfo)
           task.resolve(msg[1])
         } else if (msg[0] === ERROR) {
+          if (!workerInfo.currentTask) {
+            throw new Error(
+              `Invariant: gatsby-worker received execution rejection, but it wasn't expecting it.`
+            )
+          }
+
           let error = msg[4]
 
           if (error !== null && typeof error === `object`) {
@@ -320,3 +327,5 @@ export class WorkerPool<WorkerModuleExports = Record<string, unknown>> {
     )
   }
 }
+
+export * from "./child"
