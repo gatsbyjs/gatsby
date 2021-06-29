@@ -28,6 +28,7 @@ body:
   attributes:
     label: Description
     description: Describe the issue that you're seeing.
+    placeholder: Be as precise as you can. Feel free to share screenshots, videos, or data from the devtools of your browser.
   validations:
     required: true
 - type: input
@@ -66,11 +67,28 @@ body:
     label: Environment
     render: shell
     description: Run "gatsby info --clipboard" in your project directory and paste the output here.
+    placeholder: |
+      System:
+        OS: Operating System
+        CPU: CPU
+      Binaries:
+        Node: X
+        npm: X
+      Languages:
+        Python: X
+      Browsers:
+        Chrome: X
+        Edge: X
+      npmPackages:
+        gatsby: X => X
   validations:
     required: true
 - type: textarea
   attributes:
     label: Config Flags
     description: Do you use any "flags" inside "gatsby-config.js"? If yes, please paste them here.
+    placeholder: |
+      DEV_SSR: true
+      FAST_DEV: false
   validations:
     required: false
