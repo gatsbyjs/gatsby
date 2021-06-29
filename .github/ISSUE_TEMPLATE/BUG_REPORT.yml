@@ -1,0 +1,71 @@
+name: Bug Report 🐞
+description: Something isn't working as expected? Report your bugs here.
+labels: "type: bug"
+body:
+- type: markdown
+  attributes:
+    value: |
+      # Welcome 👋 
+      
+      Thanks for taking the time to fill out this bug report.
+      
+      Please fill out each section below. This info allows Gatsby maintainers to diagnose (and fix!) your issue as quickly as possible. Otherwise we might need to close the issue without e.g. clear reproduction steps.
+- type: checkboxes
+  attributes:
+    label: Is there an existing issue for this?
+    description: "Before opening a new issue, please search existing issues: https://github.com/gatsbyjs/gatsby/issues"
+    options:
+      - label: I verified that this issue is not a duplicate
+        required: true
+- type: checkboxes
+  attributes:
+    label: Do you intend to post a question, feature request, RFC, or anything other than a bug report?
+    description: "Please post it here: https://github.com/gatsbyjs/gatsby/discussions"
+    options:
+      - label: I verified that this issue does not belong into GitHub Discussions
+        required: true
+- type: textarea
+  attributes:
+    label: Description
+    description: Describe the issue that you're seeing.
+  validations:
+    required: true
+- type: input
+  id: reproduction-link
+  attributes:
+    label: Reproduction Link
+    description: "Link to a reproduction (GitHub repository, Codesandbox, etc.). How to make a minimal reproduction: https://gatsby.dev/reproduction"
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Steps to Reproduce
+    description: Clear steps describing how to reproduce the issue.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Expected Result
+    description: Describe what you expected to happen.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Actual Result
+    description: Describe what actually happened.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Environment
+    render: shell
+    description: Run "gatsby info --clipboard" in your project directory and paste the output here.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Your gatsby-config.js
+    render: javascript
+    description: Please paste your gatsby-config.js here (redact any secrets/API keys you might use).
+  validations:
+    required: true
