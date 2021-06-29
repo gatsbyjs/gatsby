@@ -270,7 +270,7 @@ export default function Indicator() {
     })
 
     if (shouldPoll.current) {
-      setTimeout(pollData, POLLING_INTERVAL)
+      timeoutRef.current = setTimeout(pollData, POLLING_INTERVAL)
     }
   }, [])
 
@@ -297,6 +297,7 @@ export default function Indicator() {
 
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
+        timeoutRef.current = null
       }
     }
   }, [])
