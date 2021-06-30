@@ -1,6 +1,6 @@
-jest.mock(`../../utils/jobs-manager`)
+jest.mock(`../../utils/jobs/manager`)
 
-import { isJobStale, enqueueJob } from "../../utils/jobs-manager"
+import { isJobStale, enqueueJob } from "../../utils/jobs/manager"
 import { internalActions } from "../../redux/actions"
 
 jest.spyOn(internalActions, `removeStaleJob`)

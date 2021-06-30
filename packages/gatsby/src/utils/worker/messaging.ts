@@ -3,7 +3,7 @@ import {
   IJobCreatedMessage,
   IJobCompletedMessage,
   IJobFailed,
-} from "../jobs-types"
+} from "../jobs/types"
 
 export type MessagesFromParent = IJobCompletedMessage | IJobFailed
 export type MessagesFromChild = IJobCreatedMessage

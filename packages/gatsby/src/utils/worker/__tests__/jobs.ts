@@ -2,7 +2,8 @@ import "jest-extended"
 import { createTestWorker, GatsbyTestWorkerPool } from "./test-helpers"
 import { store } from "../../../redux"
 import * as path from "path"
-import { waitUntilAllJobsComplete } from "../../jobs-manager"
+import { waitUntilAllJobsComplete } from "../../jobs/manager"
+import type { MessagesFromChild, MessagesFromParent } from "../messaging"
 import { getReduxJobs, getJobsMeta } from "./test-helpers/child-for-tests"
 
 let worker: GatsbyTestWorkerPool | undefined
@@ -13,11 +14,23 @@ describe(`worker (jobs)`, () => {
   let jobDescriptionsCreatedByWorkers: Array<Array<string>>
   let mainStateAfter: ReturnType<typeof getReduxJobs>
   let workerStateAfter: Array<ReturnType<typeof getReduxJobs>>
+  let sendMessageSpy: jest.SpyInstance<
+    void,
+    [msg: MessagesFromParent, workerId: number]
+  >
+  let receivedMessageSpy: jest.Mock<
+    void,
+    [msg: MessagesFromChild, workerId: number]
+  >
 
   beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE`, cacheIsCorrupt: true })
 
     worker = createTestWorker(3)
+
+    sendMessageSpy = jest.spyOn(worker, `sendMessage`)
+    receivedMessageSpy = jest.fn()
+    worker.onMessage(receivedMessageSpy)
 
     const siteDirectory = path.join(__dirname, `fixtures`, `sample-site`)
 
@@ -174,6 +187,51 @@ describe(`worker (jobs)`, () => {
           "PROCESSED: Same job created in all workers",
         ]
       `)
+    })
+  })
+
+  describe(`messages (worker<->parent communication)`, () => {
+    it(`worker pool receives messages about created jobs from workers`, () => {
+      expect(receivedMessageSpy).toBeCalledWith(
+        expect.objectContaining({
+          type: `JOB_CREATED`,
+          payload: expect.objectContaining({
+            id: expect.any(String),
+            args: {
+              description: expect.any(String),
+            },
+          }),
+        }),
+        expect.toBeOneOf([1, 2, 3])
+      )
+    })
+
+    it(`worker pool reports job completion back to workers`, () => {
+      expect(sendMessageSpy).toBeCalledWith(
+        expect.objectContaining({
+          type: `JOB_COMPLETED`,
+          payload: expect.objectContaining({
+            id: expect.any(String),
+            result: {
+              processed: expect.any(String),
+            },
+          }),
+        }),
+        expect.toBeOneOf([1, 2, 3])
+      )
+    })
+
+    it(`worker pool reports job failure back to workers`, () => {
+      expect(sendMessageSpy).toBeCalledWith(
+        expect.objectContaining({
+          type: `JOB_FAILED`,
+          payload: {
+            id: expect.any(String),
+            error: expect.any(String),
+          },
+        }),
+        expect.toBeOneOf([1, 2, 3])
+      )
     })
   })
 })

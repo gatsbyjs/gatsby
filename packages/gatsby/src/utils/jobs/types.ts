@@ -65,3 +65,18 @@ export interface IJobNotWhitelisted {
     id: InternalJob["id"]
   }
 }
+
+export class WorkerError extends Error {
+  constructor(error: Error | string) {
+    if (typeof error === `string`) {
+      super(error)
+    } else {
+      // use error.message or else stringiyf the object so we don't get [Object object]
+      super(error.message ?? JSON.stringify(error))
+    }
+
+    this.name = `WorkerError`
+
+    Error.captureStackTrace(this, WorkerError)
+  }
+}

@@ -1,4 +1,4 @@
-const jobsManager = require(`../../utils/jobs-manager`)
+const jobsManager = require(`../../utils/jobs/manager`)
 jest.spyOn(jobsManager, `enqueueJob`)
 jest.spyOn(jobsManager, `removeInProgressJob`)
 jest.mock(`uuid/v4`, () => () => `1234`)
