@@ -93,7 +93,7 @@ Follow the steps below to open the GraphiQL interface:
 There are three main sections of the GraphiQL interface:
 
 * **Explorer:** This is the section on the left, which shows you all the different kinds of data you can request in a GraphQL query.
-    * You can toggle the dropdowns to expand the different fields and see what kinds of data is available in the data layer.
+    * You can toggle the dropdowns to expand the different fields and see what kinds of data are available in the data layer.
     * The blue items correspond to the different data fields you can query for.
     * The purple items accept additional arguments that you can use to filter down the data returned in the response.
 * **Query Editor:** This is the middle section, which you can use to write out a query to test.
@@ -315,10 +315,10 @@ const Layout = ({ pageTitle, children }) => {
           title
         }
       }
-    }  
+    }
   `)
   // highlight-end
-  
+
   return (
     // ...
   )
@@ -381,9 +381,9 @@ const Layout = ({ pageTitle, children }) => {
           title
         }
       }
-    }  
+    }
   `)
-  
+
   return (
     <main className={container}>
       {/* highlight-start */}
@@ -449,9 +449,9 @@ const Layout = ({ pageTitle, children }) => {
           title
         }
       }
-    }  
+    }
   `)
-  
+
   return (
     <main className={container}>
       <title>{pageTitle} | {data.site.siteMetadata.title}</title>
@@ -626,7 +626,7 @@ module.exports = {
 
 **A closer look at the configuration options:**
 
-When your site builds, `gatsby-source-filesystem` adds all the files in folder specified by the `path` option to the data layer.
+When your site builds, `gatsby-source-filesystem` adds all the files in the folder specified by the `path` option to the data layer.
 
 The `name` option in the configuration object gets set to the `sourceInstanceName` field for each file. This comes in handy when you want to source files from multiple folders. By giving each folder a different `name` option, you can build GraphQL queries that filter down to only a particular folder.
 
@@ -855,7 +855,7 @@ git commit -m "Finished Gatsby Tutorial Part 4"
 git push
 ```
 
-Once your changes have been pushed to GitHub, Gatsby Cloud should notice the update and rebuild and deploy the latest version of your site. (It may take a few minutes for your changes to be reflected on the live site. Watch your build's progress from your [Gatsby Cloud dashboard](/dashboard/?utm_campaign=tutorial).)
+Once your changes have been pushed to GitHub, Gatsby Cloud should notice the update and rebuild and deploy the latest version of your site. (It may take a few minutes for your changes to be reflected on the live site. Watch your build's progress from your [Gatsby Cloud dashboard](/dashboard/).)
 
 </Announcement>
 

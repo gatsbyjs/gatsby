@@ -11,6 +11,24 @@ if (NUM_NODES < NUM_PAGES) {
 const nodesPerPage = Math.max(1, Math.round(NUM_NODES / NUM_PAGES))
 const ptop = require(`process-top`)()
 
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createTypes(`
+    type Test implements Node @dontInfer {
+      id: ID!
+      nodeNum: Int!
+      pageNum: Int!
+      unique: String!
+      fooBar: String!
+      fooBarArray: [TestFooBarArray!]
+      text: String!
+      randon: Float
+    }
+    type TestFooBarArray {
+      fooBar: String!
+    }
+  `)
+}
+
 exports.sourceNodes = async ({ actions: { createNode } }) => {
   console.log(`Creating ${NUM_NODES} nodes`)
   for (let nodeNum = 0; nodeNum < NUM_NODES; nodeNum++) {
@@ -19,15 +37,14 @@ exports.sourceNodes = async ({ actions: { createNode } }) => {
       id: String(nodeNum),
       nodeNum,
       pageNum,
-      nodeNumReversed: NUM_NODES - nodeNum,
-      testEq: String(nodeNum),
-      testIn: [`foo`, `bar`, `baz`, `foobar`][nodeNum % 4],
-      testElemMatch: [
-        { testIn: [`foo`, `bar`, `baz`, `foobar`][nodeNum % 4] },
-        { testEq: String(nodeNum) },
+      unique: String(nodeNum),
+      fooBar: [`foo`, `bar`, `baz`, `foobar`][nodeNum % 4],
+      fooBarArray: [
+        { fooBar: [`foo`, `bar`, `baz`, `foobar`][nodeNum % 4] },
+        { fooBar: [`bar`, `baz`, `foobar`, `foo`][nodeNum % 4] },
       ],
-      text: `${TEXT ? new Array(4128).join("*") : ``}${nodeNum}`,
-      sortRandom: Math.random() * NUM_NODES,
+      text: TEXT ? randomStr(4128) : `${nodeNum}`,
+      random: Math.random() * NUM_NODES,
       internal: {
         type: `Test`,
         contentDigest: String(nodeNum),
@@ -51,12 +68,11 @@ exports.createPages = async ({ actions: { createPage } }) => {
       path: `/path/${pageNum}/`,
       component: pageTemplate,
       context: {
-        pageNumAsStr: String(pageNum),
-        fooBarValues: [
+        fooBarArray: [
           [`foo`, `bar`, `baz`, `foobar`][pageNum % 4],
           [`foo`, `bar`, `baz`, `foobar`][(pageNum + 1) % 4],
         ],
-        intValue: pageNum,
+        fooBar: [`foo`, `bar`, `baz`, `foobar`][pageNum % 4],
         pageNum: pageNum,
         pagesLeft: NUM_PAGES - pageNum,
         limit: nodesPerPage,
@@ -64,7 +80,9 @@ exports.createPages = async ({ actions: { createPage } }) => {
         nodesTotal: NUM_NODES,
         pagesTotal: NUM_PAGES,
         sort: SORT
-          ? { fields: ["sortRandom"], order: SORT === `1` ? `ASC` : `DESC` }
+          ? {
+              fields: SORT === `fooBar` ? ["fooBar", "random"] : ["random"],
+            }
           : undefined,
         regex: `/^${String(pageNum).slice(0, 1)}/`, // node id starts with the same number as page id
       },
@@ -84,4 +102,13 @@ exports.onPostBuild = () => {
     global.gc()
   }
   console.log(ptop.toString())
+}
+
+function randomStr(length) {
+  let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+  let str = []
+  for (let i = 0; i < length; i++) {
+    str.push(chars.charAt(Math.floor(Math.random() * chars.length)))
+  }
+  return str.join(``)
 }

@@ -4,8 +4,8 @@ import fs from "fs-extra"
 import Bluebird from "bluebird"
 import * as path from "path"
 
-import { getPageHtmlFilePath } from "../../../utils/page-html"
-import { IPageDataWithQueryResult } from "../../../utils/page-data"
+import { getPageHtmlFilePath } from "../../page-html"
+import { IPageDataWithQueryResult } from "../../page-data"
 import { IRenderHtmlResult } from "../../../commands/build-html"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
