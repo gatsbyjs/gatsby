@@ -16,21 +16,21 @@
   },
   "dependencies": {
     "cross-env": "^7.0.0",
-    "dotenv": "^8.2.0",
-    "faker": "^4.1.0",
-    "gatsby": "^2.19.7",
-    "gatsby-image": "^2.2.40",
+    "dotenv": "^9.0.2",
+    "faker": "^5.5.3",
+    "gatsby": "^3.5.1",
+    "gatsby-image": "^3.5.0",
     "gatsby-plugin-benchmark-reporting": "*",
-    "gatsby-plugin-sharp": "^2.4.5",
-    "gatsby-source-drupal": "^3.3.18",
-    "gatsby-source-filesystem": "^2.1.48",
-    "gatsby-transformer-sharp": "^2.3.14",
+    "gatsby-plugin-sharp": "^3.5.0",
+    "gatsby-source-drupal": "^4.7.2",
+    "gatsby-source-filesystem": "^3.5.0",
+    "gatsby-transformer-sharp": "^3.5.0",
     "lodash.kebabcase": "^4.1.1",
     "node-fetch": "^2.6.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.8.3"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
   },
   "devDependencies": {
     "prettier": "2.0.4"

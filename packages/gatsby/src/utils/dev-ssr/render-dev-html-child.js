@@ -115,5 +115,3 @@ exports.renderHTML = ({
 exports.deleteModuleCache = htmlComponentRendererPath => {
   delete require.cache[require.resolve(htmlComponentRendererPath)]
 }
-
-exports.warmup = () => `warmed`

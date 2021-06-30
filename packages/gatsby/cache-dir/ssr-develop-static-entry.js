@@ -1,3 +1,4 @@
+/* global BROWSER_ESM_ONLY */
 import React from "react"
 import fs from "fs"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
@@ -331,11 +332,15 @@ export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
     htmlAttributes,
     bodyAttributes,
     preBodyComponents,
-    postBodyComponents: postBodyComponents.concat([
-      <script key={`polyfill`} src="/polyfill.js" noModule={true} />,
-      <script key={`framework`} src="/framework.js" />,
-      <script key={`commons`} src="/commons.js" />,
-    ]),
+    postBodyComponents: postBodyComponents.concat(
+      [
+        !BROWSER_ESM_ONLY && (
+          <script key={`polyfill`} src="/polyfill.js" noModule={true} />
+        ),
+        <script key={`framework`} src="/framework.js" />,
+        <script key={`commons`} src="/commons.js" />,
+      ].filter(Boolean)
+    ),
   })
   let htmlStr = renderToStaticMarkup(htmlElement)
   htmlStr = `<!DOCTYPE html>${htmlStr}`

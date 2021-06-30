@@ -483,6 +483,7 @@ describe(`Load plugins`, () => {
       ).toEqual({
         // All the options that have defaults are defined
         anonymize: false,
+        enableWebVitalsTracking: false,
         exclude: [],
         head: false,
         pageTransitionDelay: 0,
