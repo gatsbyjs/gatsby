@@ -17,7 +17,7 @@ export async function setupStep(param: string): Promise<void> {
 }
 ```
 
-File `parent.ts`
+File `parent.ts`:
 
 ```ts
 import { WorkerPool } from "gatsby-worker"
@@ -97,6 +97,132 @@ if (isWorker) {
 } else {
   // this is NOT executed in worker context
 }
+```
+
+### Messaging
+
+`gatsby-worker` allows sending messages from worker to main and from main to worker at any time.
+
+#### Sending messages from worker
+
+File `message-types.ts`:
+
+```ts
+// `gatsby-worker` supports message types. Creating common module that centralize possible messages
+// that is shared by worker and parent will ensure messages type safety.
+interface IPingMessage {
+  type: `PING`
+}
+
+interface IAnotherMessageFromChild {
+  type: `OTHER_MESSAGE_FROM_CHILD`
+  payload: {
+    foo: string
+  }
+}
+
+export type MessagesFromChild = IPingMessage | IAnotherMessageFromChild
+
+interface IPongMessage {
+  type: `PONG`
+}
+
+interface IAnotherMessageFromParent {
+  type: `OTHER_MESSAGE_FROM_PARENT`
+  payload: {
+    foo: string
+  }
+}
+
+export type MessagesFromParent = IPongMessage | IAnotherMessageFromParent
+```
+
+File `worker.ts`:
+
+```ts
+import { getMessenger } from "gatsby-worker"
+
+import { MessagesFromParent, MessagesFromChild } from "./message-types"
+
+const messenger = getMessenger<MessagesFromParent, MessagesFromChild>()
+// messenger might be `undefined` if `getMessenger`
+// is called NOT in worker context
+if (messenger) {
+  // send a message to a parent
+  messenger.send({ type: `PING` })
+  messenger.send({
+    type: `OTHER_MESSAGE_FROM_CHILD`,
+    payload: {
+      foo: `bar`,
+    },
+  })
+
+  // following would cause type error as message like that is
+  // not part of MessagesFromChild type union
+  // messenger.send({ type: `NOT_PART_OF_TYPES` })
+
+  // start listening to messages from parent
+  messenger.onMessage(msg => {
+    switch (msg.type) {
+      case `PONG`: {
+        // handle PONG message
+        break
+      }
+      case `OTHER_MESSAGE_FROM_PARENT`: {
+        // msg.payload.foo will be typed as `string` here
+        // handle
+        break
+      }
+
+      // following would cause type error as there is no msg with
+      // given type as part of MessagesFromParent type union
+      // case `NOT_PART_OF_TYPES`: {}
+    }
+  })
+}
+```
+
+File `parent.ts`:
+
+```ts
+import { getMessenger } from "gatsby-worker"
+
+import { MessagesFromParent, MessagesFromChild } from "./message-types"
+
+const workerPool = new WorkerPool<
+  typeof import("./worker"),
+  MessagesFromParent,
+  MessagesFromChild
+>(
+  workerPath: require.resolve(`./worker`)
+)
+
+// `sendMessage` on WorkerPool instance requires second parameter
+// `workerId` to specify to which worker to send message to
+// (`workerId` starts at 1 for first worker).
+workerPool.sendMessage(
+  {
+    type: `OTHER_MESSAGE_FROM_PARENT`,
+    payload: {
+      foo: `baz`
+    }
+  },
+  1
+)
+
+// start listening to messages from child
+// `onMessage` callback will be called with message sent from worker
+// and `workerId` (to identify which worker send this message)
+workerPool.onMessage((msg: MessagesFromChild, workerId: number): void => {
+  switch(msg.type) {
+    case: `PING`: {
+      // send message back making sure we send it back to same worker
+      // that sent `PING` message
+      workerPool.sendMessage({ type: `PONG` }, workerId)
+      break
+    }
+  }
+})
 ```
 
 ## Usage with unit tests
