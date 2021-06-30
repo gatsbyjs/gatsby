@@ -63,7 +63,7 @@ function App() {
 
   useEffect(async () => {
     const result = await fetch(
-      "${process.env.GATSBY_API_URL}/users"
+      `${process.env.GATSBY_API_URL}/users`
     ).then(res => res.json())
 
     setData(result.data)
