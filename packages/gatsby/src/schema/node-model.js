@@ -222,13 +222,12 @@ class LocalNodeModel {
   /**
    * Get nodes of a type matching the specified query.
    *
-   * When `args.firstOnly` is true - behavior is exactly the same as `findOne`
-   *
-   * When `args.firstOnly` is falsy - behaves like `findAll` but returns an array
-   * instead of instance of queryResult, and ignores `args.query.limit` and `args.query.skip`
-   * (returns full result set, which is slow with LMDB).
-   *
-   * @deprecated Use `findAll` or `findOne` instead
+   * @param {Object} args
+   * @param {Object} args.query Query arguments (`filter` and `sort`)
+   * @param {(string|GraphQLOutputType)} args.type Type
+   * @param {boolean} [args.firstOnly] If true, return only first match
+   * @param {PageDependencies} [pageDependencies]
+   * @returns {Promise<Node[]>}
    */
   async runQuery(args, pageDependencies = {}) {
     // TODO: show deprecation warning in v4
@@ -323,18 +322,8 @@ class LocalNodeModel {
     }
   }
 
-  /**
-   * Get nodes of a type matching the specified query.
-   *
-   * Note: this method returns a slice of result when `skip` and `limit` are set.
-   *
-   * @param {Object} args
-   * @param {Object} args.query Query arguments (`filter`, `sort`, `skip`, `limit`)
-   * @param {(string|GraphQLOutputType)} args.type Type
-   * @param {PageDependencies} [pageDependencies]
-   * @returns {Promise<IQueryResult>}
-   */
   async findAll(args, pageDependencies = {}) {
+    // TODO: add this as a public API in v4 (together with deprecating runQuery)
     const { gqlType, ...result } = await this._query(args, pageDependencies)
 
     // Tracking connections by default:
@@ -345,16 +334,8 @@ class LocalNodeModel {
     return result
   }
 
-  /**
-   * Get the first node of a type matching the specified query.
-   *
-   * @param {Object} args
-   * @param {Object} args.query Query arguments (supports: `filter`)
-   * @param {(string|GraphQLOutputType)} args.type Type
-   * @param {PageDependencies} [pageDependencies]
-   * @returns {Promise<Node | null>}
-   */
   async findOne(args, pageDependencies = {}) {
+    // TODO: add this as a public API in v4 (together with deprecating runQuery)
     const { query } = args
     if (query.sort?.fields?.length > 0) {
       // If we support sorting and return the first node based on sorting
@@ -504,8 +485,6 @@ class LocalNodeModel {
    * @param {nodePredicate} [predicate] Optional callback to check if ancestor meets defined conditions
    * @returns {Node} Top most ancestor if predicate is not specified
    * or first node that meet predicate conditions if predicate is specified
-   *
-   * TODO: keep the whole chain of ancestors in context
    */
   findRootNodeAncestor(obj, predicate = null) {
     let iterations = 0
@@ -602,9 +581,6 @@ class ContextualNodeModel {
     )
   }
 
-  /**
-   * @deprecated use findAll() or findOne() instead
-   */
   runQuery(args, pageDependencies) {
     return this.nodeModel.runQuery(
       args,
