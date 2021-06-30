@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-utils#readme",
   "dependencies": {
+    "@babel/runtime": "^7.14.0",
     "joi": "^17.2.1"
   },
   "devDependencies": {

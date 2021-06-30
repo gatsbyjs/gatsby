@@ -29,10 +29,12 @@
     "dist/"
   ],
   "dependencies": {
+    "@babel/runtime": "^7.14.0",
     "ci-info": "2.0.0",
     "configstore": "^5.0.1",
     "file-type": "^16.2.0",
     "fs-extra": "^8.1.0",
+    "got": "8.3.2",
     "node-object-hash": "^2.0.0",
     "proper-lockfile": "^4.1.1",
     "tmp": "^0.2.1",
