@@ -20,7 +20,7 @@ export class GatsbyIterable<T> {
     return new GatsbyIterable(() => concatSequence(this, other))
   }
 
-  map<U>(fn: (entry: T) => U): GatsbyIterable<U> {
+  map<U>(fn: (entry: T, index: number) => U): GatsbyIterable<U> {
     return new GatsbyIterable(() => mapSequence(this, fn))
   }
 
@@ -28,11 +28,15 @@ export class GatsbyIterable<T> {
     return new GatsbyIterable(() => filterSequence(this, predicate))
   }
 
-  flatMap<U>(fn: (entry: T) => U): GatsbyIterable<U> {
+  flatMap<U>(fn: (entry: T, index: number) => U): GatsbyIterable<U> {
     return new GatsbyIterable(() => flatMapSequence(this, fn))
   }
 
-  slice(start: number, end: number | undefined): GatsbyIterable<T> {
+  slice(start: number, end?: number): GatsbyIterable<T> {
+    if ((typeof end !== `undefined` && end < start) || start < 0)
+      throw new Error(
+        `Both arguments must not be negative and end must be greater than start`
+      )
     return new GatsbyIterable<T>(() => sliceSequence(this, start, end))
   }
 
@@ -103,19 +107,21 @@ export function isNonArrayIterable<T>(value: unknown): value is Iterable<T> {
 
 function* mapSequence<T, U>(
   source: Iterable<T>,
-  fn: (arg: T) => U
+  fn: (arg: T, index: number) => U
 ): Generator<U> {
+  let i = 0
   for (const value of source) {
-    yield fn(value)
+    yield fn(value, i++)
   }
 }
 
 function* flatMapSequence<T, U>(
   source: Iterable<T>,
-  fn: (arg: T) => U | Iterable<U>
+  fn: (arg: T, index: number) => U | Iterable<U>
 ): Generator<U> {
+  let i = 0
   for (const value of source) {
-    const mapped = fn(value)
+    const mapped = fn(value, i++)
     if (isNonArrayIterable(mapped)) {
       // @ts-ignore
       yield* mapped
@@ -130,10 +136,6 @@ function* sliceSequence<T>(
   start: number,
   end: number | undefined
 ): Generator<T> {
-  if ((typeof end !== `undefined` && end < start) || start < 0)
-    throw new Error(
-      `Negative offsets for slice() is not supported for iterables`
-    )
   let index = -1
   for (const item of source) {
     index++
