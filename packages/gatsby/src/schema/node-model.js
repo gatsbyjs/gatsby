@@ -21,7 +21,6 @@ import {
   getTypes,
 } from "../datastore"
 import { isIterable } from "../datastore/common/iterable"
-import { runFastFiltersAndSort } from "../datastore/in-memory/run-fast-filters"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -323,29 +322,6 @@ class LocalNodeModel {
       totalCount,
     }
   }
-
-  /**
-   * Get nodes of a type matching the specified query.
-   *
-   * Note: this method returns a slice of result when `skip` and `limit` are set.
-   *
-   * @param {Object} args
-   * @param {Object} args.query Query arguments (`filter`, `sort`, `skip`, `limit`)
-   * @param {(string|GraphQLOutputType)} args.type Type
-   * @param {PageDependencies} [pageDependencies]
-   * @returns {Promise<IQueryResult>}
-   */
-  async findAll(args, pageDependencies = {}) {
-    const { gqlType, ...result } = await this._query(args, pageDependencies)
-
-    // Tracking connections by default:
-    if (typeof pageDependencies.connectionType === `undefined`) {
-      pageDependencies.connectionType = gqlType.name
-    }
-    this.trackPageDependencies(result.entries, pageDependencies)
-    return result
-  }
-
 
   /**
    * Get nodes of a type matching the specified query.
