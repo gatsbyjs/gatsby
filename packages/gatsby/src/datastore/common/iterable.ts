@@ -44,9 +44,10 @@ export class GatsbyIterable<T> {
     return new GatsbyIterable<T>(() => deduplicateSequence(this, keyFn))
   }
 
-  forEach(callback: (entry: T) => unknown): void {
+  forEach(callback: (entry: T, index: number) => unknown): void {
+    let i = 0
     for (const value of this) {
-      callback(value)
+      callback(value, i++)
     }
   }
 
@@ -67,8 +68,6 @@ export class GatsbyIterable<T> {
    * Assuming both this and the other iterable are sorted
    * produces the new sorted iterable with values from this iterable
    * that also exist in the other iterable.
-   *
-   * Note: this method is not removing duplicates
    */
   intersectSorted<U = T>(
     other: Iterable<U>,
@@ -205,24 +204,31 @@ function* mergeSorted<T, U = T>(
 ): Generator<T | U> {
   const iter1 = firstSorted[Symbol.iterator]()
   const iter2 = secondSorted[Symbol.iterator]()
-  let a = iter1.next()
-  let b = iter2.next()
-  while (!a.done && !b.done) {
-    if (comparator(a.value, b.value) <= 0) {
+  try {
+    let a = iter1.next()
+    let b = iter2.next()
+    while (!a.done && !b.done) {
+      if (comparator(a.value, b.value) <= 0) {
+        yield a.value
+        a = iter1.next()
+      } else {
+        yield b.value
+        b = iter2.next()
+      }
+    }
+    while (!a.done) {
       yield a.value
       a = iter1.next()
-    } else {
+    }
+    while (!b.done) {
       yield b.value
       b = iter2.next()
     }
-  }
-  while (!a.done) {
-    yield a.value
-    a = iter1.next()
-  }
-  while (!b.done) {
-    yield b.value
-    b = iter2.next()
+  } finally {
+    // If generator is exited early, make sure to close iterators too
+    // See https://raganwald.com/2017/07/22/closing-iterables-is-a-leaky-abstraction.html#more-about-closing-iterators-explicitly
+    if (typeof iter1.return === `function`) iter1.return()
+    if (typeof iter2.return === `function`) iter2.return()
   }
 }
 
@@ -233,22 +239,27 @@ function* intersectSorted<T, U = T>(
 ): Generator<T> {
   const iter1 = firstSorted[Symbol.iterator]()
   const iter2 = secondSorted[Symbol.iterator]()
-  let a = iter1.next()
-  let b = iter2.next()
+  try {
+    let a = iter1.next()
+    let b = iter2.next()
 
-  while (!a.done && !b.done) {
-    const eq = comparator(a.value, b.value)
+    while (!a.done && !b.done) {
+      const eq = comparator(a.value, b.value)
 
-    if (eq < 0) {
-      // a < b
-      a = iter1.next()
-    } else if (eq > 0) {
-      // a > b
-      b = iter2.next()
-    } else {
-      yield a.value
-      a = iter1.next()
+      if (eq < 0) {
+        // a < b
+        a = iter1.next()
+      } else if (eq > 0) {
+        // a > b
+        b = iter2.next()
+      } else {
+        yield a.value
+        a = iter1.next()
+      }
     }
+  } finally {
+    if (typeof iter1.return === `function`) iter1.return()
+    if (typeof iter2.return === `function`) iter2.return()
   }
 }
 
