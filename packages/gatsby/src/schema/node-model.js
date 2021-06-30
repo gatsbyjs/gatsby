@@ -222,15 +222,29 @@ class LocalNodeModel {
   /**
    * Get nodes of a type matching the specified query.
    *
-   * @param {Object} args
-   * @param {Object} args.query Query arguments (`filter` and `sort`)
-   * @param {(string|GraphQLOutputType)} args.type Type
-   * @param {boolean} [args.firstOnly] If true, return only first match
-   * @param {PageDependencies} [pageDependencies]
-   * @returns {Promise<Node[]>}
+   * When `args.firstOnly` is true - behavior is exactly the same as `findOne`
+   *
+   * When `args.firstOnly` is falsy - behaves like `findAll` but returns an array
+   * instead of instance of queryResult, and ignores `args.query.limit` and `args.query.skip`
+   * (returns full result set, which is slow with LMDB).
+   *
+   * @deprecated Use `findAll` or `findOne` instead
    */
   async runQuery(args, pageDependencies = {}) {
-    const { query, firstOnly, type, stats, tracer } = args || {}
+    // TODO: show deprecation warning in v4
+    // reporter.warn(
+    //   `nodeModel.runQuery() is deprecated. Use nodeModel.findAll() or nodeModel.findOne() instead`
+    // )
+    if (args.firstOnly) {
+      return this.findOne(args, pageDependencies)
+    }
+    const { skip, limit, ...query } = args.query
+    const result = await this.findAll({ ...args, query }, pageDependencies)
+    return Array.from(result.entries)
+  }
+
+  async _query(args) {
+    const { query, type, stats, tracer } = args || {}
 
     // We don't support querying union types (yet?), because the combined types
     // need not have any fields in common.
@@ -280,9 +294,8 @@ class LocalNodeModel {
       runQueryActivity.start()
     }
 
-    const queryResult = runFastFiltersAndSort({
+    const { entries, totalCount } = runFastFiltersAndSort({
       queryArgs: query,
-      firstOnly,
       gqlSchema: this.schema,
       gqlComposer: this.schemaComposer,
       gqlType,
@@ -307,35 +320,75 @@ class LocalNodeModel {
       trackInlineObjectsActivity.start()
     }
 
-    let result = queryResult
-    if (firstOnly) {
-      if (result?.length > 0) {
-        result = result[0]
-        this.trackInlineObjectsInRootNode(result)
-      } else {
-        result = null
-
-        // Couldn't find matching node.
-        //  This leads to a state where data tracking for this query gets empty.
-        //  It means we will NEVER re-run this query on any data updates
-        //  (even if a new node matching this query is added at some point).
-        //  To workaround this, we have to add a connection tracking to re-run
-        //  the query whenever any node of this type changes.
-        pageDependencies.connectionType = gqlType.name
-      }
-    } else if (result) {
-      result.forEach(node => this.trackInlineObjectsInRootNode(node))
-    }
+    entries.forEach(node => this.trackInlineObjectsInRootNode(node))
 
     if (trackInlineObjectsActivity) {
       trackInlineObjectsActivity.end()
     }
+    return { gqlType, entries, totalCount }
+  }
+
+  /**
+   * Get nodes of a type matching the specified query.
+   *
+   * Note: this method returns a slice of result when `skip` and `limit` are set.
+   *
+   * @param {Object} args
+   * @param {Object} args.query Query arguments (`filter`, `sort`, `skip`, `limit`)
+   * @param {(string|GraphQLOutputType)} args.type Type
+   * @param {PageDependencies} [pageDependencies]
+   * @returns {Promise<IQueryResult>}
+   */
+  async findAll(args, pageDependencies = {}) {
+    const { gqlType, ...result } = await this._query(args, pageDependencies)
 
     // Tracking connections by default:
-    if (!firstOnly && typeof pageDependencies.connectionType === `undefined`) {
+    if (typeof pageDependencies.connectionType === `undefined`) {
       pageDependencies.connectionType = gqlType.name
     }
-    return this.trackPageDependencies(result, pageDependencies)
+    this.trackPageDependencies(result.entries, pageDependencies)
+    return result
+  }
+
+  /**
+   * Get the first node of a type matching the specified query.
+   *
+   * @param {Object} args
+   * @param {Object} args.query Query arguments (supports: `filter`)
+   * @param {(string|GraphQLOutputType)} args.type Type
+   * @param {PageDependencies} [pageDependencies]
+   * @returns {Promise<Node | null>}
+   */
+  async findOne(args, pageDependencies = {}) {
+    const { query } = args
+    if (query.sort?.fields?.length > 0) {
+      // If we support sorting and return the first node based on sorting
+      // we'll have to always track connection not an individual node
+      reporter.warn(
+        `nodeModel.findOne() does not support sorting. Use nodeModel.findAll({ query: { limit: 1 } }) instead`
+      )
+      // TODO: throw in v4
+      // throw new Error(
+      //   `nodeModel.findOne() does not support sorting. Use nodeModel.findAll({ query: { limit: 1 } }) instead`
+      // )
+    }
+    const { gqlType, entries } = await this._query({
+      ...args,
+      query: { ...query, skip: 0, limit: 1, sort: undefined },
+    })
+    const result = Array.from(entries)
+    const first = result[0] ?? null
+
+    if (!first) {
+      // Couldn't find matching node.
+      //  This leads to a state where data tracking for this query gets empty.
+      //  It means we will NEVER re-run this query on any data updates
+      //  (even if a new node matching this query is added at some point).
+      //  To workaround this, we have to add a connection tracking to re-run
+      //  the query whenever any node of this type changes.
+      pageDependencies.connectionType = gqlType.name
+    }
+    return this.trackPageDependencies(first, pageDependencies)
   }
 
   prepareNodes(type, queryFields, fieldsToResolve, nodeTypeNames) {
@@ -449,6 +502,8 @@ class LocalNodeModel {
    * @param {nodePredicate} [predicate] Optional callback to check if ancestor meets defined conditions
    * @returns {Node} Top most ancestor if predicate is not specified
    * or first node that meet predicate conditions if predicate is specified
+   *
+   * TODO: keep the whole chain of ancestors in context
    */
   findRootNodeAncestor(obj, predicate = null) {
     let iterations = 0
@@ -545,8 +600,25 @@ class ContextualNodeModel {
     )
   }
 
+  /**
+   * @deprecated use findAll() or findOne() instead
+   */
   runQuery(args, pageDependencies) {
     return this.nodeModel.runQuery(
+      args,
+      this._getFullDependencies(pageDependencies)
+    )
+  }
+
+  findOne(args, pageDependencies) {
+    return this.nodeModel.findOne(
+      args,
+      this._getFullDependencies(pageDependencies)
+    )
+  }
+
+  findAll(args, pageDependencies) {
+    return this.nodeModel.findAll(
       args,
       this._getFullDependencies(pageDependencies)
     )

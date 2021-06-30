@@ -9,6 +9,11 @@ export interface ILmdbDatabases {
   nodesByType: Database<NodeId, NodeType>
 }
 
+export interface IQueryResult {
+  entries: Iterable<IGatsbyNode>
+  totalCount: () => Promise<number>
+}
+
 // Note: this type is compatible with lmdb-store ArrayLikeIterable
 export interface IGatsbyIterable<T> extends Iterable<T> {
   [Symbol.iterator](): Iterator<T>

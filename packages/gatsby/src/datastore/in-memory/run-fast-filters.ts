@@ -25,6 +25,7 @@ import {
   IFilterCache,
 } from "./indexing"
 import { IGraphQLRunnerStats } from "../../query/types"
+import { IQueryResult } from "../types"
 
 // The value is an object with arbitrary keys that are either filter values or,
 // recursively, an object with the same struct. Ie. `{a: {a: {a: 2}}}`
@@ -44,8 +45,9 @@ interface IRunFilterArg {
     sort:
       | { fields: Array<string>; order: Array<boolean | "asc" | "desc"> }
       | undefined
+    skip?: number
+    limit?: number
   }
-  firstOnly: boolean
   resolvedFields: Record<string, any>
   nodeTypeNames: Array<string>
   filtersCache: FiltersCache
@@ -315,23 +317,17 @@ function collectBucketForElemMatch(
  * Filters and sorts a list of nodes using mongodb-like syntax.
  *
  * @param args raw graphql query filter/sort as an object
- * @property {boolean} args.firstOnly true if you want to return only the first
- *   result found. This will return a collection of size 1. Not a single element
- * @property {{filter?: Object, sort?: Object} | undefined} args.queryArgs
+ * @property {{filter?: Object, sort?: Object, skip?: number, limit?: number} | undefined} args.queryArgs
  * @property {FiltersCache} args.filtersCache A cache of indexes where you can
  *   look up Nodes grouped by a FilterCacheKey, which yields a Map which holds
  *   an arr of Nodes for the value that the filter is trying to query against.
  *   This object lives in query/query-runner.js and is passed down runQuery.
- * @returns Collection of results. Collection will be limited to 1
- *   if `firstOnly` is true
+ * @returns Collection of results. Collection will be sliced by `skip` and `limit`
  */
-export function runFastFiltersAndSort(
-  args: IRunFilterArg
-): Array<IGatsbyNode> | null {
+export function runFastFiltersAndSort(args: IRunFilterArg): IQueryResult {
   const {
-    queryArgs: { filter, sort } = {},
+    queryArgs: { filter, sort, limit, skip = 0 } = {},
     resolvedFields = {},
-    firstOnly = false,
     nodeTypeNames,
     filtersCache,
     stats,
@@ -339,27 +335,33 @@ export function runFastFiltersAndSort(
 
   const result = convertAndApplyFastFilters(
     filter,
-    firstOnly,
     nodeTypeNames,
     filtersCache,
     resolvedFields,
     stats
   )
 
-  return sortNodes(result, sort, resolvedFields, stats)
+  const sortedResult = sortNodes(result, sort, resolvedFields, stats)
+  const totalCount = async (): Promise<number> => sortedResult.length
+
+  const entries =
+    skip || limit
+      ? sortedResult.slice(skip, limit ? skip + (limit ?? 0) : undefined)
+      : sortedResult
+
+  return { entries, totalCount }
 }
 
 /**
- * Return a collection of results. Collection will be limited to 1 if `firstOnly` is true
+ * Return a collection of results.
  */
 function convertAndApplyFastFilters(
   filterFields: Array<IInputQuery> | undefined,
-  firstOnly: boolean,
   nodeTypeNames: Array<string>,
   filtersCache: FiltersCache,
   resolvedFields: Record<string, any>,
   stats: IGraphQLRunnerStats
-): Array<IGatsbyNode> | null {
+): Array<IGatsbyNode> {
   const filters = filterFields
     ? prefixResolvedFields(
         createDbQueriesFromObject(prepareQueryArgs(filterFields)),
@@ -393,11 +395,7 @@ function convertAndApplyFastFilters(
     // If there is no filter then the ensureCache step will populate this:
     const cache = filterCache.meta.orderedByCounter as Array<IGatsbyNode>
 
-    if (firstOnly || cache.length) {
-      return cache.slice(0)
-    }
-
-    return null
+    return cache.slice(0)
   }
 
   const result = applyFastFilters(filters, nodeTypeNames, filtersCache)
@@ -405,9 +403,6 @@ function convertAndApplyFastFilters(
   if (result) {
     if (stats) {
       stats.totalIndexHits++
-    }
-    if (firstOnly) {
-      return result.slice(0, 1)
     }
     return result
   }
@@ -447,14 +442,14 @@ function filterToStats(
  * Returns same reference as input, sorted inline
  */
 function sortNodes(
-  nodes: Array<IGatsbyNode> | null,
+  nodes: Array<IGatsbyNode>,
   sort:
     | { fields: Array<string>; order: Array<boolean | "asc" | "desc"> }
     | undefined,
   resolvedFields: any,
   stats: IGraphQLRunnerStats
-): Array<IGatsbyNode> | null {
-  if (!sort || !nodes || nodes.length === 0) {
+): Array<IGatsbyNode> {
+  if (!sort || sort.fields?.length === 0 || !nodes || nodes.length === 0) {
     return nodes
   }
 
