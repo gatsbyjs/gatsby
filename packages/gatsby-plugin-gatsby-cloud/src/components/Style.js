@@ -114,7 +114,9 @@ const Style = () => (
         }
 
         [data-gatsby-preview-indicator="tooltip-link"] {
-          text-decoration: none;
+          background: none;
+          border: none;
+          padding: 0;
         }
 
         [data-gatsby-preview-indicator="tooltip-link-text"] {

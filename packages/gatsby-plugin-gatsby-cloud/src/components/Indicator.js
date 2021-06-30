@@ -162,7 +162,7 @@ function BuildSuccessIndicatorTooltip({
   return (
     <>
       {`New preview available`}
-      <a
+      <button
         onClick={() => {
           newPreviewAvailableClick({
             isOnPrettyUrl,
@@ -175,7 +175,7 @@ function BuildSuccessIndicatorTooltip({
         data-gatsby-preview-indicator="tooltip-link"
       >
         <p data-gatsby-preview-indicator="tooltip-link-text">{`Click to view`}</p>
-      </a>
+      </button>
     </>
   )
 }
@@ -210,10 +210,6 @@ const newPreviewAvailableClick = async ({
    */
   await delay(75)
 
-  if (!window) {
-    return
-  }
-
   // Grabs domain that preview is hosted on https://preview-sitePrefix.gtsb.io
   // This will match `gtsb.io`
   const previewDomain = window.location.hostname.split(`.`).slice(-2).join(`.`)
@@ -232,7 +228,6 @@ export default function Indicator() {
   const timeoutRef = useRef()
   const shouldPoll = useRef(false)
   const trackedInitialLoad = useRef(false)
-  // const [trackedInitialLoad, setTrackedInitialLoad] = useState(false)
   const [buildId, setBuildId] = useState()
 
   const { siteInfo, currentBuild } = buildInfo || {
@@ -252,7 +247,7 @@ export default function Indicator() {
     const { siteInfo, currentBuild, latestBuild } = await getBuildInfo()
 
     if (!buildId) {
-      if (isOnPrettyUrl) {
+      if (isOnPrettyUrl || host === `localhost`) {
         setBuildId(latestBuild?.id)
       } else {
         // Match UUID from preview build URL https://build-af44185e-b8e5-11eb-8529-0242ac130003.gtsb.io
