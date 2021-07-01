@@ -390,7 +390,7 @@ export const renderHTMLDev = async ({
     paths,
     async pagePath => {
       try {
-        const htmlString = htmlComponentRenderer.default({
+        const htmlString = await htmlComponentRenderer.default({
           pagePath,
         })
         return fs.outputFile(
