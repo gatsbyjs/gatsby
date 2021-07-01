@@ -1,10 +1,11 @@
 const {
-  runFastFiltersAndSort,
+  runFastFiltersAndSort: doRunFastFiltersAndSort,
   applyFastFilters,
 } = require(`../in-memory/run-fast-filters`)
 const { store } = require(`../../redux`)
 const { getDataStore, getNode } = require(`../../datastore`)
 const { createDbQueriesFromObject } = require(`../common/query`)
+const { GatsbyIterable } = require(`../common/iterable`)
 const { actions } = require(`../../redux/actions`)
 const {
   GraphQLObjectType,
@@ -126,6 +127,16 @@ const gqlType = new GraphQLObjectType({
     }
   },
 })
+
+function runFastFiltersAndSort(...args) {
+  const result = doRunFastFiltersAndSort(...args)
+  expect(result.entries).toBeInstanceOf(GatsbyIterable)
+  expect(typeof result.totalCount).toBe(`function`)
+  return {
+    ...result,
+    entries: Array.from(result.entries),
+  }
+}
 
 describe(`fast filter tests`, () => {
   beforeEach(async () => {
