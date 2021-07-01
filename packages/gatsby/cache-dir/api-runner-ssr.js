@@ -19,6 +19,16 @@ module.exports = (api, args, defaultReturn, argTransform) => {
     console.log(`This API doesn't exist`, api)
   }
 
+  function augmentErrorWithPlugin(plugin, err) {
+    if (plugin.name !== `default-site-plugin`) {
+      // default-site-plugin is user code and will print proper stack trace,
+      // so no point in annotating error message pointing out which plugin is root of the problem
+      err.message += ` (from plugin: ${plugin.name})`
+    }
+
+    throw err
+  }
+
   // Run each plugin in series.
   const results = []
   plugins.forEach(plugin => {
@@ -29,8 +39,15 @@ module.exports = (api, args, defaultReturn, argTransform) => {
 
     try {
       let result = apiFn(args, plugin.options)
+
       if (result && argTransform) {
-        result = argTransform({ args, result })
+        if (result instanceof Promise) {
+          result
+            .then(res => argTransform({ args, result: res }))
+            .catch(err => augmentErrorWithPlugin(plugin, err))
+        } else {
+          result = argTransform({ args, result })
+        }
       }
 
       // This if case keeps behaviour as before, we should allow undefined here as the api is defined
@@ -39,13 +56,7 @@ module.exports = (api, args, defaultReturn, argTransform) => {
         results.push(result)
       }
     } catch (e) {
-      if (plugin.name !== `default-site-plugin`) {
-        // default-site-plugin is user code and will print proper stack trace,
-        // so no point in annotating error message pointing out which plugin is root of the problem
-        e.message += ` (from plugin: ${plugin.name})`
-      }
-
-      throw e
+      augmentErrorWithPlugin(plugin, e)
     }
   })
 
