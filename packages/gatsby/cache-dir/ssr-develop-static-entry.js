@@ -4,7 +4,7 @@ import fs from "fs"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { get, merge, isObject, flatten, uniqBy, concat } from "lodash"
 import nodePath from "path"
-import apiRunner from "./api-runner-ssr"
+import { apiRunner, apiRunnerAsync } from "./api-runner-ssr"
 import { grabMatchParams } from "./find-path"
 import syncRequires from "$virtual/ssr-sync-requires"
 
@@ -281,7 +281,7 @@ export default async function staticPage(
     ).pop()
 
     // Let the site or plugin render the page component.
-    await apiRunner(`replaceRenderer`, {
+    await apiRunnerAsync(`replaceRenderer`, {
       bodyComponent,
       replaceBodyHTMLString,
       setHeadComponents,

@@ -7,7 +7,7 @@ const { StaticQueryContext } = require(`gatsby`)
 const fs = require(`fs`)
 
 const { RouteAnnouncerProps } = require(`./route-announcer-props`)
-const apiRunner = require(`./api-runner-ssr`)
+const { apiRunner, apiRunnerAsync } = require(`./api-runner-ssr`)
 const syncRequires = require(`$virtual/sync-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const { grabMatchParams } = require(`./find-path`)
@@ -244,7 +244,7 @@ export default async function staticPage({
     )
 
     // Let the site or plugin render the page component.
-    await apiRunner(`replaceRenderer`, {
+    await apiRunnerAsync(`replaceRenderer`, {
       bodyComponent,
       replaceBodyHTMLString,
       setHeadComponents,
