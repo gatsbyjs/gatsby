@@ -1421,4 +1421,7 @@ const mergeResolveType = ({ typeComposer, type }) => {
   ) {
     typeComposer.setResolveType(type.getResolveType())
   }
+  if (!typeComposer.getResolveType()) {
+    typeComposer.setResolveType(node => node?.internal?.type)
+  }
 }
