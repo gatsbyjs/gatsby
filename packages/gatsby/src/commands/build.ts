@@ -210,20 +210,15 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildSSRBundleActivityProgress.end()
   }
 
-  let toRegenerate
-  let toDelete
-
-  try {
-    ;({ toRegenerate, toDelete } = await buildHTMLPagesAndDeleteStaleArtifacts({
-      program,
-      pageRenderer,
-      workerPool,
-      buildSpan,
-    }))
-  } catch (err) {
-    await Promise.all([waitForCompilerClose, waitForCompilerCloseBuildHtml])
-    report.panic(err)
-  }
+  const {
+    toRegenerate,
+    toDelete,
+  } = await buildHTMLPagesAndDeleteStaleArtifacts({
+    program,
+    pageRenderer,
+    workerPool,
+    buildSpan,
+  })
 
   telemetry.addSiteMeasurement(`BUILD_END`, {
     pagesCount: toRegenerate.length, // number of html files that will be written
