@@ -321,5 +321,15 @@ describe(`gatsby-worker`, () => {
         ]
       `)
     })
+
+    it(`sending message to worker that doesn't exist throws error`, async () => {
+      expect(() => {
+        if (!workerPool) {
+          fail(`worker pool not created`)
+        }
+
+        workerPool.sendMessage({ type: `PONG` }, 9001)
+      }).toThrowError(`There is no worker with "9001" id.`)
+    })
   })
 })
