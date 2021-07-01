@@ -485,7 +485,7 @@ jobs:
     steps:
       - checkout
       # jq is helpful for parsing json & python required for node-gyp to build lmdb
-      - run: sudo apt-get update && sudo apt-get install jq python -y
+      - run: apt-get update && apt-get install jq python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - run: yarn markdown
