@@ -349,6 +349,7 @@ export const renderHTMLProd = async ({
           path: pagePath,
           unsafeBuiltinsUsageByPagePath,
         }
+
         throw e
       }
     },
