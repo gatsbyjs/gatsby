@@ -327,29 +327,33 @@ export default async function staticPage(
     return bodyHtml
   }
 
-  const bodyStr = await generateBodyHTML()
+  try {
+    const bodyStr = await generateBodyHTML()
 
-  const htmlElement = React.createElement(Html, {
-    ...bodyProps,
-    body: bodyStr,
-    headComponents: headComponents.concat([
-      <script key={`io`} src="/socket.io/socket.io.js" />,
-    ]),
-    htmlAttributes,
-    bodyAttributes,
-    preBodyComponents,
-    postBodyComponents: postBodyComponents.concat(
-      [
-        !BROWSER_ESM_ONLY && (
-          <script key={`polyfill`} src="/polyfill.js" noModule={true} />
-        ),
-        <script key={`framework`} src="/framework.js" />,
-        <script key={`commons`} src="/commons.js" />,
-      ].filter(Boolean)
-    ),
-  })
-  let htmlStr = renderToStaticMarkup(htmlElement)
-  htmlStr = `<!DOCTYPE html>${htmlStr}`
+    const htmlElement = React.createElement(Html, {
+      ...bodyProps,
+      body: bodyStr,
+      headComponents: headComponents.concat([
+        <script key={`io`} src="/socket.io/socket.io.js" />,
+      ]),
+      htmlAttributes,
+      bodyAttributes,
+      preBodyComponents,
+      postBodyComponents: postBodyComponents.concat(
+        [
+          !BROWSER_ESM_ONLY && (
+            <script key={`polyfill`} src="/polyfill.js" noModule={true} />
+          ),
+          <script key={`framework`} src="/framework.js" />,
+          <script key={`commons`} src="/commons.js" />,
+        ].filter(Boolean)
+      ),
+    })
+    let htmlStr = renderToStaticMarkup(htmlElement)
+    htmlStr = `<!DOCTYPE html>${htmlStr}`
 
-  callback(null, htmlStr)
+    callback(null, htmlStr)
+  } catch (err) {
+    callback(err, null)
+  }
 }

@@ -264,6 +264,7 @@ export const renderDevHTML = ({
       })
       return resolve(htmlString)
     } catch (error) {
+      console.log({ error })
       return reject(error)
     }
   })
