@@ -16,7 +16,7 @@ export class GatsbyIterable<T> {
     return source[Symbol.iterator]()
   }
 
-  concat<U = T>(other: Iterable<U>): GatsbyIterable<T | U> {
+  concat<U>(other: Iterable<U>): GatsbyIterable<T | U> {
     return new GatsbyIterable(() => concatSequence(this, other))
   }
 
@@ -155,7 +155,7 @@ function* filterSequence<T>(
   }
 }
 
-function* concatSequence<T, U = T>(
+function* concatSequence<T, U>(
   first: Iterable<T>,
   second: Iterable<U>
 ): Generator<U | T> {
