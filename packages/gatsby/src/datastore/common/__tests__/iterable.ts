@@ -133,77 +133,6 @@ describe(`GatsbyIterable.map`, () => {
   })
 })
 
-describe(`GatsbyIterable.flatMap`, () => {
-  it(`returns other GatsbyIterable`, () => {
-    const foo = new GatsbyIterable([1])
-    const result = foo.flatMap(item => item + 1)
-    expect(result).toBeInstanceOf(GatsbyIterable)
-  })
-
-  it(`applies mapper function`, () => {
-    const foo = new GatsbyIterable([1, 2, 3])
-    const mapped = foo.flatMap(item => new GatsbyIterable([item, item + 1]))
-    expect(Array.from(mapped)).toEqual([1, 2, 2, 3, 3, 4])
-  })
-
-  it(`flattens other iterables`, () => {
-    const foo = new GatsbyIterable([1, 2, 3])
-    const mapped = foo.flatMap(item => new Set([item, item + 1]))
-    expect(Array.from(mapped)).toEqual([1, 2, 2, 3, 3, 4])
-  })
-
-  it(`supports index argument in mapper function`, () => {
-    const foo = new GatsbyIterable([`foo`, `bar`, `baz`])
-    const mapped = foo.flatMap((_, index) => index)
-    expect(Array.from(mapped)).toEqual([0, 1, 2])
-  })
-
-  it(`flattens one level deep`, () => {
-    const foo = new GatsbyIterable([1, 2, 3])
-    const mapped = foo.flatMap(item => new Set([item, new Set([item + 1])]))
-    expect(Array.from(mapped)).toEqual([
-      1,
-      new Set([2]),
-      2,
-      new Set([3]),
-      3,
-      new Set([4]),
-    ])
-  })
-
-  it(`does not flatten arrays - only other iterables`, () => {
-    const foo = new GatsbyIterable([1, 2, 3])
-    const mapped = foo.flatMap(item => [item, item + 1])
-    expect(Array.from(mapped)).toEqual([
-      [1, 2],
-      [2, 3],
-      [3, 4],
-    ])
-  })
-
-  it(`does not support 3rd argument (full iterable) in mapper function`, () => {
-    const foo = new GatsbyIterable([`foo`, `bar`])
-    const mapper: any = (_, __, nope) => nope
-    const mapped = foo.flatMap(mapper)
-    expect(Array.from(mapped)).toEqual([undefined, undefined])
-  })
-
-  it(`is lazy`, () => {
-    const fn = jest.fn()
-    fn.mockImplementation(item => new Set([item + 1]))
-
-    const foo = new GatsbyIterable([1, 2, 3])
-    const mapped = foo.flatMap(fn)
-    expect(fn.mock.calls.length).toEqual(0)
-
-    let i = 0
-    // @ts-ignore
-    for (const _ of mapped) {
-      expect(fn.mock.calls.length).toEqual(++i)
-    }
-  })
-})
-
 describe(`GatsbyIterable.filter`, () => {
   it(`returns other GatsbyIterable`, () => {
     const foo = new GatsbyIterable([1, 2, 3])
@@ -222,13 +151,13 @@ describe(`GatsbyIterable.filter`, () => {
     fn.mockImplementation(item => item % 2 === 0)
 
     const foo = new GatsbyIterable([1, 2, 3, 4])
-    const even = foo.flatMap(fn)
+    const even = foo.filter(fn)
     expect(fn.mock.calls.length).toEqual(0)
 
     let i = 0
     // @ts-ignore
     for (const _ of even) {
-      expect(fn.mock.calls.length).toEqual(++i)
+      expect(fn.mock.calls.length).toEqual((i += 2))
     }
   })
 })

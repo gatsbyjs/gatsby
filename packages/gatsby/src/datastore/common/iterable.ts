@@ -28,10 +28,6 @@ export class GatsbyIterable<T> {
     return new GatsbyIterable(() => filterSequence(this, predicate))
   }
 
-  flatMap<U>(fn: (entry: T, index: number) => U): GatsbyIterable<U> {
-    return new GatsbyIterable(() => flatMapSequence(this, fn))
-  }
-
   slice(start: number, end?: number): GatsbyIterable<T> {
     if ((typeof end !== `undefined` && end < start) || start < 0)
       throw new Error(
@@ -111,22 +107,6 @@ function* mapSequence<T, U>(
   let i = 0
   for (const value of source) {
     yield fn(value, i++)
-  }
-}
-
-function* flatMapSequence<T, U>(
-  source: Iterable<T>,
-  fn: (arg: T, index: number) => U | Iterable<U>
-): Generator<U> {
-  let i = 0
-  for (const value of source) {
-    const mapped = fn(value, i++)
-    if (isNonArrayIterable(mapped)) {
-      // @ts-ignore
-      yield* mapped
-    } else {
-      yield mapped
-    }
   }
 }
 
