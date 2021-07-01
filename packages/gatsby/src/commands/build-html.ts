@@ -234,7 +234,7 @@ const renderHTMLQueue = async (
           payload: pageSegment,
         })
 
-        for (const [, arrayOfUsages] of Object.entries(
+        for (const [_pagePath, arrayOfUsages] of Object.entries(
           htmlRenderMeta.unsafeBuiltinsUsageByPagePath
         )) {
           for (const unsafeUsageStack of arrayOfUsages) {
@@ -249,7 +249,7 @@ const renderHTMLQueue = async (
     })
   } catch (e) {
     if (e?.context?.unsafeBuiltinsUsageByPagePath) {
-      for (const [, arrayOfUsages] of Object.entries(
+      for (const [_pagePath, arrayOfUsages] of Object.entries(
         e.context.unsafeBuiltinsUsageByPagePath
       )) {
         // @ts-ignore TS doesn't know arrayOfUsages is Iterable
