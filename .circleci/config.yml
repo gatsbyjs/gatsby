@@ -564,6 +564,8 @@ jobs:
         default: "next"
     steps:
       - checkout
+      # python 2 is not built in and node-gyp needs it to build lmdb
+      - run: apt-get update && apt-get install python -y
       - run:
           name: "Update React to prerelease"
           command: "REACT_CHANNEL=<< parameters.version >> node ./scripts/upgrade-react"
