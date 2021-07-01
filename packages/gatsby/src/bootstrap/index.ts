@@ -1,3 +1,5 @@
+import reporter from "gatsby-cli/lib/reporter"
+import { slash } from "gatsby-core-utils"
 import { startRedirectListener } from "./redirects-writer"
 import {
   IBuildContext,
@@ -12,7 +14,6 @@ import {
   rebuildSchemaWithSitePage,
 } from "../services"
 import { Runner, createGraphQLRunner } from "./create-graphql-runner"
-import reporter from "gatsby-cli/lib/reporter"
 import { globalTracer } from "opentracing"
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { handleStalePageData } from "../utils/page-data"
@@ -45,6 +46,13 @@ export async function bootstrap(
     ...(await initialize(bootstrapContext)),
   }
 
+  const workerPool = context.workerPool
+  const directory = slash(context.store.getState().program.directory)
+
+  await Promise.all(
+    workerPool.all.loadConfigAndPlugins({ siteDirectory: directory })
+  )
+
   await customizeSchema(context)
   await sourceNodes(context)
 
@@ -65,6 +73,8 @@ export async function bootstrap(
     saveStateForWorkers([`inferenceMetadata`])
   }
 
+  await Promise.all(workerPool.all.buildSchema())
+
   await extractQueries(context)
 
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
@@ -81,6 +91,6 @@ export async function bootstrap(
 
   return {
     gatsbyNodeGraphQLFunction: context.gatsbyNodeGraphQLFunction,
-    workerPool: context.workerPool,
+    workerPool,
   }
 }
