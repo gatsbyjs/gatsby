@@ -15,7 +15,7 @@
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "1.6.0",
     "netlify-identity-widget": "^1.9.1",
-    "webpack": "^5.23.0"
+    "webpack": "^5.35.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.0",
