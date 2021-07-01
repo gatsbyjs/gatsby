@@ -1,3 +1,4 @@
+/* global plugins */
 // During bootstrap, we write requires at top of this file which looks like:
 // var plugins = [
 //   {
@@ -19,17 +20,24 @@ module.exports = (api, args, defaultReturn, argTransform) => {
   }
 
   // Run each plugin in series.
-  // eslint-disable-next-line no-undef
-  let results = plugins.map(plugin => {
-    if (!plugin.plugin[api]) {
-      return undefined
+  const results = []
+  plugins.forEach(plugin => {
+    const apiFn = plugin.plugin[api]
+    if (!apiFn) {
+      return
     }
+
     try {
-      const result = plugin.plugin[api](args, plugin.options)
+      let result = apiFn(args, plugin.options)
       if (result && argTransform) {
-        args = argTransform({ args, result })
+        result = argTransform({ args, result })
       }
-      return result
+
+      // This if case keeps behaviour as before, we should allow undefined here as the api is defined
+      // TODO V4
+      if (typeof result !== `undefined`) {
+        results.push(result)
+      }
     } catch (e) {
       if (plugin.name !== `default-site-plugin`) {
         // default-site-plugin is user code and will print proper stack trace,
@@ -41,12 +49,13 @@ module.exports = (api, args, defaultReturn, argTransform) => {
     }
   })
 
-  // Filter out undefined results.
-  results = results.filter(result => typeof result !== `undefined`)
-
-  if (results.length > 0) {
-    return results
-  } else {
-    return [defaultReturn]
+  // Plugins can use replaceRenderer to render React and extract pieces out of the HTML.
+  // For example, emotion does it. We have to make it async to allow async rendering in React.
+  if (api === `replaceRenderer`) {
+    return Promise.all(results).then(asyncResults =>
+      asyncResults.length ? asyncResults : [defaultReturn]
+    )
   }
+
+  return results.length ? results : [defaultReturn]
 }

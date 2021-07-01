@@ -86,7 +86,7 @@ const ensureArray = components => {
   }
 }
 
-export default ({
+export default async function staticPage({
   pagePath,
   pageData,
   staticQueryContext,
@@ -94,7 +94,7 @@ export default ({
   scripts,
   reversedStyles,
   reversedScripts,
-}) => {
+}) {
   // for this to work we need this function to be sync or at least ensure there is single execution of it at a time
   global.unsafeBuiltinUsage = []
 
@@ -244,7 +244,7 @@ export default ({
     )
 
     // Let the site or plugin render the page component.
-    apiRunner(`replaceRenderer`, {
+    await apiRunner(`replaceRenderer`, {
       bodyComponent,
       replaceBodyHTMLString,
       setHeadComponents,
