@@ -21,11 +21,7 @@ describe(`gatsby-worker`, () => {
   }
 
   beforeEach(() => {
-    workerPool = new WorkerPool<
-      typeof import("./fixtures/test-child"),
-      MessagesFromParent,
-      MessagesFromChild
-    >(require.resolve(`./fixtures/test-child`), {
+    workerPool = new WorkerPool(require.resolve(`./fixtures/test-child`), {
       numWorkers,
       env: {
         NODE_OPTIONS: `--require ${require.resolve(`./fixtures/ts-register`)}`,
@@ -293,8 +289,15 @@ describe(`gatsby-worker`, () => {
 
   describe(`messaging`, () => {
     it(`worker can receive and send messages`, async () => {
+      if (!workerPool) {
+        fail(`worker pool not created`)
+      }
+
       workerPool.onMessage((msg, workerId) => {
         if (msg.type === `PING`) {
+          if (!workerPool) {
+            fail(`worker pool not created`)
+          }
           workerPool.sendMessage({ type: `PONG` }, workerId)
         }
       })
