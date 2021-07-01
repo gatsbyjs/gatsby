@@ -11867,14 +11867,14 @@ expect@^26.6.2:
     jest-message-util "^26.6.2"
     jest-regex-util "^26.0.0"
 
-express-graphql@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/express-graphql/-/express-graphql-0.9.0.tgz#00fd8552f866bac5c9a4612b2c4c82076107b3c2"
-  integrity sha512-wccd9Lb6oeJ8yHpUs/8LcnGjFUUQYmOG9A5BNLybRdCzGw0PeUrtBxsIR8bfiur6uSW4OvPkVDoYH06z6/N9+w==
+express-graphql@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/express-graphql/-/express-graphql-0.12.0.tgz#58deabc309909ca2c9fe2f83f5fbe94429aa23df"
+  integrity sha512-DwYaJQy0amdy3pgNtiTDuGGM2BLdj+YO2SgbKoLliCfuHv3VVTt7vNG/ZqK2hRYjtYHE2t2KB705EU94mE64zg==
   dependencies:
     accepts "^1.3.7"
     content-type "^1.0.4"
-    http-errors "^1.7.3"
+    http-errors "1.8.0"
     raw-body "^2.4.1"
 
 express@4.17.1, express@^4.17.1:
@@ -14377,7 +14377,7 @@ http-errors@1.7.3, http-errors@~1.7.2:
     statuses ">= 1.5.0 < 2"
     toidentifier "1.0.0"
 
-http-errors@1.8.0, http-errors@^1.7.3:
+http-errors@1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.8.0.tgz#75d1bbe497e1044f51e4ee9e704a62f28d336507"
   integrity sha512-4I8r0C5JDhT5VkvI47QktDW75rNlGVsUf/8hzjCC/wkWI/jdTRmBb9aI7erSG82r1bjKY3F6k28WnsVxB1C73A==

@@ -68,7 +68,7 @@
     "event-source-polyfill": "^1.0.15",
     "execa": "^4.0.3",
     "express": "^4.17.1",
-    "express-graphql": "^0.9.0",
+    "express-graphql": "^0.12.0",
     "fastest-levenshtein": "^1.0.12",
     "fastq": "^1.10.0",
     "file-loader": "^6.2.0",

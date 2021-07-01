@@ -28,7 +28,7 @@
     "dotenv": "^8.2.0",
     "execa": "^4.0.2",
     "express": "^4.17.1",
-    "express-graphql": "^0.9.0",
+    "express-graphql": "^0.12.0",
     "fs-extra": "^8.1.0",
     "gatsby-core-utils": "^2.9.0-next.0",
     "gatsby-telemetry": "^2.9.0-next.1",
