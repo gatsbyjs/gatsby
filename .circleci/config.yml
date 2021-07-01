@@ -484,11 +484,11 @@ jobs:
     executor: node
     steps:
       - checkout
+      # jq is helpful for parsing json & python required for node-gyp to build lmdb
+      - run: sudo apt-get update && sudo apt-get install jq python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - run: yarn markdown
-      # jq is helpful for parsing json & python required for node-gyp to build lmdb
-      - run: sudo apt-get update && sudo apt-get install jq python -y
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/*"
