@@ -137,7 +137,7 @@ exports.sourceNodes = async (
               entityReferenceRevisions
             )
           )
-          await actions.deleteNode(getNode(nodeIdToDelete))
+          actions.deleteNode(getNode(nodeIdToDelete))
           reporter.log(`Deleted node: ${nodeIdToDelete}`)
         }
 
