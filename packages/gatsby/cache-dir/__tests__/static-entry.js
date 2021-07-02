@@ -248,6 +248,23 @@ describe(`develop-static-entry`, () => {
     })
   })
 
+  test(`SSR: replaceRenderer can be sync`, done => {
+    global.plugins = [
+      {
+        plugin: {
+          replaceRenderer: ({ replaceBodyHTMLString }) =>
+            replaceBodyHTMLString(`i'm sync`),
+        },
+      },
+    ]
+
+    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
+      expect(html).toContain(`i'm sync`)
+
+      done()
+    })
+  })
+
   test(`SSR: replaceRenderer can be async`, done => {
     jest.useFakeTimers()
     global.plugins = [
@@ -435,6 +452,20 @@ describe(`static-entry`, () => {
     )
   })
 
+  test(`replaceRenderer does allow sync rendering`, async () => {
+    global.plugins = [
+      {
+        plugin: {
+          replaceRenderer: ({ replaceBodyHTMLString }) =>
+            replaceBodyHTMLString(`i'm sync`),
+        },
+      },
+    ]
+
+    const { html } = await staticEntry(staticEntryFnArgs)
+    expect(html).toContain(`i'm sync`)
+  })
+
   test(`replaceRenderer does allow async rendering`, async () => {
     global.plugins = [
       {
@@ -443,7 +474,7 @@ describe(`static-entry`, () => {
             new Promise(resolve => {
               setTimeout(() => {
                 replaceBodyHTMLString(`i'm async`)
-                resolve(`tst`)
+                resolve()
               }, 1000)
             }),
         },
