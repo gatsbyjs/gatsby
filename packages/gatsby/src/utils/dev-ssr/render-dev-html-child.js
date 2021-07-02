@@ -92,15 +92,20 @@ exports.renderHTML = ({
     try {
       const htmlComponentRenderer = require(htmlComponentRendererPath)
       if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
-        htmlComponentRenderer.default(
-          path,
-          isClientOnlyPage,
-          publicDir,
-          error,
-          (_throwAway, htmlString) => {
-            resolve(htmlString)
-          }
-        )
+        htmlComponentRenderer
+          .default(
+            path,
+            isClientOnlyPage,
+            publicDir,
+            error,
+            (_throwAway, htmlString) => {
+              resolve(htmlString)
+            }
+          )
+          .catch(err => {
+            const error = parseError({ err, directory, componentPath })
+            reject(error)
+          })
       } else {
         htmlComponentRenderer.default(path, (_throwAway, htmlString) => {
           resolve(htmlString)
