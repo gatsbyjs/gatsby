@@ -26,7 +26,7 @@ To create collection routes, use curly braces (`{ }`) in your filenames to signi
 Gatsby creates a page for each node in a collection route. So if you have three markdown files that are blog posts, Gatsby will create the three pages from a collection route. As you add and remove markdown files, Gatsby will add and remove pages.
 
 Collection routes can be created for any GraphQL data type. Creating new collection routes in Gatsby is a process
-of adding a source plugin, identifying the type and field to construct the route, and then adding the file.
+of adding a source plugin, use GraphiQL to identify the type and field to construct the route file name, and then code the route component.
 
 ### Syntax (collection routes)
 
