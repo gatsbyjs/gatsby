@@ -21,7 +21,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       fooBar: String!
       fooBarArray: [TestFooBarArray!]
       text: String!
-      randon: Float
+      random: Float
     }
     type TestFooBarArray {
       fooBar: String!
@@ -81,8 +81,8 @@ exports.createPages = async ({ actions: { createPage } }) => {
         pagesTotal: NUM_PAGES,
         sort: SORT
           ? {
-              fields: SORT === `fooBar` ? ["fooBar", "random"] : ["random"],
-            }
+            fields: SORT === `fooBar` ? ["fooBar", "random"] : ["random"],
+          }
           : undefined,
         regex: `/^${String(pageNum).slice(0, 1)}/`, // node id starts with the same number as page id
       },
