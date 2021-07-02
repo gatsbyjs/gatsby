@@ -1496,7 +1496,6 @@
       "groupName": "minor and patch dependencies for gatsby-cli",
       "groupSlug": "gatsby-cli-prod-minor",
       "matchPackageNames": [
-        "gatsby-recipes",
         "is-valid-path",
         "opentracing",
         "stack-trace"
@@ -1534,7 +1533,6 @@
       "groupName": "major dependencies for gatsby-cli",
       "groupSlug": "gatsby-cli-prod-major",
       "matchPackageNames": [
-        "gatsby-recipes",
         "is-valid-path",
         "opentracing",
         "stack-trace"
