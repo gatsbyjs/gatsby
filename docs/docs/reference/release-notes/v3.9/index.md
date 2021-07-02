@@ -28,7 +28,10 @@ Full description of the change
 
 ## Notable bugfixes & improvements
 
-- `package-name`: description via [PR #39999](https://github.com/gatsbyjs/gatsby/pull/39999)
+- `gatsby`: Bumped `express-graphql` to `0.12.0` to only have graphql v15 installed via [PR #31178](https://github.com/gatsbyjs/gatsby/pull/31178)
+- `gatsby`: Prevent generation of polyfill bundle if not needed via [PR #31993](https://github.com/gatsbyjs/gatsby/pull/31993)
+- `gatsby-plugin-netlify-cms`: Limit global styles to preview pane only via [PR #32106](https://github.com/gatsbyjs/gatsby/pull/32106)
+- `gatsby`: Add activity for writing out `page-data.json` files via [PR #31987](https://github.com/gatsbyjs/gatsby/pull/31987)
 
 ## Contributors
 
