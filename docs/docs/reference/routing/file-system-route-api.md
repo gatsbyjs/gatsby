@@ -23,7 +23,7 @@ To create collection routes, use curly braces (`{ }`) in your filenames to signi
 - `src/pages/products/{Product.fields__sku}.js` will generate a route like `/products/001923`
 - `src/pages/blog/{MarkdownRemark.parent__(File)__name}.js` will generate a route like `/blog/learning-gatsby`
 
-Gatsby creates a page for each node in a collection route. So if you have three markdown files that are blog posts, Gatsby will create the three pages from a collection route. As you add and remove markdown files, Gatsby will and and remove pages.
+Gatsby creates a page for each node in a collection route. So if you have three markdown files that are blog posts, Gatsby will create the three pages from a collection route. As you add and remove markdown files, Gatsby will add and remove pages.
 
 Collection routes can be created for any GraphQL data type. Creating new collection routes in Gatsby is a process
 of adding a source plugin, identifying the type and field to construct the route, and then adding the file.
