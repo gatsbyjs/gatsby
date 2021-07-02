@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.0...gatsby@3.10.0-next.1) (2021-07-02)
+
+### Bug Fixes
+
+- **gatsby:** add fallback for resolveType ([#32195](https://github.com/gatsbyjs/gatsby/issues/32195)) ([dfef2fb](https://github.com/gatsbyjs/gatsby/commit/dfef2fbeb49b8ad5a7a7a178f28d9b1ce358d757))
+
 # [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.9.0-next.1...gatsby@3.10.0-next.0) (2021-07-01)
 
 ### Bug Fixes

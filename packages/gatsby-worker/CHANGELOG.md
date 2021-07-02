@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-worker@0.1.0-next.0...gatsby-worker@0.1.0-next.1) (2021-07-02)
+
+### Features
+
+- **gatsby-worker:** add messaging api ([#32159](https://github.com/gatsbyjs/gatsby/issues/32159)) ([5a93e74](https://github.com/gatsbyjs/gatsby/commit/5a93e7485b2718b44a59e595c5b1e896fe9802cb))
+
 # 0.1.0-next.0 (2021-07-01)
 
 ### Features
