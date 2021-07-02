@@ -6,6 +6,7 @@ import {
   END,
   ERROR,
   RESULT,
+  CUSTOM_MESSAGE,
   ParentMessageUnion,
   ChildMessageUnion,
 } from "./types"
@@ -93,7 +94,11 @@ interface IWorkerInfo<T> {
  * Worker pool allows queueing execution of a function on all workers (via `.all` property)
  * as well as distributing execution across workers (via `.single` property)
  */
-export class WorkerPool<WorkerModuleExports = Record<string, unknown>> {
+export class WorkerPool<
+  WorkerModuleExports = Record<string, unknown>,
+  MessagesFromParent = unknown,
+  MessagesFromChild = MessagesFromParent
+> {
   /**
    * Schedule task execution on all workers. Useful for setting up workers
    */
@@ -115,6 +120,9 @@ export class WorkerPool<WorkerModuleExports = Record<string, unknown>> {
   private workers: Array<IWorkerInfo<keyof WorkerModuleExports>> = []
   private taskQueue = new TaskQueue<TaskInfo<keyof WorkerModuleExports>>()
   private idleWorkers: Set<IWorkerInfo<keyof WorkerModuleExports>> = new Set()
+  private listeners: Array<
+    (msg: MessagesFromChild, workerId: number) => void
+  > = []
 
   constructor(workerPath: string, options?: IWorkerOptions) {
     const single: Partial<WorkerPool<WorkerModuleExports>["single"]> = {}
@@ -226,6 +234,10 @@ export class WorkerPool<WorkerModuleExports = Record<string, unknown>> {
           workerInfo.currentTask = undefined
           this.checkForWork(workerInfo)
           task.reject(error)
+        } else if (msg[0] === CUSTOM_MESSAGE) {
+          for (const listener of this.listeners) {
+            listener(msg[1] as MessagesFromChild, workerId)
+          }
         }
       })
 
@@ -341,6 +353,22 @@ export class WorkerPool<WorkerModuleExports = Record<string, unknown>> {
         new TaskInfo({ assignedToWorker: workerInfo, functionName, args })
       )
     )
+  }
+
+  onMessage(
+    listener: (msg: MessagesFromChild, workerId: number) => void
+  ): void {
+    this.listeners.push(listener)
+  }
+
+  sendMessage(msg: MessagesFromParent, workerId: number): void {
+    const worker = this.workers[workerId - 1]
+    if (!worker) {
+      throw new Error(`There is no worker with "${workerId}" id.`)
+    }
+
+    const poolMsg = [CUSTOM_MESSAGE, msg]
+    worker.worker.send(poolMsg)
   }
 }
 
