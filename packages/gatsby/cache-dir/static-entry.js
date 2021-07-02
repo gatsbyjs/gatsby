@@ -1,6 +1,10 @@
 const React = require(`react`)
 const path = require(`path`)
-const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
+const {
+  renderToString,
+  renderToStaticMarkup,
+  pipeToNodeWritable,
+} = require(`react-dom/server`)
 const { ServerLocation, Router, isRedirect } = require(`@gatsbyjs/reach-router`)
 const { merge, flattenDeep, replace } = require(`lodash`)
 const { StaticQueryContext } = require(`gatsby`)
@@ -260,7 +264,27 @@ export default async function staticPage({
     // If no one stepped up, we'll handle it.
     if (!bodyHtml) {
       try {
-        bodyHtml = renderToString(bodyComponent)
+        // react 18 enabled
+        if (pipeToNodeWritable) {
+          const {
+            WritableAsPromise,
+          } = require(`./server-utils/writable-as-promise`)
+          const writableStream = new WritableAsPromise()
+          const { startWriting } = pipeToNodeWritable(
+            bodyComponent,
+            writableStream,
+            {
+              onCompleteAll() {
+                startWriting()
+              },
+              onError() {},
+            }
+          )
+
+          bodyHtml = await writableStream
+        } else {
+          bodyHtml = renderToString(bodyComponent)
+        }
       } catch (e) {
         // ignore @reach/router redirect errors
         if (!isRedirect(e)) throw e
