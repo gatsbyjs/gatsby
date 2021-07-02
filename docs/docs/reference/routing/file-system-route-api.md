@@ -38,9 +38,10 @@ There are some general syntax requirements when using collection routes:
 
 ### Nested routes
 
-In addition to files, you can also name folders with this syntax. This allows you to create nested routes. For example:
+You can use dynamic segments multiple times in a path. For example, you might want to nest product names within its product category. For example:
 
-- `src/pages/products/{Product.name}/{Product.color}.js` will generate a route like `/products/fidget-spinner/red`
+- `src/pages/products/{Product.category}/{Product.name}.js` will generate a route like `/products/toys/fidget-spinner`
+- `src/pages/products/{Product.category}/{Product.name}/{Product.color}.js` will generate a route like `/products/toys/fidget-spinner/red`
 - `src/pages/products/{Product.name}/template.js` will generate a route like `/products/fidget-spinner/template`
 
 ### Field syntax
