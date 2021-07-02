@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.9.0-next.0...gatsby-plugin-netlify-cms@5.10.0-next.0) (2021-07-01)
+
+### Bug Fixes
+
+- **plugin-netlify-cms:** exclude cms.css from index.html ([#32106](https://github.com/gatsbyjs/gatsby/issues/32106)) ([6ce7c62](https://github.com/gatsbyjs/gatsby/commit/6ce7c6292dc711501b612a56ecb2242b10739661))
+
+# [5.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.8.0-next.1...gatsby-plugin-netlify-cms@5.9.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+# [5.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.8.0-next.0...gatsby-plugin-netlify-cms@5.8.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
 # [5.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.7.0-next.2...gatsby-plugin-netlify-cms@5.8.0-next.0) (2021-06-03)
 
 **Note:** Version bump only for package gatsby-plugin-netlify-cms

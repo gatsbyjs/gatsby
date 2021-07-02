@@ -25,33 +25,13 @@ import {
   IGatsbyResolverContext,
 } from "./type-definitions"
 import { IGatsbyNode } from "../redux/types"
+import { IQueryResult } from "../datastore/types"
+import { GatsbyIterable } from "../datastore/common/iterable"
 
 type ResolvedLink = IGatsbyNode | Array<IGatsbyNode> | null
 
 type nestedListOfStrings = Array<string | nestedListOfStrings>
 type nestedListOfNodes = Array<IGatsbyNode | nestedListOfNodes>
-
-export function findMany<TSource, TArgs>(
-  typeName: string
-): GatsbyResolver<TSource, TArgs> {
-  return function findManyResolver(_source, args, context, info): any {
-    if (context.stats) {
-      context.stats.totalRunQuery++
-      context.stats.totalPluralRunQuery++
-    }
-
-    return context.nodeModel.runQuery(
-      {
-        query: args,
-        firstOnly: false,
-        type: info.schema.getType(typeName),
-        stats: context.stats,
-        tracer: context.tracer,
-      },
-      { path: context.path, connectionType: typeName }
-    )
-  }
-}
 
 export function findOne<TSource, TArgs>(
   typeName: string
@@ -75,34 +55,57 @@ export function findOne<TSource, TArgs>(
 
 type PaginatedArgs<TArgs> = TArgs & { skip?: number; limit?: number }
 
-export function findManyPaginated<TSource, TArgs, TNodeType>(
+export function findManyPaginated<TSource, TArgs>(
   typeName: string
 ): GatsbyResolver<TSource, PaginatedArgs<TArgs>> {
   return async function findManyPaginatedResolver(
-    source,
+    _source,
     args,
     context,
     info
-  ): Promise<IGatsbyConnection<TNodeType>> {
+  ): Promise<IGatsbyConnection<IGatsbyNode>> {
     // Peek into selection set and pass on the `field` arg of `group` and
     // `distinct` which might need to be resolved.
     const group = getProjectedField(info, `group`)
     const distinct = getProjectedField(info, `distinct`)
     const max = getProjectedField(info, `max`)
+    const min = getProjectedField(info, `min`)
+    const sum = getProjectedField(info, `sum`)
+
+    // Apply paddings for pagination
+    // (for previous/next node and also to detect if there is a previous/next page)
+    const skip = typeof args.skip === `number` ? Math.max(0, args.skip - 1) : 0
+    const limit = typeof args.limit === `number` ? args.limit + 1 : undefined
+
     const extendedArgs = {
       ...args,
       group: group || [],
       distinct: distinct || [],
       max: max || [],
+      min: min || [],
+      sum: sum || [],
+      skip,
+      limit,
     }
-
-    const result = await findMany<TSource, PaginatedArgs<TArgs>>(typeName)(
-      source,
-      extendedArgs,
-      context,
-      info
+    // Note: stats are passed to telemetry in src/commands/build.ts
+    if (context.stats) {
+      context.stats.totalRunQuery++
+      context.stats.totalPluralRunQuery++
+    }
+    const result = await context.nodeModel.findAll(
+      {
+        query: extendedArgs,
+        type: info.schema.getType(typeName),
+        stats: context.stats,
+        tracer: context.tracer,
+      },
+      { path: context.path, connectionType: typeName }
     )
-    return paginate(result, { skip: args.skip, limit: args.limit })
+    return paginate(result, {
+      resultOffset: skip,
+      skip: args.skip,
+      limit: args.limit,
+    })
   }
 }
 
@@ -111,7 +114,7 @@ interface IFieldConnectionArgs {
 }
 
 export const distinct: GatsbyResolver<
-  IGatsbyConnection<any>,
+  IGatsbyConnection<IGatsbyNode>,
   IFieldConnectionArgs
 > = function distinctResolver(source, args): Array<string> {
   const { field } = args
@@ -138,7 +141,7 @@ export const distinct: GatsbyResolver<
 }
 
 export const min: GatsbyResolver<
-  IGatsbyConnection<any>,
+  IGatsbyConnection<IGatsbyNode>,
   IFieldConnectionArgs
 > = function minResolver(source, args): number | null {
   const { field } = args
@@ -164,7 +167,7 @@ export const min: GatsbyResolver<
 }
 
 export const max: GatsbyResolver<
-  IGatsbyConnection<any>,
+  IGatsbyConnection<IGatsbyNode>,
   IFieldConnectionArgs
 > = function maxResolver(source, args): number | null {
   const { field } = args
@@ -189,7 +192,7 @@ export const max: GatsbyResolver<
 }
 
 export const sum: GatsbyResolver<
-  IGatsbyConnection<any>,
+  IGatsbyConnection<IGatsbyNode>,
   IFieldConnectionArgs
 > = function sumResolver(source, args): number | null {
   const { field } = args
@@ -217,12 +220,12 @@ type IGatsbyGroupReturnValue<NodeType> = Array<
 >
 
 export const group: GatsbyResolver<
-  IGatsbyConnection<any>,
+  IGatsbyConnection<IGatsbyNode>,
   PaginatedArgs<IFieldConnectionArgs>
-> = function groupResolver(source, args): IGatsbyGroupReturnValue<any> {
+> = function groupResolver(source, args): IGatsbyGroupReturnValue<IGatsbyNode> {
   const { field } = args
   const { edges } = source
-  const groupedResults: Record<string, Array<string>> = edges.reduce(
+  const groupedResults: Record<string, Array<IGatsbyNode>> = edges.reduce(
     (acc, { node }) => {
       const value =
         getValueAt(node, `__gatsby_resolved.${field}`) ||
@@ -244,9 +247,16 @@ export const group: GatsbyResolver<
 
   return Object.keys(groupedResults)
     .sort()
-    .reduce((acc: IGatsbyGroupReturnValue<any>, fieldValue: string) => {
+    .reduce((acc: IGatsbyGroupReturnValue<IGatsbyNode>, fieldValue: string) => {
+      const entries = groupedResults[fieldValue] || []
       acc.push({
-        ...paginate(groupedResults[fieldValue], args),
+        ...paginate(
+          {
+            entries: new GatsbyIterable(entries),
+            totalCount: async () => entries.length,
+          },
+          args
+        ),
         field,
         fieldValue,
       })
@@ -254,28 +264,34 @@ export const group: GatsbyResolver<
     }, [])
 }
 
-export function paginate<NodeType>(
-  results: Array<NodeType> = [],
-  { skip = 0, limit }: { skip?: number; limit?: number }
-): IGatsbyConnection<NodeType> {
-  if (results === null) {
-    results = []
+export function paginate(
+  results: IQueryResult,
+  params: { skip?: number; limit?: number; resultOffset?: number }
+): IGatsbyConnection<IGatsbyNode> {
+  const { resultOffset = 0, skip = 0, limit } = params
+  if (resultOffset > skip) {
+    throw new Error("Result offset cannot be greater than `skip` argument")
   }
+  const allItems = Array.from(results.entries)
 
-  const count = results.length
-  const items = results.slice(skip, limit && skip + limit)
+  const start = skip - resultOffset
+  const items = allItems.slice(start, limit && start + limit)
 
-  const pageCount = limit
-    ? Math.ceil(skip / limit) + Math.ceil((count - skip) / limit)
-    : skip
-    ? 2
-    : 1
+  const totalCount = results.totalCount
+  const pageCount = async (): Promise<number> => {
+    const count = await totalCount()
+    return limit
+      ? Math.ceil(skip / limit) + Math.ceil((count - skip) / limit)
+      : skip
+      ? 2
+      : 1
+  }
   const currentPage = limit ? Math.ceil(skip / limit) + 1 : skip ? 2 : 1
   const hasPreviousPage = currentPage > 1
-  const hasNextPage = skip + (limit || NaN) < count
+  const hasNextPage = limit ? allItems.length - start > limit : false
 
   return {
-    totalCount: count,
+    totalCount,
     edges: items.map((item, i, arr) => {
       return {
         node: item,
@@ -291,7 +307,7 @@ export function paginate<NodeType>(
       itemCount: items.length,
       pageCount,
       perPage: limit,
-      totalCount: count,
+      totalCount,
     },
   }
 }

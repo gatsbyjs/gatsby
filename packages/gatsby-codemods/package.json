@@ -1,6 +1,6 @@
 {
   "name": "gatsby-codemods",
-  "version": "2.8.0-next.0",
+  "version": "2.10.0-next.0",
   "description": "A collection of codemod scripts for use with JSCodeshift that help migrate to newer versions of Gatsby.",
   "main": "index.js",
   "scripts": {
@@ -24,10 +24,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/plugin-proposal-class-properties": "^7.13.0",
-    "@babel/plugin-syntax-jsx": "^7.12.13",
-    "@babel/plugin-syntax-typescript": "^7.12.13",
+    "@babel/core": "^7.14.0",
+    "@babel/plugin-proposal-class-properties": "^7.14.0",
+    "@babel/plugin-syntax-jsx": "^7.14.0",
+    "@babel/plugin-syntax-typescript": "^7.14.0",
     "@babel/runtime": "^7.14.0",
     "execa": "^5.1.1",
     "graphql": "^15.5.0",
@@ -35,8 +35,8 @@
     "recast": "^0.20.4"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.3",
-    "babel-preset-gatsby-package": "^1.8.0-next.0",
+    "@babel/cli": "^7.14.0",
+    "babel-preset-gatsby-package": "^1.10.0-next.0",
     "cross-env": "^7.0.3"
   },
   "engines": {

@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.9.0-next.1...gatsby-source-contentful@5.10.0-next.0) (2021-07-01)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** force base64 previews to be formatted as JPEG ([#32155](https://github.com/gatsbyjs/gatsby/issues/32155)) ([7c343ff](https://github.com/gatsbyjs/gatsby/commit/7c343ffd803c6ada0602678b9a6e6d164a58a4fb))
+
+# [5.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.9.0-next.0...gatsby-source-contentful@5.9.0-next.1) (2021-06-28)
+
+### Bug Fixes
+
+- **contentful:** reenable support for gif images ([#31986](https://github.com/gatsbyjs/gatsby/issues/31986)) ([a30aa0b](https://github.com/gatsbyjs/gatsby/commit/a30aa0b5c8e45e2634eb939e7533230b072eb9bd))
+- **gatsby-source-contentful:** Don't ignore errors thrown when fetching assets ([#24288](https://github.com/gatsbyjs/gatsby/issues/24288)) ([2d4a791](https://github.com/gatsbyjs/gatsby/commit/2d4a791810a7f4baaff8d047324ddbe252db952b))
+
+# [5.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.8.0-next.2...gatsby-source-contentful@5.9.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.8.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.8.0-next.1...gatsby-source-contentful@5.8.0-next.2) (2021-06-17)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** improve error message when dominant color can't be generated ([#31879](https://github.com/gatsbyjs/gatsby/issues/31879)) ([1f89646](https://github.com/gatsbyjs/gatsby/commit/1f89646707c338b1ee93a4c5cf0ee36cb89c2037))
+
+# [5.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.8.0-next.0...gatsby-source-contentful@5.8.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 # [5.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.7.0-next.2...gatsby-source-contentful@5.8.0-next.0) (2021-06-03)
 
 **Note:** Version bump only for package gatsby-source-contentful

@@ -213,8 +213,8 @@ const renderHTMLQueue = async (
 
   const renderHTML =
     stage === `build-html`
-      ? workerPool.renderHTMLProd
-      : workerPool.renderHTMLDev
+      ? workerPool.single.renderHTMLProd
+      : workerPool.single.renderHTMLDev
 
   const uniqueUnsafeBuiltinUsedStacks = new Set<string>()
 

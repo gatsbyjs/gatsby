@@ -4,10 +4,15 @@ import got from "got"
 import webpack from "webpack"
 import express from "express"
 import compression from "compression"
-import graphqlHTTP from "express-graphql"
+import { graphqlHTTP, OptionsData } from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
-import { formatError, FragmentDefinitionNode, Kind } from "graphql"
+import {
+  formatError,
+  FragmentDefinitionNode,
+  GraphQLFormattedError,
+  Kind,
+} from "graphql"
 import { isCI } from "gatsby-core-utils"
 import http from "http"
 import https from "https"
@@ -209,7 +214,7 @@ module.exports = {
   app.use(
     graphqlEndpoint,
     graphqlHTTP(
-      (): graphqlHTTP.OptionsData => {
+      (): OptionsData => {
         const { schema, schemaCustomization } = store.getState()
 
         if (!schemaCustomization.composer) {
@@ -232,10 +237,14 @@ module.exports = {
             context: {},
             customContext: schemaCustomization.context,
           }),
-          customFormatErrorFn(err): unknown {
+          customFormatErrorFn(
+            err
+          ): GraphQLFormattedError<{ stack: Array<string> }> {
             return {
               ...formatError(err),
-              stack: err.stack ? err.stack.split(`\n`) : [],
+              extensions: {
+                stack: err.stack ? err.stack.split(`\n`) : [],
+              },
             }
           },
         }
