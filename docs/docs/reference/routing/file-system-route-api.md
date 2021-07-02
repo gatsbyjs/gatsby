@@ -34,7 +34,7 @@ There are some general syntax requirements when using collection routes:
 
 - Dynamic segments of file paths must start and end with curly braces (`{ }`).
 - Types are case sensitive (e.g. `MarkdownRemark` or `contentfulMyContentType`). Check GraphiQL for the correct names.
-- Dynamic segments must include both a type and a field e.g. `{Type.field}` or `BlogPost.slug`.
+- Dynamic segments must include both a type and a field e.g. `{Type.field}` or `{BlogPost.slug}`.
 
 ### Nested routes
 
