@@ -49,9 +49,7 @@ export async function bootstrap(
   const workerPool = context.workerPool
   const directory = slash(context.store.getState().program.directory)
 
-  await Promise.all(
-    workerPool.all.loadConfigAndPlugins({ siteDirectory: directory })
-  )
+  workerPool.all.loadConfigAndPlugins({ siteDirectory: directory })
 
   await customizeSchema(context)
   await sourceNodes(context)
@@ -73,7 +71,7 @@ export async function bootstrap(
     saveStateForWorkers([`inferenceMetadata`])
   }
 
-  await Promise.all(workerPool.all.buildSchema())
+  workerPool.all.buildSchema()
 
   await extractQueries(context)
 
