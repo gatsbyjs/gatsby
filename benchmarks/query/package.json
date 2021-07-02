@@ -3,7 +3,7 @@
   "description": "Benchmarks for Gatsby query performance",
   "license": "MIT",
   "scripts": {
-    "bench": "set -x; gatsby clean; NUM_TYPES=${NUM_PAGES:-5} NUM_PAGES=${NUM_PAGES:-5000} node --max_old_space_size=2000 node_modules/.bin/gatsby build",
+    "bench": "set -x; gatsby clean; NUM_TYPES=${NUM_TYPES:-5} NUM_PAGES=${NUM_PAGES:-5000} node --max_old_space_size=2000 node_modules/.bin/gatsby build",
     "develop": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve"
