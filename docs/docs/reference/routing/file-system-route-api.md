@@ -42,7 +42,6 @@ You can use dynamic segments multiple times in a path. For example, you might wa
 
 - `src/pages/products/{Product.category}/{Product.name}.js` will generate a route like `/products/toys/fidget-spinner`
 - `src/pages/products/{Product.category}/{Product.name}/{Product.color}.js` will generate a route like `/products/toys/fidget-spinner/red`
-- `src/pages/products/{Product.name}/template.js` will generate a route like `/products/fidget-spinner/template`
 
 ### Field syntax
 
