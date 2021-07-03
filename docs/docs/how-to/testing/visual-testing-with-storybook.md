@@ -23,20 +23,20 @@ This command adds a set of boilerplate files for Storybook in your project. Howe
 
 ### Storybook version 6
 
-Storybook v6 uses Webpack v4 by default, while [Gatsby v3 uses webpack v5](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v2-to-v3/#webpack-upgraded-from-version-4-to-version-5). Hence, the Webpack version for Storybook should be upgraded to v5 to prevent conflicts.
+Storybook v6 uses Webpack v4 by default, while [Gatsby v3 uses webpack v5](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v2-to-v3/#webpack-upgraded-from-version-4-to-version-5). Hence, the Webpack version for Storybook should be upgraded to match that of Gatsby to prevent conflicts.
 
-Storybook v6.2 has added [experimental Webpack v5 support](https://storybook.js.org/blog/storybook-for-webpack-5/), however bound to work without issues with the upcoming v6.3 release. At the time of writing this guide, v6.3 is only available as beta and hence be used as such.
+Storybook v6.3 has added [official Webpack v5 support](https://storybook.js.org/blog/storybook-for-webpack-5/) and can be enabled in your Storybook setup by following the steps below.
 
 Upgrade the existing Storybook version
 
 ```shell
-npx sb@next upgrade --prerelease
+npx sb upgrade
 ```
 
 Add Webpack v5 builder
 
 ```shell
-npm i -D @storybook/builder-webpack5@next @storybook/manager-webpack5@next
+npm i -D @storybook/builder-webpack5 @storybook/manager-webpack5
 ```
 
 Then update your `.storybook/main.js` file to use Webpack v5
