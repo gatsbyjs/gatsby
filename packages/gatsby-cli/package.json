@@ -69,7 +69,7 @@
     "rollup": "^2.34.2",
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-internal": "^1.0.0",
-    "typescript": "^4.1.5"
+    "typescript": "^4.3.5"
   },
   "files": [
     "lib/",
