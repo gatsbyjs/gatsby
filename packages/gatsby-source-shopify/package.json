@@ -33,7 +33,7 @@
     "cross-env": "^7.0.3",
     "gatsby-plugin-image": "^1.10.0-next.0",
     "msw": "^0.27.1",
-    "prettier": "^2.2.1",
+    "prettier": "^2.3.2",
     "prettier-check": "^2.0.0",
     "tsc-watch": "^4.2.9",
     "typescript": "^4.3.5"

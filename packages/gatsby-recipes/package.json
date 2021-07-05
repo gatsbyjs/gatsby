@@ -47,7 +47,7 @@
     "mkdirp": "^0.5.1",
     "node-fetch": "^2.5.0",
     "pkg-dir": "^4.2.0",
-    "prettier": "^2.0.5",
+    "prettier": "^2.3.2",
     "prop-types": "^15.6.1",
     "remark-mdx": "^2.0.0-next.4",
     "remark-mdxjs": "^2.0.0-next.4",
