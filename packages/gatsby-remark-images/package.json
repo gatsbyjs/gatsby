@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.6",
-    "chalk": "^4.1.0",
+    "chalk": "^4.1.1",
     "cheerio": "^1.0.0-rc.9",
     "gatsby-core-utils": "^2.10.0-next.0",
     "is-relative-url": "^3.0.0",
