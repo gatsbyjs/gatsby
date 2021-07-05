@@ -6610,13 +6610,13 @@ babel-plugin-apply-mdx-type-prop@^2.0.0-next.7:
     "@babel/helper-plugin-utils" "7.10.4"
     "@mdx-js/util" "^2.0.0-next.7"
 
-babel-plugin-codegen@^4.0.0:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-codegen/-/babel-plugin-codegen-4.0.1.tgz#bf234c5fb31d8477bc1484f00d920bae163fa268"
-  integrity sha512-cehTkKAGgENw+ftEngX/zVfFqMxFFItsatwmLHfxVLJCnkJvREQhsCb5/WNrNdP7L3tbwGgd5JQt9dFth+p24g==
+babel-plugin-codegen@^4.1.0:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/babel-plugin-codegen/-/babel-plugin-codegen-4.1.4.tgz#e00ff59aef90dbfd41f2dec74138c46416f524d2"
+  integrity sha512-WWqjrCgi/+bOA9Vnx0k6tbuyDVzJaMFcBlzBpw02r9yrW8W4qWu+ObZE8lbM1g57IX+tHHS4WbO0zW40sDLGPA==
   dependencies:
-    "@babel/runtime" "^7.9.2"
-    babel-plugin-macros "^2.8.0"
+    "@babel/runtime" "^7.12.5"
+    babel-plugin-macros "^3.0.1"
     require-from-string "^2.0.2"
 
 babel-plugin-dev-expression@^0.2.2:
@@ -8284,12 +8284,12 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
-codegen.macro@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/codegen.macro/-/codegen.macro-4.0.0.tgz#7f57a5c2d2c72e9c1c3dda71daba0e64c65a44ae"
-  integrity sha512-7K7BXVLmsO4shE/+2KhzCjP7uPbqwbkY4o5EJaJouncVY7IkZozpnbUex8xjWB9AzEV9aWpnXe0+oLbEuPj9Ew==
+codegen.macro@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/codegen.macro/-/codegen.macro-4.1.0.tgz#8d822e8f8294692d32ecb29f04240f1e6cd36018"
+  integrity sha512-T0A8vdX9SkhT00cd7nWQwlg8CT2qQwp1o2+ZD7Wqx38ABK0kJvhk/IJTjNgnE1W35dE98+OzLr1zluVREz5bPg==
   dependencies:
-    babel-plugin-codegen "^4.0.0"
+    babel-plugin-codegen "^4.1.0"
 
 codemirror-graphql@^0.15.2:
   version "0.15.2"
@@ -9017,20 +9017,15 @@ core-js-pure@^3.0.0:
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.6.4.tgz#4bf1ba866e25814f149d4e9aaa08c36173506e3a"
   integrity sha512-epIhRLkXdgv32xIUFaaAry2wdxZYBi6bgM7cB136dzzXXa+dFyRLTZeLUJxnd8ShrmyVXBub63n2NHo2JAt8Cw==
 
-core-js@3.9.0:
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.9.0.tgz#790b1bb11553a2272b36e2625c7179db345492f8"
-  integrity sha512-PyFBJaLq93FlyYdsndE5VaueA9K5cNB7CGzeCj191YYLhkQM0gdZR2SKihM70oF0wdqKSKClv/tEBOpoRmdOVQ==
+core-js@3.15.2, core-js@^3.0.0, core-js@^3.10.0, core-js@^3.14.0, core-js@^3.6.5, core-js@^3.8.1, core-js@^3.9.0:
+  version "3.15.2"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.15.2.tgz#740660d2ff55ef34ce664d7e2455119c5bdd3d61"
+  integrity sha512-tKs41J7NJVuaya8DxIOCnl8QuPHx5/ZVbFo1oKgVl1qHFBBrDctzQGtuLjPpRdNTWmKPH6oEvgN/MUID+l485Q==
 
 core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0, core-js@^2.6.5:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
   integrity sha512-5wjnpaT/3dV+XB4borEsnAYQchn00XSgTAWKDkEqv+K8KevjbzmofK6hfJ9TZIlpj2N0xQpazy7PiRQiWHqzWg==
-
-core-js@^3.0.0, core-js@^3.10.0, core-js@^3.14.0, core-js@^3.6.5, core-js@^3.8.1, core-js@^3.9.0:
-  version "3.14.0"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.14.0.tgz#62322b98c71cc2018b027971a69419e2425c2a6c"
-  integrity sha512-3s+ed8er9ahK+zJpp9ZtuVcDoFzHNiZsPbNAAE4KXgrRHbjSqqNN6xGSXq6bq7TZIbKj4NLrLb6bJ5i+vSVjHA==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -28883,10 +28878,10 @@ whatwg-fetch@2.0.4:
   version "2.0.4"
   resolved "http://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
 
-whatwg-fetch@^3.4.1, whatwg-fetch@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.5.0.tgz#605a2cd0a7146e5db141e29d1c62ab84c0c4c868"
-  integrity sha512-jXkLtsR42xhXg7akoDKvKWE40eJeI+2KZqcp2h3NsOrRnDvtWX36KcKl30dy+hxECivdk2BVUHVNrPtoMBUx6A==
+whatwg-fetch@^3.5.0, whatwg-fetch@^3.6.2:
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.6.2.tgz#dced24f37f2624ed0281725d51d0e2e3fe677f8c"
+  integrity sha512-bJlen0FcuU/0EMLrdbJ7zOnW6ITZLrZMIarMUVmdKtsGvZna8vxKYaexICWPfZ8qwf9fzNq+UEIZrnSaApt6RA==
 
 whatwg-mimetype@^2.1.0, whatwg-mimetype@^2.2.0, whatwg-mimetype@^2.3.0:
   version "2.3.0"
