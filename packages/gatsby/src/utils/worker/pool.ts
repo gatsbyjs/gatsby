@@ -1,22 +1,23 @@
-import Worker from "jest-worker"
+import { WorkerPool } from "gatsby-worker"
 import { chunk } from "lodash"
 import reporter from "gatsby-cli/lib/reporter"
 import { cpuCoreCount } from "gatsby-core-utils"
 
-import type { CreateWorkerPoolType } from "./types"
 import { IGroupedQueryIds } from "../../services"
 
-export type GatsbyWorkerPool = CreateWorkerPoolType<typeof import("./child")>
+export type GatsbyWorkerPool = WorkerPool<typeof import("./child")>
 
 export const create = (): GatsbyWorkerPool => {
-  process.env.GATSBY_WORKER_POOL_WORKER = `true`
-  const worker = new Worker(require.resolve(`./child`), {
-    numWorkers: Math.max(1, cpuCoreCount() - 1),
-    forkOptions: {
-      silent: false,
-    },
-  }) as GatsbyWorkerPool
-  delete process.env.GATSBY_WORKER_POOL_WORKER
+  const worker = new WorkerPool<typeof import("./child")>(
+    require.resolve(`./child`),
+    {
+      numWorkers: Math.max(1, cpuCoreCount() - 1),
+      env: {
+        GATSBY_WORKER_POOL_WORKER: `true`,
+      },
+    }
+  )
+
   return worker
 }
 
@@ -38,7 +39,7 @@ export async function runQueriesInWorkersQueue(
 
   for (const segment of staticQuerySegments) {
     promises.push(
-      pool
+      pool.single
         .runQueries({ pageQueryIds: [], staticQueryIds: segment })
         .then(() => {
           activity.tick(segment.length)
@@ -48,7 +49,7 @@ export async function runQueriesInWorkersQueue(
 
   for (const segment of pageQuerySegments) {
     promises.push(
-      pool
+      pool.single
         .runQueries({ pageQueryIds: segment, staticQueryIds: [] })
         .then(() => {
           activity.tick(segment.length)

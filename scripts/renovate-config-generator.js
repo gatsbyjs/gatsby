@@ -189,6 +189,7 @@ monorepoPackages.forEach(pkg => {
 
     for (const dep in pkgJson.dependencies) {
       if (
+        !monorepoPackages.includes(dep) &&
         pkgJson.dependencies[dep] &&
         (pkgJson.dependencies[dep].startsWith(`~0.`) ||
           pkgJson.dependencies[dep].startsWith(`^0.`))
@@ -296,7 +297,7 @@ const renovateConfig = {
     dependencyDashboardApproval: true,
   },
   dependencyDashboard: true,
-  ignoreDeps: [`react`, `react-dom`, `uuid`],
+  ignoreDeps: [`react`, `react-dom`, `uuid`, `gatsby-interface`],
   rangeStrategy: `bump`,
   bumpVersion: null,
   prHourlyLimit: 0,

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.9.0-next.1...gatsby-source-contentful@5.10.0-next.0) (2021-07-01)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** force base64 previews to be formatted as JPEG ([#32155](https://github.com/gatsbyjs/gatsby/issues/32155)) ([7c343ff](https://github.com/gatsbyjs/gatsby/commit/7c343ffd803c6ada0602678b9a6e6d164a58a4fb))
+
 # [5.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.9.0-next.0...gatsby-source-contentful@5.9.0-next.1) (2021-06-28)
 
 ### Bug Fixes

@@ -59,7 +59,7 @@ Gatsby has its own [GraphQL](https://graphql.org/) data layer where it keeps all
 
 First, your data is stored in one or more **sources**. That source might be a folder on your computer's filesystem, a content management system (CMS) like WordPress, or a database. You might even have multiple data sources!
 
-How do you get from its source into the data layer? By adding a type of plugin to your site called a **source plugin**. Each source plugin is designed to communicate with a specific source. When you build your site, each source plugin pulls data from its particular source and adds it to the GraphQL data layer for your site.
+How do you get data from its source into the data layer? By adding a type of plugin to your site called a **source plugin**. Each source plugin is designed to communicate with a specific source. When you build your site, each source plugin pulls data from its particular source and adds it to your site's GraphQL data layer.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -97,8 +97,8 @@ There are three main sections of the GraphiQL interface:
     * The blue items correspond to the different data fields you can query for.
     * The purple items accept additional arguments that you can use to filter down the data returned in the response.
 * **Query Editor:** This is the middle section, which you can use to write out a query to test.
-    * You can add fields to your query by checking the boxes for different fields in the Explorer pane. Or, if you'd prefer, you can type the fields directly into the Query Editor. (You can press `Ctrl + Space` on your keyboard to bring up an autocompletion box that shows what fields are available to you.)
-    * To execute the query in the Query Editor, click the "Execute Query" button (it looks like a "play" button triangle) at the top of the page.
+    * You can add fields to your query by checking the boxes for different fields in the Explorer pane. Or, if you'd prefer, you can type the fields directly into the Query Editor. (Pro Tip: You can press `Ctrl + Space` on your keyboard to bring up an autocompletion box that shows what fields are available to you.)
+    * To execute the query in the Query Editor, click the "Execute Query" button (it looks like a "play" triangle button) at the top of the page.
 * **Result Window:** This is the section on the right, which shows you the result of running the query in the Query Editor.
 
 </Collapsible>
@@ -111,7 +111,7 @@ Try creating and running a few queries by doing the following:
 
 1. Click the button at the top of the page (that looks like a "play" button) to execute the query. Look at the data returned in the Result window.
 
-In the next section, you'll learn more about how to use specific fields. For now, take a minute or two to explore the different fields. What kinds of data is already available to you in the data layer?
+In the next section, you'll learn more about how to use specific fields. For now, take a minute or two to explore the different fields. What kinds of data are already available to you in the data layer?
 
 ## Queries in building-block components: Pull the site title into the `Layout` component
 
@@ -138,13 +138,28 @@ module.exports = {
 };
 ```
 
-This data got added to your `gatsby-config.js` file automatically when you used the `gatsby new` command in Part 1. It also gets pulled into the GraphQL data layer automatically, so you don't need a source plugin for this first section.
+This data was added to your `gatsby-config.js` file automatically when you used the `gatsby new` command in [Part 1](/docs/tutorial/part-1). It also gets pulled into the GraphQL data layer automatically, so you don't need a source plugin for this first section.
 
 Since you don't need to set up a source plugin, you can jump straight into GraphiQL to build your GraphQL query:
 
 1. In your web browser, go to `localhost:8000/___graphiql` to see the GraphiQL interface.
 2. In the Explorer pane, open the dropdown for the `site` field.
-3. Within the `site` field, open the dropdown for the `siteMetadata` field. This corresponds to the `siteMetadata` object in your `gatsby-config.js` file.
+3. Within the `site` field, open the *second* dropdown for the `siteMetadata` field (the blue one). This corresponds to the `siteMetadata` object in your `gatsby-config.js` file.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Seeing Double?**
+
+You might have noticed that there are two different dropdowns for `siteMetadata` (and for every field under the `site` dropdown).
+
+The first one (the purple one with a colon, `siteMetadata:`) is actually an **argument** attached to the `site` field. You can use the purple dropdowns to filter which pieces of data from the data layer get returned in the response. (You'll see an example of this later on.)
+
+The second one (the blue one without a colon, `siteMetadata`) is what you'll use more frequently. This one adds the actual `siteMetadata` field to your query, which tells GraphQL to include that field in your response data.
+
+Try toggling each of the dropdowns in the Explorer and see how the query in the Query Editor pane changes. What differences do you notice?
+
+</Announcement>
+
 4. Within `siteMetadata`, check the box next to the `title` field. The query in your query editor should look like this:
 ```graphql
 query MyQuery {
@@ -155,7 +170,7 @@ query MyQuery {
   }
 }
 ```
-5. Click the button to run the query. The response in the Result Window should look something like the object below. Notice how the structure of the response matches the structure of the fields in the query.
+5. Click the Execute Query button (the "play" triangle at the top of the page) to run the query. The response in the Result Window should look something like the object below. Notice how the structure of the `data` object in the response matches the structure of the fields in the query.
 ```json
 {
   "data": {
@@ -247,7 +262,7 @@ For example, if you need data from both the `site` field and the `siteBuildMetad
 
 ```js
 const data = useStaticQuery(graphql`
-  query HeaderQuery {
+  query {
     site {
       siteMetadata {
         title
@@ -329,7 +344,7 @@ export default Layout
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Note:** If you add a line to print out the value of `data` to the console, you'll see that the response has a slightly different structure from what it looked like in GraphiQL's Result Window. Specifically, `data` will only contain the object that matches the `data` field in the Result Window.
+**Note:** If you add a line to print out the value of your `data` variable to the console, you'll see that the response has a slightly different structure from what it looked like in GraphiQL's Result Window. Specifically, your `data` variable will only contain the object that matches the `data` field in the Result Window.
 
 So if your GraphiQL Result Window showed this:
 
@@ -598,7 +613,7 @@ npm install gatsby-source-filesystem
 
 </Announcement>
 
-1. Configure `gatsby-source-filesystem` in your `gatsby-config.js` file. Since `gatsby-source-filesystem` requires some additional configuration options, you'll use a configuration object instead of a string.
+1. Configure `gatsby-source-filesystem` in your `gatsby-config.js` file. Since `gatsby-source-filesystem` requires some additional configuration options, you'll use a configuration object instead of a string. The code example below shows how to "source" files from your `blog` directory (in other words, how to add them to the data layer).
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -626,7 +641,7 @@ module.exports = {
 
 **A closer look at the configuration options:**
 
-When your site builds, `gatsby-source-filesystem` adds all the files in the folder specified by the `path` option to the data layer.
+When your site builds, `gatsby-source-filesystem` adds all the files in the folder specified by the `path` option to the data layer. ([`__dirname`](https://nodejs.org/docs/latest/api/modules.html#modules_dirname) is a variable from Node.js that stores the absolute path for the directory that contains the file currently being run.)
 
 The `name` option in the configuration object gets set to the `sourceInstanceName` field for each file. This comes in handy when you want to source files from multiple folders. By giving each folder a different `name` option, you can build GraphQL queries that filter down to only a particular folder.
 
@@ -634,7 +649,7 @@ The `name` option in the configuration object gets set to the `sourceInstanceNam
 
 2. Restart your local development server to make sure it picks up the configuration changes and adds your files to the data layer.
 
-3. In GraphiQL, try exploring the different fields within `allFile` to see what sorts of data you get back. Then build a query using the `allFile` field to get the name of all the files in your blog folder:
+3. You can use the `allFile` field to request data about multiple files at once. In GraphiQL, try exploring the different fields within `allFile` to see what sorts of data you get back. Then build a query using the `allFile` field to get the name of all the files in your blog folder:
 
 ```graphql
 query MyQuery {
@@ -776,7 +791,17 @@ export const query = graphql`
 export default BlogPage
 ```
 
-3. Add in `data` prop to the function definition. Then map over the `nodes` array and render the filename for each of your posts.
+3. Add in the `data` prop to the function definition. Then replace the placeholder `<p>` element with a list of the filenames for your posts. Use the JavaScript array `.map()` method to iterate over the `nodes` array and render the filename for each post.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Syntax Hint:** In JavaScript, arrays have a built-in [`.map()` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map), which you can use to iterate over the elements in the array.
+
+`.map()` takes in a function, which it runs on each element in the array. In the code block below, you're using `.map()` to loop over each of the nodes in `data.allFile.nodes` and return a React element that wraps the node's `name` in an `<li>` element.
+
+In React, when you use the `.map()` method to render a list of elements, you should give each element in the list a unique `key` prop. This helps React keep track of what values have changed and need to be rerendered. For more on rendering lists in React, check out the [React Docs: Lists and Keys](https://reactjs.org/docs/lists-and-keys.html).
+
+</Announcement>
 
 ```js:title=src/pages/blog.js
 import * as React from 'react'
@@ -813,16 +838,6 @@ export const query = graphql`
 
 export default BlogPage
 ```
-
-<Announcement style={{marginBottom: "1.5rem"}}>
-
-**Syntax Hint:** In JavaScript, arrays have a built-in [`.map()` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map), which you can use to iterate over the elements in the array.
-
-`.map()` takes in a function, which it runs on each element in the array. In the code block above, you're using `.map()` to loop over each of the nodes in `data.allFile.nodes` and return a React element that wraps the node's `name` in an `<li>` element.
-
-In React, when you use the `.map()` method to render a list of elements, you should give each element in the list a unique `key` prop. This helps React keep track of what values have changed and need to be rerendered. For more on rendering lists in React, check out the [React Docs: Lists and Keys](https://reactjs.org/docs/lists-and-keys.html).
-
-</Announcement>
 
 4. Now, when you look at your blog page in a web browser, you should see a list with the filenames for each of your posts:
 

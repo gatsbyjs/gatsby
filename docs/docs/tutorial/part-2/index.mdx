@@ -505,17 +505,9 @@ export default Layout
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Syntax Hint**: You might have noticed that the `Layout` component is using a slightly different syntax for its props.
+**Syntax Hint**: You might have noticed that the `Layout` component uses a slightly different syntax for its props.
 
-Now it looks like this:
-
-```js
-const Layout = ({ pageTitle, children }) => {
-  ...
-}
-```
-
-instead of this:
+Now instead of looking like this:
 
 ```js
 const Layout = (props) => {
@@ -523,9 +515,17 @@ const Layout = (props) => {
 }
 ```
 
+...it looks like this:
+
+```js
+const Layout = ({ pageTitle, children }) => {
+  ...
+}
+```
+
 This is a JavaScript technique called **destructuring**. It's basically a shortcut for defining variables based on an object's properties. It's like saying, "Take the object that gets passed into this function, and unpack its `pageTitle` and `children` properties into their own variables."
 
-It's a shorter way to do the following:
+In other words, it's a shorter way to do the following:
 
 ```javascript
 const Layout = (props) => {
@@ -750,7 +750,7 @@ const Layout = ({ pageTitle, children }) => {
 export default Layout
 ```
 
-<Announcement>
+<Announcement style={{marginBottom: "1.5rem"}}>
 
 **Syntax Hint:** In CSS, the convention is to name classes using kebab case (like `.nav-links`). But in JavaScript, the convention is to name variables using camel case (like `navLinks`).
 

@@ -44,6 +44,9 @@ const IndexPage = ({ data }) => (
     >
       Go to client route splat (splat: blah/blah/blah)
     </Link>
+    <Link to="/new-page" data-testid="hot-reloading-new-file">
+      Created by hot-reloading/new-file.js
+    </Link>
     <h2>Blog posts</h2>
     <ul>
       {data.posts.edges.map(({ node }) => (
