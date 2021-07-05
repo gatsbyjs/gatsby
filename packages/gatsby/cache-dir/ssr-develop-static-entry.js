@@ -4,7 +4,7 @@ import fs from "fs"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { get, merge, isObject, flatten, uniqBy, concat } from "lodash"
 import nodePath from "path"
-import apiRunner from "./api-runner-ssr"
+import { apiRunner, apiRunnerAsync } from "./api-runner-ssr"
 import { grabMatchParams } from "./find-path"
 import syncRequires from "$virtual/ssr-sync-requires"
 
@@ -48,7 +48,13 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
+export default async function staticPage(
+  pagePath,
+  isClientOnlyPage,
+  publicDir,
+  error,
+  callback
+) {
   let bodyHtml = ``
   let headComponents = [
     <meta key="environment" name="note" content="environment=development" />,
@@ -85,7 +91,7 @@ export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
     ])
   }
 
-  const generateBodyHTML = () => {
+  const generateBodyHTML = async () => {
     const setHeadComponents = components => {
       headComponents = headComponents.concat(components)
     }
@@ -151,7 +157,7 @@ export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
 
     const pageData = getPageData(pagePath)
 
-    const { componentChunkName, staticQueryHashes = [] } = pageData
+    const { componentChunkName } = pageData
 
     let scriptsAndStyles = flatten(
       [`commons`].map(chunkKey => {
@@ -192,7 +198,7 @@ export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
       })
     )
       .filter(s => isObject(s))
-      .sort((s1, s2) => (s1.rel == `preload` ? -1 : 1)) // given priority to preload
+      .sort((s1, _s2) => (s1.rel == `preload` ? -1 : 1)) // given priority to preload
 
     scriptsAndStyles = uniqBy(scriptsAndStyles, item => item.name)
 
@@ -275,7 +281,7 @@ export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
     ).pop()
 
     // Let the site or plugin render the page component.
-    apiRunner(`replaceRenderer`, {
+    await apiRunnerAsync(`replaceRenderer`, {
       bodyComponent,
       replaceBodyHTMLString,
       setHeadComponents,
@@ -321,7 +327,7 @@ export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
     return bodyHtml
   }
 
-  const bodyStr = generateBodyHTML()
+  const bodyStr = await generateBodyHTML()
 
   const htmlElement = React.createElement(Html, {
     ...bodyProps,

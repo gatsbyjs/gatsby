@@ -1,9 +1,16 @@
 import "jest-extended"
 import { WorkerPool } from "../"
 import { isPromise } from "../utils"
+import { MessagesFromChild, MessagesFromParent } from "./fixtures/test-child"
 
 describe(`gatsby-worker`, () => {
-  let workerPool: WorkerPool<typeof import("./fixtures/test-child")> | undefined
+  let workerPool:
+    | WorkerPool<
+        typeof import("./fixtures/test-child"),
+        MessagesFromParent,
+        MessagesFromChild
+      >
+    | undefined
   const numWorkers = 2
 
   async function endWorkerPool(): Promise<void> {
@@ -14,17 +21,12 @@ describe(`gatsby-worker`, () => {
   }
 
   beforeEach(() => {
-    workerPool = new WorkerPool<typeof import("./fixtures/test-child")>(
-      require.resolve(`./fixtures/test-child`),
-      {
-        numWorkers,
-        env: {
-          NODE_OPTIONS: `--require ${require.resolve(
-            `./fixtures/ts-register`
-          )}`,
-        },
-      }
-    )
+    workerPool = new WorkerPool(require.resolve(`./fixtures/test-child`), {
+      numWorkers,
+      env: {
+        NODE_OPTIONS: `--require ${require.resolve(`./fixtures/ts-register`)}`,
+      },
+    })
   })
 
   afterEach(endWorkerPool)
@@ -46,6 +48,8 @@ describe(`gatsby-worker`, () => {
         "syncThrow",
         "asyncThrow",
         "async100ms",
+        "setupPingPongMessages",
+        "getWasPonged",
       ]
     `)
     // .all and .single should have same methods
@@ -280,6 +284,52 @@ describe(`gatsby-worker`, () => {
       expect(executedOnWorker2).toEqual(
         executedOnWorker2.sort((a, b) => a.taskId - b.taskId)
       )
+    })
+  })
+
+  describe(`messaging`, () => {
+    it(`worker can receive and send messages`, async () => {
+      if (!workerPool) {
+        fail(`worker pool not created`)
+      }
+
+      workerPool.onMessage((msg, workerId) => {
+        if (msg.type === `PING`) {
+          if (!workerPool) {
+            fail(`worker pool not created`)
+          }
+          workerPool.sendMessage({ type: `PONG` }, workerId)
+        }
+      })
+
+      // baseline - workers shouldn't be PONGed yet
+      expect(await Promise.all(workerPool.all.getWasPonged()))
+        .toMatchInlineSnapshot(`
+        Array [
+          false,
+          false,
+        ]
+      `)
+
+      await Promise.all(workerPool.all.setupPingPongMessages())
+
+      expect(await Promise.all(workerPool.all.getWasPonged()))
+        .toMatchInlineSnapshot(`
+        Array [
+          true,
+          true,
+        ]
+      `)
+    })
+
+    it(`sending message to worker that doesn't exist throws error`, async () => {
+      expect(() => {
+        if (!workerPool) {
+          fail(`worker pool not created`)
+        }
+
+        workerPool.sendMessage({ type: `PONG` }, 9001)
+      }).toThrowError(`There is no worker with "9001" id.`)
     })
   })
 })

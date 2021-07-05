@@ -111,7 +111,7 @@ exports.sourceNodes = async (
     changesActivity.start()
 
     try {
-      const { secret, action, id, data } = webhookBody
+      const { secret, action, data } = webhookBody
       if (pluginOptions.secret && pluginOptions.secret !== secret) {
         reporter.warn(
           `The secret in this request did not match your plugin options secret.`
@@ -120,8 +120,27 @@ exports.sourceNodes = async (
         return
       }
       if (action === `delete`) {
-        actions.deleteNode(getNode(createNodeId(id)))
-        reporter.log(`Deleted node: ${id}`)
+        let nodesToDelete = data
+        if (!Array.isArray(data)) {
+          nodesToDelete = [data]
+        }
+
+        for (const nodeToDelete of nodesToDelete) {
+          const nodeIdToDelete = createNodeId(
+            createNodeIdWithVersion(
+              nodeToDelete.id,
+              nodeToDelete.type,
+              getOptions().languageConfig
+                ? nodeToDelete.attributes?.langcode
+                : `und`,
+              nodeToDelete.attributes?.drupal_internal__revision_id,
+              entityReferenceRevisions
+            )
+          )
+          actions.deleteNode(getNode(nodeIdToDelete))
+          reporter.log(`Deleted node: ${nodeIdToDelete}`)
+        }
+
         changesActivity.end()
         return
       }

@@ -26,6 +26,7 @@ import {
 } from "./type-definitions"
 import { IGatsbyNode } from "../redux/types"
 import { IQueryResult } from "../datastore/types"
+import { GatsbyIterable } from "../datastore/common/iterable"
 
 type ResolvedLink = IGatsbyNode | Array<IGatsbyNode> | null
 
@@ -249,7 +250,13 @@ export const group: GatsbyResolver<
     .reduce((acc: IGatsbyGroupReturnValue<IGatsbyNode>, fieldValue: string) => {
       const entries = groupedResults[fieldValue] || []
       acc.push({
-        ...paginate({ entries, totalCount: async () => entries.length }, args),
+        ...paginate(
+          {
+            entries: new GatsbyIterable(entries),
+            totalCount: async () => entries.length,
+          },
+          args
+        ),
         field,
         fieldValue,
       })

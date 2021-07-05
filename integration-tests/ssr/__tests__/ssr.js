@@ -45,7 +45,12 @@ describe(`SSR`, () => {
     const rawDevHtml = await fetchUntil(pageUrl, res => {
       return res
     }).then(res => res.text())
-    expect(rawDevHtml).toMatchSnapshot()
+
+    expect(rawDevHtml).toMatch("<h1>Failed to Server Render (SSR)</h1>")
+    expect(rawDevHtml).toMatch("<h2>Error message:</h2>")
+    expect(rawDevHtml).toMatch("<p>window is not defined</p>")
+    // html should contain stacktrace to bad-page
+    expect(rawDevHtml).toMatch(/at Component \(.+?(?=bad-page.js)[^)]+\)/)
     await fs.remove(dest)
 
     // After the page is gone, it'll 404.

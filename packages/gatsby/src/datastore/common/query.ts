@@ -1,4 +1,6 @@
 import * as _ from "lodash"
+import { prepareRegex } from "../../utils/prepare-regex"
+import { makeRe } from "micromatch"
 
 export interface IDbQueryQuery {
   type: "query"
@@ -27,13 +29,41 @@ export enum DbComparator {
   GLOB = `$glob`,
 }
 
+export type FilterValueNullable =  // TODO: merge with DbComparatorValue
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | RegExp // Only valid for $regex
+  | Array<string | number | boolean | null | undefined>
+
+// This is filter value in most cases
+export type FilterValue =
+  | string
+  | number
+  | boolean
+  | RegExp // Only valid for $regex
+  | Array<string | number | boolean>
+
+// The value is an object with arbitrary keys that are either filter values or,
+// recursively, an object with the same struct. Ie. `{a: {a: {a: 2}}}`
+export interface IInputQuery {
+  [key: string]: FilterValueNullable | IInputQuery
+}
+// Similar to IInputQuery except the comparator leaf nodes will have their
+// key prefixed with `$` and their value, in some cases, normalized.
+export interface IPreparedQueryArg {
+  [key: string]: FilterValueNullable | IPreparedQueryArg
+}
+
 const DB_COMPARATOR_VALUES: Set<string> = new Set(Object.values(DbComparator))
 
 function isDbComparator(value: string): value is DbComparator {
   return DB_COMPARATOR_VALUES.has(value)
 }
 
-type DbComparatorValue = string | number | boolean | RegExp | null
+export type DbComparatorValue = string | number | boolean | RegExp | null
 
 export interface IDbFilterStatement {
   comparator: DbComparator
@@ -86,6 +116,38 @@ function createDbQueriesFromObjectNested(
   )
 }
 
+/**
+ * Takes a DbQuery structure and returns a dotted representation of a field referenced in this query.
+ *
+ * Example:
+ * ```js
+ *   const query = createDbQueriesFromObject({
+ *     foo: { $elemMatch: { id: { $eq: 5 }, test: { $gt: 42 } } },
+ *     bar: { $in: [`bar`] }
+ *   })
+ *   const result = query.map(dbQueryToDottedField)
+ * ```
+ * Returns:
+ *   [`foo.id`, `foo.test`, `bar`]
+ */
+export function dbQueryToDottedField(query: DbQuery): string {
+  const path: Array<string> = [...query.path]
+  let currentQuery = query
+  while (currentQuery.type === `elemMatch`) {
+    currentQuery = currentQuery.nestedQuery
+    path.push(...currentQuery.path)
+  }
+  return path.join(`.`)
+}
+
+export function getFilterStatement(dbQuery: DbQuery): IDbFilterStatement {
+  let currentQuery = dbQuery
+  while (currentQuery.type !== `query`) {
+    currentQuery = currentQuery.nestedQuery
+  }
+  return currentQuery.query
+}
+
 export function prefixResolvedFields(
   queries: Array<DbQuery>,
   resolvedFields: Record<string, unknown>
@@ -104,6 +166,44 @@ export function prefixResolvedFields(
     }
   })
   return queries
+}
+
+/**
+ * Transforms filters coming from input GraphQL query to mongodb-compatible format
+ * (by prefixing comparators with "$").
+ *
+ * Example:
+ *   { foo: { eq: 5 } } -> { foo: { $eq: 5 }}
+ */
+export function prepareQueryArgs(
+  filterFields: Array<IInputQuery> | IInputQuery = {}
+): IPreparedQueryArg {
+  const filters = {}
+  Object.keys(filterFields).forEach(key => {
+    const value = filterFields[key]
+    if (_.isPlainObject(value)) {
+      filters[key === `elemMatch` ? `$elemMatch` : key] = prepareQueryArgs(
+        value as IInputQuery
+      )
+    } else {
+      switch (key) {
+        case `regex`:
+          if (typeof value !== `string`) {
+            throw new Error(
+              `The $regex comparator is expecting the regex as a string, not an actual regex or anything else`
+            )
+          }
+          filters[`$regex`] = prepareRegex(value)
+          break
+        case `glob`:
+          filters[`$regex`] = makeRe(value)
+          break
+        default:
+          filters[`$${key}`] = value
+      }
+    }
+  })
+  return filters
 }
 
 // Converts a nested mongo args object into a dotted notation. acc

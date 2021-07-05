@@ -36,7 +36,7 @@ aliases:
   validate_renovate: &validate_renovate
     run:
       name: Validate renovate-config
-      command: (node scripts/renovate-config-generator.js && (git status --porcelain renovate.json5 | grep "M renovate.json5")) && exit 1 || npx -p renovate renovate-config-validator .
+      command: (node scripts/renovate-config-generator.js && (git status --porcelain renovate.json5 | grep "M renovate.json5")) && (echo "Please run \"node scripts/renovate-config-generator.js\" to update renovate.json5" && exit 1) || npx -p renovate renovate-config-validator .
 
   persist_cache: &persist_cache
     save_cache:
@@ -484,10 +484,11 @@ jobs:
     executor: node
     steps:
       - checkout
+      # jq is helpful for parsing json & python required for node-gyp to build lmdb
+      - run: apt-get update && apt-get install jq python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - run: yarn markdown
-      - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/*"
@@ -563,6 +564,8 @@ jobs:
         default: "next"
     steps:
       - checkout
+      # python 2 is not built in and node-gyp needs it to build lmdb
+      - run: apt-get update && apt-get install python -y
       - run:
           name: "Update React to prerelease"
           command: "REACT_CHANNEL=<< parameters.version >> node ./scripts/upgrade-react"

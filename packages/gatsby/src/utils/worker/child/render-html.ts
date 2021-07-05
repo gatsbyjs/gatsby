@@ -326,7 +326,10 @@ export const renderHTMLProd = async ({
         const pageData = await readPageData(publicDir, pagePath)
         const resourcesForTemplate = await getResourcesForTemplate(pageData)
 
-        const { html, unsafeBuiltinsUsage } = htmlComponentRenderer.default({
+        const {
+          html,
+          unsafeBuiltinsUsage,
+        } = await htmlComponentRenderer.default({
           pagePath,
           pageData,
           ...resourcesForTemplate,
@@ -387,7 +390,7 @@ export const renderHTMLDev = async ({
     paths,
     async pagePath => {
       try {
-        const htmlString = htmlComponentRenderer.default({
+        const htmlString = await htmlComponentRenderer.default({
           pagePath,
         })
         return fs.outputFile(
