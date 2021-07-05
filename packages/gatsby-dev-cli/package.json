@@ -14,7 +14,7 @@
     "chokidar": "^3.5.1",
     "configstore": "^5.0.1",
     "del": "^6.0.0",
-    "execa": "^4.1.0",
+    "execa": "^5.1.1",
     "find-yarn-workspace-root": "^2.0.0",
     "fs-extra": "^9.1.0",
     "got": "^10.7.0",
