@@ -5,6 +5,7 @@ import {
   DeepPartial,
   Middleware,
   ReducersMapObject,
+  Store,
 } from "redux"
 import _ from "lodash"
 import telemetry from "gatsby-telemetry"
@@ -78,7 +79,9 @@ const multi: Middleware<IMultiDispatch> = ({ dispatch }) => next => (
 // We're using the inferred type here because manually typing it would be very complicated
 // and error-prone. Instead we'll make use of the createStore return value, and export that type.
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const configureStore = (initialState: IGatsbyState) =>
+export const configureStore = (
+  initialState: IGatsbyState
+): Store<IGatsbyState> =>
   createStore(
     combineReducers<IGatsbyState>({ ...reducers }),
     initialState,

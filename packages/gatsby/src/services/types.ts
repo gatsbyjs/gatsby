@@ -23,7 +23,7 @@ export interface IMutationAction {
 }
 
 export interface IBuildContext {
-  program?: IProgram
+  program: IProgram
   store?: Store<IGatsbyState, AnyAction>
   parentSpan?: Span
   gatsbyNodeGraphQLFunction?: Runner
