@@ -1,11 +1,11 @@
-import { createStore, combineReducers } from "redux"
+import { createStore, combineReducers, Store } from "redux"
 import { reducer } from "./reducer"
-import { ActionsUnion, ISetLogs } from "./types"
+import { ActionsUnion, ISetLogs, IGatsbyCLIState } from "./types"
 import { isInternalAction } from "./utils"
 import { createStructuredLoggingDiagnosticsMiddleware } from "./diagnostics"
 import { Actions } from "../constants"
 
-let store = createStore(
+let store: Store<{ logs: IGatsbyCLIState }> = createStore(
   combineReducers({
     logs: reducer,
   }),
