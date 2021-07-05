@@ -105,8 +105,9 @@ const globalPackageRules = [
   },
 ]
 
+// there is no excludeMatchSourceUrlPrefixes option so we force babel to be disabled
 const globalExcludePackages = []
-const globalExcludePackagePatterns = []
+const globalExcludePackagePatterns = [`^@babel`]
 globalPackageRules.forEach(group => {
   if (group.matchPackagePatterns) {
     globalExcludePackagePatterns.push(...group.matchPackagePatterns)
