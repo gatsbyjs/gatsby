@@ -40,23 +40,25 @@ module.exports = {
   core: {
     builder: "webpack5",
   },
-};
+}
 ```
 
 Adjustments to Storybook's default webpack configuration are required so that you can transpile Gatsby source files and to ensure you have the necessary Babel plugins to transpile Gatsby components. Add the following section to your `.storybook/main.js`:
 
 ```js:title=.storybook/main.js
 module.exports = {
-  webpackFinal: async (config) => {
+  webpackFinal: async config => {
     // transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
     config.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
 
     // use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
-    config.module.rules[0].use[0].options.plugins.push(require.resolve("babel-plugin-remove-graphql-queries"))
+    config.module.rules[0].use[0].options.plugins.push(
+      require.resolve("babel-plugin-remove-graphql-queries")
+    )
 
     return config
   },
-};
+}
 ```
 
 The final `.storybook/main.js` should look something like this:
@@ -64,24 +66,20 @@ The final `.storybook/main.js` should look something like this:
 ```js:title=.storybook/main.js
 module.exports = {
   // You will want to change this to wherever your Stories will live
-  stories: [
-    "../src/**/*.stories.mdx",
-    "../src/**/*.stories.@(js|jsx|ts|tsx)"
-  ],
-  addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials"
-  ],
+  stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
+  addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
   // highlight-start
   core: {
-    "builder": "webpack5"
+    builder: "webpack5",
   },
-  webpackFinal: async (config) => {
+  webpackFinal: async config => {
     // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
     config.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
 
     // use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
-    config.module.rules[0].use[0].options.plugins.push(require.resolve("babel-plugin-remove-graphql-queries"))
+    config.module.rules[0].use[0].options.plugins.push(
+      require.resolve("babel-plugin-remove-graphql-queries")
+    )
 
     return config
   },
