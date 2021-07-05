@@ -26,7 +26,8 @@
   "ignoreDeps": [
     "react",
     "react-dom",
-    "uuid"
+    "uuid",
+    "gatsby-interface"
   ],
   "rangeStrategy": "bump",
   "bumpVersion": null,

@@ -297,7 +297,7 @@ const renovateConfig = {
     dependencyDashboardApproval: true,
   },
   dependencyDashboard: true,
-  ignoreDeps: [`react`, `react-dom`, `uuid`],
+  ignoreDeps: [`react`, `react-dom`, `uuid`, `gatsby-interface`],
   rangeStrategy: `bump`,
   bumpVersion: null,
   prHourlyLimit: 0,
