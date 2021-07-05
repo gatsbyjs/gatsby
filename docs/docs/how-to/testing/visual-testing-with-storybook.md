@@ -11,7 +11,7 @@ As your project grows over time having this information available will be invalu
 
 ## Setting up your environment
 
-> **Note:** The following instructions are using [npx](https://www.npmjs.com/package/npx). `npx` is a part of npm and in this case it allows you to automatically generate a file/folder structure complete with the default configuration. If you're running an older version of `npm` (`<5.2.0`) you should run the following command instead: `npm install -g @storybook/cli`. You can then run `sb init` from your Gatsby root directory to initialize Storybook.
+> **Note:** The following instructions are using [npx](https://www.npmjs.com/package/npx). `npx` is a part of npm and in this case it allows you to automatically generate a file/folder structure complete with the default configuration. If you're running an older version of `npm` (`< 5.2.0`) you should run the following command instead: `npm install -g @storybook/cli`. You can then run `sb init` from your Gatsby root directory to initialize Storybook.
 
 To set up Storybook you need to install dependencies and do some custom configuration. You can get started quickly by using the automated command line tool from your Gatsby root directory:
 
@@ -23,7 +23,7 @@ This command adds a set of boilerplate files for Storybook in your project. Howe
 
 ## Configuration
 
-> **Note:** Make sure that you are using a Storybook version `>6.3.0` before following the instructions below. For older versions of Storybook you can visit the [Gatsby v2 documentation](https://v2.gatsbyjs.com/docs/how-to/testing/visual-testing-with-storybook/).
+> **Note:** Make sure that you are using a Storybook version `> 6.3.0` before following the instructions below. For older versions of Storybook you can visit the [Gatsby v2 documentation](https://v2.gatsbyjs.com/docs/how-to/testing/visual-testing-with-storybook/).
 
 Storybook v6 uses webpack v4 by default, while Gatsby uses webpack v5. Hence, the webpack version for Storybook should be changed to match that of Gatsby to prevent conflicts. Storybook has [official webpack v5 support](https://storybook.js.org/blog/storybook-for-webpack-5/) and can be enabled in your Storybook config.
 
