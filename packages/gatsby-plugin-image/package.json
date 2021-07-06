@@ -43,7 +43,7 @@
   "devDependencies": {
     "@babel/cli": "^7.14.5",
     "@babel/core": "^7.14.6",
-    "@testing-library/react": "^11.2.6",
+    "@testing-library/react": "^11.2.7",
     "@types/babel__core": "^7.1.12",
     "@types/babel__traverse": "^7.11.1",
     "@types/fs-extra": "^8.1.1",
