@@ -8,7 +8,7 @@ Welcome to `gatsby@3.9.0` release (July 2021 #1)
 
 Key highlights of this release:
 
-- [Suspense support at build time](#suspense-support-at-build-time) - Enables SSR support for Suspense when using React 18 (Alpha)
+- [React 18 - New Suspense SSR Architecture](#react-18--new-suspense-ssr-architecture) - Enables SSR support for Suspense when using React 18 (Alpha)
 - [title 2](#example-2) - one-liner description
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
@@ -22,7 +22,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ---
 
-## Suspense support at build time
+## React 18 - New Suspense SSR Architecture
 
 We're happy to announce support for the new React 18 server architecture during built time. When installing `react@alpha` and `react-dom@alpha`, you automatically opt into the new [`pipeToNodeWritable`](https://github.com/reactwg/react-18/discussions/37) renderer. Now you're able to use `Suspense` and `React.lazy` on the server as well.
 
