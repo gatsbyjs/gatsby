@@ -66,7 +66,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-webpack-plugin": "^2.5.3",
     "event-source-polyfill": "^1.0.15",
-    "execa": "^4.0.3",
+    "execa": "^5.1.1",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
     "fastest-levenshtein": "^1.0.12",
