@@ -5,12 +5,13 @@ import {
   DeepPartial,
   Middleware,
   ReducersMapObject,
+  Store,
 } from "redux"
 import _ from "lodash"
 import telemetry from "gatsby-telemetry"
 
 import { mett } from "../utils/mett"
-import thunk, { ThunkMiddleware } from "redux-thunk"
+import thunk, { ThunkMiddleware, ThunkAction } from "redux-thunk"
 import * as reducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
 import { IGatsbyState, ActionsUnion, GatsbyStateKeys } from "./types"
@@ -62,7 +63,9 @@ export const readState = (): IGatsbyState => {
 }
 
 export interface IMultiDispatch {
-  <T extends ActionsUnion>(action: Array<T>): Array<T>
+  <T extends ActionsUnion | ThunkAction<any, IGatsbyState, any, ActionsUnion>>(
+    action: Array<T>
+  ): Array<T>
 }
 
 /**
@@ -76,7 +79,9 @@ const multi: Middleware<IMultiDispatch> = ({ dispatch }) => next => (
 // We're using the inferred type here because manually typing it would be very complicated
 // and error-prone. Instead we'll make use of the createStore return value, and export that type.
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const configureStore = (initialState: IGatsbyState) =>
+export const configureStore = (
+  initialState: IGatsbyState
+): Store<IGatsbyState> =>
   createStore(
     combineReducers<IGatsbyState>({ ...reducers }),
     initialState,

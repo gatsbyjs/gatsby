@@ -14,7 +14,7 @@ it(`worker can use reporter without crashing`, async () => {
   worker = createTestWorker()
 
   try {
-    const result = await worker.log(`log`)
+    const result = await worker.single.log(`log`)
     expect(result).toEqual(true)
   } catch (e) {
     expect(e).toBeFalsy()

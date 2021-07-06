@@ -1043,6 +1043,25 @@ describe(`Build schema`, () => {
       expect(FizzBuzz.resolveType({ isFizz: false })).toEqual(`Buzz`)
     })
 
+    it(`falls back to default resolveType when merging with placeholder `, async () => {
+      createTypes(
+        [
+          buildObjectType({
+            name: `Foo`,
+            fields: { id: `ID!` },
+            interfaces: [`Bar`],
+          }),
+          `interface Bar { id: ID! }`,
+        ],
+        {
+          name: `default-site-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const Bar = schema.getType(`Bar`)
+      expect(Bar.resolveType({ internal: { type: `Foo` } })).toEqual(`Foo`)
+    })
+
     it(`merges plugin-defined type (Type Builder) with overridable built-in type without warning`, async () => {
       createTypes(
         [

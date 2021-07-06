@@ -11,6 +11,16 @@ const { slash } = require(`gatsby-core-utils`)
 const { setPluginOptions } = require(`./plugin-options`)
 const path = require(`path`)
 
+let coreSupportsOnPluginInit
+try {
+  const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
+  coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(
+    `unstable_onPluginInit`
+  )
+} catch (e) {
+  coreSupportsOnPluginInit = false
+}
+
 exports.onCreateDevServer = async ({ app, cache, reporter }) => {
   if (!_lazyJobsEnabled()) {
     return
@@ -101,6 +111,14 @@ exports.onPostBootstrap = async ({ reporter, cache, store }) => {
         _unstable_createJob(job, { reporter })
       }
     }
+  }
+}
+
+if (coreSupportsOnPluginInit) {
+  // to properly initialize plugin in worker (`onPreBootstrap` won't run in workers)
+  exports.unstable_onPluginInit = async ({ actions }, pluginOptions) => {
+    setActions(actions)
+    setPluginOptions(pluginOptions)
   }
 }
 

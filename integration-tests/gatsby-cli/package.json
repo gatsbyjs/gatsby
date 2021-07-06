@@ -6,7 +6,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "test": "jest -w 1"
   },
   "devDependencies": {
     "babel-jest": "^24.0.0",

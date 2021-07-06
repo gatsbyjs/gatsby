@@ -714,7 +714,6 @@ export const createWebpackUtils = (
                 `removeUnknownsAndDefaults`,
                 `removeUnusedNS`,
                 `removeUselessStrokeAndFill`,
-                `removeXMLNS`,
                 `removeXMLProcInst`,
                 `reusePaths`,
                 `sortAttrs`,

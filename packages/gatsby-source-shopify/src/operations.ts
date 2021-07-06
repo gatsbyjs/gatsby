@@ -2,11 +2,13 @@ import { NodeInput, SourceNodesArgs } from "gatsby"
 import { shiftLeft } from "shift-left"
 import { createClient } from "./client"
 import { ProductsQuery } from "./query-builders/products-query"
+import { ProductVariantsQuery } from "./query-builders/product-variants-query"
 import { CollectionsQuery } from "./query-builders/collections-query"
 import { OrdersQuery } from "./query-builders/orders-query"
 import {
   collectionsProcessor,
   incrementalProductsProcessor,
+  productVariantsProcessor,
 } from "./processors"
 import { OperationError } from "./errors"
 
@@ -29,9 +31,11 @@ export interface IShopifyBulkOperation {
 
 interface IOperations {
   incrementalProducts: (date: Date) => IShopifyBulkOperation
+  incrementalProductVariants: (date: Date) => IShopifyBulkOperation
   incrementalOrders: (date: Date) => IShopifyBulkOperation
   incrementalCollections: (date: Date) => IShopifyBulkOperation
   createProductsOperation: IShopifyBulkOperation
+  createProductVariantsOperation: IShopifyBulkOperation
   createOrdersOperation: IShopifyBulkOperation
   createCollectionsOperation: IShopifyBulkOperation
   cancelOperationInProgress: () => Promise<void>
@@ -216,6 +220,14 @@ export function createOperations(
       )
     },
 
+    incrementalProductVariants(date: Date): IShopifyBulkOperation {
+      return createOperation(
+        new ProductVariantsQuery(options).query(date),
+        `INCREMENTAL_PRODUCT_VARIANTS`,
+        productVariantsProcessor
+      )
+    },
+
     incrementalOrders(date: Date): IShopifyBulkOperation {
       return createOperation(
         new OrdersQuery(options).query(date),
@@ -234,6 +246,12 @@ export function createOperations(
     createProductsOperation: createOperation(
       new ProductsQuery(options).query(),
       `PRODUCTS`
+    ),
+
+    createProductVariantsOperation: createOperation(
+      new ProductVariantsQuery(options).query(),
+      `PRODUCT_VARIANTS`,
+      productVariantsProcessor
     ),
 
     createOrdersOperation: createOperation(

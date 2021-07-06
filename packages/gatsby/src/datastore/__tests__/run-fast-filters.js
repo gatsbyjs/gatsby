@@ -1,10 +1,11 @@
 const {
-  runFastFiltersAndSort,
+  runFastFiltersAndSort: doRunFastFiltersAndSort,
   applyFastFilters,
 } = require(`../in-memory/run-fast-filters`)
 const { store } = require(`../../redux`)
 const { getDataStore, getNode } = require(`../../datastore`)
 const { createDbQueriesFromObject } = require(`../common/query`)
+const { GatsbyIterable } = require(`../common/iterable`)
 const { actions } = require(`../../redux/actions`)
 const {
   GraphQLObjectType,
@@ -127,6 +128,16 @@ const gqlType = new GraphQLObjectType({
   },
 })
 
+function runFastFiltersAndSort(...args) {
+  const result = doRunFastFiltersAndSort(...args)
+  expect(result.entries).toBeInstanceOf(GatsbyIterable)
+  expect(typeof result.totalCount).toBe(`function`)
+  return {
+    ...result,
+    entries: Array.from(result.entries),
+  }
+}
+
 describe(`fast filter tests`, () => {
   beforeEach(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
@@ -144,24 +155,23 @@ describe(`fast filter tests`, () => {
         },
       }
 
-      const resultSingular = await runFastFiltersAndSort({
+      const { entries: resultSingular } = await runFastFiltersAndSort({
         gqlType,
-        queryArgs,
-        firstOnly: true,
+        queryArgs: { ...queryArgs, limit: 1 },
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
 
-      const resultMany = await runFastFiltersAndSort({
+      const { entries: resultMany, totalCount } = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
-        firstOnly: false,
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
 
       expect(resultSingular.map(o => o.id)).toEqual([mockNodes()[1].id])
       expect(resultMany.map(o => o.id)).toEqual([mockNodes()[1].id])
+      expect(await totalCount()).toEqual(1)
     })
 
     it(`eq operator honors type`, async () => {
@@ -171,18 +181,16 @@ describe(`fast filter tests`, () => {
         },
       }
 
-      const resultSingular = await runFastFiltersAndSort({
+      const { entries: resultSingular } = await runFastFiltersAndSort({
         gqlType,
-        queryArgs,
-        firstOnly: true,
+        queryArgs: { ...queryArgs, limit: 1 },
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
 
-      const resultMany = await runFastFiltersAndSort({
+      const { entries: resultMany, totalCount } = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
-        firstOnly: false,
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -190,6 +198,7 @@ describe(`fast filter tests`, () => {
       // `id-1` node is not of queried type, so results should be empty
       expect(resultSingular).toEqual([])
       expect(resultMany).toEqual([])
+      expect(await totalCount()).toEqual(0)
     })
 
     it(`non-eq operator`, async () => {
@@ -199,18 +208,16 @@ describe(`fast filter tests`, () => {
         },
       }
 
-      const resultSingular = await runFastFiltersAndSort({
+      const { entries: resultSingular } = await runFastFiltersAndSort({
         gqlType,
-        queryArgs,
-        firstOnly: true,
+        queryArgs: { ...queryArgs, limit: 1 },
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
 
-      const resultMany = await runFastFiltersAndSort({
+      const { entries: resultMany, totalCount } = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
-        firstOnly: false,
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -220,13 +227,13 @@ describe(`fast filter tests`, () => {
         mockNodes()[2].id,
         mockNodes()[3].id,
       ])
+      expect(await totalCount()).toEqual(2)
     })
     it(`return empty array in case of empty nodes`, async () => {
-      const queryArgs = { filter: {}, sort: {} }
-      const resultSingular = await runFastFiltersAndSort({
+      const queryArgs = { filter: {}, sort: {}, limit: 1 }
+      const { entries: resultSingular } = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
-        firstOnly: true,
         nodeTypeNames: [`NonExistentNodeType`],
         filtersCache: new Map(),
       })
@@ -241,10 +248,9 @@ describe(`fast filter tests`, () => {
         },
       }
 
-      const resultSingular = await runFastFiltersAndSort({
+      const { entries: resultSingular } = await runFastFiltersAndSort({
         gqlType,
-        queryArgs,
-        firstOnly: true,
+        queryArgs: { ...queryArgs, limit: 1 },
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -263,16 +269,16 @@ describe(`fast filter tests`, () => {
         },
       }
 
-      const resultMany = await runFastFiltersAndSort({
+      const { entries: resultMany, totalCount } = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
-        firstOnly: false,
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
 
       expect(Array.isArray(resultMany)).toBe(true)
       expect(resultMany.length).toEqual(2)
+      expect(await totalCount()).toEqual(2)
 
       resultMany.map(node => {
         expect(node.slog).toEqual(`def`)
@@ -285,10 +291,9 @@ describe(`fast filter tests`, () => {
         },
       }
 
-      const resultSingular = await runFastFiltersAndSort({
+      const { entries: resultSingular } = await runFastFiltersAndSort({
         gqlType,
-        queryArgs,
-        firstOnly: true,
+        queryArgs: { ...queryArgs, limit: 1 },
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -307,16 +312,16 @@ describe(`fast filter tests`, () => {
         },
       }
 
-      const resultMany = await runFastFiltersAndSort({
+      const { entries: resultMany, totalCount } = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
-        firstOnly: false,
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
 
       expect(Array.isArray(resultMany)).toBe(true)
       expect(resultMany.length).toEqual(2)
+      expect(await totalCount()).toEqual(2)
 
       resultMany.map(node => {
         expect(node.deep.flat.search.chain).toEqual(300)
@@ -329,10 +334,9 @@ describe(`fast filter tests`, () => {
         },
       }
 
-      const resultSingular = await runFastFiltersAndSort({
+      const { entries: resultSingular } = await runFastFiltersAndSort({
         gqlType,
-        queryArgs,
-        firstOnly: true,
+        queryArgs: { ...queryArgs, limit: 1 },
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -347,10 +351,9 @@ describe(`fast filter tests`, () => {
         },
       }
 
-      const resultMany = await runFastFiltersAndSort({
+      const { entries: resultMany } = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
-        firstOnly: false,
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
@@ -367,16 +370,16 @@ describe(`fast filter tests`, () => {
         },
       }
 
-      const resultMany = await runFastFiltersAndSort({
+      const { entries: resultMany, totalCount } = await runFastFiltersAndSort({
         gqlType,
         queryArgs,
-        firstOnly: false,
         nodeTypeNames: [gqlType.name],
         filtersCache: new Map(),
       })
 
       expect(Array.isArray(resultMany)).toBe(true)
       expect(resultMany.map(({ id }) => id)).toEqual([`id_2`, `id_3`])
+      expect(await totalCount()).toEqual(2)
     })
   })
 })

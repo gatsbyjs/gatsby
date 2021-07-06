@@ -1,6 +1,7 @@
 jest.mock(`../browserslist`, () => {
   return {
     getBrowsersList: () => [],
+    hasES6ModuleSupport: () => false,
   }
 })
 jest.mock(`webpack`, () => {

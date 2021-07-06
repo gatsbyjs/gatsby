@@ -1,3 +1,16 @@
+describe(`client-side navigation to the new page`, () => {
+  before(() => {
+    cy.visit(`/`).waitForRouteChange()
+    cy.exec(`npm run update -- --file src/pages/new-page.js`)
+    cy.wait(1000)
+  })
+
+  it(`can navigate to newly created page using link`, () => {
+    cy.findByTestId(`hot-reloading-new-file`).click().waitForRouteChange()
+    cy.getTestElement(`message`).invoke(`text`).should(`contain`, `Hello`)
+  })
+})
+
 describe(`hot reloading new page component`, () => {
   before(() => {
     cy.exec(`npm run update -- --file src/pages/sample.js`)

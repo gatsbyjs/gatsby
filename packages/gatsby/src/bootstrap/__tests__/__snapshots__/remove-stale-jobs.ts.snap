@@ -2,7 +2,23 @@
 
 exports[`remove-stale-jobs should enqueue pending jobs 1`] = `
 Array [
-  undefined,
+  Object {
+    "payload": Object {
+      "job": Object {
+        "contentDigest": "1234",
+        "inputPaths": Array [
+          "/src/myfile.js",
+        ],
+        "plugin": Object {
+          "name": "test",
+        },
+      },
+    },
+    "plugin": Object {
+      "name": "test",
+    },
+    "type": "CREATE_JOB_V2",
+  },
 ]
 `;
 

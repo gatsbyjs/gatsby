@@ -17,14 +17,14 @@ import { pageDataExists } from "../utils/page-data"
 
 const resultHashes = new Map()
 
-interface IQueryJob {
+export interface IQueryJob {
   id: string
   hash?: string
   query: string
   componentPath: string
   context: PageContext
   isPage: boolean
-  pluginCreatorId: string
+  pluginCreatorId?: string
 }
 
 function reportLongRunningQueryJob(queryJob): void {

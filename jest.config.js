@@ -54,4 +54,5 @@ module.exports = {
   testEnvironment: `jest-environment-jsdom-fourteen`,
   moduleFileExtensions: [`js`, `jsx`, `ts`, `tsx`, `json`],
   setupFiles: [`<rootDir>/.jestSetup.js`],
+  setupFilesAfterEnv: [`jest-extended`],
 }

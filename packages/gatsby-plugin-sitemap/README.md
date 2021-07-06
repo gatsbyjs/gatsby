@@ -22,6 +22,8 @@ plugins: [`gatsby-plugin-sitemap`]
 Above is the minimal configuration required to have it work. By default, the
 generated sitemap will include all of your site's pages, except the ones you exclude.
 
+You then can point your service (e.g. Google Search Console) at `https://www.example.com/sitemap/sitemap-index.xml`.
+
 ## Recommended usage
 
 You probably do not want to use the defaults in this plugin. Here's an example of the default output:
@@ -57,7 +59,7 @@ The options are as follows:
 
 - `output` (string = `/sitemap`) Folder path where sitemaps are stored.
 - `createLinkInHead` (boolean = true) Whether to populate the `<head>` of your site with a link to the sitemap.
-- `entryLimit` (number = 45000) Number of entries per sitemap file, a sitemap index and multiple sitemaps are created if you have more entries.
+- `entryLimit` (number = 45000) Number of entries per sitemap file. A sitemap index (as `sitemap-index.xml`) will always be created and multiple sitemaps are created for every `entryLimit` increment (e.g under 45000 entries only `sitemap-0.xml` will be created).
 - `excludes` (string[] = []) An array of paths to exclude from the sitemap. While this is usually an array of strings it is possible to enter other data types into this array for custom filtering. Doing so will require customization of the [`filterPages`](#filterPages) function.
 - `query` (GraphQL Query) The query for the data you need to generate the sitemap. It's required to get the site's URL, if you are not fetching it from `site.siteMetadata.siteUrl`, you will need to set a custom [`resolveSiteUrl`](#resolveSiteUrl) function. If you override the query, you may need to pass in a custom [`resolvePagePath`](#resolvePagePath), [`resolvePages`](#resolvePages) to keep everything working. If you fetch pages without using `allSitePage.nodes` query structure you will definitely need to customize the [`resolvePages`](#resolvePages) function.
 - [`resolveSiteUrl`](#resolveSiteUrl) (function) Takes the output of the data query and lets you return the site URL. Sync or async functions allowed.

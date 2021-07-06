@@ -48,6 +48,14 @@ export interface ISharpGatsbyImageArgs {
   transformOptions?: {
     fit?: Fit
     cropFocus?: number | string
+    duotone?: {
+      highlight: string
+      shadow: string
+      opacity?: number
+    }
+    grayscale?: boolean
+    rotate?: number
+    trim?: number
   }
   jpgOptions?: Record<string, unknown>
   pngOptions?: Record<string, unknown>

@@ -1,4 +1,8 @@
-import { IGroupedQueryIds, runStaticQueries } from "../../../services"
+import {
+  IGroupedQueryIds,
+  runPageQueries,
+  runStaticQueries,
+} from "../../../services"
 import { store } from "../../../redux"
 import { GraphQLRunner } from "../../../query/graphql-runner"
 import { getDataStore } from "../../../datastore"
@@ -25,6 +29,12 @@ export async function runQueries(queryIds: IGroupedQueryIds): Promise<void> {
   })
 
   await runStaticQueries({
+    queryIds,
+    store,
+    graphqlRunner,
+  })
+
+  await runPageQueries({
     queryIds,
     store,
     graphqlRunner,

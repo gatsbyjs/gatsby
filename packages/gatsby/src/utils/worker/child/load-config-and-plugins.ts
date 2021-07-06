@@ -9,6 +9,7 @@ export async function loadConfigAndPlugins(
   store.dispatch({
     type: `SET_PROGRAM`,
     payload: {
+      ...store.getState().program,
       directory: siteDirectory,
     },
   })

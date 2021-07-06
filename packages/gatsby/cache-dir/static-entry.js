@@ -1,13 +1,17 @@
 const React = require(`react`)
 const path = require(`path`)
-const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
+const {
+  renderToString,
+  renderToStaticMarkup,
+  pipeToNodeWritable,
+} = require(`react-dom/server`)
 const { ServerLocation, Router, isRedirect } = require(`@gatsbyjs/reach-router`)
 const { merge, flattenDeep, replace } = require(`lodash`)
 const { StaticQueryContext } = require(`gatsby`)
 const fs = require(`fs`)
 
 const { RouteAnnouncerProps } = require(`./route-announcer-props`)
-const apiRunner = require(`./api-runner-ssr`)
+const { apiRunner, apiRunnerAsync } = require(`./api-runner-ssr`)
 const syncRequires = require(`$virtual/sync-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const { grabMatchParams } = require(`./find-path`)
@@ -86,7 +90,7 @@ const ensureArray = components => {
   }
 }
 
-export default ({
+export default async function staticPage({
   pagePath,
   pageData,
   staticQueryContext,
@@ -94,7 +98,7 @@ export default ({
   scripts,
   reversedStyles,
   reversedScripts,
-}) => {
+}) {
   // for this to work we need this function to be sync or at least ensure there is single execution of it at a time
   global.unsafeBuiltinUsage = []
 
@@ -244,7 +248,7 @@ export default ({
     )
 
     // Let the site or plugin render the page component.
-    apiRunner(`replaceRenderer`, {
+    await apiRunnerAsync(`replaceRenderer`, {
       bodyComponent,
       replaceBodyHTMLString,
       setHeadComponents,
@@ -260,7 +264,27 @@ export default ({
     // If no one stepped up, we'll handle it.
     if (!bodyHtml) {
       try {
-        bodyHtml = renderToString(bodyComponent)
+        // react 18 enabled
+        if (pipeToNodeWritable) {
+          const {
+            WritableAsPromise,
+          } = require(`./server-utils/writable-as-promise`)
+          const writableStream = new WritableAsPromise()
+          const { startWriting } = pipeToNodeWritable(
+            bodyComponent,
+            writableStream,
+            {
+              onCompleteAll() {
+                startWriting()
+              },
+              onError() {},
+            }
+          )
+
+          bodyHtml = await writableStream
+        } else {
+          bodyHtml = renderToString(bodyComponent)
+        }
       } catch (e) {
         // ignore @reach/router redirect errors
         if (!isRedirect(e)) throw e

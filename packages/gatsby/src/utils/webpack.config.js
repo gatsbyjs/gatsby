@@ -20,7 +20,7 @@ import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
 import { StaticQueryMapper } from "./webpack/static-query-mapper"
 import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
-import { getBrowsersList } from "./browserslist"
+import { hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
 const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
 
@@ -174,10 +174,14 @@ module.exports = async (
   function getEntry() {
     switch (stage) {
       case `develop`:
-        return {
-          polyfill: directoryPath(`.cache/polyfill-entry`),
-          commons: [directoryPath(`.cache/app`)],
-        }
+        return hasES6ModuleSupport(directory)
+          ? {
+              commons: [directoryPath(`.cache/app`)],
+            }
+          : {
+              polyfill: directoryPath(`.cache/polyfill-entry`),
+              commons: [directoryPath(`.cache/app`)],
+            }
       case `develop-html`:
         return {
           main: process.env.GATSBY_EXPERIMENTAL_DEV_SSR
@@ -189,10 +193,14 @@ module.exports = async (
           main: directoryPath(`.cache/static-entry`),
         }
       case `build-javascript`:
-        return {
-          polyfill: directoryPath(`.cache/polyfill-entry`),
-          app: directoryPath(`.cache/production-app`),
-        }
+        return hasES6ModuleSupport(directory)
+          ? {
+              app: directoryPath(`.cache/production-app`),
+            }
+          : {
+              polyfill: directoryPath(`.cache/polyfill-entry`),
+              app: directoryPath(`.cache/production-app`),
+            }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
     }
@@ -211,6 +219,8 @@ module.exports = async (
         __ASSET_PREFIX__: JSON.stringify(
           program.prefixPaths ? assetPrefix : ``
         ),
+        // TODO Improve asset passing to pages
+        BROWSER_ESM_ONLY: JSON.stringify(hasES6ModuleSupport(directory)),
       }),
 
       plugins.virtualModules(),

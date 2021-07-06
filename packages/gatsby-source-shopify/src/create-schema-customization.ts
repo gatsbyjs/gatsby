@@ -109,6 +109,9 @@ export function createSchemaCustomization(
   const productDef = schema.buildObjectType({
     name: name(`ShopifyProduct`),
     fields: {
+      tags: {
+        type: `[String]`,
+      },
       variants: {
         type: `[${name(`ShopifyProductVariant`)}]`,
         extensions: {

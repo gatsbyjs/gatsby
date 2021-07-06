@@ -16,7 +16,7 @@ import { store, emitter } from "../redux"
 import reporter from "gatsby-cli/lib/reporter"
 import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
-import { IGatsbyState } from "../redux/types"
+import { IGatsbyState, IStateProgram } from "../redux/types"
 import { IBuildContext } from "./types"
 import { detectLmdbStore } from "../datastore"
 import { loadConfigAndPlugins } from "../bootstrap/load-config-and-plugins"
@@ -100,8 +100,9 @@ export async function initialize({
 
   const directory = slash(args.directory)
 
-  const program = {
+  const program: IStateProgram = {
     ...args,
+    extensions: [],
     browserslist: getBrowsersList(directory),
     // Fix program directory path for windows env.
     directory,
@@ -179,7 +180,8 @@ export async function initialize({
   }
 
   // run stale jobs
-  store.dispatch(removeStaleJobs(store.getState()))
+  // @ts-ignore we'll need to fix redux typings https://redux.js.org/usage/usage-with-typescript
+  store.dispatch(removeStaleJobs(store.getState().jobsV2))
 
   // Multiple occurrences of the same name-version-pair can occur,
   // so we report an array of unique pairs
