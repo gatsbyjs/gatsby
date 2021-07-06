@@ -179,6 +179,13 @@ export class WorkerPool<
         worker,
         exitedPromise: new Promise(resolve => {
           worker.on(`exit`, (code, signal) => {
+            console.log(
+              `[outside] Worker ${workerId} exitted with ${JSON.stringify({
+                code,
+                signal,
+              })}`
+            )
+
             if (workerInfo.currentTask) {
               // worker exited without finishing a task
               workerInfo.currentTask.reject(

@@ -17,7 +17,9 @@ process.on(`uncaughtException`, function (err) {
 
 signalExit((code, signal) => {
   reporter.verbose(
-    `Worker ${process.env.GATSBY_WORKER_ID} exitted with ${JSON.stringify({
+    `[inside] Worker ${
+      process.env.GATSBY_WORKER_ID
+    } exited with ${JSON.stringify({
       code,
       signal,
     })}`
