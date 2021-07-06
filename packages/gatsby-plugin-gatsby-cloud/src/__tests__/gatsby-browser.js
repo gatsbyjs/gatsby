@@ -27,9 +27,6 @@ describe(`Preview status indicator`, () => {
   const assertTooltipText = async ({ route, text, matcherType }) => {
     process.env.GATSBY_PREVIEW_API_URL = createUrl(route)
 
-    // it will disable setTimeout behaviour - only fetchData once
-    jest?.useFakeTimers()
-
     await act(async () => {
       render(<Indicator />)
     })
@@ -56,8 +53,6 @@ describe(`Preview status indicator`, () => {
     process.env.GATSBY_PREVIEW_API_URL = createUrl(route)
     process.env.GATSBY_TELEMETRY_API = `http://test.com/events`
     let component
-
-    jest?.useFakeTimers()
 
     await act(async () => {
       render(<Indicator />)
@@ -88,6 +83,7 @@ describe(`Preview status indicator`, () => {
   })
 
   beforeEach(() => {
+    // it will disable setTimeout behaviour - only fetchData once
     jest.useFakeTimers()
     // reset all mocks
     jest.resetModules()
