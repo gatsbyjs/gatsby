@@ -17,7 +17,7 @@ Gatsby uses React, so in a couple places we'll be linking to the React docs for 
 
 ### Client-side data entry
 
-When users type into the input, you want to persist their input, as well as store it in a JavaScript field that will later be available to your form validation and submission logic.
+When users type into the input, you want to store it in a JavaScript field that will later be available to your form validation and submission logic.
 
 The "Controlled Components" section of the React documentation [provides a good code example here](https://reactjs.org/docs/forms.html#controlled-components).
 
