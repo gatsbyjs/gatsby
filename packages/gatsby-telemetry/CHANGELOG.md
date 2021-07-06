@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.9.0-next.1...gatsby-telemetry@2.9.0) (2021-07-06)
+
+### Bug Fixes
+
+- **gatsby-telemetry:** reduce save to config ([#32260](https://github.com/gatsbyjs/gatsby/issues/32260)) ([#32268](https://github.com/gatsbyjs/gatsby/issues/32268)) ([b0d5e47](https://github.com/gatsbyjs/gatsby/commit/b0d5e474307c8aacdeb67ee84be1b0ef457917c2))
+
 # [2.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.9.0-next.0...gatsby-telemetry@2.9.0-next.1) (2021-06-28)
 
 **Note:** Version bump only for package gatsby-telemetry

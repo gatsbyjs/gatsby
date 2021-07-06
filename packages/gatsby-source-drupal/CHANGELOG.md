@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.9.0-next.1...gatsby-source-drupal@4.9.0) (2021-07-06)
+
+### Bug Fixes
+
+- **gatsby-source-drupal:** Fix Drupal webhook delete issues ([#32180](https://github.com/gatsbyjs/gatsby/issues/32180)) ([11c0d9f](https://github.com/gatsbyjs/gatsby/commit/11c0d9f4fd9a6c46a4b716e1a297693fcf1dc4df))
+
 # [4.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.9.0-next.0...gatsby-source-drupal@4.9.0-next.1) (2021-06-28)
 
 ### Bug Fixes
