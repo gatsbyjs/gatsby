@@ -179,11 +179,11 @@ export class WorkerPool<
         worker,
         exitedPromise: new Promise(resolve => {
           worker.on(`exit`, (code, signal) => {
-            console.log(
+            process.stdout.write(
               `[outside] Worker ${workerId} exitted with ${JSON.stringify({
                 code,
                 signal,
-              })}`
+              })}\n`
             )
 
             if (workerInfo.currentTask) {
