@@ -407,8 +407,8 @@ export class AnalyticsTracker {
     let machineId = this.store.getConfig(`telemetry.machineId`)
     if (typeof machineId !== `string`) {
       machineId = typedUUIDv4()
+      this.store.updateConfig(`telemetry.machineId`, machineId)
     }
-    this.store.updateConfig(`telemetry.machineId`, machineId)
     this.machineId = machineId
     return machineId
   }
