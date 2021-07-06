@@ -258,6 +258,7 @@ export class WorkerPool<
    * @returns Array of promises for each worker that will resolve once worker did exit.
    */
   end(): Array<Promise<number | null>> {
+    process.stdout.write(`[gatsby-worker] .end() called\n`)
     const results = this.workers.map(async workerInfo => {
       // tell worker to end gracefully
       const endMessage: ParentMessageUnion = [END]
@@ -266,6 +267,9 @@ export class WorkerPool<
 
       // force exit if worker doesn't exit gracefully quickly
       const forceExitTimeout = setTimeout(() => {
+        process.stdout.write(
+          `[gatsby-worker] Sending SIGKILL to ${workerInfo.workerId}\n`
+        )
         workerInfo.worker.kill(`SIGKILL`)
       }, 1000)
 
