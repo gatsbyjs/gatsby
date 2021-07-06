@@ -1,7 +1,7 @@
 import React from "react"
 import "@testing-library/jest-dom/extend-expect"
 import userEvent from "@testing-library/user-event"
-import { render, screen, act, waitFor } from "@testing-library/react"
+import { render, screen, act, waitFor, fireEvent } from "@testing-library/react"
 
 // import { wrapRootElement } from "../gatsby-browser"
 import Indicator from "../components/Indicator"
@@ -10,6 +10,7 @@ import { server } from "./mocks/server"
 
 const createUrl = path => `https://test.com/${path}`
 const copyLinkMessage = `Copy link`
+const copyLinkSuccessMessage = `Link copied`
 const infoButtonMessage = `Preview updated`
 const errorLogMessage = `View logs`
 const newPreviewMessage = `New preview available`
@@ -27,7 +28,7 @@ describe(`Preview status indicator`, () => {
     process.env.GATSBY_PREVIEW_API_URL = createUrl(route)
 
     // it will disable setTimeout behaviour - only fetchData once
-    jest.useFakeTimers()
+    jest?.useFakeTimers()
 
     await act(async () => {
       render(<Indicator />)
@@ -56,7 +57,7 @@ describe(`Preview status indicator`, () => {
     process.env.GATSBY_TELEMETRY_API = `http://test.com/events`
     let component
 
-    jest.useFakeTimers()
+    jest?.useFakeTimers()
 
     await act(async () => {
       render(<Indicator />)
@@ -87,6 +88,7 @@ describe(`Preview status indicator`, () => {
   })
 
   beforeEach(() => {
+    jest.useFakeTimers()
     // reset all mocks
     jest.resetModules()
     global.fetch = require(`node-fetch`)
@@ -100,6 +102,7 @@ describe(`Preview status indicator`, () => {
     Object.defineProperty(window, `location`, {
       value: {
         href: `https://build-123.gtsb.io`,
+        hostname: `https://build-123.gtsb.io`,
       },
     })
   })
@@ -336,20 +339,38 @@ describe(`Preview status indicator`, () => {
         process.env.GATSBY_PREVIEW_API_URL = createUrl(`uptodate`)
 
         navigator.clipboard = { writeText: jest.fn() }
-        let copyLinkButton
+        let copyLinkTooltip
 
-        await act(async () => {
+        act(() => {
           render(<Indicator />)
         })
 
-        waitFor(() => {
-          copyLinkButton = screen.getByText(copyLinkMessage, { exact: false })
+        fireEvent.mouseEnter(screen.getByTestId(`link-button`))
+
+        await waitFor(() => {
+          copyLinkTooltip = screen.getByText(copyLinkMessage, { exact: false })
         })
 
-        userEvent.click(copyLinkButton)
-        expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-          `http://localhost/`
-        )
+        /**
+         * Should show the tooltip content that exists before a successful copy
+         * when a user hovers
+         */
+        expect(copyLinkTooltip).toBeInTheDocument()
+
+        userEvent.click(screen.getByTestId(`link-button`))
+
+        await waitFor(() => {
+          copyLinkTooltip = screen.getByText(copyLinkSuccessMessage, {
+            exact: false,
+          })
+        })
+
+        /**
+         * Should show the success tooltip content after the user has copied the link
+         */
+        expect(copyLinkTooltip).toBeInTheDocument()
+
+        expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(1)
       })
     })
 

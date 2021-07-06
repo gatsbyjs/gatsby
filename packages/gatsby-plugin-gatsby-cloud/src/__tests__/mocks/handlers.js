@@ -36,11 +36,11 @@ export const handlers = [
     res(
       ctx.json({
         currentBuild: {
-          id: null,
+          id: `123`,
           buildStatus: `SUCCESS`,
           createdAt: `2021-05-11T14:45:10.263Z`,
         },
-        latestBuild: { id: null, buildStatus: `SUCCESS` },
+        latestBuild: { id: `1234`, buildStatus: `SUCCESS` },
         siteInfo: { orgId: `999`, siteId: `111`, sitePrefix: `test` },
       })
     )
