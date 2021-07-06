@@ -15,6 +15,19 @@ import * as reducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
 import { IGatsbyState, ActionsUnion, GatsbyStateKeys } from "./types"
 
+const top = require(`process-top`)()
+
+setInterval(function () {
+  // Prints out a string containing stats about your Node.js process.
+  console.log(
+    `[${
+      process.env.GATSBY_WORKER_ID
+        ? `W#${process.env.GATSBY_WORKER_ID.padStart(2, `#`)}`
+        : `Main`
+    }] ${top.toString()}`
+  )
+}, 1000)
+
 // Create event emitter for actions
 export const emitter = mett()
 
