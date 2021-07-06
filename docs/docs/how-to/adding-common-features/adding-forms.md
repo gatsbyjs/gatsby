@@ -11,7 +11,7 @@ The humble `<form>` element has evolved a lot since it was created in 1995. By d
 
 Website forms have several "concerns" like data entry storage, validating fields, form submission, form storage, and other event triggers. This documentation will walk through each concern.
 
-Forms in Gatsby are built on top of React, so in a couple places we'll be linking to the React docs for code examples. In addition, the React ecosystem also offers some popular, well-maintained libraries like [Formik](https://github.com/jaredpalmer/formik) or [Final Form](https://github.com/final-form/react-final-form) to speed up your development process.
+Gatsby uses React, so in a couple places we'll be linking to the React docs for code examples. In addition, the React ecosystem also offers some popular, well-maintained libraries like [Formik](https://github.com/jaredpalmer/formik) or [Final Form](https://github.com/final-form/react-final-form) which help with more complex forms.
 
 ## Form concerns
 
