@@ -24,8 +24,6 @@ const restrictedNodeFields = [
   `parent`,
 ]
 
-const restrictedContentTypes = [`entity`, `reference`, `tag`, `asset`]
-
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
 
 const validateContentfulAccess = async pluginOptions => {
@@ -318,6 +316,11 @@ exports.sourceNodes = async (
 
   // Check for restricted content type names
   const useNameForId = pluginConfig.get(`useNameForId`)
+  const restrictedContentTypes = [`entity`, `reference`, `asset`]
+
+  if (pluginConfig.get(`enableTags`)) {
+    restrictedContentTypes.push(`tags`)
+  }
 
   contentTypeItems.forEach(contentTypeItem => {
     // Establish identifier for content type
@@ -365,17 +368,20 @@ exports.sourceNodes = async (
     })
   }
 
-  createTypes(
-    schema.buildObjectType({
-      name: `ContentfulTag`,
-      fields: {
-        name: { type: `String!` },
-        contentful_id: { type: `String!` },
-        id: { type: `ID!` },
-      },
-      interfaces: [`Node`],
-    })
-  )
+  if (pluginConfig.get(`enableTags`)) {
+    createTypes(
+      schema.buildObjectType({
+        name: `ContentfulTag`,
+        fields: {
+          name: { type: `String!` },
+          contentful_id: { type: `String!` },
+          id: { type: `ID!` },
+        },
+        interfaces: [`Node`],
+        extensions: { dontInfer: {} },
+      })
+    )
+  }
 
   createTypes(`
   interface ContentfulEntry implements Node {
@@ -652,7 +658,6 @@ exports.sourceNodes = async (
     await Promise.all(
       normalize.createNodesForContentType({
         contentTypeItem,
-        contentTypeItems,
         restrictedNodeFields,
         conflictFieldPrefix,
         entries: entryList[i],
@@ -665,6 +670,7 @@ exports.sourceNodes = async (
         locales,
         space,
         useNameForId: pluginConfig.get(`useNameForId`),
+        pluginConfig,
       })
     )
   }

@@ -228,7 +228,6 @@ function prepareJSONNode(id, node, key, content) {
 
 exports.createNodesForContentType = ({
   contentTypeItem,
-  contentTypeItems,
   restrictedNodeFields,
   conflictFieldPrefix,
   entries,
@@ -241,6 +240,7 @@ exports.createNodesForContentType = ({
   locales,
   space,
   useNameForId,
+  pluginConfig,
 }) => {
   // Establish identifier for content type
   //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
@@ -590,9 +590,9 @@ exports.createNodesForContentType = ({
         entryNode.internal.contentDigest = entryItem.sys.updatedAt
 
         // Link tags
-        if (entryItem?.metadata?.tags) {
+        if (pluginConfig.get(`enableTags`)) {
           entryNode.metadata = {
-            tags___NODE: entryItem?.metadata?.tags.map(tag =>
+            tags___NODE: entryItem.metadata.tags.map(tag =>
               createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
             ),
           }

@@ -297,25 +297,24 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
 
   const contentTypeItems = contentTypes.items
 
-  // We need to fetch tags with the non-sync API as the sync API
-  // doesn't support this.
-  let tags
-  try {
-    tags = await await pagedGet(client, `getTags`, pageLimit)
-  } catch (e) {
-    reporter.panic({
-      id: CODES.FetchTags,
-      context: {
-        sourceMessage: `Error fetching tags: ${createContentfulErrorMessage(
-          e
-        )}`,
-      },
-    })
+  // We need to fetch tags with the non-sync API as the sync API doesn't support this.
+  let tagItems = []
+  if (pluginConfig.get(`enableTags`)) {
+    try {
+      const tagsResult = await pagedGet(client, `getTags`, pageLimit)
+      tagItems = tagsResult.items
+      reporter.verbose(`Tags fetched ${tagItems.length}`)
+    } catch (e) {
+      reporter.panic({
+        id: CODES.FetchTags,
+        context: {
+          sourceMessage: `Error fetching tags: ${createContentfulErrorMessage(
+            e
+          )}`,
+        },
+      })
+    }
   }
-
-  const tagItems = tags.items
-
-  reporter.verbose(`Tags fetched ${tagItems.length}`)
 
   const result = {
     currentSyncData,

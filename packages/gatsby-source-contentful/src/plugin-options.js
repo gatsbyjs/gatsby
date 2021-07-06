@@ -12,6 +12,7 @@ const defaultOptions = {
   forceFullSync: false,
   pageLimit: DEFAULT_PAGE_LIMIT,
   useNameForId: true,
+  enableTags: false,
 }
 
 const createPluginConfig = pluginOptions => {
