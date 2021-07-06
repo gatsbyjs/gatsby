@@ -7,7 +7,7 @@ examples:
 
 Forms are common to capture user information from site visitors. They range in complexity from simple newsletter email capture boxes, to detailed lead capture forms and signup pages requiring visitors to enter their first & last name, email, and several additional self-identificaton questions.
 
-The humble `<form>` elemenet has evolved a lot since it was created in 1995. By default, a `<form>` stores its input internally and refresh the page when you `submit`. Today, developers generally want to store input in Javascript so you can validate fields and send the data to a third-party system.
+The humble `<form>` element has evolved a lot since it was created in 1995. By default, a `<form>` stores its input internally and refresh the page when you `submit`. Today, developers generally want to store input in Javascript so you can validate fields and send the data to a third-party system.
 
 Website forms have several "concerns" like data entry storage, validating fields, form submission, form storage, and other event triggers. This documentation will walk through each concern.
 
