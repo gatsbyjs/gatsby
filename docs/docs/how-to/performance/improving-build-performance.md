@@ -96,3 +96,7 @@ This can be achieved in two ways:
 - For source plugins (like Contentful) that don't offer this option, you can write code in `gatsby-node.js` to restrict the number of pages built in development; eg, iterate only through the first X elements of an array instead of all elements.
 
 In addition, everything above applicable to build times is also applicable to develop times. However, you should probably start by slimming down the number of objects sourced and pages built in development, as that is generally a simpler and quicker to implement solution.
+
+## Additional Resources
+
+- We did a deep dive on this with additional information and context in the [Optimizing Build Performance On Gatsby](https://www.gatsbyjs.com/resources/webinars/optimizing-build-performance/) webinar.
