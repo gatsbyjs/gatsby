@@ -69,6 +69,8 @@ The `handleSubmit` function calls `preventDefault()` on the event which prevents
 
 You may want to make addition changes to visual form display after submit, like disabling the form submit button after submission, showing a spinning wheel, or changing the button color.
 
+If you need to use any sort of authentication token to submit data, you can use Gatsby Functions (Gatsby's implementation of serverless functions) to [run this logic while keeping any your credentials secure](https://www.gatsbyjs.com/docs/reference/functions/getting-started/#forms).
+
 ### Triggering additional events
 
 Sometimes you'll want to trigger additional events off of your form submissions that require authenticated calls to a third-party service.
