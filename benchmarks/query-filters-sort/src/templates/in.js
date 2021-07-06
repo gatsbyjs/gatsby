@@ -9,12 +9,13 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query($fooBarArray: [String!], $sort: TestSortInput) {
+  query($fooBarArray: [String!], $sort: TestSortInput, $count: Boolean!) {
     allTest(filter: { fooBar: { in: $fooBarArray } }, sort: $sort, limit: 100) {
       nodes {
         nodeNum
         text
       }
+      totalCount @include(if: $count)
     }
   }
 `
