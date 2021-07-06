@@ -225,7 +225,7 @@ async function sqipContentful({ type, cache, store }) {
           background,
         }
 
-        const url = createUrl(imgUrl, options)
+        const url = `https:` + createUrl(imgUrl, options)
         const extension = path.extname(imgUrl)
         const absolutePath = await fetchRemoteFile({
           url,
