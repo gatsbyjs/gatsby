@@ -267,7 +267,7 @@ describe(`Preview status indicator`, () => {
         process.env.GATSBY_PREVIEW_API_URL = createUrl(`error`)
         window.open = jest.fn()
 
-        let gatsbyButtonTooltip
+        let gatsbyButtonTooltipLink
         const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/999/sites/111/builds/123/details`
         const returnTo = encodeURIComponent(pathToBuildLogs)
 
@@ -275,16 +275,22 @@ describe(`Preview status indicator`, () => {
           render(<Indicator />)
         })
 
-        waitFor(() => {
-          gatsbyButtonTooltip = screen.getByText(errorLogMessage, {
-            exact: false,
-          })
+        await waitFor(() => {
+          gatsbyButtonTooltipLink = screen
+            .getByText(errorLogMessage, {
+              exact: false,
+            })
+            .closest(`a`)
         })
 
-        userEvent.click(gatsbyButtonTooltip)
-        expect(window.open).toHaveBeenCalledWith(
+        expect(gatsbyButtonTooltipLink.getAttribute(`href`)).toInclude(
           `${pathToBuildLogs}?returnTo=${returnTo}`
         )
+
+        assertTrackEventGetsCalled({
+          route: `error`,
+          testId: `info-button`,
+        })
       })
     })
 
