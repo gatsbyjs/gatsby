@@ -4,8 +4,11 @@ import reporter from "gatsby-cli/lib/reporter"
 import { cpuCoreCount } from "gatsby-core-utils"
 
 import { IGroupedQueryIds } from "../../services"
+import { initJobsMessagingInMainProcess } from "../jobs/worker-messaging"
 
-export type GatsbyWorkerPool = WorkerPool<typeof import("./child")>
+import { GatsbyWorkerPool } from "./types"
+
+export type { GatsbyWorkerPool }
 
 export const create = (): GatsbyWorkerPool => {
   const numWorkers = Math.max(1, cpuCoreCount() - 1)
@@ -20,6 +23,8 @@ export const create = (): GatsbyWorkerPool => {
       },
     }
   )
+
+  initJobsMessagingInMainProcess(worker)
 
   return worker
 }

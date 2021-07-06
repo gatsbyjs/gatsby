@@ -24,6 +24,7 @@ const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 import { createJobV2FromInternalJob } from "./internal"
+import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
@@ -37,7 +38,7 @@ const isTestEnv = process.env.NODE_ENV === `test`
 const shadowCreatePagePath = _.memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 )
-const { createInternalJob } = require(`../../utils/jobs-manager`)
+const { createInternalJob } = require(`../../utils/jobs/manager`)
 
 const actions = {}
 const isWindows = platform() === `win32`
@@ -1252,6 +1253,12 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
  */
 actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
   const internalJob = createInternalJob(job, plugin)
+
+  const maybeWorkerPromise = maybeSendJobToMainProcess(internalJob)
+  if (maybeWorkerPromise) {
+    return maybeWorkerPromise
+  }
+
   return createJobV2FromInternalJob(internalJob)(dispatch, getState)
 }
 

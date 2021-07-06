@@ -1,8 +1,11 @@
 import {
-  ActionsUnion,
+  ICreateJobV2Action,
+  IRemoveStaleJobV2Action,
+  IEndJobV2Action,
   IGatsbyState,
   IGatsbyIncompleteJobV2,
   IGatsbyCompleteJobV2,
+  IDeleteCacheAction,
 } from "../types"
 
 const initialState = (): IGatsbyState["jobsV2"] => {
@@ -14,11 +17,17 @@ const initialState = (): IGatsbyState["jobsV2"] => {
 
 export const jobsV2Reducer = (
   state = initialState(),
-  action: ActionsUnion
+  action:
+    | ICreateJobV2Action
+    | IRemoveStaleJobV2Action
+    | IEndJobV2Action
+    | IDeleteCacheAction
 ): IGatsbyState["jobsV2"] => {
   switch (action.type) {
     case `DELETE_CACHE`:
-      return action.cacheIsCorrupt ? initialState() : state
+      return (action as IDeleteCacheAction).cacheIsCorrupt
+        ? initialState()
+        : state
 
     case `CREATE_JOB_V2`: {
       const { job } = action.payload

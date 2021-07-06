@@ -18,11 +18,12 @@ import { globalTracer } from "opentracing"
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { handleStalePageData } from "../utils/page-data"
 import { saveStateForWorkers } from "../redux"
+import { IProgram } from "../commands/types"
 
 const tracer = globalTracer()
 
 export async function bootstrap(
-  initialContext: Partial<IBuildContext>
+  initialContext: Partial<IBuildContext> & { program: IProgram }
 ): Promise<{
   gatsbyNodeGraphQLFunction: Runner
   workerPool: GatsbyWorkerPool

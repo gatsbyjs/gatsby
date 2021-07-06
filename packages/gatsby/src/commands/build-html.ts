@@ -3,7 +3,7 @@ import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
 import { chunk } from "lodash"
-import webpack from "webpack"
+import webpack, { Stats } from "webpack"
 import * as path from "path"
 
 import { emitter, store } from "../redux"
@@ -59,7 +59,7 @@ const runWebpack = (
   directory,
   parentSpan?: Span
 ): Bluebird<{
-  stats: webpack.Stats | undefined
+  stats: Stats
   waitForCompilerClose: Promise<void>
 }> =>
   new Bluebird((resolve, reject) => {
@@ -91,7 +91,7 @@ const runWebpack = (
         if (err) {
           return reject(err)
         } else {
-          return resolve({ stats, waitForCompilerClose })
+          return resolve({ stats: stats as Stats, waitForCompilerClose })
         }
       })
     } else if (
@@ -126,7 +126,10 @@ const runWebpack = (
 
             oldHash = newHash
 
-            return resolve({ stats, waitForCompilerClose: Promise.resolve() })
+            return resolve({
+              stats: stats as Stats,
+              waitForCompilerClose: Promise.resolve(),
+            })
           }
         }
       ) as IWebpackWatchingPauseResume
@@ -145,17 +148,17 @@ const doBuildRenderer = async (
     directory,
     parentSpan
   )
-  if (stats?.hasErrors()) {
+  if (stats.hasErrors()) {
     reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
   }
 
   if (
     stage === `build-html` &&
-    store.getState().html.ssrCompilationHash !== stats?.hash
+    store.getState().html.ssrCompilationHash !== stats.hash
   ) {
     store.dispatch({
       type: `SET_SSR_WEBPACK_COMPILATION_HASH`,
-      payload: stats?.hash,
+      payload: stats.hash as string,
     })
   }
 

@@ -1,14 +1,18 @@
 import { WorkerPool } from "gatsby-worker"
+import { initJobsMessagingInMainProcess } from "../../../jobs/worker-messaging"
+import type { MessagesFromChild, MessagesFromParent } from "../../messaging"
 
 export type GatsbyTestWorkerPool = WorkerPool<
-  typeof import("./child-for-tests")
+  typeof import("./child-for-tests"),
+  MessagesFromParent,
+  MessagesFromChild
 >
 
-export function createTestWorker(): GatsbyTestWorkerPool {
-  const worker = new WorkerPool<typeof import("./child-for-tests")>(
+export function createTestWorker(numWorkers = 1): GatsbyTestWorkerPool {
+  const worker: GatsbyTestWorkerPool = new WorkerPool(
     require.resolve(`./child-for-tests`),
     {
-      numWorkers: 1,
+      numWorkers,
       env: {
         // We are using JEST_WORKER_ID env so that worker use same test database as
         // jest runner process
@@ -17,7 +21,9 @@ export function createTestWorker(): GatsbyTestWorkerPool {
         NODE_OPTIONS: `--require ${require.resolve(`./ts-register`)}`,
       },
     }
-  ) as GatsbyTestWorkerPool
+  )
+
+  initJobsMessagingInMainProcess(worker)
 
   return worker
 }

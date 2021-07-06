@@ -1,5 +1,8 @@
 import reporter from "gatsby-cli/lib/reporter"
 import signalExit from "signal-exit"
+import { initJobsMessagingInWorker } from "../../jobs/worker-messaging"
+
+initJobsMessagingInWorker()
 
 // Note: this doesn't check for conflicts between module exports
 export { renderHTMLProd, renderHTMLDev } from "./render-html"
