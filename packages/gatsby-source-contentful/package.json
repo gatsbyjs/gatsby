@@ -13,7 +13,7 @@
     "@hapi/joi": "^15.1.1",
     "@vercel/fetch-retry": "^5.0.3",
     "axios": "^0.21.1",
-    "chalk": "^4.1.0",
+    "chalk": "^4.1.1",
     "common-tags": "^1.8.0",
     "contentful": "^8.1.7",
     "fs-extra": "^9.1.0",

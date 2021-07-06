@@ -13,7 +13,7 @@
     "@babel/code-frame": "^7.14.0",
     "@types/common-tags": "^1.8.0",
     "better-opn": "^2.0.0",
-    "chalk": "^4.1.0",
+    "chalk": "^4.1.1",
     "clipboardy": "^2.3.0",
     "common-tags": "^1.8.0",
     "configstore": "^5.0.1",
