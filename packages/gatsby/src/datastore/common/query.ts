@@ -261,3 +261,35 @@ export function objectToDottedField(
   })
   return result
 }
+
+const comparatorSpecificity = [
+  DbComparator.EQ,
+  DbComparator.IN,
+  DbComparator.GTE,
+  DbComparator.LTE,
+  DbComparator.GT,
+  DbComparator.LT,
+  DbComparator.NIN,
+  DbComparator.NE,
+]
+
+export function sortBySpecificity(all: Array<DbQuery>): Array<DbQuery> {
+  return [...all].sort(compareBySpecificity)
+}
+
+function compareBySpecificity(a: DbQuery, b: DbQuery): number {
+  const aComparator = getFilterStatement(a).comparator
+  const bComparator = getFilterStatement(b).comparator
+  if (aComparator === bComparator) {
+    return 0
+  }
+  for (const comparator of comparatorSpecificity) {
+    if (comparator === aComparator) {
+      return -1
+    }
+    if (comparator === bComparator) {
+      return 1
+    }
+  }
+  throw new Error(`Unexpected comparator pair: ${aComparator}, ${bComparator}`)
+}

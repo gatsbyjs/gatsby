@@ -1,9 +1,6 @@
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-const { getDataStore } = require(`../../datastore`)
-const {
-  runFastFiltersAndSort,
-} = require(`../../datastore/in-memory/run-fast-filters`)
+const { isLmdbStore, getDataStore } = require(`../../datastore`)
 
 const makeNodesUneven = () => [
   // Note: This is assumed to be an uneven node count
@@ -19,6 +16,7 @@ const makeNodesUneven = () => [
     anArray: [1, 2, 3, 4],
     strArray: `["testing", "serialization", "hacks"]`,
     nullArray: [1, null, 3, 4],
+    duplicates: [`foo`],
     key: {
       withEmptyArray: [],
     },
@@ -70,6 +68,7 @@ const makeNodesUneven = () => [
     singleArray: [8],
     strArray: `[5,6,7,8]`,
     nullArray: [1, 3, 4],
+    duplicates: `bar`,
     waxOnly: {
       foo: true,
       bar: { baz: true },
@@ -142,6 +141,7 @@ const makeNodesUneven = () => [
     hair: 0,
     date: `2006-07-29T22:39:53.000Z`,
     waxOnly: null,
+    duplicates: [`foo`, `bar`],
     anotherKey: {
       withANested: {
         nestedKey: `bar`,
@@ -334,8 +334,8 @@ async function runQuery(queryArgs, nodes = makeNodesUneven()) {
     nodeTypeNames: [gqlType.name],
     filtersCache: new Map(),
   }
-
-  return Array.from(runFastFiltersAndSort(args).entries)
+  const { entries } = await getDataStore().runQuery(args)
+  return Array.from(entries)
 }
 
 async function runQuery2(queryArgs) {
@@ -1404,6 +1404,15 @@ describe(`Filter fields`, () => {
       )
     })
 
+    it(`sorts correctly`, async () => {
+      const needle = [`foo`, `bar`]
+      const result = await runQuery({
+        filter: { duplicates: { in: needle } },
+        sort: { fields: [`id`], order: [] },
+      })
+      expect(result.map(r => r.id)).toEqual([`0`, `1`, `2`])
+    })
+
     it(`refuses a non-arg number argument`, async () => {
       await expect(
         runFilter({
@@ -1817,9 +1826,19 @@ describe(`collection fields`, () => {
     })
 
     expect(result.length).toEqual(3)
-    expect(result[0].id).toEqual(`1`)
-    expect(result[1].id).toEqual(`2`)
-    expect(result[2].id).toEqual(`0`)
+
+    // Nodes 1 and 2 both have value 10010, so correct sorting order is undefined
+    //  LMDB actually sorts according to node.counter in addition to main sorting
+    //  and the old fast filters do not do any secondary sorting, hence the difference
+    if (isLmdbStore()) {
+      expect(result[0].id).toEqual(`2`)
+      expect(result[1].id).toEqual(`1`)
+      expect(result[2].id).toEqual(`0`)
+    } else {
+      expect(result[0].id).toEqual(`1`)
+      expect(result[1].id).toEqual(`2`)
+      expect(result[2].id).toEqual(`0`)
+    }
   })
 
   describe(`num, null, and nullable order`, () => {
