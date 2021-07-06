@@ -99,6 +99,22 @@ const activeFlags: Array<IFlag> = [
     },
   },
   {
+    name: `DEV_WEBPACK_CACHE`,
+    env: `GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE`,
+    command: `develop`,
+    telemetryId: `DevWebackCache`,
+    experimental: false,
+    description: `Enable webpack's filesystem caching during development. Speeds up the start of the development server.`,
+    // umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
+    testFitness: (): fitnessEnum => {
+      if (sampleSiteForExperiment(`DEV_WEBPACK_CACHE`, 20)) {
+        return `OPT_IN`
+      } else {
+        return true
+      }
+    },
+  },
+  {
     name: `QUERY_ON_DEMAND`,
     env: `GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND`,
     command: `develop`,
