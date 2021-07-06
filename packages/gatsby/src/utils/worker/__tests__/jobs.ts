@@ -34,10 +34,12 @@ describe(`worker (jobs)`, () => {
 
     const siteDirectory = path.join(__dirname, `fixtures`, `sample-site`)
 
-    await worker.all.loadConfigAndPlugins({
-      siteDirectory,
-      processFlags: false,
-    })
+    await Promise.all(
+      worker.all.loadConfigAndPlugins({
+        siteDirectory,
+        processFlags: false,
+      })
+    )
 
     // plugin API creates a job
     await Promise.all(worker.all.runAPI(`createSchemaCustomization`))
