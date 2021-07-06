@@ -80,7 +80,7 @@ Some examples:
 - sending emails from a service like SendGrid
 - server-side validation on form submission (eg, is this email already in our system?)
 
-Users tend to handle these situations in two ways: either they send data to a middleware service like Zapier that can trigger multiple events based on data submission. Alternately, they use Gatsby Functions (Gatsby's implementation of serverless functions) to run this logic while keeping any authentication credentials secure.
+Users tend to handle these situations in two ways: either they send data to a middleware service like Zapier that can trigger multiple events based on data submission. Alternately, they use Gatsby Functions to run this logic while keeping auth credentials secure.
 
 ## Embedding third-party forms vs writing your own forms.
 
