@@ -760,10 +760,8 @@ exports.sourceNodes = async (
 
   // highlight-start
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode(node)
-  )
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node))
+  getNodesByType(AUTHOR_NODE_TYPE).forEach(node => touchNode(node))
   // highlight-end
 
   // rest of code that creates nodes
@@ -782,10 +780,8 @@ exports.sourceNodes = async (
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode(node)
-  )
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node))
+  getNodesByType(AUTHOR_NODE_TYPE).forEach(node => touchNode(node))
 
   // highlight-start
   if (pluginOptions.previewMode) {
@@ -807,10 +803,8 @@ exports.sourceNodes = async (
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode(node)
-  )
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node))
+  getNodesByType(AUTHOR_NODE_TYPE).forEach(node => touchNode(node))
 
   if (pluginOptions.previewMode) {
     console.log("Subscribing to content updates...")
@@ -850,10 +844,8 @@ exports.sourceNodes = async (
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode(node)
-  )
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node))
+  getNodesByType(AUTHOR_NODE_TYPE).forEach(node => touchNode(node))
 
   if (pluginOptions.previewMode) {
     console.log("Subscribing to content updates...")
