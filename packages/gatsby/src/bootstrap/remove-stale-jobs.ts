@@ -4,7 +4,7 @@ import {
   ICreateJobV2FromInternalAction,
 } from "../redux/types"
 
-import { isJobStale } from "../utils/jobs-manager"
+import { isJobStale } from "../utils/jobs/manager"
 import { internalActions } from "../redux/actions"
 
 export const removeStaleJobs = (

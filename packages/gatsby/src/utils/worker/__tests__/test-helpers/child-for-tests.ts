@@ -7,6 +7,8 @@ import {
   IGatsbyPageComponent,
   IGatsbyState,
   IGatsbyStaticQueryComponents,
+  IGatsbyIncompleteJobV2,
+  IGatsbyCompleteJobV2,
 } from "../../../../redux/types"
 import { ITypeMetadata } from "../../../../schema/infer/inference-metadata"
 import reporter from "gatsby-cli/lib/reporter"
@@ -86,4 +88,36 @@ export async function getRunQueryResult(
   const state = store.getState()
 
   return await runQuery(state.schema, state.schemaCustomization.composer, query)
+}
+
+// test: jobs
+;(global as any).jobs = {
+  executedInThisProcess: [],
+  createdInThisProcess: [],
+}
+
+interface ITestJobArgs {
+  description: string
+}
+
+export function getJobsMeta(): {
+  executedInThisProcess: Array<ITestJobArgs>
+  createdInThisProcess: Array<ITestJobArgs>
+  dotThenWasCalledWith: null | Record<string, unknown>
+  dotCatchWasCalledWith: null | string
+  awaitReturnedWith: null | Record<string, unknown>
+  awaitThrewWith: null | string
+} {
+  return (global as any).jobs
+}
+
+export function getReduxJobs(): {
+  complete: Array<IGatsbyCompleteJobV2>
+  incomplete: Array<IGatsbyIncompleteJobV2>
+} {
+  const { complete, incomplete } = store.getState().jobsV2
+  return {
+    complete: Array.from(complete.values()),
+    incomplete: Array.from(incomplete.values()),
+  }
 }

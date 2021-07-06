@@ -34,7 +34,7 @@ import {
   InternalJob,
   removeInProgressJob,
   getInProcessJobPromise,
-} from "../../utils/jobs-manager"
+} from "../../utils/jobs/manager"
 
 /**
  * Create a dependency between a page and data. Probably for

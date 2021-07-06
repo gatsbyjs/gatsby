@@ -4,7 +4,7 @@ import { DocumentNode, GraphQLSchema, DefinitionNode } from "graphql"
 import { SchemaComposer } from "graphql-compose"
 import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
 import { ThunkAction } from "redux-thunk"
-import { InternalJob, JobResultInterface } from "../utils/jobs-manager"
+import { InternalJob, JobResultInterface } from "../utils/jobs/manager"
 import { ITypeMetadata } from "../schema/infer/inference-metadata"
 
 type SystemPath = string

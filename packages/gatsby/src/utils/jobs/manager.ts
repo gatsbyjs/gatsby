@@ -7,62 +7,23 @@ import _ from "lodash"
 import { createContentDigest, slash } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { IPhantomReporter } from "gatsby-cli"
+import {
+  JobInput,
+  InternalJob,
+  MESSAGE_TYPES,
+  IJobCreatedMessage,
+  IJobCompletedMessage,
+  IJobFailed,
+  IJobNotWhitelisted,
+  WorkerError,
+} from "./types"
 
-enum MESSAGE_TYPES {
-  JOB_CREATED = `JOB_CREATED`,
-  JOB_COMPLETED = `JOB_COMPLETED`,
-  JOB_FAILED = `JOB_FAILED`,
-  JOB_NOT_WHITELISTED = `JOB_NOT_WHITELISTED`,
-}
+type IncomingMessages = IJobCompletedMessage | IJobFailed | IJobNotWhitelisted
 
-interface IBaseJob {
-  name: string
-  outputDir: string
-  args: Record<string, any>
-}
+type OutgoingMessages = IJobCreatedMessage
 
-interface IJobInput {
-  inputPaths: Array<string>
-  plugin: {
-    name: string
-    version: string
-    resolve: string
-  }
-}
-
-interface IInternalJob {
-  id: string
-  contentDigest: string
-  inputPaths: Array<{
-    path: string
-    contentDigest: string
-  }>
-  plugin: {
-    name: string
-    version: string
-    resolve: string
-    isLocal: boolean
-  }
-}
-
+export { InternalJob }
 export type JobResultInterface = Record<string, unknown>
-export type JobInput = IBaseJob & IJobInput
-export type InternalJob = IBaseJob & IInternalJob
-
-export class WorkerError extends Error {
-  constructor(error: Error | string) {
-    if (typeof error === `string`) {
-      super(error)
-    } else {
-      // use error.message or else stringiyf the object so we don't get [Object object]
-      super(error.message ?? JSON.stringify(error))
-    }
-
-    this.name = `WorkerError`
-
-    Error.captureStackTrace(this, WorkerError)
-  }
-}
 
 let activityForJobs: IPhantomReporter | null = null
 let activeJobs = 0
@@ -132,15 +93,19 @@ async function runLocalWorker<T>(
   })
 }
 
+function isJobsIPCMessage(msg: any): msg is IncomingMessages {
+  return (
+    msg &&
+    msg.type &&
+    msg.payload &&
+    msg.payload.id &&
+    externalJobsMap.has(msg.payload.id)
+  )
+}
+
 function listenForJobMessages(): void {
   process.on(`message`, msg => {
-    if (
-      msg &&
-      msg.type &&
-      msg.payload &&
-      msg.payload.id &&
-      externalJobsMap.has(msg.payload.id)
-    ) {
+    if (isJobsIPCMessage(msg)) {
       const { job, deferred } = externalJobsMap.get(msg.payload.id)!
 
       switch (msg.type) {
@@ -171,10 +136,12 @@ function runExternalWorker(job: InternalJob): Promise<any> {
     deferred,
   })
 
-  process.send!({
+  const jobCreatedMessage: OutgoingMessages = {
     type: MESSAGE_TYPES.JOB_CREATED,
     payload: job,
-  })
+  }
+
+  process.send!(jobCreatedMessage)
 
   return deferred.promise
 }
