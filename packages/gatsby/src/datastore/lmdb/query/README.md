@@ -9,7 +9,7 @@ The implementation and limitations are pretty similar to that of MongoDB.
 Indexes for all object types are stored in the same LMDB database (aka collection).
 Keys in this database are represented as arrays of scalar JS values ([via][4]).
 
-# Index structure
+## Index structure
 
 Conceptually an index is a huge flat map where keys are _sorted_ tuples of node attributes and values
 contain unique id of the indexed objects (and maybe some additional attributes).
@@ -61,7 +61,7 @@ of different nodes. For instance if we add another node `a2` with the same set o
 >
 > We should switch when this is fully supported: https://github.com/DoctorEvidence/lmdb-store/issues/66
 
-# Creating an index
+## Creating an index
 
 `createIndex` expects node type name and index config as input (similar to MongoDB format):
 
@@ -82,7 +82,7 @@ If it contains fields, then the index is [MultiKey][2] index and has several lim
 
 This is later used for various optimizations when actually scanning the index.
 
-# Queries that can use index
+## Queries that can use index
 
 > **tldr;** basically only `eq` filters can always use index with `sort`.
 > All range filters (`in`, `gt`, etc) can only use index with _overlapping_ sort fields.
@@ -158,7 +158,7 @@ While those queries can only use index for `sort`:
 
 etc.
 
-# Suggest index for a query
+## Suggest index for a query
 
 Unlike databases that must select one of the existing indexes created by users,
 we actually decide which index to **create** for a given query (and then use).
@@ -190,7 +190,7 @@ So when we prefer `sort` fields for index we de-optimize not just `filter`, but 
 > TODO: Filter and sort fields that can not be used for range scans directly are added to index
 > _values_. This allows us to avoid additional expensive `getNode` operations.
 
-# Running a query
+## Running a query
 
 There are several codepaths here
 
@@ -232,9 +232,9 @@ Running a query consists of several steps:
 > TODO: we can play with streamed sorting via temporary tables in LMDB:
 > https://github.com/DoctorEvidence/lmdb-store/discussions/70
 
-# Caveats
+## Caveats
 
-## 1. Counting is slow
+### 1. Counting is slow
 
 In-memory store can do counts in `O(1)` using `results.length`. In case of querying LMDB - counting
 basically requires a separate query without `skip` / `limit`. So it is at least `O(N)`.
@@ -248,7 +248,7 @@ in this scenario: https://github.com/DoctorEvidence/lmdb-store/discussions/68#di
 > TODO: use this feature of lmdb-store when ready: https://github.com/DoctorEvidence/lmdb-store/issues/66
 > it will return counts in O(1) for 90% of common cases.
 
-## 2. MultiKey indexes and count
+### 2. MultiKey indexes and count
 
 Multikey index cannot reliably count the number of elements returned by some query
 The following node has two entries in index `{ a: 1 }`.
@@ -264,21 +264,21 @@ predicate (field `a` in this example).
 
 So in the worst case we must traverse all index results and deduplicate to get the actual count.
 
-## 3. MultiKey index and limit, offset
+### 3. MultiKey index and limit, offset
 
 Limit and offset are also unreliable with [MultiKey][2] indexes
 (unless all multiKey fields have `eq` predicate).
 
-## 4. Mixed sort order requires full in-memory sort (yet)
+### 4. Mixed sort order requires full in-memory sort (yet)
 
 Currently, we cannot scan index in mixed order. This feature requires binary inversion for key elements
 in `lmdb-store` which is [not yet available][6].
 
-## 5. Key size limit
+### 5. Key size limit
 
 1978 bytes hard limit.
 
-## 6. Using node counter for default sorting vs node id
+### 6. Using node counter for default sorting vs node id
 
 In the [index structure](#index-structure) section we mention that the last column in the index
 is node id. But in reality we use an internal node counter to have smaller keys and get sorting
@@ -286,7 +286,7 @@ by insertion order by default.
 
 > This value is stored in `node.internal.counter` and added by `createNode` action creator
 
-## 7. Materialization
+### 7. Materialization
 
 There is a special case when we index fields having custom GraphQL resolvers.
 Values for such fields require additional resolution step. We call it "materialization".
@@ -327,9 +327,9 @@ Notes:
 3. The assumption about materialization is that it is deterministic.
    We do not invalidate materialization results in index unless a corresponding node itself was updated or deleted.
 
-## 8. Any aggregations
+### 8. Any aggregations
 
-## 9. `null` and `undefined` values
+### 9. `null` and `undefined` values
 
 Imagine we want to add another node `"a3"` to the index which has no `b` field:
 
