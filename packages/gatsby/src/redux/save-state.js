@@ -8,7 +8,7 @@ async function saveState() {
   if (saveInProgress) return
   saveInProgress = true
 
-  const startTime = new Date()
+  const startTime = Date.now()
 
   try {
     await redux.saveState()
@@ -17,7 +17,7 @@ async function saveState() {
   }
 
   try {
-    const duration = (new Date().getTime() - startTime.getTime()) / 1000
+    const duration = (Date.now() - startTime) / 1000
     captureEvent(`INTERNAL_STATE_PERSISTENCE_DURATION`, {
       name: `Save Internal State`,
       duration: Math.round(duration),
