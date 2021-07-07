@@ -1,6 +1,8 @@
 import { initJobsMessagingInWorker } from "../../jobs/worker-messaging"
+import { initReporterMessagingInWorker } from "../reporter"
 
 initJobsMessagingInWorker()
+initReporterMessagingInWorker()
 
 // Note: this doesn't check for conflicts between module exports
 export { renderHTMLProd, renderHTMLDev } from "./render-html"

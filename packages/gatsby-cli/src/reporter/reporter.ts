@@ -3,7 +3,7 @@ import chalk from "chalk"
 import { trackError } from "gatsby-telemetry"
 import { globalTracer, Span } from "opentracing"
 
-import * as reporterActions from "./redux/actions"
+import * as reduxReporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
 import { getErrorFormatter } from "./errors"
 import constructError from "../structured-errors/construct-error"
@@ -17,6 +17,8 @@ import { ErrorMeta, CreateLogAction } from "./types"
 
 const errorFormatter = getErrorFormatter()
 const tracer = globalTracer()
+
+let reporterActions = reduxReporterActions
 
 export interface IActivityArgs {
   id?: string
@@ -52,6 +54,12 @@ class Reporter {
       ...this.errorMap,
       ...entry,
     }
+  }
+
+  setReporterActions = (
+    _reporterActions: typeof reduxReporterActions
+  ): void => {
+    reporterActions = _reporterActions
   }
 
   /**
@@ -233,7 +241,13 @@ class Reporter {
 
     const span = tracer.startSpan(text, spanArgs)
 
-    return createTimerReporter({ text, id, span, reporter: this })
+    return createTimerReporter({
+      text,
+      id,
+      span,
+      reporter: this,
+      reporterActions,
+    })
   }
 
   /**
@@ -258,7 +272,7 @@ class Reporter {
 
     const span = tracer.startSpan(text, spanArgs)
 
-    return createPhantomReporter({ id, text, span })
+    return createPhantomReporter({ id, text, span, reporterActions })
   }
 
   /**
@@ -284,6 +298,7 @@ class Reporter {
       start,
       span,
       reporter: this,
+      reporterActions,
     })
   }
 

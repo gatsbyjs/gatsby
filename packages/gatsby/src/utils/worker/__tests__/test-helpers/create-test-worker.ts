@@ -1,5 +1,6 @@
 import { WorkerPool } from "gatsby-worker"
 import { initJobsMessagingInMainProcess } from "../../../jobs/worker-messaging"
+import { initReporterMessagingInMainProcess } from "../../reporter"
 import type { MessagesFromChild, MessagesFromParent } from "../../messaging"
 
 export type GatsbyTestWorkerPool = WorkerPool<
@@ -24,6 +25,7 @@ export function createTestWorker(numWorkers = 1): GatsbyTestWorkerPool {
   )
 
   initJobsMessagingInMainProcess(worker)
+  initReporterMessagingInMainProcess(worker)
 
   return worker
 }
