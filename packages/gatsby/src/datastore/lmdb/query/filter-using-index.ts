@@ -183,7 +183,7 @@ function* performRangeScan(
     const range = !reverse
       ? { start, end, limit, offset, snapshot: false }
       : { start: end, end: start, limit, offset, reverse, snapshot: false }
-    // console.log(`range`, range)
+
     // @ts-ignore
     yield* indexes.getRange(range)
   }
@@ -199,15 +199,12 @@ function* performFullScan(context: IFilterArgs): Generator<IIndexEntry> {
     reverse,
     indexMetadata: { keyPrefix },
   } = context
-  // console.log(`full scan`)
 
   let start: RangeBoundary = [keyPrefix, getValueEdgeAfter(undefinedSymbol)]
   let end: RangeBoundary = [getValueEdgeAfter(keyPrefix)]
   let range = !reverse
     ? { start, end, snapshot: false }
     : { start: end, end: start, reverse, snapshot: false }
-
-  // console.log(`full-scan-range1`, range)
 
   const undefinedToEnd = range
 
@@ -220,7 +217,6 @@ function* performFullScan(context: IFilterArgs): Generator<IIndexEntry> {
 
   const topToUndefined = range
 
-  // console.log(`full-scan-range2`, range, Array.from(topToUndefined))
   if (!reverse) {
     // @ts-ignore
     yield* indexes.getRange(undefinedToEnd)

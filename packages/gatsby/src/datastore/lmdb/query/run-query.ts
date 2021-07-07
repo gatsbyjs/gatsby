@@ -231,26 +231,10 @@ function completeFiltering(
     .filter(q => !usedQueries.has(q))
     .map(q => [dbQueryToDottedField(q), getFilterStatement(q)])
 
-  // console.log(`have to complete results`, filtersToApply)
-
-  let items = 0
-  // const start = Date.now()
-  let shown = true
-
   return intermediateResult.filter(node => {
     const resolvedFields = resolvedNodes?.get(node.internal.type)?.get(node.id)
 
     for (const [dottedField, filter] of filtersToApply) {
-      ++items
-      if (items % 1000 === 0) shown = false
-      if (!shown) {
-        shown = true
-        // console.log(
-        //   `Completing huge dataset (${items} items so far) for: ${
-        //     node.internal.type
-        //   }.${dottedField}; spent: ${Date.now() - start}ms;`
-        // )
-      }
       const tmp = resolveFieldValue(dottedField, node, resolvedFields)
       const value = Array.isArray(tmp) ? tmp : [tmp]
       if (value.some(v => !shouldFilter(filter, v))) {

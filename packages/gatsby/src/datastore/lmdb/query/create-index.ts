@@ -149,11 +149,6 @@ async function doCreateIndex(
     await metadata.put(toMetadataKey(indexName), indexMetadata)
     console.timeEnd(label)
 
-    // console.log(`index entries:`)
-    // indexes
-    //   .getRange({ start: indexName })
-    //   .forEach(entry => console.log(entry.key, entry.value))
-
     return indexMetadata
   } catch (e) {
     indexMetadata.state = `error`
