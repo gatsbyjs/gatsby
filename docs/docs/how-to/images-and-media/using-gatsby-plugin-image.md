@@ -1,5 +1,10 @@
 ---
 title: Using the Gatsby Image plugin
+examples:
+  - label: Using Gatsby Image
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image"
+  - label: GatsbyGram
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram"
 ---
 
 _If you're looking for a guide on using the deprecated `gatsby-image` package, it can be found in the [How to use Gatsby Image](/docs/how-to/images-and-media/using-gatsby-image) doc._
@@ -38,7 +43,7 @@ Note that `gatsby-source-filesystem` is not included in this config. If you are 
 
 ### Decide which component to use
 
-The Gatsby Image plugin includes two image components: one for static and one for dynamic images. The simplest way to decide which you need to is to ask yourself: _"will this image be the same every time the component or template is used?"_. If it will always be the same, then use `StaticImage`. If it will change, whether through data coming from a CMS or different values passed to a component each time you use it, then it is a dynamic image and you should use the `GatsbyImage` component.
+The Gatsby Image plugin includes two image components: one for static and one for dynamic images. The simplest way to decide which you need is to ask yourself: _"will this image be the same every time the component or template is used?"_. If it will always be the same, then use `StaticImage`. If it will change, whether through data coming from a CMS or different values passed to a component each time you use it, then it is a dynamic image and you should use the `GatsbyImage` component.
 
 ### Static images
 
@@ -192,9 +197,43 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    `
    ```
 
+## Customizing the defaults
+
+You might find yourself using the same options (like `placeholder`, `formats` etc.) with most of your `GatsbyImage` and `StaticImage` instances.
+You can customize the default options with `gatsby-plugin-sharp`.
+
+The following configuration describes the options that can be customized along with their default values:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          formats: [`auto`, `webp`],
+          placeholder: `dominantColor`,
+          quality: 50,
+          breakpoints: [750, 1080, 1366, 1920],
+          backgroundColor: `transparent`,
+          tracedSVGOptions: {},
+          blurredOptions: {},
+          jpgOptions: {},
+          pngOptions: {},
+          webpOptions: {},
+          avifOptions: {},
+        },
+      },
+    },
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-image`,
+  ],
+}
+```
+
 ## Using images from a CMS or CDN
 
-Many source plugins have native support for `gatsby-plugin-image`, with images served directly from a content delivery network (CDN). This means that builds are faster, because there is no need download images and process them locally. The query syntax varies according to the plugin, as do the supported transformation features and image formats. Make sure you update to the latest version of the source plugin to ensure there is support. For plugins that are not in this list you can use [dynamic images from `gatsby-transformer-sharp`](#dynamic-images).
+Many source plugins have native support for `gatsby-plugin-image`, with images served directly from a content delivery network (CDN). This means that builds are faster, because there is no need to download images and process them locally. The query syntax varies according to the plugin, as do the supported transformation features and image formats. Make sure you update to the latest version of the source plugin to ensure there is support. For plugins that are not in this list you can use [dynamic images from `gatsby-transformer-sharp`](#dynamic-images).
 
 ### Source plugins
 
@@ -325,7 +364,7 @@ If not, check steps 1 and 2 above.
 
 If you're using GatsbyImage:
 
-Run the query you're using in your site. Does it return a gatsbyImageData object?
+Run the query you're using in your site. Does it return a `gatsbyImageData` object?
 
 If not, check steps 1 and 2 above.
 

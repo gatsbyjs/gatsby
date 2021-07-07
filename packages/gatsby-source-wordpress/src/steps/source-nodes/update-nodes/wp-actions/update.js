@@ -20,7 +20,6 @@ export const fetchAndCreateSingleNode = async ({
   id,
   actionType,
   cachedNodeIds,
-  isDraft,
   token = null,
   isPreview = false,
   userDatabaseId = null,
@@ -33,7 +32,7 @@ export const fetchAndCreateSingleNode = async ({
     // if it's a preview but it's the initial blank node
     // then use the regular node query as the preview query wont
     // return anything
-    const query = isPreview && !isDraft ? previewQuery : nodeQuery
+    const query = isPreview ? previewQuery : nodeQuery
 
     return query
   }

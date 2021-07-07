@@ -10,8 +10,8 @@ const Recipes = ({ data }) => (
       <h1>Recipes</h1>
       <ul>
         {data.recipes.edges.map(({ node }) => (
-          <li key={node.fields.slug}>
-            <Link to={node.fields.slug}>{node.title}</Link>
+          <li key={node.gatsbyPath}>
+            <Link to={node.gatsbyPath}>{node.title}</Link>
           </li>
         ))}
       </ul>
@@ -23,13 +23,11 @@ export default Recipes
 
 export const query = graphql`
   query {
-    recipes: allNodeRecipe(limit: 1000) {
+    recipes: allRecipes(limit: 1000) {
       edges {
         node {
           title
-          fields {
-            slug
-          }
+          gatsbyPath(filePath: "/{Recipes.title}")
         }
       }
     }

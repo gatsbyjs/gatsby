@@ -73,13 +73,13 @@ One of the lowest-hanging fruits is to set your scripts to load lazily rather th
 
 For slightly more effort, you can get additional performance gains; rather than loading third-party scripts from external sources, you can inline scripts in your code to reduce the cost of a network call.
 
-There are a number of ways to do this. We recommend you [use onPreRenderHTML](https://www.gatsbyjs.org/docs/ssr-apis/#onPreRenderHTML) to add your script tag to the DOM; if possible put the scripts lower in your DOM so that they are parsed and evaluated later.
+There are a number of places to put an inlined script, depending whether you need it to execute immediately upon loading or can defer execution.
 
-Other options include:
+- _No deferring_: This is a good default. Put the script in [onPreRenderHTML](https://www.gatsbyjs.org/docs/ssr-apis/#onPreRenderHTML) to have it added to your document tree. You can place it lower in your DOM to have parsed and evaluated later.
+- _Some deferring_: You can place the script in [onClientEntry](https://www.gatsbyjs.org/docs/browser-apis/#onClientEntry) to have it execute after page load, but before the browser renders the page.
+- _More deferring_: You can place the script in [onInitialClientRender](https://www.gatsbyjs.org/docs/browser-apis/#onInitialClientRender) to have it execute after the browser renders the page.
 
-- If you want to defer execution even further, put it in [onClientEntry](https://www.gatsbyjs.org/docs/browser-apis/#onClientEntry) instead -- this will execute it after page load before the client renders.
-
-- if you are using [html.js](https://www.gatsbyjs.org/docs/custom-html/) instead, you can modify that fileto include your snippet.
+Note that if you are using [html.js](https://www.gatsbyjs.org/docs/custom-html/), you should modify that file to include your snippet instead of using `onPreRenderHTML`.
 
 ### Reduce your JavaScript bundle cost
 

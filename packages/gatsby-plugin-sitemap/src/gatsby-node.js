@@ -19,27 +19,26 @@ exports.onPostBuild = async (
     serialize,
   }
 ) => {
-  const { data: queryRecords } = await graphql(query)
+  const { data: queryRecords, errors } = await graphql(query)
 
-  reporter.verbose(
-    `${REPORTER_PREFIX} Query Results:\n${JSON.stringify(
-      queryRecords,
-      null,
-      2
-    )}`
-  )
-
-  // resolvePages and resolveSuteUrl are allowed to be sync or async. The Promise.resolve handles each possibility
-  const allPages = await Promise.resolve(
-    resolvePages(queryRecords)
-  ).catch(err =>
-    reporter.panic(`${REPORTER_PREFIX} Error resolving Pages`, err)
-  )
-
+  // resolvePages and resolveSiteUrl are allowed to be sync or async. The Promise.resolve handles each possibility
   const siteUrl = await Promise.resolve(
     resolveSiteUrl(queryRecords)
   ).catch(err =>
     reporter.panic(`${REPORTER_PREFIX} Error resolving Site URL`, err)
+  )
+
+  if (errors) {
+    reporter.panic(
+      `Error executing the GraphQL query inside gatsby-plugin-sitemap:\n`,
+      errors
+    )
+  }
+
+  const allPages = await Promise.resolve(
+    resolvePages(queryRecords)
+  ).catch(err =>
+    reporter.panic(`${REPORTER_PREFIX} Error resolving Pages`, err)
   )
 
   if (!Array.isArray(allPages)) {
@@ -83,11 +82,13 @@ exports.onPostBuild = async (
     }
   }
 
-  const sitemapPath = path.join(`public`, output)
+  const sitemapWritePath = path.join(`public`, output)
+  const sitemapPublicPath = path.posix.join(pathPrefix, output)
 
   return simpleSitemapAndIndex({
     hostname: siteUrl,
-    destinationDir: sitemapPath,
+    publicBasePath: sitemapPublicPath,
+    destinationDir: sitemapWritePath,
     sourceData: serializedPages,
     limit: entryLimit,
     gzip: false,

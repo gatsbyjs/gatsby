@@ -61,7 +61,7 @@ const isGatsbyImageDataParent = <T>(
   node: IGatsbyImageDataParent<T> | any
 ): node is IGatsbyImageDataParent<T> => Boolean(node?.gatsbyImageData)
 
-type ImageDataLike = FileNode | IGatsbyImageDataParent | IGatsbyImageData
+export type ImageDataLike = FileNode | IGatsbyImageDataParent | IGatsbyImageData
 export const getImage = (node: ImageDataLike): IGatsbyImageData | undefined => {
   if (isGatsbyImageData(node)) {
     return node
@@ -101,6 +101,7 @@ export function getWrapperProps(
   } else if (layout === `constrained`) {
     if (!gatsbyImageIsInstalled()) {
       wrapperStyle.display = `inline-block`
+      wrapperStyle.verticalAlign = `top`
     }
     className = `gatsby-image-wrapper gatsby-image-wrapper-constrained`
   }

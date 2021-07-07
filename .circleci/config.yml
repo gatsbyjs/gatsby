@@ -8,9 +8,9 @@ executors:
       image:
         type: string
         # First 10.x LTS release, but old Yarn
-        default: "12.13"
+        default: "12.13.0"
     docker:
-      - image: circleci/node:<< parameters.image >>
+      - image: cimg/node:<< parameters.image >>
 
 aliases:
   e2e-executor: &e2e-executor
@@ -32,6 +32,11 @@ aliases:
     run:
       name: Check for dirty lockfile
       command: ./scripts/check-lockfile.sh || exit 1
+
+  validate_renovate: &validate_renovate
+    run:
+      name: Validate renovate-config
+      command: (node scripts/renovate-config-generator.js && (git status --porcelain renovate.json5 | grep "M renovate.json5")) && (echo "Please run \"node scripts/renovate-config-generator.js\" to update renovate.json5" && exit 1) || npx -p renovate renovate-config-validator .
 
   persist_cache: &persist_cache
     save_cache:
@@ -58,11 +63,20 @@ aliases:
           - /blog.+/
 
   test_template: &test_template
+    parameters:
+      npm_rebuild:
+        type: boolean
+        default: false
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
+      - when:
+          condition: << parameters.npm_rebuild >>
+          steps:
+            - run: npm rebuild
       - run: yarn list react
+      - run: yarn why lmdb-store
       - run:
           command: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
           environment:
@@ -150,7 +164,7 @@ commands:
         default: false
       trigger_pattern:
         type: string
-        default: "packages/*|.circleci/*"
+        default: "packages/*|.circleci/*|scripts/e2e-test.sh"
       test_path:
         type: string
       test_command:
@@ -169,6 +183,9 @@ commands:
 
       - <<: *attach_to_bootstrap
       - run:
+          name: Install gatsby-dev
+          command: yarn global add gatsby-dev-cli
+      - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
@@ -179,10 +196,13 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|yarn.lock"
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
+      # python 2 is not built in and node-gyp needs it to build lmdb
+      - run: apt-get update && apt-get install python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *check_lockfile
+      - <<: *validate_renovate
       - <<: *persist_cache
       - run: yarn bootstrap -- concurrency=2
       # Persist the workspace again with all packages already built
@@ -224,7 +244,16 @@ jobs:
   unit_tests_node14:
     executor:
       name: node
-      image: "14"
+      image: "14.17.0"
+    <<: *test_template
+
+  unit_tests_node14_lmdb_store:
+    executor:
+      name: node
+      image: "14.17.0"
+    environment:
+      GATSBY_EXPERIMENTAL_LMDB_STORE: 1
+      GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING: 1
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
@@ -240,6 +269,12 @@ jobs:
       - run: npm i -g yarn@1.22.10
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
+
+  integration_tests_node_manifest:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/node-manifest
 
   integration_tests_long_term_caching:
     executor: node
@@ -264,7 +299,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/gatsby-cli
-          trigger_pattern: packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*
+          trigger_pattern: packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*|scripts/e2e-test.sh
 
   integration_tests_structured_logging:
     executor: node
@@ -316,32 +351,32 @@ jobs:
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
       - <<: *attach_to_bootstrap
       - run:
-          command: cp -r ./starters/default ./e2e-tests/gatsby-pnp
+          command: mkdir -p /tmp/e2e-tests/
+          working_directory: ~/project
+      - run:
+          command: cp -r ./starters/default /tmp/e2e-tests/gatsby-pnp
           working_directory: ~/project
       - run:
           command: touch yarn.lock
-          working_directory: ~/project/e2e-tests/gatsby-pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Quick upgrade to the v2 (any version, we just need the real set version)
           command: yarn policies set-version berry
-          working_directory: ~/project/e2e-tests/gatsby-pnp
-      - run: # force typescript to 4.1.5 to pass test
-          command: sed '$ s/.$/,"resolutions":{"typescript":"4.1.5"}}/' package.json > tmpfile && cat tmpfile > package.json && rm tmpfile
-          working_directory: ~/project/e2e-tests/gatsby-pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Forces to use the local packages
-          command: yarn link --all --private ../..
-          working_directory: ~/project/e2e-tests/gatsby-pnp
+          command: yarn link --all --private ~/project
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: yarn install
-          working_directory: ~/project/e2e-tests/gatsby-pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: yarn add start-server-and-test@^1.11.0
-          working_directory: ~/project/e2e-tests/gatsby-pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: yarn build
-          working_directory: ~/project/e2e-tests/gatsby-pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run:
           command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
-          working_directory: ~/project/e2e-tests/gatsby-pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnp
 
   e2e_tests_gatsby-image:
     <<: *e2e_tests_gatsby-image_alias
@@ -377,8 +412,8 @@ jobs:
       CYPRESS_RECORD_KEY: 3fb49000-4143-4bd8-9ab4-219389060910
     steps:
       - e2e-test:
-          test_path: e2e-tests/themes/development-runtime
-          test_command: yarn test
+          test_path: e2e-tests/themes
+          test_command: cd development-runtime; yarn test
 
   themes_e2e_tests_production_runtime:
     <<: *e2e-executor
@@ -387,8 +422,8 @@ jobs:
       CYPRESS_RECORD_KEY: e4e7b3b8-e1e7-4a74-a0c9-9ac76585236b
     steps:
       - e2e-test:
-          test_path: e2e-tests/themes/production-runtime
-          test_command: yarn test
+          test_path: e2e-tests/themes
+          test_command: cd production-runtime; yarn test
 
   mdx_e2e_tests:
     <<: *e2e-executor
@@ -449,10 +484,11 @@ jobs:
     executor: node
     steps:
       - checkout
+      # jq is helpful for parsing json & python required for node-gyp to build lmdb
+      - run: apt-get update && apt-get install jq python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - run: yarn markdown
-      - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/*"
@@ -490,7 +526,7 @@ jobs:
     steps:
       - checkout
       - run:
-          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|yarn.lock"
+          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
           shell: bash.exe
       # Restoring cache takes as long as installing node modules, so skipping
       # - restore_cache:
@@ -528,6 +564,8 @@ jobs:
         default: "next"
     steps:
       - checkout
+      # python 2 is not built in and node-gyp needs it to build lmdb
+      - run: apt-get update && apt-get install python -y
       - run:
           name: "Update React to prerelease"
           command: "REACT_CHANNEL=<< parameters.version >> node ./scripts/upgrade-react"
@@ -623,7 +661,17 @@ workflows:
             - lint
             - typecheck
             - bootstrap
+      - unit_tests_node14_lmdb_store:
+          <<: *ignore_docs
+          # rebuild to get correct version of lmdb-store (compiled for node14 not node12)
+          npm_rebuild: true
+          requires:
+            - lint
+            - typecheck
+            - bootstrap
       - integration_tests_gatsby_source_wordpress:
+          <<: *e2e-test-workflow
+      - integration_tests_node_manifest:
           <<: *e2e-test-workflow
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow

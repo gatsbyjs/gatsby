@@ -1,10 +1,14 @@
 ---
 title: Building an E-commerce site with Shopify
+examples:
+  - label: Gatsby Shopify Starter
+    href: "https://github.com/gatsbyjs/gatsby-starter-shopify"
 ---
 
 In this tutorial, you will setup a new Gatsby website that fetches product data from [Shopify](https://www.shopify.com). The site displays a list of all products on a product listing page, and a page for every product in the store.
 
-If you are already comfortable with Gatsby and Shopify, you might want to check out the [Gatsby Shopify starter](https://www.gatsbyjs.com/starters/AlexanderProd/gatsby-shopify-starter/), which provides many of the same features as this example.
+If you're already comfortable with Gatsby and Shopify, you might want to check out our [Shopify Starter Demo](https://shopify-demo.gatsbyjs.com/), a proof of concept showcasing 10,000 products and 30,000 SKUs (variants).
+You can clone the starter, host it on Gatsby and connect it to your own Shopify data to develop your own proof of concept in as little as an hour.
 
 ## Setting up your Shopify account
 
@@ -193,5 +197,4 @@ exports.createPages = async ({ graphql, actions }) => {
 
 ## Additional Resources
 
-- [Gatsby Shopify Starter](/starters/AlexanderProd/gatsby-shopify-starter/)
-- [Gatsby Shopify Hello World](/starters/ohduran/gatsby-starter-hello-world-shopify/)
+- [Gatsby Shopify Starter](https://shopify-demo.gatsbyjs.com/)

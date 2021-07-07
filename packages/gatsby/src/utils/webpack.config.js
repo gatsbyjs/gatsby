@@ -6,6 +6,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const { CoreJSResolver } = require(`./webpack/corejs-resolver`)
+const { CacheFolderResolver } = require(`./webpack/cache-folder-resolver`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const { getPublicPath } = require(`./get-public-path`)
@@ -19,7 +20,7 @@ import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
 import { StaticQueryMapper } from "./webpack/static-query-mapper"
 import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
-import { getBrowsersList } from "./browserslist"
+import { hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
 const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
 
@@ -38,6 +39,7 @@ module.exports = async (
   port,
   { parentSpan } = {}
 ) => {
+  let fastRefreshPlugin
   const modulesThatUseGatsby = await getGatsbyDependents()
   const directoryPath = withBasePath(directory)
 
@@ -172,10 +174,14 @@ module.exports = async (
   function getEntry() {
     switch (stage) {
       case `develop`:
-        return {
-          polyfill: directoryPath(`.cache/polyfill-entry`),
-          commons: [directoryPath(`.cache/app`)],
-        }
+        return hasES6ModuleSupport(directory)
+          ? {
+              commons: [directoryPath(`.cache/app`)],
+            }
+          : {
+              polyfill: directoryPath(`.cache/polyfill-entry`),
+              commons: [directoryPath(`.cache/app`)],
+            }
       case `develop-html`:
         return {
           main: process.env.GATSBY_EXPERIMENTAL_DEV_SSR
@@ -187,10 +193,14 @@ module.exports = async (
           main: directoryPath(`.cache/static-entry`),
         }
       case `build-javascript`:
-        return {
-          polyfill: directoryPath(`.cache/polyfill-entry`),
-          app: directoryPath(`.cache/production-app`),
-        }
+        return hasES6ModuleSupport(directory)
+          ? {
+              app: directoryPath(`.cache/production-app`),
+            }
+          : {
+              polyfill: directoryPath(`.cache/polyfill-entry`),
+              app: directoryPath(`.cache/production-app`),
+            }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
     }
@@ -209,6 +219,8 @@ module.exports = async (
         __ASSET_PREFIX__: JSON.stringify(
           program.prefixPaths ? assetPrefix : ``
         ),
+        // TODO Improve asset passing to pages
+        BROWSER_ESM_ONLY: JSON.stringify(hasES6ModuleSupport(directory)),
       }),
 
       plugins.virtualModules(),
@@ -219,7 +231,7 @@ module.exports = async (
       case `develop`: {
         configPlugins = configPlugins
           .concat([
-            plugins.fastRefresh({ modulesThatUseGatsby }),
+            (fastRefreshPlugin = plugins.fastRefresh({ modulesThatUseGatsby })),
             new ForceCssHMRForEdgeCases(),
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
@@ -440,13 +452,11 @@ module.exports = async (
           `@gatsbyjs/webpack-hot-middleware`
         ),
         $virtual: getAbsolutePathForVirtualModule(`$virtual`),
-
-        // SSR can have many react versions as some packages use their own version. React works best with 1 version.
-        // By resolving react,react-dom from gatsby we'll get the site versions of react & react-dom because it's specified as a peerdependency.
-        react: getPackageRoot(`react`),
-        "react-dom": getPackageRoot(`react-dom`),
       },
-      plugins: [new CoreJSResolver()],
+      plugins: [
+        new CoreJSResolver(),
+        new CacheFolderResolver(path.join(program.directory, `.cache`)),
+      ],
     }
 
     const target =
@@ -462,6 +472,15 @@ module.exports = async (
       resolve.alias[`react-dom$`] = `react-dom/profiling`
       resolve.alias[`scheduler/tracing`] = `scheduler/tracing-profiling`
     }
+
+    // SSR can have many react versions as some packages use their own version. React works best with 1 version.
+    // By resolving react,react-dom from gatsby we'll get the site versions of react & react-dom because it's specified as a peerdependency.
+    //
+    // we need to put this below our resolve.alias for profiling as webpack picks the first one that matches
+    // @see https://github.com/gatsbyjs/gatsby/issues/31098
+    resolve.alias[`react`] = getPackageRoot(`react`)
+    resolve.alias[`react-dom`] = getPackageRoot(`react-dom`)
+
     return resolve
   }
 
@@ -805,6 +824,49 @@ module.exports = async (
     plugins,
     parentSpan,
   })
+
+  if (fastRefreshPlugin) {
+    // Fast refresh plugin has `include` option that determines
+    // wether HMR code gets injected. We need to make sure all custom loaders
+    // (like .ts or .mdx) that use our babel-loader will be taken into account
+    // when deciding which modules get fast-refresh HMR addition.
+    const fastRefreshIncludes = []
+    const babelLoaderLoc = require.resolve(`./babel-loader`)
+    for (const rule of getConfig().module.rules) {
+      if (!rule.use && !rule.loader) {
+        continue
+      }
+
+      const ruleLoaders = Array.isArray(rule.use)
+        ? rule.use.map(useEntry =>
+            typeof useEntry === `string` ? useEntry : useEntry.loader
+          )
+        : [rule.use?.loader ?? rule.loader]
+
+      const hasBabelLoader = ruleLoaders.some(
+        loader => loader === babelLoaderLoc
+      )
+
+      if (hasBabelLoader) {
+        fastRefreshIncludes.push(rule.test)
+      }
+    }
+
+    // start with default include of fast refresh plugin
+    const includeRegex = /\.([jt]sx?|flow)$/i
+    includeRegex.test = modulePath => {
+      // drop query param from request (i.e. ?type=component for mdx-loader)
+      // so loader rule test work well
+      const queryParamStartIndex = modulePath.indexOf(`?`)
+      if (queryParamStartIndex !== -1) {
+        modulePath = modulePath.substr(0, queryParamStartIndex)
+      }
+
+      return fastRefreshIncludes.some(re => re.test(modulePath))
+    }
+
+    fastRefreshPlugin.options.include = includeRegex
+  }
 
   return getConfig()
 }

@@ -557,4 +557,155 @@ describe(`handle flags`, () => {
       `)
     })
   })
+
+  describe(`other flag suggestions`, () => {
+    it(`suggest other flags when there is flag explicitly enabled`, () => {
+      const response = handleFlags(
+        [
+          {
+            name: `ENABLED_FLAG`,
+            env: `GATSBY_ENABLED_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+          {
+            name: `OTHER_FLAG`,
+            env: `GATSBY_OTHER_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+        ],
+        {
+          ENABLED_FLAG: true,
+        },
+        `build`
+      )
+
+      expect(response.message).toMatchInlineSnapshot(`
+        "The following flags are active:
+        - ENABLED_FLAG · (Umbrella Issue (test)) · test
+
+        There is one other flag available that you might be interested in:
+        - OTHER_FLAG · (Umbrella Issue (test)) · test
+        "
+      `)
+    })
+
+    it(`suggest other flags when there is opted-in flag`, () => {
+      const response = handleFlags(
+        [
+          {
+            name: `OPTED_IN_FLAG`,
+            env: `GATSBY_OPTED_IN_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => `OPT_IN`,
+          },
+          {
+            name: `OTHER_FLAG`,
+            env: `GATSBY_OTHER_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+        ],
+        {},
+        `build`
+      )
+
+      expect(response.message).toMatchInlineSnapshot(`
+        "We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
+        and your site was automatically chosen as one of them. With your help, we'll then release them to everyone in the next minor release.
+
+        We greatly appreciate your help testing the change. Please report any feedback good or bad in the umbrella issue. If you do encounter problems, please disable the flag by setting it to false in your gatsby-config.js like:
+
+        flags: {
+          THE_FLAG: false
+        }
+
+        The following flags were automatically enabled on your site:
+        - OPTED_IN_FLAG · (Umbrella Issue (test)) · test
+
+        There is one other flag available that you might be interested in:
+        - OTHER_FLAG · (Umbrella Issue (test)) · test
+        "
+      `)
+    })
+
+    it(`doesn't suggest other flags if there are no enabled or opted in flags (no locked-in flags)`, () => {
+      const response = handleFlags(
+        [
+          {
+            name: `SOME_FLAG`,
+            env: `GATSBY_SOME_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+          {
+            name: `OTHER_FLAG`,
+            env: `GATSBY_OTHER_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+        ],
+        {},
+        `build`
+      )
+
+      expect(response.message).toMatchInlineSnapshot(`""`)
+    })
+
+    it(`doesn't suggest other flags if there are no enabled or opted in flags (with locked-in flag)`, () => {
+      const response = handleFlags(
+        [
+          {
+            name: `LOCKED_IN_FLAG`,
+            env: `GATSBY_LOCKED_IN_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => `LOCKED_IN`,
+          },
+          {
+            name: `OTHER_FLAG`,
+            env: `GATSBY_OTHER_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+        ],
+        {},
+        `build`
+      )
+
+      expect(response.message).toMatchInlineSnapshot(`""`)
+    })
+  })
 })

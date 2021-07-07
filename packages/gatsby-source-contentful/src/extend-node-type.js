@@ -32,7 +32,8 @@ const {
 // cache is more likely to go stale than the images (which never go stale)
 // Note that the same image might be requested multiple times in the same run
 
-const validImageFormats = new Set([`jpg`, `png`, `webp`])
+// Supported Image Formats from https://www.contentful.com/developers/docs/references/images-api/#/reference/changing-formats/image-format
+const validImageFormats = new Set([`jpg`, `png`, `webp`, `gif`])
 
 if (process.env.GATSBY_REMOTE_CACHE) {
   console.warn(
@@ -65,7 +66,7 @@ const isImage = image =>
   )
 
 // Note: this may return a Promise<body>, body (sync), or null
-const getBase64Image = imageProps => {
+const getBase64Image = (imageProps, reporter) => {
   if (!imageProps) {
     return null
   }
@@ -75,7 +76,7 @@ const getBase64Image = imageProps => {
     return null
   }
 
-  const requestUrl = `https:${imageProps.baseUrl}?w=20`
+  const requestUrl = `https:${imageProps.baseUrl}?w=20&fm=jpg`
 
   // Prefer to return data sync if we already have it
   const alreadyFetched = resolvedBase64Cache.get(requestUrl)
@@ -111,10 +112,13 @@ const getBase64Image = imageProps => {
   }
 
   const loadImage = async () => {
-    const imageResponse = await downloadWithRetry({
-      url: requestUrl,
-      responseType: `arraybuffer`,
-    })
+    const imageResponse = await downloadWithRetry(
+      {
+        url: requestUrl,
+        responseType: `arraybuffer`,
+      },
+      reporter
+    )
 
     const base64 = Buffer.from(imageResponse.data, `binary`).toString(`base64`)
 
@@ -470,14 +474,14 @@ const resolveResize = (image, options) => {
 
 exports.resolveResize = resolveResize
 
-const fixedNodeType = ({ name, getTracedSVG }) => {
+const fixedNodeType = ({ name, getTracedSVG, reporter }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
       fields: {
         base64: {
           type: GraphQLString,
-          resolve: getBase64Image,
+          resolve: imageProps => getBase64Image(imageProps, reporter),
         },
         tracedSVG: {
           type: GraphQLString,
@@ -565,14 +569,14 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
   }
 }
 
-const fluidNodeType = ({ name, getTracedSVG }) => {
+const fluidNodeType = ({ name, getTracedSVG, reporter }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
       fields: {
         base64: {
           type: GraphQLString,
-          resolve: getBase64Image,
+          resolve: imageProps => getBase64Image(imageProps, reporter),
         },
         tracedSVG: {
           type: GraphQLString,
@@ -662,7 +666,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
   }
 }
 
-exports.extendNodeType = ({ type, store }) => {
+exports.extendNodeType = ({ type, store, reporter }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
@@ -679,7 +683,7 @@ exports.extendNodeType = ({ type, store }) => {
       return null
     }
 
-    const absolutePath = await cacheImage(store, image, options)
+    const absolutePath = await cacheImage(store, image, options, reporter)
     const extension = path.extname(absolutePath)
 
     return traceSVG({
@@ -695,10 +699,21 @@ exports.extendNodeType = ({ type, store }) => {
   }
 
   const getDominantColor = async ({ image, options }) => {
-    try {
-      const absolutePath = await cacheImage(store, image, options)
+    let pluginSharp
 
-      const pluginSharp = require(`gatsby-plugin-sharp`)
+    try {
+      pluginSharp = require(`gatsby-plugin-sharp`)
+    } catch (e) {
+      console.error(
+        `[gatsby-source-contentful] Please install gatsby-plugin-sharp`,
+        e
+      )
+      return `rgba(0,0,0,0.5)`
+    }
+
+    try {
+      const absolutePath = await cacheImage(store, image, options, reporter)
+
       if (!(`getDominantColor` in pluginSharp)) {
         console.error(
           `[gatsby-source-contentful] Please upgrade gatsby-plugin-sharp`
@@ -709,7 +724,8 @@ exports.extendNodeType = ({ type, store }) => {
       return pluginSharp.getDominantColor(absolutePath)
     } catch (e) {
       console.error(
-        `[gatsby-source-contentful] Please install gatsby-plugin-sharp`
+        `[gatsby-source-contentful] Could not getDominantColor from image`,
+        e
       )
       return `rgba(0,0,0,0.5)`
     }
@@ -748,9 +764,12 @@ exports.extendNodeType = ({ type, store }) => {
     }
 
     if (options.placeholder === `blurred`) {
-      placeholderDataURI = await getBase64Image({
-        baseUrl,
-      })
+      placeholderDataURI = await getBase64Image(
+        {
+          baseUrl,
+        },
+        reporter
+      )
     }
 
     if (options.placeholder === `tracedSVG`) {
@@ -767,9 +786,17 @@ exports.extendNodeType = ({ type, store }) => {
     return imageProps
   }
 
-  const fixedNode = fixedNodeType({ name: `ContentfulFixed`, getTracedSVG })
+  const fixedNode = fixedNodeType({
+    name: `ContentfulFixed`,
+    getTracedSVG,
+    reporter,
+  })
 
-  const fluidNode = fluidNodeType({ name: `ContentfulFluid`, getTracedSVG })
+  const fluidNode = fluidNodeType({
+    name: `ContentfulFluid`,
+    getTracedSVG,
+    reporter,
+  })
 
   // gatsby-plugin-image
   const getGatsbyImageData = () => {
@@ -796,7 +823,7 @@ exports.extendNodeType = ({ type, store }) => {
         type: ImageLayoutType,
         description: stripIndent`
             The layout for the image.
-            CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size. 
+            CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
             FIXED: A static image size, that does not resize according to the screen width
             FULL_WIDTH: The image resizes to fit its container, even if that is larger than the source image.
             Pass a value to "sizes" if the container is not the full width of the screen.
@@ -841,7 +868,7 @@ exports.extendNodeType = ({ type, store }) => {
         fields: {
           base64: {
             type: GraphQLString,
-            resolve: getBase64Image,
+            resolve: imageProps => getBase64Image(imageProps, reporter),
           },
           tracedSVG: {
             type: GraphQLString,

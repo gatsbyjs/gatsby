@@ -3,6 +3,7 @@ const { actions } = require(`../../redux/actions`)
 const { LocalNodeModel } = require(`../node-model`)
 const { build } = require(`..`)
 const typeBuilders = require(`../types/type-builders`)
+const { isLmdbStore } = require(`../../datastore`)
 
 const nodes = require(`./fixtures/node-model`)
 
@@ -645,6 +646,7 @@ describe(`NodeModel`, () => {
   describe(`materialization`, () => {
     let resolveBetterTitleMock
     let resolveOtherTitleMock
+    let resolveSlugMock
     beforeEach(async () => {
       const nodes = (() => [
         {
@@ -731,6 +733,7 @@ describe(`NodeModel`, () => {
       )
       resolveBetterTitleMock = jest.fn()
       resolveOtherTitleMock = jest.fn()
+      resolveSlugMock = jest.fn()
       store.dispatch({
         type: `CREATE_TYPES`,
         payload: [
@@ -794,7 +797,10 @@ describe(`NodeModel`, () => {
               },
               slug: {
                 type: `String`,
-                resolve: source => source.id,
+                resolve: source => {
+                  resolveSlugMock()
+                  return source.id
+                },
               },
             },
           }),
@@ -925,6 +931,70 @@ describe(`NodeModel`, () => {
       )
       expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
       expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
+    })
+
+    it(`should not resolve prepared nodes more than once (with mixed interfaces and node types)`, async () => {
+      nodeModel.replaceFiltersCache()
+      await nodeModel.runQuery(
+        {
+          query: { filter: { slug: { eq: `id1` } } },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(resolveSlugMock.mock.calls.length).toBe(2)
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(0)
+      nodeModel.replaceFiltersCache()
+      await nodeModel.runQuery(
+        {
+          query: { filter: { slug: { eq: `id1` } } },
+          firstOnly: false,
+          type: `TestInterface`,
+        },
+        { path: `/` }
+      )
+      expect(resolveSlugMock.mock.calls.length).toBe(2)
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(0)
+      nodeModel.replaceFiltersCache()
+      await nodeModel.runQuery(
+        {
+          query: {
+            filter: { slug: { eq: `id1` }, betterTitle: { eq: `foo` } },
+          },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(resolveSlugMock.mock.calls.length).toBe(2)
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
+      nodeModel.replaceFiltersCache()
+      await nodeModel.runQuery(
+        {
+          query: {
+            filter: { slug: { eq: `id1` } },
+          },
+          firstOnly: false,
+          type: `TestInterface`,
+        },
+        { path: `/` }
+      )
+      expect(resolveSlugMock.mock.calls.length).toBe(2)
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
+      nodeModel.replaceFiltersCache()
+      await nodeModel.runQuery(
+        {
+          query: {
+            filter: { slug: { eq: `id1` }, betterTitle: { eq: `foo` } },
+          },
+          firstOnly: true,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(resolveSlugMock.mock.calls.length).toBe(2)
+      expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
     })
 
     it(`can filter by resolved fields`, async () => {
@@ -1256,6 +1326,10 @@ describe(`NodeModel`, () => {
   })
 
   describe(`circular references`, () => {
+    if (isLmdbStore()) {
+      // Circular references are disallowed in the strict mode, this tests are expected to fail
+      return
+    }
     describe(`directly on a node`, () => {
       beforeEach(async () => {
         // This tests whether addRootNodeToInlineObject properly prevents re-traversing the same key-value pair infinitely
@@ -1305,8 +1379,8 @@ describe(`NodeModel`, () => {
         const copiedInlineObject = { ...node.inlineObject }
         nodeModel.trackInlineObjectsInRootNode(copiedInlineObject)
 
-        expect(nodeModel._trackedRootNodes instanceof Set).toBe(true)
-        expect(nodeModel._trackedRootNodes.has(node.id)).toEqual(true)
+        expect(nodeModel._trackedRootNodes instanceof WeakSet).toBe(true)
+        expect(nodeModel._trackedRootNodes.has(node)).toEqual(true)
       })
     })
     describe(`not directly on a node`, () => {
@@ -1349,8 +1423,8 @@ describe(`NodeModel`, () => {
         const copiedInlineObject = { ...node.inlineObject }
         nodeModel.trackInlineObjectsInRootNode(copiedInlineObject)
 
-        expect(nodeModel._trackedRootNodes instanceof Set).toBe(true)
-        expect(nodeModel._trackedRootNodes.has(node.id)).toEqual(true)
+        expect(nodeModel._trackedRootNodes instanceof WeakSet).toBe(true)
+        expect(nodeModel._trackedRootNodes.has(node)).toEqual(true)
       })
     })
   })

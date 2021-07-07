@@ -14,16 +14,18 @@ import {
 import { Runner, createGraphQLRunner } from "./create-graphql-runner"
 import reporter from "gatsby-cli/lib/reporter"
 import { globalTracer } from "opentracing"
-import JestWorker from "jest-worker"
+import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { handleStalePageData } from "../utils/page-data"
+import { saveStateForWorkers } from "../redux"
+import { IProgram } from "../commands/types"
 
 const tracer = globalTracer()
 
 export async function bootstrap(
-  initialContext: Partial<IBuildContext>
+  initialContext: Partial<IBuildContext> & { program: IProgram }
 ): Promise<{
   gatsbyNodeGraphQLFunction: Runner
-  workerPool: JestWorker
+  workerPool: GatsbyWorkerPool
 }> {
   const spanArgs = initialContext.parentSpan
     ? { childOf: initialContext.parentSpan }
@@ -60,7 +62,15 @@ export async function bootstrap(
 
   await rebuildSchemaWithSitePage(context)
 
+  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    saveStateForWorkers([`inferenceMetadata`])
+  }
+
   await extractQueries(context)
+
+  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    saveStateForWorkers([`components`, `staticQueryComponents`])
+  }
 
   await writeOutRedirects(context)
 

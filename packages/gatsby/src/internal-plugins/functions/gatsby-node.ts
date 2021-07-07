@@ -2,36 +2,140 @@ import fs from "fs-extra"
 import glob from "glob"
 import path from "path"
 import webpack from "webpack"
+import _ from "lodash"
 import multer from "multer"
 import * as express from "express"
-import { urlResolve, getMatchPath } from "gatsby-core-utils"
-import { ParentSpanPluginArgs, CreateDevServerArgs } from "gatsby"
-import { internalActions } from "../../redux/actions"
-import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
+import { getMatchPath, urlResolve } from "gatsby-core-utils"
+import { CreateDevServerArgs, ParentSpanPluginArgs } from "gatsby"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
 import chokidar from "chokidar"
+// We use an ancient version of path-to-regexp as it has breaking changes to express v4
+// see: https://github.com/pillarjs/path-to-regexp/tree/77df63869075cfa5feda1988642080162c584427#compatibility-with-express--4x
 import pathToRegexp from "path-to-regexp"
 import cookie from "cookie"
+import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
+import { internalActions } from "../../redux/actions"
+import { IGatsbyFunction } from "../../redux/types"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
 
-interface IFunctionData {
-  /** The route in the browser to access the function **/
-  apiRoute: string
-  /** The relative path to the original function **/
-  originalFilePath: string
-  /** The relative path to the compiled function (always ends with .js) **/
-  relativeCompiledFilePath: string
-  /** The absolute path to the compiled function (doesn't transfer across machines) **/
-  absoluteCompiledFilePath: string
-  /** The matchPath regex created by path-to-regexp. Only created if the function is dynamic. **/
-  matchPath: string
+interface IGlobPattern {
+  /** The plugin that owns this namespace **/
+  pluginName: string
+  /** The root path to the functions **/
+  rootPath: string
+  /** The glob pattern **/
+  globPattern: string
+}
+
+interface IPathToRegexpKey {
+  name: string | number
+  prefix: string
+  suffix: string
+  pattern: string
+  modifier: string
+}
+
+// During development, we lazily compile functions only when they're requested.
+// Here we keep track of which functions have been requested so are "active"
+const activeDevelopmentFunctions = new Set<IGatsbyFunction>()
+let activeEntries = {}
+
+async function ensureFunctionIsCompiled(
+  functionObj: IGatsbyFunction,
+  compiledFunctionsDir: string
+): Promise<any> {
+  // stat the compiled function. If it's there, then return.
+  let compiledFileExists = false
+  try {
+    compiledFileExists = !!(await fs.stat(functionObj.absoluteCompiledFilePath))
+  } catch (e) {
+    // ignore
+  }
+  if (compiledFileExists) {
+    return
+  } else {
+    // Otherwise, restart webpack by touching the file and watch for the file to be
+    // compiled.
+    const time = new Date()
+    fs.utimesSync(functionObj.originalAbsoluteFilePath, time, time)
+    await new Promise(resolve => {
+      const watcher = chokidar
+        // Watch the root of the compiled function directory in .cache as chokidar
+        // can't watch files in directories that don't yet exist.
+        .watch(compiledFunctionsDir)
+        .on(`add`, async _path => {
+          if (_path === functionObj.absoluteCompiledFilePath) {
+            await watcher.close()
+
+            resolve(null)
+          }
+        })
+    })
+  }
+}
+
+// Create glob type w/ glob, plugin name, root path
+const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
+  const globs: Array<IGlobPattern> = []
+
+  // Add the default site src/api directory.
+  globs.push({
+    globPattern: `${siteDirectoryPath}/src/api/**/*.{js,ts}`,
+    rootPath: path.join(siteDirectoryPath, `src/api`),
+    pluginName: `default-site-plugin`,
+  })
+
+  // Add each plugin
+  plugins.forEach(plugin => {
+    // Ignore the "default" site plugin (aka the src tree) as we're
+    // already watching that.
+    if (plugin.name === `default-site-plugin`) {
+      return
+    }
+    // Ignore any plugins we include by default. In the very unlikely case
+    // we want to ship default functions, we'll special case add them. In the
+    // meantime, we'll avoid extra FS IO.
+    if (plugin.resolve.includes(`internal-plugin`)) {
+      return
+    }
+    if (plugin.resolve.includes(`gatsby-plugin-typescript`)) {
+      return
+    }
+    if (plugin.resolve.includes(`gatsby-plugin-page-creator`)) {
+      return
+    }
+
+    const glob = {
+      globPattern: `${plugin.resolve}/src/api/${plugin.name}/**/*.{js,ts}`,
+      rootPath: path.join(plugin.resolve, `src/api`),
+      pluginName: plugin.name,
+    } as IGlobPattern
+    globs.push(glob)
+  })
+
+  // Only return unique paths
+  return _.union(globs)
+}
+
+async function globAsync(
+  pattern: string,
+  options: glob.IOptions = {}
+): Promise<Array<string>> {
+  return await new Promise((resolve, reject) => {
+    glob(pattern, options, (err, files) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(files)
+      }
+    })
+  })
 }
 
 const createWebpackConfig = async ({
   siteDirectoryPath,
-  functionsDirectory,
   store,
   reporter,
 }): Promise<webpack.Configuration> => {
@@ -41,42 +145,51 @@ const createWebpackConfig = async ({
     `functions`
   )
 
-  const files = await new Promise((resolve, reject) => {
-    glob(`**/*.{js,ts}`, { cwd: functionsDirectory }, (err, files) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(files)
+  const globs = createGlobArray(
+    siteDirectoryPath,
+    store.getState().flattenedPlugins
+  )
+
+  // Glob and return object with relative/absolute paths + which plugin
+  // they belong to.
+  const allFunctions = await Promise.all(
+    globs.map(
+      async (glob): Promise<Array<IGatsbyFunction>> => {
+        const knownFunctions: Array<IGatsbyFunction> = []
+        const files = await globAsync(glob.globPattern)
+        files.map(file => {
+          const originalAbsoluteFilePath = file
+          const originalRelativeFilePath = path.relative(glob.rootPath, file)
+
+          const { dir, name } = path.parse(originalRelativeFilePath)
+          // Ignore the original extension as all compiled functions now end with js.
+          const compiledFunctionName = path.join(dir, name + `.js`)
+          const compiledPath = path.join(
+            compiledFunctionsDir,
+            compiledFunctionName
+          )
+          const finalName = urlResolve(dir, name === `index` ? `` : name)
+
+          knownFunctions.push({
+            functionRoute: finalName,
+            pluginName: glob.pluginName,
+            originalAbsoluteFilePath,
+            originalRelativeFilePath,
+            relativeCompiledFilePath: compiledFunctionName,
+            absoluteCompiledFilePath: compiledPath,
+            matchPath: getMatchPath(finalName),
+          })
+        })
+
+        return knownFunctions
       }
-    })
-  })
-
-  if (files?.length === 0) {
-    reporter.warn(
-      `No functions found in directory: ${path.relative(
-        siteDirectoryPath,
-        functionsDirectory
-      )}`
     )
-  }
+  )
 
-  const knownFunctions: Array<IFunctionData> = []
-  knownFunctions.forEach(f => f.apiRoute)
-  files.map(file => {
-    const { dir, name } = path.parse(file)
-    // Ignore the original extension as all compiled functions now end with js.
-    const compiledFunctionName = path.join(dir, name + `.js`)
-    const compiledPath = path.join(compiledFunctionsDir, compiledFunctionName)
-    const finalName = urlResolve(dir, name === `index` ? `` : name)
-
-    knownFunctions.push({
-      apiRoute: finalName,
-      originalFilePath: file,
-      relativeCompiledFilePath: compiledFunctionName,
-      absoluteCompiledFilePath: compiledPath,
-      matchPath: getMatchPath(finalName),
-    })
-  })
+  // Combine functions by the route name so that functions in the default
+  // functions directory can override the plugin's implementations.
+  // @ts-ignore - Seems like a TS bug: https://github.com/microsoft/TypeScript/issues/28010#issuecomment-713484584
+  const knownFunctions = _.unionBy(...allFunctions, func => func.functionRoute)
 
   store.dispatch(internalActions.setFunctions(knownFunctions))
 
@@ -90,7 +203,7 @@ const createWebpackConfig = async ({
   // Logic is shared with webpack.config.js
 
   // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
-  const nodeEnv = process.env.NODE_ENV || `${defaultNodeEnv}`
+  const nodeEnv = process.env.NODE_ENV || `development`
   // config env is dependent on the env that it's run, this can be anything from staging-production
   // this allows you to set use different .env environments or conditions in gatsby files
   const configEnv = process.env.GATSBY_ACTIVE_ENV || nodeEnv
@@ -100,7 +213,7 @@ const createWebpackConfig = async ({
     parsed = dotenv.parse(fs.readFileSync(envFile, { encoding: `utf8` }))
   } catch (err) {
     if (err.code !== `ENOENT`) {
-      report.error(
+      reporter.error(
         `There was a problem processing the .env file (${envFile})`,
         err
       )
@@ -110,12 +223,12 @@ const createWebpackConfig = async ({
   const envObject = Object.keys(parsed).reduce((acc, key) => {
     acc[key] = JSON.stringify(parsed[key])
     return acc
-  }, {})
+  }, {} as Record<string, string>)
 
   const varsFromProcessEnv = Object.keys(process.env).reduce((acc, key) => {
     acc[key] = JSON.stringify(process.env[key])
     return acc
-  }, {})
+  }, {} as Record<string, string>)
 
   // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
   envObject.NODE_ENV = JSON.stringify(nodeEnv)
@@ -134,20 +247,27 @@ const createWebpackConfig = async ({
   )
 
   const entries = {}
-  knownFunctions.forEach(({ originalFilePath }) => {
-    const filePath = path.join(functionsDirectory, originalFilePath)
-
+  const functionsList = isProductionEnv
+    ? knownFunctions
+    : activeDevelopmentFunctions
+  functionsList.forEach(functionObj => {
     // Get path without the extension (as it could be ts or js)
-    const parsedFile = path.parse(originalFilePath)
+    const parsedFile = path.parse(functionObj.originalRelativeFilePath)
     const compiledNameWithoutExtension = path.join(
       parsedFile.dir,
       parsedFile.name
     )
 
-    entries[compiledNameWithoutExtension] = filePath
+    entries[compiledNameWithoutExtension] = functionObj.originalAbsoluteFilePath
   })
 
-  const config = {
+  activeEntries = entries
+
+  const stage = isProductionEnv
+    ? `functions-production`
+    : `functions-development`
+
+  return {
     entry: entries,
     output: {
       path: compiledFunctionsDir,
@@ -155,6 +275,28 @@ const createWebpackConfig = async ({
       libraryTarget: `commonjs2`,
     },
     target: `node`,
+
+    // Minification is expensive and not as helpful for serverless functions.
+    optimization: {
+      minimize: false,
+    },
+
+    // Resolve files ending with .ts and the default extensions of .js, .json, .wasm
+    resolve: {
+      extensions: [`.ts`, `...`],
+    },
+
+    // Have webpack save its cache to the .cache/webpack directory
+    cache: {
+      type: `filesystem`,
+      name: stage,
+      cacheLocation: path.join(
+        siteDirectoryPath,
+        `.cache`,
+        `webpack`,
+        `stage-` + stage
+      ),
+    },
 
     mode: isProductionEnv ? `production` : `development`,
     // watch: !isProductionEnv,
@@ -174,10 +316,9 @@ const createWebpackConfig = async ({
     },
     plugins: [new webpack.DefinePlugin(processEnvVars)],
   }
-
-  return config
 }
 
+let isFirstBuild = true
 export async function onPreBootstrap({
   reporter,
   store,
@@ -189,13 +330,6 @@ export async function onPreBootstrap({
     program: { directory: siteDirectoryPath },
   } = store.getState()
 
-  const functionsDirectoryPath = path.join(siteDirectoryPath, `src/api`)
-
-  const functionsDirectory = path.resolve(
-    siteDirectoryPath,
-    functionsDirectoryPath as string
-  )
-
   reporter.verbose(`Attaching functions to development server`)
   const compiledFunctionsDir = path.join(
     siteDirectoryPath,
@@ -204,15 +338,15 @@ export async function onPreBootstrap({
   )
 
   await fs.ensureDir(compiledFunctionsDir)
+  await fs.emptyDir(compiledFunctionsDir)
 
   try {
     // We do this ungainly thing as we need to make accessible
     // the resolve/reject functions to our shared callback function
     // eslint-disable-next-line
-    await new Promise(async (resolve, reject) => {
+    await new Promise<any>(async (resolve, reject) => {
       const config = await createWebpackConfig({
         siteDirectoryPath,
-        functionsDirectory,
         store,
         reporter,
       })
@@ -220,7 +354,7 @@ export async function onPreBootstrap({
       function callback(err, stats): any {
         const rawMessages = stats.toJson({ moduleTrace: false })
         if (rawMessages.warnings.length > 0) {
-          reporter.warn(reportWebpackWarnings(rawMessages.warnings))
+          reportWebpackWarnings(rawMessages.warnings, reporter)
         }
 
         if (err) return reject(err)
@@ -231,19 +365,23 @@ export async function onPreBootstrap({
         if (isProductionEnv) {
           if (errors.length > 0) return reject(stats.compilation.errors)
         } else {
-          const formated = formatWebpackMessages({
+          const formatted = formatWebpackMessages({
             errors: rawMessages.errors.map(e => e.message),
             warnings: [],
           })
-          reporter.error(formated.errors)
+          reporter.error(formatted.errors)
         }
 
         // Log success in dev
         if (!isProductionEnv) {
-          reporter.success(`Re-building functions`)
+          if (isFirstBuild) {
+            isFirstBuild = false
+          } else {
+            reporter.success(`Re-building functions`)
+          }
         }
 
-        return resolve()
+        return resolve(null)
       }
 
       if (isProductionEnv) {
@@ -252,15 +390,28 @@ export async function onPreBootstrap({
         // When in watch mode, you call things differently
         let compiler = webpack(config).watch({}, callback)
 
+        const globs = createGlobArray(
+          siteDirectoryPath,
+          store.getState().flattenedPlugins
+        )
+
         // Watch for env files to change and restart the webpack watcher.
         chokidar
           .watch(
-            [`${siteDirectoryPath}/.env*`, `${siteDirectoryPath}/src/api/**/*`],
+            [
+              `${siteDirectoryPath}/.env*`,
+              ...globs.map(glob => glob.globPattern),
+            ],
             { ignoreInitial: true }
           )
-          .on(`all`, (event, path) => {
-            // Ignore change events from the API directory
-            if (event === `change` && path.includes(`/src/api/`)) {
+          .on(`all`, async (event, path) => {
+            // Ignore change events from the API directory for functions we're
+            // already watching.
+            if (
+              event === `change` &&
+              Object.values(activeEntries).includes(path) &&
+              path.includes(`/src/api/`)
+            ) {
               return
             }
 
@@ -272,7 +423,6 @@ export async function onPreBootstrap({
             compiler.close(async () => {
               const config = await createWebpackConfig({
                 siteDirectoryPath,
-                functionsDirectory,
                 store,
                 reporter,
               })
@@ -295,11 +445,21 @@ export async function onCreateDevServer({
 }: CreateDevServerArgs): Promise<void> {
   reporter.verbose(`Attaching functions to development server`)
 
+  const {
+    program: { directory: siteDirectoryPath },
+  } = store.getState()
+
+  const compiledFunctionsDir = path.join(
+    siteDirectoryPath,
+    `.cache`,
+    `functions`
+  )
+
   app.use(
     `/api/*`,
-    multer().none(),
+    multer().any(),
     express.urlencoded({ extended: true }),
-    (req, res, next) => {
+    (req, _, next) => {
       const cookies = req.headers.cookie
 
       if (!cookies) {
@@ -318,11 +478,11 @@ export async function onCreateDevServer({
 
       const {
         functions,
-      }: { functions: Array<IFunctionData> } = store.getState()
+      }: { functions: Array<IGatsbyFunction> } = store.getState()
 
       // Check first for exact matches.
       let functionObj = functions.find(
-        ({ apiRoute }) => apiRoute === pathFragment
+        ({ functionRoute }) => functionRoute === pathFragment
       )
 
       if (!functionObj) {
@@ -330,7 +490,7 @@ export async function onCreateDevServer({
         // We loop until we find the first match.
         functions.some(f => {
           let exp
-          const keys = []
+          const keys: Array<IPathToRegexpKey> = []
           if (f.matchPath) {
             exp = pathToRegexp(f.matchPath, keys)
           }
@@ -351,7 +511,11 @@ export async function onCreateDevServer({
       }
 
       if (functionObj) {
-        reporter.verbose(`Running ${functionObj.apiRoute}`)
+        activeDevelopmentFunctions.add(functionObj)
+
+        await ensureFunctionIsCompiled(functionObj, compiledFunctionsDir)
+
+        reporter.verbose(`Running ${functionObj.functionRoute}`)
         const start = Date.now()
         const pathToFunction = functionObj.absoluteCompiledFilePath
 
@@ -363,17 +527,26 @@ export async function onCreateDevServer({
 
           await Promise.resolve(fnToExecute(req, res))
         } catch (e) {
+          // Override the default error with something more specific.
+          if (e.message.includes(`fnToExecute is not a function`)) {
+            e.message = `${functionObj.originalAbsoluteFilePath} does not export a function.`
+          }
           reporter.error(e)
-          res
-            .status(500)
-            .send(
-              `Error when executing function "${functionObj.originalFilePath}": "${e.message}"`
-            )
+          // Don't send the error if that would cause another error.
+          if (!res.headersSent) {
+            res
+              .status(500)
+              .send(
+                `Error when executing function "${functionObj.originalAbsoluteFilePath}":<br /><br />${e.message}`
+              )
+          }
         }
 
         const end = Date.now()
         reporter.log(
-          `Executed function "/api/${functionObj.apiRoute}" in ${end - start}ms`
+          `Executed function "/api/${functionObj.functionRoute}" in ${
+            end - start
+          }ms`
         )
       } else {
         next()

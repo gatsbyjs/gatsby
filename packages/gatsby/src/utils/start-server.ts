@@ -4,10 +4,15 @@ import got from "got"
 import webpack from "webpack"
 import express from "express"
 import compression from "compression"
-import graphqlHTTP from "express-graphql"
+import { graphqlHTTP, OptionsData } from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
-import { formatError, FragmentDefinitionNode, Kind } from "graphql"
+import {
+  formatError,
+  FragmentDefinitionNode,
+  GraphQLFormattedError,
+  Kind,
+} from "graphql"
 import { isCI } from "gatsby-core-utils"
 import http from "http"
 import https from "https"
@@ -41,13 +46,13 @@ import { Express } from "express"
 import * as path from "path"
 
 import { Stage, IProgram } from "../commands/types"
-import JestWorker from "jest-worker"
 import { findOriginalSourcePositionAndContent } from "./stack-trace-utils"
 import { appendPreloadHeaders } from "./develop-preload-headers"
 import {
   routeLoadingIndicatorRequests,
   writeVirtualLoadingIndicatorModule,
 } from "./loading-indicator"
+import { renderDevHTML } from "./dev-ssr/render-dev-html"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -57,7 +62,7 @@ interface IServer {
   webpackActivity: ActivityTracker
   cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
   websocketManager: WebsocketManager
-  workerPool: JestWorker
+  workerPool: WorkerPool.GatsbyWorkerPool
   webpackWatching: IWebpackWatchingPauseResume
 }
 
@@ -69,7 +74,7 @@ export interface IWebpackWatchingPauseResume {
 export async function startServer(
   program: IProgram,
   app: Express,
-  workerPool: JestWorker = WorkerPool.create()
+  workerPool: WorkerPool.GatsbyWorkerPool = WorkerPool.create()
 ): Promise<IServer> {
   const directory = program.directory
 
@@ -209,7 +214,7 @@ module.exports = {
   app.use(
     graphqlEndpoint,
     graphqlHTTP(
-      (): graphqlHTTP.OptionsData => {
+      (): OptionsData => {
         const { schema, schemaCustomization } = store.getState()
 
         if (!schemaCustomization.composer) {
@@ -232,10 +237,14 @@ module.exports = {
             context: {},
             customContext: schemaCustomization.context,
           }),
-          customFormatErrorFn(err): unknown {
+          customFormatErrorFn(
+            err
+          ): GraphQLFormattedError<{ stack: Array<string> }> {
             return {
               ...formatError(err),
-              stack: err.stack ? err.stack.split(`\n`) : [],
+              extensions: {
+                stack: err.stack ? err.stack.split(`\n`) : [],
+              },
             }
           },
         }
@@ -487,9 +496,125 @@ module.exports = {
 
   // Render an HTML page and serve it.
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
-    // Setup HTML route.
-    const { route } = require(`./dev-ssr/develop-html-route`)
-    route({ app, program, store })
+    app.get(`*`, async (req, res, next) => {
+      telemetry.trackFeatureIsUsed(`GATSBY_EXPERIMENTAL_DEV_SSR`)
+
+      const pathObj = findPageByPath(store.getState(), decodeURI(req.path))
+
+      if (!pathObj) {
+        return next()
+      }
+
+      await appendPreloadHeaders(pathObj.path, res)
+
+      const htmlActivity = report.phantomActivity(`building HTML for path`, {})
+      htmlActivity.start()
+
+      try {
+        const renderResponse = await renderDevHTML({
+          path: pathObj.path,
+          page: pathObj,
+          skipSsr: req.query[`skip-ssr`] || false,
+          store,
+          htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+          directory: program.directory,
+        })
+        res.status(200).send(renderResponse)
+      } catch (error) {
+        // The page errored but couldn't read the page component.
+        // This is a race condition when a page is deleted but its requested
+        // immediately after before anything can recompile.
+        if (error === `404 page`) {
+          return next()
+        }
+
+        // renderDevHTML throws an error with these information
+        const lineNumber = error?.line as number
+        const columnNumber = error?.column as number
+        const filePath = error?.filename as string
+        const sourceContent = error?.sourceContent as string
+
+        report.error({
+          id: `11614`,
+          context: {
+            path: pathObj.path,
+            filePath: filePath,
+            line: lineNumber,
+            column: columnNumber,
+          },
+        })
+
+        const emptyResponse = {
+          codeFrame: `No codeFrame could be generated`,
+          sourcePosition: null,
+          sourceContent: null,
+        }
+
+        if (!sourceContent || !lineNumber) {
+          res.json(emptyResponse)
+          return null
+        }
+
+        const codeFrame = codeFrameColumns(
+          sourceContent,
+          {
+            start: {
+              line: lineNumber,
+              column: columnNumber ?? 0,
+            },
+          },
+          {
+            highlightCode: true,
+          }
+        )
+
+        const message = {
+          codeFrame,
+          source: filePath,
+          line: lineNumber,
+          column: columnNumber ?? 0,
+          sourceMessage: error?.message,
+          stack: error?.stack,
+        }
+
+        try {
+          // Generate a shell for client-only content -- for the error overlay
+          const clientOnlyShell = await renderDevHTML({
+            path: pathObj.path,
+            page: pathObj,
+            skipSsr: true,
+            store,
+            error: message,
+            htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+            directory: program.directory,
+          })
+
+          res.send(clientOnlyShell)
+        } catch (e) {
+          report.error({
+            id: `11616`,
+            context: {
+              sourceMessage: e.message,
+            },
+            filePath: e.filename,
+            location: {
+              start: {
+                line: e.line,
+                column: e.column,
+              },
+            },
+          })
+
+          const minimalHTML = `<head><title>Failed to Server Render (SSR)</title></head><body><h1>Failed to Server Render (SSR)</h1><h2>Error message:</h2><p>${e.message}</p><h2>File:</h2><p>${e.filename}:${e.line}:${e.column}</p><h2>Stack:</h2><pre><code>${e.stack}</code></pre></body>`
+
+          res.send(minimalHTML).status(500)
+        }
+      }
+
+      htmlActivity.end()
+
+      return null
+    })
   }
 
   if (
@@ -527,10 +652,21 @@ module.exports = {
             htmlComponentRendererPath: pageRenderer,
             directory: program.directory,
           })
-          const status = process.env.GATSBY_EXPERIMENTAL_DEV_SSR ? 404 : 200
-          res.status(status).send(renderResponse)
+          res.status(404).send(renderResponse)
         } catch (e) {
-          report.error(e)
+          report.error({
+            id: `11615`,
+            context: {
+              sourceMessage: e.message,
+            },
+            filePath: e.filename,
+            location: {
+              start: {
+                line: e.line,
+                column: e.column,
+              },
+            },
+          })
           res.send(e).status(500)
         }
       } else {

@@ -10,7 +10,6 @@ import {
   setTelemetryEnabled,
   isTrackingEnabled,
 } from "gatsby-telemetry"
-import { startGraphQLServer } from "gatsby-recipes"
 import { run as runCreateGatsby } from "create-gatsby"
 import report from "./reporter"
 import { setStore } from "./reporter/redux"
@@ -19,10 +18,8 @@ import { initStarter } from "./init-starter"
 import { login } from "./login"
 import { logout } from "./logout"
 import { whoami } from "./whoami"
-import { recipesHandler } from "./recipes"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
 import reporter from "./reporter"
-import pluginHandler from "./handlers/plugin"
 
 const handlerP = (fn: (args: yargs.Arguments) => void) => (
   args: yargs.Arguments
@@ -144,9 +141,9 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
       _.option(`H`, {
         alias: `host`,
         type: `string`,
-        default: process.env.HOST || defaultHost,
-        describe: process.env.HOST
-          ? `Set host. Defaults to ${process.env.HOST} (set by env.HOST) (otherwise defaults ${defaultHost})`
+        default: process.env.GATSBY_HOST || defaultHost,
+        describe: process.env.GATSBY_HOST
+          ? `Set host. Defaults to ${process.env.GATSBY_HOST} (set by env.GATSBY_HOST) (otherwise defaults ${defaultHost})`
           : `Set host. Defaults to ${defaultHost}`,
       })
         .option(`p`, {
@@ -206,7 +203,11 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         `develop`,
         (args: yargs.Arguments, cmd: (args: yargs.Arguments) => unknown) => {
           process.env.NODE_ENV = process.env.NODE_ENV || `development`
-          startGraphQLServer(siteInfo.directory, true)
+
+          if (process.env.GATSBY_EXPERIMENTAL_ENABLE_ADMIN) {
+            const { startGraphQLServer } = require(`gatsby-recipes`)
+            startGraphQLServer(siteInfo.directory, true)
+          }
 
           if (args.hasOwnProperty(`inspect`)) {
             args.inspect = args.inspect || 9229
@@ -402,6 +403,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         describe: `Install recipe (defaults to plan mode)`,
       }),
     handler: handlerP(async ({ recipe, develop, install }: yargs.Arguments) => {
+      const { recipesHandler } = require(`./recipes`)
       await recipesHandler(
         siteInfo.directory,
         recipe as string,
@@ -430,6 +432,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     }: yargs.Arguments<{
       cmd: string | undefined
     }>) => {
+      const pluginHandler = require(`./handlers/plugin`).default
       await pluginHandler(siteInfo.directory, cmd)
     },
   })

@@ -7,9 +7,10 @@ const { platform } = require(`os`)
 const path = require(`path`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
-const { slash } = require(`gatsby-core-utils`)
-const { hasNodeChanged, getNode } = require(`../../redux/nodes`)
-const sanitizeNode = require(`../../db/sanitize-node`)
+const { slash, createContentDigest } = require(`gatsby-core-utils`)
+const { hasNodeChanged } = require(`../../utils/nodes`)
+const { getNode } = require(`../../datastore`)
+const sanitizeNode = require(`../../utils/sanitize-node`)
 const { store } = require(`..`)
 const { validatePageComponent } = require(`../../utils/validate-page-component`)
 import { nodeSchema } from "../../joi-schemas/joi"
@@ -22,6 +23,8 @@ const {
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+import { createJobV2FromInternalJob } from "./internal"
+import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
@@ -35,12 +38,7 @@ const isTestEnv = process.env.NODE_ENV === `test`
 const shadowCreatePagePath = _.memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 )
-const {
-  enqueueJob,
-  createInternalJob,
-  removeInProgressJob,
-  getInProcessJobPromise,
-} = require(`../../utils/jobs-manager`)
+const { createInternalJob } = require(`../../utils/jobs/manager`)
 
 const actions = {}
 const isWindows = platform() === `win32`
@@ -98,6 +96,7 @@ type PageInput = {
   path: string,
   component: string,
   context?: Object,
+  ownerNodeId?: string,
 }
 
 type Page = {
@@ -108,6 +107,7 @@ type Page = {
   internalComponentName: string,
   componentChunkName: string,
   updatedAt: number,
+  ownerNodeId?: string,
 }
 
 type ActionOptions = {
@@ -159,6 +159,7 @@ const reservedFields = [
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
  * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
+ * @param {string} page.ownerNodeId The id of the node that owns this page. This is used for routing users to previews via the unstable_createNodeManifest public action. Since multiple nodes can be queried on a single page, this allows the user to tell us which node is the main node for the page.
  * @param {string} page.component The absolute path to the component for this page
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pageContext` as well as to the graphql query
@@ -167,6 +168,7 @@ const reservedFields = [
  * createPage({
  *   path: `/my-sweet-new-page/`,
  *   component: path.resolve(`./src/templates/my-sweet-new-page.js`),
+ *   ownerNodeId: `123456`,
  *   // The context is passed as props to the component as well
  *   // as into the component's GraphQL query.
  *   context: {
@@ -399,6 +401,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),
+
+    // Link page to its plugin.
+    pluginCreator___NODE: plugin.id ?? ``,
+    pluginCreatorId: plugin.id ?? ``,
+  }
+
+  if (page.ownerNodeId) {
+    internalPage.ownerNodeId = page.ownerNodeId
   }
 
   // If the path doesn't have an initial forward slash, add it.
@@ -424,13 +434,70 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     )
   }
 
-  return {
-    ...actionOptions,
-    type: `CREATE_PAGE`,
-    contextModified,
-    plugin,
-    payload: internalPage,
+  // just so it's easier to c&p from createPage action creator for now - ideally it's DRYed
+  const { updatedAt, ...node } = internalPage
+  node.children = []
+  node.internal = {
+    type: `SitePage`,
+    contentDigest: createContentDigest(node),
   }
+  node.id = `SitePage ${internalPage.path}`
+  const oldNode = getNode(node.id)
+
+  let deleteActions
+  let updateNodeAction
+  if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
+    updateNodeAction = {
+      ...actionOptions,
+      plugin,
+      type: `TOUCH_NODE`,
+      payload: node.id,
+    }
+  } else {
+    // Remove any previously created descendant nodes as they're all due
+    // to be recreated.
+    if (oldNode) {
+      const createDeleteAction = node => {
+        return {
+          ...actionOptions,
+          type: `DELETE_NODE`,
+          plugin,
+          payload: node,
+        }
+      }
+      deleteActions = findChildren(oldNode.children)
+        .map(getNode)
+        .map(createDeleteAction)
+    }
+
+    node.internal.counter = getNextNodeCounter()
+
+    updateNodeAction = {
+      ...actionOptions,
+      type: `CREATE_NODE`,
+      plugin,
+      oldNode,
+      payload: node,
+    }
+  }
+
+  const actions = [
+    {
+      ...actionOptions,
+      type: `CREATE_PAGE`,
+      contextModified,
+      plugin,
+      payload: internalPage,
+    },
+  ]
+
+  if (deleteActions && deleteActions.length) {
+    actions.push(...deleteActions)
+  }
+
+  actions.push(updateNodeAction)
+
+  return actions
 }
 
 const deleteNodeDeprecationWarningDisplayedMessages = new Set()
@@ -1185,54 +1252,14 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
  * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
  */
 actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
-  const currentState = getState()
   const internalJob = createInternalJob(job, plugin)
-  const jobContentDigest = internalJob.contentDigest
 
-  // Check if we already ran this job before, if yes we return the result
-  // We have an inflight (in progress) queue inside the jobs manager to make sure
-  // we don't waste resources twice during the process
-  if (
-    currentState.jobsV2 &&
-    currentState.jobsV2.complete.has(jobContentDigest)
-  ) {
-    return Promise.resolve(
-      currentState.jobsV2.complete.get(jobContentDigest).result
-    )
+  const maybeWorkerPromise = maybeSendJobToMainProcess(internalJob)
+  if (maybeWorkerPromise) {
+    return maybeWorkerPromise
   }
 
-  const inProgressJobPromise = getInProcessJobPromise(jobContentDigest)
-  if (inProgressJobPromise) {
-    return inProgressJobPromise
-  }
-
-  dispatch({
-    type: `CREATE_JOB_V2`,
-    plugin,
-    payload: {
-      job: internalJob,
-      plugin,
-    },
-  })
-
-  const enqueuedJobPromise = enqueueJob(internalJob)
-  return enqueuedJobPromise.then(result => {
-    // store the result in redux so we have it for the next run
-    dispatch({
-      type: `END_JOB_V2`,
-      plugin,
-      payload: {
-        jobContentDigest,
-        result,
-      },
-    })
-
-    // remove the job from our inProgressJobQueue as it's available in our done state.
-    // this is a perf optimisations so we don't grow our memory too much when using gatsby preview
-    removeInProgressJob(jobContentDigest)
-
-    return result
-  })
+  return createJobV2FromInternalJob(internalJob)(dispatch, getState)
 }
 
 /**
@@ -1417,6 +1444,43 @@ actions.createServerVisitedPage = (chunkName: string) => {
   return {
     type: `CREATE_SERVER_VISITED_PAGE`,
     payload: { componentChunkName: chunkName },
+  }
+}
+
+/**
+ * Creates an individual node manifest.
+ * This is used to tie the unique revision state within a data source at the current point in time to a page generated from the provided node when it's node manifest is processed.
+ *
+ * @param {Object} manifest a page object
+ * @param {string} manifest.manifestId An id which ties the revision unique state of this manifest to the unique revision state of a data source.
+ * @param {string} manifest.node The Gatsyby node to tie the manifestId to
+ * @example
+ * unstable_createNodeManifest({
+ *   manifestId: `post-id-1--updated-53154315`,
+ *   node: {
+ *      id: `post-id-1`
+ *   },
+ * })
+ */
+actions.unstable_createNodeManifest = (
+  {
+    manifestId,
+    node,
+  }: {
+    manifestId: string,
+    node: {
+      id: string,
+    },
+  },
+  plugin: Plugin
+) => {
+  return {
+    type: `CREATE_NODE_MANIFEST`,
+    payload: {
+      manifestId,
+      node,
+      pluginName: plugin.name,
+    },
   }
 }
 

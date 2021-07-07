@@ -1,10 +1,7 @@
 ---
 date: "2021-01-05"
 version: "2.30.0"
----
-
-# [v2.30](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.30.0-next.0...gatsby@2.30.0) (January 2021 #1)
-
+title: "v2.30 Release Notes"
 ---
 
 Welcome to `gatsby@2.30.0` release (January 2021 #1)

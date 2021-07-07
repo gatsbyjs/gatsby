@@ -215,14 +215,10 @@ export class AnalyticsTracker {
   }
 
   getGatsbyVersion(): SemVer {
-    const packageInfo = require(join(
-      process.cwd(),
-      `node_modules`,
-      `gatsby`,
-      `package.json`
-    ))
     try {
-      return packageInfo.version
+      const packageJson = require.resolve(`gatsby/package.json`)
+      const { version } = JSON.parse(fs.readFileSync(packageJson, `utf-8`))
+      return version
     } catch (e) {
       // ignore
     }
@@ -411,8 +407,8 @@ export class AnalyticsTracker {
     let machineId = this.store.getConfig(`telemetry.machineId`)
     if (typeof machineId !== `string`) {
       machineId = typedUUIDv4()
+      this.store.updateConfig(`telemetry.machineId`, machineId)
     }
-    this.store.updateConfig(`telemetry.machineId`, machineId)
     this.machineId = machineId
     return machineId
   }

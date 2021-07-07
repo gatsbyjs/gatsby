@@ -1,180 +1,101 @@
 ---
 title: Adding Forms
+examples:
+  - label: Form that submits to a Function
+    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/basic-form"
 ---
 
-Gatsby is built on top of React. So anything that is possible with a React form is possible in Gatsby. Additional details about how to create React forms can be found in the [React forms documentation](https://reactjs.org/docs/forms.html) (which happens to be built with Gatsby!)
+Forms are common to capture user information from site visitors. They range in complexity from simple newsletter email capture boxes, to detailed lead capture forms and signup pages requiring visitors to enter their first & last name, email, and several additional self-identificaton questions.
 
-Start with the following page.
+The humble `<form>` element has evolved a lot since it was created in 1995. By default, a `<form>` stores its input internally and refresh the page when you `submit`. Today, developers generally want to store input in Javascript so you can validate fields and send the data to a third-party system.
 
-```jsx:title=src/pages/index.js
-import React from "react"
+Website forms have several "concerns" like data entry storage, validating fields, form submission, form storage, and other event triggers. This documentation will walk through each concern.
 
-export default function Home() {
-  return <div>Hello world!</div>
-}
+Gatsby uses React, so in a couple places we'll be linking to the React docs for code examples. In addition, the React ecosystem also offers some popular, well-maintained libraries like [Formik](https://github.com/jaredpalmer/formik) or [Final Form](https://github.com/final-form/react-final-form) which help with more complex forms.
+
+## Form concerns
+
+### Client-side data entry
+
+When users type into the input, you want to store it in a JavaScript field that will later be available to your form validation and submission logic.
+
+The "Controlled Components" section of the React documentation [provides a good code example here](https://reactjs.org/docs/forms.html#controlled-components).
+
 ```
-
-This Gatsby page is a React component. When you want to create a form, you need to store the state of the form - what the user has entered. Convert your function (stateless) component to a class (stateful) component.
-
-```jsx:title=src/pages/index.js
-import React from "react"
-
-export default class IndexPage extends React.Component {
-  render() {
-    return <div>Hello world!</div>
+  handleChange(event) {
+    this.setState({value: event.target.value});
   }
-}
-```
-
-Now that you have created a class component, you can add `state` to the component.
-
-```jsx:title=src/pages/index.js
-import React from "react"
-
-export default class IndexPage extends React.Component {
-  state = {
-    firstName: "",
-    lastName: "",
-  }
-
-  render() {
-    return <div>Hello world!</div>
-  }
-}
-```
-
-And now you can add a few input fields:
-
-```jsx:title=src/pages/index.js
-import React from "react"
-
-export default class IndexPage extends React.Component {
-  state = {
-    firstName: "",
-    lastName: "",
-  }
-
-  render() {
+  ...
+   render() {
     return (
-      <form>
-        <label>
-          First name
-          <input type="text" name="firstName" />
-        </label>
-        <label>
-          Last name
-          <input type="text" name="lastName" />
-        </label>
-        <button type="submit">Submit</button>
-      </form>
+      ...
+      <input type="text" value={this.state.value} onChange={this.handleChange} />
+      ...
     )
-  }
-}
+   }
 ```
 
-When a user types into an input box, the state should update. Add an `onChange` prop to update state and add a `value` prop to keep the input up to date with the new state:
+The `handleChange` function takes the value being entered by the user and stores it internally in the component state.
 
-```jsx:title=src/pages/index.js
-import React from "react"
+### Field validation
 
-export default class IndexPage extends React.Component {
-  state = {
-    firstName: "",
-    lastName: "",
-  }
+Often you'll want to, eg, ensure that the entry in an "Email" field is a valid email address.
 
-  handleInputChange = event => {
-    const target = event.target
-    const value = target.value
-    const name = target.name
+If you need to do validation of one or multiple fields, you may want to use a library like Formik, since adding logic and styling around error messages tends to be fairly boilerplate and repetitive.
 
-    this.setState({
-      [name]: value,
-    })
-  }
+### Form submission
 
-  render() {
-    return (
-      <form>
-        <label>
-          First name
-          <input
-            type="text"
-            name="firstName"
-            value={this.state.firstName}
-            onChange={this.handleInputChange}
-          />
-        </label>
-        <label>
-          Last name
-          <input
-            type="text"
-            name="lastName"
-            value={this.state.lastName}
-            onChange={this.handleInputChange}
-          />
-        </label>
-        <button type="submit">Submit</button>
-      </form>
-    )
-  }
-}
+The default behavior of the HTML form element is to send a POST request to the URL and refresh the page. You'll want to prevent the default behavior and send the information to whatever backend you're using.
+
+You do this by passing a function that prevents page refresh as an `onSubmit` prop. Again from the ["Controlled Components" section of the React docs](https://reactjs.org/docs/forms.html#controlled-components):
+
 ```
-
-Now that your inputs are working, you want something to happen when you submit the form. Add `onSubmit` props to the form element and add `handleSubmit` to show an alert when the user submits the form:
-
-```jsx:title=src/pages/index.js
-import React from "react"
-
-export default class IndexPage extends React.Component {
-  state = {
-    firstName: "",
-    lastName: "",
+  ...
+  handleSubmit(event) {
+    event.preventDefault();
   }
-
-  handleInputChange = event => {
-    const target = event.target
-    const value = target.value
-    const name = target.name
-
-    this.setState({
-      [name]: value,
-    })
-  }
-
-  handleSubmit = event => {
-    event.preventDefault()
-    alert(`Welcome ${this.state.firstName} ${this.state.lastName}!`)
-  }
-
+  ...
   render() {
     return (
+      ...
       <form onSubmit={this.handleSubmit}>
-        <label>
-          First name
-          <input
-            type="text"
-            name="firstName"
-            value={this.state.firstName}
-            onChange={this.handleInputChange}
-          />
-        </label>
-        <label>
-          Last name
-          <input
-            type="text"
-            name="lastName"
-            value={this.state.lastName}
-            onChange={this.handleInputChange}
-          />
-        </label>
-        <button type="submit">Submit</button>
-      </form>
+      ...
     )
   }
-}
+  ...
 ```
 
-This form isn't doing anything besides showing the user information that they just entered. At this point, you may want to move this form to a component, send the form state to a backend server, or add robust validation. You can also use fantastic React form libraries like [Formik](https://github.com/jaredpalmer/formik) or [Final Form](https://github.com/final-form/react-final-form) to speed up your development process.
+The `handleSubmit` function calls `preventDefault()` on the event which prevents the page from refreshing. After this, you'll want to insert desired behavior, like sending the data to a third-party service.
 
-All of this is possible and more by leveraging the power of Gatsby and the React ecosystem!
+You may want to make addition changes to visual form display after submit, like disabling the form submit button after submission, showing a spinning wheel, or changing the button color.
+
+If you need to use any sort of authentication token to submit data, you can use Gatsby Functions (Gatsby's implementation of serverless functions) to [run this logic while keeping any your credentials secure](https://www.gatsbyjs.com/docs/reference/functions/getting-started/#forms).
+
+### Triggering additional events
+
+Sometimes you'll want to trigger additional events off of your form submissions that require authenticated calls to a third-party service.
+
+Some examples:
+
+- sending emails from a service like SendGrid
+- server-side validation on form submission (eg, is this email already in our system?)
+
+Users tend to handle these situations in two ways: either they send data to a middleware service like Zapier that can trigger multiple events based on data submission. Alternately, they use Gatsby Functions to run this logic while keeping auth credentials secure.
+
+## Embedding third-party forms vs writing your own forms.
+
+If you're using a marketing automation vendor like Hubspot or Marketo, you have a few options: you can either write your own form and send the data to the vendor's endpoint, or you can drop-in the vendor's Javascript.
+
+### Using the vendor's form library
+
+Vendors tend to have a JavaScript widget for their forms.
+
+We've found these forms tend to be extremely heavy, weighing several hundred KB. This can often be more than the rest of the page combined, and can delay page load by a full second or two on some devices. For pages where conversion is critical, this can be an unacceptable tradeeoff.
+
+### Sending data
+
+Alternately, these services usually have an endpoint to send data to. If you intend to allow marketers the ability to add fields to the form in eg Hubspot, you'll need to make sure that those fields get pulled into your Gatsby form, which can require some work or using a plugin like [gatsby-source-hubspot-forms](https://www.gatsbyjs.com/plugins/gatsby-source-hubspot-forms).
+
+## Further Resources
+
+- Walkthrough of [creating a form in React](../creating-a-form-in-react)
