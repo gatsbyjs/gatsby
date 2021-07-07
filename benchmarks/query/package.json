@@ -3,17 +3,17 @@
   "description": "Benchmarks for Gatsby query performance",
   "license": "MIT",
   "scripts": {
-    "bench": "set -x; gatsby clean; NUM_TYPES=${NUM_TYPES:-5} NUM_PAGES=${NUM_PAGES:-5000} node --max_old_space_size=2000 node_modules/.bin/gatsby build",
+    "bench": "set -x; gatsby clean; NUM_TYPES=${NUM_PAGES:-5} NUM_PAGES=${NUM_PAGES:-5000} node --max_old_space_size=2000 node_modules/.bin/gatsby build",
     "develop": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve"
   },
   "dependencies": {
     "faker": "^4.1.0",
-    "gatsby": "^3.8.1",
-    "lodash": "^4.17.21",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "gatsby": "^2.19.5",
+    "lodash": "^4.17.15",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "devDependencies": {
     "gatsby-plugin-benchmark-reporting": "*"
