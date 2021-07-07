@@ -12,12 +12,18 @@ async function saveState() {
 
   try {
     await redux.saveState()
-
-    const duration = (new Date().getTime() - startTime.getTime()) / 1000
-
-    captureEvent(`EVENT_NAME`, { name: `state_persistence`, duration })
   } catch (err) {
     report.warn(`Error persisting state: ${(err && err.message) || err}`)
+  }
+
+  try {
+    const duration = (new Date().getTime() - startTime.getTime()) / 1000
+    captureEvent(`INTERNAL_STATE_PERSISTENCE_DURATION`, {
+      name: `Save Internal State`,
+      duration: Math.round(duration),
+    })
+  } catch (err) {
+    console.error(err)
   }
 
   saveInProgress = false
