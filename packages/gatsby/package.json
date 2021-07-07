@@ -124,7 +124,6 @@
     "postcss": "^8.3.5",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^5.0.0",
-    "process-top": "^1.2.0",
     "prompts": "^2.3.2",
     "prop-types": "^15.7.2",
     "query-string": "^6.13.1",
