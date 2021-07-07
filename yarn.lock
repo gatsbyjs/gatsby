@@ -11587,14 +11587,6 @@ event-emitter@^0.3.5:
     d "1"
     es5-ext "~0.10.14"
 
-event-loop-delay@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/event-loop-delay/-/event-loop-delay-1.0.1.tgz#c0e7e30a37e3ce77b1a179a23bee72cf34bcec9f"
-  integrity sha512-O7nq//Wqk2gY8IWqrQHJtlzT/Hbsn0alxX09J0RZ5Bljsfvd+xRtGGnurh+BFatzkNkGi5Ddd/vsA0v2K79g0A==
-  dependencies:
-    napi-macros "^2.0.0"
-    node-gyp-build "^4.2.0"
-
 event-source-polyfill@^1.0.15:
   version "1.0.15"
   resolved "https://registry.yarnpkg.com/event-source-polyfill/-/event-source-polyfill-1.0.15.tgz#a28e116281be677af4b055b67d95517e35c92435"
@@ -19373,7 +19365,7 @@ napi-build-utils@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/napi-build-utils/-/napi-build-utils-1.0.1.tgz#1381a0f92c39d66bf19852e7873432fc2123e508"
 
-napi-macros@^2.0.0, napi-macros@~2.0.0:
+napi-macros@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/napi-macros/-/napi-macros-2.0.0.tgz#2b6bae421e7b96eb687aa6c77a7858640670001b"
   integrity sha512-A0xLykHtARfueITVDernsAWdtIMbOJgKgcluwENp3AlsKN/PloyO10HtmoqnFAQAcxPkgZN7wdfPfEd0zNGxbg==
@@ -19571,7 +19563,7 @@ node-forge@^0.10.0:
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.10.0.tgz#32dea2afb3e9926f02ee5ce8794902691a676bf3"
   integrity sha512-PPmu8eEeG9saEUvI97fm4OYxXVB6bFvyNTyiUOBichBpFG8A1Ljw3bY62+5oOjDEMHRnd0Y7HQ+x7uzxOzC6JA==
 
-node-gyp-build@^4.2.0, node-gyp-build@^4.2.3:
+node-gyp-build@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.2.3.tgz#ce6277f853835f718829efb47db20f3e4d9c4739"
   integrity sha512-MN6ZpzmfNCRM+3t57PTJHgHyw/h4OWnZ6mR8P5j/uZtqQr46RRuDE/P+g3n0YR/AiYXeWixZZzaip77gdICfRg==
@@ -21936,11 +21928,6 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier-bytes@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/prettier-bytes/-/prettier-bytes-1.0.4.tgz#994b02aa46f699c50b6257b5faaa7fe2557e62d6"
-  integrity sha1-mUsCqkb2mcULYle1+qp/4lV+YtY=
-
 prettier-check@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/prettier-check/-/prettier-check-2.0.0.tgz#edd086ee12d270579233ccb136a16e6afcfba1ae"
@@ -22089,14 +22076,6 @@ process-nextick-args@^2.0.0, process-nextick-args@~2.0.0:
 process-nextick-args@~1.0.6:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-1.0.7.tgz#150e20b756590ad3f91093f25a4f2ad8bff30ba3"
-
-process-top@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/process-top/-/process-top-1.2.0.tgz#0443a7b2c61b0aae1207fa5562cb23252df986b6"
-  integrity sha512-R0WlpJe+os9deHxqua2S62gp7/IuWNG4T7buG0/VKwFg9/Zk5eicaI1IlwkBL3s+NXHBqdaKw/HgeG+kGL4bLw==
-  dependencies:
-    event-loop-delay "^1.0.0"
-    prettier-bytes "^1.0.4"
 
 process@^0.11.10:
   version "0.11.10"
