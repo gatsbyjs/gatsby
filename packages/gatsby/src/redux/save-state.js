@@ -1,7 +1,6 @@
-import { captureEvent } from "gatsby-telemetry"
-
 const _ = require(`lodash`)
 const report = require(`gatsby-cli/lib/reporter`)
+const { captureEvent } = require(`gatsby-telemetry`)
 const redux = require(`./`)
 
 let saveInProgress = false
