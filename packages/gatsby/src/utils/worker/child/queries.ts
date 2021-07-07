@@ -44,7 +44,7 @@ export async function runQueries(queryIds: IGroupedQueryIds): Promise<void> {
     graphqlRunner,
   })
 
-  saveQueries()
-
   await getDataStore().ready()
+
+  saveQueries()
 }
