@@ -4,7 +4,11 @@ import fs from "fs-extra"
 import type { watch as ChokidarWatchType } from "chokidar"
 import { build } from "../../../schema"
 import sourceNodesAndRemoveStaleNodes from "../../source-nodes"
-import { savePartialStateToDisk, store } from "../../../redux"
+import {
+  savePartialStateToDisk,
+  store,
+  loadPartialStateFromDisk,
+} from "../../../redux"
 import { loadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
 import {
   createTestWorker,
@@ -275,5 +279,54 @@ describeWhenLMDB(`worker (queries)`, () => {
     })
 
     spy.mockRestore()
+  })
+
+  it(`should work`, async () => {
+    if (!worker) fail(`worker not defined`)
+
+    const result = loadPartialStateFromDisk([`queries`])
+
+    expect(result).toMatchInlineSnapshot(`
+      Object {
+        "queries": Object {
+          "byConnection": Map {},
+          "byNode": Map {
+            "ceb8e742-a2ce-5110-a560-94c93d1c71a5" => Set {
+              "sq--q1",
+              "/foo",
+              "/bar",
+            },
+          },
+          "deletedQueries": Set {},
+          "dirtyQueriesListToEmitViaWebsocket": Array [],
+          "queryNodes": Map {
+            "sq--q1" => Set {
+              "ceb8e742-a2ce-5110-a560-94c93d1c71a5",
+            },
+            "/foo" => Set {
+              "ceb8e742-a2ce-5110-a560-94c93d1c71a5",
+            },
+            "/bar" => Set {
+              "ceb8e742-a2ce-5110-a560-94c93d1c71a5",
+            },
+          },
+          "trackedComponents": Map {},
+          "trackedQueries": Map {
+            "sq--q1" => Object {
+              "dirty": 0,
+              "running": 0,
+            },
+            "/foo" => Object {
+              "dirty": 0,
+              "running": 0,
+            },
+            "/bar" => Object {
+              "dirty": 0,
+              "running": 0,
+            },
+          },
+        },
+      }
+    `)
   })
 })
