@@ -288,14 +288,14 @@ describe(`filtering on linked nodes`, () => {
     expect(result.data.eq.edges).toEqual([`bar`, `baz`].map(itemToEdge))
     // In case of LMDB results are also sorted by the filter field,
     // so first - all parents with children having "hair: blonde", next - all with "hair: brown"
-    const expectedIn = isLmdbStore()
+    const expectedIn = process.env.GATSBY_EXPERIMENTAL_LMDB_INDEXES
       ? [`bar`, `foo`, `baz`]
       : [`bar`, `baz`, `foo`]
     expect(result.data.in.edges).toEqual(expectedIn.map(itemToEdge))
     expect(result.data.insideInlineArrayEq.edges).toEqual(
       [`lorem`, `ipsum`, `sit`].map(itemToEdge)
     )
-    const expectedArrayIn = isLmdbStore()
+    const expectedArrayIn = process.env.GATSBY_EXPERIMENTAL_LMDB_INDEXES
       ? [`lorem`, `ipsum`, `dolor`, `sit`]
       : [`lorem`, `ipsum`, `sit`, `dolor`]
     expect(result.data.insideInlineArrayIn.edges).toEqual(

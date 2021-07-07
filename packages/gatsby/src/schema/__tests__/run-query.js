@@ -1830,7 +1830,7 @@ describe(`collection fields`, () => {
     // Nodes 1 and 2 both have value 10010, so correct sorting order is undefined
     //  LMDB actually sorts according to node.counter in addition to main sorting
     //  and the old fast filters do not do any secondary sorting, hence the difference
-    if (isLmdbStore()) {
+    if (process.env.GATSBY_EXPERIMENTAL_LMDB_INDEXES) {
       expect(result[0].id).toEqual(`2`)
       expect(result[1].id).toEqual(`1`)
       expect(result[2].id).toEqual(`0`)
