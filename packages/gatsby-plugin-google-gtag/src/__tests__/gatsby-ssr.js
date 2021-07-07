@@ -15,7 +15,7 @@ it(`does not crash when no pluginConfig is provided`, () => {
 
 const DO_NOT_TRACK_STRING = `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
 
-it(`adds a preconnect link for Google Analytics`, () => {
+it(`adds preconnect and dns-prefetch links for Google Analytics`, () => {
   const mocks = {
     setHeadComponents: jest.fn(),
     setPostBodyComponents: jest.fn(),
@@ -26,12 +26,22 @@ it(`adds a preconnect link for Google Analytics`, () => {
   }
 
   onRenderBody(mocks, pluginOptions)
-  const [link] = mocks.setHeadComponents.mock.calls[0][0]
+  const [
+    preconnectLink,
+    prefetchLink,
+  ] = mocks.setHeadComponents.mock.calls[0][0]
 
-  expect(link).toEqual(
+  expect(preconnectLink).toEqual(
     <link
-      rel="preconnect dns-prefetch"
+      rel="preconnect"
       key="preconnect-google-analytics"
+      href="https://www.google-analytics.com"
+    />
+  )
+  expect(prefetchLink).toEqual(
+    <link
+      rel="dns-prefetch"
+      key="dns-prefetch-google-analytics"
       href="https://www.google-analytics.com"
     />
   )
