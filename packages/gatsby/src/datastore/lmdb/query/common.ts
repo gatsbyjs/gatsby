@@ -78,12 +78,6 @@ export function cartesianProduct(...arr: Array<Array<any>>): Array<any> {
   return arr.reduce((a, b) => a.flatMap(d => b.map(e => [...d, e])), [[]])
 }
 
-export function assertLength(arr: Array<any>, expectedLength: number): void {
-  if (arr.length !== expectedLength) {
-    throw new Error(`Invariant violation`)
-  }
-}
-
 const typeOrder = {
   symbol: 0,
   undefined: 1,
