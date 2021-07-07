@@ -43,8 +43,6 @@ export function shouldFilter(
   fieldValue: unknown
 ): boolean {
   const value = filter.value
-  // FIXME: lmdb-store typing are outdated?
-  const compareKeyFn: any = compareKey
 
   switch (filter.comparator) {
     case DbComparator.EQ:
@@ -54,13 +52,13 @@ export function shouldFilter(
       return arr.some(v => (v === null ? v == fieldValue : v === fieldValue))
     }
     case DbComparator.GT:
-      return compareKeyFn(value, fieldValue) > 0
+      return compareKey(value, fieldValue) > 0
     case DbComparator.GTE:
-      return compareKeyFn(value, fieldValue) >= 0
+      return compareKey(value, fieldValue) >= 0
     case DbComparator.LT:
-      return compareKeyFn(value, fieldValue) < 0
+      return compareKey(value, fieldValue) < 0
     case DbComparator.LTE:
-      return compareKeyFn(value, fieldValue) <= 0
+      return compareKey(value, fieldValue) <= 0
     case DbComparator.NE:
     case DbComparator.NIN: {
       const arr = Array.isArray(value) ? value : [value]
@@ -86,10 +84,6 @@ export function assertLength(arr: Array<any>, expectedLength: number): void {
   }
 }
 
-// Note: this is a direct copy of this function from lmdb-store:
-//  https://github.com/DoctorEvidence/lmdb-store/blob/e1e53d6d2012ec22071a8fb7fa3b47f8886b22d2/index.js#L1259-L1300
-// We need it here to avoid direct imports from "lmdb-store" while it is not a direct dependency
-// FIXME: replace with a direct import at some point
 const typeOrder = {
   symbol: 0,
   undefined: 1,
@@ -97,6 +91,11 @@ const typeOrder = {
   number: 3,
   string: 4,
 }
+
+// Note: this is a copy of this function from lmdb-store:
+// https://github.com/DoctorEvidence/lmdb-store/blob/e1e53d6d2012ec22071a8fb7fa3b47f8886b22d2/index.js#L1259-L1300
+// We need it here to avoid imports from "lmdb-store" while it is not a direct dependency
+// FIXME: replace with an import in v4
 export function compareKey(a: unknown, b: unknown): number {
   // compare with type consistency that matches ordered-binary
   if (typeof a == `object`) {

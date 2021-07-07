@@ -253,10 +253,8 @@ function sortNodesInMemory(
   // TODO: Sort using index data whenever possible (maybe store data needed for sorting in index values)
   // TODO: Nodes can be partially sorted by index prefix - we can (and should) exploit this
   return new GatsbyIterable(() => {
-    // console.time(`In-memory sort`)
     const arr = Array.from(nodes)
     arr.sort(createNodeSortComparator(context.sortFields))
-    // console.timeEnd(`In-memory sort`, arr.length)
     return arr
   })
 }
