@@ -48,9 +48,12 @@ export async function bootstrap(
   }
 
   const workerPool = context.workerPool
-  const directory = slash(context.store.getState().program.directory)
 
-  workerPool.all.loadConfigAndPlugins({ siteDirectory: directory })
+  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    const directory = slash(context.store.getState().program.directory)
+
+    workerPool.all.loadConfigAndPlugins({ siteDirectory: directory })
+  }
 
   await customizeSchema(context)
   await sourceNodes(context)
@@ -70,9 +73,9 @@ export async function bootstrap(
 
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     saveStateForWorkers([`inferenceMetadata`])
-  }
 
-  workerPool.all.buildSchema()
+    workerPool.all.buildSchema()
+  }
 
   await extractQueries(context)
 

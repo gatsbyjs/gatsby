@@ -14,15 +14,12 @@ export const create = (): GatsbyWorkerPool => {
   const numWorkers = Math.max(1, cpuCoreCount() - 1)
   reporter.verbose(`Creating ${numWorkers} worker`)
 
-  const worker = new WorkerPool<typeof import("./child")>(
-    require.resolve(`./child`),
-    {
-      numWorkers,
-      env: {
-        GATSBY_WORKER_POOL_WORKER: `true`,
-      },
-    }
-  )
+  const worker: GatsbyWorkerPool = new WorkerPool(require.resolve(`./child`), {
+    numWorkers,
+    env: {
+      GATSBY_WORKER_POOL_WORKER: `true`,
+    },
+  })
 
   initJobsMessagingInMainProcess(worker)
 
