@@ -17,7 +17,6 @@ export function initJobsMessagingInMainProcess(
   workerPool.onMessage((msg, workerId) => {
     if (msg.type === MESSAGE_TYPES.JOB_CREATED) {
       store
-        // @ts-ignore - temp to get CI running
         .dispatch(internalActions.createJobV2FromInternalJob(msg.payload))
         .then(result => {
           workerPool.sendMessage(
