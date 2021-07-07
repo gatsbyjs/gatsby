@@ -27,9 +27,11 @@ curl https://www.gatsbyjs.com/docs/how-to/adding-common-features/seo
 
 ## Speed boost
 
-Gatsby's many built-in performance optimizations, such as rendering to static files, progressive image loading, and the [PRPL pattern](/docs/prpl-pattern/)—all help your site be lightning-fast by default.
+Gatsby's many built-in performance optimizations, such as rendering to static files, progressive image loading, and so on, helping your site be lightning-fast by default.
 
-In July 2018, [Google announced a new ranking factor for site speed](https://webmasters.googleblog.com/2018/01/using-page-speed-in-mobile-search.html), calling the algorithm update the "Speed Update". Google will possibly rank pages higher in the search results for faster loading times, however, the intent of the search query is still very relevant and a slower page can rank higher if the content is more relevant.
+In June 2021, [Google implemented a new ranking factor for site speed](https://developers.google.com/search/blog/2020/11/timing-for-page-experience), calling the algorithm update the "Core Web Vitals Update".
+
+The Gatsby team included information about this in the [Core Web Vitals webinar](https://www.gatsbyjs.com/resources/webinars/understanding-core-web-vitals).
 
 ## Page metadata
 
@@ -76,4 +78,6 @@ After deployment, their [Rich result status reports](https://support.google.com/
 
 ## Additional resources
 
-You might also be interested in [blog posts about SEO in Gatsby](/blog/tags/seo/) and [an advanced tutorial about SEO and social sharing cards](/tutorial/seo-and-social-sharing-cards-tutorial/).
+- [Blog posts about SEO in Gatsby](/blog/tags/seo/)
+- [An advanced tutorial about SEO and social sharing cards](/tutorial/seo-and-social-sharing-cards-tutorial/).
+-
