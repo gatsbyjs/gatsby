@@ -80,8 +80,6 @@ export type GatsbyReduxStore = Store<IGatsbyState> & {
   dispatch: ThunkDispatch<IGatsbyState, any, ActionsUnion> & IMultiDispatch
 }
 
-// We're using the inferred type here because manually typing it would be very complicated
-// and error-prone. Instead we'll make use of the createStore return value, and export that type.
 export const configureStore = (initialState: IGatsbyState): GatsbyReduxStore =>
   createStore(
     combineReducers<IGatsbyState>({ ...reducers }),
