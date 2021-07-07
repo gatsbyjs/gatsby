@@ -1,4 +1,3 @@
-import { compareKey } from "lmdb-store"
 import { DbComparator, IDbFilterStatement } from "../../common/query"
 import { IGatsbyNode } from "../../../redux/types"
 import { getValueAt } from "../../../utils/get-value-at"
@@ -84,5 +83,59 @@ export function cartesianProduct(...arr: Array<Array<any>>): Array<any> {
 export function assertLength(arr: Array<any>, expectedLength: number): void {
   if (arr.length !== expectedLength) {
     throw new Error(`Invariant violation`)
+  }
+}
+
+// Note: this is a direct copy of this function from lmdb-store:
+//  https://github.com/DoctorEvidence/lmdb-store/blob/e1e53d6d2012ec22071a8fb7fa3b47f8886b22d2/index.js#L1259-L1300
+// We need it here to avoid direct imports from "lmdb-store" while it is not a direct dependency
+// FIXME: replace with a direct import at some point
+const typeOrder = {
+  symbol: 0,
+  undefined: 1,
+  boolean: 2,
+  number: 3,
+  string: 4,
+}
+export function compareKey(a: unknown, b: unknown): number {
+  // compare with type consistency that matches ordered-binary
+  if (typeof a == `object`) {
+    if (!a) {
+      return b == null ? 0 : -1
+    }
+    if (a[`compare`]) {
+      if (b == null) {
+        return 1
+      } else if (typeof b === `object` && b !== null && b[`compare`]) {
+        return a[`compare`](b)
+      } else {
+        return -1
+      }
+    }
+    let arrayComparison
+    if (b instanceof Array) {
+      let i = 0
+      while (
+        (arrayComparison = compareKey(a[i], b[i])) == 0 &&
+        i <= a[`length`]
+      ) {
+        i++
+      }
+      return arrayComparison
+    }
+    arrayComparison = compareKey(a[0], b)
+    if (arrayComparison == 0 && a[`length`] > 1) return 1
+    return arrayComparison
+  } else if (typeof a == typeof b) {
+    if (typeof a === `symbol` && typeof b === `symbol`) {
+      a = Symbol.keyFor(a)
+      b = Symbol.keyFor(b)
+    }
+    return (a as any) < (b as any) ? -1 : a === b ? 0 : 1
+  } else if (typeof b == `object`) {
+    if (b instanceof Array) return -compareKey(b, a)
+    return 1
+  } else {
+    return typeOrder[typeof a] < typeOrder[typeof b] ? -1 : 1
   }
 }

@@ -27,9 +27,8 @@ import {
   IIndexEntry,
 } from "./filter-using-index"
 import { store } from "../../../redux"
-import { isDesc, resolveFieldValue, shouldFilter } from "./common"
+import { isDesc, resolveFieldValue, shouldFilter, compareKey } from "./common"
 import { suggestIndex } from "./suggest-index"
-import { compareKey } from "lmdb-store"
 
 interface IDoRunQueryArgs extends IRunQueryArgs {
   databases: ILmdbDatabases
