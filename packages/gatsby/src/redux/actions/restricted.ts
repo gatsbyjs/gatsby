@@ -523,8 +523,8 @@ export const availableActionsByAPI = mapAvailableActionsToAPIs({
     [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
   },
   createTypes: {
-    [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
-    [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`],
+    [ALLOWED_IN]: [`createSchemaCustomization`],
+    [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`, `sourceNodes`],
   },
   createResolverContext: {
     [ALLOWED_IN]: [`createSchemaCustomization`],
