@@ -4,7 +4,7 @@ import fs from "fs-extra"
 import type { watch as ChokidarWatchType } from "chokidar"
 import { build } from "../../../schema"
 import sourceNodesAndRemoveStaleNodes from "../../source-nodes"
-import { saveStateForWorkers, store } from "../../../redux"
+import { savePartialStateToDisk, store } from "../../../redux"
 import { loadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
 import {
   createTestWorker,
@@ -133,7 +133,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       })
     })
 
-    saveStateForWorkers([`inferenceMetadata`])
+    savePartialStateToDisk([`inferenceMetadata`])
 
     pageQueryIds.forEach(page => {
       store.dispatch({
@@ -160,7 +160,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       payload: dummyStaticQuery,
     })
 
-    saveStateForWorkers([`components`, `staticQueryComponents`])
+    savePartialStateToDisk([`components`, `staticQueryComponents`])
 
     await Promise.all(worker.all.buildSchema())
     await worker.single.runQueries(queryIdsSmall)

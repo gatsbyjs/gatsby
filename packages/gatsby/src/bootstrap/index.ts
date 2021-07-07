@@ -16,7 +16,7 @@ import reporter from "gatsby-cli/lib/reporter"
 import { globalTracer } from "opentracing"
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { handleStalePageData } from "../utils/page-data"
-import { saveStateForWorkers } from "../redux"
+import { savePartialStateToDisk } from "../redux"
 import { IProgram } from "../commands/types"
 
 const tracer = globalTracer()
@@ -63,13 +63,13 @@ export async function bootstrap(
   await rebuildSchemaWithSitePage(context)
 
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    saveStateForWorkers([`inferenceMetadata`])
+    savePartialStateToDisk([`inferenceMetadata`])
   }
 
   await extractQueries(context)
 
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    saveStateForWorkers([`components`, `staticQueryComponents`])
+    savePartialStateToDisk([`components`, `staticQueryComponents`])
   }
 
   await writeOutRedirects(context)

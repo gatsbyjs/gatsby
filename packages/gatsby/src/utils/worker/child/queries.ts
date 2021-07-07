@@ -3,14 +3,18 @@ import {
   runPageQueries,
   runStaticQueries,
 } from "../../../services"
-import { store } from "../../../redux"
+import { savePartialStateToDisk, store } from "../../../redux"
 import { GraphQLRunner } from "../../../query/graphql-runner"
 import { getDataStore } from "../../../datastore"
 import { setState } from "./state"
 import { buildSchema } from "./schema"
 
-export function setQueries(): void {
+export function setComponents(): void {
   setState([`components`, `staticQueryComponents`])
+}
+
+export function saveQueries(): void {
+  savePartialStateToDisk([`queries`])
 }
 
 export async function runQueries(queryIds: IGroupedQueryIds): Promise<void> {
@@ -21,7 +25,7 @@ export async function runQueries(queryIds: IGroupedQueryIds): Promise<void> {
     await buildSchema()
   }
 
-  setQueries()
+  setComponents()
 
   const graphqlRunner = new GraphQLRunner(store, {
     collectStats: true,
