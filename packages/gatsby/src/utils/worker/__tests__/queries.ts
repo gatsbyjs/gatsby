@@ -180,10 +180,11 @@ describeWhenLMDB(`worker (queries)`, () => {
     }
   })
 
-  it(`should save worker state to disk`, async () => {
+  it(`should save worker "queries" state to disk`, async () => {
     if (!worker) fail(`worker not defined`)
 
-    const result = loadPartialStateFromDisk([`queries`])
+    // Pass "1" as workerId as the test only have one worker
+    const result = loadPartialStateFromDisk([`queries`], `1`)
 
     expect(result).toMatchInlineSnapshot(`
       Object {

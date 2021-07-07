@@ -43,7 +43,8 @@ function reduxWorkerSlicesPrefix(dir: string): string {
 }
 
 export function readFromCache(
-  slices?: Array<GatsbyStateKeys>
+  slices?: Array<GatsbyStateKeys>,
+  workerId?: string
 ): DeepPartial<ICachedReduxState> {
   // The cache is stored in two steps; the nodes and pages in chunks and the rest
   // First we revive the rest, then we inject the nodes and pages into that obj (if any)
@@ -58,7 +59,9 @@ export function readFromCache(
 
     return v8.deserialize(
       readFileSync(
-        reduxWorkerSlicesPrefix(cacheFolder) + createContentDigest(slices)
+        reduxWorkerSlicesPrefix(cacheFolder) +
+          `${workerId}_` +
+          createContentDigest(slices)
       )
     )
   }
@@ -213,7 +216,8 @@ function safelyRenameToBak(cacheFolder: string): string {
 
 export function writeToCache(
   contents: DeepPartial<ICachedReduxState>,
-  slices?: Array<GatsbyStateKeys>
+  slices?: Array<GatsbyStateKeys>,
+  workerId?: string
 ): void {
   // Writing the "slices" also to the "redux" folder introduces subtle bugs when
   // e.g. the whole folder gets replaced some "slices" are lost
@@ -222,7 +226,9 @@ export function writeToCache(
     const cacheFolder = getWorkerSlicesFolder()
 
     outputFileSync(
-      reduxWorkerSlicesPrefix(cacheFolder) + createContentDigest(slices),
+      reduxWorkerSlicesPrefix(cacheFolder) +
+        `${workerId}_` +
+        createContentDigest(slices),
       v8.serialize(contents)
     )
     return

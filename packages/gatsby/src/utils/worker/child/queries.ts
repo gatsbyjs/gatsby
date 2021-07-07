@@ -14,7 +14,7 @@ export function setComponents(): void {
 }
 
 export function saveQueries(): void {
-  savePartialStateToDisk([`queries`])
+  savePartialStateToDisk([`queries`], process.env.GATSBY_WORKER_ID)
 }
 
 export async function runQueries(queryIds: IGroupedQueryIds): Promise<void> {
