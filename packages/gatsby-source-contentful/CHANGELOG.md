@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.10.0-next.0...gatsby-source-contentful@5.10.0-next.1) (2021-07-08)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to ^4.1.1 ([#32250](https://github.com/gatsbyjs/gatsby/issues/32250)) ([bd03035](https://github.com/gatsbyjs/gatsby/commit/bd03035b35d4e2f69e86b9ff3bbcfb8bd3eece4a))
+
 # [5.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.9.0-next.1...gatsby-source-contentful@5.10.0-next.0) (2021-07-01)
 
 ### Bug Fixes

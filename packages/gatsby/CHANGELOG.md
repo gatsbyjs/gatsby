@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.10.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.2...gatsby@3.10.0-next.3) (2021-07-08)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to ^4.1.1 ([#32250](https://github.com/gatsbyjs/gatsby/issues/32250)) ([bd03035](https://github.com/gatsbyjs/gatsby/commit/bd03035b35d4e2f69e86b9ff3bbcfb8bd3eece4a))
+- **deps:** update dependency execa to v5 ([#32232](https://github.com/gatsbyjs/gatsby/issues/32232)) ([8a13969](https://github.com/gatsbyjs/gatsby/commit/8a1396995c02d45f00f241e22c626a20086fa955))
+- **deps:** update typescript ([#31152](https://github.com/gatsbyjs/gatsby/issues/31152)) ([124cfcc](https://github.com/gatsbyjs/gatsby/commit/124cfcc4cd42a50a992dde5b420610f290227a78))
+- don't import from other package src (even just types) ([#32234](https://github.com/gatsbyjs/gatsby/issues/32234)) ([51af0b9](https://github.com/gatsbyjs/gatsby/commit/51af0b9bc6ae1ff374bb59ea0b5b6ec6270b38ee))
+
+### Features
+
+- **gatsby:** Add PQR to bootstrap ([#32187](https://github.com/gatsbyjs/gatsby/issues/32187)) ([d58de3b](https://github.com/gatsbyjs/gatsby/commit/d58de3b53fb4a2d4deb1c4a0b014cb4d6f508a85))
+- **gatsby:** forward jobs to main process from workers ([#32162](https://github.com/gatsbyjs/gatsby/issues/32162)) ([ef7eb19](https://github.com/gatsbyjs/gatsby/commit/ef7eb1952c30db2ad6c984bc23d639bd84e79bce))
+- **gatsby:** PQR worker saves queries state to disk ([#32281](https://github.com/gatsbyjs/gatsby/issues/32281)) ([2268d5a](https://github.com/gatsbyjs/gatsby/commit/2268d5ad273f47d031ff85c66f96899f4c42dda4))
+
 # [3.10.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.1...gatsby@3.10.0-next.2) (2021-07-05)
 
 ### Features
