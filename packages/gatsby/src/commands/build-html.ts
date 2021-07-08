@@ -11,7 +11,7 @@ import { IWebpackWatchingPauseResume } from "../utils/start-server"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import * as buildUtils from "./build-utils"
-import { readPageData as readPageDataUtil } from "../utils/page-data"
+import { getPageData } from "../utils/get-page-data"
 
 import { Span } from "opentracing"
 import { IProgram, Stage } from "./types"
@@ -305,6 +305,21 @@ class BuildHTMLError extends Error {
   }
 }
 
+async function readPageData(pagePath): Promise<IPageDataWithQueryResult> {
+  const { program } = store.getState()
+
+  try {
+    return await readPageDataUtil(
+      path.join(program.directory, `public`),
+      pagePath
+    )
+  } catch (err) {
+    throw new Error(
+      `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
+    )
+  }
+}
+
 export const doBuildPages = async (
   rendererPath: string,
   pagePaths: Array<string>,
@@ -315,11 +330,7 @@ export const doBuildPages = async (
   try {
     await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
   } catch (error) {
-    const { program } = store.getState()
-    const pageData = await readPageDataUtil(
-      path.join(program.directory, `public`),
-      error.context.path
-    )
+    const pageData = await getPageData(error.context.path)
 
     // These objs can be quite large, so we want to limit the character count
     const pageDataMessage = `Data for failed page "${
