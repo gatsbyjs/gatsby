@@ -11,8 +11,11 @@ import { GatsbyWorkerPool } from "./types"
 export type { GatsbyWorkerPool }
 
 export const create = (): GatsbyWorkerPool => {
+  const numWorkers = Math.max(1, cpuCoreCount() - 1)
+  reporter.verbose(`Creating ${numWorkers} worker`)
+
   const worker: GatsbyWorkerPool = new WorkerPool(require.resolve(`./child`), {
-    numWorkers: Math.max(1, cpuCoreCount() - 1),
+    numWorkers,
     env: {
       GATSBY_WORKER_POOL_WORKER: `true`,
     },

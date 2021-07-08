@@ -10,7 +10,8 @@ export function setInferenceMetadata(): void {
 export async function buildSchema(): Promise<void> {
   const workerStore = store.getState()
 
-  if (!workerStore?.config?.plugins) {
+  // pathPrefix: '' will at least be defined when config is loaded
+  if ((workerStore?.config?.pathPrefix ?? null) === null) {
     throw Error(
       `Config loading didn't finish before attempting to build schema in worker`
     )
