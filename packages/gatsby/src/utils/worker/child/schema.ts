@@ -21,5 +21,6 @@ export async function buildSchema(): Promise<void> {
 
   await apiRunnerNode(`createSchemaCustomization`)
 
+  // build() runs other lifecycles like "createResolvers" or "setFieldsOnGraphQLNodeType" internally
   await build({ fullMetadataBuild: false, parentSpan: {} })
 }

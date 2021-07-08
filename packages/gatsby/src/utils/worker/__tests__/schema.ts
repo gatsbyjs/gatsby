@@ -5,7 +5,7 @@ import { DocumentNode } from "graphql"
 import { CombinedState } from "redux"
 import { build } from "../../../schema"
 import sourceNodesAndRemoveStaleNodes from "../../source-nodes"
-import { saveStateForWorkers, store } from "../../../redux"
+import { savePartialStateToDisk, store } from "../../../redux"
 import { loadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
 import {
   createTestWorker,
@@ -54,7 +54,7 @@ describeWhenLMDB(`worker (schema)`, () => {
     await getDataStore().ready()
 
     await build({ parentSpan: {} })
-    saveStateForWorkers([`inferenceMetadata`])
+    savePartialStateToDisk([`inferenceMetadata`])
     await Promise.all(worker.all.buildSchema())
 
     stateFromWorker = await worker.single.getState()
