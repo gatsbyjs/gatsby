@@ -3,7 +3,6 @@ const { build } = require(`..`)
 const withResolverContext = require(`../context`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-import { isLmdbStore } from "../../datastore"
 
 function makeNodes() {
   return [
