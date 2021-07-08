@@ -11,6 +11,7 @@ import { IWebpackWatchingPauseResume } from "../utils/start-server"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import * as buildUtils from "./build-utils"
+import { readPageData as readPageDataUtil } from "../utils/page-data"
 
 import { Span } from "opentracing"
 import { IProgram, Stage } from "./types"
@@ -314,12 +315,26 @@ export const doBuildPages = async (
   try {
     await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
   } catch (error) {
+    const { program } = store.getState()
+    const pageData = await readPageDataUtil(
+      path.join(program.directory, `public`),
+      error.context.path
+    )
+
+    // These objs can be quite large, so we want to limit the character count
+    const pageDataMessage = `Data for failed page "${
+      error.context.path
+    }": ${JSON.stringify(pageData, null, 2).slice(0, 50000)}`
+
     const prettyError = await createErrorFromString(
       error.stack,
       `${rendererPath}.map`
     )
+
     const buildError = new BuildHTMLError(prettyError)
     buildError.context = error.context
+
+    reporter.error(pageDataMessage)
     throw buildError
   }
 }
