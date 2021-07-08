@@ -131,7 +131,7 @@ export const saveState = (): void => {
 
 export const savePartialStateToDisk = (
   slices: Array<GatsbyStateKeys>,
-  optionalPrefix: string = ``
+  optionalPrefix?: string
 ): void => {
   const state = store.getState()
   const contents = _.pick(state, slices)
@@ -141,7 +141,7 @@ export const savePartialStateToDisk = (
 
 export const loadPartialStateFromDisk = (
   slices: Array<GatsbyStateKeys>,
-  optionalPrefix: string = ``
+  optionalPrefix?: string
 ): DeepPartial<IGatsbyState> => {
   try {
     return readFromCache(slices, optionalPrefix) as DeepPartial<IGatsbyState>
