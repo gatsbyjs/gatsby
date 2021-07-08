@@ -256,7 +256,9 @@ function narrowResultsIfPossible(
 
   const indexFields = new Map<string, number>()
   indexMetadata.keyFields.forEach(([fieldName], positionInKey) => {
-    indexFields.set(fieldName, positionInKey + 1) // +1 to offset index id at the beginning of the index
+    // Every index key is [indexId, field1, field2, ...] and `indexMetadata.keyFields` contains [field1, field2, ...]
+    // As `indexId` is in the first column the fields need to be offset by +1 for correct addressing
+    indexFields.set(fieldName, positionInKey + 1)
   })
 
   type Filter = [filter: IDbFilterStatement, fieldPositionInIndex: number]
