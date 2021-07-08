@@ -45,6 +45,4 @@ export async function runQueries(queryIds: IGroupedQueryIds): Promise<void> {
   })
 
   await getDataStore().ready()
-
-  saveQueries()
 }

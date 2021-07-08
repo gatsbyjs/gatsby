@@ -183,6 +183,7 @@ describeWhenLMDB(`worker (queries)`, () => {
   it(`should save worker "queries" state to disk`, async () => {
     if (!worker) fail(`worker not defined`)
 
+    await Promise.all(worker.all.saveQueries())
     // Pass "1" as workerId as the test only have one worker
     const result = loadPartialStateFromDisk([`queries`], `1`)
 
