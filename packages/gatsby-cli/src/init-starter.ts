@@ -115,7 +115,7 @@ const install = async (rootPath: string): Promise<void> => {
       await spawn(`yarnpkg`)
     } else {
       await fs.remove(`yarn.lock`)
-      await spawn(`npm install`)
+      await spawn(`npm install --legacy-peer-deps`)
     }
   } finally {
     process.chdir(prevDir)
