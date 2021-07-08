@@ -81,35 +81,25 @@ const spinnerIcon = (
 )
 
 const IndicatorButton = ({
-  toolTipOffset,
-  isFirstButton,
-  tooltipText,
+  buttonIndex,
+  tooltipContent,
   overrideShowTooltip = false,
-  tooltipLink,
-  tooltipIcon,
-  tooltipLinkImage,
   iconSvg,
   onClick,
   showSpinner,
   active = false,
   testId,
-  onMouseOver,
+  onMouseEnter,
 }) => {
   const [showTooltip, setShowTooltip] = useState(false)
+  const isFirstButton = buttonIndex === 0
   const marginTop = isFirstButton ? `0px` : `8px`
 
-  const onMouseEnter = () => {
-    setShowTooltip(true)
-
-    if (onMouseOver) {
-      onMouseOver()
-    }
-  }
   const onMouseLeave = () => setShowTooltip(false)
 
   return (
     <>
-      <div
+      <button
         data-gatsby-preview-indicator="button"
         data-gatsby-preview-indicator-active-button={`${active}`}
         data-gatsby-preview-indicator-hoverable={
@@ -119,26 +109,28 @@ const IndicatorButton = ({
       >
         <div
           data-testid={`${testId}-button`}
-          onMouseEnter={onMouseEnter}
+          onMouseEnter={() => {
+            setShowTooltip(true)
+
+            if (onMouseEnter) {
+              onMouseEnter()
+            }
+          }}
           onMouseLeave={onMouseLeave}
-          onClick={onClick}
+          onClick={active ? onClick : null}
         >
           {iconSvg}
           {showSpinner && (
             <div data-gatsby-preview-indicator="spinner">{spinnerIcon}</div>
           )}
         </div>
-      </div>
-      {tooltipText && (
+      </button>
+      {tooltipContent && (
         <IndicatorButtonTooltip
-          tooltipText={tooltipText}
+          tooltipContent={tooltipContent}
           overrideShowTooltip={overrideShowTooltip}
           showTooltip={showTooltip}
-          tooltipIcon={tooltipIcon}
-          toolTipOffset={toolTipOffset}
-          tooltipLink={tooltipLink}
-          tooltipLinkImage={tooltipLinkImage}
-          onClick={onClick}
+          buttonIndex={buttonIndex}
           testId={testId}
         />
       )}

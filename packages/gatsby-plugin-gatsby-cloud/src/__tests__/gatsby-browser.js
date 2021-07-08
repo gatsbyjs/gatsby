@@ -1,7 +1,7 @@
 import React from "react"
 import "@testing-library/jest-dom/extend-expect"
 import userEvent from "@testing-library/user-event"
-import { render, screen, act, waitFor } from "@testing-library/react"
+import { render, screen, act, waitFor, fireEvent } from "@testing-library/react"
 
 // import { wrapRootElement } from "../gatsby-browser"
 import Indicator from "../components/Indicator"
@@ -10,6 +10,7 @@ import { server } from "./mocks/server"
 
 const createUrl = path => `https://test.com/${path}`
 const copyLinkMessage = `Copy link`
+const copyLinkSuccessMessage = `Link copied`
 const infoButtonMessage = `Preview updated`
 const errorLogMessage = `View logs`
 const newPreviewMessage = `New preview available`
@@ -26,21 +27,18 @@ describe(`Preview status indicator`, () => {
   const assertTooltipText = async ({ route, text, matcherType }) => {
     process.env.GATSBY_PREVIEW_API_URL = createUrl(route)
 
-    // it will disable setTimeout behaviour - only fetchData once
-    jest.useFakeTimers()
-
     await act(async () => {
       render(<Indicator />)
     })
 
     if (matcherType === `query`) {
-      await waitFor(() => {
+      waitFor(() => {
         expect(
           screen.queryByText(text, { exact: false })
         ).not.toBeInTheDocument()
       })
     } else if (matcherType === `get`) {
-      await waitFor(() => {
+      waitFor(() => {
         expect(screen.getByText(text, { exact: false })).toBeInTheDocument()
       })
     }
@@ -56,13 +54,11 @@ describe(`Preview status indicator`, () => {
     process.env.GATSBY_TELEMETRY_API = `http://test.com/events`
     let component
 
-    jest.useFakeTimers()
-
     await act(async () => {
       render(<Indicator />)
     })
 
-    await waitFor(() => {
+    waitFor(() => {
       if (testId) {
         component = screen.getByTestId(testId)
       } else {
@@ -70,7 +66,7 @@ describe(`Preview status indicator`, () => {
       }
     })
 
-    await waitFor(() => {
+    waitFor(() => {
       if (action) {
         userEvent[action](component)
         // Initial poll fetch, initial load trackEvent, and trackEvent after action
@@ -87,13 +83,28 @@ describe(`Preview status indicator`, () => {
   })
 
   beforeEach(() => {
+    // it will disable setTimeout behaviour - only fetchData once
+    jest.useFakeTimers()
     // reset all mocks
     jest.resetModules()
     global.fetch = require(`node-fetch`)
     jest.spyOn(global, `fetch`)
+
+    /**
+     * mock out location.host as described here
+     * https://github.com/facebook/jest/issues/5124#issuecomment-415494099
+     */
+    global.window = Object.create(window)
+    Object.defineProperty(window, `location`, {
+      value: {
+        href: `https://build-123.gtsb.io`,
+        hostname: `https://build-123.gtsb.io`,
+      },
+    })
   })
 
   afterEach(() => {
+    jest.runOnlyPendingTimers()
     jest.useRealTimers()
     server.resetHandlers()
   })
@@ -256,24 +267,30 @@ describe(`Preview status indicator`, () => {
         process.env.GATSBY_PREVIEW_API_URL = createUrl(`error`)
         window.open = jest.fn()
 
-        let gatsbyButtonTooltip
+        let gatsbyButtonTooltipLink
         const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/999/sites/111/builds/123/details`
         const returnTo = encodeURIComponent(pathToBuildLogs)
 
-        await act(async () => {
+        act(() => {
           render(<Indicator />)
         })
 
         await waitFor(() => {
-          gatsbyButtonTooltip = screen.getByText(errorLogMessage, {
-            exact: false,
-          })
+          gatsbyButtonTooltipLink = screen
+            .getByText(errorLogMessage, {
+              exact: false,
+            })
+            .closest(`a`)
         })
 
-        userEvent.click(gatsbyButtonTooltip)
-        expect(window.open).toHaveBeenCalledWith(
+        expect(gatsbyButtonTooltipLink.getAttribute(`href`)).toInclude(
           `${pathToBuildLogs}?returnTo=${returnTo}`
         )
+
+        assertTrackEventGetsCalled({
+          route: `error`,
+          testId: `info-button`,
+        })
       })
     })
 
@@ -324,20 +341,38 @@ describe(`Preview status indicator`, () => {
         process.env.GATSBY_PREVIEW_API_URL = createUrl(`uptodate`)
 
         navigator.clipboard = { writeText: jest.fn() }
-        let copyLinkButton
+        let copyLinkTooltip
 
-        await act(async () => {
+        act(() => {
           render(<Indicator />)
         })
 
+        fireEvent.mouseEnter(screen.getByTestId(`link-button`))
+
         await waitFor(() => {
-          copyLinkButton = screen.getByText(copyLinkMessage, { exact: false })
+          copyLinkTooltip = screen.getByText(copyLinkMessage, { exact: false })
         })
 
-        userEvent.click(copyLinkButton)
-        expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-          `http://localhost/`
-        )
+        /**
+         * Should show the tooltip content that exists before a successful copy
+         * when a user hovers
+         */
+        expect(copyLinkTooltip).toBeInTheDocument()
+
+        userEvent.click(screen.getByTestId(`link-button`))
+
+        await waitFor(() => {
+          copyLinkTooltip = screen.getByText(copyLinkSuccessMessage, {
+            exact: false,
+          })
+        })
+
+        /**
+         * Should show the success tooltip content after the user has copied the link
+         */
+        expect(copyLinkTooltip).toBeInTheDocument()
+
+        expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(1)
       })
     })
 
