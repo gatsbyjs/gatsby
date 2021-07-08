@@ -305,21 +305,6 @@ class BuildHTMLError extends Error {
   }
 }
 
-async function readPageData(pagePath): Promise<IPageDataWithQueryResult> {
-  const { program } = store.getState()
-
-  try {
-    return await readPageDataUtil(
-      path.join(program.directory, `public`),
-      pagePath
-    )
-  } catch (err) {
-    throw new Error(
-      `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
-    )
-  }
-}
-
 export const doBuildPages = async (
   rendererPath: string,
   pagePaths: Array<string>,
