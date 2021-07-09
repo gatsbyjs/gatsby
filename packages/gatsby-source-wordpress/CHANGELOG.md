@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@4.0.6...gatsby-source-wordpress@4.0.7) (2021-07-09)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** Backporting auth leak fix ([#32315](https://github.com/gatsbyjs/gatsby/issues/32315)) ([98e726f](https://github.com/gatsbyjs/gatsby/commit/98e726f05145a11a57345a262eeebd2694aa18f9))
+
 ## [4.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@4.0.5...gatsby-source-wordpress@4.0.6) (2021-04-07)
 
 ### Bug Fixes
