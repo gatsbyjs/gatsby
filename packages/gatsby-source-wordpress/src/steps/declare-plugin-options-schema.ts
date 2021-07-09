@@ -729,8 +729,16 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
                 )
                 .meta({
                   example: wrapOptions(`
-                      httpOpts: {
-                        http: \`new ProxyAgent(process.env.http_proxy)\`,
+                      type: {
+                        MediaItem: {
+                          localFile: {
+                            httpOptions: {
+                              agent: {
+                                http: \`new ProxyAgent(process.env.http_proxy)\`,
+                              },
+                            },
+                          },
+                        },
                       },
                     `),
                 }),
@@ -742,29 +750,50 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
                 )
                 .meta({
                   example: wrapOptions(`
-                      httpOpts: {
-                        https: \`new ProxyAgent(process.env.https_proxy)\`,
+                      type: {
+                        MediaItem: {
+                          localFile: {
+                            httpOptions: {
+                              agent: {
+                                https: \`new ProxyAgent(process.env.https_proxy)\`,
+                              },
+                            },
+                          },
+                        },
                       },
                     `),
                 }),
             })
               .description(
-                `Custom httpOpts for got wrapper when we fetch files cf https://github.com/sindresorhus/got#agent`
+                `Custom httpOptions for got wrapper when we fetch files cf https://github.com/sindresorhus/got#agent`
               )
               .meta({
                 example: wrapOptions(`
-                    httpOpts: {
-                      agent: {}, // Add your options here :)
+                    type: {
+                      MediaItem: {
+                        localFile: {
+                          httpOptions: {
+                            agent: {}, // Add your options here
+                          },
+                        },
+                      },
                     },
+
                   `),
               }),
           })
             .description(
-              `Custom httpOpts for got wrapper when we fetch files. See below for options.`
+              `Custom httpOptions for got wrapper when we fetch files. See below for options.`
             )
             .meta({
               example: wrapOptions(`
-                  httpOpts: {}, // Add your options here :)
+                  type: {
+                    MediaItem: {
+                      localFile: {
+                        httpOptions: {}, // Add your options here
+                      },
+                    },
+                  },
                 `),
             }),
 

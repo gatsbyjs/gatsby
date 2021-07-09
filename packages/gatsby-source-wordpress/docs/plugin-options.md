@@ -25,7 +25,6 @@
   - [develop.nodeUpdateInterval](#developnodeupdateinterval)
   - [develop.hardCacheMediaFiles](#develophardcachemediafiles)
   - [develop.hardCacheData](#develophardcachedata)
-- [httpOpts](#httpopts)
 - [auth](#auth)
   - [auth.htaccess](#authhtaccess)
     - [auth.htaccess.username](#authhtaccessusername)
@@ -61,6 +60,7 @@
     - [type.MediaItem.lazyNodes](#typemediaitemlazynodes)
     - [type.MediaItem.localFile](#typemediaitemlocalfile)
       - [type.MediaItem.localFile.excludeByMimeTypes](#typemediaitemlocalfileexcludebymimetypes)
+      - [type.MediaItem.localFile.httpOptions](#typemediaitemlocalfilehttpoptions)
       - [type.MediaItem.localFile.maxFileSizeBytes](#typemediaitemlocalfilemaxfilesizebytes)
       - [type.MediaItem.localFile.requestConcurrency](#typemediaitemlocalfilerequestconcurrency)
 - [presets](#presets)
@@ -524,32 +524,6 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
   },
 }
 
-```
-
-## httpOpts
-
-Option to use a custom agent when we download the files from your WordPress.
-We use the [got](https://github.com/sindresorhus/got) to fetch the files.
-
-**Field type**: `Object`
-
-**Default value**: `{}`
-
-ex: _Set a custom agent_
-
-```js
-{
-  resolve: `gatsby-source-wordpress`,
-  options: {
-    httpOpts: {
-      // cf https://github.com/sindresorhus/got#agent
-      agent: {
-        http: new ProxyAgent(process.env.http_proxy),
-        https: new ProxyAgent(process.env.https_proxy)
-      }
-    },
-  },
-}
 ```
 
 ## auth
@@ -1207,6 +1181,38 @@ Allows preventing the download of files associated with MediaItem nodes by their
   },
 }
 
+```
+
+##### type.MediaItem.localFile.httpOptions
+
+Option to use a custom agent when we download the files from your WordPress.
+We use the [got](https://github.com/sindresorhus/got) to fetch the files.
+
+**Field type**: `Object`
+
+**Default value**: `{}`
+
+ex: _Set a custom agent_
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    type: {
+      MediaItem: {
+        localeFile: {
+          httpOptions: {
+            // cf https://github.com/sindresorhus/got#agent
+            agent: {
+              http: new ProxyAgent(process.env.http_proxy),
+              https: new ProxyAgent(process.env.https_proxy)
+            },
+          },
+        },
+      },
+    },
+  },
+}
 ```
 
 ##### type.MediaItem.localFile.maxFileSizeBytes
