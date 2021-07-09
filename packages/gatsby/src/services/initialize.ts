@@ -208,9 +208,11 @@ export async function initialize({
 
   const cacheDirectory = `${program.directory}/.cache`
   const publicDirectory = `${program.directory}/public`
+  const workerCacheDirectory = `${program.directory}/.cache/worker`
 
   const cacheJsonDirExists = fs.existsSync(`${cacheDirectory}/json`)
   const publicDirExists = fs.existsSync(publicDirectory)
+  const workerCacheDirExists = fs.existsSync(workerCacheDirectory)
 
   // For builds in case public dir exists, but cache doesn't, we need to clean up potentially stale
   // artifacts from previous builds (due to cache not being available, we can't rely on tracking of artifacts)
@@ -232,6 +234,25 @@ export async function initialize({
       `!public/static`,
       `!public/static/**/*.{html,css}`,
     ])
+    activity.end()
+  }
+
+  // When the main process and workers communicate they save parts of their redux state to .cache/worker
+  // We should clean this directory to remove stale files that a worker might accidentally reuse then
+  if (
+    workerCacheDirExists &&
+    process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING
+  ) {
+    activity = reporter.activityTimer(
+      `delete worker cache from previous builds`,
+      {
+        parentSpan,
+      }
+    )
+    activity.start()
+    await fs
+      .remove(workerCacheDirectory)
+      .catch(() => fs.emptyDir(workerCacheDirectory))
     activity.end()
   }
 
