@@ -72,21 +72,22 @@ export function suggestIndex({
   return dedupeAndTrim([...filterFields, ...sortFields], maxFields)
 }
 
+const canUseIndex = new Set([
+  DbComparator.EQ,
+  DbComparator.IN,
+  DbComparator.GTE,
+  DbComparator.LTE,
+  DbComparator.GT,
+  DbComparator.LT,
+  DbComparator.NIN,
+  DbComparator.NE,
+])
+
 /**
  * Returns queries that can potentially use index.
  * Returned list is sorted by query specificity
  */
 function getQueriesThatCanUseIndex(all: Array<DbQuery>): Array<DbQuery> {
-  const canUseIndex = new Set([
-    DbComparator.EQ,
-    DbComparator.IN,
-    DbComparator.GTE,
-    DbComparator.LTE,
-    DbComparator.GT,
-    DbComparator.LT,
-    DbComparator.NIN,
-    DbComparator.NE,
-  ])
   return sortBySpecificity(
     all.filter(q => canUseIndex.has(getFilterStatement(q).comparator))
   )

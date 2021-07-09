@@ -262,34 +262,33 @@ export function objectToDottedField(
   return result
 }
 
-const comparatorSpecificity = [
-  DbComparator.EQ,
-  DbComparator.IN,
-  DbComparator.GTE,
-  DbComparator.LTE,
-  DbComparator.GT,
-  DbComparator.LT,
-  DbComparator.NIN,
-  DbComparator.NE,
-]
-
-export function sortBySpecificity(all: Array<DbQuery>): Array<DbQuery> {
-  return [...all].sort(compareBySpecificity)
+const comparatorSpecificity = {
+  [DbComparator.EQ]: 80,
+  [DbComparator.IN]: 70,
+  [DbComparator.GTE]: 60,
+  [DbComparator.LTE]: 50,
+  [DbComparator.GT]: 40,
+  [DbComparator.LT]: 30,
+  [DbComparator.NIN]: 20,
+  [DbComparator.NE]: 10,
 }
 
-function compareBySpecificity(a: DbQuery, b: DbQuery): number {
+export function sortBySpecificity(all: Array<DbQuery>): Array<DbQuery> {
+  return [...all].sort(compareBySpecificityDesc)
+}
+
+function compareBySpecificityDesc(a: DbQuery, b: DbQuery): number {
   const aComparator = getFilterStatement(a).comparator
   const bComparator = getFilterStatement(b).comparator
   if (aComparator === bComparator) {
     return 0
   }
-  for (const comparator of comparatorSpecificity) {
-    if (comparator === aComparator) {
-      return -1
-    }
-    if (comparator === bComparator) {
-      return 1
-    }
+  const aSpecificity = comparatorSpecificity[aComparator]
+  const bSpecificity = comparatorSpecificity[bComparator]
+  if (!aSpecificity || !bSpecificity) {
+    throw new Error(
+      `Unexpected comparator pair: ${aComparator}, ${bComparator}`
+    )
   }
-  throw new Error(`Unexpected comparator pair: ${aComparator}, ${bComparator}`)
+  return aSpecificity > bSpecificity ? -1 : 1
 }

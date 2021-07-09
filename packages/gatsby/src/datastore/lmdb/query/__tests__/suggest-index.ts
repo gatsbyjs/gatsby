@@ -268,7 +268,7 @@ describe(`suggestIndex`, () => {
       `single "%s" filter`,
       predicate => {
         it(`prefers "sort" fields to single "${predicate}" filter`, () => {
-          const filter = { a: { [predicate]: [1, 2] } }
+          const filter = { a: { [predicate]: 42 } }
           const sort = { fields: [`b`, `c`], order: [] }
           expect(suggestIndex({ filter, sort })).toEqual([
             [`b`, 1],
