@@ -5,6 +5,7 @@ import { cpuCoreCount } from "gatsby-core-utils"
 
 import { IGroupedQueryIds } from "../../services"
 import { initJobsMessagingInMainProcess } from "../jobs/worker-messaging"
+import { initReporterMessagingInMainProcess } from "./reporter"
 
 import { GatsbyWorkerPool } from "./types"
 
@@ -22,6 +23,7 @@ export const create = (): GatsbyWorkerPool => {
   })
 
   initJobsMessagingInMainProcess(worker)
+  initReporterMessagingInMainProcess(worker)
 
   return worker
 }
