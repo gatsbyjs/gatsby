@@ -416,55 +416,6 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
           `),
       }),
 
-    httpOpts: Joi.object({
-      agent: Joi.object({
-        http: Joi.any()
-          .allow(null)
-          .default(null)
-          .description(
-            `Agent for the request cf https://nodejs.org/api/http.html#http_class_http_agent`
-          )
-          .meta({
-            example: wrapOptions(`
-                httpOpts: {
-                  http: \`new ProxyAgent(process.env.http_proxy)\`,
-                },
-              `),
-          }),
-        https: Joi.any()
-          .allow(null)
-          .default(null)
-          .description(
-            `Agent for the request cf https://nodejs.org/api/https.html#https_class_https_agent`
-          )
-          .meta({
-            example: wrapOptions(`
-                httpOpts: {
-                  https: \`new ProxyAgent(process.env.https_proxy)\`,
-                },
-              `),
-          }),
-      })
-        .description(
-          `Custom httpOpts for got wrapper when we fetch files cf https://github.com/sindresorhus/got#agent`
-        )
-        .meta({
-          example: wrapOptions(`
-              httpOpts: {
-                agent: {}, // Add your options here :)
-              },
-            `),
-        }),
-    })
-      .description(
-        `Custom httpOpts for got wrapper when we fetch files. See below for options.`
-      )
-      .meta({
-        example: wrapOptions(`
-            httpOpts: {}, // Add your options here :)
-          `),
-      }),
-
     schema: Joi.object({
       queryDepth: Joi.number()
         .integer()
@@ -767,6 +718,56 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
                   },
                 `),
             }),
+
+          httpOptions: Joi.object({
+            agent: Joi.object({
+              http: Joi.any()
+                .allow(null)
+                .default(null)
+                .description(
+                  `Agent for the request cf https://nodejs.org/api/http.html#http_class_http_agent`
+                )
+                .meta({
+                  example: wrapOptions(`
+                      httpOpts: {
+                        http: \`new ProxyAgent(process.env.http_proxy)\`,
+                      },
+                    `),
+                }),
+              https: Joi.any()
+                .allow(null)
+                .default(null)
+                .description(
+                  `Agent for the request cf https://nodejs.org/api/https.html#https_class_https_agent`
+                )
+                .meta({
+                  example: wrapOptions(`
+                      httpOpts: {
+                        https: \`new ProxyAgent(process.env.https_proxy)\`,
+                      },
+                    `),
+                }),
+            })
+              .description(
+                `Custom httpOpts for got wrapper when we fetch files cf https://github.com/sindresorhus/got#agent`
+              )
+              .meta({
+                example: wrapOptions(`
+                    httpOpts: {
+                      agent: {}, // Add your options here :)
+                    },
+                  `),
+              }),
+          })
+            .description(
+              `Custom httpOpts for got wrapper when we fetch files. See below for options.`
+            )
+            .meta({
+              example: wrapOptions(`
+                  httpOpts: {}, // Add your options here :)
+                `),
+            }),
+
           maxFileSizeBytes: Joi.number()
             .integer()
             .default(15728640)
