@@ -22,24 +22,23 @@ const gatsbyWorkerMessenger = getMessenger()
 export function initReporterMessagingInWorker(): void {
   if (isWorker && gatsbyWorkerMessenger) {
     if (typeof reporter.setReporterActions === `function`) {
-      const intentifiedActionCreators = (Object.keys(ActionCreators) as Array<
+      const intentifiedActionCreators = {}
+      for (const actionCreatorName of Object.keys(ActionCreators) as Array<
         ReporterActionKeys
-      >).reduce((acc, keyName: ReporterActionKeys) => {
-        acc[keyName] = (
-          ...args: Parameters<ReporterActions[ReporterActionKeys]>
-        ): void => {
+      >) {
+        // swap each reporter action creator with function that send intent
+        // to main process
+        intentifiedActionCreators[actionCreatorName] = (...args): void => {
           gatsbyWorkerMessenger.sendMessage({
             type: `LOG_INTENT`,
             payload: {
-              name: keyName,
+              name: actionCreatorName,
               args,
             } as any,
           })
         }
-        return acc
-      }, {}) as ReporterActions
-
-      reporter.setReporterActions(intentifiedActionCreators)
+      }
+      reporter.setReporterActions(intentifiedActionCreators as ReporterActions)
     }
 
     process.on(`unhandledRejection`, (reason: unknown) => {
