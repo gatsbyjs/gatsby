@@ -250,7 +250,9 @@ export async function initialize({
       }
     )
     activity.start()
-    await del([`${workerCacheDirectory}/**`])
+    await fs
+      .remove(workerCacheDirectory)
+      .catch(() => fs.emptyDir(workerCacheDirectory))
     activity.end()
   }
 
