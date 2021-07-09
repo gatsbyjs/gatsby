@@ -62,9 +62,12 @@ describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
       await gatsbyCleanBeforeAll()
     }
 
-    if (isWarmCache && !process.env.WORDPRESS_BASIC_AUTH) {
+    if (
+      isWarmCache &&
+      (!process.env.HTACCESS_USERNAME || !process.env.HTACCESS_PASSWORD)
+    ) {
       console.log(
-        `Please add the env var WORDPRESS_BASIC_AUTH. It should be a string in the following pattern: base64Encode(\`\${username}:\${password}\`)`
+        `Please add the env var HTACCESS_USERNAME and HTACCESS_PASSWORD. It should be a string in the following pattern: base64Encode(\`\${username}:\${password}\`)`
       )
 
       await new Promise(resolve => setTimeout(resolve, 100))
