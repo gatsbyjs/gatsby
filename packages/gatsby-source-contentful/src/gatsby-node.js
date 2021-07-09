@@ -8,7 +8,10 @@ const fetch = require(`@vercel/fetch-retry`)(require(`node-fetch`))
 const { CODES } = require(`./report`)
 
 const normalize = require(`./normalize`)
-const fetchData = require(`./fetch`)
+const {
+  contentfulFetchTypeItems,
+  contentfulFetch: fetchData,
+} = require(`./fetch`)
 const { createPluginConfig, maskText } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
@@ -151,6 +154,67 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
 
 exports.pluginOptionsSchema = pluginOptionsSchema
 
+exports.createSchemaCustomization = async (
+  { actions, schema, reporter },
+  pluginOptions
+) => {
+  const { createTypes } = actions
+
+  const pluginConfig = createPluginConfig(pluginOptions)
+  const contentTypeItems = await contentfulFetchTypeItems({
+    pluginConfig,
+    reporter,
+  })
+
+  createTypes(`
+    interface ContentfulEntry implements Node {
+      contentful_id: String!
+      id: ID!
+      node_locale: String!
+    }
+  `)
+
+  createTypes(`
+    interface ContentfulReference {
+      contentful_id: String!
+      id: ID!
+    }
+  `)
+
+  createTypes(
+    schema.buildObjectType({
+      name: `ContentfulAsset`,
+      fields: {
+        contentful_id: { type: `String!` },
+        id: { type: `ID!` },
+      },
+      interfaces: [`ContentfulReference`, `Node`],
+    })
+  )
+
+  const gqlTypes = contentTypeItems.map(contentTypeItem =>
+    schema.buildObjectType({
+      name: _.upperFirst(
+        _.camelCase(
+          `Contentful ${
+            pluginConfig.get(`useNameForId`)
+              ? contentTypeItem.name
+              : contentTypeItem.sys.id
+          }`
+        )
+      ),
+      fields: {
+        contentful_id: { type: `String!` },
+        id: { type: `ID!` },
+        node_locale: { type: `String!` },
+      },
+      interfaces: [`ContentfulReference`, `ContentfulEntry`, `Node`],
+    })
+  )
+
+  createTypes(gqlTypes)
+}
+
 /***
  * Localization algorithm
  *
@@ -173,12 +237,11 @@ exports.sourceNodes = async (
     cache,
     getCache,
     reporter,
-    schema,
     parentSpan,
   },
   pluginOptions
 ) => {
-  const { createNode, deleteNode, touchNode, createTypes } = actions
+  const { createNode, deleteNode, touchNode } = actions
 
   let currentSyncData
   let contentTypeItems
@@ -361,54 +424,6 @@ exports.sourceNodes = async (
       },
     })
   }
-
-  createTypes(`
-  interface ContentfulEntry implements Node {
-    contentful_id: String!
-    id: ID!
-    node_locale: String!
-  }
-`)
-
-  createTypes(`
-  interface ContentfulReference {
-    contentful_id: String!
-    id: ID!
-  }
-`)
-
-  createTypes(
-    schema.buildObjectType({
-      name: `ContentfulAsset`,
-      fields: {
-        contentful_id: { type: `String!` },
-        id: { type: `ID!` },
-      },
-      interfaces: [`ContentfulReference`, `Node`],
-    })
-  )
-
-  const gqlTypes = contentTypeItems.map(contentTypeItem =>
-    schema.buildObjectType({
-      name: _.upperFirst(
-        _.camelCase(
-          `Contentful ${
-            pluginConfig.get(`useNameForId`)
-              ? contentTypeItem.name
-              : contentTypeItem.sys.id
-          }`
-        )
-      ),
-      fields: {
-        contentful_id: { type: `String!` },
-        id: { type: `ID!` },
-        node_locale: { type: `String!` },
-      },
-      interfaces: [`ContentfulReference`, `ContentfulEntry`, `Node`],
-    })
-  )
-
-  createTypes(gqlTypes)
 
   fetchActivity.end()
 

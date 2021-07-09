@@ -4,6 +4,11 @@ const chalk = require(`chalk`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
 const { CODES } = require(`./report`)
 
+let client
+let syncProgress
+let syncItemCount = 0
+let contentTypeItems
+
 /**
  * Generate a user friendly error message.
  *
@@ -72,15 +77,11 @@ const createContentfulErrorMessage = e => {
   return errorMessage
 }
 
-module.exports = async function contentfulFetch({
-  syncToken,
-  pluginConfig,
-  reporter,
-}) {
+async function getContentfulClient({ pluginConfig, reporter }) {
+  if (client) {
+    return client
+  }
   // Fetch articles.
-  let syncProgress
-  let syncItemCount = 0
-  const pageLimit = pluginConfig.get(`pageLimit`)
   const contentfulClientOptions = {
     space: pluginConfig.get(`spaceId`),
     accessToken: pluginConfig.get(`accessToken`),
@@ -133,7 +134,16 @@ module.exports = async function contentfulFetch({
     ...(pluginConfig.get(`contentfulClientConfig`) || {}),
   }
 
-  const client = contentful.createClient(contentfulClientOptions)
+  client = contentful.createClient(contentfulClientOptions)
+  return client
+}
+
+async function contentfulFetch({ syncToken, pluginConfig, reporter }) {
+  const pageLimit = pluginConfig.get(`pageLimit`)
+  const client = await getContentfulClient({ pluginConfig, reporter })
+  const contentfulClientOptions = {
+    environment: pluginConfig.get(`environment`),
+  }
 
   // The sync API puts the locale in all fields in this format { fieldName:
   // {'locale': value} } so we need to get the space and its default local.
@@ -295,17 +305,46 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
   }
   reporter.verbose(`Content types fetched ${contentTypes.items.length}`)
 
-  const contentTypeItems = contentTypes.items
+  if (!contentTypeItems) {
+    contentTypeItems = await contentfulFetchTypeItems({
+      pluginConfig,
+      reporter,
+    })
+  }
 
   const result = {
     currentSyncData,
-    contentTypeItems,
     defaultLocale,
+    contentTypeItems,
     locales,
     space,
   }
 
   return result
+}
+
+async function contentfulFetchTypeItems({ pluginConfig, reporter }) {
+  // We need to fetch content types with the non-sync API as the sync API
+  // doesn't support this.
+  const pageLimit = pluginConfig.get(`pageLimit`)
+  const client = await getContentfulClient({ pluginConfig, reporter })
+  let contentTypes
+  try {
+    contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
+  } catch (e) {
+    reporter.panic({
+      id: CODES.FetchContentTypes,
+      context: {
+        sourceMessage: `Error fetching content types: ${createContentfulErrorMessage(
+          e
+        )}`,
+      },
+    })
+  }
+  reporter.verbose(`Content types fetched ${contentTypes.items.length}`)
+
+  contentTypeItems = contentTypes.items
+  return contentTypeItems
 }
 
 /**
@@ -345,3 +384,6 @@ function pagedGet(
     return aggregatedResponse
   })
 }
+
+exports.contentfulFetch = contentfulFetch
+exports.contentfulFetchTypeItems = contentfulFetchTypeItems
