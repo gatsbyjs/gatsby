@@ -51,7 +51,7 @@
   },
   "scripts": {
     "build": "babel src --out-dir lib --ignore \"**/__tests__\",\"**/__mocks__\" --extensions \".ts,.js\"",
-    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
+    "prepare": "cross-env NODE_ENV=production npm run build",
     "jest": "jest",
     "postinstall": "node src/postinstall.js || true",
     "typegen": "rimraf \"lib/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir lib/",

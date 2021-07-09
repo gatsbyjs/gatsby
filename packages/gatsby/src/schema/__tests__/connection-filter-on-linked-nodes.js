@@ -3,6 +3,7 @@ const { build } = require(`..`)
 const withResolverContext = require(`../context`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
+import { isLmdbStore } from "../../datastore"
 
 function makeNodes() {
   return [
@@ -285,12 +286,20 @@ describe(`filtering on linked nodes`, () => {
     }
 
     expect(result.data.eq.edges).toEqual([`bar`, `baz`].map(itemToEdge))
-    expect(result.data.in.edges).toEqual([`bar`, `baz`, `foo`].map(itemToEdge))
+    // In case of LMDB results are also sorted by the filter field,
+    // so first - all parents with children having "hair: blonde", next - all with "hair: brown"
+    const expectedIn = isLmdbStore()
+      ? [`bar`, `foo`, `baz`]
+      : [`bar`, `baz`, `foo`]
+    expect(result.data.in.edges).toEqual(expectedIn.map(itemToEdge))
     expect(result.data.insideInlineArrayEq.edges).toEqual(
       [`lorem`, `ipsum`, `sit`].map(itemToEdge)
     )
+    const expectedArrayIn = isLmdbStore()
+      ? [`lorem`, `ipsum`, `dolor`, `sit`]
+      : [`lorem`, `ipsum`, `sit`, `dolor`]
     expect(result.data.insideInlineArrayIn.edges).toEqual(
-      [`lorem`, `ipsum`, `sit`, `dolor`].map(itemToEdge)
+      expectedArrayIn.map(itemToEdge)
     )
   })
 

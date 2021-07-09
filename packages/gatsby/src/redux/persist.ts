@@ -149,7 +149,10 @@ function prepareCacheFolder(
   contents.pages = pagesMap
 
   if (nodesMap) {
-    if (nodesMap.size === 0 && process.env.GATSBY_EXPERIMENTAL_LMDB_STORE) {
+    if (
+      nodesMap.size === 0 &&
+      true /* process.env.GATSBY_EXPERIMENTAL_LMDB_STORE*/
+    ) {
       // Nodes are actually stored in LMDB.
       //  But we need at least one node in redux state to workaround the warning above:
       //  "Cache exists but contains no nodes..." (when loading cache).
