@@ -178,6 +178,11 @@ function updateDataStore(action: ActionsUnion): void {
       })
       break
     }
+    case `SET_PROGRAM`: {
+      // TODO: remove this when we have support for incremental indexes in lmdb
+      clearIndexes()
+      break
+    }
     case `CREATE_NODE`:
     case `ADD_FIELD_TO_NODE`:
     case `ADD_CHILD_NODE_TO_PARENT_NODE`:
@@ -189,6 +194,14 @@ function updateDataStore(action: ActionsUnion): void {
       ])
     }
   }
+}
+
+function clearIndexes(): void {
+  const dbs = getDatabases()
+  dbs.nodes.transactionSync(() => {
+    dbs.metadata.clear()
+    dbs.indexes.clear()
+  })
 }
 
 /**
@@ -210,5 +223,7 @@ export function setupLmdbStore(): IDataStore {
       updateDataStore(action)
     }
   })
+  // TODO: remove this when we have support for incremental indexes in lmdb
+  clearIndexes()
   return lmdbDatastore
 }

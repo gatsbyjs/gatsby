@@ -734,10 +734,6 @@ describe(`query caching between builds`, () => {
     }, 999999)
 
     it(`changing node to be used by any query triggers running that query (with restart)`, async () => {
-      // FIXME: this requires incremental index updates
-      if (process.env.GATSBY_EXPERIMENTAL_LMDB_INDEXES) {
-        return
-      }
       const { staticQueriesThatRan } = await setup({ restart: true })
 
       // runs the query with filter `slug: { eq: "foo2" }`
