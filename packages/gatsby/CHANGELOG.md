@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.9.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.9.0...gatsby@3.9.1) (2021-07-09)
+
+### Bug Fixes
+
+- **gatsby:** delay 'unstable_onPluginInit' lifecycle to after cache is initialized ([#32307](https://github.com/gatsbyjs/gatsby/issues/32307)) ([#32312](https://github.com/gatsbyjs/gatsby/issues/32312)) ([36613fb](https://github.com/gatsbyjs/gatsby/commit/36613fba356c7929494edc3abf1ab954d3ec412a))
+
 # [3.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.9.0-next.1...gatsby@3.9.0) (2021-07-06)
 
 ### Bug Fixes

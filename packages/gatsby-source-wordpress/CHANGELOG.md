@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.9.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.9.0...gatsby-source-wordpress@5.9.1) (2021-07-09)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** don't leak auth details ([#32303](https://github.com/gatsbyjs/gatsby/issues/32303)) ([#32314](https://github.com/gatsbyjs/gatsby/issues/32314)) ([ba421d7](https://github.com/gatsbyjs/gatsby/commit/ba421d76285bd4cb4a2da3faae936a2128a7a815))
+
 # [5.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.9.0-next.0...gatsby-source-wordpress@5.9.0) (2021-07-06)
 
 **Note:** Version bump only for package gatsby-source-wordpress
