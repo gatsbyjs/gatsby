@@ -105,7 +105,7 @@ const queryIdsBig: IGroupedQueryIds = {
   staticQueryIds: [dummyStaticQuery.id],
 }
 
-describe(`worker (queries)`, () => {
+describeWhenLMDB(`worker (queries)`, () => {
   beforeAll(async () => {
     store.dispatch({ type: `DELETE_CACHE` })
     const fileDir = path.join(process.cwd(), `.cache/worker`)
