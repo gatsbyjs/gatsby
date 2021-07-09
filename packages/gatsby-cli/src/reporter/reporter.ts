@@ -304,7 +304,8 @@ class Reporter {
   // "reporter._setStage is not a function" error when gatsby@<2.16 is used with gatsby-cli@>=2.8
   _setStage = (): void => {}
 
-  //
+  // This method is called by core when initializing worker process, so it can communicate with main process
+  // and dispatch structured logs created by workers to parent process.
   _initReporterMessagingInWorker(sendMessage: (msg: ILogIntent) => void): void {
     const intentifiedActionCreators = {}
     for (const actionCreatorName of Object.keys(reduxReporterActions) as Array<
@@ -325,6 +326,8 @@ class Reporter {
     reporterActions = intentifiedActionCreators as typeof reduxReporterActions
   }
 
+  // This method is called by core when initializing worker pool, so main process can receive
+  // messages from workers and dispatch structured logs created by workers to parent process.
   _initReporterMessagingInMain(
     onMessage: (listener: (msg: ILogIntent | unknown) => void) => void
   ): void {
