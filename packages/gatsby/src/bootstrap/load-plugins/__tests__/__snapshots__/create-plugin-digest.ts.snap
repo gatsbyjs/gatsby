@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createPluginDigest local plugins creates a digest for a local file by tracing its dependencies 1`] = `
+Object {
+  "digest": "609075af600bd67e9c6b54b82f139648d2f7cc77",
+  "isCached": false,
+}
+`;
+
+exports[`createPluginDigest local plugins returns a different digest when the src files change 1`] = `
+Object {
+  "digest": "8e4e7ff5fb748b54646ab1f406548bd99dba663f",
+  "isCached": false,
+}
+`;
+
+exports[`createPluginDigest packages npm It returns the correct tree when transitive dependencies get updated 1`] = `
+Object {
+  "digest": "35bb022e1d23dabf47f359b98e56e704325e52fc",
+  "isCached": true,
+}
+`;
+
+exports[`createPluginDigest packages npm It returns the correct tree when transitive dependencies get updated 2`] = `
+Object {
+  "digest": "35bb022e1d23dabf47f359b98e56e704325e52fc",
+  "isCached": false,
+}
+`;
+
+exports[`createPluginDigest packages npm creates a digest for a package 1`] = `
+Object {
+  "digest": "2d74e02559d12ed2d0097e01dcce8132cc099560",
+  "isCached": false,
+}
+`;
+
+exports[`createPluginDigest packages npm creates digests for multiple packages 1`] = `
+Object {
+  "digest": "2d74e02559d12ed2d0097e01dcce8132cc099560",
+  "isCached": true,
+}
+`;
+
+exports[`createPluginDigest packages npm creates digests for multiple packages 2`] = `
+Object {
+  "digest": "0076d604e1dc105a5b3c577f7064bbdabe0301f6",
+  "isCached": false,
+}
+`;
+
+exports[`createPluginDigest packages npm returns a different digest when the package version changes 1`] = `
+Object {
+  "digest": "35bb022e1d23dabf47f359b98e56e704325e52fc",
+  "isCached": false,
+}
+`;
+
+exports[`createPluginDigest packages yarn It returns the correct tree when transitive dependencies get updated 1`] = `
+Object {
+  "digest": "35bb022e1d23dabf47f359b98e56e704325e52fc",
+  "isCached": true,
+}
+`;
+
+exports[`createPluginDigest packages yarn It returns the correct tree when transitive dependencies get updated 2`] = `
+Object {
+  "digest": "35bb022e1d23dabf47f359b98e56e704325e52fc",
+  "isCached": false,
+}
+`;
+
+exports[`createPluginDigest packages yarn creates a digest for a package 1`] = `
+Object {
+  "digest": "2d74e02559d12ed2d0097e01dcce8132cc099560",
+  "isCached": false,
+}
+`;
+
+exports[`createPluginDigest packages yarn creates digests for multiple packages 1`] = `
+Object {
+  "digest": "2d74e02559d12ed2d0097e01dcce8132cc099560",
+  "isCached": true,
+}
+`;
+
+exports[`createPluginDigest packages yarn creates digests for multiple packages 2`] = `
+Object {
+  "digest": "0076d604e1dc105a5b3c577f7064bbdabe0301f6",
+  "isCached": false,
+}
+`;
+
+exports[`createPluginDigest packages yarn returns a different digest when the package version changes 1`] = `
+Object {
+  "digest": "35bb022e1d23dabf47f359b98e56e704325e52fc",
+  "isCached": false,
+}
+`;

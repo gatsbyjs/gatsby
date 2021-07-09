@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gets dependencies gets dependencies with file hash 1`] = `
+Object {
+  "fixtures/file-with-node-dependency.ts": "6562831d242897e3c2caedf33beaf4d645945ecd",
+}
+`;
+
+exports[`gets dependencies gets dependencies with file hash 2`] = `
+Object {
+  "fixtures/file-with-node-dependency.ts": "6562831d242897e3c2caedf33beaf4d645945ecd",
+  "fixtures/requires-other-local-file.js": "7ae35bd4b775e72dd91c9a2af2441537575111ba",
+}
+`;

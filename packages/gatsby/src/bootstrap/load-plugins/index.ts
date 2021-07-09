@@ -86,11 +86,12 @@ export async function loadPlugins(
   rawConfig: IRawSiteConfig = {},
   rootDir: string
 ): Promise<Array<IFlattenedPlugin>> {
+  console.time(`loadPlugins`)
   // Turn all strings in plugins: [`...`] into the { resolve: ``, options: {} } form
   const config = normalizeConfig(rawConfig)
 
   // Show errors for invalid plugin configuration
-  await validateConfigPluginsOptions(config, rootDir)
+  // await validateConfigPluginsOptions(config, rootDir)
 
   const currentAPIs = getAPI({
     browser: browserAPIs,
@@ -131,3 +132,4 @@ export async function loadPlugins(
 
   return flattenedPlugins
 }
+
