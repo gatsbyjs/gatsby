@@ -7,6 +7,7 @@ import {
   buildNodeQueryOnFieldName,
   buildSelectionSet,
   generateReusableFragments,
+  buildNodesByIdsQueryOnFieldName,
 } from "./build-query-on-field-name"
 
 import clipboardy from "clipboardy"
@@ -298,6 +299,34 @@ const generateNodeQueriesFromIngestibleFields = async () => {
       nodeListQueries = [nodeListQuery]
     }
 
+    const nodesByIdsFieldVariablesByType = {
+      default: `where: {in: $ids}`,
+      Category: `where: {include: $ids}`,
+      Tag: `where: {include: $ids}`,
+      PostFormat: `where: {include: $ids}`,
+      User: `where: {include: $ids}`,
+      Comment: `where: {commentIn: $ids}`,
+    }
+
+    const nodesByIdsVariablesByType = {
+      default: `$ids: [ID]`,
+      User: `$ids: [Int]`,
+    }
+
+    const nodeListByIdsQuery = buildNodesByIdsQueryOnFieldName({
+      fields: transformedFields,
+      fieldName: name,
+      variables:
+        nodesByIdsVariablesByType[nodesType.name] ||
+        nodesByIdsVariablesByType.default,
+      fieldVariables:
+        nodesByIdsFieldVariablesByType[nodesType.name] ||
+        nodesByIdsFieldVariablesByType.default,
+      settings,
+      builtFragments,
+      builtSelectionSet: selectionSet,
+    })
+
     if (
       process.env.NODE_ENV === `development` &&
       nodesType.name === copyNodeSourcingQueryAndExit
@@ -336,6 +365,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
         nodesTypeName: nodesType.name,
       },
       nodeListQueries,
+      nodeListByIdsQuery,
       nodeQuery,
       previewQuery,
       selectionSet,

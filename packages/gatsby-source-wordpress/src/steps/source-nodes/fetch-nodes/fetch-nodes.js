@@ -1,3 +1,6 @@
+import chunk from "lodash/chunk"
+import PQueue from "p-queue"
+
 import { createGatsbyNodesFromWPGQLContentNodes } from "../create-nodes/create-nodes"
 import { paginatedWpNodeFetch } from "./fetch-nodes-paginated"
 import { formatLogMessage } from "~/utils/format-log-message"
@@ -5,7 +8,6 @@ import { CREATED_NODE_IDS } from "~/constants"
 
 import store from "~/store"
 import { getGatsbyApi, getPluginOptions } from "~/utils/get-gatsby-api"
-import chunk from "lodash/chunk"
 
 import {
   getHardCachedNodes,
@@ -13,6 +15,112 @@ import {
   setHardCachedNodes,
   setPersistentCache,
 } from "~/utils/cache"
+
+import fetchGraphql from "~/utils/fetch-graphql"
+
+const nodesByTypeById = {}
+
+const fetchNodesByIds = async () => {
+  const fetchNodesByIdQueue = new PQueue({
+    concurrency: 10,
+  })
+
+  const { helpers } = getGatsbyApi()
+  const { reporter } = helpers
+
+  const timer = reporter.activityTimer(formatLogMessage(`Fetch Nodes by ID`))
+
+  timer.start()
+
+  const typeNamesToQueryInfos = getContentTypeQueryInfos().reduce(
+    (accumulator, current) => {
+      accumulator[current.typeInfo.nodesTypeName] = current
+
+      return accumulator
+    },
+    {}
+  )
+
+  const {
+    data: {
+      wpGatsby: { allIDs },
+    },
+  } = await fetchGraphql({
+    query: /* GraphQL */ `
+      query {
+        wpGatsby {
+          allIDs {
+            type
+            ids
+          }
+        }
+      }
+    `,
+  })
+
+  const fetchedTypeNames = allIDs.map(({ type }) => type)
+
+  const pluginOptions = getPluginOptions()
+  const {
+    schema: { perPage },
+  } = pluginOptions
+
+  const idsSortedByIdCount = allIDs.sort((a, b) => a.ids.length - b.ids.length)
+
+  for (const { type, ids } of idsSortedByIdCount) {
+    const queryInfo = typeNamesToQueryInfos[type]
+
+    const query = queryInfo.nodeListByIdsQuery
+
+    const idChunks = chunk(ids, perPage)
+
+    nodesByTypeById[type] = []
+
+    const startedTimers = {}
+
+    idChunks.map(async (idChunk, index) => {
+      fetchNodesByIdQueue.add(async () => {
+        if (!startedTimers[type]) {
+          store.dispatch.logger.createActivityTimer({
+            typeName: type,
+            pluginOptions,
+            reporter,
+          })
+          startedTimers[type] = true
+        }
+
+        const response = await fetchGraphql({
+          query,
+          variables: {
+            ids: idChunk,
+            first: perPage,
+          },
+        })
+
+        const nodes = response.data?.[queryInfo.typeInfo.pluralName]?.nodes
+
+        if (nodes.length) {
+          nodes.forEach(node => nodesByTypeById[type].push(node))
+
+          store.dispatch.logger.incrementActivityTimer({
+            typeName: type,
+            by: nodes.length,
+          })
+        }
+
+        if (idChunks.length === index + 1) {
+          store.dispatch.logger.stopActivityTimer({ typeName: type })
+        }
+      })
+    })
+  }
+
+  const fetchNodesByIdFinishedPromise = fetchNodesByIdQueue.onIdle()
+
+  fetchNodesByIdFinishedPromise.then(() => timer.end())
+
+  return { fetchNodesByIdFinishedPromise, fetchedTypeNames }
+}
 
 /**
  * fetchWPGQLContentNodes
@@ -143,13 +251,33 @@ export const runFnForEachNodeQuery = async fn => {
 }
 
 export const fetchWPGQLContentNodesByContentType = async () => {
+  const {
+    fetchNodesByIdFinishedPromise,
+    fetchedTypeNames,
+  } = await fetchNodesByIds()
+
   const contentNodeGroups = []
 
   await runFnForEachNodeQuery(async ({ queryInfo }) => {
-    const contentNodeGroup = await fetchWPGQLContentNodes({ queryInfo })
+    if (fetchedTypeNames.includes(queryInfo.typeInfo.nodesTypeName)) {
+      await fetchNodesByIdFinishedPromise
 
-    if (contentNodeGroup) {
+      const previousNodes = nodesByTypeById[queryInfo.typeInfo.nodesTypeName]
+      const { singularName, pluralName } = queryInfo.typeInfo
+
+      const contentNodeGroup = {
+        singular: singularName,
+        plural: pluralName,
+        allNodesOfContentType: previousNodes,
+      }
+
       contentNodeGroups.push(contentNodeGroup)
+    } else {
+      const contentNodeGroup = await fetchWPGQLContentNodes({ queryInfo })
+
+      if (contentNodeGroup) {
+        contentNodeGroups.push(contentNodeGroup)
+      }
     }
   })
 

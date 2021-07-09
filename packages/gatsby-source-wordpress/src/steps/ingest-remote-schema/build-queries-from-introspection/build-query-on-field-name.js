@@ -83,6 +83,32 @@ export const buildNodesQueryOnFieldName = ({
     })
   )
 
+export const buildNodesByIdsQueryOnFieldName = ({
+  fieldName,
+  builtSelectionSet,
+  builtFragments = ``,
+  fieldVariables = ``,
+  variables = ``,
+}) =>
+  compress(
+    buildQuery({
+      queryName: `NODE_LIST_BY_IDS_QUERY`,
+      variables: `$first: Int!, ${variables}`,
+      fieldName,
+      fieldVariables: `first: $first, ${fieldVariables}`,
+      builtSelectionSet: `
+        nodes {
+          ${builtSelectionSet}
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      `,
+      builtFragments,
+    })
+  )
+
 const buildVariables = variables =>
   variables && typeof variables === `string` ? `(${variables})` : ``
 
