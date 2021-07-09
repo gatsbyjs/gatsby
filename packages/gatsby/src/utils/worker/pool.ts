@@ -67,12 +67,14 @@ export async function runQueriesInWorkersQueue(
   }
 
   await Promise.all(promises)
-  await mergeWorkerState(pool)
 
   activity.end()
 }
 
-async function mergeWorkerState(pool: GatsbyWorkerPool): Promise<void> {
+export async function mergeWorkerState(pool: GatsbyWorkerPool): Promise<void> {
+  const activity = reporter.activityTimer(`Merge worker state`)
+  activity.start()
+
   await pool.all.saveQueries()
   const workerQueryState: IMergeWorkerQueryState["payload"] = []
 
@@ -88,4 +90,5 @@ async function mergeWorkerState(pool: GatsbyWorkerPool): Promise<void> {
     type: `MERGE_WORKER_QUERY_STATE`,
     payload: workerQueryState,
   })
+  activity.end()
 }
