@@ -11,6 +11,8 @@ export type NodeType = string
 export interface ILmdbDatabases {
   nodes: Database<IGatsbyNode, NodeId>
   nodesByType: Database<NodeId, NodeType>
+  indexes: Database<NodeId, Array<any>>
+  metadata: Database<any, string>
 }
 
 export interface IQueryResult {

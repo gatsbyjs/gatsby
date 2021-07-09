@@ -253,6 +253,7 @@ jobs:
       image: "14.17.0"
     environment:
       GATSBY_EXPERIMENTAL_LMDB_STORE: 1
+      GATSBY_EXPERIMENTAL_LMDB_INDEXES: 1
       GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING: 1
     <<: *test_template
 
