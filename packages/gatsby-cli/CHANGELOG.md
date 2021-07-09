@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.10.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.10.0-next.1...gatsby-cli@3.10.0-next.2) (2021-07-09)
+
+### Features
+
+- **pqr:** handle structured logs ([#32289](https://github.com/gatsbyjs/gatsby/issues/32289)) ([a4ab474](https://github.com/gatsbyjs/gatsby/commit/a4ab4749fb085fb1b3cfcc5927100c0487bb6b1e))
+
 # [3.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.10.0-next.0...gatsby-cli@3.10.0-next.1) (2021-07-08)
 
 ### Bug Fixes

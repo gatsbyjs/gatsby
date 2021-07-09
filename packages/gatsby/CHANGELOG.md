@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.10.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.3...gatsby@3.10.0-next.4) (2021-07-09)
+
+### Bug Fixes
+
+- **gatsby:** delay 'unstable_onPluginInit' lifecycle to after cache is initialized ([#32307](https://github.com/gatsbyjs/gatsby/issues/32307)) ([b348b7c](https://github.com/gatsbyjs/gatsby/commit/b348b7cb830be148af7d5bb9921d8e5bee3d498f))
+- **gatsby:** Delete `.cache/worker` before each run ([#32304](https://github.com/gatsbyjs/gatsby/issues/32304)) ([8c9eb29](https://github.com/gatsbyjs/gatsby/commit/8c9eb292bdbb95f6bd2c60a1cc1526249366ebbe))
+
+### Features
+
+- **gatsby:** experimental secondary indexes in lmdb ([#32261](https://github.com/gatsbyjs/gatsby/issues/32261)) ([54ed0c3](https://github.com/gatsbyjs/gatsby/commit/54ed0c301631450720e341a33ebc7ffce99e5528))
+- **pqr:** handle structured logs ([#32289](https://github.com/gatsbyjs/gatsby/issues/32289)) ([a4ab474](https://github.com/gatsbyjs/gatsby/commit/a4ab4749fb085fb1b3cfcc5927100c0487bb6b1e))
+
 # [3.10.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.2...gatsby@3.10.0-next.3) (2021-07-08)
 
 ### Bug Fixes
