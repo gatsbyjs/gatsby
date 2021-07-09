@@ -422,6 +422,9 @@ export async function initialize({
   // Ensure the public/static directory
   await fs.ensureDir(`${publicDirectory}/static`)
 
+  // Init plugins once cache is initialized
+  await apiRunnerNode(`unstable_onPluginInit`)
+
   activity.end()
 
   activity = reporter.activityTimer(`copy gatsby files`, {
