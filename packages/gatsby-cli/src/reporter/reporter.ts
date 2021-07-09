@@ -13,7 +13,7 @@ import { IConstructError, IStructuredError } from "../structured-errors/types"
 import { createTimerReporter, ITimerReporter } from "./reporter-timer"
 import { createPhantomReporter, IPhantomReporter } from "./reporter-phantom"
 import { createProgressReporter, IProgressReporter } from "./reporter-progress"
-import { ErrorMeta, CreateLogAction } from "./types"
+import { ErrorMeta, CreateLogAction, ILogIntent } from "./types"
 
 const errorFormatter = getErrorFormatter()
 const tracer = globalTracer()
@@ -27,6 +27,10 @@ export interface IActivityArgs {
 }
 
 let isVerbose = false
+
+function isLogIntentMessage(msg: any): msg is ILogIntent {
+  return msg && msg.type === `LOG_INTENT`
+}
 
 /**
  * Reporter module.
@@ -54,12 +58,6 @@ class Reporter {
       ...this.errorMap,
       ...entry,
     }
-  }
-
-  setReporterActions = (
-    _reporterActions: typeof reduxReporterActions
-  ): void => {
-    reporterActions = _reporterActions
   }
 
   /**
@@ -305,6 +303,42 @@ class Reporter {
   // This method was called in older versions of gatsby, so we need to keep it to avoid
   // "reporter._setStage is not a function" error when gatsby@<2.16 is used with gatsby-cli@>=2.8
   _setStage = (): void => {}
+
+  //
+  _initReporterMessagingInWorker(sendMessage: (msg: ILogIntent) => void): void {
+    const intentifiedActionCreators = {}
+    for (const actionCreatorName of Object.keys(reduxReporterActions) as Array<
+      keyof typeof reduxReporterActions
+    >) {
+      // swap each reporter action creator with function that send intent
+      // to main process
+      intentifiedActionCreators[actionCreatorName] = (...args): void => {
+        sendMessage({
+          type: `LOG_INTENT`,
+          payload: {
+            name: actionCreatorName,
+            args,
+          } as any,
+        })
+      }
+    }
+    reporterActions = intentifiedActionCreators as typeof reduxReporterActions
+  }
+
+  _initReporterMessagingInMain(
+    onMessage: (listener: (msg: ILogIntent | unknown) => void) => void
+  ): void {
+    onMessage(msg => {
+      if (isLogIntentMessage(msg)) {
+        reduxReporterActions[msg.payload.name].call(
+          reduxReporterActions,
+          // @ts-ignore Next line (`...msg.payload.args`) cause "A spread argument
+          // must either have a tuple type or be passed to a rest parameter"
+          ...msg.payload.args
+        )
+      }
+    })
+  }
 }
 export type { Reporter }
 export const reporter = new Reporter()
