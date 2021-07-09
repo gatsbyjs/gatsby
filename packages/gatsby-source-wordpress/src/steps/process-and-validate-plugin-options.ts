@@ -86,5 +86,8 @@ export const processAndValidatePluginOptions = (
     }
   })
 
+  // remove auth from pluginOptions so we don't leak into the browser
+  delete pluginOptions.auth
+
   return userPluginOptions
 }
