@@ -39,7 +39,7 @@ yarn add js-search axios
 
 **Note**:
 
-For this particular example [axios](https://github.com/axios/axios) will be used to handle all of the promise-based HTTP requests.
+For this particular example [axios](https://github.com/axios/axios) will be used to handle all the promise-based HTTP requests.
 
 ## Strategy selection
 
@@ -260,7 +260,7 @@ Run `gatsby develop` and if all went well, open your browser of choice and enter
 
 ## JS-Search with a big dataset
 
-Now try a different approach, this time instead of letting the component do all of the work, it's Gatsby's job to do that and pass all the data to a page defined by the path property, via [pageContext](/docs/behind-the-scenes-terminology/#pagecontext).
+Now try a different approach, this time instead of letting the component do all the work, it's Gatsby's job to do that and pass all the data to a page defined by the path property, via [pageContext](/docs/behind-the-scenes-terminology/#pagecontext).
 
 To do this, some changes are required.
 

@@ -73,7 +73,7 @@ The js module might look like this:
 
 ```javascript
 /**
- * The default export of `netlify-cms-app` is an object with all of the Netlify CMS
+ * The default export of `netlify-cms-app` is an object with all the Netlify CMS
  * extension registration methods, such as `registerWidget` and
  * `registerPreviewTemplate`.
  */

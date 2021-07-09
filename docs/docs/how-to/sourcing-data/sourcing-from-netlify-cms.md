@@ -104,7 +104,7 @@ to see them in the locally served site.
 
 ### Pushing to GitHub
 
-We can resolve all of the above handily by pushing our test site to GitHub and deploying it to
+We can resolve all the above handily by pushing our test site to GitHub and deploying it to
 Netlify. First, initialize your Gatsby project as a Git repo, and push it up to GitHub. If you need
 help on this part, check out GitHub's
 [guide](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/).

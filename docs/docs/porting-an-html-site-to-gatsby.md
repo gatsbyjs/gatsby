@@ -480,7 +480,7 @@ With your new Gatsby application taking shape, it's time to integrate it into yo
 
 ### Gatsby build step
 
-With all of the pages ported over, you now have a site that mirrors the existing HTML site. Stop the development server if it's still running; it's time to run the production build! 🎉
+With all the pages ported over, you now have a site that mirrors the existing HTML site. Stop the development server if it's still running; it's time to run the production build! 🎉
 
 ```shell
 gatsby build

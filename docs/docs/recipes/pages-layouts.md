@@ -7,7 +7,7 @@ Add pages to your Gatsby site, and use layouts to manage common page elements.
 
 ## Project structure
 
-Inside a Gatsby project, you may see some or all of the following folders and files:
+Inside a Gatsby project, you may see some or all the following folders and files:
 
 ```text
 |-- /.cache

@@ -17,7 +17,7 @@ Some specific things that engineering leaders and managers care about include:
 
 Here's an example of a basic explanation of Gatsby for engineering leaders and managers:
 
-> Gatsby is a free, open-source framework for building websites and applications. It's extremely developer-friendly and streamlines the setup and configuration of your build. Gatsby can pull data into your UI from any and all of the sources you currently use; and exceptional performance, added security, and current web best practices are built into Gatsby so your team can focus on delivering an exceptional experience for your users and customers.
+> Gatsby is a free, open-source framework for building websites and applications. It's extremely developer-friendly and streamlines the setup and configuration of your build. Gatsby can pull data into your UI from any and all the sources you currently use; and exceptional performance, added security, and current web best practices are built into Gatsby so your team can focus on delivering an exceptional experience for your users and customers.
 
 ## Specific benefits
 

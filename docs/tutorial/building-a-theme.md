@@ -804,7 +804,7 @@ export default EventList
 ```
 
 - You've created a header for "Upcoming Events"
-- You've mapped over all of the "event" records, displaying:
+- You've mapped over all the "event" records, displaying:
   - The event name (which links to the event page)
   - The date of the event
   - The location of the event
@@ -1535,7 +1535,7 @@ export default function Layout({ children }) {
 }
 ```
 
-If you restart the development server, you'll see all of the styles and structure from the theme have been stripped away, because the component has been completely overridden:
+If you restart the development server, you'll see all the styles and structure from the theme have been stripped away, because the component has been completely overridden:
 
 ![Test site, with layout component overridden.](./images/building-a-theme-override-component.png)
 

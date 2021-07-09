@@ -13,7 +13,7 @@ A _headless WordPress_ site is one that uses WordPress for managing content and 
 
 Most WordPress installations use _themes_, which are a collection of template files, to display content. A WordPress template file mixes HTML with PHP template tags, and controls the layout of a particular page or page type — e.g. `single.php` for individual blog posts; `home.php` for the home page. The downside of this template-based system is that the content is only available as HTML, using the document structure defined by each template.
 
-The WordPress REST API, on the other hand, returns JSON instead of HTML. Using a content API gives you more flexibility around what kind of frontend you use: vanilla JavaScript, a native mobile application, your Gatsby site, or all of the above.
+The WordPress REST API, on the other hand, returns JSON instead of HTML. Using a content API gives you more flexibility around what kind of frontend you use: vanilla JavaScript, a native mobile application, your Gatsby site, or all the above.
 
 Gatsby [supports WordPress](/docs/how-to/sourcing-data/sourcing-from-wordpress/) as a content source with the [`gatsby-source-wordpress`](/plugins/gatsby-source-wordpress/) plugin. As with Gatsby, you can install the `gatsby-source-wordpress` plugin using [npm](/docs/glossary/#npm):
 

@@ -121,7 +121,7 @@ module.exports = ({ markdownAST }, pluginOptions) => {
 }
 ```
 
-The first parameter is all of the default properties that can be used in plugins (actions, store, getNodes, schema, etc.) plus a couple just for gatsby-transformer-remark plugins. The most relevant field for our purposes is the `markdownAST` field which is destructured in the code snippet above.
+The first parameter is all the default properties that can be used in plugins (actions, store, getNodes, schema, etc.) plus a couple just for gatsby-transformer-remark plugins. The most relevant field for our purposes is the `markdownAST` field which is destructured in the code snippet above.
 
 As with other Gatsby plugins, the 2nd parameter is the `pluginOptions` which is obtained from the definition in `gatsby-config.js` file.
 
@@ -231,7 +231,7 @@ Looking again at the AST node for heading:
 
 You have context about the text as well as what depth the heading is (for instance here you have a depth of 1 which would equate to an `h1` element)
 
-With the inner function of the `visit` call, you parse out all of the text and if it will map to a h1, you set the type of the node to `html` and set the node's value to be some custom HTML.
+With the inner function of the `visit` call, you parse out all the text and if it will map to a h1, you set the type of the node to `html` and set the node's value to be some custom HTML.
 
 ```js:title=plugins/gatsby-remark-purple-headers/index.js
 const visit = require("unist-util-visit")

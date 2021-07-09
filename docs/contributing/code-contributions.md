@@ -26,7 +26,7 @@ To contribute example sites, it is recommended to create your own GitHub repo an
 
 ## Using Docker to set up test environments
 
-With all of the possible Gatsby integrations, it might help to spin up a Docker container with the software application you need to test. This makes installation a breeze, so you can focus less on getting set up and more on the integration details that matter to you.
+With all the possible Gatsby integrations, it might help to spin up a Docker container with the software application you need to test. This makes installation a breeze, so you can focus less on getting set up and more on the integration details that matter to you.
 
 > Do you have a setup not listed here? Let us know by adding it to this file and opening a PR.
 

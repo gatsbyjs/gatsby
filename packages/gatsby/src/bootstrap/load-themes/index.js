@@ -149,7 +149,7 @@ module.exports = async (config, { configFilePath, rootDir }) => {
       }
     )
       /**
-       * themes resolve to a gatsby-config, so here we merge all of the configs
+       * themes resolve to a gatsby-config, so here we merge all the configs
        * into a single config, making sure to maintain the order in which
        * they were defined so that later configs, like the user's site and
        * children, can override functionality in earlier themes.

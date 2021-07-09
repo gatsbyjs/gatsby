@@ -2,7 +2,7 @@
 title: Adding Gatsby Image support to your plugin
 ---
 
-The [new Gatsby image plugin](https://www.gatsbyjs.com/plugins/gatsby-plugin-image) includes React components for displaying images, and these can be used with data from plugins. The plugin handles all of the hard parts of displaying responsive images that follow best practices for performance. In fact we are confident that it is the fastest way to render images in React, as it can handle blur-up and lazy-loading before React hydration.
+The [new Gatsby image plugin](https://www.gatsbyjs.com/plugins/gatsby-plugin-image) includes React components for displaying images, and these can be used with data from plugins. The plugin handles all the hard parts of displaying responsive images that follow best practices for performance. In fact we are confident that it is the fastest way to render images in React, as it can handle blur-up and lazy-loading before React hydration.
 Support for these are available out of the box in `gatsby-transformer-sharp`, so if your plugin downloads images and processes them locally then your users can use the [`gatsbyImageData` resolver](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image#dynamic-images). However, if your CDN can deliver images of multiple sizes with a URL-based API, then the plugin includes a toolkit to allow you to give your users the same great experience without needing to download the images locally. It also allows you to create components that display these images dynamically at runtime, without needing to add a GraphQL resolver.
 
 ## Adding a `gatsbyImageData` GraphQL resolver
@@ -83,7 +83,7 @@ const resolveGatsbyImageData = async (image, options) => {
 
 ### Add the resolver
 
-You should register the resolver using the [`createResolvers` API hook](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#createResolvers). `gatsby-plugin-image/graphql-utils` includes an optional utility function to help with this. It registers the resolver with all of the base arguments needed to create the image data, such as width, aspect ratio, layout and background color. These are defined with comprehensive descriptions that are visible when your users are building queries in GraphiQL.
+You should register the resolver using the [`createResolvers` API hook](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#createResolvers). `gatsby-plugin-image/graphql-utils` includes an optional utility function to help with this. It registers the resolver with all the base arguments needed to create the image data, such as width, aspect ratio, layout and background color. These are defined with comprehensive descriptions that are visible when your users are building queries in GraphiQL.
 
 You can pass additional arguments supported by your plugin, for example, image options such as quality. However, if you want complete control over the resolver args, then you will want to create it yourself from scratch. We recommend keeping the args similar to the default, as this is what users will be expecting, and it means you benefit from the plugin documentation. At a minimum, you should always expose `layout`, `width` and `height` as args.
 
@@ -172,7 +172,7 @@ return <GatsbyImage image={imageData} alt="Kitten" />
 
 This stage is optional: you may prefer to share the image data function and let your users pass the result to `<GatsbyImage>`, as shown above. However, the developer experience is better with a custom image component.
 
-The component should accept the same props as your image data function, as well as all of the props for `<GatsbyImage>` which it can pass down to that component. Here's how you might type the props in TypeScript:
+The component should accept the same props as your image data function, as well as all the props for `<GatsbyImage>` which it can pass down to that component. Here's how you might type the props in TypeScript:
 
 ```typescript
 interface ImageComponentProps

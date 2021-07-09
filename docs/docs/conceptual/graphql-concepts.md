@@ -162,7 +162,7 @@ This makes it possible to pull data from anywhere and immediately start writing
 GraphQL queries against your data.
 
 This _can_ cause confusion as some data sources allow you to define
-a schema even when there's not any data added for parts or all of the schema. If parts of the data haven't been added, then those parts of the schema might not be recreated in Gatsby.
+a schema even when there's not any data added for parts or all the schema. If parts of the data haven't been added, then those parts of the schema might not be recreated in Gatsby.
 
 ## Powerful data transformations
 

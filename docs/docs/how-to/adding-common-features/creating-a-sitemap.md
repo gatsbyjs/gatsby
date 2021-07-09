@@ -9,7 +9,7 @@ examples:
 
 An [XML sitemap](https://support.google.com/webmasters/answer/156184?hl=en) lists a website’s important pages, making sure search engines (such as Google) can find and crawl them all. In effect, a sitemap helps a search engine understand your website structure.
 
-Think of it as a map for your website. It shows what all of the pages are on your website.
+Think of it as a map for your website. It shows what all the pages are on your website.
 
 ## Using [gatsby-plugin-sitemap](/plugins/gatsby-plugin-sitemap/)
 

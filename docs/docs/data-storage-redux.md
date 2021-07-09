@@ -2,7 +2,7 @@
 title: Data Storage (Redux)
 ---
 
-During Gatsby's bootstrap & build phases, the state is stored and manipulated using the [Redux](https://redux.js.org/) library. The key purpose of using Redux in Gatsby internals is to centralize all of the state logic. Reviewing the Gatsby [reducers](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/redux/reducers) and [actions](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/redux/actions) folders gives a comprehensive picture of what state manipulations are possible.
+During Gatsby's bootstrap & build phases, the state is stored and manipulated using the [Redux](https://redux.js.org/) library. The key purpose of using Redux in Gatsby internals is to centralize all the state logic. Reviewing the Gatsby [reducers](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/redux/reducers) and [actions](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/redux/actions) folders gives a comprehensive picture of what state manipulations are possible.
 
 ## Store
 
@@ -34,7 +34,7 @@ Gatsby actions have a similar journey through defining, exposing and dispatching
 
 - **Action creator** - An action creator, `createRedirect`, is defined in the public actions file. The action has a payload, the information needed to complete the action, and a type, the string that identifies this particular action.
 
-- **Expose bound action creator** - `createRedirect` is one of the public actions made available to all of the [Node APIs](/docs/reference/config-files/gatsby-node/). A collection of public actions and the restricted actions available to the called API are bound to the Redux store dispatch. The bound action collection is then passed when calling the user's API function.
+- **Expose bound action creator** - `createRedirect` is one of the public actions made available to all the [Node APIs](/docs/reference/config-files/gatsby-node/). A collection of public actions and the restricted actions available to the called API are bound to the Redux store dispatch. The bound action collection is then passed when calling the user's API function.
 
 - **Dispatch** - Here is an example of the `createRedirect` call that a Gatsby user could make with the [createPages](/docs/reference/config-files/gatsby-node/#createPages) API in their project's [gatsby-node.js](/docs/reference/config-files/gatsby-node/) file:
 

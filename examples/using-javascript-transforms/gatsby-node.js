@@ -99,7 +99,7 @@ exports.createPages = ({ graphql, actions }) => {
           path: frontmatter.path, // required
           // Note, we can't have a template, but rather require the file directly.
           //  Templates are for converting non-react into react. jsFrontmatter
-          //  picks up all of the JavaScript files. We have only written these in react.
+          //  picks up all the JavaScript files. We have only written these in react.
           component: path.resolve(edge.node.fileAbsolutePath),
           context: {
             slug: edge.node.fields.slug,
