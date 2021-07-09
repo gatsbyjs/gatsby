@@ -4,7 +4,7 @@
   "private": true,
   "description": "A simple Gatsby WP site for running integrations tests",
   "scripts": {
-    "run-jest": "jest --runInBand && WARM_CACHE=true jest --runInBand",
+    "run-jest": "jest --runInBand && cross-env WARM_CACHE=true jest --runInBand",
     "test": "npm run docker-clean-start && npm run run-jest",
     "docker-start": "docker-compose up --build --force-recreate --always-recreate-deps --remove-orphans -d",
     "docker-clean-start": "docker-compose stop && docker-compose rm -f && docker volume rm gatsby-source-wordpress_db_data gatsby-source-wordpress_wp_data || true && docker-compose pull && docker-compose build --no-cache --force-rm --pull && docker-compose up -d"
@@ -12,11 +12,11 @@
   "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "gatsby": "next",
-    "gatsby-plugin-sharp": "next",
-    "gatsby-source-filesystem": "next",
-    "gatsby-source-wordpress": "next",
-    "gatsby-transformer-sharp": "next",
+    "gatsby": "3.10.0-next.3-dev-1625762686234",
+    "gatsby-plugin-sharp": "3.10.0-next.1-dev-1625762686234",
+    "gatsby-source-filesystem": "3.10.0-next.1-dev-1625762686234",
+    "gatsby-source-wordpress": "5.10.0-next.1-dev-1625762686234",
+    "gatsby-transformer-sharp": "3.10.0-next.1-dev-1625762686234",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
@@ -24,6 +24,7 @@
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
     "jest": "^26.6.3",
+    "node-fetch": "^2.6.1",
     "rimraf": "^3.0.2",
     "urling": "^1.0.7"
   }

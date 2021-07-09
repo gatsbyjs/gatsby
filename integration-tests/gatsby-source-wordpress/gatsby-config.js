@@ -8,8 +8,8 @@ const requestConcurrency = 1
 
 const mediaItemTypeSettings = {
   localFile: {
-    excludeByMimeTypes: ['video/mp4'],
-    /** 
+    excludeByMimeTypes: ["video/mp4"],
+    /**
      * This is set to one byte smaller than the largest image in the Gatsby site so that we will have exactly one image that isn't fetched
      * during the site build
      */
@@ -98,6 +98,12 @@ module.exports = {
         },
         develop: {
           hardCacheMediaFiles: true,
+        },
+        auth: {
+          htaccess: {
+            username: process.env.HTACCESS_USERNAME,
+            password: process.env.HTACCESS_PASSWORD,
+          },
         },
         ...wpPluginOptions,
       },

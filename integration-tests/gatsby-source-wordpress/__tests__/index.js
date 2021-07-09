@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 require(`dotenv`).config({
   path: `.env.test`,
 })
@@ -53,7 +57,7 @@ describe(`[gatsby-source-wordpress] Build default options`, () => {
 describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
   let gatsbyDevelopProcess
 
-  beforeAll(async done => {
+  beforeAll(async () => {
     if (!isWarmCache) {
       await gatsbyCleanBeforeAll()
     }
@@ -78,7 +82,6 @@ describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
     gatsbyDevelopProcess = spawnGatsbyProcess(`develop`)
 
     await urling(`http://localhost:8000`)
-    done()
   })
 
   require(`../test-fns/index`)
