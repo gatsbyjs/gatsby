@@ -220,6 +220,14 @@ export function queriesReducer(
       state.dirtyQueriesListToEmitViaWebsocket = []
       return state
     }
+    case `MERGE_WORKER_QUERY_STATE`: {
+      assertSaneWorkerState(action.payload)
+
+      for (const workerState of action.payload) {
+        state = mergeWorkerDataDependencies(state, workerState)
+      }
+      return state
+    }
     default:
       return state
   }
@@ -333,4 +341,64 @@ function trackDirtyQuery(
   }
 
   return state
+}
+
+interface IWorkerStateChunk {
+  workerId: number
+  queryStateChunk: IGatsbyState["queries"]
+}
+
+function mergeWorkerDataDependencies(
+  state: IGatsbyState["queries"],
+  workerStateChunk: IWorkerStateChunk
+): IGatsbyState["queries"] {
+  const queryState = workerStateChunk.queryStateChunk
+
+  // First clear data dependencies for all queries tracked by worker
+  for (const queryId of queryState.trackedQueries.keys()) {
+    state = clearNodeDependencies(state, queryId)
+    state = clearConnectionDependencies(state, queryId)
+  }
+
+  // Now re-add all data deps from worker
+  for (const [nodeId, queries] of queryState.byNode) {
+    for (const queryId of queries) {
+      state = addNodeDependency(state, queryId, nodeId)
+    }
+  }
+  for (const [connectionName, queries] of queryState.byConnection) {
+    for (const queryId of queries) {
+      state = addConnectionDependency(state, queryId, connectionName)
+    }
+  }
+  return state
+}
+
+function assertSaneWorkerState(
+  workerStateChunks: Array<IWorkerStateChunk>
+): void {
+  for (const { workerId, queryStateChunk } of workerStateChunks) {
+    if (queryStateChunk.deletedQueries.size !== 0) {
+      throw new Error(
+        `Assertion failed: workerState.deletedQueries.size === 0 (worker #${workerId})`
+      )
+    }
+    if (queryStateChunk.trackedComponents.size !== 0) {
+      throw new Error(
+        `Assertion failed: queryStateChunk.trackedComponents.size === 0 (worker #${workerId})`
+      )
+    }
+    for (const query of queryStateChunk.trackedQueries.values()) {
+      if (query.dirty) {
+        throw new Error(
+          `Assertion failed: all worker queries are not dirty (worker #${workerId})`
+        )
+      }
+      if (query.running) {
+        throw new Error(
+          `Assertion failed: all worker queries are not running (worker #${workerId})`
+        )
+      }
+    }
+  }
 }
