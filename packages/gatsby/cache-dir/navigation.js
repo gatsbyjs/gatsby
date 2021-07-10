@@ -48,7 +48,6 @@ const navigate = (to, options = {}) => {
   }
 
   let { pathname, search } = parsePath(to)
-  
   const redirect = maybeGetBrowserRedirect(pathname)
 
   // If we're redirecting, just replace the passed in pathname
