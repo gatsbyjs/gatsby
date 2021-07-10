@@ -54,10 +54,10 @@ const navigate = (to, options = {}) => {
   // to the one we want to redirect to.
   if (redirect) {
     to = redirect.toPath
-    const path = parsePath(to)
+    const parsedPath = parsePath(to)
     
-    pathname = path.pathname
-    search = path.search
+    pathname = parsedPath.pathname
+    search = parsedPath.search
   }
 
   // If we had a service worker update, no matter the path, reload window and
