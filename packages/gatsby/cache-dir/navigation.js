@@ -55,7 +55,7 @@ const navigate = (to, options = {}) => {
   if (redirect) {
     to = redirect.toPath
     const parsedPath = parsePath(to)
-    
+
     pathname = parsedPath.pathname
     search = parsedPath.search
   }
