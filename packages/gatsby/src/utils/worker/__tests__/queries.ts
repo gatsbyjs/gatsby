@@ -4,7 +4,11 @@ import fs from "fs-extra"
 import type { watch as ChokidarWatchType } from "chokidar"
 import { build } from "../../../schema"
 import sourceNodesAndRemoveStaleNodes from "../../source-nodes"
-import { saveStateForWorkers, store } from "../../../redux"
+import {
+  savePartialStateToDisk,
+  store,
+  loadPartialStateFromDisk,
+} from "../../../redux"
 import { loadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
 import {
   createTestWorker,
@@ -133,7 +137,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       })
     })
 
-    saveStateForWorkers([`inferenceMetadata`])
+    savePartialStateToDisk([`inferenceMetadata`])
 
     pageQueryIds.forEach(page => {
       store.dispatch({
@@ -160,7 +164,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       payload: dummyStaticQuery,
     })
 
-    saveStateForWorkers([`components`, `staticQueryComponents`])
+    savePartialStateToDisk([`components`, `staticQueryComponents`])
 
     await Promise.all(worker.all.buildSchema())
     await worker.single.runQueries(queryIdsSmall)
@@ -174,6 +178,57 @@ describeWhenLMDB(`worker (queries)`, () => {
     for (const watcher of mockWatchersToClose) {
       watcher.close()
     }
+  })
+
+  it(`should save worker "queries" state to disk`, async () => {
+    if (!worker) fail(`worker not defined`)
+
+    await Promise.all(worker.all.saveQueries())
+    // Pass "1" as workerId as the test only have one worker
+    const result = loadPartialStateFromDisk([`queries`], `1`)
+
+    expect(result).toMatchInlineSnapshot(`
+      Object {
+        "queries": Object {
+          "byConnection": Map {},
+          "byNode": Map {
+            "ceb8e742-a2ce-5110-a560-94c93d1c71a5" => Set {
+              "sq--q1",
+              "/foo",
+              "/bar",
+            },
+          },
+          "deletedQueries": Set {},
+          "dirtyQueriesListToEmitViaWebsocket": Array [],
+          "queryNodes": Map {
+            "sq--q1" => Set {
+              "ceb8e742-a2ce-5110-a560-94c93d1c71a5",
+            },
+            "/foo" => Set {
+              "ceb8e742-a2ce-5110-a560-94c93d1c71a5",
+            },
+            "/bar" => Set {
+              "ceb8e742-a2ce-5110-a560-94c93d1c71a5",
+            },
+          },
+          "trackedComponents": Map {},
+          "trackedQueries": Map {
+            "sq--q1" => Object {
+              "dirty": 0,
+              "running": 0,
+            },
+            "/foo" => Object {
+              "dirty": 0,
+              "running": 0,
+            },
+            "/bar" => Object {
+              "dirty": 0,
+              "running": 0,
+            },
+          },
+        },
+      }
+    `)
   })
 
   it(`should execute static queries`, async () => {

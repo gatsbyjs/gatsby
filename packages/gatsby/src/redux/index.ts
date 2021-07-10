@@ -129,18 +129,22 @@ export const saveState = (): void => {
   })
 }
 
-export const saveStateForWorkers = (slices: Array<GatsbyStateKeys>): void => {
+export const savePartialStateToDisk = (
+  slices: Array<GatsbyStateKeys>,
+  optionalPrefix?: string
+): void => {
   const state = store.getState()
   const contents = _.pick(state, slices)
 
-  return writeToCache(contents, slices)
+  return writeToCache(contents, slices, optionalPrefix)
 }
 
-export const loadStateInWorker = (
-  slices: Array<GatsbyStateKeys>
+export const loadPartialStateFromDisk = (
+  slices: Array<GatsbyStateKeys>,
+  optionalPrefix?: string
 ): DeepPartial<IGatsbyState> => {
   try {
-    return readFromCache(slices) as DeepPartial<IGatsbyState>
+    return readFromCache(slices, optionalPrefix) as DeepPartial<IGatsbyState>
   } catch (e) {
     // ignore errors.
   }

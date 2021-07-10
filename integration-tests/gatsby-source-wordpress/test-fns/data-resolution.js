@@ -41,10 +41,10 @@ describe(`data resolution`, () => {
     expect(data[`allWpComment`].totalCount).toBe(1)
     expect(data[`allWpTaxonomy`].totalCount).toBe(3)
     expect(data[`allWpCategory`].totalCount).toBe(9)
-    expect(data[`allWpMenu`].totalCount).toBe(1)
+    expect(data[`allWpMenu`].totalCount).toBe(3)
     expect(data[`allWpMenuItem`].totalCount).toBe(4)
     expect(data[`allWpPostFormat`].totalCount).toBe(0)
-    expect(data[`allWpContentType`].totalCount).toBe(6)
+    expect(data[`allWpContentType`].totalCount).toBe(9)
   })
 
   testResolvedData({

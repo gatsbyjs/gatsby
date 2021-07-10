@@ -14,7 +14,6 @@ import {
   ICurrentAPIs,
   validateConfigPluginsOptions,
 } from "./validate"
-import apiRunnerNode from "../../utils/api-runner-node"
 import {
   IPluginInfo,
   IFlattenedPlugin,
@@ -125,9 +124,6 @@ export async function loadPlugins(
     type: `SET_SITE_FLATTENED_PLUGINS`,
     payload: flattenedPlugins as IGatsbyState["flattenedPlugins"],
   })
-
-  // And let plugins initialize if they want to
-  await apiRunnerNode(`unstable_onPluginInit`)
 
   return flattenedPlugins
 }
