@@ -159,6 +159,28 @@ const requestRemoteNode = (
     })
   })
 
+const fetchCache = new Map()
+
+export async function fetchRemoteFileWithCache(
+  args: IFetchRemoteFileOptions
+): Promise<string> {
+  // If we are already fetching the file, return the unresolved promise
+  const inFlight = fetchCache.get(args.url)
+  if (inFlight) {
+    return inFlight
+  }
+
+  // Create file fetch promise and store it into cache
+  const fetchPromise = fetchRemoteFile(args)
+  fetchCache.set(args.url, fetchPromise)
+  const result = await fetchPromise
+
+  // When the file is fetched, replace the promise with the result
+  fetchCache.set(args.url, result)
+
+  return result
+}
+
 export async function fetchRemoteFile({
   url,
   cache,

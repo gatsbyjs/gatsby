@@ -14,7 +14,7 @@ const {
   GraphQLJSON,
   GraphQLList,
 } = require(`gatsby/graphql`)
-const { fetchRemoteFile } = require(`gatsby-core-utils`)
+const { fetchRemoteFileWithCache } = require(`gatsby-core-utils`)
 
 const { stripIndent } = require(`common-tags`)
 const qs = require(`qs`)
@@ -62,12 +62,14 @@ const CONTENTFUL_IMAGE_MAX_SIZE = 4000
 const validImageFormats = new Set([`jpg`, `png`, `webp`, `gif`])
 
 const mimeTypeExtensions = new Map([
-  [`image/jpeg`, `jpg`],
-  [`image/jpg`, `jpg`],
-  [`image/gif`, `gif`],
-  [`image/png`, `png`],
-  [`image/webp`, `webp`],
+  [`image/jpeg`, `.jpg`],
+  [`image/jpg`, `.jpg`],
+  [`image/gif`, `.gif`],
+  [`image/png`, `.png`],
+  [`image/webp`, `.webp`],
 ])
+
+exports.mimeTypeExtensions = mimeTypeExtensions
 
 const isImage = image => mimeTypeExtensions.has(image?.file?.contentType)
 
@@ -682,7 +684,7 @@ exports.extendNodeType = ({ type, cache, reporter }) => {
 
     const { image, options } = args
     const {
-      file: { contentType, url: imgUrl, fileName: name },
+      file: { contentType, url: imgUrl, fileName },
     } = image
 
     if (contentType.indexOf(`image/`) !== 0) {
@@ -690,9 +692,10 @@ exports.extendNodeType = ({ type, cache, reporter }) => {
     }
 
     const extension = mimeTypeExtensions.get(contentType)
-
     const url = `https:` + createUrl(imgUrl, options)
-    const absolutePath = await fetchRemoteFile({
+    const name = path.basename(fileName, extension)
+
+    const absolutePath = await fetchRemoteFileWithCache({
       url,
       name,
       cache,
@@ -726,17 +729,23 @@ exports.extendNodeType = ({ type, cache, reporter }) => {
 
     try {
       const {
-        file: { contentType, url: imgUrl, fileName: name },
+        file: { contentType, url: imgUrl, fileName },
       } = image
 
       if (contentType.indexOf(`image/`) !== 0) {
         return null
       }
 
-      const url = `https:` + createUrl(imgUrl, options)
-      const extension = mimeTypeExtensions.get(contentType)
+      // 256px should be enough to properly detect the dominant color
+      if (!options.width) {
+        options.width = 256
+      }
 
-      const absolutePath = await fetchRemoteFile({
+      const extension = mimeTypeExtensions.get(contentType)
+      const url = `https:` + createUrl(imgUrl, options)
+      const name = path.basename(fileName, extension)
+
+      const absolutePath = await fetchRemoteFileWithCache({
         url,
         name,
         cache,
