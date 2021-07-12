@@ -47,7 +47,7 @@ const navigate = (to, options = {}) => {
     return
   }
 
-  let { pathname } = parsePath(to)
+  let { pathname, search, hash } = parsePath(to)
   const redirect = maybeGetBrowserRedirect(pathname)
 
   // If we're redirecting, just replace the passed in pathname
@@ -60,7 +60,7 @@ const navigate = (to, options = {}) => {
   // If we had a service worker update, no matter the path, reload window and
   // reset the pathname whitelist
   if (window.___swUpdated) {
-    window.location = pathname
+    window.location = pathname + search + hash
     return
   }
 
