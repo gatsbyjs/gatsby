@@ -520,7 +520,8 @@ const mapAvailableActionsToAPIs = (
 
 export const availableActionsByAPI = mapAvailableActionsToAPIs({
   createFieldExtension: {
-    [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
+    [ALLOWED_IN]: [`createSchemaCustomization`],
+    [DEPRECATED_IN]: [`sourceNodes`],
   },
   createTypes: {
     [ALLOWED_IN]: [`createSchemaCustomization`],
@@ -530,8 +531,8 @@ export const availableActionsByAPI = mapAvailableActionsToAPIs({
     [ALLOWED_IN]: [`createSchemaCustomization`],
   },
   addThirdPartySchema: {
-    [ALLOWED_IN]: [`sourceNodes`, `createSchemaCustomization`],
-    [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`],
+    [ALLOWED_IN]: [`createSchemaCustomization`],
+    [DEPRECATED_IN]: [`onPreInit`, `onPreBootstrap`, `sourceNodes`],
   },
   printTypeDefinitions: {
     [ALLOWED_IN]: [`createSchemaCustomization`],
