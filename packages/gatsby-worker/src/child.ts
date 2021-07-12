@@ -49,7 +49,11 @@ if (process.send && process.env.GATSBY_WORKER_MODULE_PATH) {
       error,
     ]
 
-    ensuredSendToMain(msg)
+    try {
+      ensuredSendToMain(msg)
+    } catch (e) {
+      // no-op
+    }
   }
 
   function onResult(result: unknown): void {

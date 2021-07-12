@@ -70,6 +70,7 @@ export interface NodeModel {
 
 class LocalNodeModel {
   constructor({ schema, schemaComposer, createPageDependency }) {
+    console.log(`NEW LocalNodeModel ${process.env.GATSBY_WORKER_ID}`)
     this.schema = schema
     this.schemaComposer = schemaComposer
     this.createPageDependencyActionCreator = createPageDependency
@@ -467,6 +468,7 @@ class LocalNodeModel {
    * @param {Node} node Root Node
    */
   trackInlineObjectsInRootNode(node) {
+    return
     if (!this._trackedRootNodes.has(node)) {
       addRootNodeToInlineObject(
         this._rootNodeMap,

@@ -41,7 +41,9 @@ export async function runPageQueries({
     }
   )
 
-  activity.start()
+  if (!process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    activity.start()
+  }
 
   let cancelNotice: CancelExperimentNoticeCallbackOrUndefined
   if (
@@ -81,5 +83,7 @@ modules.exports = {
     cancelNotice()
   }
 
-  activity.done()
+  if (!process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    activity.done()
+  }
 }

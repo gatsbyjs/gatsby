@@ -3,13 +3,14 @@
   "description": "Gatsby hello world starter",
   "license": "MIT",
   "scripts": {
-    "bench": "gatsby clean && rimraf .data && node --max_old_space_size=16384 --expose-gc node_modules/gatsby/dist/bin/gatsby.js build",
+    "bench": "gatsby clean && rimraf .data && GATSBY_EXPERIMENTAL_LMDB_STORE=1 GATSBY_EXPERIMENTAL_LMDB_INDEXES=1 GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING=1 NUM_PAGES=100000 NUM_NODES=100000 FILTER=eq-two-fields /usr/bin/time -v node --max_old_space_size=16384 --expose-gc node_modules/gatsby/dist/bin/gatsby.js build",
+    "bench-old": "gatsby clean && rimraf .data && NUM_PAGES=100000 NUM_NODES=100000 FILTER=eq-two-fields /usr/bin/time -v node --max_old_space_size=16384 --expose-gc node_modules/gatsby/dist/bin/gatsby.js build",
     "develop": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "gatsby": "^3.4.1",
+    "gatsby": "~3.8.1",
     "process-top": "^1.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

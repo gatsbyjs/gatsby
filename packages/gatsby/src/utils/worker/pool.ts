@@ -33,6 +33,7 @@ export async function runQueriesInWorkersQueue(
   queryIds: IGroupedQueryIds,
   chunkSize = 50
 ): Promise<void> {
+  console.log(`chunkSize: ${chunkSize}`)
   const staticQuerySegments = chunk(queryIds.staticQueryIds, chunkSize)
   const pageQuerySegments = chunk(queryIds.pageQueryIds, chunkSize)
 

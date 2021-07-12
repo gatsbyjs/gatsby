@@ -1,3 +1,4 @@
+import { performance } from "perf_hooks"
 import {
   IDataStore,
   ILmdbDatabases,
@@ -13,6 +14,7 @@ import {
   dbQueryToDottedField,
   getFilterStatement,
   IDbFilterStatement,
+  IInputQuery,
   prepareQueryArgs,
 } from "../../common/query"
 import {
@@ -48,11 +50,15 @@ interface IQueryContext {
   limit?: number
   skip: number
   totalCount?: number
+  filter: IInputQuery | undefined
+  filtersCache: Map<any, any>
 }
 
 export async function doRunQuery(args: IDoRunQueryArgs): Promise<IQueryResult> {
   // Note: Keeping doRunQuery method the only async method in chain for perf
   const context = createQueryContext(args)
+
+  // logOnce(`First doRunQuery ${qid(context)}!`)
 
   // Fast-path: filter by node id
   const nodeId = getFilterById(context)
@@ -67,11 +73,19 @@ export async function doRunQuery(args: IDoRunQueryArgs): Promise<IQueryResult> {
   const totalCount = async (): Promise<number> => runCountOnce(context)
 
   if (canUseIndex(context)) {
-    await Promise.all(
-      context.nodeTypeNames.map(typeName =>
-        createIndex(context, typeName, context.suggestedIndexFields)
-      )
-    )
+    for (const typeName of context.nodeTypeNames) {
+      await createIndex(context, typeName, context.suggestedIndexFields)
+    }
+    // const start = performance.now()
+    // const result: Array<any> = Array.from(performIndexScan(context))
+    // const len = result.length
+    // if (performance.now() - start > 500) {
+    //   console.info(
+    //     `Slow query: ${qid(context)}`,
+    //     len,
+    //     context.suggestedIndexFields
+    //   )
+    // }
     return { entries: performIndexScan(context), totalCount }
   }
   return { entries: performFullTableScan(context), totalCount }
@@ -118,7 +132,14 @@ function performIndexScan(context: IQueryContext): GatsbyIterable<IGatsbyNode> {
 
 function runCountOnce(context: IQueryContext): number {
   if (typeof context.totalCount === `undefined`) {
-    context.totalCount = runCount(context)
+    const filterId = JSON.stringify(context.filter)
+    const count = context.filtersCache.get(filterId)
+    if (typeof count !== `number`) {
+      context.totalCount = runCount(context)
+      context.filtersCache.set(filterId, context.totalCount)
+    } else {
+      context.totalCount = count
+    }
   }
   return context.totalCount
 }
@@ -141,6 +162,7 @@ function runCount(context: IQueryContext): number {
       )
       for (const _ of nodes) count++
     }
+    console.info(`Count without index: ${qid(context)}`, count)
     return count
   }
 
@@ -155,6 +177,7 @@ function runCount(context: IQueryContext): number {
     } catch (e) {
       // We cannot reliably count using index - fallback to full iteration :/
       for (const _ of filterNodes(context, indexMetadata)) count++
+      console.info(`Fallback to count without index: ${qid(context)}`, count)
     }
   }
   return count
@@ -164,8 +187,11 @@ function performFullTableScan(
   context: IQueryContext
 ): GatsbyIterable<IGatsbyNode> {
   // console.warn(`Fallback to full table scan :/`)
-
   const { datastore, nodeTypeNames } = context
+
+  if (nodeTypeNames[0] !== `Site`) {
+    console.warn(`performFullTableScan: ${qid(context)}`)
+  }
 
   let result = new GatsbyIterable<IGatsbyNode>([])
   for (const typeName of nodeTypeNames) {
@@ -231,6 +257,8 @@ function completeFiltering(
     .filter(q => !usedQueries.has(q))
     .map(q => [dbQueryToDottedField(q), getFilterStatement(q)])
 
+  console.log(`Completing filtering for: ${qid(context)}`, filtersToApply)
+
   return intermediateResult.filter(node => {
     const resolvedFields = resolvedNodes?.get(node.internal.type)?.get(node.id)
 
@@ -246,6 +274,17 @@ function completeFiltering(
   })
 }
 
+function qid(context: IQueryContext): string {
+  const { dbQueries, sortFields, nodeTypeNames } = context
+
+  const filters = dbQueries
+    .map(q => `${dbQueryToDottedField(q)}: ${getFilterStatement(q).comparator}`)
+    .join(`,\n`)
+  const sort = Array.from(sortFields.keys()).join(`, `)
+
+  return nodeTypeNames.join(`,`) + `/filter: { ${filters} }; sort: ${sort}`
+}
+
 function sortNodesInMemory(
   context: IQueryContext,
   nodes: GatsbyIterable<IGatsbyNode>
@@ -254,6 +293,7 @@ function sortNodesInMemory(
   // TODO: Nodes can be partially sorted by index prefix - we can (and should) exploit this
   return new GatsbyIterable(() => {
     const arr = Array.from(nodes)
+    console.info(`sortNodesInMemory!: ${qid(context)}`, arr.length)
     arr.sort(createNodeSortComparator(context.sortFields))
     return arr
   })
@@ -266,6 +306,8 @@ function createQueryContext(args: IDoRunQueryArgs): IQueryContext {
     datastore: args.datastore,
     databases: args.databases,
     nodeTypeNames: args.nodeTypeNames,
+    filtersCache: args.filtersCache,
+    filter: args.queryArgs.filter,
     dbQueries: createDbQueriesFromObject(prepareQueryArgs(filter)),
     sortFields: new Map<string, number>(
       sort?.fields.map((field, i) => [field, isDesc(sort?.order[i]) ? -1 : 1])

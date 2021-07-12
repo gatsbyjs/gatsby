@@ -13,6 +13,7 @@ const nodesPerPage = Math.max(1, Math.round(NUM_NODES / NUM_PAGES))
 const ptop = require(`process-top`)()
 
 exports.createSchemaCustomization = ({ actions }) => {
+  console.log(`createSchemaCustomization!`, process.env.GATSBY_WORKER_ID)
   actions.createTypes(`
     type Test implements Node @dontInfer {
       id: ID!
@@ -37,6 +38,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 
 exports.sourceNodes = async ({ actions: { createNode } }) => {
+  setTimeout(mem, 1000)
   console.log(`Creating ${NUM_NODES} nodes`)
   for (let nodeNum = 0; nodeNum < NUM_NODES; nodeNum++) {
     const pageNum = Math.floor(nodeNum / nodesPerPage)
@@ -62,6 +64,9 @@ exports.sourceNodes = async ({ actions: { createNode } }) => {
     })
     if (nodeNum % 50 === 0) {
       await new Promise(resolve => setTimeout(resolve, 3))
+    }
+    if (nodeNum % 10000 === 0) {
+      console.log(`Created ${nodeNum} nodes`)
     }
   }
   if (global.gc) {
@@ -131,4 +136,12 @@ function randomStr(length) {
     str.push(chars.charAt(Math.floor(Math.random() * chars.length)))
   }
   return str.join(``)
+}
+
+function mem() {
+  if (global.gc) {
+    global.gc()
+  }
+  console.log(ptop.toString())
+  setTimeout(mem, 10 * 1000)
 }

@@ -1,5 +1,5 @@
 import { RootDatabase, open } from "lmdb-store"
-// import { performance } from "perf_hooks"
+import { performance } from "perf_hooks"
 import { ActionsUnion, IGatsbyNode } from "../../redux/types"
 import { updateNodes } from "./updates/nodes"
 import { updateNodesByType } from "./updates/nodes-by-type"
@@ -46,6 +46,7 @@ function getRootDb(): RootDatabase {
       name: `root`,
       path: process.cwd() + `/.cache/data/` + rootDbFile,
       compression: true,
+      maxReaders: 1024,
     })
   }
   return rootDb
@@ -58,9 +59,12 @@ function getDatabases(): ILmdbDatabases {
       nodes: rootDb.openDB({
         name: `nodes`,
         // FIXME: sharedStructuresKey breaks tests - probably need some cleanup for it on DELETE_CACHE
-        // sharedStructuresKey: Symbol.for(`structures`),
+        sharedStructuresKey: Symbol.for(`structures`),
         // @ts-ignore
         cache: true,
+        // cache: { expirer: false },
+        // cache: true,
+        // encoding: `json`,
       }),
       nodesByType: rootDb.openDB({
         name: `nodesByType`,
@@ -69,11 +73,13 @@ function getDatabases(): ILmdbDatabases {
       metadata: rootDb.openDB({
         name: `metadata`,
         useVersions: true,
+        // readOnly: Boolean(process.env.GATSBY_WORKER_ID),
       }),
       indexes: rootDb.openDB({
         name: `indexes`,
         // TODO: use dupSort when this is ready: https://github.com/DoctorEvidence/lmdb-store/issues/66
         // dupSort: true
+        // readOnly: Boolean(process.env.GATSBY_WORKER_ID),
       }),
     }
   }
@@ -131,10 +137,17 @@ function iterateNodesByType(type: string): GatsbyIterable<IGatsbyNode> {
   )
 }
 
+let getNodeTime = 0
+let totalCalls = 0
+
 function getNode(id: string): IGatsbyNode | undefined {
   if (!id) return undefined
   const { nodes } = getDatabases()
-  return nodes.get(id)
+  const start = performance.now()
+  const result = nodes.get(id)
+  getNodeTime += performance.now() - start
+  totalCalls++
+  return result
 }
 
 function getTypes(): Array<string> {
@@ -223,6 +236,11 @@ export function setupLmdbStore(): IDataStore {
       updateDataStore(action)
     }
   })
+  setInterval(() => {
+    console.log(
+      `Time spent in getNode: ${getNodeTime / 1000}; totalCalls: ${totalCalls}`
+    )
+  }, 10000)
   // TODO: remove this when we have support for incremental indexes in lmdb
   clearIndexes()
   return lmdbDatastore

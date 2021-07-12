@@ -16,6 +16,8 @@ interface ICacheProperties {
   store?: Store
 }
 
+let logged = false
+
 export default class GatsbyCache {
   public name: string
   public store: Store
@@ -73,6 +75,12 @@ export default class GatsbyCache {
     value: T,
     args: CachingConfig = { ttl: TTL }
   ): Promise<T | undefined> {
+
+    if (!logged) {
+      logged = true
+      console.trace(`Saving to cache:`, key, value)
+    }
+
     return new Promise(resolve => {
       if (!this.cache) {
         throw new Error(

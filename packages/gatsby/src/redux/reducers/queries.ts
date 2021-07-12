@@ -241,13 +241,18 @@ function addNodeDependency(
   queryId: QueryId,
   nodeId: NodeId
 ): IGatsbyState["queries"] {
+  // Workaround for https://bugs.chromium.org/p/v8/issues/detail?id=2869
+  //  Internally in v8 `nodeId` is a `String slice` of a full serialized node
+  //  when we put it to state, it retains the full version of this serialized node string
+  const fixedNodeId = ` ${nodeId}`.substr(1)
+
   // Perf: using two-side maps.
   //   Without additional `queryNodes` map we would have to loop through
   //   all existing nodes in `clearNodeDependencies` to delete node <-> query dependency
-  let nodeQueries = state.byNode.get(nodeId)
+  let nodeQueries = state.byNode.get(fixedNodeId)
   if (!nodeQueries) {
     nodeQueries = new Set<QueryId>()
-    state.byNode.set(nodeId, nodeQueries)
+    state.byNode.set(fixedNodeId, nodeQueries)
   }
   let queryNodes = state.queryNodes.get(queryId)
   if (!queryNodes) {
@@ -255,7 +260,7 @@ function addNodeDependency(
     state.queryNodes.set(queryId, queryNodes)
   }
   nodeQueries.add(queryId)
-  queryNodes.add(nodeId)
+  queryNodes.add(fixedNodeId)
   return state
 }
 

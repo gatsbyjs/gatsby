@@ -22,7 +22,7 @@ type IndexFields = Array<IndexField>
 export function suggestIndex({
   filter,
   sort,
-  maxFields = 4,
+  maxFields = 8,
 }: ISelectIndexArgs): Array<IndexField> {
   const filterQueries = createDbQueriesFromObject(prepareQueryArgs(filter))
   const filterQueriesThatCanUseIndex = getQueriesThatCanUseIndex(filterQueries)
@@ -46,21 +46,31 @@ export function suggestIndex({
     // In this case combined index for filter+sort only makes sense when all filters have `eq` predicate
     // Same as https://docs.mongodb.com/manual/tutorial/sort-results-with-indexes/#sort-and-non-prefix-subset-of-an-index
     const eqFields = getFieldsWithEqPredicate(filterQueriesThatCanUseIndex)
+    const eqFilterFields: Array<IndexField> = [...eqFields].map(f => [f, 1])
 
     if (eqFields.size === filterQueriesThatCanUseIndex.length) {
-      const eqFilterFields: Array<IndexField> = [...eqFields].map(f => [f, 1])
       return dedupeAndTrim([...eqFilterFields, ...sortFields], maxFields)
     }
-    // Single unbound range filter: "lt", "gt", "gte", "lte" (but not "in"): prefer sort fields
-    if (
-      filterQueriesThatCanUseIndex.length === 1 &&
-      getFilterStatement(filterQueriesThatCanUseIndex[0]).comparator !==
-        DbComparator.IN
-    ) {
-      return dedupeAndTrim(sortFields, maxFields)
-    }
-    // Otherwise prefer filter fields
-    return dedupeAndTrim(toIndexFields(filterQueriesThatCanUseIndex), maxFields)
+    return dedupeAndTrim(
+      [
+        ...eqFilterFields,
+        ...sortFields,
+        ...filterQueriesThatCanUseIndex
+          .map((q): IndexField => [dbQueryToDottedField(q), 1])
+          .filter(([f]) => !eqFields.has(f)),
+      ],
+      maxFields
+    )
+    // // Single unbound range filter: "lt", "gt", "gte", "lte" (but not "in"): prefer sort fields
+    // if (
+    //   filterQueriesThatCanUseIndex.length === 1 &&
+    //   getFilterStatement(filterQueriesThatCanUseIndex[0]).comparator !==
+    //     DbComparator.IN
+    // ) {
+    //   return dedupeAndTrim(sortFields, maxFields)
+    // }
+    // // Otherwise prefer filter fields
+    // return dedupeAndTrim(toIndexFields(filterQueriesThatCanUseIndex), maxFields)
   }
 
   // There is an overlap:

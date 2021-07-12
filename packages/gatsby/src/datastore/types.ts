@@ -37,6 +37,7 @@ export interface IRunQueryArgs {
   resolvedFields: Record<string, any>
   nodeTypeNames: Array<string>
   stats: IGraphQLRunnerStats
+  filtersCache: Map<any, any>
 }
 
 export interface IDataStore {
