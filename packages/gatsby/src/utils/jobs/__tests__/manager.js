@@ -1,6 +1,7 @@
 const path = require(`path`)
 const _ = require(`lodash`)
 const { slash } = require(`gatsby-core-utils`)
+let WorkerError
 let jobManager = null
 
 // I need a mock to spy on
@@ -92,7 +93,8 @@ describe(`Jobs manager`, () => {
     })
 
     jest.isolateModules(() => {
-      jobManager = require(`../jobs-manager`)
+      jobManager = require(`../manager`)
+      WorkerError = require(`../types`).WorkerError
     })
   })
 
@@ -458,7 +460,7 @@ describe(`Jobs manager`, () => {
       jest.runAllTimers()
 
       await expect(promise).rejects.toStrictEqual(
-        new jobManager.WorkerError(`JOB failed...`)
+        new WorkerError(`JOB failed...`)
       )
       expect(worker.TEST_JOB).not.toHaveBeenCalled()
     })

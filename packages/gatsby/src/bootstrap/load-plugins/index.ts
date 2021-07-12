@@ -1,6 +1,7 @@
 import _ from "lodash"
 
 import { store } from "../../redux"
+import { IGatsbyState } from "../../redux/types"
 import * as nodeAPIs from "../../utils/api-node-docs"
 import * as browserAPIs from "../../utils/api-browser-docs"
 import ssrAPIs from "../../../cache-dir/api-ssr-docs"
@@ -13,7 +14,6 @@ import {
   ICurrentAPIs,
   validateConfigPluginsOptions,
 } from "./validate"
-import apiRunnerNode from "../../utils/api-runner-node"
 import {
   IPluginInfo,
   IFlattenedPlugin,
@@ -122,11 +122,8 @@ export async function loadPlugins(
   // If we get this far, everything looks good. Update the store
   store.dispatch({
     type: `SET_SITE_FLATTENED_PLUGINS`,
-    payload: flattenedPlugins,
+    payload: flattenedPlugins as IGatsbyState["flattenedPlugins"],
   })
-
-  // And let plugins initialize if they want to
-  await apiRunnerNode(`unstable_onPluginInit`)
 
   return flattenedPlugins
 }

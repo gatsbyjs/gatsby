@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.10.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.10.0-next.1...gatsby-source-wordpress@5.10.0-next.2) (2021-07-09)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** don't leak auth details ([#32303](https://github.com/gatsbyjs/gatsby/issues/32303)) ([4d7ec18](https://github.com/gatsbyjs/gatsby/commit/4d7ec18b98721ff9a6d4217e10c98df891d9be01))
+
+# [5.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.10.0-next.0...gatsby-source-wordpress@5.10.0-next.1) (2021-07-08)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to ^4.1.1 ([#32250](https://github.com/gatsbyjs/gatsby/issues/32250)) ([bd03035](https://github.com/gatsbyjs/gatsby/commit/bd03035b35d4e2f69e86b9ff3bbcfb8bd3eece4a))
+- **gatsby-source-wordpress:** Move the remote url !== options url check earlier in previews ([#32251](https://github.com/gatsbyjs/gatsby/issues/32251)) ([60955e9](https://github.com/gatsbyjs/gatsby/commit/60955e90843d69e0dbfa65f98ed20eac2a58acc9))
+
 # [5.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.9.0-next.0...gatsby-source-wordpress@5.10.0-next.0) (2021-07-01)
 
 **Note:** Version bump only for package gatsby-source-wordpress

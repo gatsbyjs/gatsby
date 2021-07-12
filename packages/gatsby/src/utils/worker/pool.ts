@@ -4,19 +4,26 @@ import reporter from "gatsby-cli/lib/reporter"
 import { cpuCoreCount } from "gatsby-core-utils"
 
 import { IGroupedQueryIds } from "../../services"
+import { initJobsMessagingInMainProcess } from "../jobs/worker-messaging"
+import { initReporterMessagingInMainProcess } from "./reporter"
 
-export type GatsbyWorkerPool = WorkerPool<typeof import("./child")>
+import { GatsbyWorkerPool } from "./types"
+
+export type { GatsbyWorkerPool }
 
 export const create = (): GatsbyWorkerPool => {
-  const worker = new WorkerPool<typeof import("./child")>(
-    require.resolve(`./child`),
-    {
-      numWorkers: Math.max(1, cpuCoreCount() - 1),
-      env: {
-        GATSBY_WORKER_POOL_WORKER: `true`,
-      },
-    }
-  )
+  const numWorkers = Math.max(1, cpuCoreCount() - 1)
+  reporter.verbose(`Creating ${numWorkers} worker`)
+
+  const worker: GatsbyWorkerPool = new WorkerPool(require.resolve(`./child`), {
+    numWorkers,
+    env: {
+      GATSBY_WORKER_POOL_WORKER: `true`,
+    },
+  })
+
+  initJobsMessagingInMainProcess(worker)
+  initReporterMessagingInMainProcess(worker)
 
   return worker
 }

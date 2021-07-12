@@ -3,7 +3,7 @@ import chalk from "chalk"
 import { trackError } from "gatsby-telemetry"
 import { globalTracer, Span } from "opentracing"
 
-import * as reporterActions from "./redux/actions"
+import * as reduxReporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
 import { getErrorFormatter } from "./errors"
 import constructError from "../structured-errors/construct-error"
@@ -13,10 +13,12 @@ import { IConstructError, IStructuredError } from "../structured-errors/types"
 import { createTimerReporter, ITimerReporter } from "./reporter-timer"
 import { createPhantomReporter, IPhantomReporter } from "./reporter-phantom"
 import { createProgressReporter, IProgressReporter } from "./reporter-progress"
-import { ErrorMeta, CreateLogAction } from "./types"
+import { ErrorMeta, CreateLogAction, ILogIntent } from "./types"
 
 const errorFormatter = getErrorFormatter()
 const tracer = globalTracer()
+
+let reporterActions = reduxReporterActions
 
 export interface IActivityArgs {
   id?: string
@@ -25,6 +27,10 @@ export interface IActivityArgs {
 }
 
 let isVerbose = false
+
+function isLogIntentMessage(msg: any): msg is ILogIntent {
+  return msg && msg.type === `LOG_INTENT`
+}
 
 /**
  * Reporter module.
@@ -233,7 +239,13 @@ class Reporter {
 
     const span = tracer.startSpan(text, spanArgs)
 
-    return createTimerReporter({ text, id, span, reporter: this })
+    return createTimerReporter({
+      text,
+      id,
+      span,
+      reporter: this,
+      reporterActions,
+    })
   }
 
   /**
@@ -258,7 +270,7 @@ class Reporter {
 
     const span = tracer.startSpan(text, spanArgs)
 
-    return createPhantomReporter({ id, text, span })
+    return createPhantomReporter({ id, text, span, reporterActions })
   }
 
   /**
@@ -284,12 +296,52 @@ class Reporter {
       start,
       span,
       reporter: this,
+      reporterActions,
     })
   }
 
   // This method was called in older versions of gatsby, so we need to keep it to avoid
   // "reporter._setStage is not a function" error when gatsby@<2.16 is used with gatsby-cli@>=2.8
   _setStage = (): void => {}
+
+  // This method is called by core when initializing worker process, so it can communicate with main process
+  // and dispatch structured logs created by workers to parent process.
+  _initReporterMessagingInWorker(sendMessage: (msg: ILogIntent) => void): void {
+    const intentifiedActionCreators = {}
+    for (const actionCreatorName of Object.keys(reduxReporterActions) as Array<
+      keyof typeof reduxReporterActions
+    >) {
+      // swap each reporter action creator with function that send intent
+      // to main process
+      intentifiedActionCreators[actionCreatorName] = (...args): void => {
+        sendMessage({
+          type: `LOG_INTENT`,
+          payload: {
+            name: actionCreatorName,
+            args,
+          } as any,
+        })
+      }
+    }
+    reporterActions = intentifiedActionCreators as typeof reduxReporterActions
+  }
+
+  // This method is called by core when initializing worker pool, so main process can receive
+  // messages from workers and dispatch structured logs created by workers to parent process.
+  _initReporterMessagingInMain(
+    onMessage: (listener: (msg: ILogIntent | unknown) => void) => void
+  ): void {
+    onMessage(msg => {
+      if (isLogIntentMessage(msg)) {
+        reduxReporterActions[msg.payload.name].call(
+          reduxReporterActions,
+          // @ts-ignore Next line (`...msg.payload.args`) cause "A spread argument
+          // must either have a tuple type or be passed to a rest parameter"
+          ...msg.payload.args
+        )
+      }
+    })
+  }
 }
 export type { Reporter }
 export const reporter = new Reporter()

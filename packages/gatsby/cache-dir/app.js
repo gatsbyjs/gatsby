@@ -134,8 +134,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   // render to avoid React complaining about hydration mis-matches.
   let defaultRenderer = ReactDOM.render
   if (focusEl && focusEl.children.length) {
-    if (ReactDOM.createRoot) {
-      defaultRenderer = ReactDOM.createRoot
+    if (ReactDOM.hydrateRoot) {
+      defaultRenderer = ReactDOM.hydrateRoot
     } else {
       defaultRenderer = ReactDOM.hydrate
     }
@@ -193,7 +193,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         )
         document.body.append(indicatorMountElement)
 
-        if (renderer === ReactDOM.createRoot) {
+        if (renderer === ReactDOM.hydrateRoot) {
           renderer(indicatorMountElement).render(
             <LoadingIndicatorEventHandler />
           )
@@ -225,10 +225,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         dismissLoadingIndicator()
       }
 
-      if (renderer === ReactDOM.createRoot) {
-        renderer(rootElement, {
-          hydrate: true,
-        }).render(<App />)
+      if (renderer === ReactDOM.hydrateRoot) {
+        renderer(rootElement, <App />)
       } else {
         renderer(<App />, rootElement)
       }

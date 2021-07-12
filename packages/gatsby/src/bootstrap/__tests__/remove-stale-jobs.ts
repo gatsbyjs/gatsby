@@ -1,6 +1,6 @@
-jest.mock(`../../utils/jobs-manager`)
+jest.mock(`../../utils/jobs/manager`)
 
-import { isJobStale, enqueueJob } from "../../utils/jobs-manager"
+import { isJobStale, enqueueJob } from "../../utils/jobs/manager"
 import { internalActions } from "../../redux/actions"
 
 jest.spyOn(internalActions, `removeStaleJob`)
@@ -31,7 +31,7 @@ describe(`remove-stale-jobs`, () => {
 
     isJobStale.mockReturnValue(true)
 
-    expect(removeStaleJobs(state)).toMatchSnapshot()
+    expect(removeStaleJobs(state.jobsV2)).toMatchSnapshot()
     expect(internalActions.removeStaleJob).toHaveBeenCalledTimes(1)
     expect(internalActions.removeStaleJob).toHaveBeenCalledWith(`1234`)
     expect(internalActions.createJobV2FromInternalJob).not.toHaveBeenCalled()
@@ -50,7 +50,7 @@ describe(`remove-stale-jobs`, () => {
 
     isJobStale.mockReturnValue(true)
 
-    expect(removeStaleJobs(state)).toMatchSnapshot()
+    expect(removeStaleJobs(state.jobsV2)).toMatchSnapshot()
     expect(internalActions.removeStaleJob).toHaveBeenCalledTimes(1)
     expect(internalActions.removeStaleJob).toHaveBeenCalledWith(`1234`)
     expect(internalActions.createJobV2FromInternalJob).not.toHaveBeenCalled()
@@ -72,7 +72,7 @@ describe(`remove-stale-jobs`, () => {
     // we need it to return a promise so createJobV2FromInternalJob action creator works correctly
     enqueueJob.mockReturnValue(Promise.resolve({ result: true }))
 
-    const toDispatch = removeStaleJobs(state)
+    const toDispatch = removeStaleJobs(state.jobsV2)
     const dispatchedActions = []
     for (const actionOrThunk of toDispatch) {
       if (typeof actionOrThunk === `function`) {

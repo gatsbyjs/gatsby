@@ -4,7 +4,7 @@ import { DocumentNode, GraphQLSchema, DefinitionNode } from "graphql"
 import { SchemaComposer } from "graphql-compose"
 import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
 import { ThunkAction } from "redux-thunk"
-import { InternalJob, JobResultInterface } from "../utils/jobs-manager"
+import { InternalJob, JobResultInterface } from "../utils/jobs/manager"
 import { ITypeMetadata } from "../schema/infer/inference-metadata"
 
 type SystemPath = string
@@ -179,6 +179,7 @@ type BabelStageKeys =
 
 export interface IStateProgram extends IProgram {
   extensions: Array<string>
+  browserslist: Array<string>
 }
 
 export interface IQueryState {
@@ -401,6 +402,7 @@ export type ActionsUnion =
   | IGeneratedHtml
   | IMarkHtmlDirty
   | ISSRUsedUnsafeBuiltin
+  | ISetSiteConfig
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`

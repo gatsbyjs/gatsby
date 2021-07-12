@@ -5,12 +5,13 @@ import {
   DeepPartial,
   Middleware,
   ReducersMapObject,
+  Store,
 } from "redux"
 import _ from "lodash"
 import telemetry from "gatsby-telemetry"
 
 import { mett } from "../utils/mett"
-import thunk, { ThunkMiddleware, ThunkAction } from "redux-thunk"
+import thunk, { ThunkMiddleware, ThunkAction, ThunkDispatch } from "redux-thunk"
 import * as reducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
 import { IGatsbyState, ActionsUnion, GatsbyStateKeys } from "./types"
@@ -75,17 +76,17 @@ const multi: Middleware<IMultiDispatch> = ({ dispatch }) => next => (
 ): ActionsUnion | Array<ActionsUnion> =>
   Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
 
-// We're using the inferred type here because manually typing it would be very complicated
-// and error-prone. Instead we'll make use of the createStore return value, and export that type.
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const configureStore = (initialState: IGatsbyState) =>
+export type GatsbyReduxStore = Store<IGatsbyState> & {
+  dispatch: ThunkDispatch<IGatsbyState, any, ActionsUnion> & IMultiDispatch
+}
+
+export const configureStore = (initialState: IGatsbyState): GatsbyReduxStore =>
   createStore(
     combineReducers<IGatsbyState>({ ...reducers }),
     initialState,
     applyMiddleware(thunk as ThunkMiddleware<IGatsbyState, ActionsUnion>, multi)
   )
 
-export type GatsbyReduxStore = ReturnType<typeof configureStore>
 export const store: GatsbyReduxStore = configureStore(
   process.env.GATSBY_WORKER_POOL_WORKER ? ({} as IGatsbyState) : readState()
 )
@@ -128,18 +129,22 @@ export const saveState = (): void => {
   })
 }
 
-export const saveStateForWorkers = (slices: Array<GatsbyStateKeys>): void => {
+export const savePartialStateToDisk = (
+  slices: Array<GatsbyStateKeys>,
+  optionalPrefix?: string
+): void => {
   const state = store.getState()
   const contents = _.pick(state, slices)
 
-  return writeToCache(contents, slices)
+  return writeToCache(contents, slices, optionalPrefix)
 }
 
-export const loadStateInWorker = (
-  slices: Array<GatsbyStateKeys>
+export const loadPartialStateFromDisk = (
+  slices: Array<GatsbyStateKeys>,
+  optionalPrefix?: string
 ): DeepPartial<IGatsbyState> => {
   try {
-    return readFromCache(slices) as DeepPartial<IGatsbyState>
+    return readFromCache(slices, optionalPrefix) as DeepPartial<IGatsbyState>
   } catch (e) {
     // ignore errors.
   }
