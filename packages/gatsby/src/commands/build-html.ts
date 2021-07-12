@@ -333,7 +333,7 @@ export const doBuildPages = async (
     const pageData = await getPageData(error.context.path)
     const truncatedPageData = truncateObjStrings(pageData)
 
-    const pageDataMessage = `Data for failed page "${
+    const pageDataMessage = `Page data from page-data.json for the failed page "${
       error.context.path
     }": ${JSON.stringify(truncatedPageData, null, 2)}`
 
