@@ -17,6 +17,7 @@ import { Span } from "opentracing"
 import { IProgram, Stage } from "./types"
 import { PackageJson } from "../.."
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
+import { IPageDataWithQueryResult } from "../utils/page-data"
 
 type IActivity = any // TODO
 
@@ -305,12 +306,12 @@ class BuildHTMLError extends Error {
   }
 }
 
-const truncateObjStrings = obj => {
+const truncateObjStrings = (obj): IPageDataWithQueryResult => {
   // Recursively truncate strings nested in object
   for (const key in obj) {
-    if (typeof obj[key] === "object") {
+    if (typeof obj[key] === `object`) {
       truncateObjStrings(obj[key])
-    } else if (typeof obj[key] === "string") {
+    } else if (typeof obj[key] === `string`) {
       obj[key] = truncate(obj[key], { length: 250 })
     }
   }
