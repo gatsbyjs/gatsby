@@ -277,7 +277,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
     return null
   }
 
-  if (!gatsbyImageIsInstalled()) {
+  if (!gatsbyImageIsInstalled() && process.env.NODE_ENV === `development`) {
     console.error(
       `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
     )
