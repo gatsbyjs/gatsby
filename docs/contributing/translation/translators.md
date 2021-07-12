@@ -2,7 +2,7 @@
 title: Contributing to a Translation
 ---
 
-> ⚠️ Note: At the moment our localization efforts are on pause, as we shifted towwards a [redesign of the docs](https://www.gatsbyjs.com/blog/announcing-new-gatsby-docs-site/). Right now, we're prioritizing a new version of the tutorial. As with all prioritization efforts, we will weigh this, amongst other potential features, fixes, and improvements, and may consider picking up on the internationalization efforts of 2020. The repositories inside the GitHub org will remain. For now we archived the respective language channels on our Discord and the role for language maintainers.
+> ⚠️ Note: At the moment our localization efforts are on pause, as we shifted towards a [redesign of the docs](https://www.gatsbyjs.com/blog/announcing-new-gatsby-docs-site/). Right now, we're prioritizing a new version of the tutorial. As with all prioritization efforts, we will weigh this, amongst other potential features, fixes, and improvements, and may consider picking up on the internationalization efforts of 2020. The repositories inside the GitHub org will remain. For now we archived the respective language channels on our Discord and the role for language maintainers.
 
 Once a language repository is created and someone on the Gatsby team has assigned codeowners, contributions can begin. It is up to the discretion of the contributor how exactly they want to work, but it's recommended to limit the scope of PRs to 1 doc at a time to aid with code reviewing.
 
