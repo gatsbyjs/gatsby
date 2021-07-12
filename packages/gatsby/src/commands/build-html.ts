@@ -308,6 +308,7 @@ class BuildHTMLError extends Error {
 
 const truncateObjStrings = (obj): IPageDataWithQueryResult => {
   // Recursively truncate strings nested in object
+  // These objs can be quite large, but we want to preserve each field
   for (const key in obj) {
     if (typeof obj[key] === `object`) {
       truncateObjStrings(obj[key])
@@ -332,7 +333,6 @@ export const doBuildPages = async (
     const pageData = await getPageData(error.context.path)
     const truncatedPageData = truncateObjStrings(pageData)
 
-    // These objs can be quite large, so we want to limit the character count
     const pageDataMessage = `Data for failed page "${
       error.context.path
     }": ${JSON.stringify(truncatedPageData, null, 2)}`
