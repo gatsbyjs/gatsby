@@ -109,8 +109,10 @@ export const pageQuery = graphql`
         }
         one {
           __typename
-          sys {
-            id
+          ... on ContentfulEntry {
+            sys {
+              id
+            }
           }
           ... on ContentfulContentTypeText {
             title
@@ -152,8 +154,10 @@ export const pageQuery = graphql`
         }
         many {
           __typename
-          sys {
-            id
+          ... on ContentfulEntry {
+            sys {
+              id
+            }
           }
           ... on ContentfulContentTypeText {
             title
@@ -165,6 +169,11 @@ export const pageQuery = graphql`
           }
           ... on ContentfulContentTypeContentReference {
             title
+            ... on ContentfulEntry {
+              sys {
+                id
+              }
+            }
             one {
               ... on ContentfulContentTypeText {
                 title
