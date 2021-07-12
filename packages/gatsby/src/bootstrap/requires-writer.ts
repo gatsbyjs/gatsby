@@ -242,6 +242,16 @@ const preferDefault = m => (m && m.default) || m
     .join(`,\n`)}
 }\n\n`
 
+  syncRequires += `exports.serverData = {\n${components
+    .map(
+      (c: IGatsbyPageComponent): string =>
+        `  "${c.componentChunkName}": require("${joinPath(
+          c.component
+        )}").getServerData`
+    )
+    .join(`,\n`)}
+}\n\n`
+
   // Create file with async requires of components/json files.
   let asyncRequires = `// prefer default export if available
 const preferDefault = m => (m && m.default) || m

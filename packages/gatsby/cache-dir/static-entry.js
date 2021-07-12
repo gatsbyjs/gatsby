@@ -195,6 +195,12 @@ export default async function staticPage({
     const { componentChunkName, staticQueryHashes = [] } = pageData
 
     const staticQueryUrls = staticQueryHashes.map(getStaticQueryUrl)
+    const serverData = null
+    if (syncRequires.serverData[componentChunkName]) {
+      const params = grabMatchParams(pagePath)
+      console.log({ params })
+      // serverData = await syncRequires.serverData[componentChunkName]()
+    }
 
     class RouteHandler extends React.Component {
       render() {
@@ -205,7 +211,9 @@ export default async function staticPage({
             ...grabMatchParams(this.props.location.pathname),
             ...(pageData.result?.pageContext?.__params || {}),
           },
+          serverData,
         }
+        console.log({ props })
 
         const pageElement = createElement(
           syncRequires.components[componentChunkName],

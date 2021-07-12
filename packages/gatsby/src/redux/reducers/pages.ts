@@ -1,4 +1,5 @@
 import normalize from "./normalize-path"
+import { readFileSync } from "fs"
 import {
   IGatsbyState,
   IGatsbyPage,
@@ -6,6 +7,8 @@ import {
   ICreatePageAction,
   IDeletePageAction,
 } from "../types"
+
+const ssrCache = new Map<string, boolean>()
 
 export const pagesReducer = (
   state: IGatsbyState["pages"] = new Map<string, IGatsbyPage>(),
@@ -17,6 +20,23 @@ export const pagesReducer = (
 
     case `CREATE_PAGE`: {
       action.payload.component = normalize(action.payload.component)
+
+      // TODO do AST check like queries
+      if (!ssrCache.has(action.payload.component)) {
+        if (
+          readFileSync(action.payload.component)
+            .toString()
+            .includes(`getServerData`)
+        ) {
+          ssrCache.set(action.payload.component, true)
+        } else {
+          ssrCache.set(action.payload.component, false)
+        }
+      }
+
+      if (ssrCache.get(action.payload.component)) {
+        action.payload.mode = `SSR`
+      }
 
       // throws an error if the page is not created by a plugin
       if (!action.plugin?.name) {
