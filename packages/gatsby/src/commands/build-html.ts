@@ -2,7 +2,7 @@ import Bluebird from "bluebird"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
-import { chunk } from "lodash"
+import { chunk, truncate } from "lodash"
 import webpack, { Stats } from "webpack"
 import * as path from "path"
 
@@ -305,6 +305,19 @@ class BuildHTMLError extends Error {
   }
 }
 
+const truncateObjStrings = obj => {
+  // Recursively truncate strings nested in object
+  for (const key in obj) {
+    if (typeof obj[key] === "object") {
+      truncateObjStrings(obj[key])
+    } else if (typeof obj[key] === "string") {
+      obj[key] = truncate(obj[key], { length: 250 })
+    }
+  }
+
+  return obj
+}
+
 export const doBuildPages = async (
   rendererPath: string,
   pagePaths: Array<string>,
@@ -316,11 +329,12 @@ export const doBuildPages = async (
     await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
   } catch (error) {
     const pageData = await getPageData(error.context.path)
+    const truncatedPageData = truncateObjStrings(pageData)
 
     // These objs can be quite large, so we want to limit the character count
     const pageDataMessage = `Data for failed page "${
       error.context.path
-    }": ${JSON.stringify(pageData, null, 2).slice(0, 50000)}`
+    }": ${JSON.stringify(truncatedPageData, null, 2)}`
 
     const prettyError = await createErrorFromString(
       error.stack,
