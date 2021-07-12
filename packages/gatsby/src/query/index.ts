@@ -248,8 +248,12 @@ function createPageQueryJob(
     return undefined
   }
 
-  const { path, componentPath, context } = page
+  const { path, componentPath, context, mode } = page
   const { query } = component
+
+  if (mode !== `SSG`) {
+    return undefined
+  }
 
   return {
     id: path,

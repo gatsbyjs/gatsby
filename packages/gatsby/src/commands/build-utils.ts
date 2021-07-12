@@ -157,14 +157,20 @@ export function calcDirtyHtmlFiles(
   }
 
   state.html.trackedHtmlFiles.forEach(function (htmlFile, path) {
-    if (htmlFile.isDeleted || !state.pages.has(path)) {
+    const page = state.pages.get(path)
+
+    if (htmlFile.isDeleted || !page) {
       // FIXME: checking pages state here because pages are not persisted
       // and because of that `isDeleted` might not be set ...
       markActionForPage(path, `delete`)
-    } else if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
-      markActionForPage(path, `regenerate`)
     } else {
-      markActionForPage(path, `reuse`)
+      if (page.mode === `SSG`) {
+        if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
+          markActionForPage(path, `regenerate`)
+        } else {
+          markActionForPage(path, `reuse`)
+        }
+      }
     }
   })
 
