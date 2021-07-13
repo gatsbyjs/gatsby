@@ -6,7 +6,12 @@ const { typeNameFromFile } = require(`./index`)
 const convertToJson = (data, options) =>
   csv(options)
     .fromString(data)
-    .then(jsonData => jsonData, new Error(`CSV to JSON conversion failed!`))
+    .then(
+      jsonData => jsonData,
+      reason => {
+        throw new Error(`CSV to JSON conversion failed! : ${reason}`)
+      }
+    )
 
 function unstable_shouldOnCreateNode({ node }, pluginOptions = {}) {
   const { extension } = node
