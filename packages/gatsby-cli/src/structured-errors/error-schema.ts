@@ -37,5 +37,6 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys
     group: Joi.string(),
     panicOnBuild: Joi.boolean(),
     pluginName: Joi.string(),
+    name: Joi.string(),
   }
 )
