@@ -18,6 +18,16 @@ Object {
 }
 `;
 
+exports[`npm package resource e2e npm package resource test: NPMPackage destroy 1`] = `
+Object {
+  "_message": "Installed NPM package is-sorted@1.0.2",
+  "description": "A small module to check if an Array is sorted",
+  "id": "is-sorted",
+  "name": "is-sorted",
+  "version": "1.0.2",
+}
+`;
+
 exports[`npm package resource e2e npm package resource test: NPMPackage update 1`] = `
 Object {
   "_message": "Installed NPM package is-sorted@1.0.2",
@@ -53,16 +63,6 @@ Object {
   "id": "is-odd",
   "name": "is-odd",
   "version": "3.0.1",
-}
-`;
-
-exports[`npm package resource installs 2 resources, one prod & one dev: NPMPackage destroy 1`] = `
-Object {
-  "_message": "Installed NPM package is-sorted@1.0.2",
-  "description": "A small module to check if an Array is sorted",
-  "id": "is-sorted",
-  "name": "is-sorted",
-  "version": "1.0.2",
 }
 `;
 
