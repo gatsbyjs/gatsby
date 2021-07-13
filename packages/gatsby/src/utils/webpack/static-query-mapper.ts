@@ -1,4 +1,5 @@
 import path from "path"
+import fs from "fs"
 import { Store } from "redux"
 import { Compiler, Module, NormalModule, Compilation } from "webpack"
 import ConcatenatedModule from "webpack/lib/optimize/ConcatenatedModule"
@@ -39,7 +40,7 @@ function getRealPath(
   componentPath: string
 ): string {
   if (!cache.has(componentPath)) {
-    cache.set(componentPath, path.resolve(componentPath))
+    cache.set(componentPath, fs.realpathSync(path.resolve(componentPath)))
   }
 
   return cache.get(componentPath) as string
