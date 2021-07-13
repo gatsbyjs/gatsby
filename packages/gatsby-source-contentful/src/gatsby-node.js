@@ -22,6 +22,8 @@ const restrictedNodeFields = [
   `id`,
   `internal`,
   `parent`,
+  `Entity`,
+  `Reference`,
 ]
 
 const restrictedContentTypes = [`entity`, `reference`]
