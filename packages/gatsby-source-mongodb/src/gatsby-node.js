@@ -77,10 +77,20 @@ function createNodes(
   dbName,
   createNode,
   createNodeId,
-  collectionName,
+  collectionData,
   createContentDigest
 ) {
+  let collectionName, type
+  if (typeof collectionData === `object`) {
+    collectionName = collectionData.name
+    type = sanitizeName(collectionData.nodeType, false)
+  } else {
+    collectionName = collectionData
+    type = `mongodb${sanitizeName(dbName)}${sanitizeName(collectionName)}`
+  }
+
   const { preserveObjectIds = false, query = {} } = pluginOptions
+
   return new Promise((resolve, reject) => {
     const collection = db.collection(collectionName)
     const cursor = collection.find(
@@ -108,12 +118,10 @@ function createNodes(
           ...item,
           id: createNodeId(`${id}`),
           mongodb_id: id,
-          parent: `__${collectionName}__`,
+          parent: `__${type}__`,
           children: [],
           internal: {
-            type: `mongodb${sanitizeName(dbName)}${sanitizeName(
-              collectionName
-            )}`,
+            type,
             content: JSON.stringify(item),
             contentDigest: createContentDigest(item),
           },
