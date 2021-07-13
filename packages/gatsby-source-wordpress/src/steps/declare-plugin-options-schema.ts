@@ -642,6 +642,19 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
               },
             `),
         }),
+      generateWebpImages: Joi.boolean()
+        .default(false)
+        .allow(null)
+        .description(
+          `When this is true, .webp images would be generated in addition to the same file format as the source images`
+        )
+        .meta({
+          example: wrapOptions(`
+              html: {
+                generateWebpImages: false,
+              },
+            `),
+        }),
     })
       .description(`Options related to html field processing.`)
       .meta({
