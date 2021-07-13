@@ -304,5 +304,17 @@
         "keys": { "purpose": { "type": "string" } }
       }
     }
+  },
+  "gatsby-source-strapi": {
+    "type": "object",
+    "keys": {
+      "apiURL": {
+        "type": "string",
+        "flags": {
+          "description": "The Strapi API root URL",
+          "presence": "required"
+        }
+      }
+    }
   }
 }

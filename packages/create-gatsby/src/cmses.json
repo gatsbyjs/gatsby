@@ -7,5 +7,6 @@
   "gatsby-plugin-netlify-cms": {
     "message": "Netlify CMS",
     "dependencies": ["netlify-cms-app"]
-  }
+  },
+  "gatsby-source-strapi": { "message": "Strapi" }
 }
