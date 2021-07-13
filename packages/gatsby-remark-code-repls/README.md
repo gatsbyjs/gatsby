@@ -97,6 +97,21 @@ import { foo } from "./utils"
 import "./index.css"
 ```
 
+### Creating StackBlitz Example With Multiple Files
+
+StackBlitz also supports code example with multiple files. With this plugin, you can do:
+
+```html
+[Try it on
+StackBlitz](stackblitz://my-example/index.js,my-example/util.js,my-example/index.css)
+```
+
+> Caveat
+>
+> Depending on the template you pick, you _must_ have some files specified for that template. [StackBlitz includes documentation outlining which of these files are needed for which template](https://developer.stackblitz.com/docs/platform/javascript-sdk/#required-files-for-templates)
+>
+> The default template is set to `javascript`
+
 ### How does it work?
 
 Codepen links point to Gatsby pages (also created by this plug-in) that redirect
@@ -177,6 +192,15 @@ specified examples directory. (This will avoid broken links at runtime.)
       // Optional runtime dependencies to load from NPM.
       // e.g. ['react', 'react-dom'] or ['react@15', 'react-dom@15']
       dependencies: [],
+    },
+
+    stackblitz: {
+      // Optional runtime dependencies to load from NPM.
+      // e.g. ['react', 'react-dom'] or ['react@15', 'react-dom@15']
+      dependencies: [],
+      // Which template you want StackBlitz to use to setup your project
+      // e.g. 'angular-cli' or 'create-react-app'
+      template: 'javascript',
     }
   },
 },

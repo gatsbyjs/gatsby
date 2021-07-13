@@ -12,6 +12,7 @@ const baseOptions = {
   PROTOCOL_CODEPEN: `codepen://`,
   PROTOCOL_CODE_SANDBOX: `codesandbox://`,
   PROTOCOL_RAMDA: `ramda://`,
+  PROTOCOL_STACKBLITZ: `stackblitz://`,
 }
 module.exports = {
   ...baseOptions,
@@ -26,5 +27,9 @@ module.exports = {
   OPTION_DEFAULT_CODESANDBOX: {
     html: DEFAULT_HTML,
     dependencies: [],
+  },
+  OPTION_DEFAULT_STACKBLITZ: {
+    dependencies: [],
+    template: `javascript`,
   },
 }
