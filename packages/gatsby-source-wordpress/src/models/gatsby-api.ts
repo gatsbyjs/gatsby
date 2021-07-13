@@ -107,6 +107,7 @@ export interface IPluginOptions {
       lazyNodes?: boolean
       localFile?: {
         excludeByMimeTypes?: Array<string>
+        httpOptions?: any
         maxFileSizeBytes?: number
         requestConcurrency?: number
       }
@@ -212,6 +213,9 @@ const defaultPluginOptions: IPluginOptions = {
       lazyNodes: false,
       localFile: {
         excludeByMimeTypes: [],
+        httpOptions: {
+          agent: null,
+        },
         maxFileSizeBytes: 15728640, // 15Mb
         requestConcurrency: 100,
       },

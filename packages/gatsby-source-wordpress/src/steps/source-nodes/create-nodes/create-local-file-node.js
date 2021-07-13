@@ -303,7 +303,6 @@ export const createLocalFileNode = async ({
         // if media items are hosted on another url like s3,
         // using the htaccess creds will throw 400 errors
         const shouldUseHtaccessCredentials = wpUrlHostname === mediaItemHostname
-
         const auth =
           htaccessCredentials && shouldUseHtaccessCredentials
             ? {
