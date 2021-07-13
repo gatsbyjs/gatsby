@@ -121,6 +121,20 @@ const server = setupServer(
       ctx.status(200),
       ctx.body(content)
     )
+  }),
+  rest.get(`http://external.com/dog-cached.jpg`, async (req, res, ctx) => {
+    const { content, contentLength } = await getFileContent(
+      path.join(__dirname, `./fixtures/dog-thumbnail.jpg`),
+      req
+    )
+
+    return res(
+      ctx.set(`Content-Type`, `image/svg+xml`),
+      ctx.set(`Content-Length`, contentLength),
+      ctx.set(`Cache-Control`, `public, max-age=1000`),
+      ctx.status(200),
+      ctx.body(content)
+    )
   })
 )
 
@@ -129,10 +143,17 @@ function createMockCache() {
     path.join(os.tmpdir(), `gatsby-source-filesystem-`)
   )
 
-  return {
-    get: jest.fn(),
-    set: jest.fn(),
-    directory: tmpDir,
+  if (process.env.GATSBY_EXPERIMENTAL_HTTP_CACHEABLE_REQUEST === `true`) {
+    const cache = new Map()
+    // @ts-ignore
+    cache.directory = tmpDir
+    return cache
+  } else {
+    return {
+      get: jest.fn(),
+      set: jest.fn(),
+      directory: tmpDir,
+    }
   }
 }
 
@@ -168,6 +189,45 @@ describe(`create-remote-file-node`, () => {
     expect(path.basename(filePath)).toBe(`logo.svg`)
     expect(gotStream).toBeCalledTimes(1)
   })
+
+  if (process.env.GATSBY_EXPERIMENTAL_HTTP_CACHEABLE_REQUEST === `true`) {
+    it(`downloads only once for a cached file`, async () => {
+      let requstCount = 0
+      server.on(`request:start`, () => {
+        requstCount++
+      })
+      const filePath = await fetchRemoteFile({
+        url: `http://external.com/dog-cached.jpg`,
+        cache,
+      })
+      await fetchRemoteFile({
+        url: `http://external.com/dog-cached.jpg`,
+        cache,
+      })
+      console.debug(cache)
+      expect(path.basename(filePath)).toBe(`dog-cached.jpg`)
+      expect(gotStream).toBeCalledTimes(2)
+      expect(requstCount).toEqual(1)
+    })
+
+    it(`downloads each time for a non cached file`, async () => {
+      let requstCount = 0
+      server.on(`request:start`, () => {
+        requstCount++
+      })
+      const filePath = await fetchRemoteFile({
+        url: `http://external.com/dog.jpg`,
+        cache,
+      })
+      await fetchRemoteFile({
+        url: `http://external.com/dog.jpg`,
+        cache,
+      })
+      expect(path.basename(filePath)).toBe(`dog.jpg`)
+      expect(gotStream).toBeCalledTimes(2)
+      expect(requstCount).toEqual(2)
+    })
+  }
 
   it(`downloads and create a gzip file`, async () => {
     const filePath = await fetchRemoteFile({
