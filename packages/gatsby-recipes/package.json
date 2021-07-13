@@ -118,7 +118,7 @@
     "@mdx-js/runtime": "^2.0.0-next.4",
     "graphql": "^15.5.1",
     "property-information": "5.5.0",
-    "remark-mdx": "^2.0.0-next.4",
+    "remark-mdx": "^2.0.0-next.9",
     "remark-mdxjs": "^2.0.0-next.4"
   },
   "scripts": {
