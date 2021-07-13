@@ -30,44 +30,81 @@ import { MdInfo } from 'react-icons/md'
 
 ## Introduction
 
-SET CONTEXT AND RELEVANCE FOR THIS SECTION. BIG IDEAS: TRANSFORMER PLUGINS LET YOU MANIPULATE DATA NODES IN THE DATA LAYER. SIDE NOTE: MDX IS A POWERFUL FORMAT FOR WRITING SITE CONTENT.
+In Part 4, you used the `gatsby-source-filesystem` source plugin to build a Blog page that lists the names of your blog post files. But you weren't able to actually render the contents of your post files, because `gatsby-source-filesystem` doesn't provide a field for it. To do that, you'll need another type of plugin called a **transformer plugin**.
 
-In this part of the Tutorial, you'll learn about how to ???.
+Sometimes, the format of the data you get from source plugins isn’t what you want to use to build your website. For example, the filesystem source plugin lets you query data *about* files, but it doesn't let you use the data *inside* the files themselves. To make this possible, Gatsby supports transformer plugins, which take the raw content from source plugins and transform it into something more usable.
+
+In this part of the Tutorial, you'll learn about one particular transformer plugin, `gatsby-plugin-mdx`, which lets you use [MDX](https://mdxjs.com/), a file format that allows Markdown and JSX alongside your text content. (Fun fact: this Tutorial is actually written in MDX!) You'll use MDX to add some content to your blog post files, and then you'll use `gatsby-plugin-mdx` to render the contents of your posts on your Blog page.
 
 By the end of this part of the Tutorial, you will be able to:
 
-- Do something.
-- SHOULD WE TEACH THEM ABOUT THE PARENT FIELD? possibly use the parent field to get access to the "changeTime" field, so they can add a "Updated: XXXXX" date to their post? (Possibly have to teach them about GraphQL fragments then...)
+- Write an MDX file with Markdown formatting and frontmatter.
+- Use the `gatsby-plugin-mdx` plugin to render the contents of your MDX files on your Blog page.
+- Use the `sort` field to control the order of results in your GraphQL queries.
 
 https://github.com/meganesu/gatsby-intro-workshop-example-site-with-v3/commit/207d5d11d72e972ac1ec5507159ff2c4460c98b9
 
-## Tranformer plugins
+## A closer look at Gatsby's GraphQL data layer
 
-![WORDS](./data-layer-with-nodes.png)
+To understand how `gatsby-plugin-mdx` and other transformer plugins work, you need to know a bit more about how Gatsby’s GraphQL data layer works.
+
+Inside the data layer, information is stored in objects called **nodes**. Different source plugins create different types of nodes, each of which have their own properties. For example, `gatsby-source-filesystem` creates File nodes.
+
+A **transformer plugin** converts nodes from one type to another. For example, the `gatsby-plugin-mdx` plugin transforms File nodes that have the `.mdx` extension into MDX nodes, which have a different set of fields that you can query using GraphQL. Transformer plugins let you manipulate the raw data in the nodes created by source plugins, so that you can get it into the structure or format you need.
+
+![The gatsby-source-filesystem plugin pulls data from your local filesystem into Gatsby's GraphQL data layer as File nodes. Then the gatsby-plugin-mdx transformer plugin uses those File nodes to create new MDX nodes. Finally, you can use GraphQL queries to pull data from the MDX nodes into your components.](./data-layer-with-nodes.png)
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-(It's called a transformer plugin, but it's not actually changing the original nodes. It creates new nodes based on the originals, but with different data fields. You can see fields from the original node in the `parent` field.)
+**Note:** Even though it's called a transformer plugin, it's not actually *changing* the original nodes created by the source plugins. Each transformer plugin creates new nodes based on the data from the sourced nodes, but it doesn't actually change the source nodes themselves. So even though `gatsby-plugin-mdx` creates new MDX nodes, you can still access the original File nodes created by `gatsby-source-filesystem`.
 
 </Announcement>
 
 In this part of the Tutorial, you'll learn how to use a transformer plugin to create MDX nodes from your File nodes.
 
-## Task: post contents
+## Add some MDX content to your blog posts
 
-Add page contents with Markdown
+In Part 4, you created empty files for your blog posts. Now, it's time to fill them in!
 
-<Collapsible>
-Markdown format
+<Collapsible
+  summary={<h3>Using Markdown formatting in MDX</h3>}
+>
 
-Frontmatter
-</Collapsible>
+MDX files let you format text using Markdown, a markup language that uses a special syntax to add special formatting to your text elements. For example, if you can make text appear **strong** by wrapping it in `**double asterisks**`, or you can create a link by using a syntax like `[text to link](url)`.
 
-<Announcement>
+Once you get used to what all the different symbols mean, Markdown can be easier to read than HTML, which makes it a popular format for written content like blog posts.
 
-Want to add photos to your Markdown? You'll need some additional plugins for that: [gatsby-remark-images](/plugins/gatsby-remark-images/) (for translating the images) and [gatsby-plugin-sharp](/plugins/gatsby-plugin-sharp/) (which you installed already in Part 3).
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**New to Markdown?** The MDX documentation includes a [table of components](https://mdxjs.com/table-of-components) that shows the different formatting options available. It includes things like headings, blockquotes, lists, and code blocks. 
 
 </Announcement>
+
+#### Frontmatter
+
+With `gatsby-plugin-mdx`, you can also add **frontmatter** to your MDX files. Frontmatter is additional metadata about your file. It won't be rendered on your page, but it's a way for you to add some extra details about your content. For example, you might store your post title or the date it was published.
+
+To add frontmatter to your post, put it between an opening and closing set of three hyphens (`---`) at the top of your MDX file. Within the opening and closing hyphens, you can create key-value pairs for any kind of data you want to store about your file.
+
+Here's an example:
+
+```mdx
+---
+name: "Fun Facts about Red Pandas"
+datePublished: "2021-07-12"
+author: "#1 Red Panda Fan"
+---
+```
+
+You'll learn more about how to access the frontmatter for your posts later on.
+
+</Collapsible>
+
+Add some Markdown content to each of the `.mdx` files you created in your `/blog` directory in Part 4. 
+
+Include frontmatter with fields for the title of each post and the date it was published. (Give each post a different date, to make it easier to add sorting later on.) After the frontmatter, write some post content using some Markdown syntax.
+
+Here are some example posts that you can use for inspiration:
 
 ```mdx:title=blog/my-first-post.mdx
 ---
@@ -102,7 +139,15 @@ date: "2021-07-25"
 Wow look at all this content. How do they do it?
 ```
 
-## Task: install and configure MDX plugin (and dependencies)
+## Render each post's contents on the Blog page
+
+Now that you have some MDX content inside your blog posts, it's time to render them on your Blog page. You'll do that in a few different steps:
+
+1. Install and configure `gatsby-plugin-mdx` and its dependencies.
+2. Update the Blog page query to use the `allMdx` field from `gatsby-plugin-mdx` instead of `allFile`.
+3. Use the `MDXRenderer` component from `gatsby-plugin-mdx` to render your post's MDX contents in the JSX for your Blog page.
+
+### Task: Install and configure the MDX transformer plugin (and dependencies)
 
 There's a plugin to help you add support for MDX content to your site: `gatsby-plugin-mdx`.
 
@@ -141,17 +186,53 @@ module.exports = {
 };
 ```
 
-## Task: query
+// WORKSHOP
+
+The `gatsby-plugin-mdx` plugin provides some new tools for you to use in your site:
+
+* The `allMdx` and `mdx` fields (for your GraphQL queries)
+* An `MDXRenderer` component (for processing and displaying MDX content)
+
+You'll take a closer look at both of these pieces in the next few sections.
+
+// END WORKSHOP
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Tip:** There are a variety of [remark](https://remark.js.org/) plugins that you can use to add extra features to your Markdown. You can configure them using the [`gatsbyRemarkPlugins`](/plugins/gatsby-plugin-mdx/#gatsby-remark-plugins) option when you configure `gatsby-plugin-mdx` in your `gatsby-config.js` file.
+
+Here are some popular remark plugins:
+
+* [`gatsby-remark-images`](/plugins/gatsby-remark-images/): Use this if you want to use the Markdown image syntax (which looks like this: `![alt](image url)`).
+    * To use this plugin, you'll also need `gatsby-plugin-sharp`, which you installed already in Part 3.
+* [`gatsby-remark-prismjs`](/plugins/gatsby-remark-prismjs/): Add syntax highlighting to your code blocks.
+* [`gatsby-remark-autolink-headers`](/plugins/gatsby-remark-autolink-headers/): Automatically create links for all the headers in your Markdown content.
+
+Try searching for `gatsby-remark-` in the [Gatsby Plugin Library](/plugins/) for a full list.
+
+</Announcement>
+
+### Task: query
 
 In GraphiQL, there are now two new fields available for you to use in your queries: `allMdx` and `mdx`. In this part of the Tutorial, you'll use `allMdx` to add the contents of each blog post to your Blog page. (You'll use `mdx` later on, in Part 6.)
 
-<Collapsible>
-allMdx field in GraphiQL
+<Collapsible
+  summary="allMdx field in GraphiQL"
+>
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+You can see fields from the original node in the `parent` field. TRY IT IN GRAPHIQL. THE ORIGINAL NODES WILL STILL BE THERE.
+
+- SHOULD WE TEACH THEM ABOUT THE PARENT FIELD? possibly use the parent field to get access to the "changeTime" field, so they can add a "Updated: XXXXX" date to their post? (Possibly have to teach them about GraphQL fragments then...) (only as a callout.)
+
+</Announcement>
+
 </Collapsible>
 
 Write a query to get your MDX content. Let's start by getting just the front matter. While you're at it, you can also grab the `id` field, which you can use as a React `key` for the items in your list.
 
-You can change the format of the `date` string using [Momment.js formatting tokens](https://momentjs.com/docs/#/displaying/format/).
+You can change the format of the `date` string using [Moment.js formatting tokens](https://momentjs.com/docs/#/displaying/format/).
 
 ```graphql
 query MyQuery {
@@ -191,7 +272,7 @@ query MyQuery {
 }
 ```
 
-## Task: render frontmatter instead of filename
+### Task: render frontmatter instead of filename
 
 Swap out the existing page query in your Blog page with the one you built in GraphiQL. You'll also need to update the code for mapping over the nodes in the response.
 
@@ -238,7 +319,7 @@ export default BlogPage
 
 ![WORDS](./blog-page-with-frontmatter.png)
 
-## Task: render post body
+### Task: render post body
 
 The final step in this part of the Tutorial is to render the actual contents of your MDX blog posts. To do that, you'll need to add one more field to your GraphQL query: `body`. In GraphiQL, add the `body` field to your query.
 
@@ -268,10 +349,22 @@ Woah, that's a lot of information! The `body` field actually contains a function
 <Collapsible
   summary="MDXRenderer"
 >
-MDXRenderer
+
+`gatsby-plugin-mdx` also includes a special component that you can use to render the contents from an MDX file: `MDXRenderer`.
+
+`MDXRenderer` uses the `children` prop, similar to the `Layout` component you created earlier. You can pass in the value of the `body` field from an MDX node.
+
+```javascript
+import { MDXRenderer } from 'gatsby-plugin-mdx'
+
+<MDXRenderer>
+  { node.body }
+</MDXRenderer>
+```
+
 </Collapsible>
 
-1. Import the `MDXRenderer` component.
+1. Import the `MDXRenderer` component from `gatsby-plugin-mdx`.
 
 ```js:title=src/pages/blog.js
 import * as React from 'react'
@@ -392,7 +485,10 @@ Once your changes have been pushed to GitHub, Gatsby Cloud should notice the upd
 
 ### Key takeaways
 
-* .
+* Data in Gatsby's GraphQL data layer is stored in **nodes**.
+* Each source plugin creates a different type of node with different fields.
+* Transformer plugins create new types of nodes, using data from existing source nodes as a starting point. Transformer plugins don't actually change the original source nodes.
+* `gatsby-plugin-mdx` is a transformer plugin that lets you use MDX in your site. With MDX, you can create text content with Markdown formatting and embedded React components.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -405,6 +501,8 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 </Announcement>
 
 ### What's coming next?
+
+Right now, all your blog posts and their contents are being rendered in one long page. It would be better if each post lived on its own page, and then the Blog page could link out to all the different posts.
 
 In Part 6, you'll learn how to use Gatsby's filesystem route API to dynamically create new pages for each of your blog posts.
 
