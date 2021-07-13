@@ -156,10 +156,14 @@ export const routeThroughBrowserOrApp = (
   if (hashShouldBeFollowed(origin, destination)) return true
 
   if (pluginOptions.excludePattern) {
-    const excludeRegex = new RegExp(pluginOptions.excludePattern)
-    if (excludeRegex.test(destination.pathname)) {
-      return true
-    }
+    const patterns = Array.isArray(pluginOptions.excludePattern)
+      ? pluginOptions.excludePattern
+      : [pluginOptions.excludePattern]
+    // eslint-disable-next-line consistent-return
+    patterns.foreach(pattern => {
+      const excludeRegex = new RegExp(pattern)
+      if (excludeRegex.test(destination.pathname)) return true
+    })
   }
 
   event.preventDefault()
