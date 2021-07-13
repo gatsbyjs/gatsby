@@ -452,7 +452,7 @@ module.exports = {
   // Set up API proxy.
   const { proxy } = store.getState().config
   if (proxy) {
-    proxy.forEach(({ prefix, url }) => {
+    proxy.forEach(({ prefix, url, followRedirect }) => {
       app.use(`${prefix}/*`, (req, res) => {
         const proxiedUrl = url + req.originalUrl
         const {
@@ -464,7 +464,12 @@ module.exports = {
         req
           .pipe(
             got
-              .stream(proxiedUrl, { headers, method, decompress: false })
+              .stream(proxiedUrl, {
+                headers,
+                method,
+                decompress: false,
+                followRedirect: followRedirect !== false,
+              })
               .on(`response`, response =>
                 res.writeHead(response.statusCode || 200, response.headers)
               )
