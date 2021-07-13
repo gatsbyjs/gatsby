@@ -2,6 +2,7 @@ import WebpackAssetsManifest from "webpack-assets-manifest"
 import { captureEvent } from "gatsby-telemetry"
 import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
+import createSSRRoutes from "./create-ssr-routes"
 import copyFunctionsManifest from "./copy-functions-manifest"
 import createRedirects from "./create-redirects"
 import { readJSON } from "fs-extra"
@@ -36,7 +37,7 @@ exports.onPostBuild = async (
   const pluginData = makePluginData(store, assetsManifest, pathPrefix)
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
-  const { redirects, pageDataStats, nodes } = store.getState()
+  const { redirects, pageDataStats, nodes, pages } = store.getState()
 
   let nodesCount
 
@@ -60,6 +61,17 @@ exports.onPostBuild = async (
     },
   })
 
+  const ssrRoutes = []
+
+  for (const [pathname, page] of pages) {
+    if (page.mode === `SSR`) {
+      ssrRoutes.push({
+        fromPath: pathname,
+        toPath: `_ssr${pathname}`,
+      })
+    }
+  }
+
   let rewrites = []
   if (pluginOptions.generateMatchPathRewrites) {
     const matchPathsFile = joinPath(
@@ -82,6 +94,7 @@ exports.onPostBuild = async (
     buildHeadersProgram(pluginData, pluginOptions, reporter),
     createRedirects(pluginData, redirects, rewrites),
     copyFunctionsManifest(pluginData),
+    createSSRRoutes(pluginData, ssrRoutes),
   ])
 }
 
