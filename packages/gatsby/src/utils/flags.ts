@@ -185,6 +185,20 @@ const activeFlags: Array<IFlag> = [
       return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
     },
   },
+  {
+    name: `PARALLEL_QUERY_RUNNING`,
+    env: `GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING`,
+    command: `build`,
+    telemetryId: `PQR`,
+    experimental: true,
+    umbrellaIssue: `https://gatsby.dev/pqr-feedback`,
+    description: `Parallelize running page queries in order to better sature all available cores. Improves time it takes to run queries during gatsby build.`,
+    includedFlags: [`LMDB_STORE`],
+    testFitness: (): fitnessEnum => {
+      const [major, minor] = process.versions.node.split(`.`)
+      return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
+    },
+  },
 ]
 
 export default activeFlags
