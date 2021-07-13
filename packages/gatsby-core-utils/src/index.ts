@@ -7,7 +7,11 @@ export { createRequireFromPath } from "./create-require-from-path"
 export { getConfigStore } from "./get-config-store"
 export { getGatsbyVersion } from "./get-gatsby-version"
 export { getTermProgram } from "./get-term-program"
-export { fetchRemoteFile, IFetchRemoteFileOptions } from "./fetch-remote-file"
+export {
+  fetchRemoteFile,
+  fetchRemoteFileWithCache,
+  IFetchRemoteFileOptions,
+} from "./fetch-remote-file"
 export { isTruthy } from "./is-truthy"
 export { getMatchPath } from "./match-path"
 export * from "./service-lock"

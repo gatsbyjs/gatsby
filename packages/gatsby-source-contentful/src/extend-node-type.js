@@ -14,10 +14,11 @@ const {
   GraphQLJSON,
   GraphQLList,
 } = require(`gatsby/graphql`)
-const qs = require(`qs`)
-const { stripIndent } = require(`common-tags`)
+const { fetchRemoteFileWithCache } = require(`gatsby-core-utils`)
 
-const cacheImage = require(`./cache-image`)
+const { stripIndent } = require(`common-tags`)
+const qs = require(`qs`)
+
 const downloadWithRetry = require(`./download-with-retry`).default
 const {
   ImageFormatType,
@@ -31,9 +32,6 @@ const {
 // and store the image cache away from the gatsby cache. After all, the gatsby
 // cache is more likely to go stale than the images (which never go stale)
 // Note that the same image might be requested multiple times in the same run
-
-// Supported Image Formats from https://www.contentful.com/developers/docs/references/images-api/#/reference/changing-formats/image-format
-const validImageFormats = new Set([`jpg`, `png`, `webp`, `gif`])
 
 if (process.env.GATSBY_REMOTE_CACHE) {
   console.warn(
@@ -60,10 +58,20 @@ const resolvedBase64Cache = new Map()
 // @see https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-width-&-height
 const CONTENTFUL_IMAGE_MAX_SIZE = 4000
 
-const isImage = image =>
-  [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`].includes(
-    image?.file?.contentType
-  )
+// Supported Image Formats from https://www.contentful.com/developers/docs/references/images-api/#/reference/changing-formats/image-format
+const validImageFormats = new Set([`jpg`, `png`, `webp`, `gif`])
+
+const mimeTypeExtensions = new Map([
+  [`image/jpeg`, `.jpg`],
+  [`image/jpg`, `.jpg`],
+  [`image/gif`, `.gif`],
+  [`image/png`, `.png`],
+  [`image/webp`, `.webp`],
+])
+
+exports.mimeTypeExtensions = mimeTypeExtensions
+
+const isImage = image => mimeTypeExtensions.has(image?.file?.contentType)
 
 // Note: this may return a Promise<body>, body (sync), or null
 const getBase64Image = (imageProps, reporter) => {
@@ -666,7 +674,7 @@ const fluidNodeType = ({ name, getTracedSVG, reporter }) => {
   }
 }
 
-exports.extendNodeType = ({ type, store, reporter }) => {
+exports.extendNodeType = ({ type, cache, reporter }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
@@ -676,15 +684,23 @@ exports.extendNodeType = ({ type, store, reporter }) => {
 
     const { image, options } = args
     const {
-      file: { contentType },
+      file: { contentType, url: imgUrl, fileName },
     } = image
 
     if (contentType.indexOf(`image/`) !== 0) {
       return null
     }
 
-    const absolutePath = await cacheImage(store, image, options, reporter)
-    const extension = path.extname(absolutePath)
+    const extension = mimeTypeExtensions.get(contentType)
+    const url = `https:` + createUrl(imgUrl, options)
+    const name = path.basename(fileName, extension)
+
+    const absolutePath = await fetchRemoteFileWithCache({
+      url,
+      name,
+      cache,
+      ext: extension,
+    })
 
     return traceSVG({
       file: {
@@ -712,7 +728,29 @@ exports.extendNodeType = ({ type, store, reporter }) => {
     }
 
     try {
-      const absolutePath = await cacheImage(store, image, options, reporter)
+      const {
+        file: { contentType, url: imgUrl, fileName },
+      } = image
+
+      if (contentType.indexOf(`image/`) !== 0) {
+        return null
+      }
+
+      // 256px should be enough to properly detect the dominant color
+      if (!options.width) {
+        options.width = 256
+      }
+
+      const extension = mimeTypeExtensions.get(contentType)
+      const url = `https:` + createUrl(imgUrl, options)
+      const name = path.basename(fileName, extension)
+
+      const absolutePath = await fetchRemoteFileWithCache({
+        url,
+        name,
+        cache,
+        ext: extension,
+      })
 
       if (!(`getDominantColor` in pluginSharp)) {
         console.error(
