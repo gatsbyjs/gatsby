@@ -5,8 +5,8 @@
   "license": "MIT",
   "dependencies": {
     "@sindresorhus/slugify": "^1.0.0",
-    "faunadb": "^4.3.0",
-    "gatsby": "3.10.0-next.3-dev-1626079081315",
+    "gatsby": "alpha-9689ff",
+    "gatsby-plugin-gatsby-cloud": "alpha-9689ff",
     "gatsby-source-filesystem": "^3.9.0",
     "gatsby-transformer-remark": "^4.6.0",
     "node-fetch": "^2.6.1",

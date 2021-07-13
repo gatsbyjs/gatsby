@@ -38,6 +38,16 @@ export default function Home({ data }) {
             </li>
           )
         })}
+
+        <li className={postListItemCss}>
+          <div className={postTeaserCss}>
+            <h2 className={postTeaserTitleCss}>
+              <Link to={`/products/`} className={postTeaserLinkCss}>
+                Products
+              </Link>
+            </h2>
+          </div>
+        </li>
       </ul>
     </Layout>
   )
