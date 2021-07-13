@@ -31,7 +31,7 @@ export function createPage(
 ): void {
   // Filter out special components that shouldn't be made into
   // pages.
-  if (!validatePath(filePath)) {
+  if (!ignore?.overrideDefaults && !validatePath(filePath)) {
     return
   }
 

@@ -3,6 +3,7 @@ import { isMatch, Options as mmOptions } from "micromatch"
 export interface IPathIgnoreOptions {
   patterns?: string | ReadonlyArray<string>
   options?: mmOptions
+  overrideDefaults?: boolean
 }
 
 export function ignorePath(
