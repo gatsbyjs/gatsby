@@ -45,4 +45,5 @@ export interface IBuildContext {
   queryFilesDirty?: boolean
   sourceFilesDirty?: boolean
   pendingQueryRuns?: Set<string>
+  schemaDirty?: boolean
 }
