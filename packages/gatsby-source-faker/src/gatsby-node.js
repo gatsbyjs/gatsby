@@ -29,3 +29,45 @@ exports.sourceNodes = (
     createNode(Object.assign({}, nodeBase, item))
   }
 }
+
+exports.createSchemaCustomization = ({ actions, schema }, pluginOptions) => {
+  const { createTypes } = actions
+  const { schema: optionsSchema, type } = pluginOptions
+
+  Object.keys(optionsSchema).map(schemaKey => {
+    let fields = {}
+    const schemaItemList = optionsSchema[schemaKey]
+
+    schemaItemList.forEach(schemaItem => {
+      fields[schemaItem] = `String`
+    })
+
+    const typeDefs = [
+      schema.buildObjectType({
+        name: `${type}${schemaKey[0].toUpperCase() + schemaKey.substring(1)}`,
+        fields,
+      }),
+    ]
+
+    createTypes(typeDefs)
+  })
+
+  let fields = {}
+  Object.keys(optionsSchema).map(schemaKey => {
+    fields[schemaKey] = `${type}${
+      schemaKey[0].toUpperCase() + schemaKey.substring(1)
+    }`
+  })
+
+  const typeDefs = [
+    schema.buildObjectType({
+      name: type,
+      fields,
+      interfaces: [`Node`],
+      extensions: {
+        infer: true,
+      },
+    }),
+  ]
+  createTypes(typeDefs)
+}
