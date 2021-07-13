@@ -179,7 +179,7 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `LmdbStore`,
     experimental: true,
     umbrellaIssue: `https://gatsby.dev/lmdb-feedback`,
-    description: `Store nodes in a persistent embedded database (vs in-memory). Lowers peak memory usage.`,
+    description: `Store nodes in a persistent embedded database (vs in-memory). Lowers peak memory usage. Requires Node v14.10 or above.`,
     testFitness: (): fitnessEnum => {
       const [major, minor] = process.versions.node.split(`.`)
       return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
@@ -192,7 +192,7 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `PQR`,
     experimental: true,
     umbrellaIssue: `https://gatsby.dev/pqr-feedback`,
-    description: `Parallelize running page queries in order to better sature all available cores. Improves time it takes to run queries during gatsby build.`,
+    description: `Parallelize running page queries in order to better sature all available cores. Improves time it takes to run queries during gatsby build. Requires Node v14.10 or above.`,
     includedFlags: [`LMDB_STORE`],
     testFitness: (): fitnessEnum => {
       const [major, minor] = process.versions.node.split(`.`)
