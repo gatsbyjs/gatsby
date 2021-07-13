@@ -127,7 +127,12 @@ class ControllableScript {
 
     this.isRunning = false
     if (signal) {
-      this.process.kill(signal)
+      try {
+        this.process.kill(signal)
+      } catch (err) {
+        // Ignore error if process has crashed
+        // Ref: https://github.com/gatsbyjs/gatsby/issues/28011#issuecomment-877302917
+      }
     } else {
       this.process.send({
         type: `COMMAND`,

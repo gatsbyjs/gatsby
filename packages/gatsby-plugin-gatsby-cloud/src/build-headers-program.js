@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { writeFile, existsSync } from "fs-extra"
+import { createWriteStream, existsSync } from "fs-extra"
 import { parse, posix } from "path"
 import kebabHash from "kebab-hash"
 import { IMMUTABLE_CACHING_HEADER } from "./constants"
@@ -306,7 +306,27 @@ const applyTransfromHeaders = ({ transformHeaders }) => headers =>
   _.mapValues(headers, transformHeaders)
 
 const writeHeadersFile = ({ publicFolder }) => contents =>
-  writeFile(publicFolder(HEADERS_FILENAME), JSON.stringify(contents))
+  new Promise((resolve, reject) => {
+    const contentsStr = JSON.stringify(contents)
+    const writeStream = createWriteStream(publicFolder(HEADERS_FILENAME))
+    const chunkSize = 10000
+    const numChunks = Math.ceil(contentsStr.length / chunkSize)
+
+    for (let i = 0; i < numChunks; i++) {
+      writeStream.write(
+        contentsStr.slice(
+          i * chunkSize,
+          Math.min((i + 1) * chunkSize, contentsStr.length)
+        )
+      )
+    }
+
+    writeStream.end()
+    writeStream.on(`finish`, () => {
+      resolve()
+    })
+    writeStream.on(`error`, reject)
+  })
 
 export default function buildHeadersProgram(
   pluginData,
