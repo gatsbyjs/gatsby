@@ -12,7 +12,6 @@ const fs = require(`fs`)
 
 const { RouteAnnouncerProps } = require(`./route-announcer-props`)
 const { apiRunner, apiRunnerAsync } = require(`./api-runner-ssr`)
-const syncRequires = require(`$virtual/sync-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const { grabMatchParams } = require(`./find-path`)
 
@@ -90,14 +89,16 @@ const ensureArray = components => {
   }
 }
 
-export default async function staticPage({
+export default async function ssrPage({
   pagePath,
+  pageParams,
   pageData,
   staticQueryContext,
   styles,
   scripts,
   reversedStyles,
   reversedScripts,
+  componentModule,
 }) {
   // for this to work we need this function to be sync or at least ensure there is single execution of it at a time
   global.unsafeBuiltinUsage = []
@@ -123,21 +124,7 @@ export default async function staticPage({
         return pageData
       }
 
-      const pageDataPath = getPageDataPath(_pagePath)
-      const pageDataFile = join(process.cwd(), `public`, pageDataPath)
-      try {
-        // deprecation notice
-        const myErrorHolder = {
-          name: `Usage of loadPageDataSync for page other than currently generated page disables incremental html generation in future builds`,
-        }
-        Error.captureStackTrace(myErrorHolder, loadPageDataSync)
-        global.unsafeBuiltinUsage.push(myErrorHolder.stack)
-        const pageDataJson = fs.readFileSync(pageDataFile)
-        return JSON.parse(pageDataJson)
-      } catch (error) {
-        // not an error if file is not found. There's just no page data
-        return null
-      }
+      throw new Error(`Loading a different path is not working in SSR context`)
     }
 
     const replaceBodyHTMLString = body => {
@@ -192,9 +179,15 @@ export default async function staticPage({
 
     const pageDataUrl = getPageDataUrl(pagePath)
 
-    const { componentChunkName, staticQueryHashes = [] } = pageData
+    const { staticQueryHashes = [] } = pageData
 
     const staticQueryUrls = staticQueryHashes.map(getStaticQueryUrl)
+    let serverData = null
+    if (componentModule.getServerData) {
+      serverData = await componentModule.getServerData({
+        params: pageParams,
+      })
+    }
 
     class RouteHandler extends React.Component {
       render() {
@@ -202,13 +195,14 @@ export default async function staticPage({
           ...this.props,
           ...pageData.result,
           params: {
-            ...grabMatchParams(this.props.location.pathname),
+            ...pageParams,
             ...(pageData.result?.pageContext?.__params || {}),
           },
+          serverData,
         }
 
         const pageElement = createElement(
-          syncRequires.components[componentChunkName],
+          componentModule.default ?? componentModule,
           props
         )
 

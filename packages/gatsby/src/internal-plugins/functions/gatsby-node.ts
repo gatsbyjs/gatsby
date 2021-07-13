@@ -494,6 +494,7 @@ export async function onCreateDevServer({
           if (f.matchPath) {
             exp = pathToRegexp(f.matchPath, keys)
           }
+          console.log({ matchpath: f.matchPath, keys, pathFragment })
           if (exp && exp.exec(pathFragment) !== null) {
             functionObj = f
             const matches = [...pathFragment.match(exp)].slice(1)

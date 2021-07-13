@@ -158,7 +158,6 @@ export function calcDirtyHtmlFiles(
 
   state.html.trackedHtmlFiles.forEach(function (htmlFile, path) {
     const page = state.pages.get(path)
-
     if (htmlFile.isDeleted || !page) {
       // FIXME: checking pages state here because pages are not persisted
       // and because of that `isDeleted` might not be set ...

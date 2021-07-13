@@ -1,6 +1,7 @@
 import Bluebird from "bluebird"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
+import { getMatchPath } from "gatsby-core-utils"
 import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
 import { chunk, truncate } from "lodash"
 import webpack, { Stats } from "webpack"
@@ -182,6 +183,234 @@ export const buildRenderer = async (
   })
 
   return doBuildRenderer(program, config, stage, parentSpan)
+}
+
+export const buildSSRRenderer = async (
+  program: IProgram,
+  pages: any,
+  mode: "production" | "development",
+  parentSpan?: IActivity
+): Promise<Array<any>> => {
+  const { directory } = program
+  // TODO refactor to virtual files or improve bundling
+
+  const cacheDir = path.join(directory, `.cache`)
+  const ssrDir = path.join(cacheDir, `_ssr`)
+  await fs.mkdirs(path.join(ssrDir, `page-data`))
+
+  const webpackStats = await fs.readJSON(
+    path.join(directory, `public`, `webpack.stats.json`)
+  )
+
+  const entries = {}
+  const manifest = []
+  for (const page of pages) {
+    if (!entries[page.componentChunkName]) {
+      const stylesSet = new Set()
+      const scriptsSet = new Set()
+      for (const chunkName of [`app`, page.componentChunkName]) {
+        const assets = webpackStats.assetsByChunkName[chunkName]
+        if (!assets) {
+          continue
+        }
+
+        for (const asset of assets) {
+          if (asset === `/`) {
+            continue
+          }
+
+          if (asset.endsWith(`.js`)) {
+            scriptsSet.add(asset)
+          }
+          if (asset.endsWith(`.css`)) {
+            stylesSet.add(asset)
+          }
+        }
+      }
+      await fs.writeFile(
+        path.join(ssrDir, `${page.componentChunkName}.js`),
+        `
+import * as React from 'react';
+import ssrRender from '../static-entry-ssr.js';
+import * as componentModule from "${page.component}"
+import * as webpackStats from "../../public/webpack.stats.json";
+
+const stylesSet = new Set();
+const scriptsSet = new Set();
+for (const chunkName of ["app", "${page.componentChunkName}"]) {
+  const assets = webpackStats.assetsByChunkName[chunkName]
+  if (!assets) {
+    continue
+  }
+
+  for (const asset of assets) {
+    if (asset === "/") {
+      continue
+    }
+
+    if (asset.endsWith('.js')) {
+      scriptsSet.add(asset)
+    }
+    if (asset.endsWith('.css')) {
+      stylesSet.add(asset)
+    }
+  }
+}
+
+const styles = ${JSON.stringify(
+          Array.from(stylesSet).map(asset => {
+            return {
+              name: asset,
+              rel: `preload`,
+              content:
+                mode === `production`
+                  ? fs
+                      .readFileSync(path.join(directory, `public`, asset))
+                      .toString()
+                  : ``,
+            }
+          })
+        )}
+const scripts = ${JSON.stringify(
+          Array.from(scriptsSet).map(asset => {
+            return { name: asset, rel: `preload` }
+          })
+        )}
+const reversedStyles = styles.slice(0).reverse();
+const reversedScripts = scripts.slice(0).reverse();
+
+export default async function ssrPage(req, res) {
+  const { html } = await ssrRender({
+    pagePath: req.originalUrl,
+    pageParams: req.params,
+    pageData: {},
+    staticQueryContext: {},
+    styles,
+    scripts,
+    reversedStyles,
+    reversedScripts,
+    componentModule,
+  });
+
+  res.send(html);
+}
+    `
+      )
+
+      await fs.writeFile(
+        path.join(ssrDir, `page-data`, `${page.componentChunkName}.js`),
+        `
+  import * as React from 'react';
+  import { getServerData } from "${page.component}"
+
+export default async function ssrPageJson(req, res) {
+  let serverData = null;
+  if (getServerData) {
+    serverData = await Promise.resolve(getServerData({
+      params: req.params,
+    }))
+  }
+
+  res.json({
+    "componentChunkName": "${page.componentChunkName}",
+    "path": req.originalUrl.replace('/page-data', '').replace('page-data.json', ''),
+    "result": {
+      "serverData": serverData,
+      "pageContext": {},
+    },
+    "staticQueryHashes": []
+  })
+}
+    `
+      )
+
+      entries[page.componentChunkName] = path.join(
+        ssrDir,
+        `${page.componentChunkName}.js`
+      )
+      entries[`page-data/` + page.componentChunkName] = path.join(
+        ssrDir,
+        `page-data`,
+        `${page.componentChunkName}.js`
+      )
+    }
+
+    manifest.push({
+      functionRoute: `_ssr/${page.path.slice(1)}`,
+      pluginName: `default-site-plugin`,
+      originalAbsoluteFilePath: path.join(
+        ssrDir,
+        `${page.componentChunkName}.js`
+      ),
+      originalRelativeFilePath: path.join(
+        `_ssr`,
+        `${page.componentChunkName}.js`
+      ),
+      relativeCompiledFilePath: path.join(
+        `_ssr`,
+        `${page.componentChunkName}.js`
+      ),
+      absoluteCompiledFilePath: path.join(
+        cacheDir,
+        `functions`,
+        `_ssr`,
+        `${page.componentChunkName}.js`
+      ),
+      matchPath: getMatchPath(`_ssr` + page.path),
+    })
+    manifest.push({
+      functionRoute: `_ssr/page-data/${page.path.slice(1)}`,
+      pluginName: `default-site-plugin`,
+      originalAbsoluteFilePath: path.join(
+        ssrDir,
+        `page-data`,
+        `${page.componentChunkName}.js`
+      ),
+      originalRelativeFilePath: path.join(
+        `_ssr`,
+        `page-data`,
+        `${page.componentChunkName}.js`
+      ),
+      relativeCompiledFilePath: path.join(
+        `_ssr`,
+        `page-data`,
+        `${page.componentChunkName}.js`
+      ),
+      absoluteCompiledFilePath: path.join(
+        cacheDir,
+        `functions`,
+        `_ssr`,
+        `page-data`,
+        `${page.componentChunkName}.js`
+      ),
+      matchPath: getMatchPath(`_ssr/page-data` + page.path),
+    })
+  }
+
+  const config = await webpackConfig(program, directory, `build-html`, null, {
+    parentSpan,
+  })
+  config.entry = entries
+
+  config.output.path = path.join(directory, `.cache`, `functions`, `_ssr`)
+  delete config.output.filename
+
+  const { stats, waitForCompilerClose } = await runWebpack(
+    config,
+    `build-html`,
+    directory,
+    parentSpan
+  )
+
+  const functionsManifest = await fs.readJSON(
+    path.join(cacheDir, `functions`, `manifest.json`)
+  )
+  await fs.writeJSON(path.join(cacheDir, `functions`, `manifest.json`), [
+    ...functionsManifest,
+    ...manifest,
+  ])
+
+  return manifest
 }
 
 export const deleteRenderer = async (rendererPath: string): Promise<void> => {

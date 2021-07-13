@@ -21,6 +21,7 @@ import {
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
 import { emitter } from "../redux"
+import { buildSSRRenderer } from "../commands/build-html"
 
 export async function startWebpackServer({
   program,
@@ -132,6 +133,28 @@ export async function startWebpackServer({
 
       markWebpackStatusAsDone()
       done()
+
+      try {
+        const ssrPages = []
+        for (const [, page] of store.getState().pages) {
+          if (page.mode === `SSR`) {
+            ssrPages.push(page)
+          }
+        }
+
+        const functions = await buildSSRRenderer(
+          program,
+          ssrPages,
+          `development`
+        )
+        store.dispatch({
+          type: `SET_SITE_FUNCTIONS`,
+          payload: functions,
+        })
+      } catch (err) {
+        console.log({ err })
+      }
+
       emitter.emit(`COMPILATION_DONE`, stats)
       resolve({ compiler, websocketManager, webpackWatching })
     })

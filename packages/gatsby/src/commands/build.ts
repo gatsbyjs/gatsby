@@ -6,6 +6,7 @@ import telemetry from "gatsby-telemetry"
 import { updateSiteMetadata, isTruthy } from "gatsby-core-utils"
 import {
   buildRenderer,
+  buildSSRRenderer,
   buildHTMLPagesAndDeleteStaleArtifacts,
   IBuildArgs,
 } from "./build-html"
@@ -212,6 +213,21 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
   } finally {
     buildSSRBundleActivityProgress.end()
+  }
+
+  // TODO Refactor buildRenderer to build per component instead of all pages at once
+  // TODO improve promise handling - do more in parallel
+  try {
+    const ssrPages = []
+    for (const [, page] of store.getState().pages) {
+      if (page.mode === `SSR`) {
+        ssrPages.push(page)
+      }
+    }
+
+    await buildSSRRenderer(program, ssrPages, `production`)
+  } catch (err) {
+    console.log(err)
   }
 
   const {

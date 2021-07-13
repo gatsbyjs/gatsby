@@ -138,6 +138,55 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   }
 
   if (functions) {
+    const ssrRoutes = new Map()
+    functions.forEach(fn => {
+      if (
+        fn.functionRoute.startsWith(`_ssr/`) &&
+        !fn.functionRoute.startsWith(`_ssr/page-data/`)
+      ) {
+        let pathName = fn.functionRoute
+        let pageDataRoute = fn.functionRoute.replace(`_ssr/`, `_ssr/page-data/`)
+        const keys = []
+        if (fn.matchPath) {
+          pathName = pathToRegexp(fn.matchPath, keys)
+          pageDataRoute = pathToRegexp(
+            fn.matchPath.replace(`_ssr/`, `_ssr/page-data/`) +
+              `/page-data.json`,
+            []
+          )
+        }
+
+        ssrRoutes.set(pathName, {
+          apiRoute: `/api/${fn.functionRoute}`,
+          params: keys.map(key => key.name),
+        })
+        ssrRoutes.set(pageDataRoute, {
+          apiRoute: `/api/${fn.functionRoute.replace(
+            `_ssr`,
+            `_ssr/page-data`
+          )}`,
+          params: keys.map(key => key.name),
+        })
+      }
+    })
+
+    app.use(`/`, (req, _, next) => {
+      for (const [ssrPath, ssrFn] of ssrRoutes) {
+        const match = `_ssr${req.path}`.match(ssrPath)
+        if (match) {
+          let url = ssrFn.apiRoute
+          ssrFn.params.forEach((param, index) => {
+            url = url.replace(`[${param}]`, match[index + 1])
+          })
+
+          req.url = url
+          break
+        }
+      }
+
+      next()
+    })
+
     app.use(
       `/api/*`,
       multer().any(),
@@ -173,6 +222,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
             if (f.matchPath) {
               exp = pathToRegexp(f.matchPath, keys)
             }
+
             if (exp && exp.exec(pathFragment) !== null) {
               functionObj = f
               // @ts-ignore - TS bug? https://stackoverflow.com/questions/50234481/typescript-2-8-3-type-must-have-a-symbol-iterator-method-that-returns-an-iterato

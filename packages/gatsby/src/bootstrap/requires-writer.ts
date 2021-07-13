@@ -108,7 +108,7 @@ const getMatchPaths = (
   const matchPathPages: Array<IMatchPathEntry> = []
 
   pages.forEach((page: IGatsbyPage, index: number): void => {
-    if (page.matchPath) {
+    if (page.matchPath && page.mode === `SSG`) {
       matchPathPages.push(createMatchPathEntry(page, index))
     }
   })
