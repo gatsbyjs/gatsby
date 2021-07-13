@@ -1,4 +1,4 @@
-import * as Joi from "@hapi/joi"
+import * as Joi from "joi"
 
 import client from "./client"
 import resourceSchema from "../resource-schema"
@@ -25,13 +25,12 @@ const destroy = async (_context, id) => {}
 
 const all = async () => {}
 
-const schema = {
+const schema = Joi.object({
   name: Joi.string(),
   ...resourceSchema,
-}
+})
 
-const validate = resource =>
-  Joi.validate(resource, schema, { abortEarly: false })
+const validate = resource => schema.validate(resource, { abortEarly: false })
 
 const plan = async (context, { id, name }) => {
   console.log({ context, name, id })

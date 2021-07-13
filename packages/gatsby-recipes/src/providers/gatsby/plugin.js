@@ -3,7 +3,7 @@ import path from "path"
 import { transform } from "@babel/core"
 import * as t from "@babel/types"
 import { declare } from "@babel/helper-plugin-utils"
-import * as Joi from "@hapi/joi"
+import * as Joi from "joi"
 import glob from "glob"
 import prettier from "prettier"
 import { slash } from "gatsby-core-utils"
@@ -520,7 +520,7 @@ export const all = async ({ root }, processPlugins = true) => {
   )
 }
 
-const schema = {
+const schema = Joi.object({
   name: Joi.string(),
   description: Joi.string().optional().allow(null).allow(``),
   options: Joi.object(),
@@ -529,7 +529,7 @@ const schema = {
   shadowableFiles: Joi.array().items(Joi.string()),
   shadowedFiles: Joi.array().items(Joi.string()),
   ...resourceSchema,
-}
+})
 
 const validate = resource => {
   if (REQUIRES_KEYS.includes(resource.name) && !resource._key) {
@@ -544,7 +544,7 @@ const validate = resource => {
     }
   }
 
-  return Joi.validate(resource, schema, { abortEarly: false })
+  return schema.validate(resource, { abortEarly: false })
 }
 
 export { schema, validate }

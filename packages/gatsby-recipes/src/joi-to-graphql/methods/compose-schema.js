@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLSchema } from "graphql"
 import Hoek from "@hapi/hoek"
-import * as Joi from "@hapi/joi"
+import * as Joi from "joi"
 import { typeDictionary } from "../helpers"
 const internals = {}
 

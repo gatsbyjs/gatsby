@@ -1,6 +1,6 @@
 import fs from "fs-extra"
 import path from "path"
-import * as Joi from "@hapi/joi"
+import * as Joi from "joi"
 import singleTrailingNewline from "single-trailing-newline"
 
 import getDiff from "../utils/get-diff"
@@ -137,12 +137,12 @@ export const plan = async (context, args) => {
 
 const message = resource => `Added ${resource.id || resource.name} to gitignore`
 
-const schema = {
+const schema = Joi.object({
   name: Joi.string(),
   ...resourceSchema,
-}
+})
 
 export const validate = resource =>
-  Joi.validate(resource, schema, { abortEarly: false })
+  schema.validate(resource, { abortEarly: false })
 
 export { schema, create, update, read, destroy, all }

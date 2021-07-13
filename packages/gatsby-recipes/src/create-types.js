@@ -1,5 +1,5 @@
 import * as Joi2GQL from "./joi-to-graphql"
-import * as Joi from "@hapi/joi"
+import * as Joi from "joi"
 import { GraphQLString, GraphQLObjectType, GraphQLList } from "graphql"
 import _ from "lodash"
 import { ObjectTypeComposer, schemaComposer } from "graphql-compose"

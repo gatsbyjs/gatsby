@@ -3,7 +3,7 @@ import path from "path"
 import { transform } from "@babel/core"
 import * as t from "@babel/types"
 import { declare } from "@babel/helper-plugin-utils"
-import * as Joi from "@hapi/joi"
+import * as Joi from "joi"
 import prettier from "prettier"
 
 import lock from "../lock"
@@ -239,11 +239,11 @@ export const all = async ({ root }) => {
   })
 }
 
-const schema = {
+const schema = Joi.object({
   value: Joi.string(),
   name: Joi.string(),
   ...resourceSchema,
-}
+})
 
 const validate = resource => {
   if (REQUIRES_KEYS.includes(resource.name) && !resource.key) {
@@ -258,7 +258,7 @@ const validate = resource => {
     }
   }
 
-  return Joi.validate(resource, schema, { abortEarly: false })
+  return schema.validate(resource, { abortEarly: false })
 }
 
 export { schema, validate }

@@ -1,4 +1,4 @@
-import * as Joi from "@hapi/joi"
+import * as Joi from "joi"
 import { getService } from "gatsby-core-utils"
 import fetch from "node-fetch"
 
@@ -79,7 +79,7 @@ export const all = async ({ root }) => {
   return result.data.allSitePage.nodes
 }
 
-const schema = {
+const schema = Joi.object({
   internalComponentName: Joi.string(),
   path: Joi.string(),
   matchPath: Joi.string().optional(),
@@ -92,7 +92,7 @@ const schema = {
     name: Joi.string(),
   }),
   ...resourceSchema,
-}
+})
 
 const validate = resource => {
   if (REQUIRES_KEYS.includes(resource.name) && !resource.key) {
@@ -107,7 +107,7 @@ const validate = resource => {
     }
   }
 
-  return Joi.validate(resource, schema, { abortEarly: false })
+  return schema.validate(resource, { abortEarly: false })
 }
 
 export { schema, validate }

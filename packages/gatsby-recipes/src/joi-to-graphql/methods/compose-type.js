@@ -1,5 +1,5 @@
 import Hoek from "@hapi/hoek"
-import * as Joi from "@hapi/joi"
+import * as Joi from "joi"
 import { joiToGraphql } from "../helpers"
 
 const internals = {}
