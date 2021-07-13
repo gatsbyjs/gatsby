@@ -69,10 +69,12 @@ describe(`GatsbyImage browser`, () => {
     jest.clearAllMocks()
     global.SERVER = undefined
     global.GATSBY___IMAGE = undefined
+    process.env.NODE_ENV = `test`
   })
 
   it(`shows a suggestion to switch to the new gatsby-image API when available`, async () => {
     global.GATSBY___IMAGE = undefined
+    process.env.NODE_ENV = `development`
 
     const { container } = render(
       <GatsbyImage image={image} alt="Alt content" />
