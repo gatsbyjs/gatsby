@@ -16,14 +16,14 @@ const GatsbyImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.fluid ? (
               <GatsbyImage fluid={node.fluid} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -35,14 +35,14 @@ const GatsbyImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.fixed ? (
               <GatsbyImage fixed={node.fixed} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -54,14 +54,14 @@ const GatsbyImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.webp ? (
               <GatsbyImage fixed={node.webp} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -73,14 +73,14 @@ const GatsbyImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.traced ? (
               <GatsbyImage fixed={node.traced} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -92,7 +92,7 @@ const GatsbyImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
@@ -104,7 +104,7 @@ const GatsbyImagePage = ({ data }) => {
                 }}
               />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -116,14 +116,14 @@ const GatsbyImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.fluid ? (
               <GatsbyImage fluid={node.fluid} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -135,14 +135,14 @@ const GatsbyImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.fluid ? (
               <GatsbyImage fluid={node.fluid} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -157,24 +157,24 @@ export const pageQuery = graphql`
   query GatsbyImageQuery {
     default: allContentfulAsset(
       filter: {
-        contentful_id: {
-          in: [
-            "3ljGfnpegOnBTFGhV07iC1"
-            "3BSI9CgDdAn1JchXmY5IJi"
-            "65syuRuRVeKi03HvRsOkkb"
-          ]
+        sys: {
+          id: {
+            in: [
+              "3ljGfnpegOnBTFGhV07iC1"
+              "3BSI9CgDdAn1JchXmY5IJi"
+              "65syuRuRVeKi03HvRsOkkb"
+            ]
+          }
+          locale: { eq: "en-US" }
         }
-        node_locale: { eq: "en-US" }
       }
-      sort: { fields: contentful_id }
+      sort: { fields: sys___id }
     ) {
       nodes {
         title
         description
-        file {
-          fileName
-          url
-        }
+        fileName
+        url
         fluid(maxWidth: 420) {
           ...GatsbyContentfulFluid
         }
@@ -194,18 +194,15 @@ export const pageQuery = graphql`
     }
     english: allContentfulAsset(
       filter: {
-        contentful_id: { in: ["4FwygYxkL3rAteERtoxxNC"] }
-        node_locale: { eq: "en-US" }
+        sys: { id: { in: ["4FwygYxkL3rAteERtoxxNC"] }, locale: { eq: "en-US" } }
       }
-      sort: { fields: contentful_id }
+      sort: { fields: sys___id }
     ) {
       nodes {
         title
         description
-        file {
-          fileName
-          url
-        }
+        fileName
+        url
         fluid(maxWidth: 420) {
           ...GatsbyContentfulFluid
         }
@@ -213,18 +210,15 @@ export const pageQuery = graphql`
     }
     german: allContentfulAsset(
       filter: {
-        contentful_id: { in: ["4FwygYxkL3rAteERtoxxNC"] }
-        node_locale: { eq: "de-DE" }
+        sys: { id: { in: ["4FwygYxkL3rAteERtoxxNC"] }, locale: { eq: "de-DE" } }
       }
-      sort: { fields: contentful_id }
+      sort: { fields: sys___id }
     ) {
       nodes {
         title
         description
-        file {
-          fileName
-          url
-        }
+        fileName
+        url
         fluid(maxWidth: 420) {
           ...GatsbyContentfulFluid
         }

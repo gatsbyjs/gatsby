@@ -214,6 +214,8 @@ describe(`gatsby-node`, () => {
           })
         )
 
+        const file = getFieldValue(asset.fields.file, locale, defaultLocale)
+
         // check if asset exists
         expect(getNode(assetId)).toMatchObject({
           title: getFieldValue(asset.fields.title, locale, defaultLocale),
@@ -222,7 +224,12 @@ describe(`gatsby-node`, () => {
             locale,
             defaultLocale
           ),
-          file: getFieldValue(asset.fields.file, locale, defaultLocale),
+          contentType: file.contentType,
+          fileName: file.fileName,
+          url: file.url,
+          size: file.details.size,
+          width: file.details?.image?.width || null,
+          height: file.details?.image?.height || null,
         })
       })
     })
@@ -672,7 +679,7 @@ describe(`gatsby-node`, () => {
     )
   })
 
-  it(`stores rich text as raw with references attached`, async () => {
+  it(`stores rich text as JSON`, async () => {
     fetch.mockImplementationOnce(richTextFixture.initialSync)
 
     // initial sync
@@ -694,13 +701,11 @@ describe(`gatsby-node`, () => {
     const initNodes = getNodes()
 
     const homeNodes = initNodes.filter(
-      ({ contentful_id: id }) => id === `6KpLS2NZyB3KAvDzWf4Ukh`
+      ({ sys: { id } }) => id === `6KpLS2NZyB3KAvDzWf4Ukh`
     )
+
     homeNodes.forEach(homeNode => {
-      expect(homeNode.content.references___NODE).toStrictEqual([
-        ...new Set(homeNode.content.references___NODE),
-      ])
-      expect(homeNode.content.references___NODE).toMatchSnapshot()
+      expect(homeNode.content).toMatchSnapshot()
     })
   })
 
@@ -739,40 +744,6 @@ describe(`gatsby-node`, () => {
           sourceMessage: `Please check if your localeFilter is configured properly. Locales '${locales.join(
             `,`
           )}' were found but were filtered down to none.`,
-        },
-      })
-    )
-  })
-
-  it(`panics when response contains restricted content types`, async () => {
-    cache.get.mockClear()
-    cache.set.mockClear()
-    fetch.mockImplementationOnce(restrictedContentTypeFixture.initialSync)
-
-    const mockPanicReporter = {
-      ...reporter,
-      panic: jest.fn(),
-    }
-
-    await gatsbyNode.sourceNodes(
-      {
-        actions,
-        store,
-        getNodes,
-        getNode,
-        reporter: mockPanicReporter,
-        createNodeId,
-        cache,
-        getCache,
-        schema,
-      },
-      pluginOptions
-    )
-
-    expect(mockPanicReporter.panic).toBeCalledWith(
-      expect.objectContaining({
-        context: {
-          sourceMessage: `Restricted ContentType name found. The name "reference" is not allowed.`,
         },
       })
     )

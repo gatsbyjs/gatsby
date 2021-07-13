@@ -1,8 +1,8 @@
 const _ = require(`lodash`)
-const stringify = require(`json-stringify-safe`)
 
-const typePrefix = `Contentful`
-const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
+const typePrefix = `ContentfulContentType`
+export const makeTypeName = type =>
+  _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
 const getLocalizedField = ({ field, locale, localesFallback }) => {
   if (!_.isUndefined(field[locale.code])) {
@@ -45,11 +45,18 @@ const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
 
 exports.makeId = makeId
 
+// Generates an unique id over multiple spaces for Gatsby
 const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => (
   spaceId,
   id,
   type
 ) => createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
+
+// Generates an unique id per space for reference resolving
+const generateReferenceId = nodeOrLink =>
+  `${nodeOrLink.sys.id}___${nodeOrLink.sys.linkType || nodeOrLink.sys.type}`
+
+exports.generateReferenceId = generateReferenceId
 
 exports.buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
@@ -71,27 +78,21 @@ exports.buildResolvableSet = ({
   entryList,
   existingNodes = [],
   assets = [],
-  locales,
-  defaultLocale,
 }) => {
   const resolvable = new Set()
   existingNodes.forEach(node => {
-    if (node.internal.owner === `gatsby-source-contentful`) {
+    if (node.internal.owner === `gatsby-source-contentful` && node?.sys?.id) {
       // We need to add only root level resolvable (assets and entries)
       // Derived nodes (markdown or JSON) will be recreated if needed.
-      resolvable.add(`${node.contentful_id}___${node.sys.type}`)
+      resolvable.add(generateReferenceId(node))
     }
   })
 
   entryList.forEach(entries => {
-    entries.forEach(entry =>
-      resolvable.add(`${entry.sys.id}___${entry.sys.type}`)
-    )
+    entries.forEach(entry => resolvable.add(generateReferenceId(entry)))
   })
 
-  assets.forEach(assetItem =>
-    resolvable.add(`${assetItem.sys.id}___${assetItem.sys.type}`)
-  )
+  assets.forEach(assetItem => resolvable.add(generateReferenceId(assetItem)))
 
   return resolvable
 }
@@ -101,7 +102,6 @@ exports.buildForeignReferenceMap = ({
   entryList,
   resolvable,
   defaultLocale,
-  locales,
   space,
   useNameForId,
 }) => {
@@ -133,7 +133,7 @@ exports.buildForeignReferenceMap = ({
               entryItemFieldValue[0].sys.id
             ) {
               entryItemFieldValue.forEach(v => {
-                const key = `${v.sys.id}___${v.sys.linkType || v.sys.type}`
+                const key = generateReferenceId(v)
                 // Don't create link to an unresolvable field.
                 if (!resolvable.has(key)) {
                   return
@@ -154,9 +154,7 @@ exports.buildForeignReferenceMap = ({
             entryItemFieldValue?.sys?.type &&
             entryItemFieldValue.sys.id
           ) {
-            const key = `${entryItemFieldValue.sys.id}___${
-              entryItemFieldValue.sys.linkType || entryItemFieldValue.sys.type
-            }`
+            const key = generateReferenceId(entryItemFieldValue)
             // Don't create link to an unresolvable field.
             if (!resolvable.has(key)) {
               return
@@ -185,52 +183,21 @@ function prepareTextNode(id, node, key, text) {
   const textNode = {
     id,
     parent: node.id,
-    children: [],
-    [key]: str,
+    raw: str,
     internal: {
-      type: _.camelCase(`${node.internal.type} ${key} TextNode`),
+      type: `ContentfulText`,
       mediaType: `text/markdown`,
       content: str,
-      // entryItem.sys.updatedAt is source of truth from contentful
-      contentDigest: node.updatedAt,
-    },
-    sys: {
-      type: node.sys.type,
+      // entryItem.sys.publishedAt is source of truth from contentful
+      contentDigest: node.sys.publishedAt,
     },
   }
-
-  node.children = node.children.concat([id])
 
   return textNode
 }
 
-function prepareJSONNode(id, node, key, content) {
-  const str = JSON.stringify(content)
-  const JSONNode = {
-    ...(_.isPlainObject(content) ? { ...content } : { content: content }),
-    id,
-    parent: node.id,
-    children: [],
-    internal: {
-      type: _.camelCase(`${node.internal.type} ${key} JSONNode`),
-      mediaType: `application/json`,
-      content: str,
-      // entryItem.sys.updatedAt is source of truth from contentful
-      contentDigest: node.updatedAt,
-    },
-    sys: {
-      type: node.sys.type,
-    },
-  }
-
-  node.children = node.children.concat([id])
-
-  return JSONNode
-}
-
 exports.createNodesForContentType = ({
   contentTypeItem,
-  contentTypeItems,
   restrictedNodeFields,
   conflictFieldPrefix,
   entries,
@@ -333,11 +300,7 @@ exports.createNodesForContentType = ({
                 // creating an empty node field in case when original key field value
                 // is empty due to links to missing entities
                 const resolvableEntryItemFieldValue = entryItemFieldValue
-                  .filter(function (v) {
-                    return resolvable.has(
-                      `${v.sys.id}___${v.sys.linkType || v.sys.type}`
-                    )
-                  })
+                  .filter(v => resolvable.has(generateReferenceId(v)))
                   .map(function (v) {
                     return mId(
                       space.sys.id,
@@ -359,14 +322,7 @@ exports.createNodesForContentType = ({
               entryItemFieldValue.sys.type &&
               entryItemFieldValue.sys.id
             ) {
-              if (
-                resolvable.has(
-                  `${entryItemFieldValue.sys.id}___${
-                    entryItemFieldValue.sys.linkType ||
-                    entryItemFieldValue.sys.type
-                  }`
-                )
-              ) {
+              if (resolvable.has(generateReferenceId(entryItemFieldValue))) {
                 entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
                   space.sys.id,
                   entryItemFieldValue.sys.id,
@@ -381,7 +337,7 @@ exports.createNodesForContentType = ({
 
         // Add reverse linkages if there are any for this node
         const foreignReferences =
-          foreignReferenceMap[`${entryItem.sys.id}___${entryItem.sys.type}`]
+          foreignReferenceMap[generateReferenceId(entryItem)]
         if (foreignReferences) {
           foreignReferences.forEach(foreignReference => {
             const existingReference = entryItemFields[foreignReference.name]
@@ -412,30 +368,29 @@ exports.createNodesForContentType = ({
           })
         }
 
+        // Create actual entry node
         let entryNode = {
           id: entryNodeId,
-          spaceId: space.sys.id,
-          contentful_id: entryItem.sys.id,
-          createdAt: entryItem.sys.createdAt,
-          updatedAt: entryItem.sys.updatedAt,
           parent: contentTypeItemId,
           children: [],
           internal: {
             type: `${makeTypeName(contentTypeItemId)}`,
+            // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
+            contentDigest: entryItem.sys.updatedAt,
           },
+          // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
+          // https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/sys-field
           sys: {
             type: entryItem.sys.type,
+            id: entryItem.sys.id,
+            locale: locale.code,
+            spaceId: entryItem.sys.space.sys.id,
+            environmentId: entryItem.sys.environment.sys.id,
+            contentType___NODE: createNodeId(contentTypeItemId),
+            firstPublishedAt: entryItem.sys.createdAt,
+            publishedAt: entryItem.sys.updatedAt,
+            publishedVersion: entryItem.sys.revision,
           },
-        }
-
-        // Revision applies to entries, assets, and content types
-        if (entryItem.sys.revision) {
-          entryNode.sys.revision = entryItem.sys.revision
-        }
-
-        // Content type applies to entries only
-        if (entryItem.sys.contentType) {
-          entryNode.sys.contentType = entryItem.sys.contentType
         }
 
         // Replace text fields with text nodes so we can process their markdown
@@ -478,136 +433,39 @@ exports.createNodesForContentType = ({
 
             entryItemFields[`${entryItemFieldKey}___NODE`] = textNodeId
             delete entryItemFields[entryItemFieldKey]
-          } else if (
-            fieldType === `RichText` &&
-            _.isPlainObject(entryItemFields[entryItemFieldKey])
-          ) {
-            const fieldValue = entryItemFields[entryItemFieldKey]
-
-            const rawReferences = []
-
-            // Locate all Contentful Links within the rich text data
-            const traverse = obj => {
-              for (const k in obj) {
-                const v = obj[k]
-                if (v && v.sys && v.sys.type === `Link`) {
-                  rawReferences.push(v)
-                } else if (v && typeof v === `object`) {
-                  traverse(v)
-                }
-              }
-            }
-
-            traverse(fieldValue)
-
-            // Build up resolvable reference list
-            const resolvableReferenceIds = new Set()
-            rawReferences
-              .filter(function (v) {
-                return resolvable.has(
-                  `${v.sys.id}___${v.sys.linkType || v.sys.type}`
-                )
-              })
-              .forEach(function (v) {
-                resolvableReferenceIds.add(
-                  mId(space.sys.id, v.sys.id, v.sys.linkType || v.sys.type)
-                )
-              })
-
-            entryItemFields[entryItemFieldKey] = {
-              raw: stringify(fieldValue),
-              references___NODE: [...resolvableReferenceIds],
-            }
-          } else if (
-            fieldType === `Object` &&
-            _.isPlainObject(entryItemFields[entryItemFieldKey])
-          ) {
-            const jsonNodeId = createNodeId(
-              `${entryNodeId}${entryItemFieldKey}JSONNode`
-            )
-
-            // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
-            // of an entry did not change, then we can trust that none of its children were changed either.
-            // (That's why child nodes use the updatedAt of the parent node as their digest, too)
-            const existingNode = getNode(jsonNodeId)
-            if (
-              existingNode?.internal?.contentDigest !== entryItem.sys.updatedAt
-            ) {
-              const jsonNode = prepareJSONNode(
-                jsonNodeId,
-                entryNode,
-                entryItemFieldKey,
-                entryItemFields[entryItemFieldKey],
-                createNodeId
-              )
-              childrenNodes.push(jsonNode)
-            }
-
-            entryItemFields[`${entryItemFieldKey}___NODE`] = jsonNodeId
-            delete entryItemFields[entryItemFieldKey]
-          } else if (
-            fieldType === `Object` &&
-            _.isArray(entryItemFields[entryItemFieldKey])
-          ) {
-            entryItemFields[`${entryItemFieldKey}___NODE`] = []
-
-            entryItemFields[entryItemFieldKey].forEach((obj, i) => {
-              const jsonNodeId = createNodeId(
-                `${entryNodeId}${entryItemFieldKey}${i}JSONNode`
-              )
-
-              // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
-              // of an entry did not change, then we can trust that none of its children were changed either.
-              // (That's why child nodes use the updatedAt of the parent node as their digest, too)
-              const existingNode = getNode(jsonNodeId)
-              if (
-                existingNode?.internal?.contentDigest !==
-                entryItem.sys.updatedAt
-              ) {
-                const jsonNode = prepareJSONNode(
-                  jsonNodeId,
-                  entryNode,
-                  entryItemFieldKey,
-                  obj,
-                  createNodeId,
-                  i
-                )
-                childrenNodes.push(jsonNode)
-              }
-
-              entryItemFields[`${entryItemFieldKey}___NODE`].push(jsonNodeId)
-            })
-
-            delete entryItemFields[entryItemFieldKey]
           }
         })
 
         entryNode = {
           ...entryItemFields,
           ...entryNode,
-          node_locale: locale.code,
         }
-
-        // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
-        entryNode.internal.contentDigest = entryItem.sys.updatedAt
 
         return entryNode
       })
       .filter(Boolean)
 
     // Create a node for each content type
+
     const contentTypeNode = {
       id: createNodeId(contentTypeItemId),
-      parent: null,
-      children: [],
       name: contentTypeItem.name,
       displayField: contentTypeItem.displayField,
       description: contentTypeItem.description,
       internal: {
         type: `${makeTypeName(`ContentType`)}`,
       },
+      // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
+      // https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/sys-field
       sys: {
         type: contentTypeItem.sys.type,
+        id: contentTypeItem.sys.id,
+        locale: locale.code,
+        spaceId: contentTypeItem.sys.space.sys.id,
+        environmentId: contentTypeItem.sys.environment.sys.id,
+        firstPublishedAt: contentTypeItem.sys.createdAt,
+        publishedAt: contentTypeItem.sys.updatedAt,
+        publishedVersion: contentTypeItem.sys.revision,
       },
     }
 
@@ -647,35 +505,40 @@ exports.createAssetNodes = ({
       localesFallback,
     })
 
+    const file = getField(assetItem.fields.file)
+
     const assetNode = {
-      contentful_id: assetItem.sys.id,
-      spaceId: space.sys.id,
       id: mId(space.sys.id, assetItem.sys.id, assetItem.sys.type),
-      createdAt: assetItem.sys.createdAt,
-      updatedAt: assetItem.sys.updatedAt,
       parent: null,
       children: [],
-      file: assetItem.fields.file ? getField(assetItem.fields.file) : null,
+      internal: {
+        type: `ContentfulAsset`,
+        // The content of an asset is guaranteed to be updated if and only if the .sys.updatedAt field changed
+        contentDigest: assetItem.sys.updatedAt,
+      },
+      // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
+      // https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/sys-field
+      sys: {
+        type: assetItem.sys.type,
+        id: assetItem.sys.id,
+        locale: locale.code,
+        spaceId: assetItem.sys.space.sys.id,
+        environmentId: assetItem.sys.environment.sys.id,
+        firstPublishedAt: assetItem.sys.createdAt,
+        publishedAt: assetItem.sys.updatedAt,
+        publishedVersion: assetItem.sys.revision,
+      },
       title: assetItem.fields.title ? getField(assetItem.fields.title) : ``,
       description: assetItem.fields.description
         ? getField(assetItem.fields.description)
         : ``,
-      node_locale: locale.code,
-      internal: {
-        type: `${makeTypeName(`Asset`)}`,
-      },
-      sys: {
-        type: assetItem.sys.type,
-      },
+      contentType: file.contentType,
+      fileName: file.fileName,
+      url: file.url,
+      size: file.details.size,
+      width: file.details?.image?.width || null,
+      height: file.details?.image?.height || null,
     }
-
-    // Revision applies to entries, assets, and content types
-    if (assetItem.sys.revision) {
-      assetNode.sys.revision = assetItem.sys.revision
-    }
-
-    // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
-    assetNode.internal.contentDigest = assetItem.sys.updatedAt
 
     createNodePromises.push(createNode(assetNode))
   })

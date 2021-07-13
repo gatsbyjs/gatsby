@@ -1485,6 +1485,13 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@contentful/rich-text-links@^14.1.2":
+  version "14.1.2"
+  resolved "https://registry.yarnpkg.com/@contentful/rich-text-links/-/rich-text-links-14.1.2.tgz#993cd086d55af11f5d31b76060c02a9866c93a01"
+  integrity sha512-oK+y/c42fOJOdRM6XDKNLqw7uwVHZUIRGKzk9fJLDaOt5tygDm0pvgJ9bkvadaBwbAioxlQ0hHS0i5JP+UHkvA==
+  dependencies:
+    "@contentful/rich-text-types" "^14.1.2"
+
 "@contentful/rich-text-react-renderer@^14.1.2":
   version "14.1.2"
   resolved "https://registry.yarnpkg.com/@contentful/rich-text-react-renderer/-/rich-text-react-renderer-14.1.2.tgz#b7fff19faa0512f034f1717774a0d9b348bb07fc"

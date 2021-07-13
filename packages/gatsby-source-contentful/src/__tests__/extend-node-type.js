@@ -21,18 +21,12 @@ describe(`contentful extend node type`, () => {
 
   const image = {
     defaultLocale: `en-US`,
-    file: {
-      url: `//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg`,
-      fileName: `ryugj83mqwa1asojwtwb.jpg`,
-      contentType: `image/jpeg`,
-      details: {
-        size: 28435,
-        image: {
-          width: `4500`,
-          height: `6000`,
-        },
-      },
-    },
+    url: `//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg`,
+    fileName: `ryugj83mqwa1asojwtwb.jpg`,
+    contentType: `image/jpeg`,
+    size: 28435,
+    width: `4500`,
+    height: `6000`,
   }
 
   const nullFileImage = {
