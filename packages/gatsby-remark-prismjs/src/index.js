@@ -94,6 +94,7 @@ module.exports = (
       node.value,
       escapeEntities,
       highlightLines,
+      outputLines,
       noInlineHighlight,
       diffLanguage
     )
