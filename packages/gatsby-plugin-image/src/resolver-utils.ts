@@ -125,6 +125,10 @@ export function getGatsbyImageResolver<TSource, TContext, TArgs>(
   }
 }
 
+export function getGatsbyImageFieldConfig<TSource, TContext, TArgs>(
+  resolve: GraphQLFieldResolver<TSource, TContext>,
+  extraArgs?: GraphQLFieldConfigArgumentMap
+): GraphQLFieldConfig<TSource, TContext, TArgs>
 export function getGatsbyImageFieldConfig<TSource, TContext>(
   resolve: GraphQLFieldResolver<TSource, TContext>,
   extraArgs?: GraphQLFieldConfigArgumentMap
