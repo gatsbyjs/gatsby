@@ -789,6 +789,7 @@ exports.initialSync = () => {
         },
       ],
     },
+    tagItems: [],
   }
 }
 exports.deleteLinkedPage = () => {
@@ -922,5 +923,6 @@ exports.deleteLinkedPage = () => {
         },
       ],
     },
+    tagItems: [],
   }
 }
