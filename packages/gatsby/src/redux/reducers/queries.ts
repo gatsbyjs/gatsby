@@ -244,7 +244,8 @@ function addNodeDependency(
   // Workaround for https://bugs.chromium.org/p/v8/issues/detail?id=2869
   //  Internally in v8 `nodeId` is a `String slice` of a full serialized node
   //  when we put it to state, it retains the full version of this serialized node string
-  const fixedNodeId = ` ${nodeId}`.substr(1)
+  // const fixedNodeId = ` ${nodeId}`.substr(1)
+  const fixedNodeId = nodeId
 
   // Perf: using two-side maps.
   //   Without additional `queryNodes` map we would have to loop through

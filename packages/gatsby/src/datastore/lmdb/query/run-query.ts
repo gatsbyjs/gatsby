@@ -1,4 +1,3 @@
-import { performance } from "perf_hooks"
 import {
   IDataStore,
   ILmdbDatabases,
@@ -14,7 +13,6 @@ import {
   dbQueryToDottedField,
   getFilterStatement,
   IDbFilterStatement,
-  IInputQuery,
   prepareQueryArgs,
 } from "../../common/query"
 import {
@@ -50,15 +48,11 @@ interface IQueryContext {
   limit?: number
   skip: number
   totalCount?: number
-  filter: IInputQuery | undefined
-  filtersCache: Map<any, any>
 }
 
 export async function doRunQuery(args: IDoRunQueryArgs): Promise<IQueryResult> {
   // Note: Keeping doRunQuery method the only async method in chain for perf
   const context = createQueryContext(args)
-
-  // logOnce(`First doRunQuery ${qid(context)}!`)
 
   // Fast-path: filter by node id
   const nodeId = getFilterById(context)
@@ -73,19 +67,11 @@ export async function doRunQuery(args: IDoRunQueryArgs): Promise<IQueryResult> {
   const totalCount = async (): Promise<number> => runCountOnce(context)
 
   if (canUseIndex(context)) {
-    for (const typeName of context.nodeTypeNames) {
-      await createIndex(context, typeName, context.suggestedIndexFields)
-    }
-    // const start = performance.now()
-    // const result: Array<any> = Array.from(performIndexScan(context))
-    // const len = result.length
-    // if (performance.now() - start > 500) {
-    //   console.info(
-    //     `Slow query: ${qid(context)}`,
-    //     len,
-    //     context.suggestedIndexFields
-    //   )
-    // }
+    await Promise.all(
+      context.nodeTypeNames.map(typeName =>
+        createIndex(context, typeName, context.suggestedIndexFields)
+      )
+    )
     return { entries: performIndexScan(context), totalCount }
   }
   return { entries: performFullTableScan(context), totalCount }
@@ -132,14 +118,7 @@ function performIndexScan(context: IQueryContext): GatsbyIterable<IGatsbyNode> {
 
 function runCountOnce(context: IQueryContext): number {
   if (typeof context.totalCount === `undefined`) {
-    const filterId = JSON.stringify(context.filter)
-    const count = context.filtersCache.get(filterId)
-    if (typeof count !== `number`) {
-      context.totalCount = runCount(context)
-      context.filtersCache.set(filterId, context.totalCount)
-    } else {
-      context.totalCount = count
-    }
+    context.totalCount = runCount(context)
   }
   return context.totalCount
 }
@@ -306,8 +285,6 @@ function createQueryContext(args: IDoRunQueryArgs): IQueryContext {
     datastore: args.datastore,
     databases: args.databases,
     nodeTypeNames: args.nodeTypeNames,
-    filtersCache: args.filtersCache,
-    filter: args.queryArgs.filter,
     dbQueries: createDbQueriesFromObject(prepareQueryArgs(filter)),
     sortFields: new Map<string, number>(
       sort?.fields.map((field, i) => [field, isDesc(sort?.order[i]) ? -1 : 1])
