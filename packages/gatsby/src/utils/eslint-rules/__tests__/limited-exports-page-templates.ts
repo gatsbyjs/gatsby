@@ -52,6 +52,18 @@ describe(`no-anonymous-exports-page-templates`, () => {
       test({
         code: `import { graphql } from "gatsby"\nconst Template = () => {}\nconst query = graphql\`test\`\nexport { query }\nexport default Template`,
       }),
+      test({
+        code: `import { graphql } from "gatsby"\nimport Template from './Template'\nconst query = graphql\`test\`\nexport { query }\nexport default Template`,
+      }),
+      test({
+        code: `import { graphql } from "gatsby"\nexport { default } from './Template'\nexport const query = graphql\`test\``,
+      }),
+      test({
+        code: `import { graphql } from "gatsby"\nconst query = graphql\`test\`\nexport { query }\nexport { default } from './Template'`,
+      }),
+      test({
+        code: `import { graphql } from "gatsby"\nexport { Template as default } from './Template'\nexport const query = graphql\`test\``,
+      }),
     ],
     invalid: [
       test({
@@ -84,6 +96,14 @@ describe(`no-anonymous-exports-page-templates`, () => {
       }),
       test({
         code: `import { graphql } from "gatsby"\nconst Template = () => {}\nexport const hello = 10, query = graphql\`test\`\nexport default Template`,
+        errors: [{ messageId: `limitedExportsPageTemplates` }],
+      }),
+      test({
+        code: `import { graphql } from "gatsby"\nexport { Template } from './Template'\nconst query = graphql\`test\`\nexport { query }`,
+        errors: [{ messageId: `limitedExportsPageTemplates` }],
+      }),
+      test({
+        code: `import { graphql } from "gatsby"\nexport { default as Template } from './Template'\nconst query = graphql\`test\`\nexport { query }`,
         errors: [{ messageId: `limitedExportsPageTemplates` }],
       }),
     ],
