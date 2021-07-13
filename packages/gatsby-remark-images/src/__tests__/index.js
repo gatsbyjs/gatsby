@@ -26,7 +26,6 @@ jest.mock(`gatsby-plugin-sharp`, () => {
 
 const Remark = require(`remark`)
 const { Potrace } = require(`potrace`)
-const queryString = require(`query-string`)
 const cheerio = require(`cheerio`)
 const toHAST = require(`mdast-util-to-hast`)
 const hastToHTML = require(`hast-util-to-html`)
@@ -68,7 +67,7 @@ const createPluginOptions = (content, imagePaths = `/`) => {
   return {
     files: [].concat(imagePaths).map(imagePath => {
       return {
-        absolutePath: queryString.parseUrl(`${dirName}/${imagePath}`).url,
+        absolutePath: `${dirName}/${imagePath.split(`?`)[0]}`,
       }
     }),
     markdownNode: createNode(content),
