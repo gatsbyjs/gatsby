@@ -220,12 +220,12 @@ In order to load the product and image data into GraphQL, you need to add a few 
 - Optimize images ([`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/))
 - Add data about optimized images to Gatsby’s data store ([`gatsby-transformer-sharp`](/plugins/gatsby-transformer-sharp/))
 
-In addition to the plugins, we’ll use [`gatsby-image`](/plugins/gatsby-image/) to display the optimized images with lazy loading.
+In addition to the plugins, we’ll use [`gatsby-plugin-image`](/plugins/gatsby-plugin-image/) to display the optimized images with lazy loading.
 
 Install these packages using the command line:
 
 ```shell
-npm install gatsby-source-filesystem gatsby-transformer-json gatsby-plugin-sharp gatsby-transformer-sharp gatsby-image
+npm install gatsby-source-filesystem gatsby-transformer-json gatsby-plugin-sharp gatsby-transformer-sharp gatsby-plugin-image
 ```
 
 Then add them to `gatsby-config.js`:
@@ -330,7 +330,7 @@ Here’s what that looks like in practice:
 ```jsx:title=src/templates/product-graphql.js
 import React from "react"
 import { graphql } from "gatsby"
-import Image from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 
 export const query = graphql`
   query($slug: String!) {
@@ -340,9 +340,7 @@ export const query = graphql`
       price
       image {
         childImageSharp {
-          fluid {
-            ...GatsbyImageSharpFluid
-          }
+          gatsbyImageData(layout: CONSTRAINED, width: 150)
         }
       }
     }
@@ -355,10 +353,10 @@ const Product = ({ data }) => {
   return (
     <div>
       <h1>{product.title}</h1>
-      <Image
-        fluid={product.image.childImageSharp.fluid}
+      <GatsbyImage
+        images={product.image.childImageSharp.gatsbyImageData}
         alt={product.title}
-        style={{ float: "left", marginRight: "1rem", width: 150 }}
+        style={{ float: "left", marginRight: "1rem" }}
       />
       <p>{product.price}</p>
       <div dangerouslySetInnerHTML={{ __html: product.description }} />
@@ -373,8 +371,7 @@ A few notes about this file:
 
 1. The result of the query is added to the template component as the `data` prop.
 2. The image path was automatically converted by the Sharp transformer into a “child node” that includes optimized versions of the image.
-3. The query uses a [GraphQL fragment](/plugins/gatsby-image/#fragments) to query all the required data for optimized images. GraphQL fragments _do not work_ in the GraphQL Playground.
-4. The `img` tag has been swapped out for a `gatsby-image` component named `Image`. Instead of a `src` attribute, it accepts an object with optimized image data.
+3. The `img` tag has been swapped out for a `gatsby-plugin-image` component named `GatsbyImage`. Instead of a `src` attribute, it accepts an object with optimized image data.
 
 Save this file, run `gatsby develop`, then open `http://localhost:8000/gql/purple-hat/`:
 
