@@ -6,8 +6,6 @@ exports[`gatsby-plugin-canonical-urls creates a canonical link if siteUrl is set
     Array [
       Array [
         <link
-          data-basehost="someurl.com"
-          data-baseprotocol="http:"
           href="http://someurl.com/somepost"
           rel="canonical"
         />,
@@ -31,8 +29,6 @@ exports[`gatsby-plugin-canonical-urls strips a trailing slash on the siteUrl and
     Array [
       Array [
         <link
-          data-basehost="someurl.com"
-          data-baseprotocol="http:"
           href="http://someurl.com/somepost?tag=foobar"
           rel="canonical"
         />,
@@ -54,8 +50,6 @@ exports[`gatsby-plugin-canonical-urls strips search parameters if option stripQu
     Array [
       Array [
         <link
-          data-basehost="someurl.com"
-          data-baseprotocol="http:"
           href="http://someurl.com/somepost"
           rel="canonical"
         />,

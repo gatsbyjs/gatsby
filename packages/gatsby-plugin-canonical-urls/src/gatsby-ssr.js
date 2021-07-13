@@ -21,14 +21,6 @@ exports.onRenderBody = (
       pageUrl = parsed.href
     }
 
-    setHeadComponents([
-      <link
-        rel="canonical"
-        key={pageUrl}
-        href={pageUrl}
-        data-baseprotocol={parsed.protocol}
-        data-basehost={parsed.host}
-      />,
-    ])
+    setHeadComponents([<link rel="canonical" key={pageUrl} href={pageUrl} />])
   }
 }
