@@ -129,7 +129,31 @@ module.exports = (
   ) {
     // Check if this markdownNode has a File parent. This plugin
     // won't work if the image isn't hosted locally.
-    const parentNode = getNode(markdownNode.parent)
+    let parentNode = getNode(markdownNode.parent)
+    // check if the parent node is a File node, otherwise go up the chain and
+    // search for the closest parent File node. This is necessary in case
+    // you have markdown in child nodes (e.g. gatsby-plugin-json-remark).
+    if (
+      parentNode &&
+      parentNode.internal &&
+      parentNode.internal.type !== `File`
+    ) {
+      let tempParentNode = parentNode
+      while (
+        tempParentNode &&
+        tempParentNode.internal &&
+        tempParentNode.internal.type !== `File`
+      ) {
+        tempParentNode = getNode(tempParentNode.parent)
+      }
+      if (
+        tempParentNode &&
+        tempParentNode.internal &&
+        tempParentNode.internal.type === `File`
+      ) {
+        parentNode = tempParentNode
+      }
+    }
     let imagePath
     if (parentNode && parentNode.dir) {
       imagePath = slash(path.join(parentNode.dir, getImageInfo(node.url).url))
