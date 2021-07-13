@@ -262,6 +262,21 @@ describe(`worker (share-state)`, () => {
 
     const inf = await worker.single.getInferenceMetadata(`Test`)
 
-    expect(inf).toMatchInlineSnapshot(`null`)
+    expect(inf).toMatchInlineSnapshot(`
+      Object {
+        "dirty": true,
+        "fieldMap": Object {
+          "foo": Object {
+            "string": Object {
+              "example": "bar",
+              "first": "1",
+              "total": 1,
+            },
+          },
+        },
+        "ignoredFields": Object {},
+        "total": 1,
+      }
+    `)
   })
 })
