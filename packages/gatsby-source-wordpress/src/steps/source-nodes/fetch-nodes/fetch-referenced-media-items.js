@@ -271,7 +271,7 @@ const processAndDedupeImageUrls = urls =>
     }, urls)
   )
 
-const fetchMediaItemsBySourceUrl = async ({
+export const fetchMediaItemsBySourceUrl = async ({
   mediaItemUrls,
   selectionSet,
   builtFragments,
@@ -319,10 +319,16 @@ const fetchMediaItemsBySourceUrl = async ({
   // we pass this resolve function into the queue function so it can let us
   // know when it's finished
   let resolveFutureNodes
+  const allResolvedNodes = [...previouslyCachedMediaItemNodes]
+  let resolveCountTogo = mediaItemUrlsPages.length
   const futureNodes = new Promise(resolve => {
-    resolveFutureNodes = (nodes = []) =>
-      // combine our resolved nodes we fetched with our cached nodes
-      resolve([...nodes, ...previouslyCachedMediaItemNodes])
+    // combine our resolved nodes we fetched with our cached nodes
+    resolveFutureNodes = (nodes = []) => {
+      allResolvedNodes.push(...nodes)
+      if (--resolveCountTogo === 0) {
+        resolve(allResolvedNodes)
+      }
+    }
   })
 
   // we have no media items to fetch,
