@@ -783,8 +783,10 @@ module.exports = async (
   }
 
   if (
-    process.env.GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE &&
-    (stage === `develop` || stage === `develop-html`)
+    stage === `build-javascript` ||
+    stage === `build-html` ||
+    (process.env.GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE &&
+      (stage === `develop` || stage === `develop-html`))
   ) {
     const cacheLocation = path.join(
       program.directory,
