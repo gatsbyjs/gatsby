@@ -20,7 +20,7 @@ function pathIsClientOnlyRoute(path: string): boolean {
   return path.includes(`[`)
 }
 
-export function createPage(
+export async function createPage(
   filePath: string,
   pagesDirectory: string,
   actions: Actions,
@@ -28,7 +28,7 @@ export function createPage(
   reporter: Reporter,
   ignore?: IPathIgnoreOptions | string | Array<string> | null,
   slugifyOptions?: ISlugifyOptions
-): void {
+): Promise<void> {
   // Filter out special components that shouldn't be made into
   // pages.
   if (!validatePath(filePath)) {
@@ -45,7 +45,7 @@ export function createPage(
   // If the page includes a `{}` in it, then we create it as a collection builder
   if (pathIsCollectionBuilder(absolutePath)) {
     trackFeatureIsUsed(`UnifiedRoutes:collection-page-builder`)
-    createPagesFromCollectionBuilder(
+    await createPagesFromCollectionBuilder(
       filePath,
       absolutePath,
       actions,
