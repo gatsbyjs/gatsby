@@ -401,6 +401,7 @@ export default async function ssrPageJson(req, res) {
 
   config.output.path = path.join(directory, `.cache`, `functions`, `_ssr`)
   delete config.output.filename
+  delete config.externals
 
   const { waitForCompilerClose } = await runWebpack(
     config,
