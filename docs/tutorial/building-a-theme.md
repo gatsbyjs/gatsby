@@ -1267,24 +1267,24 @@ yarn workspace site develop
 
 ![Theme UI changes starting to take effect on the site. For example, the header is now purple.](./images/building-a-theme-theme-ui-changes.png)
 
-To continue applying theme styles, you can use the `Styled` import from Theme UI. For example, in the `event-list.js` component, change the `<h1>`, `<ul>` and `<li>` elements to reference their themed styles:
+To continue applying theme styles, you can use the `Themed` import from Theme UI. For example, in the `event-list.js` component, change the `<h1>`, `<ul>` and `<li>` elements to reference their themed styles:
 
 ```jsx:title=gatsby-theme-events/src/components/event-list.js
 import React from "react"
 import { Link } from "gatsby"
 // highlight-next-line
-import { Styled } from "theme-ui"
+import { Themed } from "theme-ui"
 
 const EventList = ({ events }) => {
   return (
     <>
       // highlight-next-line
-      <Styled.h1>Upcoming Events</Styled.h1>
+      <Themed.h1>Upcoming Events</Themed.h1>
       // highlight-next-line
-      <Styled.ul>
+      <Themed.ul>
         {events.map(event => (
           // highlight-next-line
-          <Styled.li key={event.id}>
+          <Themed.li key={event.id}>
             <strong>
               <Link to={event.slug}>{event.name}</Link>
             </strong>
@@ -1296,10 +1296,10 @@ const EventList = ({ events }) => {
             })}{" "}
             in {event.location}
             // highlight-next-line
-          </Styled.li>
+          </Themed.li>
         ))}
         // highlight-next-line
-      </Styled.ul>
+      </Themed.ul>
     </>
   )
 }
@@ -1307,7 +1307,7 @@ const EventList = ({ events }) => {
 export default EventList
 ```
 
-By replacing the `h1` with `Styled.h1`, `ul` with `Styled.ul`, and `li` with `Styled.li`, the theme styles for those elements have been applied:
+By replacing the `h1` with `Themed.h1`, `ul` with `Themed.ul`, and `li` with `Themed.li`, the theme styles for those elements have been applied:
 
 ![Theme UI style changes showing on the events listing.](./images/building-a-theme-events-listing-styling.png)
 
