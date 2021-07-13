@@ -141,21 +141,22 @@ Wow look at all this content. How do they do it?
 
 ## Render each post's contents on the Blog page
 
-Now that you have some MDX content inside your blog posts, it's time to render them on your Blog page. You'll do that in a few different steps:
+Now that you have some MDX content inside your blog posts, it's time set up the `gatsby-plugin-mdx` transformer plugin.
 
-1. Install and configure `gatsby-plugin-mdx` and its dependencies.
+<Announcement>
+
+**Quick Refresher:** Remember the process for adding a plugin to your site (from [Part 3](/docs/tutorial/part-3/))? See if you can remember the three steps from memory before checking your answer. (Science has shown that the act of trying to [actively recall information](https://www.cultofpedagogy.com/retrieval-practice/) helps you retain it better!)
+
+</Announcement>
+
+To render your posts on the Blog page, you'll complete a few different steps:
+
+1. Install and configure the `gatsby-plugin-mdx` transformer plugin and its dependencies.
 2. Update the Blog page query to use the `allMdx` field from `gatsby-plugin-mdx` instead of `allFile`.
 3. Use the `MDXRenderer` component from `gatsby-plugin-mdx` to render your post's MDX contents in the JSX for your Blog page.
 
+
 ### Task: Install and configure the MDX transformer plugin (and dependencies)
-
-There's a plugin to help you add support for MDX content to your site: `gatsby-plugin-mdx`.
-
-If you'll recall from Part 3, the three steps to add a plugin to your site are:
-
-1. **Install** it (and any dependencies).
-2. **Configure** it in your `gatsby-config.js` file.
-3. **Use** the plugin's features in your site.
 
 The `gatsby-plugin-mdx` package requires a few additional dependencies to run: `@mdx-js/mdx` and `@mdx-js/react`. These are both packages that DO SOMETHING.
 
