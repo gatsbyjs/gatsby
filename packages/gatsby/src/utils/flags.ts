@@ -192,7 +192,7 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `PQR`,
     experimental: true,
     umbrellaIssue: `https://gatsby.dev/pqr-feedback`,
-    description: `Parallelize running page queries in order to better sature all available cores. Improves time it takes to run queries during gatsby build. Requires Node v14.10 or above.`,
+    description: `Parallelize running page queries in order to better saturate all available cores. Improves time it takes to run queries during gatsby build. Requires Node v14.10 or above.`,
     includedFlags: [`LMDB_STORE`],
     testFitness: (): fitnessEnum => {
       const [major, minor] = process.versions.node.split(`.`)
