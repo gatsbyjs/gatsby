@@ -6,6 +6,8 @@ const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
+const { defaultRuntimeCachingHandlers } = require(`./constants`)
+const mergeWorkboxConfig = require(`./merge-workbox-config`)
 
 let getResourcesFromHTML = require(`./get-resources-from-html`)
 
@@ -78,6 +80,7 @@ exports.onPostBuild = (
     appendScript = null,
     debug = undefined,
     workboxConfig = {},
+    runtimeCachingMergeStrategy = undefined,
   }
 ) => {
   const { pathPrefix, reporter } = args
@@ -132,35 +135,16 @@ exports.onPostBuild = (
     // Don't cache-bust JS or CSS files, and anything in the static directory,
     // since these files have unique URLs and their contents will never change
     dontCacheBustURLsMatching: /(\.js$|\.css$|static\/)/,
-    runtimeCaching: [
-      {
-        // Use cacheFirst since these don't need to be revalidated (same RegExp
-        // and same reason as above)
-        urlPattern: /(\.js$|\.css$|static\/)/,
-        handler: `CacheFirst`,
-      },
-      {
-        // page-data.json files, static query results and app-data.json
-        // are not content hashed
-        urlPattern: /^https?:.*\/page-data\/.*\.json/,
-        handler: `StaleWhileRevalidate`,
-      },
-      {
-        // Add runtime caching of various other page resources
-        urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|avif|svg|gif|tiff|js|woff|woff2|json|css)$/,
-        handler: `StaleWhileRevalidate`,
-      },
-      {
-        // Google Fonts CSS (doesn't end in .css so we need to specify it)
-        urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
-        handler: `StaleWhileRevalidate`,
-      },
-    ],
+    runtimeCaching: defaultRuntimeCachingHandlers,
     skipWaiting: true,
     clientsClaim: true,
   }
 
-  const combinedOptions = _.merge(options, workboxConfig)
+  const combinedOptions = mergeWorkboxConfig(
+    options,
+    workboxConfig,
+    runtimeCachingMergeStrategy
+  )
 
   const idbKeyvalFile = `idb-keyval-iife.min.js`
   const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)
@@ -256,5 +240,10 @@ exports.pluginOptionsSchema = function ({ Joi }) {
     })
       .description(`Overrides workbox configuration. Helpful documentation: https://www.gatsbyjs.com/plugins/gatsby-plugin-offline/#overriding-workbox-configuration
       `),
+    runtimeCachingMergeStrategy: Joi.string()
+      .valid(`merge`, `append`, `replace`)
+      .description(
+        `Option where one can define how workboxConfig.runtimeCaching should be merged. Helpful documentation: https://www.gatsbyjs.com/plugins/gatsby-plugin-offline/#option-of-runtime-caching-merge-strategy`
+      ),
   })
 }

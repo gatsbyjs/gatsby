@@ -131,6 +131,8 @@ describe(`pluginOptionsSchema`, () => {
       `"workboxConfig.runtimeCaching[2]" must be of type object`,
       `"workboxConfig.skipWaiting" must be a boolean`,
       `"workboxConfig.clientsClaim" must be a boolean`,
+      `"runtimeCachingMergeStrategy" must be one of [merge, append, replace]`,
+      `"runtimeCachingMergeStrategy" is not allowed to be empty`,
     ]
 
     const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
@@ -157,6 +159,7 @@ describe(`pluginOptionsSchema`, () => {
         skipWaiting: `This should be a boolean`,
         clientsClaim: `This should be a boolean`,
       },
+      runtimeCachingMergeStrategy: ``,
     })
 
     expect(errors).toEqual(expectedErrors)
