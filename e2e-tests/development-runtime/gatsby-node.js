@@ -106,6 +106,13 @@ exports.createPages = async function createPages({
     isPermanent: true,
     redirectInBrowser: true,
   })
+
+  createRedirect({
+    fromPath: `/redirect-two`,
+    toPath: `/redirect-search-hash`,
+    isPermanent: true,
+    redirectInBrowser: true,
+  })
 }
 
 exports.onCreatePage = async ({ page, actions }) => {
