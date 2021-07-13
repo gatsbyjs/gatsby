@@ -1,5 +1,6 @@
 import { NodeInput, SourceNodesArgs } from "gatsby"
 import { pattern as idPattern, createNodeId } from "../node-builder"
+import { getObjectsByType } from "./utils"
 
 export function incrementalProductsProcessor(
   objects: BulkResults,
@@ -7,18 +8,19 @@ export function incrementalProductsProcessor(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: ShopifyPluginOptions
 ): Array<Promise<NodeInput>> {
+  return [...process(objects, builder, gatsbyApi, pluginOptions)]
+}
+
+function* process(
+  objects: BulkResults,
+  builder: NodeBuilder,
+  gatsbyApi: SourceNodesArgs,
+  pluginOptions: ShopifyPluginOptions
+): Generator<Promise<NodeInput>> {
   const { typePrefix = `` } = pluginOptions
-  const products = objects.filter(obj => {
-    const [, remoteType] = obj.id.match(idPattern) || []
+  const products = getObjectsByType(objects, `Product`)
 
-    return remoteType === `Product`
-  })
-
-  const variants = objects.filter(obj => {
-    const [, remoteType] = obj.id.match(idPattern) || []
-
-    return remoteType === `ProductVariant`
-  })
+  const variants = getObjectsByType(objects, `ProductVariant`)
 
   const productNodeIds = products.map(product =>
     createNodeId(product.id, gatsbyApi, pluginOptions)
@@ -74,11 +76,11 @@ export function incrementalProductsProcessor(
       }
     })
 
-  const objectsToBuild = objects.filter(obj => {
+  for (const obj of objects) {
     const [, remoteType] = obj.id.match(idPattern) || []
 
-    return remoteType !== `ProductVariant`
-  })
-
-  return objectsToBuild.map(builder.buildNode)
+    if (remoteType !== `ProductVariant`) {
+      yield builder.buildNode(obj)
+    }
+  }
 }

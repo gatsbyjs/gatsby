@@ -707,9 +707,22 @@ describe(`The incremental products processor`, () => {
   const firstMetadataId = `gid://shopify/Metafield/12345`
   const secondMetadataId = `gid://shopify/Metafield/12346`
 
+  const expectedDeletions = [
+    secondVariantId,
+    secondMetadataId,
+    firstImageId,
+    secondImageId,
+  ].length
+
+  const expectedCreations = [firstProductId, firstImageId].length
+
   const bulkResults = [
     {
       id: firstProductId,
+    },
+    {
+      id: firstVariantId,
+      __parentId: firstProductId,
     },
     {
       id: firstImageId,
@@ -830,27 +843,13 @@ describe(`The incremental products processor`, () => {
 
     await sourceFromOperation(operations.incrementalProducts(new Date()))
 
-    expect(createNode).toHaveBeenCalledTimes(2)
-    expect(deleteNode).toHaveBeenCalledTimes(6)
-
-    expect(deleteNode).toHaveBeenCalledWith(
-      expect.objectContaining({
-        id: firstVariantId,
-        productId: firstProductId,
-      })
-    )
+    expect(createNode).toHaveBeenCalledTimes(expectedCreations)
+    expect(deleteNode).toHaveBeenCalledTimes(expectedDeletions)
 
     expect(deleteNode).toHaveBeenCalledWith(
       expect.objectContaining({
         id: secondVariantId,
         productId: firstProductId,
-      })
-    )
-
-    expect(deleteNode).toHaveBeenCalledWith(
-      expect.objectContaining({
-        id: firstMetadataId,
-        productVariantId: firstVariantId,
       })
     )
 
