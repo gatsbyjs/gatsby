@@ -8,6 +8,7 @@ import webpack, { Stats } from "webpack"
 import * as path from "path"
 
 import { emitter, store } from "../redux"
+import { IGatsbyFunction } from "../redux/types"
 import { IWebpackWatchingPauseResume } from "../utils/start-server"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
@@ -203,11 +204,11 @@ export const buildSSRRenderer = async (
   )
 
   const entries = {}
-  const manifest = []
+  const manifest: Array<IGatsbyFunction> = []
   for (const page of pages) {
     if (!entries[page.componentChunkName]) {
-      const stylesSet = new Set()
-      const scriptsSet = new Set()
+      const stylesSet = new Set<string>()
+      const scriptsSet = new Set<string>()
       for (const chunkName of [`app`, page.componentChunkName]) {
         const assets = webpackStats.assetsByChunkName[chunkName]
         if (!assets) {
@@ -387,17 +388,23 @@ export default async function ssrPageJson(req, res) {
     })
   }
 
-  const config = await webpackConfig(program, directory, `build-html`, null, {
-    parentSpan,
-  })
+  const config = await webpackConfig(
+    program,
+    directory,
+    Stage.BuildHTML,
+    null,
+    {
+      parentSpan,
+    }
+  )
   config.entry = entries
 
   config.output.path = path.join(directory, `.cache`, `functions`, `_ssr`)
   delete config.output.filename
 
-  const { stats, waitForCompilerClose } = await runWebpack(
+  const { waitForCompilerClose } = await runWebpack(
     config,
-    `build-html`,
+    Stage.BuildHTML,
     directory,
     parentSpan
   )
@@ -409,6 +416,10 @@ export default async function ssrPageJson(req, res) {
     ...functionsManifest,
     ...manifest,
   ])
+
+  if (mode === `production`) {
+    await waitForCompilerClose
+  }
 
   return manifest
 }

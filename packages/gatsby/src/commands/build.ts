@@ -18,6 +18,7 @@ import { copyStaticDirs } from "../utils/get-static-dir"
 import { initTracer, stopTracer } from "../utils/tracer"
 import * as db from "../redux/save-state"
 import { store } from "../redux"
+import { IGatsbyPage } from "../redux/types"
 import * as appDataUtil from "../utils/app-data"
 import { flush as flushPendingPageDataWrites } from "../utils/page-data"
 import {
@@ -218,7 +219,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // TODO Refactor buildRenderer to build per component instead of all pages at once
   // TODO improve promise handling - do more in parallel
   try {
-    const ssrPages = []
+    const ssrPages: Array<IGatsbyPage> = []
     for (const [, page] of store.getState().pages) {
       if (page.mode === `SSR`) {
         ssrPages.push(page)

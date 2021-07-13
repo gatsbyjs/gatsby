@@ -146,7 +146,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
       ) {
         let pathName = fn.functionRoute
         let pageDataRoute = fn.functionRoute.replace(`_ssr/`, `_ssr/page-data/`)
-        const keys = []
+        const keys: Array<{ name: string }> = []
         if (fn.matchPath) {
           pathName = pathToRegexp(fn.matchPath, keys)
           pageDataRoute = pathToRegexp(

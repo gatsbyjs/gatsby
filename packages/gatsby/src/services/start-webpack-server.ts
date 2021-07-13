@@ -21,6 +21,7 @@ import {
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
 import { emitter } from "../redux"
+import { IGatsbyPage } from "../redux/types"
 import { buildSSRRenderer } from "../commands/build-html"
 
 export async function startWebpackServer({
@@ -135,7 +136,7 @@ export async function startWebpackServer({
       done()
 
       try {
-        const ssrPages = []
+        const ssrPages: Array<IGatsbyPage> = []
         for (const [, page] of store.getState().pages) {
           if (page.mode === `SSR`) {
             ssrPages.push(page)

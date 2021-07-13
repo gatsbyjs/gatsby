@@ -123,7 +123,6 @@ export interface IGatsbyStaticQueryComponents {
 export interface IGatsbyPageComponent {
   componentPath: SystemPath
   componentChunkName: string
-  mode: "SSG" | "DSR" | "SSR"
   query: string
   pages: Set<string>
   isInBootstrap: boolean
@@ -198,7 +197,6 @@ export interface IComponentState {
 
 export interface IHtmlFileState {
   dirty: number
-  mode: "SSG" | "DSR" | "SSR"
   isDeleted: boolean
   pageDataHash: string
 }
