@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.10.0-next.1...gatsby-plugin-gatsby-cloud@2.10.0-next.2) (2021-07-13)
+
+### Bug Fixes
+
+- **gatsby-plugin-gatsby-cloud:** lower peak memory usage by stream writing the \_header.json file ([#32337](https://github.com/gatsbyjs/gatsby/issues/32337)) ([84dfe6d](https://github.com/gatsbyjs/gatsby/commit/84dfe6dc6c6e778f2e47ca086499d9b0960f4f87))
+
 # [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.10.0-next.0...gatsby-plugin-gatsby-cloud@2.10.0-next.1) (2021-07-08)
 
 **Note:** Version bump only for package gatsby-plugin-gatsby-cloud

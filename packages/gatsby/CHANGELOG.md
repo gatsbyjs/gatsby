@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.10.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.4...gatsby@3.10.0-next.5) (2021-07-13)
+
+### Bug Fixes
+
+- **gatsby:** Pass search/hash to location after swUpdated ([#32323](https://github.com/gatsbyjs/gatsby/issues/32323)) ([636df42](https://github.com/gatsbyjs/gatsby/commit/636df42c8cc73c234c979aadfcd0265eb3a08174))
+
+### Features
+
+- **gatsby:** add page data for failed page to logs ([#32301](https://github.com/gatsbyjs/gatsby/issues/32301)) ([ce0ae00](https://github.com/gatsbyjs/gatsby/commit/ce0ae00754b55d34d6b03981a3e689fb638d3a13))
+- **gatsby:** Redirect passes search & hash parameter to final URL ([#32334](https://github.com/gatsbyjs/gatsby/issues/32334)) ([46cbfec](https://github.com/gatsbyjs/gatsby/commit/46cbfecee7b864f725587cbba1c4421e386ef572))
+
 # [3.10.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.3...gatsby@3.10.0-next.4) (2021-07-09)
 
 ### Bug Fixes
