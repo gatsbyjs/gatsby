@@ -226,6 +226,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     workerPool,
     buildSpan,
   })
+  const waitWorkerPoolEnd = Promise.all(workerPool.end())
 
   telemetry.addSiteMeasurement(`BUILD_END`, {
     pagesCount: toRegenerate.length, // number of html files that will be written
@@ -246,6 +247,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // This could occur due to queries being run which invoke sharp for instance
   await waitUntilAllJobsComplete()
 
+  try {
+    await waitWorkerPoolEnd
+  } catch (e) {
+    report.warn(`Error when closing WorkerPool: ${e.message}`)
+  }
+
   // Make sure we saved the latest state so we have all jobs cached
   await db.saveState()
 
@@ -255,7 +262,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   buildSpan.finish()
   await stopTracer()
-  workerPool.end()
   buildActivity.end()
 
   if (program.logPages) {
