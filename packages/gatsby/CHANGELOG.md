@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.10.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.6...gatsby@3.10.0-next.7) (2021-07-14)
+
+### Bug Fixes
+
+- **gatsby:** Hide page/static queries activities for PQR ([#32361](https://github.com/gatsbyjs/gatsby/issues/32361)) ([d65de41](https://github.com/gatsbyjs/gatsby/commit/d65de413b8d0ad5720c46652936b44dda3f872c9))
+- **gatsby:** shut down worker pool after html generation ([#32366](https://github.com/gatsbyjs/gatsby/issues/32366)) ([8cba0b9](https://github.com/gatsbyjs/gatsby/commit/8cba0b915cd0bd987675c4ed1839bbdaf39ae217))
+
+### Features
+
+- **gatsby:** restart worker pool after query running in workers ([#32365](https://github.com/gatsbyjs/gatsby/issues/32365)) ([b9236e1](https://github.com/gatsbyjs/gatsby/commit/b9236e16aac8c889c526571738c716cfb520043d))
+
 # [3.10.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.5...gatsby@3.10.0-next.6) (2021-07-14)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-worker@0.1.0-next.2...gatsby-worker@0.1.0-next.3) (2021-07-14)
+
+### Features
+
+- **gatsby:** restart worker pool after query running in workers ([#32365](https://github.com/gatsbyjs/gatsby/issues/32365)) ([b9236e1](https://github.com/gatsbyjs/gatsby/commit/b9236e16aac8c889c526571738c716cfb520043d))
+
 # [0.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-worker@0.1.0-next.1...gatsby-worker@0.1.0-next.2) (2021-07-08)
 
 ### Bug Fixes
