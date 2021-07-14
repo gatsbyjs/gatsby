@@ -205,7 +205,7 @@ The `gatsby-plugin-mdx` package requires a few additional dependencies to run: `
 
 Here are some popular remark plugins:
 
-* [`gatsby-remark-images`](/plugins/gatsby-remark-images/): Use this if you want to use the Markdown image syntax (which looks like this: `![alt](image url)`).
+* [`gatsby-remark-images`](/plugins/gatsby-remark-images/): Use this if you want to generate responsive images when using the Markdown image syntax (which looks like this: `![alt](image url)`).
     * To use this plugin, you'll also need `gatsby-plugin-sharp`, which you installed already in Part 3.
 * [`gatsby-remark-prismjs`](/plugins/gatsby-remark-prismjs/): Add syntax highlighting to your code blocks.
 * [`gatsby-remark-autolink-headers`](/plugins/gatsby-remark-autolink-headers/): Automatically create links for all the headers in your Markdown content.
@@ -410,7 +410,7 @@ query MyQuery {
     nodes {
       parent {
         ... on File {
-          changeTime(formatString: "MMMM D, YYYY")
+          modifiedTime(formatString: "MMMM D, YYYY")
         }
       }
     }
@@ -455,7 +455,7 @@ Now that your GraphQL query is all set up, it's time to replace the page query i
     export default BlogPage
     ```
 
-2. Next, update the JSX for your Blog page to use the data fields off your response. Start by rendering just the title and date for each post.
+2. Next, update the JSX for your Blog page to use the data fields of your response. Start by rendering just the title and date for each post.
     * Now that you're rendering more than just a filename, it makes more sense to use the [`<article>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) semantic HTML element instead of a `<ul>` and nested `<li>` elements.
     * You can also use the `id` field as your unique `key` prop for each post. (React uses the `key` prop to keep track of what elements need to be re-rendered. If you don't include it, you'll get a warning in your browser console. For more on the `key` prop, check out the [React Docs: List and Keys](https://reactjs.org/docs/lists-and-keys.html#keys).)
     ```js:title=src/pages/blog.js
