@@ -45,8 +45,8 @@ function getRootDb(): RootDatabase {
     rootDb = open({
       name: `root`,
       path: process.cwd() + `/.cache/data/` + rootDbFile,
-      compression: true,
-      maxReaders: 1024,
+      // compression: true,
+      // maxReaders: 1024,
     })
   }
   return rootDb
@@ -59,10 +59,11 @@ function getDatabases(): ILmdbDatabases {
       nodes: rootDb.openDB({
         name: `nodes`,
         // FIXME: sharedStructuresKey breaks tests - probably need some cleanup for it on DELETE_CACHE
-        sharedStructuresKey: Symbol.for(`structures`),
+        // sharedStructuresKey: Symbol.for(`structures`),
         // @ts-ignore
-        // cache: { expirer: false },
         cache: true,
+        // cache: { expirer: false },
+        // cache: false,
         // encoding: `json`,
       }),
       nodesByType: rootDb.openDB({
