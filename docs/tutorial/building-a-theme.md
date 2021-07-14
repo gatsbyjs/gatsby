@@ -150,7 +150,7 @@ The `gatsby-theme-events/package.json` file should now include the following:
     "gatsby": "^3.0.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
-  },
+  }
 }
 ```
 
