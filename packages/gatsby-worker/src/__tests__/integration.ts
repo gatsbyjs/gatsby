@@ -1,6 +1,6 @@
 import "jest-extended"
 import { WorkerPool } from "../"
-import { isPromise } from "../utils"
+import { isPromise, isRunning } from "../utils"
 import { MessagesFromChild, MessagesFromParent } from "./fixtures/test-child"
 
 describe(`gatsby-worker`, () => {
@@ -258,6 +258,21 @@ describe(`gatsby-worker`, () => {
       const newPids = await Promise.all(workerPool.all.pid())
       expect(newPids).toBeArrayOfSize(numWorkers)
       expect(newPids).toSatisfyAll(value => !initialPids.includes(value))
+    })
+
+    it(`kills old processes on restart`, async () => {
+      if (!workerPool) {
+        fail(`worker pool not created`)
+      }
+
+      const initialPids = await Promise.all(workerPool.all.pid())
+
+      // sanity checks:
+      expect(initialPids).toBeArrayOfSize(numWorkers)
+      expect(initialPids).toSatisfyAll(pid => isRunning(pid))
+
+      await workerPool.restart()
+      expect(initialPids).toSatisfyAll(pid => !isRunning(pid))
     })
 
     it(`.single works after restart`, async () => {
