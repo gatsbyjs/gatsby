@@ -20,7 +20,8 @@ const url = `http://localhost:8000/___graphql`
 
 const getPluginConfig = () =>
   gatsbyConfig.plugins.find(
-    plugin => typeof plugin === 'object' && plugin.resolve === `gatsby-source-wordpress`
+    plugin =>
+      typeof plugin === "object" && plugin.resolve === `gatsby-source-wordpress`
   )
 
 describe(`data resolution`, () => {
@@ -322,11 +323,23 @@ describe(`data resolution`, () => {
     /**
      * Ensure that the fileSize "gt" filter value matches the maxFileSizeBytes value in gatsby-config
      */
-    const { data: { allWpMediaItem: { nodes }}} = await fetchGraphql({
+    const {
+      data: {
+        allWpMediaItem: { nodes },
+      },
+    } = await fetchGraphql({
       url,
-      query: /* GraphQL */`
-        query tooLargeFiles($maxFileSizeBytes: Int!, $includedMimeTypes: [String]!) {
-          allWpMediaItem(filter: { fileSize: { gt: $maxFileSizeBytes }, mimeType: {in: $includedMimeTypes } }) {
+      query: /* GraphQL */ `
+        query tooLargeFiles(
+          $maxFileSizeBytes: Int!
+          $includedMimeTypes: [String]!
+        ) {
+          allWpMediaItem(
+            filter: {
+              fileSize: { gt: $maxFileSizeBytes }
+              mimeType: { in: $includedMimeTypes }
+            }
+          ) {
             nodes {
               id
               sourceUrl
@@ -337,12 +350,12 @@ describe(`data resolution`, () => {
               }
             }
           }
-        } 
+        }
       `,
       variables: {
         maxFileSizeBytes,
-        includedMimeTypes: ['image/jpeg'],
-      }
+        includedMimeTypes: ["image/jpeg"],
+      },
     })
 
     expect(nodes.length).toEqual(1)
@@ -357,11 +370,23 @@ describe(`data resolution`, () => {
     /**
      * Ensure that the fileSize "gt" filter value matches the maxFileSizeBytes value in gatsby-config
      */
-    const { data: { allWpMediaItem: { nodes }}} = await fetchGraphql({
+    const {
+      data: {
+        allWpMediaItem: { nodes },
+      },
+    } = await fetchGraphql({
       url,
-      query: /* GraphQL */`
-        query tooLargeFiles($maxFileSizeBytes: Int!, $includedMimeTypes: [String]!) {
-          allWpMediaItem(filter: { fileSize: { lte: $maxFileSizeBytes }, mimeType: {in: $includedMimeTypes } }) {
+      query: /* GraphQL */ `
+        query tooLargeFiles(
+          $maxFileSizeBytes: Int!
+          $includedMimeTypes: [String]!
+        ) {
+          allWpMediaItem(
+            filter: {
+              fileSize: { lte: $maxFileSizeBytes }
+              mimeType: { in: $includedMimeTypes }
+            }
+          ) {
             nodes {
               id
               sourceUrl
@@ -372,12 +397,12 @@ describe(`data resolution`, () => {
               }
             }
           }
-        } 
+        }
       `,
       variables: {
         maxFileSizeBytes,
-        includedMimeTypes: ['image/jpeg'],
-      }
+        includedMimeTypes: ["image/jpeg"],
+      },
     })
 
     nodes.forEach(node => {
@@ -389,11 +414,15 @@ describe(`data resolution`, () => {
     const wpPluginOpts = getPluginConfig()
     const { excludeByMimeTypes } = wpPluginOpts.options.type.MediaItem.localFile
 
-    const { data: { allWpMediaItem: { nodes }}} = await fetchGraphql({
+    const {
+      data: {
+        allWpMediaItem: { nodes },
+      },
+    } = await fetchGraphql({
       url,
-      query: /* GraphQL */`
+      query: /* GraphQL */ `
         query excludedMimeType($excludeByMimeTypes: [String]) {
-          allWpMediaItem(filter: { mimeType: { in: $excludeByMimeTypes }}) {
+          allWpMediaItem(filter: { mimeType: { in: $excludeByMimeTypes } }) {
             nodes {
               id
               mimeType
@@ -419,11 +448,15 @@ describe(`data resolution`, () => {
     const wpPluginOpts = getPluginConfig()
     const { excludeByMimeTypes } = wpPluginOpts.options.type.MediaItem.localFile
 
-    const { data: { allWpMediaItem: { nodes }}} = await fetchGraphql({
+    const {
+      data: {
+        allWpMediaItem: { nodes },
+      },
+    } = await fetchGraphql({
       url,
-      query: /* GraphQL */`
+      query: /* GraphQL */ `
         query excludedMimeType($excludeByMimeTypes: [String]) {
-          allWpMediaItem(filter: { mimeType: { nin: $excludeByMimeTypes }}) {
+          allWpMediaItem(filter: { mimeType: { nin: $excludeByMimeTypes } }) {
             nodes {
               id
               mimeType
@@ -442,5 +475,41 @@ describe(`data resolution`, () => {
     nodes.forEach(node => {
       expect(node.localFile).toBeDefined()
     })
+  })
+
+  it(`Only sources MediaItem nodes that are in use and does so incrementally`, async () => {
+    const mediaItemSlug = "aperture-vintage-346923-unsplash"
+
+    const {
+      data: { wpMediaItem },
+    } = await fetchGraphql({
+      url,
+      query: /* GraphQL */ `
+        query MediaItem() {
+          wpMediaItem(databaseId: {eq: 195}) {
+            slug
+            localFile {
+              absolutePath
+            }
+          }
+        }
+      `,
+      variables: {
+        slug: mediaItemSlug,
+      },
+    })
+
+    // we make a mutation to WPGraphQL on our second build (warm cache) adding this media item to a post in WP which  makes it available in Gatsby
+    if (isWarmCache) {
+      expect(wpMediaItem).toBeTruthy()
+      expect(wpMediaItem.localFile).toBeTruthy()
+      expect(
+        wpMediaItem.localFile.absolutePath.includes(wpMediaItem.slug)
+      ).toBeTruthy()
+    }
+    // otherwise this media item shouldn't exist
+    else {
+      expect(wpMediaItem).toBeNull()
+    }
   })
 })
