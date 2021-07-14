@@ -93,8 +93,10 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const { queryIds } = await calculateDirtyQueries({ store })
 
+  let waitForWorkerPoolRestart = Promise.resolve()
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     await runQueriesInWorkersQueue(workerPool, queryIds)
+    waitForWorkerPoolRestart = workerPool.restart()
   } else {
     await runStaticQueries({
       queryIds,
@@ -214,6 +216,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildSSRBundleActivityProgress.end()
   }
 
+  await waitForWorkerPoolRestart
   const {
     toRegenerate,
     toDelete,
