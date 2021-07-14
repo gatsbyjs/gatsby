@@ -42,8 +42,6 @@ By the end of this part of the Tutorial, you will be able to:
 - Use the `gatsby-plugin-mdx` plugin to render the contents of your MDX files on your Blog page.
 - Use the `sort` field to control the order of results in your GraphQL queries.
 
-https://github.com/meganesu/gatsby-intro-workshop-example-site-with-v3/commit/207d5d11d72e972ac1ec5507159ff2c4460c98b9
-
 ## A closer look at Gatsby's GraphQL data layer
 
 To understand how `gatsby-plugin-mdx` and other transformer plugins work, you need to know a bit more about how Gatsby’s GraphQL data layer works.
@@ -317,7 +315,7 @@ query MyQuery {
     }
     ```
 
-4. You might notice that your posts aren't listed in order. Most blog sites list their posts in reverse-chronological order (so that the newest posts are listed first). You can sort the data nodes in your response by using the `sort` argument on the `allMdx` field.
+4. You might notice that your posts aren't listed in order. Most blog sites list their posts in reverse-chronological order, so that the newest posts are listed first. You can sort the data nodes in your response by using the `sort` argument on the `allMdx` field.
     * In the Explorer pane, toggle the `sort` dropdown underneath the `allMdx` field.
     * Under `sort`, check the `fields` argument, and use the dropdown to select which field you want to sort your data nodes by. In this case, that would be `frontmatter___date` (with three underscores).
     * Check the `order` argument, and use the dropdown to select `DESC`. This will sort the nodes in descending order, so that the newest posts come first.
@@ -343,10 +341,10 @@ query MyQuery {
           "nodes": [
             {
               "frontmatter": {
-                "date": "July 23, 2021",
-                "title": "My First Post"
+                "date": "July 25, 2021",
+                "title": "Yet Another Post"
               },
-              "id": "11b3a825-30c5-551d-a713-dd748e7d554a"
+              "id": "c4b5ae6d-f3ad-5ea4-ab54-b08a72badea1"
             },
             {
               "frontmatter": {
@@ -357,10 +355,10 @@ query MyQuery {
             },
             {
               "frontmatter": {
-                "date": "July 25, 2021",
-                "title": "Yet Another Post"
+                "date": "July 23, 2021",
+                "title": "My First Post"
               },
-              "id": "c4b5ae6d-f3ad-5ea4-ab54-b08a72badea1"
+              "id": "11b3a825-30c5-551d-a713-dd748e7d554a"
             }
           ]
         }
@@ -385,7 +383,7 @@ query MyQuery {
     }
     ```
 
-7. When you run your query, the `body` field for each node should look something like the object shown below. That's a lot of information! The `body` field actually contains the *compiled MDX content* for your file. It might not be readable for humans, but it's the format that the `MDXRenderer` component understands. (You'll get to `MDXRenderer` in a moment.)
+7. When you run your query, the `body` field for each node should look something like the data shown below. That's a lot of information! The `body` field actually contains the *compiled MDX content* for your file. It might not be readable for humans, but it's the format that the `MDXRenderer` component understands. (You'll get to `MDXRenderer` in a moment.)
     ```json
     "body": "var _excluded = [\"components\"];\n\nfunction _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }\n\nfunction _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }\n\nfunction _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }\n\n/* @jsxRuntime classic */\n\n/* @jsx mdx */\nvar _frontmatter = {\n  \"title\": \"Yet Another Post\",\n  \"date\": \"2021-07-25\"\n};\nvar layoutProps = {\n  _frontmatter: _frontmatter\n};\nvar MDXLayout = \"wrapper\";\nreturn function MDXContent(_ref) {\n  var components = _ref.components,\n      props = _objectWithoutProperties(_ref, _excluded);\n\n  return mdx(MDXLayout, _extends({}, layoutProps, props, {\n    components: components,\n    mdxType: \"MDXLayout\"\n  }), mdx(\"p\", null, \"Wow look at all this content. How do they do it?\"));\n}\n;\nMDXContent.isMDXComponent = true;"
     ```
@@ -417,97 +415,84 @@ query MyQuery {
 
 ### Task: Use the `MDXRenderer` component to render your post's contents in your Blog page
 
-Swap out the existing page query in your Blog page with the one you built in GraphiQL. You'll also need to update the code for mapping over the nodes in the response.
+Now that your GraphQL query is all set up, it's time to replace the page query in your Blog page component.
 
-```js
-import * as React from 'react'
-import { graphql } from 'gatsby'
-import Layout from '../components/layout'
+1. Start by swapping out the `allFile` page query in your Blog page for the one you just created using `allMdx`. (Don't forget to delete the query name!)
+    ```js:title=src/pages/blog.js
+    // imports
 
-const BlogPage = ({ data }) => {
-  return (
-    <Layout pageTitle="My Blog Posts">
-      {/* highlight-start */}
-      {
-      data.allMdx.nodes.map((node) => (
-        <article key={node.id}>
-          <h2>{node.frontmatter.title}</h2>
-          <p>Posted: {node.frontmatter.date}</p>
-        </article>
-      ))
-      }
-      {/* highlight-end */}
-    </Layout>
-  );
-}
+    const BlogPage = ({ data }) => {
+      return (
+        // ...
+      )
+    }
 
-// highlight-start
-export const query = graphql`
-  query {
-    allMdx(sort: {fields: frontmatter___date, order: DESC}) {
-      nodes {
-        frontmatter {
-          title
-          date(formatString: "MMMM DD, YYYY")
+    // highlight-start
+    export const query = graphql`
+      query {
+        allMdx(sort: {fields: frontmatter___date, order: DESC}) {
+          nodes {
+            frontmatter {
+              date(formatString: "MMMM D, YYYY")
+              title
+            }
+            id
+            body
+          }
         }
-        id
       }
+    `
+    // highlight-end
+
+    export default BlogPage
+    ```
+
+2. Next, update the JSX for your Blog page to use the data fields off your response. Start by rendering just the title and date for each post.
+    * Now that you're rendering more than just a filename, it makes more sense to use the [`<article>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) semantic HTML element instead of a `<ul>` and nested `<li>` elements.
+    * You can also use the `id` field as your unique `key` prop for each post. (React uses the `key` prop to keep track of what elements need to be re-rendered. If you don't include it, you'll get a warning in your browser console. For more on the `key` prop, check out the [React Docs: List and Keys](https://reactjs.org/docs/lists-and-keys.html#keys).)
+    ```js:title=src/pages/blog.js
+    // imports
+
+    const BlogPage = ({ data }) => {
+      return (
+        <Layout pageTitle="My Blog Posts">
+          {/* highlight-start */}
+          {
+            data.allMdx.nodes.map((node) => (
+              <article key={node.id}>
+                <h2>{node.frontmatter.title}</h2>
+                <p>Posted: {node.frontmatter.date}</p>
+              </article>
+            ))
+          }
+          {/* highlight-end */}
+        </Layout>
+      )
     }
-  }
-`
-// highlight-end
 
-export default BlogPage
-```
-
-![WORDS](./blog-page-with-frontmatter.png)
-
-### Task: render post body
-
-The final step in this part of the Tutorial is to render the actual contents of your MDX blog posts. To do that, you'll need to add one more field to your GraphQL query: `body`. In GraphiQL, add the `body` field to your query.
-
-```graphql
-query MyQuery {
-  allMdx(sort: {fields: frontmatter___date, order: DESC}) {
-    nodes {
-      frontmatter {
-        title
-        date(formatString: "MMMM DD, YYYY")
+    export const query = graphql`
+      query {
+        allMdx(sort: {fields: frontmatter___date, order: DESC}) {
+          nodes {
+            frontmatter {
+              title
+              date(formatString: "MMMM DD, YYYY")
+            }
+            id
+            body
+          }
+        }
       }
-      id
-      body
-    }
-  }
-}
-```
+    `
 
-Run the query to see what the response looks like. The `body` field should look something like this:
+    export default BlogPage
+    ```
 
-```json
-"body": "var _excluded = [\"components\"];\n\nfunction _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }\n\nfunction _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }\n\nfunction _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }\n\n/* @jsxRuntime classic */\n\n/* @jsx mdx */\nvar _frontmatter = {\n  \"title\": \"Yet Another Post\",\n  \"date\": \"2021-07-25\"\n};\nvar layoutProps = {\n  _frontmatter: _frontmatter\n};\nvar MDXLayout = \"wrapper\";\nreturn function MDXContent(_ref) {\n  var components = _ref.components,\n      props = _objectWithoutProperties(_ref, _excluded);\n\n  return mdx(MDXLayout, _extends({}, layoutProps, props, {\n    components: components,\n    mdxType: \"MDXLayout\"\n  }), mdx(\"p\", null, \"Wow look at all this content. How do they do it?\"));\n}\n;\nMDXContent.isMDXComponent = true;"
-```
+3. Go to `localhost:8000/blog` in your web browser. You should be able to see the titles and dates for each of your posts:
 
-Woah, that's a lot of information! The `body` field actually contains a function that WHAT DOES IT DO? To render the contents of your MDX file, you'll use a component from `gatsby-plugin-mdx` called `MDXRenderer`, which knows how to parse the `body` field.
+![A screenshot of the Blog page in a web browser. Underneath the page heading, there are three posts listed: "Yet Another Post" (posted July 25, 2021), "Another Post" (posted July 24, 2021), and "My First Post" (posted July 23, 2021).](./blog-page-with-frontmatter.png)
 
-<Collapsible
-  summary="MDXRenderer"
->
-
-`gatsby-plugin-mdx` also includes a special component that you can use to render the contents from an MDX file: `MDXRenderer`.
-
-`MDXRenderer` uses the `children` prop, similar to the `Layout` component you created earlier. You can pass in the value of the `body` field from an MDX node.
-
-```javascript
-import { MDXRenderer } from 'gatsby-plugin-mdx'
-
-<MDXRenderer>
-  { node.body }
-</MDXRenderer>
-```
-
-</Collapsible>
-
-1. Import the `MDXRenderer` component from `gatsby-plugin-mdx`.
+4. The final step in this part of the Tutorial is to render the actual contents of your MDX blog posts. To do that, you'll need to use a component from `gatsby-plugin-mdx` called `MDXRenderer`. Start by importing the component into your Blog page:
 
 ```js:title=src/pages/blog.js
 import * as React from 'react'
@@ -518,41 +503,34 @@ import Layout from '../components/layout'
 // ...
 ```
 
-2. Add the `body` field to your page query for your Blog page.
+<Collapsible
+  summary={<h4>The <code>MDXRenderer</code> component</h4>}
+>
 
-```js:title=src/pages/blog.js
-import * as React from 'react'
-import { graphql } from 'gatsby'
+`MDXRenderer` is a component included in the `gatsby-plugin-mdx` plugin that you can use to render the contents of a `.mdx` file.
+
+The `MDXRenderer` uses the `children` prop, similar to the `Layout` component you created in [Part 2](/docs/tutorial/part-2/). It expects to receive compiled MDX between the its opening and closing tags. You can pass in the `body` field from an MDX node. 
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Quick Refresher:** Need a reminder of how the `children` prop works? Refer back to the ["Create a reusable layout component" section in Part 2](/docs/tutorial/part-2/#create-a-reusable-layout-component).
+
+</Announcement>
+
+Here's a quick example of how to import and use the `MDXRenderer` component:
+
+```js
 import { MDXRenderer } from 'gatsby-plugin-mdx'
-import Layout from '../components/layout'
 
-const BlogPage = ({ data }) => {
-  return (
-    // ...
-  );
-}
-
-// highlight-start
-export const query = graphql`
-  query {
-    allMdx(sort: {fields: frontmatter___date, order: DESC}) {
-      nodes {
-        frontmatter {
-          title
-          date(formatString: "MMMM DD, YYYY")
-        }
-        id
-        body
-      }
-    }
-  }
-`
-// highlight-end
-
-export default BlogPage
+// Use this in the JSX for your component
+<MDXRenderer>
+  { node.body }
+</MDXRenderer>
 ```
 
-3. In the JSX for your Blog page, use the `MDXRenderer` component to wrap the contents of the `body` field for each node:
+</Collapsible>
+
+5. In the JSX for your Blog page, use the `MDXRenderer` component to wrap the contents of the `body` field for each node:
 
 ```js:title=src/pages/blog.js
 import * as React from 'react'
@@ -564,20 +542,20 @@ const BlogPage = ({ data }) => {
   return (
     <Layout pageTitle="My Blog Posts">
       {
-      data.allMdx.nodes.map((node) => (
-        <article key={node.id}>
-          <h2>{node.frontmatter.title}</h2>
-          <p>Posted: {node.frontmatter.date}</p>
-          {/* highlight-start */}
-          <MDXRenderer>
-            {node.body}
-          </MDXRenderer>
-          {/* highlight-end */}
-        </article>
-      ))
+        data.allMdx.nodes.map((node) => (
+          <article key={node.id}>
+            <h2>{node.frontmatter.title}</h2>
+            <p>Posted: {node.frontmatter.date}</p>
+            {/* highlight-start */}
+            <MDXRenderer>
+              {node.body}
+            </MDXRenderer>
+            {/* highlight-end */}
+          </article>
+        ))
       }
     </Layout>
-  );
+  )
 }
 
 export const query = graphql`
@@ -598,15 +576,17 @@ export const query = graphql`
 export default BlogPage
 ```
 
-![WORDS](./blog-page-with-full-posts.png)
+6. When you refresh your Blog page in the web browser, you should see your post contents rendered!
+    ![A screenshot of the Blog page in a web browser. Now, underneath the date for each post, the contents of the blog post are also being rendered.](./blog-page-with-full-posts.png)
 
-// SHOULD WE ADD SOME STYLES SO THIS LOOKS LESS LIKE TRASH?
+Nice work! Your site now has a blog page with actual content.
 
 ## Summary
 
 Take a moment to think back on what you've learned so far. Challenge yourself to answer the following questions from memory:
 
-* ?
+* What is a transformer plugin? How do transformer plugins affect the data in the data layer?
+* What is MDX? Why is it useful?
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
