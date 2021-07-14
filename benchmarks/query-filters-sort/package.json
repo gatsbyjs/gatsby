@@ -9,7 +9,8 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "gatsby": "^3.4.1",
+    "gatsby": "next",
+    "lmdb-store": "^1.6.1",
     "process-top": "^1.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
