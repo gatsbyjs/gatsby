@@ -89,8 +89,8 @@ describe(`data resolution`, () => {
 
     expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(
       // we add a media item node before running our warm cache build.
-      // so 30 before 31 after
-      isWarmCache ? 31 : 30
+      // so 31 before 32 after
+      isWarmCache ? 32 : 31
     )
   })
 
