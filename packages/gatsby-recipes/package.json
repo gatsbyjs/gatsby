@@ -50,7 +50,6 @@
     "prettier": "^2.3.2",
     "prop-types": "^15.6.1",
     "remark-mdx": "^2.0.0-next.4",
-    "remark-mdxjs": "^2.0.0-next.4",
     "remark-parse": "^6.0.3",
     "remark-stringify": "^8.1.0",
     "resolve-from": "^5.0.0",
@@ -118,8 +117,7 @@
     "@mdx-js/runtime": "^2.0.0-next.4",
     "graphql": "^15.5.1",
     "property-information": "5.5.0",
-    "remark-mdx": "^2.0.0-next.4",
-    "remark-mdxjs": "^2.0.0-next.4"
+    "remark-mdx": "^2.0.0-next.4"
   },
   "scripts": {
     "build": "rollup -c",
