@@ -547,96 +547,6 @@ Object {
 }
 `;
 
-exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves posts 1`] = `
-Object {
-  "data": Object {
-    "allWpPost": Object {
-      "nodes": Array [
-        Object {
-          "author": Object {
-            "node": Object {
-              "avatar": Object {
-                "url": "http://2.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=96&d=mm&r=g",
-              },
-              "comments": Object {
-                "nodes": Array [],
-              },
-            },
-          },
-          "featuredImage": null,
-          "title": "Gutenberg: Common Blocks",
-        },
-        Object {
-          "author": Object {
-            "node": Object {
-              "avatar": Object {
-                "url": "http://2.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=96&d=mm&r=g",
-              },
-              "comments": Object {
-                "nodes": Array [],
-              },
-            },
-          },
-          "featuredImage": null,
-          "title": "Gutenberg: Formatting Blocks",
-        },
-        Object {
-          "author": Object {
-            "node": Object {
-              "avatar": Object {
-                "url": "http://2.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=96&d=mm&r=g",
-              },
-              "comments": Object {
-                "nodes": Array [],
-              },
-            },
-          },
-          "featuredImage": null,
-          "title": "Gutenberg: Layout Element Blocks",
-        },
-        Object {
-          "author": Object {
-            "node": Object {
-              "avatar": Object {
-                "url": "http://2.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=96&d=mm&r=g",
-              },
-              "comments": Object {
-                "nodes": Array [],
-              },
-            },
-          },
-          "featuredImage": null,
-          "title": "Gutenberg: Columns",
-        },
-        Object {
-          "author": Object {
-            "node": Object {
-              "avatar": Object {
-                "url": "http://2.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=96&d=mm&r=g",
-              },
-              "comments": Object {
-                "nodes": Array [],
-              },
-            },
-          },
-          "featuredImage": Object {
-            "node": Object {
-              "altText": "",
-              "sourceUrl": "http://localhost:8001/wp-content/uploads/2020/03/84-1000x1000-1.jpg",
-            },
-          },
-          "title": "Hello world!",
-        },
-      ],
-    },
-    "testPost": Object {
-      "title": "Hello world!",
-    },
-  },
-  "extensions": Object {},
-}
-`;
-
 exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves posts INCREMENTED 1`] = `
 Object {
   "data": Object {
@@ -653,8 +563,13 @@ Object {
               },
             },
           },
-          "featuredImage": null,
-          "title": "Gutenberg: Common Blocks",
+          "featuredImage": Object {
+            "node": Object {
+              "altText": "",
+              "sourceUrl": "http://localhost:8001/wp-content/uploads/2020/03/1024x1024-300x300-1.png",
+            },
+          },
+          "title": "Gutenberg: Common Blocks DELTA SYNC",
         },
         Object {
           "author": Object {
@@ -858,7 +773,7 @@ Object {
                 "title": "Gutenberg: Formatting Blocks",
               },
               Object {
-                "title": "Gutenberg: Common Blocks",
+                "title": "Gutenberg: Common Blocks DELTA SYNC",
               },
             ],
           },
@@ -6449,6 +6364,17 @@ Array [
     "name": "ActionMonitorActionToTermNodeConnectionWhereArgs",
   },
   Object {
+    "fields": null,
+    "name": "AttachFeaturedImageToNodeByIdInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "success",
+    ],
+    "name": "AttachFeaturedImageToNodeByIdPayload",
+  },
+  Object {
     "fields": Array [
       "default",
       "extraAttr",
@@ -10570,6 +10496,17 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "RemoveFeaturedImageFromNodeByIdInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "success",
+    ],
+    "name": "RemoveFeaturedImageFromNodeByIdPayload",
+  },
+  Object {
+    "fields": null,
     "name": "ResetUserPasswordInput",
   },
   Object {
@@ -10641,6 +10578,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "attachFeaturedImageToNodeById",
       "createActionMonitorAction",
       "createCategory",
       "createComment",
@@ -10669,6 +10607,7 @@ Array [
       "deleteUser",
       "increaseCount",
       "registerUser",
+      "removeFeaturedImageFromNodeById",
       "resetUserPassword",
       "restoreComment",
       "sendPasswordResetEmail",

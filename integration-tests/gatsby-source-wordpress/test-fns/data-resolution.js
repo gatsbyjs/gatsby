@@ -86,7 +86,12 @@ describe(`data resolution`, () => {
     })
 
     expect(gatsbyResult.data.allWpTermNode.nodes.length).toBe(14)
-    expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(30)
+
+    expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(
+      // we add a media item node before running our warm cache build.
+      // so 30 before 31 after
+      isWarmCache ? 31 : 30
+    )
   })
 
   it(`resolves interface fields which are a mix of Gatsby nodes and regular object data with no node`, async () => {
@@ -478,36 +483,30 @@ describe(`data resolution`, () => {
   })
 
   it(`Only sources MediaItem nodes that are in use and does so incrementally`, async () => {
-    const mediaItemSlug = "aperture-vintage-346923-unsplash"
-
+    // mutate wp
+    // we need to set media item #195 as the featured image on post #94 at the start of warm builds and remove it at the start of cold builds
     const {
       data: { wpMediaItem },
     } = await fetchGraphql({
       url,
       query: /* GraphQL */ `
-        query MediaItem() {
-          wpMediaItem(databaseId: {eq: 195}) {
+        query MediaItem {
+          wpMediaItem(databaseId: { eq: 195 }) {
             slug
             localFile {
-              absolutePath
+              name
             }
           }
         }
       `,
-      variables: {
-        slug: mediaItemSlug,
-      },
     })
 
     // we make a mutation to WPGraphQL on our second build (warm cache) adding this media item to a post in WP which  makes it available in Gatsby
     if (isWarmCache) {
       expect(wpMediaItem).toBeTruthy()
       expect(wpMediaItem.localFile).toBeTruthy()
-      expect(
-        wpMediaItem.localFile.absolutePath.includes(wpMediaItem.slug)
-      ).toBeTruthy()
     }
-    // otherwise this media item shouldn't exist
+    // otherwise this media item shouldn't exist in Gatsby
     else {
       expect(wpMediaItem).toBeNull()
     }
