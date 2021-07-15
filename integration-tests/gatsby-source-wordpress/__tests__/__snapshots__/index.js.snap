@@ -547,6 +547,96 @@ Object {
 }
 `;
 
+exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves posts 1`] = `
+Object {
+  "data": Object {
+    "allWpPost": Object {
+      "nodes": Array [
+        Object {
+          "author": Object {
+            "node": Object {
+              "avatar": Object {
+                "url": "http://2.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=96&d=mm&r=g",
+              },
+              "comments": Object {
+                "nodes": Array [],
+              },
+            },
+          },
+          "featuredImage": null,
+          "title": "Gutenberg: Common Blocks",
+        },
+        Object {
+          "author": Object {
+            "node": Object {
+              "avatar": Object {
+                "url": "http://2.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=96&d=mm&r=g",
+              },
+              "comments": Object {
+                "nodes": Array [],
+              },
+            },
+          },
+          "featuredImage": null,
+          "title": "Gutenberg: Formatting Blocks",
+        },
+        Object {
+          "author": Object {
+            "node": Object {
+              "avatar": Object {
+                "url": "http://2.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=96&d=mm&r=g",
+              },
+              "comments": Object {
+                "nodes": Array [],
+              },
+            },
+          },
+          "featuredImage": null,
+          "title": "Gutenberg: Layout Element Blocks",
+        },
+        Object {
+          "author": Object {
+            "node": Object {
+              "avatar": Object {
+                "url": "http://2.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=96&d=mm&r=g",
+              },
+              "comments": Object {
+                "nodes": Array [],
+              },
+            },
+          },
+          "featuredImage": null,
+          "title": "Gutenberg: Columns",
+        },
+        Object {
+          "author": Object {
+            "node": Object {
+              "avatar": Object {
+                "url": "http://2.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=96&d=mm&r=g",
+              },
+              "comments": Object {
+                "nodes": Array [],
+              },
+            },
+          },
+          "featuredImage": Object {
+            "node": Object {
+              "altText": "",
+              "sourceUrl": "http://localhost:8001/wp-content/uploads/2020/03/84-1000x1000-1.jpg",
+            },
+          },
+          "title": "Hello world!",
+        },
+      ],
+    },
+    "testPost": Object {
+      "title": "Hello world!",
+    },
+  },
+  "extensions": Object {},
+}
+`;
+
 exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves posts INCREMENTED 1`] = `
 Object {
   "data": Object {
