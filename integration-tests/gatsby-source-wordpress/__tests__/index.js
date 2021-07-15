@@ -74,12 +74,18 @@ describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
       process.exit(1)
     }
 
-    if (isWarmCache) {
-      const response = await mutateSchema()
-      console.log(response)
-    } else {
-      const response = await resetSchema()
-      console.log(response)
+    try {
+      if (isWarmCache) {
+        const response = await mutateSchema()
+        console.log(response)
+      } else {
+        const response = await resetSchema()
+        console.log(response)
+      }
+    } catch (e) {
+      console.info(`Threw errors while mutating or unmutating WordPress`)
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      process.exit(1)
     }
 
     gatsbyDevelopProcess = spawnGatsbyProcess(`develop`)
