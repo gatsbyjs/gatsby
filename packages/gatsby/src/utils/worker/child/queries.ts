@@ -8,6 +8,12 @@ import { GraphQLRunner } from "../../../query/graphql-runner"
 import { getDataStore } from "../../../datastore"
 import { setState } from "./state"
 import { buildSchema } from "./schema"
+import {
+  IAddPendingPageDataWriteAction,
+  ICreatePageDependencyAction,
+  IPageQueryRunAction,
+  IQueryStartAction,
+} from "../../../redux/types"
 
 export function setComponents(): void {
   setState([`components`, `staticQueryComponents`])
@@ -29,7 +35,39 @@ function getGraphqlRunner(): GraphQLRunner {
   return gqlRunner
 }
 
-export async function runQueries(queryIds: IGroupedQueryIds): Promise<void> {
+type ActionsToReplay = Array<
+  | IQueryStartAction
+  | IPageQueryRunAction
+  | IAddPendingPageDataWriteAction
+  | ICreatePageDependencyAction
+>
+
+export async function runQueries(
+  queryIds: IGroupedQueryIds
+): Promise<ActionsToReplay> {
+  const actionsToReplay: ActionsToReplay = []
+
+  const unsubscribe = store.subscribe(() => {
+    const action = store.getState().lastAction
+    if (
+      action.type === `QUERY_START` ||
+      action.type === `PAGE_QUERY_RUN` ||
+      action.type === `ADD_PENDING_PAGE_DATA_WRITE` ||
+      action.type === `CREATE_COMPONENT_DEPENDENCY`
+    ) {
+      actionsToReplay.push(action)
+    }
+  })
+
+  try {
+    await doRunQueries(queryIds)
+    return actionsToReplay
+  } finally {
+    unsubscribe()
+  }
+}
+
+async function doRunQueries(queryIds: IGroupedQueryIds): Promise<void> {
   const workerStore = store.getState()
 
   // If buildSchema() didn't run yet, execute it

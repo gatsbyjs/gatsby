@@ -8,8 +8,8 @@ import { initJobsMessagingInMainProcess } from "../jobs/worker-messaging"
 import { initReporterMessagingInMainProcess } from "./reporter"
 
 import { GatsbyWorkerPool } from "./types"
-import { loadPartialStateFromDisk, store } from "../../redux"
-import { IGatsbyState, IMergeWorkerQueryState } from "../../redux/types"
+import { store } from "../../redux"
+import { ActionsUnion } from "../../redux/types"
 
 export type { GatsbyWorkerPool }
 
@@ -50,6 +50,7 @@ export async function runQueriesInWorkersQueue(
     promises.push(
       pool.single
         .runQueries({ pageQueryIds: [], staticQueryIds: segment })
+        .then(replayWorkerActions)
         .then(() => {
           activity.tick(segment.length)
         })
@@ -60,6 +61,7 @@ export async function runQueriesInWorkersQueue(
     promises.push(
       pool.single
         .runQueries({ pageQueryIds: segment, staticQueryIds: [] })
+        .then(replayWorkerActions)
         .then(() => {
           activity.tick(segment.length)
         })
@@ -71,24 +73,16 @@ export async function runQueriesInWorkersQueue(
   activity.end()
 }
 
-export async function mergeWorkerState(pool: GatsbyWorkerPool): Promise<void> {
-  const activity = reporter.activityTimer(`Merge worker state`)
-  activity.start()
+async function replayWorkerActions(
+  actions: Array<ActionsUnion>
+): Promise<void> {
+  let i = 1
+  for (const action of actions) {
+    store.dispatch(action)
 
-  await pool.all.saveQueries()
-  const workerQueryState: IMergeWorkerQueryState["payload"] = []
-
-  for (const { workerId } of pool.getWorkerInfo()) {
-    const state = loadPartialStateFromDisk([`queries`], String(workerId))
-    workerQueryState.push({
-      workerId,
-      queryStateChunk: state as IGatsbyState["queries"],
-    })
-    await new Promise(resolve => process.nextTick(resolve))
+    // Give event loop some breath
+    if (i++ % 100 === 0) {
+      await new Promise(resolve => process.nextTick(resolve))
+    }
   }
-  store.dispatch({
-    type: `MERGE_WORKER_QUERY_STATE`,
-    payload: workerQueryState,
-  })
-  activity.end()
 }
