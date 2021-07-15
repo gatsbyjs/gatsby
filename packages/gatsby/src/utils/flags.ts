@@ -78,7 +78,7 @@ const activeFlags: Array<IFlag> = [
     command: `develop`,
     telemetryId: `FastDev`,
     experimental: false,
-    description: `Enable all experiments aimed at improving develop server start time`,
+    description: `Enable all experiments aimed at improving develop server start time.`,
     includedFlags: [
       `DEV_SSR`,
       `PRESERVE_FILE_DOWNLOAD_CACHE`,
