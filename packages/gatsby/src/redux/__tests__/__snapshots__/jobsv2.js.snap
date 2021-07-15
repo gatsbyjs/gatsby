@@ -19,11 +19,6 @@ Object {
           "version": "1.0.0",
         },
       },
-      "plugin": Object {
-        "name": "test-plugin",
-        "resolve": "/node_modules/test-plugin",
-        "version": "1.0.0",
-      },
     },
   },
 }

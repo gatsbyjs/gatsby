@@ -1,5 +1,5 @@
 ---
-title: Use and Style React Components
+title: "Part 2: Use and Style React Components"
 ---
 
 import { Announcement, Notification, LinkButton } from 'gatsby-interface'
@@ -170,7 +170,7 @@ wrapped in an enclosing tag. Did you want a JSX fragment
 
 ### Task: Update the home page content
 
-Now that you've gotten a high-level introduction to React, it's time to your hands at writing some React components. To start, you'll update the content for the home page.
+Now that you've gotten a high-level introduction to React, it's time to try your hands at writing some React components. To start, you'll update the content for the home page.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -505,17 +505,9 @@ export default Layout
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Syntax Hint**: You might have noticed that the `Layout` component is using a slightly different syntax for its props.
+**Syntax Hint**: You might have noticed that the `Layout` component uses a slightly different syntax for its props.
 
-Now it looks like this:
-
-```js
-const Layout = ({ pageTitle, children }) => {
-  ...
-}
-```
-
-instead of this:
+Now instead of looking like this:
 
 ```js
 const Layout = (props) => {
@@ -523,9 +515,17 @@ const Layout = (props) => {
 }
 ```
 
+...it looks like this:
+
+```js
+const Layout = ({ pageTitle, children }) => {
+  ...
+}
+```
+
 This is a JavaScript technique called **destructuring**. It's basically a shortcut for defining variables based on an object's properties. It's like saying, "Take the object that gets passed into this function, and unpack its `pageTitle` and `children` properties into their own variables."
 
-It's a shorter way to do the following:
+In other words, it's a shorter way to do the following:
 
 ```javascript
 const Layout = (props) => {
@@ -608,7 +608,7 @@ Then, in your component `.js` file, import each class separately and apply it to
 
 ```javascript:title=src/components/my-component.js
 import * as React from 'react'
-import { title } from './layout.module.css' // highlight-line
+import { title } from './my-component.module.css' // highlight-line
 
 const MyComponent = () => {
   return (
@@ -750,6 +750,14 @@ const Layout = ({ pageTitle, children }) => {
 export default Layout
 ```
 
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Syntax Hint:** In CSS, the convention is to name classes using kebab case (like `.nav-links`). But in JavaScript, the convention is to name variables using camel case (like `navLinks`).
+
+Luckily, when you use CSS Modules with Gatsby, you can have both! Your kebab-case class names in your `.modules.css` files will automatically be converted to camel-case variables that you can import in your `.js` files.
+
+</Announcement>
+
 7. Once your development server finishes rebuilding your site, you should see your new styles applied in your web browser:
 
 ![A screenshot of the Home page. The styles have been updated so now the page title is in purple, and the navigation links at the top of the page are in a single line instead of a bulleted list.](./index-page-styled.png)
@@ -780,7 +788,7 @@ git commit -m "Finished Gatsby Tutorial Part 2"
 git push
 ```
 
-Once your changes have been pushed to GitHub, Gatsby Cloud should notice the update and rebuild and deploy the latest version of your site. (It may take a few minutes for your changes to be reflected on the live site. Watch your build's progress from your [Gatsby Cloud dashboard](/dashboard/?utm_campaign=tutorial).)
+Once your changes have been pushed to GitHub, Gatsby Cloud should notice the update and rebuild and deploy the latest version of your site. (It may take a few minutes for your changes to be reflected on the live site. Watch your build's progress from your [Gatsby Cloud dashboard](/dashboard/).)
 
 </Announcement>
 
@@ -808,7 +816,7 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 In Part 3 of the Tutorial, you'll learn about how to use Gatsby plugins to add more pre-built functionality to your site.
 
 <LinkButton
-  to="/docs/tutorial/part-3"
+  to="/docs/tutorial/part-3/"
   rightIcon={<MdArrowForward />}
   variant="SECONDARY"
 >

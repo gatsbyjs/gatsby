@@ -1,6 +1,7 @@
 import _ from "lodash"
 
 import { store } from "../../redux"
+import { IGatsbyState } from "../../redux/types"
 import * as nodeAPIs from "../../utils/api-node-docs"
 import * as browserAPIs from "../../utils/api-browser-docs"
 import ssrAPIs from "../../../cache-dir/api-ssr-docs"
@@ -121,7 +122,7 @@ export async function loadPlugins(
   // If we get this far, everything looks good. Update the store
   store.dispatch({
     type: `SET_SITE_FLATTENED_PLUGINS`,
-    payload: flattenedPlugins,
+    payload: flattenedPlugins as IGatsbyState["flattenedPlugins"],
   })
 
   return flattenedPlugins

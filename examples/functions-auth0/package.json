@@ -1,0 +1,27 @@
+{
+  "name": "gatsby-auth0-functions",
+  "private": true,
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "@auth0/auth0-react": "^1.0.0",
+    "@serverless-jwt/jwt-verifier": "^0.2.1",
+    "dotenv": "^8.2.0",
+    "gatsby": "next",
+    "gatsby-plugin-gatsby-cloud": "next",
+    "node-fetch": "^2.6.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "gatsby-plugin-create-client-paths": "next",
+    "gatsby-plugin-postcss": "next",
+    "prettier": "^2.2.1",
+    "tailwindcss": "^1.5.2"
+  }
+}

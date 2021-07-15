@@ -33,7 +33,7 @@ watchers to build Gatsby source code.
 
 ## Revert to current packages
 
-If you've recently run `gatsby-dev` your `node_modules` will be out of sync with current published packages. In order to undo this, you can remove the `node_modules` directory or run:
+If you've recently run `gatsby-dev` your `node_modules` will be out of sync with currently published packages. In order to undo this, you can remove the `node_modules` directory or run:
 
 ```shell
 git checkout package.json; yarn --force
@@ -47,7 +47,7 @@ git checkout package.json; npm install --force
 
 **[Demo Video](https://www.youtube.com/watch?v=D0SwX1MSuas)**
 
-More detailed instruction for setting up your Gatsby development environment can
+More detailed instructions for setting up your Gatsby development environment can
 be found [here](https://www.gatsbyjs.org/contributing/how-to-contribute/).
 
 ### Other commands
@@ -78,4 +78,4 @@ Copy all modules/files in the gatsby source repo in packages/
 
 #### `--force-install`
 
-Disables copying files into node_modules and forces usage of local npm repository.
+Disable copying files into node_modules and force usage of local npm repository.

@@ -29,5 +29,7 @@ packages/gatsby-source-wordpress/test-site/**
 **/__testfixtures__/**
 **/__tests__/fixtures/**
 
+!packages/gatsby-worker/src/__tests__/fixtures/**
+
 # coverage
 coverage

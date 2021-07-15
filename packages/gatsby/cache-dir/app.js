@@ -1,6 +1,5 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import domReady from "@mikaelkristiansson/domready"
 import io from "socket.io-client"
 
 import socketIo from "./socketIo"
@@ -23,22 +22,16 @@ import "./blank.css"
 // Enable fast-refresh for virtual sync-requires, gatsby-browser & navigation
 // To ensure that our <Root /> component can hot reload in case anything below doesn't
 // satisfy fast-refresh constraints
-module.hot.accept([
-  `$virtual/async-requires`,
-  `./api-runner-browser`,
-  `./navigation`,
-])
+module.hot.accept(
+  [`$virtual/async-requires`, `./api-runner-browser`, `./navigation`],
+  () => {
+    // asyncRequires should be automatically updated here (due to ESM import and webpack HMR spec),
+    // but loader doesn't know that and needs to be manually nudged
+    loader.updateAsyncRequires(asyncRequires)
+  }
+)
 
 window.___emitter = emitter
-
-if (
-  process.env.GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES &&
-  !ReactDOM.unstable_createRoot
-) {
-  throw new Error(
-    `The GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES flag is not compatible with your React version. Please install "react@0.0.0-experimental-57768ef90" and "react-dom@0.0.0-experimental-57768ef90" or higher.`
-  )
-}
 
 const loader = new DevLoader(asyncRequires, matchPaths)
 setLoader(loader)
@@ -141,11 +134,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   // render to avoid React complaining about hydration mis-matches.
   let defaultRenderer = ReactDOM.render
   if (focusEl && focusEl.children.length) {
-    if (
-      process.env.GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES &&
-      ReactDOM.unstable_createRoot
-    ) {
-      defaultRenderer = ReactDOM.unstable_createRoot
+    if (ReactDOM.hydrateRoot) {
+      defaultRenderer = ReactDOM.hydrateRoot
     } else {
       defaultRenderer = ReactDOM.hydrate
     }
@@ -203,12 +193,15 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         )
         document.body.append(indicatorMountElement)
 
-        if (renderer === ReactDOM.unstable_createRoot) {
+        if (renderer === ReactDOM.hydrateRoot) {
           renderer(indicatorMountElement).render(
             <LoadingIndicatorEventHandler />
           )
         } else {
-          renderer(<LoadingIndicatorEventHandler />, indicatorMountElement)
+          ReactDOM.render(
+            <LoadingIndicatorEventHandler />,
+            indicatorMountElement
+          )
         }
       }
     }
@@ -227,18 +220,38 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       return <Root />
     }
 
-    domReady(() => {
+    function runRender() {
       if (dismissLoadingIndicator) {
         dismissLoadingIndicator()
       }
 
-      if (renderer === ReactDOM.unstable_createRoot) {
-        renderer(rootElement, {
-          hydrate: true,
-        }).render(<App />)
+      if (renderer === ReactDOM.hydrateRoot) {
+        renderer(rootElement, <App />)
       } else {
         renderer(<App />, rootElement)
       }
-    })
+    }
+
+    // https://github.com/madrobby/zepto/blob/b5ed8d607f67724788ec9ff492be297f64d47dfc/src/zepto.js#L439-L450
+    // TODO remove IE 10 support
+    const doc = document
+    if (
+      doc.readyState === `complete` ||
+      (doc.readyState !== `loading` && !doc.documentElement.doScroll)
+    ) {
+      setTimeout(function () {
+        runRender()
+      }, 0)
+    } else {
+      const handler = function () {
+        doc.removeEventListener(`DOMContentLoaded`, handler, false)
+        window.removeEventListener(`load`, handler, false)
+
+        runRender()
+      }
+
+      doc.addEventListener(`DOMContentLoaded`, handler, false)
+      window.addEventListener(`load`, handler, false)
+    }
   })
 })

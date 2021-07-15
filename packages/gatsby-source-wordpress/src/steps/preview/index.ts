@@ -6,6 +6,7 @@ import chalk from "chalk"
 import urlUtil from "url"
 import PQueue from "p-queue"
 import { dump } from "dumper.js"
+import { actions as gatsbyActions } from "gatsby/dist/redux/actions/public"
 
 import { paginatedWpNodeFetch } from "~/steps/source-nodes/fetch-nodes/fetch-nodes-paginated"
 import fetchGraphql from "~/utils/fetch-graphql"
@@ -38,7 +39,7 @@ export type PreviewStatusUnion =
   | `GATSBY_PREVIEW_PROCESS_ERROR`
   | `RECEIVED_PREVIEW_DATA_FROM_WRONG_URL`
 
-export interface IWebhookBody {
+export interface IPreviewData {
   previewDatabaseId: number
   userDatabaseId: number
   token: string
@@ -100,7 +101,7 @@ const writeDummyPageDataJsonIfNeeded = async ({
   previewData,
   pageNode,
 }: {
-  previewData: IWebhookBody
+  previewData: IPreviewData
   pageNode: IPageNode
 }): Promise<void> => {
   if (!previewData.isDraft) {
@@ -143,7 +144,7 @@ const createPreviewStatusCallback = ({
   previewData,
   reporter,
 }: {
-  previewData: IWebhookBody
+  previewData: IPreviewData
   reporter: Reporter
 }) => async ({
   passedNode,
@@ -215,10 +216,15 @@ const createPreviewStatusCallback = ({
  * previewForIdIsAlreadyBeingProcessed to see if another preview webhook
  * already started processing for this action
  */
-export const sourcePreview = async (
-  { previewData, reporter }: { previewData: IWebhookBody; reporter: Reporter },
-  { url }: IPluginOptions
-): Promise<void> => {
+export const sourcePreview = async ({
+  previewData,
+  reporter,
+  actions,
+}: {
+  previewData: IPreviewData
+  reporter: Reporter
+  actions: typeof gatsbyActions
+}): Promise<void> => {
   if (previewForIdIsAlreadyBeingProcessed(previewData?.id)) {
     return
   }
@@ -256,37 +262,10 @@ export const sourcePreview = async (
 
   await touchValidNodes()
 
-  const { hostname: settingsHostname } = urlUtil.parse(url)
-  const { hostname: remoteHostname } = urlUtil.parse(previewData.remoteUrl)
-
   const sendPreviewStatus = createPreviewStatusCallback({
     previewData,
     reporter,
   })
-
-  if (settingsHostname !== remoteHostname) {
-    await sendPreviewStatus({
-      status: `RECEIVED_PREVIEW_DATA_FROM_WRONG_URL`,
-      context: `check that the preview data came from the right URL.`,
-      passedNode: {
-        modified: previewData.modified,
-        databaseId: previewData.parentDatabaseId,
-      },
-      graphqlEndpoint: previewData.remoteUrl,
-    })
-
-    reporter.warn(
-      formatLogMessage(
-        `Received preview data from a different remote URL than the one specified in plugin options. \n\n ${chalk.bold(
-          `Remote URL:`
-        )} ${previewData.remoteUrl}\n ${chalk.bold(
-          `Plugin options URL:`
-        )} ${url}`
-      )
-    )
-
-    return
-  }
 
   // this callback will be invoked when the page is created/updated for this node
   // then it'll send a mutation to WPGraphQL so that WP knows the preview is ready
@@ -296,12 +275,26 @@ export const sourcePreview = async (
     sendPreviewStatus,
   })
 
-  await fetchAndCreateSingleNode({
+  const { node } = await fetchAndCreateSingleNode({
     actionType: `PREVIEW`,
     ...previewData,
     previewParentId: previewData.parentDatabaseId,
     isPreview: true,
   })
+
+  if (`unstable_createNodeManifest` in actions) {
+    const manifestId = node.databaseId + previewData.modified
+
+    reporter.info(
+      formatLogMessage(
+        `Creating node manifest for ${node.id} with manifestId ${manifestId}`
+      )
+    )
+    actions.unstable_createNodeManifest({
+      manifestId,
+      node,
+    })
+  }
 }
 
 /**
@@ -309,14 +302,44 @@ export const sourcePreview = async (
  * It should only ever run in Preview mode, which is process.env.ENABLE_GATSBY_REFRESH_ENDPOINT = true
  * It first sources all pending preview actions, then calls sourcePreview() for each of them.
  */
-export const sourcePreviews = async (
-  helpers: GatsbyHelpers,
-  pluginOptions: IPluginOptions
-): Promise<void> => {
-  const { webhookBody, reporter } = helpers
+export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
+  const { webhookBody, reporter, actions } = helpers
   const {
     debug: { preview: inPreviewDebugModeOption },
+    url,
   } = getPluginOptions()
+
+  const { hostname: settingsHostname } = urlUtil.parse(url)
+  const { hostname: remoteHostname } = urlUtil.parse(webhookBody.remoteUrl)
+
+  if (settingsHostname !== remoteHostname) {
+    const sendPreviewStatus = createPreviewStatusCallback({
+      previewData: webhookBody,
+      reporter,
+    })
+
+    await sendPreviewStatus({
+      status: `RECEIVED_PREVIEW_DATA_FROM_WRONG_URL`,
+      context: `check that the preview data came from the right URL.`,
+      passedNode: {
+        modified: webhookBody.modified,
+        databaseId: webhookBody.parentDatabaseId,
+      },
+      graphqlEndpoint: webhookBody.remoteUrl,
+    })
+
+    reporter.warn(
+      formatLogMessage(
+        `Received preview data from a different remote URL than the one specified in plugin options. Preview will not work. Please send preview requests from the WP instance configured in gatsby-config.js.\n\n ${chalk.bold(
+          `Remote URL:`
+        )} ${webhookBody.remoteUrl}\n ${chalk.bold(
+          `Plugin options URL:`
+        )} ${url}\n\n`
+      )
+    )
+
+    return
+  }
 
   const inPreviewDebugMode =
     inPreviewDebugModeOption || process.env.WP_GATSBY_PREVIEW_DEBUG
@@ -399,13 +422,11 @@ export const sourcePreviews = async (
 
   for (const { previewData } of previewActions) {
     queue.add(() =>
-      sourcePreview(
-        {
-          previewData: { ...previewData, token: webhookBody.token },
-          reporter,
-        },
-        pluginOptions
-      )
+      sourcePreview({
+        previewData: { ...previewData, token: webhookBody.token },
+        reporter,
+        actions,
+      })
     )
   }
 

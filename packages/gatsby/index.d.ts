@@ -1105,7 +1105,7 @@ export interface Actions {
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createParentChildLink */
   createParentChildLink(
-    args: { parent: Node; child: Node },
+    args: { parent: Node; child: NodeInput },
     plugin?: ActionPlugin
   ): void
 

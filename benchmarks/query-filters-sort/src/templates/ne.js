@@ -3,18 +3,19 @@ import { graphql } from "gatsby"
 
 export default ({ data }) => {
   if (!data?.allTest?.nodes) {
-    throw new Error("Invalid data")
+    throw new Error("Wrong data: " + JSON.stringify(data))
   }
   return <div>{JSON.stringify(data)}</div>
 }
 
 export const query = graphql`
-  query($pageNumAsStr: String!, $sort: TestSortInput) {
-    allTest(filter: { testEq: { ne: $pageNumAsStr } }, sort: $sort, limit: 5) {
+  query($fooBar: String!, $sort: TestSortInput, $count: Boolean!) {
+    allTest(filter: { fooBar: { ne: $fooBar } }, sort: $sort, limit: 100) {
       nodes {
         nodeNum
         text
       }
+      totalCount @include(if: $count)
     }
   }
 `

@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.10.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.10.0-next.2...gatsby-source-wordpress@5.10.0-next.3) (2021-07-14)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.10.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.10.0-next.1...gatsby-source-wordpress@5.10.0-next.2) (2021-07-09)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** don't leak auth details ([#32303](https://github.com/gatsbyjs/gatsby/issues/32303)) ([4d7ec18](https://github.com/gatsbyjs/gatsby/commit/4d7ec18b98721ff9a6d4217e10c98df891d9be01))
+
+# [5.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.10.0-next.0...gatsby-source-wordpress@5.10.0-next.1) (2021-07-08)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to ^4.1.1 ([#32250](https://github.com/gatsbyjs/gatsby/issues/32250)) ([bd03035](https://github.com/gatsbyjs/gatsby/commit/bd03035b35d4e2f69e86b9ff3bbcfb8bd3eece4a))
+- **gatsby-source-wordpress:** Move the remote url !== options url check earlier in previews ([#32251](https://github.com/gatsbyjs/gatsby/issues/32251)) ([60955e9](https://github.com/gatsbyjs/gatsby/commit/60955e90843d69e0dbfa65f98ed20eac2a58acc9))
+
+# [5.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.9.0-next.0...gatsby-source-wordpress@5.10.0-next.0) (2021-07-01)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.8.0-next.2...gatsby-source-wordpress@5.9.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.8.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.8.0-next.1...gatsby-source-wordpress@5.8.0-next.2) (2021-06-17)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.8.0-next.0...gatsby-source-wordpress@5.8.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.7.0-next.2...gatsby-source-wordpress@5.8.0-next.0) (2021-06-03)
+
+### Features
+
+- **gatsby:** add createNodeManifest action ([#31127](https://github.com/gatsbyjs/gatsby/issues/31127)) ([eed6108](https://github.com/gatsbyjs/gatsby/commit/eed610813da645356316826a4558640ecc4365b5))
+
+# [5.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.7.0-next.1...gatsby-source-wordpress@5.7.0-next.2) (2021-06-02)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** Prevent "EADDRINUSE: address already in use 127.0.0.1" error ([#31713](https://github.com/gatsbyjs/gatsby/issues/31713)) ([58e8503](https://github.com/gatsbyjs/gatsby/commit/58e8503142e31f2b2e2542bfbcfefc21f9041283))
+
+# [5.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.7.0-next.0...gatsby-source-wordpress@5.7.0-next.1) (2021-05-31)
+
+### Features
+
+- **gatsby-source-wordpress:** auto-alias any field named `fields` to prevent conflicts with Gatsby core ([#31526](https://github.com/gatsbyjs/gatsby/issues/31526)) ([8bdb7f5](https://github.com/gatsbyjs/gatsby/commit/8bdb7f56a69ca7480a8887a650d7d5f7254dbbc1))
+- **gatsby-source-wordpress:** Fix false positive error if the URL and the responsePath are the same ([#31612](https://github.com/gatsbyjs/gatsby/issues/31612)) ([cca71cf](https://github.com/gatsbyjs/gatsby/commit/cca71cfb32b295e6feeed19a4103f27e3aeed2c0))
+
 # [5.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.6.0-next.2...gatsby-source-wordpress@5.7.0-next.0) (2021-05-21)
 
 **Note:** Version bump only for package gatsby-source-wordpress

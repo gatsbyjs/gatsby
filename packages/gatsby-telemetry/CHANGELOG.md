@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.10.0-next.0...gatsby-telemetry@2.10.0-next.1) (2021-07-08)
+
+### Bug Fixes
+
+- **deps:** update typescript ([#31152](https://github.com/gatsbyjs/gatsby/issues/31152)) ([124cfcc](https://github.com/gatsbyjs/gatsby/commit/124cfcc4cd42a50a992dde5b420610f290227a78))
+- **gatsby-telemetry:** reduce save to config ([#32260](https://github.com/gatsbyjs/gatsby/issues/32260)) ([bb29394](https://github.com/gatsbyjs/gatsby/commit/bb29394ebc18e3e9970020c92bb86fa3cc526698))
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.9.0-next.1...gatsby-telemetry@2.10.0-next.0) (2021-07-01)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [2.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.9.0-next.0...gatsby-telemetry@2.9.0-next.1) (2021-06-28)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.8.0-next.1...gatsby-telemetry@2.9.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [2.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.8.0-next.0...gatsby-telemetry@2.8.0-next.1) (2021-06-10)
+
+### Bug Fixes
+
+- **gatsby-telemetry:** Export captureEvent via module.exports as well ([#31833](https://github.com/gatsbyjs/gatsby/issues/31833)) ([e1e8c07](https://github.com/gatsbyjs/gatsby/commit/e1e8c07d1fb52c574b88f5bcb050f203744aa0f3))
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.7.0-next.2...gatsby-telemetry@2.8.0-next.0) (2021-06-03)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [2.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.7.0-next.1...gatsby-telemetry@2.7.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [2.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.7.0-next.0...gatsby-telemetry@2.7.0-next.1) (2021-05-31)
+
+**Note:** Version bump only for package gatsby-telemetry
+
 # [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.6.0-next.0...gatsby-telemetry@2.7.0-next.0) (2021-05-21)
 
 **Note:** Version bump only for package gatsby-telemetry
