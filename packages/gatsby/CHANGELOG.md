@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.7...gatsby@3.11.0-next.0) (2021-07-15)
+
+### Features
+
+- **gatsby:** Add cache-lmdb implementation ([#32373](https://github.com/gatsbyjs/gatsby/issues/32373)) ([7897834](https://github.com/gatsbyjs/gatsby/commit/789783410878d562f1499c1915155135ac258d82))
+- **gatsby:** Add webpack fs caching for development flag ([#32264](https://github.com/gatsbyjs/gatsby/issues/32264)) ([4f9a724](https://github.com/gatsbyjs/gatsby/commit/4f9a724b91ce35b0232952023eaecb8db448719d))
+
 # [3.10.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.6...gatsby@3.10.0-next.7) (2021-07-14)
 
 ### Bug Fixes

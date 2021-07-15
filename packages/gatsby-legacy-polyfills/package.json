@@ -1,7 +1,7 @@
 {
   "name": "gatsby-legacy-polyfills",
   "description": "Polyfills for legacy browsers",
-  "version": "1.10.0-next.1",
+  "version": "1.11.0-next.0",
   "main": "dist/polyfills.js",
   "author": "Ward Peeters <ward@gatsbyjs.com>",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-legacy-polyfills#readme",

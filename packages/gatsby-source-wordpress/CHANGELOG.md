@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.10.0-next.3...gatsby-source-wordpress@5.11.0-next.0) (2021-07-15)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** WPGraphQL pageInfo is nullable, make sure we're not accessing hasNextPage on null ([#32369](https://github.com/gatsbyjs/gatsby/issues/32369)) ([53ae249](https://github.com/gatsbyjs/gatsby/commit/53ae249d670a058ce84ce9992140cddd3e4f481d))
+- **wordpress:** ensure all file links are rewritten ([#31652](https://github.com/gatsbyjs/gatsby/issues/31652)) ([f970600](https://github.com/gatsbyjs/gatsby/commit/f9706009f4b12006d655b1e14e17fbf0e0708b3a)), closes [#31646](https://github.com/gatsbyjs/gatsby/issues/31646)
+
 # [5.10.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.10.0-next.2...gatsby-source-wordpress@5.10.0-next.3) (2021-07-14)
 
 **Note:** Version bump only for package gatsby-source-wordpress
