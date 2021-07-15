@@ -99,22 +99,6 @@ const activeFlags: Array<IFlag> = [
     },
   },
   {
-    name: `DEV_WEBPACK_CACHE`,
-    env: `GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE`,
-    command: `develop`,
-    telemetryId: `DevWebackCache`,
-    experimental: false,
-    description: `Enable webpack's filesystem caching during development. Speeds up the start of the development server.`,
-    // umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
-    testFitness: (): fitnessEnum => {
-      if (sampleSiteForExperiment(`DEV_WEBPACK_CACHE`, 20)) {
-        return `OPT_IN`
-      } else {
-        return true
-      }
-    },
-  },
-  {
     name: `QUERY_ON_DEMAND`,
     env: `GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND`,
     command: `develop`,
@@ -157,6 +141,22 @@ const activeFlags: Array<IFlag> = [
     description: `Use webpack's persistent caching and don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
     umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
     testFitness: (): fitnessEnum => `LOCKED_IN`,
+  },
+  {
+    name: `DEV_WEBPACK_CACHE`,
+    env: `GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE`,
+    command: `develop`,
+    telemetryId: `DevWebackCache`,
+    experimental: false,
+    description: `Enable webpack's persistent caching during development. Speeds up the start of the development server.`,
+    umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
+    testFitness: (): fitnessEnum => {
+      if (sampleSiteForExperiment(`DEV_WEBPACK_CACHE`, 20)) {
+        return `OPT_IN`
+      } else {
+        return true
+      }
+    },
   },
   {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
