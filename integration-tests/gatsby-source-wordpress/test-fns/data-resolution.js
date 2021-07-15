@@ -483,7 +483,6 @@ describe(`data resolution`, () => {
   })
 
   it(`Only sources MediaItem nodes that are in use and does so incrementally`, async () => {
-    // mutate wp
     // we need to set media item #195 as the featured image on post #94 at the start of warm builds and remove it at the start of cold builds
     const {
       data: { wpMediaItem },
