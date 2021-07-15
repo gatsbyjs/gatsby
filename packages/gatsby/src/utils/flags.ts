@@ -78,8 +78,12 @@ const activeFlags: Array<IFlag> = [
     command: `develop`,
     telemetryId: `FastDev`,
     experimental: false,
-    description: `Enable all experiments aimed at improving develop server start time`,
-    includedFlags: [`DEV_SSR`, `PRESERVE_FILE_DOWNLOAD_CACHE`],
+    description: `Enable all experiments aimed at improving develop server start time.`,
+    includedFlags: [
+      `DEV_SSR`,
+      `PRESERVE_FILE_DOWNLOAD_CACHE`,
+      `DEV_WEBPACK_CACHE`,
+    ],
     testFitness: (): fitnessEnum => true,
   },
   {
@@ -141,6 +145,16 @@ const activeFlags: Array<IFlag> = [
     description: `Use webpack's persistent caching and don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
     umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
     testFitness: (): fitnessEnum => `LOCKED_IN`,
+  },
+  {
+    name: `DEV_WEBPACK_CACHE`,
+    env: `GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE`,
+    command: `develop`,
+    telemetryId: `DevWebackCache`,
+    experimental: false,
+    description: `Enable webpack's persistent caching during development. Speeds up the start of the development server.`,
+    umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
+    testFitness: (): fitnessEnum => true,
   },
   {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
