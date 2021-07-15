@@ -154,13 +154,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Enable webpack's persistent caching during development. Speeds up the start of the development server.`,
     umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => {
-      if (sampleSiteForExperiment(`DEV_WEBPACK_CACHE`, 20)) {
-        return `OPT_IN`
-      } else {
-        return true
-      }
-    },
+    testFitness: (): fitnessEnum => true,
   },
   {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
