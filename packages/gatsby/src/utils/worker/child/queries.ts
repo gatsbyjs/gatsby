@@ -17,6 +17,18 @@ export function saveQueries(): void {
   savePartialStateToDisk([`queries`], process.env.GATSBY_WORKER_ID)
 }
 
+let gqlRunner
+
+function getGraphqlRunner(): GraphQLRunner {
+  if (!gqlRunner) {
+    gqlRunner = new GraphQLRunner(store, {
+      collectStats: true,
+      graphqlTracing: store.getState().program.graphqlTracing,
+    })
+  }
+  return gqlRunner
+}
+
 export async function runQueries(queryIds: IGroupedQueryIds): Promise<void> {
   const workerStore = store.getState()
 
@@ -27,10 +39,7 @@ export async function runQueries(queryIds: IGroupedQueryIds): Promise<void> {
 
   setComponents()
 
-  const graphqlRunner = new GraphQLRunner(store, {
-    collectStats: true,
-    graphqlTracing: workerStore.program.graphqlTracing,
-  })
+  const graphqlRunner = getGraphqlRunner()
 
   await runStaticQueries({
     queryIds,

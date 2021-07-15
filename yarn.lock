@@ -1485,10 +1485,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@contentful/rich-text-react-renderer@^14.1.2":
-  version "14.1.2"
-  resolved "https://registry.yarnpkg.com/@contentful/rich-text-react-renderer/-/rich-text-react-renderer-14.1.2.tgz#b7fff19faa0512f034f1717774a0d9b348bb07fc"
-  integrity sha512-UmZ5nNvFXuD4LA2TKDDD52FgzmeMAQUVu5p9UqKDVDG6twHAD4DiWtoXSRM5Bebftlx2UH+UeWHbxIOgF/lV5A==
+"@contentful/rich-text-react-renderer@^14.1.3":
+  version "14.1.3"
+  resolved "https://registry.npmjs.org/@contentful/rich-text-react-renderer/-/rich-text-react-renderer-14.1.3.tgz#501136677742d0ad3f4b50fa2c12b17fc1d68cc8"
+  integrity sha512-qieT2qEKlHarlYjDvDHpv6vwf2M9uI0Nf+WgyKBP6SFgakpzxuO5PR9j5CnxyusZ/NzsWcGBu9SDQMnKeM2iZw==
   dependencies:
     "@contentful/rich-text-types" "^14.1.2"
 
@@ -8688,12 +8688,12 @@ contentful-sdk-core@^6.5.0, contentful-sdk-core@^6.7.0:
     fast-copy "^2.1.0"
     qs "^6.9.4"
 
-contentful@^8.1.7:
-  version "8.1.7"
-  resolved "https://registry.yarnpkg.com/contentful/-/contentful-8.1.7.tgz#24786d5eb98118368cafd2a7bf718de9a1f99bae"
-  integrity sha512-dFlpRjkrTp+TG6kCjERIgzsBRTfjflRnjosE0uQus7dENrz2nrVEYhFO/T3WrKQfAbTyozKcTpWr5pEZiXpm2A==
+contentful@^8.4.0:
+  version "8.4.0"
+  resolved "https://registry.npmjs.org/contentful/-/contentful-8.4.0.tgz#0bfa29391176e9570fbada272797c07f7b0a6c9a"
+  integrity sha512-VHVIZMRVMvce949uhDtvxEgHsNzcbYN1YW7Hz4vJKt37qyf42AESvSsRZAKLYgf8b8NeHn07VgV2drBacFm5Tg==
   dependencies:
-    axios "^0.21.0"
+    axios "^0.21.1"
     contentful-resolve-response "^1.3.0"
     contentful-sdk-core "^6.5.0"
     fast-copy "^2.1.0"
@@ -9677,7 +9677,7 @@ cssstyle@^2.0.0, cssstyle@^2.3.0:
 
 csstype@2.6.17, csstype@^2.5.7, csstype@^2.6.14, csstype@^2.6.4, csstype@^2.6.9, csstype@^3.0.2:
   version "2.6.17"
-  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.17.tgz#4cf30eb87e1d1a005d8b6510f95292413f6a1c0e"
+  resolved "https://registry.npmjs.org/csstype/-/csstype-2.6.17.tgz#4cf30eb87e1d1a005d8b6510f95292413f6a1c0e"
   integrity sha512-u1wmTI1jJGzCJzWndZo8mk4wnPTZd1eOIYTYvuEyOQGfmDl3TrabCCfKnOC86FZwW/9djqTl933UF/cS425i9A==
 
 csvtojson@^2.0.10:
@@ -26780,7 +26780,7 @@ text-table@0.2.0, text-table@^0.2.0:
 
 theme-ui@0.4.0-rc.14, "theme-ui@>= 0.4.0-rc.1", theme-ui@^0.2.49, theme-ui@^0.4.0-rc.14:
   version "0.4.0-rc.14"
-  resolved "https://registry.yarnpkg.com/theme-ui/-/theme-ui-0.4.0-rc.14.tgz#67856dd8302e621ad55f7687a18d483b506c0706"
+  resolved "https://registry.npmjs.org/theme-ui/-/theme-ui-0.4.0-rc.14.tgz#67856dd8302e621ad55f7687a18d483b506c0706"
   integrity sha512-ciaGwsv9cRskUAukHSzMHdRXhqpweV8xAsywkE61gBg9msAfeI6MyeOU7HCseK4U9/Ppu3NNJExI32CK4BMDtg==
   dependencies:
     "@theme-ui/color-modes" "^0.4.0-rc.14"

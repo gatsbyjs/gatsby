@@ -74,5 +74,6 @@ exports.initialSync = () => {
         },
       ],
     },
+    tagItems: [],
   }
 }
