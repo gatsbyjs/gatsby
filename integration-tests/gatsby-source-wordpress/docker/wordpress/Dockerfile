@@ -34,6 +34,8 @@ RUN chmod +x  /usr/local/bin/install-plugin
 COPY install-wp-graphql-plugins.sh /usr/local/bin/install-wp-graphql-plugins
 RUN  chmod +x /usr/local/bin/install-wp-graphql-plugins
 
+COPY plugins/* ${PLUGIN_DIR}
+
 EXPOSE 8001
 
 CMD ["wait-for-it", "-t", "40", "db:3306", "--", "/usr/local/bin/start.sh"]
