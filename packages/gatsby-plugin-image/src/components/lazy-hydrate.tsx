@@ -1,5 +1,5 @@
 import React, { MutableRefObject } from "react"
-// @ts-ignore - react 18 has hydrateRoot
+// @ts-ignore - react 18 has createRoot
 import { hydrate, render, createRoot } from "react-dom"
 import { GatsbyImageProps } from "./gatsby-image.browser"
 import { LayoutWrapper } from "./layout-wrapper"
