@@ -73,6 +73,7 @@ describe(`data resolution`, () => {
 
         allWpContentNode {
           nodes {
+            __typename
             id
             databaseId
             ... on WpNodeWithTitle {
