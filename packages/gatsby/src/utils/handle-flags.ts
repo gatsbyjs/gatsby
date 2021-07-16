@@ -12,6 +12,7 @@ const handleFlags = (
 ): {
   enabledConfigFlags: Array<IFlag>
   unknownFlagMessage: string
+  unfitFlagMessage: string
   message: string
 } => {
   // Prepare config flags.
@@ -23,6 +24,7 @@ const handleFlags = (
 
   // Find unknown flags someone has in their config to warn them about.
   const unknownConfigFlags: Array<{ flag: string; didYouMean: string }> = []
+  const unfitConfigFlags: Array<{ flag: string; requires: string }> = []
   for (const flagName in configFlags) {
     if (availableFlags.has(flagName)) {
       continue
@@ -99,7 +101,22 @@ const handleFlags = (
     if (fitness === true || fitness === `OPT_IN`) {
       applicableFlags.set(flag.name, flag)
     }
+
+    if (fitness === false && enabledConfigFlags.includes(flag)) {
+      unfitConfigFlags.push({ flag: flag.name, requires: flag.requires ?? `` })
+    }
   })
+
+  let unfitFlagMessage = ``
+  if (unfitConfigFlags.length > 0) {
+    unfitFlagMessage =
+      `The following flag(s) found in your gatsby-config.js are not supported in your environment and will have no effect:` +
+      unfitConfigFlags
+        .map(
+          flag => `- ${flag.flag}${flag.requires ? `: ${flag.requires}` : ``}`
+        )
+        .join(`\n`)
+  }
 
   // Filter enabledConfigFlags against various tests
   enabledConfigFlags = enabledConfigFlags.filter(flag => {
@@ -239,6 +256,7 @@ The following flags were automatically enabled on your site:`
     enabledConfigFlags,
     message,
     unknownFlagMessage,
+    unfitFlagMessage,
   }
 }
 

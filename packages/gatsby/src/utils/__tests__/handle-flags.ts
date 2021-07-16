@@ -145,6 +145,17 @@ describe(`handle flags`, () => {
         }
       },
     },
+    {
+      name: `LMDB_NODE14_ONLY`,
+      env: `GATSBY_LMDB`,
+      command: `all`,
+      description: `test`,
+      umbrellaIssue: `test`,
+      telemetryId: `test`,
+      experimental: false,
+      testFitness: (): fitnessEnum => false,
+      requires: `Requires Node 14.10+`,
+    },
   ]
 
   const configFlags = {
@@ -190,6 +201,23 @@ describe(`handle flags`, () => {
       `develop`
     )
     expect(unknownConfigFlags).toMatchSnapshot()
+  })
+
+  it(`returns a message about unfit flags in the config`, () => {
+    const unfitConfigFlags = handleFlags(
+      activeFlags,
+      { LMDB_NODE14_ONLY: true },
+      `develop`
+    )
+    expect(unfitConfigFlags.enabledConfigFlags).not.toContain(
+      expect.objectContaining({
+        name: `LMDB_NODE14_ONLY`,
+      })
+    )
+    expect(unfitConfigFlags.unfitFlagMessage).toMatchInlineSnapshot(
+      `"The following flag(s) found in your gatsby-config.js are not supported in your environment and will have no effect:- LMDB_NODE14_ONLY: Requires Node 14.10+"`
+    )
+    expect(unfitConfigFlags.unknownFlagMessage).toEqual(``)
   })
 
   it(`opts in sites to a flag if their site is selected for partial release`, () => {

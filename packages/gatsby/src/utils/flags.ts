@@ -66,6 +66,13 @@ export interface IFlag {
    * (avoids showing unknown flag message and shows "no longer needed" message).
    */
   testFitness: (flag: IFlag) => fitnessEnum
+  /**
+   * Human-readable text explaining requirements for this feature to be available
+   * (e.g. requires Node 14+)
+   *
+   * It is shown to users when testFitness() returns `false` but flag is set in gatsby-config.js
+   */
+  requires?: string
   includedFlags?: Array<string>
   umbrellaIssue?: string
   noCI?: boolean
@@ -135,6 +142,7 @@ const activeFlags: Array<IFlag> = [
         return false
       }
     },
+    requires: `Requires gatsby-plugin-sharp@2.10.0 or above.`,
   },
   {
     name: `PRESERVE_WEBPACK_CACHE`,
@@ -198,6 +206,7 @@ const activeFlags: Array<IFlag> = [
       const [major, minor] = process.versions.node.split(`.`)
       return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
     },
+    requires: `Requires Node v14.10 or above.`,
   },
   {
     name: `PARALLEL_QUERY_RUNNING`,
@@ -212,6 +221,7 @@ const activeFlags: Array<IFlag> = [
       const [major, minor] = process.versions.node.split(`.`)
       return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
     },
+    requires: `Requires Node v14.10 or above.`,
   },
 ]
 
