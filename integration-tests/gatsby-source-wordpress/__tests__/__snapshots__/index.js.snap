@@ -991,91 +991,6 @@ Array [
     "name": "WpBlock",
   },
   Object {
-    "fields": Array [
-      "author",
-      "authorDatabaseId",
-      "authorId",
-      "blocks",
-      "blocksJSON",
-      "content",
-      "contentType",
-      "databaseId",
-      "date",
-      "dateGmt",
-      "desiredSlug",
-      "enclosure",
-      "guid",
-      "id",
-      "lastEditedBy",
-      "lastUpdateTime",
-      "link",
-      "modified",
-      "modifiedGmt",
-      "previewedDatabaseId",
-      "previewedParentDatabaseId",
-      "seo",
-      "slug",
-      "status",
-      "template",
-      "title",
-      "uri",
-      "nodeType",
-      "parent",
-      "children",
-      "internal",
-    ],
-    "name": "WpBlockEditorPreview",
-  },
-  Object {
-    "fields": Array [
-      "totalCount",
-      "edges",
-      "nodes",
-      "pageInfo",
-      "distinct",
-      "max",
-      "min",
-      "sum",
-      "group",
-    ],
-    "name": "WpBlockEditorPreviewConnection",
-  },
-  Object {
-    "fields": Array [
-      "next",
-      "node",
-      "previous",
-    ],
-    "name": "WpBlockEditorPreviewEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "WpBlockEditorPreviewFieldsEnum",
-  },
-  Object {
-    "fields": null,
-    "name": "WpBlockEditorPreviewFilterInput",
-  },
-  Object {
-    "fields": null,
-    "name": "WpBlockEditorPreviewFilterListInput",
-  },
-  Object {
-    "fields": Array [
-      "totalCount",
-      "edges",
-      "nodes",
-      "pageInfo",
-      "field",
-      "fieldValue",
-    ],
-    "name": "WpBlockEditorPreviewGroupConnection",
-  },
-  Object {
-    "fields": null,
-    "name": "WpBlockEditorPreviewSortInput",
-  },
-  Object {
     "fields": null,
     "name": "WpBlockFilterInput",
   },
@@ -5995,7 +5910,6 @@ Array [
   Object {
     "fields": Array [
       "avatar",
-      "blockEditorPreviews",
       "capabilities",
       "comments",
       "databaseId",
@@ -6131,16 +6045,6 @@ Array [
   Object {
     "fields": null,
     "name": "WpUserSortInput",
-  },
-  Object {
-    "fields": Array [
-      "nodes",
-    ],
-    "name": "WpUserToBlockEditorPreviewConnection",
-  },
-  Object {
-    "fields": null,
-    "name": "WpUserToBlockEditorPreviewConnectionFilterInput",
   },
   Object {
     "fields": Array [
