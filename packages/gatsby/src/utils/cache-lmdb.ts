@@ -16,9 +16,11 @@ export default class GatsbyCacheLmdb {
   private static store
   private db: Database | undefined
   public readonly name: string
+  public readonly directory: string
 
   constructor({ name = `db` }: { name: string }) {
     this.name = name
+    this.directory = path.join(process.cwd(), `.cache/caches/${name}`)
   }
 
   private static getStore(): RootDatabase {
