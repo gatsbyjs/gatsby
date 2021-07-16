@@ -24,8 +24,6 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Experimental: Parallel Query Running
 
-TODO: Benchmark comparison, clarification what type of sites this helps with, screenshot?
-
 Gatsby's build process is composed of multiple steps (see [our documentation](/docs/conceptual/overview-of-the-gatsby-build-process/) for more details) and one step that will increase in time with more and more pages/nodes is query running. You're seeing this step as `run static queries` and `run page queries` in your build log.
 
 This step currently only runs in a singular process and the goal of Parallel Query Running is to spread out the work to multiple processes to better utilize available cores & memory. We're using [`gatsby-worker`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-worker) (highly inspired by [`jest-worker`](https://www.npmjs.com/package/jest-worker)) and [`lmdb-store`](https://www.npmjs.com/package/lmdb-store) to accomplish this. In [Gatsby v3.7](/docs/reference/release-notes/v3.7/#experimental-node-persistence-in-lmdb) we've added support for LMDB in Gatsby and are now leveraging this new data storage option to enable communication between the main process and the workers.
