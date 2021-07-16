@@ -74,6 +74,10 @@ describe(`data resolution`, () => {
         allWpContentNode {
           nodes {
             id
+            databaseId
+            ... on WpNodeWithTitle {
+              title
+            }
           }
         }
       }
@@ -86,6 +90,8 @@ describe(`data resolution`, () => {
     })
 
     expect(gatsbyResult.data.allWpTermNode.nodes.length).toBe(14)
+
+    console.log(JSON.stringify(gatsbyResult.data.allWpContentNode))
 
     expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(
       // we add a media item node before running our warm cache build.
