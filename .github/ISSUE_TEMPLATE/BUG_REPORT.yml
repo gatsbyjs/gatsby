@@ -11,6 +11,7 @@ body:
         Please fill out each section below. This info allows Gatsby maintainers to diagnose (and fix!) your issue as quickly as possible. Otherwise we might need to close the issue without e.g. clear reproduction steps.
 
         Also please verify that your issue is present in `gatsby@next`, too. The `next` version is the latest beta version of Gatsby and has any pending changes that are in the next stable release.
+        Bug reports also shoulnd't be used for support requests about a specific problem in your site, please use GitHub Discussions for that.
 
         Useful Links:
         - Documentation: https://www.gatsbyjs.com/docs/
@@ -22,7 +23,7 @@ body:
       options:
         - label: "This issue is not a duplicate. Before opening a new issue, please search existing issues: https://github.com/gatsbyjs/gatsby/issues"
           required: true
-        - label: "This issue is not a question, feature request, RFC, or anything other than a bug report. Please post those things in GitHub Discussions: https://github.com/gatsbyjs/gatsby/discussions"
+        - label: "This issue is not a question, feature request, RFC, or anything other than a bug report directly related to Gatsby. Please post those things in GitHub Discussions: https://github.com/gatsbyjs/gatsby/discussions"
           required: true
   - type: textarea
     attributes:

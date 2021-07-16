@@ -194,7 +194,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         document.body.append(indicatorMountElement)
 
         if (renderer === ReactDOM.hydrateRoot) {
-          renderer(indicatorMountElement).render(
+          ReactDOM.createRoot(indicatorMountElement).render(
             <LoadingIndicatorEventHandler />
           )
         } else {

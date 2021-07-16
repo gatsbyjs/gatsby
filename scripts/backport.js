@@ -4,6 +4,10 @@ const yargs = require(`yargs`)
 const { Octokit } = require(`@octokit/rest`)
 const childProcess = require(`child_process`)
 
+yargs.parserConfiguration({
+  "parse-numbers": false,
+})
+
 if (!process.env.GITHUB_ACCESS_TOKEN) {
   throw new Error(`GITHUB_ACCESS_TOKEN env var not set`)
 }
@@ -22,7 +26,7 @@ const argv = yargs
         .positional(`pr`, { type: `number` })
   )
   .check(argv => {
-    if (!/^3\.\d+$/.test(argv.release)) {
+    if (!/^[1-9][0-9]*\.\d+$/.test(argv.release)) {
       throw new Error(`"${argv.release}" is not a release version`)
     }
 

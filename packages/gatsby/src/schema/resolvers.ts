@@ -288,7 +288,24 @@ export function paginate(
   }
   const currentPage = limit ? Math.ceil(skip / limit) + 1 : skip ? 2 : 1
   const hasPreviousPage = currentPage > 1
-  const hasNextPage = limit ? allItems.length - start > limit : false
+
+  let hasNextPage = false
+  // If limit is not defined, there will never be a next page.
+  if (limit) {
+    if (resultOffset > 0) {
+      // If resultOffset is greater than 0, we need to test if `allItems` contains
+      // items that should be skipped.
+      //
+      // This is represented if the `start` index offset is 0 or less. A start
+      // greater than 0 means `allItems` contains extra items that would come
+      // before the skipped items.
+      hasNextPage = start < 1
+    } else {
+      // If the resultOffset is 0, we can test if `allItems` contains more items
+      // than the limit after removing the skipped items.
+      hasNextPage = allItems.length - start > limit
+    }
+  }
 
   return {
     totalCount,

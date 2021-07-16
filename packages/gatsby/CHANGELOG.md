@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.7...gatsby@3.11.0-next.0) (2021-07-15)
+
+### Features
+
+- **gatsby:** Add cache-lmdb implementation ([#32373](https://github.com/gatsbyjs/gatsby/issues/32373)) ([7897834](https://github.com/gatsbyjs/gatsby/commit/789783410878d562f1499c1915155135ac258d82))
+- **gatsby:** Add webpack fs caching for development flag ([#32264](https://github.com/gatsbyjs/gatsby/issues/32264)) ([4f9a724](https://github.com/gatsbyjs/gatsby/commit/4f9a724b91ce35b0232952023eaecb8db448719d))
+
+# [3.10.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.6...gatsby@3.10.0-next.7) (2021-07-14)
+
+### Bug Fixes
+
+- **gatsby:** Hide page/static queries activities for PQR ([#32361](https://github.com/gatsbyjs/gatsby/issues/32361)) ([d65de41](https://github.com/gatsbyjs/gatsby/commit/d65de413b8d0ad5720c46652936b44dda3f872c9))
+- **gatsby:** shut down worker pool after html generation ([#32366](https://github.com/gatsbyjs/gatsby/issues/32366)) ([8cba0b9](https://github.com/gatsbyjs/gatsby/commit/8cba0b915cd0bd987675c4ed1839bbdaf39ae217))
+
+### Features
+
+- **gatsby:** restart worker pool after query running in workers ([#32365](https://github.com/gatsbyjs/gatsby/issues/32365)) ([b9236e1](https://github.com/gatsbyjs/gatsby/commit/b9236e16aac8c889c526571738c716cfb520043d))
+
+# [3.10.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.5...gatsby@3.10.0-next.6) (2021-07-14)
+
+### Bug Fixes
+
+- **gatsby:** freeze the schema in workers ([#32352](https://github.com/gatsbyjs/gatsby/issues/32352)) ([8c9afc6](https://github.com/gatsbyjs/gatsby/commit/8c9afc648bda3770a06a6d5d440b15149c112bf1))
+- **gatsby:** Use shared gql runner in PQR workers ([#32355](https://github.com/gatsbyjs/gatsby/issues/32355)) ([f75c833](https://github.com/gatsbyjs/gatsby/commit/f75c8332aad031990e6ad0d68146b13782343b3b))
+
+### Features
+
+- **gatsby:** Track persistence time of save-state ([#32192](https://github.com/gatsbyjs/gatsby/issues/32192)) ([eef99cc](https://github.com/gatsbyjs/gatsby/commit/eef99cce69c537025882f352a14f32e8065c380e))
+
 # [3.10.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.4...gatsby@3.10.0-next.5) (2021-07-13)
 
 ### Bug Fixes
