@@ -214,9 +214,10 @@ describe(`handle flags`, () => {
         name: `LMDB_NODE14_ONLY`,
       })
     )
-    expect(unfitConfigFlags.unfitFlagMessage).toMatchInlineSnapshot(
-      `"The following flag(s) found in your gatsby-config.js are not supported in your environment and will have no effect:- LMDB_NODE14_ONLY: Requires Node 14.10+"`
-    )
+    expect(unfitConfigFlags.unfitFlagMessage).toMatchInlineSnapshot(`
+      "The following flag(s) found in your gatsby-config.js are not supported in your environment and will have no effect:
+      - LMDB_NODE14_ONLY: Requires Node 14.10+"
+    `)
     expect(unfitConfigFlags.unknownFlagMessage).toEqual(``)
   })
 
@@ -254,7 +255,8 @@ describe(`handle flags`, () => {
       Object {
         "enabledConfigFlags": Array [],
         "message": "",
-        "unfitFlagMessage": "The following flag(s) found in your gatsby-config.js are not supported in your environment and will have no effect:- PARTIAL_RELEASE_ONLY_VERY_OLD_LODASH",
+        "unfitFlagMessage": "The following flag(s) found in your gatsby-config.js are not supported in your environment and will have no effect:
+      - PARTIAL_RELEASE_ONLY_VERY_OLD_LODASH",
         "unknownFlagMessage": "",
       }
     `)

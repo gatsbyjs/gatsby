@@ -110,7 +110,7 @@ const handleFlags = (
   let unfitFlagMessage = ``
   if (unfitConfigFlags.length > 0) {
     unfitFlagMessage =
-      `The following flag(s) found in your gatsby-config.js are not supported in your environment and will have no effect:` +
+      `The following flag(s) found in your gatsby-config.js are not supported in your environment and will have no effect:\n` +
       unfitConfigFlags
         .map(
           flag => `- ${flag.flag}${flag.requires ? `: ${flag.requires}` : ``}`
