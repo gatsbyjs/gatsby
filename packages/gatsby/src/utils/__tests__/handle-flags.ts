@@ -254,6 +254,7 @@ describe(`handle flags`, () => {
       Object {
         "enabledConfigFlags": Array [],
         "message": "",
+        "unfitFlagMessage": "The following flag(s) found in your gatsby-config.js are not supported in your environment and will have no effect:- PARTIAL_RELEASE_ONLY_VERY_OLD_LODASH",
         "unknownFlagMessage": "",
       }
     `)
@@ -405,6 +406,7 @@ describe(`handle flags`, () => {
           "message": "The following flags are active:
         - SOME_FLAG · (Umbrella Issue (test)) · test
         ",
+          "unfitFlagMessage": "",
           "unknownFlagMessage": "",
         }
       `)
