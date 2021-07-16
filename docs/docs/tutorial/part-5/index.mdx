@@ -1,8 +1,8 @@
 ---
-title: "Part 5: Transform Data to Use MDX"
+title: "Part 5: Transform data to use MDX"
 ---
 
-import { Announcement, Notification, LinkButton } from 'gatsby-interface'
+import { Announcement, Notification } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
 import { MdInfo } from 'react-icons/md'
 
@@ -637,10 +637,24 @@ Right now, all your blog posts and their contents are being rendered in one long
 
 In Part 6, you'll learn how to use Gatsby's filesystem route API to dynamically create new pages for each of your blog posts.
 
-<LinkButton
-  to="/docs/tutorial/part-6/"
-  rightIcon={<MdArrowForward />}
+<Notification
+  Icon={MdInfo}
+  tone="WARNING"
   variant="SECONDARY"
->
-  Continue to Part 6
-</LinkButton>
+  content={
+    <div>
+      <p>
+        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
+        You've reached the end of the new content we've released so far. Subsequent parts
+        will be added as we finish them. Part 6 has a tentative release date of July 28, 2021.
+      </p>
+      <p style={{ marginBottom: 0 }}>
+        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
+        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
+          <strong>Gatsby v2 Tutorial</strong>
+        </a>
+        .
+      </p>
+    </div>
+  }
+/>
