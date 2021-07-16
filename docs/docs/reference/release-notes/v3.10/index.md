@@ -24,9 +24,26 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Experimental: Parallel Query Running
 
-TODO: Explanation of what it does, LMDB?, Benchmark comparison, clarification what type of sites this helps with, screenshot?
+TODO: Benchmark comparison, clarification what type of sites this helps with, screenshot?
 
-To use it and try it out, please make sure that you're using Node v14.10 or later. Install `lmdb-store` as a dependency:
+Gatsby's build process is composed of multiple steps (see [our documentation](/docs/conceptual/overview-of-the-gatsby-build-process/) for more details) and one step that will increase in time with more and more pages/nodes is query running. You're seeing this step as `run static queries` and `run page queries` in your build log.
+
+This step currently only runs in a singular process and the goal of Parallel Query Running is to spread out the work to multiple processes to better utilize available cores & memory. We're using [`gatsby-worker`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-worker) (highly inspired by [`jest-worker`](https://www.npmjs.com/package/jest-worker)) and [`lmdb-store`](https://www.npmjs.com/package/lmdb-store) to accomplish this. In [Gatsby v3.7](/docs/reference/release-notes/v3.7/#experimental-node-persistence-in-lmdb) we've added support for LMDB in Gatsby and are now leveraging this new data storage option to enable communication between the main process and the workers.
+
+Depending on the type of queries you use you will see dramatic improvements in performance. You can try out different types of queries (and expected results) with the [query-filters-sort benchmark](https://github.com/gatsbyjs/gatsby/tree/master/benchmarks/query-filters-sort). Toggle the feature flag for a before/after comparison.
+
+Here are two examples:
+
+- Fast `eq-uniq` filter with `GATSBY_CPU_COUNT=5 NUM_NODES=100000 NUM_PAGES=10000 FILTER=eq-uniq TEXT=1`.
+  - **Before:** `run page queries - 3.787s - 10001/10001 2641.07/s`
+  - **After:** `run queries in workers - 3.445s - 10001/10001 2903.34/s`
+  - For the already fast `eq` filters you will see smaller improvements compared to the slower filters like...
+- Slow `gt` filter with `GATSBY_CPU_COUNT=5 NUM_NODES=10000 NUM_PAGES=10000 FILTER=gt TEXT=1`:
+  - **Before:** `run page queries - 41.832s - 10001/10001 239.07/s`
+  - **After:** `run queries in workers - 15.072s - 10001/10001 663.57/s`
+  - Huge improvements for more complex queries or filters that are not "Fast Filters"
+
+To try it out in your own site, please make sure that you're using Node v14.10 or later. Install `lmdb-store` as a dependency:
 
 ```shell
 npm install lmdb-store
