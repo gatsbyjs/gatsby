@@ -91,18 +91,22 @@ This is later used for various optimizations when actually scanning the index.
 Not all filters can use indexes. The following Gatsby filters **can**:
 
 ```
-eq, in, gt, gte, lt, lte, ne, nin
+eq, in, gt, gte, lt, lte
 ```
-
-> Note: `ne` and `nin` **can not** use [MultiKey][2] indexes
-> because they contain duplicates. E.g. `{ foo: { ne: "bar" } }`
-> will still match `{ foo: ["foo", "bar"] }` because of "foo" duplicate.
 
 Those filters **can not** use index:
 
 ```
-regex, glob
+ne, nin, regex, glob
 ```
+
+> Note: `ne` and `nin` **can not** use MultiKey indexes at all.
+> Technically they can use simple index but only when a single `ne`/`nin`
+> predicate is used in a query
+> (otherwise we are effectively dealing with `OR` situation).
+>
+> TODO: handle special cases like `ne: null` or `nin: [null]` when building
+> indexes (simply exclude those values from index).
 
 Furthermore, only _some_ combinations of `filters` + `sort` can use index.
 
@@ -196,7 +200,7 @@ There are several codepaths here
 
 ### Can not use index
 
-> Can happen for `regex`/`glob` filters and `ne`/`nin` with [MultiKey][2] index.
+> Can happen for `regex`/`glob` filters and `ne`/`nin`
 
 1. Iterate through all nodes and apply filters.
 2. 🐌 If sorting is needed - load all filtered nodes in memory and sort

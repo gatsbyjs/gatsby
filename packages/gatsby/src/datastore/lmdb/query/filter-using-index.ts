@@ -276,12 +276,6 @@ function narrowResultsIfPossible(
       // Filter is already applied
       continue
     }
-    if (isMultiKeyIndex(context) && isNegatedQuery(query)) {
-      // NE/NIN not supported with MultiKey indexes:
-      //   MultiKey indexes include duplicates; negated queries will only filter some of those
-      //   but may still incorrectly include others in final results
-      continue
-    }
     const filter = getFilterStatement(query)
     filtersToApply.push([filter, positionInKey])
     usedQueries.add(query)
@@ -305,46 +299,24 @@ function narrowResultsIfPossible(
       })
 }
 
+const isSupported = new Set([
+  DbComparator.EQ,
+  DbComparator.IN,
+  DbComparator.GTE,
+  DbComparator.LTE,
+  DbComparator.GT,
+  DbComparator.LT,
+])
+
 /**
  * Returns query clauses that can potentially use index.
  * Returned list is sorted by query specificity
  */
-function getSupportedRangeQueries(
-  context: IFilterContext,
-  dbQueries: Array<DbQuery>
-): Array<DbQuery> {
-  const isSupported = new Set([
-    DbComparator.EQ,
-    DbComparator.IN,
-    DbComparator.GTE,
-    DbComparator.LTE,
-    DbComparator.GT,
-    DbComparator.LT,
-    DbComparator.NIN,
-    DbComparator.NE,
-  ])
-  let supportedQueries = dbQueries.filter(query =>
+function getSupportedRangeQueries(dbQueries: Array<DbQuery>): Array<DbQuery> {
+  const supportedQueries = dbQueries.filter(query =>
     isSupported.has(getFilterStatement(query).comparator)
   )
-  if (isMultiKeyIndex(context)) {
-    // Note:
-    // NE and NIN are not supported by multi-key indexes. Why?
-    //   Imagine a node { id: 1, field: [`foo`, `bar`] }
-    //   Then the filter { field: { ne: `foo` } } should completely remove this node from results.
-    //   But multikey index contains separate entries for `foo` and `bar` values.
-    //   Final range will exclude entry "foo" but it will still include entry for "bar" hence
-    //   will incorrectly include our node in results.
-    supportedQueries = supportedQueries.filter(query => !isNegatedQuery(query))
-  }
   return sortBySpecificity(supportedQueries)
-}
-
-function isNegatedQuery(query: DbQuery): boolean {
-  const filter = getFilterStatement(query)
-  return (
-    filter.comparator === DbComparator.NE ||
-    filter.comparator === DbComparator.NIN
-  )
 }
 
 export function getIndexRanges(
@@ -356,7 +328,7 @@ export function getIndexRanges(
   } = context
   const rangeStarts: Array<RangeBoundary> = []
   const rangeEndings: Array<RangeBoundary> = []
-  const supportedQueries = getSupportedRangeQueries(context, dbQueries)
+  const supportedQueries = getSupportedRangeQueries(dbQueries)
 
   for (const indexField of new Map(keyFields)) {
     const result = getIndexFieldRanges(context, supportedQueries, indexField)
@@ -522,34 +494,6 @@ function getIndexFieldRanges(
 
       rangeStarts.push(start)
       rangeEndings.push(end ?? rangeTail)
-      break
-    }
-    case DbComparator.NE:
-    case DbComparator.NIN: {
-      const arr = Array.isArray(filter.value)
-        ? [...filter.value]
-        : [filter.value]
-
-      // Sort ranges by index sort direction
-      arr.sort((a: any, b: any): number => {
-        if (a === b) return 0
-        if (sortDirection === 1) return a > b ? 1 : -1
-        return a < b ? 1 : -1
-      })
-      const hasNull = arr.some(value => value === null)
-
-      if (hasNull) {
-        rangeStarts.push(getValueEdgeAfter(undefinedSymbol))
-      } else {
-        rangeStarts.push(BinaryInfinityNegative)
-      }
-      for (const item of new Set(arr)) {
-        const value = toIndexFieldValue(item, filter)
-        if (value === null) continue // already handled via hasNull case above
-        rangeEndings.push(value)
-        rangeStarts.push(getValueEdgeAfter(value))
-      }
-      rangeEndings.push(BinaryInfinityPositive)
       break
     }
     default:

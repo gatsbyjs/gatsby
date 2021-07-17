@@ -87,45 +87,9 @@ describe(`getIndexRanges`, () => {
         ],
         [`$gt`, `$lt`],
       ],
-      [
-        { $ne: 1 },
-        [
-          { start: [BinaryInfinityNegative], end: [1] },
-          {
-            start: [[1, BinaryInfinityPositive]],
-            end: [BinaryInfinityPositive],
-          },
-        ],
-      ],
-      [
-        { $nin: [1, 2] },
-        [
-          { start: [BinaryInfinityNegative], end: [1] },
-          {
-            start: [[1, BinaryInfinityPositive]],
-            end: [2],
-          },
-          {
-            start: [[2, BinaryInfinityPositive]],
-            end: [BinaryInfinityPositive],
-          },
-        ],
-      ],
-      [
-        // Must produce the same set of ranges as $nin: [1, 2]
-        { $nin: [2, 1] },
-        [
-          { start: [BinaryInfinityNegative], end: [1] },
-          {
-            start: [[1, BinaryInfinityPositive]],
-            end: [2],
-          },
-          {
-            start: [[2, BinaryInfinityPositive]],
-            end: [BinaryInfinityPositive],
-          },
-        ],
-      ],
+      [{ $ne: 1 }, [], []],
+      [{ $nin: [1, 2] }, [], []],
+      [{ $nin: [2, 1] }, [], []],
       // Nulls hackery
       // $eq: null in gatsby must also include undefined!
       [
@@ -173,24 +137,8 @@ describe(`getIndexRanges`, () => {
           },
         ],
       ],
-      [
-        { $ne: null },
-        [
-          {
-            start: [undefinedNextEdge],
-            end: [BinaryInfinityPositive],
-          },
-        ],
-      ],
-      [
-        { $nin: [null, null] },
-        [
-          {
-            start: [undefinedNextEdge],
-            end: [BinaryInfinityPositive],
-          },
-        ],
-      ],
+      [{ $ne: null }, [], []],
+      [{ $nin: [null, null] }, [], []],
       // Mixed predicates (picks the most specific one and applies others separately)
       [
         { $eq: 1, $lte: 10, $gte: 6 },
@@ -216,18 +164,20 @@ describe(`getIndexRanges`, () => {
         ],
         [`$in`],
       ],
-    ])(`%o`, (filter, expectedRange, expectedUsed = []) => {
+    ])(`%o`, (filter, expectedRange, expectedUsed = null) => {
       const context = createContext({ keyFields: [[`field`, 1]] })
       const dbQueries = createDbQueriesFromObject({ field: filter })
       const ranges = getIndexRanges(context, dbQueries)
       expect(ranges).toEqual(expectedRange)
 
-      if (expectedUsed.length) {
+      if (expectedUsed) {
         const expectedDbQueries = dbQueries.find(q =>
           expectedUsed.includes(getFilterStatement(q).comparator)
         )
         expect(context.usedQueries.size).toEqual(expectedUsed.length)
-        expect(context.usedQueries).toContain(expectedDbQueries)
+        if (expectedUsed.length > 0) {
+          expect(context.usedQueries).toContain(expectedDbQueries)
+        }
       } else {
         expect(context.usedQueries.size).toEqual(1)
         expect(context.usedQueries).toContain(dbQueries[0])
@@ -296,38 +246,40 @@ describe(`getIndexRanges`, () => {
         ],
         { foo: [`$eq`], bar: [`$in`] },
       ],
-    ])(
-      `%o`,
-      (filters, expectedRange, expectedUsed: any = { foo: [], bar: [] }) => {
-        const context = createContext({
-          keyFields: [
-            [`foo`, 1],
-            [`bar`, 1],
-          ],
-        })
-        const dbQueries = createDbQueriesFromObject(filters)
-        const ranges = getIndexRanges(context, dbQueries)
-        expect(ranges).toEqual(expectedRange)
+      [{ foo: { $ne: null }, bar: { $ne: `bar` } }, [], { foo: [], bar: [] }],
+    ])(`%o`, (filters, expectedRange, expectedUsed = null) => {
+      const context = createContext({
+        keyFields: [
+          [`foo`, 1],
+          [`bar`, 1],
+        ],
+      })
+      const dbQueries = createDbQueriesFromObject(filters)
+      const ranges = getIndexRanges(context, dbQueries)
+      expect(ranges).toEqual(expectedRange)
 
+      if (expectedUsed) {
+        const expectedDbQuery1 = dbQueries.find(q =>
+          expectedUsed.foo.includes(getFilterStatement(q).comparator)
+        )
+        const expectedDbQuery2 = dbQueries.find(q =>
+          expectedUsed.bar.includes(getFilterStatement(q).comparator)
+        )
+        expect(context.usedQueries.size).toEqual(
+          expectedUsed.foo.length + expectedUsed.bar.length
+        )
         if (expectedUsed.foo.length) {
-          const expectedDbQuery1 = dbQueries.find(q =>
-            expectedUsed.foo.includes(getFilterStatement(q).comparator)
-          )
-          const expectedDbQuery2 = dbQueries.find(q =>
-            expectedUsed.bar.includes(getFilterStatement(q).comparator)
-          )
-          expect(context.usedQueries.size).toEqual(
-            expectedUsed.foo.length + expectedUsed.bar.length
-          )
           expect(context.usedQueries).toContain(expectedDbQuery1)
-          expect(context.usedQueries).toContain(expectedDbQuery2)
-        } else {
-          expect(context.usedQueries.size).toEqual(2)
-          expect(context.usedQueries).toContain(dbQueries[0])
-          expect(context.usedQueries).toContain(dbQueries[1])
         }
+        if (expectedUsed.bar.length) {
+          expect(context.usedQueries).toContain(expectedDbQuery2)
+        }
+      } else {
+        expect(context.usedQueries.size).toEqual(2)
+        expect(context.usedQueries).toContain(dbQueries[0])
+        expect(context.usedQueries).toContain(dbQueries[1])
       }
-    )
+    })
   })
 
   function createContext(indexMetadata: Partial<IIndexMetadata>): any {

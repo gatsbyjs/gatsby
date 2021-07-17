@@ -79,8 +79,6 @@ const canUseIndex = new Set([
   DbComparator.LTE,
   DbComparator.GT,
   DbComparator.LT,
-  DbComparator.NIN,
-  DbComparator.NE,
 ])
 
 /**

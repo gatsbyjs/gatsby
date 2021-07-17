@@ -232,18 +232,23 @@ const makeNodesNeNull = () => [
     internal: { type: `Test`, contentDigest: `1` },
     desc: `first start of path is null`,
     a: null,
+    b: true,
+    c: false,
   },
   {
     id: `2`,
     internal: { type: `Test`, contentDigest: `2` },
     desc: `second start of path is undefined`,
     a: {},
+    b: true,
   },
   {
     id: `3`,
     internal: { type: `Test`, contentDigest: `3` },
     desc: `second start of path is null`,
     a: { b: null },
+    b: true,
+    c: true,
   },
   {
     id: `4`,
@@ -551,6 +556,27 @@ describe(`Filter fields`, () => {
         )
         expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
         result.forEach(node => expect(node?.a?.b?.c).not.toEqual(needle))
+      })
+
+      it(`should deal with eq null on multiple fields`, async () => {
+        const needle = null
+        const allNodes = makeNodesNeNull()
+        const result = await runQuery(
+          {
+            filter: {
+              b: { ne: needle },
+              c: { ne: needle },
+            },
+          },
+          allNodes
+        )
+        expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
+        expect(result?.length).toEqual(
+          allNodes.filter(node => node?.b != null && node?.c != null).length
+        )
+        expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+        result.forEach(node => expect(node?.b).not.toEqual(needle))
+        result.forEach(node => expect(node?.c).not.toEqual(needle))
       })
 
       it(`should deal with eq true`, async () => {
