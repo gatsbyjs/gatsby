@@ -11,6 +11,8 @@ export {
   getSrc,
   getSrcSet,
   getImageData,
+  isGatsbyImageData,
+  isGatsbyImageDataParent,
   withArtDirection,
   IArtDirectedImage,
   IGetImageDataArgs,

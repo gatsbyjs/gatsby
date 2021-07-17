@@ -49,14 +49,14 @@ export type FileNode = Node & {
   childImageSharp?: IGatsbyImageDataParent<Node>
 }
 
-const isGatsbyImageData = (
+export const isGatsbyImageData = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   node: IGatsbyImageData | any
 ): node is IGatsbyImageData =>
   // 🦆 check for a deep prop to be sure this is a valid gatsbyImageData object
   Boolean(node?.images?.fallback?.src)
 
-const isGatsbyImageDataParent = <T>(
+export const isGatsbyImageDataParent = <T>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   node: IGatsbyImageDataParent<T> | any
 ): node is IGatsbyImageDataParent<T> => Boolean(node?.gatsbyImageData)
