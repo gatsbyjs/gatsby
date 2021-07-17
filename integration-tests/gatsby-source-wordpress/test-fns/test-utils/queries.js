@@ -19,9 +19,6 @@ exports.queries = {
       allWpComment {
         totalCount
       }
-      # allWpProject {
-      #   totalCount
-      # }
       allWpTaxonomy {
         totalCount
       }
@@ -34,16 +31,17 @@ exports.queries = {
       allWpMenuItem {
         totalCount
       }
-      allWpMediaItem(sort: { fields: [id] }) {
+      allWpMediaItem(
+        sort: { fields: [id] }
+        # this node "cG9zdDoxOTU=" only exists on warm builds. So our snapshot is wrong if we don't filter it out.
+        filter: { id: { ne: "cG9zdDoxOTU=" } }
+      ) {
         totalCount
         nodes {
           id
           mediaItemUrl
         }
       }
-      # allWpTeamMember {
-      #   totalCount
-      # }
       allWpPostFormat {
         totalCount
       }
