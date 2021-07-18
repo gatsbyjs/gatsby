@@ -44,7 +44,7 @@ interface IIndexRange {
 
 enum ValueEdges {
   BEFORE = -1,
-  NONE = 0,
+  EQ = 0,
   AFTER = 1,
 }
 
@@ -309,7 +309,7 @@ function narrowResultsIfPossible(
  * Returns query clauses that can potentially use index.
  * Returned list is sorted by query specificity
  */
-function getSupportedRangeQueries(
+function getSupportedQueries(
   context: IFilterContext,
   dbQueries: Array<DbQuery>
 ): Array<DbQuery> {
@@ -339,6 +339,14 @@ function getSupportedRangeQueries(
   return sortBySpecificity(supportedQueries)
 }
 
+function isEqualityQuery(query: DbQuery): boolean {
+  const filter = getFilterStatement(query)
+  return (
+    filter.comparator === DbComparator.EQ ||
+    filter.comparator === DbComparator.IN
+  )
+}
+
 function isNegatedQuery(query: DbQuery): boolean {
   const filter = getFilterStatement(query)
   return (
@@ -356,21 +364,46 @@ export function getIndexRanges(
   } = context
   const rangeStarts: Array<RangeBoundary> = []
   const rangeEndings: Array<RangeBoundary> = []
-  const supportedQueries = getSupportedRangeQueries(context, dbQueries)
+  const supportedQueries = getSupportedQueries(context, dbQueries)
 
-  for (const indexField of new Map(keyFields)) {
-    const result = getIndexFieldRanges(context, supportedQueries, indexField)
-
-    if (!result.rangeStarts.length) {
-      // No point to continue - just use index prefix, not all index fields
+  for (const indexFieldInfo of new Map(keyFields)) {
+    const query = getMostSpecificQuery(supportedQueries, indexFieldInfo)
+    if (!query) {
+      // Use index prefix, not all index fields
       break
     }
+    const result = resolveIndexFieldRanges(context, query, indexFieldInfo)
     rangeStarts.push(result.rangeStarts)
     rangeEndings.push(result.rangeEndings)
+
+    if (!isEqualityQuery(query)) {
+      // Compound index { a: 1, b: 1, c: 1 } supports only one non-eq (range) operator. E.g.:
+      //  Supported: { a: { eq: `foo` }, b: { eq: 8 }, c: { gt: 5 } }
+      //  Not supported: { a: { eq: `foo` }, b: { gt: 5 }, c: { eq: 5 } }
+      //  (or to be precise, can do a range scan only for { a: { eq: `foo` }, b: { gt: 5 } })
+      break
+    }
   }
   if (!rangeStarts.length) {
     return []
   }
+  // Only the last segment encloses the whole range.
+  // For example, given an index { a: 1, b: 1 } and a filter { a: { eq: `foo` }, b: { eq: `bar` } },
+  // It should produce this range:
+  // {
+  //   start: [`foo`, `bar`],
+  //   end: [`foo`, [`bar`, BinaryInfinityPositive]]
+  // }
+  //
+  // Not this:
+  // {
+  //   start: [`foo`, `bar`],
+  //   end: [[`foo`, BinaryInfinityPositive], [`bar`, BinaryInfinityPositive]]
+  // }
+  for (let i = 0; i < rangeStarts.length - 1; i++) {
+    rangeEndings[i] = rangeStarts[i]
+  }
+
   // Example:
   //   rangeStarts: [
   //     [field1Start1, field1Start2],
@@ -404,10 +437,26 @@ export function getIndexRanges(
   return ranges
 }
 
-function getIndexFieldRanges(
-  context: IFilterContext,
+function getFieldQueries(
   queries: Array<DbQuery>,
-  [indexField, sortDirection]: [fieldName: string, sortDirection: number]
+  fieldName: string
+): Array<DbQuery> {
+  return queries.filter(q => dbQueryToDottedField(q) === fieldName)
+}
+
+function getMostSpecificQuery(
+  queries: Array<DbQuery>,
+  [indexField]: [fieldName: string, sortDirection: number]
+): DbQuery | undefined {
+  const fieldQueries = getFieldQueries(queries, indexField)
+  // Assuming queries are sorted by specificity, the best bet is to pick the first query
+  return fieldQueries[0]
+}
+
+function resolveIndexFieldRanges(
+  context: IFilterContext,
+  query: DbQuery,
+  [field, sortDirection]: [fieldName: string, sortDirection: number]
 ): {
   rangeStarts: RangeBoundary
   rangeEndings: RangeBoundary
@@ -417,22 +466,13 @@ function getIndexFieldRanges(
   const rangeStarts: RangeBoundary = []
   const rangeEndings: RangeBoundary = []
 
-  const fieldQueries = queries.filter(
-    q => dbQueryToDottedField(q) === indexField
-  )
-  if (!fieldQueries.length) {
-    return { rangeStarts, rangeEndings }
-  }
-  // Assuming queries are sorted by specificity, the best bet is to pick the first query
-  // TODO: add range intersection for most common cases (e.g. gte + ne)
-  const bestMatchingQuery = fieldQueries[0]
-  const filter = getFilterStatement(bestMatchingQuery)
+  const filter = getFilterStatement(query)
 
   if (filter.comparator === DbComparator.IN && !Array.isArray(filter.value)) {
     throw new Error("The argument to the `in` predicate should be an array")
   }
 
-  context.usedQueries.add(bestMatchingQuery)
+  context.usedQueries.add(query)
 
   switch (filter.comparator) {
     case DbComparator.EQ:
@@ -447,9 +487,6 @@ function getIndexFieldRanges(
         if (sortDirection === 1) return a > b ? 1 : -1
         return a < b ? 1 : -1
       })
-      // TODO: ideally do range intersections with other queries (e.g. $in + $gt + $lt)
-      //  although it is likely something like 0.1% of cases
-      //  (right now it applies additional filters in runQuery.completeFiltering)
 
       let hasNull = false
       for (const item of new Set(arr)) {
@@ -475,10 +512,9 @@ function getIndexFieldRanges(
         filter.comparator === DbComparator.LT ? value : getValueEdgeAfter(value)
 
       // Try to find matching GTE/GT filter
-      const used = context.usedQueries
       const start =
-        findRangeEdge(fieldQueries, used, DbComparator.GTE) ??
-        findRangeEdge(fieldQueries, used, DbComparator.GT, ValueEdges.AFTER)
+        resolveRangeEdge(context, field, DbComparator.GTE) ??
+        resolveRangeEdge(context, field, DbComparator.GT, ValueEdges.AFTER)
 
       // Do not include null or undefined in results unless null was requested explicitly
       //
@@ -512,10 +548,9 @@ function getIndexFieldRanges(
           : getValueEdgeAfter(value)
 
       // Try to find matching LT/LTE
-      const used = context.usedQueries
       const end =
-        findRangeEdge(fieldQueries, used, DbComparator.LTE, ValueEdges.AFTER) ??
-        findRangeEdge(fieldQueries, used, DbComparator.LT)
+        resolveRangeEdge(context, field, DbComparator.LTE, ValueEdges.AFTER) ??
+        resolveRangeEdge(context, field, DbComparator.LT)
 
       const rangeTail =
         value === null ? getValueEdgeAfter(null) : BinaryInfinityPositive
@@ -558,21 +593,22 @@ function getIndexFieldRanges(
   return { rangeStarts, rangeEndings }
 }
 
-function findRangeEdge(
-  queries: Array<DbQuery>,
-  usedQueries: Set<DbQuery>,
+function resolveRangeEdge(
+  context: IFilterContext,
+  indexField: string,
   predicate: DbComparator,
-  edge: ValueEdges = ValueEdges.NONE
+  edge: ValueEdges = ValueEdges.EQ
 ): IndexFieldValue | RangeEdgeBefore | RangeEdgeAfter | undefined {
-  for (const dbQuery of queries) {
-    if (usedQueries.has(dbQuery)) {
+  const fieldQueries = getFieldQueries(context.dbQueries, indexField)
+  for (const dbQuery of fieldQueries) {
+    if (context.usedQueries.has(dbQuery)) {
       continue
     }
     const filterStatement = getFilterStatement(dbQuery)
     if (filterStatement.comparator !== predicate) {
       continue
     }
-    usedQueries.add(dbQuery)
+    context.usedQueries.add(dbQuery)
     const value = filterStatement.value
     if (Array.isArray(value)) {
       throw new Error(`Range filter ${predicate} should not have array value`)

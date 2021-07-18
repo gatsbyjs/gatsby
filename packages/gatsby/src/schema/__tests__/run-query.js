@@ -232,18 +232,23 @@ const makeNodesNeNull = () => [
     internal: { type: `Test`, contentDigest: `1` },
     desc: `first start of path is null`,
     a: null,
+    b: true,
+    c: false,
   },
   {
     id: `2`,
     internal: { type: `Test`, contentDigest: `2` },
     desc: `second start of path is undefined`,
     a: {},
+    b: true,
   },
   {
     id: `3`,
     internal: { type: `Test`, contentDigest: `3` },
     desc: `second start of path is null`,
     a: { b: null },
+    b: true,
+    c: true,
   },
   {
     id: `4`,
@@ -280,6 +285,37 @@ const makeNodesNeNull = () => [
     internal: { type: `Test`, contentDigest: `9` },
     desc: `second step is a bool (would be prevented by schema in real world)`,
     a: { b: true },
+  },
+]
+
+const makeNodesMultiFilter = () => [
+  {
+    id: `1`,
+    internal: { type: `Test`, contentDigest: `1` },
+    locale: `en`,
+    author: 1,
+    category: `foo`,
+  },
+  {
+    id: `2`,
+    internal: { type: `Test`, contentDigest: `2` },
+    locale: `en`,
+    author: 2,
+    category: `foo`,
+  },
+  {
+    id: `3`,
+    internal: { type: `Test`, contentDigest: `3` },
+    locale: `it`,
+    author: 1,
+    category: `foo`,
+  },
+  {
+    id: `4`,
+    internal: { type: `Test`, contentDigest: `4` },
+    locale: `it`,
+    author: 1,
+    category: `foo`,
   },
 ]
 
@@ -1813,6 +1849,58 @@ describe(`Filter fields`, () => {
       expect(result[1].index).toEqual(2)
     })
   })
+})
+
+describe(`Multiple filter fields`, () => {
+  const nodes = makeNodesMultiFilter()
+
+  describe(`$eq + $eq`, () => {
+    it(`supports simple query`, async () => {
+      const result = await runQuery(
+        {
+          filter: {
+            author: { eq: 1 },
+            locale: { eq: `en` },
+          },
+        },
+        nodes
+      )
+      expect(result).toEqual([nodes[0]])
+    })
+  })
+
+  describe(`$ne + $ne`, async () => {
+    it(`should deal with ne null on both fields`, async () => {
+      const needle = null
+      const allNodes = makeNodesNeNull()
+      const result = await runQuery(
+        {
+          filter: {
+            b: { ne: needle },
+            c: { ne: needle },
+          },
+        },
+        allNodes
+      )
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
+      expect(result).toEqual(
+        allNodes.filter(node => node?.b != null && node?.c != null)
+      )
+      expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+      result.forEach(node => expect(node?.b).not.toEqual(needle))
+      result.forEach(node => expect(node?.c).not.toEqual(needle))
+    })
+  })
+
+  // TODO:
+  describe(`$eq + $in`, () => {})
+  describe(`$eq + $gt`, () => {})
+  describe(`$eq + $lt`, () => {})
+  describe(`$eq + $gt + $lt`, () => {})
+  describe(`$in + $in`, () => {})
+  describe(`$in + $gt`, () => {})
+  describe(`$gt + $gt`, () => {})
+  describe(`$gt + $lt`, () => {})
 })
 
 describe(`collection fields`, () => {
