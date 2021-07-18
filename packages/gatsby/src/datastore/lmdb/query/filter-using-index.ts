@@ -69,7 +69,7 @@ export interface IFilterResult {
 
 export function filterUsingIndex(args: IFilterArgs): IFilterResult {
   const context = createFilteringContext(args)
-  const ranges = getIndexRanges(context, args.dbQueries)
+  const ranges = getIndexRanges(context)
 
   let entries = new GatsbyIterable<IIndexEntry>(() =>
     ranges.length > 0
@@ -94,7 +94,7 @@ export function countUsingIndexOnly(args: IFilterArgs): number {
     indexMetadata: { keyPrefix },
   } = args
 
-  const ranges = getIndexRanges(context, args.dbQueries)
+  const ranges = getIndexRanges(context)
 
   if (context.usedQueries.size !== dbQueries.length) {
     throw new Error(`Cannot count using index only`)
@@ -355,11 +355,9 @@ function isNegatedQuery(query: DbQuery): boolean {
   )
 }
 
-export function getIndexRanges(
-  context: IFilterContext,
-  dbQueries: Array<DbQuery>
-): Array<IIndexRange> {
+export function getIndexRanges(context: IFilterContext): Array<IIndexRange> {
   const {
+    dbQueries,
     indexMetadata: { keyFields },
   } = context
   const rangeStarts: Array<RangeBoundary> = []

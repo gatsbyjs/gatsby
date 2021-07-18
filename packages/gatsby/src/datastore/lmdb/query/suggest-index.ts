@@ -46,16 +46,21 @@ export function suggestIndex({
 
   // Combined index for filter+sort only makes sense when all prefix fields have `eq` predicate
   // Same as https://docs.mongodb.com/manual/tutorial/sort-results-with-indexes/#sort-and-non-prefix-subset-of-an-index
+  const sortDirection = sortFields[0][1]
   const eqFilterQueries = getEqQueries(filterQueriesThatCanUseIndex)
+  const eqFilterFields = toIndexFields(eqFilterQueries, sortDirection)
+
+  // Index prefix should not contain eq filters overlapping with sort fields
+  const overlap = findOverlappingFields(eqFilterQueries, sortFields)
 
   return dedupeAndTrim(
     [
-      ...toIndexFields(eqFilterQueries),
+      ...eqFilterFields.filter(([name]) => !overlap.has(name)),
       ...sortFields,
       // Still append other filter fields to the tail of the index to leverage additional filtering
       //  of results using data stored in the index (without loading full node object)
-      //  Note: fields previously listed in eqFilterQueries and sortFields will be removed in dedupeAndTrim
-      ...toIndexFields(filterQueriesThatCanUseIndex),
+      //  Note: fields previously listed in eqFilterFields and sortFields will be removed in dedupeAndTrim
+      ...toIndexFields(filterQueriesThatCanUseIndex, sortDirection),
     ],
     maxFields
   )
@@ -102,6 +107,24 @@ function getSortFieldsThatCanUseIndex(
   return sortFields
 }
 
+function findOverlappingFields(
+  filterQueries: Array<DbQuery>,
+  sortFields: Array<IndexField>
+): Set<string> {
+  const overlap = new Set<string>()
+
+  for (const [fieldName] of sortFields) {
+    const filterQuery = filterQueries.find(
+      q => dbQueryToDottedField(q) === fieldName
+    )
+    if (!filterQuery) {
+      break
+    }
+    overlap.add(fieldName)
+  }
+  return overlap
+}
+
 function getEqQueries(filterQueries: Array<DbQuery>): Array<DbQuery> {
   return filterQueries.filter(
     filterQuery =>
@@ -109,8 +132,13 @@ function getEqQueries(filterQueries: Array<DbQuery>): Array<DbQuery> {
   )
 }
 
-function toIndexFields(queries: Array<DbQuery>): IndexFields {
-  return queries.map((q): IndexField => [dbQueryToDottedField(q), 1])
+function toIndexFields(
+  queries: Array<DbQuery>,
+  sortDirection: number = 1
+): IndexFields {
+  return queries.map(
+    (q): IndexField => [dbQueryToDottedField(q), sortDirection]
+  )
 }
 
 function dedupeAndTrim(fields: IndexFields, maxFields: number): IndexFields {
