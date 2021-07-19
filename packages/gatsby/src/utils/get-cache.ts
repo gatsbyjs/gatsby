@@ -8,7 +8,7 @@ export const getCache = (name: string): GatsbyCache => {
   if (!cache) {
     if (isLmdbStore()) {
       const GatsbyCacheLmdb = require(`./cache-lmdb`).default
-      cache = new GatsbyCacheLmdb({ name }) as GatsbyCache
+      cache = new GatsbyCacheLmdb({ name }).init() as GatsbyCache
     } else {
       cache = new GatsbyCache({ name }).init()
     }

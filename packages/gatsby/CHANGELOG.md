@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.0...gatsby@3.11.0-next.1) (2021-07-19)
+
+### Bug Fixes
+
+- **gatsby:** Add `directory` to GatsbyCacheLmdb ([#32391](https://github.com/gatsbyjs/gatsby/issues/32391)) ([7480849](https://github.com/gatsbyjs/gatsby/commit/7480849844884d6ee9f7ce5108f8ca0fe4dc4d15))
+- **gatsby:** catch error from this.process.send ([#32356](https://github.com/gatsbyjs/gatsby/issues/32356)) ([99936a8](https://github.com/gatsbyjs/gatsby/commit/99936a8cb24a0bafe4794e6ceffc864e6e103bc7))
+- **gatsby:** correct hasNextPage pagination info when resultOffset is provided ([#32319](https://github.com/gatsbyjs/gatsby/issues/32319)) ([9f8a580](https://github.com/gatsbyjs/gatsby/commit/9f8a580287ec3a4bf9696237e7e8ac49e2fc001c))
+- **gatsby:** handle errors thrown when importing html renderer ([#32417](https://github.com/gatsbyjs/gatsby/issues/32417)) ([b6f1272](https://github.com/gatsbyjs/gatsby/commit/b6f127248aa6126d6a186bd4ee1a49a98c9a239e))
+- **gatsby,gatsby-plugin-image:** fix createRoot on React 18 ([#32378](https://github.com/gatsbyjs/gatsby/issues/32378)) ([79b7b04](https://github.com/gatsbyjs/gatsby/commit/79b7b0407ddc6b53c2e86b0cdd16866283a928d2))
+
 # [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.7...gatsby@3.11.0-next.0) (2021-07-15)
 
 ### Features
