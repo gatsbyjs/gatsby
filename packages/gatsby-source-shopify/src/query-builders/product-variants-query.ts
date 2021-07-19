@@ -39,6 +39,29 @@ export class ProductVariantsQuery extends BulkQuery {
                       originalSrc
                       transformedSrc
                     }
+                    inventoryItem {
+                      id
+                      countryCodeOfOrigin
+                      createdAt
+                      duplicateSkuCount
+                      harmonizedSystemCode
+                      inventoryHistoryUrl
+                      legacyResourceId
+                      locationsCount
+                      provinceCodeOfOrigin
+                      requiresShipping
+                      sku
+                      tracked
+                      trackedEditable {
+                        locked
+                        reason
+                      }
+                      unitCost {
+                        amount
+                        currencyCode
+                      }
+                      updatedAt
+                    }
                     inventoryPolicy
                     inventoryQuantity
                     legacyResourceId
