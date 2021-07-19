@@ -16,6 +16,7 @@ export default class GatsbyCacheLmdb {
   private static store
   private db: Database | undefined
   public readonly name: string
+  // Needed for plugins that want to write data to the cache directory
   public readonly directory: string
 
   constructor({ name = `db` }: { name: string }) {
