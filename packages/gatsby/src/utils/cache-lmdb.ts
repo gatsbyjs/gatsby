@@ -1,4 +1,5 @@
 import { open, RootDatabase, Database } from "lmdb-store"
+import fs from "fs-extra"
 import path from "path"
 
 // Since the regular GatsbyCache saves to "caches" this should be "caches-lmdb"
@@ -22,6 +23,11 @@ export default class GatsbyCacheLmdb {
   constructor({ name = `db` }: { name: string }) {
     this.name = name
     this.directory = path.join(process.cwd(), `.cache/caches/${name}`)
+  }
+
+  init(): GatsbyCacheLmdb {
+    fs.ensureDirSync(this.directory)
+    return this
   }
 
   private static getStore(): RootDatabase {
