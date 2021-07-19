@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.11.0-next.0...gatsby-source-wordpress@5.11.0-next.1) (2021-07-19)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** fetch referenced media items during single node updates ([#32381](https://github.com/gatsbyjs/gatsby/issues/32381)) ([1645965](https://github.com/gatsbyjs/gatsby/commit/16459658b64289ed3bf4203f3a5612451b19778b))
+
+### Reverts
+
+- Revert "fix(wordpress): ensure all file links are rewritten" (#32398) ([9e96088](https://github.com/gatsbyjs/gatsby/commit/9e96088645160649dc6880b5debc882f353fd133)), closes [#32398](https://github.com/gatsbyjs/gatsby/issues/32398)
+
 # [5.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.10.0-next.3...gatsby-source-wordpress@5.11.0-next.0) (2021-07-15)
 
 ### Bug Fixes
