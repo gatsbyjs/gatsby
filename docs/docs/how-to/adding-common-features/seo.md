@@ -80,4 +80,3 @@ After deployment, their [Rich result status reports](https://support.google.com/
 
 - [Blog posts about SEO in Gatsby](/blog/tags/seo/)
 - [An advanced tutorial about SEO and social sharing cards](/tutorial/seo-and-social-sharing-cards-tutorial/).
--
