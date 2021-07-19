@@ -37,7 +37,7 @@ body:
     attributes:
       label: Reproduction Link
       placeholder: "https://github.com/username/repository-name/"
-      description: "Link to a reproduction (GitHub repository, Codesandbox, etc.). How to make a minimal reproduction: https://gatsby.dev/reproduction"
+      description: "Link to a reproduction (GitHub repository, Codesandbox, etc.). **Do not link to your actual project**, but provide a minimal reproduction in a fresh project -- how to make a minimal reproduction: https://gatsby.dev/reproduction"
     validations:
       required: true
   - type: textarea

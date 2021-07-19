@@ -30,7 +30,7 @@ const testOnColdCacheOnly = isWarmCache ? test.skip : test
 
 describe(`[gatsby-source-wordpress] Build default options`, () => {
   beforeAll(async done => {
-    await urling({ url: `http://localhost:8001/graphql`, retry: 15 })
+    await urling({ url: `http://localhost:8001/graphql`, retry: 100 })
 
     if (isWarmCache) {
       done()
@@ -74,17 +74,23 @@ describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
       process.exit(1)
     }
 
-    if (isWarmCache) {
-      const response = await mutateSchema()
-      console.log(response)
-    } else {
-      const response = await resetSchema()
-      console.log(response)
+    try {
+      if (isWarmCache) {
+        const response = await mutateSchema()
+        console.log(response)
+      } else {
+        const response = await resetSchema()
+        console.log(response)
+      }
+    } catch (e) {
+      console.info(`Threw errors while mutating or unmutating WordPress`)
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      process.exit(1)
     }
 
     gatsbyDevelopProcess = spawnGatsbyProcess(`develop`)
 
-    await urling(`http://localhost:8000`)
+    await urling(`http://localhost:8000`, { retry: 100 })
   })
 
   require(`../test-fns/index`)
