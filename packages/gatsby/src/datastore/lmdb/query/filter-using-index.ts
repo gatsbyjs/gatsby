@@ -59,23 +59,36 @@ export interface IFilterArgs {
 }
 
 interface IFilterContext extends IFilterArgs {
+  usedLimit: number | undefined
+  usedSkip: number
   usedQueries: Set<DbQuery>
 }
 
 export interface IFilterResult {
   entries: GatsbyIterable<IIndexEntry>
   usedQueries: Set<DbQuery>
+  usedLimit: number | undefined
+  usedSkip: number
+}
+
+interface ILmdbStoreRangeOptions {
+  start?: any
+  end?: any
+  limit?: number | undefined
+  offset?: number | undefined
+  revers?: boolean
+  snapshot?: boolean
 }
 
 export function filterUsingIndex(args: IFilterArgs): IFilterResult {
   const context = createFilteringContext(args)
   const ranges = getIndexRanges(context)
 
-  let entries = new GatsbyIterable<IIndexEntry>(() =>
+  let entries =
     ranges.length > 0
       ? performRangeScan(context, ranges)
       : performFullScan(context)
-  )
+
   if (context.usedQueries.size !== args.dbQueries.length) {
     // Try to additionally filter out results using data stored in index
     entries = narrowResultsIfPossible(context, entries)
@@ -83,7 +96,12 @@ export function filterUsingIndex(args: IFilterArgs): IFilterResult {
   if (isMultiKeyIndex(context) && needsDeduplication(context)) {
     entries = entries.deduplicate(getIdentifier)
   }
-  return { entries, usedQueries: context.usedQueries }
+  return {
+    entries,
+    usedQueries: context.usedQueries,
+    usedLimit: context.usedLimit,
+    usedSkip: context.usedSkip,
+  }
 }
 
 export function countUsingIndexOnly(args: IFilterArgs): number {
@@ -103,18 +121,20 @@ export function countUsingIndexOnly(args: IFilterArgs): number {
     throw new Error(`Cannot count using MultiKey index.`)
   }
   if (ranges.length === 0) {
-    return indexes.getKeysCount({
+    const range: ILmdbStoreRangeOptions = {
       start: [keyPrefix],
       end: [getValueEdgeAfter(keyPrefix)],
       snapshot: false,
-    } as any)
+    }
+    return indexes.getKeysCount(range)
   }
   let count = 0
   for (let { start, end } of ranges) {
     start = [keyPrefix, ...start]
     end = [keyPrefix, ...end]
     // Assuming ranges are not overlapping
-    count += indexes.getKeysCount({ start, end, snapshot: false } as any)
+    const range: ILmdbStoreRangeOptions = { start, end, snapshot: false }
+    count += indexes.getKeysCount(range)
   }
   return count
 }
@@ -122,6 +142,8 @@ export function countUsingIndexOnly(args: IFilterArgs): number {
 function createFilteringContext(args: IFilterArgs): IFilterContext {
   return {
     ...args,
+    usedLimit: undefined,
+    usedSkip: 0,
     usedQueries: new Set<DbQuery>(),
   }
 }
@@ -147,36 +169,40 @@ function needsDeduplication(context: IFilterContext): boolean {
   )
 }
 
-function* performRangeScan(
+function performRangeScan(
   context: IFilterContext,
   ranges: Array<IIndexRange>
-): Generator<IIndexEntry> {
+): GatsbyIterable<IIndexEntry> {
   const {
-    databases: { indexes },
     indexMetadata: { keyPrefix, stats },
     reverse,
   } = context
 
   let { limit, skip: offset = 0 } = context
 
-  if (limit) {
-    if (ranges.length > 1) {
-      // e.g. { in: [1, 2] }
-      // Cannot use offset: we will run several range queries and it's not clear which one to offset
-      // TODO: assuming ranges are sorted and not overlapping it should be possible to use offsets in this case
-      //   by running first range query, counting results while lazily iterating and
-      //   running the next range query when the previous iterator is done (and count is known)
-      //   with offset = offset - previousRangeCount, limit = limit - previousRangeCount
-      limit = offset + limit
-      offset = 0
-    }
-    if (isMultiKeyIndex(context) && needsDeduplication(context)) {
-      // Cannot use limit:
-      // MultiKey index may contain duplicates - we can only set a safe upper bound
-      limit *= stats.maxKeysPerItem
-    }
+  if (context.dbQueries.length !== context.usedQueries.size) {
+    // Since this query is not fully satisfied by the index, we can't use limit/skip
+    limit = undefined
+    offset = 0
   }
+  if (ranges.length > 1) {
+    // e.g. { in: [1, 2] }
+    // Cannot use offset: we will run several range queries and it's not clear which one to offset
+    // TODO: assuming ranges are sorted and not overlapping it should be possible to use offsets in this case
+    //   by running first range query, counting results while lazily iterating and
+    //   running the next range query when the previous iterator is done (and count is known)
+    //   with offset = offset - previousRangeCount, limit = limit - previousRangeCount
+    limit = typeof limit !== `undefined` ? offset + limit : undefined
+    offset = 0
+  }
+  if (limit && isMultiKeyIndex(context) && needsDeduplication(context)) {
+    // Cannot use limit:
+    // MultiKey index may contain duplicates - we can only set a safe upper bound
+    limit *= stats.maxKeysPerItem
+  }
+
   // Assuming ranges are sorted and not overlapping, we can yield results sequentially
+  const lmdbRanges: Array<ILmdbStoreRangeOptions> = []
   for (let { start, end } of ranges) {
     start = [keyPrefix, ...start]
     end = [keyPrefix, ...end]
@@ -184,18 +210,19 @@ function* performRangeScan(
       ? { start, end, limit, offset, snapshot: false }
       : { start: end, end: start, limit, offset, reverse, snapshot: false }
 
-    // @ts-ignore
-    yield* indexes.getRange(range)
+    lmdbRanges.push(range)
   }
+  context.usedLimit = limit
+  context.usedSkip = offset
+  return new GatsbyIterable(() => traverseRanges(context, lmdbRanges))
 }
 
-function* performFullScan(context: IFilterArgs): Generator<IIndexEntry> {
+function performFullScan(context: IFilterContext): GatsbyIterable<IIndexEntry> {
   // *Caveat*: our old query implementation was putting undefined and null values at the end
   //   of the list when ordered ascending. But lmdb-store keeps them at the top.
   //   So in LMDB case, need to concat two ranges to conform to our old format:
   //     concat(undefinedToEnd, topToUndefined)
   const {
-    databases: { indexes },
     reverse,
     indexMetadata: { keyPrefix },
   } = context
@@ -217,16 +244,24 @@ function* performFullScan(context: IFilterArgs): Generator<IIndexEntry> {
 
   const topToUndefined = range
 
-  if (!reverse) {
+  const ranges: Array<ILmdbStoreRangeOptions> = !reverse
+    ? [undefinedToEnd, topToUndefined]
+    : [topToUndefined, undefinedToEnd]
+
+  return new GatsbyIterable(() => traverseRanges(context, ranges))
+}
+
+function* traverseRanges(
+  context: IFilterContext,
+  ranges: Array<ILmdbStoreRangeOptions>
+): Generator<IIndexEntry> {
+  const {
+    databases: { indexes },
+  } = context
+
+  for (const range of ranges) {
     // @ts-ignore
-    yield* indexes.getRange(undefinedToEnd)
-    // @ts-ignore
-    yield* indexes.getRange(topToUndefined)
-  } else {
-    // @ts-ignore
-    yield* indexes.getRange(topToUndefined)
-    // @ts-ignore
-    yield* indexes.getRange(undefinedToEnd)
+    yield* indexes.getRange(range)
   }
 }
 

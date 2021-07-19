@@ -1869,7 +1869,7 @@ describe(`Multiple filter fields`, () => {
     })
   })
 
-  describe(`$ne + $ne`, async () => {
+  describe(`$ne + $ne`, () => {
     it(`should deal with ne null on both fields`, async () => {
       const needle = null
       const allNodes = makeNodesNeNull()
