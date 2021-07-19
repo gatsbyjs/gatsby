@@ -13,7 +13,7 @@ import errorParser from "./error-parser"
 
 import { GraphQLRunner } from "./graphql-runner"
 import { IExecutionResult, PageContext } from "./types"
-import { pageDataExists } from "../utils/page-data"
+import { pageDataExists, savePageQueryResult } from "../utils/page-data"
 
 const resultHashes = new Map()
 
@@ -175,13 +175,12 @@ export async function queryRunner(
     if (queryJob.isPage) {
       // We need to save this temporarily in cache because
       // this might be incomplete at the moment
-      const resultPath = path.join(
+      await savePageQueryResult(
         program.directory,
-        `.cache`,
-        `json`,
-        `${queryJob.id.replace(/\//g, `_`)}.json`
+        queryJob.id,
+        result,
+        resultJSON
       )
-      await fs.outputFile(resultPath, resultJSON)
       store.dispatch({
         type: `ADD_PENDING_PAGE_DATA_WRITE`,
         payload: {
