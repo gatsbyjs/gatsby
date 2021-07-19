@@ -17,6 +17,8 @@ const newPreviewMessage = `New preview available`
 const initialStateMessage = `Fetching preview info...`
 const buildingPreviewMessage = `Building a new preview`
 
+const initialLoadEventName = `PREVIEW_INDICATOR_LOADED`
+
 process.env.GATSBY_PREVIEW_AUTH_TOKEN = `token`
 
 jest.mock(`../package.json`, () => jest.requireActual(`../../package.json`), {
@@ -58,7 +60,7 @@ describe(`Preview status indicator`, () => {
       render(<Indicator />)
     })
 
-    waitFor(() => {
+    await waitFor(() => {
       if (testId) {
         component = screen.getByTestId(testId)
       } else {
@@ -66,7 +68,7 @@ describe(`Preview status indicator`, () => {
       }
     })
 
-    waitFor(() => {
+    await waitFor(() => {
       if (action) {
         userEvent[action](component)
         // Initial poll fetch, initial load trackEvent, and trackEvent after action
@@ -179,10 +181,21 @@ describe(`Preview status indicator`, () => {
   describe(`Indicator`, () => {
     describe(`trackEvent`, () => {
       it(`should trackEvent after indicator's initial poll`, async () => {
-        await assertTrackEventGetsCalled({
-          route: `success`,
-          text: newPreviewMessage,
+        process.env.GATSBY_PREVIEW_API_URL = createUrl(`success`)
+        process.env.GATSBY_TELEMETRY_API = `http://test.com/events`
+
+        await act(async () => {
+          render(<Indicator />)
         })
+
+        await waitFor(() => {
+          // Initial poll fetch for build data and then trackEvent fetch call
+          expect(window.fetch).toBeCalledTimes(2)
+        })
+
+        expect(window.fetch.mock.calls[1][1].body).toContain(
+          initialLoadEventName
+        )
       })
 
       it(`should trackEvent after error logs are opened`, async () => {
@@ -283,7 +296,7 @@ describe(`Preview status indicator`, () => {
             .closest(`a`)
         })
 
-        expect(gatsbyButtonTooltipLink.getAttribute(`href`)).toInclude(
+        expect(gatsbyButtonTooltipLink.getAttribute(`href`)).toContain(
           `${pathToBuildLogs}?returnTo=${returnTo}`
         )
 
