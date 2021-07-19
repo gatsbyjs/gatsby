@@ -39,13 +39,15 @@ export const createNodeWithSideEffects = ({
   }
 
   if (wpgqlNodesGroup?.plural !== `mediaItems`) {
-    node = await processNode({
+    const { processedNode } = await processNode({
       node,
       pluginOptions,
       referencedMediaItemNodeIds,
       wpUrl,
       helpers,
     })
+
+    node = processedNode
   }
 
   const builtTypename = buildTypeName(node.__typename)
