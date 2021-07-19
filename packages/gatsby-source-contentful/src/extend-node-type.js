@@ -1,7 +1,6 @@
 // @ts-check
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const path = require(`path`)
-const crypto = require(`crypto`)
 
 const sortBy = require(`lodash/sortBy`)
 const {
@@ -14,12 +13,11 @@ const {
   GraphQLJSON,
   GraphQLList,
 } = require(`gatsby/graphql`)
-const { fetchRemoteFileWithCache } = require(`gatsby-core-utils`)
+const { fetchContentfulAsset } = require(`./fetch-contentful-asset`)
 
 const { stripIndent } = require(`common-tags`)
 const qs = require(`qs`)
 
-const downloadWithRetry = require(`./download-with-retry`).default
 const {
   ImageFormatType,
   ImageResizingBehavior,
@@ -33,6 +31,7 @@ const {
 // cache is more likely to go stale than the images (which never go stale)
 // Note that the same image might be requested multiple times in the same run
 
+// @todo execute name deprication on next major
 if (process.env.GATSBY_REMOTE_CACHE) {
   console.warn(
     `Note: \`GATSBY_REMOTE_CACHE\` will be removed soon because it has been renamed to \`GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE\``
@@ -48,6 +47,9 @@ const REMOTE_CACHE_FOLDER =
   process.env.GATSBY_REMOTE_CACHE ??
   path.join(process.cwd(), `.cache/remote_cache`)
 const CACHE_IMG_FOLDER = path.join(REMOTE_CACHE_FOLDER, `images`)
+
+// TODO: Find the best place for this step. This is definitely not it.
+fs.mkdirSync(CACHE_IMG_FOLDER, { recursive: true })
 
 // Promises that rejected should stay in this map. Otherwise remove promise and put their data in resolvedBase64Cache
 const inFlightBase64Cache = new Map()
@@ -74,7 +76,7 @@ exports.mimeTypeExtensions = mimeTypeExtensions
 const isImage = image => mimeTypeExtensions.has(image?.file?.contentType)
 
 // Note: this may return a Promise<body>, body (sync), or null
-const getBase64Image = (imageProps, reporter) => {
+const getBase64Image = (imageProps, reporter, cache) => {
   if (!imageProps) {
     return null
   }
@@ -108,53 +110,20 @@ const getBase64Image = (imageProps, reporter) => {
     return inFlight
   }
 
-  // Note: sha1 is unsafe for crypto but okay for this particular case
-  const shasum = crypto.createHash(`sha1`)
-  shasum.update(requestUrl)
-  const urlSha = shasum.digest(`hex`)
-
-  // TODO: Find the best place for this step. This is definitely not it.
-  fs.mkdirSync(CACHE_IMG_FOLDER, { recursive: true })
-
-  const cacheFile = path.join(CACHE_IMG_FOLDER, urlSha + `.base64`)
-
-  if (fs.existsSync(cacheFile)) {
-    // TODO: against dogma, confirm whether readFileSync is indeed slower
-    const promise = fs.promises.readFile(cacheFile, `utf8`)
-    inFlightBase64Cache.set(requestUrl, promise)
-    return promise.then(body => {
-      inFlightBase64Cache.delete(requestUrl)
-      resolvedBase64Cache.set(requestUrl, body)
-      return body
+  const loadImageAsBase64 = async () => {
+    const filename = await fetchContentfulAsset({
+      url: requestUrl,
+      cache,
+      reporter,
+      cacheDir: CACHE_IMG_FOLDER,
     })
+
+    const buffer = await fs.readFile(filename)
+
+    return `data:image/jpeg;base64,${buffer.toString(`base64`)}`
   }
 
-  const loadImage = async () => {
-    const imageResponse = await downloadWithRetry(
-      {
-        url: requestUrl,
-        responseType: `arraybuffer`,
-      },
-      reporter
-    )
-
-    const base64 = Buffer.from(imageResponse.data, `binary`).toString(`base64`)
-
-    const body = `data:image/${toFormat || originalFormat};base64,${base64}`
-
-    try {
-      // TODO: against dogma, confirm whether writeFileSync is indeed slower
-      await fs.promises.writeFile(cacheFile, body)
-      return body
-    } catch (e) {
-      console.error(
-        `Contentful:getBase64Image: failed to write ${body.length} bytes remotely fetched from \`${requestUrl}\` to: \`${cacheFile}\`\nError: ${e}`
-      )
-      throw e
-    }
-  }
-
-  const promise = loadImage()
+  const promise = loadImageAsBase64()
 
   inFlightBase64Cache.set(requestUrl, promise)
 
@@ -506,14 +475,14 @@ const resolveResize = (image, options) => {
 
 exports.resolveResize = resolveResize
 
-const fixedNodeType = ({ name, getTracedSVG, reporter }) => {
+const fixedNodeType = ({ name, getTracedSVG, reporter, cache }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
       fields: {
         base64: {
           type: GraphQLString,
-          resolve: imageProps => getBase64Image(imageProps, reporter),
+          resolve: imageProps => getBase64Image(imageProps, reporter, cache),
         },
         tracedSVG: {
           type: GraphQLString,
@@ -608,14 +577,14 @@ const fixedNodeType = ({ name, getTracedSVG, reporter }) => {
   }
 }
 
-const fluidNodeType = ({ name, getTracedSVG, reporter }) => {
+const fluidNodeType = ({ name, getTracedSVG, reporter, cache }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
       fields: {
         base64: {
           type: GraphQLString,
-          resolve: imageProps => getBase64Image(imageProps, reporter),
+          resolve: imageProps => getBase64Image(imageProps, reporter, cache),
         },
         tracedSVG: {
           type: GraphQLString,
@@ -733,10 +702,12 @@ exports.extendNodeType = ({ type, cache, reporter }) => {
     const url = `https:` + createUrl(imgUrl, options)
     const name = path.basename(fileName, extension)
 
-    const absolutePath = await fetchRemoteFileWithCache({
+    const absolutePath = await fetchContentfulAsset({
       url,
       name,
       cache,
+      reporter,
+      cacheDir: CACHE_IMG_FOLDER,
       ext: extension,
     })
 
@@ -783,10 +754,12 @@ exports.extendNodeType = ({ type, cache, reporter }) => {
       const url = `https:` + createUrl(imgUrl, options)
       const name = path.basename(fileName, extension)
 
-      const absolutePath = await fetchRemoteFileWithCache({
+      const absolutePath = await fetchContentfulAsset({
         url,
         name,
         cache,
+        reporter,
+        cacheDir: CACHE_IMG_FOLDER,
         ext: extension,
       })
 
@@ -847,7 +820,8 @@ exports.extendNodeType = ({ type, cache, reporter }) => {
           image,
           options,
         },
-        reporter
+        reporter,
+        cache
       )
     }
 
@@ -869,12 +843,14 @@ exports.extendNodeType = ({ type, cache, reporter }) => {
     name: `ContentfulFixed`,
     getTracedSVG,
     reporter,
+    cache,
   })
 
   const fluidNode = fluidNodeType({
     name: `ContentfulFluid`,
     getTracedSVG,
     reporter,
+    cache,
   })
 
   // gatsby-plugin-image
@@ -954,7 +930,7 @@ exports.extendNodeType = ({ type, cache, reporter }) => {
         fields: {
           base64: {
             type: GraphQLString,
-            resolve: imageProps => getBase64Image(imageProps, reporter),
+            resolve: imageProps => getBase64Image(imageProps, reporter, cache),
           },
           tracedSVG: {
             type: GraphQLString,

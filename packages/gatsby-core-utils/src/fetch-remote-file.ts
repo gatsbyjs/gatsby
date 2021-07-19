@@ -15,6 +15,8 @@ import type { GatsbyCache } from "gatsby"
 export interface IFetchRemoteFileOptions {
   url: string
   cache: GatsbyCache
+  cacheDir?: string
+  skipCache?: boolean
   auth?: {
     htaccess_pass?: string
     htaccess_user?: string
@@ -176,31 +178,33 @@ const requestRemoteNode = (
 
 const fetchCache = new Map()
 
-export function fetchRemoteFileWithCache(
-  args: IFetchRemoteFileOptions
-): Promise<string> {
+export async function fetchRemoteFile({
+  skipCache,
+  ...args
+}: IFetchRemoteFileOptions): Promise<string> {
   // If we are already fetching the file, return the unresolved promise
   const inFlight = fetchCache.get(args.url)
-  if (inFlight) {
+  if (inFlight && !skipCache) {
     return inFlight
   }
 
   // Create file fetch promise and store it into cache
-  const fetchPromise = fetchRemoteFile(args)
+  const fetchPromise = fetchFile(args)
   fetchCache.set(args.url, fetchPromise)
 
-  return fetchPromise 
+  return fetchPromise
 }
 
-export async function fetchRemoteFile({
+async function fetchFile({
   url,
   cache,
+  cacheDir,
   auth = {},
   httpHeaders = {},
   ext,
   name,
 }: IFetchRemoteFileOptions): Promise<string> {
-  const pluginCacheDir = cache.directory
+  const pluginCacheDir = cacheDir || cache.directory
   // See if there's response headers for this url
   // from a previous request.
   const cachedHeaders = await cache.get(cacheIdForHeaders(url))
