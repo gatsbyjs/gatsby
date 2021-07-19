@@ -184,6 +184,7 @@ describeWhenLMDB(`worker (queries)`, () => {
   // We switched to "replaying actions" as a mechanism for state syncing.
   // But we can get back to state saving / merging if "replaying actions" proves to be too expensive
   // TODO: delete or re-activate depending on results yielded by "replaying actions" approach.
+  // The logic for `loadPartialStateFromDisk` itself is tested in `share-state` tests
   it(`should save worker "queries" state to disk`, async () => {
     if (!worker) fail(`worker not defined`)
 
