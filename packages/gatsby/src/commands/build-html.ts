@@ -330,13 +330,6 @@ export const doBuildPages = async (
   try {
     await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
   } catch (error) {
-    const pageData = await getPageData(error.context.path)
-    const truncatedPageData = truncateObjStrings(pageData)
-
-    const pageDataMessage = `Page data from page-data.json for the failed page "${
-      error.context.path
-    }": ${JSON.stringify(truncatedPageData, null, 2)}`
-
     const prettyError = await createErrorFromString(
       error.stack,
       `${rendererPath}.map`
@@ -345,7 +338,17 @@ export const doBuildPages = async (
     const buildError = new BuildHTMLError(prettyError)
     buildError.context = error.context
 
-    reporter.error(pageDataMessage)
+    if (error?.context?.path) {
+      const pageData = await getPageData(error.context.path)
+      const truncatedPageData = truncateObjStrings(pageData)
+
+      const pageDataMessage = `Page data from page-data.json for the failed page "${
+        error.context.path
+      }": ${JSON.stringify(truncatedPageData, null, 2)}`
+
+      reporter.error(pageDataMessage)
+    }
+
     throw buildError
   }
 }
