@@ -46,6 +46,17 @@ export class ProductVariantsQuery extends BulkQuery {
                       duplicateSkuCount
                       harmonizedSystemCode
                       inventoryHistoryUrl
+                      inventoryLevels {
+                        edges {
+                          node {
+                            id
+                            available
+                            location {
+                              id
+                            }
+                          }
+                        }
+                      }
                       legacyResourceId
                       locationsCount
                       provinceCodeOfOrigin

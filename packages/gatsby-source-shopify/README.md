@@ -142,7 +142,7 @@ Your Shopify store URL, e.g. some-shop.myshopify.com
 
 An optional array of additional data types to source.
 
-Accepted values: `'orders'`, `'collections'`
+Accepted values: `'orders'`, `'collections'`, `'locations'`
 
 `downloadImages: bool`
 

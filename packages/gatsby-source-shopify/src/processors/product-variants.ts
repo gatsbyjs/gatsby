@@ -1,14 +1,32 @@
-import { NodeInput } from "gatsby"
-import { pattern as idPattern } from "../node-builder"
+import { NodeInput, SourceNodesArgs } from "gatsby"
+import { createNodeId, pattern as idPattern } from "../node-builder"
 
 export function productVariantsProcessor(
   objects: BulkResults,
-  builder: NodeBuilder
+  builder: NodeBuilder,
+  gatsbyApi: SourceNodesArgs,
+  pluginOptions: ShopifyPluginOptions
 ): Array<Promise<NodeInput>> {
-  const objectsToBuild = objects.filter(obj => {
+  const filteredObjects = objects.filter(obj => {
     const [, remoteType] = obj.id.match(idPattern) || []
 
     return remoteType !== `Product`
+  })
+
+  const objectsToBuild = filteredObjects.map(obj => {
+    const [, remoteType] = obj.id.match(idPattern) || []
+
+    if (remoteType === `InventoryLevel`) {
+      console.log(obj)
+      return {
+        ...obj,
+        location: {
+          id: createNodeId(obj.location.id, gatsbyApi, pluginOptions),
+        },
+      }
+    } else {
+      return obj
+    }
   })
 
   /**
