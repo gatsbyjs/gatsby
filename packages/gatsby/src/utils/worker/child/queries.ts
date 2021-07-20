@@ -52,8 +52,7 @@ export async function runQueries(
     if (
       action.type === `QUERY_START` ||
       action.type === `PAGE_QUERY_RUN` ||
-      action.type === `ADD_PENDING_PAGE_DATA_WRITE` ||
-      action.type === `CREATE_COMPONENT_DEPENDENCY`
+      action.type === `ADD_PENDING_PAGE_DATA_WRITE`
     ) {
       actionsToReplay.push(action)
     }

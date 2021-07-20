@@ -403,6 +403,7 @@ export type ActionsUnion =
   | IMarkHtmlDirty
   | ISSRUsedUnsafeBuiltin
   | ISetSiteConfig
+  | IMergeWorkerQueryState
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -904,4 +905,9 @@ export interface INodeManifest {
   node: {
     id: string
   }
+}
+
+export interface IMergeWorkerQueryState {
+  type: `MERGE_WORKER_QUERY_STATE`
+  payload: Array<{ workerId: number; queryStateChunk: IGatsbyState["queries"] }>
 }
