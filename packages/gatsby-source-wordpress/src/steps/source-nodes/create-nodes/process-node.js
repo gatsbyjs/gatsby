@@ -948,11 +948,13 @@ const processNode = async ({
     wpUrl,
   })
 
-  // only parse if the nodeString has changed
-  if (processedNodeString !== nodeString) {
-    return JSON.parse(processedNodeString)
-  } else {
-    return node
+  const processedNode =
+    // only parse if the nodeString has changed
+    processedNodeString !== nodeString ? JSON.parse(processedNodeString) : node
+
+  return {
+    processedNode,
+    nodeMediaItemIdReferences,
   }
 }
 
