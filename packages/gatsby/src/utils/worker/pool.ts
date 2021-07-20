@@ -73,8 +73,7 @@ export async function runQueriesInWorkersQueue(
   }
 
   await Promise.all(promises)
-  await pool.all.saveQueries()
-
+  await Promise.all(pool.all.saveQueries())
   activity.end()
 }
 
