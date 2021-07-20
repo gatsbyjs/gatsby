@@ -17,7 +17,6 @@ export function productVariantsProcessor(
     const [, remoteType] = obj.id.match(idPattern) || []
 
     if (remoteType === `InventoryLevel`) {
-      console.log(obj)
       return {
         ...obj,
         location: {
