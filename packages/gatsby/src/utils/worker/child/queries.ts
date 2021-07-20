@@ -11,16 +11,30 @@ import { buildSchema } from "./schema"
 import {
   IAddPendingPageDataWriteAction,
   ICreatePageDependencyAction,
+  IGatsbyState,
   IPageQueryRunAction,
   IQueryStartAction,
 } from "../../../redux/types"
+import { DeepPartial } from "redux"
 
 export function setComponents(): void {
   setState([`components`, `staticQueryComponents`])
 }
 
 export function saveQueries(): void {
-  savePartialStateToDisk([`queries`], process.env.GATSBY_WORKER_ID)
+  // Drop `queryNodes` from query state - it can be restored from other pieces of state
+  // and is there only as a perf optimization
+  const pickNecessaryQueryState = <T extends DeepPartial<IGatsbyState>>(
+    state: T
+  ): T => {
+    if (!state?.queries?.queryNodes) return state
+    return { ...state, queries: { ...state.queries, queryNodes: new Map() } }
+  }
+  savePartialStateToDisk(
+    [`queries`],
+    process.env.GATSBY_WORKER_ID,
+    pickNecessaryQueryState
+  )
 }
 
 let gqlRunner

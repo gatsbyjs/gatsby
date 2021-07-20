@@ -86,11 +86,12 @@ export async function mergeWorkerState(pool: GatsbyWorkerPool): Promise<void> {
 
   for (const { workerId } of pool.getWorkerInfo()) {
     const state = loadPartialStateFromDisk([`queries`], String(workerId))
-    workerQueryState.push({
-      workerId,
-      queryStateChunk: state as IGatsbyState["queries"],
-    })
-    await new Promise(resolve => process.nextTick(resolve))
+    const queryStateChunk = state.queries as IGatsbyState["queries"]
+    if (queryStateChunk) {
+      // When there are too little queries, some worker can be inactive and its state is empty
+      workerQueryState.push({ workerId, queryStateChunk })
+      await new Promise(resolve => process.nextTick(resolve))
+    }
   }
   store.dispatch({
     type: `MERGE_WORKER_QUERY_STATE`,
