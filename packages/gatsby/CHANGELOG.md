@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.7...gatsby@3.10.0) (2021-07-20)
+
+### Bug Fixes
+
+- **gatsby:** Add `directory` to GatsbyCacheLmdb ([#32391](https://github.com/gatsbyjs/gatsby/issues/32391)) ([#32421](https://github.com/gatsbyjs/gatsby/issues/32421)) ([3d5bf37](https://github.com/gatsbyjs/gatsby/commit/3d5bf372f9a96332216a45038118fb4438c1e298))
+- **gatsby:** catch error from this.process.send ([#32356](https://github.com/gatsbyjs/gatsby/issues/32356)) ([#32387](https://github.com/gatsbyjs/gatsby/issues/32387)) ([0ae10bf](https://github.com/gatsbyjs/gatsby/commit/0ae10bf5dc87202deddb6f197631a2acba7f1cab))
+- **gatsby:** correct hasNextPage pagination info when resultOffset is provided ([#32319](https://github.com/gatsbyjs/gatsby/issues/32319)) ([#32386](https://github.com/gatsbyjs/gatsby/issues/32386)) ([ba0050a](https://github.com/gatsbyjs/gatsby/commit/ba0050a637824477f7666ebf0564dafd94976589))
+- **gatsby:** handle errors thrown when importing html renderer ([#32417](https://github.com/gatsbyjs/gatsby/issues/32417)) ([#32423](https://github.com/gatsbyjs/gatsby/issues/32423)) ([006788d](https://github.com/gatsbyjs/gatsby/commit/006788d5869ecbbad2a13f25986ad5c16b4cbe72))
+- **gatsby,gatsby-plugin-image:** fix createRoot on React 18 ([#32378](https://github.com/gatsbyjs/gatsby/issues/32378)) ([#32420](https://github.com/gatsbyjs/gatsby/issues/32420)) ([1b45c7b](https://github.com/gatsbyjs/gatsby/commit/1b45c7b462343d7d96b4ec8b10ec00a16360a84a))
+
+### Features
+
+- **gatsby:** Add cache-lmdb implementation ([#32373](https://github.com/gatsbyjs/gatsby/issues/32373)) ([7897834](https://github.com/gatsbyjs/gatsby/commit/789783410878d562f1499c1915155135ac258d82))
+- **gatsby:** Add webpack fs caching for development flag ([#32264](https://github.com/gatsbyjs/gatsby/issues/32264)) ([4f9a724](https://github.com/gatsbyjs/gatsby/commit/4f9a724b91ce35b0232952023eaecb8db448719d))
+- **gatsby:** display message about unfit flags found in config ([#32394](https://github.com/gatsbyjs/gatsby/issues/32394)) ([#32424](https://github.com/gatsbyjs/gatsby/issues/32424)) ([7499b22](https://github.com/gatsbyjs/gatsby/commit/7499b2239684eeeefbbf9ce4430fc8c56239dbe8))
+- **gatsby:** PQR: merge data dependencies from workers to the main process ([#32305](https://github.com/gatsbyjs/gatsby/issues/32305)) ([#32438](https://github.com/gatsbyjs/gatsby/issues/32438)) ([5982a17](https://github.com/gatsbyjs/gatsby/commit/5982a1781cf675f4e74920233424f5f39ce87630))
+
 # [3.10.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.6...gatsby@3.10.0-next.7) (2021-07-14)
 
 ### Bug Fixes

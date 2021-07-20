@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.10.0-next.1...gatsby-plugin-image@1.10.0) (2021-07-20)
+
+### Bug Fixes
+
+- **gatsby,gatsby-plugin-image:** fix createRoot on React 18 ([#32378](https://github.com/gatsbyjs/gatsby/issues/32378)) ([#32420](https://github.com/gatsbyjs/gatsby/issues/32420)) ([1b45c7b](https://github.com/gatsbyjs/gatsby/commit/1b45c7b462343d7d96b4ec8b10ec00a16360a84a))
+
 # [1.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.10.0-next.0...gatsby-plugin-image@1.10.0-next.1) (2021-07-08)
 
 ### Bug Fixes
