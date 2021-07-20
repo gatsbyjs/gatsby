@@ -96,7 +96,7 @@ A big **Thank You** to [our community who contributed](https://github.com/gatsby
 - [emmanuelgautier](https://github.com/emmanuelgautier): fix(gatsby-plugin-gtag): replace google analytics domain with google tag manager [PR #31036](https://github.com/gatsbyjs/gatsby/pull/31036)
 - [nellaparedes](https://github.com/nellaparedes): fix(gatsby): Pass search/hash to location after swUpdated [PR #32323](https://github.com/gatsbyjs/gatsby/pull/32323)
 - [karlhorky](https://github.com/karlhorky): Avoid UNHANDLED REJECTION error on ctrl-C [PR #32311](https://github.com/gatsbyjs/gatsby/pull/32311)
-- [weronikadominiak](https://github.com/weronikadominiak): docs(contributing): update docs with info about translations being on hold  (#31883) [PR #32328](https://github.com/gatsbyjs/gatsby/pull/32328)
+- [weronikadominiak](https://github.com/weronikadominiak): docs(contributing): update docs with info about translations being on hold (#31883) [PR #32328](https://github.com/gatsbyjs/gatsby/pull/32328)
 - [cabutler10](https://github.com/cabutler10): chore(docs): Fix typo in apollo/client npm package name [PR #32345](https://github.com/gatsbyjs/gatsby/pull/32345)
 - [ezeYaniv](https://github.com/ezeYaniv): chore(docs): Update building-a-theme to latest Theme UI [PR #32357](https://github.com/gatsbyjs/gatsby/pull/32357)
 - [SonnyBrooks](https://github.com/SonnyBrooks): chore(docs): Correct JavaScript spelling [PR #32368](https://github.com/gatsbyjs/gatsby/pull/32368)
