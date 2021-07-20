@@ -180,11 +180,6 @@ describeWhenLMDB(`worker (queries)`, () => {
     }
   })
 
-  // This was the original implementation of state syncing between a worker and the main process.
-  // We switched to "replaying actions" as a mechanism for state syncing.
-  // But we can get back to state saving / merging if "replaying actions" proves to be too expensive
-  // TODO: delete or re-activate depending on results yielded by "replaying actions" approach.
-  // The logic for `loadPartialStateFromDisk` itself is tested in `share-state` tests
   it(`should save worker "queries" state to disk`, async () => {
     if (!worker) fail(`worker not defined`)
 
@@ -350,10 +345,9 @@ describeWhenLMDB(`worker (queries)`, () => {
     const expectedActionShapes = {
       QUERY_START: [`componentPath`, `isPage`, `path`],
       PAGE_QUERY_RUN: [`componentPath`, `isPage`, `path`, `resultHash`],
-      CREATE_COMPONENT_DEPENDENCY: [`nodeId`, `path`],
       ADD_PENDING_PAGE_DATA_WRITE: [`path`],
     }
-    expect(result).toBeArrayOfSize(11)
+    expect(result).toBeArrayOfSize(8)
 
     for (const action of result) {
       expect(action.type).toBeOneOf(Object.keys(expectedActionShapes))
@@ -380,14 +374,6 @@ describeWhenLMDB(`worker (queries)`, () => {
       },
       {
         payload: {
-          nodeId: `ceb8e742-a2ce-5110-a560-94c93d1c71a5`,
-          path: `sq--q1`,
-        },
-        plugin: ``,
-        type: `CREATE_COMPONENT_DEPENDENCY`,
-      },
-      {
-        payload: {
           componentPath: `/static-query-component.js`,
           isPage: false,
           path: `sq--q1`,
@@ -411,22 +397,6 @@ describeWhenLMDB(`worker (queries)`, () => {
           path: `/bar`,
         },
         type: `QUERY_START`,
-      },
-      {
-        payload: {
-          nodeId: `ceb8e742-a2ce-5110-a560-94c93d1c71a5`,
-          path: `/foo`,
-        },
-        plugin: ``,
-        type: `CREATE_COMPONENT_DEPENDENCY`,
-      },
-      {
-        payload: {
-          nodeId: `ceb8e742-a2ce-5110-a560-94c93d1c71a5`,
-          path: `/bar`,
-        },
-        plugin: ``,
-        type: `CREATE_COMPONENT_DEPENDENCY`,
       },
       {
         payload: {
