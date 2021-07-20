@@ -2,7 +2,7 @@
 
 Any mid-to-high performance WordPress host will work great. You may also have success on low performance WordPress hosts for smaller or medium sized sites, but a better server is recommended.
 
-A great Gatsby/WordPress workflow is to use [Local by Flywheel](https://localwp.com/) for hosting your local WordPress server and then pushing from there to [Flywheel](https://getflywheel.com/) or [WPEngine](https://wpengine.com/) hosting for your live/staging WordPress servers.
+A great Gatsby/WordPress workflow to use is [Local by Flywheel](https://localwp.com/) for hosting your local WordPress server and then pushing from there to [Flywheel](https://getflywheel.com/) or [WPEngine](https://wpengine.com/) hosting for your live/staging WordPress servers.
 
 ## Host IP rate limiting
 
