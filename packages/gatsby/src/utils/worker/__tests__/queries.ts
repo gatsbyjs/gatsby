@@ -201,17 +201,7 @@ describeWhenLMDB(`worker (queries)`, () => {
           },
           "deletedQueries": Set {},
           "dirtyQueriesListToEmitViaWebsocket": Array [],
-          "queryNodes": Map {
-            "sq--q1" => Set {
-              "ceb8e742-a2ce-5110-a560-94c93d1c71a5",
-            },
-            "/foo" => Set {
-              "ceb8e742-a2ce-5110-a560-94c93d1c71a5",
-            },
-            "/bar" => Set {
-              "ceb8e742-a2ce-5110-a560-94c93d1c71a5",
-            },
-          },
+          "queryNodes": Map {},
           "trackedComponents": Map {},
           "trackedQueries": Map {
             "sq--q1" => Object {
