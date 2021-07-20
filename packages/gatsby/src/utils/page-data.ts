@@ -75,7 +75,7 @@ function getLMDBPageQueryResultsCache(): GatsbyCacheLmdb {
     const GatsbyCacheLmdbImpl = require(`./cache-lmdb`).default
     lmdbPageQueryResultsCache = new GatsbyCacheLmdbImpl({
       name: `internal-page-data-cache`,
-    })
+    }).init()
   }
   return lmdbPageQueryResultsCache
 }
