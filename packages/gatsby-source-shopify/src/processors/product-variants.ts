@@ -7,26 +7,24 @@ export function productVariantsProcessor(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: ShopifyPluginOptions
 ): Array<Promise<NodeInput>> {
-  const filteredObjects = objects.filter(obj => {
+  const objectsToBuild = objects.reduce((objs, obj) => {
     const [, remoteType] = obj.id.match(idPattern) || []
 
-    return remoteType !== `Product`
-  })
-
-  const objectsToBuild = filteredObjects.map(obj => {
-    const [, remoteType] = obj.id.match(idPattern) || []
-
-    if (remoteType === `InventoryLevel`) {
-      return {
+    if (remoteType === `Product`) {
+      // ProductVariants query also returns products but we already process the products in another processor
+    } else if (remoteType === `InventoryLevel`) {
+      objs.push({
         ...obj,
         location: {
           id: createNodeId(obj.location.id, gatsbyApi, pluginOptions),
         },
-      }
+      })
     } else {
-      return obj
+      objs.push(obj)
     }
-  })
+
+    return objs
+  }, [])
 
   /**
    * We will need to attach presentmentPrices here as a simple array.
