@@ -248,7 +248,7 @@ export function createOperations(
 
     incrementalLocations(date: Date): IShopifyBulkOperation {
       return createOperation(
-        new CollectionsQuery(options).query(date),
+        new LocationsQuery(options).query(date),
         `INCREMENTAL_LOCATIONS`
       )
     },
