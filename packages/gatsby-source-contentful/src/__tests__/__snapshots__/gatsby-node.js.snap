@@ -13,6 +13,9 @@ Object {
     "owner": "gatsby-source-contentful",
     "type": "ContentfulContentTypeBlogPost",
   },
+  "metadata": Object {
+    "tags___NODE": Array [],
+  },
   "parent": "Blog Post",
   "publishDate": "2020-04-01T00:00+02:00",
   "slug": "integration-tests",
@@ -51,6 +54,9 @@ Object {
     "owner": "gatsby-source-contentful",
     "type": "ContentfulContentTypePerson",
   },
+  "metadata": Object {
+    "tags___NODE": Array [],
+  },
   "name": "John Doe",
   "parent": "Person",
   "phone": "0176 / 1234567",
@@ -83,6 +89,9 @@ Object {
     "contentDigest": "2020-06-03T14:22:37.720Z",
     "owner": "gatsby-source-contentful",
     "type": "ContentfulContentTypeBlogPost",
+  },
+  "metadata": Object {
+    "tags___NODE": Array [],
   },
   "parent": "Blog Post",
   "publishDate": "2020-04-01T00:00+02:00",
@@ -121,6 +130,9 @@ Object {
     "contentDigest": "2020-06-03T14:17:31.246Z",
     "owner": "gatsby-source-contentful",
     "type": "ContentfulContentTypePerson",
+  },
+  "metadata": Object {
+    "tags___NODE": Array [],
   },
   "name": "John Doe",
   "parent": "Person",
@@ -161,6 +173,9 @@ Object {
     "owner": "gatsby-source-contentful",
     "type": "ContentfulContentTypePerson",
   },
+  "metadata": Object {
+    "tags___NODE": Array [],
+  },
   "name": "John Doe",
   "parent": "Person",
   "phone": "0176 / 1234567",
@@ -200,6 +215,9 @@ Object {
     "owner": "gatsby-source-contentful",
     "type": "ContentfulContentTypePerson",
   },
+  "metadata": Object {
+    "tags___NODE": Array [],
+  },
   "name": "John Doe",
   "parent": "Person",
   "phone": "0176 / 1234567",
@@ -232,6 +250,9 @@ Object {
     "contentDigest": "2020-06-03T14:27:24.359Z",
     "owner": "gatsby-source-contentful",
     "type": "ContentfulContentTypeBlogPost",
+  },
+  "metadata": Object {
+    "tags___NODE": Array [],
   },
   "parent": "Blog Post",
   "publishDate": "2020-05-15T00:00+02:00",
@@ -271,6 +292,9 @@ Object {
     "owner": "gatsby-source-contentful",
     "type": "ContentfulContentTypePerson",
   },
+  "metadata": Object {
+    "tags___NODE": Array [],
+  },
   "name": "John Doe",
   "parent": "Person",
   "phone": "0176 / 1234567",
@@ -303,6 +327,9 @@ Object {
     "contentDigest": "2020-06-03T14:27:24.359Z",
     "owner": "gatsby-source-contentful",
     "type": "ContentfulContentTypeBlogPost",
+  },
+  "metadata": Object {
+    "tags___NODE": Array [],
   },
   "parent": "Blog Post",
   "publishDate": "2020-05-15T00:00+02:00",
@@ -341,6 +368,9 @@ Object {
     "contentDigest": "2020-06-03T14:17:31.246Z",
     "owner": "gatsby-source-contentful",
     "type": "ContentfulContentTypePerson",
+  },
+  "metadata": Object {
+    "tags___NODE": Array [],
   },
   "name": "John Doe",
   "parent": "Person",

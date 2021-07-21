@@ -520,17 +520,12 @@ export const createNodesForContentType = ({
         entryNode = {
           ...entryItemFields,
           ...entryNode,
-        }
-
-        // Link tags
-        if (pluginConfig.get(`enableTags`) && entryItem.metadata.tags.length) {
-          entryNode.metadata = {
+          metadata: {
             tags___NODE: entryItem.metadata.tags.map(tag =>
               createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
             ),
-          }
+          },
         }
-
         return entryNode
       })
       .filter(Boolean)
