@@ -10,7 +10,12 @@ const reporterInfo = jest.spyOn(reporter, `info`).mockImplementation(jest.fn)
 const reporterWarn = jest.spyOn(reporter, `warn`).mockImplementation(jest.fn)
 
 const { isLmdbStore } = require(`../../datastore`)
-const { saveState, store, readState } = require(`../index`)
+const {
+  saveState,
+  store,
+  readState,
+  savePartialStateToDisk,
+} = require(`../index`)
 
 const {
   actions: { createPage, createNode },
@@ -492,5 +497,11 @@ describe(`redux db`, () => {
         `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
       )
     }
+  })
+
+  describe(`savePartialStateToDisk`, () => {
+    it.only(`test`, () => {
+      expect(true).toBe(true)
+    })
   })
 })
