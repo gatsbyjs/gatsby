@@ -28,6 +28,9 @@ jest.mock(`fs-extra`, () => {
     writeFileSync: jest.fn((file, content) =>
       mockWrittenContent.set(file, content)
     ),
+    outputFileSync: jest.fn((file, content) =>
+      mockWrittenContent.set(file, content)
+    ),
     readFileSync: jest.fn(file => mockWrittenContent.get(file)),
     moveSync: jest.fn((from, to) => {
       // This will only work for folders if they are always the full prefix
@@ -500,8 +503,55 @@ describe(`redux db`, () => {
   })
 
   describe(`savePartialStateToDisk`, () => {
-    it.only(`test`, () => {
-      expect(true).toBe(true)
+    beforeEach(() => {
+      createPages(defaultPage)
+    })
+
+    it(`saves with correct filename (with defaults)`, () => {
+      savePartialStateToDisk([`pages`])
+
+      const savedFile = mockWrittenContent.keys().next().value
+      const basename = path.basename(savedFile)
+
+      expect(basename.startsWith(`redux.worker.slices__`)).toBe(true)
+    })
+
+    it(`saves correct slice of state`, () => {
+      savePartialStateToDisk([`pages`])
+
+      expect(writeToCache).toBeCalledWith(
+        { pages: expect.anything() },
+        [`pages`],
+        undefined
+      )
+    })
+
+    it(`respects optionalPrefix`, () => {
+      savePartialStateToDisk([`pages`], `custom-prefix`)
+
+      const savedFile = mockWrittenContent.keys().next().value
+      const basename = path.basename(savedFile)
+
+      expect(basename.startsWith(`redux.worker.slices_custom-prefix_`)).toBe(
+        true
+      )
+    })
+
+    it(`respects transformState`, () => {
+      const customTransform = state => {
+        return {
+          ...state,
+          hello: `world`,
+        }
+      }
+
+      savePartialStateToDisk([`pages`], undefined, customTransform)
+
+      expect(writeToCache).toBeCalledWith(
+        { pages: expect.anything(), hello: `world` },
+        [`pages`],
+        undefined
+      )
     })
   })
 })
