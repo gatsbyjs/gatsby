@@ -44,6 +44,8 @@ import {
 } from "../utils/webpack-status"
 import { showExperimentNotices } from "../utils/show-experiment-notice"
 import { runQueriesInWorkersQueue } from "../utils/worker/pool"
+import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle"
+import { isLmdbStore } from "../datastore"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (isTruthy(process.env.VERBOSE)) {
@@ -85,6 +87,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     program,
     parentSpan: buildSpan,
   })
+
+  // bundle graphql-engine
+  if (isLmdbStore()) {
+    await createGraphqlEngineBundle()
+  }
 
   const graphqlRunner = new GraphQLRunner(store, {
     collectStats: true,

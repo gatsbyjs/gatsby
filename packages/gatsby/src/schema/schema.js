@@ -195,6 +195,12 @@ const updateSchemaComposer = async ({
     schemaComposer,
     parentSpan: activity.span,
   })
+  // make sure to print schema that will be used when bundling graphql-engine
+  await printTypeDefinitions({
+    config: { path: process.cwd() + `/.cache/schema.gql` },
+    schemaComposer,
+    parentSpan: activity.span,
+  })
   await addSetFieldsOnGraphQLNodeTypeFields({
     schemaComposer,
     parentSpan: activity.span,
