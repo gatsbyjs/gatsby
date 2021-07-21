@@ -1279,6 +1279,15 @@ export interface GatsbyCache {
    * await cache.set(`unique-key`, value)
    */
   set(key: string, value: any): Promise<any>
+
+  /**
+   * Deletes cached value
+   * @param {string} key Cache key
+   * @returns {Promise<void>} Promise resolving once key is deleted from cache
+   * @example
+   * await cache.del(`unique-key`)
+   */
+  del(key: string): Promise<void>
 }
 
 export interface Tracing {
