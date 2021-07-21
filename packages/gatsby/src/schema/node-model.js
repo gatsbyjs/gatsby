@@ -74,8 +74,8 @@ class LocalNodeModel {
     this.schemaComposer = schemaComposer
     this.createPageDependencyActionCreator = createPageDependency
 
-    this._rootNodeMap = new WeakMap()
-    this._trackedRootNodes = new WeakSet()
+    // this._rootNodeMap = new WeakMap()
+    // this._trackedRootNodes = new WeakSet()
     this._prepareNodesQueues = {}
     this._prepareNodesPromises = {}
     this._preparedNodesCache = new Map()
@@ -466,17 +466,17 @@ class LocalNodeModel {
    * and that Node object.
    * @param {Node} node Root Node
    */
-  trackInlineObjectsInRootNode(node) {
-    if (!this._trackedRootNodes.has(node)) {
-      addRootNodeToInlineObject(
-        this._rootNodeMap,
-        node,
-        node.id,
-        true,
-        new Set()
-      )
-      this._trackedRootNodes.add(node)
-    }
+  trackInlineObjectsInRootNode() {
+    // if (!this._trackedRootNodes.has(node)) {
+    //   addRootNodeToInlineObject(
+    //     this._rootNodeMap,
+    //     node,
+    //     node.id,
+    //     true,
+    //     new Set()
+    //   )
+    //   this._trackedRootNodes.add(node)
+    // }
   }
 
   /**
@@ -487,28 +487,28 @@ class LocalNodeModel {
    * or first node that meet predicate conditions if predicate is specified
    */
   findRootNodeAncestor(obj, predicate = null) {
-    let iterations = 0
-    let node = obj
+    // let iterations = 0
+    // let node = obj
 
-    while (iterations++ < 100) {
-      if (predicate && predicate(node)) return node
+    // while (iterations++ < 100) {
+    //   if (predicate && predicate(node)) return node
 
-      const parent = getNodeById(node.parent)
-      const id = this._rootNodeMap.get(node)
-      const trackedParent = getNodeById(id)
+    //   const parent = getNodeById(node.parent)
+    //   const id = this._rootNodeMap.get(node)
+    //   const trackedParent = getNodeById(id)
 
-      if (!parent && !trackedParent) {
-        const isMatchingRoot = !predicate || predicate(node)
-        return isMatchingRoot ? node : null
-      }
+    //   if (!parent && !trackedParent) {
+    //     const isMatchingRoot = !predicate || predicate(node)
+    //     return isMatchingRoot ? node : null
+    //   }
 
-      node = parent || trackedParent
-    }
+    //   node = parent || trackedParent
+    // }
 
-    reporter.error(
-      `It looks like you have a node that's set its parent as itself:\n\n` +
-        node
-    )
+    // reporter.error(
+    //   `It looks like you have a node that's set its parent as itself:\n\n` +
+    //     node
+    // )
     return null
   }
 
@@ -892,31 +892,31 @@ const determineResolvableFields = (
   return fieldsToResolve
 }
 
-const addRootNodeToInlineObject = (
-  rootNodeMap,
-  data,
-  nodeId,
-  isNode /* : boolean */,
-  path /* : Set<mixed> */
-) /* : void */ => {
-  const isPlainObject = _.isPlainObject(data)
+// const addRootNodeToInlineObject = (
+//   rootNodeMap,
+//   data,
+//   nodeId,
+//   isNode /* : boolean */,
+//   path /* : Set<mixed> */
+// ) /* : void */ => {
+//   const isPlainObject = _.isPlainObject(data)
 
-  if (isPlainObject || _.isArray(data)) {
-    if (path.has(data)) return
-    path.add(data)
+//   if (isPlainObject || _.isArray(data)) {
+//     if (path.has(data)) return
+//     path.add(data)
 
-    _.each(data, (o, key) => {
-      if (!isNode || key !== `internal`) {
-        addRootNodeToInlineObject(rootNodeMap, o, nodeId, false, path)
-      }
-    })
+//     _.each(data, (o, key) => {
+//       if (!isNode || key !== `internal`) {
+//         addRootNodeToInlineObject(rootNodeMap, o, nodeId, false, path)
+//       }
+//     })
 
-    // don't need to track node itself
-    if (!isNode) {
-      rootNodeMap.set(data, nodeId)
-    }
-  }
-}
+//     // don't need to track node itself
+//     if (!isNode) {
+//       rootNodeMap.set(data, nodeId)
+//     }
+//   }
+// }
 
 const saveResolvedNodes = async (typeName, resolvedNodes) => {
   store.dispatch({
