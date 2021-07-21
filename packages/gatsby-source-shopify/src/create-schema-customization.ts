@@ -58,6 +58,10 @@ export function createSchemaCustomization(
 
   const includeOrders = pluginOptions.shopifyConnections?.includes(`orders`)
 
+  const includeLocations = pluginOptions.shopifyConnections?.includes(
+    `locations`
+  )
+
   const name = (name: string): string =>
     `${pluginOptions.typePrefix || ``}${name}`
 
@@ -270,6 +274,26 @@ export function createSchemaCustomization(
             extensions: {
               link: {
                 from: `orderId`,
+                by: `id`,
+              },
+            },
+          },
+        },
+        interfaces: [`Node`],
+      })
+    )
+  }
+
+  if (includeLocations) {
+    typeDefs.push(
+      schema.buildObjectType({
+        name: name(`ShopifyInventoryLevel`),
+        fields: {
+          location: {
+            type: name(`ShopifyLocation`),
+            extensions: {
+              link: {
+                from: `location.id`,
                 by: `id`,
               },
             },
