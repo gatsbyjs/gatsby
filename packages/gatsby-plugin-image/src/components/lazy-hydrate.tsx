@@ -1,6 +1,5 @@
 import React, { MutableRefObject } from "react"
-// @ts-ignore - react 18 has createRoot
-import { hydrate, render, createRoot } from "react-dom"
+import ReactDOM from "react-dom"
 import { GatsbyImageProps } from "./gatsby-image.browser"
 import { LayoutWrapper } from "./layout-wrapper"
 import { Placeholder } from "./placeholder"
@@ -88,16 +87,20 @@ export function lazyHydrate(
 
   if (root.current) {
     // Force render to mitigate "Expected server HTML to contain a matching" in develop
-    if (createRoot) {
+    // @ts-ignore react 18 typings
+    if (ReactDOM.createRoot) {
       if (!hydrated.current) {
-        hydrated.current = createRoot(root.current)
+        // @ts-ignore react 18 typings
+        hydrated.current = ReactDOM.createRoot(root.current)
       }
 
       // @ts-ignore react 18 typings
       hydrated.current.render(component)
     } else {
       const doRender =
-        hydrated.current || forceHydrate.current ? render : hydrate
+        hydrated.current || forceHydrate.current
+          ? ReactDOM.render
+          : ReactDOM.hydrate
       doRender(component, root.current)
       hydrated.current = true
     }
@@ -105,11 +108,12 @@ export function lazyHydrate(
 
   return (): void => {
     if (root.current) {
-      if (createRoot) {
+      // @ts-ignore react 18 typings
+      if (ReactDOM.createRoot) {
         // @ts-ignore react 18 typings
         hydrated.current.render(null)
       } else {
-        render((null as unknown) as ReactElement, root.current)
+        ReactDOM.render((null as unknown) as ReactElement, root.current)
       }
     }
   }
