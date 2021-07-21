@@ -75,6 +75,7 @@ function getLMDBPageQueryResultsCache(): GatsbyCacheLmdb {
     const GatsbyCacheLmdbImpl = require(`./cache-lmdb`).default
     lmdbPageQueryResultsCache = new GatsbyCacheLmdbImpl({
       name: `internal-tmp-query-results`,
+      encoding: `string`,
     }).init()
   }
   return lmdbPageQueryResultsCache
@@ -83,11 +84,10 @@ function getLMDBPageQueryResultsCache(): GatsbyCacheLmdb {
 export async function savePageQueryResult(
   programDir: string,
   pagePath: string,
-  result: IExecutionResult,
   stringifiedResult: string
 ): Promise<void> {
   if (isLmdbStore()) {
-    await getLMDBPageQueryResultsCache().set(pagePath, result)
+    getLMDBPageQueryResultsCache().set(pagePath, stringifiedResult)
   } else {
     const pageQueryResultsPath = path.join(
       programDir,
@@ -104,7 +104,11 @@ export async function readPageQueryResult(
   pagePath: string
 ): Promise<any> {
   if (isLmdbStore()) {
-    return getLMDBPageQueryResultsCache().get(pagePath)
+    const stringifiedResult = await getLMDBPageQueryResultsCache().get(pagePath)
+    if (typeof stringifiedResult === `string`) {
+      return JSON.parse(stringifiedResult)
+    }
+    throw new Error(`Couldn't find temp query result for "${pagePath}".`)
   } else {
     const pageQueryResultsPath = path.join(
       publicDir,

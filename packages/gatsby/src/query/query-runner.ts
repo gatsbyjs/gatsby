@@ -175,12 +175,7 @@ export async function queryRunner(
     if (queryJob.isPage) {
       // We need to save this temporarily in cache because
       // this might be incomplete at the moment
-      await savePageQueryResult(
-        program.directory,
-        queryJob.id,
-        result,
-        resultJSON
-      )
+      await savePageQueryResult(program.directory, queryJob.id, resultJSON)
       store.dispatch({
         type: `ADD_PENDING_PAGE_DATA_WRITE`,
         payload: {

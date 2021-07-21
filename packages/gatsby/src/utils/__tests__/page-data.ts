@@ -22,12 +22,7 @@ describe(`savePageQueryResults / readPageQueryResults`, () => {
       `${pagePath.replace(/\//g, `_`)}.json`
     )
 
-    await savePageQueryResult(
-      programDir,
-      pagePath,
-      inputResult,
-      JSON.stringify(inputResult)
-    )
+    await savePageQueryResult(programDir, pagePath, JSON.stringify(inputResult))
 
     const result = await readPageQueryResult(publicDir, pagePath)
     expect(result).toEqual(inputResult)
