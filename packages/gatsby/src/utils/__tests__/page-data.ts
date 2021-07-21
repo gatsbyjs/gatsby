@@ -1,6 +1,10 @@
 import * as path from "path"
 import * as fs from "fs-extra"
-import { savePageQueryResult, readPageQueryResult } from "../page-data"
+import {
+  savePageQueryResult,
+  readPageQueryResult,
+  waitUntilPageQueryResultsAreStored,
+} from "../page-data"
 import { isLmdbStore } from "../../datastore"
 
 describe(`savePageQueryResults / readPageQueryResults`, () => {
@@ -23,6 +27,8 @@ describe(`savePageQueryResults / readPageQueryResults`, () => {
     )
 
     await savePageQueryResult(programDir, pagePath, JSON.stringify(inputResult))
+
+    await waitUntilPageQueryResultsAreStored()
 
     const result = await readPageQueryResult(publicDir, pagePath)
     expect(result).toEqual(inputResult)

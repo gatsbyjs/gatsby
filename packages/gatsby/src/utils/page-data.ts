@@ -81,13 +81,22 @@ function getLMDBPageQueryResultsCache(): GatsbyCacheLmdb {
   return lmdbPageQueryResultsCache
 }
 
+let savePageQueryResultsPromise = Promise.resolve()
+
+export function waitUntilPageQueryResultsAreStored(): Promise<void> {
+  return savePageQueryResultsPromise
+}
+
 export async function savePageQueryResult(
   programDir: string,
   pagePath: string,
   stringifiedResult: string
 ): Promise<void> {
   if (isLmdbStore()) {
-    getLMDBPageQueryResultsCache().set(pagePath, stringifiedResult)
+    savePageQueryResultsPromise = getLMDBPageQueryResultsCache().set(
+      pagePath,
+      stringifiedResult
+    ) as Promise<void>
   } else {
     const pageQueryResultsPath = path.join(
       programDir,
