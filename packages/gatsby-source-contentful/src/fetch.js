@@ -325,22 +325,20 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
   }
 
   // We need to fetch tags with the non-sync API as the sync API doesn't support this.
-  let tagItems = []
-  if (pluginConfig.get(`enableTags`)) {
-    try {
-      const tagsResult = await pagedGet(client, `getTags`, pageLimit)
-      tagItems = tagsResult.items
-      reporter.verbose(`Tags fetched ${tagItems.length}`)
-    } catch (e) {
-      reporter.panic({
-        id: CODES.FetchTags,
-        context: {
-          sourceMessage: `Error fetching tags: ${createContentfulErrorMessage(
-            e
-          )}`,
-        },
-      })
-    }
+  let tagItems
+  try {
+    const tagsResult = await pagedGet(client, `getTags`, pageLimit)
+    tagItems = tagsResult.items
+    reporter.verbose(`Tags fetched ${tagItems.length}`)
+  } catch (e) {
+    reporter.panic({
+      id: CODES.FetchTags,
+      context: {
+        sourceMessage: `Error fetching tags: ${createContentfulErrorMessage(
+          e
+        )}`,
+      },
+    })
   }
 
   const result = {

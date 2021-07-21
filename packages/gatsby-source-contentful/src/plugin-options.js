@@ -11,7 +11,6 @@ const defaultOptions = {
   localeFilter: () => true,
   pageLimit: DEFAULT_PAGE_LIMIT,
   useNameForId: true,
-  enableTags: false,
 }
 
 const createPluginConfig = pluginOptions => {

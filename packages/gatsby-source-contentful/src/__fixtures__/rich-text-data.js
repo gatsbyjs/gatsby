@@ -496,6 +496,7 @@ exports.initialSync = () => {
               },
             },
           },
+          metadata: { tags: [] },
         },
         {
           sys: {
@@ -658,6 +659,7 @@ exports.initialSync = () => {
               },
             },
           },
+          metadata: { tags: [] },
         },
       ],
       assets: [
