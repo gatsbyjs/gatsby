@@ -12,7 +12,6 @@ const defaultOptions = {
   contentTypeFilter: () => true,
   pageLimit: DEFAULT_PAGE_LIMIT,
   useNameForId: true,
-  enableTags: false,
 }
 
 const createPluginConfig = pluginOptions => {

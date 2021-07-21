@@ -11,6 +11,7 @@
 
 - [gatsby-source-contentful](#gatsby-source-contentful)
   - [Install](#install)
+  - [Setup Instructions](#setup-instructions)
   - [How to use](#how-to-use)
   - [Restrictions and limitations](#restrictions-and-limitations)
     - [Using Delivery API](#using-delivery-api)
@@ -173,12 +174,6 @@ Number of workers to use when downloading Contentful assets. Due to technical li
 Additional config which will get passed to [Contentfuls JS SDK](https://github.com/contentful/contentful.js#configuration).
 
 Use this with caution, you might override values this plugin does set for you to connect to Contentful.
-
-**`enableTags`** [boolean][optional] [default: `false`]
-
-Enable the new [tags feature](https://www.contentful.com/blog/2021/04/08/governance-tagging-metadata/). This will disallow the content type name `tags` till the next major version of this plugin.
-
-Learn how to use them at the [Contentful Tags](#contentful-tags) section.
 
 **`contentTypeFilter`** [function][optional] [default: () => true]
 
@@ -392,8 +387,6 @@ module.exports = {
 Check the [Reference Guide of gatsby-plugin-image](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/) to get a deeper insight on how this works.
 
 ## [Contentful Tags](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/content-tags)
-
-You need to set the `enableTags` flag to `true` to use this new feature.
 
 ### List available tags
 

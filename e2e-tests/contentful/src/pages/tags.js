@@ -92,7 +92,7 @@ export default TagsPage
 
 export const pageQuery = graphql`
   query TagsQuery {
-    tags: allContentfulTag(sort: { fields: contentful_id }) {
+    tags: allContentfulTag(sort: { fields: id }) {
       nodes {
         name
         contentful_id

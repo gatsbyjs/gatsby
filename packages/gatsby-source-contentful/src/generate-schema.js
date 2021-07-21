@@ -123,7 +123,7 @@ export function generateSchema({
   createTypes(`
     interface ContentfulReference implements Node {
       id: ID!
-      sys: ContentfulSys
+      sys: ContentfulSys!
     }
   `)
 
@@ -151,11 +151,35 @@ export function generateSchema({
   `)
 
   createTypes(`
-    interface ContentfulEntry implements Node @dontInfer {
+    interface ContentfulEntry implements ContentfulReference & Node @dontInfer {
       id: ID!
-      sys: ContentfulSys
+      sys: ContentfulSys!
+      metadata: ContentfulMetadata!
     }
   `)
+
+  createTypes(
+    schema.buildObjectType({
+      name: `ContentfulMetadata`,
+      fields: {
+        tags: { type: `[ContentfulTag]!` },
+      },
+      extensions: { dontInfer: {} },
+    })
+  )
+
+  createTypes(
+    schema.buildObjectType({
+      name: `ContentfulTag`,
+      fields: {
+        name: { type: `String!` },
+        contentful_id: { type: `String!` },
+        id: { type: `ID!` },
+      },
+      interfaces: [`Node`],
+      extensions: { dontInfer: {} },
+    })
+  )
 
   // Assets
   createTypes(
@@ -212,6 +236,7 @@ export function generateSchema({
           size: { type: `Int` },
           width: { type: `Int` },
           height: { type: `Int` },
+          metadata: { type: `ContentfulMetadata!` },
         },
         interfaces: [`ContentfulReference`, `Node`],
       }),
@@ -240,21 +265,6 @@ export function generateSchema({
     }
 
   // Contentful specific types
-  if (pluginConfig.get(`enableTags`)) {
-    createTypes(
-      schema.buildObjectType({
-        name: `ContentfulTag`,
-        fields: {
-          name: { type: `String!` },
-          contentful_id: { type: `String!` },
-          id: { type: `ID!` },
-        },
-        interfaces: [`Node`],
-        extensions: { dontInfer: {} },
-      })
-    )
-  }
-
   createTypes(
     schema.buildObjectType({
       name: `ContentfulRichTextAssets`,
@@ -354,6 +364,7 @@ export function generateSchema({
       fields: {
         raw: `String!`,
       },
+      // @todo do we need a node interface here?
       interfaces: [`Node`],
       extensions: {
         dontInfer: {},
@@ -376,18 +387,19 @@ export function generateSchema({
         ? contentTypeItem.name
         : contentTypeItem.sys.id
 
-      const contentTypeType = {
-        name: makeTypeName(type),
-        fields: {
-          id: { type: `ID!` },
-          sys: { type: `ContentfulSys` },
-          ...fields,
-        },
-        interfaces: [`ContentfulReference`, `ContentfulEntry`, `Node`],
-        extensions: { dontInfer: {} },
-      }
-
-      createTypes(schema.buildObjectType(contentTypeType))
+      createTypes(
+        schema.buildObjectType({
+          name: makeTypeName(type),
+          fields: {
+            id: { type: `ID!` },
+            sys: { type: `ContentfulSys!` },
+            metadata: { type: `ContentfulMetadata!` },
+            ...fields,
+          },
+          interfaces: [`ContentfulReference`, `ContentfulEntry`, `Node`],
+          extensions: { dontInfer: {} },
+        })
+      )
     } catch (err) {
       err.message = `Unable to create schema for Contentful Content Type ${
         contentTypeItem.name || contentTypeItem.sys.id
