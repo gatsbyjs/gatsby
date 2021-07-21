@@ -67,6 +67,8 @@ export async function runQueries(
       action.type === `QUERY_START` ||
       action.type === `PAGE_QUERY_RUN` ||
       action.type === `ADD_PENDING_PAGE_DATA_WRITE`
+      // Note: Instead of saving/replaying `CREATE_COMPONENT_DEPENDENCY` action
+      // we do state merging once at the end of the query running (replaying this action is expensive)
     ) {
       actionsToReplay.push(action)
     }

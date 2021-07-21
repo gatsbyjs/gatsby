@@ -909,5 +909,8 @@ export interface INodeManifest {
 
 export interface IMergeWorkerQueryState {
   type: `MERGE_WORKER_QUERY_STATE`
-  payload: Array<{ workerId: number; queryStateChunk: IGatsbyState["queries"] }>
+  payload: {
+    workerId: number
+    queryStateChunk: IGatsbyState["queries"]
+  }
 }

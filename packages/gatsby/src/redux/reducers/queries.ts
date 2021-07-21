@@ -223,9 +223,7 @@ export function queriesReducer(
     case `MERGE_WORKER_QUERY_STATE`: {
       assertSaneWorkerState(action.payload)
 
-      for (const workerState of action.payload) {
-        state = mergeWorkerDataDependencies(state, workerState)
-      }
+      state = mergeWorkerDataDependencies(state, action.payload)
       return state
     }
     default:
@@ -374,31 +372,30 @@ function mergeWorkerDataDependencies(
   return state
 }
 
-function assertSaneWorkerState(
-  workerStateChunks: Array<IWorkerStateChunk>
-): void {
-  for (const { workerId, queryStateChunk } of workerStateChunks) {
-    if (queryStateChunk.deletedQueries.size !== 0) {
+function assertSaneWorkerState({
+  queryStateChunk,
+  workerId,
+}: IWorkerStateChunk): void {
+  if (queryStateChunk.deletedQueries.size !== 0) {
+    throw new Error(
+      `Assertion failed: workerState.deletedQueries.size === 0 (worker #${workerId})`
+    )
+  }
+  if (queryStateChunk.trackedComponents.size !== 0) {
+    throw new Error(
+      `Assertion failed: queryStateChunk.trackedComponents.size === 0 (worker #${workerId})`
+    )
+  }
+  for (const query of queryStateChunk.trackedQueries.values()) {
+    if (query.dirty) {
       throw new Error(
-        `Assertion failed: workerState.deletedQueries.size === 0 (worker #${workerId})`
+        `Assertion failed: all worker queries are not dirty (worker #${workerId})`
       )
     }
-    if (queryStateChunk.trackedComponents.size !== 0) {
+    if (query.running) {
       throw new Error(
-        `Assertion failed: queryStateChunk.trackedComponents.size === 0 (worker #${workerId})`
+        `Assertion failed: all worker queries are not running (worker #${workerId})`
       )
-    }
-    for (const query of queryStateChunk.trackedQueries.values()) {
-      if (query.dirty) {
-        throw new Error(
-          `Assertion failed: all worker queries are not dirty (worker #${workerId})`
-        )
-      }
-      if (query.running) {
-        throw new Error(
-          `Assertion failed: all worker queries are not running (worker #${workerId})`
-        )
-      }
     }
   }
 }
