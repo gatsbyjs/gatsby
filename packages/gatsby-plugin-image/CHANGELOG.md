@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.10.0...gatsby-plugin-image@1.10.1) (2021-07-21)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Switch react-dom import to remove createRoot warning ([#32457](https://github.com/gatsbyjs/gatsby/issues/32457)) ([#32458](https://github.com/gatsbyjs/gatsby/issues/32458)) ([a6fa7c7](https://github.com/gatsbyjs/gatsby/commit/a6fa7c71fcddec1c41fb17fba2a62c8e377bc155))
+
 # [1.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.10.0-next.1...gatsby-plugin-image@1.10.0) (2021-07-20)
 
 ### Bug Fixes
