@@ -77,6 +77,7 @@ export async function createGraphqlEngineBundle(): Promise<void> {
       replace({
         values: {
           SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
+          "process.env.GATSBY_EXPERIMENTAL_LMDB_STORE": "true",
         },
         preventAssignment: true,
       }),
