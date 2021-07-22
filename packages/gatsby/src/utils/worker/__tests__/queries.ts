@@ -7,6 +7,7 @@ import sourceNodesAndRemoveStaleNodes from "../../source-nodes"
 import {
   savePartialStateToDisk,
   store,
+  emitter,
   loadPartialStateFromDisk,
 } from "../../../redux"
 import { loadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
@@ -168,7 +169,6 @@ describeWhenLMDB(`worker (queries)`, () => {
     savePartialStateToDisk([`components`, `staticQueryComponents`])
 
     await Promise.all(worker.all.buildSchema())
-    await worker.single.runQueries(queryIdsSmall)
   })
 
   afterAll(() => {
@@ -181,9 +181,15 @@ describeWhenLMDB(`worker (queries)`, () => {
     }
   })
 
+  // This was the original implementation of state syncing between a worker and the main process.
+  // We switched to "replaying actions" as a mechanism for state syncing.
+  // But we can get back to state saving / merging if "replaying actions" proves to be too expensive
+  // TODO: delete or re-activate depending on results yielded by "replaying actions" approach.
+  // The logic for `loadPartialStateFromDisk` itself is tested in `share-state` tests
   it(`should save worker "queries" state to disk`, async () => {
     if (!worker) fail(`worker not defined`)
 
+    await worker.single.runQueries(queryIdsSmall)
     await Promise.all(worker.all.saveQueries())
     // Pass "1" as workerId as the test only have one worker
     const result = loadPartialStateFromDisk([`queries`], `1`)
@@ -234,6 +240,8 @@ describeWhenLMDB(`worker (queries)`, () => {
 
   it(`should execute static queries`, async () => {
     if (!worker) fail(`worker not defined`)
+
+    await worker.single.runQueries(queryIdsSmall)
     const stateFromWorker = await worker.single.getState()
 
     const staticQueryResult = await fs.readJson(
@@ -251,6 +259,8 @@ describeWhenLMDB(`worker (queries)`, () => {
 
   it(`should execute page queries`, async () => {
     if (!worker) fail(`worker not defined`)
+
+    await worker.single.runQueries(queryIdsSmall)
     const stateFromWorker = await worker.single.getState()
 
     const pageQueryResult = await readPageQueryResult(
@@ -267,6 +277,8 @@ describeWhenLMDB(`worker (queries)`, () => {
 
   it(`should execute page queries with context variables`, async () => {
     if (!worker) fail(`worker not defined`)
+
+    await worker.single.runQueries(queryIdsSmall)
     const stateFromWorker = await worker.single.getState()
 
     const pageQueryResult = await readPageQueryResult(
@@ -335,5 +347,132 @@ describeWhenLMDB(`worker (queries)`, () => {
     })
 
     spy.mockRestore()
+  })
+
+  it(`should return actions occurred in worker to replay in the main process`, async () => {
+    const result = await worker.single.runQueries(queryIdsSmall)
+
+    const expectedActionShapes = {
+      QUERY_START: [`componentPath`, `isPage`, `path`],
+      PAGE_QUERY_RUN: [`componentPath`, `isPage`, `path`, `resultHash`],
+      CREATE_COMPONENT_DEPENDENCY: [`nodeId`, `path`],
+      ADD_PENDING_PAGE_DATA_WRITE: [`path`],
+    }
+    expect(result).toBeArrayOfSize(11)
+
+    for (const action of result) {
+      expect(action.type).toBeOneOf(Object.keys(expectedActionShapes))
+      expect(action.payload).toContainKeys(expectedActionShapes[action.type])
+    }
+    // Double-check that important actions are actually present
+    expect(result).toContainValue(
+      expect.objectContaining({ type: `QUERY_START` })
+    )
+    expect(result).toContainValue(
+      expect.objectContaining({ type: `PAGE_QUERY_RUN` })
+    )
+  })
+
+  it(`should replay selected worker actions in runQueriesInWorkersQueue`, async () => {
+    const expectedActions = [
+      {
+        payload: {
+          componentPath: `/static-query-component.js`,
+          isPage: false,
+          path: `sq--q1`,
+        },
+        type: `QUERY_START`,
+      },
+      {
+        payload: {
+          nodeId: `ceb8e742-a2ce-5110-a560-94c93d1c71a5`,
+          path: `sq--q1`,
+        },
+        plugin: ``,
+        type: `CREATE_COMPONENT_DEPENDENCY`,
+      },
+      {
+        payload: {
+          componentPath: `/static-query-component.js`,
+          isPage: false,
+          path: `sq--q1`,
+          queryHash: `q1-hash`,
+          resultHash: `Dr5hgCDB+R0S9oRBWeZYj3lB7VI=`,
+        },
+        type: `PAGE_QUERY_RUN`,
+      },
+      {
+        payload: {
+          componentPath: `/foo.js`,
+          isPage: true,
+          path: `/foo`,
+        },
+        type: `QUERY_START`,
+      },
+      {
+        payload: {
+          componentPath: `/bar.js`,
+          isPage: true,
+          path: `/bar`,
+        },
+        type: `QUERY_START`,
+      },
+      {
+        payload: {
+          nodeId: `ceb8e742-a2ce-5110-a560-94c93d1c71a5`,
+          path: `/foo`,
+        },
+        plugin: ``,
+        type: `CREATE_COMPONENT_DEPENDENCY`,
+      },
+      {
+        payload: {
+          nodeId: `ceb8e742-a2ce-5110-a560-94c93d1c71a5`,
+          path: `/bar`,
+        },
+        plugin: ``,
+        type: `CREATE_COMPONENT_DEPENDENCY`,
+      },
+      {
+        payload: {
+          path: `/foo`,
+        },
+        type: `ADD_PENDING_PAGE_DATA_WRITE`,
+      },
+      {
+        payload: {
+          componentPath: `/foo.js`,
+          isPage: true,
+          path: `/foo`,
+          resultHash: `8dW7PoqwZNk/0U8LO6kTj1qBCwU=`,
+        },
+        type: `PAGE_QUERY_RUN`,
+      },
+      {
+        payload: {
+          path: `/bar`,
+        },
+        type: `ADD_PENDING_PAGE_DATA_WRITE`,
+      },
+      {
+        payload: {
+          componentPath: `/bar.js`,
+          isPage: true,
+          path: `/bar`,
+          resultHash: `iKmhf9XgbsfK7qJw0tw95pmGwJM=`,
+        },
+        type: `PAGE_QUERY_RUN`,
+      },
+    ]
+
+    const actualActions: Array<any> = []
+    function listenActions(action): void {
+      actualActions.push(action)
+    }
+    emitter.on(`*`, listenActions)
+    await runQueriesInWorkersQueue(worker, queryIdsSmall)
+    emitter.off(`*`, listenActions)
+
+    expect(actualActions).toContainAllValues(expectedActions)
   })
 })

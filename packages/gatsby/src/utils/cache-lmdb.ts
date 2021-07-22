@@ -16,21 +16,26 @@ const cacheDbFile =
 export default class GatsbyCacheLmdb {
   private static store
   private db: Database | undefined
-  private readonly encoding: DatabaseOptions["encoding"]
+  private encoding: DatabaseOptions["encoding"]
   public readonly name: string
   // Needed for plugins that want to write data to the cache directory
   public readonly directory: string
+  // TODO: remove `.cache` in v4. This is compat mode - cache-manager cache implementation
+  // expose internal cache that gives access to `.del` function that wasn't available in public
+  // cache interface (gatsby-plugin-sharp use it to clear no longer needed data)
+  public readonly cache: GatsbyCacheLmdb
 
   constructor({
     name = `db`,
     encoding = `json`,
   }: {
     name: string
-    encoding: DatabaseOptions["encoding"]
+    encoding?: DatabaseOptions["encoding"]
   }) {
     this.name = name
     this.encoding = encoding
     this.directory = path.join(process.cwd(), `.cache/caches/${name}`)
+    this.cache = this
   }
 
   init(): GatsbyCacheLmdb {
@@ -67,5 +72,9 @@ export default class GatsbyCacheLmdb {
   async set<T>(key: string, value: T): Promise<T | undefined> {
     await this.getDb().put(key, value)
     return value
+  }
+
+  async del(key: string): Promise<void> {
+    return (this.getDb().remove(key) as unknown) as Promise<void>
   }
 }

@@ -240,6 +240,9 @@ const getUninitializedCache = plugin => {
     async set() {
       throw new Error(message)
     },
+    async del() {
+      throw new Error(message)
+    },
   }
 }
 
