@@ -36,7 +36,7 @@ const queriesChunkSize =
 export async function runQueriesInWorkersQueue(
   pool: GatsbyWorkerPool,
   queryIds: IGroupedQueryIds,
-  chunkSize: number = queriesChunkSize
+  chunkSize = queriesChunkSize
 ): Promise<void> {
   const staticQuerySegments = chunk(queryIds.staticQueryIds, chunkSize)
   const pageQuerySegments = chunk(queryIds.pageQueryIds, chunkSize)
