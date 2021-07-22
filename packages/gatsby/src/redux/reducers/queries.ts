@@ -221,7 +221,7 @@ export function queriesReducer(
       return state
     }
     case `MERGE_WORKER_QUERY_STATE`: {
-      assertSaneWorkerState(action.payload)
+      assertCorrectWorkerState(action.payload)
 
       state = mergeWorkerDataDependencies(state, action.payload)
       return state
@@ -372,7 +372,7 @@ function mergeWorkerDataDependencies(
   return state
 }
 
-function assertSaneWorkerState({
+function assertCorrectWorkerState({
   queryStateChunk,
   workerId,
 }: IWorkerStateChunk): void {
