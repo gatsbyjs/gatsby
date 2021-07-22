@@ -16,7 +16,7 @@
     "gatsby-config.js",
     "gatsby-ssr.js",
     "static/",
-    "src"
+    "src/"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-admin#readme",
   "devDependencies": {
