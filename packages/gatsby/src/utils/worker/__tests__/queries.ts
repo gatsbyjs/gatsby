@@ -20,6 +20,7 @@ import { getDataStore } from "../../../datastore"
 import { IGroupedQueryIds } from "../../../services"
 import { IGatsbyPage } from "../../../redux/types"
 import { runQueriesInWorkersQueue } from "../pool"
+import { readPageQueryResult } from "../../page-data"
 
 let worker: GatsbyTestWorkerPool | undefined
 
@@ -262,8 +263,9 @@ describeWhenLMDB(`worker (queries)`, () => {
     await worker.single.runQueries(queryIdsSmall)
     const stateFromWorker = await worker.single.getState()
 
-    const pageQueryResult = await fs.readJson(
-      `${stateFromWorker.program.directory}/.cache/json/_foo.json`
+    const pageQueryResult = await readPageQueryResult(
+      `${stateFromWorker.program.directory}/public`,
+      `/foo`
     )
 
     expect(pageQueryResult.data).toStrictEqual({
@@ -279,8 +281,9 @@ describeWhenLMDB(`worker (queries)`, () => {
     await worker.single.runQueries(queryIdsSmall)
     const stateFromWorker = await worker.single.getState()
 
-    const pageQueryResult = await fs.readJson(
-      `${stateFromWorker.program.directory}/.cache/json/_bar.json`
+    const pageQueryResult = await readPageQueryResult(
+      `${stateFromWorker.program.directory}/public`,
+      `/bar`
     )
 
     expect(pageQueryResult.data).toStrictEqual({
@@ -301,8 +304,9 @@ describeWhenLMDB(`worker (queries)`, () => {
     const stateFromWorker = await worker.single.getState()
 
     // Called the complete ABC so we can test _a
-    const pageQueryResultA = await fs.readJson(
-      `${stateFromWorker.program.directory}/.cache/json/_a.json`
+    const pageQueryResultA = await readPageQueryResult(
+      `${stateFromWorker.program.directory}/public`,
+      `/a`
     )
 
     expect(pageQueryResultA.data).toStrictEqual({
@@ -311,8 +315,9 @@ describeWhenLMDB(`worker (queries)`, () => {
       },
     })
 
-    const pageQueryResultZ = await fs.readJson(
-      `${stateFromWorker.program.directory}/.cache/json/_z.json`
+    const pageQueryResultZ = await readPageQueryResult(
+      `${stateFromWorker.program.directory}/public`,
+      `/z`
     )
 
     expect(pageQueryResultZ.data).toStrictEqual({
