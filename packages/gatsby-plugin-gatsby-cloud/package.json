@@ -50,9 +50,9 @@
   },
   "sideEffects": false,
   "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\" && yarn clean && yarn copy-type-declarations",
-    "clean": "yarn rimraf ./components/index.d.ts",
-    "copy-type-declarations": "yarn cpy src/components/index.d.ts components/index.d.ts",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\" && npm run clean && npm run copy-type-declarations",
+    "clean": "rimraf ./components/index.d.ts",
+    "copy-type-declarations": "cpy src/components/index.d.ts components/index.d.ts",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },

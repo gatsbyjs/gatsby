@@ -1,10 +1,10 @@
+export { default as Indicator, PreviewIndicator } from "./Indicator"
+
 export {
-  default as Indicator,
-  PreviewIndicator,
   GatsbyIndicatorButton,
   LinkIndicatorButton,
   InfoIndicatorButton,
-  BuildErrorIndicatorTooltip,
-} from "./Indicator"
+  IndicatorButton,
+} from "./buttons"
 
-export { IndicatorButton } from "./IndicatorButton"
+export { BuildErrorTooltipContent } from "./tooltips"

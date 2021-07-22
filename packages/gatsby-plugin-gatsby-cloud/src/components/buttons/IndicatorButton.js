@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import IndicatorButtonTooltip from "./IndicatorButtonTooltip"
+import { IndicatorButtonTooltip } from "../tooltips"
 
 const spinnerIcon = (
   <svg
@@ -80,7 +80,7 @@ const spinnerIcon = (
   </svg>
 )
 
-const IndicatorButton = ({
+export function IndicatorButton({
   buttonIndex,
   tooltipContent,
   overrideShowTooltip = false,
@@ -90,7 +90,7 @@ const IndicatorButton = ({
   active = false,
   testId,
   onMouseEnter,
-}) => {
+}) {
   const [showTooltip, setShowTooltip] = useState(false)
   const isFirstButton = buttonIndex === 0
   const marginTop = isFirstButton ? `0px` : `8px`
@@ -137,5 +137,3 @@ const IndicatorButton = ({
     </>
   )
 }
-
-export default IndicatorButton
