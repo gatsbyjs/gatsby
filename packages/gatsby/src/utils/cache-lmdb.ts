@@ -23,7 +23,7 @@ export default class GatsbyCacheLmdb {
 
   constructor({
     name = `db`,
-    encoding = `msgpack`,
+    encoding = `json`,
   }: {
     name: string
     encoding: DatabaseOptions["encoding"]
