@@ -9,6 +9,15 @@
     "url": "https://github.com/gatsbyjs/gatsby.git",
     "directory": "packages/gatsby-admin"
   },
+  "files": [
+    ".estlintignore",
+    "gatsby-browser.js",
+    "gatsby-node.js",
+    "gatsby-config.js",
+    "gatsby-ssr.js",
+    "static/",
+    "src/"
+  ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-admin#readme",
   "devDependencies": {
     "@emotion/react": "^11.1.4",
