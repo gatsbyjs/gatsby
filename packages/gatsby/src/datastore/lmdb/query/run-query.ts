@@ -84,7 +84,14 @@ function performIndexScan(context: IQueryContext): GatsbyIterable<IGatsbyNode> {
   const filterContext =
     context.nodeTypeNames.length === 1
       ? context
-      : { ...context, skip: 0, limit: context.skip + (context.limit ?? 0) }
+      : {
+          ...context,
+          skip: 0,
+          limit:
+            typeof context.limit === `undefined`
+              ? undefined
+              : context.skip + context.limit,
+        }
 
   let result = new GatsbyIterable<IGatsbyNode>([])
   let resultOffset = filterContext.skip
