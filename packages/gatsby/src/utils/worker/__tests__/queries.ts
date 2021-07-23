@@ -184,7 +184,7 @@ describeWhenLMDB(`worker (queries)`, () => {
     if (!worker) fail(`worker not defined`)
 
     await worker.single.runQueries(queryIdsSmall)
-    await Promise.all(worker.all.saveQueries())
+    await Promise.all(worker.all.saveQueriesDependencies())
     // Pass "1" as workerId as the test only have one worker
     const result = loadPartialStateFromDisk([`queries`], `1`)
 

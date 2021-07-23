@@ -68,8 +68,8 @@ export async function runQueriesInWorkersQueue(
     )
   }
 
-  await Promise.all(promises)
-  await Promise.all(pool.all.saveQueries())
+  Promise.all(promises)
+  await Promise.all(pool.all.saveQueriesDependencies())
   activity.end()
 }
 

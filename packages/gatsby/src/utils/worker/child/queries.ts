@@ -21,7 +21,7 @@ export function setComponents(): void {
   setState([`components`, `staticQueryComponents`])
 }
 
-export function saveQueries(): void {
+export function saveQueriesDependencies(): void {
   // Drop `queryNodes` from query state - it can be restored from other pieces of state
   // and is there only as a perf optimization
   const pickNecessaryQueryState = <T extends DeepPartial<IGatsbyState>>(
