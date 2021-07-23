@@ -30,10 +30,13 @@ export const create = (): GatsbyWorkerPool => {
   return worker
 }
 
+const queriesChunkSize =
+  Number(process.env.GATSBY_PARALLEL_QUERY_CHUNK_SIZE) || 50
+
 export async function runQueriesInWorkersQueue(
   pool: GatsbyWorkerPool,
   queryIds: IGroupedQueryIds,
-  chunkSize = 50
+  chunkSize = queriesChunkSize
 ): Promise<void> {
   const staticQuerySegments = chunk(queryIds.staticQueryIds, chunkSize)
   const pageQuerySegments = chunk(queryIds.pageQueryIds, chunkSize)
