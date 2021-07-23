@@ -5,9 +5,9 @@ const engine = new GraphQLEngine({
 })
 
 async function run() {
-  const result = await engine.runQuery(`
+  const query = `
     {
-      allTest( limit: 100) {
+      allTest( limit: 15, filter: { nodeNum: { gt: 5 }}) {
         nodes {
           nodeNum
           text
@@ -15,8 +15,14 @@ async function run() {
         totalCount
       }
     }
-  `)
-  console.log(result)
+  `
+  const result = await engine.runQuery(query)
+  console.log(
+    require(`util`).inspect(
+      { query, ...result },
+      { depth: Infinity, color: true }
+    )
+  )
 }
 
 run()
