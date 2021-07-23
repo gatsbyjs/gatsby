@@ -154,25 +154,6 @@ describe(`Paginate query results`, () => {
   })
 
   it(`returns correct pagination info with skip, limit and resultOffset`, async () => {
-    const args = { skip: 1, limit: 2, resultOffset: 1 }
-    const { pageInfo, totalCount } = paginate(results, args)
-    expect(typeof totalCount).toBe(`function`)
-    expect(await totalCount()).toBe(4)
-
-    expect(pageInfo).toEqual({
-      currentPage: 2,
-      hasNextPage: true,
-      hasPreviousPage: true,
-      itemCount: 2,
-      pageCount: expect.toBeFunction(),
-      perPage: 2,
-      totalCount: expect.toBeFunction(),
-    })
-    expect(await pageInfo.pageCount()).toEqual(3)
-    expect(await pageInfo.totalCount()).toEqual(4)
-  })
-
-  it(`returns correct pagination info with skip, limit and resultOffset on the last page`, async () => {
     const args = { skip: 2, limit: 2, resultOffset: 1 }
     const { pageInfo, totalCount } = paginate(results, args)
     expect(typeof totalCount).toBe(`function`)
@@ -180,7 +161,7 @@ describe(`Paginate query results`, () => {
 
     expect(pageInfo).toEqual({
       currentPage: 2,
-      hasNextPage: false,
+      hasNextPage: true,
       hasPreviousPage: true,
       itemCount: 2,
       pageCount: expect.toBeFunction(),
