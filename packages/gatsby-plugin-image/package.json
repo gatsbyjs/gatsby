@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-image",
-  "version": "1.11.0-next.1",
+  "version": "1.11.0-next.2",
   "scripts": {
     "build": "npm-run-all -s clean -p build:*",
     "build:gatsby-node": "tsc --jsx react --downlevelIteration true --skipLibCheck true --esModuleInterop true --outDir dist/ src/gatsby-node.ts src/babel-plugin-parse-static-images.ts src/resolver-utils.ts src/types.d.ts -d --declarationDir dist/src",

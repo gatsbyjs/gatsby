@@ -86,6 +86,10 @@ interface IWorkerInfo<T> {
   currentTask?: TaskInfo<T>
 }
 
+export interface IPublicWorkerInfo {
+  workerId: number
+}
+
 /**
  * Worker pool is a class that allow you to queue function execution across multiple
  * child processes, in order to parallelize work. It accepts absolute path to worker module
@@ -291,6 +295,12 @@ export class WorkerPool<
   async restart(): Promise<void> {
     await Promise.all(this.end())
     this.startAll()
+  }
+
+  getWorkerInfo(): Array<IPublicWorkerInfo> {
+    return this.workers.map(worker => {
+      return { workerId: worker.workerId }
+    })
   }
 
   private checkForWork<T extends keyof WorkerModuleExports>(

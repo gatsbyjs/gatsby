@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "3.11.0-next.1",
+  "version": "3.11.0-next.4",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./cli.js"
@@ -85,7 +85,7 @@
     "gatsby-plugin-utils": "^1.11.0-next.0",
     "gatsby-react-router-scroll": "^4.11.0-next.0",
     "gatsby-telemetry": "^2.11.0-next.0",
-    "gatsby-worker": "^0.2.0-next.0",
+    "gatsby-worker": "^0.2.0-next.1",
     "glob": "^7.1.6",
     "got": "8.3.2",
     "graphql": "^15.4.0",

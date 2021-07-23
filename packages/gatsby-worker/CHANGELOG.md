@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-worker@0.2.0-next.0...gatsby-worker@0.2.0-next.1) (2021-07-23)
+
+### Bug Fixes
+
+- **gatsby:** merge data deps state instead of replaying actions ([#32440](https://github.com/gatsbyjs/gatsby/issues/32440)) ([fd1d8cc](https://github.com/gatsbyjs/gatsby/commit/fd1d8ccc8dd27c316d24f91475a24702d228910c))
+
 # [0.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-worker@0.1.0-next.3...gatsby-worker@0.2.0-next.0) (2021-07-15)
 
 **Note:** Version bump only for package gatsby-worker
