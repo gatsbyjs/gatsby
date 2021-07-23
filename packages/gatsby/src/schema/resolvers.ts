@@ -75,7 +75,7 @@ export function findManyPaginated<TSource, TArgs>(
     // Apply paddings for pagination
     // (for previous/next node and also to detect if there is a previous/next page)
     const skip = typeof args.skip === `number` ? Math.max(0, args.skip - 1) : 0
-    const limit = typeof args.limit === `number` ? args.limit + 1 : undefined
+    const limit = typeof args.limit === `number` ? args.limit + 2 : undefined
 
     const extendedArgs = {
       ...args,
