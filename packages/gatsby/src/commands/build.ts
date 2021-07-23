@@ -43,7 +43,10 @@ import {
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
 import { showExperimentNotices } from "../utils/show-experiment-notice"
-import { runQueriesInWorkersQueue } from "../utils/worker/pool"
+import {
+  mergeWorkerState,
+  runQueriesInWorkersQueue,
+} from "../utils/worker/pool"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (isTruthy(process.env.VERBOSE)) {
@@ -96,7 +99,9 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   let waitForWorkerPoolRestart = Promise.resolve()
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     await runQueriesInWorkersQueue(workerPool, queryIds)
+    // Restart worker pool before merging state to lower memory pressure while merging state
     waitForWorkerPoolRestart = workerPool.restart()
+    await mergeWorkerState(workerPool)
   } else {
     await runStaticQueries({
       queryIds,

@@ -8,8 +8,8 @@ import { initJobsMessagingInMainProcess } from "../jobs/worker-messaging"
 import { initReporterMessagingInMainProcess } from "./reporter"
 
 import { GatsbyWorkerPool } from "./types"
-import { store } from "../../redux"
-import { ActionsUnion } from "../../redux/types"
+import { loadPartialStateFromDisk, store } from "../../redux"
+import { ActionsUnion, IGatsbyState } from "../../redux/types"
 
 export type { GatsbyWorkerPool }
 
@@ -71,8 +71,30 @@ export async function runQueriesInWorkersQueue(
     )
   }
 
-  await Promise.all(promises)
+  Promise.all(promises)
+  await Promise.all(pool.all.saveQueriesDependencies())
+  activity.end()
+}
 
+export async function mergeWorkerState(pool: GatsbyWorkerPool): Promise<void> {
+  const activity = reporter.activityTimer(`Merge worker state`)
+  activity.start()
+
+  for (const { workerId } of pool.getWorkerInfo()) {
+    const state = loadPartialStateFromDisk([`queries`], String(workerId))
+    const queryStateChunk = state.queries as IGatsbyState["queries"]
+    if (queryStateChunk) {
+      // When there are too little queries, some worker can be inactive and its state is empty
+      store.dispatch({
+        type: `MERGE_WORKER_QUERY_STATE`,
+        payload: {
+          workerId,
+          queryStateChunk,
+        },
+      })
+      await new Promise(resolve => process.nextTick(resolve))
+    }
+  }
   activity.end()
 }
 
