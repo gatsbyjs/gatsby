@@ -86,6 +86,7 @@ const createInitialGitCommit = async (
     execSync(`git commit -m "Initial commit from gatsby: (${starterUrl})"`, {
       cwd: rootPath,
     })
+    execSync(`git branch -M main`, { cwd: rootPath})
   } catch {
     // Remove git support if initial commit fails
     report.info(`Initial git commit failed - removing git support\n`)
