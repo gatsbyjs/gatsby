@@ -1,6 +1,10 @@
 import { store } from "../../redux"
 import { IGatsbyNode } from "../../redux/types"
-import { IDbQueryElemMatch } from "../common/query"
+import {
+  IDbQueryElemMatch,
+  FilterValue,
+  FilterValueNullable,
+} from "../common/query"
 import { getDataStore } from "../"
 
 // Only list supported ops here. "CacheableFilterOp"
@@ -15,21 +19,7 @@ export type FilterOp =  // TODO: merge with DbComparator ?
   | "$nin"
   | "$regex" // Note: this includes $glob
 // Note: `undefined` is an encoding for a property that does not exist
-export type FilterValueNullable =  // TODO: merge with DbComparatorValue
-  | string
-  | number
-  | boolean
-  | null
-  | undefined
-  | RegExp // Only valid for $regex
-  | Array<string | number | boolean | null | undefined>
-// This is filter value in most cases
-type FilterValue =
-  | string
-  | number
-  | boolean
-  | RegExp // Only valid for $regex
-  | Array<string | number | boolean>
+
 export type FilterCacheKey = string
 export interface IFilterCache {
   op: FilterOp

@@ -201,7 +201,7 @@ You can query data from any location to source at build time using functions and
 You'll use several modules from npm to making fetching data with GraphQL easier. Install them in the `source-plugin` project with:
 
 ```shell:title=source-plugin
-npm install @apollo-client graphql subscriptions-transport-ws ws
+npm install @apollo/client graphql subscriptions-transport-ws ws
 ```
 
 _Note: The libraries used here are specifically chosen so that the source plugin can support [GraphQL subscriptions](https://www.apollographql.com/docs/react/data/subscriptions/). You can fetch data the same way you would in any other Node.js app or however you are most comfortable._
@@ -214,7 +214,7 @@ Import the handful of Apollo packages that you installed to help set up an Apoll
 
 ```javascript:title=source-plugin/gatsby-node.js
 // highlight-start
-const { ApolloClient, InMemoryCache, gql, split, HttpLink } = require("@apollo-client")
+const { ApolloClient, InMemoryCache, gql, split, HttpLink } = require("@apollo/client")
 const { WebSocketLink } = require("@apollo/client/link/ws")
 const { getMainDefinition } = require("@apollo/client/utilities")
 const WebSocket = require("ws")
@@ -760,10 +760,8 @@ exports.sourceNodes = async (
 
   // highlight-start
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode(node)
-  )
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node))
+  getNodesByType(AUTHOR_NODE_TYPE).forEach(node => touchNode(node))
   // highlight-end
 
   // rest of code that creates nodes
@@ -782,10 +780,8 @@ exports.sourceNodes = async (
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode(node)
-  )
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node))
+  getNodesByType(AUTHOR_NODE_TYPE).forEach(node => touchNode(node))
 
   // highlight-start
   if (pluginOptions.previewMode) {
@@ -807,10 +803,8 @@ exports.sourceNodes = async (
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode(node)
-  )
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node))
+  getNodesByType(AUTHOR_NODE_TYPE).forEach(node => touchNode(node))
 
   if (pluginOptions.previewMode) {
     console.log("Subscribing to content updates...")
@@ -850,10 +844,8 @@ exports.sourceNodes = async (
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode(node)
-  )
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node))
+  getNodesByType(AUTHOR_NODE_TYPE).forEach(node => touchNode(node))
 
   if (pluginOptions.previewMode) {
     console.log("Subscribing to content updates...")

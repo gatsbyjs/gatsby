@@ -5,6 +5,8 @@ import chalk from "chalk"
 import { getQueryInfoBySingleFieldName } from "../../helpers"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { CREATED_NODE_IDS } from "~/constants"
+import fetchReferencedMediaItemsAndCreateNodes from "../../fetch-nodes/fetch-referenced-media-items"
+
 import { dump } from "dumper.js"
 import { atob } from "atob"
 
@@ -159,11 +161,15 @@ export const createSingleNode = async ({
     type: typeInfo.nodesTypeName,
   }
 
-  const processedNode = await processNode({
+  const { processedNode, nodeMediaItemIdReferences } = await processNode({
     node: updatedNodeContent,
     pluginOptions,
     wpUrl,
     helpers,
+  })
+
+  await fetchReferencedMediaItemsAndCreateNodes({
+    referencedMediaItemNodeIds: nodeMediaItemIdReferences,
   })
 
   const { actions } = helpers
@@ -184,7 +190,7 @@ export const createSingleNode = async ({
     name: typeInfo.nodesTypeName,
   })
 
-  let additionalNodeIds
+  let additionalNodeIds = nodeMediaItemIdReferences || []
   let cancelUpdate
 
   if (
@@ -208,7 +214,11 @@ export const createSingleNode = async ({
         wpStore: store,
       })) || {}
 
-    additionalNodeIds = receivedAdditionalNodeIds
+    additionalNodeIds = [
+      ...additionalNodeIds,
+      ...(receivedAdditionalNodeIds || []),
+    ]
+
     cancelUpdate = receivedCancelUpdate
 
     if (receivedRemoteNode) {

@@ -3,7 +3,7 @@ import report from "gatsby-cli/lib/reporter"
 import signalExit from "signal-exit"
 import fs from "fs-extra"
 import telemetry from "gatsby-telemetry"
-
+import { updateSiteMetadata, isTruthy } from "gatsby-core-utils"
 import {
   buildRenderer,
   buildHTMLPagesAndDeleteStaleArtifacts,
@@ -42,8 +42,11 @@ import {
   markWebpackStatusAsPending,
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
-import { updateSiteMetadata, isTruthy } from "gatsby-core-utils"
 import { showExperimentNotices } from "../utils/show-experiment-notice"
+import {
+  mergeWorkerState,
+  runQueriesInWorkersQueue,
+} from "../utils/worker/pool"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (isTruthy(process.env.VERBOSE)) {
@@ -93,19 +96,27 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const { queryIds } = await calculateDirtyQueries({ store })
 
-  await runStaticQueries({
-    queryIds,
-    parentSpan: buildSpan,
-    store,
-    graphqlRunner,
-  })
+  let waitForWorkerPoolRestart = Promise.resolve()
+  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    await runQueriesInWorkersQueue(workerPool, queryIds)
+    // Restart worker pool before merging state to lower memory pressure while merging state
+    waitForWorkerPoolRestart = workerPool.restart()
+    await mergeWorkerState(workerPool)
+  } else {
+    await runStaticQueries({
+      queryIds,
+      parentSpan: buildSpan,
+      store,
+      graphqlRunner,
+    })
 
-  await runPageQueries({
-    queryIds,
-    graphqlRunner,
-    parentSpan: buildSpan,
-    store,
-  })
+    await runPageQueries({
+      queryIds,
+      graphqlRunner,
+      parentSpan: buildSpan,
+      store,
+    })
+  }
 
   await writeOutRequires({
     store,
@@ -210,6 +221,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildSSRBundleActivityProgress.end()
   }
 
+  await waitForWorkerPoolRestart
   const {
     toRegenerate,
     toDelete,
@@ -219,6 +231,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     workerPool,
     buildSpan,
   })
+  const waitWorkerPoolEnd = Promise.all(workerPool.end())
 
   telemetry.addSiteMeasurement(`BUILD_END`, {
     pagesCount: toRegenerate.length, // number of html files that will be written
@@ -239,6 +252,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // This could occur due to queries being run which invoke sharp for instance
   await waitUntilAllJobsComplete()
 
+  try {
+    await waitWorkerPoolEnd
+  } catch (e) {
+    report.warn(`Error when closing WorkerPool: ${e.message}`)
+  }
+
   // Make sure we saved the latest state so we have all jobs cached
   await db.saveState()
 
@@ -248,7 +267,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   buildSpan.finish()
   await stopTracer()
-  workerPool.end()
   buildActivity.end()
 
   if (program.logPages) {

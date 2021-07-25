@@ -1105,7 +1105,7 @@ export interface Actions {
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createParentChildLink */
   createParentChildLink(
-    args: { parent: Node; child: Node },
+    args: { parent: Node; child: NodeInput },
     plugin?: ActionPlugin
   ): void
 
@@ -1279,6 +1279,15 @@ export interface GatsbyCache {
    * await cache.set(`unique-key`, value)
    */
   set(key: string, value: any): Promise<any>
+
+  /**
+   * Deletes cached value
+   * @param {string} key Cache key
+   * @returns {Promise<void>} Promise resolving once key is deleted from cache
+   * @example
+   * await cache.del(`unique-key`)
+   */
+  del(key: string): Promise<void>
 }
 
 export interface Tracing {

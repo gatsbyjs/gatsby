@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.3.0-next.1...gatsby-source-shopify@5.3.0-next.2) (2021-07-22)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [5.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.3.0-next.0...gatsby-source-shopify@5.3.0-next.1) (2021-07-19)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [5.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.2.0-next.1...gatsby-source-shopify@5.3.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [5.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.2.0-next.0...gatsby-source-shopify@5.2.0-next.1) (2021-07-08)
+
+### Bug Fixes
+
+- **deps:** update typescript ([#31152](https://github.com/gatsbyjs/gatsby/issues/31152)) ([124cfcc](https://github.com/gatsbyjs/gatsby/commit/124cfcc4cd42a50a992dde5b420610f290227a78))
+- **gatsby-source-shopify:** add tags to schema ([#32253](https://github.com/gatsbyjs/gatsby/issues/32253)) ([e2b6a9a](https://github.com/gatsbyjs/gatsby/commit/e2b6a9a2ca50742877638b09d4e6aff1b4d196ad))
+
+# [5.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.1.0-next.1...gatsby-source-shopify@5.2.0-next.0) (2021-07-01)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [5.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.1.0-next.0...gatsby-source-shopify@5.1.0-next.1) (2021-06-28)
+
+### Features
+
+- **gatsby-source-shopify:** add default sales channel when using shopify app integration ([#32010](https://github.com/gatsbyjs/gatsby/issues/32010)) ([95280a3](https://github.com/gatsbyjs/gatsby/commit/95280a38fc410838c724ed6c6e3facf5dbbaf4c1))
+
 # [5.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.0.0-next.0...gatsby-source-shopify@5.1.0-next.0) (2021-06-18)
 
 **Note:** Version bump only for package gatsby-source-shopify

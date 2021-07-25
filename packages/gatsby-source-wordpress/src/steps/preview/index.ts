@@ -216,18 +216,15 @@ const createPreviewStatusCallback = ({
  * previewForIdIsAlreadyBeingProcessed to see if another preview webhook
  * already started processing for this action
  */
-export const sourcePreview = async (
-  {
-    previewData,
-    reporter,
-    actions,
-  }: {
-    previewData: IPreviewData
-    reporter: Reporter
-    actions: typeof gatsbyActions
-  },
-  { url }: IPluginOptions
-): Promise<void> => {
+export const sourcePreview = async ({
+  previewData,
+  reporter,
+  actions,
+}: {
+  previewData: IPreviewData
+  reporter: Reporter
+  actions: typeof gatsbyActions
+}): Promise<void> => {
   if (previewForIdIsAlreadyBeingProcessed(previewData?.id)) {
     return
   }
@@ -265,37 +262,10 @@ export const sourcePreview = async (
 
   await touchValidNodes()
 
-  const { hostname: settingsHostname } = urlUtil.parse(url)
-  const { hostname: remoteHostname } = urlUtil.parse(previewData.remoteUrl)
-
   const sendPreviewStatus = createPreviewStatusCallback({
     previewData,
     reporter,
   })
-
-  if (settingsHostname !== remoteHostname) {
-    await sendPreviewStatus({
-      status: `RECEIVED_PREVIEW_DATA_FROM_WRONG_URL`,
-      context: `check that the preview data came from the right URL.`,
-      passedNode: {
-        modified: previewData.modified,
-        databaseId: previewData.parentDatabaseId,
-      },
-      graphqlEndpoint: previewData.remoteUrl,
-    })
-
-    reporter.warn(
-      formatLogMessage(
-        `Received preview data from a different remote URL than the one specified in plugin options. \n\n ${chalk.bold(
-          `Remote URL:`
-        )} ${previewData.remoteUrl}\n ${chalk.bold(
-          `Plugin options URL:`
-        )} ${url}`
-      )
-    )
-
-    return
-  }
 
   // this callback will be invoked when the page is created/updated for this node
   // then it'll send a mutation to WPGraphQL so that WP knows the preview is ready
@@ -332,14 +302,44 @@ export const sourcePreview = async (
  * It should only ever run in Preview mode, which is process.env.ENABLE_GATSBY_REFRESH_ENDPOINT = true
  * It first sources all pending preview actions, then calls sourcePreview() for each of them.
  */
-export const sourcePreviews = async (
-  helpers: GatsbyHelpers,
-  pluginOptions: IPluginOptions
-): Promise<void> => {
+export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
   const { webhookBody, reporter, actions } = helpers
   const {
     debug: { preview: inPreviewDebugModeOption },
+    url,
   } = getPluginOptions()
+
+  const { hostname: settingsHostname } = urlUtil.parse(url)
+  const { hostname: remoteHostname } = urlUtil.parse(webhookBody.remoteUrl)
+
+  if (settingsHostname !== remoteHostname) {
+    const sendPreviewStatus = createPreviewStatusCallback({
+      previewData: webhookBody,
+      reporter,
+    })
+
+    await sendPreviewStatus({
+      status: `RECEIVED_PREVIEW_DATA_FROM_WRONG_URL`,
+      context: `check that the preview data came from the right URL.`,
+      passedNode: {
+        modified: webhookBody.modified,
+        databaseId: webhookBody.parentDatabaseId,
+      },
+      graphqlEndpoint: webhookBody.remoteUrl,
+    })
+
+    reporter.warn(
+      formatLogMessage(
+        `Received preview data from a different remote URL than the one specified in plugin options. Preview will not work. Please send preview requests from the WP instance configured in gatsby-config.js.\n\n ${chalk.bold(
+          `Remote URL:`
+        )} ${webhookBody.remoteUrl}\n ${chalk.bold(
+          `Plugin options URL:`
+        )} ${url}\n\n`
+      )
+    )
+
+    return
+  }
 
   const inPreviewDebugMode =
     inPreviewDebugModeOption || process.env.WP_GATSBY_PREVIEW_DEBUG
@@ -422,14 +422,11 @@ export const sourcePreviews = async (
 
   for (const { previewData } of previewActions) {
     queue.add(() =>
-      sourcePreview(
-        {
-          previewData: { ...previewData, token: webhookBody.token },
-          reporter,
-          actions,
-        },
-        pluginOptions
-      )
+      sourcePreview({
+        previewData: { ...previewData, token: webhookBody.token },
+        reporter,
+        actions,
+      })
     )
   }
 

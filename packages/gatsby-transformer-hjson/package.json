@@ -1,20 +1,20 @@
 {
   "name": "gatsby-transformer-hjson",
   "description": "Gatsby transformer plugin for HJSON files",
-  "version": "3.9.0-next.0",
+  "version": "3.11.0-next.0",
   "author": "Remi Barraquand <dev@remibarraquand.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.14.0",
+    "@babel/runtime": "^7.14.6",
     "bluebird": "^3.7.2",
     "hjson": "^3.2.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.0",
-    "@babel/core": "^7.14.0",
-    "babel-preset-gatsby-package": "^1.9.0-next.0",
+    "@babel/cli": "^7.14.5",
+    "@babel/core": "^7.14.6",
+    "babel-preset-gatsby-package": "^1.11.0-next.0",
     "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-hjson#readme",

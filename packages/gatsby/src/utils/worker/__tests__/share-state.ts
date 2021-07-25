@@ -2,8 +2,8 @@ import { createTestWorker, GatsbyTestWorkerPool } from "./test-helpers"
 import {
   store,
   saveState,
-  saveStateForWorkers,
-  loadStateInWorker,
+  savePartialStateToDisk,
+  loadPartialStateFromDisk,
 } from "../../../redux"
 import { GatsbyStateKeys } from "../../../redux/types"
 
@@ -48,7 +48,7 @@ describe(`worker (share-state)`, () => {
 
     worker = createTestWorker()
 
-    const result = await worker.getPage(dummyPagePayload.path)
+    const result = await worker.single.getPage(dummyPagePayload.path)
 
     expect(result).toBe(null)
   })
@@ -81,8 +81,8 @@ describe(`worker (share-state)`, () => {
       `staticQueryComponents`,
     ]
 
-    saveStateForWorkers(slicesOne)
-    const resultOne = loadStateInWorker(slicesOne)
+    savePartialStateToDisk(slicesOne)
+    const resultOne = loadPartialStateFromDisk(slicesOne)
 
     expect(resultOne).toMatchInlineSnapshot(`
       Object {
@@ -100,9 +100,9 @@ describe(`worker (share-state)`, () => {
       }
     `)
 
-    saveStateForWorkers(slicesTwo)
+    savePartialStateToDisk(slicesTwo)
 
-    const resultTwo = loadStateInWorker(slicesTwo)
+    const resultTwo = loadPartialStateFromDisk(slicesTwo)
 
     expect(resultTwo).toMatchInlineSnapshot(`
       Object {
@@ -141,8 +141,8 @@ describe(`worker (share-state)`, () => {
 
     const slices: Array<GatsbyStateKeys> = []
 
-    saveStateForWorkers(slices)
-    const result = loadStateInWorker(slices)
+    savePartialStateToDisk(slices)
+    const result = loadPartialStateFromDisk(slices)
 
     expect(result).toEqual({})
   })
@@ -158,8 +158,8 @@ describe(`worker (share-state)`, () => {
 
     const slices: Array<GatsbyStateKeys> = [`staticQueryComponents`]
 
-    saveStateForWorkers(slices)
-    const result = loadStateInWorker(slices)
+    savePartialStateToDisk(slices)
+    const result = loadPartialStateFromDisk(slices)
 
     expect(result).toMatchInlineSnapshot(`
       Object {
@@ -206,12 +206,14 @@ describe(`worker (share-state)`, () => {
       },
     })
 
-    saveStateForWorkers([`components`, `staticQueryComponents`])
+    savePartialStateToDisk([`components`, `staticQueryComponents`])
 
-    await worker.setQueries()
+    await Promise.all(worker.all.setComponents())
 
-    const components = await worker.getComponent(dummyPagePayload.component)
-    const staticQueryComponents = await worker.getStaticQueryComponent(
+    const components = await worker.single.getComponent(
+      dummyPagePayload.component
+    )
+    const staticQueryComponents = await worker.single.getStaticQueryComponent(
       staticQueryID
     )
 
@@ -254,11 +256,11 @@ describe(`worker (share-state)`, () => {
       },
     })
 
-    saveStateForWorkers([`inferenceMetadata`])
+    savePartialStateToDisk([`inferenceMetadata`])
 
-    await worker.setInferenceMetadata()
+    await Promise.all(worker.all.setInferenceMetadata())
 
-    const inf = await worker.getInferenceMetadata(`Test`)
+    const inf = await worker.single.getInferenceMetadata(`Test`)
 
     expect(inf).toMatchInlineSnapshot(`
       Object {

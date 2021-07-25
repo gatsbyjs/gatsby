@@ -16,7 +16,7 @@ import { store, emitter } from "../redux"
 import reporter from "gatsby-cli/lib/reporter"
 import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
-import { IGatsbyState } from "../redux/types"
+import { IGatsbyState, IStateProgram } from "../redux/types"
 import { IBuildContext } from "./types"
 import { detectLmdbStore } from "../datastore"
 import { loadConfigAndPlugins } from "../bootstrap/load-config-and-plugins"
@@ -100,8 +100,9 @@ export async function initialize({
 
   const directory = slash(args.directory)
 
-  const program = {
+  const program: IStateProgram = {
     ...args,
+    extensions: [],
     browserslist: getBrowsersList(directory),
     // Fix program directory path for windows env.
     directory,
@@ -179,7 +180,8 @@ export async function initialize({
   }
 
   // run stale jobs
-  store.dispatch(removeStaleJobs(store.getState()))
+  // @ts-ignore we'll need to fix redux typings https://redux.js.org/usage/usage-with-typescript
+  store.dispatch(removeStaleJobs(store.getState().jobsV2))
 
   // Multiple occurrences of the same name-version-pair can occur,
   // so we report an array of unique pairs
@@ -206,9 +208,11 @@ export async function initialize({
 
   const cacheDirectory = `${program.directory}/.cache`
   const publicDirectory = `${program.directory}/public`
+  const workerCacheDirectory = `${program.directory}/.cache/worker`
 
   const cacheJsonDirExists = fs.existsSync(`${cacheDirectory}/json`)
   const publicDirExists = fs.existsSync(publicDirectory)
+  const workerCacheDirExists = fs.existsSync(workerCacheDirectory)
 
   // For builds in case public dir exists, but cache doesn't, we need to clean up potentially stale
   // artifacts from previous builds (due to cache not being available, we can't rely on tracking of artifacts)
@@ -230,6 +234,25 @@ export async function initialize({
       `!public/static`,
       `!public/static/**/*.{html,css}`,
     ])
+    activity.end()
+  }
+
+  // When the main process and workers communicate they save parts of their redux state to .cache/worker
+  // We should clean this directory to remove stale files that a worker might accidentally reuse then
+  if (
+    workerCacheDirExists &&
+    process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING
+  ) {
+    activity = reporter.activityTimer(
+      `delete worker cache from previous builds`,
+      {
+        parentSpan,
+      }
+    )
+    activity.start()
+    await fs
+      .remove(workerCacheDirectory)
+      .catch(() => fs.emptyDir(workerCacheDirectory))
     activity.end()
   }
 
@@ -398,6 +421,9 @@ export async function initialize({
 
   // Ensure the public/static directory
   await fs.ensureDir(`${publicDirectory}/static`)
+
+  // Init plugins once cache is initialized
+  await apiRunnerNode(`unstable_onPluginInit`)
 
   activity.end()
 

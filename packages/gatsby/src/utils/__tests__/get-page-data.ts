@@ -1,15 +1,21 @@
 import { store } from "../../redux"
 import { getPageData, RETRY_INTERVAL } from "../get-page-data"
-import { fixedPagePath, flush as flushPageData } from "../page-data"
+import {
+  fixedPagePath,
+  flush as flushPageData,
+  savePageQueryResult,
+} from "../page-data"
 import {
   IGatsbyPage,
   IGatsbyPlugin,
   IQueryStartAction,
+  IPageQueryRunAction,
 } from "../../redux/types"
 import { pageQueryRun, queryStart } from "../../redux/actions/internal"
 import { join as pathJoin } from "path"
 
 let MOCK_FILE_INFO = {}
+let MOCK_LMDBCACHE_INFO = {}
 
 jest.mock(`fs-extra`, () => {
   return {
@@ -34,6 +40,35 @@ jest.mock(`fs-extra`, () => {
         MOCK_FILE_INFO[path] = content
       }
     ),
+  }
+})
+
+jest.mock(`../cache-lmdb`, () => {
+  return {
+    default: class MockedCache {
+      init(): MockedCache {
+        return this
+      }
+      async get<T = unknown>(key): Promise<T | undefined> {
+        return MOCK_LMDBCACHE_INFO[key]
+      }
+      async set<T>(key: string, value: T): Promise<T | undefined> {
+        MOCK_LMDBCACHE_INFO[key] = value
+        return value
+      }
+    },
+  }
+})
+
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    createProgress: (): any => {
+      return {
+        start: jest.fn(),
+        tick: jest.fn(),
+        end: jest.fn(),
+      }
+    },
   }
 })
 
@@ -369,20 +404,15 @@ function finishQuery(
   page: Partial<IGatsbyPage>,
   jsonObject: Record<string, unknown>
 ): void {
-  const payload: IQueryStartAction["payload"] = {
+  const payload: IPageQueryRunAction["payload"] = {
     path: page.path!,
     componentPath: page.componentPath!,
     isPage: true,
+    resultHash: `resultHash`,
+    queryHash: `queryHash`,
   }
 
-  MOCK_FILE_INFO[
-    pathJoin(
-      __dirname,
-      `.cache`,
-      `json`,
-      `${page.path!.replace(/\//g, `_`)}.json`
-    )
-  ] = JSON.stringify(jsonObject)
+  savePageQueryResult(__dirname, page.path!, JSON.stringify(jsonObject))
 
   store.dispatch(
     pageQueryRun(payload, { name: `page-data-test` } as IGatsbyPlugin)
@@ -398,6 +428,7 @@ function finishQuery(
 
 function deletePageDataFilesFromFs(): void {
   MOCK_FILE_INFO = {}
+  MOCK_LMDBCACHE_INFO = {}
 }
 
 function writePageDataFileToFs(

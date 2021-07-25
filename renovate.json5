@@ -26,7 +26,8 @@
   "ignoreDeps": [
     "react",
     "react-dom",
-    "uuid"
+    "uuid",
+    "gatsby-interface"
   ],
   "rangeStrategy": "bump",
   "bumpVersion": null,
@@ -366,6 +367,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -400,6 +402,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -433,6 +436,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -465,6 +469,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -499,6 +504,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -533,6 +539,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -568,6 +575,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -602,6 +610,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -635,6 +644,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -667,6 +677,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -701,6 +712,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -735,6 +747,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -770,6 +783,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -804,6 +818,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -837,6 +852,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -869,6 +885,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -905,6 +922,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -941,6 +959,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -976,6 +995,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1010,6 +1030,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1043,6 +1064,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1075,6 +1097,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1109,6 +1132,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1143,6 +1167,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1178,6 +1203,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1212,6 +1238,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1245,6 +1272,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1277,6 +1305,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1311,6 +1340,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1345,6 +1375,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1380,6 +1411,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1414,6 +1446,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1447,6 +1480,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1479,6 +1513,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1496,7 +1531,6 @@
       "groupName": "minor and patch dependencies for gatsby-cli",
       "groupSlug": "gatsby-cli-prod-minor",
       "matchPackageNames": [
-        "gatsby-recipes",
         "is-valid-path",
         "opentracing",
         "stack-trace"
@@ -1518,6 +1552,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1534,7 +1569,6 @@
       "groupName": "major dependencies for gatsby-cli",
       "groupSlug": "gatsby-cli-prod-major",
       "matchPackageNames": [
-        "gatsby-recipes",
         "is-valid-path",
         "opentracing",
         "stack-trace"
@@ -1557,6 +1591,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1592,6 +1627,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1626,6 +1662,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1659,6 +1696,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1691,6 +1729,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1728,6 +1767,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1765,6 +1805,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1800,6 +1841,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1834,6 +1876,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1867,6 +1910,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1899,6 +1943,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1935,6 +1980,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -1971,6 +2017,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2006,6 +2053,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2040,6 +2088,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2073,6 +2122,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2105,6 +2155,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2139,6 +2190,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2173,6 +2225,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2208,6 +2261,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2242,6 +2296,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2275,6 +2330,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2307,6 +2363,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2343,6 +2400,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2379,6 +2437,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2414,6 +2473,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2448,6 +2508,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2481,6 +2542,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2513,6 +2575,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2547,6 +2610,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2581,6 +2645,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2616,6 +2681,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2650,6 +2716,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2683,6 +2750,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2715,6 +2783,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2749,6 +2818,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2783,6 +2853,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2818,6 +2889,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2852,6 +2924,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2885,6 +2958,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2917,6 +2991,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2951,6 +3026,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -2985,6 +3061,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3020,6 +3097,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3054,6 +3132,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3087,6 +3166,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3119,6 +3199,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3153,6 +3234,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3187,6 +3269,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3222,6 +3305,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3256,6 +3340,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3289,6 +3374,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3321,6 +3407,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3355,6 +3442,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3389,6 +3477,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3424,6 +3513,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3458,6 +3548,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3491,6 +3582,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3523,6 +3615,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3557,6 +3650,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3591,6 +3685,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3626,6 +3721,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3660,6 +3756,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3693,6 +3790,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3725,6 +3823,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3759,6 +3858,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3793,6 +3893,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3828,6 +3929,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3862,6 +3964,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3895,6 +3998,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3927,6 +4031,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3961,6 +4066,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -3995,6 +4101,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4030,6 +4137,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4064,6 +4172,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4097,6 +4206,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4129,6 +4239,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4163,6 +4274,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4197,6 +4309,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4232,6 +4345,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4266,6 +4380,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4299,6 +4414,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4331,6 +4447,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4367,6 +4484,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4403,6 +4521,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4438,6 +4557,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4472,6 +4592,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4505,6 +4626,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4537,6 +4659,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4571,6 +4694,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4605,6 +4729,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4640,6 +4765,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4674,6 +4800,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4707,6 +4834,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4739,6 +4867,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4773,6 +4902,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4807,6 +4937,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4842,6 +4973,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4876,6 +5008,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4909,6 +5042,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4941,6 +5075,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -4975,6 +5110,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5009,6 +5145,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5044,6 +5181,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5078,6 +5216,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5111,6 +5250,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5143,6 +5283,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5177,6 +5318,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5211,6 +5353,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5246,6 +5389,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5280,6 +5424,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5313,6 +5458,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5345,6 +5491,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5379,6 +5526,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5413,6 +5561,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5448,6 +5597,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5482,6 +5632,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5515,6 +5666,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5547,6 +5699,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5581,6 +5734,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5615,6 +5769,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5650,6 +5805,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5684,6 +5840,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5717,6 +5874,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5749,6 +5907,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5783,6 +5942,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5817,6 +5977,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5852,6 +6013,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5886,6 +6048,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5919,6 +6082,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5951,6 +6115,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -5987,6 +6152,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6023,6 +6189,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6058,6 +6225,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6092,6 +6260,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6125,6 +6294,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6157,6 +6327,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6191,6 +6362,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6225,6 +6397,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6260,6 +6433,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6294,6 +6468,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6327,6 +6502,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6359,6 +6535,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6393,6 +6570,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6427,6 +6605,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6462,6 +6641,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6496,6 +6676,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6529,6 +6710,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6561,6 +6743,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6595,6 +6778,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6629,6 +6813,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6664,6 +6849,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6698,6 +6884,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6731,6 +6918,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6763,6 +6951,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6797,6 +6986,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6831,6 +7021,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6866,6 +7057,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6900,6 +7092,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6933,6 +7126,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6965,6 +7159,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -6999,6 +7194,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7033,6 +7229,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7068,6 +7265,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7102,6 +7300,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7135,6 +7334,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7167,6 +7367,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7201,6 +7402,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7235,6 +7437,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7270,6 +7473,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7304,6 +7508,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7337,6 +7542,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7369,6 +7575,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7403,6 +7610,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7437,6 +7645,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7472,6 +7681,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7506,6 +7716,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7539,6 +7750,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7571,6 +7783,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7605,6 +7818,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7639,6 +7853,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7674,6 +7889,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7708,6 +7924,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7741,6 +7958,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7773,6 +7991,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7807,6 +8026,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7841,6 +8061,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7876,6 +8097,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7910,6 +8132,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7943,6 +8166,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -7975,6 +8199,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8011,6 +8236,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8047,6 +8273,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8082,6 +8309,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8116,6 +8344,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8149,6 +8378,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8181,6 +8411,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8217,6 +8448,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8253,6 +8485,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8288,6 +8521,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8322,6 +8556,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8355,6 +8590,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8387,6 +8623,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8424,6 +8661,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8461,6 +8699,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8496,6 +8735,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8530,6 +8770,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8563,6 +8804,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8595,6 +8837,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8629,6 +8872,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8663,6 +8907,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8698,6 +8943,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8732,6 +8978,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8765,6 +9012,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8797,6 +9045,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8833,6 +9082,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8869,6 +9119,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8904,6 +9155,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8938,6 +9190,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -8971,6 +9224,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9003,6 +9257,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9037,6 +9292,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9071,6 +9327,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9106,6 +9363,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9140,6 +9398,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9173,6 +9432,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9205,6 +9465,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9241,6 +9502,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9277,6 +9539,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9312,6 +9575,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9346,6 +9610,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9379,6 +9644,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9411,6 +9677,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9445,6 +9712,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9479,6 +9747,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9514,6 +9783,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9548,6 +9818,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9581,6 +9852,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9613,6 +9885,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9647,6 +9920,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9681,6 +9955,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9716,6 +9991,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9750,6 +10026,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9783,6 +10060,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9815,6 +10093,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9849,6 +10128,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9883,6 +10163,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9918,6 +10199,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9952,6 +10234,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -9985,6 +10268,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10017,6 +10301,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10053,6 +10338,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10089,6 +10375,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10124,6 +10411,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10158,6 +10446,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10191,6 +10480,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10223,6 +10513,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10257,6 +10548,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10291,6 +10583,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10326,6 +10619,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10360,6 +10654,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10393,6 +10688,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10425,6 +10721,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10459,6 +10756,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10493,6 +10791,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10528,6 +10827,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10562,6 +10862,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10595,6 +10896,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10627,6 +10929,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10661,6 +10964,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10695,6 +10999,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10730,6 +11035,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10764,6 +11070,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10797,6 +11104,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10829,6 +11137,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10863,6 +11172,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10897,6 +11207,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10932,6 +11243,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10966,6 +11278,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -10999,6 +11312,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11031,6 +11345,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11065,6 +11380,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11099,6 +11415,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11134,6 +11451,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11168,6 +11486,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11201,6 +11520,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11233,6 +11553,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11267,6 +11588,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11301,6 +11623,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11336,6 +11659,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11370,6 +11694,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11403,6 +11728,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11435,6 +11761,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11471,6 +11798,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11507,6 +11835,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11542,6 +11871,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11576,6 +11906,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11609,6 +11940,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11641,6 +11973,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11675,6 +12008,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11709,6 +12043,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11744,6 +12079,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11778,6 +12114,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11811,6 +12148,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11843,6 +12181,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11877,6 +12216,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11911,6 +12251,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11946,6 +12287,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -11980,6 +12322,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12013,6 +12356,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12045,6 +12389,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12079,6 +12424,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12113,6 +12459,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12148,6 +12495,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12182,6 +12530,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12215,6 +12564,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12247,6 +12597,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12281,6 +12632,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12315,6 +12667,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12350,6 +12703,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12384,6 +12738,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12417,6 +12772,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12449,6 +12805,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12485,6 +12842,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12521,6 +12879,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12556,6 +12915,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12590,6 +12950,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12623,6 +12984,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12655,6 +13017,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12689,6 +13052,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12723,6 +13087,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12758,6 +13123,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12792,6 +13158,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12825,6 +13192,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12857,6 +13225,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12891,6 +13260,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12925,6 +13295,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12960,6 +13331,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -12994,6 +13366,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13027,6 +13400,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13059,6 +13433,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13093,6 +13468,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13127,6 +13503,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13162,6 +13539,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13196,6 +13574,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13229,6 +13608,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13261,6 +13641,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13295,6 +13676,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13329,6 +13711,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13364,6 +13747,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13398,6 +13782,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13431,6 +13816,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13463,6 +13849,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13497,6 +13884,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13531,6 +13919,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13566,6 +13955,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13600,6 +13990,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13633,6 +14024,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13665,6 +14057,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13699,6 +14092,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13733,6 +14127,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13768,6 +14163,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13802,6 +14198,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13835,6 +14232,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13867,6 +14265,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13907,6 +14306,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13947,6 +14347,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -13982,6 +14383,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14016,6 +14418,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14049,6 +14452,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14081,6 +14485,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14115,6 +14520,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14149,6 +14555,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14184,6 +14591,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14218,6 +14626,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14251,6 +14660,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14283,6 +14693,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14317,6 +14728,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14351,6 +14763,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14386,6 +14799,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14420,6 +14834,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14453,6 +14868,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14485,6 +14901,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14519,6 +14936,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14553,6 +14971,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14588,6 +15007,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14622,6 +15042,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14655,6 +15076,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14687,6 +15109,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14721,6 +15144,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14755,6 +15179,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14790,6 +15215,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14824,6 +15250,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14857,6 +15284,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14889,6 +15317,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14923,6 +15352,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14957,6 +15387,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -14992,6 +15423,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15026,6 +15458,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15059,6 +15492,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15091,6 +15525,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15125,6 +15560,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15159,6 +15595,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15194,6 +15631,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15228,6 +15666,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15261,6 +15700,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15293,6 +15733,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15330,6 +15771,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15367,6 +15809,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15402,6 +15845,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15436,6 +15880,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15469,6 +15914,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15501,6 +15947,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15535,6 +15982,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15569,6 +16017,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15604,6 +16053,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15638,6 +16088,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15671,6 +16122,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15703,6 +16155,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15737,6 +16190,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15771,6 +16225,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15806,6 +16261,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15840,6 +16296,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15873,6 +16330,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15905,6 +16363,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15939,6 +16398,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -15973,6 +16433,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16008,6 +16469,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16042,6 +16504,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16075,6 +16538,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16107,6 +16571,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16141,6 +16606,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16175,6 +16641,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16210,6 +16677,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16244,6 +16712,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16277,6 +16746,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16309,6 +16779,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16343,6 +16814,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16377,6 +16849,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16412,6 +16885,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16446,6 +16920,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16479,6 +16954,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16511,6 +16987,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16547,6 +17024,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16583,6 +17061,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16618,6 +17097,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16652,6 +17132,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16685,6 +17166,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16717,6 +17199,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16751,6 +17234,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16785,6 +17269,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16820,6 +17305,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16854,6 +17340,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16887,6 +17374,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16919,6 +17407,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16953,6 +17442,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -16987,6 +17477,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17022,6 +17513,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17056,6 +17548,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17089,6 +17582,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17121,6 +17615,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17155,6 +17650,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17189,6 +17685,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17224,6 +17721,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17258,6 +17756,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17291,6 +17790,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17323,6 +17823,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17357,6 +17858,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17391,6 +17893,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17426,6 +17929,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17460,6 +17964,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17493,6 +17998,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17525,6 +18031,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17561,6 +18068,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17597,6 +18105,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17632,6 +18141,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17666,6 +18176,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17699,6 +18210,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17731,6 +18243,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17767,6 +18280,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17803,6 +18317,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17838,6 +18353,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17872,6 +18388,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17905,6 +18422,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17937,6 +18455,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -17973,6 +18492,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18009,6 +18529,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18044,6 +18565,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18078,6 +18600,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18111,6 +18634,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18143,6 +18667,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18177,6 +18702,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18211,6 +18737,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18246,6 +18773,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18280,6 +18808,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18313,6 +18842,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18345,6 +18875,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18379,6 +18910,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18413,6 +18945,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18448,6 +18981,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18482,6 +19016,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18515,6 +19050,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18547,6 +19083,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18584,6 +19121,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18621,6 +19159,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18656,6 +19195,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18690,6 +19230,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18723,6 +19264,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18755,6 +19297,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18789,6 +19332,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18823,6 +19367,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18858,6 +19403,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18892,6 +19438,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18925,6 +19472,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18957,6 +19505,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -18995,6 +19544,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19033,6 +19583,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19068,6 +19619,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19102,6 +19654,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19135,6 +19688,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19167,6 +19721,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19203,6 +19758,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19239,6 +19795,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19274,6 +19831,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19308,6 +19866,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19341,6 +19900,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19373,6 +19933,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19407,6 +19968,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19441,6 +20003,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19476,6 +20039,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19510,6 +20074,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19543,6 +20108,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19575,6 +20141,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19609,6 +20176,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19643,6 +20211,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19678,6 +20247,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19712,6 +20282,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19745,6 +20316,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19777,6 +20349,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19811,6 +20384,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19845,6 +20419,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19880,6 +20455,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19914,6 +20490,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19947,6 +20524,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -19979,6 +20557,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20015,6 +20594,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20051,6 +20631,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20086,6 +20667,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20120,6 +20702,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20153,6 +20736,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20185,6 +20769,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20219,6 +20804,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20253,6 +20839,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20288,6 +20875,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20322,6 +20910,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20355,6 +20944,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20387,6 +20977,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20421,6 +21012,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20455,6 +21047,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20490,6 +21083,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20524,6 +21118,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20557,6 +21152,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20589,6 +21185,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20623,6 +21220,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20657,6 +21255,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20692,6 +21291,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20726,6 +21326,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20759,6 +21360,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20791,6 +21393,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20825,6 +21428,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20859,6 +21463,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20894,6 +21499,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20928,6 +21534,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20961,6 +21568,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -20993,6 +21601,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21027,6 +21636,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21061,6 +21671,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21096,6 +21707,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21130,6 +21742,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21163,6 +21776,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21195,6 +21809,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21231,6 +21846,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21267,6 +21883,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21302,6 +21919,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21336,6 +21954,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21369,6 +21988,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21401,6 +22021,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21435,6 +22056,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21469,6 +22091,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21504,6 +22127,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21538,6 +22162,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21571,6 +22196,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21603,6 +22229,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21639,6 +22266,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21675,6 +22303,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21710,6 +22339,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21744,6 +22374,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21777,6 +22408,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21809,6 +22441,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21845,6 +22478,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21881,6 +22515,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21916,6 +22551,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21950,6 +22586,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -21983,6 +22620,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22015,6 +22653,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22051,6 +22690,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22087,6 +22727,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22122,6 +22763,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22156,6 +22798,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22189,6 +22832,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22221,6 +22865,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22255,6 +22900,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22289,6 +22935,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22324,6 +22971,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22358,6 +23006,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22391,6 +23040,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22423,6 +23073,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22457,6 +23108,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22491,6 +23143,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22526,6 +23179,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22560,6 +23214,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22593,6 +23248,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22625,6 +23281,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22659,6 +23316,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22693,11 +23351,220 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
       ],
       "commitMessageSuffix": "{{#unless groupName}} for gatsby-transformer-yaml{{/unless}}",
+      "dependencyDashboardApproval": true
+    },
+    {
+      "matchPaths": [
+        "packages/gatsby-worker/package.json"
+      ],
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "[DEV] minor and patch dependencies for gatsby-worker",
+      "groupSlug": "gatsby-worker-dev-minor",
+      "automerge": true,
+      "excludePackageNames": [
+        "eslint",
+        "prettier",
+        "cross-env",
+        "execa",
+        "mini-css-extract-plugin",
+        "sharp",
+        "@types/sharp",
+        "typescript",
+        "chalk",
+        "fs-extra",
+        "@types/fs-extra"
+      ],
+      "excludePackagePatterns": [
+        "^@babel",
+        "^eslint-",
+        "^@typescript-eslint/",
+        "^@testing-library/"
+      ],
+      "commitMessageSuffix": "{{#unless groupName}} for gatsby-worker{{/unless}}"
+    },
+    {
+      "matchPaths": [
+        "packages/gatsby-worker/package.json"
+      ],
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "[DEV] major dependencies for gatsby-worker",
+      "groupSlug": "gatsby-worker-dev-major",
+      "automerge": true,
+      "dependencyDashboardApproval": false,
+      "excludePackageNames": [
+        "eslint",
+        "prettier",
+        "cross-env",
+        "execa",
+        "mini-css-extract-plugin",
+        "sharp",
+        "@types/sharp",
+        "typescript",
+        "chalk",
+        "fs-extra",
+        "@types/fs-extra"
+      ],
+      "excludePackagePatterns": [
+        "^@babel",
+        "^eslint-",
+        "^@typescript-eslint/",
+        "^@testing-library/"
+      ],
+      "commitMessageSuffix": "{{#unless groupName}} for gatsby-worker{{/unless}}"
+    },
+    {
+      "matchPaths": [
+        "packages/gatsby-worker/package.json"
+      ],
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "minor and patch dependencies for gatsby-worker",
+      "groupSlug": "gatsby-worker-prod-minor",
+      "excludePackageNames": [
+        "eslint",
+        "prettier",
+        "cross-env",
+        "execa",
+        "mini-css-extract-plugin",
+        "sharp",
+        "@types/sharp",
+        "typescript",
+        "chalk",
+        "fs-extra",
+        "@types/fs-extra"
+      ],
+      "excludePackagePatterns": [
+        "^@babel",
+        "^eslint-",
+        "^@typescript-eslint/",
+        "^@testing-library/"
+      ],
+      "commitMessageSuffix": "{{#unless groupName}} for gatsby-worker{{/unless}}"
+    },
+    {
+      "matchPaths": [
+        "packages/gatsby-worker/package.json"
+      ],
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "major dependencies for gatsby-worker",
+      "groupSlug": "gatsby-worker-prod-major",
+      "excludePackageNames": [
+        "eslint",
+        "prettier",
+        "cross-env",
+        "execa",
+        "mini-css-extract-plugin",
+        "sharp",
+        "@types/sharp",
+        "typescript",
+        "chalk",
+        "fs-extra",
+        "@types/fs-extra"
+      ],
+      "excludePackagePatterns": [
+        "^@babel",
+        "^eslint-",
+        "^@typescript-eslint/",
+        "^@testing-library/"
+      ],
+      "commitMessageSuffix": "{{#unless groupName}} for gatsby-worker{{/unless}}",
+      "dependencyDashboardApproval": true
+    },
+    {
+      "matchPaths": [
+        "packages/gatsby-worker/package.json"
+      ],
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "groupName": "minor and patch dependencies for gatsby-worker",
+      "groupSlug": "gatsby-worker-prod-minor",
+      "matchPackageNames": [],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "excludePackageNames": [
+        "eslint",
+        "prettier",
+        "cross-env",
+        "execa",
+        "mini-css-extract-plugin",
+        "sharp",
+        "@types/sharp",
+        "typescript",
+        "chalk",
+        "fs-extra",
+        "@types/fs-extra"
+      ],
+      "excludePackagePatterns": [
+        "^@babel",
+        "^eslint-",
+        "^@typescript-eslint/",
+        "^@testing-library/"
+      ],
+      "commitMessageSuffix": "{{#unless groupName}} for gatsby-worker{{/unless}}"
+    },
+    {
+      "matchPaths": [
+        "packages/gatsby-worker/package.json"
+      ],
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "groupName": "major dependencies for gatsby-worker",
+      "groupSlug": "gatsby-worker-prod-major",
+      "matchPackageNames": [],
+      "matchUpdateTypes": [
+        "major",
+        "minor"
+      ],
+      "excludePackageNames": [
+        "eslint",
+        "prettier",
+        "cross-env",
+        "execa",
+        "mini-css-extract-plugin",
+        "sharp",
+        "@types/sharp",
+        "typescript",
+        "chalk",
+        "fs-extra",
+        "@types/fs-extra"
+      ],
+      "excludePackagePatterns": [
+        "^@babel",
+        "^eslint-",
+        "^@typescript-eslint/",
+        "^@testing-library/"
+      ],
+      "commitMessageSuffix": "{{#unless groupName}} for gatsby-worker{{/unless}}",
       "dependencyDashboardApproval": true
     },
     {
@@ -22728,6 +23595,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22762,6 +23630,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22795,6 +23664,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22827,6 +23697,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22877,6 +23748,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"
@@ -22927,6 +23799,7 @@
         "@types/fs-extra"
       ],
       "excludePackagePatterns": [
+        "^@babel",
         "^eslint-",
         "^@typescript-eslint/",
         "^@testing-library/"

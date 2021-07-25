@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.10.0-next.1...gatsby-dev-cli@3.11.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+# [3.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.10.0-next.0...gatsby-dev-cli@3.10.0-next.1) (2021-07-08)
+
+### Bug Fixes
+
+- **deps:** update dependency execa to v5 ([#32232](https://github.com/gatsbyjs/gatsby/issues/32232)) ([8a13969](https://github.com/gatsbyjs/gatsby/commit/8a1396995c02d45f00f241e22c626a20086fa955))
+
+# [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.9.0-next.0...gatsby-dev-cli@3.10.0-next.0) (2021-07-01)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
 # [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.8.0-next.2...gatsby-dev-cli@3.9.0-next.0) (2021-06-18)
 
 **Note:** Version bump only for package gatsby-dev-cli

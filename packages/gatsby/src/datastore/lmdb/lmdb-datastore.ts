@@ -3,12 +3,36 @@ import { RootDatabase, open } from "lmdb-store"
 import { ActionsUnion, IGatsbyNode } from "../../redux/types"
 import { updateNodes } from "./updates/nodes"
 import { updateNodesByType } from "./updates/nodes-by-type"
-import { IDataStore, IGatsbyIterable, ILmdbDatabases } from "../types"
+import { IDataStore, ILmdbDatabases, IQueryResult } from "../types"
 import { emitter, replaceReducer } from "../../redux"
+import { GatsbyIterable } from "../common/iterable"
+import { doRunQuery } from "./query/run-query"
+import {
+  IRunFilterArg,
+  runFastFiltersAndSort,
+} from "../in-memory/run-fast-filters"
+
+const lmdbDatastore = {
+  getNode,
+  getTypes,
+  countNodes,
+  iterateNodes,
+  iterateNodesByType,
+  updateDataStore,
+  ready,
+  runQuery,
+
+  // deprecated:
+  getNodes,
+  getNodesByType,
+}
 
 const rootDbFile =
   process.env.NODE_ENV === `test`
     ? `test-datastore-${
+        // FORCE_TEST_DATABASE_ID will be set if this gets executed in worker context
+        // when running jest tests. JEST_WORKER_ID will be set when this gets executed directly
+        // in test context (jest will use jest-worker internally).
         process.env.FORCE_TEST_DATABASE_ID ?? process.env.JEST_WORKER_ID
       }`
     : `datastore`
@@ -21,7 +45,6 @@ function getRootDb(): RootDatabase {
     rootDb = open({
       name: `root`,
       path: process.cwd() + `/.cache/data/` + rootDbFile,
-      sharedStructuresKey: Symbol.for(`structures`),
       compression: true,
     })
   }
@@ -34,11 +57,23 @@ function getDatabases(): ILmdbDatabases {
     databases = {
       nodes: rootDb.openDB({
         name: `nodes`,
+        // FIXME: sharedStructuresKey breaks tests - probably need some cleanup for it on DELETE_CACHE
+        // sharedStructuresKey: Symbol.for(`structures`),
+        // @ts-ignore
         cache: true,
       }),
       nodesByType: rootDb.openDB({
         name: `nodesByType`,
         dupSort: true,
+      }),
+      metadata: rootDb.openDB({
+        name: `metadata`,
+        useVersions: true,
+      }),
+      indexes: rootDb.openDB({
+        name: `indexes`,
+        // TODO: use dupSort when this is ready: https://github.com/DoctorEvidence/lmdb-store/issues/66
+        // dupSort: true
       }),
     }
   }
@@ -73,21 +108,27 @@ function getNodesByType(type: string): Array<IGatsbyNode> {
   return result ?? []
 }
 
-function iterateNodes(): IGatsbyIterable<IGatsbyNode> {
+function iterateNodes(): GatsbyIterable<IGatsbyNode> {
   // Additionally fetching items by id to leverage lmdb-store cache
   const nodesDb = getDatabases().nodes
-  return nodesDb
-    .getKeys({ snapshot: false })
-    .map(nodeId => getNode(nodeId)!)
-    .filter(Boolean)
+  return new GatsbyIterable(
+    nodesDb
+      .getKeys({ snapshot: false })
+      .map(
+        nodeId => (typeof nodeId === `string` ? getNode(nodeId) : undefined)!
+      )
+      .filter(Boolean)
+  )
 }
 
-function iterateNodesByType(type: string): IGatsbyIterable<IGatsbyNode> {
+function iterateNodesByType(type: string): GatsbyIterable<IGatsbyNode> {
   const nodesByType = getDatabases().nodesByType
-  return nodesByType
-    .getValues(type)
-    .map(nodeId => getNode(nodeId)!)
-    .filter(Boolean)
+  return new GatsbyIterable(
+    nodesByType
+      .getValues(type)
+      .map(nodeId => getNode(nodeId)!)
+      .filter(Boolean)
+  )
 }
 
 function getNode(id: string): IGatsbyNode | undefined {
@@ -104,15 +145,22 @@ function countNodes(typeName?: string): number {
   if (!typeName) {
     const stats = getDatabases().nodes.getStats()
     // @ts-ignore
-    return Number(stats.entryCount || 0)
+    return Number(stats.entryCount || 0) // FIXME: add -1 when restoring shared structures key
   }
 
   const { nodesByType } = getDatabases()
-  let count = 0
-  nodesByType.getValues(typeName).forEach(() => {
-    count++
-  })
-  return count
+  return nodesByType.getValuesCount(typeName)
+}
+
+async function runQuery(args: IRunFilterArg): Promise<IQueryResult> {
+  if (process.env.GATSBY_EXPERIMENTAL_LMDB_INDEXES) {
+    return await doRunQuery({
+      datastore: lmdbDatastore,
+      databases: getDatabases(),
+      ...args,
+    })
+  }
+  return Promise.resolve(runFastFiltersAndSort(args))
 }
 
 let lastOperationPromise: Promise<any> = Promise.resolve()
@@ -125,7 +173,14 @@ function updateDataStore(action: ActionsUnion): void {
       dbs.nodes.transactionSync(() => {
         dbs.nodes.clear()
         dbs.nodesByType.clear()
+        dbs.metadata.clear()
+        dbs.indexes.clear()
       })
+      break
+    }
+    case `SET_PROGRAM`: {
+      // TODO: remove this when we have support for incremental indexes in lmdb
+      clearIndexes()
       break
     }
     case `CREATE_NODE`:
@@ -141,6 +196,14 @@ function updateDataStore(action: ActionsUnion): void {
   }
 }
 
+function clearIndexes(): void {
+  const dbs = getDatabases()
+  dbs.nodes.transactionSync(() => {
+    dbs.metadata.clear()
+    dbs.indexes.clear()
+  })
+}
+
 /**
  * Resolves when all the data is synced
  */
@@ -149,19 +212,6 @@ async function ready(): Promise<void> {
 }
 
 export function setupLmdbStore(): IDataStore {
-  const lmdbDatastore = {
-    getNode,
-    getTypes,
-    countNodes,
-    iterateNodes,
-    iterateNodesByType,
-    updateDataStore,
-    ready,
-
-    // deprecated:
-    getNodes,
-    getNodesByType,
-  }
   replaceReducer({
     nodes: (state = new Map(), action) =>
       action.type === `DELETE_CACHE` ? new Map() : state,
@@ -173,5 +223,7 @@ export function setupLmdbStore(): IDataStore {
       updateDataStore(action)
     }
   })
+  // TODO: remove this when we have support for incremental indexes in lmdb
+  clearIndexes()
   return lmdbDatastore
 }

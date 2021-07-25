@@ -11,6 +11,29 @@ const { slash } = require(`gatsby-core-utils`)
 const { setPluginOptions } = require(`./plugin-options`)
 const path = require(`path`)
 
+let coreSupportsOnPluginInit
+try {
+  const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
+  coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(
+    `unstable_onPluginInit`
+  )
+} catch (e) {
+  coreSupportsOnPluginInit = false
+}
+
+function removeCachedValue(cache, key) {
+  if (cache?.del) {
+    // if cache expose ".del" method directly on public interface
+    return cache.del(key)
+  } else if (cache?.cache?.del) {
+    // legacy - using internal cache instance and calling ".del" on it directly
+    return cache.cache.del(key)
+  }
+  return Promise.reject(
+    new Error(`Cache instance doesn't expose ".del" function`)
+  )
+}
+
 exports.onCreateDevServer = async ({ app, cache, reporter }) => {
   if (!_lazyJobsEnabled()) {
     return
@@ -43,14 +66,14 @@ exports.onCreateDevServer = async ({ app, cache, reporter }) => {
     } = splitOperationsByRequestedFile(cacheResult, pathOnDisk)
 
     await _unstable_createJob(matchingJob, { reporter })
-    await cache.cache.del(decodedURI)
+    await removeCachedValue(cache, decodedURI)
 
     if (jobWithRemainingOperations.args.operations.length > 0) {
       // There are still some operations pending for this job - replace the cached job
-      await cache.cache.set(jobContentDigest, jobWithRemainingOperations)
+      await cache.set(jobContentDigest, jobWithRemainingOperations)
     } else {
       // No operations left to process - purge the cache
-      await cache.cache.del(jobContentDigest)
+      await removeCachedValue(cache, jobContentDigest)
     }
 
     return res.sendFile(pathOnDisk)
@@ -101,6 +124,14 @@ exports.onPostBootstrap = async ({ reporter, cache, store }) => {
         _unstable_createJob(job, { reporter })
       }
     }
+  }
+}
+
+if (coreSupportsOnPluginInit) {
+  // to properly initialize plugin in worker (`onPreBootstrap` won't run in workers)
+  exports.unstable_onPluginInit = async ({ actions }, pluginOptions) => {
+    setActions(actions)
+    setPluginOptions(pluginOptions)
   }
 }
 

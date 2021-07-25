@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.21.0-next.1...gatsby-recipes@0.22.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.21.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.21.0-next.0...gatsby-recipes@0.21.0-next.1) (2021-07-08)
+
+### Bug Fixes
+
+- **deps:** update dependency execa to v5 ([#32232](https://github.com/gatsbyjs/gatsby/issues/32232)) ([8a13969](https://github.com/gatsbyjs/gatsby/commit/8a1396995c02d45f00f241e22c626a20086fa955))
+
+# [0.21.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.20.0-next.1...gatsby-recipes@0.21.0-next.0) (2021-07-01)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.20.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.20.0-next.0...gatsby-recipes@0.20.0-next.1) (2021-06-28)
+
+**Note:** Version bump only for package gatsby-recipes
+
 # [0.20.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.19.0-next.1...gatsby-recipes@0.20.0-next.0) (2021-06-18)
 
 **Note:** Version bump only for package gatsby-recipes

@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.11.0-next.0...gatsby-plugin-mdx@2.11.0-next.1) (2021-07-23)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** generate mdx once when multiple mdx fields requested ([#32462](https://github.com/gatsbyjs/gatsby/issues/32462)) ([0f8d747](https://github.com/gatsbyjs/gatsby/commit/0f8d747b495f3fe25536d3eb8eb49c5bbb2f7d71))
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.10.0-next.1...gatsby-plugin-mdx@2.11.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+# [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.10.0-next.0...gatsby-plugin-mdx@2.10.0-next.1) (2021-07-08)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.9.0-next.1...gatsby-plugin-mdx@2.10.0-next.0) (2021-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+# [2.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.9.0-next.0...gatsby-plugin-mdx@2.9.0-next.1) (2021-06-28)
+
+### Features
+
+- **gatsby-plugin-mdx:** swap sourceNodes to createSchemaCustomization ([#32021](https://github.com/gatsbyjs/gatsby/issues/32021)) ([d75b965](https://github.com/gatsbyjs/gatsby/commit/d75b965266fc3fa8e58086421dfea7c7e7ee2f86))
+
 # [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.8.0-next.1...gatsby-plugin-mdx@2.9.0-next.0) (2021-06-18)
 
 **Note:** Version bump only for package gatsby-plugin-mdx

@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.11.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.11.0-next.1...gatsby-plugin-sharp@3.11.0-next.2) (2021-07-22)
+
+### Bug Fixes
+
+- expose ".del" function on lmdb cache ([#32459](https://github.com/gatsbyjs/gatsby/issues/32459)) ([e1a1396](https://github.com/gatsbyjs/gatsby/commit/e1a1396e1582a18047e2cefaeff0f57d61c0c83a))
+
+# [3.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.11.0-next.0...gatsby-plugin-sharp@3.11.0-next.1) (2021-07-19)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.10.0-next.1...gatsby-plugin-sharp@3.11.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [3.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.10.0-next.0...gatsby-plugin-sharp@3.10.0-next.1) (2021-07-08)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.9.0-next.1...gatsby-plugin-sharp@3.10.0-next.0) (2021-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [3.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.9.0-next.0...gatsby-plugin-sharp@3.9.0-next.1) (2021-06-28)
+
+### Features
+
+- add unstable_onPluginInit that would execute once in all processes ([#31901](https://github.com/gatsbyjs/gatsby/issues/31901)) ([2bf8c0d](https://github.com/gatsbyjs/gatsby/commit/2bf8c0d37fd6de3fbbbe7e543275cfd6d64ec9de))
+
 # [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.8.0-next.1...gatsby-plugin-sharp@3.9.0-next.0) (2021-06-18)
 
 **Note:** Version bump only for package gatsby-plugin-sharp
