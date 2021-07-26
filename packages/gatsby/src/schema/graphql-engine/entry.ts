@@ -11,6 +11,10 @@ import {
 } from "../../bootstrap/create-graphql-runner"
 // const { builtInFieldExtensions } = require(`./extensions`)
 
+import type { IGatsbyPage, IGatsbyState } from "../../redux/types"
+import { findPageByPath } from "../../utils/find-page-by-path"
+import { getDataStore } from "../../datastore"
+
 export class GraphQLEngine {
   // private schema: GraphQLSchema
   private runner: Runner
@@ -42,5 +46,20 @@ export class GraphQLEngine {
     //   schema: await this.getSchema(),
     //   document: parse(wat),
     // })
+  }
+
+  public findPageByPath(pathname: string): IGatsbyPage | undefined {
+    // adapter so `findPageByPath` use SitePage nodes in datastore
+    // instead of `pages` redux slice
+    const state = ({
+      pages: {
+        get(pathname: string) {
+          return getDataStore().getNode(`SitePage ${pathname}`)
+        },
+        [Symbol.iterator]: () => getDataStore().iterateNodesByType(`SitePage`),
+      },
+    } as unknown) as IGatsbyState
+
+    return findPageByPath(state, pathname, false)
   }
 }
