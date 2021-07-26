@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.10.0...gatsby-plugin-mdx@2.10.1) (2021-07-26)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** generate mdx once when multiple mdx fields requested ([#32462](https://github.com/gatsbyjs/gatsby/issues/32462)) ([#32506](https://github.com/gatsbyjs/gatsby/issues/32506)) ([4519a7c](https://github.com/gatsbyjs/gatsby/commit/4519a7cfb7a06ee9b79147b2ef20a427b8c69ef1))
+
 # [2.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.10.0-next.1...gatsby-plugin-mdx@2.10.0) (2021-07-20)
 
 **Note:** Version bump only for package gatsby-plugin-mdx

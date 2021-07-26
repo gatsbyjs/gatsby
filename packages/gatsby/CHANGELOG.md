@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.1...gatsby@3.10.2) (2021-07-26)
+
+### Bug Fixes
+
+- **gatsby:** correct pagination logic ([#32496](https://github.com/gatsbyjs/gatsby/issues/32496)) ([#32507](https://github.com/gatsbyjs/gatsby/issues/32507)) ([c6d370d](https://github.com/gatsbyjs/gatsby/commit/c6d370dbb4782b4a9851b202d231c6133fb12e4d)), closes [#32319](https://github.com/gatsbyjs/gatsby/issues/32319)
+
 ## [3.10.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0...gatsby@3.10.1) (2021-07-21)
 
 ### Bug Fixes
