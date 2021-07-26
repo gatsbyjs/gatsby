@@ -12,6 +12,8 @@ exports.onPostBuild = async (
     entryLimit,
     query,
     excludes,
+    // The old config API, do not use inside this function
+    exclude,
     resolveSiteUrl,
     resolvePagePath,
     resolvePages,
@@ -19,6 +21,12 @@ exports.onPostBuild = async (
     serialize,
   }
 ) => {
+  if (exclude) {
+    reporter.panic(
+      `gatsby-plugin-sitemap uses 'excludes' not 'exclude' as of v4`
+    )
+  }
+
   const { data: queryRecords, errors } = await graphql(query)
 
   // resolvePages and resolveSiteUrl are allowed to be sync or async. The Promise.resolve handles each possibility
