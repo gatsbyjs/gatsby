@@ -10,13 +10,16 @@ import json from "@rollup/plugin-json"
 import { visualizer } from "rollup-plugin-visualizer"
 import autoExternal from "rollup-plugin-auto-external"
 import internal from "rollup-plugin-internal"
+import nativePlugin from "rollup-plugin-natives"
 
-import { builtinModules } from "module"
+import { builtinModules, createRequire } from "module"
+
+const outputDir = path.join(process.cwd(), `.cache`, `query-engine`)
 
 const outputOptions = {
   // core output options
   // dir,
-  file: path.join(process.cwd(), `.cache`, `query-engine.js`),
+  file: path.join(outputDir, `index.js`),
   format: `cjs`, // required
   // globals,
   // name,
@@ -57,7 +60,7 @@ const outputOptions = {
   // noConflict,
   // preferConst,
   // sanitizeFileName,
-  // strict,
+  strict: false, // lmdb-store is not strict :(
   // systemNullSetters,
 }
 
@@ -123,12 +126,15 @@ const allowedPackages = [
 
   "opentracing", // shimmed
   `glob`,
+
+  `lmdb-store-0.9`, // shimmed
+  `cbor-x`, // shimmed
 ]
 
 const skipDedupe = [`joi`]
 
 const forSureExternals = [
-  `lmdb-store`, // native bindings - maybe we can bundle it and make it work given same env, but for now marked as external so would need to be installed at location where queryEngine would be executed
+  // `lmdb-store`, // native bindings - maybe we can bundle it and make it work given same env, but for now marked as external so would need to be installed at location where queryEngine would be executed
   // `joi`,
 
   // https://github.com/rollup/rollup/issues/1507#issuecomment-340550539
@@ -202,6 +208,7 @@ export async function createGraphqlEngineBundle(): Promise<any> {
           // silly glob - https://github.com/isaacs/node-glob/pull/438
           "var Glob = require('./glob.js').Glob": "",
 
+          "require.resolve('./dict/dict.txt')": "__dirname + '/dict/dict.txt'", // transform so next replacement doesn't break this completely
           // require.resolve is not touched - I'm not sure how to handle it yet :/ but for demo we shouldn't need this code to function, just not to crash
           "require.resolve": "",
           "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": "true",
@@ -273,11 +280,11 @@ export async function createGraphqlEngineBundle(): Promise<any> {
             }
           }
 
-          if (id.includes(`lru-cache`)) {
-            return {
-              code: `export default class LRUCache {}`,
-            }
-          }
+          // if (id.includes(`lru-cache`)) {
+          //   return {
+          //     code: `export default class LRUCache {}`,
+          //   }
+          // }
 
           if (id.includes(`webpack-merge`)) {
             return {
@@ -303,10 +310,59 @@ export async function createGraphqlEngineBundle(): Promise<any> {
             }
           }
 
+          if (id.includes(`lmdb-store-0.9`)) {
+            // https://github.com/DoctorEvidence/lmdb-store/blob/ab756d45e0e6b92542d9d8885ef783215c5368a6/util/upgrade-lmdb.js#L7
+            return {
+              code: `export default true`,
+            }
+          }
+
+          if (id.includes(`cbor-x`)) {
+            // https://github.com/DoctorEvidence/lmdb-store/blob/1df114fc8f59db6174fa32d35f7e79cf0e7e12ef/index.js#L211
+            // we don't use it so shimming
+            return {
+              code: `export const Encoder = true; export default { Encoder }`,
+            }
+          }
+
           return null
+        },
+        transform(code, id): any {
+          if (code.indexOf(`require('node-gyp-build')(__dirname)`) > -1) {
+            // massage node-gyp-build to work with `rollup-plugin-natives` (it doesn't support node-gyp-build :()
+            // we will just execute it at bundle time to find .node file to bundle
+
+            const load = createRequire(id)(`node-gyp-build`)
+            const dirname = path.dirname(id)
+            const dotNodePath = `./${path.relative(
+              dirname,
+              load.path(dirname)
+            )}`
+
+            return code.replace(
+              `require('node-gyp-build')(__dirname)`,
+              `require('./${dotNodePath}')`
+            )
+          }
+          return null
+        },
+        buildEnd(): any {
+          // used when compression enabled for lmdb - https://github.com/DoctorEvidence/lmdb-store/blob/7eb1333bb40bb3e8438133b98896f9f5218ec3b3/README.md#compression
+          // this is default dictionary that is read with `readFile`, so isn't auto-discovered by rollup
+          fs.copySync(
+            path.join(
+              path.dirname(require.resolve(`lmdb-store`)),
+              `dict/dict.txt`
+            ),
+            path.join(outputDir, `dict/dict.txt`)
+          )
         },
       },
       json({ namedExports: false }),
+      nativePlugin({
+        copyTo: path.join(outputDir, `libs`),
+        destDir: `./libs/`,
+      }),
       // {
       //   name: `graphql-test`,
       //   resolveId(source, importer) {
