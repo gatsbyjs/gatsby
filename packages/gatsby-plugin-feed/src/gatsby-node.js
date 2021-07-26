@@ -21,7 +21,12 @@ exports.onPostBuild = async ({ graphql, reporter }, pluginOptions) => {
   }
 
   const baseQuery = await runQuery(graphql, options.query)
-
+  let siteUrl =
+    baseQuery.site.siteMetadata.site_url || baseQuery.site.siteMetadata.siteUrl
+  // Remove the last slash of the url
+  if (siteUrl) {
+    siteUrl = siteUrl.replace(/\/$/, ``)
+  }
   for (const { ...feed } of options.feeds) {
     if (feed.query) {
       feed.query = await runQuery(graphql, feed.query).then(result =>
