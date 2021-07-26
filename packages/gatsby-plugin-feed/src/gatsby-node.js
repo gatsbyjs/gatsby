@@ -27,6 +27,16 @@ exports.onPostBuild = async ({ graphql, reporter }, pluginOptions) => {
   if (siteUrl) {
     siteUrl = siteUrl.replace(/\/$/, ``)
   }
+  // Match any string that is:
+  // - preceded by href or src followed by an equal sign and a double quote
+  // - contains a slash one one or more characters
+  // - succeeded by a double quote
+  const regexForHrefAndSrc = /(?<=(?:href|src)=")\/.+?(?=")/g
+  // Match any string that is:
+  // - preceded by srcset=" or a comma and zero or more whitespaces
+  // - contains a slash and a dot
+  // - ends with either of jpeg, jpg, png, svg, or gif
+  const regexForSrcSet = /(?<=srcset="|,\s*)\/.+?\.(?:jpe?g|png|svg|gif)/g
   for (const { ...feed } of options.feeds) {
     if (feed.query) {
       feed.query = await runQuery(graphql, feed.query).then(result =>
