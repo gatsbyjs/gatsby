@@ -9,7 +9,7 @@ const generateBuildLogUrl = ({ orgId, siteId, buildId }) => {
   return `${pathToBuildLogs}?returnTo=${returnTo}`
 }
 
-export function BuildErrorTooltipContent({ siteId, orgId, buildId }) {
+export default function BuildErrorTooltipContent({ siteId, orgId, buildId }) {
   return (
     <>
       {failedIcon}

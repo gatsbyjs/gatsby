@@ -1,5 +1,12 @@
-export * from "./IndicatorButton"
+import IndicatorButton from "./IndicatorButton"
 
-export * from "./LinkIndicatorButton"
-export * from "./InfoIndicatorButton"
-export * from "./GatsbyIndicatorButton"
+import LinkIndicatorButton from "./LinkIndicatorButton"
+import InfoIndicatorButton from "./InfoIndicatorButton"
+import GatsbyIndicatorButton from "./GatsbyIndicatorButton"
+
+export {
+  IndicatorButton,
+  LinkIndicatorButton,
+  InfoIndicatorButton,
+  GatsbyIndicatorButton,
+}

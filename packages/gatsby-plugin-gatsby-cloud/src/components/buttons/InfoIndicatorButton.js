@@ -1,8 +1,8 @@
 import React from "react"
 import { formatDistance } from "date-fns"
-
-import { IndicatorButton } from "../buttons"
 import trackEvent from "../../utils/trackEvent"
+
+import IndicatorButton from "./IndicatorButton"
 import { infoIcon } from "../icons"
 
 const getButtonProps = props => {
@@ -27,7 +27,7 @@ const getButtonProps = props => {
   }
 }
 
-export function InfoIndicatorButton(props) {
+export default function InfoIndicatorButton(props) {
   const { orgId, siteId, buildId } = props
   const buttonProps = getButtonProps(props)
   const trackHover = () => {
@@ -46,6 +46,7 @@ export function InfoIndicatorButton(props) {
       iconSvg={infoIcon}
       onMouseEnter={buttonProps?.active && trackHover}
       buttonIndex={props.buttonIndex}
+      hoverable={true}
       {...buttonProps}
     />
   )

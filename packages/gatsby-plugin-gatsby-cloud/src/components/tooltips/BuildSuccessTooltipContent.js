@@ -37,7 +37,7 @@ const newPreviewAvailableClick = async ({
   }
 }
 
-export function BuildSuccessTooltipContent({
+export default function BuildSuccessTooltipContent({
   isOnPrettyUrl,
   sitePrefix,
   orgId,

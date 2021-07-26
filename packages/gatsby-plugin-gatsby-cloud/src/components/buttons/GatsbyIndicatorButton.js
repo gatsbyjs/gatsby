@@ -1,10 +1,10 @@
 import React from "react"
-import { IndicatorButton } from "../buttons"
-import { gatsbyIcon } from "../icons"
+import IndicatorButton from "./IndicatorButton"
 import {
   BuildErrorTooltipContent,
   BuildSuccessTooltipContent,
 } from "../tooltips"
+import { gatsbyIcon } from "../icons"
 
 const getButtonProps = ({
   buildStatus,
@@ -62,7 +62,7 @@ const getButtonProps = ({
   }
 }
 
-export function GatsbyIndicatorButton(props) {
+export default function GatsbyIndicatorButton(props) {
   return (
     <IndicatorButton
       testId="gatsby"

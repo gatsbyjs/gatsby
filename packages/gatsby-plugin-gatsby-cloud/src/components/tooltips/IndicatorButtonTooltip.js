@@ -1,6 +1,6 @@
 import React from "react"
 
-export function IndicatorButtonTooltip({
+export default function IndicatorButtonTooltip({
   tooltipContent,
   overrideShowTooltip,
   showTooltip,

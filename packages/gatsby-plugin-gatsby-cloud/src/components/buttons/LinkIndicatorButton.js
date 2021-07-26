@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import trackEvent from "../../utils/trackEvent"
-import { IndicatorButton } from "./IndicatorButton"
+import IndicatorButton from "./IndicatorButton"
 import { linkIcon, successIcon } from "../icons"
 
 const copySuccessTooltip = (
@@ -26,7 +26,7 @@ const getButtonProps = ({ buildStatus }) => {
   }
 }
 
-export function LinkIndicatorButton(props) {
+export default function LinkIndicatorButton(props) {
   const { orgId, siteId, buildId } = props
   const [linkButtonCopyProps, setLinkButtonCopyProps] = useState()
 
@@ -82,6 +82,7 @@ export function LinkIndicatorButton(props) {
       onClick={copyLinkClick}
       onMouseEnter={buttonProps?.active && trackHover}
       buttonIndex={props.buttonIndex}
+      hoverable={true}
       {...buttonProps}
       {...linkButtonCopyProps}
     />

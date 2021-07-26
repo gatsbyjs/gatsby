@@ -1,4 +1,10 @@
-export * from "./IndicatorButtonTooltip"
+import IndicatorButtonTooltip from "./IndicatorButtonTooltip"
 
-export * from "./BuildErrorTooltipContent"
-export * from "./BuildSuccessTooltipContent"
+import BuildErrorTooltipContent from "./BuildErrorTooltipContent"
+import BuildSuccessTooltipContent from "./BuildSuccessTooltipContent"
+
+export {
+  IndicatorButtonTooltip,
+  BuildErrorTooltipContent,
+  BuildSuccessTooltipContent,
+}
