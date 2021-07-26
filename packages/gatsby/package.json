@@ -142,6 +142,7 @@
     "rollup-plugin-auto-external": "latest",
     "rollup-plugin-internal": "latest",
     "rollup-plugin-visualizer": "^5.5.2",
+    "rollup-plugin-natives": "latest",
     "semver": "^7.3.2",
     "shallow-compare": "^1.2.2",
     "signal-exit": "^3.0.3",
