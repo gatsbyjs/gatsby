@@ -33,19 +33,15 @@ describe(`Preview status indicator`, () => {
       render(<Indicator />)
     })
 
-    // jest.runOnlyPendingTimers()
+    jest.runOnlyPendingTimers()
 
-    // await act(async () => {
     if (matcherType === `query`) {
-      // await waitFor(() => {
       expect(screen.queryByText(text, { exact: false })).not.toBeInTheDocument()
-      // })
     } else if (matcherType === `get`) {
       await waitFor(() => {
         expect(screen.getByText(text, { exact: false })).toBeInTheDocument()
       })
     }
-    // })
   }
 
   const assertTrackEventGetsCalled = async ({
@@ -238,15 +234,13 @@ describe(`Preview status indicator`, () => {
     })
 
     describe(`Gatsby Button`, () => {
-      // This test doesn't work currently with how we get the buildId
-
-      // it(`should show a more recent succesful build when available`, async () => {
-      //   await assertTooltipText({
-      //     route: `success`,
-      //     text: newPreviewMessage,
-      //     matcherType: `get`,
-      //   })
-      // })
+      it(`should show a more recent succesful build when available`, async () => {
+        await assertTooltipText({
+          route: `success`,
+          text: newPreviewMessage,
+          matcherType: `get`,
+        })
+      })
 
       it(`should show an error message when most recent build fails`, async () => {
         await assertTooltipText({

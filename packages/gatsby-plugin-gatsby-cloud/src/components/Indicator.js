@@ -27,9 +27,10 @@ export function PreviewIndicator({ children }) {
   )
 }
 
+let buildId
+
 export default function Indicator() {
   const [buildInfo, setBuildInfo] = useState()
-  const [buildId, setBuildId] = useState()
 
   const timeoutRef = useRef()
   const shouldPoll = useRef(false)
@@ -42,56 +43,52 @@ export default function Indicator() {
 
   const { orgId, siteId } = siteInfo || {}
 
-  const pollData = useCallback(
-    async function pollData() {
-      const prettyUrlRegex = /^preview-/
-      const host = window.location.hostname
+  const pollData = useCallback(async function pollData() {
+    const prettyUrlRegex = /^preview-/
+    const host = window.location.hostname
 
-      // currentBuild is the most recent build that is not QUEUED.
-      // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
-      const isOnPrettyUrl = prettyUrlRegex.test(host)
-      const { siteInfo, currentBuild, latestBuild } = await getBuildInfo()
+    // currentBuild is the most recent build that is not QUEUED.
+    // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
+    const isOnPrettyUrl = prettyUrlRegex.test(host)
+    const { siteInfo, currentBuild, latestBuild } = await getBuildInfo()
 
-      if (!buildId) {
-        if (isOnPrettyUrl || host === `localhost`) {
-          console.log("here?", latestBuild)
-          setBuildId(latestBuild?.id)
-        } else {
-          // Match UUID from preview build URL https://build-af44185e-b8e5-11eb-8529-0242ac130003.gtsb.io
-          const buildIdMatch = host?.match(/build-(.*?(?=\.))/)
-          if (buildIdMatch) {
-            setBuildId(buildIdMatch[1])
-          }
+    if (!buildId) {
+      if (isOnPrettyUrl || host === `localhost`) {
+        buildId = latestBuild?.id
+      } else {
+        // Match UUID from preview build URL https://build-af44185e-b8e5-11eb-8529-0242ac130003.gtsb.io
+        const buildIdMatch = host?.match(/build-(.*?(?=\.))/)
+        if (buildIdMatch) {
+          buildId = buildIdMatch[1]
         }
       }
+    }
 
-      const newBuildInfo = {
-        currentBuild,
-        latestBuild,
-        siteInfo,
-        isOnPrettyUrl,
-      }
+    const newBuildInfo = {
+      currentBuild,
+      latestBuild,
+      siteInfo,
+      isOnPrettyUrl,
+    }
 
-      if (currentBuild?.buildStatus === `BUILDING`) {
-        setBuildInfo({ ...newBuildInfo, buildStatus: `BUILDING` })
-      } else if (currentBuild?.buildStatus === `ERROR`) {
-        setBuildInfo({ ...newBuildInfo, buildStatus: `ERROR` })
-      } else if (buildId && buildId === buildInfo?.currentBuild?.id) {
-        setBuildInfo({ ...newBuildInfo, buildStatus: `UPTODATE` })
-      } else if (
-        buildId &&
-        buildId !== buildInfo?.latestBuild?.id &&
-        currentBuild?.buildStatus === `SUCCESS`
-      ) {
-        setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
-      }
+    if (currentBuild?.buildStatus === `BUILDING`) {
+      setBuildInfo({ ...newBuildInfo, buildStatus: `BUILDING` })
+    } else if (currentBuild?.buildStatus === `ERROR`) {
+      setBuildInfo({ ...newBuildInfo, buildStatus: `ERROR` })
+    } else if (buildId && buildId === newBuildInfo?.currentBuild?.id) {
+      setBuildInfo({ ...newBuildInfo, buildStatus: `UPTODATE` })
+    } else if (
+      buildId &&
+      buildId !== newBuildInfo?.latestBuild?.id &&
+      currentBuild?.buildStatus === `SUCCESS`
+    ) {
+      setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
+    }
 
-      if (shouldPoll.current) {
-        timeoutRef.current = setTimeout(pollData, POLLING_INTERVAL)
-      }
-    },
-    [buildId, buildInfo, setBuildInfo, setBuildId]
-  )
+    if (shouldPoll.current) {
+      timeoutRef.current = setTimeout(pollData, POLLING_INTERVAL)
+    }
+  }, [])
 
   useEffect(() => {
     if (buildInfo?.siteInfo && !trackedInitialLoad.current) {
@@ -130,8 +127,6 @@ export default function Indicator() {
     createdAt: currentBuild?.createdAt,
     erroredBuildId: currentBuild?.id,
   }
-
-  console.log(buttonProps)
 
   return (
     <PreviewIndicator>
