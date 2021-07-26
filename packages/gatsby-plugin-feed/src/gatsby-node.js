@@ -55,6 +55,17 @@ exports.onPostBuild = async ({ graphql, reporter }, pluginOptions) => {
       )
     } else {
       const rssFeed = (await feed.serialize(locals)).reduce((merged, item) => {
+        const { custom_elements: customElems } = item
+        if (
+          customElems &&
+          customElems.length &&
+          customElems[0][`content:encoded`]
+        ) {
+          let html = item.custom_elements[0][`content:encoded`]
+          html = html.replace(regexForHrefAndSrc, `${siteUrl}$&`)
+          html = html.replace(regexForSrcSet, `${siteUrl}$&`)
+          customElems[0][`content:encoded`] = html
+        }
         merged.item(item)
         return merged
       }, new RSS(setup(locals)))
