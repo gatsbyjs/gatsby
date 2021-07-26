@@ -4,3 +4,44 @@ exports[`Test plugin feed custom properties work properly 1`] = `"<?xml version=
 
 exports[`Test plugin feed custom query runs 1`] = `"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?><rss xmlns:dc=\\"http://purl.org/dc/elements/1.1/\\" xmlns:content=\\"http://purl.org/rss/1.0/modules/content/\\" xmlns:atom=\\"http://www.w3.org/2005/Atom\\" version=\\"2.0\\"><channel><title><![CDATA[my feed]]></title><description><![CDATA[a description]]></description><link>http://github.com/dylang/node-rss</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 01 Jan 2018 00:00:00 GMT</lastBuildDate><item><title><![CDATA[No title]]></title><description><![CDATA[post description]]></description><link>http://dummy.url/a-custom-path</link><guid isPermaLink=\\"true\\">http://dummy.url/a-custom-path</guid></item><item><title><![CDATA[No title]]></title><description><![CDATA[post description]]></description><link>http://dummy.url/another-custom-path</link><guid isPermaLink=\\"true\\">http://dummy.url/another-custom-path</guid></item></channel></rss>"`;
 
+exports[`Test plugin feed run query for custom HTML content 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?><rss xmlns:dc=\\"http://purl.org/dc/elements/1.1/\\" xmlns:content=\\"http://purl.org/rss/1.0/modules/content/\\" xmlns:atom=\\"http://www.w3.org/2005/Atom\\" version=\\"2.0\\"><channel><title><![CDATA[Custom feed which contains html content for each post]]></title><description><![CDATA[a description]]></description><link>http://github.com/dylang/node-rss</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 01 Jan 2018 00:00:00 GMT</lastBuildDate><item><title><![CDATA[No title]]></title><description><![CDATA[post description]]></description><link>http://dummy.url/a-custom-path</link><guid isPermaLink=\\"true\\">http://dummy.url/a-custom-path</guid><content:encoded>&lt;p&gt;Here is link to my &lt;a href=&quot;http://dummy.url/first-post&quot;&gt;first post&lt;/a&gt;.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[No title]]></title><description><![CDATA[post description]]></description><link>http://dummy.url/another-custom-path</link><guid isPermaLink=\\"true\\">http://dummy.url/another-custom-path</guid><content:encoded>
+  &lt;p&gt;This is what a salty egg looks like.&lt;/p&gt;
+  &lt;p&gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 630px; &quot;
+    &gt;
+      &lt;a
+        class=&quot;gatsby-resp-image-link&quot;
+        href=&quot;http://dummy.url/static/8058f3f26913fea3b6a89a73344fe94a/e1596/salty_egg.jpg&quot;
+        style=&quot;display: block&quot;
+        target=&quot;_blank&quot;
+        rel=&quot;noopener&quot;
+      &gt;
+        &lt;span
+          class=&quot;gatsby-resp-image-background-image&quot;
+          style=&quot;padding-bottom: 75.31645569620254%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAPABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAMB/8QAFwEAAwEAAAAAAAAAAAAAAAAAAAEEBf/aAAwDAQACEAMQAAABgik0dWC//8QAGRABAAMBAQAAAAAAAAAAAAAAAQACERJC/9oACAEBAAEFAkqW7B5Zovtvk//EABcRAQADAAAAAAAAAAAAAAAAAAAREkH/2gAIAQMBAT8B1WX/xAAWEQEBAQAAAAAAAAAAAAAAAAAAESL/2gAIAQIBAT8BjT//xAAbEAABBAMAAAAAAAAAAAAAAAAAAQIRISIxMv/aAAgBAQAGPwK9GNocyS8hCj//xAAaEAADAQEBAQAAAAAAAAAAAAAAAREhQYGx/9oACAEBAAE/IXOrA43oOyg9wgU86OZMfwZKypT/2gAMAwEAAgADAAAAEMjv/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQARIf/aAAgBAwEBPxARwyusv//EABcRAQEBAQAAAAAAAAAAAAAAAAEAIVH/2gAIAQIBAT8QOoVoX//EAB0QAQEAAgIDAQAAAAAAAAAAAAERADFhgSFB0eH/2gAIAQEAAT8QSpwaGjrBSrtHyF9iY8RpUnGRBGqtOcsiDE6fM3AgiXf5M//Z&apos;); background-size: cover; display: block;&quot;
+        &gt;
+        &lt;/span&gt;
+        &lt;img
+          class=&quot;gatsby-resp-image-image&quot;
+          alt=&quot;Chinese Salty Egg&quot;
+          title=&quot;Chinese Salty Egg&quot;
+          src=&quot;http://dummy.url/static/8058f3f26913fea3b6a89a73344fe94a/828fb/salty_egg.jpg&quot;
+          srcset=&quot;http://dummy.url/static/8058f3f26913fea3b6a89a73344fe94a/ff44c/salty_egg.jpg 158w,
+          http://dummy.url/static/8058f3f26913fea3b6a89a73344fe94a/a6688/salty_egg.jpg 315w,
+          http://dummy.url/static/8058f3f26913fea3b6a89a73344fe94a/828fb/salty_egg.jpg 630w,
+          http://dummy.url/static/8058f3f26913fea3b6a89a73344fe94a/0ede0/salty_egg.jpg 945w,
+          http://dummy.url/static/8058f3f26913fea3b6a89a73344fe94a/3ac88/salty_egg.jpg 1260w,
+          http://dummy.url/static/8058f3f26913fea3b6a89a73344fe94a/e1596/salty_egg.jpg 2048w&quot;
+          sizes=&quot;(max-width: 630px) 100vw, 630px&quot;
+          style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          loading=&quot;lazy&quot;
+          decoding=&quot;async&quot;
+        /&gt;
+      &lt;/a&gt;
+    &lt;/span&gt;
+  &lt;/p&gt;
+</content:encoded></item></channel></rss>"
+`;
