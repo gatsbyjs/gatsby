@@ -45,6 +45,7 @@ import {
 import { showExperimentNotices } from "../utils/show-experiment-notice"
 import { runQueriesInWorkersQueue } from "../utils/worker/pool"
 import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle"
+import { createPageSSRBundle } from "../utils/page-ssr-module/bundle"
 import { isLmdbStore } from "../datastore"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
@@ -88,9 +89,9 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     parentSpan: buildSpan,
   })
 
-  // bundle graphql-engine
+  // bundle graphql-engine and page ssr module
   if (isLmdbStore()) {
-    await createGraphqlEngineBundle()
+    await Promise.all([createGraphqlEngineBundle(), createPageSSRBundle()])
   }
 
   const graphqlRunner = new GraphQLRunner(store, {
