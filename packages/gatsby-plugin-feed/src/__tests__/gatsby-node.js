@@ -114,6 +114,10 @@ const customQueryForHtml = `
     }
     `
 
+const regexForMatchingRelativeUrls = /(?:(?<="|\s)\/.+\.(?:jpe?g|png|gif|svg))|(?:(?<=href=")\/.+(?="))/g
+const rawHtml = `${htmlWithAnchorTags}${htmlWithMultipleImageLinks}`
+const relativeUrls = rawHtml.match(regexForMatchingRelativeUrls)
+
 describe(`Test plugin feed`, () => {
   beforeEach(() => {
     fs.exists = jest.fn().mockResolvedValue(true)
@@ -364,5 +368,40 @@ describe(`Test plugin feed`, () => {
     expect(filePath).toEqual(path.join(`public`, `rss_post_content.xml`))
     expect(contents).toMatchSnapshot()
     expect(graphql).toBeCalledWith(customQueryForHtml)
+  })
+
+  it(`turns all relative Urls into absolute Urls`, async () => {
+    fs.writeFile = jest.fn()
+    fs.writeFile.mockResolvedValue(true)
+    const graphql = jest.fn()
+    graphql.mockResolvedValue({
+      data: { ...mockSiteMetadata, ...mockAllMarkdownWithHtml },
+    })
+    const options = {
+      feeds: [
+        {
+          output: `rss_links.xml`,
+          serialize: serializeContentWithHtml,
+          query: customQueryForHtml,
+          title: `Custom feed with all types of relative links for images and internal pages`,
+        },
+      ],
+    }
+
+    await onPostBuild({ graphql }, options)
+    const [, contents] = fs.writeFile.mock.calls[0]
+    const regexForMatchingUrls = /(?:(?<==&quot;|,\s*)[^\s]+\.(?:jpe?g|png|svg|gif))|(?:(?<=href=&quot;).+(?=&quot;))/g
+    const absoluteUrls = contents.match(regexForMatchingUrls)
+    let { siteUrl } = mockSiteMetadata.site.siteMetadata
+    siteUrl = siteUrl.replace(/\/$/g, ``)
+    const isProperlyTurnedIntoAbsoluteUrls = absoluteUrls.every(
+      (url, index) => {
+        const path = relativeUrls[index]
+        const re = new RegExp(`${siteUrl}${path}`)
+        return re.test(url)
+      }
+    )
+    expect(absoluteUrls.length).toEqual(relativeUrls.length)
+    expect(isProperlyTurnedIntoAbsoluteUrls).toBe(true)
   })
 })
