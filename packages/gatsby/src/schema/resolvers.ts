@@ -75,7 +75,7 @@ export function findManyPaginated<TSource, TArgs>(
     // Apply paddings for pagination
     // (for previous/next node and also to detect if there is a previous/next page)
     const skip = typeof args.skip === `number` ? Math.max(0, args.skip - 1) : 0
-    const limit = typeof args.limit === `number` ? args.limit + 1 : undefined
+    const limit = typeof args.limit === `number` ? args.limit + 2 : undefined
 
     const extendedArgs = {
       ...args,
@@ -288,24 +288,7 @@ export function paginate(
   }
   const currentPage = limit ? Math.ceil(skip / limit) + 1 : skip ? 2 : 1
   const hasPreviousPage = currentPage > 1
-
-  let hasNextPage = false
-  // If limit is not defined, there will never be a next page.
-  if (limit) {
-    if (resultOffset > 0) {
-      // If resultOffset is greater than 0, we need to test if `allItems` contains
-      // items that should be skipped.
-      //
-      // This is represented if the `start` index offset is 0 or less. A start
-      // greater than 0 means `allItems` contains extra items that would come
-      // before the skipped items.
-      hasNextPage = start < 1
-    } else {
-      // If the resultOffset is 0, we can test if `allItems` contains more items
-      // than the limit after removing the skipped items.
-      hasNextPage = allItems.length - start > limit
-    }
-  }
+  const hasNextPage = limit ? allItems.length - start > limit : false
 
   return {
     totalCount,

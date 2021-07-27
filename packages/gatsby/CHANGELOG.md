@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.11.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.5...gatsby@3.11.0-next.6) (2021-07-27)
+
+### Bug Fixes
+
+- **gatsby:** PQR - Wait for Jobs to be Completed before restarting ([#32520](https://github.com/gatsbyjs/gatsby/issues/32520)) ([50a3eec](https://github.com/gatsbyjs/gatsby/commit/50a3eecc96f744498b1f6be03f0ba11e85326f39))
+
+# [3.11.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.4...gatsby@3.11.0-next.5) (2021-07-26)
+
+### Bug Fixes
+
+- **gatsby:** correct pagination logic ([#32496](https://github.com/gatsbyjs/gatsby/issues/32496)) ([2dbe647](https://github.com/gatsbyjs/gatsby/commit/2dbe6477d88bf6e0138f247dc9dda1bd67a2a613)), closes [#32319](https://github.com/gatsbyjs/gatsby/issues/32319)
+
+# [3.11.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.3...gatsby@3.11.0-next.4) (2021-07-23)
+
+### Bug Fixes
+
+- **gatsby:** merge data deps state instead of replaying actions ([#32440](https://github.com/gatsbyjs/gatsby/issues/32440)) ([fd1d8cc](https://github.com/gatsbyjs/gatsby/commit/fd1d8ccc8dd27c316d24f91475a24702d228910c))
+
+# [3.11.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.2...gatsby@3.11.0-next.3) (2021-07-23)
+
+### Bug Fixes
+
+- **gatsby:** Configurable PQR chunksize by env var ([#32487](https://github.com/gatsbyjs/gatsby/issues/32487)) ([33f9855](https://github.com/gatsbyjs/gatsby/commit/33f98555ba00d244a7f5deb6dffe2b9c4a41599f))
+
+# [3.11.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.1...gatsby@3.11.0-next.2) (2021-07-22)
+
+### Bug Fixes
+
+- **gatsby:** Add encoding option to GatsbyCacheLmdb ([#32466](https://github.com/gatsbyjs/gatsby/issues/32466)) ([f4a6525](https://github.com/gatsbyjs/gatsby/commit/f4a65256ba4d322fe8db1981797ecde858ef05bc))
+- expose ".del" function on lmdb cache ([#32459](https://github.com/gatsbyjs/gatsby/issues/32459)) ([e1a1396](https://github.com/gatsbyjs/gatsby/commit/e1a1396e1582a18047e2cefaeff0f57d61c0c83a))
+
+### Features
+
+- store partial page-data results in lmdb ([#32431](https://github.com/gatsbyjs/gatsby/issues/32431)) ([7601014](https://github.com/gatsbyjs/gatsby/commit/76010147a007bb4b643f363a25cca8ac38c53cdf))
+- **gatsby:** display message about unfit flags found in config ([#32394](https://github.com/gatsbyjs/gatsby/issues/32394)) ([7df39aa](https://github.com/gatsbyjs/gatsby/commit/7df39aa18809103cfabd403bb23a5b14b31028d7))
+- **gatsby:** PQR: merge data dependencies from workers to the main process ([#32305](https://github.com/gatsbyjs/gatsby/issues/32305)) ([bdb9352](https://github.com/gatsbyjs/gatsby/commit/bdb9352bed68e384970c8bf152643304bc228dcf))
+
 # [3.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.0...gatsby@3.11.0-next.1) (2021-07-19)
 
 ### Bug Fixes

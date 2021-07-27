@@ -10,7 +10,12 @@ const reporterInfo = jest.spyOn(reporter, `info`).mockImplementation(jest.fn)
 const reporterWarn = jest.spyOn(reporter, `warn`).mockImplementation(jest.fn)
 
 const { isLmdbStore } = require(`../../datastore`)
-const { saveState, store, readState } = require(`../index`)
+const {
+  saveState,
+  store,
+  readState,
+  savePartialStateToDisk,
+} = require(`../index`)
 
 const {
   actions: { createPage, createNode },
@@ -21,6 +26,9 @@ const mockCompatiblePath = path
 jest.mock(`fs-extra`, () => {
   return {
     writeFileSync: jest.fn((file, content) =>
+      mockWrittenContent.set(file, content)
+    ),
+    outputFileSync: jest.fn((file, content) =>
       mockWrittenContent.set(file, content)
     ),
     readFileSync: jest.fn(file => mockWrittenContent.get(file)),
@@ -492,5 +500,58 @@ describe(`redux db`, () => {
         `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
       )
     }
+  })
+
+  describe(`savePartialStateToDisk`, () => {
+    beforeEach(() => {
+      createPages(defaultPage)
+    })
+
+    it(`saves with correct filename (with defaults)`, () => {
+      savePartialStateToDisk([`pages`])
+
+      const savedFile = mockWrittenContent.keys().next().value
+      const basename = path.basename(savedFile)
+
+      expect(basename.startsWith(`redux.worker.slices__`)).toBe(true)
+    })
+
+    it(`saves correct slice of state`, () => {
+      savePartialStateToDisk([`pages`])
+
+      expect(writeToCache).toBeCalledWith(
+        { pages: expect.anything() },
+        [`pages`],
+        undefined
+      )
+    })
+
+    it(`respects optionalPrefix`, () => {
+      savePartialStateToDisk([`pages`], `custom-prefix`)
+
+      const savedFile = mockWrittenContent.keys().next().value
+      const basename = path.basename(savedFile)
+
+      expect(basename.startsWith(`redux.worker.slices_custom-prefix_`)).toBe(
+        true
+      )
+    })
+
+    it(`respects transformState`, () => {
+      const customTransform = state => {
+        return {
+          ...state,
+          hello: `world`,
+        }
+      }
+
+      savePartialStateToDisk([`pages`], undefined, customTransform)
+
+      expect(writeToCache).toBeCalledWith(
+        { pages: expect.anything(), hello: `world` },
+        [`pages`],
+        undefined
+      )
+    })
   })
 })

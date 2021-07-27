@@ -9,6 +9,8 @@ import { websocketManager } from "./websocket-manager"
 import { isWebpackStatusPending } from "./webpack-status"
 import { store } from "../redux"
 import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
+import { isLmdbStore } from "../datastore"
+import type GatsbyCacheLmdb from "./cache-lmdb"
 
 import { IExecutionResult } from "../query/types"
 
@@ -67,6 +69,67 @@ export function pageDataExists(publicDir: string, pagePath: string): boolean {
   return fs.existsSync(getFilePath(publicDir, pagePath))
 }
 
+let lmdbPageQueryResultsCache: GatsbyCacheLmdb
+function getLMDBPageQueryResultsCache(): GatsbyCacheLmdb {
+  if (!lmdbPageQueryResultsCache) {
+    const GatsbyCacheLmdbImpl = require(`./cache-lmdb`).default
+    lmdbPageQueryResultsCache = new GatsbyCacheLmdbImpl({
+      name: `internal-tmp-query-results`,
+      encoding: `string`,
+    }).init()
+  }
+  return lmdbPageQueryResultsCache
+}
+
+let savePageQueryResultsPromise = Promise.resolve()
+
+export function waitUntilPageQueryResultsAreStored(): Promise<void> {
+  return savePageQueryResultsPromise
+}
+
+export async function savePageQueryResult(
+  programDir: string,
+  pagePath: string,
+  stringifiedResult: string
+): Promise<void> {
+  if (isLmdbStore()) {
+    savePageQueryResultsPromise = getLMDBPageQueryResultsCache().set(
+      pagePath,
+      stringifiedResult
+    ) as Promise<void>
+  } else {
+    const pageQueryResultsPath = path.join(
+      programDir,
+      `.cache`,
+      `json`,
+      `${pagePath.replace(/\//g, `_`)}.json`
+    )
+    await fs.outputFile(pageQueryResultsPath, stringifiedResult)
+  }
+}
+
+export async function readPageQueryResult(
+  publicDir: string,
+  pagePath: string
+): Promise<any> {
+  if (isLmdbStore()) {
+    const stringifiedResult = await getLMDBPageQueryResultsCache().get(pagePath)
+    if (typeof stringifiedResult === `string`) {
+      return JSON.parse(stringifiedResult)
+    }
+    throw new Error(`Couldn't find temp query result for "${pagePath}".`)
+  } else {
+    const pageQueryResultsPath = path.join(
+      publicDir,
+      `..`,
+      `.cache`,
+      `json`,
+      `${pagePath.replace(/\//g, `_`)}.json`
+    )
+    return fs.readJSON(pageQueryResultsPath)
+  }
+}
+
 export async function writePageData(
   publicDir: string,
   {
@@ -76,16 +139,9 @@ export async function writePageData(
     staticQueryHashes,
   }: IPageData
 ): Promise<IPageDataWithQueryResult> {
-  const inputFilePath = path.join(
-    publicDir,
-    `..`,
-    `.cache`,
-    `json`,
-    `${pagePath.replace(/\//g, `_`)}.json`
-  )
+  const result = await readPageQueryResult(publicDir, pagePath)
 
   const outputFilePath = getFilePath(publicDir, pagePath)
-  const result = await fs.readJSON(inputFilePath)
   const body = {
     componentChunkName,
     path: pagePath,
