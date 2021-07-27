@@ -124,7 +124,7 @@ type SiteBuildMetadata implements Node @dontInfer {
 
 interface ContentfulReference implements Node {
   id: ID!
-  sys: ContentfulSys
+  sys: ContentfulSys!
 }
 
 type ContentfulSys {
@@ -145,13 +145,23 @@ type ContentfulContentType implements Node @dontInfer {
   description: String!
 }
 
-interface ContentfulEntry implements Node {
+interface ContentfulEntry implements ContentfulReference & Node {
   id: ID!
-  sys: ContentfulSys
+  sys: ContentfulSys!
+  metadata: ContentfulMetadata!
+}
+
+type ContentfulMetadata @dontInfer {
+  tags: [ContentfulTag]! @link(by: "id", from: "tags___NODE")
+}
+
+type ContentfulTag implements Node @dontInfer {
+  name: String!
+  contentful_id: String!
 }
 
 type ContentfulAsset implements ContentfulReference & Node @dontInfer {
-  sys: ContentfulSys
+  sys: ContentfulSys!
   title: String
   description: String
   contentType: String
@@ -203,7 +213,8 @@ type ContentfulText implements Node @dontInfer {
 }
 
 type ContentfulContentTypeNumber implements ContentfulReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulSys
+  sys: ContentfulSys!
+  metadata: ContentfulMetadata!
   title: String
   integer: Int
   integerLocalized: Int
@@ -212,7 +223,8 @@ type ContentfulContentTypeNumber implements ContentfulReference & ContentfulEntr
 }
 
 type ContentfulContentTypeText implements ContentfulReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulSys
+  sys: ContentfulSys!
+  metadata: ContentfulMetadata!
   title: String
   short: String
   shortLocalized: String
@@ -224,7 +236,8 @@ type ContentfulContentTypeText implements ContentfulReference & ContentfulEntry 
 }
 
 type ContentfulContentTypeMediaReference implements ContentfulReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulSys
+  sys: ContentfulSys!
+  metadata: ContentfulMetadata!
   title: String
   one: ContentfulAsset @link(by: "id", from: "one___NODE")
   oneLocalized: ContentfulAsset @link(by: "id", from: "oneLocalized___NODE")
@@ -233,14 +246,16 @@ type ContentfulContentTypeMediaReference implements ContentfulReference & Conten
 }
 
 type ContentfulContentTypeBoolean implements ContentfulReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulSys
+  sys: ContentfulSys!
+  metadata: ContentfulMetadata!
   title: String
   boolean: Boolean
   booleanLocalized: Boolean
 }
 
 type ContentfulContentTypeDate implements ContentfulReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulSys
+  sys: ContentfulSys!
+  metadata: ContentfulMetadata!
   title: String
   date: Date @dateformat
   dateTime: Date @dateformat
@@ -249,21 +264,24 @@ type ContentfulContentTypeDate implements ContentfulReference & ContentfulEntry 
 }
 
 type ContentfulContentTypeLocation implements ContentfulReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulSys
+  sys: ContentfulSys!
+  metadata: ContentfulMetadata!
   title: String
   location: ContentfulLocation
   locationLocalized: ContentfulLocation
 }
 
 type ContentfulContentTypeJson implements ContentfulReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulSys
+  sys: ContentfulSys!
+  metadata: ContentfulMetadata!
   title: String
   json: JSON
   jsonLocalized: JSON
 }
 
 type ContentfulContentTypeRichText implements ContentfulReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulSys
+  sys: ContentfulSys!
+  metadata: ContentfulMetadata!
   title: String
   richText: ContentfulRichText
   richTextLocalized: ContentfulRichText
@@ -271,7 +289,8 @@ type ContentfulContentTypeRichText implements ContentfulReference & ContentfulEn
 }
 
 type ContentfulContentTypeContentReference implements ContentfulReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulSys
+  sys: ContentfulSys!
+  metadata: ContentfulMetadata!
   title: String
   one: ContentfulEntry @link(by: "id", from: "one___NODE")
   oneLocalized: ContentfulEntry @link(by: "id", from: "oneLocalized___NODE")
@@ -280,7 +299,8 @@ type ContentfulContentTypeContentReference implements ContentfulReference & Cont
 }
 
 type ContentfulContentTypeValidatedContentReference implements ContentfulReference & ContentfulEntry & Node @dontInfer {
-  sys: ContentfulSys
+  sys: ContentfulSys!
+  metadata: ContentfulMetadata!
   title: String
   oneItemSingleType: ContentfulEntry @link(by: "id", from: "oneItemSingleType___NODE")
   oneItemManyTypes: ContentfulEntry @link(by: "id", from: "oneItemManyTypes___NODE")

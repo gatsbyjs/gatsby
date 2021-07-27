@@ -1,8 +1,7 @@
 // @ts-check
 import _ from "lodash"
 
-const typePrefix = `ContentfulContentType`
-export const makeTypeName = type =>
+export const makeTypeName = (type, typePrefix = `ContentfulContentType`) =>
   _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
 export const getLocalizedField = ({ field, locale, localesFallback }) => {
