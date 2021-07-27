@@ -197,8 +197,16 @@ const updateSchemaComposer = async ({
       parentSpan: activity.span,
     })
     // make sure to print schema that will be used when bundling graphql-engine
+    const graphqlEngineSnapshotPath = process.cwd() + `/.cache/schema.gql`
+    try {
+      await require(`fs-extra`).remove(graphqlEngineSnapshotPath)
+    } catch (e) {
+      // that's fine, it probably didn't exist yet
+      // we only delete if it exist because printTypeDefinitions will
+      // be noisy no-op if file exists
+    }
     await printTypeDefinitions({
-      config: { path: process.cwd() + `/.cache/schema.gql` },
+      config: { path: graphqlEngineSnapshotPath },
       schemaComposer,
       parentSpan: activity.span,
     })
