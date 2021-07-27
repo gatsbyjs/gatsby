@@ -1186,7 +1186,7 @@ export interface Actions {
     node: NodeInput & TNode,
     plugin?: ActionPlugin,
     options?: ActionOptions
-  ): void
+  ): Promise<void>
 
   /** @see https://www.gatsbyjs.com/docs/actions/#touchNode */
   touchNode(node: NodeInput, plugin?: ActionPlugin): void
