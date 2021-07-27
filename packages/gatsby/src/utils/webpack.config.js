@@ -795,6 +795,14 @@ module.exports = async (
       `stage-` + stage
     )
 
+    const resolve = (...parts) => {
+      try {
+        return require.resolve(path.join(...parts));
+      } catch (err) {
+        return ``;
+      }
+    }
+    
     const cacheConfig = {
       type: `filesystem`,
       name: stage,
@@ -807,7 +815,8 @@ module.exports = async (
             .flattenedPlugins.filter(plugin =>
               plugin.nodeAPIs.includes(`onCreateWebpackConfig`)
             )
-            .map(plugin => path.join(plugin.resolve, `gatsby-node.js`)),
+            .map(plugin => resolve(plugin.resolve, `gatsby-node`))
+            .filter(Boolean),
         ],
       },
     }
