@@ -175,26 +175,73 @@ When you build your site, Gatsby looks at the page components in your `src/pages
 
 ### Task: Update route to include a `/blog` path parameter
 
-So far, each of your blog posts are created using just the 
+So far, all of your pages have been created off the root domain of your site (`localhost:8000`). But it would be better (both for search engine optimization and for general organization) if you grouped all your blog posts under a `/blog` path parameter. That way, the URLs for all your blog posts would start with `localhost:8000/blog/`.
 
-BUT WAIT. WHAT IF WE WANT ALL OUR BLOG POSTS TO BE UNDER THE /blog PATH? SO URL WOULD BE `localhost:8000/blog/my-first-post`. HAVE TO CREATE A NEW FOLDER STRUCTURE INSIDE OF PAGES. PAGE URLS REFLECT THE FOLDER STRUCTURE.
+Since Gatsby builds page routes based on the folder structure inside the `src/pages` directory, you can add new path parameters to a page by creating subdirectories inside of `src/pages`.
 
-![WORDS](./file-system-routes-with-blog-subdirectory.png)
+The following diagram shows an overview of the updates you'll have to make in order to add a `/blog` path parameter to the routes for your blog posts. The process is also outlined in more detail below.
 
-1. CREATE src/pages/blog DIRECTORY
-2. MOVE src/pages/{mdx.slug}.js TO src/pages/blog/{mdx.slug}.js
-3. CHECK THAT PATHS IN BROWSER HAVE UPDATED. POSTS NOW AT `localhost:8000/blog/my-first-post`
-4. FOR ORGANIZATION, MOVE src/pages/blog.js INTO src/pages/blog DIRECTORY. CHECK URL IN BROWSER. HAVE TO GO TO `localhost:8000/blog/blog`. (HAVE TO KILL AND RESTART DEVELOP SERVER TO SEE /blog/blog ON 404 PAGE LIST OF PAGES.)
+![A diagram showing a new folder structure for the page components, along with the corresponding routes that get generated. Extended description below.](./file-system-routes-with-blog-subdirectory.png)
+
+<Collapsible
+  summary={<em>Expand for detailed description</em>}
+>
+
+When Gatsby builds the pages for your site, it creates routes based on the folder structure of the `src/pages` directory. So if your `src/pages` directory contains subdirectories with page components, the name of the subdirectory will get added as a path parameter for those pages.
+
+* `src/pages/index.js` still lives at the `/` route.
+* `src/pages/blog/index.js` lives at the `/blog` route.
+* `src/pages/blog/{mdx.slug}.js` gets turned into multiple routes - one for each MDX node in the data layer.
+    * Gatsby uses the MDX node with slug `my-first-post` to build a page that lives at the `blog/my-first-post route`.
+    * Gatsby uses the MDX node with slug `another-post` to build a page that lives at the `blog/another-post route`.
+    * Gatsby uses the MDX node with slug `yet-another-post` to build a page that lives at the `blog/yet-another-post route`.
+
+</Collapsible>
+
+1. Create a new folder in your `src/pages` directory, and call it `blog`.
+
+2. Move the `src/pages/{mdx.slug}.js` file into the new `blog` subdirectory. Update the import for your `Layout` component to reflect the new folder structure:
+```js:title=src/pages/blog/{mdx.slug}.js
+import * as React from 'react'
+import Layout from '../../components/layout' // highlight-line
+
+// ...
+```
+
+3. Once your local development server rebuilds your site, check in a web browser that the paths to your blog posts have updated.
+    * For example, you should now have a page at `localhost:8000/blog/my-first-post`, and trying to access `localhost:8000/my-first-post` (without the `blog` path parameter) should send you to the 404 page.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-GATSBY CLEAN. MOVING STUFF AROUND CAN CAUSE PROBLEMS WITH WHAT GATSBY HAS CACHED. TO CLEAN THE CACHE, RUN gatsby clean. DON'T HAVE GATSBY GLOBALLY INSTALLED? RUN npx gatsby clean INSTEAD.
+**Pro Tip:** Gatsby caches information about your site as it builds it, to make subsequent builds faster. But sometimes, when you make changes to your site, you'll need to empty the cache for your changes to show up.
+
+If you're seeing unexpected behavior (like maybe your local development server isn't picking up your new changes), you can run `gatsby clean` from the command line to delete the cache and start fresh on your next build.
+
+Don't have the Gatsby CLI globally installed? Try running `npx gatsby clean` instead.
 
 </Announcement>
 
-5. UPDATE FILENAME TO src/pages/blog/index.js. CHECK THAT PAGE SHOWS UP AT `localhost:8000/blog`. HAVE TO KILL AND RESTART DEVELOP SERVER TO SEE IT SHOW UP IN 404 PAGE LIST OF PAGES.
+4. For organization, it would be nice to keep all your blog-related pages together. Move the `src/pages/blog.js` file into your new `src/pages/blog` directory as well.
+    * Rename the file from `blog.js` to `index.js`. (Otherwise your blog page will move to `localhost:8000/blog/blog`).
+    * You'll also need to update the import for the `Layout` component to reflect the new folder structure:
+        ```js:title=src/pages/blog/index.js
+        import * as React from 'react'
+        import { graphql } from 'gatsby'
+        import { MDXRenderer } from 'gatsby-plugin-mdx'
+        import Layout from '../../components/layout' // highlight-line
+
+        // ...
+        ```
+    * You may need to stop and restart your local development server for the changes to be picked up.
+
+5. In a web browser, check that your Blog page still shows up at `localhost:8000/blog`.
+
+Nice work! You've now used Gatsby's file system route API to create pages from nodes in the data layer.
+
 
 ## TASK: RENDER BLOG POST CONTENTS IN POST PAGE TEMPLATE
+
+Now that you've got all the pages for your posts set up, it's time to pull in the actual post contents. To do that, you'll need to give your blog post page template a way to tell Gatsby which MDX node to pull into each page.
 
 PRINT OUT PROPS, TO SEE THE PAGECONTEXT THAT GETS ADDED. FS ROUTE API ADDS ID AND THE FIELD YOU USED IN THE PATH.
 
