@@ -11,7 +11,6 @@ module.exports = {
         // Use: https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/
         spaceId: `k8iqpp6u0ior`,
         accessToken: `hO_7N0bLaCJFbu5nL3QVekwNeB_TNtg6tOCB_9qzKUw`,
-        enableTags: true,
         downloadLocal: true,
       },
     },
