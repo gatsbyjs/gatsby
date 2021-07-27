@@ -2,15 +2,18 @@
 import type { GraphQLEngine } from "../../schema/graphql-engine/entry"
 import type { IExecutionResult } from "../../query/types"
 import type { IGatsbyPage } from "../../redux/types"
+import type { IScriptsAndStyles } from "../client-assets-for-template"
 // import type { IPageDataWithQueryResult } from "../page-data/write-page-data"
 
 // actual imports
 import * as path from "path"
 import { writePageData } from "../page-data/write-page-data"
+import htmlComponentRenderer from "./render-page"
 
 export interface ITemplateDetails {
   query: string
   staticQueryHashes: Array<string>
+  assets: IScriptsAndStyles
 }
 export interface ISSRData {
   results: IExecutionResult
@@ -48,7 +51,6 @@ export async function getData({
   }
 
   // 3. Execute query
-
   // query-runner handles case when query is not there - so maybe we should consider using that somehow
   let results: IExecutionResult = {}
   if (templateDetails.query) {
@@ -78,4 +80,24 @@ export async function getPageData({
     },
     data.results
   )
+}
+
+export async function renderHTML({
+  data,
+  pageData,
+}: {
+  data: ISSRData
+  pageData?: any
+}): Promise<any> {
+  if (!pageData) {
+    const results = await getPageData({ data })
+    pageData = results.body
+  }
+
+  return htmlComponentRenderer({
+    pagePath: data.page.path,
+    pageData,
+    staticQueryContext: {}, // TODO: handle static query results map
+    ...data.templateDetails.assets,
+  })
 }

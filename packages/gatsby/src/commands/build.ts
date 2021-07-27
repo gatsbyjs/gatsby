@@ -57,6 +57,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   }
   report.setVerbose(program.verbose)
 
+  if (isLmdbStore()) {
+    // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
+    program.keepPageRenderer = true
+  }
+
   if (program.profile) {
     report.warn(
       `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/#performance-impact`
@@ -92,9 +97,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     parentSpan: buildSpan,
   })
 
-  // bundle graphql-engine and page ssr module
+  const engineBundlingPromises: Array<Promise<any>> = []
+
+  // bundle graphql-engine
   if (isLmdbStore()) {
-    await Promise.all([createGraphqlEngineBundle(), createPageSSRBundle()])
+    engineBundlingPromises.push(createGraphqlEngineBundle())
   }
 
   const graphqlRunner = new GraphQLRunner(store, {
@@ -164,6 +171,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildActivityTimer.end()
   }
 
+  // client bundle is produced so static query maps should be ready
+  if (isLmdbStore()) {
+    engineBundlingPromises.push(createPageSSRBundle())
+  }
+
   const webpackCompilationHash = stats.hash
   if (
     webpackCompilationHash !== store.getState().webpackCompilationHash ||
@@ -224,6 +236,15 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   try {
     const result = await buildRenderer(program, Stage.BuildHTML, buildSpan)
     pageRenderer = result.rendererPath
+    // for nowy copy it to `.cache`
+    if (isLmdbStore()) {
+      engineBundlingPromises.push(
+        fs.copyFile(
+          result.rendererPath,
+          path.join(program.directory, `.cache`, `page-ssr`, `render-page.js`)
+        )
+      )
+    }
     waitForCompilerCloseBuildHtml = result.waitForCompilerClose
   } catch (err) {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
@@ -320,6 +341,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
     report.info(`.cache/deletedPages.txt created`)
   }
+
+  await Promise.all(engineBundlingPromises)
 
   showExperimentNotices()
 

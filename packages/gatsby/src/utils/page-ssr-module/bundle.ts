@@ -7,6 +7,11 @@ import resolve from "@rollup/plugin-node-resolve"
 
 import type { ITemplateDetails } from "./entry"
 
+import {
+  getScriptsAndStylesForTemplate,
+  readWebpackStats,
+} from "../client-assets-for-template"
+
 const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
 
 const outputOptions = {
@@ -15,14 +20,23 @@ const outputOptions = {
 }
 
 export async function createPageSSRBundle(): Promise<any> {
+  const { program, components } = store.getState()
+  const webpackStats = await readWebpackStats(
+    path.join(program.directory, `public`)
+  )
+
   const toInline: Record<string, ITemplateDetails> = {}
-  for (const pageTemplate of store.getState().components.values()) {
+  for (const pageTemplate of components.values()) {
     toInline[pageTemplate.componentChunkName] = {
       query: pageTemplate.query,
       staticQueryHashes:
         store
           .getState()
           .staticQueriesByTemplate.get(pageTemplate.componentPath) || [],
+      assets: await getScriptsAndStylesForTemplate(
+        pageTemplate.componentChunkName,
+        webpackStats
+      ),
     }
   }
   const inputOptions = {
@@ -36,6 +50,7 @@ export async function createPageSSRBundle(): Promise<any> {
       resolve(),
       commonjs(),
     ],
+    external: [`./render-page`],
   }
 
   const bundle = await rollup.rollup(inputOptions)
