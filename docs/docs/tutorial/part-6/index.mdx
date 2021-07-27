@@ -41,7 +41,7 @@ By the end of this part of the Tutorial, you will be able to:
 - Use Gatsby's filesystem route API to dynamically create new pages for your blog posts.
 - Add a query variable to a page query.
 
-## Create new routes dynamically with Gatsby's File System Route API.
+## Create new routes dynamically with Gatsby's File System Route API
 
 When you build your Gatsby site, Gatsby creates a new route for each page component in your `src/pages` directory. So far, you've only been building one page per file: the `index.js` file creates the Home page, the `about.js` file creates the About page, and the `blog.js` file creates the Blog page.
 
@@ -64,13 +64,65 @@ To create a collection route:
 
 For example, if you wanted to create a separate page for each `Product` node, and you wanted to use the product's `name` field in the URL, you'd create a new file at `src/pages/{Product.name}.js`. Then Gatsby would create those pages at routes like `/water-bottle` or `/sweatshirt` or `/notebook`.
 
-HOW COLLECTION ROUTES WORK. SOMETHING ABOUT PROPS THAT GET ADDED TO THE COMPONENT.
-
-EXAMPLE OF QUERY/RESULT. LIST THE ROUTES THAT WOULD BE CREATED FOR THAT DATA.
-
 </Collapsible>
 
-In this part of the Tutorial, you'll use Gatsby's file system route API to dynamically create new pages for each of your blog posts. THE diagram BELOW SHOWS SOMETHING.
+In this part of the Tutorial, you'll use Gatsby's file system route API to dynamically create new pages for each of your blog posts.
+
+According to the file system route API, you need to decide on two things before creating a collection route:
+
+* Which *type* of node to create pages from.
+* Which *field* from that node type to use in the URL.
+
+Since your blog posts are written in MDX, you'll use MDX as the node type to create pages from. But which field on the MDX nodes should you use?
+
+`gatsby-plugin-mdx` automatically adds a `slug` field to each MDX node, which contains a string of the filename for the `.mdx` file (with the `.mdx` extension removed). You can see the `slug` field's value for each MDX node in GraphiQL. If you run the following query:
+
+```graphql
+{
+  allMdx {
+    nodes {
+      slug
+    }
+  }
+}
+```
+
+...you should get back something like the result below:
+
+```json
+{
+  "data": {
+    "allMdx": {
+      "nodes": [
+        {
+          "slug": "my-first-post"
+        },
+        {
+          "slug": "yet-another-post"
+        },
+        {
+          "slug": "another-post"
+        }
+      ]
+    }
+  },
+  "extensions": {}
+}
+```
+
+That looks like a good format for a URL!
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Note:** In this case, the `slug` field is a good choice because it's human readable, which means the URLs for your blog posts will be easier for users to understand. But you can use any field in your routes!
+
+</Announcement>
+
+### Task: Create blog post page template
+
+Now that you know what node type and field to use, you can plug them into the file system routes naming convention. To create new pages from the `slug` field of your MDX nodes, you should make a new file at `src/pages/{mdx.slug}.js`.
+
+The diagram below shows the different routes that Gatsby will create when it builds your site:
 
 ![A diagram showing how files in the "src/pages" directory get turned into routes for the site. Extended description below.](./file-system-routes.png)
 
@@ -89,34 +141,41 @@ When you build your site, Gatsby looks at the page components in your `src/pages
 
 </Collapsible>
 
-COLLECTION ROUTES. CREATE A FILE WITH THE `src/pages/{mdx.slug}` NAME. IT HAS TO BE IN SRC/PAGES. THIS CREATES THE NEW PAGES, USING THE SLUG AS THE URL PATH.
-LOOK AT GRAPHIQL. GET EACH POST'S SLUG.
+1. Create a new file in your `src/pages` directory called `{mdx.slug}.js`. This will be the file for your blog post page template.
 
-USE THE SLUG BECAUSE IT'S MORE HUMAN-READABLE THAN THE ID. BUT COULD USE THE ID IF NAMES AREN'T GUARANTEED TO BE UNIQUE, LIKE FOR PRODUCTS.
+2. Create a basic page component in your new `{mdx.slug}.js` file. For now, add in the `Layout` component, but hard code the page title and page contents. (You'll make those dynamic later on.)
+    ```js:title=src/pages/{mdx.slug}.js
+    import * as React from 'react'
+    import Layout from '../components/layout'
 
-```js:title=src/pages/{mdx.slug}.js
-import * as React from 'react'
+    const BlogPost = () => {
+      return (
+        <Layout pageTitle="Super Cool Blog Posts">
+          <p>My blog post contents will go here (eventually).</p>
+        </Layout>
+      )
+    }
 
-const BlogPost = () => {
-  return (
-    <p>My blog post contents will go here (eventually).</p>
-  )
-}
+    export default BlogPost
+    ```
 
-export default BlogPost
-```
+3. In a web browser, go to `localhost:8000/my-first-post` and you should see your hard-coded content. You can update your URL with the slugs for your other posts to check that identical pages were created for them too.
 
-Go to `localhost:8000/my-first-post` and you should see your content. Can check again at the other slugs. (Get slugs from the file names or from GraphiQL.)
+![A screenshot of the blog post template page in a web browser. The page title says, "Super Cool Blog Posts," and the post contents have a paragraph element that says, "My blog post contents will go here (eventually)."](./post-page-template-hardcoded.png)
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-YOU CAN SEE ALL THE PAGES CREATED ON THE 404 PAGE WHEN YOU RUN THE DEVELOP SERVER. GO TO A FAKE URL, AND THERE WILL BE A LIST OF PAGES CREATED FOR YOUR SITE.
+**Pro Tip:** Not sure which pages were created? Check out the 404 page when you run `gatsby develop`. (You can get to it by trying to access the URL for a page that doesn't exist.) The bottom of the page lists the routes for all the pages Gatsby created for your site.
+
+(If you're making changes to your routes, you'll have to stop and restart your local development server for the list of pages on the 404 page to update.)
+
+![A screenshot of the development 404 page in a web browser. The URL is "localhost:8000/fake-route" and the 404 page shows an error message followed by a list of links to existing pages.](./404-page-with-routes.png)
 
 </Announcement>
 
-PRO TIP: IF YOU WANT TO HAVE MORE CONTROL OVER THE DIFFERENT NODES, TO ADD EXTRA FIELDS OR WHATEVER, YOU CAN USE THE GATSBY-NODE API. BUT THAT'S OUT OF SCOPE FOR THIS TUTORIAL. (MAYBE LEAVE THIS AS A SUGGESTED NEXT STEP IN THE "WHAT'S NEXT" SECTION.)
+### Task: Update route to include a `/blog` path parameter
 
-### TASK: UPDATE PATH TO INCLUDE BLOG URL PATH
+So far, each of your blog posts are created using just the 
 
 BUT WAIT. WHAT IF WE WANT ALL OUR BLOG POSTS TO BE UNDER THE /blog PATH? SO URL WOULD BE `localhost:8000/blog/my-first-post`. HAVE TO CREATE A NEW FOLDER STRUCTURE INSIDE OF PAGES. PAGE URLS REFLECT THE FOLDER STRUCTURE.
 
