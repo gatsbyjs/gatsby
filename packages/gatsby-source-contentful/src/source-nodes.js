@@ -337,6 +337,7 @@ export async function sourceNodes(
   )
   creationActivity.start()
 
+  // Create nodes for each entry of each content type
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
 
