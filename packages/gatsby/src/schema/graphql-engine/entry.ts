@@ -53,10 +53,16 @@ export class GraphQLEngine {
     // instead of `pages` redux slice
     const state = ({
       pages: {
-        get(pathname: string) {
-          return getDataStore().getNode(`SitePage ${pathname}`)
+        get(pathname: string): IGatsbyPage | undefined {
+          return getDataStore().getNode(`SitePage ${pathname}`) as
+            | IGatsbyPage
+            | undefined
         },
-        [Symbol.iterator]: () => getDataStore().iterateNodesByType(`SitePage`),
+        values(): Iterable<IGatsbyPage> {
+          return getDataStore().iterateNodesByType(`SitePage`) as Iterable<
+            IGatsbyPage
+          >
+        },
       },
     } as unknown) as IGatsbyState
 
