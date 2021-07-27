@@ -170,7 +170,12 @@ export function generateSchema({
     schema.buildObjectType({
       name: `ContentfulMetadata`,
       fields: {
-        tags: { type: `[ContentfulTag]!` },
+        tags: {
+          type: `[ContentfulTag]!`,
+          extensions: {
+            link: { by: `id`, from: `tags___NODE` },
+          },
+        },
       },
       extensions: { dontInfer: {} },
     })
