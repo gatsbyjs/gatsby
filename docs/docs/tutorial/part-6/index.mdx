@@ -30,7 +30,7 @@ import { MdInfo } from 'react-icons/md'
 
 ## Introduction
 
-In Part 5, you added all of your blog posts to your Blog page. But that means that your Blog page will get longer and longer as you add more posts to your site. It would be better if each post lived on its own page, and then your Blog page could link out to all the different posts.
+In [Part 5](/docs/tutorial/part-5/), you added all of your blog posts to your Blog page. But that means that your Blog page will get longer and longer as you add more posts to your site. It would be better if each post lived on its own page, and then your Blog page could link out to all the different posts.
 
 So far, the way you've created new pages for your Gatsby site is by creating a new file in the `src/pages` directory and hard-coding the page's contents in JSX. But manually creating a new page for each post would be quite repetitive, especially since each page has the same structure: render the frontmatter and contents of an MDX file.
 
@@ -239,99 +239,210 @@ Don't have the Gatsby CLI globally installed? Try running `npx gatsby clean` ins
 Nice work! You've now used Gatsby's file system route API to create pages from nodes in the data layer.
 
 
-## TASK: RENDER BLOG POST CONTENTS IN POST PAGE TEMPLATE
+## Render post contents in the blog post page template
 
-Now that you've got all the pages for your posts set up, it's time to pull in the actual post contents. To do that, you'll need to give your blog post page template a way to tell Gatsby which MDX node to pull into each page.
-
-PRINT OUT PROPS, TO SEE THE PAGECONTEXT THAT GETS ADDED. FS ROUTE API ADDS ID AND THE FIELD YOU USED IN THE PATH.
-
-```js:title=src/pages/{mdx.slug}.js
-import * as React from 'react'
-
-const BlogPost = (props) => {
-  console.log(props)
-
-  return (
-    <p>My blog post contents will go in here (eventually).</p>
-  )
-}
-
-export default BlogPost
-```
-
-```js
-Object {
-  // ...
-  pageContext: Object { 
-    id: "11b3a825-30c5-551d-a713-dd748e7d554a"
-    slug: "my-first-post"
-  }
-  // ...
-}
-```
-THESE ARE THE KEYS YOU CAN USE AS QUERY VARIABLES. id AND slug.
-PAGECONTEXT GETS CONNECTED TO QUERY VARIABLES, SOMEHOW.
+Now that you've got all the pages for your posts set up, it's time to pull in the actual post contents. You learned in [Part 4](/docs/tutorial/part-4/) that you can pull data into your components using GraphQL queries. But how can you tell Gatsby which MDX node from the data layer to pull into each page? To do that, you'll need to learn about another key GraphQL concept: **query variables**.
 
 <Collapsible
-  summary="query variables"
+  summary={<h3>Key GraphQL Concept: Query Variables</h3>}
 >
 
-SHOW QUERYING FOR A SINGLE POST USING AN INLINE ARGUMENT (HARD-CODE THE SLUG).
+In GraphQL, query variables are a way to send extra data along with your request. With query variables, you can write dynamic queries that return different data based on the values you pass in.
 
-THEN SWITCH TO USE QUERY VARIABLE.
+Let's take a look at an example in GraphiQL. In [Part 5](/docs/tutorial/part-5/), you learned about passing arguments to fields to change the data you get back in the response. For example, you could use the query below to request data for the MDX node that has a `slug` field equal to `"another-post"`:
+
+```graphql
+query MyQuery {
+  mdx(slug: {eq: "another-post"}) {
+    frontmatter {
+      title
+    }
+  }
+}
+```
+
+...which would return the following response:
+
+```json
+{
+  "data": {
+    "mdx": {
+      "frontmatter": {
+        "title": "Another Post"
+      }
+    }
+  },
+  "extensions": {}
+}
+```
+
+In this case, your `slug` value is hard coded into your GraphQL query. But what happens if you want to swap out a different value on a different page? That's where query variables come in.
+
+GraphiQL has a collapsible "Query Variables" section at the bottom of the Query Editor pane. If you click on it, a new text area appears, where you can add key-value pairs for data that you want to pass into your query. These key-value pairs should be written in JSON. For example, adding the object below to the Query Variables section passes your request a query variable called `slug` with a value of `another-post`:
+
+```json
+{
+	"slug": "another-post"
+}
+```
+
+To use the query variable inside your query, do the following:
+
+1. **Define your query variable.** It should include the variable name (with a `$` in front of it) and its GraphQL data type.
+2. **Use the query variable in your query.** (You'll need to add a `$` before the variable name.)
+
+For example, here's how you would update the previous query to use query variables instead of a field argument:
+
+```graphql
+query MyQuery($slug: String) {
+  mdx(slug: {eq: $slug}) {
+    frontmatter {
+      title
+    }
+  }
+}
+```
+
+Running this new query should return the same response as the previous one without query variables. But now, you can swap out the value of your `slug` variable with a different value, like `"my-first-post"`, and your response will send back the correct node.
+
+The diagram below shows how the query, query variables, and response all fit together in the GraphiQL interface:
+
+![A screenshot of GraphiQL in a web browser. The Query Editor pane in the middle shows the request with query variables. The Query Variables pane below shows a JSON object with a single key-value pair for the `slug`. The Result Window shows the single MDX node returned in the response.](./graphiql-with-query-variables.png)
+
+<Announcement>
+
+**Note:** In Gatsby, query variables can *only* be used inside of page queries. (You can't use them with the `useStaticQuery` hook.)
+
+</Announcement>
 
 </Collapsible>
 
-CREATE BLOG POST QUERY, USING QUERY VARIABLE FROM PAGECONTEXT. SLUG FROM PAGECONTEXT GETS PASSED INTO QUERY AS QUERY VARIABLE (AUTOMATICALLY?).
+When you use Gatsby's file system route API, it automatically adds some props into the page template component for each page:
 
-```js:title=src/pages/{mdx.slug}.js
-export const query = graphql`
-query($id: String) {
-  mdx(id: {eq: $id}) {
-    frontmatter {
-      date
-      title
+* The `id` for the data layer node it used to create the page.
+* The field you used to create the dynamic part of the route. (In this case, the `slug` field.)
+
+Under the hood, Gatsby makes both of these values available to use as query variables in your page queries.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Want to take a closer look?**
+
+1. Add a `console.log` statement to print out the props for your `BlogPost` page component in `src/pages/blog/{mdx.slug}.js`.
+2. In a web browser, go to `localhost:8000/blog/my-first-post` and open the developer tools. In the console tab, you should see an object similar to the one below:
+    ```js
+    Object {
+      // ...
+      pageContext: Object { 
+        id: "11b3a825-30c5-551d-a713-dd748e7d554a"
+        slug: "my-first-post"
+      }
+      // ...
     }
-    body
-  }
+    ```
+
+The keys in the `pageContext` object get added when you create a page using the file system route API. These are also the keys that are available for you to use as query variables in your page query for the blog post page template.
+
+</Announcement>
+
+1. Start by using GraphiQL to create a page query for  your blog post page template.
+    * Since each page only needs data for a single MDX node, use the `mdx` field.
+    * The fastest way to look up nodes is using the `id` field, so use the `id` query variable instead of `slug`.
+    ```graphql
+    query MyQuery($id: String) {
+      mdx(id: {eq: $id}) {
+        frontmatter {
+          title
+          date(formatString: "MMMM D, YYYY")
+        }
+        body
+      }
+    }
+    ```
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Tip:** If you want to test out your query in GraphiQL, you'll need to add an `id` key to the Query Variables section. You can copy one of the `id` values from running an `allMdx` query.
+
+The JSON object in the Query Variables section should look something like this:
+
+```json
+{
+	"id": "11b3a825-30c5-551d-a713-dd748e7d554a"
 }
-`
 ```
 
-ADD LAYOUT COMPONENT AND RENDER DATA IN PAGE TEMPLATE.
+</Announcement>
 
-```js:title=src/pages/{mdx.slug}.js
-import * as React from 'react'
-import { graphql } from 'gatsby'
-import Layout from '../../components/layout'
-import { MDXRenderer } from 'gatsby-plugin-mdx'
+2. Add your page query to the blog post page template. Don't forget to import the `graphql` tag!
+    ```js:title=src/pages/blog/{mdx.slug}.js
+    import * as React from 'react'
+    import { graphql } from 'gatsby' // highlight-line
+    import Layout from '../../components/layout'
 
-const BlogPost = ({ data }) => {
-
-  return (
-    <Layout pageTitle={data.mdx.frontmatter.title}>
-      <p>{data.mdx.frontmatter.date}</p>
-      <MDXRenderer>
-        {data.mdx.body}
-      </MDXRenderer>
-    </Layout>
-  )
-}
-
-export const query = graphql`
-query($id: String) {
-  mdx(id: {eq: $id}) {
-    frontmatter {
-      date(formatString: "MMMM D, YYYY")
-      title
+    const BlogPost = () => {
+      return (
+        <Layout pageTitle="Super Cool Blog Posts">
+          <p>My blog post contents will go here (eventually).</p>
+        </Layout>
+      )
     }
-    body
-  }
-}
-`
 
-export default BlogPost
-```
+    // highlight-start
+    export const query = graphql`
+      query MyQuery($id: String) {
+        mdx(id: {eq: $id}) {
+          frontmatter {
+            title
+            date(formatString: "MMMM D, YYYY")
+          }
+          body
+        }
+      }
+    `
+    // highlight-end
+
+    export default BlogPost
+    ```
+
+3. In [Part 4](/docs/tutorial/part-4/), you learned that Gatsby passes in the results from your page query into your page component as a `data` prop. You can update your `BlogPost` component to use the `data` prop and render the contents of your blog post. (Remember to import `MDXRenderer` so that you can render the body of your post!)
+    ```js:title=src/pages/blog/{mdx.slug}.js
+    import * as React from 'react'
+    import { graphql } from 'gatsby'
+    import { MDXRenderer } from 'gatsby-plugin-mdx' // highlight-line
+    import Layout from '../../components/layout'
+
+    const BlogPost = ({ data }) => { // highlight-line
+      return (
+        {/* highlight-start */}
+        <Layout pageTitle={data.mdx.frontmatter.title}>
+          <p>{data.mdx.frontmatter.date}</p>
+          <MDXRenderer>
+            {data.mdx.body}
+          </MDXRenderer>
+        {/* highlight-end */}
+        </Layout>
+      )
+    }
+
+    export const query = graphql`
+      query MyQuery($id: String) {
+        mdx(id: {eq: $id}) {
+          frontmatter {
+            title
+            date(formatString: "MMMM D, YYYY")
+          }
+          body
+        }
+      }
+    `
+
+    export default BlogPost
+    ```
+
+4. In your web browser, go to one of your blog post pages (like `localhost:8000/blog/my-first-post`). You should see the contents of your blog post rendered in their own page!
+
+![A screenshot of the "my-first-post" blog page in a web browser. The post's title, date, and body contents are rendered.](./my-first-post.png)
 
 ## TASK: UPDATE BLOG PAGE TO LINK TO PAGES
 
