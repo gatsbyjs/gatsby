@@ -530,7 +530,7 @@ export const createNodesForContentType = ({
       })
       .filter(Boolean)
 
-    // Create a node for each content type
+    // Create a node for given content type item
     const contentTypeNode = {
       id: createNodeId(contentTypeItemId),
       name: contentTypeItem.name,

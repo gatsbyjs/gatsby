@@ -398,6 +398,7 @@ export async function sourceNodes(
   )
   creationActivity.start()
 
+  // Create nodes for each entry of each content type
   for (let i = 0; i < contentTypeItems.length; i++) {
     const contentTypeItem = contentTypeItems[i]
 
@@ -438,20 +439,19 @@ export async function sourceNodes(
 
   if (assets.length) {
     reporter.info(`Creating ${assets.length} Contentful asset nodes`)
-  }
-
-  for (let i = 0; i < assets.length; i++) {
-    // We wait for each asset to be process until handling the next one.
-    await Promise.all(
-      createAssetNodes({
-        assetItem: assets[i],
-        createNode,
-        createNodeId,
-        defaultLocale,
-        locales,
-        space,
-      })
-    )
+    for (let i = 0; i < assets.length; i++) {
+      // We wait for each asset to be process until handling the next one.
+      await Promise.all(
+        createAssetNodes({
+          assetItem: assets[i],
+          createNode,
+          createNodeId,
+          defaultLocale,
+          locales,
+          space,
+        })
+      )
+    }
   }
 
   // Create tags entities
