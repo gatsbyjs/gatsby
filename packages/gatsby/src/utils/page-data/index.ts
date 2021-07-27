@@ -4,42 +4,24 @@ import reporter from "gatsby-cli/lib/reporter"
 import fastq from "fastq"
 import path from "path"
 import { createContentDigest } from "gatsby-core-utils"
-import { IGatsbyPage } from "../redux/types"
-import { websocketManager } from "./websocket-manager"
-import { isWebpackStatusPending } from "./webpack-status"
-import { store } from "../redux"
-import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
-import { isLmdbStore } from "../datastore"
-import type GatsbyCacheLmdb from "./cache-lmdb"
+import { IGatsbyPage } from "../../redux/types"
+import { websocketManager } from "../websocket-manager"
+import { isWebpackStatusPending } from "../webpack-status"
+import { store } from "../../redux"
+import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../../redux/reducers/queries"
+import { isLmdbStore } from "../../datastore"
+import {
+  writePageData,
+  IPageDataWithQueryResult,
+  getFilePath,
+  fixedPagePath,
+} from "./write-page-data"
+import type GatsbyCacheLmdb from "../cache-lmdb"
 
-import { IExecutionResult } from "../query/types"
-
-interface IPageData {
-  componentChunkName: IGatsbyPage["componentChunkName"]
-  matchPath?: IGatsbyPage["matchPath"]
-  path: IGatsbyPage["path"]
-  staticQueryHashes: Array<string>
-}
-
-export interface IPageDataWithQueryResult extends IPageData {
-  result: IExecutionResult
-}
-
-export function fixedPagePath(pagePath: string): string {
-  return pagePath === `/` ? `index` : pagePath
-}
+export { fixedPagePath, IPageDataWithQueryResult }
 
 export function reverseFixedPagePath(pageDataRequestPath: string): string {
   return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
-}
-
-function getFilePath(publicDir: string, pagePath: string): string {
-  return path.join(
-    publicDir,
-    `page-data`,
-    fixedPagePath(pagePath),
-    `page-data.json`
-  )
 }
 
 export async function readPageData(
@@ -130,44 +112,6 @@ export async function readPageQueryResult(
   }
 }
 
-export async function writePageData(
-  publicDir: string,
-  {
-    componentChunkName,
-    matchPath,
-    path: pagePath,
-    staticQueryHashes,
-  }: IPageData
-): Promise<IPageDataWithQueryResult> {
-  const result = await readPageQueryResult(publicDir, pagePath)
-
-  const outputFilePath = getFilePath(publicDir, pagePath)
-  const body = {
-    componentChunkName,
-    path: pagePath,
-    matchPath,
-    result,
-    staticQueryHashes,
-  }
-
-  const bodyStr = JSON.stringify(body)
-  // transform asset size to kB (from bytes) to fit 64 bit to numbers
-  const pageDataSize = Buffer.byteLength(bodyStr) / 1000
-
-  store.dispatch({
-    type: `ADD_PAGE_DATA_STATS`,
-    payload: {
-      pagePath,
-      filePath: outputFilePath,
-      size: pageDataSize,
-      pageDataHash: createContentDigest(bodyStr),
-    },
-  })
-
-  await fs.outputFile(outputFilePath, bodyStr)
-  return body
-}
-
 let isFlushPending = false
 let isFlushing = false
 
@@ -198,6 +142,7 @@ export async function flush(): Promise<void> {
     0
   )
   writePageDataActivity.start()
+  const publicDir = path.join(program.directory, `public`)
 
   const flushQueue = fastq(async (pagePath, cb) => {
     const page = pages.get(pagePath)
@@ -234,20 +179,33 @@ export async function flush(): Promise<void> {
       const staticQueryHashes =
         staticQueriesByTemplate.get(page.componentPath) || []
 
-      const result = await writePageData(
-        path.join(program.directory, `public`),
+      const pageQueryResult = await readPageQueryResult(publicDir, pagePath)
+      const { body, stringifiedBody, outputFilePath } = await writePageData(
+        publicDir,
         {
           ...page,
           staticQueryHashes,
-        }
+        },
+        pageQueryResult
       )
+
+      const pageDataSize = Buffer.byteLength(stringifiedBody) / 1000
+      store.dispatch({
+        type: `ADD_PAGE_DATA_STATS`,
+        payload: {
+          pagePath,
+          filePath: outputFilePath,
+          size: pageDataSize,
+          pageDataHash: createContentDigest(stringifiedBody),
+        },
+      })
 
       writePageDataActivity.tick()
 
       if (program?._?.[0] === `develop`) {
         websocketManager.emitPageData({
           id: pagePath,
-          result,
+          result: body,
         })
       }
     }

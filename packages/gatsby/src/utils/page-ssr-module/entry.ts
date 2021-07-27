@@ -1,4 +1,27 @@
+// just types - those should not be bundled
 import type { GraphQLEngine } from "../../schema/graphql-engine/entry"
+import type { IExecutionResult } from "../../query/types"
+import type { IGatsbyPage } from "../../redux/types"
+// import type { IPageDataWithQueryResult } from "../page-data/write-page-data"
+
+// actual imports
+import * as path from "path"
+import { writePageData } from "../page-data/write-page-data"
+
+export interface ITemplateDetails {
+  query: string
+  staticQueryHashes: Array<string>
+}
+export interface ISSRData {
+  results: IExecutionResult
+  page: IGatsbyPage
+  templateDetails: ITemplateDetails
+}
+
+const pageTemplateDetailsMap: Record<
+  string,
+  ITemplateDetails
+> = INLINED_TEMPLATE_TO_DETAILS
 
 export async function getData({
   pathName,
@@ -6,7 +29,7 @@ export async function getData({
 }: {
   graphqlEngine: GraphQLEngine
   pathName: string
-}): Promise<any> {
+}): Promise<ISSRData | null> {
   // 1. Find a page for pathname
   const page = graphqlEngine.findPageByPath(pathName)
   if (!page) {
@@ -16,9 +39,8 @@ export async function getData({
   }
 
   // 2. Lookup query used for a page (template)
-  const pageTemplateDetails =
-    INLINED_TEMPLATE_TO_DETAILS[page.componentChunkName]
-  if (!pageTemplateDetails) {
+  const templateDetails = pageTemplateDetailsMap[page.componentChunkName]
+  if (!templateDetails) {
     console.log(
       `couldn't find page template details for "${page.componentChunkName}`
     )
@@ -28,9 +50,9 @@ export async function getData({
   // 3. Execute query
 
   // query-runner handles case when query is not there - so maybe we should consider using that somehow
-  let results = {}
-  if (pageTemplateDetails.query) {
-    results = await graphqlEngine.runQuery(pageTemplateDetails.query, {
+  let results: IExecutionResult = {}
+  if (templateDetails.query) {
+    results = await graphqlEngine.runQuery(templateDetails.query, {
       ...page,
       ...page.context,
     })
@@ -38,5 +60,22 @@ export async function getData({
 
   results.pageContext = page.context
 
-  return results
+  return { results, page, templateDetails }
+}
+
+export async function getPageData({
+  data,
+}: {
+  data: ISSRData
+}): Promise<ReturnType<typeof writePageData>> {
+  return writePageData(
+    path.join(process.cwd(), `public`),
+    {
+      componentChunkName: data.page.componentChunkName,
+      path: data.page.path,
+      matchPath: data.page.matchPath,
+      staticQueryHashes: data.templateDetails.staticQueryHashes,
+    },
+    data.results
+  )
 }

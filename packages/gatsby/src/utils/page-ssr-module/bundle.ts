@@ -2,6 +2,10 @@ import * as path from "path"
 const rollup = require(`rollup`)
 import replace from "@rollup/plugin-replace"
 import { store } from "../../redux"
+import commonjs from "@rollup/plugin-commonjs"
+import resolve from "@rollup/plugin-node-resolve"
+
+import type { ITemplateDetails } from "./entry"
 
 const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
 
@@ -11,10 +15,14 @@ const outputOptions = {
 }
 
 export async function createPageSSRBundle(): Promise<any> {
-  const toInline = {}
+  const toInline: Record<string, ITemplateDetails> = {}
   for (const pageTemplate of store.getState().components.values()) {
     toInline[pageTemplate.componentChunkName] = {
       query: pageTemplate.query,
+      staticQueryHashes:
+        store
+          .getState()
+          .staticQueriesByTemplate.get(pageTemplate.componentPath) || [],
     }
   }
   const inputOptions = {
@@ -25,6 +33,8 @@ export async function createPageSSRBundle(): Promise<any> {
           INLINED_TEMPLATE_TO_DETAILS: JSON.stringify(toInline),
         },
       }),
+      resolve(),
+      commonjs(),
     ],
   }
 
