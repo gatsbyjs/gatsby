@@ -3,7 +3,7 @@ import type { GraphQLEngine } from "../../schema/graphql-engine/entry"
 import type { IExecutionResult } from "../../query/types"
 import type { IGatsbyPage } from "../../redux/types"
 import type { IScriptsAndStyles } from "../client-assets-for-template"
-// import type { IPageDataWithQueryResult } from "../page-data/write-page-data"
+import type { IPageDataWithQueryResult } from "../page-data/write-page-data"
 
 // actual imports
 import * as path from "path"
@@ -36,22 +36,20 @@ export async function getData({
 }: {
   graphqlEngine: GraphQLEngine
   pathName: string
-}): Promise<ISSRData | null> {
+}): Promise<ISSRData> {
   // 1. Find a page for pathname
   const page = graphqlEngine.findPageByPath(pathName)
   if (!page) {
     // page not found, nothing to run query for
-    console.log(`Page "${pathName}" not found`)
-    return null
+    throw new Error(`Page for "${pathName}" not found`)
   }
 
   // 2. Lookup query used for a page (template)
   const templateDetails = pageTemplateDetailsMap[page.componentChunkName]
   if (!templateDetails) {
-    console.log(
-      `couldn't find page template details for "${page.componentChunkName}`
+    throw new Error(
+      `Page template details for "${page.componentChunkName}" not found`
     )
-    return null
   }
 
   // 3. Execute query
@@ -69,12 +67,12 @@ export async function getData({
   return { results, page, templateDetails }
 }
 
-export async function getPageData({
+export async function renderPageData({
   data,
 }: {
   data: ISSRData
-}): Promise<ReturnType<typeof writePageData>> {
-  return writePageData(
+}): Promise<IPageDataWithQueryResult> {
+  const results = await writePageData(
     path.join(process.cwd(), `public`),
     {
       componentChunkName: data.page.componentChunkName,
@@ -84,6 +82,8 @@ export async function getPageData({
     },
     data.results
   )
+
+  return results.body
 }
 
 export async function renderHTML({
@@ -92,10 +92,9 @@ export async function renderHTML({
 }: {
   data: ISSRData
   pageData?: any
-}): Promise<any> {
+}): Promise<string> {
   if (!pageData) {
-    const results = await getPageData({ data })
-    pageData = results.body
+    pageData = await renderPageData({ data })
   }
 
   const results = await htmlComponentRenderer({

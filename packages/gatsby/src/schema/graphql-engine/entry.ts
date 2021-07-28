@@ -48,13 +48,13 @@ export class GraphQLEngine {
     // })
   }
 
-  public findPageByPath(pathname: string): IGatsbyPage | undefined {
+  public findPageByPath(pathName: string): IGatsbyPage | undefined {
     // adapter so `findPageByPath` use SitePage nodes in datastore
     // instead of `pages` redux slice
     const state = ({
       pages: {
-        get(pathname: string): IGatsbyPage | undefined {
-          return getDataStore().getNode(`SitePage ${pathname}`) as
+        get(pathName: string): IGatsbyPage | undefined {
+          return getDataStore().getNode(`SitePage ${pathName}`) as
             | IGatsbyPage
             | undefined
         },
@@ -66,6 +66,6 @@ export class GraphQLEngine {
       },
     } as unknown) as IGatsbyState
 
-    return findPageByPath(state, pathname, false)
+    return findPageByPath(state, pathName, false)
   }
 }
