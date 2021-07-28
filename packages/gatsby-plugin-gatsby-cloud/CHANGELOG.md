@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.10.0...gatsby-plugin-gatsby-cloud@2.10.1) (2021-07-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-gatsby-cloud:** Use fs instead of require to get webpack stats because require is cached ([#32535](https://github.com/gatsbyjs/gatsby/issues/32535)) ([#32536](https://github.com/gatsbyjs/gatsby/issues/32536)) ([b5afed6](https://github.com/gatsbyjs/gatsby/commit/b5afed6926c537f78e68f1e9ebfa038798634ba4))
+
 # [2.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.10.0-next.2...gatsby-plugin-gatsby-cloud@2.10.0) (2021-07-20)
 
 **Note:** Version bump only for package gatsby-plugin-gatsby-cloud
