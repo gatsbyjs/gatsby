@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.11.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.11.0-next.1...gatsby-plugin-sharp@3.11.0-next.2) (2021-07-22)
+
+### Bug Fixes
+
+- expose ".del" function on lmdb cache ([#32459](https://github.com/gatsbyjs/gatsby/issues/32459)) ([e1a1396](https://github.com/gatsbyjs/gatsby/commit/e1a1396e1582a18047e2cefaeff0f57d61c0c83a))
+
 # [3.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.11.0-next.0...gatsby-plugin-sharp@3.11.0-next.1) (2021-07-19)
 
 **Note:** Version bump only for package gatsby-plugin-sharp

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-admin",
-  "version": "0.21.0-next.1",
+  "version": "0.21.0-next.6",
   "main": "index.js",
   "author": "Max Stoiber",
   "license": "MIT",
@@ -9,6 +9,15 @@
     "url": "https://github.com/gatsbyjs/gatsby.git",
     "directory": "packages/gatsby-admin"
   },
+  "files": [
+    ".estlintignore",
+    "gatsby-browser.js",
+    "gatsby-node.js",
+    "gatsby-config.js",
+    "gatsby-ssr.js",
+    "static/",
+    "src/"
+  ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-admin#readme",
   "devDependencies": {
     "@emotion/react": "^11.1.4",
@@ -20,7 +29,7 @@
     "@typescript-eslint/parser": "^4.28.1",
     "csstype": "^2.6.14",
     "formik": "^2.2.6",
-    "gatsby": "^3.11.0-next.1",
+    "gatsby": "^3.11.0-next.6",
     "gatsby-interface": "^0.0.244",
     "gatsby-plugin-typescript": "^3.11.0-next.0",
     "gatsby-plugin-webfonts": "^1.1.4",

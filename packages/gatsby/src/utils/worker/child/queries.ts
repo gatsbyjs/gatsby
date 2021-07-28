@@ -11,16 +11,30 @@ import { buildSchema } from "./schema"
 import {
   IAddPendingPageDataWriteAction,
   ICreatePageDependencyAction,
+  IGatsbyState,
   IPageQueryRunAction,
   IQueryStartAction,
 } from "../../../redux/types"
+import { DeepPartial } from "redux"
 
 export function setComponents(): void {
   setState([`components`, `staticQueryComponents`])
 }
 
-export function saveQueries(): void {
-  savePartialStateToDisk([`queries`], process.env.GATSBY_WORKER_ID)
+export function saveQueriesDependencies(): void {
+  // Drop `queryNodes` from query state - it can be restored from other pieces of state
+  // and is there only as a perf optimization
+  const pickNecessaryQueryState = <T extends DeepPartial<IGatsbyState>>(
+    state: T
+  ): T => {
+    if (!state?.queries?.queryNodes) return state
+    return { ...state, queries: { ...state.queries, queryNodes: new Map() } }
+  }
+  savePartialStateToDisk(
+    [`queries`],
+    process.env.GATSBY_WORKER_ID,
+    pickNecessaryQueryState
+  )
 }
 
 let gqlRunner
@@ -52,8 +66,9 @@ export async function runQueries(
     if (
       action.type === `QUERY_START` ||
       action.type === `PAGE_QUERY_RUN` ||
-      action.type === `ADD_PENDING_PAGE_DATA_WRITE` ||
-      action.type === `CREATE_COMPONENT_DEPENDENCY`
+      action.type === `ADD_PENDING_PAGE_DATA_WRITE`
+      // Note: Instead of saving/replaying `CREATE_COMPONENT_DEPENDENCY` action
+      // we do state merging once at the end of the query running (replaying this action is expensive)
     ) {
       actionsToReplay.push(action)
     }

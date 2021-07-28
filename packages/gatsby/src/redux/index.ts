@@ -131,12 +131,14 @@ export const saveState = (): void => {
 
 export const savePartialStateToDisk = (
   slices: Array<GatsbyStateKeys>,
-  optionalPrefix?: string
+  optionalPrefix?: string,
+  transformState?: <T extends DeepPartial<IGatsbyState>>(state: T) => T
 ): void => {
   const state = store.getState()
   const contents = _.pick(state, slices)
+  const savedContents = transformState ? transformState(contents) : contents
 
-  return writeToCache(contents, slices, optionalPrefix)
+  return writeToCache(savedContents, slices, optionalPrefix)
 }
 
 export const loadPartialStateFromDisk = (

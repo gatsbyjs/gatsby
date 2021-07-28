@@ -15,7 +15,8 @@
  * (asserting correctness of this is not part of this test suite).
  *
  * Mocked systems:
- *  - fs-extra (to not write query results to filesystem)
+ *  - fs-extra (to not write query results to filesystem when LMDB_STORE is not enabled)
+ *  - cache-lmdb (to not write query results to lmdb when LMDB_STORE is enabled)
  *  - reporter (to not spam output of test runner)
  *  - api-runner-node (to be able to dynamically adjust `sourceNodes` and `createPage` API hooks)
  *  - query-runner (it's not really mocked - it still uses real query-runner, this is just cleanest way to add spy to default commonJS export I could find)
@@ -30,6 +31,18 @@ jest.mock(`fs-extra`, () => {
   return {
     outputFile: jest.fn(),
     ensureDir: jest.fn(),
+  }
+})
+
+jest.mock(`../../utils/cache-lmdb`, () => {
+  return {
+    default: class MockedCache {
+      init() {
+        return this
+      }
+      get = jest.fn(() => Promise.resolve())
+      set = jest.fn(() => Promise.resolve())
+    },
   }
 })
 
