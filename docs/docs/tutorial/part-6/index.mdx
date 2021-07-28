@@ -34,26 +34,26 @@ In [Part 5](/docs/tutorial/part-5/), you added all of your blog posts to your Bl
 
 So far, the way you've created new pages for your Gatsby site is by creating a new file in the `src/pages` directory and hard-coding the page's contents in JSX. But manually creating a new page for each post would be quite repetitive, especially since each page has the same structure: render the frontmatter and contents of an MDX file.
 
-In this part of the Tutorial, you'll learn how to create new pages dynamically using Gatsby's filesystem route API.
+In this part of the Tutorial, you'll learn how to create new pages dynamically using Gatsby's Filesystem Route API.
 
 By the end of this part of the Tutorial, you will be able to:
 
-- Use Gatsby's filesystem route API to dynamically create new pages for your blog posts.
+- Use Gatsby's Filesystem Route API to dynamically create new pages for your blog posts.
 - Add a query variable to a page query.
 
 ## Create new routes dynamically with Gatsby's File System Route API
 
 When you build your Gatsby site, Gatsby creates a new route for each page component in your `src/pages` directory. So far, you've only been building one page per file: the `index.js` file creates the Home page, the `about.js` file creates the About page, and the `blog.js` file creates the Blog page.
 
-But you can also use one page component to create multiple pages. Instead of hard-coding all the contents, you'll create a template to outline the basic structure of your page, and then Gatsby can dynamically add in the specific data for each page at build time. To do that, you'll use Gatsby's **file system route API**, which lets you create routes dynamically by naming your page files with a special syntax.
+But you can also use one page component to create multiple pages. Instead of hard-coding all the contents, you'll create a template to outline the basic structure of your page, and then Gatsby can dynamically add in the specific data for each page at build time. To do that, you'll use Gatsby's **File System Route API**, which lets you create routes dynamically by naming your page files with a special syntax.
 
 <Collapsible
   summary={<h3>Key Gatsby Concept: File System Route API</h3>}
 >
 
-Gatsby's file system route API defines a special syntax for naming the files in your `src/pages` directory, which lets you dynamically create new pages for your site based on a **collection** of nodes in the data layer.
+Gatsby's [File System Route API](/docs/reference/routing/file-system-route-api/) defines a special syntax for naming the files in your `src/pages` directory, which lets you dynamically create new pages for your site based on a **collection** of nodes in the data layer.
 
-For example, imagine your site had a bunch of `Product` nodes in the data layer. You could use the file system route API to create one product page template component. Then, when you built your site, Gatsby would combine that page template with the data for each `Product` node and generate a new page for each product. And if you decided you needed to make changes to your product page, you'd only have to edit the template component, and Gatsby would update all your product pages the next time it rebuilt the site.
+For example, imagine your site had a bunch of `Product` nodes in the data layer. You could use the File System Route API to create one product page template component. Then, when you built your site, Gatsby would combine that page template with the data for each `Product` node and generate a new page for each product. And if you decided you needed to make changes to your product page, you'd only have to edit the template component, and Gatsby would update all your product pages the next time it rebuilt the site.
 
 To create a collection route:
 
@@ -66,9 +66,9 @@ For example, if you wanted to create a separate page for each `Product` node, an
 
 </Collapsible>
 
-In this part of the Tutorial, you'll use Gatsby's file system route API to dynamically create new pages for each of your blog posts.
+In this part of the Tutorial, you'll use Gatsby's File System Route API to dynamically create new pages for each of your blog posts.
 
-According to the file system route API, you need to decide on two things before creating a collection route:
+According to the API, you need to decide on two things before creating a collection route:
 
 * Which *type* of node to create pages from.
 * Which *field* from that node type to use in the URL.
@@ -114,13 +114,13 @@ That looks like a good format for a URL!
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Note:** In this case, the `slug` field is a good choice because it's human readable, which means the URLs for your blog posts will be easier for users to understand. But you can use any field in your routes!
+**Note:** In this case, the `slug` field is a good choice because it's human readable, which means the URLs for your blog posts will be easier for users to understand. But you can use any field in your routes, even if it contains special characters or whitespace, as Gatsby will ["slugify"](/docs/reference/routing/file-system-route-api/#routing-and-linking) every route. For example, `I ♥ Dogs` will be converted to `i-love-dogs`.
 
 </Announcement>
 
 ### Task: Create blog post page template
 
-Now that you know what node type and field to use, you can plug them into the file system routes naming convention. To create new pages from the `slug` field of your MDX nodes, you should make a new file at `src/pages/{mdx.slug}.js`.
+Now that you know what node type and field to use, you can plug them into the File System Routes naming convention. To create new pages from the `slug` field of your MDX nodes, you should make a new file at `src/pages/{mdx.slug}.js`.
 
 The diagram below shows the different routes that Gatsby will create when it builds your site:
 
@@ -201,12 +201,12 @@ When Gatsby builds the pages for your site, it creates routes based on the folde
 1. Create a new folder in your `src/pages` directory, and call it `blog`.
 
 2. Move the `src/pages/{mdx.slug}.js` file into the new `blog` subdirectory. Update the import for your `Layout` component to reflect the new folder structure:
-```js:title=src/pages/blog/{mdx.slug}.js
-import * as React from 'react'
-import Layout from '../../components/layout' // highlight-line
+    ```js:title=src/pages/blog/{mdx.slug}.js
+    import * as React from 'react'
+    import Layout from '../../components/layout' // highlight-line
 
-// ...
-```
+    // ...
+    ```
 
 3. Once your local development server rebuilds your site, check in a web browser that the paths to your blog posts have updated.
     * For example, you should now have a page at `localhost:8000/blog/my-first-post`, and trying to access `localhost:8000/my-first-post` (without the `blog` path parameter) should send you to the 404 page.
@@ -236,7 +236,7 @@ Don't have the Gatsby CLI globally installed? Try running `npx gatsby clean` ins
 
 5. In a web browser, check that your Blog page still shows up at `localhost:8000/blog`.
 
-Nice work! You've now used Gatsby's file system route API to create pages from nodes in the data layer.
+Nice work! You've now used Gatsby's File System Route API to create pages from nodes in the data layer.
 
 
 ## Render post contents in the blog post page template
@@ -317,7 +317,7 @@ The diagram below shows how the query, query variables, and response all fit tog
 
 </Collapsible>
 
-When you use Gatsby's file system route API, it automatically adds some props into the page template component for each page:
+When you use Gatsby's File System Route API, it automatically adds some props into the page template component for each page:
 
 * The `id` for the data layer node it used to create the page.
 * The field you used to create the dynamic part of the route. (In this case, the `slug` field.)
@@ -341,11 +341,11 @@ Under the hood, Gatsby makes both of these values available to use as query vari
     }
     ```
 
-The keys in the `pageContext` object get added when you create a page using the file system route API. These are also the keys that are available for you to use as query variables in your page query for the blog post page template.
+The keys in the `pageContext` object get added when you create a page using the File System Route API. These are also the keys that are available for you to use as query variables in your page query for the blog post page template.
 
 </Announcement>
 
-1. Start by using GraphiQL to create a page query for  your blog post page template.
+1. Start by using GraphiQL to create a page query for your blog post page template.
     * Since each page only needs data for a single MDX node, use the `mdx` field.
     * The fastest way to look up nodes is using the `id` field, so use the `id` query variable instead of `slug`.
     ```graphql
@@ -362,9 +362,9 @@ The keys in the `pageContext` object get added when you create a page using the 
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Tip:** If you want to test out your query in GraphiQL, you'll need to add an `id` key to the Query Variables section. You can copy one of the `id` values from running an `allMdx` query.
+**Tip:** If you want to test out your query in GraphiQL, you'll need to add an `id` key to the Query Variables section. You can copy one of the `id` values from running an `allMdx` query in GraphiQL.
 
-The JSON object in the Query Variables section should look something like this:
+The JSON object in the Query Variables section should look something like this (using your own `id` as copying the one below won't work):
 
 ```json
 {
@@ -447,7 +447,7 @@ The JSON object in the Query Variables section should look something like this:
 
 ## Update Blog page to link to each post
 
-So far, you've used the file system route API and GraphQL query variables to create separate pages for each of your blog posts.
+So far, you've used the File System Route API and GraphQL query variables to create separate pages for each of your blog posts.
 
 The last step of Part 6 is to clean up your Blog page. Instead of rendering the full contents of your blog posts, the Blog page should link out to the new post pages you just created.
 
@@ -547,7 +547,7 @@ Congratulations, you now have a multi-page blog site! Try adding some new `.mdx`
 
 Take a moment to think back on what you've learned so far. Challenge yourself to answer the following questions from memory:
 
-* What is the file system route API used for?
+* What is the File System Route API used for?
 * What is the syntax for creating a new collection route?
 * What is a query variable?
 * When can you use a query variable?
@@ -572,8 +572,8 @@ Once your changes have been pushed to GitHub, Gatsby Cloud should notice the upd
 
 ### Key takeaways
 
-* Gatsby's file system route API lets you dynamically create new pages from data layer nodes by naming your files with a special syntax.
-    * File system routes only work on files in the `src/pages` directory (or subdirectories).
+* Gatsby's File System Route API lets you dynamically create new pages from data layer nodes by naming your files with a special syntax.
+    * File System Routes only work on files in the `src/pages` directory (or subdirectories).
     * To create a new collection route, you name your file `{nodeType.field}.js`, where `nodeType` is the type of node you want to create pages from, and `field` is the data field from that node type that you want to use in the URL for that page.
 * Query variables let you pass in different data values to the same GraphQL query. They can be combined with field arguments to get back data only about a specific node.
 * Query variables can only be used in page queries.
