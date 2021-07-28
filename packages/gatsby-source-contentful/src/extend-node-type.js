@@ -26,30 +26,7 @@ const {
   ImagePlaceholderType,
 } = require(`./schemes`)
 
-// By default store the images in `.cache` but allow the user to override
-// and store the image cache away from the gatsby cache. After all, the gatsby
-// cache is more likely to go stale than the images (which never go stale)
-// Note that the same image might be requested multiple times in the same run
-
-// @todo execute name deprication on next major
-if (process.env.GATSBY_REMOTE_CACHE) {
-  console.warn(
-    `Note: \`GATSBY_REMOTE_CACHE\` will be removed soon because it has been renamed to \`GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE\``
-  )
-}
-if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE) {
-  console.warn(
-    `Please be aware that the \`GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE\` env flag is not officially supported and could be removed at any time`
-  )
-}
-const REMOTE_CACHE_FOLDER =
-  process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE ??
-  process.env.GATSBY_REMOTE_CACHE ??
-  path.join(process.cwd(), `.cache/remote_cache`)
-const CACHE_IMG_FOLDER = path.join(REMOTE_CACHE_FOLDER, `images`)
-
-// TODO: Find the best place for this step. This is definitely not it.
-fs.mkdirSync(CACHE_IMG_FOLDER, { recursive: true })
+const { getCacheFolder } = require(`./config`)
 
 // Promises that rejected should stay in this map. Otherwise remove promise and put their data in resolvedBase64Cache
 const inFlightBase64Cache = new Map()
@@ -76,7 +53,7 @@ exports.mimeTypeExtensions = mimeTypeExtensions
 const isImage = image => mimeTypeExtensions.has(image?.file?.contentType)
 
 // Note: this may return a Promise<body>, body (sync), or null
-const getBase64Image = (imageProps, reporter, cache) => {
+const getBase64Image = (imageProps, reporter, cache, CACHE_FOLDER) => {
   if (!imageProps) {
     return null
   }
@@ -115,7 +92,7 @@ const getBase64Image = (imageProps, reporter, cache) => {
       url: requestUrl,
       cache,
       reporter,
-      cacheDir: CACHE_IMG_FOLDER,
+      cacheDir: CACHE_FOLDER,
     })
 
     const buffer = await fs.readFile(filename)
@@ -475,14 +452,21 @@ const resolveResize = (image, options) => {
 
 exports.resolveResize = resolveResize
 
-const fixedNodeType = ({ name, getTracedSVG, reporter, cache }) => {
+const fixedNodeType = ({
+  name,
+  getTracedSVG,
+  reporter,
+  cache,
+  CACHE_FOLDER,
+}) => {
   return {
     type: new GraphQLObjectType({
       name: name,
       fields: {
         base64: {
           type: GraphQLString,
-          resolve: imageProps => getBase64Image(imageProps, reporter, cache),
+          resolve: imageProps =>
+            getBase64Image(imageProps, reporter, cache, CACHE_FOLDER),
         },
         tracedSVG: {
           type: GraphQLString,
@@ -577,14 +561,21 @@ const fixedNodeType = ({ name, getTracedSVG, reporter, cache }) => {
   }
 }
 
-const fluidNodeType = ({ name, getTracedSVG, reporter, cache }) => {
+const fluidNodeType = ({
+  name,
+  getTracedSVG,
+  reporter,
+  cache,
+  CACHE_FOLDER,
+}) => {
   return {
     type: new GraphQLObjectType({
       name: name,
       fields: {
         base64: {
           type: GraphQLString,
-          resolve: imageProps => getBase64Image(imageProps, reporter, cache),
+          resolve: imageProps =>
+            getBase64Image(imageProps, reporter, cache, CACHE_FOLDER),
         },
         tracedSVG: {
           type: GraphQLString,
@@ -681,10 +672,12 @@ const fluidNodeType = ({ name, getTracedSVG, reporter, cache }) => {
   }
 }
 
-exports.extendNodeType = ({ type, cache, reporter }) => {
+exports.extendNodeType = ({ type, cache, reporter, store }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
+
+  const CACHE_FOLDER = getCacheFolder({ store })
 
   const getTracedSVG = async args => {
     const { traceSVG } = require(`gatsby-plugin-sharp`)
@@ -707,7 +700,7 @@ exports.extendNodeType = ({ type, cache, reporter }) => {
       name,
       cache,
       reporter,
-      cacheDir: CACHE_IMG_FOLDER,
+      cacheDir: CACHE_FOLDER,
       ext: extension,
     })
 
@@ -759,7 +752,7 @@ exports.extendNodeType = ({ type, cache, reporter }) => {
         name,
         cache,
         reporter,
-        cacheDir: CACHE_IMG_FOLDER,
+        cacheDir: CACHE_FOLDER,
         ext: extension,
       })
 
@@ -844,6 +837,7 @@ exports.extendNodeType = ({ type, cache, reporter }) => {
     getTracedSVG,
     reporter,
     cache,
+    CACHE_FOLDER,
   })
 
   const fluidNode = fluidNodeType({
@@ -851,6 +845,7 @@ exports.extendNodeType = ({ type, cache, reporter }) => {
     getTracedSVG,
     reporter,
     cache,
+    CACHE_FOLDER,
   })
 
   // gatsby-plugin-image

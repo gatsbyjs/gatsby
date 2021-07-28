@@ -11,6 +11,7 @@ const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
 const { createPluginConfig, maskText } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
+const { getCacheFolder } = require(`./config`)
 
 const conflictFieldPrefix = `contentful`
 
@@ -732,14 +733,8 @@ exports.sourceNodes = async (
   return
 }
 
-// Check if there are any ContentfulAsset nodes and if gatsby-image is installed. If so,
-// add fragments for ContentfulAsset and gatsby-image. The fragment will cause an error
-// if there's not ContentfulAsset nodes and without gatsby-image, the fragment is useless.
+// Create cache folder for asset downloads
 exports.onPreExtractQueries = async ({ store }) => {
-  const program = store.getState().program
-
-  const CACHE_DIR = path.resolve(
-    `${program.directory}/.cache/contentful/assets/`
-  )
+  const CACHE_DIR = getCacheFolder({ store })
   await fs.ensureDir(CACHE_DIR)
 }
