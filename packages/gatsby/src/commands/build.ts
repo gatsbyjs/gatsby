@@ -236,13 +236,18 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   try {
     const result = await buildRenderer(program, Stage.BuildHTML, buildSpan)
     pageRenderer = result.rendererPath
-    // for nowy copy it to `.cache`
     if (isLmdbStore()) {
+      // for now copy page-render to `.cache` so page-ssr module can require it as a sibling module
+      const outputDir = path.join(program.directory, `.cache`, `page-ssr`)
       engineBundlingPromises.push(
-        fs.copyFile(
-          result.rendererPath,
-          path.join(program.directory, `.cache`, `page-ssr`, `render-page.js`)
-        )
+        fs
+          .ensureDir(outputDir)
+          .then(() =>
+            fs.copyFile(
+              result.rendererPath,
+              path.join(outputDir, `render-page.js`)
+            )
+          )
       )
     }
     waitForCompilerCloseBuildHtml = result.waitForCompilerClose
