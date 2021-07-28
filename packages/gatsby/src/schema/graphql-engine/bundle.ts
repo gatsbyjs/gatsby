@@ -4,15 +4,14 @@ import replace from "@rollup/plugin-replace"
 import * as fs from "fs-extra"
 
 import resolve from "@rollup/plugin-node-resolve"
-import babel from "@rollup/plugin-babel"
 import commonjs from "@rollup/plugin-commonjs"
 import json from "@rollup/plugin-json"
 import { visualizer } from "rollup-plugin-visualizer"
-import autoExternal from "rollup-plugin-auto-external"
-import internal from "rollup-plugin-internal"
 import nativePlugin from "rollup-plugin-natives"
 
-import { builtinModules, createRequire } from "module"
+import moduleModule from "module"
+
+const { builtinModules, createRequire } = moduleModule
 
 const outputDir = path.join(process.cwd(), `.cache`, `query-engine`)
 

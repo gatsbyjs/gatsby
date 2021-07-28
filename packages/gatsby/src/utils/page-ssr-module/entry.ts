@@ -7,7 +7,10 @@ import type { IScriptsAndStyles } from "../client-assets-for-template"
 
 // actual imports
 import * as path from "path"
+import * as fs from "fs-extra"
 import { writePageData } from "../page-data/write-page-data"
+import { getPageHtmlFilePath } from "../page-html"
+// @ts-ignore render-page import will become valid later on (it's marked as external)
 import htmlComponentRenderer from "./render-page"
 
 export interface ITemplateDetails {
@@ -24,6 +27,7 @@ export interface ISSRData {
 const pageTemplateDetailsMap: Record<
   string,
   ITemplateDetails
+  // @ts-ignore INLINED_TEMPLATE_TO_DETAILS is being "inlined" by bundler
 > = INLINED_TEMPLATE_TO_DETAILS
 
 export async function getData({
@@ -94,10 +98,19 @@ export async function renderHTML({
     pageData = results.body
   }
 
-  return htmlComponentRenderer({
+  const results = await htmlComponentRenderer({
     pagePath: data.page.path,
     pageData,
     staticQueryContext: {}, // TODO: handle static query results map
     ...data.templateDetails.assets,
   })
+
+  const outputPath = getPageHtmlFilePath(
+    path.join(process.cwd(), `public`),
+    data.page.path
+  )
+
+  await fs.outputFile(outputPath, results.html)
+
+  return results.html
 }

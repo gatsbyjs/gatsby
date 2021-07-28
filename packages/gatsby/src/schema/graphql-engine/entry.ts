@@ -1,6 +1,5 @@
 // import { buildSchema } from "../schema"
 import { build } from "../index"
-import { GraphQLSchema, execute, parse } from "graphql"
 import { setupLmdbStore } from "../../datastore/lmdb/lmdb-datastore"
 import { store } from "../../redux"
 import { actions } from "../../redux/actions"
@@ -17,7 +16,7 @@ import { getDataStore } from "../../datastore"
 
 export class GraphQLEngine {
   // private schema: GraphQLSchema
-  private runner: Runner
+  private runner?: Runner
 
   constructor({ dbPath }: { dbPath: string }) {
     setupLmdbStore({ dbPath })
@@ -25,6 +24,7 @@ export class GraphQLEngine {
 
   private async getRunner(): Promise<Runner> {
     if (!this.runner) {
+      // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
       store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
 
       await build({ fullMetadataBuild: false, freeze: true })
@@ -40,7 +40,7 @@ export class GraphQLEngine {
     return this.runner
   }
 
-  public async runQuery(...args): Promise<any> {
+  public async runQuery(...args: Parameters<Runner>): ReturnType<Runner> {
     return (await this.getRunner())(...args)
     // return execute({
     //   schema: await this.getSchema(),
