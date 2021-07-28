@@ -441,68 +441,116 @@ The JSON object in the Query Variables section should look something like this:
     ```
 
 4. In your web browser, go to one of your blog post pages (like `localhost:8000/blog/my-first-post`). You should see the contents of your blog post rendered in their own page!
+    * Try checking the routes for your other posts, to make sure all your pages are rendering the post contents correctly.
 
 ![A screenshot of the "my-first-post" blog page in a web browser. The post's title, date, and body contents are rendered.](./my-first-post.png)
 
-## TASK: UPDATE BLOG PAGE TO LINK TO PAGES
+## Update Blog page to link to each post
 
-* DON'T NEED MDXRENDERER ANYMORE
-* ADD SLUG TO QUERY, REMOVE BODY
-* ADD LINK TO POST TITLE. NEED BLOG PART OF THE PATH.
+So far, you've used the file system route API and GraphQL query variables to create separate pages for each of your blog posts.
 
-```js
-import * as React from 'react'
-import { graphql, Link } from 'gatsby' // highlight-line
-import Layout from '../../components/layout'
+The last step of Part 6 is to clean up your Blog page. Instead of rendering the full contents of your blog posts, the Blog page should link out to the new post pages you just created.
 
-const BlogPage = ({ data }) => {
-  return (
-    <Layout pageTitle="My Blog Posts">
-      {
-        data.allMdx.nodes.map(node => (
-          <article key={node.id}>
-            {/* highlight-start */}
-            <h2>
-              <Link to={`/blog/${node.slug}`}>
-                {node.frontmatter.title}
-              </Link>
-            </h2>
-            {/* highlight-end */}
-            <p>Posted: {node.frontmatter.date}</p>
-          </article>
-        ))
-      }
-    </Layout>
-  )
-}
+1. In your `src/pages/blog/index.js` file, remove the `body` field from your JSX and your page query. You can also get rid of the `MDXRenderer` component.
+    ```js:title=src/pages/blog/index.js
+    import * as React from 'react'
+    import { graphql } from 'gatsby'
+    import Layout from '../../components/layout'
 
-// highlight-start
-export const query = graphql`
-  query {
-    allMdx(sort: {fields: frontmatter___date, order: DESC}) {
-      nodes {
-        frontmatter {
-          date(formatString: "MMMM D, YYYY")
-          title
-        }
-        id
-        slug
-      }
+    const BlogPage = ({ data }) => {
+      return (
+        <Layout pageTitle="My Blog Posts">
+          {
+            data.allMdx.nodes.map(node => (
+              <article key={node.id}>
+                <h2>{node.frontmatter.title}</h2>
+                <p>Posted: {node.frontmatter.date}</p>
+              </article>
+            ))
+          }
+        </Layout>
+      )
     }
-  }
-`
-// highlight-end
+    
+    export const query = graphql`
+      query {
+        allMdx(sort: {fields: frontmatter___date, order: DESC}) {
+          nodes {
+            frontmatter {
+              date(formatString: "MMMM D, YYYY")
+              title
+            }
+            id
+          }
+        }
+      }
+    `
 
-export default BlogPage
-```
+    export default BlogPage
+    ```
 
-![WORDS](./blog-page-with-links.png)
+2. Add the `slug` field to your page query, and use it to turn the post title into a link to the post page.
+    * Since these links are between pages on your own site, you can use Gatsby's `Link` component to get some extra performance benefits.
+    * If you use absolute URLs, you'll need to add the extra `/blog/` path parameter, since the `slug` field only contains the last part of the path (like `my-first-post`).
+    ```js:title=src/pages/blog/index.js
+    import * as React from 'react'
+    import { Link, graphql } from 'gatsby' // highlight-line
+    import Layout from '../../components/layout'
+
+    const BlogPage = ({ data }) => {
+      return (
+        <Layout pageTitle="My Blog Posts">
+          {
+            data.allMdx.nodes.map(node => (
+              <article key={node.id}>
+                {/* highlight-start */}
+                <h2>
+                  <Link to={`/blog/${node.slug}`}>
+                    {node.frontmatter.title}
+                  </Link>
+                </h2>
+                {/* highlight-end */}
+                <p>Posted: {node.frontmatter.date}</p>
+              </article>
+            ))
+          }
+        </Layout>
+      )
+    }
+
+    // highlight-start
+    export const query = graphql`
+      query {
+        allMdx(sort: {fields: frontmatter___date, order: DESC}) {
+          nodes {
+            frontmatter {
+              date(formatString: "MMMM D, YYYY")
+              title
+            }
+            id
+            slug
+          }
+        }
+      }
+    `
+    // highlight-end
+
+    export default BlogPage
+    ```
+
+3. In a web browser, go to `localhost:8000/blog`. Your Blog page should now show links to each of your blog post pages. 
+    ![A screenshot of the Blog page in a web browser. It shows the title and date for each post, and each post title is a link to the page for that post.](./blog-page-with-links.png)
+
+Congratulations, you now have a multi-page blog site! Try adding some new `.mdx` files to your top-level `blog` directory. They should get added to your Blog page automatically when your site rebuilds!
 
 ## Summary
 
 Take a moment to think back on what you've learned so far. Challenge yourself to answer the following questions from memory:
 
-* ?
+* What is the file system route API used for?
+* What is the syntax for creating a new collection route?
+* What is a query variable?
+* When can you use a query variable?
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -524,9 +572,11 @@ Once your changes have been pushed to GitHub, Gatsby Cloud should notice the upd
 
 ### Key takeaways
 
-* .
-* NAME OF FILE CONNECTS TO THE PATH TO THAT PAGE. COMES FROM FS ROUTE API.
-* QUERY VARIABLES ONLY USABLE IN PAGE QUERIES.
+* Gatsby's file system route API lets you dynamically create new pages from data layer nodes by naming your files with a special syntax.
+    * File system routes only work on files in the `src/pages` directory (or subdirectories).
+    * To create a new collection route, you name your file `{nodeType.field}.js`, where `nodeType` is the type of node you want to create pages from, and `field` is the data field from that node type that you want to use in the URL for that page.
+* Query variables let you pass in different data values to the same GraphQL query. They can be combined with field arguments to get back data only about a specific node.
+* Query variables can only be used in page queries.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -540,7 +590,7 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 
 ### What's coming next?
 
-In Part 7, you'll finish up your blog site by adding some hero images to your blog posts. 
+In Part 7, you'll revisit `gatsby-plugin-image` (from way back in [Part 3](/docs/tutorial/part-3/)). This time, you'll learn how to create dynamic images using the `GatsbyImage` component. You'll put the finishing touches on your blog site by adding hero images to your blog posts.
 
 <Notification
   Icon={MdInfo}
@@ -551,7 +601,7 @@ In Part 7, you'll finish up your blog site by adding some hero images to your bl
       <p>
         <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
         You've reached the end of the new content we've released so far. Subsequent parts
-        will be added as we finish them. Part 7 has a tentative release date of August 11, 2021.
+        will be added as we finish them. Part 7 (the final part!) has a tentative release date of August 11, 2021.
       </p>
       <p style={{ marginBottom: 0 }}>
         If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
