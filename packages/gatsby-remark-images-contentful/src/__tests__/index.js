@@ -16,17 +16,27 @@ jest.mock(`../utils/`, () => {
 })
 
 jest.mock(`axios`)
+
+let mockedSharpMetadata
 jest.mock(`sharp`, () => () => {
-  return {
-    metadata: jest.fn(() => {
-      return {
-        width: 200,
-        height: 200,
-        density: 75,
-      }
-    }),
-  }
+  return { metadata: mockedSharpMetadata }
 })
+
+const mockSharpSuccess = () => {
+  mockedSharpMetadata = jest.fn(() => {
+    return {
+      width: 200,
+      height: 200,
+      density: 75,
+    }
+  })
+}
+
+const mockSharpFailure = () => {
+  mockedSharpMetadata = jest.fn(() =>
+    Promise.reject(new Error(`invalid image`))
+  )
+}
 
 const createNode = content => {
   const node = {
@@ -94,6 +104,7 @@ beforeEach(() => {
 })
 
 test(`it returns empty array when 0 images`, async () => {
+  mockSharpSuccess()
   const content = `
 # hello world
 Look ma, no images
@@ -116,6 +127,7 @@ test(`it leaves relative images alone`, async () => {
 })
 
 test(`it leaves non-contentful images alone`, async () => {
+  mockSharpSuccess()
   const imagePath = `//google.com/images/an-image.jpeg`
   const content = `
 ![asdf](${imagePath})
@@ -127,6 +139,7 @@ test(`it leaves non-contentful images alone`, async () => {
 })
 
 test(`it transforms images in markdown`, async () => {
+  mockSharpSuccess()
   const imagePath = `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`
   const content = `
 ![image](${imagePath})
@@ -143,6 +156,7 @@ test(`it transforms images in markdown`, async () => {
 })
 
 test(`it transforms images with a https scheme in markdown`, async () => {
+  mockSharpSuccess()
   const imagePath = `https://images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`
   const content = `
 ![image](${imagePath})
@@ -159,6 +173,7 @@ test(`it transforms images with a https scheme in markdown`, async () => {
 })
 
 test(`it throws specific error if the image is not found`, async () => {
+  mockSharpSuccess()
   axios.mockImplementationOnce(() => Promise.reject(new Error(`oh no`)))
   const reporter = {
     panic: jest.fn(),
@@ -177,6 +192,7 @@ test(`it throws specific error if the image is not found`, async () => {
 })
 
 test(`it transforms multiple images in markdown`, async () => {
+  mockSharpSuccess()
   const imagePaths = [
     `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`,
     `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`,
@@ -193,6 +209,7 @@ test(`it transforms multiple images in markdown`, async () => {
 })
 
 test(`it transforms HTML img tags`, async () => {
+  mockSharpSuccess()
   const imagePath = `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`
 
   const content = `
@@ -210,6 +227,7 @@ test(`it transforms HTML img tags`, async () => {
 })
 
 test(`it leaves relative HTML img tags alone`, async () => {
+  mockSharpSuccess()
   const imagePath = `images/this-was-an-image.jpeg`
 
   const content = `
@@ -221,6 +239,7 @@ test(`it leaves relative HTML img tags alone`, async () => {
 })
 
 test(`it transforms images in markdown with webp srcSets if option is enabled`, async () => {
+  mockSharpSuccess()
   const imagePath = `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`
   const content = `
 ![image](${imagePath})
@@ -236,4 +255,26 @@ test(`it transforms images in markdown with webp srcSets if option is enabled`, 
   expect(node.type).toBe(`html`)
   expect(node.value).toMatchSnapshot()
   expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it shows an useful error message when the file is not a valid image`, async () => {
+  mockSharpFailure()
+
+  const imagePath = `//images.ctfassets.net/k8iqpp6u0ior/752jwCIe9dwtfi9mLbp9m2/bc588ee25cf8299bc33a56ca32f8677b/Gatsby-Logos.zip`
+
+  const content = `
+![image](${imagePath})
+  `.trim()
+
+  const reporter = {
+    panic: jest.fn(),
+  }
+
+  await plugin(createPluginOptions(content, imagePath, { reporter }))
+
+  expect(reporter.panic).toHaveBeenCalledTimes(1)
+  expect(reporter.panic).toHaveBeenCalledWith(
+    `The image "${imagePath}" (with alt text: "image") doesn't appear to be a supported image format.`,
+    expect.any(Error)
+  )
 })
