@@ -53,7 +53,7 @@ export function pageDataExists(publicDir: string, pagePath: string): boolean {
 let lmdbPageQueryResultsCache: GatsbyCacheLmdb
 function getLMDBPageQueryResultsCache(): GatsbyCacheLmdb {
   if (!lmdbPageQueryResultsCache) {
-    const GatsbyCacheLmdbImpl = require(`./cache-lmdb`).default
+    const GatsbyCacheLmdbImpl = require(`../cache-lmdb`).default
     lmdbPageQueryResultsCache = new GatsbyCacheLmdbImpl({
       name: `internal-tmp-query-results`,
       encoding: `string`,
