@@ -664,6 +664,11 @@ type FileGroupConnection {
   edges: [FileEdge!]!
   nodes: [File!]!
   pageInfo: PageInfo!
+  distinct(field: FileFieldsEnum!): [String!]!
+  max(field: FileFieldsEnum!): Float
+  min(field: FileFieldsEnum!): Float
+  sum(field: FileFieldsEnum!): Float
+  group(skip: Int, limit: Int, field: FileFieldsEnum!): [FileGroupConnection!]!
   field: String!
   fieldValue: String
 }
@@ -859,6 +864,11 @@ type DirectoryGroupConnection {
   edges: [DirectoryEdge!]!
   nodes: [Directory!]!
   pageInfo: PageInfo!
+  distinct(field: DirectoryFieldsEnum!): [String!]!
+  max(field: DirectoryFieldsEnum!): Float
+  min(field: DirectoryFieldsEnum!): Float
+  sum(field: DirectoryFieldsEnum!): Float
+  group(skip: Int, limit: Int, field: DirectoryFieldsEnum!): [DirectoryGroupConnection!]!
   field: String!
   fieldValue: String
 }
@@ -1026,6 +1036,11 @@ type SiteGroupConnection {
   edges: [SiteEdge!]!
   nodes: [Site!]!
   pageInfo: PageInfo!
+  distinct(field: SiteFieldsEnum!): [String!]!
+  max(field: SiteFieldsEnum!): Float
+  min(field: SiteFieldsEnum!): Float
+  sum(field: SiteFieldsEnum!): Float
+  group(skip: Int, limit: Int, field: SiteFieldsEnum!): [SiteGroupConnection!]!
   field: String!
   fieldValue: String
 }
@@ -1163,6 +1178,11 @@ type SiteFunctionGroupConnection {
   edges: [SiteFunctionEdge!]!
   nodes: [SiteFunction!]!
   pageInfo: PageInfo!
+  distinct(field: SiteFunctionFieldsEnum!): [String!]!
+  max(field: SiteFunctionFieldsEnum!): Float
+  min(field: SiteFunctionFieldsEnum!): Float
+  sum(field: SiteFunctionFieldsEnum!): Float
+  group(skip: Int, limit: Int, field: SiteFunctionFieldsEnum!): [SiteFunctionGroupConnection!]!
   field: String!
   fieldValue: String
 }
@@ -1303,6 +1323,11 @@ type SitePageGroupConnection {
   edges: [SitePageEdge!]!
   nodes: [SitePage!]!
   pageInfo: PageInfo!
+  distinct(field: SitePageFieldsEnum!): [String!]!
+  max(field: SitePageFieldsEnum!): Float
+  min(field: SitePageFieldsEnum!): Float
+  sum(field: SitePageFieldsEnum!): Float
+  group(skip: Int, limit: Int, field: SitePageFieldsEnum!): [SitePageGroupConnection!]!
   field: String!
   fieldValue: String
 }
