@@ -54,9 +54,10 @@ export async function createPageSSRBundle(): Promise<any> {
   }
 
   const bundle = await rollup.rollup(inputOptions)
-  const { output } = await bundle.write(outputOptions)
+  // const { output } =
+  await bundle.write(outputOptions)
 
-  console.log({
-    imports: output[0].imports,
-  })
+  // console.log({
+  //   imports: output[0].imports,
+  // })
 }

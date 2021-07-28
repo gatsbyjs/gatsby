@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import * as path from "path"
 const rollup = require(`rollup`)
 import replace from "@rollup/plugin-replace"
@@ -117,13 +119,13 @@ const allowedPackages = [
   // used for node,page,config validation (that could be skipped/shimmed as it won't be used), but also to validate structured error (maybe we could just shim there to always pass validation without doing validation)
   // below `joi` are its deps
   `joi`,
-  "@hapi/hoek",
-  "@hapi/topo",
-  "@sideway/address",
-  "@sideway/formula",
-  "@sideway/pinpoint",
+  `@hapi/hoek`,
+  `@hapi/topo`,
+  `@sideway/address`,
+  `@sideway/formula`,
+  `@sideway/pinpoint`,
 
-  "opentracing", // shimmed
+  `opentracing`, // shimmed
   `glob`,
 
   `lmdb-store-0.9`, // shimmed
@@ -137,8 +139,8 @@ const forSureExternals = [
   // `joi`,
 
   // https://github.com/rollup/rollup/issues/1507#issuecomment-340550539
-  "readable-stream",
-  "readable-stream/transform",
+  `readable-stream`,
+  `readable-stream/transform`,
 
   ...builtinModules,
 ]
@@ -154,7 +156,7 @@ export async function createGraphqlEngineBundle(): Promise<any> {
   const inputOptions = {
     // core input options
     // external: [`lmdb-store`, `yoga-layout-prebuilt`, `gatsby-cli`],
-    external: id => {
+    external: (id: string): boolean => {
       if (id.includes(`?commonjs-dynamic-register`)) {
         console.log(`dynamic "${id}`)
         return false
@@ -196,21 +198,21 @@ export async function createGraphqlEngineBundle(): Promise<any> {
       replace({
         values: {
           SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
-          "process.env.GATSBY_EXPERIMENTAL_LMDB_STORE": "true",
-          "process.env.GATSBY_LOGGER": JSON.stringify("yurnalist"),
+          "process.env.GATSBY_EXPERIMENTAL_LMDB_STORE": `true`,
+          "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
 
           // https://github.com/rollup/rollup/issues/1507#issuecomment-340550539
-          "require('readable-stream/transform')": "require('stream').Transform",
-          'require("readable-stream/transform")': 'require("stream").Transform',
-          "readable-stream": "stream",
+          "require('readable-stream/transform')": `require('stream').Transform`,
+          'require("readable-stream/transform")': `require("stream").Transform`,
+          "readable-stream": `stream`,
 
           // silly glob - https://github.com/isaacs/node-glob/pull/438
-          "var Glob = require('./glob.js').Glob": "",
+          "var Glob = require('./glob.js').Glob": ``,
 
-          "require.resolve('./dict/dict.txt')": "__dirname + '/dict/dict.txt'", // transform so next replacement doesn't break this completely
+          "require.resolve('./dict/dict.txt')": `__dirname + '/dict/dict.txt'`, // transform so next replacement doesn't break this completely
           // require.resolve is not touched - I'm not sure how to handle it yet :/ but for demo we shouldn't need this code to function, just not to crash
-          "require.resolve": "",
-          "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": "true",
+          "require.resolve": ``,
+          "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": `true`,
         },
         preventAssignment: true,
         // FIXME - replace plugin by default will not replace if we try to access something nested
@@ -458,10 +460,9 @@ export async function createGraphqlEngineBundle(): Promise<any> {
 
   const { output } = await bundle.write(outputOptions)
 
-  console.log({
-    imports: output[0].imports,
-    unknownExternalImports: Array.from(unknownExternalImports).sort(),
-  })
-  debugger
+  // console.log({
+  //   imports: output[0].imports,
+  //   unknownExternalImports: Array.from(unknownExternalImports).sort(),
+  // })
   return { modulesMap, modules: output[0].modules }
 }
