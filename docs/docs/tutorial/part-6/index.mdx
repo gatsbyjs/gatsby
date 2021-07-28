@@ -238,7 +238,6 @@ Don't have the Gatsby CLI globally installed? Try running `npx gatsby clean` ins
 
 Nice work! You've now used Gatsby's File System Route API to create pages from nodes in the data layer.
 
-
 ## Render post contents in the blog post page template
 
 Now that you've got all the pages for your posts set up, it's time to pull in the actual post contents. You learned in [Part 4](/docs/tutorial/part-4/) that you can pull data into your components using GraphQL queries. But how can you tell Gatsby which MDX node from the data layer to pull into each page? To do that, you'll need to learn about another key GraphQL concept: **query variables**.
@@ -364,7 +363,7 @@ The keys in the `pageContext` object get added when you create a page using the 
 
 **Tip:** If you want to test out your query in GraphiQL, you'll need to add an `id` key to the Query Variables section. You can copy one of the `id` values from running an `allMdx` query in GraphiQL.
 
-The JSON object in the Query Variables section should look something like this (using your own `id` as copying the one below won't work):
+The JSON object in the Query Variables section should look something like this (use your own `id` as copying the one below won't work):
 
 ```json
 {
