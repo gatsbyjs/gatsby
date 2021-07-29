@@ -134,7 +134,7 @@ It is also possible to filter on multiple fields by separating the individual fi
 filter: { contentType: { in: ["post", "page"] }, draft: { eq: false } }
 ```
 
-In this query the fields `categories` and `title` are filtered to find the book that has `Fantastic` in its title and belongs to the `magical creatures` category.
+In this query the fields `categories` and `title` are filtered to find the book that belongs to the `magical creatures` category _AND_ has `Fantastic` in its title.
 
 ```graphql
 {
