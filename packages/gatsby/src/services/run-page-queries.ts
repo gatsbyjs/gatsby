@@ -7,7 +7,6 @@ import {
   CancelExperimentNoticeCallbackOrUndefined,
 } from "../utils/show-experiment-notice"
 import { isCI } from "gatsby-core-utils"
-import { processNodeManifests } from "../utils/node-manifest"
 
 const ONE_MINUTE = 1 * 60 * 1000
 
