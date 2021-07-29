@@ -412,10 +412,10 @@ const Layout = ({ pageTitle, children }) => {
   `)
 
   return (
-    <main className={container}>
+    <div className={container}>
       {/* highlight-start */}
       <title>{pageTitle} | {data.site.siteMetadata.title}</title>
-      <p>{data.site.siteMetadata.title}</p>
+      <header>{data.site.siteMetadata.title}</header>
       {/* highlight-end */}
       <nav>
         <ul className={navLinks}>
@@ -431,9 +431,11 @@ const Layout = ({ pageTitle, children }) => {
           </li>
         </ul>
       </nav>
-      <h1 className={heading}>{pageTitle}</h1>
-      {children}
-    </main>
+      <main>
+        <h1 className={heading}>{pageTitle}</h1>
+        {children}
+      </main>
+    </div>
   )
 }
 
@@ -451,6 +453,7 @@ export default Layout
   font-size: 3rem;
   color: gray;
   font-weight: 700;
+  margin: 3rem 0;
 }
 ```
 
@@ -480,10 +483,10 @@ const Layout = ({ pageTitle, children }) => {
   `)
 
   return (
-    <main className={container}>
+    <div className={container}>
       <title>{pageTitle} | {data.site.siteMetadata.title}</title>
       {/* highlight-next-line */}
-      <p className={siteTitle}>{data.site.siteMetadata.title}</p>
+      <header className={siteTitle}>{data.site.siteMetadata.title}</header>
       <nav>
         <ul className={navLinks}>
           <li className={navLinkItem}>
@@ -498,8 +501,10 @@ const Layout = ({ pageTitle, children }) => {
           </li>
         </ul>
       </nav>
-      <h1 className={heading}>{pageTitle}</h1>
-      {children}
+      <main>
+        <h1 className={heading}>{pageTitle}</h1>
+        {children}
+      </main>
     </main>
   )
 }
@@ -560,9 +565,9 @@ const Layout = ({ pageTitle, children }) => {
   `)
 
   return (
-    <main className={container}>
+    <div className={container}>
       <title>{pageTitle} | {data.site.siteMetadata.title}</title>
-      <p className={siteTitle}>{data.site.siteMetadata.title}</p>
+      <header className={siteTitle}>{data.site.siteMetadata.title}</header>
       <nav>
         <ul className={navLinks}>
           <li className={navLinkItem}>
@@ -584,9 +589,11 @@ const Layout = ({ pageTitle, children }) => {
           {/* highlight-end */}
         </ul>
       </nav>
-      <h1 className={heading}>{pageTitle}</h1>
-      {children}
-    </main>
+      <main>
+        <h1 className={heading}>{pageTitle}</h1>
+        {children}
+      </main>
+    </div>
   )
 }
 
