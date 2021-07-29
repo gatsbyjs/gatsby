@@ -126,7 +126,7 @@ In this query `filter` and the `ne` (not equals) operator is used to show only r
 }
 ```
 
-Gatsby relies on [Sift](https://www.npmjs.com/package/sift) to enable MongoDB-like query syntax for object filtering. This allows Gatsby to support operators like `eq`, `ne`, `in`, `regex` and querying nested fields through the `__` connector.
+Gatsby relies on [Sift](https://www.npmjs.com/package/sift) to enable MongoDB-like query syntax for object filtering. This allows Gatsby to support operators like `eq`, `ne`, `in`, `regex` and querying nested fields through the `___` connector.
 
 It is also possible to filter on multiple fields by separating the individual filters by a comma (works as an AND):
 
