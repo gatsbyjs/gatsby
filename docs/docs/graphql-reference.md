@@ -414,7 +414,7 @@ Dates can be formatted using the `formatString` function.
 }
 ```
 
-Gatsby relies on [Moment.js](https://momentjs.com/) to format the dates. This allows you to use any tokens in your string. See [moment.js documentation](https://momentjs.com/docs/#/displaying/format/) for more tokens.
+Gatsby relies on [Moment.js](https://momentjs.com/) to format the dates. This allows you to use any tokens in your string. See the [Moment.js documentation](https://momentjs.com/docs/#/displaying/format/) for more tokens.
 
 You can also pass in a `locale` to adapt the output to your language. The above query gives you the English output for the weekdays, this example outputs them in German.
 
