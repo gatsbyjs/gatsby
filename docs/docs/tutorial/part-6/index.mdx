@@ -2,31 +2,9 @@
 title: "Part 6: Create Pages Programmatically"
 ---
 
-import { Announcement, Notification } from 'gatsby-interface'
+import { Announcement, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
-import { MdInfo } from 'react-icons/md'
-
-<Notification
-  Icon={MdInfo}
-  tone="WARNING"
-  variant="SECONDARY"
-  content={
-    <div>
-      <p>
-        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
-        The first few parts of the new Tutorial have been released here, and subsequent parts
-        will be added as we finish them.
-      </p>
-      <p style={{ marginBottom: 0 }}>
-        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
-        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
-          <strong>Gatsby v2 Tutorial</strong>
-        </a>
-        .
-      </p>
-    </div>
-  }
-/>
+import { MdArrowForward } from 'react-icons/md'
 
 ## Introduction
 
@@ -591,24 +569,10 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 
 In Part 7, you'll revisit `gatsby-plugin-image` (from way back in [Part 3](/docs/tutorial/part-3/)). This time, you'll learn how to create dynamic images using the `GatsbyImage` component. You'll put the finishing touches on your blog site by adding hero images to your blog posts.
 
-<Notification
-  Icon={MdInfo}
-  tone="WARNING"
+<LinkButton
+  to="/docs/tutorial/part-7/"
+  rightIcon={<MdArrowForward />}
   variant="SECONDARY"
-  content={
-    <div>
-      <p>
-        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
-        You've reached the end of the new content we've released so far. Subsequent parts
-        will be added as we finish them. Part 7 (the final part!) has a tentative release date of August 11, 2021.
-      </p>
-      <p style={{ marginBottom: 0 }}>
-        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
-        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
-          <strong>Gatsby v2 Tutorial</strong>
-        </a>
-        .
-      </p>
-    </div>
-  }
-/>
+>
+  Continue to Part 7
+</LinkButton>
