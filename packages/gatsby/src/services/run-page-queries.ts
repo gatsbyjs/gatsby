@@ -73,13 +73,6 @@ modules.exports = {
     graphqlTracing: program?.graphqlTracing,
   })
 
-  if (process.env.NODE_ENV !== `development`) {
-    /**
-     * only process node manifests here when not in develop. for gatsby develop we process node manifests in src/query/query-watcher.ts everytime queries are re-run. Because we process node manifests in this location for gatsby build we have all the information needed to create the manifests. In query-watcher during gatsby build we might not have all information about created pages and queries.
-     */
-    await processNodeManifests()
-  }
-
   if (cancelNotice) {
     cancelNotice()
   }
