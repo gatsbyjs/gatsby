@@ -9,11 +9,9 @@ These examples will work on the _real_ schema used on [graphql-reference example
 You can run this example locally to experiment and poke around the innards of the site!
 You can also open the [CodeSandbox version](https://codesandbox.io/s/github/gatsbyjs/gatsby/tree/master/examples/graphql-reference) of it.
 
-<!-- TODO update copy -->
+For more information, read about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/) and [how to use GraphiQL][] in any Gatsby site.
 
-You'll be using GraphiQL, an interactive editor you can also use [while building your Gatsby site](/docs/tutorial/part-five/#introducing-graphiql).
-
-For more information, read about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/).
+[how to use graphiql]: https://www.gatsbyjs.com/docs/tutorial/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries
 
 ## Basic query
 
@@ -29,9 +27,7 @@ Start with the basics, pulling up the site `title` from your `gatsby-config.js`'
 }
 ```
 
-<!--
-Try editing the query to include the `description` from `siteMetadata`. When typing in the query editor you can use `Ctrl + Space` to see autocomplete options and `Ctrl + Enter` to run the current query.
--->
+In the GraphiQL editor, try editing the query to include the `description` from `siteMetadata`. When typing in the query editor you can use `Ctrl + Space` to see autocomplete options and `Ctrl + Enter` to run the current query.
 
 ## A longer query
 
@@ -54,7 +50,7 @@ Gatsby structures its content as collections of `nodes`, which are connected to 
 }
 ```
 
-Try using the editor's autocomplete (`Ctrl + Space`) to get extended details from the `packageJson` nodes.
+In the GraphiQL editor, try using the editor's autocomplete (`Ctrl + Space`) to get extended details from the `packageJson` nodes.
 
 If you're using Gatsby version `2.2.0` or later, you can remove `edges` and `node` from your query and replace it with `nodes`. The query will still work and the returned object will reflect the `nodes` structure.
 
@@ -541,7 +537,8 @@ query GetBlogPosts(
 }
 ```
 
-```graphql:title=Query Variables
+```graphql
+# Query Variables
 {
   "limit": 5,
   "filter": {
@@ -661,7 +658,7 @@ Instead of receiving `title` you'll get `header`. This is especially useful when
 
 GraphQL allows you to skip a piece of a query depending on variables. This is handy when you need to render some part of a page conditionally.
 
-Try changing variable `withDate` in the example query below:
+In the GraphiQL editor, try changing variable `withDate` in the example query below:
 
 ```graphql
 query GetBlogPosts($withDate: Boolean = false) {
