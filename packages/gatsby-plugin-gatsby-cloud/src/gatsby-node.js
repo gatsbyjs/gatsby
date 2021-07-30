@@ -31,7 +31,7 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
 
 function emitRoutes(routes) {
   if (!process.send) {
-    console.error(`No process send.`)
+    console.log(`No process send available`)
     return
   }
 
