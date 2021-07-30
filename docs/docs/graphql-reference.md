@@ -11,7 +11,7 @@ You can also open the [CodeSandbox version](https://codesandbox.io/s/github/gats
 
 For more information, read about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/) and [how to use GraphiQL][] in any Gatsby site.
 
-[how to use graphiql]: https://www.gatsbyjs.com/docs/tutorial/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries
+[how to use graphiql]: /docs/tutorial/part-4/#use-graphiql-to-explore-the-data-layer-and-write-graphql-queries
 
 ## Basic query
 
