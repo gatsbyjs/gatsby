@@ -29,6 +29,19 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
   })
 }
 
+function emitRoutes(routes) {
+  if (!process.send) {
+    return
+  }
+
+  process.send({
+    type: `LOG_ROUTES`,
+    action: {
+      routes,
+    },
+  })
+}
+
 exports.onPostBuild = async (
   { store, pathPrefix, reporter },
   userPluginOptions
@@ -36,7 +49,18 @@ exports.onPostBuild = async (
   const pluginData = makePluginData(store, assetsManifest, pathPrefix)
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
-  const { redirects, pageDataStats, nodes } = store.getState()
+  const { redirects, pageDataStats, nodes, pages } = store.getState()
+
+  const routes = {}
+  for (const [pathname, page] of pages) {
+    routes[pathname] = `ssr`
+  }
+
+  try {
+    emitRoutes(routes)
+  } catch (e) {
+    console.error(e.message, e)
+  }
 
   let nodesCount
 
