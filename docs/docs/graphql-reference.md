@@ -109,7 +109,7 @@ Skip over a number of results. In this query `skip` is used to omit the first 3 
 
 ## Filter
 
-In this query `filter` and the `ne` (not equals) operator is used to show only results that have a title. You can find a good video tutorial on this [here](https://www.youtube.com/watch?v=Lg1bom99uGM).
+In this query the `filter` argument and the `ne` (not equals) operator are used to show only results that have a title. You can find a good video tutorial on this in the [LevelUpTuts Gatsby Tutorial #9: Filters & Sorting with GraphQL](https://www.youtube.com/watch?v=Lg1bom99uGM).
 
 ```graphql
 {
