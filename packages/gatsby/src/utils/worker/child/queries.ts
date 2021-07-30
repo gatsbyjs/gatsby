@@ -90,8 +90,6 @@ async function doRunQueries(queryIds: IGroupedQueryIds): Promise<void> {
     await buildSchema()
   }
 
-  setComponents()
-
   const graphqlRunner = getGraphqlRunner()
 
   await runStaticQueries({
