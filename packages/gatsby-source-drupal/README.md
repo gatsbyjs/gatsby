@@ -317,12 +317,14 @@ module.exports = {
           defaultLanguage: `en`,
           enabledLanguages: [`en`, `fil`],
           translatableEntities: [`node--article`],
+          nonTranslatableEntities: [`file--file`],
         },
       },
     },
   ],
 }
 ```
+Some entities are not translatable like Drupal files and will return null result when language code from parent entity doesn't match up. These items can be specified as nonTranslatableEntities and receive the defaultLanguage as fallback.
 
 ## Gatsby Preview (experimental)
 

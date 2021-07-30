@@ -94,6 +94,7 @@ exports.sourceNodes = async (
       defaultLanguage: `und`,
       enabledLanguages: [`und`],
       translatableEntities: [],
+      nonTranslatableEntities: [],
     },
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
