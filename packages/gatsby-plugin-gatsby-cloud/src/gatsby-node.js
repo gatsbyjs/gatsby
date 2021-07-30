@@ -38,7 +38,10 @@ function emitRoutes(routes) {
   process.send({
     type: `LOG_ROUTES`,
     action: {
-      routes,
+      type: `LOG_ROUTES`,
+      payload: {
+        routes,
+      },
     },
   })
 }
