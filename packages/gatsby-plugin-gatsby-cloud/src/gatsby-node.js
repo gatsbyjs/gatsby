@@ -31,6 +31,7 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
 
 function emitRoutes(routes) {
   if (!process.send) {
+    console.error(`No process send.`)
     return
   }
 
@@ -52,7 +53,7 @@ exports.onPostBuild = async (
   const { redirects, pageDataStats, nodes, pages } = store.getState()
 
   const routes = {}
-  for (const [pathname, page] of pages) {
+  for (const [pathname] of pages) {
     routes[pathname] = `ssr`
   }
 
