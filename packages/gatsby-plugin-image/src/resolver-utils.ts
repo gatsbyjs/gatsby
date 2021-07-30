@@ -51,24 +51,28 @@ export interface IGatsbyGraphQLResolverArgumentConfig<TValue = any> {
 }
 export type IGatsbyImageResolverArgs = Pick<
   ISharpGatsbyImageArgs & IImageSizeArgs,
-  | "layout"
-  | "width"
-  | "height"
   | "aspectRatio"
-  | "sizes"
-  | "outputPixelDensities"
-  | "breakpoints"
   | "backgroundColor"
+  | "breakpoints"
+  | "height"
+  | "layout"
+  | "outputPixelDensities"
+  | "sizes"
+  | "width"
 >
 
-export function getGatsbyImageResolver<
+export function getGatsbyImageResolver<TSource, TContext, TArgs>(
+  resolve: GraphQLFieldResolver<
+    TSource,
+    TContext,
+    IGatsbyImageResolverArgs & TArgs
+  >,
+  extraArgs?: ObjectTypeComposerArgumentConfigMapDefinition<TArgs>
+): ObjectTypeComposerFieldConfigAsObjectDefinition<
   TSource,
   TContext,
-  TArgs extends IGatsbyImageResolverArgs
->(
-  resolve: GraphQLFieldResolver<TSource, TContext, TArgs>,
-  extraArgs?: ObjectTypeComposerArgumentConfigMapDefinition<TArgs>
-): ObjectTypeComposerFieldConfigAsObjectDefinition<TSource, TContext, TArgs> {
+  IGatsbyImageResolverArgs & TArgs
+> {
   return {
     type: `JSON!`,
     args: {
@@ -135,14 +139,32 @@ export function getGatsbyImageResolver<
   }
 }
 
-export function getGatsbyImageFieldConfig<
+export type IGatsbyImageFieldArgs = Pick<
+  ISharpGatsbyImageArgs & IImageSizeArgs,
+  | "aspectRatio"
+  | "backgroundColor"
+  | "breakpoints"
+  | "formats"
+  | "height"
+  | "layout"
+  | "outputPixelDensities"
+  | "placeholder"
+  | "sizes"
+  | "width"
+>
+
+export function getGatsbyImageFieldConfig<TSource, TContext, TArgs>(
+  resolve: GraphQLFieldResolver<
+    TSource,
+    TContext,
+    IGatsbyImageFieldArgs & TArgs
+  >,
+  extraArgs?: ObjectTypeComposerArgumentConfigMapDefinition<TArgs>
+): ObjectTypeComposerFieldConfigAsObjectDefinition<
   TSource,
   TContext,
-  TArgs extends IGatsbyImageResolverArgs
->(
-  resolve: GraphQLFieldResolver<TSource, TContext, TArgs>,
-  extraArgs?: ObjectTypeComposerArgumentConfigMapDefinition<TArgs>
-): ObjectTypeComposerFieldConfigAsObjectDefinition<TSource, TContext, TArgs> {
+  IGatsbyImageFieldArgs & TArgs
+> {
   return {
     type: `JSON!`,
     args: {
