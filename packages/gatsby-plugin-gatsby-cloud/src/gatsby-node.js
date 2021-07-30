@@ -56,11 +56,15 @@ exports.onPostBuild = async (
   const { redirects, pageDataStats, nodes, pages } = store.getState()
 
   const routes = {}
+  console.log(`Assembling Routes`)
   for (const [pathname] of pages) {
     routes[pathname] = `ssr`
   }
 
+  console.log(`Routes Manifest`, routes)
+
   try {
+    console.log(`Emitting Routes`)
     emitRoutes(routes)
   } catch (e) {
     console.error(e.message, e)
