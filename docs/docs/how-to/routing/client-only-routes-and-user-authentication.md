@@ -56,6 +56,25 @@ export default App
 
 Briefly, when a page loads, Reach Router looks at the `path` prop of each component nested under `<Router />`, and chooses _one_ to render that best matches `window.location` (you can learn more about how routing works from the [@reach/router documentation](https://reach.tech/router/api/Router)). In the case of the `/app/profile` path, the `Profile` component will be rendered, as its prefix matches the base path of `/app`, and the remaining part is identical to the child's path.
 
+### Set up Gatsby development server to serve client side routes
+
+In order for your development server to pick up that we want to route anything prefixed by `/app` on the client side, you will need to amend or create a `gatsby-node.js` file.
+
+```jsx:title=gatsby-node.js
+exports.onCreatePage = async ({ page, actions }) => {
+  const { createPage } = actions
+
+  // page.matchPath is a special key that's used for matching pages
+  // only on the client.
+  if (page.path.match(/^\/app/)) {
+    page.matchPath = `/app/*`
+
+    // Update the page.
+    createPage(page)
+  }
+}
+```
+
 ### Adjusting routes to account for authenticated users
 
 With [authentication set up](/docs/how-to/adding-common-features/building-a-site-with-authentication) on your site, you can create a component like a `<PrivateRoute/>` to extend the example above and gate content:
