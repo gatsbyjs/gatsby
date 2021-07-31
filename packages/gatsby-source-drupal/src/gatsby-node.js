@@ -571,5 +571,6 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       defaultLanguage: Joi.string().required(),
       enabledLanguages: Joi.array().items(Joi.string()).required(),
       translatableEntities: Joi.array().items(Joi.string()).required(),
+      nonTranslatableEntities: Joi.array().items(Joi.string()).required(),
     }),
   })
