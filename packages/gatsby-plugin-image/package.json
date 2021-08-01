@@ -55,7 +55,7 @@
     "ast-pretty-print": "^2.0.1",
     "babel-plugin-macros": "^3.1.0",
     "cross-env": "^7.0.3",
-    "cssnano": "^4.1.11",
+    "cssnano": "^5.1.14",
     "del-cli": "^5.0.0",
     "do-sync": "^3.1.1",
     "microbundle": "^0.15.1",

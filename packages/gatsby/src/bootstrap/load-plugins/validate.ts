@@ -1,7 +1,7 @@
 import _ from "lodash"
 import path from "path"
-import * as semver from "semver"
-import * as stringSimilarity from "string-similarity"
+import { gt, satisfies } from "semver"
+import { findBestMatch } from "string-similarity"
 import { version as gatsbyVersion } from "gatsby/package.json"
 import reporter from "gatsby-cli/lib/reporter"
 import { validateOptionsSchema, Joi } from "gatsby-plugin-utils"
@@ -47,7 +47,7 @@ export type ICurrentAPIs = {
 const getGatsbyUpgradeVersion = (entries: ReadonlyArray<IEntry>): string =>
   entries.reduce((version, entry) => {
     if (entry.api && entry.api.version) {
-      return semver.gt(entry.api.version, version || `0.0.0`)
+      return gt(entry.api.version, version || `0.0.0`)
         ? entry.api.version
         : version
     }
@@ -101,7 +101,7 @@ function getErrorContext(
     : []
 
   entries.forEach(entry => {
-    const similarities = stringSimilarity.findBestMatch(
+    const similarities = findBestMatch(
       entry.exportName,
       currentAPIs[exportType]
     )
@@ -565,7 +565,7 @@ export function warnOnIncompatiblePeerDependency(
   if (
     !isWorker &&
     gatsbyPeerDependency &&
-    !semver.satisfies(gatsbyVersion, gatsbyPeerDependency, {
+    !satisfies(gatsbyVersion, gatsbyPeerDependency, {
       includePrerelease: true,
     })
   ) {
