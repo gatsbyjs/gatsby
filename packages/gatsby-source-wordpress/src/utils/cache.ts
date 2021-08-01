@@ -213,7 +213,7 @@ export const clearHardCache = async (): Promise<void> => {
   await new Promise(resolve => {
     const directory = new Cache().cacheBase
 
-    rimraf(directory, resolve)
+    rimraf(directory).then(resolve)
   })
 }
 
