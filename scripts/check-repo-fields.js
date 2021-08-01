@@ -1,9 +1,8 @@
 // @ts-check
-const path = require(`path`)
-const fs = require(`fs`)
+const { relative, join } = require(`node:path`)
+const { writeFile } = require(`node:fs`)
 const { getPackages } = require(`@lerna/project`)
 const yargs = require(`yargs`)
-const _ = require(`lodash`)
 
 const GIT_REPO_URL = `https://github.com/gatsbyjs/gatsby`
 const MAIN_PKG_NAME = `gatsby`
@@ -19,7 +18,7 @@ function insertKeyAvoidMergeConflict(pkgJson, key, value) {
     const newPkgJson = {}
     let inserted = false
     for (const pkgKey in pkgJson) {
-      if (pkgJson.hasOwnProperty(pkgKey)) {
+      if (pkgJson.hasOwn(pkgKey)) {
         if (!inserted && /depend/i.test(pkgKey)) {
           inserted = true
           newPkgJson[key] = value
@@ -52,7 +51,7 @@ async function main() {
       }
 
       let pkgJson = pkg.toJSON()
-      const relativeLocation = path.relative(rootDir, pkg.location)
+      const relativeLocation = relative(rootDir, pkg.location)
 
       pkgJson = insertKeyAvoidMergeConflict(pkgJson, `repository`, {
         type: `git`,
@@ -68,8 +67,8 @@ async function main() {
 
       if (argv.fix) {
         return new Promise((resolve, reject) => {
-          fs.writeFile(
-            path.join(relativeLocation, `package.json`),
+          writeFile(
+            join(relativeLocation, `package.json`),
             JSON.stringify(pkgJson, null, 2) + `\n`,
             `utf8`,
             err => {
@@ -79,7 +78,7 @@ async function main() {
           )
         })
       } else {
-        if (!_.isEqual(pkg.toJSON(), pkgJson)) {
+        if (pkg.toJSON() !== pkgJson) {
           warned = true
           console.error(
             `[${pkg.name}]` +

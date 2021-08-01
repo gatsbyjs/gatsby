@@ -1,15 +1,14 @@
 const ignore = require(`ignore`)
-const fs = require(`fs-extra`)
+const { readFileSync, removeSync } = require(`fs-extra`)
 const yargs = require(`yargs`)
 const chalk = require(`chalk`)
-const collectUpdates = require(`@lerna/collect-updates`)
-const PackageGraph = require(`@lerna/package-graph`)
-const Project = require(`@lerna/project`)
-const PromptUtilities = require(`@lerna/prompt`)
-const _ = require(`lodash`)
-const path = require(`path`)
+const { collectUpdates } = require(`@lerna/collect-updates`)
+const { PackageGraph } = require(`@lerna/package-graph`)
+const { Project } = require(`@lerna/project`)
+const { promptConfirmation } = require(`@lerna/prompt`)
+const { join, posix } = require(`node:path`)
 const packlist = require(`npm-packlist`)
-const { execSync } = require(`child_process`)
+const { execSync } = require(`node:child_process`)
 
 const argv = yargs
   .command(
@@ -71,7 +70,7 @@ const getListOfFilesToClear = async ({ location, name }) => {
   let gitignore = []
   try {
     gitignore = buildIgnoreArray(
-      fs.readFileSync(path.join(location, `.gitignore`), `utf-8`)
+      readFileSync(join(location, `.gitignore`), `utf-8`)
     )
   } catch {
     // not all packages have .gitignore - see gatsby-plugin-no-sourcemap
@@ -101,13 +100,13 @@ const getListOfFilesToClear = async ({ location, name }) => {
         console.log(
           `[ ${
             willBeDeleted ? chalk.red(`DEL`) : chalk.green(` - `)
-          } ] ${path.posix.join(file)}`
+          } ] ${posix.join(file)}`
         )
       }
 
       return willBeDeleted
     })
-    .map(file => path.join(location, file))
+    .map(file => join(location, file))
 
   return filesToDelete
 }
@@ -130,20 +129,18 @@ const run = async () => {
       }
     )
 
-    const filesToDelete = _.flatten(
+    const filesToDelete = (
       await Promise.all(changed.map(getListOfFilesToClear))
-    )
+    ).flat()
 
     if (!argv[`dry-run`] && filesToDelete.length > 0) {
       if (
         argv[`force`] ||
-        (await PromptUtilities.confirm(
+        (await promptConfirmation(
           `Are you sure you want to delete those files?`
         ))
       ) {
-        filesToDelete.forEach(file => {
-          fs.removeSync(file)
-        })
+        filesToDelete.forEach(file => removeSync(file))
       } else {
         console.log(
           `${chalk.red(

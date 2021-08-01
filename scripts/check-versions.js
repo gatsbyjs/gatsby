@@ -1,8 +1,8 @@
-const { writeFileSync } = require(`fs`)
+const { writeFileSync } = require(`node:fs`)
 const yargs = require(`yargs`)
 const { getPackages } = require(`@lerna/project`)
-const PackageGraph = require(`@lerna/package-graph`)
-const semver = require(`semver`)
+const { PackageGraph } = require(`@lerna/package-graph`)
+const { satisfies } = require(`semver`)
 
 let warned = false
 const argv = yargs
@@ -18,10 +18,10 @@ const argv = yargs
 getPackages(process.cwd()).then(packages => {
   const graph = new PackageGraph(packages, `allDependencies`, true)
 
-  graph.forEach((pkgNode, name) => {
+  graph.forEach(pkgNode => {
     let outdated = Array.from(pkgNode.localDependencies.values()).filter(
       localDep =>
-        !semver.satisfies(graph.get(localDep.name).version, localDep.fetchSpec)
+        !satisfies(graph.get(localDep.name).version, localDep.fetchSpec)
     )
 
     if (argv[`allow-next`]) {

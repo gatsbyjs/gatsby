@@ -1,5 +1,7 @@
+version: 2.1
+
 orbs:
-  win: circleci/windows@2.4.0
+  win: circleci/windows@4
 
 executors:
   node:
@@ -46,7 +48,7 @@ aliases:
   validate_renovate: &validate_renovate
     run:
       name: Validate renovate-config
-      command: (node scripts/renovate-config-generator.js && (git status --porcelain renovate.json5 | grep "M renovate.json5")) && (echo "Please run \"node scripts/renovate-config-generator.js\" to update renovate.json5" && exit 1) || npx -p renovate@31.28.5 renovate-config-validator .
+      command: (node scripts/renovate-config-generator.js && (git status --porcelain renovate.json5 | grep "M renovate.json5")) && (echo "Please run \"node scripts/renovate-config-generator.js\" to update renovate.json5" && exit 1) || npx -p renovate renovate-config-validator
 
   persist_cache: &persist_cache
     save_cache:
@@ -165,8 +167,6 @@ commands:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
-version: 2.1
-
 jobs:
   bootstrap:
     executor: node
@@ -180,7 +180,7 @@ jobs:
       - <<: *check_lockfile
       - <<: *validate_renovate
       - <<: *persist_cache
-      - run: yarn bootstrap -- concurrency=2
+      - run: yarn bootstrap concurrency=2
       # Persist the workspace again with all packages already built
       - persist_to_workspace:
           root: ./
@@ -230,7 +230,7 @@ jobs:
             echo nvm alias default v18 >> $BASH_ENV
       - run: |
           node -v
-      - run: npm i -g yarn@1.22.11
+      - run: npm i -g yarn@1.22.19
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 

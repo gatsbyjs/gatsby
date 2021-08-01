@@ -1,11 +1,11 @@
 const { getPackages } = require(`@lerna/project`)
-const PackageGraph = require(`@lerna/package-graph`)
-const filterPackages = require(`@lerna/filter-packages`)
-const util = require(`util`)
-const path = require(`path`)
-const { exec, execSync } = require(`child_process`)
+const { PackageGraph } = require(`@lerna/package-graph`)
+const { filterPackages } = require(`@lerna/filter-packages`)
+const { promisify } = require(`node:util`)
+const { join } = require(`node:path`)
+const { exec, execSync } = require(`node:child_process`)
 
-const execP = util.promisify(exec)
+const execP = promisify(exec)
 
 const getPackagesWithReadWriteAccess = async user => {
   const cmd = `npm access ls-packages ${user}`
@@ -20,7 +20,7 @@ const getPackagesWithReadWriteAccess = async user => {
 }
 
 module.exports = async function getUnownedPackages({
-  rootPath = path.join(__dirname, `../..`),
+  rootPath = join(__dirname, `../..`),
   user,
 } = {}) {
   // infer user from npm whoami
@@ -30,7 +30,7 @@ module.exports = async function getUnownedPackages({
       `"node_modules/.bin/cross-env" npm_config_username="" npm whoami --registry https://registry.npmjs.org`
     )
       .then(({ stdout }) => stdout.trim())
-      .catch(err => {
+      .catch(() => {
         throw new Error(`You are not logged-in`)
       })
   }
