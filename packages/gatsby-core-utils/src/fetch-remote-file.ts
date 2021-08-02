@@ -181,7 +181,8 @@ export async function fetchRemoteFile({
   // extensible. We should define a proper API that we validate.
   const httpOpts: got.GotOptions<string | null> = {}
   if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
-    httpOpts.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
+    httpOpts.username = auth.htaccess_user
+    httpOpts.password = auth.htaccess_pass
   }
 
   // Create the temp and permanent file names for the url.
