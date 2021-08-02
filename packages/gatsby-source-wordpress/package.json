@@ -18,7 +18,7 @@
     "btoa": "^1.2.1",
     "cache-manager": "^3.4.0",
     "cache-manager-fs-hash": "^0.0.9",
-    "chalk": "^4.1.1",
+    "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.9",
     "clipboardy": "^2.1.0",
     "diff": "^5.0.0",

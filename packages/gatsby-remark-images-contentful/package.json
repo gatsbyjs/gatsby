@@ -17,7 +17,7 @@
   "dependencies": {
     "@babel/runtime": "^7.14.6",
     "axios": "^0.21.1",
-    "chalk": "^4.1.1",
+    "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.9",
     "is-relative-url": "^3.0.0",
     "lodash": "^4.17.21",
