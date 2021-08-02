@@ -18,10 +18,10 @@
     "@babel/runtime": "^7.14.6",
     "axios": "^0.21.1",
     "chalk": "^4.1.2",
-    "cheerio": "^1.0.0-rc.9",
+    "cheerio": "^1.0.0-rc.10",
     "is-relative-url": "^3.0.0",
     "lodash": "^4.17.21",
-    "semver": "^7.3.2",
+    "semver": "^7.3.5",
     "sharp": "^0.28.3",
     "unist-util-select": "^3.0.4"
   },
