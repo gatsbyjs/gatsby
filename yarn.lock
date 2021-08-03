@@ -8689,10 +8689,10 @@ contentful-sdk-core@^6.5.0, contentful-sdk-core@^6.7.0:
     fast-copy "^2.1.0"
     qs "^6.9.4"
 
-contentful@^8.4.0:
-  version "8.4.0"
-  resolved "https://registry.npmjs.org/contentful/-/contentful-8.4.0.tgz#0bfa29391176e9570fbada272797c07f7b0a6c9a"
-  integrity sha512-VHVIZMRVMvce949uhDtvxEgHsNzcbYN1YW7Hz4vJKt37qyf42AESvSsRZAKLYgf8b8NeHn07VgV2drBacFm5Tg==
+contentful@^8.4.2:
+  version "8.4.2"
+  resolved "https://registry.yarnpkg.com/contentful/-/contentful-8.4.2.tgz#e9d0088772d41edefcc91ec79db99c5e679c4b34"
+  integrity sha512-ddbJaJEQm58XBNjzne/lLkapEW9bWX0K3vVF16UEYyekiv2CAIaO5OwWgDD9w+VJe2wliPcDPmbtVeB9BIc/zA==
   dependencies:
     axios "^0.21.1"
     contentful-resolve-response "^1.3.0"
@@ -22329,10 +22329,12 @@ qs@6.7.0:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
 
-qs@^6.1.0, qs@^6.4.0, qs@^6.5.1, qs@^6.5.2, qs@^6.9.4, qs@^6.9.6:
-  version "6.9.6"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.6.tgz#26ed3c8243a431b2924aca84cc90471f35d5a0ee"
-  integrity sha512-TIRk4aqYLNoJUbd+g2lEdz5kLWIuTMRagAXxl78Q0RiVjAOugHmeKNGdd3cwo/ktpf9aL9epCfFqWDEKysUlLQ==
+qs@^6.1.0, qs@^6.10.1, qs@^6.4.0, qs@^6.5.1, qs@^6.5.2, qs@^6.9.4:
+  version "6.10.1"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.10.1.tgz#4931482fa8d647a5aab799c5271d2133b981fb6a"
+  integrity sha512-M528Hph6wsSVOBiYUnGf+K/7w0hNshs/duGsNXPUCLH5XAqjEtiPGwNONLV0tBH8NoGb0mvD5JubnUTrujKDTg==
+  dependencies:
+    side-channel "^1.0.4"
 
 qs@~6.5.2:
   version "6.5.2"
