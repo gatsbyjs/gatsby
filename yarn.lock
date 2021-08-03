@@ -26300,10 +26300,10 @@ stylehacks@^5.0.0:
     browserslist "^4.16.0"
     postcss-selector-parser "^6.0.4"
 
-styletron-engine-atomic@^1.4.7:
-  version "1.4.7"
-  resolved "https://registry.yarnpkg.com/styletron-engine-atomic/-/styletron-engine-atomic-1.4.7.tgz#0c6572491685308f3a5b4565016c7c5637bcb4fb"
-  integrity sha512-RDWbNjMNi4mCH+OhTSU76cnBxs4sPF1PAYwn5pwI8z6U8L9BVv1Q8lpci/zXqrwt6oqQZ05yj7gDoYxsXB6xZg==
+styletron-engine-atomic@^1.4.8:
+  version "1.4.8"
+  resolved "https://registry.yarnpkg.com/styletron-engine-atomic/-/styletron-engine-atomic-1.4.8.tgz#3cab053e6d8e930fc2cd3f36dfbda1e9da8576ae"
+  integrity sha512-KLyDkigcIrIMzUlX0usBfO/BBwnh1yC/48+DqP4LSZn8UgGP00oStxoezAH8pYhal1amvBJ7tLVs7tNZDUTAdg==
   dependencies:
     inline-style-prefixer "^5.1.0"
     styletron-standard "^3.0.5"
