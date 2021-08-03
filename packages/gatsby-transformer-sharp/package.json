@@ -13,7 +13,7 @@
     "fs-extra": "^9.1.0",
     "potrace": "^2.1.8",
     "probe-image-size": "^6.0.0",
-    "semver": "^7.3.4",
+    "semver": "^7.3.5",
     "sharp": "^0.28.3"
   },
   "devDependencies": {
