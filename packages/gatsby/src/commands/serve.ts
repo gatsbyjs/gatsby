@@ -18,6 +18,7 @@ import { preferDefault } from "../bootstrap/prefer-default"
 import { IProgram } from "./types"
 import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
 import { IGatsbyFunction } from "../redux/types"
+import { reverseFixedPagePath } from "../utils/page-data"
 
 interface IMatchPath {
   path: string
@@ -121,6 +122,75 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   router.use(express.static(`public`, { dotfiles: `allow` }))
   const matchPaths = await readMatchPaths(program)
   router.use(matchPathRouter(matchPaths, { root }))
+
+  if (process.env.GATSBY_EXPERIMENTAL_ENGINES) {
+    console.log(`init engines support`)
+    const { GraphQLEngine } = require(path.join(
+      program.directory,
+      `.cache`,
+      `query-engine`
+    ))
+    const { getData, renderPageData, renderHTML } = require(path.join(
+      program.directory,
+      `.cache`,
+      `page-ssr`
+    ))
+    const graphqlEngine = new GraphQLEngine({
+      dbPath: path.join(program.directory, `.cache`, `data`, `datastore`),
+    })
+
+    router.get(
+      `/page-data/:pagePath(*)/page-data.json`,
+      async (req, res, next): Promise<void> => {
+        const requestedPagePath = req.params.pagePath
+        if (!requestedPagePath) {
+          next()
+          return
+        }
+
+        const pathName = reverseFixedPagePath(requestedPagePath)
+        const page = graphqlEngine.findPageByPath(pathName)
+
+        if (page && page.mode === `DSR`) {
+          console.log(`Received page-data request for DSR page`, {
+            pathName,
+            page,
+          })
+          const data = await getData({ pathName, graphqlEngine })
+          const results = await renderPageData({ data })
+          console.log(`Serving page-data`, pathName)
+          res.send(results)
+          return
+        }
+
+        next()
+        return
+      }
+    )
+
+    router.use(async (req, res, next) => {
+      if (req.accepts(`html`)) {
+        const pathName = req.path
+        if (!pathName) {
+          next()
+          return
+        }
+
+        const page = graphqlEngine.findPageByPath(pathName)
+
+        if (page && page.mode === `DSR`) {
+          console.log(`Received html request for DSR page`, { pathName, page })
+          const data = await getData({ pathName, graphqlEngine })
+          const results = await renderHTML({ data })
+          console.log(`Serving html`, pathName)
+          res.send(results)
+          return
+        }
+      }
+      next()
+      return
+    })
+  }
 
   const compiledFunctionsDir = path.join(
     program.directory,
