@@ -129,9 +129,8 @@ export const getFieldsEnum = <TSource = any, TContext = any>({
 }): EnumTypeComposer<TContext> => {
   const typeName = typeComposer.getTypeName()
   const fieldsEnumTypeName = `${typeName}FieldsEnum`
-  const fieldsEnumTypeComposer = schemaComposer.getOrCreateETC(
-    fieldsEnumTypeName
-  )
+  const fieldsEnumTypeComposer =
+    schemaComposer.getOrCreateETC(fieldsEnumTypeName)
   addDerivedType({ typeComposer, derivedTypeName: fieldsEnumTypeName })
 
   const fields = convert({

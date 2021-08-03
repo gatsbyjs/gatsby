@@ -6,9 +6,8 @@ module.exports = (() => options => {
   if (!memoizedValue) {
     let instance
     if (typeof window !== `undefined` && window.document.createElement) {
-      const styleElements = document.getElementsByClassName(
-        `_styletron_hydrate_`
-      )
+      const styleElements =
+        document.getElementsByClassName(`_styletron_hydrate_`)
       instance = new Client({ hydrate: styleElements, ...options })
     } else {
       instance = new Server(options)

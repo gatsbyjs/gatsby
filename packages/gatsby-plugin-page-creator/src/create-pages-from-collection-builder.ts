@@ -91,7 +91,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
 
   // 2. Get the nodes out of the data. We very much expect data to come back in a known shape:
   //    data = { [key: string]: { nodes: Array<ACTUAL_DATA> } }
-  const nodes = (Object.values(Object.values(data)[0])[0] as any) as Array<
+  const nodes = Object.values(Object.values(data)[0])[0] as any as Array<
     Record<string, Record<string, unknown>>
   >
 

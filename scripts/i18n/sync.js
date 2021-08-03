@@ -53,7 +53,7 @@ async function graphql(query, params) {
 async function getRepository(owner, name) {
   const { repository } = await graphql(
     `
-      query($owner: String!, $name: String!, $syncLabel: String!) {
+      query ($owner: String!, $name: String!, $syncLabel: String!) {
         repository(owner: $owner, name: $name) {
           id
           syncPullRequests: pullRequests(labels: [$syncLabel], first: 1) {
@@ -79,7 +79,7 @@ async function getRepository(owner, name) {
 async function createLabel(input) {
   const { createLabel } = await graphql(
     `
-      mutation($input: CreateLabelInput!) {
+      mutation ($input: CreateLabelInput!) {
         createLabel(input: $input) {
           label {
             id
@@ -100,7 +100,7 @@ async function createLabel(input) {
 async function createPullRequest(input) {
   const { createPullRequest } = await graphql(
     `
-      mutation($input: CreatePullRequestInput!) {
+      mutation ($input: CreatePullRequestInput!) {
         createPullRequest(input: $input) {
           pullRequest {
             id
@@ -122,7 +122,7 @@ async function createPullRequest(input) {
 async function addLabelToPullRequest(pullRequest, label) {
   await graphql(
     `
-      mutation($input: AddLabelsToLabelableInput!) {
+      mutation ($input: AddLabelsToLabelableInput!) {
         addLabelsToLabelable(input: $input) {
           clientMutationId
         }

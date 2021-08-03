@@ -41,31 +41,32 @@ async function cacheGraphQLConfig(program: IStateProgram): Promise<void> {
   }
 }
 
-const createFragmentCacheHandler = (
-  cacheDirectory: string,
-  store: GatsbyReduxStore
-) => async (): Promise<void> => {
-  try {
-    const currentDefinitions = store.getState().definitions
+const createFragmentCacheHandler =
+  (cacheDirectory: string, store: GatsbyReduxStore) =>
+  async (): Promise<void> => {
+    try {
+      const currentDefinitions = store.getState().definitions
 
-    const fragmentString = Array.from(currentDefinitions.entries())
-      .filter(([_, def]) => def.isFragment)
-      .map(([_, def]) => `# ${def.filePath}\n${def.printedAst}`)
-      .join(`\n`)
+      const fragmentString = Array.from(currentDefinitions.entries())
+        .filter(([_, def]) => def.isFragment)
+        .map(([_, def]) => `# ${def.filePath}\n${def.printedAst}`)
+        .join(`\n`)
 
-    await fs.writeFile(
-      join(cacheDirectory, `fragments.graphql`),
-      fragmentString
-    )
+      await fs.writeFile(
+        join(cacheDirectory, `fragments.graphql`),
+        fragmentString
+      )
 
-    console.log(`[gatsby-plugin-graphql-config] wrote fragments file to .cache`)
-  } catch (err) {
-    console.error(
-      `[gatsby-plugin-graphql-config] failed writing fragments file to .cache`
-    )
-    console.error(err)
+      console.log(
+        `[gatsby-plugin-graphql-config] wrote fragments file to .cache`
+      )
+    } catch (err) {
+      console.error(
+        `[gatsby-plugin-graphql-config] failed writing fragments file to .cache`
+      )
+      console.error(err)
+    }
   }
-}
 
 const cacheSchema = async (
   cacheDirectory: string,
@@ -86,13 +87,12 @@ const cacheSchema = async (
   }
 }
 
-const createSchemaCacheHandler = (
-  cacheDirectory: string,
-  store: GatsbyReduxStore
-) => async (): Promise<void> => {
-  const { schema } = store.getState()
-  await cacheSchema(cacheDirectory, schema)
-}
+const createSchemaCacheHandler =
+  (cacheDirectory: string, store: GatsbyReduxStore) =>
+  async (): Promise<void> => {
+    const { schema } = store.getState()
+    await cacheSchema(cacheDirectory, schema)
+  }
 
 export async function onPostBootstrap({
   store,
