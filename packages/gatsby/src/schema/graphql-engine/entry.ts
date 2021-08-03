@@ -69,3 +69,5 @@ export class GraphQLEngine {
     return findPageByPath(state, pathName, false)
   }
 }
+
+export default { GraphQLEngine }
