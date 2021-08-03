@@ -58,7 +58,7 @@ exports.onPostBuild = async (
   const routes = {}
   console.log(`Assembling Routes`)
   for (const [pathname] of pages) {
-    routes[pathname] = `ssr`
+    routes[pathname] = `SSR`
   }
 
   console.log(`Routes Manifest`, routes)
