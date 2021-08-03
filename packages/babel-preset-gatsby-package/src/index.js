@@ -1,8 +1,14 @@
 const r = require(`./resolver`)
 
 function preset(context, options = {}) {
-  const { browser = false, debug = false, nodeVersion = `12.13.0`, esm = false } = options
-  const { NODE_ENV, BABEL_ENV } = process.env
+  const {
+    browser = false,
+    debug = false,
+    nodeVersion = `12.13.0`,
+    esm = false,
+    availableCompilerFlags = [],
+  } = options
+  const { NODE_ENV, BABEL_ENV, COMPILER_OPTIONS } = process.env
 
   const IS_TEST = (BABEL_ENV || NODE_ENV) === `test`
 
@@ -13,11 +19,11 @@ function preset(context, options = {}) {
   if (browser) {
     if (esm) {
       browserConfig.targets = {
-        esmodules: true
+        esmodules: true,
       }
     } else {
       browserConfig.targets = {
-        browsers: [`last 2 versions`, `not ie <= 11`, `not android 4.4.3`]
+        browsers: [`last 2 versions`, `not ie <= 11`, `not android 4.4.3`],
       }
     }
   }
@@ -29,7 +35,6 @@ function preset(context, options = {}) {
       node: nodeVersion,
     },
   }
-
   return {
     presets: [
       [
@@ -54,6 +59,13 @@ function preset(context, options = {}) {
       r(`@babel/plugin-transform-runtime`),
       r(`@babel/plugin-syntax-dynamic-import`),
       IS_TEST && r(`babel-plugin-dynamic-import-node`),
+      availableCompilerFlags.length && [
+        r(`./babel-transform-compiler-flags`),
+        {
+          flags: COMPILER_OPTIONS || {},
+          availableFlags: [`MAJOR`],
+        },
+      ],
     ].filter(Boolean),
     overrides: [
       {

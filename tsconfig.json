@@ -19,5 +19,6 @@
       "@reach/router/*": ["./node_modules/@gatsbyjs/reach-router/*"]
     }
   },
+  "include": ["./global.d.ts"],
   "exclude": ["peril/*", "examples/*"]
 }
