@@ -15,7 +15,7 @@
     "axios": "^0.21.1",
     "chalk": "^4.1.2",
     "common-tags": "^1.8.0",
-    "contentful": "^8.4.0",
+    "contentful": "^8.4.2",
     "fs-extra": "^9.1.0",
     "gatsby-core-utils": "^2.12.0-next.0",
     "gatsby-plugin-utils": "^1.12.0-next.0",
@@ -25,7 +25,7 @@
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.1",
     "p-queue": "^6.6.2",
-    "qs": "^6.9.6",
+    "qs": "^6.10.1",
     "retry-axios": "^2.4.0"
   },
   "devDependencies": {
