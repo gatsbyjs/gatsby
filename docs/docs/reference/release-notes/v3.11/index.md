@@ -1,10 +1,10 @@
 ---
-date: "2021-07-20"
-version: "3.10.0"
-title: "v3.10 Release Notes"
+date: "2021-08-03"
+version: "3.11.0"
+title: "v3.11 Release Notes"
 ---
 
-Welcome to `gatsby@3.10.0` release (July 2021 #2)
+Welcome to `gatsby@3.11.0` release (August 2021 #1)
 
 Key highlights of this release:
 
@@ -31,6 +31,6 @@ TODO
 
 ## Contributors
 
-A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.10.0-next.0...gatsby@3.10.0) to this release 💜
+A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.0...gatsby@3.11.0) to this release 💜
 
 TODO
