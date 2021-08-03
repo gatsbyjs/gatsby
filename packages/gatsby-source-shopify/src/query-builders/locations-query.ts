@@ -3,8 +3,8 @@ import { BulkQuery } from "./bulk-query"
 export class LocationsQuery extends BulkQuery {
   query(date?: Date): string {
     const publishedStatus = this.pluginOptions.salesChannel
-      ? encodeURIComponent(`${this.pluginOptions.salesChannel}=visible`)
-      : `published`
+      ? `'${encodeURIComponent(this.pluginOptions.salesChannel)}:visible'`
+      : `published`;
 
     const filters = [`published_status:${publishedStatus}`]
     if (date) {
