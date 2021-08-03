@@ -90,7 +90,7 @@ If you're using a marketing automation vendor like Hubspot or Marketo, you have 
 
 Vendors tend to have a JavaScript widget for their forms.
 
-We've found these forms tend to be extremely heavy, weighing several hundred KB. This can often be more than the rest of the page combined, and can delay page load by a full second or two on some devices. For pages where conversion is critical, this can be an unacceptable tradeeoff.
+We've found these forms tend to be extremely heavy, weighing several hundred KB. This can often be more than the rest of the page combined, and can delay page load by a full second or two on some devices. For pages where conversion is critical, this can be an unacceptable trade-off.
 
 ### Sending data
 
