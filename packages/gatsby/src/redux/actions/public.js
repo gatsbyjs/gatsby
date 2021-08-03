@@ -97,7 +97,7 @@ type PageInput = {
   component: string,
   context?: Object,
   ownerNodeId?: string,
-  dsr: boolean,
+  defer: boolean,
 }
 
 type Page = {
@@ -393,7 +393,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   let pageMode = `SSG`
-  if (page.dsr) {
+  if (page.defer) {
     pageMode = `DSR`
   }
 

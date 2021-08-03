@@ -68,7 +68,7 @@ exports.createPages = async function createPages({
       context: {
         id: node.id,
       },
-      dsr: node.slug !== "hello-world",
+      defer: node.slug !== "hello-world",
     })
   }
 }

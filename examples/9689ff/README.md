@@ -18,7 +18,7 @@ If you use [File System Route API](https://www.gatsbyjs.com/docs/reference/routi
  */
 export function config({ params }) {
   return {
-    dsr: params.slug !== "hello-world",
+    defer: params.slug !== "hello-world",
   }
 }
 
@@ -26,7 +26,7 @@ export function config({ params }) {
  * Example of DSR for all routes
  */
 // export const config = {
-//   dsr: true,
+//   defer: true,
 // }
 ```
 
@@ -42,7 +42,7 @@ actions.createPage({
   context: {
     id: node.id,
   },
-  dsr: node.slug !== "hello-world",
+  defer: node.slug !== "hello-world",
 })
 ```
 

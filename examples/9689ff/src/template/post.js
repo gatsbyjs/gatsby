@@ -32,7 +32,7 @@ export default function BlogPostTemplate({ data }) {
  */
 export function config({ params }) {
   return {
-    dsr: params.slug !== "hello-world",
+    defer: params.slug !== "hello-world",
   }
 }
 
@@ -40,7 +40,7 @@ export function config({ params }) {
  * Example of DSR for all routes
  */
 // export const config = {
-//   dsr: true,
+//   defer: true,
 // }
 
 export const query = graphql`
