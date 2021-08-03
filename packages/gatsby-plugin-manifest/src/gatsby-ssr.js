@@ -26,7 +26,9 @@ exports.onRenderBody = (
 
   const srcIconExists = !!icon
   const icons = pluginIcons || defaultIcons
-  const manifestFileName = getManifestForPathname(pathname, localize)
+  const manifestFileName = withPrefix(
+    getManifestForPathname(pathname, localize)
+  )
 
   // If icons were generated, also add a favicon link.
   if (srcIconExists) {
