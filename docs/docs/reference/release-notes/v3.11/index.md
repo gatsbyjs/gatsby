@@ -17,7 +17,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 [Previous release notes](/docs/reference/release-notes/v3.10)
 
-[Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.0...gatsby@3.12.0-next.0)
+[Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.0...gatsby@3.11.0)
 
 ---
 
@@ -31,11 +31,6 @@ TODO
 
 ## Contributors
 
-A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.0...gatsby@3.12.0-next.0) to this release 💜
+A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.0...gatsby@3.11.0) to this release 💜
 
-- [angeloashmore](https://github.com/angeloashmore): fix(gatsby): correct hasNextPage pagination info when resultOffset is provided [PR #32319](https://github.com/gatsbyjs/gatsby/pull/32319)
-- [jvidalv](https://github.com/jvidalv): chore(docs): modified file-mock path for typescript config on unit-te… [PR #32390](https://github.com/gatsbyjs/gatsby/pull/32390)
-- [kik-o](https://github.com/kik-o): chore(docs): SEO remove typos & outdated information [PR #32433](https://github.com/gatsbyjs/gatsby/pull/32433)
-- [farhan443](https://github.com/farhan443): chore(docs): Fix a minor typo "with" > "will" [PR #32491](https://github.com/gatsbyjs/gatsby/pull/32491)
-- [nyedidikeke](https://github.com/nyedidikeke): chore(docs): Fix typo in documentation for assetPrefix [PR #32499](https://github.com/gatsbyjs/gatsby/pull/32499)
-- [xugetsu](https://github.com/xugetsu): chore(docs): Fix typo in File System Route API doc [PR #32517](https://github.com/gatsbyjs/gatsby/pull/32517)
+TODO
