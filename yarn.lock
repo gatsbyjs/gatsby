@@ -4273,10 +4273,15 @@
     "@theme-ui/core" "^0.4.0-rc.13"
     "@theme-ui/mdx" "^0.4.0-rc.13"
 
-"@tokenizer/token@^0.1.0", "@tokenizer/token@^0.1.1":
+"@tokenizer/token@^0.1.0":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@tokenizer/token/-/token-0.1.1.tgz#f0d92c12f87079ddfd1b29f614758b9696bc29e3"
   integrity sha512-XO6INPbZCxdprl+9qa/AAbFFOMzzwqYxpjPgLICrMD6C2FCw6qfJOPcBk6JqqPLSaZ/Qx87qn4rpPmPMwaAK6w==
+
+"@tokenizer/token@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@tokenizer/token/-/token-0.3.0.tgz#fe98a93fe789247e998c75e74e9c7c63217aa276"
+  integrity sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==
 
 "@trysound/sax@0.1.1":
   version "0.1.1"
@@ -4445,11 +4450,6 @@
   version "0.0.30"
   resolved "https://registry.yarnpkg.com/@types/debug/-/debug-0.0.30.tgz#dc1e40f7af3b9c815013a7860e6252f6352a84df"
   integrity sha512-orGL5LXERPYsLov6CWs3Fh6203+dXzJkR7OnddIr2514Hsecwc8xRpzCapshBbKFImCsvS/mk6+FWiN5LyZJAQ==
-
-"@types/debug@^4.1.5":
-  version "4.1.5"
-  resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.5.tgz#b14efa8852b7768d898906613c23f688713e02cd"
-  integrity sha512-Q1y515GcOdTHgagaVFhHnIFQ38ygs/kmxdNpvpou+raI9UO3YZcHDngBSYKQklcKlvA7iuQlmIKbzvmxcOE9CQ==
 
 "@types/eslint-scope@^3.7.0":
   version "3.7.0"
@@ -12161,15 +12161,14 @@ file-type@^15.0.1:
     token-types "^2.0.0"
     typedarray-to-buffer "^3.1.5"
 
-file-type@^16.0.0, file-type@^16.2.0:
-  version "16.2.0"
-  resolved "https://registry.yarnpkg.com/file-type/-/file-type-16.2.0.tgz#d4f1da71ddda758db7f15f93adfaed09ce9e2715"
-  integrity sha512-1Wwww3mmZCMmLjBfslCluwt2mxH80GsAXYrvPnfQ42G1EGWag336kB1iyCgyn7UXiKY3cJrNykXPrCwA7xb5Ag==
+file-type@^16.0.0, file-type@^16.5.3:
+  version "16.5.3"
+  resolved "https://registry.yarnpkg.com/file-type/-/file-type-16.5.3.tgz#474b7e88c74724046abb505e9b8ed4db30c4fc06"
+  integrity sha512-uVsl7iFhHSOY4bEONLlTK47iAHtNsFHWP5YE4xJfZ4rnX7S1Q3wce09XgqSC7E/xh8Ncv/be1lNoyprlUH/x6A==
   dependencies:
     readable-web-to-node-stream "^3.0.0"
-    strtok3 "^6.0.3"
-    token-types "^2.0.0"
-    typedarray-to-buffer "^3.1.5"
+    strtok3 "^6.2.4"
+    token-types "^4.1.1"
 
 file-type@^3.8.0:
   version "3.9.0"
@@ -14518,7 +14517,7 @@ identity-obj-proxy@^3.0.0:
   dependencies:
     harmony-reflect "^1.4.6"
 
-ieee754@^1.1.13, ieee754@^1.1.4:
+ieee754@^1.1.13, ieee754@^1.1.4, ieee754@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.2.1.tgz#8eb7a10a63fff25d15a57b001586d177d1b0d352"
   integrity sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==
@@ -19643,10 +19642,10 @@ node-notifier@^8.0.0:
     uuid "^8.3.0"
     which "^2.0.2"
 
-node-object-hash@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/node-object-hash/-/node-object-hash-2.0.0.tgz#9971fcdb7d254f05016bd9ccf508352bee11116b"
-  integrity sha512-VZR0zroAusy1ETZMZiGeLkdu50LGjG5U1KHZqTruqtTyQ2wfWhHG2Ow4nsUbfTFGlaREgNHcCWoM/OzEm6p+NQ==
+node-object-hash@^2.3.8:
+  version "2.3.8"
+  resolved "https://registry.yarnpkg.com/node-object-hash/-/node-object-hash-2.3.8.tgz#d19927ebbdb27019d2260de419cc62598a1721e7"
+  integrity sha512-hg/4TUqBOFdEhKjLF4jnn64utX3OWPVPWunVaDsaKxY+TVoViOFyW4lu34DES8yAqAqULSFm2jFL9SqVGes0Zg==
 
 node-plop@=0.9.0:
   version "0.9.0"
@@ -20991,10 +20990,10 @@ pdf2json@^1.2.3:
     xmldom "^0.6.0"
     yargs "^17.0.1"
 
-peek-readable@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/peek-readable/-/peek-readable-3.1.0.tgz#250b08b7de09db8573d7fd8ea475215bbff14348"
-  integrity sha512-KGuODSTV6hcgdZvDrIDBUkN0utcAVj1LL7FfGbM0viKTtCHmtZcuEJ+lGqsp0fTFkGqesdtemV2yUSMeyy3ddA==
+peek-readable@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/peek-readable/-/peek-readable-4.0.1.tgz#9a045f291db254111c3412c1ce4fec27ddd4d202"
+  integrity sha512-7qmhptnR0WMSpxT5rMHG9bW/mYSR1uqaPFj2MHvT+y/aOUu6msJijpKt5SkTDKySwg65OWG2JwTMBlgcbwMHrQ==
 
 pend@~1.2.0:
   version "1.2.0"
@@ -22135,12 +22134,12 @@ propagate@^2.0.0:
   resolved "https://registry.yarnpkg.com/propagate/-/propagate-2.0.1.tgz#40cdedab18085c792334e64f0ac17256d38f9a45"
   integrity sha512-vGrhOavPSTz4QVNuBNdcNXePNdNMaO1xj9yBeH1ScQPjk/rhg9sSlCXPhMkFuaNNW/syTvYqsnbIJxMBfRbbag==
 
-proper-lockfile@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/proper-lockfile/-/proper-lockfile-4.1.1.tgz#284cf9db9e30a90e647afad69deb7cb06881262c"
-  integrity sha512-1w6rxXodisVpn7QYvLk706mzprPTAPCYAqxMvctmPN3ekuRk/kuGkGc82pangZiAt4R3lwSuUzheTTn0/Yb7Zg==
+proper-lockfile@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/proper-lockfile/-/proper-lockfile-4.1.2.tgz#c8b9de2af6b2f1601067f98e01ac66baa223141f"
+  integrity sha512-TjNPblN4BwAWMXU8s9AEz4JmQxnD1NNL7bNOY/AKUzyamc379FWASUhc/K1pL2noVb+XmZKLL68cjzLsiOAMaA==
   dependencies:
-    graceful-fs "^4.1.11"
+    graceful-fs "^4.2.4"
     retry "^0.12.0"
     signal-exit "^3.0.2"
 
@@ -26210,14 +26209,13 @@ strong-log-transformer@^2.0.0:
     minimist "^1.2.0"
     through "^2.3.4"
 
-strtok3@^6.0.3:
-  version "6.0.4"
-  resolved "https://registry.yarnpkg.com/strtok3/-/strtok3-6.0.4.tgz#ede0d20fde5aa9fda56417c3558eaafccc724694"
-  integrity sha512-rqWMKwsbN9APU47bQTMEYTPcwdpKDtmf1jVhHzNW2cL1WqAxaM9iBb9t5P2fj+RV2YsErUWgQzHD5JwV0uCTEQ==
+strtok3@^6.0.3, strtok3@^6.2.4:
+  version "6.2.4"
+  resolved "https://registry.yarnpkg.com/strtok3/-/strtok3-6.2.4.tgz#302aea64c0fa25d12a0385069ba66253fdc38a81"
+  integrity sha512-GO8IcFF9GmFDvqduIspUBwCzCbqzegyVKIsSymcMgiZKeCfrN9SowtUoi8+b59WZMAjIzVZic/Ft97+pynR3Iw==
   dependencies:
-    "@tokenizer/token" "^0.1.1"
-    "@types/debug" "^4.1.5"
-    peek-readable "^3.1.0"
+    "@tokenizer/token" "^0.3.0"
+    peek-readable "^4.0.1"
 
 style-inject@^0.3.0:
   version "0.3.0"
@@ -27063,6 +27061,14 @@ token-types@^2.0.0:
   dependencies:
     "@tokenizer/token" "^0.1.0"
     ieee754 "^1.1.13"
+
+token-types@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/token-types/-/token-types-4.1.1.tgz#ef9e8c8e2e0ded9f1b3f8dbaa46a3228b113ba1a"
+  integrity sha512-hD+QyuUAyI2spzsI0B7gf/jJ2ggR4RjkAo37j3StuePhApJUwcWDjnHDOFdIWYSwNR28H14hpwm4EI+V1Ted1w==
+  dependencies:
+    "@tokenizer/token" "^0.3.0"
+    ieee754 "^1.2.1"
 
 tokenizr@1.5.7:
   version "1.5.7"
