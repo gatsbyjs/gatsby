@@ -23,7 +23,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Improvements to Parallel Query Running
 
-In case you missed it, in [3.10](/docs/reference/release-notes/v3.10) we've added experimental support for Parallel Query Running. Depending on your site you will see dramatic improvements in `gatsby build` performance. We've moved more information [into LMDB](https://github.com/gatsbyjs/gatsby/pull/32431), fixed a [bug](https://github.com/gatsbyjs/gatsby/pull/32520) and [optimized](https://github.com/gatsbyjs/gatsby/pull/32440) how we merge the state of the workers.
+In case you missed it, in [3.10](/docs/reference/release-notes/v3.10) we've added experimental support for Parallel Query Running. Depending on your site you will see dramatic improvements in `gatsby build` performance. We've moved more information [into LMDB](https://github.com/gatsbyjs/gatsby/pull/32431), fixed a [bug](https://github.com/gatsbyjs/gatsby/pull/32520) and [optimized](https://github.com/gatsbyjs/gatsby/pull/32440) how we merge the state of the workers. You can also force the chunk size for each worker now by setting the `GATSBY_PARALLEL_QUERY_CHUNK_SIZE` environment variable.
 
 To learn more about Parallel Query Running head to the [previous release notes](/docs/reference/release-notes/v3.10/#experimental-parallel-query-running).
 
