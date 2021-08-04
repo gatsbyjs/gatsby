@@ -15,7 +15,7 @@
     "gatsby-core-utils": "^2.12.0-next.0",
     "got": "^9.6.0",
     "md5-file": "^5.0.0",
-    "mime": "^2.4.6",
+    "mime": "^2.5.2",
     "pretty-bytes": "^5.4.1",
     "progress": "^2.0.3",
     "valid-url": "^1.0.9",
