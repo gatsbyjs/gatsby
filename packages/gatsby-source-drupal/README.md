@@ -324,6 +324,7 @@ module.exports = {
   ],
 }
 ```
+
 Some entities are not translatable like Drupal files and will return null result when language code from parent entity doesn't match up. These items can be specified as nonTranslatableEntities and receive the defaultLanguage as fallback.
 
 ## Gatsby Preview (experimental)
