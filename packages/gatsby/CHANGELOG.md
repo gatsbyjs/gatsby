@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.6...gatsby@3.11.0) (2021-08-04)
+
+### Bug Fixes
+
+- **gatsby:** correct results for multiple range filters with indexes ([#32406](https://github.com/gatsbyjs/gatsby/issues/32406)) ([9b42793](https://github.com/gatsbyjs/gatsby/commit/9b427936752ec0b107b36331f444366987355fbb))
+
 # [3.11.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.5...gatsby@3.11.0-next.6) (2021-07-27)
 
 ### Bug Fixes

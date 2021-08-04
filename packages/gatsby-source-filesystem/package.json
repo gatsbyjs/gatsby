@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-filesystem",
   "description": "Gatsby source plugin for building websites from local data. Markdown, JSON, images, YAML, CSV, and dozens of other data types supported.",
-  "version": "3.11.0-next.0",
+  "version": "3.11.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -12,7 +12,7 @@
     "chokidar": "^3.4.3",
     "file-type": "^16.0.0",
     "fs-extra": "^8.1.0",
-    "gatsby-core-utils": "^2.11.0-next.0",
+    "gatsby-core-utils": "^2.11.0",
     "got": "^9.6.0",
     "md5-file": "^5.0.0",
     "mime": "^2.4.6",
@@ -24,7 +24,7 @@
   "devDependencies": {
     "@babel/cli": "^7.14.5",
     "@babel/core": "^7.14.6",
-    "babel-preset-gatsby-package": "^1.11.0-next.0",
+    "babel-preset-gatsby-package": "^1.11.0",
     "cross-env": "^7.0.3",
     "msw": "^0.25.0"
   },

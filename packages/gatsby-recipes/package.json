@@ -1,7 +1,7 @@
 {
   "name": "gatsby-recipes",
   "description": "Core functionality for Gatsby Recipes",
-  "version": "0.22.0-next.0",
+  "version": "0.22.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -30,8 +30,8 @@
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
     "fs-extra": "^8.1.0",
-    "gatsby-core-utils": "^2.11.0-next.0",
-    "gatsby-telemetry": "^2.11.0-next.0",
+    "gatsby-core-utils": "^2.11.0",
+    "gatsby-telemetry": "^2.11.0",
     "glob": "^7.1.6",
     "graphql": "^15.4.0",
     "graphql-compose": "~7.25.0",

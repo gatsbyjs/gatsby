@@ -1,6 +1,6 @@
 {
   "name": "gatsby-design-tokens",
-  "version": "3.11.0-next.0",
+  "version": "3.11.0",
   "description": "Gatsby Design Tokens",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

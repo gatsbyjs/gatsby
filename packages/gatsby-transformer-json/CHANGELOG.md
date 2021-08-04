@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-json@3.11.0-next.0...gatsby-transformer-json@3.11.0) (2021-08-04)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
 # [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-json@3.10.0-next.1...gatsby-transformer-json@3.11.0-next.0) (2021-07-15)
 
 **Note:** Version bump only for package gatsby-transformer-json
