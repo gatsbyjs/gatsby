@@ -160,6 +160,8 @@ Not set by default. If set to a string (example `My Sales Channel`), only produc
 
 Note: If you set up your site with the Gatsby Cloud Public App integration, `salesChannel` is set for you.
 
+Note: If you want to filter products by a Private App instead of Public App or default sales channel, you have to provide App ID instead of sales channel name.
+
 <div id="images"></div>
 
 ## Images
