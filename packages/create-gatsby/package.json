@@ -17,9 +17,9 @@
   ],
   "devDependencies": {
     "@ascorbic/worker-threads-shim": "^1.0.0",
-    "@babel/runtime": "^7.14.6",
+    "@babel/runtime": "^7.14.8",
     "@types/configstore": "^4.0.0",
-    "@types/fs-extra": "^9.0.11",
+    "@types/fs-extra": "^9.0.12",
     "@types/node": "^14.17.4",
     "ansi-wordwrap": "^1.0.2",
     "common-tags": "^1.8.0",
