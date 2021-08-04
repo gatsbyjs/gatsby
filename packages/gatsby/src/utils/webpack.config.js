@@ -1,6 +1,6 @@
 require(`v8-compile-cache`)
 
-const { isCI } = require(`gatsby-core-utils`)
+const { isCI, createRequireFromPath } = require(`gatsby-core-utils`)
 const crypto = require(`crypto`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
@@ -531,6 +531,20 @@ module.exports = async (
   }
 
   const isCssModule = module => module.type === `css/mini-extract`
+
+  const defaultSiteRequire = createRequireFromPath(`${directory}/:internal:`)
+  const frameworkList = FRAMEWORK_BUNDLES.map(name => {
+    try {
+      return path.dirname(defaultSiteRequire.resolve(`${name}/package.json`))
+    } catch (err) {
+      return ``
+    }
+  }).filter(Boolean)
+  const isFrameworkModule = mod =>
+    frameworkList.some(
+      framework => mod && mod.resource && mod.resource.startsWith(framework)
+    )
+
   if (stage === `develop`) {
     config.optimization = {
       splitChunks: {
@@ -541,12 +555,8 @@ module.exports = async (
           framework: {
             chunks: `all`,
             name: `framework`,
-            // This regex ignores nested copies of framework libraries so they're bundled with their issuer.
-            test: new RegExp(
-              `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join(
-                `|`
-              )})[\\\\/]`
-            ),
+            // This function ignores nested copies of framework libraries so they're bundled with their issuer.
+            test: isFrameworkModule,
             priority: 40,
             // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
             enforce: true,
@@ -579,12 +589,8 @@ module.exports = async (
         framework: {
           chunks: `all`,
           name: `framework`,
-          // This regex ignores nested copies of framework libraries so they're bundled with their issuer.
-          test: new RegExp(
-            `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join(
-              `|`
-            )})[\\\\/]`
-          ),
+          // This function ignores nested copies of framework libraries so they're bundled with their issuer.
+          test: isFrameworkModule,
           priority: 40,
           // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
           enforce: true,
