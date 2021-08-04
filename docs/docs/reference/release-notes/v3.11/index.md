@@ -35,9 +35,16 @@ Please give it a try and report back in the [PQR GitHub Discussion](https://gith
 - `gatsby`: Correct pagination logic (fixing a regression) per [PR #32496](https://github.com/gatsbyjs/gatsby/pull/32496)
 - `gatsby-source-shopify`: Add a query for `ShopifyLocation` and `ShopifyInventoryLevel` per [PR #32450](https://github.com/gatsbyjs/gatsby/pull/32450)
 - `gatsby-plugin-mdx`: Performance improvement for a specific usage scenario (multiple GraphQL fields that require MDX processing) per [PR #32462](https://github.com/gatsbyjs/gatsby/pull/32462)
+- `gatsby-source-wordpress`: Fetch referenced media items during single node updates per [PR #32381](https://github.com/gatsbyjs/gatsby/pull/32381)
+- `gatsby-plugin-gatsby-cloud`: Fix bug where Incremental Builds on Gatsby Cloud would result in downloading duplicate JavaScript assets per [PR #32535](https://github.com/gatsbyjs/gatsby/pull/32535)
 
 ## Contributors
 
 A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.0...gatsby@3.11.0) to this release 💜
 
-TODO
+- [angeloashmore](https://github.com/angeloashmore): fix(gatsby): correct hasNextPage pagination info when resultOffset is provided [PR #32319](https://github.com/gatsbyjs/gatsby/pull/32319)
+- [jvidalv](https://github.com/jvidalv): chore(docs): modified file-mock path for typescript config on unit-te… [PR #32390](https://github.com/gatsbyjs/gatsby/pull/32390)
+- [kik-o](https://github.com/kik-o): chore(docs): SEO remove typos & outdated information [PR #32433](https://github.com/gatsbyjs/gatsby/pull/32433)
+- [farhan443](https://github.com/farhan443): chore(docs): Fix a minor typo "with" > "will" [PR #32491](https://github.com/gatsbyjs/gatsby/pull/32491)
+- [nyedidikeke](https://github.com/nyedidikeke): chore(docs): Fix typo in documentation for assetPrefix [PR #32499](https://github.com/gatsbyjs/gatsby/pull/32499)
+- [xugetsu](https://github.com/xugetsu): chore(docs): Fix typo in File System Route API doc [PR #32517](https://github.com/gatsbyjs/gatsby/pull/32517)
