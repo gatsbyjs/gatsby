@@ -5221,6 +5221,11 @@
     async-retry "^1.3.1"
     debug "^3.1.0"
 
+"@vercel/webpack-asset-relocator-loader@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@vercel/webpack-asset-relocator-loader/-/webpack-asset-relocator-loader-1.6.0.tgz#5c1359187a1f88fbf212c05ba8291bc17441e510"
+  integrity sha512-Iy7uTSeiYn78Gc0flRHxlBFLn32/q9i70Ss8MKO37g2fYHdCYhbLbZg1cfQ5DgXv0SQqBdWimF4Md4hcgH/jhw==
+
 "@verdaccio/commons-api@9.7.1", "@verdaccio/commons-api@^9.7.1":
   version "9.7.1"
   resolved "https://registry.yarnpkg.com/@verdaccio/commons-api/-/commons-api-9.7.1.tgz#816f08eb6cb0dbe345f2546428c837be6804796d"
@@ -19669,6 +19674,13 @@ node-libs-browser@^2.2.1:
     url "^0.11.0"
     util "^0.11.0"
     vm-browserify "^1.0.1"
+
+node-loader@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/node-loader/-/node-loader-2.0.0.tgz#9109a6d828703fd3e0aa03c1baec12a798071562"
+  integrity sha512-I5VN34NO4/5UYJaUBtkrODPWxbobrE4hgDqPrjB25yPkonFhCmZ146vTH+Zg417E9Iwoh1l/MbRs1apc5J295Q==
+  dependencies:
+    loader-utils "^2.0.0"
 
 node-match-path@^0.6.0, node-match-path@^0.6.3:
   version "0.6.3"
