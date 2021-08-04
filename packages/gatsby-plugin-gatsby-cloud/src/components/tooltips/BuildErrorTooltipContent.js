@@ -3,7 +3,14 @@ import { logsIcon, failedIcon } from "../icons"
 import trackEvent from "../../utils/trackEvent"
 
 const generateBuildLogUrl = ({ orgId, siteId, buildId }) => {
-  const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/builds/${buildId}/details`
+  let pathToBuildLogs
+
+  if (!buildId) {
+    pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/cmsPreview`
+  } else {
+    pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/builds/${buildId}/details`
+  }
+
   const returnTo = encodeURIComponent(pathToBuildLogs)
 
   return `${pathToBuildLogs}?returnTo=${returnTo}`
