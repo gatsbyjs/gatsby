@@ -36,7 +36,8 @@ export async function createGraphqlEngineBundle(): Promise<any> {
     module: {
       rules: [
         {
-          test: /\.m?js/,
+          test: /\.m?js$/,
+          type: `javascript/auto`,
           resolve: {
             byDependency: {
               esm: {
