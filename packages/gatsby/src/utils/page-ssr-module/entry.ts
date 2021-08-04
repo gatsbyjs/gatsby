@@ -8,7 +8,7 @@ import type { IPageDataWithQueryResult } from "../page-data/write-page-data"
 // actual imports
 import * as path from "path"
 import * as fs from "fs-extra"
-import { writePageData } from "../page-data/write-page-data"
+import { writePageData, fixedPagePath } from "../page-data/write-page-data"
 import { getPageHtmlFilePath } from "../page-html"
 // @ts-ignore render-page import will become valid later on (it's marked as external)
 import htmlComponentRenderer from "./render-page"
@@ -86,21 +86,41 @@ export async function renderPageData({
   return results.body
 }
 
+const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
+
+const readStaticQueryContext = async (
+  templatePath: string
+): Promise<Record<string, any>> => {
+  const filePath = path.join(
+    outputDir,
+    `sq-context`,
+    fixedPagePath(templatePath),
+    `sq-context.json`
+  )
+  const rawSQContext = await fs.readFile(filePath, `utf-8`)
+
+  return JSON.parse(rawSQContext)
+}
+
 export async function renderHTML({
   data,
   pageData,
 }: {
   data: ISSRData
-  pageData?: any
+  pageData?: IPageDataWithQueryResult
 }): Promise<string> {
   if (!pageData) {
     pageData = await renderPageData({ data })
   }
 
+  const staticQueryContext = await readStaticQueryContext(
+    data.page.componentChunkName
+  )
+
   const results = await htmlComponentRenderer({
     pagePath: data.page.path,
     pageData,
-    staticQueryContext: {}, // TODO: handle static query results map
+    staticQueryContext,
     ...data.templateDetails.assets,
   })
 

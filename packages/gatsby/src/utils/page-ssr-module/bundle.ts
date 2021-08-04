@@ -11,6 +11,7 @@ import {
   getScriptsAndStylesForTemplate,
   readWebpackStats,
 } from "../client-assets-for-template"
+import { writeStaticQueryContext } from "../static-query-utils"
 
 const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
 
@@ -27,12 +28,18 @@ export async function createPageSSRBundle(): Promise<any> {
 
   const toInline: Record<string, ITemplateDetails> = {}
   for (const pageTemplate of components.values()) {
+    const staticQueryHashes =
+      store
+        .getState()
+        .staticQueriesByTemplate.get(pageTemplate.componentPath) || []
+    await writeStaticQueryContext(
+      staticQueryHashes,
+      pageTemplate.componentChunkName
+    )
+
     toInline[pageTemplate.componentChunkName] = {
       query: pageTemplate.query,
-      staticQueryHashes:
-        store
-          .getState()
-          .staticQueriesByTemplate.get(pageTemplate.componentPath) || [],
+      staticQueryHashes,
       assets: await getScriptsAndStylesForTemplate(
         pageTemplate.componentChunkName,
         webpackStats

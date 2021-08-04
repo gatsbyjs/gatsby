@@ -13,6 +13,11 @@ import {
 } from "../../client-assets-for-template"
 import type { IPageDataWithQueryResult } from "../../page-data"
 import type { IRenderHtmlResult } from "../../../commands/build-html"
+import {
+  clearStaticQueryCaches,
+  IResourcesForTemplate,
+  getStaticQueryContext,
+} from "../../static-query-utils"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
 
@@ -34,9 +39,6 @@ let lastSessionId = 0
 let htmlComponentRenderer
 let webpackStats
 
-const staticQueryResultCache = new Map<string, any>()
-const inFlightStaticQueryPromise = new Map<string, Promise<any>>()
-
 const resourcesForTemplateCache = new Map<string, IResourcesForTemplate>()
 const inFlightResourcesForTemplate = new Map<
   string,
@@ -44,24 +46,11 @@ const inFlightResourcesForTemplate = new Map<
 >()
 
 function clearCaches(): void {
-  staticQueryResultCache.clear()
-  inFlightStaticQueryPromise.clear()
-
+  clearStaticQueryCaches()
   resourcesForTemplateCache.clear()
   inFlightResourcesForTemplate.clear()
 
   clearAssetsMappingCache()
-}
-
-const getStaticQueryPath = (hash: string): string =>
-  join(`page-data`, `sq`, `d`, `${hash}.json`)
-
-const getStaticQueryResult = async (hash: string): Promise<any> => {
-  const staticQueryPath = getStaticQueryPath(hash)
-  const absoluteStaticQueryPath = join(process.cwd(), `public`, staticQueryPath)
-  const staticQueryRaw = await fs.readFile(absoluteStaticQueryPath)
-
-  return JSON.parse(staticQueryRaw.toString())
 }
 
 async function readPageData(
@@ -75,46 +64,17 @@ async function readPageData(
   return JSON.parse(rawPageData)
 }
 
-interface IResourcesForTemplate extends IScriptsAndStyles {
-  staticQueryContext: Record<string, any>
-}
-
 async function doGetResourcesForTemplate(
   pageData: IPageDataWithQueryResult
 ): Promise<IResourcesForTemplate> {
-  const staticQueryResultPromises: Array<Promise<void>> = []
-  const staticQueryContext: Record<string, any> = {}
-  for (const staticQueryHash of pageData.staticQueryHashes) {
-    const memoizedStaticQueryResult = staticQueryResultCache.get(
-      staticQueryHash
-    )
-    if (memoizedStaticQueryResult) {
-      staticQueryContext[staticQueryHash] = memoizedStaticQueryResult
-      continue
-    }
-
-    let getStaticQueryPromise = inFlightStaticQueryPromise.get(staticQueryHash)
-    if (!getStaticQueryPromise) {
-      getStaticQueryPromise = getStaticQueryResult(staticQueryHash)
-      inFlightStaticQueryPromise.set(staticQueryHash, getStaticQueryPromise)
-      getStaticQueryPromise.then(() => {
-        inFlightStaticQueryPromise.delete(staticQueryHash)
-      })
-    }
-
-    staticQueryResultPromises.push(
-      getStaticQueryPromise.then(results => {
-        staticQueryContext[staticQueryHash] = results
-      })
-    )
-  }
-
   const scriptsAndStyles = await getScriptsAndStylesForTemplate(
     pageData.componentChunkName,
     webpackStats
   )
 
-  await Promise.all(staticQueryResultPromises)
+  const { staticQueryContext } = await getStaticQueryContext(
+    pageData.staticQueryHashes
+  )
 
   return {
     staticQueryContext,
