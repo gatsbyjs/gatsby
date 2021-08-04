@@ -294,7 +294,7 @@ export async function createGraphqlEngineBundle(): Promise<any> {
         extensions,
         transformMixedEsModules: true,
         requireReturnsDefault: id => {
-          if (id && id.includes(`ci-info/vendors.json`)) {
+          if (id && id.includes(path.join(`ci-info`, `vendors.json`))) {
             return true
           }
           return false
