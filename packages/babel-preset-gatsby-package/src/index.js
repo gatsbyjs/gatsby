@@ -78,7 +78,7 @@ function preset(context, options = {}) {
         r(`./babel-transform-compiler-flags`),
         {
           flags: parsedCompilerOptions,
-          availableFlags: [`MAJOR`],
+          availableFlags: availableCompilerFlags,
         },
       ],
     ].filter(Boolean),
