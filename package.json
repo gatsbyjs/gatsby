@@ -146,6 +146,7 @@
     "publish-preminor": "node scripts/check-publish-access && node scripts/clear-package-dir preminor --verbose && lerna publish preminor --pre-dist-tag=next --preid=next --force-publish --allow-branch=master --message=\"chore(release): Publish next pre-minor\"",
     "publish-rc": "node scripts/check-publish-access && node scripts/clear-package-dir prerelease --verbose && lerna publish prerelease --pre-dist-tag=rc --preid=rc --message=\"chore(release): Publish rc\"",
     "publish-release": "node scripts/check-publish-access && node scripts/clear-package-dir patch --verbose && lerna publish patch",
+    "publish-v4": "node scripts/release-cli.js publish v4",
     "test": "npm-run-all -s lint jest test:peril",
     "test:coverage": "jest --coverage",
     "test:integration": "jest --config=integration-tests/jest.config.js",
