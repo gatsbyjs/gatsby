@@ -12207,10 +12207,10 @@ filenamify@^2.0.0:
     strip-outer "^1.0.0"
     trim-repeated "^1.0.0"
 
-filenamify@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/filenamify/-/filenamify-4.2.0.tgz#c99716d676869585b3b5d328b3f06590d032e89f"
-  integrity sha512-pkgE+4p7N1n7QieOopmn3TqJaefjdWXwEkj2XLZJLKfOgcQKkn11ahvGNgTD8mLggexLiDFQxeTs14xVU22XPA==
+filenamify@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/filenamify/-/filenamify-4.3.0.tgz#62391cb58f02b09971c9d4f9d63b3cf9aba03106"
+  integrity sha512-hcFKyUG57yWGAzu1CMt/dPzYZuv+jAJUT85bL8mrXvNe6hWj6yEHEc4EdcgiA6Z3oi1/9wXJdZPXF2dZNgwgOg==
   dependencies:
     filename-reserved-regex "^2.0.0"
     strip-outer "^1.0.1"
@@ -14574,10 +14574,10 @@ imagemin-mozjpeg@^9.0.0:
     is-jpg "^2.0.0"
     mozjpeg "^7.0.0"
 
-imagemin-pngquant@^9.0.1:
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/imagemin-pngquant/-/imagemin-pngquant-9.0.1.tgz#ecf22f522bdb734a503ecc21bdd7bc3d0230edcc"
-  integrity sha512-PYyo9G/xwddf+Qqlqe3onz5ZH7p6vHYVVkiuuczUjxZmfekyY77RXaOA/AR6FnVoeQxGa/pDtEK5xUKOcVo+sA==
+imagemin-pngquant@^9.0.2:
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/imagemin-pngquant/-/imagemin-pngquant-9.0.2.tgz#38155702b0cc4f60f671ba7c2b086ea3805d9567"
+  integrity sha512-cj//bKo8+Frd/DM8l6Pg9pws1pnDUjgb7ae++sUX1kUVdv2nrngPykhiUOgFeE0LGY/LmUbCf4egCHC4YUcZSg==
   dependencies:
     execa "^4.0.0"
     is-png "^2.0.0"
@@ -18995,7 +18995,7 @@ mini-css-extract-plugin@1.6.2:
     schema-utils "^3.0.0"
     webpack-sources "^1.1.0"
 
-mini-svg-data-uri@^1.2.3, mini-svg-data-uri@^1.3.3:
+mini-svg-data-uri@^1.3.3:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/mini-svg-data-uri/-/mini-svg-data-uri-1.3.3.tgz#91d2c09f45e056e5e1043340b8b37ba7b50f4fac"
   integrity sha512-+fA2oRcR1dJI/7ITmeQJDrYWks0wodlOz0pAEhKYJ2IVc1z0AnwJUsKY2fzFmPAM3Jo9J0rBx8JAA9QQSJ5PuA==
