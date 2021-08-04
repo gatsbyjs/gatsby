@@ -35,6 +35,21 @@ function preset(context, options = {}) {
       node: nodeVersion,
     },
   }
+
+  let parsedCompilerOptions = {}
+  if (COMPILER_OPTIONS) {
+    // COMPILER_OPTIONS syntax is key=value,key2=value2
+    parsedCompilerOptions = COMPILER_OPTIONS.split(`,`).reduce((acc, curr) => {
+      const [key, value] = curr.split(`=`)
+
+      if (key) {
+        acc[key] = value
+      }
+
+      return acc
+    }, Object.create(null))
+  }
+
   return {
     presets: [
       [
@@ -62,7 +77,7 @@ function preset(context, options = {}) {
       availableCompilerFlags.length && [
         r(`./babel-transform-compiler-flags`),
         {
-          flags: COMPILER_OPTIONS || {},
+          flags: parsedCompilerOptions,
           availableFlags: [`MAJOR`],
         },
       ],
