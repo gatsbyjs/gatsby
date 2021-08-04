@@ -31,7 +31,7 @@
     "gatsby-core-utils": "^2.12.0-next.0",
     "gatsby-page-utils": "^1.12.0-next.0",
     "gatsby-telemetry": "^2.12.0-next.0",
-    "globby": "^11.0.3",
+    "globby": "^11.0.4",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
