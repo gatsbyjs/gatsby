@@ -3,7 +3,7 @@ import fileType from "file-type"
 import path from "path"
 import { IncomingMessage, OutgoingHttpHeaders } from "http"
 import fs from "fs-extra"
-import { createContentDigest } from "."
+import { createContentDigest } from "./create-content-digest"
 import {
   getRemoteFileName,
   getRemoteFileExtension,
