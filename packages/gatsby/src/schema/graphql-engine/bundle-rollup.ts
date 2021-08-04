@@ -90,7 +90,7 @@ const allowedPackages = [
   `cbor-x`, // shimmed
 ]
 
-const skipDedupe = [`joi`]
+const skipDedupe = [`joi`, `@hapi/topo`]
 
 const forSureExternals = [
   // https://github.com/rollup/rollup/issues/1507#issuecomment-340550539
