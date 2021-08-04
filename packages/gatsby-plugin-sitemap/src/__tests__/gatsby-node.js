@@ -193,17 +193,4 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
       path.join(`public`, subdir)
     )
   })
-
-  it(`should throw with a useful error if you have the old config`, async () => {
-    const graphql = jest.fn()
-    const exclude = [`*/2/*`, `*/glossary`, `*/vo/*`]
-    const reporter = {
-      panic: () => {
-        throw new Error(`Thrown`)
-      },
-    }
-    expect(() => {
-      onPostBuild({ graphql, pathPrefix, reporter }, { exclude })
-    }).toThrow()
-  })
 })
