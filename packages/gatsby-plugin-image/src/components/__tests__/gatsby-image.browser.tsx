@@ -82,7 +82,7 @@ describe(`GatsbyImage browser`, () => {
 
     await waitFor(() => container.querySelector(`[data-placeholder-image=""]`))
 
-    expect(console.error).toBeCalledWith(
+    expect(console.warn).toBeCalledWith(
       `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
     )
   })
