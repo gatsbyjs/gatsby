@@ -59,7 +59,7 @@ const createNodeIdWithVersion = (
   if (getOptions().languageConfig.nonTranslatableEntities.includes(type)) {
     langcode = getOptions().languageConfig.defaultLanguage
   }
-  
+
   // If the source plugin hasn't enabled `translation` then always just set langcode
   // to "undefined".
   let langcodeNormalized = getOptions().languageConfig ? langcode : `und`
