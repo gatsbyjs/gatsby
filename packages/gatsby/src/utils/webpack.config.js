@@ -535,15 +535,18 @@ module.exports = async (
   const defaultSiteRequire = createRequireFromPath(`${directory}/:internal:`)
   const frameworkList = FRAMEWORK_BUNDLES.map(name => {
     try {
-      return path.dirname(defaultSiteRequire.resolve(`${name}/package.json`))
+      return (
+        path.dirname(defaultSiteRequire.resolve(`${name}/package.json`)) +
+        path.sep
+      )
     } catch (err) {
       return ``
     }
   }).filter(Boolean)
   const isFrameworkModule = mod =>
-    frameworkList.some(
-      framework => mod && mod.resource && mod.resource.startsWith(framework)
-    )
+    mod &&
+    mod.resource &&
+    frameworkList.some(framework => mod.resource.startsWith(framework))
 
   if (stage === `develop`) {
     config.optimization = {
