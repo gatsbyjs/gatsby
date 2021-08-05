@@ -128,10 +128,7 @@ let commitCreated = false
       // no catch
     }
 
-    let COMPILER_OPTIONS = ``
-    if (argv.type === `v4`) {
-      COMPILER_OPTIONS = `GATSBY_MAJOR=4`
-    }
+    const COMPILER_OPTIONS = `GATSBY_MAJOR=4`
 
     console.log(` `)
     console.log(`=== BUILDING V4 ALPHA ===`)
