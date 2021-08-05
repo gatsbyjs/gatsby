@@ -17,7 +17,13 @@ const { spawn, execSync } = require(`child_process`)
 const yargs = require(`yargs`)
 const glob = require(`glob`)
 
-const argv = yargs.command(`publish v4`, `Publishes a v4 alpha release`)
+const argv = yargs
+  .command(`publish v4`, `Publishes a v4 alpha release`)
+  .option(`registry`, {
+    default: `https://registry.npmjs.org`,
+    describe: `The NPM registry to publish to`,
+    type: `string`,
+  }).argv
 
 function promiseSpawn(command, args, options) {
   return new Promise((resolve, reject) => {
@@ -153,7 +159,8 @@ let commitCreated = false
         `--pre-dist-tag`,
         tagName,
         `--force-publish`, // publish all
-        `--registry=https://registry.wardpeet.dev`,
+        `--registry`,
+        argv.registry,
       ],
       {
         cwd: path.resolve(__dirname, `../`),
