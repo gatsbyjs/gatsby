@@ -125,7 +125,7 @@ let commitCreated = false
       )
       commitCreated = true
     } catch (err) {
-      console.log({ err })
+      // no catch
     }
 
     let COMPILER_OPTIONS = ``
