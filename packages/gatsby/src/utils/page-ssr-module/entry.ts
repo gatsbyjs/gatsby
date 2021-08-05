@@ -86,13 +86,11 @@ export async function renderPageData({
   return results.body
 }
 
-const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
-
 const readStaticQueryContext = async (
   templatePath: string
 ): Promise<Record<string, any>> => {
   const filePath = path.join(
-    outputDir,
+    __dirname,
     `sq-context`,
     fixedPagePath(templatePath),
     `sq-context.json`
