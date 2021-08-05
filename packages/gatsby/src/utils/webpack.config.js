@@ -544,8 +544,7 @@ module.exports = async (
     }
   }).filter(Boolean)
   const isFrameworkModule = mod =>
-    mod &&
-    mod.resource &&
+    !!(mod && mod.resource) &&
     frameworkList.some(framework => mod.resource.startsWith(framework))
 
   if (stage === `develop`) {
