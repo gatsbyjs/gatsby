@@ -80,7 +80,7 @@ Some examples:
 - sending emails from a service like SendGrid
 - server-side validation on form submission (eg, is this email already in our system?)
 
-Users tend to handle these situations in two ways: either they send data to a middleware service like Zapier that can trigger multiple events based on data submission. Alternately, they use Gatsby Functions to run this logic while keeping auth credentials secure.
+Users tend to handle these situations in two ways: either they send data to a middleware service like Zapier that can trigger multiple events based on data submission. Alternatively, they use Gatsby Functions to run this logic while keeping auth credentials secure.
 
 ## Embedding third-party forms vs writing your own forms.
 
@@ -90,7 +90,7 @@ If you're using a marketing automation vendor like Hubspot or Marketo, you have 
 
 Vendors tend to have a JavaScript widget for their forms.
 
-We've found these forms tend to be extremely heavy, weighing several hundred KB. This can often be more than the rest of the page combined, and can delay page load by a full second or two on some devices. For pages where conversion is critical, this can be an unacceptable tradeeoff.
+We've found these forms tend to be extremely heavy, weighing several hundred KB. This can often be more than the rest of the page combined, and can delay page load by a full second or two on some devices. For pages where conversion is critical, this can be an unacceptable trade-off.
 
 ### Sending data
 
