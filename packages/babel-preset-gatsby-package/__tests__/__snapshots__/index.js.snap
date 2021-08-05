@@ -84,6 +84,15 @@ Array [
   "@babel/plugin-transform-runtime",
   "@babel/plugin-syntax-dynamic-import",
   "babel-plugin-dynamic-import-node",
+  Array [
+    "./babel-transform-compiler-flags",
+    Object {
+      "availableFlags": Array [
+        "GATSBY_MAJOR",
+      ],
+      "flags": Object {},
+    },
+  ],
 ]
 `;
 
@@ -161,5 +170,14 @@ Array [
   "@babel/plugin-transform-runtime",
   "@babel/plugin-syntax-dynamic-import",
   "babel-plugin-dynamic-import-node",
+  Array [
+    "./babel-transform-compiler-flags",
+    Object {
+      "availableFlags": Array [
+        "GATSBY_MAJOR",
+      ],
+      "flags": Object {},
+    },
+  ],
 ]
 `;
