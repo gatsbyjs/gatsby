@@ -230,7 +230,7 @@ async function sqipContentful({ type, cache, store }) {
         }
 
         const extension = mimeTypeExtensions.get(contentType)
-        const url = `https:` + createUrl(imgUrl, options)
+        const url = createUrl(imgUrl, options)
         const name = path.basename(fileName, extension)
 
         const absolutePath = await fetchContentfulAsset({
