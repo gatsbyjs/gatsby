@@ -17,25 +17,30 @@ jest.mock(`../utils/`, () => {
 
 jest.mock(`axios`)
 
-let mockedSharpMetadata
-jest.mock(`sharp`, () => () => {
-  return { metadata: mockedSharpMetadata }
-})
-
-const mockSharpSuccess = () => {
-  mockedSharpMetadata = jest.fn(() => {
+jest.mock(`sharp`, () => {
+  const metadataMock = jest.fn(() => {
     return {
       width: 200,
       height: 200,
       density: 75,
     }
   })
-}
 
+  const sharp = () => {
+    const pipeline = {
+      metadata: metadataMock,
+    }
+    return pipeline
+  }
+
+  sharp.metadataMock = metadataMock
+
+  return sharp
+})
+
+const sharp = require(`sharp`)
 const mockSharpFailure = () => {
-  mockedSharpMetadata = jest.fn(() =>
-    Promise.reject(new Error(`invalid image`))
-  )
+  sharp.metadataMock.mockRejectedValueOnce(new Error(`invalid image`))
 }
 
 const createNode = content => {
@@ -104,7 +109,6 @@ beforeEach(() => {
 })
 
 test(`it returns empty array when 0 images`, async () => {
-  mockSharpSuccess()
   const content = `
 # hello world
 Look ma, no images
@@ -127,7 +131,6 @@ test(`it leaves relative images alone`, async () => {
 })
 
 test(`it leaves non-contentful images alone`, async () => {
-  mockSharpSuccess()
   const imagePath = `//google.com/images/an-image.jpeg`
   const content = `
 ![asdf](${imagePath})
@@ -139,12 +142,10 @@ test(`it leaves non-contentful images alone`, async () => {
 })
 
 test(`it transforms images in markdown`, async () => {
-  mockSharpSuccess()
   const imagePath = `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`
   const content = `
 ![image](${imagePath})
   `.trim()
-
   const nodes = await plugin(createPluginOptions(content, imagePath))
 
   expect(nodes.length).toBe(1)
@@ -156,7 +157,6 @@ test(`it transforms images in markdown`, async () => {
 })
 
 test(`it transforms images with a https scheme in markdown`, async () => {
-  mockSharpSuccess()
   const imagePath = `https://images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`
   const content = `
 ![image](${imagePath})
@@ -173,7 +173,6 @@ test(`it transforms images with a https scheme in markdown`, async () => {
 })
 
 test(`it throws specific error if the image is not found`, async () => {
-  mockSharpSuccess()
   axios.mockImplementationOnce(() => Promise.reject(new Error(`oh no`)))
   const reporter = {
     panic: jest.fn(),
@@ -192,7 +191,6 @@ test(`it throws specific error if the image is not found`, async () => {
 })
 
 test(`it transforms multiple images in markdown`, async () => {
-  mockSharpSuccess()
   const imagePaths = [
     `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`,
     `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`,
@@ -209,7 +207,6 @@ test(`it transforms multiple images in markdown`, async () => {
 })
 
 test(`it transforms HTML img tags`, async () => {
-  mockSharpSuccess()
   const imagePath = `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`
 
   const content = `
@@ -227,7 +224,6 @@ test(`it transforms HTML img tags`, async () => {
 })
 
 test(`it leaves relative HTML img tags alone`, async () => {
-  mockSharpSuccess()
   const imagePath = `images/this-was-an-image.jpeg`
 
   const content = `
@@ -239,7 +235,6 @@ test(`it leaves relative HTML img tags alone`, async () => {
 })
 
 test(`it transforms images in markdown with webp srcSets if option is enabled`, async () => {
-  mockSharpSuccess()
   const imagePath = `//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg`
   const content = `
 ![image](${imagePath})
