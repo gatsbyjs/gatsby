@@ -36,10 +36,10 @@
     "node": ">=12.13.0"
   },
   "files": [
-    "lib/"
+    "lib/*.js"
   ],
   "scripts": {
-    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts,.js\"",
+    "build": "",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\""
   }
