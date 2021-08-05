@@ -100,7 +100,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   const engineBundlingPromises: Array<Promise<any>> = []
 
   // bundle graphql-engine
-  if (isLmdbStore()) {
+  if (process.env.GATSBY_EXPERIMENTAL_GENERATE_ENGINES) {
     engineBundlingPromises.push(createGraphqlEngineBundle())
   }
 
@@ -172,7 +172,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   }
 
   // client bundle is produced so static query maps should be ready
-  if (isLmdbStore()) {
+  if (process.env.GATSBY_EXPERIMENTAL_GENERATE_ENGINES) {
     engineBundlingPromises.push(createPageSSRBundle())
   }
 
@@ -236,7 +236,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   try {
     const result = await buildRenderer(program, Stage.BuildHTML, buildSpan)
     pageRenderer = result.rendererPath
-    if (isLmdbStore()) {
+    if (process.env.GATSBY_EXPERIMENTAL_GENERATE_ENGINES) {
       // for now copy page-render to `.cache` so page-ssr module can require it as a sibling module
       const outputDir = path.join(program.directory, `.cache`, `page-ssr`)
       engineBundlingPromises.push(

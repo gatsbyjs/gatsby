@@ -223,6 +223,23 @@ const activeFlags: Array<IFlag> = [
     },
     requires: `Requires Node v14.10 or above.`,
   },
+  {
+    name: `GENERATE_ENGINES`,
+    env: `GATSBY_EXPERIMENTAL_GENERATE_ENGINES`,
+    command: `build`,
+    telemetryId: `ENGINES`,
+    experimental: true,
+    // umbrellaIssue: `https://gatsby.dev/pqr-feedback`,
+    description: ``,
+    includedFlags: [`LMDB_STORE`],
+    testFitness: (): fitnessEnum => {
+      const [major, minor] = process.versions.node.split(`.`)
+      return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
+        ? `LOCKED_IN`
+        : false
+    },
+    requires: `Requires Node v14.10 or above.`,
+  },
 ]
 
 export default activeFlags
