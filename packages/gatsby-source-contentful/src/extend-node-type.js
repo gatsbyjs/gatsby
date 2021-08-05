@@ -805,6 +805,8 @@ exports.extendNodeType = ({ type, store, reporter }) => {
       placeholderDataURI = await getBase64Image(
         {
           baseUrl,
+          image,
+          options,
         },
         reporter
       )
