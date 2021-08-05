@@ -49,18 +49,12 @@ import {
 } from "../utils/worker/pool"
 import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle"
 import { createPageSSRBundle } from "../utils/page-ssr-module/bundle"
-import { isLmdbStore } from "../datastore"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (isTruthy(process.env.VERBOSE)) {
     program.verbose = true
   }
   report.setVerbose(program.verbose)
-
-  if (isLmdbStore()) {
-    // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
-    program.keepPageRenderer = true
-  }
 
   if (program.profile) {
     report.warn(
@@ -255,6 +249,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
   } finally {
     buildSSRBundleActivityProgress.end()
+  }
+
+  if (process.env.GATSBY_EXPERIMENTAL_GENERATE_ENGINES) {
+    // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
+    program.keepPageRenderer = true
   }
 
   await waitForWorkerPoolRestart
