@@ -12,6 +12,10 @@ export class ProductVariantsQuery extends BulkQuery {
       filters.push(`created_at:>='${isoDate}' OR updated_at:>='${isoDate}'`)
     }
 
+    const includeLocations = this.pluginOptions.shopifyConnections?.includes(
+      `locations`
+    )
+
     const ProductVariantSortKey = `POSITION`
 
     const queryString = filters.map(f => `(${f})`).join(` AND `)
@@ -38,7 +42,9 @@ export class ProductVariantsQuery extends BulkQuery {
                       width
                       originalSrc
                       transformedSrc
-                    }
+                    }${
+                      includeLocations
+                        ? `
                     inventoryItem {
                       id
                       countryCodeOfOrigin
@@ -72,6 +78,8 @@ export class ProductVariantsQuery extends BulkQuery {
                         currencyCode
                       }
                       updatedAt
+                    }`
+                        : ``
                     }
                     inventoryPolicy
                     inventoryQuantity
