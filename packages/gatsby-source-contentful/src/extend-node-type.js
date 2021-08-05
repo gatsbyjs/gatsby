@@ -86,7 +86,8 @@ const getBase64Image = (imageProps, reporter) => {
     width: 20,
     height: Math.floor(20 * aspectRatio),
   }
-  const requestUrl = `https:${createUrl(imageProps.baseUrl, imageOptions)}`
+
+  const requestUrl = createUrl(imageProps.baseUrl, imageOptions)
 
   // Prefer to return data sync if we already have it
   const alreadyFetched = resolvedBase64Cache.get(requestUrl)
@@ -198,7 +199,7 @@ const createUrl = (imgUrl, options = {}) => {
   }
 
   // Note: qs will ignore keys that are `undefined`. `qs.stringify({a: undefined, b: null, c: 1})` => `b=&c=1`
-  return `${imgUrl}?${qs.stringify(urlArgs)}`
+  return `https:${imgUrl}?${qs.stringify(urlArgs)}`
 }
 exports.createUrl = createUrl
 
