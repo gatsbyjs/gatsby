@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.12.0-next.0...gatsby@3.12.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to ^4.1.2 ([#32576](https://github.com/gatsbyjs/gatsby/issues/32576)) ([5c4e109](https://github.com/gatsbyjs/gatsby/commit/5c4e109313cd1b59f814332fdb4dfdcaf1faed1a))
+- **deps:** update dependency eslint to ^7.32.0 ([#32628](https://github.com/gatsbyjs/gatsby/issues/32628)) ([65fe945](https://github.com/gatsbyjs/gatsby/commit/65fe94547e0892b3978a7c7376ff1297acb0144f))
+- **deps:** update dependency eslint-plugin-flowtype to ^5.8.2 ([#32629](https://github.com/gatsbyjs/gatsby/issues/32629)) ([4391f05](https://github.com/gatsbyjs/gatsby/commit/4391f05bcae65c36820c3407f09df668dacc692e))
+- **deps:** update dependency eslint-plugin-import to ^2.23.4 ([#32581](https://github.com/gatsbyjs/gatsby/issues/32581)) ([769e98f](https://github.com/gatsbyjs/gatsby/commit/769e98f3dbcdbededfa1909d86aad83050a291c7))
+- **deps:** update dependency eslint-plugin-react to ^7.24.0 ([#32582](https://github.com/gatsbyjs/gatsby/issues/32582)) ([de676bc](https://github.com/gatsbyjs/gatsby/commit/de676bc45d4196c78bf88e91346625ef80e93545))
+- **deps:** update dependency eslint-webpack-plugin to ^2.5.4 ([#32583](https://github.com/gatsbyjs/gatsby/issues/32583)) ([170e58b](https://github.com/gatsbyjs/gatsby/commit/170e58b1ea30e3ee9927e9ef61be9c0c629b9534))
+- **deps:** update dependency mini-css-extract-plugin to v1.6.2 ([#32586](https://github.com/gatsbyjs/gatsby/issues/32586)) ([6c6d4e5](https://github.com/gatsbyjs/gatsby/commit/6c6d4e501764614ad737c88ba5810b6fbbcbff68))
+- **docs:** clarify redirectInBrowser option ([#32669](https://github.com/gatsbyjs/gatsby/issues/32669)) ([774e680](https://github.com/gatsbyjs/gatsby/commit/774e680e186f3ac0928a7b178d395d64b7d8a4e9))
+- **gatsby:** load page and static queries texts in PQR only once per worker ([#32545](https://github.com/gatsbyjs/gatsby/issues/32545)) ([bbec42b](https://github.com/gatsbyjs/gatsby/commit/bbec42bd599dfbed4c7a4728f50b3c9fba5f903c))
+
+### Features
+
+- **gatsby:** allow sites to disable the dev 404 page ([#32686](https://github.com/gatsbyjs/gatsby/issues/32686)) ([af5525e](https://github.com/gatsbyjs/gatsby/commit/af5525e59cbc8052ccac1c646ef12a0c5d9843bf))
+
 # [3.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.6...gatsby@3.12.0-next.0) (2021-07-29)
 
 ### Bug Fixes
