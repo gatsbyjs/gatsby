@@ -1,10 +1,3 @@
-import IndicatorButtonTooltip from "./IndicatorButtonTooltip"
-
-import BuildErrorTooltipContent from "./BuildErrorTooltipContent"
-import BuildSuccessTooltipContent from "./BuildSuccessTooltipContent"
-
-export {
-  IndicatorButtonTooltip,
-  BuildErrorTooltipContent,
-  BuildSuccessTooltipContent,
-}
+export { default as BuildErrorTooltipContent } from "./BuildErrorTooltipContent"
+export { default as IndicatorButtonTooltip } from "./IndicatorButtonTooltip"
+export { default as BuildSuccessTooltipContent } from "./BuildSuccessTooltipContent"
