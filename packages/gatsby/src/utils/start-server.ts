@@ -314,7 +314,11 @@ module.exports = {
       if (page) {
         try {
           let pageData: IPageDataWithQueryResult
-          if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+          if (page.mode === `SSR`) {
+            req.url = `/api/_ssr` + req.url.replace(`page-data.json`, ``)
+            next()
+            return
+          } else if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
             const start = Date.now()
 
             pageData = await getPageDataExperimental(page.path)

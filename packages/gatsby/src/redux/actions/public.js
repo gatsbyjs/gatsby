@@ -97,11 +97,13 @@ type PageInput = {
   component: string,
   context?: Object,
   ownerNodeId?: string,
+  defer: boolean,
 }
 
 type Page = {
   path: string,
   matchPath: ?string,
+  mode: "SSG" | "DSR" | "SSR",
   component: string,
   context: Object,
   internalComponentName: string,
@@ -390,12 +392,18 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.path = truncatedPath
   }
 
+  let pageMode = `SSG`
+  if (page.defer) {
+    pageMode = `DSR`
+  }
+
   const internalPage: Page = {
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
     component: page.component,
     componentChunkName: generateComponentChunkName(page.component),
+    mode: pageMode,
     isCreatedByStatefulCreatePages:
       actionOptions?.traceId === `initial-createPagesStatefully`,
     // Ensure the page has a context object

@@ -39,6 +39,7 @@ export interface IGatsbyPage {
   pluginCreatorId: Identifier
   componentPath: SystemPath
   ownerNodeId: Identifier
+  mode: "SSG" | "DSR" | "SSR"
 }
 
 export interface IGatsbyFunction {

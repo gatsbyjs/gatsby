@@ -157,6 +157,7 @@ export async function queryRunner(
     delete result.pageContext.componentPath
     delete result.pageContext.context
     delete result.pageContext.isCreatedByStatefulCreatePages
+    delete result.pageContext.mode
   }
 
   const resultJSON = JSON.stringify(result)

@@ -6,6 +6,7 @@ import telemetry from "gatsby-telemetry"
 import { updateSiteMetadata, isTruthy } from "gatsby-core-utils"
 import {
   buildRenderer,
+  buildSSRRenderer,
   buildHTMLPagesAndDeleteStaleArtifacts,
   IBuildArgs,
 } from "./build-html"
@@ -17,6 +18,7 @@ import { copyStaticDirs } from "../utils/get-static-dir"
 import { initTracer, stopTracer } from "../utils/tracer"
 import * as db from "../redux/save-state"
 import { store } from "../redux"
+import { IGatsbyPage } from "../redux/types"
 import * as appDataUtil from "../utils/app-data"
 import { flush as flushPendingPageDataWrites } from "../utils/page-data"
 import {
@@ -257,6 +259,21 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   }
 
   await waitForWorkerPoolRestart
+  // TODO Refactor buildRenderer to build per component instead of all pages at once
+  // TODO improve promise handling - do more in parallel
+  try {
+    const ssrPages: Array<IGatsbyPage> = []
+    for (const [, page] of store.getState().pages) {
+      if (page.mode === `SSR`) {
+        ssrPages.push(page)
+      }
+    }
+
+    await buildSSRRenderer(program, ssrPages, `production`)
+  } catch (err) {
+    console.log(err)
+  }
+
   const {
     toRegenerate,
     toDelete,

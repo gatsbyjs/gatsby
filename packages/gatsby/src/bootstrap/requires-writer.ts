@@ -108,7 +108,7 @@ const getMatchPaths = (
   const matchPathPages: Array<IMatchPathEntry> = []
 
   pages.forEach((page: IGatsbyPage, index: number): void => {
-    if (page.matchPath) {
+    if (page.matchPath && page.mode === `SSG`) {
       matchPathPages.push(createMatchPathEntry(page, index))
     }
   })
@@ -238,6 +238,16 @@ const preferDefault = m => (m && m.default) || m
         `  "${c.componentChunkName}": preferDefault(require("${joinPath(
           c.component
         )}"))`
+    )
+    .join(`,\n`)}
+}\n\n`
+
+  syncRequires += `exports.serverData = {\n${components
+    .map(
+      (c: IGatsbyPageComponent): string =>
+        `  "${c.componentChunkName}": require("${joinPath(
+          c.component
+        )}").getServerData`
     )
     .join(`,\n`)}
 }\n\n`

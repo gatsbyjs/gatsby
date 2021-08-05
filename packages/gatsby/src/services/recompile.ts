@@ -17,6 +17,7 @@ export async function recompile({
   return new Promise(resolve => {
     function finish(stats: Stats): void {
       emitter.off(`COMPILATION_DONE`, finish)
+
       resolve(stats)
     }
     emitter.on(`COMPILATION_DONE`, finish)
