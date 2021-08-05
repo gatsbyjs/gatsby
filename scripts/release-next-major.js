@@ -17,8 +17,11 @@ const { spawn, execSync } = require(`child_process`)
 const yargs = require(`yargs`)
 const glob = require(`glob`)
 
+const gatsbyPKG = require(`../packages/gatsby/package.json`)
+const nextMajor = String(Number(gatsbyPKG.version.match(/[^.]+/)[0]) + 1)
+
 const argv = yargs
-  .command(`publish v4`, `Publishes a v4 alpha release`)
+  .command(`publish`, `Publishes a next-major alpha release`)
   .option(`registry`, {
     default: `https://registry.npmjs.org`,
     describe: `The NPM registry to publish to`,
@@ -55,10 +58,11 @@ function promiseSpawn(command, args, options) {
   })
 }
 
-const patchFiles = glob.sync(`patches/v4/*.patch`, {
+const patchFiles = glob.sync(`patches/v${nextMajor}/*.patch`, {
   cwd: path.join(__dirname, `..`),
 })
 let commitCreated = false
+let currentGitHash = null
 
 ;(async () => {
   try {
@@ -72,8 +76,8 @@ let commitCreated = false
     )
 
     const bumpType = `major`
-    const tagName = `alpha-v4`
-    const preId = `alpha-v4`
+    const tagName = `alpha-v${nextMajor}`
+    const preId = `alpha-v${nextMajor}`
 
     try {
       await Promise.all([
@@ -114,6 +118,13 @@ let commitCreated = false
     })
 
     console.log(`=== COMMITING PATCH FILES ===`)
+    currentGitHash = execSync(`git rev-parse HEAD`)
+      .toString()
+      .replace(/[\r\n]/, ``)
+
+    if (!currentGitHash) {
+      throw new Error(`The current commit hash could not be determined.`)
+    }
     try {
       await promiseSpawn(
         `git`,
@@ -128,10 +139,10 @@ let commitCreated = false
       // no catch
     }
 
-    const COMPILER_OPTIONS = `GATSBY_MAJOR=4`
+    const COMPILER_OPTIONS = `GATSBY_MAJOR=${nextMajor}`
 
     console.log(` `)
-    console.log(`=== BUILDING V4 ALPHA ===`)
+    console.log(`=== BUILDING V${nextMajor} ALPHA ===`)
     await promiseSpawn(`yarn`, [`bootstrap`], {
       shell: true,
       env: {
@@ -141,7 +152,7 @@ let commitCreated = false
     })
 
     console.log(` `)
-    console.log(`=== PUBLISHING V4 ALPHA ===`)
+    console.log(`=== PUBLISHING V${nextMajor} ALPHA ===`)
     await promiseSpawn(
       process.execPath,
       [
@@ -174,7 +185,7 @@ let commitCreated = false
     if (commitCreated) {
       console.log(`REMOVING PATCH COMMIT`)
       try {
-        await promiseSpawn(`git`, [`reset`, `--hard`, `HEAD~1`], {
+        await promiseSpawn(`git`, [`reset`, `--hard`, currentGitHash], {
           cwd: path.resolve(__dirname, `../`),
           stdio: [`inherit`, `inherit`, `inherit`],
         })
