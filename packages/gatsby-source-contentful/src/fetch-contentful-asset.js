@@ -38,11 +38,9 @@ export async function fetchContentfulAsset({
         // Fetch the asset
         try {
           // Skip cache to to force a new network request to the asset
-          const skipCache = attempts > 1
           const filename = await fetchRemoteFile({
             url,
             cache,
-            skipCache,
             ...restArgs,
           })
           return filename

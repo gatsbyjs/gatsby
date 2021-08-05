@@ -179,12 +179,11 @@ const requestRemoteNode = (
 const fetchCache = new Map()
 
 export async function fetchRemoteFile({
-  skipCache,
   ...args
 }: IFetchRemoteFileOptions): Promise<string> {
   // If we are already fetching the file, return the unresolved promise
   const inFlight = fetchCache.get(args.url)
-  if (inFlight && !skipCache) {
+  if (inFlight) {
     return inFlight
   }
 
@@ -192,7 +191,11 @@ export async function fetchRemoteFile({
   const fetchPromise = fetchFile(args)
   fetchCache.set(args.url, fetchPromise)
 
-  return fetchPromise
+  return fetchPromise.catch(err => {
+    fetchCache.delete(args.url)
+
+    throw err
+  })
 }
 
 async function fetchFile({
