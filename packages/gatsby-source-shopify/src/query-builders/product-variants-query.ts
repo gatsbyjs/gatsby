@@ -42,10 +42,8 @@ export class ProductVariantsQuery extends BulkQuery {
                       width
                       originalSrc
                       transformedSrc
-                    }${
-                      includeLocations
-                        ? `
-                    inventoryItem {
+                    }
+                    inventoryItem @include(if: ${includeLocations}) {
                       id
                       countryCodeOfOrigin
                       createdAt
@@ -78,8 +76,6 @@ export class ProductVariantsQuery extends BulkQuery {
                         currencyCode
                       }
                       updatedAt
-                    }`
-                        : ``
                     }
                     inventoryPolicy
                     inventoryQuantity
