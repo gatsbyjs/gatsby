@@ -76,7 +76,17 @@ const getBase64Image = (imageProps, reporter) => {
     return null
   }
 
-  const requestUrl = `https:${imageProps.baseUrl}?w=20&fm=jpg`
+  // Keep aspect ratio, image format and other transform options
+  const { aspectRatio } = imageProps
+  const originalFormat = imageProps.image.file.contentType.split(`/`)[1]
+  const toFormat = imageProps.options.toFormat
+  const imageOptions = {
+    ...imageProps.options,
+    toFormat,
+    width: 20,
+    height: Math.floor(20 * aspectRatio),
+  }
+  const requestUrl = `https:${createUrl(imageProps.baseUrl, imageOptions)}`
 
   // Prefer to return data sync if we already have it
   const alreadyFetched = resolvedBase64Cache.get(requestUrl)
@@ -122,7 +132,7 @@ const getBase64Image = (imageProps, reporter) => {
 
     const base64 = Buffer.from(imageResponse.data, `binary`).toString(`base64`)
 
-    const body = `data:image/jpeg;base64,${base64}`
+    const body = `data:image/${toFormat || originalFormat};base64,${base64}`
 
     try {
       // TODO: against dogma, confirm whether writeFileSync is indeed slower
@@ -146,6 +156,7 @@ const getBase64Image = (imageProps, reporter) => {
     return body
   })
 }
+exports.getBase64Image = getBase64Image
 
 const getBasicImageProps = (image, args) => {
   let aspectRatio
