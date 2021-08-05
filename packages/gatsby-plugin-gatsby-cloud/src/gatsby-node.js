@@ -4,6 +4,7 @@ import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
 import copyFunctionsManifest from "./copy-functions-manifest"
 import createRedirects from "./create-redirects"
+import createSiteConfig from "./create-site-config"
 import { readJSON } from "fs-extra"
 import { joinPath } from "gatsby-core-utils"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
@@ -80,6 +81,7 @@ exports.onPostBuild = async (
 
   await Promise.all([
     buildHeadersProgram(pluginData, pluginOptions, reporter),
+    createSiteConfig(pluginData, pluginOptions),
     createRedirects(pluginData, redirects, rewrites),
     copyFunctionsManifest(pluginData),
   ])

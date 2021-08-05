@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`create-site-config should generate a site-config file with pathPrefix set 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "_gatsby-config.json",
+      Object {
+        "pathPrefix": "/nested",
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
