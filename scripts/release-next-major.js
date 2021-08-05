@@ -128,7 +128,7 @@ let currentGitHash = null
     try {
       await promiseSpawn(
         `git`,
-        [`commit`, `-am`, `Comitting patch files changes`],
+        [`commit`, `-am`, `Comitting patch files changes`, `--no-verify`],
         {
           cwd: path.resolve(__dirname, `../`),
           stdio: [`inherit`, `inherit`, `inherit`],
