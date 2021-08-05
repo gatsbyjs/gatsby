@@ -88,7 +88,7 @@ export async function renderPageData({
 
 const readStaticQueryContext = async (
   templatePath: string
-): Promise<Record<string, any>> => {
+): Promise<Record<string, { data: unknown }>> => {
   const filePath = path.join(
     __dirname,
     `sq-context`,

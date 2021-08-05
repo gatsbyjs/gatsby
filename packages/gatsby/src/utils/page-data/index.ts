@@ -16,6 +16,7 @@ import {
   fixedPagePath,
 } from "./write-page-data"
 import type GatsbyCacheLmdb from "../cache-lmdb"
+import type { IExecutionResult } from "../../query/types"
 
 export { fixedPagePath, IPageDataWithQueryResult }
 
@@ -92,7 +93,7 @@ export async function savePageQueryResult(
 export async function readPageQueryResult(
   publicDir: string,
   pagePath: string
-): Promise<any> {
+): Promise<IExecutionResult> {
   if (isLmdbStore()) {
     const stringifiedResult = await getLMDBPageQueryResultsCache().get(pagePath)
     if (typeof stringifiedResult === `string`) {

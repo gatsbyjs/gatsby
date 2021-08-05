@@ -9,7 +9,6 @@ import {
   readWebpackStats,
   getScriptsAndStylesForTemplate,
   clearCache as clearAssetsMappingCache,
-  IScriptsAndStyles,
 } from "../../client-assets-for-template"
 import type { IPageDataWithQueryResult } from "../../page-data"
 import type { IRenderHtmlResult } from "../../../commands/build-html"

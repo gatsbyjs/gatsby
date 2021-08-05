@@ -20,7 +20,7 @@ const outputOptions = {
   format: `cjs`,
 }
 
-export async function createPageSSRBundle(): Promise<any> {
+export async function createPageSSRBundle(): Promise<void> {
   const { program, components } = store.getState()
   const webpackStats = await readWebpackStats(
     path.join(program.directory, `public`)
@@ -61,10 +61,5 @@ export async function createPageSSRBundle(): Promise<any> {
   }
 
   const bundle = await rollup.rollup(inputOptions)
-  // const { output } =
   await bundle.write(outputOptions)
-
-  // console.log({
-  //   imports: output[0].imports,
-  // })
 }
