@@ -6,7 +6,7 @@ function preset(context, options = {}) {
     debug = false,
     nodeVersion = `12.13.0`,
     esm = false,
-    availableCompilerFlags = [],
+    availableCompilerFlags = [`GATSBY_MAJOR`],
   } = options
   const { NODE_ENV, BABEL_ENV, COMPILER_OPTIONS } = process.env
 
@@ -74,7 +74,7 @@ function preset(context, options = {}) {
       r(`@babel/plugin-transform-runtime`),
       r(`@babel/plugin-syntax-dynamic-import`),
       IS_TEST && r(`babel-plugin-dynamic-import-node`),
-      availableCompilerFlags.length && [
+      [
         r(`./babel-transform-compiler-flags`),
         {
           flags: parsedCompilerOptions,
