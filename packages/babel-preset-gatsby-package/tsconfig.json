@@ -1,4 +1,8 @@
 {
   "extends": "../../tsconfig.json",
-  "strict": true
+  "strict": true,
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true
+  }
 }

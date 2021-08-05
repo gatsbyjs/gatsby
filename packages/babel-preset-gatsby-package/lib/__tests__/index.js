@@ -1,6 +1,6 @@
-const preset = require(`../src/index.js`)
+const preset = require(`../index.js`)
 
-jest.mock(`../src/resolver`, () => jest.fn(moduleName => moduleName))
+jest.mock(`../resolver`, () => jest.fn(moduleName => moduleName))
 
 
 describe(`babel-preset-gatsby-package`, () => {
