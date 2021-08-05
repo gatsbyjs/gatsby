@@ -1,6 +1,7 @@
 orbs:
   win: circleci/windows@2.4.0
   slack: circleci/slack@3.4.1
+  node: circleci/node@4.6.0
 
 executors:
   node:
@@ -182,13 +183,25 @@ jobs:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
       # python 2 is not built in and node-gyp needs it to build lmdb
-      - run: apt-get update && apt-get install python -y
-      - <<: *restore_cache
-      - <<: *install_node_modules
+      - run:
+          name: Install Python
+          command: apt-get update && apt-get install python -y
+      - run:
+          command: |
+            echo 'export YARN_CACHE_DIR=$(yarn cache dir)' >> $BASH_ENV
+      - run: "echo $YARN_CACHE_DIR"
+      - node/install-packages:
+          cache-path: YARN_CACHE_DIR
+          override-ci-command: yarn
+          pkg-manager: yarn
       - <<: *check_lockfile
       - <<: *validate_renovate
-      - <<: *persist_cache
       - run: yarn bootstrap -- concurrency=2
+      - run:
+          command: |
+            npx verdaccio -c .circleci/verdaccio/config.yaml &
+            curl --ipv4 --max-time 10  --retry 10 --retry-delay 0 --retry-connrefused --retry-max-time 40 'http://localhost:4873'
+            yarn lerna publish --canary --ignore-scripts --exact --preid $CIRCLE_SHA1 --pre-dist-tag circleci --force-publish --registry=http://localhost:4873
       # Persist the workspace again with all packages already built
       - persist_to_workspace:
           root: ./
@@ -205,7 +218,10 @@ jobs:
           name: "remove workspaces from package.json"
           command: |
             sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]/,"workspaces":\["packages\/babel-preset-gatsby"\]/g' package.json
-      - <<: *install_node_modules
+      - node/install-packages:
+          with-cache: false
+          override-ci-command: yarn
+          pkg-manager: yarn
       - run: yarn lint:code
       - run: yarn lint:docs
       - run: yarn lint:other
@@ -609,86 +625,86 @@ workflows:
   build-test:
     jobs:
       - bootstrap
-      - lint
-      - typecheck:
-          requires:
-            - bootstrap
-      - windows_unit_tests:
-          <<: *ignore_docs
-          requires:
-            - lint
-      - unit_tests_node12:
-          <<: *ignore_docs
-          requires:
-            - lint
-            - typecheck
-            - bootstrap
-      - unit_tests_node14:
-          <<: *ignore_docs
-          requires:
-            - lint
-            - typecheck
-            - bootstrap
-      - unit_tests_node14_lmdb_store:
-          <<: *ignore_docs
-          # rebuild to get correct version of lmdb-store (compiled for node14 not node12)
-          npm_rebuild: true
-          requires:
-            - lint
-            - typecheck
-            - bootstrap
-      - integration_tests_gatsby_source_wordpress:
-          <<: *e2e-test-workflow
-      - integration_tests_node_manifest:
-          <<: *e2e-test-workflow
-      - integration_tests_long_term_caching:
-          <<: *e2e-test-workflow
-      - integration_tests_cache_resilience:
-          <<: *e2e-test-workflow
-      - integration_tests_gatsby_pipeline:
-          <<: *e2e-test-workflow
-      - integration_tests_structured_logging:
-          <<: *e2e-test-workflow
-      - integration_tests_artifacts:
-          <<: *e2e-test-workflow
-      - integration_tests_ssr:
-          <<: *e2e-test-workflow
-      - integration_tests_images:
-          <<: *e2e-test-workflow
-      - integration_tests_functions:
-          <<: *e2e-test-workflow
-      - integration_tests_gatsby_cli:
-          requires:
-            - bootstrap
-      - e2e_tests_pnp:
-          <<: *e2e-test-workflow
-      - e2e_tests_path-prefix:
-          <<: *e2e-test-workflow
-      - e2e_tests_gatsby-static-image:
-          <<: *e2e-test-workflow
-      - e2e_tests_visual-regression:
-          <<: *e2e-test-workflow
-      - e2e_tests_contentful:
-          <<: *e2e-test-workflow
-      - e2e_tests_development_runtime:
-          <<: *e2e-test-workflow
-      - e2e_tests_production_runtime:
-          <<: *e2e-test-workflow
-      - themes_e2e_tests_production_runtime:
-          <<: *e2e-test-workflow
-      - themes_e2e_tests_development_runtime:
-          <<: *e2e-test-workflow
-      - mdx_e2e_tests:
-          <<: *e2e-test-workflow
-      - starters_validate:
-          <<: *ignore_master
-      - starters_publish:
-          filters:
-            branches:
-              only:
-                - master
-      - update_i18n_source:
-          filters:
-            branches:
-              only:
-                - master
+      # - lint
+      # - typecheck:
+      #     requires:
+      #       - bootstrap
+      # - windows_unit_tests:
+      #     <<: *ignore_docs
+      #     requires:
+      #       - lint
+      # - unit_tests_node12:
+      #     <<: *ignore_docs
+      #     requires:
+      #       - lint
+      #       - typecheck
+      #       - bootstrap
+      # - unit_tests_node14:
+      #     <<: *ignore_docs
+      #     requires:
+      #       - lint
+      #       - typecheck
+      #       - bootstrap
+      # - unit_tests_node14_lmdb_store:
+      #     <<: *ignore_docs
+      #     # rebuild to get correct version of lmdb-store (compiled for node14 not node12)
+      #     npm_rebuild: true
+      #     requires:
+      #       - lint
+      #       - typecheck
+      #       - bootstrap
+      # - integration_tests_gatsby_source_wordpress:
+      #     <<: *e2e-test-workflow
+      # - integration_tests_node_manifest:
+      #     <<: *e2e-test-workflow
+      # - integration_tests_long_term_caching:
+      #     <<: *e2e-test-workflow
+      # - integration_tests_cache_resilience:
+      #     <<: *e2e-test-workflow
+      # - integration_tests_gatsby_pipeline:
+      #     <<: *e2e-test-workflow
+      # - integration_tests_structured_logging:
+      #     <<: *e2e-test-workflow
+      # - integration_tests_artifacts:
+      #     <<: *e2e-test-workflow
+      # - integration_tests_ssr:
+      #     <<: *e2e-test-workflow
+      # - integration_tests_images:
+      #     <<: *e2e-test-workflow
+      # - integration_tests_functions:
+      #     <<: *e2e-test-workflow
+      # - integration_tests_gatsby_cli:
+      #     requires:
+      #       - bootstrap
+      # - e2e_tests_pnp:
+      #     <<: *e2e-test-workflow
+      # - e2e_tests_path-prefix:
+      #     <<: *e2e-test-workflow
+      # - e2e_tests_gatsby-static-image:
+      #     <<: *e2e-test-workflow
+      # - e2e_tests_visual-regression:
+      #     <<: *e2e-test-workflow
+      # - e2e_tests_contentful:
+      #     <<: *e2e-test-workflow
+      # - e2e_tests_development_runtime:
+      #     <<: *e2e-test-workflow
+      # - e2e_tests_production_runtime:
+      #     <<: *e2e-test-workflow
+      # - themes_e2e_tests_production_runtime:
+      #     <<: *e2e-test-workflow
+      # - themes_e2e_tests_development_runtime:
+      #     <<: *e2e-test-workflow
+      # - mdx_e2e_tests:
+      #     <<: *e2e-test-workflow
+      # - starters_validate:
+      #     <<: *ignore_master
+      # - starters_publish:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
+      # - update_i18n_source:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
