@@ -247,9 +247,16 @@ const createWebpackConfig = async ({
   )
 
   const entries = {}
-  const functionsList = isProductionEnv
+
+  const precompileDevFunctions =
+    isProductionEnv ||
+    process.env.GATSBY_PRECOMPILE_DEVELOP_FUNCTIONS === `true` ||
+    process.env.GATSBY_PRECOMPILE_DEVELOP_FUNCTIONS === `1`
+
+  const functionsList = precompileDevFunctions
     ? knownFunctions
     : activeDevelopmentFunctions
+
   functionsList.forEach(functionObj => {
     // Get path without the extension (as it could be ts or js)
     const parsedFile = path.parse(functionObj.originalRelativeFilePath)
