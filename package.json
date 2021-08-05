@@ -117,8 +117,8 @@
   },
   "scripts": {
     "bootstrap": "npm-run-all -s check-versions \"lerna-prepare -- --{@}\" --",
-    "check-repo-fields": "babel-node scripts/check-repo-fields.js",
-    "check-versions": "babel-node scripts/check-versions.js",
+    "check-repo-fields": "node scripts/check-repo-fields.js",
+    "check-versions": "node scripts/check-versions.js",
     "format": "npm run format:code && npm run format:other && npm run format:svg",
     "format:code": "npm run lint:code -- --fix",
     "format:other": "npm run prettier -- --write",

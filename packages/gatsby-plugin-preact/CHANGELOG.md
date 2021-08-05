@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@5.12.0-next.0...gatsby-plugin-preact@5.12.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency @prefresh/webpack to ^3.3.2 for gatsby-plugin-preact ([#32573](https://github.com/gatsbyjs/gatsby/issues/32573)) ([bf5eafe](https://github.com/gatsbyjs/gatsby/commit/bf5eafea55c3ecd0234f2b3d4f4a15fb1b0e1cc4))
+
 # [5.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@5.11.0-next.0...gatsby-plugin-preact@5.12.0-next.0) (2021-07-29)
 
 **Note:** Version bump only for package gatsby-plugin-preact

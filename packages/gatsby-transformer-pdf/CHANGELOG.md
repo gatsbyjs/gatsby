@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-pdf@2.12.0-next.0...gatsby-transformer-pdf@2.12.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency pdf2json to ^1.2.3 for gatsby-transformer-pdf ([#32588](https://github.com/gatsbyjs/gatsby/issues/32588)) ([e9ddbe4](https://github.com/gatsbyjs/gatsby/commit/e9ddbe4dba06bbc071f0f3745502f1b7f30875bc))
+
 # [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-pdf@2.11.0-next.0...gatsby-transformer-pdf@2.12.0-next.0) (2021-07-29)
 
 **Note:** Version bump only for package gatsby-transformer-pdf

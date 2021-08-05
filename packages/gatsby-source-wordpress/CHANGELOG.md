@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.12.0-next.0...gatsby-source-wordpress@5.12.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to ^4.1.2 ([#32576](https://github.com/gatsbyjs/gatsby/issues/32576)) ([5c4e109](https://github.com/gatsbyjs/gatsby/commit/5c4e109313cd1b59f814332fdb4dfdcaf1faed1a))
+
 # [5.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.11.0-next.1...gatsby-source-wordpress@5.12.0-next.0) (2021-07-29)
 
 **Note:** Version bump only for package gatsby-source-wordpress

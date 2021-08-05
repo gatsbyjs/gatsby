@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.12.0-next.0...create-gatsby@1.12.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency eslint to ^7.32.0 ([#32628](https://github.com/gatsbyjs/gatsby/issues/32628)) ([65fe945](https://github.com/gatsbyjs/gatsby/commit/65fe94547e0892b3978a7c7376ff1297acb0144f))
+
 # [1.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.11.0-next.0...create-gatsby@1.12.0-next.0) (2021-07-29)
 
 **Note:** Version bump only for package create-gatsby

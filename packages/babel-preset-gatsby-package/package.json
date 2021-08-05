@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-gatsby-package",
-  "version": "1.12.0-next.0",
+  "version": "1.12.0-next.1",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "repository": {
     "type": "git",
@@ -20,12 +20,24 @@
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "core-js": "^3.10.0"
   },
+  "devDependencies": {
+    "@types/babel__core": "^7.1.15",
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
+    "@babel/helper-plugin-test-runner": "7.14.5",
+    "@babel/plugin-transform-modules-commonjs": "^7.14.5"
+  },
   "peerDependencies": {
     "@babel/core": "^7.11.6"
   },
   "license": "MIT",
-  "main": "index.js",
+  "main": "dist/index.js",
   "engines": {
     "node": ">=12.13.0"
+  },
+  "scripts": {
+    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts,.js\"",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\""
   }
 }
