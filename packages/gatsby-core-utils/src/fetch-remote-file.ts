@@ -207,7 +207,12 @@ async function fetchFile({
   ext,
   name,
 }: IFetchRemoteFileOptions): Promise<string> {
+  // A custom cacheDir can be used to ensure files won't
+  // get deleted on a regular cache clear.
+  // The GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE flag from gatsby-source-contentful
+  // is using this option to speed up recurring builds.
   const pluginCacheDir = cacheDir || cache.directory
+
   // See if there's response headers for this url
   // from a previous request.
   const cachedHeaders = await cache.get(cacheIdForHeaders(url))
