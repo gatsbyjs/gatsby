@@ -4,7 +4,7 @@ import semver from "semver"
 import sampleSiteForExperiment from "./sample-site-for-experiment"
 
 // Does this experiment run for only builds
-type executingCommand = "build" | "develop" | "all"
+type ExecutingCommand = "build" | "develop" | "serve"
 
 export const satisfiesSemvers = (
   semverConstraints: Record<string, string>
@@ -36,7 +36,7 @@ export interface IFlag {
   name: string
   env: string
   description: string
-  command: executingCommand
+  command: ExecutingCommand | Array<ExecutingCommand> | `all`
   /**
    * Use string identifier to track enabled flag or false to disable any tracking (useful when flag becomes new defaults)
    */
@@ -226,7 +226,7 @@ const activeFlags: Array<IFlag> = [
   {
     name: `GENERATE_ENGINES`,
     env: `GATSBY_EXPERIMENTAL_GENERATE_ENGINES`,
-    command: `build`,
+    command: [`build`, `serve`],
     telemetryId: `ENGINES`,
     experimental: true,
     // umbrellaIssue: `https://gatsby.dev/pqr-feedback`,
