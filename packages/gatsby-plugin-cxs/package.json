@@ -1,20 +1,21 @@
 {
   "name": "gatsby-plugin-cxs",
   "description": "Gatsby plugin to add SSR support for ctx",
-  "version": "2.3.10",
+  "version": "3.12.0-next.2",
   "author": "Chen-Tai Hou <ctxhou@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.3"
+    "@babel/runtime": "^7.14.8"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "babel-preset-gatsby-package": "^0.5.2",
-    "cross-env": "^5.2.1",
-    "cxs": "^6.2.0"
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
+    "babel-preset-gatsby-package": "^1.12.0-next.2",
+    "cross-env": "^7.0.3",
+    "cxs": "^6.2.0",
+    "gatsby-plugin-utils": "^1.12.0-next.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-cxs#readme",
   "keywords": [
@@ -26,7 +27,9 @@
   "main": "index.js",
   "peerDependencies": {
     "cxs": ">=5.0.0",
-    "gatsby": "^2.0.0"
+    "gatsby": "^3.0.0-next.0",
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
   },
   "repository": {
     "type": "git",
@@ -39,6 +42,6 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

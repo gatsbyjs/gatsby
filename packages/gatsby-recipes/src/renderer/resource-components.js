@@ -1,6 +1,6 @@
 import React, { Suspense } from "react"
 
-import resources from "../resources"
+import * as resources from "../resources"
 
 import { ResourceComponent } from "./render"
 

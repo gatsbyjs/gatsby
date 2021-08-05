@@ -1,6 +1,6 @@
 const mdxLoader = require(`./mdx-loader`)
 const prettier = require(`prettier`)
-const c = require(`js-combinatorics`)
+const { BaseN } = require(`js-combinatorics/commonjs/combinatorics`)
 
 function genMDXFile(input) {
   const code = {
@@ -16,9 +16,9 @@ array: [1,2,3]
 )`,
     namedExports: `export const meta = {author: "chris"}`,
     body: `# Some title
-    
+
 a bit of a paragraph
-    
+
 some content`,
   }
 
@@ -34,17 +34,18 @@ some content`,
       input.namedExports ? code.namedExports : ``,
       code.body,
     ].join(`\n\n`),
+    isDevelopStage: input.isDevelopStage,
+    lessBabel: input.lessBabel,
   }
 }
 
 // generate a table of all possible combinations of genMDXfile input
-const fixtures = c
-  .baseN([true, false], 3)
+const fixtures = new BaseN([true, false], 5)
   .toArray()
-  .map(([frontmatter, layout, namedExports]) =>
-    genMDXFile({ frontmatter, layout, namedExports })
+  .map(([frontmatter, layout, namedExports, isDevelopStage, lessBabel]) =>
+    genMDXFile({ frontmatter, layout, namedExports, isDevelopStage, lessBabel })
   )
-  .map(({ name, content }) => [
+  .map(({ name, content, isDevelopStage, lessBabel }) => [
     name,
     {
       internal: { type: `File` },
@@ -52,11 +53,13 @@ const fixtures = c
       absolutePath: `/fake/${name}`,
     },
     content,
+    isDevelopStage,
+    lessBabel,
   ])
 
 describe(`mdx-loader`, () => {
   expect.addSnapshotSerializer({
-    print(val /*, serialize */) {
+    print(val /* , serialize */) {
       return prettier.format(val, { parser: `babel` })
     },
     test() {
@@ -65,34 +68,56 @@ describe(`mdx-loader`, () => {
   })
   test.each(fixtures)(
     `snapshot with %s`,
-    async (filename, fakeGatsbyNode, content) => {
-      const loader = mdxLoader.bind({
-        async() {
-          return (err, result) => {
-            expect(err).toBeNull()
-            expect(result).toMatchSnapshot()
-          }
-        },
-        query: {
-          getNodes(_type) {
-            return fixtures.map(([, node]) => node)
+    async (filename, fakeGatsbyNode, content, isDevelopStage, lessBabel) => {
+      let err
+      let result
+
+      const createLoader = (opts = {}) =>
+        mdxLoader.bind({
+          async() {
+            return (_err, _result) => {
+              err = _err
+              result = _result
+            }
           },
-          getNodesByType(_type) {
-            return fixtures.map(([, node]) => node)
-          },
-          pluginOptions: {},
-          cache: {
-            get() {
-              return false
+          query: {
+            getNodes(_type) {
+              return fixtures.map(([, node]) => node)
             },
-            set() {
-              return
+            getNodesByType(_type) {
+              return fixtures.map(([, node]) => node)
             },
+            pluginOptions: {
+              lessBabel,
+            },
+            cache: {
+              get() {
+                return false
+              },
+              set() {
+                return
+              },
+            },
+            isolateMDXComponent: isDevelopStage,
           },
-        },
-        resourcePath: fakeGatsbyNode.absolutePath,
-      })
-      await loader(content)
+          resourcePath: fakeGatsbyNode.absolutePath,
+          resourceQuery: fakeGatsbyNode.absolutePath,
+          rootContext: `/fake/`,
+          ...opts,
+        })
+
+      await createLoader()(content)
+      expect(err).toBeNull()
+      expect(result).toMatchSnapshot()
+      err = result = undefined
+
+      if (isDevelopStage) {
+        await createLoader({
+          resourceQuery: `${fakeGatsbyNode.absolutePath}?type=component`,
+        })(content)
+        expect(err).toBeNull()
+        expect(result).toMatchSnapshot()
+      }
     }
   )
 })

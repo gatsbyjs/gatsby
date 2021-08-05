@@ -1,4 +1,4 @@
-const validateRecipe = require(`./validate-recipe`)
+import validateRecipe from "./validate-recipe"
 
 describe(`validate module validates recipes with resource declarations`, () => {
   it(`returns errors for unknown resources`, () => {

@@ -1,24 +1,39 @@
 import {
-  ActionsUnion,
+  ICreateJobV2Action,
+  IRemoveStaleJobV2Action,
+  IEndJobV2Action,
   IGatsbyState,
   IGatsbyIncompleteJobV2,
   IGatsbyCompleteJobV2,
+  IDeleteCacheAction,
 } from "../types"
 
-export const jobsV2Reducer = (
-  state: IGatsbyState["jobsV2"] = {
+const initialState = (): IGatsbyState["jobsV2"] => {
+  return {
     incomplete: new Map(),
     complete: new Map(),
-  },
-  action: ActionsUnion
+  }
+}
+
+export const jobsV2Reducer = (
+  state = initialState(),
+  action:
+    | ICreateJobV2Action
+    | IRemoveStaleJobV2Action
+    | IEndJobV2Action
+    | IDeleteCacheAction
 ): IGatsbyState["jobsV2"] => {
   switch (action.type) {
+    case `DELETE_CACHE`:
+      return (action as IDeleteCacheAction).cacheIsCorrupt
+        ? initialState()
+        : state
+
     case `CREATE_JOB_V2`: {
-      const { job, plugin } = action.payload
+      const { job } = action.payload
 
       state.incomplete.set(job.contentDigest, {
         job,
-        plugin,
       } as IGatsbyIncompleteJobV2)
 
       return state

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-legacy-polyfills",
   "description": "Polyfills for legacy browsers",
-  "version": "0.0.2",
+  "version": "1.12.0-next.1",
   "main": "dist/polyfills.js",
   "author": "Ward Peeters <ward@gatsbyjs.com>",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-legacy-polyfills#readme",
@@ -24,24 +24,24 @@
     "watch:polyfills": "microbundle -f iife -i src/polyfills.js --no-sourcemap --external=none --watch"
   },
   "dependencies": {
-    "core-js-compat": "^3.6.5"
+    "core-js-compat": "3.9.0"
   },
   "files": [
-    "dist/**"
+    "dist/"
   ],
   "devDependencies": {
     "chokidar-cli": "^2.1.0",
-    "codegen.macro": "^4.0.0",
-    "core-js": "^3.6.5",
+    "codegen.macro": "^4.1.0",
+    "core-js": "3.15.2",
     "cpy-cli": "^3.1.1",
-    "cross-env": "^5.2.1",
-    "execa": "^4.0.2",
-    "fs-extra": "^9.0.1",
-    "microbundle": "^0.12.0",
+    "cross-env": "^7.0.3",
+    "execa": "^5.1.1",
+    "fs-extra": "^9.1.0",
+    "microbundle": "^0.13.3",
     "npm-run-all": "^4.1.5",
     "object-assign": "^4.1.1",
     "source-map": "^0.7.3",
-    "url-polyfill": "^1.1.9",
-    "whatwg-fetch": "3.0.0"
+    "url-polyfill": "^1.1.12",
+    "whatwg-fetch": "^3.6.2"
   }
 }

@@ -2,58 +2,189 @@ import Bluebird from "bluebird"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
-import telemetry from "gatsby-telemetry"
-import { chunk } from "lodash"
-import webpack from "webpack"
+import { chunk, truncate } from "lodash"
+import webpack, { Stats } from "webpack"
+import * as path from "path"
 
+import { emitter, store } from "../redux"
+import { IWebpackWatchingPauseResume } from "../utils/start-server"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
+import * as buildUtils from "./build-utils"
+import { getPageData } from "../utils/get-page-data"
 
+import { Span } from "opentracing"
 import { IProgram, Stage } from "./types"
+import { PackageJson } from "../.."
+import type { GatsbyWorkerPool } from "../utils/worker/pool"
+import { IPageDataWithQueryResult } from "../utils/page-data"
 
 type IActivity = any // TODO
-type IWorkerPool = any // TODO
 
-const runWebpack = (compilerConfig): Bluebird<webpack.Stats> =>
+export interface IBuildArgs extends IProgram {
+  directory: string
+  sitePackageJson: PackageJson
+  prefixPaths: boolean
+  noUglify: boolean
+  logPages: boolean
+  writeToFile: boolean
+  profile: boolean
+  graphqlTracing: boolean
+  openTracingConfigFile: string
+  keepPageRenderer: boolean
+}
+
+let devssrWebpackCompiler: webpack.Compiler
+let devssrWebpackWatcher: IWebpackWatchingPauseResume
+let needToRecompileSSRBundle = true
+export const getDevSSRWebpack = (): {
+  devssrWebpackWatcher: IWebpackWatchingPauseResume
+  devssrWebpackCompiler: webpack.Compiler
+  needToRecompileSSRBundle: boolean
+} => {
+  if (process.env.gatsby_executing_command !== `develop`) {
+    throw new Error(`This function can only be called in development`)
+  }
+
+  return {
+    devssrWebpackWatcher,
+    devssrWebpackCompiler,
+    needToRecompileSSRBundle,
+  }
+}
+
+let oldHash = ``
+let newHash = ``
+const runWebpack = (
+  compilerConfig,
+  stage: Stage,
+  directory,
+  parentSpan?: Span
+): Bluebird<{
+  stats: Stats
+  waitForCompilerClose: Promise<void>
+}> =>
   new Bluebird((resolve, reject) => {
-    webpack(compilerConfig).run((err, stats) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(stats)
-      }
-    })
+    if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR || stage === `build-html`) {
+      const compiler = webpack(compilerConfig)
+      compiler.run((err, stats) => {
+        let activity
+        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
+          activity = reporter.activityTimer(
+            `Caching HTML renderer compilation`,
+            { parentSpan }
+          )
+          activity.start()
+        }
+
+        const waitForCompilerClose = new Promise<void>((resolve, reject) => {
+          compiler.close(error => {
+            if (activity) {
+              activity.end()
+            }
+
+            if (error) {
+              return reject(error)
+            }
+            return resolve()
+          })
+        })
+
+        if (err) {
+          return reject(err)
+        } else {
+          return resolve({ stats: stats as Stats, waitForCompilerClose })
+        }
+      })
+    } else if (
+      process.env.GATSBY_EXPERIMENTAL_DEV_SSR &&
+      stage === `develop-html`
+    ) {
+      devssrWebpackCompiler = webpack(compilerConfig)
+      devssrWebpackCompiler.hooks.invalid.tap(`ssr file invalidation`, () => {
+        needToRecompileSSRBundle = true
+      })
+      devssrWebpackWatcher = devssrWebpackCompiler.watch(
+        {
+          ignored: /node_modules/,
+        },
+        (err, stats) => {
+          needToRecompileSSRBundle = false
+          emitter.emit(`DEV_SSR_COMPILATION_DONE`)
+          devssrWebpackWatcher.suspend()
+
+          if (err) {
+            return reject(err)
+          } else {
+            newHash = stats?.hash || ``
+
+            const {
+              restartWorker,
+            } = require(`../utils/dev-ssr/render-dev-html`)
+            // Make sure we use the latest version during development
+            if (oldHash !== `` && newHash !== oldHash) {
+              restartWorker(`${directory}/public/render-page.js`)
+            }
+
+            oldHash = newHash
+
+            return resolve({
+              stats: stats as Stats,
+              waitForCompilerClose: Promise.resolve(),
+            })
+          }
+        }
+      ) as IWebpackWatchingPauseResume
+    }
   })
 
 const doBuildRenderer = async (
   { directory }: IProgram,
-  webpackConfig: webpack.Configuration
-): Promise<string> => {
-  const stats = await runWebpack(webpackConfig)
+  webpackConfig: webpack.Configuration,
+  stage: Stage,
+  parentSpan?: Span
+): Promise<{ rendererPath: string; waitForCompilerClose }> => {
+  const { stats, waitForCompilerClose } = await runWebpack(
+    webpackConfig,
+    stage,
+    directory,
+    parentSpan
+  )
   if (stats.hasErrors()) {
-    reporter.panic(
-      structureWebpackErrors(`build-html`, stats.compilation.errors)
-    )
+    reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
+  }
+
+  if (
+    stage === `build-html` &&
+    store.getState().html.ssrCompilationHash !== stats.hash
+  ) {
+    store.dispatch({
+      type: `SET_SSR_WEBPACK_COMPILATION_HASH`,
+      payload: stats.hash as string,
+    })
   }
 
   // render-page.js is hard coded in webpack.config
-  return `${directory}/public/render-page.js`
+  return {
+    rendererPath: `${directory}/public/render-page.js`,
+    waitForCompilerClose,
+  }
 }
 
-const buildRenderer = async (
+export const buildRenderer = async (
   program: IProgram,
   stage: Stage,
-  parentSpan: IActivity
-): Promise<string> => {
+  parentSpan?: IActivity
+): Promise<{ rendererPath: string; waitForCompilerClose }> => {
   const { directory } = program
   const config = await webpackConfig(program, directory, stage, null, {
     parentSpan,
   })
 
-  return doBuildRenderer(program, config)
+  return doBuildRenderer(program, config, stage, parentSpan)
 }
 
-const deleteRenderer = async (rendererPath: string): Promise<void> => {
+export const deleteRenderer = async (rendererPath: string): Promise<void> => {
   try {
     await fs.remove(rendererPath)
     await fs.remove(`${rendererPath}.map`)
@@ -62,34 +193,100 @@ const deleteRenderer = async (rendererPath: string): Promise<void> => {
   }
 }
 
+export interface IRenderHtmlResult {
+  unsafeBuiltinsUsageByPagePath: Record<string, Array<string>>
+}
+
 const renderHTMLQueue = async (
-  workerPool: IWorkerPool,
+  workerPool: GatsbyWorkerPool,
   activity: IActivity,
   htmlComponentRendererPath: string,
-  pages: string[]
+  pages: Array<string>,
+  stage: Stage = Stage.BuildHTML
 ): Promise<void> => {
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
-  const envVars = [
+  const envVars: Array<[string, string | undefined]> = [
     [`NODE_ENV`, process.env.NODE_ENV],
     [`gatsby_executing_command`, process.env.gatsby_executing_command],
     [`gatsby_log_level`, process.env.gatsby_log_level],
   ]
 
-  // const start = process.hrtime()
   const segments = chunk(pages, 50)
 
-  await Bluebird.map(segments, async pageSegment => {
-    await workerPool.renderHTML({
-      envVars,
-      htmlComponentRendererPath,
-      paths: pageSegment,
-    })
+  const sessionId = Date.now()
 
-    if (activity && activity.tick) {
-      activity.tick(pageSegment.length)
+  const renderHTML =
+    stage === `build-html`
+      ? workerPool.single.renderHTMLProd
+      : workerPool.single.renderHTMLDev
+
+  const uniqueUnsafeBuiltinUsedStacks = new Set<string>()
+
+  try {
+    await Bluebird.map(segments, async pageSegment => {
+      const renderHTMLResult = await renderHTML({
+        envVars,
+        htmlComponentRendererPath,
+        paths: pageSegment,
+        sessionId,
+      })
+
+      if (stage === `build-html`) {
+        const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult
+        store.dispatch({
+          type: `HTML_GENERATED`,
+          payload: pageSegment,
+        })
+
+        for (const [_pagePath, arrayOfUsages] of Object.entries(
+          htmlRenderMeta.unsafeBuiltinsUsageByPagePath
+        )) {
+          for (const unsafeUsageStack of arrayOfUsages) {
+            uniqueUnsafeBuiltinUsedStacks.add(unsafeUsageStack)
+          }
+        }
+      }
+
+      if (activity && activity.tick) {
+        activity.tick(pageSegment.length)
+      }
+    })
+  } catch (e) {
+    if (e?.context?.unsafeBuiltinsUsageByPagePath) {
+      for (const [_pagePath, arrayOfUsages] of Object.entries(
+        e.context.unsafeBuiltinsUsageByPagePath
+      )) {
+        // @ts-ignore TS doesn't know arrayOfUsages is Iterable
+        for (const unsafeUsageStack of arrayOfUsages) {
+          uniqueUnsafeBuiltinUsedStacks.add(unsafeUsageStack)
+        }
+      }
     }
-  })
+    throw e
+  } finally {
+    if (uniqueUnsafeBuiltinUsedStacks.size > 0) {
+      console.warn(
+        `Unsafe builtin method was used, future builds will need to rebuild all pages`
+      )
+      store.dispatch({
+        type: `SSR_USED_UNSAFE_BUILTIN`,
+      })
+    }
+
+    for (const unsafeBuiltinUsedStack of uniqueUnsafeBuiltinUsedStacks) {
+      const prettyError = await createErrorFromString(
+        unsafeBuiltinUsedStack,
+        `${htmlComponentRendererPath}.map`
+      )
+
+      const warningMessage = `${prettyError.stack}${
+        prettyError.codeFrame ? `\n\n${prettyError.codeFrame}\n` : ``
+      }`
+
+      reporter.warn(warningMessage)
+    }
+  }
 }
 
 class BuildHTMLError extends Error {
@@ -109,29 +306,54 @@ class BuildHTMLError extends Error {
   }
 }
 
-const doBuildPages = async (
-  rendererPath: string,
-  pagePaths: string[],
-  activity: IActivity,
-  workerPool: IWorkerPool
-): Promise<void> => {
-  telemetry.addSiteMeasurement(`BUILD_END`, {
-    pagesCount: pagePaths.length,
-  })
+const truncateObjStrings = (obj): IPageDataWithQueryResult => {
+  // Recursively truncate strings nested in object
+  // These objs can be quite large, but we want to preserve each field
+  for (const key in obj) {
+    if (typeof obj[key] === `object`) {
+      truncateObjStrings(obj[key])
+    } else if (typeof obj[key] === `string`) {
+      obj[key] = truncate(obj[key], { length: 250 })
+    }
+  }
 
+  return obj
+}
+
+export const doBuildPages = async (
+  rendererPath: string,
+  pagePaths: Array<string>,
+  activity: IActivity,
+  workerPool: GatsbyWorkerPool,
+  stage: Stage
+): Promise<void> => {
   try {
-    await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths)
+    await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
   } catch (error) {
     const prettyError = await createErrorFromString(
       error.stack,
       `${rendererPath}.map`
     )
+
     const buildError = new BuildHTMLError(prettyError)
     buildError.context = error.context
+
+    if (error?.context?.path) {
+      const pageData = await getPageData(error.context.path)
+      const truncatedPageData = truncateObjStrings(pageData)
+
+      const pageDataMessage = `Page data from page-data.json for the failed page "${
+        error.context.path
+      }": ${JSON.stringify(truncatedPageData, null, 2)}`
+
+      reporter.error(pageDataMessage)
+    }
+
     throw buildError
   }
 }
 
+// TODO remove in v4 - this could be a "public" api
 export const buildHTML = async ({
   program,
   stage,
@@ -141,11 +363,104 @@ export const buildHTML = async ({
 }: {
   program: IProgram
   stage: Stage
-  pagePaths: string[]
+  pagePaths: Array<string>
   activity: IActivity
-  workerPool: IWorkerPool
+  workerPool: GatsbyWorkerPool
 }): Promise<void> => {
-  const rendererPath = await buildRenderer(program, stage, activity.span)
-  await doBuildPages(rendererPath, pagePaths, activity, workerPool)
+  const { rendererPath } = await buildRenderer(program, stage, activity.span)
+  await doBuildPages(rendererPath, pagePaths, activity, workerPool, stage)
   await deleteRenderer(rendererPath)
+}
+
+export async function buildHTMLPagesAndDeleteStaleArtifacts({
+  pageRenderer,
+  workerPool,
+  buildSpan,
+  program,
+}: {
+  pageRenderer: string
+  workerPool: GatsbyWorkerPool
+  buildSpan?: Span
+  program: IBuildArgs
+}): Promise<{
+  toRegenerate: Array<string>
+  toDelete: Array<string>
+}> {
+  buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged()
+
+  const {
+    toRegenerate,
+    toDelete,
+    toCleanupFromTrackedState,
+  } = buildUtils.calcDirtyHtmlFiles(store.getState())
+
+  store.dispatch({
+    type: `HTML_TRACKED_PAGES_CLEANUP`,
+    payload: toCleanupFromTrackedState,
+  })
+
+  if (toRegenerate.length > 0) {
+    const buildHTMLActivityProgress = reporter.createProgress(
+      `Building static HTML for pages`,
+      toRegenerate.length,
+      0,
+      {
+        parentSpan: buildSpan,
+      }
+    )
+    buildHTMLActivityProgress.start()
+    try {
+      await doBuildPages(
+        pageRenderer,
+        toRegenerate,
+        buildHTMLActivityProgress,
+        workerPool,
+        Stage.BuildHTML
+      )
+    } catch (err) {
+      let id = `95313` // TODO: verify error IDs exist
+      const context = {
+        errorPath: err.context && err.context.path,
+        ref: ``,
+      }
+
+      const match = err.message.match(
+        /ReferenceError: (window|document|localStorage|navigator|alert|location) is not defined/i
+      )
+      if (match && match[1]) {
+        id = `95312`
+        context.ref = match[1]
+      }
+
+      buildHTMLActivityProgress.panic({
+        id,
+        context,
+        error: err,
+      })
+    }
+    buildHTMLActivityProgress.end()
+  } else {
+    reporter.info(`There are no new or changed html files to build.`)
+  }
+
+  if (!program.keepPageRenderer) {
+    try {
+      await deleteRenderer(pageRenderer)
+    } catch (err) {
+      // pass through
+    }
+  }
+
+  if (toDelete.length > 0) {
+    const publicDir = path.join(program.directory, `public`)
+    const deletePageDataActivityTimer = reporter.activityTimer(
+      `Delete previous page data`
+    )
+    deletePageDataActivityTimer.start()
+    await buildUtils.removePageFiles(publicDir, toDelete)
+
+    deletePageDataActivityTimer.end()
+  }
+
+  return { toRegenerate, toDelete }
 }

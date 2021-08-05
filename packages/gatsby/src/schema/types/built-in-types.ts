@@ -36,6 +36,18 @@ const fileType = `
   }
 `
 
+const siteFunctionType = `
+  type SiteFunction implements Node @infer {
+    functionRoute: String!
+    pluginName: String!
+    originalAbsoluteFilePath: String!
+    originalRelativeFilePath: String!
+    relativeCompiledFilePath: String!
+    absoluteCompiledFilePath: String!
+    matchPath: String
+  }
+`
+
 const directoryType = `
   type Directory implements Node @infer {
     sourceInstanceName: String!
@@ -72,6 +84,20 @@ const directoryType = `
   }
 `
 
+const site = `
+  type Site implements Node @infer {
+    buildTime: Date @dateformat
+    siteMetadata: SiteSiteMetadata
+  }
+`
+
+const siteSiteMetadata = `
+  type SiteSiteMetadata {
+    title: String
+    description: String
+  }
+`
+
 const sitePageType = `
   type SitePage implements Node @infer {
     path: String!
@@ -82,5 +108,16 @@ const sitePageType = `
   }
 `
 
-export const builtInTypeDefinitions = (): DocumentNode[] =>
-  [fileType, directoryType, sitePageType].map(type => parse(type))
+const allSdlTypes = [
+  fileType,
+  directoryType,
+  site,
+  siteSiteMetadata,
+  siteFunctionType,
+  sitePageType,
+]
+
+export const overridableBuiltInTypeNames = new Set([`SiteSiteMetadata`])
+
+export const builtInTypeDefinitions = (): Array<DocumentNode> =>
+  allSdlTypes.map(type => parse(type))

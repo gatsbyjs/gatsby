@@ -2,10 +2,10 @@ import report from "gatsby-cli/lib/reporter"
 import { Span } from "opentracing"
 import apiRunner from "./api-runner-node"
 import { store } from "../redux"
-import { getNode, getNodes } from "../redux/nodes"
-import { boundActionCreators } from "../redux/actions"
+import { getDataStore, getNode, getNodes } from "../datastore"
+import { actions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
-const { deleteNode } = boundActionCreators
+const { deleteNode } = actions
 import { Node } from "../../index"
 
 /**
@@ -14,8 +14,8 @@ import { Node } from "../../index"
  */
 function discoverPluginsWithoutNodes(
   storeState: IGatsbyState,
-  nodes: Node[]
-): string[] {
+  nodes: Array<Node>
+): Array<string> {
   // Find out which plugins own already created nodes
   const nodeOwnerSet = new Set([`default-site-plugin`])
   nodes.forEach(node => nodeOwnerSet.add(node.internal.owner))
@@ -34,7 +34,10 @@ function discoverPluginsWithoutNodes(
 /**
  * Warn about plugins that should have created nodes but didn't.
  */
-function warnForPluginsWithoutNodes(state: IGatsbyState, nodes: Node[]): void {
+function warnForPluginsWithoutNodes(
+  state: IGatsbyState,
+  nodes: Array<Node>
+): void {
   const pluginsWithNoNodes = discoverPluginsWithoutNodes(state, nodes)
 
   pluginsWithNoNodes.map(name =>
@@ -47,7 +50,7 @@ function warnForPluginsWithoutNodes(state: IGatsbyState, nodes: Node[]): void {
 /**
  * Return the set of nodes for which its root node has not been touched
  */
-function getStaleNodes(state: IGatsbyState, nodes: Node[]): Node[] {
+function getStaleNodes(state: IGatsbyState, nodes: Array<Node>): Array<Node> {
   return nodes.filter(node => {
     let rootNode = node
     let next: Node | undefined = undefined
@@ -74,22 +77,24 @@ function getStaleNodes(state: IGatsbyState, nodes: Node[]): Node[] {
 /**
  * Find all stale nodes and delete them
  */
-function deleteStaleNodes(state: IGatsbyState, nodes: Node[]): void {
+function deleteStaleNodes(state: IGatsbyState, nodes: Array<Node>): void {
   const staleNodes = getStaleNodes(state, nodes)
 
   if (staleNodes.length > 0) {
-    staleNodes.forEach(node => deleteNode({ node }))
+    staleNodes.forEach(node => store.dispatch(deleteNode(node)))
   }
 }
 
 export default async ({
   webhookBody,
+  pluginName,
   parentSpan,
   deferNodeMutation = false,
 }: {
   webhookBody: unknown
-  parentSpan: Span
-  deferNodeMutation: boolean
+  pluginName?: string
+  parentSpan?: Span
+  deferNodeMutation?: boolean
 }): Promise<void> => {
   await apiRunner(`sourceNodes`, {
     traceId: `initial-sourceNodes`,
@@ -97,7 +102,9 @@ export default async ({
     deferNodeMutation,
     parentSpan,
     webhookBody: webhookBody || {},
+    pluginName,
   })
+  await getDataStore().ready()
 
   const state = store.getState()
   const nodes = getNodes()

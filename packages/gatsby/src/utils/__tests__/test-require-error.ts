@@ -19,6 +19,14 @@ describe(`test-require-error`, () => {
       ).toEqual(true)
     }
   })
+  it(`handles windows paths with double slashes`, () => {
+    expect(
+      testRequireError(
+        `C:\\fixtures\\nothing`,
+        `Error: Cannot find module 'C:\\\\fixtures\\\\nothing'`
+      )
+    ).toEqual(true)
+  })
   it(`Only returns true on not found errors for actual module not "not found" errors of requires inside the module`, () => {
     try {
       require(`./fixtures/bad-module-require`)

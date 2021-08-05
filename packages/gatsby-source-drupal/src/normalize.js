@@ -1,12 +1,32 @@
 const { URL } = require(`url`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const path = require(`path`)
 
-const nodeFromData = (datum, createNodeId) => {
-  const { attributes: { id: _attributes_id, ...attributes } = {} } = datum
+const { getOptions } = require(`./plugin-options`)
+const getHref = link => {
+  if (typeof link === `object`) {
+    return link.href
+  }
+  return link
+}
+
+exports.getHref = getHref
+
+const nodeFromData = (datum, createNodeId, entityReferenceRevisions = []) => {
+  const { attributes: { id: attributeId, ...attributes } = {} } = datum
   const preservedId =
-    typeof _attributes_id !== `undefined` ? { _attributes_id } : {}
+    typeof attributeId !== `undefined` ? { _attributes_id: attributeId } : {}
+  const langcode = attributes.langcode || `und`
   return {
-    id: createNodeId(datum.id),
+    id: createNodeId(
+      createNodeIdWithVersion(
+        datum.id,
+        datum.type,
+        langcode,
+        attributes.drupal_internal__revision_id,
+        entityReferenceRevisions
+      )
+    ),
     drupal_id: datum.id,
     parent: null,
     drupal_parent_menu_item: attributes.parent,
@@ -23,6 +43,38 @@ const nodeFromData = (datum, createNodeId) => {
 
 exports.nodeFromData = nodeFromData
 
+const isEntityReferenceRevision = (type, entityReferenceRevisions = []) =>
+  entityReferenceRevisions.findIndex(
+    revisionType => type.indexOf(revisionType) === 0
+  ) !== -1
+
+const createNodeIdWithVersion = (
+  id,
+  type,
+  langcode,
+  revisionId,
+  entityReferenceRevisions = []
+) => {
+  // If the source plugin hasn't enabled `translation` then always just set langcode
+  // to "undefined".
+  let langcodeNormalized = getOptions().languageConfig ? langcode : `und`
+
+  if (
+    getOptions().languageConfig &&
+    !getOptions().languageConfig?.enabledLanguages.includes(langcodeNormalized)
+  ) {
+    langcodeNormalized = getOptions().languageConfig.defaultLanguage
+  }
+
+  // The relationship between an entity and another entity also depends on the revision ID if the field is of type
+  // entity reference revision such as for paragraphs.
+  return isEntityReferenceRevision(type, entityReferenceRevisions)
+    ? `${langcodeNormalized}.${id}.${revisionId || 0}`
+    : `${langcodeNormalized}.${id}`
+}
+
+exports.createNodeIdWithVersion = createNodeIdWithVersion
+
 const isFileNode = node =>
   node.internal.type === `files` || node.internal.type === `file__file`
 
@@ -34,43 +86,39 @@ exports.downloadFile = async (
 ) => {
   // handle file downloads
   if (isFileNode(node)) {
-    let fileNode
     let fileType
 
-    try {
-      let fileUrl = node.url
-      if (typeof node.uri === `object`) {
-        // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
-        fileUrl = node.uri.url
-        // get file type from uri prefix ("S3:", "public:", etc.)
-        const uri_prefix = node.uri.value.match(/^\w*:/)
-        fileType = uri_prefix ? uri_prefix[0] : null
-      }
-      // Resolve w/ baseUrl if node.uri isn't absolute.
-      const url = new URL(fileUrl, baseUrl)
-      // If we have basicAuth credentials, add them to the request.
-      const basicAuthFileSystems = [`public:`, `private:`, `temporary:`]
-      const auth =
-        typeof basicAuth === `object` && basicAuthFileSystems.includes(fileType)
-          ? {
-              htaccess_user: basicAuth.username,
-              htaccess_pass: basicAuth.password,
-            }
-          : {}
-      fileNode = await createRemoteFileNode({
-        url: url.href,
-        store,
-        cache,
-        createNode,
-        createNodeId,
-        getCache,
-        parentNodeId: node.id,
-        auth,
-        reporter,
-      })
-    } catch (e) {
-      // Ignore
+    let fileUrl = node.url
+    if (typeof node.uri === `object`) {
+      // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
+      fileUrl = node.uri.url
+      // get file type from uri prefix ("S3:", "public:", etc.)
+      const uriPrefix = node.uri.value.match(/^\w*:/)
+      fileType = uriPrefix ? uriPrefix[0] : null
     }
+    // Resolve w/ baseUrl if node.uri isn't absolute.
+    const url = new URL(fileUrl, baseUrl)
+    // If we have basicAuth credentials, add them to the request.
+    const basicAuthFileSystems = [`public:`, `private:`, `temporary:`]
+    const auth =
+      typeof basicAuth === `object` && basicAuthFileSystems.includes(fileType)
+        ? {
+            htaccess_user: basicAuth.username,
+            htaccess_pass: basicAuth.password,
+          }
+        : {}
+    const fileNode = await createRemoteFileNode({
+      url: url.href,
+      name: path.parse(decodeURIComponent(url.pathname)).name,
+      store,
+      cache,
+      createNode,
+      createNodeId,
+      getCache,
+      parentNodeId: node.id,
+      auth,
+      reporter,
+    })
     if (fileNode) {
       node.localFile___NODE = fileNode.id
     }

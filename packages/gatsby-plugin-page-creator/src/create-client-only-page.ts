@@ -1,6 +1,6 @@
 import { Actions } from "gatsby"
 import { createPath } from "gatsby-page-utils"
-import { getMatchPath } from "./get-match-path"
+import { getMatchPath } from "gatsby-core-utils"
 
 // Create a client side page with a matchPath
 // based on the `[]` existing in it's file path.

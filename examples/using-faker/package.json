@@ -5,11 +5,11 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "core-js": "^2.6.11",
-    "gatsby": "^2.24.41",
-    "gatsby-plugin-react-helmet": "^3.3.10",
-    "gatsby-source-faker": "^2.3.10",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "gatsby": "next",
+    "gatsby-plugin-react-helmet": "next",
+    "gatsby-source-faker": "next",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1"
   },
   "keywords": [

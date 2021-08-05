@@ -1,4 +1,4 @@
-const getFields = require(`./get-graphql-fields`)
+import getFields from "./get-graphql-fields"
 
 const options = {
   metadata: [`type`, `title`],

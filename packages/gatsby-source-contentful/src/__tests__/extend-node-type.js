@@ -3,6 +3,7 @@ const {
   resolveFixed,
   resolveFluid,
   resolveResize,
+  generateImageSource,
 } = require(`../extend-node-type`)
 
 describe(`contentful extend node type`, () => {
@@ -39,6 +40,35 @@ describe(`contentful extend node type`, () => {
     defaultLocale: `en-US`,
     file: null,
   }
+
+  describe(`generateImageSource`, () => {
+    it(`default`, () => {
+      const resp = generateImageSource(`test.png`, 420, 210, `webp`, null, {})
+      expect(resp.src).toContain(`w=420`)
+      expect(resp.src).toContain(`h=210`)
+      expect(resp.src).toContain(`fm=webp`)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`supports corner radius`, async () => {
+      const resp = generateImageSource(`test.png`, 420, 210, `webp`, null, {
+        cornerRadius: 10,
+      })
+      expect(resp.src).toContain(`r=10`)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`transforms corner radius -1 to max`, async () => {
+      const resp = generateImageSource(`test.png`, 420, 210, `webp`, null, {
+        cornerRadius: -1,
+      })
+      expect(resp.src).toContain(`r=max`)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`does not include corner by default`, async () => {
+      const resp = generateImageSource(`test.png`, 420, 210, `webp`, null, {})
+      expect(resp.src).not.toContain(`r=`)
+      expect(resp).toMatchSnapshot()
+    })
+  })
 
   describe(`resolveFixed`, () => {
     it(`generates responsive resolution data for images using width option`, async () => {
@@ -109,6 +139,25 @@ describe(`contentful extend node type`, () => {
       expect(resp.srcSet.split(`,`).length).toBe(1)
       expect(resp).toMatchSnapshot()
     })
+    it(`supports corner radius`, async () => {
+      const resp = await resolveFixed(image, {
+        cornerRadius: 10,
+      })
+      expect(resp.srcSet).toContain(`r=10`)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`transforms corner radius -1 to max`, async () => {
+      const resp = await resolveFixed(image, {
+        cornerRadius: -1,
+      })
+      expect(resp.srcSet).toContain(`r=max`)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`does not include corner by default`, async () => {
+      const resp = await resolveFixed(image, {})
+      expect(resp.srcSet).not.toContain(`r=`)
+      expect(resp).toMatchSnapshot()
+    })
   })
 
   describe(`resolveFluid`, () => {
@@ -150,6 +199,25 @@ describe(`contentful extend node type`, () => {
       expect(resp.srcSet.split(`,`).length).toBe(3)
       expect(resp).toMatchSnapshot()
     })
+    it(`supports corner radius`, async () => {
+      const resp = await resolveFluid(image, {
+        cornerRadius: 10,
+      })
+      expect(resp.srcSet).toContain(`r=10`)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`transforms corner radius -1 to max`, async () => {
+      const resp = await resolveFluid(image, {
+        cornerRadius: -1,
+      })
+      expect(resp.srcSet).toContain(`r=max`)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`does not include corner by default`, async () => {
+      const resp = await resolveFluid(image, {})
+      expect(resp.srcSet).not.toContain(`r=`)
+      expect(resp).toMatchSnapshot()
+    })
   })
 
   describe(`resolveResize`, () => {
@@ -177,6 +245,25 @@ describe(`contentful extend node type`, () => {
     it(`handles null`, async () => {
       const resp = await resolveResize(nullFileImage, { width: 400 })
       expect(resp).toBe(null)
+    })
+    it(`supports corner radius`, async () => {
+      const resp = await resolveResize(image, {
+        cornerRadius: 10,
+      })
+      expect(resp.src).toContain(`r=10`)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`transforms corner radius -1 to max`, async () => {
+      const resp = await resolveResize(image, {
+        cornerRadius: -1,
+      })
+      expect(resp.src).toContain(`r=max`)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`does not include corner by default`, async () => {
+      const resp = await resolveResize(image, {})
+      expect(resp.src).not.toContain(`r=`)
+      expect(resp).toMatchSnapshot()
     })
   })
 })

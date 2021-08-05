@@ -1,0 +1,22 @@
+{
+  "name": "gatsby-starter-hello-world",
+  "description": "Gatsby hello world starter",
+  "license": "MIT",
+  "scripts": {
+    "bench": "gatsby clean && rimraf .data && node --max_old_space_size=16384 --expose-gc node_modules/gatsby/dist/bin/gatsby.js build",
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve"
+  },
+  "dependencies": {
+    "gatsby": "next",
+    "lmdb-store": "^1.6.1",
+    "process-top": "^1.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "gatsby-plugin-benchmark-reporting": "*"
+  }
+}

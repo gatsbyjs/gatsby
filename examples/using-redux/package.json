@@ -5,9 +5,9 @@
   "version": "1.0.0",
   "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.24.41",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
+    "gatsby": "next",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-redux": "5.1.2",
     "redux": "3.7.2"
   },

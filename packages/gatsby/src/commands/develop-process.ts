@@ -1,17 +1,20 @@
 import { syncStaticDir } from "../utils/get-static-dir"
 import reporter from "gatsby-cli/lib/reporter"
-import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
+import { isTruthy } from "gatsby-core-utils"
 import express from "express"
 import inspector from "inspector"
 import { initTracer } from "../utils/tracer"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import onExit from "signal-exit"
 import {
+  userGetsSevenDayFeedback,
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
+  showSevenDayFeedbackRequest,
 } from "../utils/feedback"
 import { markWebpackStatusAsPending } from "../utils/webpack-status"
+import { store } from "../redux"
 
 import { IProgram, IDebugInfo } from "./types"
 import { interpret } from "xstate"
@@ -45,7 +48,11 @@ if (process.send) {
 }
 
 onExit(() => {
-  telemetry.trackCli(`DEVELOP_STOP`)
+  telemetry.trackCli(`DEVELOP_STOP`, {
+    siteMeasurements: {
+      totalPagesCount: store.getState().pages.size,
+    },
+  })
 })
 
 process.on(`message`, msg => {
@@ -59,6 +66,10 @@ interface IDevelopArgs extends IProgram {
 }
 
 const openDebuggerPort = (debugInfo: IDebugInfo): void => {
+  if (inspector.url() !== undefined) {
+    return // fixes #26708
+  }
+
   if (debugInfo.break) {
     inspector.open(debugInfo.port, undefined, true)
     // eslint-disable-next-line no-debugger
@@ -69,6 +80,9 @@ const openDebuggerPort = (debugInfo: IDebugInfo): void => {
 }
 
 module.exports = async (program: IDevelopArgs): Promise<void> => {
+  if (isTruthy(process.env.VERBOSE)) {
+    program.verbose = true
+  }
   reporter.setVerbose(program.verbose)
 
   if (program.debugInfo) {
@@ -81,22 +95,15 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   process.on(
     `SIGINT`,
     async (): Promise<void> => {
-      if (await userPassesFeedbackRequestHeuristic()) {
+      if (await userGetsSevenDayFeedback()) {
+        showSevenDayFeedbackRequest()
+      } else if (await userPassesFeedbackRequestHeuristic()) {
         showFeedbackRequest()
       }
       process.exit(0)
     }
   )
 
-  if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
-    reporter.panic(
-      `The flag ${chalk.yellow(
-        `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES`
-      )} is not available with ${chalk.cyan(
-        `gatsby develop`
-      )}, please retry using ${chalk.cyan(`gatsby build`)}`
-    )
-  }
   initTracer(program.openTracingConfigFile)
   markWebpackStatusAsPending()
   reporter.pendingActivity({ id: `webpack-develop` })
@@ -123,6 +130,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     program,
     parentSpan,
     app,
+    pendingQueryRuns: new Set([`/`]),
   })
 
   const service = interpret(machine)

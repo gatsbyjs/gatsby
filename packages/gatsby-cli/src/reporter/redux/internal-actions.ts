@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
-
-import uuidv4 from "uuid/v4"
+import uuidv4 from "uuid"
 import { trackCli } from "gatsby-telemetry"
 import signalExit from "signal-exit"
 import { Dispatch } from "redux"
@@ -31,6 +29,7 @@ import {
   getGlobalStatus,
 } from "./utils"
 import { IStructuredError } from "../../structured-errors/types"
+import { ErrorCategory } from "../../structured-errors/error-map"
 
 const ActivityStatusToLogLevel = {
   [ActivityStatuses.Interrupted]: ActivityLogLevels.Interrupted,
@@ -44,23 +43,40 @@ signalExit(() => {
 })
 
 let cancelDelayedSetStatus: (() => void) | null
-// TODO: THIS IS NOT WORKING ATM
+
+let pendingStatus: ActivityStatuses | "" = ``
+
+// We debounce "done" statuses because activities don't always overlap
+// and there is timing window after one activity ends and before next one starts
+// where technically we are "done" (all activities are done).
+// We don't want to emit multiple SET_STATUS events that would toggle between
+// IN_PROGRESS and SUCCESS/FAILED in short succession in those cases.
 export const setStatus = (
   status: ActivityStatuses | "",
   force: boolean = false
 ) => (dispatch: Dispatch<ISetStatus>): void => {
   const currentStatus = getStore().getState().logs.status
+
   if (cancelDelayedSetStatus) {
     cancelDelayedSetStatus()
     cancelDelayedSetStatus = null
   }
-  if (status !== currentStatus) {
-    if (status === `IN_PROGRESS` || force || weShouldExit) {
-      dispatch({
-        type: Actions.SetStatus,
-        payload: status,
-      })
-    } else {
+
+  if (
+    status !== currentStatus &&
+    (status === ActivityStatuses.InProgress || force || weShouldExit)
+  ) {
+    dispatch({
+      type: Actions.SetStatus,
+      payload: status,
+    })
+    pendingStatus = ``
+  } else {
+    // use pending status if truthy, fallback to current status if we don't have pending status
+    const pendingOrCurrentStatus = pendingStatus || currentStatus
+
+    if (status !== pendingOrCurrentStatus) {
+      pendingStatus = status
       cancelDelayedSetStatus = delayedCall(() => {
         setStatus(status, true)(dispatch)
       }, 1000)
@@ -76,6 +92,7 @@ export const createLog = ({
   group,
   code,
   type,
+  category,
   filePath,
   location,
   docsUrl,
@@ -85,6 +102,7 @@ export const createLog = ({
   activity_type,
   activity_uuid,
   stack,
+  pluginName,
 }: {
   level: string
   text?: string
@@ -93,6 +111,7 @@ export const createLog = ({
   group?: string
   code?: string
   type?: string
+  category?: keyof typeof ErrorCategory
   filePath?: string
   location?: IStructuredError["location"]
   docsUrl?: string
@@ -102,6 +121,7 @@ export const createLog = ({
   activity_type?: string
   activity_uuid?: string
   stack?: IStructuredError["stack"]
+  pluginName?: string
 }): ICreateLog => {
   return {
     type: Actions.Log,
@@ -113,6 +133,7 @@ export const createLog = ({
       group,
       code,
       type,
+      category,
       filePath,
       location,
       docsUrl,
@@ -123,6 +144,7 @@ export const createLog = ({
       activity_uuid,
       timestamp: new Date().toJSON(),
       stack,
+      pluginName,
     },
   }
 }
@@ -135,26 +157,19 @@ export const createPendingActivity = ({
   id: string
   status?: ActivityStatuses
 }): ActionsToEmit => {
-  const actionsToEmit: ActionsToEmit = []
-
-  const logsState = getStore().getState().logs
-
   const globalStatus = getGlobalStatus(id, status)
-
-  if (globalStatus !== logsState.status) {
-    actionsToEmit.push(setStatus(globalStatus))
-  }
-
-  actionsToEmit.push({
-    type: Actions.PendingActivity,
-    payload: {
-      id,
-      type: ActivityTypes.Pending,
-      status,
+  return [
+    setStatus(globalStatus),
+    {
+      type: Actions.PendingActivity,
+      payload: {
+        id,
+        type: ActivityTypes.Pending,
+        startTime: process.hrtime(),
+        status,
+      },
     },
-  })
-
-  return actionsToEmit
+  ]
 }
 
 type QueuedStartActivityActions = Array<
@@ -175,32 +190,25 @@ export const startActivity = ({
   current?: number
   total?: number
 }): QueuedStartActivityActions => {
-  const actionsToEmit: QueuedStartActivityActions = []
-
-  const logsState = getStore().getState().logs
-
   const globalStatus = getGlobalStatus(id, status)
 
-  if (globalStatus !== logsState.status) {
-    actionsToEmit.push(setStatus(globalStatus))
-  }
-
-  actionsToEmit.push({
-    type: Actions.StartActivity,
-    payload: {
-      id,
-      uuid: uuidv4(),
-      text,
-      type,
-      status,
-      startTime: process.hrtime(),
-      statusText: ``,
-      current,
-      total,
+  return [
+    setStatus(globalStatus),
+    {
+      type: Actions.StartActivity,
+      payload: {
+        id,
+        uuid: uuidv4(),
+        text,
+        type,
+        status,
+        startTime: process.hrtime(),
+        statusText: ``,
+        current,
+        total,
+      },
     },
-  })
-
-  return actionsToEmit
+  ]
 }
 
 type QueuedEndActivity = Array<
@@ -276,13 +284,8 @@ export const endActivity = ({
     }
   }
 
-  const logsState = getStore().getState().logs
-
   const globalStatus = getGlobalStatus(id, status)
-
-  if (globalStatus !== logsState.status) {
-    actionsToEmit.push(setStatus(globalStatus))
-  }
+  actionsToEmit.push(setStatus(globalStatus))
 
   return actionsToEmit
 }

@@ -8,11 +8,11 @@ title: Query Filters with GraphQL in Gatsby
 
 Gatsby stores all data loaded during the source-nodes phase in Redux and it allows you to write GraphQL queries to query that data. This data, stored as individual "nodes", can be searched through using a query language that is inspired by [MongoDB queries](https://docs.mongodb.com/manual/reference/operator/query/).
 
-Filtering is used in GraphQL root fields of Node types (e.g. for File type it would be `file` and `allFile`). The GraphQL `filter` argument is passed to the filtering system and will return all the nodes that match each of the given filters. The rest of the processing, such as pagination, is handled on the GraphQL resolver level.
+Filtering is used in GraphQL root fields of node types (e.g. for file type it would be `file` and `allFile`). The GraphQL `filter` argument is passed to the filtering system and will return all the nodes that match each of the given filters. The rest of the processing, such as pagination, is handled on the GraphQL resolver level.
 
 ### History and Sift
 
-For a long time Gatsby used the [sift.js](https://github.com/crcn/sift.js) library through which you can use [MongoDB queries](https://docs.mongodb.com/manual/reference/operator/query/) in JavaScript.
+For a long time Gatsby used the [Sift](https://github.com/crcn/sift.js) library through which you can use [MongoDB queries](https://docs.mongodb.com/manual/reference/operator/query/) in JavaScript.
 
 Unfortunately Sift did not align with how Gatsby used it and so a custom system was written to slowly replace it. This system was called "fast filters" and as of gatsby@2.23.0 (June 2020) the Sift library is no longer used.
 
@@ -47,7 +47,7 @@ nodes = [
 
 The filter path is `post.author.name`, the comparator is `eq`, and the filter value is `'Alex'`.
 
-This ought to return two nodes, the ones with id 1 and 3, because those are the only ones where the result value `node[i].post.author.name` equals `'Alex'`.
+This ought to return two nodes, the ones with id 1 and 4, because those are the only ones where the result value `node[i].post.author.name` equals `'Alex'`.
 
 A filter path can combine multiple paths, for example:
 
@@ -78,13 +78,37 @@ One additional feature that Gatsby supports is the `elemMatch` query. This query
 A contrived `elemMatch` example:
 
 ```js
-filter = {a: { elemMatch: { b: { eq: 5 } } }
+filter = { a: { elemMatch: { b: { eq: 5 } } } }
 
 nodes = [
-  { id: 1, a: [{ a: 1, b: 8, c: 7 }, { a: 3, b: 5, c: 6 }] },
-  { id: 2, a: [{ a: 2, b: 4, c: 6 }, { a: 6, b: 3, c: 3 }] },
-  { id: 3, a: [{ a: 3, b: 5, c: 3 }, { a: 5, b: 4, c: 1 }] },
-  { id: 4, a: [{ a: 4, b: 7, c: 1 }, { a: 9, b: 1, c: 6 }] },
+  {
+    id: 1,
+    a: [
+      { a: 1, b: 8, c: 7 },
+      { a: 3, b: 5, c: 6 },
+    ],
+  },
+  {
+    id: 2,
+    a: [
+      { a: 2, b: 4, c: 6 },
+      { a: 6, b: 3, c: 3 },
+    ],
+  },
+  {
+    id: 3,
+    a: [
+      { a: 3, b: 5, c: 3 },
+      { a: 5, b: 4, c: 1 },
+    ],
+  },
+  {
+    id: 4,
+    a: [
+      { a: 4, b: 7, c: 1 },
+      { a: 9, b: 1, c: 6 },
+    ],
+  },
 ]
 ```
 
@@ -131,9 +155,9 @@ Specific rules:
   - Will never return nodes with partial paths
   - Weak comparison due to the nature of the JavaScript operators
 - `regex`, `glob`
-  - This is like `new RegExp(filterValue).test(resultValue)` (with caveats for the filterValue syntax)
+  - This is like `new RegExp(filterValue).test(resultValue)` (with caveats for the `filterValue` syntax)
   - Glob pattern is converted to a JavaScript RegExp with [micromatch](https://github.com/micromatch/micromatch)
-  - The `regex` filterValue must be a stringified regular expression, including leading and trailing forward slash and optional flags; Like `"/foo/g"`
+  - The `regex` `filterValue` must be a stringified regular expression, including leading and trailing forward slash and optional flags; Like `"/foo/g"`
   - Never returns nodes with partial paths
   - While testing, result values are explicitly cast to a string through `String(resultValue)` before passing it to `regex.test()`
 

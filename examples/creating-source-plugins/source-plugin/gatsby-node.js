@@ -144,9 +144,9 @@ exports.sourceNodes = async function sourceNodes(
   console.log(await cache.get(`hello`))
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node))
   getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+    touchNode(node)
   )
 
   // listen for updates using subscriptions from the API
@@ -179,9 +179,7 @@ exports.sourceNodes = async function sourceNodes(
         const nodeId = createNodeId(`${POST_NODE_TYPE}-${post.id}`)
         switch (post.status) {
           case "deleted":
-            deleteNode({
-              node: getNode(nodeId),
-            })
+            deleteNode(getNode(nodeId))
             break
           case "created":
           case "updated":
@@ -250,7 +248,7 @@ exports.onCreateNode = async ({
   createNodeId,
   node,
 }) => {
-  // transfrom remote file nodes using Gatsby sharp plugins
+  // transform remote file nodes using Gatsby sharp plugins
   // because onCreateNode is called for all nodes, verify that you are only running this code on nodes created by your plugin
   if (node.internal.type === POST_NODE_TYPE) {
     // create a FileNode in Gatsby that gatsby-transformer-sharp will create optimized images for

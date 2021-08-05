@@ -1,8 +1,8 @@
-const diff = require(`jest-diff`).default
-const chalk = require(`chalk`)
-const stripAnsi = require(`strip-ansi`)
+import diff from "jest-diff"
+import chalk from "chalk"
+import stripAnsi from "strip-ansi"
 
-module.exports = (oldVal, newVal) => {
+export default function getDiff(oldVal, newVal) {
   const options = {
     aAnnotation: `Original`,
     bAnnotation: `Modified`,

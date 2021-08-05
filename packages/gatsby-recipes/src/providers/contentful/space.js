@@ -1,4 +1,4 @@
-import Joi from "@hapi/joi"
+import * as Joi from "@hapi/joi"
 
 import client from "./client"
 import resourceSchema from "../resource-schema"
@@ -84,11 +84,4 @@ const plan = async (context, { id, name }) => {
 
 const message = resource => `Created Contentful space ${resource.name}`
 
-module.exports.schema = schema
-module.exports.validate = validate
-module.exports.plan = plan
-module.exports.create = create
-module.exports.read = read
-module.exports.update = create
-module.exports.destroy = destroy
-module.exports.all = all
+export { schema, validate, plan, create, create as update, read, destroy, all }

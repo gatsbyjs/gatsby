@@ -4,6 +4,13 @@ const path = require(`path`)
 const { Machine, interpret } = require(`xstate`)
 
 const { createFileNode } = require(`./create-file-node`)
+const { ERROR_MAP } = require(`./error-utils`)
+
+exports.onPreInit = ({ reporter }) => {
+  if (reporter.setErrorMap) {
+    reporter.setErrorMap(ERROR_MAP)
+  }
+}
 
 /**
  * Create a state machine to manage Chokidar's not-ready/ready states.
@@ -29,7 +36,7 @@ const createFSMachine = (
     // It's possible the node was never created as sometimes tools will
     // write and then immediately delete temporary files to the file system.
     if (node) {
-      deleteNode({ node })
+      deleteNode(node)
     }
   }
 
@@ -38,7 +45,7 @@ const createFSMachine = (
   // After 'ready', we handle the 'add' event without putting it into a queue.
   let pathQueue = []
   const flushPathQueue = () => {
-    let queue = pathQueue.slice()
+    const queue = pathQueue.slice()
     pathQueue = null
     return Promise.all(
       // eslint-disable-next-line consistent-return
@@ -145,6 +152,17 @@ const createFSMachine = (
   )
   return interpret(fsMachine).start()
 }
+
+exports.pluginOptionsSchema = ({ Joi }) =>
+  Joi.object({
+    name: Joi.string(),
+    path: Joi.string(),
+    ignore: Joi.array().items(
+      Joi.string(),
+      Joi.object().regex(),
+      Joi.function()
+    ),
+  })
 
 exports.sourceNodes = (api, pluginOptions) => {
   // Validate that the path exists.

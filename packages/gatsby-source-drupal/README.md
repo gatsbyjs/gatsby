@@ -15,7 +15,7 @@ been used since jsonapi version `8.x-1.0-alpha4`.
 
 ## Install
 
-`npm install --save gatsby-source-drupal`
+`npm install gatsby-source-drupal`
 
 ## How to use
 
@@ -150,7 +150,7 @@ module.exports = {
 }
 ```
 
-## GET Params
+## GET Search Params
 
 You can append optional GET request params to the request url using `params` option.
 
@@ -214,9 +214,13 @@ module.exports = {
 }
 ```
 
+## Concurrent API Requests
+
+You can use the `concurrentAPIRequests` option to change how many simultaneous API requests are made to the server/service. 20 is the default and seems to be the fastest for most sites.
+
 ## Disallowed Link Types
 
-You can use the `disallowedLinkTypes` option to skip link types found in JSON:API documents. By default it skips the `self` and `describedby` links, which do not provide data that can be sourced. You may override the setting to add additional link types to be skipped.
+You can use the `disallowedLinkTypes` option to skip link types found in JSON:API documents. By default it skips the `self`, `describedby`, `contact_message--feedback`, and `contact_message--pesonal` links, which do not provide data that can be sourced. You may override the setting to add additional link types to be skipped.
 
 ```javascript
 // In your gatsby-config.js
@@ -227,7 +231,12 @@ module.exports = {
       options: {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
         // skip the action--action resource type.
-        disallowedLinkTypes: [`self`, `describedby`, `action--action`],
+        disallowedLinkTypes: [
+          `self`,
+          `describedby`,
+          `contact_message--feedback`,
+          `contact_message--personal`,
+        ],
       },
     },
   ],
@@ -259,6 +268,55 @@ module.exports = {
         filters: {
           // Use includes so only the news content paragraph components are fetched.
           "node--news": "include=field_content",
+        },
+      },
+    },
+  ],
+}
+```
+
+## Entity Reference revisions and relationships
+
+By default `gatsby-source-drupal` resolves Entity Reference relationships using just ID. If you are
+using the contrib module [Entity reference revisions](https://drupal.org/project/entity_reference_revisions) and [Paragraphs](https://drupal.org/project/paragraphs),
+you may have advanced use-cases such as fetching drafts where you want to resolve these relationships using both ID and
+revision ID. You can nominate entity-type IDs where you wish to resolve relationships using the revision ID by adding
+them to the `entityReferenceRevisions` configuration option. Please note that `gatsby-source-drupal` only ever fetches
+the default (published) revision, so this functionality is only needed in advanced cases where you have custom code
+Drupal side that is applying additional logic.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`,
+        entityReferenceRevisions: ["paragraph"], // optional, defaults to `[]`
+      },
+    },
+  ],
+}
+```
+
+## Translations
+
+If you have translations or multilingual enabled on your Drupal site, you can opt-in to sourcing translations of entities. To do this, enable in your plugin's configuration the languages and entity types you'd like to source. E.g.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        languageConfig: {
+          defaultLanguage: `en`,
+          enabledLanguages: [`en`, `fil`],
+          translatableEntities: [`node--article`],
         },
       },
     },

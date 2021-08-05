@@ -3,6 +3,130 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.12.0-next.1...babel-preset-gatsby-package@1.12.0-next.2) (2021-08-05)
+
+### Features
+
+- **babel-preset-gatsby-package:** add conditional compilation plugin ([#32687](https://github.com/gatsbyjs/gatsby/issues/32687)) ([a179e76](https://github.com/gatsbyjs/gatsby/commit/a179e760f41c64ccf60d88d9705a534548e47c41))
+
+# [1.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.12.0-next.0...babel-preset-gatsby-package@1.12.0-next.1) (2021-08-05)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.11.0-next.0...babel-preset-gatsby-package@1.12.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.10.0-next.1...babel-preset-gatsby-package@1.11.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.10.0-next.0...babel-preset-gatsby-package@1.10.0-next.1) (2021-07-08)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.9.0-next.0...babel-preset-gatsby-package@1.10.0-next.0) (2021-07-01)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.8.0-next.1...babel-preset-gatsby-package@1.9.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.8.0-next.0...babel-preset-gatsby-package@1.8.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.7.0-next.2...babel-preset-gatsby-package@1.8.0-next.0) (2021-06-03)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.7.0-next.1...babel-preset-gatsby-package@1.7.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.7.0-next.0...babel-preset-gatsby-package@1.7.0-next.1) (2021-05-31)
+
+### Bug Fixes
+
+- **gatsby-plugin-gatsby-cloud:** only load indicator code when enabled ([#31506](https://github.com/gatsbyjs/gatsby/issues/31506)) ([cb654cd](https://github.com/gatsbyjs/gatsby/commit/cb654cd7dd3a42f5e557736d18b0f7530d4a710e))
+
+# [1.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.6.0-next.0...babel-preset-gatsby-package@1.7.0-next.0) (2021-05-21)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.5.0-next.0...babel-preset-gatsby-package@1.6.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.4.0-next.0...babel-preset-gatsby-package@1.5.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.3.0-next.1...babel-preset-gatsby-package@1.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.3.0-next.0...babel-preset-gatsby-package@1.3.0-next.1) (2021-04-07)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for babel-preset-gatsby-package ([#29852](https://github.com/gatsbyjs/gatsby/issues/29852)) ([5fd8f33](https://github.com/gatsbyjs/gatsby/commit/5fd8f33371a699578e5ffbd39be3ccd9e2c438f6))
+
+# [1.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.2.0-next.0...babel-preset-gatsby-package@1.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.1.0-next.1...babel-preset-gatsby-package@1.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.1.0-next.0...babel-preset-gatsby-package@1.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@1.0.0-next.0...babel-preset-gatsby-package@1.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [1.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.13.0-next.0...babel-preset-gatsby-package@1.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [0.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.12.0-next.0...babel-preset-gatsby-package@0.13.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [0.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.11.0-next.0...babel-preset-gatsby-package@0.12.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [0.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.10.0-next.0...babel-preset-gatsby-package@0.11.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [0.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.9.0-next.0...babel-preset-gatsby-package@0.10.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [0.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.8.0-next.0...babel-preset-gatsby-package@0.9.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [0.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.7.0-next.0...babel-preset-gatsby-package@0.8.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
+# [0.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.6.0-next.0...babel-preset-gatsby-package@0.6.0-next.1) (2020-11-10)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for babel-preset-gatsby-package ([#27905](https://github.com/gatsbyjs/gatsby/issues/27905)) ([34bf36b](https://github.com/gatsbyjs/gatsby/commit/34bf36b449afde745dd192d80fca015f003acec6))
+
+## [0.5.3](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.5.2...babel-preset-gatsby-package@0.5.3) (2020-09-15)
+
+**Note:** Version bump only for package babel-preset-gatsby-package
+
 ## [0.5.2](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby-package@0.5.1...babel-preset-gatsby-package@0.5.2) (2020-07-09)
 
 **Note:** Version bump only for package babel-preset-gatsby-package

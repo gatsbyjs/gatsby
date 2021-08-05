@@ -3,6 +3,173 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.12.0-next.1...gatsby-plugin-google-analytics@3.12.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.12.0-next.0...gatsby-plugin-google-analytics@3.12.0-next.1) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.11.0-next.0...gatsby-plugin-google-analytics@3.12.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.10.0-next.1...gatsby-plugin-google-analytics@3.11.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.10.0-next.0...gatsby-plugin-google-analytics@3.10.0-next.1) (2021-07-08)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.9.0-next.0...gatsby-plugin-google-analytics@3.10.0-next.0) (2021-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.8.0-next.2...gatsby-plugin-google-analytics@3.9.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.8.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.8.0-next.1...gatsby-plugin-google-analytics@3.8.0-next.2) (2021-06-17)
+
+### Features
+
+- **gatsby-plugin-google-analytics:** enable core webvitals tracking ([#31665](https://github.com/gatsbyjs/gatsby/issues/31665)) ([1ecd6e1](https://github.com/gatsbyjs/gatsby/commit/1ecd6e12eeedcabc54f3be00137a5d092978de58))
+
+# [3.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.8.0-next.0...gatsby-plugin-google-analytics@3.8.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.7.0-next.2...gatsby-plugin-google-analytics@3.8.0-next.0) (2021-06-03)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.7.0-next.1...gatsby-plugin-google-analytics@3.7.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.7.0-next.0...gatsby-plugin-google-analytics@3.7.0-next.1) (2021-05-31)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.6.0-next.0...gatsby-plugin-google-analytics@3.7.0-next.0) (2021-05-21)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.5.0-next.0...gatsby-plugin-google-analytics@3.6.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.4.0-next.0...gatsby-plugin-google-analytics@3.5.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.3.0-next.1...gatsby-plugin-google-analytics@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.3.0-next.0...gatsby-plugin-google-analytics@3.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.2.0-next.0...gatsby-plugin-google-analytics@3.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.1.0-next.1...gatsby-plugin-google-analytics@3.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.1.0-next.0...gatsby-plugin-google-analytics@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.0.0-next.1...gatsby-plugin-google-analytics@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.0.0-next.0...gatsby-plugin-google-analytics@3.0.0-next.1) (2021-02-11)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.12.0-next.0...gatsby-plugin-google-analytics@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.11.0-next.0...gatsby-plugin-google-analytics@2.12.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.10.0-next.1...gatsby-plugin-google-analytics@2.11.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+# [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.10.0-next.0...gatsby-plugin-google-analytics@2.10.0-next.1) (2021-01-12)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.9.0-next.0...gatsby-plugin-google-analytics@2.10.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.8.0-next.0...gatsby-plugin-google-analytics@2.9.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.7.0-next.0...gatsby-plugin-google-analytics@2.8.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.6.0-next.0...gatsby-plugin-google-analytics@2.7.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+# [2.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.5.0-next.0...gatsby-plugin-google-analytics@2.5.0-next.1) (2020-11-10)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-analytics:** add cookieFlags to options schema ([#27923](https://github.com/gatsbyjs/gatsby/issues/27923)) ([557139e](https://github.com/gatsbyjs/gatsby/commit/557139ed20fb18db08686db42284511ab8f9bdfd))
+- **gatsby-plugin-google-analytics:** add optional options to options schema ([#27914](https://github.com/gatsbyjs/gatsby/issues/27914)) ([3cdf29f](https://github.com/gatsbyjs/gatsby/commit/3cdf29f2c337a0a0960127f9670d356b34aa1a0c))
+
+# [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.19...gatsby-plugin-google-analytics@2.4.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
+## [2.3.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.18...gatsby-plugin-google-analytics@2.3.19) (2020-10-16)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-analytics:** Fix gatsby-node so we still have a warning on older gatsby versions ([#27495](https://github.com/gatsbyjs/gatsby/issues/27495)) ([9797828](https://github.com/gatsbyjs/gatsby/commit/9797828a5ec686a367937e60ff0400521be1ae68))
+
+## [2.3.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.17...gatsby-plugin-google-analytics@2.3.18) (2020-10-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-google-analytics:** remove required on trackingId ([#27398](https://github.com/gatsbyjs/gatsby/issues/27398)) ([3518d10](https://github.com/gatsbyjs/gatsby/commit/3518d10c3541277a3ba2da5bb099a54d02179257))
+
+## [2.3.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.16...gatsby-plugin-google-analytics@2.3.17) (2020-10-07)
+
+### Features
+
+- **gatsby:** plugin option validation ([#27242](https://github.com/gatsbyjs/gatsby/issues/27242)) ([9b01ca7](https://github.com/gatsbyjs/gatsby/commit/9b01ca7926efa1c4c6d58b33a137c2f0a0ef99b7))
+
+## [2.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.15...gatsby-plugin-google-analytics@2.3.16) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+## [2.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.14...gatsby-plugin-google-analytics@2.3.15) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
+## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.13...gatsby-plugin-google-analytics@2.3.14) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-plugin-google-analytics
+
 ## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.12...gatsby-plugin-google-analytics@2.3.13) (2020-07-21)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics

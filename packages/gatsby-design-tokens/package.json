@@ -1,6 +1,6 @@
 {
   "name": "gatsby-design-tokens",
-  "version": "2.0.10",
+  "version": "3.12.0-next.1",
   "description": "Gatsby Design Tokens",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -14,7 +14,7 @@
     "directory": "packages/gatsby-design-tokens"
   },
   "files": [
-    "dist/**/*"
+    "dist/"
   ],
   "scripts": {
     "build": "npm run build:tokens && npm run build:theme && npm run build:theme-gatsbyjs-org",
@@ -29,12 +29,12 @@
     "hex2rgba": "^0.0.1"
   },
   "devDependencies": {
-    "agadoo": "^1.1.0",
-    "cross-env": "^5.2.1",
-    "microbundle": "^0.12.2",
-    "preval.macro": "^3.0.0"
+    "agadoo": "^2.0.0",
+    "cross-env": "^7.0.3",
+    "microbundle": "^0.13.3",
+    "preval.macro": "^5.0.0"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

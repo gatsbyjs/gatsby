@@ -181,6 +181,9 @@ const queriesTest = ({ typesDiff, dataDiff }) => {
               \\"name\\": \\"foo\\",
     -       },
     -       Object {
+    -         \\"name\\": \\"childrenChildOfParentChildDeletionForTransformer\\",
+    -       },
+    -       Object {
     -         \\"name\\": \\"childChildOfParentChildDeletionForTransformer\\",
             },
           ],

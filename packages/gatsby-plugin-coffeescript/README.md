@@ -4,7 +4,7 @@ Provides drop-in support for CoffeeScript and CJSX.
 
 ## Install
 
-`npm install --save gatsby-plugin-coffeescript`
+`npm install gatsby-plugin-coffeescript`
 
 ## How to use
 

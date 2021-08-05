@@ -1,11 +1,24 @@
 const _ = require(`lodash`)
-const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
+
+const {
+  nodeFromData,
+  downloadFile,
+  isFileNode,
+  getHref,
+  createNodeIdWithVersion,
+} = require(`./normalize`)
+
+const { getOptions } = require(`./plugin-options`)
 
 const backRefsNamesLookup = new WeakMap()
 const referencedNodesLookup = new WeakMap()
 
-const handleReferences = (node, { getNode, createNodeId }) => {
+const handleReferences = (
+  node,
+  { getNode, createNodeId, entityReferenceRevisions = [] }
+) => {
   const relationships = node.relationships
+  const rootNodeLanguage = getOptions().languageConfig ? node.langcode : `und`
 
   if (node.drupal_relationships) {
     const referencedNodes = []
@@ -15,7 +28,15 @@ const handleReferences = (node, { getNode, createNodeId }) => {
       if (_.isArray(v.data)) {
         relationships[nodeFieldName] = _.compact(
           v.data.map(data => {
-            const referencedNodeId = createNodeId(data.id)
+            const referencedNodeId = createNodeId(
+              createNodeIdWithVersion(
+                data.id,
+                data.type,
+                rootNodeLanguage,
+                data.meta?.target_version,
+                entityReferenceRevisions
+              )
+            )
             if (!getNode(referencedNodeId)) {
               return null
             }
@@ -35,7 +56,15 @@ const handleReferences = (node, { getNode, createNodeId }) => {
           node[k] = meta
         }
       } else {
-        const referencedNodeId = createNodeId(v.data.id)
+        const referencedNodeId = createNodeId(
+          createNodeIdWithVersion(
+            v.data.id,
+            v.data.type,
+            rootNodeLanguage,
+            v.data.meta?.target_revision_id,
+            entityReferenceRevisions
+          )
+        )
         if (getNode(referencedNodeId)) {
           relationships[nodeFieldName] = referencedNodeId
           referencedNodes.push(referencedNodeId)
@@ -97,13 +126,18 @@ const handleWebhookUpdate = async (
 ) => {
   const { createNode } = actions
 
-  const newNode = nodeFromData(nodeToUpdate, createNodeId)
+  const newNode = nodeFromData(
+    nodeToUpdate,
+    createNodeId,
+    pluginOptions.entityReferenceRevisions
+  )
 
   const nodesToUpdate = [newNode]
 
   handleReferences(newNode, {
     getNode,
     createNodeId,
+    entityReferenceRevisions: pluginOptions.entityReferenceRevisions,
   })
 
   const oldNode = getNode(newNode.id)
@@ -172,6 +206,9 @@ const handleWebhookUpdate = async (
   for (const node of nodesToUpdate) {
     if (node.internal.owner) {
       delete node.internal.owner
+    }
+    if (node.fields) {
+      delete node.fields
     }
     node.internal.contentDigest = createContentDigest(node)
     createNode(node)

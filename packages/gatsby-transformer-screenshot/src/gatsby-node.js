@@ -22,6 +22,7 @@ exports.onPreBootstrap = (
     actions,
     createNodeId,
     getCache,
+    getNode,
     getNodesByType,
     createContentDigest,
     reporter,
@@ -61,7 +62,7 @@ exports.onPreBootstrap = (
     } else {
       // Screenshot hasn't yet expired, touch the image node
       // to prevent garbage collection
-      touchNode({ nodeId: n.screenshotFile___NODE })
+      touchNode(getNode(n.screenshotFile___NODE))
     }
   })
 
@@ -76,20 +77,26 @@ exports.onPreBootstrap = (
   })
 }
 
-exports.onCreateNode = async (
-  { node, actions, store, cache, createNodeId, createContentDigest, getCache },
-  pluginOptions
-) => {
-  const { createNode, createParentChildLink } = actions
-
+function unstable_shouldOnCreateNode({ node }, pluginOptions) {
   /*
    * Check if node is of a type we care about, and has a url field
    * (originally only checked sites.yml, hence including by default)
    */
   const validNodeTypes = [`SitesYaml`].concat(pluginOptions.nodeTypes || [])
-  if (!validNodeTypes.includes(node.internal.type) || !node.url) {
+  return validNodeTypes.includes(node.internal.type) && node.url
+}
+
+exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+
+exports.onCreateNode = async (
+  { node, actions, store, cache, createNodeId, createContentDigest, getCache },
+  pluginOptions
+) => {
+  if (!unstable_shouldOnCreateNode({ node }, pluginOptions)) {
     return
   }
+
+  const { createNode, createParentChildLink } = actions
 
   try {
     const screenshotNode = await new Promise((resolve, reject) => {
@@ -135,7 +142,8 @@ const createScreenshotNode = async ({
   reporter,
 }) => {
   try {
-    let fileNode, expires
+    let fileNode
+    let expires
     if (USE_PLACEHOLDER_IMAGE) {
       const getPlaceholderFileNode = require(`./placeholder-file-node`)
       fileNode = await getPlaceholderFileNode({

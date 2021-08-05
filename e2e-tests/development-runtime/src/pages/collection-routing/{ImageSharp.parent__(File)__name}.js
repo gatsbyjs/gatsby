@@ -1,15 +1,16 @@
 import React from "react"
-import { Link, graphql, unstable_collectionGraphql } from "gatsby"
+import { Link, graphql } from "gatsby"
 import Image from "gatsby-image"
 
 import Layout from "../../components/layout"
 import SEO from "../../components/seo"
 
-export default function BlogPost({ data: { image } }) {
+export default function BlogPost({ data: { image }, pageContext: { parent__name } }) {
   return (
     <Layout>
       <SEO title={image.parent.name} />
       <h2 data-testid="name">{image.parent.name}</h2>
+      <p data-testid="pagecontext">{parent__name}</p>
       <Image fixed={image.fixed} />
       <Link to="/">Back to home</Link>
     </Layout>
@@ -27,15 +28,6 @@ export const blogPostQuery = graphql`
           name
         }
       }
-    }
-  }
-`
-
-// This should filter it down to just a single instance
-export const collectionQuery = unstable_collectionGraphql`
-  {
-    allImageSharp(limit: 1, skip: 1) {
-      ...CollectionPagesQueryFragment
     }
   }
 `

@@ -1,9 +1,5 @@
 const visit = require(`unist-util-visit`)
-const _ = require(`lodash`)
-const debug = require(`debug`)(`get-source-plugins-as-remark-plugins`)
 const { interopDefault } = require(`./interop-default`)
-
-let fileNodes
 
 // ensure only one `/` in new url
 const withPathPrefix = (url, pathPrefix) =>
@@ -19,13 +15,12 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
   pathPrefix,
   ...helpers
 }) {
-  debug(`getSourcePluginsAsRemarkPlugins`)
   let pathPlugin = undefined
   if (pathPrefix) {
     pathPlugin = () =>
       async function transformer(markdownAST) {
         // Ensure relative links include `pathPrefix`
-        visit(markdownAST, `link`, node => {
+        visit(markdownAST, [`link`, `definition`], node => {
           if (
             node.url &&
             node.url.startsWith(`/`) &&
@@ -39,43 +34,41 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
       }
   }
 
-  fileNodes = getNodesByType(`File`)
-
   // return list of remarkPlugins
-  const userPlugins = gatsbyRemarkPlugins
-    .filter(plugin => {
-      if (_.isFunction(interopDefault(require(plugin.resolve)))) {
-        return true
-      } else {
-        debug(`userPlugins: filtering out`, plugin)
-        return false
-      }
-    })
-    .map(plugin => {
-      debug(`userPlugins: constructing remark plugin for `, plugin)
-      const requiredPlugin = interopDefault(require(plugin.resolve))
-      const wrappedPlugin = () =>
-        async function transformer(markdownAST) {
-          await requiredPlugin(
-            {
-              markdownAST,
-              markdownNode: mdxNode,
-              getNode,
-              getNodesByType,
-              files: fileNodes,
-              pathPrefix,
-              reporter,
-              cache,
-              ...helpers,
+  const userPluginsFiltered = gatsbyRemarkPlugins.filter(
+    plugin => typeof interopDefault(require(plugin.resolve)) === `function`
+  )
+
+  if (!userPluginsFiltered.length) {
+    return pathPlugin ? [pathPlugin] : []
+  }
+
+  const userPlugins = userPluginsFiltered.map(plugin => {
+    const requiredPlugin = interopDefault(require(plugin.resolve))
+    const wrappedPlugin = () =>
+      async function transformer(markdownAST) {
+        await requiredPlugin(
+          {
+            markdownAST,
+            markdownNode: mdxNode,
+            getNode,
+            getNodesByType,
+            get files() {
+              return getNodesByType(`File`)
             },
-            plugin.options || {}
-          )
+            pathPrefix,
+            reporter,
+            cache,
+            ...helpers,
+          },
+          plugin.options || {}
+        )
 
-          return markdownAST
-        }
+        return markdownAST
+      }
 
-      return [wrappedPlugin, {}]
-    })
+    return [wrappedPlugin, {}]
+  })
 
   if (pathPlugin) {
     return [pathPlugin, ...userPlugins]

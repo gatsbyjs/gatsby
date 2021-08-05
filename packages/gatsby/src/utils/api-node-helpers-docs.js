@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-/** */
+/***/
 const GatsbyReporter = {
   /**
    * @callback GatsbyReporterFn
@@ -58,9 +58,28 @@ const GatsbyReporter = {
    * reporter.verbose(`text`)
    */
   verbose: true,
+
+  /**
+   * @callback GatsbyReporterActivityTimerFn
+   * @param {string} message Timer message to display
+   * @returns {ITimerReporter}
+   */
+
+  /**
+   * Creates a new activity timer with the provided message.
+   * Check the full [return type definition here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/src/reporter/reporter-timer.ts#L19).
+   * @type {GatsbyReporterActivityTimerFn}
+   * @example
+   * const activity = reporter.activityTimer(`Timer text`)
+   *
+   * activity.start()
+   * activity.setStatus(`status text`)
+   * activity.end()
+   */
+  activityTimer: true,
 };
 
-/** */
+/***/
 const GatsbyCache = {
   /**
    * Retrieve cached value
@@ -80,9 +99,18 @@ const GatsbyCache = {
    * await cache.set(`unique-key`, value)
    */
   set: true,
+
+  /**
+   * Deletes cached value
+   * @param {string} key Cache key
+   * @returns {Promise<void>} Promise resolving once key is deleted from cache
+   * @example
+   * await cache.del(`unique-key`)
+   */
+  del: true,
 };
 
-/** */
+/***/
 const GatsbyTracing = {
   /**
    * Global tracer instance. Check
@@ -166,16 +194,6 @@ module.exports.createContentDigest = true;
  *
  * See [`actions`](/docs/actions/) reference.
  * @type {Actions}
- * @deprecated Will be removed in gatsby 3.0. Use [actions](#actions)
- * instead.
- */
-module.exports.boundActionCreators = true;
-
-/**
- * Collection of functions used to programmatically modify Gatsby’s internal state.
- *
- * See [`actions`](/docs/actions/) reference.
- * @type {Actions}
  */
 module.exports.actions = true;
 
@@ -238,17 +256,6 @@ module.exports.getNode = true;
  * const markdownNodes = getNodesByType(`MarkdownRemark`)
  */
 module.exports.getNodesByType = true;
-
-/**
- * Compares `contentDigest` of cached node with passed value
- * to determine if node has changed.
- *
- * @param {string} id of node
- * @param {string} contentDigest of node
- * @returns {boolean}
- * @deprecated This check is done internally in Gatsby and it's not necessary to use it in plugins. Will be removed in gatsby 3.0.
- */
-module.exports.hasNodeChanged = true;
 
 /**
  * Set of utilities to output information to user

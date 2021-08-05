@@ -30,8 +30,7 @@ function validHeaders(headers, reporter) {
       _.every(headersList, header => {
         if (_.isString(header)) {
           if (!getHeaderName(header)) {
-            // TODO panic on builds on v3
-            reporter.warn(
+            reporter.panic(
               `[gatsby-plugin-netlify] ${path} contains an invalid header (${header}). Please check your plugin configuration`
             )
           }
@@ -94,7 +93,7 @@ function headersPath(pathPrefix, path) {
 }
 
 function preloadHeadersByPage({ pages, manifest, pathPrefix, publicFolder }) {
-  let linksByPage = {}
+  const linksByPage = {}
 
   const appDataPath = publicFolder(PAGE_DATA_DIR, `app-data.json`)
   const hasAppData = existsSync(appDataPath)
@@ -307,9 +306,19 @@ const applyCachingHeaders = (
     return headers
   }
 
-  const chunks = Array.from(pluginData.pages.values()).map(
-    page => page.componentChunkName
-  )
+  let chunks = []
+  // Gatsby v3.5 added componentChunkName to store().components
+  // So we prefer to pull chunk names off that as it gets very expensive to loop
+  // over large numbers of pages.
+  const isComponentChunkSet = !!pluginData.components.entries()?.next()
+    ?.value[1]?.componentChunkName
+  if (isComponentChunkSet) {
+    chunks = [...pluginData.components.values()].map(c => c.componentChunkName)
+  } else {
+    chunks = Array.from(pluginData.pages.values()).map(
+      page => page.componentChunkName
+    )
+  }
 
   chunks.push(`pages-manifest`, `app`)
 

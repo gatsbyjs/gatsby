@@ -1,25 +1,25 @@
 {
   "name": "gatsby-plugin-emotion",
   "description": "Gatsby plugin to add support for Emotion",
-  "version": "4.3.10",
+  "version": "6.12.0-next.2",
   "author": "Tegan Churchill <churchill.tegan@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
-    "@emotion/babel-preset-css-prop": "^10.0.27"
+    "@babel/runtime": "^7.14.8",
+    "@emotion/babel-preset-css-prop": "^11.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "babel-preset-gatsby-package": "^0.5.2",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
+    "babel-preset-gatsby-package": "^1.12.0-next.2",
+    "cross-env": "^7.0.3"
   },
   "peerDependencies": {
-    "@babel/core": "^7.0.0",
-    "@emotion/core": "^10.0.5",
-    "gatsby": "^2.0.0"
+    "@babel/core": "^7.11.6",
+    "@emotion/react": "^11.0.0",
+    "gatsby": "^3.0.0-next.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-emotion#readme",
   "keywords": [
@@ -41,6 +41,6 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

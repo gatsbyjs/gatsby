@@ -4,11 +4,11 @@
   "version": "1.0.0",
   "author": "Jason Lengstorf <jason@lengstorf.com>",
   "dependencies": {
-    "gatsby": "^2.24.41",
-    "gatsby-plugin-react-helmet": "^3.3.10",
+    "gatsby": "next",
+    "gatsby-plugin-react-helmet": "next",
     "prop-types": "^15.7.2",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1"
   },
   "keywords": [

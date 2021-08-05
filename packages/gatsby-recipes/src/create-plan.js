@@ -1,10 +1,6 @@
-const render = require(`./renderer`)
+import render from "./renderer"
 
-module.exports = async (context, cb) => {
-  try {
-    const result = await render(context.recipe, cb, context.inputs)
-    return result
-  } catch (e) {
-    throw e
-  }
+export default async function createPlan(context, cb) {
+  const result = await render(context.recipe, cb, context)
+  return result
 }

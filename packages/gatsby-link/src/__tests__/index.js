@@ -5,7 +5,7 @@ import {
   createHistory,
   LocationProvider,
 } from "@reach/router"
-import Link, { navigate, push, replace, withPrefix, withAssetPrefix } from "../"
+import Link, { navigate, withPrefix, withAssetPrefix } from "../"
 
 beforeEach(() => {
   global.__BASE_PATH__ = ``
@@ -24,16 +24,6 @@ const getNavigate = () => {
   return navigate
 }
 
-const getPush = () => {
-  global.___push = jest.fn()
-  return push
-}
-
-const getReplace = () => {
-  global.___replace = jest.fn()
-  return replace
-}
-
 const getWithPrefix = (pathPrefix = ``) => {
   global.__BASE_PATH__ = pathPrefix
   return withPrefix
@@ -44,7 +34,30 @@ const getWithAssetPrefix = (prefix = ``) => {
   return withAssetPrefix
 }
 
-const setup = ({ sourcePath = `/active`, linkProps, pathPrefix = `` } = {}) => {
+const setup = ({ sourcePath = `/`, linkProps, pathPrefix = `` } = {}) => {
+  const intersectionInstances = new WeakMap()
+  // mock intersectionObserver
+  global.IntersectionObserver = jest.fn(cb => {
+    const instance = {
+      observe: ref => {
+        intersectionInstances.set(ref, instance)
+      },
+      unobserve: ref => {
+        intersectionInstances.delete(ref)
+      },
+      disconnect: () => {},
+      trigger: ref => {
+        cb([
+          {
+            target: ref,
+            isIntersecting: true,
+          },
+        ])
+      },
+    }
+
+    return instance
+  })
   global.__BASE_PATH__ = pathPrefix
   const source = createMemorySource(sourcePath)
   const history = createHistory(source)
@@ -66,22 +79,31 @@ const setup = ({ sourcePath = `/active`, linkProps, pathPrefix = `` } = {}) => {
 
   return Object.assign({}, utils, {
     link: utils.getByText(`link`),
+    triggerInViewport: ref => {
+      intersectionInstances.get(ref).trigger(ref)
+    },
   })
 }
 
 describe(`<Link />`, () => {
   it(`matches basic snapshot`, () => {
-    const { container } = setup()
+    const { container } = setup({
+      linkProps: { to: `/active` },
+    })
     expect(container).toMatchSnapshot()
   })
 
   it(`matches active snapshot`, () => {
-    const { container } = setup({ linkProps: { to: `/active` } })
+    const { container } = setup({
+      sourcePath: `/active`,
+      linkProps: { to: `/active` },
+    })
     expect(container).toMatchSnapshot()
   })
 
   it(`matches partially active snapshot`, () => {
     const { container } = setup({
+      sourcePath: `/active`,
       linkProps: { to: `/active/nested`, partiallyActive: true },
     })
     expect(container).toMatchSnapshot()
@@ -150,19 +172,28 @@ describe(`<Link />`, () => {
 
     it(`handles relative link with "./"`, () => {
       const location = `./courses?sort=name`
-      const { link } = setup({ linkProps: { to: location } })
+      const { link } = setup({
+        sourcePath: `/active`,
+        linkProps: { to: location },
+      })
       expect(link.getAttribute(`href`)).toEqual(`/active/courses?sort=name`)
     })
 
     it(`handles relative link with "../"`, () => {
       const location = `../courses?sort=name`
-      const { link } = setup({ linkProps: { to: location } })
+      const { link } = setup({
+        sourcePath: `/active`,
+        linkProps: { to: location },
+      })
       expect(link.getAttribute(`href`)).toEqual(`/courses?sort=name`)
     })
 
     it(`handles bare relative link`, () => {
       const location = `courses?sort=name`
-      const { link } = setup({ linkProps: { to: location } })
+      const { link } = setup({
+        sourcePath: `/active`,
+        linkProps: { to: location },
+      })
       expect(link.getAttribute(`href`)).toEqual(`/active/courses?sort=name`)
     })
 
@@ -200,16 +231,6 @@ describe(`<Link />`, () => {
       setup({ linkProps: { to } })
       expect(console.warn).toBeCalled()
     })
-  })
-
-  it(`push is called with correct args`, () => {
-    getPush()(`/some-path`)
-    expect(global.___push).toHaveBeenCalledWith(`/some-path`)
-  })
-
-  it(`replace is called with correct args`, () => {
-    getReplace()(`/some-path`)
-    expect(global.___replace).toHaveBeenCalledWith(`/some-path`)
   })
 
   describe(`uses push or replace adequately`, () => {
@@ -380,6 +401,43 @@ describe(`state`, () => {
         replace: true,
         state,
       }
+    )
+  })
+})
+
+describe(`prefetch`, () => {
+  beforeEach(() => {
+    global.___loader = {
+      enqueue: jest.fn(),
+    }
+  })
+
+  it(`it prefetches when in viewport`, () => {
+    const to = `/active`
+
+    const { link, triggerInViewport } = setup({
+      linkProps: { to },
+    })
+
+    triggerInViewport(link)
+
+    expect(global.___loader.enqueue).toHaveBeenCalledWith(
+      `${global.__BASE_PATH__}${to}`
+    )
+  })
+
+  it(`it does not prefetch if link is current page`, () => {
+    const to = `/active`
+
+    const { link, triggerInViewport } = setup({
+      sourcePath: `/active`,
+      linkProps: { to },
+    })
+
+    triggerInViewport(link)
+
+    expect(global.___loader.enqueue).not.toHaveBeenCalledWith(
+      `${global.__BASE_PATH__}${to}`
     )
   })
 })

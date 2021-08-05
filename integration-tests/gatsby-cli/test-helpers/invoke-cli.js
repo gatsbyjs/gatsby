@@ -1,6 +1,15 @@
 import execa, { sync } from "execa"
-import { join, resolve } from "path"
+import { join } from "path"
+import strip from "strip-ansi"
 import { createLogsMatcher } from "./matcher"
+
+const gatsbyBinLocation = join(
+  __dirname,
+  "..",
+  `node_modules`,
+  `gatsby-cli`,
+  `cli.js`
+)
 
 // Use as `GatsbyCLI.cwd('execution-folder').invoke('new', 'foo')`
 export const GatsbyCLI = {
@@ -9,45 +18,37 @@ export const GatsbyCLI = {
       invoke(args) {
         const NODE_ENV = args[0] === `develop` ? `development` : `production`
         try {
-          const results = sync(
-            resolve(`./node_modules/.bin/gatsby`),
-            [].concat(args),
-            {
-              cwd: join(__dirname, `../`, `./${relativeCwd}`),
-              env: { NODE_ENV, CI: 1, GATSBY_LOGGER: `ink` },
-            }
-          )
+          const results = sync("node", [gatsbyBinLocation].concat(args), {
+            cwd: join(__dirname, `../`, `./${relativeCwd}`),
+            env: { NODE_ENV, CI: 1, GATSBY_LOGGER: `ink` },
+          })
 
           return [
             results.exitCode,
-            createLogsMatcher(results.stdout.toString().split("\n")),
+            createLogsMatcher(strip(results.stdout.toString())),
           ]
         } catch (err) {
           return [
             err.exitCode,
-            createLogsMatcher(err.stdout?.toString().split("\n") || ``),
+            createLogsMatcher(strip(err.stdout?.toString() || ``)),
           ]
         }
       },
 
       invokeAsync: (args, onExit) => {
         const NODE_ENV = args[0] === `develop` ? `development` : `production`
-        const res = execa(
-          resolve(`./node_modules/.bin/gatsby`),
-          [].concat(args),
-          {
-            cwd: join(__dirname, `../`, `./${relativeCwd}`),
-            env: { NODE_ENV, CI: 1, GATSBY_LOGGER: `ink` },
-          }
-        )
+        const res = execa("node", [gatsbyBinLocation].concat(args), {
+          cwd: join(__dirname, `../`, `./${relativeCwd}`),
+          env: { NODE_ENV, CI: 1, GATSBY_LOGGER: `ink` },
+        })
 
-        const logs = []
+        let logs = ``
         res.stdout.on("data", data => {
           if (!res.killed) {
-            logs.push(data.toString())
+            logs += data.toString()
           }
 
-          if (onExit && onExit(data.toString())) {
+          if (onExit && onExit(strip(logs))) {
             res.cancel()
           }
         })
@@ -60,7 +61,7 @@ export const GatsbyCLI = {
 
             throw err
           }),
-          () => createLogsMatcher(logs),
+          () => createLogsMatcher(strip(logs)),
         ]
       },
     }

@@ -47,16 +47,18 @@ async function genMDX(
     options,
     getNode,
     getNodes,
+    getNodesByType,
     reporter,
     cache,
     pathPrefix,
+    isolateMDXComponent,
     ...helpers
   },
   { forceDisableCache = false } = {}
 ) {
   const pathPrefixCacheStr = pathPrefix || ``
   const payloadCacheKey = node =>
-    `gatsby-plugin-mdx-entire-payload-${node.internal.contentDigest}-${pathPrefixCacheStr}`
+    `gatsby-plugin-mdx-entire-payload-${node.internal.contentDigest}-${pathPrefixCacheStr}-${isolateMDXComponent}`
 
   if (!forceDisableCache) {
     const cachedPayload = await cache.get(payloadCacheKey(node))
@@ -65,7 +67,7 @@ async function genMDX(
     }
   }
 
-  let results = {
+  const results = {
     mdast: undefined,
     hast: undefined,
     html: undefined,
@@ -88,7 +90,10 @@ async function genMDX(
   // pull classic style frontmatter off the raw MDX body
   debug(`processing classic frontmatter`)
   const { data, content: frontMatterCodeResult } = grayMatter(node.rawBody)
-  const content = `${frontMatterCodeResult}
+
+  const content = isolateMDXComponent
+    ? frontMatterCodeResult
+    : `${frontMatterCodeResult}
 
 export const _frontmatter = ${JSON.stringify(data)}`
 
@@ -114,6 +119,7 @@ export const _frontmatter = ${JSON.stringify(data)}`
       //          files,
       getNode,
       getNodes,
+      getNodesByType,
       reporter,
       cache,
       pathPrefix,
@@ -126,7 +132,7 @@ export const _frontmatter = ${JSON.stringify(data)}`
   )
 
   debug(`running mdx`)
-  let code = await mdx(content, {
+  const code = await mdx(content, {
     filepath: node.fileAbsolutePath,
     ...options,
     remarkPlugins: options.remarkPlugins.concat(
@@ -241,7 +247,7 @@ async function findImports({
   }
 
   let mdast = await compiler.parse(fileOpts)
-  mdast = await compiler.run(mdast)
+  mdast = await compiler.run(mdast, fileOpts)
 
   // Assuming valid code, identifiers must be unique (they are consts) so
   // we don't need to dedupe the symbols here.
@@ -271,3 +277,88 @@ async function findImports({
 }
 
 module.exports.findImports = findImports
+
+async function findImportsExports({
+  mdxNode,
+  rawInput,
+  absolutePath = null,
+  options,
+  getNode,
+  getNodes,
+  getNodesByType,
+  reporter,
+  cache,
+  pathPrefix,
+  ...helpers
+}) {
+  const { data: frontmatter, content } = grayMatter(rawInput)
+
+  const gatsbyRemarkPluginsAsRemarkPlugins = await getSourcePluginsAsRemarkPlugins(
+    {
+      gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
+      mdxNode,
+      getNode,
+      getNodes,
+      getNodesByType,
+      reporter,
+      cache,
+      pathPrefix,
+      compiler: {
+        parseString: () => compiler.parse.bind(compiler),
+        generateHTML: ast => mdx(ast, options),
+      },
+      ...helpers,
+    }
+  )
+
+  const compilerOptions = {
+    filepath: absolutePath,
+    ...options,
+    remarkPlugins: [
+      ...options.remarkPlugins,
+      ...gatsbyRemarkPluginsAsRemarkPlugins,
+    ],
+  }
+  const compiler = mdx.createCompiler(compilerOptions)
+
+  const fileOpts = { contents: content }
+  if (absolutePath) {
+    fileOpts.path = absolutePath
+  }
+
+  let mdast = await compiler.parse(fileOpts)
+  mdast = await compiler.run(mdast, fileOpts)
+
+  // Assuming valid code, identifiers must be unique (they are consts) so
+  // we don't need to dedupe the symbols here.
+  const identifiers = []
+  const imports = []
+  const exports = []
+
+  mdast.children.forEach(node => {
+    if (node.type === `import`) {
+      const importCode = node.value
+
+      imports.push(importCode)
+
+      const bindings = parseImportBindings(importCode)
+      identifiers.push(...bindings)
+    } else if (node.type === `export`) {
+      exports.push(node.value)
+    }
+  })
+
+  if (!identifiers.includes(`React`)) {
+    identifiers.push(`React`)
+    imports.push(`import * as React from 'react'`)
+  }
+
+  return {
+    frontmatter,
+    scopeImports: imports,
+    scopeExports: exports,
+    scopeIdentifiers: identifiers,
+  }
+}
+
+module.exports.findImportsExports = findImportsExports

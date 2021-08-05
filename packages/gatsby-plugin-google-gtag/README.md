@@ -14,7 +14,7 @@ NOTE: This plugin only works in production mode! To test your Global Site Tag is
 
 ## Install
 
-`npm install --save gatsby-plugin-google-gtag`
+`npm install gatsby-plugin-google-gtag`
 
 ## How to use
 
@@ -116,7 +116,7 @@ document.cookie.indexOf(disableStr + "=true") > -1 && (window[disableStr] = !0)
 If your visitors should be able to set an Opt-Out-Cookie (No future tracking)
 you can set a link e.g. in your imprint as follows:
 
-`<a href="javascript:gaOptout();">Deactive Google Tracking</a>`
+`<a href="javascript:gaOptout();">Deactivate Google Tracking</a>`
 
 ## The "gtagConfig.optimize_id" option
 

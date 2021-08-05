@@ -23,6 +23,7 @@ Array [
 exports[`gatsby-plugin-manifest CORS Generation Does not add crossOrigin when 'crossOrigin' is blank 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -32,16 +33,17 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting Does file name cache busting if "cache_busting_mode" option is set to name 1`] = `
 Array [
   <link
-    href="/favicon-00913339321ee5a854812aea11f8a5d4.svg"
-    rel="icon"
-    type="image/svg+xml"
-  />,
-  <link
     href="/favicon-32x32-00913339321ee5a854812aea11f8a5d4.png"
     rel="icon"
     type="image/png"
   />,
   <link
+    href="/favicon-00913339321ee5a854812aea11f8a5d4.svg"
+    rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -91,16 +93,17 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting Does query cache busting if "cache_busting_mode" option is set to query 1`] = `
 Array [
   <link
-    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
-    rel="icon"
-    type="image/svg+xml"
-  />,
-  <link
     href="/favicon-32x32.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="icon"
     type="image/png"
   />,
   <link
+    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
+    rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -150,16 +153,17 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting Does query cache busting if "cache_busting_mode" option is set to undefined 1`] = `
 Array [
   <link
-    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
-    rel="icon"
-    type="image/svg+xml"
-  />,
-  <link
     href="/favicon-32x32.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="icon"
     type="image/png"
   />,
   <link
+    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
+    rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -209,16 +213,17 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting doesn't add cache busting if "cache_busting_mode" option is set to none 1`] = `
 Array [
   <link
-    href="/favicon.svg"
-    rel="icon"
-    type="image/svg+xml"
-  />,
-  <link
     href="/favicon-32x32.png"
     rel="icon"
     type="image/png"
   />,
   <link
+    href="/favicon.svg"
+    rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -268,6 +273,7 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting doesn't add cache busting in manual mode 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -287,16 +293,17 @@ Array [
 exports[`gatsby-plugin-manifest Favicon Adds link favicon tag if "include_favicon" is set to true 1`] = `
 Array [
   <link
-    href="/favicon.svg"
-    rel="icon"
-    type="image/svg+xml"
-  />,
-  <link
     href="/favicon-32x32.png"
     rel="icon"
     type="image/png"
   />,
   <link
+    href="/favicon.svg"
+    rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -306,6 +313,7 @@ Array [
 exports[`gatsby-plugin-manifest Favicon Does not add a link favicon if "include_favicon" option is set to false 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -315,6 +323,7 @@ Array [
 exports[`gatsby-plugin-manifest Favicon Does not add a link favicon if in manual mode 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -324,6 +333,7 @@ Array [
 exports[`gatsby-plugin-manifest Legacy Icons Does create legacy links if "legacy" not specified in automatic mode 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -373,6 +383,7 @@ Array [
 exports[`gatsby-plugin-manifest Legacy Icons Does create legacy links if "legacy" not specified in hybrid mode. 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -392,6 +403,7 @@ Array [
 exports[`gatsby-plugin-manifest Legacy Icons Does create legacy links if "legacy" not specified in manual mode. 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -411,6 +423,7 @@ Array [
 exports[`gatsby-plugin-manifest Legacy Icons Does not create legacy links If "legacy" options is false and in automatic 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -420,6 +433,7 @@ Array [
 exports[`gatsby-plugin-manifest Legacy Icons Does not create legacy links If "legacy" options is false and in hybrid mode 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -429,6 +443,7 @@ Array [
 exports[`gatsby-plugin-manifest Legacy Icons Does not create legacy links If "legacy" options is false and in manual mode 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -442,6 +457,7 @@ Array [
 exports[`gatsby-plugin-manifest Manifest Link Generation Add a "theme color" meta tag if "theme_color_in_head" is set to true 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -455,16 +471,17 @@ Array [
 exports[`gatsby-plugin-manifest Manifest Link Generation Adds "icon" and "manifest" links and "theme_color" meta tag to head 1`] = `
 Array [
   <link
-    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
-    rel="icon"
-    type="image/svg+xml"
-  />,
-  <link
     href="/favicon-32x32.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="icon"
     type="image/png"
   />,
   <link
+    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
+    rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -518,6 +535,7 @@ Array [
 exports[`gatsby-plugin-manifest Manifest Link Generation Adds a "theme color" meta tag to head if "theme_color_in_head" is not provided 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -531,6 +549,7 @@ Array [
 exports[`gatsby-plugin-manifest Manifest Link Generation Adds correct (default) i18n "manifest" link to head 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -580,6 +599,7 @@ Array [
 exports[`gatsby-plugin-manifest Manifest Link Generation Adds correct (es) i18n "manifest" link to head 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest_es.webmanifest"
     rel="manifest"
   />,
@@ -629,6 +649,7 @@ Array [
 exports[`gatsby-plugin-manifest Manifest Link Generation Does not add a "theme color" meta tag if "theme_color_in_head" is set to false 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -638,6 +659,7 @@ Array [
 exports[`gatsby-plugin-manifest Manifest Link Generation Does not add a "theme_color" meta tag to head if "theme_color" option is not provided. 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,

@@ -23,6 +23,9 @@ const IndexPage = ({ data }) => (
     <Link to="/안녕" data-testid="page-with-unicode-path">
       Go to page with unicode path
     </Link>
+    <Link to="/foo/@something/bar" data-testid="page-with-encodable-path">
+      Go to page with unicode path
+    </Link>
     <Link to="/__non_existent_page__/" data-testid="broken-link">
       Go to a broken link
     </Link>
@@ -41,6 +44,12 @@ const IndexPage = ({ data }) => (
     >
       Go to client route splat (splat: blah/blah/blah)
     </Link>
+    <Link to="/new-page" data-testid="hot-reloading-new-file">
+      Created by hot-reloading/new-file.js
+    </Link>
+    <Link to="/redirect-two#anchor" data-testid="redirect-two-anchor">Go to redirect with hash</Link>
+    <Link to="/redirect-two?query_param=hello" data-testid="redirect-two-search">Go to redirect with query param</Link>
+    <Link to="/redirect-two?query_param=hello#anchor" data-testid="redirect-two-search-anchor">Go to redirect with query param and hash</Link>
     <h2>Blog posts</h2>
     <ul>
       {data.posts.edges.map(({ node }) => (

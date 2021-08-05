@@ -5,7 +5,7 @@ Object {
   "aspectRatio": 1,
   "height": 20,
   "originalName": "test.png",
-  "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsSAAALEgHS3X78AAABKklEQVQ4y8WUy07DMBBFrwMpr4aybjepUeqIFd/CAgmJsuIHgWXVL+Gx4C3xCdQJnpm0UDJNAQnVuouMM8dzY4+DcoA/C/8Fe9bv4ABMMpQOZc5yFPqfwEUQY499jHoY9/BsKQyTRTNMyzu8WAwTbBnI2DY438XbPr0qFsFCvlrkMTERYFgRL3HYUvh5OMdpQqkbBtPC9NDiINQPCZM6LGVvUzIpwNch4V5EGxHS/DeYtjfHZbcyXB8yGfaPimcafLEMHqmw2L5OsWkUUuY6Ee5V28WUP25TXjwPS3iWUFnfcFQPFna98rlmSGL4IOZucQvgT76Po53qeOTYTtp4qpFKe/qM29PhJsVVl3SXsluntLfS7rPvn10MP1Aau+lKBuA9I/kV/AyW6gNTIWTuA/r8lQAAAABJRU5ErkJggg==",
+  "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABP0lEQVQ4y2P4r8ZANmKgvuZ/agy/VaHojyopmv+CNf/XQCCoCEHNf1VBqv+oM5yVY1giwbBakuG2AkjknzoW/eh2/tdgOCPHYM7OwMDAwAgiGFgYGMJ5GF4og43ApRmuk58JqpMJRjIwMBizMbxTZviPaj8ihCD6rThAStkgljJATWEHc3P5wT5SxdD8B2ztERmQIiYGdAAxSpaF4T2q5TDN4HCaLgZSxMyAE1yQgwY+Fs1zxQloviSPTTMktM7JgVzIiKEH4hElFoavKogAQgltiJA3F0gdOyPC58yw8GsUwhFgUMvVGR4oMqiwogQbhOHLxfBLDcVabIlEneGxEkMMLwMvTLc4M0OdEMN3VfRIxp48/6mDnPdCieGkHCiRflRh+K+JPXljz1IQJ0AzhjrRGQPZC5As+ZeuhQGRmgHU8mT34D0STQAAAABJRU5ErkJggg==",
   "width": 20,
 }
 `;
@@ -23,7 +23,7 @@ Object {
 exports[`gatsby-plugin-sharp duotone fixed 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAACXBIWXMAAAPoAAAD6AG1e1JrAAABk0lEQVQ4y7VUy07DMBDsf9IDhcauaVM4IajUIuALOFRI/R24wB8AgkpInJKI9ME5zDi24rx5HjZKvOP17Hg2neh8nNjo8CGESGL7sbpwMvrlaepriF4J3dQLMlsXvzbVFCKHLJ3J8+5PRxqlF0OzleFLkSG7Xrp4faiyRaI/Lgs13QhNVB5uCUyUTDyUloidvkjezvyMEB8B4uZkqAHCiR44bYtCcecSirD5XQDmIGzVjOrEiJo4fhvY2jWTG3C6g/TLmZ+8VwEJekWy20+loUSzA5kDp15BKJmXhmD6Iqcjtep5eSArk0ZQPPpqPNAaWiBpbKt0pLgEU2xuIOewTh7rmFWFRH9/M78uaG8yNuox4oYbbrQEhaI4HKEh7mvfS2OE98WR0r6P26zj2ofW5rWowlzY2WduAQxZ14odmNZuMWA0h6wo5pplDxj+MrgnqDM3W32E/QYNxaxN2f7ztNx6qWUCOC3H+F/Y35EU2XCw3QkGhBrHX/WXLbwG4wewoAwMst84t/0jH4ZG36DFLv9m7E/1HjvIa/canAAAAABJRU5ErkJggg==",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAHNUN2pAAAAD1BMVEXugW5lZmbMemybcGl6aWdJY41OAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAVUlEQVQY062QUQ6AMAhD28L9z2w2RObEH+P7WJquK2TAgEh0SoVfF+GQPk9DC5kvxNLv+QYJ1eBVy0VGxJYJltFfkI/q+87T2mzxQo3pj8rmI6QPGx6CUQCaU8vWagAAAABJRU5ErkJggg==",
   "height": 100,
   "originalName": "test.png",
   "src": "/static/1234/df2e1/test.png",
@@ -36,7 +36,7 @@ Object {
 exports[`gatsby-plugin-sharp duotone fluid 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAACXBIWXMAAAPoAAAD6AG1e1JrAAABk0lEQVQ4y7VUy07DMBDsf9IDhcauaVM4IajUIuALOFRI/R24wB8AgkpInJKI9ME5zDi24rx5HjZKvOP17Hg2neh8nNjo8CGESGL7sbpwMvrlaepriF4J3dQLMlsXvzbVFCKHLJ3J8+5PRxqlF0OzleFLkSG7Xrp4faiyRaI/Lgs13QhNVB5uCUyUTDyUloidvkjezvyMEB8B4uZkqAHCiR44bYtCcecSirD5XQDmIGzVjOrEiJo4fhvY2jWTG3C6g/TLmZ+8VwEJekWy20+loUSzA5kDp15BKJmXhmD6Iqcjtep5eSArk0ZQPPpqPNAaWiBpbKt0pLgEU2xuIOewTh7rmFWFRH9/M78uaG8yNuox4oYbbrQEhaI4HKEh7mvfS2OE98WR0r6P26zj2ofW5rWowlzY2WduAQxZ14odmNZuMWA0h6wo5pplDxj+MrgnqDM3W32E/QYNxaxN2f7ztNx6qWUCOC3H+F/Y35EU2XCw3QkGhBrHX/WXLbwG4wewoAwMst84t/0jH4ZG36DFLv9m7E/1HjvIa/canAAAAABJRU5ErkJggg==",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAHNUN2pAAAAD1BMVEXugW5lZmbMemybcGl6aWdJY41OAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAVUlEQVQY062QUQ6AMAhD28L9z2w2RObEH+P7WJquK2TAgEh0SoVfF+GQPk9DC5kvxNLv+QYJ1eBVy0VGxJYJltFfkI/q+87T2mzxQo3pj8rmI6QPGx6CUQCaU8vWagAAAABJRU5ErkJggg==",
   "density": 72,
   "originalImg": "/static/1234/df2e1/test.png",
   "originalName": "test.png",
@@ -58,6 +58,7 @@ exports[`gatsby-plugin-sharp fixed correctly infers the width when only the heig
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -84,6 +85,7 @@ exports[`gatsby-plugin-sharp fixed correctly infers the width when only the heig
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -113,6 +115,7 @@ exports[`gatsby-plugin-sharp fixed does not warn when the requested width is equ
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -139,6 +142,7 @@ exports[`gatsby-plugin-sharp fixed does not warn when the requested width is equ
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -168,6 +172,7 @@ exports[`gatsby-plugin-sharp fixed should give the same result with createJob as
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -194,6 +199,7 @@ exports[`gatsby-plugin-sharp fixed should give the same result with createJob as
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -223,6 +229,7 @@ exports[`gatsby-plugin-sharp fixed warns when the requested width is greater tha
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -235,6 +242,7 @@ exports[`gatsby-plugin-sharp fixed warns when the requested width is greater tha
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -264,6 +272,7 @@ exports[`gatsby-plugin-sharp fluid accepts srcSet breakpoints 1`] = `
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -304,6 +313,7 @@ exports[`gatsby-plugin-sharp fluid accepts srcSet breakpoints 1`] = `
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -333,6 +343,7 @@ exports[`gatsby-plugin-sharp fluid adds pathPrefix if defined 1`] = `
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -345,6 +356,7 @@ exports[`gatsby-plugin-sharp fluid adds pathPrefix if defined 1`] = `
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -373,6 +385,7 @@ Array [
   Array [
     Object {
       "args": Object {
+        "isLazy": false,
         "operations": Array [
           Object {
             "args": Object {
@@ -426,6 +439,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
+          "failOnError": true,
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -447,6 +461,7 @@ Array [
   Array [
     Object {
       "args": Object {
+        "isLazy": false,
         "operations": Array [
           Object {
             "args": Object {
@@ -506,6 +521,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
+          "failOnError": true,
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -527,6 +543,7 @@ Array [
   Array [
     Object {
       "args": Object {
+        "isLazy": false,
         "operations": Array [
           Object {
             "args": Object {
@@ -586,6 +603,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
+          "failOnError": true,
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -607,6 +625,7 @@ Array [
   Array [
     Object {
       "args": Object {
+        "isLazy": false,
         "operations": Array [
           Object {
             "args": Object {
@@ -666,6 +685,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
+          "failOnError": true,
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -687,6 +707,7 @@ Array [
   Array [
     Object {
       "args": Object {
+        "isLazy": false,
         "operations": Array [
           Object {
             "args": Object {
@@ -724,6 +745,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
+          "failOnError": true,
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -745,6 +767,7 @@ Array [
   Array [
     Object {
       "args": Object {
+        "isLazy": false,
         "operations": Array [
           Object {
             "args": Object {
@@ -786,6 +809,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
+          "failOnError": true,
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -807,6 +831,7 @@ Array [
   Array [
     Object {
       "args": Object {
+        "isLazy": false,
         "operations": Array [
           Object {
             "args": Object {
@@ -848,6 +873,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
+          "failOnError": true,
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -869,6 +895,7 @@ Array [
   Array [
     Object {
       "args": Object {
+        "isLazy": false,
         "operations": Array [
           Object {
             "args": Object {
@@ -910,6 +937,7 @@ Array [
         "pluginOptions": Object {
           "base64Width": 20,
           "defaultQuality": 50,
+          "failOnError": true,
           "forceBase64Format": "",
           "lazyImageGeneration": true,
           "stripMetadata": true,
@@ -932,6 +960,7 @@ exports[`gatsby-plugin-sharp fluid does not change the arguments object it is gi
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -944,6 +973,7 @@ exports[`gatsby-plugin-sharp fluid does not change the arguments object it is gi
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -973,6 +1003,7 @@ exports[`gatsby-plugin-sharp fluid ensure maxWidth is in srcSet breakpoints 1`] 
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1013,6 +1044,7 @@ exports[`gatsby-plugin-sharp fluid ensure maxWidth is in srcSet breakpoints 1`] 
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1039,7 +1071,7 @@ exports[`gatsby-plugin-sharp fluid ensure maxWidth is in srcSet breakpoints 1`] 
 exports[`gatsby-plugin-sharp fluid includes responsive image properties, e.g. sizes, srcset, etc. 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsSAAALEgHS3X78AAABKklEQVQ4y8WUy07DMBBFrwMpr4aybjepUeqIFd/CAgmJsuIHgWXVL+Gx4C3xCdQJnpm0UDJNAQnVuouMM8dzY4+DcoA/C/8Fe9bv4ABMMpQOZc5yFPqfwEUQY499jHoY9/BsKQyTRTNMyzu8WAwTbBnI2DY438XbPr0qFsFCvlrkMTERYFgRL3HYUvh5OMdpQqkbBtPC9NDiINQPCZM6LGVvUzIpwNch4V5EGxHS/DeYtjfHZbcyXB8yGfaPimcafLEMHqmw2L5OsWkUUuY6Ee5V28WUP25TXjwPS3iWUFnfcFQPFna98rlmSGL4IOZucQvgT76Po53qeOTYTtp4qpFKe/qM29PhJsVVl3SXsluntLfS7rPvn10MP1Aau+lKBuA9I/kV/AyW6gNTIWTuA/r8lQAAAABJRU5ErkJggg==",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABP0lEQVQ4y2P4r8ZANmKgvuZ/agy/VaHojyopmv+CNf/XQCCoCEHNf1VBqv+oM5yVY1giwbBakuG2AkjknzoW/eh2/tdgOCPHYM7OwMDAwAgiGFgYGMJ5GF4og43ApRmuk58JqpMJRjIwMBizMbxTZviPaj8ihCD6rThAStkgljJATWEHc3P5wT5SxdD8B2ztERmQIiYGdAAxSpaF4T2q5TDN4HCaLgZSxMyAE1yQgwY+Fs1zxQloviSPTTMktM7JgVzIiKEH4hElFoavKogAQgltiJA3F0gdOyPC58yw8GsUwhFgUMvVGR4oMqiwogQbhOHLxfBLDcVabIlEneGxEkMMLwMvTLc4M0OdEMN3VfRIxp48/6mDnPdCieGkHCiRflRh+K+JPXljz1IQJ0AzhjrRGQPZC5As+ZeuhQGRmgHU8mT34D0STQAAAABJRU5ErkJggg==",
   "density": 72,
   "originalImg": "/static/1234/7e516/test.png",
   "originalName": "test.png",
@@ -1056,7 +1088,7 @@ Object {
 exports[`gatsby-plugin-sharp fluid includes responsive image properties, e.g. sizes, srcset, etc. with the createJob api 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsSAAALEgHS3X78AAABKklEQVQ4y8WUy07DMBBFrwMpr4aybjepUeqIFd/CAgmJsuIHgWXVL+Gx4C3xCdQJnpm0UDJNAQnVuouMM8dzY4+DcoA/C/8Fe9bv4ABMMpQOZc5yFPqfwEUQY499jHoY9/BsKQyTRTNMyzu8WAwTbBnI2DY438XbPr0qFsFCvlrkMTERYFgRL3HYUvh5OMdpQqkbBtPC9NDiINQPCZM6LGVvUzIpwNch4V5EGxHS/DeYtjfHZbcyXB8yGfaPimcafLEMHqmw2L5OsWkUUuY6Ee5V28WUP25TXjwPS3iWUFnfcFQPFna98rlmSGL4IOZucQvgT76Po53qeOTYTtp4qpFKe/qM29PhJsVVl3SXsluntLfS7rPvn10MP1Aau+lKBuA9I/kV/AyW6gNTIWTuA/r8lQAAAABJRU5ErkJggg==",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABP0lEQVQ4y2P4r8ZANmKgvuZ/agy/VaHojyopmv+CNf/XQCCoCEHNf1VBqv+oM5yVY1giwbBakuG2AkjknzoW/eh2/tdgOCPHYM7OwMDAwAgiGFgYGMJ5GF4og43ApRmuk58JqpMJRjIwMBizMbxTZviPaj8ihCD6rThAStkgljJATWEHc3P5wT5SxdD8B2ztERmQIiYGdAAxSpaF4T2q5TDN4HCaLgZSxMyAE1yQgwY+Fs1zxQloviSPTTMktM7JgVzIiKEH4hElFoavKogAQgltiJA3F0gdOyPC58yw8GsUwhFgUMvVGR4oMqiwogQbhOHLxfBLDcVabIlEneGxEkMMLwMvTLc4M0OdEMN3VfRIxp48/6mDnPdCieGkHCiRflRh+K+JPXljz1IQJ0AzhjrRGQPZC5As+ZeuhQGRmgHU8mT34D0STQAAAABJRU5ErkJggg==",
   "density": 72,
   "originalImg": "/static/1234/7e516/test.png",
   "originalName": "test.png",
@@ -1076,6 +1108,7 @@ exports[`gatsby-plugin-sharp fluid infers the maxWidth if only maxHeight is give
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1123,6 +1156,7 @@ exports[`gatsby-plugin-sharp fluid infers the maxWidth if only maxHeight is give
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1152,6 +1186,7 @@ exports[`gatsby-plugin-sharp fluid keeps original file name 1`] = `
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1164,6 +1199,7 @@ exports[`gatsby-plugin-sharp fluid keeps original file name 1`] = `
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1193,6 +1229,7 @@ exports[`gatsby-plugin-sharp fluid prevents duplicate breakpoints 1`] = `
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1226,6 +1263,7 @@ exports[`gatsby-plugin-sharp fluid prevents duplicate breakpoints 1`] = `
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1255,6 +1293,7 @@ exports[`gatsby-plugin-sharp fluid reject any breakpoints larger than the origin
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1295,6 +1334,7 @@ exports[`gatsby-plugin-sharp fluid reject any breakpoints larger than the origin
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1324,6 +1364,7 @@ exports[`gatsby-plugin-sharp fluid should give the same result with createJob as
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1336,6 +1377,7 @@ exports[`gatsby-plugin-sharp fluid should give the same result with createJob as
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1380,6 +1422,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJob file name works w
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1392,6 +1435,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJob file name works w
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1423,6 +1467,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJob should round heig
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1435,6 +1480,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJob should round heig
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1466,6 +1512,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 file name works
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1478,6 +1525,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 file name works
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
@@ -1507,6 +1555,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 should round he
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1519,6 +1568,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 should round he
           "pluginOptions": Object {
             "base64Width": 20,
             "defaultQuality": 50,
+            "failOnError": true,
             "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,

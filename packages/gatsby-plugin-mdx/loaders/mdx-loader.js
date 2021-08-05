@@ -1,6 +1,7 @@
 const _ = require(`lodash`)
 const { getOptions } = require(`loader-utils`)
 const grayMatter = require(`gray-matter`)
+const path = require(`path`)
 const unified = require(`unified`)
 const babel = require(`@babel/core`)
 const { createRequireFromPath, slash } = require(`gatsby-core-utils`)
@@ -25,7 +26,10 @@ const debugMore = require(`debug`)(`gatsby-plugin-mdx-info:mdx-loader`)
 
 const genMdx = require(`../utils/gen-mdx`)
 const withDefaultOptions = require(`../utils/default-options`)
-const createMDXNode = require(`../utils/create-mdx-node`)
+const {
+  createMdxNodeExtraBabel,
+  createMdxNodeLessBabel,
+} = require(`../utils/create-mdx-node`)
 const { createFileNode } = require(`../utils/create-fake-file-node`)
 
 const DEFAULT_OPTIONS = {
@@ -69,9 +73,10 @@ const hasDefaultExport = (str, options) => {
     isExport(value) || isImport(value) ? -1 : 1
 
   function esSyntax() {
-    var Parser = this.Parser
-    var tokenizers = Parser.prototype.blockTokenizers
-    var methods = Parser.prototype.blockMethods
+    // eslint-disable-next-line @babel/no-invalid-this
+    const Parser = this.Parser
+    const tokenizers = Parser.prototype.blockTokenizers
+    const methods = Parser.prototype.blockMethods
 
     tokenizers.esSyntax = tokenizeEsSyntax
 
@@ -89,17 +94,38 @@ const hasDefaultExport = (str, options) => {
   return hasDefaultExportBool
 }
 
-module.exports = async function (content) {
+module.exports = async function mdxLoader(content) {
   const callback = this.async()
+
   const {
+    isolateMDXComponent,
     getNode: rawGetNode,
     getNodes,
+    getNodesByType,
     reporter,
     cache,
     pathPrefix,
     pluginOptions,
     ...helpers
   } = getOptions(this)
+
+  const resourceQuery = this.resourceQuery || ``
+  if (isolateMDXComponent && !resourceQuery.includes(`type=component`)) {
+    const { data } = grayMatter(content)
+
+    const requestPath = slash(
+      `/${path.relative(this.rootContext, this.resourcePath)}?type=component`
+    )
+
+    return callback(
+      null,
+      `import MDXContent from "${requestPath}";
+export default MDXContent;
+export * from "${requestPath}"
+
+export const _frontmatter = ${JSON.stringify(data)};`
+    )
+  }
 
   const options = withDefaultOptions(pluginOptions)
 
@@ -121,11 +147,24 @@ module.exports = async function (content) {
 
   let mdxNode
   try {
-    mdxNode = await createMDXNode({
-      id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
-      node: fileNode,
-      content,
-    })
+    // This fakeNodeIdMDXFileABugIfYouSeeThis node object attempts to break the chicken-egg problem,
+    // where parsing mdx allows for custom plugins, which can receive a mdx node.
+    if (options.lessBabel) {
+      ;({ mdxNode } = await createMdxNodeLessBabel({
+        id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
+        node: fileNode,
+        content,
+        options,
+        getNodesByType,
+        getNode: rawGetNode,
+      }))
+    } else {
+      mdxNode = await createMdxNodeExtraBabel({
+        id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
+        node: fileNode,
+        content,
+      })
+    }
   } catch (e) {
     return callback(e)
   }
@@ -165,12 +204,12 @@ ${contentWithoutFrontmatter}`
   /**
    * Support gatsby-remark parser plugins
    */
-  for (let plugin of options.gatsbyRemarkPlugins) {
+  for (const plugin of options.gatsbyRemarkPlugins) {
     debug(`requiring`, plugin.resolve)
     const requiredPlugin = interopDefault(require(plugin.resolve))
     debug(`required`, plugin)
     if (_.isFunction(requiredPlugin.setParserPlugins)) {
-      for (let parserPlugin of requiredPlugin.setParserPlugins(
+      for (const parserPlugin of requiredPlugin.setParserPlugins(
         plugin.options || {}
       )) {
         if (_.isArray(parserPlugin)) {
@@ -192,9 +231,11 @@ ${contentWithoutFrontmatter}`
     node: { ...mdxNode, rawBody: code },
     getNode,
     getNodes,
+    getNodesByType,
     reporter,
     cache,
     pathPrefix,
+    isolateMDXComponent,
   })
 
   try {

@@ -1,4 +1,4 @@
-const { onCreateWebpackConfig } = require(`../gatsby-node`)
+const { onCreateWebpackConfig, onCreateBabelConfig } = require(`../gatsby-node`)
 const PreactRefreshPlugin = require(`@prefresh/webpack`)
 const ReactRefreshWebpackPlugin = require(`@pmmmwh/react-refresh-webpack-plugin`)
 
@@ -6,6 +6,9 @@ describe(`gatsby-plugin-preact`, () => {
   it(`sets the correct webpack config in development`, () => {
     const getConfig = jest.fn(() => {
       return {
+        entry: {
+          commons: [],
+        },
         plugins: [new ReactRefreshWebpackPlugin()],
       }
     })
@@ -15,11 +18,14 @@ describe(`gatsby-plugin-preact`, () => {
       replaceWebpackConfig: jest.fn(),
     }
 
+    onCreateBabelConfig({ stage: `develop`, actions })
+    onCreateBabelConfig({ stage: `develop-html`, actions })
     onCreateWebpackConfig({ stage: `develop`, actions, getConfig })
+    onCreateWebpackConfig({ stage: `develop-html`, actions, getConfig })
 
-    expect(actions.setWebpackConfig).toHaveBeenCalledTimes(1)
+    expect(actions.setWebpackConfig).toHaveBeenCalledTimes(2)
     expect(actions.setWebpackConfig).toHaveBeenCalledWith({
-      plugins: [new PreactRefreshPlugin()],
+      plugins: expect.arrayContaining([expect.any(PreactRefreshPlugin)]),
       resolve: {
         alias: {
           react: `preact/compat`,
@@ -28,28 +34,19 @@ describe(`gatsby-plugin-preact`, () => {
       },
     })
 
-    expect(getConfig).toHaveBeenCalledTimes(1)
+    expect(getConfig).toHaveBeenCalledTimes(2)
     expect(actions.setBabelPlugin).toHaveBeenCalledTimes(1)
     expect(actions.setBabelPlugin).toHaveBeenCalledWith({
-      name: `react-refresh/babel`,
+      name: `@prefresh/babel-plugin`,
+      stage: `develop`,
     })
-    expect(actions.replaceWebpackConfig).toMatchInlineSnapshot(`
-      [MockFunction] {
-        "calls": Array [
-          Array [
-            Object {
-              "plugins": Array [],
-            },
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      }
-    `)
+    expect(actions.replaceWebpackConfig).toHaveBeenCalledTimes(1)
+    expect(actions.replaceWebpackConfig).toHaveBeenCalledWith({
+      plugins: [],
+      entry: {
+        commons: [`@gatsbyjs/webpack-hot-middleware/client`],
+      },
+    })
   })
 
   it(`sets the correct webpack config in production`, () => {
@@ -86,9 +83,12 @@ describe(`gatsby-plugin-preact`, () => {
       replaceWebpackConfig: jest.fn(),
     }
 
+    onCreateBabelConfig({ stage: `build-javascript`, actions })
+    onCreateBabelConfig({ stage: `build-html`, actions })
     onCreateWebpackConfig({ stage: `build-javascript`, actions, getConfig })
+    onCreateWebpackConfig({ stage: `build-html`, actions, getConfig })
 
-    expect(actions.setWebpackConfig).toHaveBeenCalledTimes(1)
+    expect(actions.setWebpackConfig).toHaveBeenCalledTimes(2)
     expect(actions.setWebpackConfig).toHaveBeenCalledWith({
       plugins: [],
       resolve: {

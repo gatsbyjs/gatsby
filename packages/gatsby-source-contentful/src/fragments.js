@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { graphql } from "gatsby"
 
 /**
@@ -147,111 +148,6 @@ export const GatsbyContentfulFluid_withWebp = graphql`
  */
 export const contentfulAssetFluidPreferWebpNoBase64 = graphql`
   fragment GatsbyContentfulFluid_withWebp_noBase64 on ContentfulFluid {
-    aspectRatio
-    src
-    srcSet
-    srcWebp
-    srcSetWebp
-    sizes
-  }
-`
-
-// TODO: in v3 remove these legacy fragments
-export const GatsbyContentfulResolutions = graphql`
-  fragment GatsbyContentfulResolutions on ContentfulResolutions {
-    base64
-    width
-    height
-    src
-    srcSet
-  }
-`
-
-export const GatsbyContentfulResolutions_tracedSVG = graphql`
-  fragment GatsbyContentfulResolutions_tracedSVG on ContentfulResolutions {
-    tracedSVG
-    width
-    height
-    src
-    srcSet
-  }
-`
-
-export const GatsbyContentfulResolutions_noBase64 = graphql`
-  fragment GatsbyContentfulResolutions_noBase64 on ContentfulResolutions {
-    width
-    height
-    src
-    srcSet
-  }
-`
-
-export const GatsbyContentfulResolutions_withWebp = graphql`
-  fragment GatsbyContentfulResolutions_withWebp on ContentfulResolutions {
-    base64
-    width
-    height
-    src
-    srcSet
-    srcWebp
-    srcSetWebp
-  }
-`
-
-export const GatsbyContentfulResolutions_withWebp_noBase64 = graphql`
-  fragment GatsbyContentfulResolutions_withWebp_noBase64 on ContentfulResolutions {
-    width
-    height
-    src
-    srcSet
-    srcWebp
-    srcSetWebp
-  }
-`
-
-export const GatsbyContentfulSizes = graphql`
-  fragment GatsbyContentfulSizes on ContentfulSizes {
-    base64
-    aspectRatio
-    src
-    srcSet
-    sizes
-  }
-`
-
-export const GatsbyContentfulSizes_tracedSVG = graphql`
-  fragment GatsbyContentfulSizes_tracedSVG on ContentfulSizes {
-    tracedSVG
-    aspectRatio
-    src
-    srcSet
-    sizes
-  }
-`
-
-export const GatsbyContentfulSizes_noBase64 = graphql`
-  fragment GatsbyContentfulSizes_noBase64 on ContentfulSizes {
-    aspectRatio
-    src
-    srcSet
-    sizes
-  }
-`
-
-export const GatsbyContentfulSizes_withWebp = graphql`
-  fragment GatsbyContentfulSizes_withWebp on ContentfulSizes {
-    base64
-    aspectRatio
-    src
-    srcSet
-    srcWebp
-    srcSetWebp
-    sizes
-  }
-`
-
-export const GatsbyContentfulSizes_withWebp_noBase64 = graphql`
-  fragment GatsbyContentfulSizes_withWebp_noBase64 on ContentfulSizes {
     aspectRatio
     src
     srcSet

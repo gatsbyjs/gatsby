@@ -2,7 +2,7 @@
 title: Debugging Asynchronous Lifecycle Methods
 ---
 
-Various lifecycle methods (see: [Gatsby Node APIs](/docs/node-apis/)) within Gatsby are presumed to be asynchronous. In other words, these methods can _eventually_ resolve to a value and this value is a [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise). You wait for the `Promise` to resolve, and then mark the lifecycle method as completed when it does.
+Various lifecycle methods (see: [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/)) within Gatsby are presumed to be asynchronous. In other words, these methods can _eventually_ resolve to a value and this value is a [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise). You wait for the `Promise` to resolve, and then mark the lifecycle method as completed when it does.
 
 In the context of Gatsby, this means that if you are invoking asynchronous functionality (e.g. data requests, `graphql` calls, etc.) and not correctly returning the Promise an internal issue can arise where the result of those call(s) happens _after_ the lifecycle method has already been marked as completed. Consider an example:
 

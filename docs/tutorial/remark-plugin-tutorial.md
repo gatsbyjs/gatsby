@@ -2,9 +2,9 @@
 title: "Creating a Remark Transformer Plugin"
 ---
 
-[`gatsby-transformer-remark`](/packages/gatsby-transformer-remark) empowers developers to translate Markdown into HTML to be consumed via Gatsby's GraphQL API. Blogs and other content based sites can highly benefit from functionality enabled with this plugin. With this plugin, authors of content for the site don't need to worry about how the site is written or structured but can rather focus on writing engaging posts and content!
+[`gatsby-transformer-remark`](/plugins/gatsby-transformer-remark) empowers developers to translate Markdown into HTML to be consumed via Gatsby's GraphQL API. Blogs and other content based sites can highly benefit from functionality enabled with this plugin. With this plugin, authors of content for the site don't need to worry about how the site is written or structured but can rather focus on writing engaging posts and content!
 
-In certain instances, a developer may want to customize the content of the Markdown file and extend it functionally in useful ways; for example, use cases such as [adding syntax highlighting](/packages/gatsby-remark-prismjs/), [parsing and creating responsive images](/packages/gatsby-remark-images), [embedding videos](/packages/gatsby-remark-embed-video), and many others. In each of these examples, a plugin will be injected with the Markdown Abstract Syntax Tree (AST) and manipulate content based on certain node types or content in particular nodes.
+In certain instances, a developer may want to customize the content of the Markdown file and extend it functionally in useful ways; for example, use cases such as [adding syntax highlighting](/plugins/gatsby-remark-prismjs/), [parsing and creating responsive images](/plugins/gatsby-remark-images), [embedding videos](/plugins/gatsby-remark-embed-video), and many others. In each of these examples, a plugin will be injected with the Markdown Abstract Syntax Tree (AST) and manipulate content based on certain node types or content in particular nodes.
 
 ## What you will learn in this tutorial
 
@@ -16,7 +16,7 @@ In certain instances, a developer may want to customize the content of the Markd
 
 There a few things that you should have some understanding with:
 
-- How to work with Remark in Gatsby as described in [Part Six](/tutorial/part-six/) and [Part Seven](/tutorial/part-seven/) of the Gatsby Tutorial.
+- How to work with Remark in Gatsby as described in [Part Six](/docs/tutorial/part-six/) and [Part Seven](/docs/tutorial/part-seven/) of the Gatsby Tutorial.
 - Understanding of the Markdown Syntax.
 
 ## Understanding the Abstract Syntax Tree
@@ -233,7 +233,7 @@ You have context about the text as well as what depth the heading is (for instan
 
 With the inner function of the `visit` call, you parse out all of the text and if it will map to a h1, you set the type of the node to `html` and set the node's value to be some custom HTML.
 
-```js
+```js:title=plugins/gatsby-remark-purple-headers/index.js
 const visit = require("unist-util-visit")
 const toString = require("mdast-util-to-string")
 
@@ -264,9 +264,45 @@ module.exports = ({ markdownAST }, pluginOptions) => {
 
 A small library [mdast-util-to-string](https://github.com/syntax-tree/mdast-util-to-string) by Unified was used to extract the plain text of the inner nodes. This would remove links or other types of nodes inside the heading, but given you have full access to the markdown AST, you can modify it however you wish.
 
+## Using asynchronous behavior
+
+Gatsby supports the usage of asynchronous behavior in plugins, and `gatsby-transformer-remark` uses [unified](https://github.com/unifiedjs/unified) under the hood. The following example shows how the `gatsby-remark-purple-headers` transformer can be converted to asynchronous by adding the `async` keyword to the function declaration.
+
+```js:title=plugins/gatsby-remark-purple-headers/index.js
+const visit = require("unist-util-visit")
+const toString = require("mdast-util-to-string")
+
+// highlight-next-line
+module.exports = async ({ markdownAST }, pluginOptions) => {
+  visit(markdownAST, "heading", node => {
+    let { depth } = node
+
+    // Skip if not an h1
+    if (depth !== 1) return
+
+    // Grab the innerText of the heading node
+    let text = toString(node)
+
+    const html = `
+        <h1 style="color: rebeccapurple">
+          ${text}
+        </h1>
+      `
+
+    node.type = "html"
+    node.children = undefined
+    node.value = html
+  })
+
+  return markdownAST
+}
+```
+
+A real-world example of this would be [`gatsby-remark-code-repls`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-remark-code-repls/src/gatsby-node.js).
+
 ## Loading in changes and seeing effect
 
-At this point, our plugin is now ready to be used. To see the resulting functionality, it is helpful to re-visit [Part 7 of the Gatsby Tutorial](/tutorial/part-seven/) to programmatically create pages from Markdown data. Once this is set up, you can examine that your plugin works as seen below based on the markdown you wrote earlier.
+At this point, our plugin is now ready to be used. To see the resulting functionality, it is helpful to re-visit [Part 7 of the Gatsby Tutorial](/docs/tutorial/part-seven/) to programmatically create pages from Markdown data. Once this is set up, you can examine that your plugin works as seen below based on the markdown you wrote earlier.
 
 ![Output](../docs/images/remark-ast-output.png)
 

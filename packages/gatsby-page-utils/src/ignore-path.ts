@@ -1,19 +1,19 @@
-import * as mm from "micromatch"
+import { isMatch, Options as mmOptions } from "micromatch"
 
-interface IPathIgnoreOptions {
+export interface IPathIgnoreOptions {
   patterns?: string | ReadonlyArray<string>
-  options?: mm.Options
+  options?: mmOptions
 }
 
 export function ignorePath(
   path: string,
-  ignore?: IPathIgnoreOptions | string | string[] | null
+  ignore?: IPathIgnoreOptions | string | Array<string> | null
 ): boolean {
   // Don't do anything if no ignore patterns
   if (!ignore) return false
   const settings: {
     patterns: string | ReadonlyArray<string>
-    options: mm.Options
+    options: mmOptions
   } = {
     patterns: ``,
     options: {},
@@ -37,5 +37,5 @@ export function ignorePath(
       settings.patterns = ignore.patterns
     }
   }
-  return mm.any(path, settings.patterns, settings.options)
+  return isMatch(path, settings.patterns, settings.options)
 }

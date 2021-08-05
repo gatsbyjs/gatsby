@@ -1,0 +1,44 @@
+{
+  "name": "gatsby-plugin-utils",
+  "version": "1.12.0-next.2",
+  "description": "Gatsby utils that help creating plugins",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\"",
+    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\"",
+    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
+    "typegen": "rimraf \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "author": "Max Stoiber <@mxstbr>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-plugin-utils"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-utils#readme",
+  "dependencies": {
+    "joi": "^17.2.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
+    "babel-preset-gatsby-package": "^1.12.0-next.2",
+    "cross-env": "^7.0.3",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.3.5"
+  },
+  "peerDependencies": {
+    "gatsby": "^3.0.0-next.0"
+  },
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "engines": {
+    "node": ">=12.13.0"
+  }
+}

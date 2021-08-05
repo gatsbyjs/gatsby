@@ -1,6 +1,6 @@
-const { interpret } = require(`xstate`)
+import { interpret } from "xstate"
 
-const recipeMachine = require(`.`)
+import recipeMachine from "."
 
 describe(`recipe-machine errors`, () => {
   it(`errors if part of the recipe fails schema validation`, done => {
@@ -36,10 +36,10 @@ describe(`recipe-machine errors`, () => {
   it(`errors if the introduction step has a command`, done => {
     const initialContext = {
       src: `
-# Hello, world
+  # Hello, world
 
-<File path="./hi.md" content="#yo" />
-    `,
+  <File path="./hi.md" content="#yo" />
+      `,
     }
     const service = interpret(
       recipeMachine.withContext(initialContext)

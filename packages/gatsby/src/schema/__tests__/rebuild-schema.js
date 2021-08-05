@@ -6,10 +6,11 @@ const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLSchema,
+  assertValidSchema,
 } = require(`graphql`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-const { build, rebuild } = require(`..`)
+const { build, rebuild, rebuildWithSitePage } = require(`..`)
 import { buildObjectType } from "../types/type-builders"
 
 jest.mock(`../../utils/api-runner-node`)
@@ -59,6 +60,7 @@ const addNodeField = ({ node, name, value }) => {
 
 const rebuildTestSchema = async () => {
   await rebuild({})
+  await rebuildWithSitePage({})
   return store.getState().schema
 }
 
@@ -77,24 +79,36 @@ const deleteNodeAndRebuild = async node => {
 const createExternalSchema = () => {
   const query = new GraphQLObjectType({
     name: `Query`,
-    fields: {
-      external: {
-        type: new GraphQLObjectType({
-          name: `ExternalType`,
-          fields: {
-            externalFoo: {
-              type: GraphQLString,
-              resolve: parentValue =>
-                `${parentValue}.ExternalType.externalFoo.defaultResolver`,
+    fields: () => {
+      return {
+        external: {
+          type: new GraphQLObjectType({
+            name: `ExternalType`,
+            fields: {
+              externalFoo: {
+                type: GraphQLString,
+                resolve: parentValue =>
+                  `${parentValue}.ExternalType.externalFoo.defaultResolver`,
+              },
             },
-          },
-        }),
-        resolve: () => `Query.external`,
-      },
-      external2: {
-        type: GraphQLString,
-        resolve: () => `Query.external2`,
-      },
+          }),
+          resolve: () => `Query.external`,
+        },
+        external2: {
+          type: GraphQLString,
+          resolve: () => `Query.external2`,
+        },
+        external3: {
+          type: new GraphQLObjectType({
+            name: `ExternalType3`,
+            fields: {
+              recurse: {
+                type: query,
+              },
+            },
+          }),
+        },
+      }
     },
   })
   return new GraphQLSchema({ query })
@@ -465,6 +479,9 @@ describe(`build and update individual types`, () => {
         nodes: [Bar!]!
         pageInfo: PageInfo!
         distinct(field: BarFieldsEnum!): [String!]!
+        max(field: BarFieldsEnum!): Float
+        min(field: BarFieldsEnum!): Float
+        sum(field: BarFieldsEnum!): Float
         group(skip: Int, limit: Int, field: BarFieldsEnum!): [BarGroupConnection!]!
       }"
     `)
@@ -541,7 +558,9 @@ describe(`build and update individual types`, () => {
     const fields = newSchema.getType(`Foo`).getFields()
     const fieldNames = Object.keys(fields).sort()
     expect(fieldNames).toEqual(
-      initialFooFields.concat(`childBar`, `childBaz`).sort()
+      initialFooFields
+        .concat(`childBar`, `childBaz`, `childrenBar`, `childrenBaz`)
+        .sort()
     )
     expect(String(fields.childBar.type)).toEqual(`Bar`)
     expect(String(fields.childBaz.type)).toEqual(`Baz`)
@@ -573,7 +592,10 @@ describe(`build and update individual types`, () => {
 
     const fields = newSchema.getType(`Foo`).getFields()
     const fieldNames = Object.keys(fields).sort()
-    expect(fieldNames).toEqual(initialFooFields.concat(`childrenBar`).sort())
+    expect(fieldNames).toEqual(
+      initialFooFields.concat(`childBar`, `childrenBar`).sort()
+    )
+    expect(String(fields.childBar.type)).toEqual(`Bar`)
     expect(String(fields.childrenBar.type)).toEqual(`[Bar]`)
 
     await expectSymmetricDelete(nodes)
@@ -658,47 +680,6 @@ describe(`build and update individual types`, () => {
         bool: BooleanQueryOperatorInput
       }"
     `)
-  })
-
-  it(`removes types on DELETE_NODES`, async () => {
-    const schema = await addNodeAndRebuild({
-      id: `Bar1`,
-      internal: { type: `Bar`, contentDigest: `0` },
-      children: [],
-      bar: 5,
-    })
-    expect(schema.getType(`Foo`)).toBeDefined()
-    expect(schema.getType(`Bar`)).toBeDefined()
-
-    store.dispatch(actions.deleteNodes([`Foo1`, `Bar1`]))
-    const newSchema = await rebuildTestSchema()
-    expect(newSchema.getType(`Foo`)).not.toBeDefined()
-    expect(newSchema.getType(`Bar`)).not.toBeDefined()
-  })
-
-  it(`removes fields on DELETE_NODES`, async () => {
-    let schema = await addNodeAndRebuild([
-      {
-        id: `Foo2`,
-        internal: { type: `Foo`, contentDigest: `0` },
-        children: [],
-        newKey1: `str`,
-      },
-      {
-        id: `Foo3`,
-        internal: { type: `Foo`, contentDigest: `0` },
-        children: [],
-        newKey2: `str`,
-      },
-    ])
-    let fooFields = Object.keys(schema.getType(`Foo`).getFields())
-    expect(fooFields).toEqual(initialFooFields.concat([`newKey1`, `newKey2`]))
-
-    store.dispatch(actions.deleteNodes([`Foo2`, `Foo3`]))
-
-    schema = await rebuildTestSchema()
-    fooFields = Object.keys(schema.getType(`Foo`).getFields())
-    expect(fooFields).toEqual(initialFooFields)
   })
 
   it(`applies automatic extensions to inferred fields`, async () => {
@@ -1192,6 +1173,9 @@ describe(`Compatibility with addThirdPartySchema`, () => {
     })
     createNodes().forEach(addNode)
     await build({})
+    await rebuildWithSitePage({})
+    const schema = store.getState().schema
+    assertValidSchema(schema)
   })
 
   it(`rebuilds after third party schema is extended with createResolvers`, async () => {

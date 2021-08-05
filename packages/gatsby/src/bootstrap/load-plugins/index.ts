@@ -1,6 +1,7 @@
 import _ from "lodash"
 
 import { store } from "../../redux"
+import { IGatsbyState } from "../../redux/types"
 import * as nodeAPIs from "../../utils/api-node-docs"
 import * as browserAPIs from "../../utils/api-browser-docs"
 import ssrAPIs from "../../../cache-dir/api-ssr-docs"
@@ -11,8 +12,15 @@ import {
   handleMultipleReplaceRenderers,
   ExportType,
   ICurrentAPIs,
+  validateConfigPluginsOptions,
 } from "./validate"
-import { IPluginInfo, IFlattenedPlugin, ISiteConfig } from "./types"
+import {
+  IPluginInfo,
+  IFlattenedPlugin,
+  ISiteConfig,
+  IRawSiteConfig,
+} from "./types"
+import { IPluginRefObject, PluginRef } from "gatsby-plugin-utils/dist/types"
 
 const getAPI = (
   api: { [exportType in ExportType]: { [api: string]: boolean } }
@@ -25,8 +33,8 @@ const getAPI = (
 // Create a "flattened" array of plugins with all subplugins
 // brought to the top-level. This simplifies running gatsby-* files
 // for subplugins.
-const flattenPlugins = (plugins: IPluginInfo[]): IPluginInfo[] => {
-  const flattened: IPluginInfo[] = []
+const flattenPlugins = (plugins: Array<IPluginInfo>): Array<IPluginInfo> => {
+  const flattened: Array<IPluginInfo> = []
   const extractPlugins = (plugin: IPluginInfo): void => {
     if (plugin.pluginOptions && plugin.pluginOptions.plugins) {
       plugin.pluginOptions.plugins.forEach(subPlugin => {
@@ -44,10 +52,45 @@ const flattenPlugins = (plugins: IPluginInfo[]): IPluginInfo[] => {
   return flattened
 }
 
+function normalizePlugin(plugin): IPluginRefObject {
+  if (typeof plugin === `string`) {
+    return {
+      resolve: plugin,
+      options: {},
+    }
+  }
+
+  if (plugin.options?.plugins) {
+    plugin.options = {
+      ...plugin.options,
+      plugins: normalizePlugins(plugin.options.plugins),
+    }
+  }
+
+  return plugin
+}
+
+function normalizePlugins(plugins?: Array<PluginRef>): Array<IPluginRefObject> {
+  return (plugins || []).map(normalizePlugin)
+}
+
+const normalizeConfig = (config: IRawSiteConfig = {}): ISiteConfig => {
+  return {
+    ...config,
+    plugins: (config.plugins || []).map(normalizePlugin),
+  }
+}
+
 export async function loadPlugins(
-  config: ISiteConfig = {},
-  rootDir: string | null = null
-): Promise<IFlattenedPlugin[]> {
+  rawConfig: IRawSiteConfig = {},
+  rootDir: string
+): Promise<Array<IFlattenedPlugin>> {
+  // Turn all strings in plugins: [`...`] into the { resolve: ``, options: {} } form
+  const config = normalizeConfig(rawConfig)
+
+  // Show errors for invalid plugin configuration
+  await validateConfigPluginsOptions(config, rootDir)
+
   const currentAPIs = getAPI({
     browser: browserAPIs,
     node: nodeAPIs,
@@ -79,7 +122,7 @@ export async function loadPlugins(
   // If we get this far, everything looks good. Update the store
   store.dispatch({
     type: `SET_SITE_FLATTENED_PLUGINS`,
-    payload: flattenedPlugins,
+    payload: flattenedPlugins as IGatsbyState["flattenedPlugins"],
   })
 
   return flattenedPlugins

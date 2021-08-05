@@ -10,7 +10,7 @@ Combine it with a source of products (like a CMS or an e-commerce platform such 
 
 To get started, you'll need to have the following set up:
 
-- A Gatsby site with [`gatsby-plugin-snipcart`](/packages/gatsby-plugin-snipcart/) installed
+- A Gatsby site with [`gatsby-plugin-snipcart`](/plugins/gatsby-plugin-snipcart/) installed
 - A [Snipcart](https://snipcart.com/) account
 - A Snipcart test API key
 - A list of products to sell
@@ -186,9 +186,9 @@ The following quote is from the Snipcart [payment gateway page](https://app.snip
 ## Other resources
 
 - [Build an E-commerce Site with Gatsby, DatoCMS, and Snipcart](/tutorial/e-commerce-with-datocms-and-snipcart/) tutorial
-- [`gatsby-plugin-snipcart`](/packages/gatsby-plugin-snipcart/)
+- [`gatsby-plugin-snipcart`](/plugins/gatsby-plugin-snipcart/)
 - [OneShopper Gatsby starter](/starters/rohitguptab/OneShopper/)
 - Reference guide on [sourcing from Etsy](/docs/sourcing-from-etsy/)
-- Reference guide on [processing payments with Stripe](/docs/processing-payments-with-stripe/)
-- From the Snipcart blog: [E-Commerce for React Developers \[w/ Gatsby Tutorial\]](https://snipcart.com/blog/react-ecommerce-gatsby-tutorial)
+- Reference guide on [processing payments with Stripe](/docs/how-to/adding-common-features/processing-payments-with-stripe/)
+- From the Snipcart blog: [Gatsby E-Commerce Recipe: Integrate a Cart in a Few Steps](https://snipcart.com/blog/gatsby-recipes-ecommerce)
 - [Snipcart documentation](https://docs.snipcart.com/v3/setup/installation)

@@ -5,21 +5,22 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.24.41",
-    "gatsby-image": "^2.4.15",
-    "gatsby-plugin-manifest": "^2.4.22",
-    "gatsby-plugin-offline": "^3.2.23",
-    "gatsby-plugin-react-helmet": "^3.3.10",
-    "gatsby-plugin-sharp": "^2.6.26",
-    "gatsby-source-filesystem": "^2.3.24",
-    "gatsby-transformer-sharp": "^2.5.12",
+    "gatsby": "^3.11.0",
+    "gatsby-plugin-gatsby-cloud": "^2.11.0",
+    "gatsby-plugin-image": "^1.11.0",
+    "gatsby-plugin-manifest": "^3.11.0",
+    "gatsby-plugin-offline": "^4.11.0",
+    "gatsby-plugin-react-helmet": "^4.11.0",
+    "gatsby-plugin-sharp": "^3.11.0",
+    "gatsby-source-filesystem": "^3.11.0",
+    "gatsby-transformer-sharp": "^3.11.0",
     "prop-types": "^15.7.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0"
   },
   "devDependencies": {
-    "prettier": "2.0.5"
+    "prettier": "2.3.2"
   },
   "keywords": [
     "gatsby"

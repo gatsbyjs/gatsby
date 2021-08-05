@@ -28,7 +28,7 @@ Gatsby's design tokens are following the [System UI Theme Specification](https:/
 
 - Minor fixes to tokens will be released as patch versions.
 - Major design changes will be released as minor versions
-- _Breaking_ public API changes will be released in a major versions only.
+- _Breaking_ public API changes will be released in major versions only.
 
 To prevent your site from breaking due to a breaking change or looking dramatically different due to a minor version bump, we recommend the [~](https://docs.npmjs.com/misc/semver#tilde-ranges-123-12-1) comparator when using this package.
 
@@ -182,7 +182,7 @@ Follow the [official guide](https://www.gatsbyjs.org/contributing/setting-up-you
 git clone https://github.com/gatsbyjs/gatsby.git
 cd gatsby
 
-# set up the repo,install dependencies for `packages`, and build the latter
+# set up the repo, install dependencies for `packages`, and build the latter
 yarn run bootstrap
 
 # make sure tests are passing
@@ -242,4 +242,4 @@ with
 const header = system
 ```
 
-and you should see `Futura PT` turning into `system-ui` within a few moments on your `localhost:8000`.
+and you should see `Futura PT` turning into `system-ui` within a few moments on your `http://localhost:8000`.

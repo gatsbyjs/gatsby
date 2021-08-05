@@ -1,8 +1,14 @@
 const { GraphQLString } = require(`gatsby/graphql`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
+const { prefixId, CODES } = require(`./error-utils`)
 
-module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
+module.exports = ({
+  type,
+  getNodeAndSavePathDependency,
+  pathPrefix = ``,
+  reporter,
+}) => {
   if (type.name !== `File`) {
     return {}
   }
@@ -24,14 +30,19 @@ module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
         )
 
         if (!fs.existsSync(publicPath)) {
-          fs.copy(
+          fs.copySync(
             details.absolutePath,
             publicPath,
             { dereference: true },
             err => {
               if (err) {
-                console.error(
-                  `error copying file from ${details.absolutePath} to ${publicPath}`,
+                reporter.panic(
+                  {
+                    id: prefixId(CODES.MissingResource),
+                    context: {
+                      sourceMessage: `error copying file from ${details.absolutePath} to ${publicPath}`,
+                    },
+                  },
                   err
                 )
               }

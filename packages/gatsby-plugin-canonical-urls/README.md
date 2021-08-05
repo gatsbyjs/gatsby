@@ -8,7 +8,7 @@ paths to the same page.
 
 ## Install
 
-`npm install --save gatsby-plugin-canonical-urls`
+`npm install gatsby-plugin-canonical-urls`
 
 ## How to use
 

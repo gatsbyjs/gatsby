@@ -1,4 +1,6 @@
 const normalize = require(`../normalize`)
+import { createPluginConfig } from "../plugin-options"
+
 const {
   currentSyncData,
   contentTypeItems,
@@ -18,6 +20,8 @@ const restrictedNodeFields = [
   `internal`,
 ]
 
+const pluginConfig = createPluginConfig({})
+
 describe(`Process contentful data (by name)`, () => {
   let entryList
   let resolvable
@@ -25,7 +29,7 @@ describe(`Process contentful data (by name)`, () => {
 
   it(`builds entry list`, () => {
     entryList = normalize.buildEntryList({
-      currentSyncData,
+      mergedSyncData: currentSyncData,
       contentTypeItems,
     })
     expect(entryList).toMatchSnapshot()
@@ -57,8 +61,8 @@ describe(`Process contentful data (by name)`, () => {
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
     const createNodeId = jest.fn(id => id)
+    const getNode = jest.fn(id => undefined) // All nodes are new
     contentTypeItems.forEach((contentTypeItem, i) => {
-      entryList[i].forEach(normalize.fixIds)
       normalize.createNodesForContentType({
         contentTypeItem,
         restrictedNodeFields,
@@ -66,15 +70,190 @@ describe(`Process contentful data (by name)`, () => {
         entries: entryList[i],
         createNode,
         createNodeId,
+        getNode,
         resolvable,
         foreignReferenceMap,
         defaultLocale,
         locales,
         space,
         useNameForId: true,
+        pluginConfig,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
+
+    // Relevant to compare to compare warm and cold situation. Actual number not relevant.
+    expect(createNode.mock.calls.length).toBe(74) // "cold build entries" count
+  })
+
+  it(`creates nodes for each asset`, () => {
+    const createNode = jest.fn()
+    const createNodeId = jest.fn(id => id)
+    const assets = currentSyncData.assets
+    assets.forEach(assetItem => {
+      normalize.createAssetNodes({
+        assetItem,
+        createNode,
+        createNodeId,
+        defaultLocale,
+        locales,
+        space,
+      })
+    })
+    expect(createNode.mock.calls).toMatchSnapshot()
+  })
+})
+
+describe(`Skip existing nodes in warm build`, () => {
+  it(`creates nodes for each entry`, () => {
+    const entryList = normalize.buildEntryList({
+      mergedSyncData: currentSyncData,
+      contentTypeItems,
+    })
+
+    const resolvable = normalize.buildResolvableSet({
+      assets: currentSyncData.assets,
+      entryList,
+      defaultLocale,
+      locales,
+    })
+
+    const foreignReferenceMap = normalize.buildForeignReferenceMap({
+      contentTypeItems,
+      entryList,
+      resolvable,
+      defaultLocale,
+      locales,
+      space,
+      useNameForId: true,
+    })
+
+    const createNode = jest.fn()
+    const createNodeId = jest.fn(id => id)
+    let doReturn = true
+    const getNode = jest.fn(id => {
+      if (doReturn) {
+        doReturn = false
+        // Note: the relevant part for this test is that the same digest is returned
+        // so it skips generating the node and any of its children. Actual shape of
+        // returned is not relevant to test so update if anything breaks.
+        return {
+          id,
+          internal: { contentDigest: entryList[0][0].sys.updatedAt },
+        }
+      }
+      // All other nodes are new ("unknown")
+      return undefined
+    })
+    contentTypeItems.forEach((contentTypeItem, i) => {
+      normalize.createNodesForContentType({
+        contentTypeItem,
+        restrictedNodeFields,
+        conflictFieldPrefix,
+        entries: entryList[i],
+        createNode,
+        createNodeId,
+        getNode,
+        resolvable,
+        foreignReferenceMap,
+        defaultLocale,
+        locales,
+        space,
+        useNameForId: true,
+        pluginConfig,
+      })
+    })
+    expect(createNode.mock.calls).toMatchSnapshot()
+
+    // Relevant to compare to compare warm and cold situation. Actual number not relevant.
+    // This number ought to be less than the cold build
+    expect(createNode.mock.calls.length).toBe(71) // "warm build where entry was not changed" count
+  })
+
+  it(`creates nodes for each asset`, () => {
+    const createNode = jest.fn()
+    const createNodeId = jest.fn(id => id)
+    const assets = currentSyncData.assets
+    assets.forEach(assetItem => {
+      normalize.createAssetNodes({
+        assetItem,
+        createNode,
+        createNodeId,
+        defaultLocale,
+        locales,
+        space,
+      })
+    })
+    expect(createNode.mock.calls).toMatchSnapshot()
+  })
+})
+
+describe(`Process existing mutated nodes in warm build`, () => {
+  it(`creates nodes for each entry`, () => {
+    const entryList = normalize.buildEntryList({
+      mergedSyncData: currentSyncData,
+      contentTypeItems,
+    })
+
+    const resolvable = normalize.buildResolvableSet({
+      assets: currentSyncData.assets,
+      entryList,
+      defaultLocale,
+      locales,
+    })
+
+    const foreignReferenceMap = normalize.buildForeignReferenceMap({
+      contentTypeItems,
+      entryList,
+      resolvable,
+      defaultLocale,
+      locales,
+      space,
+      useNameForId: true,
+    })
+
+    const createNode = jest.fn()
+    const createNodeId = jest.fn(id => id)
+    let doReturn = true
+    const getNode = jest.fn(id => {
+      if (doReturn) {
+        doReturn = false
+        // Note: the relevant part for this test is that the same digest is returned
+        // so it skips generating the node and any of its children. Actual shape of
+        // returned is not relevant to test so update if anything breaks.
+        return {
+          id,
+          internal: {
+            contentDigest: entryList[0][0].sys.updatedAt + `changed`,
+          },
+        }
+      }
+      // All other nodes are new ("unknown")
+      return undefined
+    })
+    contentTypeItems.forEach((contentTypeItem, i) => {
+      normalize.createNodesForContentType({
+        contentTypeItem,
+        restrictedNodeFields,
+        conflictFieldPrefix,
+        entries: entryList[i],
+        createNode,
+        createNodeId,
+        getNode,
+        resolvable,
+        foreignReferenceMap,
+        defaultLocale,
+        locales,
+        space,
+        useNameForId: true,
+        pluginConfig,
+      })
+    })
+    expect(createNode.mock.calls).toMatchSnapshot()
+
+    // Relevant to compare to compare warm and cold situation. Actual number not relevant.
+    // This number ought to be the same as the cold build
+    expect(createNode.mock.calls.length).toBe(74) // "warm build where entry was changed" count
   })
 
   it(`creates nodes for each asset`, () => {
@@ -102,7 +281,7 @@ describe(`Process contentful data (by id)`, () => {
 
   it(`builds entry list`, () => {
     entryList = normalize.buildEntryList({
-      currentSyncData,
+      mergedSyncData: currentSyncData,
       contentTypeItems,
     })
     expect(entryList).toMatchSnapshot()
@@ -134,8 +313,8 @@ describe(`Process contentful data (by id)`, () => {
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
     const createNodeId = jest.fn(id => id)
+    const getNode = jest.fn(id => undefined) // All nodes are new
     contentTypeItems.forEach((contentTypeItem, i) => {
-      entryList[i].forEach(normalize.fixIds)
       normalize.createNodesForContentType({
         contentTypeItem,
         restrictedNodeFields,
@@ -143,12 +322,14 @@ describe(`Process contentful data (by id)`, () => {
         entries: entryList[i],
         createNode,
         createNodeId,
+        getNode,
         resolvable,
         foreignReferenceMap,
         defaultLocale,
         locales,
         space,
         useNameForId: false,
+        pluginConfig,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -169,182 +350,6 @@ describe(`Process contentful data (by id)`, () => {
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
-  })
-})
-
-describe(`Fix contentful IDs`, () => {
-  it(`leaves ids that start with a string the same`, () => {
-    expect(normalize.fixId(`a123`)).toEqual(`a123`)
-  })
-  it(`left pads ids that start with a number of a "c"`, () => {
-    expect(normalize.fixId(`123`)).toEqual(`c123`)
-  })
-  it(`does not change entries that are null/undefined`, () => {
-    const a = null
-    normalize.fixIds(a)
-    expect(a).toBeNull()
-  })
-  it(`does not change entries that are not object/array`, () => {
-    const a = 123
-    const expected = 123
-    normalize.fixIds(a)
-    expect(a).toEqual(expected)
-  })
-
-  it(`does not check/change falsy values in arrays`, () => {
-    const a = {
-      b: [
-        {
-          sys: {
-            id: 500,
-          },
-        },
-        null,
-        {},
-      ],
-    }
-
-    const expected = {
-      b: [
-        {
-          sys: {
-            contentful_id: 500,
-            id: `c500`,
-          },
-        },
-        null,
-        {},
-      ],
-    }
-    normalize.fixIds(a)
-    expect(a).toEqual(expected)
-  })
-
-  it(`does not check/change falsy values in objects`, () => {
-    const a = {
-      b: {
-        sys: {
-          id: 500,
-        },
-        value: null,
-      },
-    }
-
-    const expected = {
-      b: {
-        sys: {
-          contentful_id: 500,
-          id: `c500`,
-        },
-        value: null,
-      },
-    }
-    normalize.fixIds(a)
-    expect(a).toEqual(expected)
-  })
-
-  describe(`cycles`, () => {
-    it(`should return undefined`, () => {
-      const a = {}
-      a.b = a
-      expect(normalize.fixIds(a)).toEqual(undefined)
-    })
-
-    it(`should not change cycles without sys`, () => {
-      const a = {}
-      a.b = a
-
-      const b = {}
-      b.b = b
-
-      normalize.fixIds(a)
-      expect(a).toEqual(b)
-    })
-
-    it(`cycle with sys + id`, () => {
-      const original = {
-        sys: {
-          id: 500,
-        },
-      }
-      original.b = original
-
-      const fixed = {
-        sys: {
-          contentful_id: 500,
-          id: `c500`,
-        },
-      }
-      fixed.b = fixed
-
-      expect(original).not.toEqual(fixed)
-      normalize.fixIds(original)
-      expect(original).toEqual(fixed)
-    })
-
-    it(`cycle with nested sys v1`, () => {
-      const original = {
-        sys: {
-          id: 500,
-          fii: {
-            sys: {
-              id: `300x`,
-            },
-          },
-        },
-      }
-      original.b = original
-
-      const fixed = {
-        sys: {
-          id: `c500`,
-          contentful_id: 500,
-          fii: {
-            sys: {
-              id: `c300x`,
-              contentful_id: `300x`,
-            },
-          },
-        },
-      }
-      fixed.b = fixed
-
-      expect(original).not.toEqual(fixed)
-      normalize.fixIds(original)
-      expect(original).toEqual(fixed)
-    })
-
-    it(`cycle with nested sys v2`, () => {
-      const original = {
-        sys: {
-          id: 500,
-          fii: {
-            sys: {
-              id: `300x`,
-            },
-          },
-        },
-      }
-      original.sys.fii.repeat = original
-
-      const fixed = {
-        sys: {
-          id: `c500`,
-          contentful_id: 500,
-          fii: {
-            sys: {
-              id: `c300x`,
-              contentful_id: `300x`,
-            },
-          },
-        },
-      }
-      fixed.sys.fii.repeat = fixed
-
-      expect(original).not.toEqual(fixed)
-      normalize.fixIds(original)
-      expect(original).toEqual(fixed)
-    })
   })
 })
 
@@ -445,19 +450,21 @@ describe(`Make IDs`, () => {
       normalize.makeId({
         spaceId: `spaceId`,
         id: `id`,
+        type: `type`,
         defaultLocale: `en-US`,
         currentLocale: `en-US`,
       })
-    ).toBe(`spaceId___id`)
+    ).toBe(`spaceId___id___type`)
   })
   it(`It does postfix the spaceId and the id if its not the default locale`, () => {
     expect(
       normalize.makeId({
         spaceId: `spaceId`,
         id: `id`,
+        type: `type`,
         defaultLocale: `en-US`,
         currentLocale: `en-GB`,
       })
-    ).toBe(`spaceId___id___en-GB`)
+    ).toBe(`spaceId___id___type___en-GB`)
   })
 })

@@ -1,11 +1,19 @@
-import webpack, { Plugin } from "webpack"
+import webpack, { WebpackPluginInstance } from "webpack"
 
 const plugin = (
   name: string,
-  optimize?: boolean
-): ((...args: any) => Plugin) => {
+  optimize?: boolean,
+  deprecationReason?: string
+): ((...args: any) => WebpackPluginInstance) => (
+  ...args: any
+): WebpackPluginInstance => {
+  if (deprecationReason) {
+    // TODO add proper deprecation function to reporter
+    console.warn(`[deprecated]: ${deprecationReason}`)
+  }
+
   const WebpackPlugin = (optimize ? webpack.optimize : webpack)[name]
-  return (...args: any): Plugin => new WebpackPlugin(...args)
+  return new WebpackPlugin(...args)
 }
 
 export const builtinPlugins = {
@@ -26,7 +34,11 @@ export const builtinPlugins = {
   extendedAPI: plugin(`ExtendedAPIPlugin`),
   externals: plugin(`ExternalsPlugin`),
   jsonpTemplate: plugin(`JsonpTemplatePlugin`),
-  libraryTemplate: plugin(`LibraryTemplatePlugin`),
+  libraryTemplate: plugin(
+    `LibraryTemplatePlugin`,
+    false,
+    `plugins.libraryTemplate is deprecated and has been replaced by compilation.outputOptions.library or compilation.addEntry + passing a library option`
+  ),
   loaderTarget: plugin(`LoaderTargetPlugin`),
   memoryOutputFile: plugin(`MemoryOutputFileSystem`),
   progress: plugin(`ProgressPlugin`),
@@ -45,7 +57,11 @@ export const builtinPlugins = {
   moduleFilenameH: plugin(`ModuleFilenameHelpers`),
 
   aggressiveMerging: plugin(`AggressiveMergingPlugin`, true),
-  aggressiveSplitting: plugin(`AggressiveSplittingPlugin`, true),
+  aggressiveSplitting: plugin(
+    `AggressiveSplittingPlugin`,
+    true,
+    `plugins.aggressiveSplitting is deprecated in favor of plugins.splitChunks.`
+  ),
   splitChunks: plugin(`SplitChunks`, true),
   chunkModuleIdRange: plugin(`ChunkModuleIdRangePlugin`, true),
   dedupe: plugin(`DedupePlugin`, true),

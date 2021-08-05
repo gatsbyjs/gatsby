@@ -30,7 +30,7 @@ Follow these instructions for installs on an Ubuntu droplet.
 
    ```shell
    sudo apt-get update
-   sudo apt-get install node
+   sudo apt-get install nodejs
    ```
 
 3. Install npm
@@ -42,7 +42,7 @@ Follow these instructions for installs on an Ubuntu droplet.
    To view the version of Node.js and npm installed, run,
 
    ```shell
-   node -v
+   nodejs -v
    npm -v
    ```
 
@@ -57,7 +57,7 @@ Follow these instructions for installs on an Ubuntu droplet.
    > You can either exit and restart your terminal or refresh the cache by running the following commands:
 
    ```shell
-   hash node
+   hash nodejs
    hash npm
    ```
 
@@ -128,6 +128,8 @@ Nginx is web-server. It provides the infrastructure code for handling client req
    sudo ufw allow 'Nginx HTTPS'
    ```
 
+   > **Note:** You may have to allow access to port 443 explicitly using `sudo ufw allow 443/tcp`.
+
 3. To check the access,
 
    ```shell
@@ -196,18 +198,23 @@ Follow the below steps to configure your site with a free SSL/TLS certificate fr
 
 1. Install Certbot onto your droplet.
 
-   You'll need to add the Certbot PPA (Personal Package Archives) to your list of repositories. To do so, run the following commands:
+   You'll need to install Certbot using `snapd`. To do so, run the following commands:
 
    ```shell
-   sudo apt-get update
-   sudo add-apt-repository ppa:certbot/certbot
-   sudo apt-get update
+   sudo snap install core; sudo snap refresh core
+   sudo apt-get remove certbot
    ```
 
-   Run the following commands to install Certbot.
+   Run the following command to install Certbot.
 
    ```shell
-   sudo apt-get install certbot python3-certbot-nginx
+   sudo snap install --classic certbot
+   ```
+
+   Run the following command to start using Certbot.
+
+   ```shell
+   sudo ln -s /snap/bin/certbot /usr/bin/certbot
    ```
 
 2. Generate the certificate. Certbot will automatically edit and configure the Nginx config file and point to the certificate file.
@@ -249,7 +256,8 @@ There's a lot more to learn about DigitalOcean's Droplets, Ubuntu configurations
 
 - [Microblog - Create a new non-root user with `sudo` privileges on Ubuntu-based DigitalOcean Droplet configured with SSH](https://dev.to/mistryvatsal/microblog-create-a-new-non-root-user-with-sudo-privileges-on-ubuntu-based-digitalocean-droplet-configured-with-ssh-1l3)
 - [Official DigitalOcean Docs](https://www.digitalocean.com/docs/)
-- [Official Nginx Docs](http://nginx.org/en/docs/)
-- [Configuring HTTPS Servers with Nginx](http://nginx.org/en/docs/http/configuring_https_servers.html)
+- [Official Nginx Docs](https://nginx.org/en/docs/)
+- [Configuring HTTPS Servers with Nginx](https://nginx.org/en/docs/http/configuring_https_servers.html)
 - [How To Install Nginx on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04)
 - [How To Secure Nginx with Let's Encrypt on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-18-04)
+- [Installing Certbot with Nginx](https://certbot.eff.org/lets-encrypt/ubuntuxenial-nginx)

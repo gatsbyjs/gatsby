@@ -6,9 +6,9 @@
   "author": "@gatsbyjs",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "gatsby": "^2.24.41",
-    "gatsby-plugin-react-helmet": "^3.3.10",
-    "gatsby-source-graphql": "^2.7.0",
+    "gatsby": "next",
+    "gatsby-plugin-react-helmet": "next",
+    "gatsby-source-graphql": "next",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",

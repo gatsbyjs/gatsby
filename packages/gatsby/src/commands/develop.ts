@@ -1,23 +1,29 @@
 // NOTE(@mxstbr): Do not use the reporter in this file, as that has side-effects on import which break structured logging
 import path from "path"
 import http from "http"
+import https from "https"
 import tmp from "tmp"
-import { spawn, ChildProcess } from "child_process"
+import { ChildProcess } from "child_process"
+import execa from "execa"
 import chokidar from "chokidar"
 import getRandomPort from "detect-port"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
-import socket from "socket.io"
+import { Server as SocketIO } from "socket.io"
 import fs from "fs-extra"
-import { isCI, slash } from "gatsby-core-utils"
+import onExit from "signal-exit"
 import {
+  isCI,
+  slash,
   createServiceLock,
   getService,
-} from "gatsby-core-utils/dist/service-lock"
-import { UnlockFn } from "gatsby-core-utils/src/service-lock"
+  updateSiteMetadata,
+  UnlockFn,
+} from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { getSslCert } from "../utils/get-ssl-cert"
-import { startDevelopProxy } from "../utils/develop-proxy"
+import { IProxyControls, startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram, IDebugInfo } from "./types"
+import { flush as telemetryFlush } from "gatsby-telemetry"
 
 // Adapted from https://stackoverflow.com/a/16060619
 const requireUncached = (file: string): any => {
@@ -66,12 +72,12 @@ const doesConfigChangeRequireRestart = (
 const getDebugPort = (port?: number): number => port ?? 9229
 
 export const getDebugInfo = (program: IProgram): IDebugInfo | null => {
-  if (program.hasOwnProperty(`inspect`)) {
+  if (Object.prototype.hasOwnProperty.call(program, `inspect`)) {
     return {
       port: getDebugPort(program.inspect),
       break: false,
     }
-  } else if (program.hasOwnProperty(`inspectBrk`)) {
+  } else if (Object.prototype.hasOwnProperty.call(program, `inspectBrk`)) {
     return {
       port: getDebugPort(program.inspectBrk),
       break: true,
@@ -91,22 +97,22 @@ class ControllableScript {
     this.debugInfo = debugInfo
   }
   start(): void {
+    const args: Array<string> = []
     const tmpFileName = tmp.tmpNameSync({
       tmpdir: path.join(process.cwd(), `.cache`),
     })
     fs.outputFileSync(tmpFileName, this.script)
     this.isRunning = true
-    const args = [tmpFileName]
     // Passing --inspect isn't necessary for the child process to launch a port but it allows some editors to automatically attach
     if (this.debugInfo) {
-      args.push(
-        this.debugInfo.break
-          ? `--inspect-brk=${this.debugInfo.port}`
-          : `--inspect=${this.debugInfo.port}`
-      )
+      if (this.debugInfo.break) {
+        args.push(`--inspect-brk=${this.debugInfo.port}`)
+      } else {
+        args.push(`--inspect=${this.debugInfo.port}`)
+      }
     }
 
-    this.process = spawn(`node`, args, {
+    this.process = execa.node(tmpFileName, args, {
       env: process.env,
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
@@ -118,23 +124,30 @@ class ControllableScript {
     if (!this.process) {
       throw new Error(`Trying to stop the process before starting it`)
     }
+
     this.isRunning = false
-    if (signal) {
-      this.process.kill(signal)
-    } else {
-      this.process.send({
-        type: `COMMAND`,
-        action: {
-          type: `EXIT`,
-          payload: code,
-        },
-      })
+    try {
+      if (signal) {
+        this.process.kill(signal)
+      } else {
+        this.process.send({
+          type: `COMMAND`,
+          action: {
+            type: `EXIT`,
+            payload: code,
+          },
+        })
+      }
+    } catch (err) {
+      // Ignore error if process has crashed or already quit.
+      // Ref: https://github.com/gatsbyjs/gatsby/issues/28011#issuecomment-877302917
     }
 
     return new Promise(resolve => {
       if (!this.process) {
         throw new Error(`Trying to stop the process before starting it`)
       }
+
       this.process.on(`exit`, () => {
         if (this.process) {
           this.process.removeAllListeners()
@@ -178,6 +191,9 @@ module.exports = async (program: IProgram): Promise<void> => {
   // So we want to early just force it to a number to ensure we always act on a correct type.
   program.port = parseInt(program.port + ``, 10)
   const developProcessPath = slash(require.resolve(`./develop-process`))
+  const telemetryServerPath = slash(
+    require.resolve(`../utils/telemetry-server`)
+  )
 
   try {
     program.port = await detectPortInUseAndPrompt(program.port)
@@ -194,14 +210,25 @@ module.exports = async (program: IProgram): Promise<void> => {
   const proxyPort = program.port
   const debugInfo = getDebugInfo(program)
 
+  const rootFile = (file: string): string => path.join(program.directory, file)
+
+  // Require gatsby-config.js before accessing process.env, to enable the user to change
+  // environment variables from the config file.
+  let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
+
   // INTERNAL_STATUS_PORT allows for setting the websocket port used for monitoring
   // when the browser should prompt the user to restart the develop process.
   // This port is randomized by default and in most cases should never be required to configure.
   // It is exposed for environments where port access needs to be explicit, such as with Docker.
   // As the port is meant for internal usage only, any attempt to interface with features
   // it exposes via third-party software is not supported.
-  const [statusServerPort, developPort] = await Promise.all([
+  const [
+    statusServerPort,
+    developPort,
+    telemetryServerPort,
+  ] = await Promise.all([
     getRandomPort(process.env.INTERNAL_STATUS_PORT),
+    getRandomPort(),
     getRandomPort(),
   ])
 
@@ -267,7 +294,14 @@ module.exports = async (program: IProgram): Promise<void> => {
     debugInfo
   )
 
-  let unlocks: Array<UnlockFn> = []
+  const telemetryServerProcess = new ControllableScript(
+    `require(${JSON.stringify(telemetryServerPath)}).default(${JSON.stringify(
+      telemetryServerPort
+    )})`,
+    null
+  )
+
+  let unlocks: Array<UnlockFn | null> = []
   if (!isCI()) {
     const statusUnlock = await createServiceLock(
       program.directory,
@@ -283,30 +317,46 @@ module.exports = async (program: IProgram): Promise<void> => {
         port: proxyPort,
       }
     )
-    // We don't need to keep a lock on this, as it's just site metadata
-    await createServiceLock(program.directory, `metadata`, {
+    const telemetryUnlock = await createServiceLock(
+      program.directory,
+      `telemetryserver`,
+      {
+        port: telemetryServerPort,
+      }
+    )
+    await updateSiteMetadata({
       name: program.sitePackageJson.name,
       sitePath: program.directory,
       pid: process.pid,
       lastRun: Date.now(),
-    }).then(unlock => unlock?.())
+    })
 
     if (!statusUnlock || !developUnlock) {
       const data = await getService(program.directory, `developproxy`)
       const port = data?.port || 8000
       console.error(
         `Looks like develop for this site is already running, can you visit ${
-          program.ssl ? `https://` : `http://`
-        }://localhost:${port} ? If it is not, try again in five seconds!`
+          program.ssl ? `https:` : `http:`
+        }//localhost:${port} ? If it is not, try again in five seconds!`
       )
       process.exit(1)
     }
 
-    unlocks = unlocks.concat([statusUnlock, developUnlock])
+    unlocks = unlocks.concat([statusUnlock, developUnlock, telemetryUnlock])
   }
 
-  const statusServer = http.createServer().listen(statusServerPort)
-  const io = socket(statusServer)
+  const statusServer = program.ssl
+    ? https.createServer(program.ssl)
+    : http.createServer()
+  statusServer.listen(statusServerPort)
+
+  const io = new SocketIO(statusServer, {
+    // whitelist all (https://github.com/expressjs/cors#configuration-options)
+    cors: {
+      origin: true,
+    },
+    cookie: true,
+  })
 
   const handleChildProcessIPC = (msg): void => {
     if (msg.type === `HEARTBEAT`) return
@@ -315,21 +365,23 @@ module.exports = async (program: IProgram): Promise<void> => {
       process.send(msg)
     }
 
+    io.emit(`structured-log`, msg)
+
     if (
       msg.type === `LOG_ACTION` &&
       msg.action.type === `SET_STATUS` &&
       msg.action.payload === `SUCCESS`
     ) {
       proxy.serveSite()
-      io.emit(`develop:started`)
     }
   }
 
   io.on(`connection`, socket => {
-    socket.on(`develop:restart`, async () => {
+    socket.on(`develop:restart`, async respond => {
       isRestarting = true
       proxy.serveRestartingScreen()
-      io.emit(`develop:is-starting`)
+      // respond() responds to the client, which in our case prompts it to reload the page to show the restarting screen
+      if (respond) respond(`develop:is-starting`)
       await developProcess.stop()
       developProcess.start()
       developProcess.onMessage(handleChildProcessIPC)
@@ -340,10 +392,17 @@ module.exports = async (program: IProgram): Promise<void> => {
   developProcess.start()
   developProcess.onMessage(handleChildProcessIPC)
 
+  telemetryServerProcess.start()
+
   // Plugins can call `process.exit` which would be sent to `develop-process` (child process)
   // This needs to be propagated back to the parent process
   developProcess.onExit(
     (code: number | null, signal: NodeJS.Signals | null) => {
+      try {
+        telemetryFlush()
+      } catch (e) {
+        // nop
+      }
       if (isRestarting) return
       if (signal !== null) {
         process.kill(process.pid, signal)
@@ -367,15 +426,11 @@ module.exports = async (program: IProgram): Promise<void> => {
     }
   )
 
-  const rootFile = (file: string): string => path.join(program.directory, file)
-
   const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
-  let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
-
-  let watcher
+  let watcher: chokidar.FSWatcher
 
   if (!isCI()) {
-    chokidar.watch(files).on(`change`, filePath => {
+    watcher = chokidar.watch(files).on(`change`, filePath => {
       const file = path.basename(filePath)
 
       if (file === `gatsby-config.js`) {
@@ -392,8 +447,13 @@ module.exports = async (program: IProgram): Promise<void> => {
       console.warn(
         `develop process needs to be restarted to apply the changes to ${file}`
       )
-      io.emit(`develop:needs-restart`, {
-        dirtyFile: file,
+      io.emit(`structured-log`, {
+        type: `LOG_ACTION`,
+        action: {
+          type: `DEVELOP`,
+          payload: `RESTART_REQUIRED`,
+          dirtyFile: file,
+        },
       })
     })
   }
@@ -403,26 +463,93 @@ module.exports = async (program: IProgram): Promise<void> => {
     developProcess.send(msg)
   })
 
-  process.on(`beforeExit`, async () => {
-    await Promise.all([
-      watcher?.close(),
-      ...unlocks.map(unlock => unlock()),
-      new Promise(resolve => {
-        statusServer.close(resolve)
-      }),
-      new Promise(resolve => {
-        proxy.server.close(resolve)
-      }),
-    ])
-  })
-
   process.on(`SIGINT`, async () => {
-    await developProcess.stop(`SIGINT`)
-    process.exit()
+    await shutdownServices(
+      {
+        developProcess,
+        telemetryServerProcess,
+        unlocks,
+        statusServer,
+        proxy,
+        watcher,
+      },
+      `SIGINT`
+    )
+
+    process.exit(0)
   })
 
   process.on(`SIGTERM`, async () => {
-    await developProcess.stop(`SIGTERM`)
-    process.exit()
+    await shutdownServices(
+      {
+        developProcess,
+        telemetryServerProcess,
+        unlocks,
+        statusServer,
+        proxy,
+        watcher,
+      },
+      `SIGTERM`
+    )
+
+    process.exit(0)
   })
+
+  onExit((_code, signal) => {
+    shutdownServices(
+      {
+        developProcess,
+        telemetryServerProcess,
+        unlocks,
+        statusServer,
+        proxy,
+        watcher,
+      },
+      signal as NodeJS.Signals
+    )
+  })
+}
+
+interface IShutdownServicesOptions {
+  statusServer: https.Server | http.Server
+  developProcess: ControllableScript
+  proxy: IProxyControls
+  unlocks: Array<UnlockFn | null>
+  watcher: chokidar.FSWatcher
+  telemetryServerProcess: ControllableScript
+}
+
+function shutdownServices(
+  {
+    statusServer,
+    developProcess,
+    proxy,
+    unlocks,
+    watcher,
+    telemetryServerProcess,
+  }: IShutdownServicesOptions,
+  signal: NodeJS.Signals
+): Promise<void> {
+  try {
+    telemetryFlush()
+  } catch (e) {
+    // nop
+  }
+  const services = [
+    developProcess.stop(signal),
+    telemetryServerProcess.stop(),
+    watcher?.close(),
+    new Promise(resolve => statusServer.close(resolve)),
+    new Promise(resolve => proxy.server.close(resolve)),
+  ]
+
+  unlocks.forEach(unlock => {
+    if (unlock) {
+      services.push(unlock())
+    }
+  })
+
+  return Promise.all(services)
+    .catch(() => {})
+    .then(() => {})
 }

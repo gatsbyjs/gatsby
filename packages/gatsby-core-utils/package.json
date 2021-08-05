@@ -1,6 +1,6 @@
 {
   "name": "gatsby-core-utils",
-  "version": "1.3.15",
+  "version": "2.12.0-next.2",
   "description": "A collection of gatsby utils used in different gatsby packages",
   "keywords": [
     "gatsby",
@@ -10,6 +10,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-core-utils#readme",
   "license": "MIT",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
@@ -25,26 +26,27 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "files": [
-    "dist/",
-    "dist/index.d.ts"
+    "dist/"
   ],
   "dependencies": {
     "ci-info": "2.0.0",
     "configstore": "^5.0.1",
+    "file-type": "^16.5.3",
     "fs-extra": "^8.1.0",
-    "node-object-hash": "^2.0.0",
-    "proper-lockfile": "^4.1.1",
+    "node-object-hash": "^2.3.8",
+    "proper-lockfile": "^4.1.2",
+    "tmp": "^0.2.1",
     "xdg-basedir": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
     "@types/ci-info": "2.0.0",
-    "babel-preset-gatsby-package": "^0.5.2",
-    "cross-env": "^5.2.1",
-    "typescript": "^3.9.5"
+    "babel-preset-gatsby-package": "^1.12.0-next.2",
+    "cross-env": "^7.0.3",
+    "typescript": "^4.3.5"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

@@ -10,13 +10,13 @@
   },
   "dependencies": {
     "dateformat": "^3.0.3",
-    "gatsby": "^2.24.41",
-    "gatsby-image": "^2.4.15",
-    "gatsby-plugin-netlify": "^2.3.13",
-    "gatsby-plugin-sharp": "^2.6.26",
-    "gatsby-source-filesystem": "^2.3.24",
-    "gatsby-source-graphql": "^2.7.0",
-    "gatsby-transformer-sharp": "^2.5.12",
+    "gatsby": "next",
+    "gatsby-image": "next",
+    "gatsby-plugin-netlify": "next",
+    "gatsby-plugin-sharp": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-source-graphql": "next",
+    "gatsby-transformer-sharp": "next",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "remark": "^11.0.2",
@@ -31,8 +31,8 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.5",
-    "prettier": "2.0.5",
+    "eslint-plugin-react": "^7.20.6",
+    "prettier": "2.1.1",
     "prettier-eslint-cli": "5.0.0"
   }
 }

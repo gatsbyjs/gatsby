@@ -22,7 +22,7 @@ First, clone the Gatsby default starter repository.
 git clone https://github.com/gatsbyjs/gatsby-starter-default.git gatsby-forestry-example
 ```
 
-Next, on GitHub create a new repository. The repository must live on a Git provider for it to be available to Forestry CMS. I'm using GitHub, but you can also use GitLab, Bitbucket, or Azure Devops as well. Set your cloned repository's remote url to point to your newly created repository on GitHub.
+Next, on GitHub create a new repository. The repository must live on a Git provider for it to be available to Forestry CMS. I'm using GitHub, but you can also use GitLab, Bitbucket, or Azure DevOps as well. Set your cloned repository's remote url to point to your newly created repository on GitHub.
 
 ```shell
 git remote set-url origin <your-github-repo-link>
@@ -73,7 +73,7 @@ upload_dir: static/uploads
 public_path: "/static/uploads"
 ```
 
-This sets where media is saved. Visit Gatsby's [guide on its static folder](/docs/static-folder/) to learn more. The rest of the settings can remain the same.
+This sets where media is saved. Visit Gatsby's [guide on its static folder](/docs/how-to/images-and-media/static-folder/) to learn more. The rest of the settings can remain the same.
 
 Open `package.json` and add the following to scripts already available:
 
@@ -158,7 +158,7 @@ window pops up (check for blocked pop ups if you don't see it), and try creating
 new blog post. Once you've done that, you'll find a new `content/posts` directory in your GitHub repo
 containing a Markdown file with your blog post content!
 
-Now you can do whatever you want to with the CMS content. Here is the guide for creating pages from Markdown files in Gatsby: [Adding Markdown Pages](/docs/adding-markdown-pages/). The docs also have a guide for doing this with MDX if you need to use JSX in your CMS content: [Writing Pages in MDX](/docs/mdx/writing-pages/).
+Now you can do whatever you want to with the CMS content. Here is the guide for creating pages from Markdown files in Gatsby: [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages/). The docs also have a guide for doing this with MDX if you need to use JSX in your CMS content: [Writing Pages in MDX](/docs/how-to/routing/mdx/writing-pages/).
 
 Both these guides explain the `gatsby-source-filesystem` plugin that Gatsby uses to locate markdown files.
 

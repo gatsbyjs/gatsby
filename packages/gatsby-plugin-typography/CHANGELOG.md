@@ -3,6 +3,138 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.12.0-next.1...gatsby-plugin-typography@3.12.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.12.0-next.0...gatsby-plugin-typography@3.12.0-next.1) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.11.0-next.0...gatsby-plugin-typography@3.12.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.10.0-next.1...gatsby-plugin-typography@3.11.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.10.0-next.0...gatsby-plugin-typography@3.10.0-next.1) (2021-07-08)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.9.0-next.0...gatsby-plugin-typography@3.10.0-next.0) (2021-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.8.0-next.1...gatsby-plugin-typography@3.9.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.8.0-next.0...gatsby-plugin-typography@3.8.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.7.0-next.2...gatsby-plugin-typography@3.8.0-next.0) (2021-06-03)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.7.0-next.1...gatsby-plugin-typography@3.7.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.7.0-next.0...gatsby-plugin-typography@3.7.0-next.1) (2021-05-31)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.6.0-next.0...gatsby-plugin-typography@3.7.0-next.0) (2021-05-21)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.5.0-next.0...gatsby-plugin-typography@3.6.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.4.0-next.0...gatsby-plugin-typography@3.5.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.3.0-next.1...gatsby-plugin-typography@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.3.0-next.0...gatsby-plugin-typography@3.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.2.0-next.0...gatsby-plugin-typography@3.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.1.0-next.2...gatsby-plugin-typography@3.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.1.0-next.1...gatsby-plugin-typography@3.1.0-next.2) (2021-03-10)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.1.0-next.0...gatsby-plugin-typography@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.0.0-next.0...gatsby-plugin-typography@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@2.13.0-next.0...gatsby-plugin-typography@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [2.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@2.12.0-next.0...gatsby-plugin-typography@2.13.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@2.11.0-next.0...gatsby-plugin-typography@2.12.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@2.10.0-next.0...gatsby-plugin-typography@2.11.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@2.9.0-next.0...gatsby-plugin-typography@2.10.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@2.8.0-next.0...gatsby-plugin-typography@2.9.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@2.7.0-next.0...gatsby-plugin-typography@2.8.0-next.0) (2020-11-18)
+
+### Features
+
+- **gatsby:** SSR pages during development ([#27432](https://github.com/gatsbyjs/gatsby/issues/27432)) ([23da2c3](https://github.com/gatsbyjs/gatsby/commit/23da2c3fb2e16b7e3fe1e15c19decd799000a212))
+
+# [2.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@2.6.0-next.0...gatsby-plugin-typography@2.6.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [2.5.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@2.5.12...gatsby-plugin-typography@2.5.13) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [2.5.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@2.5.11...gatsby-plugin-typography@2.5.12) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
+## [2.5.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@2.5.10...gatsby-plugin-typography@2.5.11) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
 ## [2.5.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@2.5.9...gatsby-plugin-typography@2.5.10) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-plugin-typography

@@ -4,11 +4,11 @@
   "description": "Gatsby example site using using-excel",
   "author": "SheetJS <dev@sheetjs.com>",
   "dependencies": {
-    "gatsby": "^2.24.41",
-    "gatsby-source-filesystem": "^2.3.24",
-    "gatsby-transformer-excel": "^2.4.10",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0"
+    "gatsby": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-transformer-excel": "next",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "license": "MIT",
   "main": "n/a",

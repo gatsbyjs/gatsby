@@ -554,3 +554,11 @@
   for_hire: true
   hiring: false
   portfolio: true
+- name: Webplace
+  type: agency
+  image: images/webplace.png
+  description: >-
+    Webplace have been providing exceptional digital experiences for a vast range of clients since 2003. We provide digital strategy, UX / UI design, Web development, QA testing and ongoing maintenance & support. We are experts at WordPress, Drupal & Joomla and now use WordPress and Drupal as a Headless CMS with React / Gatsby as the frontend.
+  website: https://www.webplace.com.au
+  for_hire: true
+  portfolio: true

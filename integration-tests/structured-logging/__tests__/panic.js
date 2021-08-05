@@ -3,20 +3,14 @@ const path = require(`path`)
 
 jest.setTimeout(100000)
 
-const gatsbyBin = path.join(
-  `node_modules`,
-  `gatsby`,
-  `dist`,
-  `bin`,
-  `gatsby.js`
-)
+const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
 describe(`Panic`, () => {
   let gatsbyProcess
   let events = []
 
   beforeEach(async () => {
-    gatsbyProcess = spawn(gatsbyBin, [`build`], {
+    gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
       // inherit lets us see logs in console
       //   stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
       stdio: [`ignore`, `ignore`, `ignore`, `ipc`],

@@ -1,20 +1,20 @@
 {
   "name": "gatsby-plugin-postcss",
   "description": "Gatsby plugin to handle PostCSS",
-  "version": "2.3.11",
+  "version": "4.12.0-next.2",
   "author": "Marat Dreizin <marat.dreizin@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
-    "postcss-loader": "^3.0.0"
+    "@babel/runtime": "^7.14.8",
+    "postcss-loader": "^4.3.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "babel-preset-gatsby-package": "^0.5.2",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
+    "babel-preset-gatsby-package": "^1.12.0-next.2",
+    "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-postcss#readme",
   "keywords": [
@@ -25,9 +25,9 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.0.0"
+    "gatsby": "^3.0.0-next.0",
+    "postcss": "^8.0.5"
   },
-  "readme": "README.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
@@ -39,6 +39,6 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

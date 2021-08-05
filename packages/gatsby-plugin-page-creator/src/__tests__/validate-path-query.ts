@@ -7,7 +7,7 @@ describe(`validatePathQuery`, () => {
     expect(() => {
       validatePathQuery(`foo/{bar}`, [])
     }).toThrowErrorMatchingInlineSnapshot(`
-"To query node \\"path\\" the \\"filePath\\" argument must be an absolute path, starting with a /
+"PageCreator: To query node \\"gatsbyPath\\" the \\"filePath\\" argument must be an absolute path, starting with a /
 Please change this to: \\"/foo/{bar}\\""
 `)
   })
@@ -16,7 +16,7 @@ Please change this to: \\"/foo/{bar}\\""
     expect(() => {
       validatePathQuery(`/foo/{bar}.js`, [])
     }).toThrowErrorMatchingInlineSnapshot(`
-"To query node \\"path\\" the \\"filePath\\" argument must omit the file extension
+"PageCreator: To query node \\"gatsbyPath\\" the \\"filePath\\" argument must omit the file extension
 Please change /foo/{bar}.js to \\"/foo/{bar}\\""
 `)
   })
@@ -25,7 +25,7 @@ Please change /foo/{bar}.js to \\"/foo/{bar}\\""
     expect(() => {
       validatePathQuery(`/src/pages/foo/{bar}`, [])
     }).toThrowErrorMatchingInlineSnapshot(`
-"To query node \\"path\\" the \\"filePath\\" argument must omit the src/pages prefix.
+"PageCreator: To query node \\"gatsbyPath\\" the \\"filePath\\" argument must omit the src/pages prefix.
 Please change this to: \\"foo/{bar}\\""
 `)
   })
@@ -34,7 +34,7 @@ Please change this to: \\"foo/{bar}\\""
     expect(() => {
       validatePathQuery(`/foo/{bar}/index`, [])
     }).toThrowErrorMatchingInlineSnapshot(`
-"To query node \\"path\\" the \\"filePath\\" argument must omit index.
+"PageCreator: To query node \\"gatsbyPath\\" the \\"filePath\\" argument must omit index.
 Please change this to: \\"/foo/{bar}/\\""
 `)
   })
@@ -43,7 +43,7 @@ Please change this to: \\"/foo/{bar}/\\""
     expect(() => {
       validatePathQuery(`/foo/{bar}`, [`.js`, `.ts`, `.mjs`])
     }).toThrowErrorMatchingInlineSnapshot(`
-"To query node \\"path\\" the \\"filePath\\" argument must represent a file that exists.
+"PageCreator: To query node \\"gatsbyPath\\" the \\"filePath\\" argument must represent a file that exists.
 Unable to find a file at: \\"<PROJECT_ROOT>/src/pages/foo/{bar}\\""
 `)
   })
@@ -61,6 +61,6 @@ Unable to find a file at: \\"<PROJECT_ROOT>/src/pages/foo/{bar}\\""
       validatePathQuery(filePath, [`.js`, `.ts`, `.mjs`])
     }).not.toThrow()
 
-    await fs.remove(systemPath.join(process.cwd(), `src`))
+    await fs.remove(systemPath.join(process.cwd(), `src/pages`))
   })
 })

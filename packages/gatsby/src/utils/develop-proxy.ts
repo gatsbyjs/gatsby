@@ -3,15 +3,15 @@ import https from "https"
 import httpProxy from "http-proxy"
 import path from "path"
 import fs from "fs-extra"
-import { getServices } from "gatsby-core-utils/dist/service-lock"
+import { getServices } from "gatsby-core-utils"
 import st from "st"
 import restartingScreen from "./restarting-screen"
 import { IProgram } from "../commands/types"
 
-interface IProxyControls {
+export interface IProxyControls {
   serveRestartingScreen: () => void
   serveSite: () => void
-  server: any
+  server: https.Server | http.Server
 }
 
 const noop = (): void => {}

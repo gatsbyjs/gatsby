@@ -3,7 +3,7 @@ import Configstore from "configstore"
 import createFetch from "@turist/fetch"
 import { Store } from "./store"
 import { ensureDirSync } from "fs-extra"
-import { isTruthy } from "./is-truthy"
+import { isTruthy } from "gatsby-core-utils"
 import { InMemoryConfigStore } from "./in-memory-store"
 
 const fetch = createFetch()
@@ -56,7 +56,7 @@ export class EventStorage {
     const eventString = JSON.stringify(event)
 
     if (this.debugEvents || this.verbose) {
-      console.error(`Captured event:`, JSON.parse(eventString))
+      console.log(`Captured event:`, JSON.parse(eventString))
 
       if (this.debugEvents) {
         // Bail because we don't want to send debug events
