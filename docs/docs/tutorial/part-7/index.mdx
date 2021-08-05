@@ -1,5 +1,5 @@
 ---
-title: "Part 7: ???"
+title: "Part 7: Add Dynamic Images from Data"
 ---
 
 import { Announcement, LinkButton } from 'gatsby-interface'
@@ -8,27 +8,243 @@ import { MdArrowForward } from 'react-icons/md'
 
 ## Introduction
 
-In [Part 5](/docs/tutorial/part-5/), you added all of your blog posts to your Blog page. But that means that your Blog page will get longer and longer as you add more posts to your site. It would be better if each post lived on its own page, and then your Blog page could link out to all the different posts.
+In Part 3, you used `gatsby-plugin-image` to add static images to your home page. Now that you've worked a bit more with Gatsby's data layer, it's time to revisit `gatsby-plugin-image`. This time, you'll learn how to add dynamic images to your site.
 
-So far, the way you've created new pages for your Gatsby site is by creating a new file in the `src/pages` directory and hard-coding the page's contents in JSX. But manually creating a new page for each post would be quite repetitive, especially since each page has the same structure: render the frontmatter and contents of an MDX file.
-
-In this part of the Tutorial, you'll learn how to create new pages dynamically using Gatsby's Filesystem Route API.
+In this part of the Tutorial, you'll use the dynamic `GatsbyImage` component to add hero images to each of your blog posts.
 
 By the end of this part of the Tutorial, you will be able to:
 
-- Use Gatsby's Filesystem Route API to dynamically create new pages for your blog posts.
-- Add a query variable to a page query.
+- Use the `GatsbyImage` component to create images dynamically from data.
 
-## ??
+## Add hero images to blog post frontmatter
+
+Many blog sites include a hero image at the top of each post. These images are usually large, high-quality photos that are meant to grab the reader's attention and make them want to stay on the page longer.
+
+The steps below will help you find and download some photos for your hero images and add them to the frontmatter for each of your blog posts.
+
+1. Start by organizing the `blog` directory with all your MDX posts. First, create a new subdirectory in your `blog` folder for each post. Then, rename each of your `.mdx` files to `index.mdx` (to prevent the routes from ending up with a duplicated path parameter, like `blog/my-post/my-post/`).
+    * For example, a post at `blog/my-first-post.mdx` would move to `blog/my-first-post/index.mdx`. Similarly, a post at `blog/another-post.mdx` would move to `blog/another-post/index.mdx`.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Note:** After you move or rename your `.mdx` files, you'll need to stop and restart your local development server for your changes to be picked up.
+
+</Announcement>
+
+![Diagram of moving each MDX file into its own subdirectory in the blog folder](./reorganize-blog-directory.png)
+
+2. Use a website like [Unsplash](https://unsplash.com) to find some pretty, freely usable images. For best results, choose photos with a landscape (horizontal) orientation, since those will fit on your screen more easily.
+    ![A screenshot of the Unsplash home page](./unsplash.png)
+
+2. When you've found a photo that you like, download it and add it to subdirectory for one of your blog posts. Continue downloading photos until you have a different hero image for each post.
+
+3. Next, add some additional frontmatter fields to each of your blog posts:
+    * `hero_image`: the relative path to the hero image file for that post
+    * `hero_image_alt`: a short description of the image, to be used as alternative text for screen readers or in case the image doesn't load correctly
+    * `hero_image_credit_text`: the text to display to give the photographer credit for the hero image
+    * `hero_image_credit_link`: a link to the page where your hero image was downloaded from
+
+```mdx:title=blog/my-first-post/index.js
+---
+title: "My First Post"
+date: "2021-07-23"
+// highlight-start
+hero_image: "./christopher-ayme-ocZ-_Y7-Ptg-unsplash.jpg"
+hero_image_alt: "A gray pitbull relaxing on the sidewalk with its tongue hanging out"
+hero_image_credit_text: "Christopher Ayme"
+hero_image_credit_link: "https://unsplash.com/photos/ocZ-_Y7-Ptg"
+// highlight-end
+---
+
+...
+```
+
+```mdx:title=blog/another-post/index.js
+---
+title: "Another Post"
+date: "2021-07-24"
+// highlight-start
+hero_image: "./anthony-duran-eLUBGqKGdE4-unsplash.jpg"
+hero_image_alt: "A grey and white pitbull wading happily in a pool"
+hero_image_credit_text: "Anthony Duran"
+hero_image_credit_link: "https://unsplash.com/photos/eLUBGqKGdE4"
+// highlight-end
+---
+
+...
+```
+
+```mdx:title=blog/yet-another-post/index.js
+---
+title: "Yet Another Post"
+date: "2021-07-25"
+// highlight-start
+hero_image: "./jane-almon-7rriIaBH6JY-unsplash.jpg"
+hero_image_alt: "A white pitbull wearing big googly-eye glasses"
+hero_image_credit_text: "Jane Almon"
+hero_image_credit_link: "https://unsplash.com/photos/7rriIaBH6JY"
+// highlight-end
+---
+
+...
+```
+
+
+Now that your hero images are set up, it's time to connect them to the data layer so you can pull them into your blog post page template.
+
+## TASK: CONFIGURE PLUGIN
+
+Install `gatsby-transformer-sharp`. THIS DOES SOMETHING TO ADD IMAGE STUFF TO THE DATA LAYER NODES. WHICH NODES?
+
+```shell
+npm install gatsby-transformer-sharp
+```
+
+ADD TO GATSBY-CONFIG.JSON
+
+```js:title=gatsby-config.js
+module.exports = {
+  siteMetadata: {
+    title: "My First Gatsby Site",
+  },
+  plugins: [
+    // ...existing plugins
+    "gatsby-transformer-sharp", // highlight-line
+  ],
+}
+```
+
+MIGHT HAVE TO STOP AND START DEVELOP SERVER FOR CHANGES TO SHOW UP IN GraphiQL
+
+
+## TASK: ADD HERO IMAGE TO BLOG POST PAGE TEMPLATE
+
+COLLAPSIBLE: DYNAMIC IMAGES. WHAT IS CHILDIMAGESHARP? WHAT IS GATSBYIMAGEDATA?
+
+`gatsbyImageData`: GRAPHQL RESOLVER ON SHARP NODES.
+
+```graphql
+query MyQuery($id: String) {
+  mdx(id: {eq: $id}) {
+    frontmatter {
+      title
+      date(formatString: "MMMM D, YYYY")
+      // highlight-start
+      hero_image {
+        childImageSharp {
+          gatsbyImageData
+        }
+      }
+      hero_image_alt
+      hero_image_credit_text
+      hero_image_credit_link
+      // highlight-end
+    }
+    body
+  }
+}
+```
+
+IMPORT
+
+```js:title=src/pages/blog/{mdx.slug}.js
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+```
+
+ADD TO Query
+
+```js:title=src/pages/blog/{mdx.slug}.js
+export const query = graphql`
+  query($slug: String) {
+    mdx(slug: {eq: $slug}) {
+      body
+      frontmatter {
+        date(formatString: "MMMM DD, YYYY")
+        title
+        hero_image {
+          childImageSharp {
+            gatsbyImageData
+          }
+        }
+        hero_image_alt
+        hero_image_credit_text
+        hero_image_credit_link
+      }
+    }
+  }
+`
+```
+
+DEFINE IMAGE
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Note:** `getImage` is just a helper function that takes in a file node and returns the `.childImageSharp.gatsbyImageData` object for that node. You can use it to keep your code a little cleaner and easier to read.
+
+</Announcement>
+
+```js:title=src/pages/blog/{mdx.slug}.js
+const image = getImage(data.mdx.frontmatter.hero_image)
+```
+
+RENDER IMAGE IN JSX
+
+```js:title=src/pages/blog/{mdx.slug}.js
+return (
+  <Layout pageTitle={data.mdx.frontmatter.title}>
+    <p>Posted: {data.mdx.frontmatter.date}</p>
+    <GatsbyImage
+      image={image}
+      alt={data.mdx.frontmatter.hero_image_alt}
+    />
+    <MDXRenderer>
+      {data.mdx.body}
+    </MDXRenderer>
+  </Layout>
+)
+```
+
+![WORDS](./blog-post-with-hero-image.png)
+
+![WORDS](./another-post.png)
+
+![WORDS](./yet-another-post.png)
+
+ADD IMAGE CREDIT PARAGRAPH. YOU NEED AN EXTRA {" "} TO GET THE SPACE TO SHOW UP IF YOU HAVE A NEWLINE BETWEEN THE PHOTO CREDIT TEXT AND THE LINK.
+
+```js:title=src/pages/blog/{mdx.slug}.js
+  return (
+    <Layout
+      pageTitle={data.mdx.frontmatter.title}
+      heroImage={image}
+    >
+      <p>{data.mdx.frontmatter.date}</p>
+      <GatsbyImage
+        image={image}
+        alt={data.mdx.frontmatter.hero_image_alt}
+      />
+      {/* highlight-start */}
+      <p>
+        Photo Credit:{" "}
+        <Link to={data.mdx.frontmatter.hero_image_credit_link}>
+          {data.mdx.frontmatter.hero_image_credit_text}
+        </Link>
+      </p>
+      {/* highlight-end */}
+      <MDXRenderer>
+        {data.mdx.body}
+      </MDXRenderer>
+    </Layout>
+  )
+```
+
+![WORDS](./blog-post-with-hero-image-credit.png)
 
 ## Summary
 
 Take a moment to think back on what you've learned so far. Challenge yourself to answer the following questions from memory:
 
-* What is the File System Route API used for?
-* What is the syntax for creating a new collection route?
-* What is a query variable?
-* When can you use a query variable?
+* ?
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -40,7 +256,7 @@ First, run the following commands in a terminal to push your changes to your Git
 
 ```shell
 git add .
-git commit -m "Finished Gatsby Tutorial Part 6"
+git commit -m "Finished Gatsby Tutorial Part 7"
 git push
 ```
 
@@ -50,11 +266,7 @@ Once your changes have been pushed to GitHub, Gatsby Cloud should notice the upd
 
 ### Key takeaways
 
-* Gatsby's File System Route API lets you dynamically create new pages from data layer nodes by naming your files with a special syntax.
-    * File System Routes only work on files in the `src/pages` directory (or subdirectories).
-    * To create a new collection route, you name your file `{nodeType.field}.js`, where `nodeType` is the type of node you want to create pages from, and `field` is the data field from that node type that you want to use in the URL for that page.
-* Query variables let you pass in different data values to the same GraphQL query. They can be combined with field arguments to get back data only about a specific node.
-* Query variables can only be used in page queries.
+* .
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -66,9 +278,11 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 
 </Announcement>
 
-### What's coming next?
+### You did it!
 
-In Part 7, you'll revisit `gatsby-plugin-image` (from way back in [Part 3](/docs/tutorial/part-3/)). This time, you'll learn how to create dynamic images using the `GatsbyImage` component. You'll put the finishing touches on your blog site by adding hero images to your blog posts.
+Congratulations, you've reached the end of the official Gatsby Tutorial! 🥳
+
+Want to know more? The next page includes some additional resources that you can use to continue learning about Gatsby.
 
 <LinkButton
   to="/docs/tutorial/whats-next/"
