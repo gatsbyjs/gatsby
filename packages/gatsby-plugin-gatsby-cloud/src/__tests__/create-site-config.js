@@ -25,7 +25,7 @@ describe(`create-site-config`, () => {
     expect(fs.writeJSON.mock.calls[0][0]).toBe(`public/_gatsby-config.json`)
     expect(fs.writeJSON.mock.calls[0][1]).toMatchInlineSnapshot(`
       Object {
-        "pathPrefix": "",
+        "pathPrefix": null,
       }
     `)
   })
