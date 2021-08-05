@@ -56,7 +56,7 @@ index 037b1998a7..198f324f00 100644
 -    nodeVersion = `12.13.0`,
 +    nodeVersion = `14.15.0`,
      esm = false,
-     availableCompilerFlags = [],
+     availableCompilerFlags = [`GATSBY_MAJOR`],
    } = options
 diff --git a/packages/babel-preset-gatsby/package.json b/packages/babel-preset-gatsby/package.json
 index 60ccfdc163..4fac99ab61 100644
@@ -88,25 +88,25 @@ index 7f578dd757..650d019753 100644
 +++ b/packages/gatsby-cli/src/__tests__/index.ts
 @@ -52,8 +52,8 @@ const setup = (version?: string): ReturnType<typeof getCLI> => {
  }
- 
+
  describe(`error handling`, () => {
 -  it(`panics on Node < 12.13.0`, () => {
 -    ;[`6.0.0`, `8.0.0`, `10.0.0`, `12.0.0`].forEach(version => {
 +  it(`panics on Node < 14.15.0`, () => {
 +    ;[`6.0.0`, `8.0.0`, `12.13.0`, `13.0.0`].forEach(version => {
        const { reporter } = setup(version)
- 
+
        expect(reporter.panic).toHaveBeenCalledTimes(1)
 @@ -95,8 +95,8 @@ describe(`error handling`, () => {
  // })
- 
+
  describe(`normal behavior`, () => {
 -  it(`does not panic on Node >= 12.13.0`, () => {
 -    ;[`12.13.0`, `13.0.0`, `14.0.0`].forEach(version => {
 +  it(`does not panic on Node >= 14.15.0`, () => {
 +    ;[`14.15.0`, `15.0.0`, `16.3.0`].forEach(version => {
        const { reporter } = setup(version)
- 
+
        expect(reporter.panic).not.toHaveBeenCalled()
 diff --git a/packages/gatsby-codemods/package.json b/packages/gatsby-codemods/package.json
 index b3d35d17c7..fb647fb90b 100644
@@ -1294,7 +1294,7 @@ index 1611d48014..63fa7ff6b0 100644
 --- a/packages/gatsby/src/utils/webpack.config.js
 +++ b/packages/gatsby/src/utils/webpack.config.js
 @@ -525,7 +525,7 @@ module.exports = async (
- 
+
    if (stage === `build-html` || stage === `develop-html`) {
      const [major, minor] = process.version.replace(`v`, ``).split(`.`)
 -    config.target = `node12.13`
