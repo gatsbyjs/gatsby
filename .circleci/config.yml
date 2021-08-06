@@ -209,11 +209,16 @@ jobs:
             do
               echo "Processing $f file..."
               # take action on each file. $f store current file name
-              curl http://localhost:4873/$f
+              curl -s http://localhost:4873/$f > /dev/null
             done
             cd ..
             # done
             yarn lerna publish --yes --canary --ignore-scripts --exact --preid circleci --pre-dist-tag circleci --force-publish --registry=http://localhost:4873
+      - save_cache:
+          name: Save verdaccio cache
+          key: yarn-verdaccio-circleci
+          paths:
+            - /tmp/verdaccio/
       # Persist the workspace again with all packages already built
       - persist_to_workspace:
           root: ./
