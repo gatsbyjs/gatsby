@@ -241,8 +241,8 @@ export async function processNodeManifest(
   // write out the manifest file
   const manifestFilePath = path.join(
     gatsbySiteDirectory,
-    `.cache`,
-    `node-manifests`,
+    `public`,
+    `__node-manifests`,
     inputManifest.pluginName,
     `${inputManifest.manifestId}.json`
   )

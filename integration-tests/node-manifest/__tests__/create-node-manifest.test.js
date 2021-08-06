@@ -8,8 +8,8 @@ const fs = require(`fs-extra`)
 
 const manifestDir = path.join(
   process.cwd(),
-  `.cache`,
-  `node-manifests`,
+  `public`,
+  `__node-manifests`,
   `default-site-plugin`
 )
 
