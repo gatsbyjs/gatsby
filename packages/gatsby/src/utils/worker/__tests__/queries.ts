@@ -184,6 +184,7 @@ describeWhenLMDB(`worker (queries)`, () => {
   it(`should save worker "queries" state to disk`, async () => {
     if (!worker) fail(`worker not defined`)
 
+    await Promise.all(worker.all.setComponents())
     await worker.single.runQueries(queryIdsSmall)
     await Promise.all(worker.all.saveQueriesDependencies())
     // Pass "1" as workerId as the test only have one worker
@@ -226,6 +227,7 @@ describeWhenLMDB(`worker (queries)`, () => {
   it(`should execute static queries`, async () => {
     if (!worker) fail(`worker not defined`)
 
+    await Promise.all(worker.all.setComponents())
     await worker.single.runQueries(queryIdsSmall)
     const stateFromWorker = await worker.single.getState()
 
@@ -245,6 +247,7 @@ describeWhenLMDB(`worker (queries)`, () => {
   it(`should execute page queries`, async () => {
     if (!worker) fail(`worker not defined`)
 
+    await Promise.all(worker.all.setComponents())
     await worker.single.runQueries(queryIdsSmall)
     const stateFromWorker = await worker.single.getState()
 
@@ -263,6 +266,7 @@ describeWhenLMDB(`worker (queries)`, () => {
   it(`should execute page queries with context variables`, async () => {
     if (!worker) fail(`worker not defined`)
 
+    await Promise.all(worker.all.setComponents())
     await worker.single.runQueries(queryIdsSmall)
     const stateFromWorker = await worker.single.getState()
 
@@ -335,6 +339,7 @@ describeWhenLMDB(`worker (queries)`, () => {
   })
 
   it(`should return actions occurred in worker to replay in the main process`, async () => {
+    await Promise.all(worker.all.setComponents())
     const result = await worker.single.runQueries(queryIdsSmall)
 
     const expectedActionShapes = {

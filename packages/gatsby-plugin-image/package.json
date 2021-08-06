@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-image",
-  "version": "1.12.0-next.0",
+  "version": "1.12.0-next.2",
   "scripts": {
     "build": "npm-run-all -s clean -p build:*",
     "build:gatsby-node": "tsc --jsx react --downlevelIteration true --skipLibCheck true --esModuleInterop true --outDir dist/ src/gatsby-node.ts src/babel-plugin-parse-static-images.ts src/resolver-utils.ts src/types.d.ts -d --declarationDir dist/src",
@@ -41,12 +41,12 @@
   "types": "dist/src/index.d.ts",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image#readme",
   "devDependencies": {
-    "@babel/cli": "^7.14.5",
-    "@babel/core": "^7.14.6",
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
     "@testing-library/react": "^11.2.7",
     "@types/babel__core": "^7.1.12",
     "@types/babel__traverse": "^7.11.1",
-    "@types/fs-extra": "^8.1.1",
+    "@types/fs-extra": "^8.1.2",
     "@types/node": "^14.10.2",
     "@types/prop-types": "^15.7.3",
     "@types/react": "^16.9.56",
@@ -73,15 +73,15 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.14.0",
-    "@babel/parser": "^7.14.7",
-    "@babel/traverse": "^7.14.7",
+    "@babel/parser": "^7.14.9",
+    "@babel/traverse": "^7.14.9",
     "babel-jsx-utils": "^1.1.0",
-    "babel-plugin-remove-graphql-queries": "^3.12.0-next.0",
+    "babel-plugin-remove-graphql-queries": "^3.12.0-next.2",
     "camelcase": "^5.3.1",
     "chokidar": "^3.5.1",
     "common-tags": "^1.8.0",
     "fs-extra": "^8.1.0",
-    "gatsby-core-utils": "^2.12.0-next.0",
+    "gatsby-core-utils": "^2.12.0-next.2",
     "objectFitPolyfill": "^2.3.0",
     "prop-types": "^15.7.2"
   },

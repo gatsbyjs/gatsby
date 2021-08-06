@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@3.12.0-next.1...gatsby-source-filesystem@3.12.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+# [3.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@3.12.0-next.0...gatsby-source-filesystem@3.12.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency mime to ^2.5.2 for gatsby-source-filesystem ([#32610](https://github.com/gatsbyjs/gatsby/issues/32610)) ([4441a6a](https://github.com/gatsbyjs/gatsby/commit/4441a6abf4e0906d781c63e1b759f58d59dc9bdd))
+
 # [3.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@3.11.0-next.0...gatsby-source-filesystem@3.12.0-next.0) (2021-07-29)
 
 **Note:** Version bump only for package gatsby-source-filesystem

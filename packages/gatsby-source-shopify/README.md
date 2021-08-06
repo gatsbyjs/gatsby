@@ -98,6 +98,7 @@ For the Private app name enter `Gatsby` (the name does not really matter). Add t
 - `Read access` for `Products`
 - `Read access` for `Product listings` if you want to use Shopify's Product Collections in your Gatsby site
 - `Read access` for `Orders` if you want to use order information in your Gatsby site
+- `Read access` for `Inventory` and `Locations` if you want to use location information in your Gatsby site
 
 <div id="enabling-cart-and-checkout-features"></div>
 
@@ -159,6 +160,8 @@ Not set by default. If set to a string (example `MyStore`) node names will be `a
 Not set by default. If set to a string (example `My Sales Channel`), only products and collections that are active in that channel will be sourced. If no sales channel is provided, the default behavior is to source products that are available in the online store.
 
 Note: If you set up your site with the Gatsby Cloud Public App integration, `salesChannel` is set for you.
+
+Note: If you want to filter products by a Private App instead of Public App or default sales channel, you have to provide App ID instead of sales channel name.
 
 <div id="images"></div>
 
