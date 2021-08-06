@@ -191,10 +191,10 @@ jobs:
             echo 'export YARN_CACHE_DIR=$(yarn cache dir)' >> $BASH_ENV
       - node/install-packages:
           # can't seem to be able to use env var here :|
-          cache-path: ~/project/node_modules
+          cache-path: /usr/local/share/.cache/yarn/v6
           override-ci-command: yarn --verbose
           pkg-manager: yarn
-          cache-version: v0000
+          cache-version: v000
       - <<: *check_lockfile
       - <<: *validate_renovate
       - run: yarn bootstrap -- concurrency=2
@@ -216,7 +216,7 @@ jobs:
             yarn lerna publish --yes --canary --ignore-scripts --exact --preid circleci --pre-dist-tag circleci --force-publish --registry=http://localhost:4873
       - save_cache:
           name: Save verdaccio cache
-          key: yarn-verdaccio-circleci
+          key: yarn-verdaccio-$CIRCLE_SHA1
           paths:
             - /tmp/verdaccio/
       # Persist the workspace again with all packages already built
