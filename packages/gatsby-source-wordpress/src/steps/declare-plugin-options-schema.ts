@@ -646,7 +646,7 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
         .default(false)
         .allow(null)
         .description(
-          `When this is true, .webp images would be generated in addition to the same file format as the source images`
+          `When this is true, .webp images will be generated for images in html fields in addition to the images gatsby-image normally generates.`
         )
         .meta({
           example: wrapOptions(`
