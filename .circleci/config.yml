@@ -94,10 +94,10 @@ aliases:
           - master
           - /docs.+/
           - /blog.+/
-    requires:
-      - lint
-      - typecheck
-      - unit_tests_node12
+    # requires:
+    # - lint
+    # - typecheck
+    # - unit_tests_node12
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
     <<: *e2e-executor
@@ -166,10 +166,19 @@ commands:
           steps:
             - run: ./scripts/assert-changed-files.sh "<< parameters.trigger_pattern >>|<< parameters.test_path >>/*"
 
-      - <<: *attach_to_bootstrap
+      #- <<: *attach_to_bootstrap
+      - restore_cache:
+          name: Restore verdaccio cache
+          keys:
+            - yarn-verdaccio-<< pipeline.git.revision >>
       - run:
-          name: Install gatsby-dev
-          command: yarn global add gatsby-dev-cli
+          command: |
+            npx verdaccio@^5.0.0 -c .circleci/verdaccio/config.yaml &
+            sleep 1
+            curl --ipv4 --max-time 10  --retry 10 --retry-delay 0 --retry-connrefused --retry-max-time 40 'http://localhost:4873'
+      # - run:
+      #     name: Install gatsby-dev
+      #     command: yarn global add gatsby-dev-cli
       - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
@@ -199,6 +208,7 @@ jobs:
       - <<: *validate_renovate
       - run: yarn bootstrap -- concurrency=2
       - run:
+          name: "Publish packages to local registry"
           command: |
             npx verdaccio@^5.0.0 -c .circleci/verdaccio/config.yaml &
             sleep 1
@@ -216,7 +226,7 @@ jobs:
             yarn lerna publish --yes --canary --ignore-scripts --exact --preid circleci --pre-dist-tag circleci --force-publish --registry=http://localhost:4873
       - save_cache:
           name: Save verdaccio cache
-          key: yarn-verdaccio-$CIRCLE_SHA1
+          key: yarn-verdaccio-<< pipeline.git.revision >>
           paths:
             - /tmp/verdaccio/
       # Persist the workspace again with all packages already built
@@ -643,7 +653,7 @@ workflows:
   build-test:
     jobs:
       - bootstrap
-      # - lint
+      - lint
       # - typecheck:
       #     requires:
       #       - bootstrap
@@ -706,8 +716,8 @@ workflows:
       #     <<: *e2e-test-workflow
       # - e2e_tests_development_runtime:
       #     <<: *e2e-test-workflow
-      # - e2e_tests_production_runtime:
-      #     <<: *e2e-test-workflow
+      - e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
       # - themes_e2e_tests_production_runtime:
       #     <<: *e2e-test-workflow
       # - themes_e2e_tests_development_runtime:
