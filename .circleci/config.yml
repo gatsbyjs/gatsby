@@ -94,8 +94,8 @@ aliases:
           - master
           - /docs.+/
           - /blog.+/
-    # requires:
-    # - lint
+    requires:
+      - lint
     # - typecheck
     # - unit_tests_node12
 
