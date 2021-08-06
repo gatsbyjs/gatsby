@@ -351,7 +351,9 @@ The JSON object in the Query Variables section should look something like the on
 
 </Announcement>
 
-2. Add your page query to the blog post page template. Don't forget to import the `graphql` tag!
+2. Add your page query to the blog post page template.
+    * Don't forget to import the `graphql` tag!
+    * You should also delete the query name `MyQuery` or replace it with a unique name.
     ```js:title=src/pages/blog/{mdx.slug}.js
     import * as React from 'react'
     import { graphql } from 'gatsby' // highlight-line
@@ -367,7 +369,7 @@ The JSON object in the Query Variables section should look something like the on
 
     // highlight-start
     export const query = graphql`
-      query MyQuery($id: String) {
+      query ($id: String) {
         mdx(id: {eq: $id}) {
           frontmatter {
             title
@@ -403,7 +405,7 @@ The JSON object in the Query Variables section should look something like the on
     }
 
     export const query = graphql`
-      query MyQuery($id: String) {
+      query ($id: String) {
         mdx(id: {eq: $id}) {
           frontmatter {
             title
