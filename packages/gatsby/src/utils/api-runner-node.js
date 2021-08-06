@@ -248,14 +248,23 @@ const getUninitializedCache = plugin => {
 
 const pluginNodeCache = new Map()
 
-const availableActionsCache = new Map()
-let publicPath
-const runAPI = async (plugin, api, args, activity) => {
+function setGatsbyNodeCache(name, gatsbyNode) {
+  pluginNodeCache.set(name, gatsbyNode)
+}
+
+function loadGatsbyNode(plugin) {
   let gatsbyNode = pluginNodeCache.get(plugin.name)
   if (!gatsbyNode) {
     gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
     pluginNodeCache.set(plugin.name, gatsbyNode)
   }
+  return gatsbyNode
+}
+
+const availableActionsCache = new Map()
+let publicPath
+const runAPI = async (plugin, api, args, activity) => {
+  const gatsbyNode = loadGatsbyNode(plugin)
 
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
@@ -445,7 +454,7 @@ const apisRunningById = new Map()
 const apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
-module.exports = (api, args = {}, { pluginSource, activity } = {}) => {
+function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
   const plugins = store.getState().flattenedPlugins
 
   // Get the list of plugins that implement this API.
@@ -561,12 +570,7 @@ module.exports = (api, args = {}, { pluginSource, activity } = {}) => {
           return null
         }
 
-        let gatsbyNode = pluginNodeCache.get(plugin.name)
-        if (!gatsbyNode) {
-          gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
-          pluginNodeCache.set(plugin.name, gatsbyNode)
-        }
-
+        const gatsbyNode = loadGatsbyNode(plugin)
         const pluginName =
           plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
@@ -684,3 +688,7 @@ module.exports = (api, args = {}, { pluginSource, activity } = {}) => {
     })
   })
 }
+
+apiRunnerNode.setGatsbyNodeCache = setGatsbyNodeCache
+
+module.exports = apiRunnerNode

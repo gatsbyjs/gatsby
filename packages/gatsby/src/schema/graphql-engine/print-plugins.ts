@@ -22,41 +22,46 @@ export async function printQueryEnginePlugins(): Promise<void> {
   }
   return await fs.writeFile(
     schemaCustomizationPluginsPath,
-    renderSchemaCustomizationPlugins()
+    renderQueryEnginePlugins()
   )
 }
 
-function renderSchemaCustomizationPlugins(): string {
+function renderQueryEnginePlugins(): string {
   const { flattenedPlugins } = store.getState()
-  const schemaCustomizationPlugins = flattenedPlugins.filter(
+  const usedPlugins = flattenedPlugins.filter(
     p =>
       !excludePlugins.has(p.name) &&
       p.nodeAPIs.some(api => schemaCustomizationAPIs.has(api))
   )
-  const usedSubPlugins = findSubPlugins(
-    schemaCustomizationPlugins,
-    flattenedPlugins
-  )
-  return render(uniq(schemaCustomizationPlugins), uniq(usedSubPlugins))
+  const usedSubPlugins = findSubPlugins(usedPlugins, flattenedPlugins)
+  return render(usedPlugins, usedSubPlugins)
 }
 
 function render(
-  gatsbyNode: IGatsbyState["flattenedPlugins"],
-  index: IGatsbyState["flattenedPlugins"]
+  usedPlugins: IGatsbyState["flattenedPlugins"],
+  usedSubPlugins: IGatsbyState["flattenedPlugins"]
 ): string {
+  const uniqGatsbyNode = uniq(usedPlugins)
+  const uniqIndex = uniq(usedSubPlugins)
+
+  const sanitizedUsedPlugins = usedPlugins.map(plugin => {
+    // TODO: remove options as we will separately bundle gatsby-config.js
+    return { ...plugin, resolve: ``, filePath: `` }
+  })
+
   const imports: Array<string> = [
-    ...gatsbyNode.map(
+    ...uniqGatsbyNode.map(
       (plugin, i) =>
         `import * as pluginGatsbyNode${i} from "${plugin.name}/gatsby-node"`
     ),
-    ...index.map(
+    ...uniqIndex.map(
       (plugin, i) => `import * as pluginIndex${i} from "${plugin.name}"`
     ),
   ]
-  const gatsbyNodeExports = gatsbyNode.map(
+  const gatsbyNodeExports = uniqGatsbyNode.map(
     (plugin, i) => `"${plugin.name}": pluginGatsbyNode${i},`
   )
-  const indexExports = index.map(
+  const indexExports = uniqIndex.map(
     (plugin, i) => `  "${plugin.name}": pluginIndex${i},`
   )
   const output = `
@@ -69,6 +74,8 @@ ${gatsbyNodeExports.join(`\n`)}
 export const indexes = {
 ${indexExports.join(`\n`)}
 }
+
+export const flattenedPlugins = ${JSON.stringify(sanitizedUsedPlugins)}
   `
   return output
 }

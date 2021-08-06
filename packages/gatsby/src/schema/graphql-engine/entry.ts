@@ -10,9 +10,12 @@ import {
 } from "../../bootstrap/create-graphql-runner"
 // const { builtInFieldExtensions } = require(`./extensions`)
 
+import { setGatsbyNodeCache } from "../../utils/api-runner-node"
 import type { IGatsbyPage, IGatsbyState } from "../../redux/types"
 import { findPageByPath } from "../../utils/find-page-by-path"
 import { getDataStore } from "../../datastore"
+// @ts-ignore
+import { gatsbyNodes, flattenedPlugins } from ".cache/query-engine-plugins"
 
 export class GraphQLEngine {
   // private schema: GraphQLSchema
@@ -27,7 +30,20 @@ export class GraphQLEngine {
       // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
       store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
 
+      // TODO: FLATTENED_PLUGINS needs to be merged with plugin options from gatsby-config
+      //  (as there might be non-serializable options, i.e. functions)
+      store.dispatch({
+        type: `SET_SITE_FLATTENED_PLUGINS`,
+        payload: flattenedPlugins,
+      })
+
+      for (const pluginName of Object.keys(gatsbyNodes)) {
+        setGatsbyNodeCache(pluginName, gatsbyNodes[pluginName])
+      }
+
+      // Build runs
       await build({ fullMetadataBuild: false, freeze: true })
+
       // this.schema = await buildSchema({
       //   types: [{ typeOrTypeDef: SCHEMA_SNAPSHOT }, { name: `query-engine` }],
       // })
