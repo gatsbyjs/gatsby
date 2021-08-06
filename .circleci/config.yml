@@ -192,7 +192,7 @@ jobs:
       - node/install-packages:
           # can't seem to be able to use env var here :|
           cache-path: /usr/local/share/.cache/yarn/v6
-          override-ci-command: yarn
+          override-ci-command: yarn --verbose
           pkg-manager: yarn
           cache-version: v000
       - <<: *check_lockfile
