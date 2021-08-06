@@ -191,9 +191,10 @@ jobs:
             echo 'export YARN_CACHE_DIR=$(yarn cache dir)' >> $BASH_ENV
       - run: "echo $YARN_CACHE_DIR"
       - node/install-packages:
-          cache-path: /usr/local/share/.cache/yarn/v6
+          cache-path: $YARN_CACHE_DIR
           override-ci-command: yarn
           pkg-manager: yarn
+          cache-version: v0
       - <<: *check_lockfile
       - <<: *validate_renovate
       - run: yarn bootstrap -- concurrency=2
