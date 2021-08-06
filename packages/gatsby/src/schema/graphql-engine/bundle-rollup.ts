@@ -8,10 +8,12 @@ import * as fs from "fs-extra"
 import resolve from "@rollup/plugin-node-resolve"
 import commonjs from "@rollup/plugin-commonjs"
 import json from "@rollup/plugin-json"
+import alias from "@rollup/plugin-alias"
 import { visualizer } from "rollup-plugin-visualizer"
 import nativePlugin from "rollup-plugin-natives"
 
 import moduleModule from "module"
+import { printQueryEnginePlugins } from "./print-plugins"
 
 const { builtinModules, createRequire } = moduleModule
 
@@ -104,6 +106,7 @@ export async function createGraphqlEngineBundle(): Promise<any> {
     process.cwd() + `/.cache/schema.gql`,
     `utf-8`
   )
+  await printQueryEnginePlugins()
 
   const inputOptions = {
     external: (id: string): boolean => {
@@ -302,6 +305,9 @@ export async function createGraphqlEngineBundle(): Promise<any> {
         dynamicRequireTargets: [
           `**/node_modules/joi/lib/**/*.js`, // https://github.com/rollup/plugins/issues/731
         ],
+      }),
+      alias({
+        entries: [{ find: `.cache`, replacement: process.cwd() + `/.cache/` }],
       }),
       visualizer(),
     ],

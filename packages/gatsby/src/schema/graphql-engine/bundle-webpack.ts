@@ -3,6 +3,7 @@
 import * as path from "path"
 import * as fs from "fs-extra"
 import webpack from "webpack"
+import { printQueryEnginePlugins } from "./print-plugins"
 
 const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
 
@@ -13,6 +14,7 @@ export async function createGraphqlEngineBundle(): Promise<any> {
     process.cwd() + `/.cache/schema.gql`,
     `utf-8`
   )
+  await printQueryEnginePlugins()
 
   const compiler = webpack({
     // mode: `production`,
@@ -70,6 +72,9 @@ export async function createGraphqlEngineBundle(): Promise<any> {
     },
     resolve: {
       extensions,
+      alias: {
+        ".cache": process.cwd() + `/.cache/`,
+      },
     },
     plugins: [
       new webpack.DefinePlugin({
