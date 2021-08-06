@@ -107,19 +107,19 @@ export async function createGraphqlEngineBundle(): Promise<any> {
 
   const inputOptions = {
     external: (id: string): boolean => {
-      const match = id.match(/node_modules\/(.+)$/)
+      const match = id.match(/node_modules[\\/](.+)$/)
       if (match && Array.isArray(match) && match.length >= 2) {
         // const pkgName = match[1]
 
         for (const external of forSureExternals) {
-          if (id.includes(`node_modules/${external}/`)) {
+          if (id.includes(path.join(`node_modules`, external) + path.sep)) {
             // console.log(`marking ${id} as internal (because "${allowed}")`)
             return true
           }
         }
 
         for (const allowed of allowedPackages) {
-          if (id.includes(`node_modules/${allowed}/`)) {
+          if (id.includes(path.join(`node_modules`, allowed) + path.sep)) {
             // console.log(`marking ${id} as internal (because "${allowed}")`)
             return false
           }
@@ -182,7 +182,7 @@ export async function createGraphqlEngineBundle(): Promise<any> {
             return { code: `export default null` }
           }
 
-          if (id.includes(`/loggers/ink/index.js`)) {
+          if (id.includes(path.join(`loggers`, `ink`, `index.js`))) {
             return {
               code: `export function initializeINKLogger() {}; export default { initializeINKLogger }`,
             }
