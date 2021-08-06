@@ -191,7 +191,7 @@ jobs:
             echo 'export YARN_CACHE_DIR=$(yarn cache dir)' >> $BASH_ENV
       - run: "echo $YARN_CACHE_DIR"
       - node/install-packages:
-          cache-path: $YARN_CACHE_DIR
+          cache-path: /usr/local/share/.cache/yarn/v6
           override-ci-command: yarn
           pkg-manager: yarn
       - <<: *check_lockfile
