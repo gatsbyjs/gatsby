@@ -392,7 +392,7 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
             orderby: { field: MODIFIED, order: DESC }
             sinceTimestamp: ${
               // only source previews made in the last 60 minutes
-              // We delete every preview we process so this accounts for very long cold builds between previews.
+              // We delete every preview action we process so this accounts for very long cold builds between previews.
               Date.now() - 1000 * 60 * 60
             }
           }
