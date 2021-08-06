@@ -8,6 +8,7 @@ import PQueue from "p-queue"
 import { dump } from "dumper.js"
 import { actions as gatsbyActions } from "gatsby/dist/redux/actions/public"
 
+import { remoteSchemaSupportsFieldNameOnTypeName } from "~/steps/ingest-remote-schema/introspect-remote-schema"
 import { paginatedWpNodeFetch } from "~/steps/source-nodes/fetch-nodes/fetch-nodes-paginated"
 import fetchGraphql from "~/utils/fetch-graphql"
 
@@ -51,6 +52,7 @@ export interface IPreviewData {
   since?: number
   refreshing?: boolean
   preview?: boolean
+  manifestIds?: Array<string>
 }
 
 interface IPageNode {
@@ -281,18 +283,27 @@ export const sourcePreview = async ({
     isPreview: true,
   })
 
-  if (`unstable_createNodeManifest` in actions && node) {
-    const manifestId = node.databaseId + previewData.modified
+  if (
+    previewData?.manifestIds?.length &&
+    `unstable_createNodeManifest` in actions &&
+    node
+  ) {
+    previewData.manifestIds.forEach(manifestId => {
+      actions.unstable_createNodeManifest({
+        manifestId,
+        node,
+      })
+    })
 
     reporter.info(
       formatLogMessage(
-        `Creating node manifest for ${node.id} with manifestId ${manifestId}`
+        `Creating node manifests for ${
+          node.id
+        } with manifestIds: [${previewData.manifestIds
+          .map(id => `"${id}"`)
+          .join(`, `)}]`
       )
     )
-    actions.unstable_createNodeManifest({
-      manifestId,
-      node,
-    })
   }
 }
 
@@ -357,6 +368,13 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
     return
   }
 
+  const wpGatsbyPreviewNodeManifestsAreSupported = await remoteSchemaSupportsFieldNameOnTypeName(
+    {
+      typeName: `GatsbyPreviewData`,
+      fieldName: `manifestIds`,
+    }
+  )
+
   const previewActions = await paginatedWpNodeFetch({
     contentTypePlural: `actionMonitorActions`,
     nodeTypeName: `ActionMonitor`,
@@ -390,6 +408,7 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
               remoteUrl
               singleName
               userDatabaseId
+              ${wpGatsbyPreviewNodeManifestsAreSupported ? `manifestIds` : ``}
             }
           }
           pageInfo {
