@@ -26,7 +26,8 @@
     "cross-env": "^7.0.3",
     "jest": "^26.6.3",
     "msw": "^0.33.2",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "rimraf": "^3.0.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-gatsby-cloud#readme",
   "keywords": [
@@ -35,6 +36,7 @@
     "http/2-server-push",
     "gatsby-cloud"
   ],
+  "types": "./index.d.ts",
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
@@ -47,7 +49,9 @@
   },
   "sideEffects": false,
   "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\" && npm run clean && npm run copy-type-declarations",
+    "clean": "rimraf ./components/index.d.ts",
+    "copy-type-declarations": "cp src/components/index.d.ts components/index.d.ts",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },

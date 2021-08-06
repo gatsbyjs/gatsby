@@ -282,7 +282,7 @@ export const sourcePreview = async ({
     isPreview: true,
   })
 
-  if (`unstable_createNodeManifest` in actions) {
+  if (`unstable_createNodeManifest` in actions && node) {
     const manifestId = node.databaseId + previewData.modified
 
     reporter.info(

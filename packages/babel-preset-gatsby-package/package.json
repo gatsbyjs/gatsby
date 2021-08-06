@@ -31,12 +31,15 @@
     "@babel/core": "^7.11.6"
   },
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "engines": {
     "node": ">=12.13.0"
   },
+  "files": [
+    "lib/*.js"
+  ],
   "scripts": {
-    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts,.js\"",
+    "build": "",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\""
   }
