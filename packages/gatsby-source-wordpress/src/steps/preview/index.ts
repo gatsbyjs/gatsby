@@ -17,7 +17,6 @@ import { fetchAndCreateSingleNode } from "~/steps/source-nodes/update-nodes/wp-a
 import { formatLogMessage } from "~/utils/format-log-message"
 import { touchValidNodes } from "../source-nodes/update-nodes/fetch-node-updates"
 
-import { IPluginOptions } from "~/models/gatsby-api"
 import { Reporter } from "gatsby/reporter"
 
 const inDevelopPreview =
