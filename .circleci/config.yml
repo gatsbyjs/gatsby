@@ -95,7 +95,7 @@ aliases:
           - /docs.+/
           - /blog.+/
     requires:
-      - lint
+      - bootstrap
     # - typecheck
     # - unit_tests_node12
 
