@@ -203,7 +203,17 @@ jobs:
             npx verdaccio@^5.0.0 -c .circleci/verdaccio/config.yaml &
             sleep 1
             curl --ipv4 --max-time 10  --retry 10 --retry-delay 0 --retry-connrefused --retry-max-time 40 'http://localhost:4873'
-            yarn lerna publish --yes --canary --ignore-scripts --exact --preid $CIRCLE_SHA1 --pre-dist-tag circleci --force-publish --registry=http://localhost:4873
+            # warmup verdaccio cache
+            cd packages;
+            for f in *
+            do
+              echo "Processing $f file..."
+              # take action on each file. $f store current file name
+              curl http://localhost:4873/$f
+            done
+            cd ..
+            # done
+            yarn lerna publish --yes --canary --ignore-scripts --exact --preid circleci --pre-dist-tag circleci --force-publish --registry=http://localhost:4873
       # Persist the workspace again with all packages already built
       - persist_to_workspace:
           root: ./
