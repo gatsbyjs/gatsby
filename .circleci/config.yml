@@ -194,13 +194,14 @@ jobs:
           cache-path: /usr/local/share/.cache/yarn/v6
           override-ci-command: yarn
           pkg-manager: yarn
-          cache-version: v00
+          cache-version: v000
       - <<: *check_lockfile
       - <<: *validate_renovate
       - run: yarn bootstrap -- concurrency=2
       - run:
           command: |
             npx verdaccio -c .circleci/verdaccio/config.yaml &
+            sleep 1
             curl --ipv4 --max-time 10  --retry 10 --retry-delay 0 --retry-connrefused --retry-max-time 40 'http://localhost:4873'
             chown verdaccio: /tmp/verdaccio -R
             yarn lerna publish --yes --canary --ignore-scripts --exact --preid $CIRCLE_SHA1 --pre-dist-tag circleci --force-publish --registry=http://localhost:4873
