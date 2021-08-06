@@ -191,10 +191,10 @@ jobs:
             echo 'export YARN_CACHE_DIR=$(yarn cache dir)' >> $BASH_ENV
       - node/install-packages:
           # can't seem to be able to use env var here :|
-          cache-path: /usr/local/share/.cache/yarn/v6
+          cache-path: ~/project/node_modules
           override-ci-command: yarn --verbose
           pkg-manager: yarn
-          cache-version: v000
+          cache-version: v0000
       - <<: *check_lockfile
       - <<: *validate_renovate
       - run: yarn bootstrap -- concurrency=2
@@ -223,7 +223,8 @@ jobs:
       - persist_to_workspace:
           root: ./
           paths:
-            - "*"
+            - "packages/"
+            - "node_modules/"
 
   lint:
     executor: node
