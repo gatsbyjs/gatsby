@@ -1,15 +1,11 @@
-storage: ./storage
+storage: /tmp/verdaccio
 uplinks:
   npmjs:
     url: https://registry.npmjs.org/
 packages:
-  "@*/*":
-    access: $anonymous
-    publish: $anonymous
-    proxy: npmjs
   "**":
     access: $anonymous
     publish: $anonymous
     proxy: npmjs
 logs:
-  - { type: stdout, format: pretty, level: http }
+  - { type: stdout, format: pretty, level: warn }
