@@ -41,4 +41,5 @@ exports.pluginOptionsSchema = ({ Joi }) =>
         `Name of the event that is triggered on every Gatsby route change.`
       ),
     enableWebVitalsTracking: Joi.boolean().default(false),
+    selfHostedOrigin: Joi.string().default("https://www.googletagmanager.com").description(`Self hosted origin.`),
   })
