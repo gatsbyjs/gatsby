@@ -25,7 +25,7 @@ cd "$TMP_TEST_LOCATION"
 # gatsby-dev --set-path-to-repo "$GATSBY_PATH"
 # gatsby-dev --force-install --scan-once  # Do not copy files, only install through npm, like our users would
 
-yarn add gatsby@circleci gatsby-cypress@circleci gatsby-plugin-image@circleci gatsby-plugin-less@circleci gatsby-plugin-manifest@circleci gatsby-plugin-offline@circleci gatsby-plugin-react-helmet@circleci gatsby-plugin-sass@circleci gatsby-plugin-sharp@circleci gatsby-plugin-stylus@circleci gatsby-source-filesystem@circleci
+yarn add gatsby@circleci gatsby-cypress@circleci gatsby-plugin-image@circleci gatsby-plugin-less@circleci gatsby-plugin-manifest@circleci gatsby-plugin-offline@circleci gatsby-plugin-react-helmet@circleci gatsby-plugin-sass@circleci gatsby-plugin-sharp@circleci gatsby-plugin-stylus@circleci gatsby-source-filesystem@circleci --registry=http://loclahost:4873
 
 if test -f "./node_modules/.bin/gatsby"; then
   chmod +x ./node_modules/.bin/gatsby # this is sometimes necessary to ensure executable
