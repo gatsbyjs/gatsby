@@ -92,15 +92,20 @@ hero_image_credit_link: "https://unsplash.com/photos/7rriIaBH6JY"
 
 Now that your hero images are set up, it's time to connect them to the data layer so you can pull them into your blog post page template.
 
-## TASK: CONFIGURE PLUGIN
+## Install and configure `gatsby-transformer-sharp`
 
-Install `gatsby-transformer-sharp`. THIS DOES SOMETHING TO ADD IMAGE STUFF TO THE DATA LAYER NODES. WHICH NODES?
+In order to use the `GatsbyImage` component, you'll need to add the `gatsby-transformer-sharp` transformer plugin to your site.
 
-```shell
-npm install gatsby-transformer-sharp
-```
+When Gatsby adds nodes to the data layer at build time, the `gatsby-transformer-sharp` plugin looks for any File nodes that end with an image extension (like `.png` or `.jpg`) and creates an ImageSharp node for that file.
 
-ADD TO GATSBY-CONFIG.JSON
+![A diagram showing how ImageSharp nodes get created from File nodes in the data layer](./data-layer-with-imagesharp-nodes.png)
+
+1. In the terminal, run the following command to install `gatsby-transformer-sharp`:
+    ```shell
+    npm install gatsby-transformer-sharp
+    ```
+
+2. Add `gatsby-transformer-sharp` to the `plugins` array in your `gatsby-config.js` file.
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -114,30 +119,70 @@ module.exports = {
 }
 ```
 
-MIGHT HAVE TO STOP AND START DEVELOP SERVER FOR CHANGES TO SHOW UP IN GraphiQL
+Now that you've added `gatsby-transformer-sharp` to your site, you'll need to restart your local development server to see the changes in GraphiQL. You'll take a closer look at GraphiQL in the next step.
 
 
-## TASK: ADD HERO IMAGE TO BLOG POST PAGE TEMPLATE
+## Render hero image in the blog post page template
 
-COLLAPSIBLE: DYNAMIC IMAGES. WHAT IS CHILDIMAGESHARP? WHAT IS GATSBYIMAGEDATA?
+Now that you have all the necessary tools in place, it's time to add your hero image to your blog post page template.
 
-`gatsbyImageData`: GRAPHQL RESOLVER ON SHARP NODES.
+### Task: Use GraphiQL to build the query
+
+First, you'll use GraphiQL to add the hero image frontmatter fields to the GraphQL query for your blog post page template.
+
+1. Open GraphiQL by going to `localhost:8000/___graphql` in a web browser. Start by copying your existing blog post page query into the GraphiQL Query Editor pane. Run it once to make sure everything is working correctly.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Note:** You'll need to set up an object in the Query Variables pane with an `id` that matches one of your posts. Refer to [Part 6 section on query variables](/docs/tutorial/part-6/#render-post-contents-in-the-blog-post-page-template) if you need a refresher on how to set that up.
+
+</Announcement>
 
 ```graphql
-query MyQuery($id: String) {
+query ($id: String) {
+  mdx(id: {eq: $id}) {
+    frontmatter {
+      title
+      date(formatString: "MMMM D, YYYY")
+    }
+    body
+  }
+}
+```
+
+```json
+{
+  "data": {
+    "mdx": {
+      "frontmatter": {
+        "title": "My First Post",
+        "date": "July 23, 2021",
+      },
+      "body": "..."
+    }
+  },
+  "extensions": {}
+}
+```
+
+2. In the Explorer pane, check the boxes for the `hero_image_alt`, `hero_image_credit_link`, and `hero_image_credit_text` fields. When you run your query, you should get back a response something like the JSON object below.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Note:** Remember to scroll down to the blue `frontmatter` field, which is lower than the purple `frontmatter:` argument.
+
+</Announcement>
+
+```graphql
+query ($id: String) {
   mdx(id: {eq: $id}) {
     frontmatter {
       title
       date(formatString: "MMMM D, YYYY")
       // highlight-start
-      hero_image {
-        childImageSharp {
-          gatsbyImageData
-        }
-      }
       hero_image_alt
-      hero_image_credit_text
       hero_image_credit_link
+      hero_image_credit_text
       // highlight-end
     }
     body
@@ -145,79 +190,218 @@ query MyQuery($id: String) {
 }
 ```
 
-IMPORT
-
-```js:title=src/pages/blog/{mdx.slug}.js
-import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+```json
+{
+  "data": {
+    "mdx": {
+      "frontmatter": {
+        "title": "My First Post",
+        "date": "July 23, 2021",
+        "hero_image_alt": "A gray pitbull relaxing on the sidewalk with its tongue hanging out",
+        "hero_image_credit_link": "https://unsplash.com/photos/ocZ-_Y7-Ptg",
+        "hero_image_credit_text": "Christopher Ayme"
+      },
+      "body": "..."
+    }
+  },
+  "extensions": {}
+}
 ```
 
-ADD TO Query
+3. Adding the `hero_image` field itself is a bit more involved. Within the `hero_image` field, toggle the `childImageSharp` field, and then check the box for the `gatsbyImageData` field. Now your query should look like this:
 
-```js:title=src/pages/blog/{mdx.slug}.js
-export const query = graphql`
-  query($slug: String) {
-    mdx(slug: {eq: $slug}) {
-      body
-      frontmatter {
-        date(formatString: "MMMM DD, YYYY")
-        title
-        hero_image {
-          childImageSharp {
-            gatsbyImageData
+```graphql
+query ($id: String) {
+  mdx(id: {eq: $id}) {
+    frontmatter {
+      title
+      date(formatString: "MMMM D, YYYY")
+      hero_image_alt
+      hero_image_credit_link
+      hero_image_credit_text
+      // highlight-start
+      hero_image {
+        childrenImageSharp {
+          gatsbyImageData
+        }
+      }
+      // highlight-end
+    }
+    body
+  }
+}
+```
+
+4. Run your query to see what data you get back in the response. It should mostly look like the response you got back before, but this time with an extra `hero_image` object:
+
+```json
+{
+  "data": {
+    "mdx": {
+      "frontmatter": {
+        // ...
+        // highlight-start
+        "hero_image": {
+          "childrenImageSharp": [
+            {
+              "gatsbyImageData": {
+                "layout": "constrained",
+                "backgroundColor": "#282828",
+                "images": {
+                  "fallback": {
+                    "src": "/static/402ec135e08c3b799c16c08a82ae2dd8/68193/christopher-ayme-ocZ-_Y7-Ptg-unsplash.jpg",
+                    "srcSet": "/static/402ec135e08c3b799c16c08a82ae2dd8/86d57/christopher-ayme-ocZ-_Y7-Ptg-unsplash.jpg 919w,\n/static/402ec135e08c3b799c16c08a82ae2dd8/075d8/christopher-ayme-ocZ-_Y7-Ptg-unsplash.jpg 1839w,\n/static/402ec135e08c3b799c16c08a82ae2dd8/68193/christopher-ayme-ocZ-_Y7-Ptg-unsplash.jpg 3677w",
+                    "sizes": "(min-width: 3677px) 3677px, 100vw"
+                  },
+                  "sources": [
+                    {
+                      "srcSet": "/static/402ec135e08c3b799c16c08a82ae2dd8/6b4aa/christopher-ayme-ocZ-_Y7-Ptg-unsplash.webp 919w,\n/static/402ec135e08c3b799c16c08a82ae2dd8/0fe0b/christopher-ayme-ocZ-_Y7-Ptg-unsplash.webp 1839w,\n/static/402ec135e08c3b799c16c08a82ae2dd8/5d6d7/christopher-ayme-ocZ-_Y7-Ptg-unsplash.webp 3677w",
+                      "type": "image/webp",
+                      "sizes": "(min-width: 3677px) 3677px, 100vw"
+                    }
+                  ]
+                },
+                "width": 3677,
+                "height": 2456
+              }
+            }
+          ]
+        }
+        // highlight-end
+      },
+      "body": "..."
+    }
+  },
+  "extensions": {}
+}
+```
+
+If you take a closer look at the `gatsbyImageData` object on the `hero_image.childrenImageSharp` field, you'll see that it contains a bunch of information about the hero image for that post: dimensions, file paths for the images at different sizes, fallback images to use as a placeholder while the image loads. All this data gets calculated by `gatsby-plugin-sharp` at build time. The `gatsbyImageData` object in your response has the same structure that the `GatsbyImage` component needs to render an image.
+
+### Task: Add hero image using `GatsbyImage` component
+
+Now that you have your GraphQL query set up, it's time to add it to your blog post page template.
+
+1. Replace your existing page query with the query you built in GraphiQL that includes the hero image frontmatter fields.
+    ```js:title=src/pages/blog/{mdx.slug}.js
+    // imports
+
+    const BlogPost = ({ data }) => {
+      return (
+        // ...
+      )
+    }
+
+    // highlight-start
+    export const query = graphql`
+      query($slug: String) {
+        mdx(slug: {eq: $slug}) {
+          body
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            title
+            hero_image_alt
+            hero_image_credit_link
+            hero_image_credit_text
+            hero_image {
+              childrenImageSharp {
+                gatsbyImageData
+              }
+            }
           }
         }
-        hero_image_alt
-        hero_image_credit_text
-        hero_image_credit_link
       }
-    }
-  }
-`
+    `
+    // highlight-end
+
+    export default BlogPost
+    ```
+
+2. Import the `GatsbyImage` component and the `getImage` helper function from the `gatsby-plugin-image` package.
+
+```js:title=src/pages/blog/{mdx.slug}.js
+import * as React from 'react'
+import { graphql } from 'gatsby'
+import { MDXRenderer } from 'gatsby-plugin-mdx'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image' // highlight-line
+import Layout from '../../components/layout'
+
+// ...
 ```
 
-DEFINE IMAGE
+2. Use the `getImage` helper function to get back the `gatsbyImageData` object from the `hero_image` field.
+
+```js:title=src/pages/blog/{mdx.slug}.js
+// imports
+
+const BlogPost = ({ data }) => {
+  const image = getImage(data.mdx.frontmatter.hero_image) // highlight-line
+
+  return (
+    // ...
+  )
+}
+
+// ...
+```
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Note:** `getImage` is just a helper function that takes in a file node and returns the `.childImageSharp.gatsbyImageData` object for that node. You can use it to keep your code a little cleaner and easier to read.
+**Note:** `getImage` is a helper function that takes in a File node or an ImageSharp node and returns the `gatsbyImageData` object for that node. You can use it to keep your code a little cleaner and easier to read.
+
+Without the `getImage` helper function, you'd have to type out `data.mdx.frontmatter.hero_image.childImageSharp.gatsbyImageData` (which is longer, but gives you back the same data).
 
 </Announcement>
 
+3. Use the `GatsbyImage` component from `gatsby-plugin-image` to render the hero image data. You should pass `GatsbyImage` two props:
+    * `image`: the `gatsbyImageData` object for your `hero_image` field
+    * `alt`: the alternative text for your image, from the `hero_image_alt` field
+    ```js:title=src/pages/blog/{mdx.slug}.js
+    return (
+      <Layout pageTitle={data.mdx.frontmatter.title}>
+        <p>Posted: {data.mdx.frontmatter.date}</p>
+        {/* highlight-start */}
+        <GatsbyImage
+          image={image}
+          alt={data.mdx.frontmatter.hero_image_alt}
+        />
+        {/* highlight-end */}
+        <MDXRenderer>
+          {data.mdx.body}
+        </MDXRenderer>
+      </Layout>
+    )
+    ```
+
+4. Now, when you visit each of your blog post pages, you should see the corresponding hero image rendered before the body of your post!
+    ![A screenshot of the My First Post blog page, with a hero image of a gray pitbull relaxing on the sidewalk.](./blog-post-with-hero-image.png)
+
+    ![A screenshot of the Another Post blog page, with a hero image of a gray and white pitbull in a swimming pool.](./another-post.png)
+
+    ![A screenshot of the Yet Another Post blog page, with a hero image of a dog wearing googly-eye glasses.](./yet-another-post.png)
+
+### Task: Add image credit after hero image
+
+It's important to give credit to people whose work you use in your own site. The last piece of including hero images to your site is to add a paragraph to give credit to the photographer.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Pro Tip:** Since the credit link goes to an external page (in other words, one that's not part of your site), you can use the `<a>` HTML tag instead of the Gatsby `Link` component.
+
+Remember, Gatsby's `Link` component only gives performance benefits for internal links to other pages within your site.
+
+</Announcement>
+
+
+
 ```js:title=src/pages/blog/{mdx.slug}.js
-const image = getImage(data.mdx.frontmatter.hero_image)
-```
+// imports
 
-RENDER IMAGE IN JSX
+const BlogPost = ({ data }) => {
+  const image = getImage(data.mdx.frontmatter.hero_image)
 
-```js:title=src/pages/blog/{mdx.slug}.js
-return (
-  <Layout pageTitle={data.mdx.frontmatter.title}>
-    <p>Posted: {data.mdx.frontmatter.date}</p>
-    <GatsbyImage
-      image={image}
-      alt={data.mdx.frontmatter.hero_image_alt}
-    />
-    <MDXRenderer>
-      {data.mdx.body}
-    </MDXRenderer>
-  </Layout>
-)
-```
-
-![WORDS](./blog-post-with-hero-image.png)
-
-![WORDS](./another-post.png)
-
-![WORDS](./yet-another-post.png)
-
-ADD IMAGE CREDIT PARAGRAPH. YOU NEED AN EXTRA {" "} TO GET THE SPACE TO SHOW UP IF YOU HAVE A NEWLINE BETWEEN THE PHOTO CREDIT TEXT AND THE LINK.
-
-```js:title=src/pages/blog/{mdx.slug}.js
   return (
-    <Layout
-      pageTitle={data.mdx.frontmatter.title}
-      heroImage={image}
-    >
+    <Layout pageTitle={data.mdx.frontmatter.title}>
       <p>{data.mdx.frontmatter.date}</p>
       <GatsbyImage
         image={image}
@@ -236,9 +420,24 @@ ADD IMAGE CREDIT PARAGRAPH. YOU NEED AN EXTRA {" "} TO GET THE SPACE TO SHOW UP 
       </MDXRenderer>
     </Layout>
   )
+  }
+
+export const query = graphql`
+  ...
+`
+
+export default BlogPost
 ```
 
-![WORDS](./blog-post-with-hero-image-credit.png)
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Syntax Hint:** You might have noticed that there's a `{" "}` after the "Photo Credit:" text `<p>` tag. That's to make sure that a space gets rendered between the colon (`:`) and the link text.
+
+Try removing the `{" "}` and see what happens. The paragraph text should end up being "Photo Credit:Author".
+
+</Announcement>
+
+![A screenshot of the My First Post blog page, which now includes a photo credit underneath the hero image. It says, "Photo Credit: Christopher Ayme".](./blog-post-with-hero-image-credit.png)
 
 ## Summary
 
