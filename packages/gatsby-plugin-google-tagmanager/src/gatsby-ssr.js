@@ -1,15 +1,15 @@
 import React from "react"
 import { oneLine, stripIndent } from "common-tags"
 
-const generateGTM = ({ id, environmentParamStr, dataLayerName }) => stripIndent`
+const generateGTM = ({ id, environmentParamStr, dataLayerName, selfHostedOrigin }) => stripIndent`
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl+'${environmentParamStr}';f.parentNode.insertBefore(j,f);
+  '${selfHostedOrigin}/gtm.js?id='+i+dl+'${environmentParamStr}';f.parentNode.insertBefore(j,f);
   })(window,document,'script','${dataLayerName}', '${id}');`
 
-const generateGTMIframe = ({ id, environmentParamStr }) =>
-  oneLine`<iframe src="https://www.googletagmanager.com/ns.html?id=${id}${environmentParamStr}" height="0" width="0" style="display: none; visibility: hidden" aria-hidden="true"></iframe>`
+const generateGTMIframe = ({ id, environmentParamStr, selfHostedOrigin }) =>
+  oneLine`<iframe src="${selfHostedOrigin}/ns.html?id=${id}${environmentParamStr}" height="0" width="0" style="display: none; visibility: hidden" aria-hidden="true"></iframe>`
 
 const generateDefaultDataLayer = (dataLayer, reporter, dataLayerName) => {
   let result = `window.${dataLayerName} = window.${dataLayerName} || [];`
@@ -41,6 +41,7 @@ exports.onRenderBody = (
     defaultDataLayer,
     dataLayerName = `dataLayer`,
     enableWebVitalsTracking = false,
+    selfHostedOrigin = 'https://www.googletagmanager.com',
   }
 ) => {
   if (process.env.NODE_ENV === `production` || includeInDevelopment) {
@@ -83,7 +84,7 @@ exports.onRenderBody = (
         dangerouslySetInnerHTML={{
           __html: oneLine`
           ${defaultDataLayerCode}
-          ${generateGTM({ id, environmentParamStr, dataLayerName })}`,
+          ${generateGTM({ id, environmentParamStr, dataLayerName, selfHostedOrigin })}`,
         }}
       />
     )
@@ -94,7 +95,7 @@ exports.onRenderBody = (
       <noscript
         key="plugin-google-tagmanager"
         dangerouslySetInnerHTML={{
-          __html: generateGTMIframe({ id, environmentParamStr }),
+          __html: generateGTMIframe({ id, environmentParamStr, selfHostedOrigin }),
         }}
       />,
     ])
