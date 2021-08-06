@@ -8,6 +8,8 @@ packages:
     publish: $anonymous
     proxy: npmjs
   "**":
+    access: $anonymous
+    publish: $anonymous
     proxy: npmjs
 logs:
   - { type: stdout, format: pretty, level: http }
