@@ -294,6 +294,7 @@ const makeNodesMultiFilter = () => [
     internal: { type: `Test`, contentDigest: `1` },
     locale: `en`,
     author: 1,
+    date: `2021-08-06`,
     category: `foo`,
   },
   {
@@ -301,6 +302,7 @@ const makeNodesMultiFilter = () => [
     internal: { type: `Test`, contentDigest: `2` },
     locale: `en`,
     author: 2,
+    date: `2021-08-07`,
     category: `foo`,
   },
   {
@@ -308,6 +310,7 @@ const makeNodesMultiFilter = () => [
     internal: { type: `Test`, contentDigest: `3` },
     locale: `it`,
     author: 1,
+    date: `2021-08-07`,
     category: `foo`,
   },
   {
@@ -315,6 +318,7 @@ const makeNodesMultiFilter = () => [
     internal: { type: `Test`, contentDigest: `4` },
     locale: `it`,
     author: 1,
+    date: `2021-08-08`,
     category: `foo`,
   },
 ]
@@ -1852,7 +1856,10 @@ describe(`Filter fields`, () => {
 })
 
 describe(`Multiple filter fields`, () => {
-  const nodes = makeNodesMultiFilter()
+  let nodes
+  beforeEach(() => {
+    nodes = makeNodesMultiFilter()
+  })
 
   describe(`$eq + $eq`, () => {
     it(`supports simple query`, async () => {
@@ -1892,9 +1899,42 @@ describe(`Multiple filter fields`, () => {
     })
   })
 
+  describe(`$eq + $gte`, () => {
+    it(`supports simple query`, async () => {
+      const result = await runQuery(
+        {
+          filter: {
+            locale: { eq: `en` },
+            date: { gte: `2021-08-06` },
+          },
+        },
+        nodes
+      )
+      const ids = result.map(n => n.id)
+      expect(ids).toEqual([`1`, `2`])
+    })
+
+    it(`supports query with sort by a different field`, async () => {
+      const result = await runQuery(
+        {
+          filter: {
+            locale: { eq: `en` },
+            date: { gte: `2021-08-06` },
+          },
+          sort: {
+            fields: [`author`],
+            order: [`DESC`],
+          },
+        },
+        nodes
+      )
+      const ids = result.map(n => n.id)
+      expect(ids).toEqual([`2`, `1`])
+    })
+  })
+
   // TODO:
   describe(`$eq + $in`, () => {})
-  describe(`$eq + $gt`, () => {})
   describe(`$eq + $lt`, () => {})
   describe(`$eq + $gt + $lt`, () => {})
   describe(`$in + $in`, () => {})
