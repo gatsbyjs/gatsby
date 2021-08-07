@@ -415,9 +415,11 @@ query MyQuery {
 
 Now that your GraphQL query is all set up, it's time to replace the page query in your Blog page component.
 
-1. Start by swapping out the `allFile` page query in your Blog page for the one you just created using `allMdx`. (Don't forget to delete the query name!)
+1. Start by swapping out the `allFile` page query in your Blog page for the one you just created using `allMdx`. (Don't forget to delete the query name!) You'll also need to import the `graphql` tag from the `gatsby` package.
     ```js:title=src/pages/blog.js
-    // imports
+    import * as React from 'react'
+    import { graphql } from 'gatsby' // highlight-line
+    import Layout from '../components/layout'
 
     const BlogPage = ({ data }) => {
       return (
