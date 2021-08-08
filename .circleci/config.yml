@@ -694,7 +694,7 @@ orbs:
               steps:
                 - restore_cache:
                     keys:
-                      - yarn-verdaccio-<< pipeline.git.revision >>
+                      - yarn-verdaccio-<< pipeline.number >>
                     name: Restore local NPM registry cache
           - run:
               background: true
