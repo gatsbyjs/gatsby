@@ -174,8 +174,7 @@ commands:
       - run:
           background: true
           command: |
-            npx verdaccio@^5.0.0 -c .circleci/verdaccio/config.yaml &
-            sleep 1
+            npx verdaccio@^5.0.0 -c .circleci/verdaccio/config.yaml
       - run:
           name: "wait for verdaccio"
           command: curl --ipv4 --max-time 10  --retry 10 --retry-delay 0 --retry-connrefused --retry-max-time 40 'http://localhost:4873'
