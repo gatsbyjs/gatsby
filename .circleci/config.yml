@@ -172,6 +172,7 @@ jobs:
           name: Validate renovate-config
       - run: yarn bootstrap -- concurrency=2
       - verdaccio/setup:
+          cacheKey: << pipeline.number >>
           config-path: .circleci/verdaccio/config.yaml
       - run:
           command: |
@@ -188,7 +189,7 @@ jobs:
             yarn lerna publish --yes --canary --ignore-scripts --exact --preid circleci --pre-dist-tag circleci --force-publish --registry=http://localhost:4873
           name: Publish packages to local registry
       - save_cache:
-          key: yarn-verdaccio-<< pipeline.git.revision >>
+          key: verdaccio-<< pipeline.git.revision >>
           name: Save verdaccio cache
           paths:
             - /tmp/verdaccio/
@@ -674,6 +675,10 @@ orbs:
         description: |
           Starts a verdacio server in the background and waits until it's ready
         parameters:
+          cacheKey:
+            description: |
+              Cachekey to use for the cache
+            type: string
           config-path:
             description: |
               Path to verdaccio config
@@ -694,7 +699,7 @@ orbs:
               steps:
                 - restore_cache:
                     keys:
-                      - yarn-verdaccio-<< pipeline.number >>
+                      - verdaccio-<< parameters.cacheKey >>
                     name: Restore local NPM registry cache
           - run:
               background: true
