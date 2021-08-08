@@ -137,8 +137,8 @@ commands:
       - when:
           condition: << parameters.condition >>
           steps:
-            - channel: eng-react-integration-status
-              slack/status: null
+            - slack/status:
+                channel: eng-react-integration-status
 executors:
   node:
     docker:
