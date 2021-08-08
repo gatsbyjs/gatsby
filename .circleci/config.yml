@@ -189,7 +189,7 @@ jobs:
             yarn lerna publish --yes --canary --ignore-scripts --exact --preid circleci --pre-dist-tag circleci --force-publish --registry=http://localhost:4873
           name: Publish packages to local registry
       - save_cache:
-          key: verdaccio-<< pipeline.git.revision >>
+          key: verdaccio-<< pipeline.number >>
           name: Save verdaccio cache
           paths:
             - /tmp/verdaccio/
