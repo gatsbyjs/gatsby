@@ -676,6 +676,7 @@ orbs:
           Starts a verdacio server in the background and waits until it's ready
         parameters:
           cacheKey:
+            default: ""
             description: |
               Cachekey to use for the cache
             type: string
