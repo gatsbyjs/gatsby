@@ -172,7 +172,7 @@ jobs:
           name: Validate renovate-config
       - run: yarn bootstrap -- concurrency=2
       - verdaccio/setup:
-          cacheKey: << pipeline.number >>
+          cacheKey: << pipeline.git.revision >>
           config-path: .circleci/verdaccio/config.yaml
       - run:
           command: |
