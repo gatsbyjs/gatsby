@@ -34,7 +34,7 @@ If you've either experienced, or are worried about OOM memory crashes, we strong
 
 It's a good practice to profile memory periodically once your site crosses 10k or 20k pages, or if you've experienced out-of-memory challenges on smaller sites.
 
-The Gatsby team's recommendation is to run Gatsby within a profiling tool like [process-top](https://github.com/mafintosh/process-top). Run your site like the following:
+The Gatsby team's recommendation is to run `gatsby` within a profiling tool like [process-top](https://github.com/mafintosh/process-top). Run your site like the following:
 
 `npx process-top ./node_modules/.bin/gatsby build`
 
