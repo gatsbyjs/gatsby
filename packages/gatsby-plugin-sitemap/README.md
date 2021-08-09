@@ -153,9 +153,9 @@ is needed.
 
 **Returns**: <code>string</code> - - uri of the page without domain or protocol
 
-| Param | Type                | Description         |
-| ----- | ------------------- | ------------------- | ------------------------------------- |
-| page  | <code>object</code> | <code>string</code> | Array Item returned from resolvePages |
+| Param | Type                | Description                           |
+| ----- | ------------------- | ------------------------------------- |
+| page  | <code>object</code> | Array Item returned from resolvePages |
 
 <a id=resolvePages></a>
 
