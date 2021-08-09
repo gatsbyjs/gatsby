@@ -8,6 +8,7 @@ import PQueue from "p-queue"
 import { dump } from "dumper.js"
 import { actions as gatsbyActions } from "gatsby/dist/redux/actions/public"
 
+import { remoteSchemaSupportsFieldNameOnTypeName } from "~/steps/ingest-remote-schema/introspect-remote-schema"
 import { paginatedWpNodeFetch } from "~/steps/source-nodes/fetch-nodes/fetch-nodes-paginated"
 import fetchGraphql from "~/utils/fetch-graphql"
 
@@ -17,7 +18,6 @@ import { fetchAndCreateSingleNode } from "~/steps/source-nodes/update-nodes/wp-a
 import { formatLogMessage } from "~/utils/format-log-message"
 import { touchValidNodes } from "../source-nodes/update-nodes/fetch-node-updates"
 
-import { IPluginOptions } from "~/models/gatsby-api"
 import { Reporter } from "gatsby/reporter"
 
 const inDevelopPreview =
@@ -52,6 +52,7 @@ export interface IPreviewData {
   since?: number
   refreshing?: boolean
   preview?: boolean
+  manifestIds?: Array<string>
 }
 
 interface IPageNode {
@@ -285,18 +286,27 @@ export const sourcePreview = async ({
     isPreview: true,
   })
 
-  if (`unstable_createNodeManifest` in actions && node) {
-    const manifestId = node.databaseId + previewData.modified
+  if (
+    previewData?.manifestIds?.length &&
+    `unstable_createNodeManifest` in actions &&
+    node
+  ) {
+    previewData.manifestIds.forEach(manifestId => {
+      actions.unstable_createNodeManifest({
+        manifestId,
+        node,
+      })
+    })
 
     reporter.info(
       formatLogMessage(
-        `Creating node manifest for ${node.id} with manifestId ${manifestId}`
+        `Creating node manifests for ${
+          node.id
+        } with manifestIds: [${previewData.manifestIds
+          .map(id => `"${id}"`)
+          .join(`, `)}]`
       )
     )
-    actions.unstable_createNodeManifest({
-      manifestId,
-      node,
-    })
   }
 }
 
@@ -361,6 +371,13 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
     return
   }
 
+  const wpGatsbyPreviewNodeManifestsAreSupported = await remoteSchemaSupportsFieldNameOnTypeName(
+    {
+      typeName: `GatsbyPreviewData`,
+      fieldName: `manifestIds`,
+    }
+  )
+
   const previewActions = await paginatedWpNodeFetch({
     contentTypePlural: `actionMonitorActions`,
     nodeTypeName: `ActionMonitor`,
@@ -377,8 +394,9 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
             status: PRIVATE
             orderby: { field: MODIFIED, order: DESC }
             sinceTimestamp: ${
-              // only source previews made in the last 10 minutes
-              Date.now() - 1000 * 60 * 10
+              // only source previews made in the last 60 minutes
+              // We delete every preview action we process so this accounts for very long cold builds between previews.
+              Date.now() - 1000 * 60 * 60
             }
           }
           first: 100
@@ -394,6 +412,7 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
               remoteUrl
               singleName
               userDatabaseId
+              ${wpGatsbyPreviewNodeManifestsAreSupported ? `manifestIds` : ``}
             }
           }
           pageInfo {
