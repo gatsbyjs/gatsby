@@ -30,8 +30,8 @@ export async function createPages({
   // eslint-disable-next-line
   function wrappedGraphQL() {
     const start = Date.now()
-    // eslint-disable-next-line
-    const returnValue = originalGraphQL.apply(this, arguments)
+    // @ts-ignore not sure how to type the following
+    const returnValue = originalGraphQL.apply(this, arguments) // eslint-disable-line
     const end = Date.now()
     const totalMS = end - start
     if (totalMS > 10000) {
