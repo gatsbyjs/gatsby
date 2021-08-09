@@ -176,13 +176,16 @@ export const createSingleNode = async ({
 
   const { createContentDigest } = helpers
 
+  const builtTypename = buildTypeName(typeInfo.nodesTypeName)
+
   let remoteNode = {
     ...processedNode,
+    __typename: builtTypename,
     id: id,
     parent: null,
     internal: {
       contentDigest: createContentDigest(updatedNodeContent),
-      type: buildTypeName(typeInfo.nodesTypeName),
+      type: builtTypename,
     },
   }
 
