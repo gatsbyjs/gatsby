@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.11.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.11.0...gatsby-source-contentful@5.11.1) (2021-08-09)
+
+### Bug Fixes
+
+- **contentful:** base64 previews now reflect all query options ([#32709](https://github.com/gatsbyjs/gatsby/issues/32709)) ([#32746](https://github.com/gatsbyjs/gatsby/issues/32746)) ([4f8d93b](https://github.com/gatsbyjs/gatsby/commit/4f8d93b7938236b5fcdc20a5f233fd924010e9cb))
+
 # [5.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.11.0-next.0...gatsby-source-contentful@5.11.0) (2021-08-04)
 
 **Note:** Version bump only for package gatsby-source-contentful

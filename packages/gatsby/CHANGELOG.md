@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.11.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0...gatsby@3.11.1) (2021-08-09)
+
+### Bug Fixes
+
+- **gatsby:** Silence process.send Error ([#32744](https://github.com/gatsbyjs/gatsby/issues/32744)) ([#32747](https://github.com/gatsbyjs/gatsby/issues/32747)) ([ac7c641](https://github.com/gatsbyjs/gatsby/commit/ac7c6410d168dd892739cda56e7e4d0e67b2fad3))
+
+### Features
+
+- **gatsby:** allow sites to disable the dev 404 page ([#32686](https://github.com/gatsbyjs/gatsby/issues/32686)) ([#32745](https://github.com/gatsbyjs/gatsby/issues/32745)) ([54d3315](https://github.com/gatsbyjs/gatsby/commit/54d3315560041883e010b91610b1597a2a2466ec))
+
 # [3.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.6...gatsby@3.11.0) (2021-08-04)
 
 ### Bug Fixes
