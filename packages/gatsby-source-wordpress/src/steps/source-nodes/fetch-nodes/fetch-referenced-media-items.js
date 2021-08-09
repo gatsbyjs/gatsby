@@ -282,26 +282,24 @@ export const fetchMediaItemsBySourceUrl = async ({
 }) => {
   const processedMediaItemUrls = processAndDedupeImageUrls(mediaItemUrls)
 
-  const {
-    cachedMediaItemNodeIds,
-    uncachedMediaItemUrls,
-  } = processedMediaItemUrls.reduce(
-    (accumulator, url) => {
-      const { id } = getFileNodeMetaBySourceUrl(url) || {}
+  const { cachedMediaItemNodeIds, uncachedMediaItemUrls } =
+    processedMediaItemUrls.reduce(
+      (accumulator, url) => {
+        const { id } = getFileNodeMetaBySourceUrl(url) || {}
 
-      // if we have a cached image and we haven't already recorded this cached image
-      if (id && !accumulator.cachedMediaItemNodeIds.includes(id)) {
-        // save it
-        accumulator.cachedMediaItemNodeIds.push(id)
-      } else if (!id) {
-        // otherwise we need to fetch this media item by url
-        accumulator.uncachedMediaItemUrls.push(url)
-      }
+        // if we have a cached image and we haven't already recorded this cached image
+        if (id && !accumulator.cachedMediaItemNodeIds.includes(id)) {
+          // save it
+          accumulator.cachedMediaItemNodeIds.push(id)
+        } else if (!id) {
+          // otherwise we need to fetch this media item by url
+          accumulator.uncachedMediaItemUrls.push(url)
+        }
 
-      return accumulator
-    },
-    { cachedMediaItemNodeIds: [], uncachedMediaItemUrls: [] }
-  )
+        return accumulator
+      },
+      { cachedMediaItemNodeIds: [], uncachedMediaItemUrls: [] }
+    )
 
   // take our previously cached id's and get nodes for them
   const previouslyCachedMediaItemNodes = await Promise.all(
@@ -329,7 +327,7 @@ export const fetchMediaItemsBySourceUrl = async ({
   const allPromises = []
   // for all the images we don't have cached, loop through and get them all
   for (const [index, sourceUrls] of mediaItemUrlsPages.entries()) {
-    const curPromise = new Promise((resolve, reject) => {
+    const curPromise = new Promise(resolve => {
       pushPromiseOntoRetryQueue({
         helpers,
         createContentDigest,
