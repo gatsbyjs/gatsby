@@ -19,6 +19,8 @@ import { IProgram } from "./types"
 import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
 import { IGatsbyFunction } from "../redux/types"
 import { reverseFixedPagePath } from "../utils/page-data"
+import handleFlags from "../utils/handle-flags"
+import availableFlags from "../utils/flags"
 
 interface IMatchPath {
   path: string
@@ -49,7 +51,7 @@ const readMatchPaths = async (
   try {
     rawJSON = await fs.readFile(filePath, `utf8`)
   } catch (error) {
-    report.warn(error)
+    report.warn(error.toString())
     report.warn(
       `Could not read ${chalk.bold(
         `match-paths.json`
@@ -100,13 +102,35 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   let { prefixPaths, port, open, host } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
-  const { configModule } = await getConfigFile(
-    program.directory,
-    `gatsby-config`
-  )
-  const config = preferDefault(configModule)
+  let config
+  try {
+    const { configModule } = await getConfigFile(
+      program.directory,
+      `gatsby-config`
+    )
+    config = preferDefault(configModule)
+  } catch (e) {
+    // ignore
+  }
 
   const { pathPrefix: configPathPrefix } = config || {}
+
+  if (config) {
+    // Get flags
+    const { enabledConfigFlags } = handleFlags(availableFlags, config.flags)
+
+    //  track usage of feature
+    enabledConfigFlags.forEach(flag => {
+      if (flag.telemetryId) {
+        telemetry.trackFeatureIsUsed(flag.telemetryId)
+      }
+    })
+
+    // Track the usage of config.flags
+    if (config.flags) {
+      telemetry.trackFeatureIsUsed(`ConfigFlags`)
+    }
+  }
 
   const pathPrefix = prefixPaths && configPathPrefix ? configPathPrefix : `/`
 
@@ -123,8 +147,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   const matchPaths = await readMatchPaths(program)
   router.use(matchPathRouter(matchPaths, { root }))
 
-  if (process.env.GATSBY_EXPERIMENTAL_ENGINES) {
-    console.log(`init engines support`)
+  if (process.env.GATSBY_EXPERIMENTAL_GENERATE_ENGINES) {
     const { GraphQLEngine } = require(path.join(
       program.directory,
       `.cache`,
@@ -152,13 +175,8 @@ module.exports = async (program: IServeProgram): Promise<void> => {
         const page = graphqlEngine.findPageByPath(pathName)
 
         if (page && page.mode === `DSR`) {
-          console.log(`Received page-data request for DSR page`, {
-            pathName,
-            page,
-          })
           const data = await getData({ pathName, graphqlEngine })
           const results = await renderPageData({ data })
-          console.log(`Serving page-data`, pathName)
           res.send(results)
           return
         }
@@ -179,10 +197,8 @@ module.exports = async (program: IServeProgram): Promise<void> => {
         const page = graphqlEngine.findPageByPath(pathName)
 
         if (page && page.mode === `DSR`) {
-          console.log(`Received html request for DSR page`, { pathName, page })
           const data = await getData({ pathName, graphqlEngine })
           const results = await renderHTML({ data })
-          console.log(`Serving html`, pathName)
           res.send(results)
           return
         }
@@ -389,7 +405,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
         port
       )
       printInstructions(
-        program.sitePackageJson.name || `(Unnamed package)`,
+        program?.sitePackageJson?.name || `(Unnamed package)`,
         urls
       )
       if (open) {
