@@ -411,7 +411,7 @@ export const fetchMediaItemsBySourceUrl = async ({
   await mediaFileFetchQueue.onIdle()
 
   const allResults = await Promise.all(allPromises)
-  return allResults.flatMap(elem => elem)
+  return allResults.flat()
 }
 
 export const fetchMediaItemsById = async ({
@@ -506,7 +506,7 @@ export const fetchMediaItemsById = async ({
   await mediaFileFetchQueue.onIdle()
 
   const allResults = await Promise.all(allPromises)
-  return allResults.flatMap(elem => elem)
+  return allResults.flat()
 }
 
 export default async function fetchReferencedMediaItemsAndCreateNodes({
