@@ -20,40 +20,54 @@ import { gatsbyNodes, flattenedPlugins } from ".cache/query-engine-plugins"
 export class GraphQLEngine {
   // private schema: GraphQLSchema
   private runner?: Runner
+  private runnerPromise?: Promise<Runner>
 
   constructor({ dbPath }: { dbPath: string }) {
     setupLmdbStore({ dbPath })
+    // start initting runner ASAP
+    this.getRunner()
+  }
+
+  private async _doGetRunner(): Promise<Runner> {
+    // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
+    store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
+
+    // TODO: FLATTENED_PLUGINS needs to be merged with plugin options from gatsby-config
+    //  (as there might be non-serializable options, i.e. functions)
+    store.dispatch({
+      type: `SET_SITE_FLATTENED_PLUGINS`,
+      payload: flattenedPlugins,
+    })
+
+    for (const pluginName of Object.keys(gatsbyNodes)) {
+      setGatsbyNodeCache(pluginName, gatsbyNodes[pluginName])
+    }
+
+    // Build runs
+    await build({ fullMetadataBuild: false, freeze: true })
+
+    // this.schema = await buildSchema({
+    //   types: [{ typeOrTypeDef: SCHEMA_SNAPSHOT }, { name: `query-engine` }],
+    // })
+
+    // this.schema = store.getState().schema
+
+    return createGraphQLRunner(store, reporter)
   }
 
   private async getRunner(): Promise<Runner> {
-    if (!this.runner) {
-      // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
-      store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
-
-      // TODO: FLATTENED_PLUGINS needs to be merged with plugin options from gatsby-config
-      //  (as there might be non-serializable options, i.e. functions)
-      store.dispatch({
-        type: `SET_SITE_FLATTENED_PLUGINS`,
-        payload: flattenedPlugins,
+    if (this.runner) {
+      return this.runner
+    } else if (this.runnerPromise) {
+      return this.runnerPromise
+    } else {
+      this.runnerPromise = this._doGetRunner()
+      this.runnerPromise.then(runner => {
+        this.runner = runner
+        this.runnerPromise = undefined
       })
-
-      for (const pluginName of Object.keys(gatsbyNodes)) {
-        setGatsbyNodeCache(pluginName, gatsbyNodes[pluginName])
-      }
-
-      // Build runs
-      await build({ fullMetadataBuild: false, freeze: true })
-
-      // this.schema = await buildSchema({
-      //   types: [{ typeOrTypeDef: SCHEMA_SNAPSHOT }, { name: `query-engine` }],
-      // })
-
-      // this.schema = store.getState().schema
-
-      this.runner = createGraphQLRunner(store, reporter)
+      return this.runnerPromise
     }
-
-    return this.runner
   }
 
   public async runQuery(...args: Parameters<Runner>): ReturnType<Runner> {
