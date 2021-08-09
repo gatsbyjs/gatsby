@@ -442,7 +442,7 @@ Try removing the `{" "}` and see what happens. The paragraph text should end up 
 
 Take a moment to think back on what you've learned so far. Challenge yourself to answer the following questions from memory:
 
-* ?
+* When should you use the `GatsbyImage` component instead of the `StaticImage` component?
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -464,7 +464,8 @@ Once your changes have been pushed to GitHub, Gatsby Cloud should notice the upd
 
 ### Key takeaways
 
-* .
+* Use the `StaticImage` component if your component always renders the same image (from a relative path or a remote URL).
+* Use the `GatsbyImage` component if the image source is changes for different instances of your component (like if it gets passed in as a prop).
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
