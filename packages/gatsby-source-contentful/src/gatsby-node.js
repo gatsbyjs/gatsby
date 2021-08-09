@@ -24,7 +24,8 @@ const restrictedNodeFields = [
   `parent`,
 ]
 
-exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
+exports.setFieldsOnGraphQLNodeType =
+  require(`./extend-node-type`).extendNodeType
 
 const validateContentfulAccess = async pluginOptions => {
   if (process.env.NODE_ENV === `test`) return undefined

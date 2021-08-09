@@ -67,10 +67,8 @@ const pageDataMock = {
 const MOCK_FILE_INFO = {
   [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
   [`${process.cwd()}/public/chunk-map.json`]: `{}`,
-  [join(
-    process.cwd(),
-    `/public/page-data/about/page-data.json`
-  )]: JSON.stringify(pageDataMock),
+  [join(process.cwd(), `/public/page-data/about/page-data.json`)]:
+    JSON.stringify(pageDataMock),
   [join(process.cwd(), `/public/page-data/app-data.json`)]: JSON.stringify({
     webpackCompilationHash: `1234567890abcdef1234`,
   }),

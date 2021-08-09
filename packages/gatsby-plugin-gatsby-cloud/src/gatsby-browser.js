@@ -8,7 +8,7 @@ const ShadowPortal = ({ children, identifier }) => {
   const shadowNode = React.useRef(null)
   const [, forceUpdate] = React.useState()
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     const ownerDocument = mountNode.current.ownerDocument
     portalNode.current = ownerDocument.createElement(identifier)
     shadowNode.current = portalNode.current.attachShadow({ mode: `open` })
@@ -24,7 +24,7 @@ const ShadowPortal = ({ children, identifier }) => {
   return shadowNode.current ? (
     createPortal(children, shadowNode.current)
   ) : (
-    <span ref={mountNode} />
+    <span ref={mountNode}></span>
   )
 }
 

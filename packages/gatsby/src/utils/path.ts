@@ -1,9 +1,10 @@
 import path from "path"
 import { joinPath, createContentDigest } from "gatsby-core-utils"
 
-export const withBasePath = (basePath: string) => (
-  ...paths: Array<string>
-): string => joinPath(basePath, ...paths)
+export const withBasePath =
+  (basePath: string) =>
+  (...paths: Array<string>): string =>
+    joinPath(basePath, ...paths)
 
 export const withTrailingSlash = (basePath: string): string => `${basePath}/`
 

@@ -19,27 +19,21 @@ let MOCK_LMDBCACHE_INFO = {}
 
 jest.mock(`fs-extra`, () => {
   return {
-    readFile: jest.fn(
-      async (path: string): Promise<any> => {
-        if (MOCK_FILE_INFO[path]) {
-          return MOCK_FILE_INFO[path]
-        }
-        throw new Error(`Cannot read file "${path}"`)
+    readFile: jest.fn(async (path: string): Promise<any> => {
+      if (MOCK_FILE_INFO[path]) {
+        return MOCK_FILE_INFO[path]
       }
-    ),
-    readJSON: jest.fn(
-      async (path: string): Promise<any> => {
-        if (MOCK_FILE_INFO[path]) {
-          return JSON.parse(MOCK_FILE_INFO[path])
-        }
-        throw new Error(`Cannot read file "${path}"`)
+      throw new Error(`Cannot read file "${path}"`)
+    }),
+    readJSON: jest.fn(async (path: string): Promise<any> => {
+      if (MOCK_FILE_INFO[path]) {
+        return JSON.parse(MOCK_FILE_INFO[path])
       }
-    ),
-    outputFile: jest.fn(
-      async (path: string, content: string): Promise<any> => {
-        MOCK_FILE_INFO[path] = content
-      }
-    ),
+      throw new Error(`Cannot read file "${path}"`)
+    }),
+    outputFile: jest.fn(async (path: string, content: string): Promise<any> => {
+      MOCK_FILE_INFO[path] = content
+    }),
   }
 })
 

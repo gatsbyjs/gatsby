@@ -63,18 +63,19 @@ function extractUrlParamsForQuery(createdPath: string): string {
   }
 
   return parts
-    .reduce<Array<string>>((queryParts: Array<string>, part: string): Array<
-      string
-    > => {
-      if (part.includes(`{`) && part.includes(`}`)) {
-        const fields = extractField(part)
-        const derived = fields.map(f => deriveNesting(f))
+    .reduce<Array<string>>(
+      (queryParts: Array<string>, part: string): Array<string> => {
+        if (part.includes(`{`) && part.includes(`}`)) {
+          const fields = extractField(part)
+          const derived = fields.map(f => deriveNesting(f))
 
-        return queryParts.concat(derived)
-      }
+          return queryParts.concat(derived)
+        }
 
-      return queryParts
-    }, [])
+        return queryParts
+      },
+      []
+    )
     .join(`,`)
 }
 

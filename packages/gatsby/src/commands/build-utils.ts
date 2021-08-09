@@ -89,9 +89,7 @@ const pageGenerationActionPriority: Record<PageGenerationAction, number> = {
   delete: 0,
 }
 
-export function calcDirtyHtmlFiles(
-  state: IGatsbyState
-): {
+export function calcDirtyHtmlFiles(state: IGatsbyState): {
   toRegenerate: Array<string>
   toDelete: Array<string>
   toCleanupFromTrackedState: Set<string>

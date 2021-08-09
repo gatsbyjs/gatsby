@@ -40,11 +40,7 @@ type FoundPageBy =
  * When this fn is being used for routing to previews the user wont necessarily have
  * visited the page in the browser yet.
  */
-async function findPageOwnedByNodeId({
-  nodeId,
-}: {
-  nodeId: string
-}): Promise<{
+async function findPageOwnedByNodeId({ nodeId }: { nodeId: string }): Promise<{
   page: INodeManifestPage
   foundPageBy: FoundPageBy
 }> {
@@ -90,11 +86,13 @@ async function findPageOwnedByNodeId({
         break
       }
 
-      const path = (usingPagesMap
-        ? // in development we're using a Map, so the value here is a page object
-          (pathOrPageObject as IGatsbyPage).path
-        : // in builds we're using a Set so the page path is the value
-          pathOrPageObject) as string
+      const path = (
+        usingPagesMap
+          ? // in development we're using a Map, so the value here is a page object
+            (pathOrPageObject as IGatsbyPage).path
+          : // in builds we're using a Set so the page path is the value
+            pathOrPageObject
+      ) as string
 
       const fullPage: IGatsbyPage | undefined = pages.get(path)
 
@@ -105,8 +103,9 @@ async function findPageOwnedByNodeId({
       if (foundOwnerNodeId) {
         foundPageBy = `ownerNodeId`
       } else if (foundPageIdInContext && fullPage) {
-        const pageCreatedByPluginName = nodes.get(fullPage.pluginCreatorId)
-          ?.name
+        const pageCreatedByPluginName = nodes.get(
+          fullPage.pluginCreatorId
+        )?.name
 
         const pageCreatedByFilesystemPlugin =
           pageCreatedByPluginName === `gatsby-plugin-page-creator`
@@ -241,8 +240,8 @@ export async function processNodeManifest(
   // write out the manifest file
   const manifestFilePath = path.join(
     gatsbySiteDirectory,
-    `.cache`,
-    `node-manifests`,
+    `public`,
+    `__node-manifests`,
     inputManifest.pluginName,
     `${inputManifest.manifestId}.json`
   )

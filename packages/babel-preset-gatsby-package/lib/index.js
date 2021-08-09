@@ -1,8 +1,14 @@
 const r = require(`./resolver`)
 
 function preset(context, options = {}) {
-  const { browser = false, debug = false, nodeVersion = `12.13.0`, esm = false } = options
-  const { NODE_ENV, BABEL_ENV } = process.env
+  const {
+    browser = false,
+    debug = false,
+    nodeVersion = `12.13.0`,
+    esm = false,
+    availableCompilerFlags = [`GATSBY_MAJOR`],
+  } = options
+  const { NODE_ENV, BABEL_ENV, COMPILER_OPTIONS } = process.env
 
   const IS_TEST = (BABEL_ENV || NODE_ENV) === `test`
 
@@ -13,11 +19,11 @@ function preset(context, options = {}) {
   if (browser) {
     if (esm) {
       browserConfig.targets = {
-        esmodules: true
+        esmodules: true,
       }
     } else {
       browserConfig.targets = {
-        browsers: [`last 2 versions`, `not ie <= 11`, `not android 4.4.3`]
+        browsers: [`last 2 versions`, `not ie <= 11`, `not android 4.4.3`],
       }
     }
   }
@@ -28,6 +34,20 @@ function preset(context, options = {}) {
     targets: {
       node: nodeVersion,
     },
+  }
+
+  let parsedCompilerOptions = {}
+  if (COMPILER_OPTIONS) {
+    // COMPILER_OPTIONS syntax is key=value,key2=value2
+    parsedCompilerOptions = COMPILER_OPTIONS.split(`,`).reduce((acc, curr) => {
+      const [key, value] = curr.split(`=`)
+
+      if (key) {
+        acc[key] = value
+      }
+
+      return acc
+    }, Object.create(null))
   }
 
   return {
@@ -54,6 +74,13 @@ function preset(context, options = {}) {
       r(`@babel/plugin-transform-runtime`),
       r(`@babel/plugin-syntax-dynamic-import`),
       IS_TEST && r(`babel-plugin-dynamic-import-node`),
+      [
+        r(`./babel-transform-compiler-flags`),
+        {
+          flags: parsedCompilerOptions,
+          availableFlags: availableCompilerFlags,
+        },
+      ],
     ].filter(Boolean),
     overrides: [
       {

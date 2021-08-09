@@ -114,7 +114,8 @@ export function createStructuredLoggingDiagnosticsMiddleware(
           // using nextTick here to prevent infinite recursion (report.warn would
           // result in another call of this function and so on)
           process.nextTick(() => {
-            const activitiesDiagnosticsMessage = generateStuckStatusDiagnosticMessage()
+            const activitiesDiagnosticsMessage =
+              generateStuckStatusDiagnosticMessage()
             reporter.warn(
               `This is just diagnostic information (enabled by GATSBY_DIAGNOSTIC_STUCK_STATUS_TIMEOUT):\n\nThere was activity since last diagnostic message. Log action:\n\n${JSON.stringify(
                 action,
@@ -175,7 +176,8 @@ export function createStructuredLoggingDiagnosticsMiddleware(
                 context: {
                   activities: inProgressActivities(),
                   status: store.getState().logs.status,
-                  stuckStatusDiagnosticMessage: generateStuckStatusDiagnosticMessage(),
+                  stuckStatusDiagnosticMessage:
+                    generateStuckStatusDiagnosticMessage(),
                   stuckStatusWatchdogTimeoutDelay,
                 },
               })
