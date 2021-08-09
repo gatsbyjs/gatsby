@@ -122,6 +122,82 @@ This can reduce the time it takes repeated data fetching operations to run if yo
 
 You can read more about the cache API, other types of plugins that leverage the cache, and example open source plugins that use the cache in the [build caching guide](/docs/build-caching).
 
+### Adding support for Gatsby Cloud Content Loader
+
+Content Loader is a service that will allow your CMS backend to route from a piece of content to a finally built page in Gatsby. Currently, the primary use-case for this is implementing Content Previews. This allows site admins to preview their content in a Gatsby Preview instance before they decide to push it to their production site.
+
+#### How Content Loader works for users
+
+The feature will display a loading page while the users content is being built in Gatsby. Once the build is finished, the loader will route the user to the correct page. If any errors occur, the loader will let the user know. This way site admins wont be left guessing when they can view their preview content.
+
+TODO: write and then link to the site developer docs on how ownerNodeId in createPage relates to this feature.
+
+TODO: what is a node manifest?
+
+#### Why use Content Loader
+
+Using Content Loader has some advantages over having your CMS load and route to previews.
+
+1. The loader is aware of wether or not the build has finished, allowing the user to be routed to the right page at the right time.
+2. The loader has error handling to let the user know if a build failed.
+3. The loader can route the user to the correct page even if the page path has been constructed in ways the CMS isn't aware of.
+4. The loader will let the user know if no page was created in the Gatsby site for the content they're attempting to preview.
+
+#### How to support Content Loader
+
+Source plugins that wish to support this feature need to do a few things:
+
+##### Understanding and constructing node manifest ID's
+
+TODO
+
+##### Add a new CMS setting field for the Content Loader URL
+
+TODO
+
+##### Add an "Open Preview" button to the content editing view of your CMS
+
+TODO
+
+##### Always trigger a new build for the previewed content when a user opens the Content Loader
+
+TODO
+
+##### Add a manifest ID to your Preview Webhooks
+
+TODO
+
+##### Call createNodeManifest during sourceNodes
+
+During node sourcing, call [`actions.unstable_createNodeManifest()`](https://www.gatsbyjs.com/docs/reference/config-files/actions/#unstable_createNodeManifest) on each node a user is intending to preview. Be sure to check that this action exists before calling it in case the user is on a version of Gatsby core which doesn't yet support this action.
+
+For example:
+
+```js
+exports.sourceNodes = async ({ webhookBody, actions, createContentDigest }) => {
+  const cmsNodeData = await exampleFunctionFetchCmsNode(webhookBody.nodeId)
+
+  const node = {
+    ...cmsNodeData,
+    internal: {
+      type: `ExampleNode`,
+      contentDigest: createContentDigest(cmsNodeData),
+    },
+  }
+
+  actions.createNode(node)
+
+  if (cmsNodeData && `unstable_createNodeManifest` in actions) {
+    actions.unstable_createNodeManifest({
+      manifestId: webhookBody.manifestId,
+      node,
+    })
+  }
+}
+```
+
+This action will link the `manifestId` to a page that was created from this node. This allows Content Loader to connect the `manifestId` to a users intent to view a built page and route them there at the right time.
+
 ### Adding relationships between nodes
 
 Gatsby source plugins not only create nodes, they also create relationships between nodes that are exposed to GraphQL queries.
