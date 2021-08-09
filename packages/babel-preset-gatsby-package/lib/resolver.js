@@ -1,3 +1,3 @@
 const r = m => require.resolve(m)
 
-module.exports = r;
+module.exports = r

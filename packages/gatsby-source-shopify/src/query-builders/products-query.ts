@@ -3,7 +3,7 @@ import { BulkQuery } from "./bulk-query"
 export class ProductsQuery extends BulkQuery {
   query(date?: Date): string {
     const publishedStatus = this.pluginOptions.salesChannel
-      ? encodeURIComponent(`${this.pluginOptions.salesChannel}=visible`)
+      ? `'${encodeURIComponent(this.pluginOptions.salesChannel)}:visible'`
       : `published`
 
     const filters = [`status:active`, `published_status:${publishedStatus}`]

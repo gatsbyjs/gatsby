@@ -611,6 +611,22 @@ const replaceNodeHtmlImages = async ({
               reporter,
               cache,
             })
+
+            if (pluginOptions?.html?.generateWebpImages) {
+              const webpResult = await fluid({
+                file: fileNode,
+                args: {
+                  maxWidth,
+                  quality,
+                  pathPrefix,
+                  toFormat: `WEBP`,
+                },
+                reporter,
+                cache,
+              })
+
+              fluidResult.srcSetWebp = webpResult.srcSet
+            }
           } catch (e) {
             reporter.error(e)
             reporter.warn(

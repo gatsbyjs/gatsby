@@ -47,6 +47,7 @@
   - [html.fallbackImageMaxWidth](#htmlfallbackimagemaxwidth)
   - [html.imageQuality](#htmlimagequality)
   - [html.createStaticFiles](#htmlcreatestaticfiles)
+  - [html.generateWebpImages](#htmlgeneratewebpimages)
 - [type](#type)
   - [type.\_\_all](#type__all)
     - [type.\_\_all.where](#type__allwhere)
@@ -954,6 +955,26 @@ When this is true, any url's which are wrapped in "", '', or () and which contai
   options: {
     html: {
       createStaticFiles: true,
+    },
+  },
+}
+
+```
+
+### html.generateWebpImages
+
+When this is true, .webp images will be generated for images in html fields in addition to the images gatsby-image normally generates.
+
+**Field type**: `Boolean`
+
+**Default value**: `false`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    html: {
+      generateWebpImages: false,
     },
   },
 }
