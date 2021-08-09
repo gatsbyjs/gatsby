@@ -240,9 +240,10 @@ describe(`<Link />`, () => {
       const { link } = setup({ linkProps: { to, replace: false } })
       link.click()
 
-      expect(
-        global.___navigate
-      ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { replace: false })
+      expect(global.___navigate).toHaveBeenCalledWith(
+        `${global.__BASE_PATH__}${to}`,
+        { replace: false }
+      )
     })
 
     it(`respects force enabling replace`, () => {
@@ -251,9 +252,10 @@ describe(`<Link />`, () => {
       const { link } = setup({ linkProps: { to, replace: true } })
       link.click()
 
-      expect(
-        global.___navigate
-      ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { replace: true })
+      expect(global.___navigate).toHaveBeenCalledWith(
+        `${global.__BASE_PATH__}${to}`,
+        { replace: true }
+      )
     })
 
     it(`does not replace history when navigating away`, () => {
@@ -274,9 +276,10 @@ describe(`<Link />`, () => {
       const { link } = setup({ linkProps: { to } })
       link.click()
 
-      expect(
-        global.___navigate
-      ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { replace: true })
+      expect(global.___navigate).toHaveBeenCalledWith(
+        `${global.__BASE_PATH__}${to}`,
+        { replace: true }
+      )
     })
   })
 })

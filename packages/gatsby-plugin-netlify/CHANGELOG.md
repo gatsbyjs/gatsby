@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.12.0-next.2...gatsby-plugin-netlify@3.12.0-next.3) (2021-08-09)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+# [3.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.12.0-next.1...gatsby-plugin-netlify@3.12.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+# [3.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.12.0-next.0...gatsby-plugin-netlify@3.12.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency webpack-assets-manifest to ^5.0.6 for gatsby-plugin-netlify ([#32593](https://github.com/gatsbyjs/gatsby/issues/32593)) ([fa0f286](https://github.com/gatsbyjs/gatsby/commit/fa0f2863a7dfd51c0323032e80aa9f1868d2e506))
+
+# [3.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.11.0-next.0...gatsby-plugin-netlify@3.12.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+# [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.10.0-next.1...gatsby-plugin-netlify@3.11.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+# [3.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.10.0-next.0...gatsby-plugin-netlify@3.10.0-next.1) (2021-07-08)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
 # [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.9.0-next.1...gatsby-plugin-netlify@3.10.0-next.0) (2021-07-01)
 
 **Note:** Version bump only for package gatsby-plugin-netlify

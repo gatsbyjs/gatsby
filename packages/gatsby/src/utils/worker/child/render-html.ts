@@ -221,9 +221,8 @@ async function doGetResourcesForTemplate(
   const staticQueryResultPromises: Array<Promise<void>> = []
   const staticQueryContext: Record<string, any> = {}
   for (const staticQueryHash of pageData.staticQueryHashes) {
-    const memoizedStaticQueryResult = staticQueryResultCache.get(
-      staticQueryHash
-    )
+    const memoizedStaticQueryResult =
+      staticQueryResultCache.get(staticQueryHash)
     if (memoizedStaticQueryResult) {
       staticQueryContext[staticQueryHash] = memoizedStaticQueryResult
       continue
@@ -326,14 +325,12 @@ export const renderHTMLProd = async ({
         const pageData = await readPageData(publicDir, pagePath)
         const resourcesForTemplate = await getResourcesForTemplate(pageData)
 
-        const {
-          html,
-          unsafeBuiltinsUsage,
-        } = await htmlComponentRenderer.default({
-          pagePath,
-          pageData,
-          ...resourcesForTemplate,
-        })
+        const { html, unsafeBuiltinsUsage } =
+          await htmlComponentRenderer.default({
+            pagePath,
+            pageData,
+            ...resourcesForTemplate,
+          })
 
         if (unsafeBuiltinsUsage.length > 0) {
           unsafeBuiltinsUsageByPagePath[pagePath] = unsafeBuiltinsUsage

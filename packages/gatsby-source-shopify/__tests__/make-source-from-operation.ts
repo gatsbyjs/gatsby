@@ -534,6 +534,7 @@ describe(`A production build`, () => {
 
 describe(`When an operation gets canceled`, () => {
   const bulkResult = { id: `gid://shopify/Product/12345` }
+  process.env.GATSBY_IS_PREVIEW = `true`
 
   beforeEach(() => {
     server.use(

@@ -28,8 +28,10 @@ const buildFallbackChain = locales => {
   )
   return localesFallback
 }
-const makeGetLocalizedField = ({ locale, localesFallback }) => field =>
-  getLocalizedField({ field, locale, localesFallback })
+const makeGetLocalizedField =
+  ({ locale, localesFallback }) =>
+  field =>
+    getLocalizedField({ field, locale, localesFallback })
 
 exports.getLocalizedField = getLocalizedField
 exports.buildFallbackChain = buildFallbackChain
@@ -45,11 +47,10 @@ const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
 
 exports.makeId = makeId
 
-const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => (
-  spaceId,
-  id,
-  type
-) => createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
+const makeMakeId =
+  ({ currentLocale, defaultLocale, createNodeId }) =>
+  (spaceId, id, type) =>
+    createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
 exports.buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
@@ -76,11 +77,9 @@ exports.buildResolvableSet = ({
 }) => {
   const resolvable = new Set()
   existingNodes.forEach(node => {
-    if (node.internal.owner === `gatsby-source-contentful`) {
-      // We need to add only root level resolvable (assets and entries)
-      // Derived nodes (markdown or JSON) will be recreated if needed.
-      resolvable.add(`${node.contentful_id}___${node.sys.type}`)
-    }
+    // We need to add only root level resolvable (assets and entries)
+    // Derived nodes (markdown or JSON) will be recreated if needed.
+    resolvable.add(`${node.contentful_id}___${node.sys.type}`)
   })
 
   entryList.forEach(entries => {
@@ -230,7 +229,6 @@ function prepareJSONNode(id, node, key, content) {
 
 exports.createNodesForContentType = ({
   contentTypeItem,
-  contentTypeItems,
   restrictedNodeFields,
   conflictFieldPrefix,
   entries,
@@ -243,6 +241,7 @@ exports.createNodesForContentType = ({
   locales,
   space,
   useNameForId,
+  pluginConfig,
 }) => {
   // Establish identifier for content type
   //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
@@ -346,9 +345,8 @@ exports.createNodesForContentType = ({
                     )
                   })
                 if (resolvableEntryItemFieldValue.length !== 0) {
-                  entryItemFields[
-                    `${entryItemFieldKey}___NODE`
-                  ] = resolvableEntryItemFieldValue
+                  entryItemFields[`${entryItemFieldKey}___NODE`] =
+                    resolvableEntryItemFieldValue
                 }
 
                 delete entryItemFields[entryItemFieldKey]
@@ -590,6 +588,15 @@ exports.createNodesForContentType = ({
 
         // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
         entryNode.internal.contentDigest = entryItem.sys.updatedAt
+
+        // Link tags
+        if (pluginConfig.get(`enableTags`)) {
+          entryNode.metadata = {
+            tags___NODE: entryItem.metadata.tags.map(tag =>
+              createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
+            ),
+          }
+        }
 
         return entryNode
       })

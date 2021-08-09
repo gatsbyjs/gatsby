@@ -195,13 +195,10 @@ describe(`gatsby-transformer-documentationjs: onCreateNode`, () => {
         expect(nestedNode.name).toBe(`nested`)
         expect(nestedNode.properties___NODE).toBeDefined()
         expect(nestedNode.properties___NODE.length).toBe(3)
-        ;[
-          nestedFooNode,
-          nestedOptionalNode,
-          nestedCallbackNode,
-        ] = nestedNode.properties___NODE.map(paramID =>
-          createdNodes.find(node => node.id === paramID)
-        )
+        ;[nestedFooNode, nestedOptionalNode, nestedCallbackNode] =
+          nestedNode.properties___NODE.map(paramID =>
+            createdNodes.find(node => node.id === paramID)
+          )
       })
 
       it(`should strip prefixes from nested nodes`, () => {

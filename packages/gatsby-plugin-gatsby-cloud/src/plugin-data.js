@@ -1,4 +1,5 @@
 import path from "path"
+import fs from "fs-extra"
 
 export function buildPrefixer(prefix, ...paths) {
   return (...subpaths) => path.join(prefix, ...paths, ...subpaths)
@@ -15,7 +16,7 @@ export default function makePluginData(store, assetsManifest, pathPrefix) {
     `.cache`,
     `functions`
   )
-  const stats = require(publicFolder(`webpack.stats.json`))
+  const stats = fs.readJSONSync(publicFolder(`webpack.stats.json`))
   // Get all the files, not just the first
   const chunkManifest = stats.assetsByChunkName
 

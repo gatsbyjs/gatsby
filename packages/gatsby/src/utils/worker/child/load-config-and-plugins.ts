@@ -1,5 +1,6 @@
 import { loadConfigAndPlugins as internalLoadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
 import { store } from "../../../redux"
+import apiRunnerNode from "../../api-runner-node"
 
 export async function loadConfigAndPlugins(
   ...args: Parameters<typeof internalLoadConfigAndPlugins>
@@ -14,4 +15,7 @@ export async function loadConfigAndPlugins(
     },
   })
   await internalLoadConfigAndPlugins(...args)
+
+  // Cache is already initialized
+  await apiRunnerNode(`unstable_onPluginInit`)
 }

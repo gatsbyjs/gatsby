@@ -54,6 +54,7 @@ There are 2 other flags available that you might be interested in:
 - FAST_DEV · Enable all experiments aimed at improving develop server start time
 - YET_ANOTHER · (Umbrella Issue (test)) · test
 ",
+  "unfitFlagMessage": "",
   "unknownFlagMessage": "",
 }
 `;
@@ -101,6 +102,7 @@ There are 4 other flags available that you might be interested in:
 - ALL_COMMANDS · (Umbrella Issue (test)) · test
 - YET_ANOTHER · (Umbrella Issue (test)) · test
 ",
+  "unfitFlagMessage": "",
   "unknownFlagMessage": "",
 }
 `;
@@ -160,6 +162,7 @@ There are 3 other flags available that you might be interested in:
 - DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
 - YET_ANOTHER · (Umbrella Issue (test)) · test
 ",
+  "unfitFlagMessage": "",
   "unknownFlagMessage": "The following flag(s) found in your gatsby-config.js are not known:
 - FASTLY_DEV (did you mean: FAST_DEV)
 - SUPER_COOL_FLAG",
@@ -256,6 +259,7 @@ The following flags were automatically enabled on your site:
 There is one other flag available that you might be interested in:
 - YET_ANOTHER · (Umbrella Issue (test)) · test
 ",
+  "unfitFlagMessage": "",
   "unknownFlagMessage": "",
 }
 `;

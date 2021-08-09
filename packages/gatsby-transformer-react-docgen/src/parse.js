@@ -21,7 +21,11 @@ let fileCount = 0
  * Wrap handlers to pass in additional arguments such as the File node
  */
 function makeHandlers(node, handlers) {
-  handlers = (handlers || []).map(h => (...args) => h(...args, node))
+  handlers = (handlers || []).map(
+    h =>
+      (...args) =>
+        h(...args, node)
+  )
   return [
     createDisplayNameHandler(
       node.absolutePath || `/UnknownComponent${++fileCount}`

@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@3.0.0-next.0...gatsby-plugin-gatsby-cloud@3.0.0-next.1) (2021-08-09)
+
+### Features
+
+- **gatsby-plugin-gatsby-cloud:** Reusable preview loader component ([#31717](https://github.com/gatsbyjs/gatsby/issues/31717)) ([b2c30db](https://github.com/gatsbyjs/gatsby/commit/b2c30db1b83d5275c698d3b131832518833d07fc))
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.12.0-next.1...gatsby-plugin-gatsby-cloud@3.0.0-next.0) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
+# [2.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.12.0-next.0...gatsby-plugin-gatsby-cloud@2.12.0-next.1) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.11.0-next.0...gatsby-plugin-gatsby-cloud@2.12.0-next.0) (2021-07-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-gatsby-cloud:** Use fs instead of require to get webpack stats because require is cached ([#32535](https://github.com/gatsbyjs/gatsby/issues/32535)) ([da35203](https://github.com/gatsbyjs/gatsby/commit/da35203b9234f608a4f34b7091bc2e3d651c260e))
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.10.0-next.2...gatsby-plugin-gatsby-cloud@2.11.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
+# [2.10.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.10.0-next.1...gatsby-plugin-gatsby-cloud@2.10.0-next.2) (2021-07-13)
+
+### Bug Fixes
+
+- **gatsby-plugin-gatsby-cloud:** lower peak memory usage by stream writing the \_header.json file ([#32337](https://github.com/gatsbyjs/gatsby/issues/32337)) ([84dfe6d](https://github.com/gatsbyjs/gatsby/commit/84dfe6dc6c6e778f2e47ca086499d9b0960f4f87))
+
+# [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.10.0-next.0...gatsby-plugin-gatsby-cloud@2.10.0-next.1) (2021-07-08)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
 # [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.9.0-next.1...gatsby-plugin-gatsby-cloud@2.10.0-next.0) (2021-07-01)
 
 **Note:** Version bump only for package gatsby-plugin-gatsby-cloud

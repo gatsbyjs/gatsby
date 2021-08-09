@@ -75,7 +75,7 @@ export function findManyPaginated<TSource, TArgs>(
     // Apply paddings for pagination
     // (for previous/next node and also to detect if there is a previous/next page)
     const skip = typeof args.skip === `number` ? Math.max(0, args.skip - 1) : 0
-    const limit = typeof args.limit === `number` ? args.limit + 1 : undefined
+    const limit = typeof args.limit === `number` ? args.limit + 2 : undefined
 
     const extendedArgs = {
       ...args,
@@ -598,31 +598,29 @@ function getFieldNodeByNameInSelectionSet(
   )
 }
 
-export const defaultFieldResolver: GatsbyResolver<
-  any,
-  any
-> = function defaultFieldResolver(source, args, context, info) {
-  if (
-    (typeof source == `object` && source !== null) ||
-    typeof source === `function`
-  ) {
-    if (info.from) {
-      if (info.fromNode) {
-        const node = context.nodeModel.findRootNodeAncestor(source)
-        if (!node) return null
-        return getValueAt(node, info.from)
+export const defaultFieldResolver: GatsbyResolver<any, any> =
+  function defaultFieldResolver(source, args, context, info) {
+    if (
+      (typeof source == `object` && source !== null) ||
+      typeof source === `function`
+    ) {
+      if (info.from) {
+        if (info.fromNode) {
+          const node = context.nodeModel.findRootNodeAncestor(source)
+          if (!node) return null
+          return getValueAt(node, info.from)
+        }
+        return getValueAt(source, info.from)
       }
-      return getValueAt(source, info.from)
+      const property = source[info.fieldName]
+      if (typeof property === `function`) {
+        return source[info.fieldName](args, context, info)
+      }
+      return property
     }
-    const property = source[info.fieldName]
-    if (typeof property === `function`) {
-      return source[info.fieldName](args, context, info)
-    }
-    return property
-  }
 
-  return null
-}
+    return null
+  }
 
 let WARNED_ABOUT_RESOLVERS = false
 function badResolverInvocationMessage(missingVar: string, path?: Path): string {

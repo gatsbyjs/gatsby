@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.12.0-next.2...gatsby-source-contentful@5.12.0-next.3) (2021-08-09)
+
+### Bug Fixes
+
+- **contentful:** base64 previews now reflect all query options ([#32709](https://github.com/gatsbyjs/gatsby/issues/32709)) ([f5dab4f](https://github.com/gatsbyjs/gatsby/commit/f5dab4f5acfc73e613c5b7a31234ed876e1efd8f))
+
+# [5.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.12.0-next.1...gatsby-source-contentful@5.12.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.12.0-next.0...gatsby-source-contentful@5.12.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to ^4.1.2 ([#32576](https://github.com/gatsbyjs/gatsby/issues/32576)) ([5c4e109](https://github.com/gatsbyjs/gatsby/commit/5c4e109313cd1b59f814332fdb4dfdcaf1faed1a))
+- **deps:** update minor and patch dependencies for gatsby-source-contentful ([#32608](https://github.com/gatsbyjs/gatsby/issues/32608)) ([229af4f](https://github.com/gatsbyjs/gatsby/commit/229af4f28a4147932829c1369ed43f87436c63e1))
+
+# [5.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.11.0-next.0...gatsby-source-contentful@5.12.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.10.0-next.1...gatsby-source-contentful@5.11.0-next.0) (2021-07-15)
+
+### Features
+
+- **contentful:** add support for tags ([#31746](https://github.com/gatsbyjs/gatsby/issues/31746)) ([15b49b6](https://github.com/gatsbyjs/gatsby/commit/15b49b65ed92c24ce3f5c0f6720723b0c28319fe))
+- **contentful:** add support image corner radius ([#32333](https://github.com/gatsbyjs/gatsby/issues/32333)) ([848b56e](https://github.com/gatsbyjs/gatsby/commit/848b56e0919fedd2ed21d3a0ad36f86b880d2e6d)), closes [#29784](https://github.com/gatsbyjs/gatsby/issues/29784)
+
+# [5.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.10.0-next.0...gatsby-source-contentful@5.10.0-next.1) (2021-07-08)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to ^4.1.1 ([#32250](https://github.com/gatsbyjs/gatsby/issues/32250)) ([bd03035](https://github.com/gatsbyjs/gatsby/commit/bd03035b35d4e2f69e86b9ff3bbcfb8bd3eece4a))
+
 # [5.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.9.0-next.1...gatsby-source-contentful@5.10.0-next.0) (2021-07-01)
 
 ### Bug Fixes

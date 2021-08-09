@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@3.12.0-next.2...gatsby-transformer-sharp@3.12.0-next.3) (2021-08-09)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [3.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@3.12.0-next.1...gatsby-transformer-sharp@3.12.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [3.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@3.12.0-next.0...gatsby-transformer-sharp@3.12.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency semver to ^7.3.5 for gatsby-transformer-sharp ([#32591](https://github.com/gatsbyjs/gatsby/issues/32591)) ([b428ae9](https://github.com/gatsbyjs/gatsby/commit/b428ae99ba5ce032b99bb7465f281505cdcab4c5))
+
+# [3.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@3.11.0-next.0...gatsby-transformer-sharp@3.12.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@3.10.0-next.1...gatsby-transformer-sharp@3.11.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [3.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@3.10.0-next.0...gatsby-transformer-sharp@3.10.0-next.1) (2021-07-08)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
 # [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@3.9.0-next.0...gatsby-transformer-sharp@3.10.0-next.0) (2021-07-01)
 
 **Note:** Version bump only for package gatsby-transformer-sharp

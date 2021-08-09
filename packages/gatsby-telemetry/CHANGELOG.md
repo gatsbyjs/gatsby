@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.12.0-next.2...gatsby-telemetry@2.12.0-next.3) (2021-08-09)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [2.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.12.0-next.1...gatsby-telemetry@2.12.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [2.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.12.0-next.0...gatsby-telemetry@2.12.0-next.1) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.11.0-next.0...gatsby-telemetry@2.12.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.10.0-next.1...gatsby-telemetry@2.11.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.10.0-next.0...gatsby-telemetry@2.10.0-next.1) (2021-07-08)
+
+### Bug Fixes
+
+- **deps:** update typescript ([#31152](https://github.com/gatsbyjs/gatsby/issues/31152)) ([124cfcc](https://github.com/gatsbyjs/gatsby/commit/124cfcc4cd42a50a992dde5b420610f290227a78))
+- **gatsby-telemetry:** reduce save to config ([#32260](https://github.com/gatsbyjs/gatsby/issues/32260)) ([bb29394](https://github.com/gatsbyjs/gatsby/commit/bb29394ebc18e3e9970020c92bb86fa3cc526698))
+
 # [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.9.0-next.1...gatsby-telemetry@2.10.0-next.0) (2021-07-01)
 
 **Note:** Version bump only for package gatsby-telemetry

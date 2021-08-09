@@ -15,11 +15,11 @@ examples:
 
 Gatsby Functions help you build [Express-like](https://expressjs.com/) backends without running servers.
 
-Functions are generally available in sites running Gatsby 3.7 and above. [Learn more and join the discussion](https://github.com/gatsbyjs/gatsby/discussions/30735).
+Functions are generally available in sites running Gatsby 3.7 and above.
 
 ## Hello World
 
-JavaScript and Typescript files in `src/api/*` are mapped to function routes like files in `src/pages/*` become pages.
+JavaScript and Typescript files in `src/api/*` are mapped to function routes like files in `src/pages/*` become pages. So `src/api` is a reserved directory for Gatsby.
 
 For example, the following Function is run when you visit the URL `/api/hello-world`
 

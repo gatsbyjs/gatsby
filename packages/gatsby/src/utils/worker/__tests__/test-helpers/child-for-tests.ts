@@ -45,9 +45,52 @@ export function getInferenceMetadata(typeName: string): ITypeMetadata {
 }
 
 // test: reporter
-export function log(message: string): boolean {
-  reporter.log(message)
+export function log(
+  message: string,
+  method: "log" | "warn" | "info" | "success" | "verbose" | "error" = `log`
+): boolean {
+  if (method === `verbose`) {
+    reporter.setVerbose(true)
+  }
+  reporter[method](message)
   return true
+}
+export async function activityTimer(message: string): Promise<void> {
+  const activity = reporter.activityTimer(message)
+  activity.start()
+
+  await new Promise(resolve => setTimeout(resolve, 50))
+
+  activity.setStatus(`test`)
+
+  await new Promise(resolve => setTimeout(resolve, 50))
+
+  activity.end()
+}
+
+export async function progress(message: string): Promise<void> {
+  const activity = reporter.createProgress(message, 50)
+  activity.start()
+
+  await new Promise(resolve => setTimeout(resolve, 50))
+
+  activity.tick(25)
+
+  await new Promise(resolve => setTimeout(resolve, 50))
+
+  activity.total = 100
+
+  await new Promise(resolve => setTimeout(resolve, 50))
+
+  activity.tick(75)
+
+  await new Promise(resolve => setTimeout(resolve, 50))
+
+  activity.setStatus(`test`)
+
+  await new Promise(resolve => setTimeout(resolve, 50))
+
+  activity.end()
 }
 
 // test: config

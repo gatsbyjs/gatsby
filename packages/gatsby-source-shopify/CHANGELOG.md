@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.4.0-next.2...gatsby-source-shopify@5.4.0-next.3) (2021-08-09)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [5.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.4.0-next.1...gatsby-source-shopify@5.4.0-next.2) (2021-08-05)
+
+### Bug Fixes
+
+- **gatsby-source-shopify:** only add inventory fields to product variant when using locations ([#32710](https://github.com/gatsbyjs/gatsby/issues/32710)) ([7ab9ed6](https://github.com/gatsbyjs/gatsby/commit/7ab9ed65d318a3e75e41051d173212a313c638f7))
+
+# [5.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.4.0-next.0...gatsby-source-shopify@5.4.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **gatsby-source-shopify:** update method of generating published_status when salesChannel parameter is used ([#32674](https://github.com/gatsbyjs/gatsby/issues/32674)) ([65aeb4b](https://github.com/gatsbyjs/gatsby/commit/65aeb4bd62b9e3d8df114fae6529db5e13febd30))
+
+# [5.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.3.0-next.2...gatsby-source-shopify@5.4.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [5.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.3.0-next.1...gatsby-source-shopify@5.3.0-next.2) (2021-07-22)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [5.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.3.0-next.0...gatsby-source-shopify@5.3.0-next.1) (2021-07-19)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [5.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.2.0-next.1...gatsby-source-shopify@5.3.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [5.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.2.0-next.0...gatsby-source-shopify@5.2.0-next.1) (2021-07-08)
+
+### Bug Fixes
+
+- **deps:** update typescript ([#31152](https://github.com/gatsbyjs/gatsby/issues/31152)) ([124cfcc](https://github.com/gatsbyjs/gatsby/commit/124cfcc4cd42a50a992dde5b420610f290227a78))
+- **gatsby-source-shopify:** add tags to schema ([#32253](https://github.com/gatsbyjs/gatsby/issues/32253)) ([e2b6a9a](https://github.com/gatsbyjs/gatsby/commit/e2b6a9a2ca50742877638b09d4e6aff1b4d196ad))
+
 # [5.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.1.0-next.1...gatsby-source-shopify@5.2.0-next.0) (2021-07-01)
 
 **Note:** Version bump only for package gatsby-source-shopify

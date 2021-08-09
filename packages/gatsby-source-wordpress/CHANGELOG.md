@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.12.0-next.2...gatsby-source-wordpress@5.12.0-next.3) (2021-08-09)
+
+### Features
+
+- **gatsby-source-wordpress:** generate webp images ([#30896](https://github.com/gatsbyjs/gatsby/issues/30896)) ([fcd0b44](https://github.com/gatsbyjs/gatsby/commit/fcd0b449edcca4808814fbcd89df82551d566889))
+
+# [5.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.12.0-next.1...gatsby-source-wordpress@5.12.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.12.0-next.0...gatsby-source-wordpress@5.12.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to ^4.1.2 ([#32576](https://github.com/gatsbyjs/gatsby/issues/32576)) ([5c4e109](https://github.com/gatsbyjs/gatsby/commit/5c4e109313cd1b59f814332fdb4dfdcaf1faed1a))
+
+# [5.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.11.0-next.1...gatsby-source-wordpress@5.12.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.11.0-next.0...gatsby-source-wordpress@5.11.0-next.1) (2021-07-19)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** fetch referenced media items during single node updates ([#32381](https://github.com/gatsbyjs/gatsby/issues/32381)) ([1645965](https://github.com/gatsbyjs/gatsby/commit/16459658b64289ed3bf4203f3a5612451b19778b))
+
+### Reverts
+
+- Revert "fix(wordpress): ensure all file links are rewritten" (#32398) ([9e96088](https://github.com/gatsbyjs/gatsby/commit/9e96088645160649dc6880b5debc882f353fd133)), closes [#32398](https://github.com/gatsbyjs/gatsby/issues/32398)
+
+# [5.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.10.0-next.3...gatsby-source-wordpress@5.11.0-next.0) (2021-07-15)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** WPGraphQL pageInfo is nullable, make sure we're not accessing hasNextPage on null ([#32369](https://github.com/gatsbyjs/gatsby/issues/32369)) ([53ae249](https://github.com/gatsbyjs/gatsby/commit/53ae249d670a058ce84ce9992140cddd3e4f481d))
+- **wordpress:** ensure all file links are rewritten ([#31652](https://github.com/gatsbyjs/gatsby/issues/31652)) ([f970600](https://github.com/gatsbyjs/gatsby/commit/f9706009f4b12006d655b1e14e17fbf0e0708b3a)), closes [#31646](https://github.com/gatsbyjs/gatsby/issues/31646)
+
+# [5.10.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.10.0-next.2...gatsby-source-wordpress@5.10.0-next.3) (2021-07-14)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.10.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.10.0-next.1...gatsby-source-wordpress@5.10.0-next.2) (2021-07-09)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** don't leak auth details ([#32303](https://github.com/gatsbyjs/gatsby/issues/32303)) ([4d7ec18](https://github.com/gatsbyjs/gatsby/commit/4d7ec18b98721ff9a6d4217e10c98df891d9be01))
+
+# [5.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.10.0-next.0...gatsby-source-wordpress@5.10.0-next.1) (2021-07-08)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to ^4.1.1 ([#32250](https://github.com/gatsbyjs/gatsby/issues/32250)) ([bd03035](https://github.com/gatsbyjs/gatsby/commit/bd03035b35d4e2f69e86b9ff3bbcfb8bd3eece4a))
+- **gatsby-source-wordpress:** Move the remote url !== options url check earlier in previews ([#32251](https://github.com/gatsbyjs/gatsby/issues/32251)) ([60955e9](https://github.com/gatsbyjs/gatsby/commit/60955e90843d69e0dbfa65f98ed20eac2a58acc9))
+
 # [5.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.9.0-next.0...gatsby-source-wordpress@5.10.0-next.0) (2021-07-01)
 
 **Note:** Version bump only for package gatsby-source-wordpress

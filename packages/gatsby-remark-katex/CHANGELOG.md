@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.9.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-katex@5.9.0-next.2...gatsby-remark-katex@5.9.0-next.3) (2021-08-09)
+
+### Bug Fixes
+
+- **deps:** update dependency unified to ^9.2.2 for gatsby-remark-katex ([#32592](https://github.com/gatsbyjs/gatsby/issues/32592)) ([1f5a0fb](https://github.com/gatsbyjs/gatsby/commit/1f5a0fb40fb3365e2c60a9bc225adeb70985eed5))
+
+# [5.9.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-katex@5.9.0-next.1...gatsby-remark-katex@5.9.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-remark-katex
+
+# [5.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-katex@5.9.0-next.0...gatsby-remark-katex@5.9.0-next.1) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-remark-katex
+
+# [5.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-katex@5.8.0-next.0...gatsby-remark-katex@5.9.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-remark-katex
+
+# [5.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-katex@5.7.0-next.1...gatsby-remark-katex@5.8.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-remark-katex
+
+# [5.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-katex@5.7.0-next.0...gatsby-remark-katex@5.7.0-next.1) (2021-07-08)
+
+**Note:** Version bump only for package gatsby-remark-katex
+
 # [5.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-katex@5.6.0-next.0...gatsby-remark-katex@5.7.0-next.0) (2021-07-01)
 
 **Note:** Version bump only for package gatsby-remark-katex

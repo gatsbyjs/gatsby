@@ -128,22 +128,6 @@ aliases:
       - notify-status:
           condition: << parameters.nightly >>
 
-  e2e_tests_gatsby-image_alias: &e2e_tests_gatsby-image_alias
-    <<: *e2e-executor
-    parameters:
-      nightly:
-        type: boolean
-        default: false
-    environment:
-      CYPRESS_PROJECT_ID: ave32k
-      CYPRESS_RECORD_KEY: fb3cb6e0-a0f9-48b2-aa9a-95e8ef150a85
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/gatsby-image
-          skip_file_change_test: << parameters.nightly >>
-      - notify-status:
-          condition: << parameters.nightly >>
-
 commands:
   notify-status:
     parameters:
@@ -253,6 +237,7 @@ jobs:
       image: "14.17.0"
     environment:
       GATSBY_EXPERIMENTAL_LMDB_STORE: 1
+      GATSBY_EXPERIMENTAL_LMDB_INDEXES: 1
       GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING: 1
     <<: *test_template
 
@@ -377,15 +362,6 @@ jobs:
       - run:
           command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
           working_directory: /tmp/e2e-tests/gatsby-pnp
-
-  e2e_tests_gatsby-image:
-    <<: *e2e_tests_gatsby-image_alias
-
-  e2e_tests_gatsby-image_with_experimental_react:
-    <<: *e2e_tests_gatsby-image_alias
-
-  e2e_tests_gatsby-image_with_next_react:
-    <<: *e2e_tests_gatsby-image_alias
 
   e2e_tests_development_runtime:
     <<: *e2e_tests_development_runtime_alias
@@ -602,10 +578,6 @@ workflows:
     jobs:
       - bootstrap-with-experimental-react:
           version: "next"
-      - e2e_tests_gatsby-image_with_next_react:
-          nightly: true
-          requires:
-            - bootstrap-with-experimental-react
       - e2e_tests_development_runtime_with_next_react:
           nightly: true
           requires:
@@ -625,10 +597,6 @@ workflows:
     jobs:
       - bootstrap-with-experimental-react:
           version: "experimental"
-      - e2e_tests_gatsby-image_with_experimental_react:
-          nightly: true
-          requires:
-            - bootstrap-with-experimental-react
       - e2e_tests_development_runtime_with_experimental_react:
           nightly: true
           requires:
@@ -695,8 +663,6 @@ workflows:
       - e2e_tests_pnp:
           <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
-          <<: *e2e-test-workflow
-      - e2e_tests_gatsby-image:
           <<: *e2e-test-workflow
       - e2e_tests_gatsby-static-image:
           <<: *e2e-test-workflow
