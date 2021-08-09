@@ -25,6 +25,13 @@ The Gatsby team is constantly updating plugins to use less memory and run faster
 
 As your site's codebase evolves, you might accumulate plugins that are not longer needed. Try looking through your `gatsby-config.js` to make sure you're using all the plugins you have installed. In addition, you may want to look through queries to make sure you're using them (and the fields in each query).
 
+#### Query only needed fields in `createPages`
+
+Creating pages should take at most around 1-2 seconds / 10k pages. Some sites take however 30s to many minutes to create pages. This almost always happens because the graphql query in `createPages` includes
+many fields that aren't needed to create the pages. Most sites only need to query for the node id in `createPages`. All other fields needed for the page should be queried in the page component's query.
+
+Check how long `createPages` takes for your build. If it's longer than 10s, check if there's fields you can remove from the query.
+
 #### Make sure you're not clearing the cache between builds
 
 In the past, Gatsby's cache was less reliable than it is now. As a result, some sites started clearing the cache between builds. With improvements we've made, that should not be necessary anymore, so if your build script says something like "gatsby clean && gatsby build" you may want to change it to just run gatsby build.
