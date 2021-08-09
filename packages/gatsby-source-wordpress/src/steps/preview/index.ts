@@ -319,10 +319,10 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
   const { webhookBody, reporter, actions } = helpers
   const {
     debug: { preview: inPreviewDebugModeOption },
-    url,
+    url = ``,
   } = getPluginOptions()
 
-  const { hostname: settingsHostname } = urlUtil.parse(url)
+  const { hostname: settingsHostname } = url && urlUtil.parse(url)
   const { hostname: remoteHostname } = urlUtil.parse(webhookBody.remoteUrl)
 
   if (settingsHostname !== remoteHostname) {
