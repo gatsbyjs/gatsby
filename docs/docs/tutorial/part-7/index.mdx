@@ -219,7 +219,7 @@ query ($id: String) {
       hero_image_credit_text
       // highlight-start
       hero_image {
-        childrenImageSharp {
+        childImageSharp {
           gatsbyImageData
         }
       }
@@ -240,7 +240,7 @@ query ($id: String) {
         // ...
         // highlight-start
         "hero_image": {
-          "childrenImageSharp": [
+          "childImageSharp": [
             {
               "gatsbyImageData": {
                 "layout": "constrained",
@@ -274,7 +274,7 @@ query ($id: String) {
 }
 ```
 
-If you take a closer look at the `gatsbyImageData` object on the `hero_image.childrenImageSharp` field, you'll see that it contains a bunch of information about the hero image for that post: dimensions, file paths for the images at different sizes, fallback images to use as a placeholder while the image loads. All this data gets calculated by `gatsby-plugin-sharp` at build time. The `gatsbyImageData` object in your response has the same structure that the `GatsbyImage` component needs to render an image.
+If you take a closer look at the `gatsbyImageData` object on the `hero_image.childImageSharp` field, you'll see that it contains a bunch of information about the hero image for that post: dimensions, file paths for the images at different sizes, fallback images to use as a placeholder while the image loads. All this data gets calculated by `gatsby-plugin-sharp` at build time. The `gatsbyImageData` object in your response has the same structure that the `GatsbyImage` component needs to render an image.
 
 ### Task: Add hero image using `GatsbyImage` component
 
@@ -302,7 +302,7 @@ Once you have your GraphQL query set up, you can to add it to your blog post pag
             hero_image_credit_link
             hero_image_credit_text
             hero_image {
-              childrenImageSharp {
+              childImageSharp {
                 gatsbyImageData
               }
             }
