@@ -248,6 +248,16 @@ query ($id: String) {
 }
 ```
 
+<Announcement>
+
+**Pro Tip:** How does GraphiQL know to add extra fields to the `hero_image` frontmatter field?
+
+When Gatsby builds your site, it creates a GraphQL **schema** that describes the different types of data in the data layer. As Gatsby builds that schema, it tries to guess the type of data for each field. This process is called **schema inference**.
+
+Gatsby can tell that the `hero_image` field from your MDX frontmatter matches a `File` node, so it lets you query the `File` fields for that node. Similarly, `gatsby-transformer-sharp` can tell that the file is an image, so it also lets you query the `ImageSharp` fields for that node.
+
+</Announcement>
+
 4. Run your query to see what data you get back in the response. It should mostly look like the response you got back before, but this time with an extra `hero_image` object:
 
 ```json
