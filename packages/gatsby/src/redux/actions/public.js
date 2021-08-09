@@ -866,26 +866,28 @@ const createNode = (
   }
 }
 
-actions.createNode = (...args) => dispatch => {
-  const actions = createNode(...args)
+actions.createNode =
+  (...args) =>
+  dispatch => {
+    const actions = createNode(...args)
 
-  dispatch(actions)
-  const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
-    action => action.type === `CREATE_NODE`
-  )
+    dispatch(actions)
+    const createNodeAction = (
+      Array.isArray(actions) ? actions : [actions]
+    ).find(action => action.type === `CREATE_NODE`)
 
-  if (!createNodeAction) {
-    return undefined
+    if (!createNodeAction) {
+      return undefined
+    }
+
+    const { payload: node, traceId, parentSpan } = createNodeAction
+    return apiRunnerNode(`onCreateNode`, {
+      node,
+      traceId,
+      parentSpan,
+      traceTags: { nodeId: node.id, nodeType: node.internal.type },
+    })
   }
-
-  const { payload: node, traceId, parentSpan } = createNodeAction
-  return apiRunnerNode(`onCreateNode`, {
-    node,
-    traceId,
-    parentSpan,
-    traceTags: { nodeId: node.id, nodeType: node.internal.type },
-  })
-}
 
 const touchNodeDeprecationWarningDisplayedMessages = new Set()
 

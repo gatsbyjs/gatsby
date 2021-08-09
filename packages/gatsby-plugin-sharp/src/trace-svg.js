@@ -149,10 +149,11 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
 let memoizedPrepareTraceSVGInputFile
 let memoizedTraceSVG
 const createMemoizedFunctions = () => {
-  exports.memoizedPrepareTraceSVGInputFile = memoizedPrepareTraceSVGInputFile = _.memoize(
-    exports.notMemoizedPrepareTraceSVGInputFile,
-    ({ tmpFilePath }) => tmpFilePath
-  )
+  exports.memoizedPrepareTraceSVGInputFile = memoizedPrepareTraceSVGInputFile =
+    _.memoize(
+      exports.notMemoizedPrepareTraceSVGInputFile,
+      ({ tmpFilePath }) => tmpFilePath
+    )
 
   exports.memoizedTraceSVG = memoizedTraceSVG = _.memoize(
     exports.notMemoizedtraceSVG,

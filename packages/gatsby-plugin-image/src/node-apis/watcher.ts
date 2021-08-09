@@ -26,23 +26,20 @@ export function watchImage({
   // We use a shared watcher, but only create it if needed
   if (!watcher) {
     watcher = chokidar.watch(fullPath)
-    watcher.on(
-      `change`,
-      async (path: string): Promise<void> => {
-        reporter.verbose(`Image changed: ${path}`)
-        const node = await createImageNode({
-          fullPath: path,
-          createNodeId,
-          createNode,
-          reporter,
-        })
-        if (!node) {
-          reporter.warn(`Could not process image ${path}`)
-          return
-        }
-        await updateImages({ node, cache, pathPrefix, reporter })
+    watcher.on(`change`, async (path: string): Promise<void> => {
+      reporter.verbose(`Image changed: ${path}`)
+      const node = await createImageNode({
+        fullPath: path,
+        createNodeId,
+        createNode,
+        reporter,
+      })
+      if (!node) {
+        reporter.warn(`Could not process image ${path}`)
+        return
       }
-    )
+      await updateImages({ node, cache, pathPrefix, reporter })
+    })
   } else {
     // If we already have a watcher, just add this image to it
     watcher.add(fullPath)

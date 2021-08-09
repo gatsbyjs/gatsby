@@ -181,21 +181,21 @@ export const createWebpackUtils = (
   const isSSR = stage.includes(`html`)
 
   const jsxRuntimeExists = reactHasJsxRuntime()
-  const makeExternalOnly = (original: RuleFactory) => (
-    options = {}
-  ): RuleSetRule => {
-    const rule = original(options)
-    rule.include = vendorRegex
-    return rule
-  }
+  const makeExternalOnly =
+    (original: RuleFactory) =>
+    (options = {}): RuleSetRule => {
+      const rule = original(options)
+      rule.include = vendorRegex
+      return rule
+    }
 
-  const makeInternalOnly = (original: RuleFactory) => (
-    options = {}
-  ): RuleSetRule => {
-    const rule = original(options)
-    rule.exclude = vendorRegex
-    return rule
-  }
+  const makeInternalOnly =
+    (original: RuleFactory) =>
+    (options = {}): RuleSetRule => {
+      const rule = original(options)
+      rule.exclude = vendorRegex
+      return rule
+    }
 
   const loaders: ILoaderUtils = {
     json: (options = {}) => {
@@ -319,9 +319,11 @@ export const createWebpackUtils = (
             const autoprefixerPlugin = autoprefixer({
               overrideBrowserslist,
               flexbox: `no-2009`,
-              ...(((postCSSPlugins.find(
-                plugin => plugin.postcssPlugin === `autoprefixer`
-              ) as unknown) as autoprefixer.ExportedAPI)?.options ?? {}),
+              ...((
+                postCSSPlugins.find(
+                  plugin => plugin.postcssPlugin === `autoprefixer`
+                ) as unknown as autoprefixer.ExportedAPI
+              )?.options ?? {}),
             })
 
             postCSSPlugins.unshift(autoprefixerPlugin)
@@ -767,8 +769,9 @@ export const createWebpackUtils = (
   plugins.extractStats = (): GatsbyWebpackStatsExtractor =>
     new GatsbyWebpackStatsExtractor()
 
-  plugins.eslintGraphqlSchemaReload = (): GatsbyWebpackEslintGraphqlSchemaReload =>
-    new GatsbyWebpackEslintGraphqlSchemaReload()
+  plugins.eslintGraphqlSchemaReload =
+    (): GatsbyWebpackEslintGraphqlSchemaReload =>
+      new GatsbyWebpackEslintGraphqlSchemaReload()
 
   plugins.virtualModules = (): GatsbyWebpackVirtualModules =>
     new GatsbyWebpackVirtualModules()

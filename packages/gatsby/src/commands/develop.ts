@@ -184,7 +184,8 @@ class ControllableScript {
 let isRestarting
 
 // checks if a string is a valid ip
-const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
+const REGEX_IP =
+  /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
 
 module.exports = async (program: IProgram): Promise<void> => {
   // In some cases, port can actually be a string. But our codebase is expecting it to be a number.
@@ -222,15 +223,12 @@ module.exports = async (program: IProgram): Promise<void> => {
   // It is exposed for environments where port access needs to be explicit, such as with Docker.
   // As the port is meant for internal usage only, any attempt to interface with features
   // it exposes via third-party software is not supported.
-  const [
-    statusServerPort,
-    developPort,
-    telemetryServerPort,
-  ] = await Promise.all([
-    getRandomPort(process.env.INTERNAL_STATUS_PORT),
-    getRandomPort(),
-    getRandomPort(),
-  ])
+  const [statusServerPort, developPort, telemetryServerPort] =
+    await Promise.all([
+      getRandomPort(process.env.INTERNAL_STATUS_PORT),
+      getRandomPort(),
+      getRandomPort(),
+    ])
 
   // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
   // used together

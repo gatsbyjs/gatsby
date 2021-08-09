@@ -64,8 +64,10 @@ exports.mdxHTMLLoader = ({ cache, reporter, store }) =>
                 reporter.warn(`gatsby-plugin-mdx\n` + info.warnings)
               }
 
-              const renderMdxBody = require(path.join(outputPath, `output.js`))
-                .default
+              const renderMdxBody = require(path.join(
+                outputPath,
+                `output.js`
+              )).default
 
               resolve(
                 keys.map(({ body }) =>

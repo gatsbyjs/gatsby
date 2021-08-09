@@ -213,43 +213,41 @@ module.exports = {
 
   app.use(
     graphqlEndpoint,
-    graphqlHTTP(
-      (): OptionsData => {
-        const { schema, schemaCustomization } = store.getState()
+    graphqlHTTP((): OptionsData => {
+      const { schema, schemaCustomization } = store.getState()
 
-        if (!schemaCustomization.composer) {
-          throw new Error(
-            `A schema composer was not created in time. This is likely a gatsby bug. If you experienced this please create an issue.`
-          )
-        }
-        return {
-          schema,
-          graphiql: false,
-          extensions(): { [key: string]: unknown } {
-            return {
-              enableRefresh: process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
-              refreshToken: process.env.GATSBY_REFRESH_TOKEN,
-            }
-          },
-          context: withResolverContext({
-            schema,
-            schemaComposer: schemaCustomization.composer,
-            context: {},
-            customContext: schemaCustomization.context,
-          }),
-          customFormatErrorFn(
-            err
-          ): GraphQLFormattedError<{ stack: Array<string> }> {
-            return {
-              ...formatError(err),
-              extensions: {
-                stack: err.stack ? err.stack.split(`\n`) : [],
-              },
-            }
-          },
-        }
+      if (!schemaCustomization.composer) {
+        throw new Error(
+          `A schema composer was not created in time. This is likely a gatsby bug. If you experienced this please create an issue.`
+        )
       }
-    )
+      return {
+        schema,
+        graphiql: false,
+        extensions(): { [key: string]: unknown } {
+          return {
+            enableRefresh: process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
+            refreshToken: process.env.GATSBY_REFRESH_TOKEN,
+          }
+        },
+        context: withResolverContext({
+          schema,
+          schemaComposer: schemaCustomization.composer,
+          context: {},
+          customContext: schemaCustomization.context,
+        }),
+        customFormatErrorFn(
+          err
+        ): GraphQLFormattedError<{ stack: Array<string> }> {
+          return {
+            ...formatError(err),
+            extensions: {
+              stack: err.stack ? err.stack.split(`\n`) : [],
+            },
+          }
+        },
+      }
+    })
   )
 
   /**

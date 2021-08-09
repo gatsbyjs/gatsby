@@ -201,18 +201,17 @@ export const createSingleNode = async ({
       additionalNodeIds: receivedAdditionalNodeIds,
       remoteNode: receivedRemoteNode,
       cancelUpdate: receivedCancelUpdate,
-    } =
-      (await typeSettings.beforeChangeNode({
-        actionType: actionType,
-        remoteNode,
-        actions,
-        helpers,
-        fetchGraphql,
-        typeSettings,
-        buildTypeName,
-        type: typeInfo.nodesTypeName,
-        wpStore: store,
-      })) || {}
+    } = (await typeSettings.beforeChangeNode({
+      actionType: actionType,
+      remoteNode,
+      actions,
+      helpers,
+      fetchGraphql,
+      typeSettings,
+      buildTypeName,
+      type: typeInfo.nodesTypeName,
+      wpStore: store,
+    })) || {}
 
     additionalNodeIds = [
       ...additionalNodeIds,

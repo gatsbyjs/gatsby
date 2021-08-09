@@ -51,10 +51,8 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
       { graphql, pathPrefix, reporter },
       await schema.validateAsync({})
     )
-    const {
-      destinationDir,
-      sourceData,
-    } = sitemap.simpleSitemapAndIndex.mock.calls[0][0]
+    const { destinationDir, sourceData } =
+      sitemap.simpleSitemapAndIndex.mock.calls[0][0]
     expect(destinationDir).toEqual(path.join(`public`, `sitemap`))
     expect(sourceData).toMatchSnapshot()
   })
@@ -110,10 +108,8 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
       await schema.validateAsync(options)
     )
 
-    const {
-      destinationDir,
-      sourceData,
-    } = sitemap.simpleSitemapAndIndex.mock.calls[0][0]
+    const { destinationDir, sourceData } =
+      sitemap.simpleSitemapAndIndex.mock.calls[0][0]
 
     expect(destinationDir).toEqual(path.join(`public`, `custom-folder`))
     expect(sourceData).toMatchSnapshot()
