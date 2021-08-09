@@ -74,6 +74,9 @@ export const pluginOptionsSchema = ({ Joi }) =>
         enter other data types into this array for custom filtering.
         Doing so will require customization of the \`filterPages\` function.`
       ),
+    exclude: Joi.forbidden().messages({
+      "any.unknown": `As of v4 the \`exclude\` option was renamed to \`excludes\``,
+    }),
     resolveSiteUrl: Joi.function()
       .default(() => resolveSiteUrl)
       .description(
