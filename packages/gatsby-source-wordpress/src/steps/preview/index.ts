@@ -371,12 +371,11 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
     return
   }
 
-  const wpGatsbyPreviewNodeManifestsAreSupported = await remoteSchemaSupportsFieldNameOnTypeName(
-    {
+  const wpGatsbyPreviewNodeManifestsAreSupported =
+    await remoteSchemaSupportsFieldNameOnTypeName({
       typeName: `GatsbyPreviewData`,
       fieldName: `manifestIds`,
-    }
-  )
+    })
 
   const previewActions = await paginatedWpNodeFetch({
     contentTypePlural: `actionMonitorActions`,
