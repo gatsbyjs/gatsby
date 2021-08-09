@@ -44,7 +44,7 @@ The steps below will help you find and download some photos for your hero images
     * `hero_image_credit_text`: the text to display to give the photographer credit for the hero image
     * `hero_image_credit_link`: a link to the page where your hero image was downloaded from
 
-```mdx:title=blog/my-first-post/index.js
+```mdx:title=blog/my-first-post/index.mdx
 ---
 title: "My First Post"
 date: "2021-07-23"
@@ -59,7 +59,7 @@ hero_image_credit_link: "https://unsplash.com/photos/ocZ-_Y7-Ptg"
 ...
 ```
 
-```mdx:title=blog/another-post/index.js
+```mdx:title=blog/another-post/index.mdx
 ---
 title: "Another Post"
 date: "2021-07-24"
@@ -74,7 +74,7 @@ hero_image_credit_link: "https://unsplash.com/photos/eLUBGqKGdE4"
 ...
 ```
 
-```mdx:title=blog/yet-another-post/index.js
+```mdx:title=blog/yet-another-post/index.mdx
 ---
 title: "Yet Another Post"
 date: "2021-07-25"
@@ -106,18 +106,17 @@ When Gatsby adds nodes to the data layer at build time, the `gatsby-transformer-
     ```
 
 2. Add `gatsby-transformer-sharp` to the `plugins` array in your `gatsby-config.js` file.
-
-```js:title=gatsby-config.js
-module.exports = {
-  siteMetadata: {
-    title: "My First Gatsby Site",
-  },
-  plugins: [
-    // ...existing plugins
-    "gatsby-transformer-sharp", // highlight-line
-  ],
-}
-```
+    ```js:title=gatsby-config.js
+    module.exports = {
+      siteMetadata: {
+        title: "My First Gatsby Site",
+      },
+      plugins: [
+        // ...existing plugins
+        "gatsby-transformer-sharp", // highlight-line
+      ],
+    }
+    ```
 
 Now that you've added `gatsby-transformer-sharp` to your site, you'll need to restart your local development server to see the changes in GraphiQL. You'll take a closer look at GraphiQL in the next step.
 
