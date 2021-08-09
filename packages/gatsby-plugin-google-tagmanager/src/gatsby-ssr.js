@@ -1,7 +1,12 @@
 import React from "react"
 import { oneLine, stripIndent } from "common-tags"
 
-const generateGTM = ({ id, environmentParamStr, dataLayerName, selfHostedOrigin }) => stripIndent`
+const generateGTM = ({
+  id,
+  environmentParamStr,
+  dataLayerName,
+  selfHostedOrigin,
+}) => stripIndent`
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -41,7 +46,7 @@ exports.onRenderBody = (
     defaultDataLayer,
     dataLayerName = `dataLayer`,
     enableWebVitalsTracking = false,
-    selfHostedOrigin = 'https://www.googletagmanager.com',
+    selfHostedOrigin = `https://www.googletagmanager.com`,
   }
 ) => {
   if (process.env.NODE_ENV === `production` || includeInDevelopment) {
@@ -84,7 +89,12 @@ exports.onRenderBody = (
         dangerouslySetInnerHTML={{
           __html: oneLine`
           ${defaultDataLayerCode}
-          ${generateGTM({ id, environmentParamStr, dataLayerName, selfHostedOrigin })}`,
+          ${generateGTM({
+            id,
+            environmentParamStr,
+            dataLayerName,
+            selfHostedOrigin,
+          })}`,
         }}
       />
     )
@@ -95,7 +105,11 @@ exports.onRenderBody = (
       <noscript
         key="plugin-google-tagmanager"
         dangerouslySetInnerHTML={{
-          __html: generateGTMIframe({ id, environmentParamStr, selfHostedOrigin }),
+          __html: generateGTMIframe({
+            id,
+            environmentParamStr,
+            selfHostedOrigin,
+          }),
         }}
       />,
     ])
