@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.14.8",
     "rehype-parse": "^7.0.1",
     "remark-math": "^4.0.0",
-    "unified": "^9.2.1",
+    "unified": "^9.2.2",
     "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
