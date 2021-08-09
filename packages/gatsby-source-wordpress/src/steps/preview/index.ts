@@ -63,8 +63,9 @@ let previewQueue: PQueue
 
 const getPreviewQueue = (): PQueue => {
   if (!previewQueue) {
-    const { previewRequestConcurrency } =
-      store.getState().gatsbyApi.pluginOptions.schema
+    const {
+      previewRequestConcurrency,
+    } = store.getState().gatsbyApi.pluginOptions.schema
 
     previewQueue = new PQueue({
       concurrency: previewRequestConcurrency,
@@ -82,8 +83,8 @@ const previewForIdIsAlreadyBeingProcessed = (id: string): boolean => {
     return false
   }
 
-  const existingCallbacks =
-    store.getState().previewStore.nodePageCreatedCallbacks
+  const existingCallbacks = store.getState().previewStore
+    .nodePageCreatedCallbacks
 
   const alreadyProcessingThisPreview = !!existingCallbacks?.[id]
 
@@ -140,77 +141,73 @@ interface IOnPreviewStatusInput {
   error?: Error
 }
 
-const createPreviewStatusCallback =
-  ({
-    previewData,
-    reporter,
-  }: {
-    previewData: IPreviewData
-    reporter: Reporter
-  }) =>
-  async ({
-    passedNode,
-    pageNode,
-    context,
-    status,
-    graphqlEndpoint,
-    error,
-  }: IOnPreviewStatusInput): Promise<void> => {
-    if (status === `PREVIEW_SUCCESS`) {
-      // we might need to write a dummy page-data.json so that
-      // Gatsby doesn't throw 404 errors when WPGatsby tries to read this file
-      // that maybe doesn't exist yet
-      await writeDummyPageDataJsonIfNeeded({ previewData, pageNode })
-    }
-
-    const statusContext = error?.message
-      ? `${context}\n\n${error.message}`
-      : context
-
-    const { data } = await fetchGraphql({
-      url: graphqlEndpoint,
-      query: /* GraphQL */ `
-        mutation MUTATE_PREVIEW_NODE(
-          $input: WpGatsbyRemotePreviewStatusInput!
-        ) {
-          wpGatsbyRemotePreviewStatus(input: $input) {
-            success
-          }
-        }
-      `,
-      variables: {
-        input: {
-          clientMutationId: `sendPreviewStatus`,
-          modified: passedNode?.modified,
-          pagePath: pageNode?.path,
-          parentDatabaseId:
-            previewData.parentDatabaseId || previewData.previewDatabaseId, // if the parentDatabaseId is 0 we want to use the previewDatabaseId
-          status,
-          statusContext,
-        },
-      },
-      errorContext: `Error occurred while mutating WordPress Preview node meta.`,
-      forceReportCriticalErrors: true,
-      headers: {
-        WPGatsbyPreview: previewData.token,
-        WPGatsbyPreviewUser: previewData.userDatabaseId,
-      },
-    })
-
-    if (data?.wpGatsbyRemotePreviewStatus?.success) {
-      reporter.log(
-        formatLogMessage(
-          `Successfully sent Preview status back to WordPress post ${previewData.id} during ${context}`
-        )
-      )
-    } else {
-      reporter.log(
-        formatLogMessage(
-          `failed to mutate WordPress post ${previewData.id} during Preview ${context}.\nCheck your WP server logs for more information.`
-        )
-      )
-    }
+const createPreviewStatusCallback = ({
+  previewData,
+  reporter,
+}: {
+  previewData: IPreviewData
+  reporter: Reporter
+}) => async ({
+  passedNode,
+  pageNode,
+  context,
+  status,
+  graphqlEndpoint,
+  error,
+}: IOnPreviewStatusInput): Promise<void> => {
+  if (status === `PREVIEW_SUCCESS`) {
+    // we might need to write a dummy page-data.json so that
+    // Gatsby doesn't throw 404 errors when WPGatsby tries to read this file
+    // that maybe doesn't exist yet
+    await writeDummyPageDataJsonIfNeeded({ previewData, pageNode })
   }
+
+  const statusContext = error?.message
+    ? `${context}\n\n${error.message}`
+    : context
+
+  const { data } = await fetchGraphql({
+    url: graphqlEndpoint,
+    query: /* GraphQL */ `
+      mutation MUTATE_PREVIEW_NODE($input: WpGatsbyRemotePreviewStatusInput!) {
+        wpGatsbyRemotePreviewStatus(input: $input) {
+          success
+        }
+      }
+    `,
+    variables: {
+      input: {
+        clientMutationId: `sendPreviewStatus`,
+        modified: passedNode?.modified,
+        pagePath: pageNode?.path,
+        parentDatabaseId:
+          previewData.parentDatabaseId || previewData.previewDatabaseId, // if the parentDatabaseId is 0 we want to use the previewDatabaseId
+        status,
+        statusContext,
+      },
+    },
+    errorContext: `Error occurred while mutating WordPress Preview node meta.`,
+    forceReportCriticalErrors: true,
+    headers: {
+      WPGatsbyPreview: previewData.token,
+      WPGatsbyPreviewUser: previewData.userDatabaseId,
+    },
+  })
+
+  if (data?.wpGatsbyRemotePreviewStatus?.success) {
+    reporter.log(
+      formatLogMessage(
+        `Successfully sent Preview status back to WordPress post ${previewData.id} during ${context}`
+      )
+    )
+  } else {
+    reporter.log(
+      formatLogMessage(
+        `failed to mutate WordPress post ${previewData.id} during Preview ${context}.\nCheck your WP server logs for more information.`
+      )
+    )
+  }
+}
 
 /**
  * This is called and passed the result from the ActionMonitor.previewData object along with a JWT token
@@ -371,11 +368,12 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
     return
   }
 
-  const wpGatsbyPreviewNodeManifestsAreSupported =
-    await remoteSchemaSupportsFieldNameOnTypeName({
+  const wpGatsbyPreviewNodeManifestsAreSupported = await remoteSchemaSupportsFieldNameOnTypeName(
+    {
       typeName: `GatsbyPreviewData`,
       fieldName: `manifestIds`,
-    })
+    }
+  )
 
   const previewActions = await paginatedWpNodeFetch({
     contentTypePlural: `actionMonitorActions`,
