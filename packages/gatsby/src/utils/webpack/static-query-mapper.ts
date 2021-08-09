@@ -146,18 +146,18 @@ export class StaticQueryMapper {
         ChunkGroup
       >()
 
-      const {
-        webpackModulesByStaticQueryId,
-        webpackModulesByComponentId,
-      } = getWebpackModulesByResourcePaths(
-        compilation.modules,
-        staticQueryComponents,
-        components
-      )
+      const { webpackModulesByStaticQueryId, webpackModulesByComponentId } =
+        getWebpackModulesByResourcePaths(
+          compilation.modules,
+          staticQueryComponents,
+          components
+        )
 
-      const appEntryPoint = (compilation.entrypoints.has(`app`)
-        ? compilation.entrypoints.get(`app`)
-        : compilation.entrypoints.get(`commons`)) as EntryPoint
+      const appEntryPoint = (
+        compilation.entrypoints.has(`app`)
+          ? compilation.entrypoints.get(`app`)
+          : compilation.entrypoints.get(`commons`)
+      ) as EntryPoint
 
       // group hashes by chunkGroup for ease of use
       for (const [
@@ -172,9 +172,10 @@ export class StaticQueryMapper {
             if (chunkGroup === appEntryPoint) {
               chunkGroupsDerivedFromEntrypoints.push(chunkGroup)
             } else {
-              chunkGroupsDerivedFromEntrypoints = chunkGroupsDerivedFromEntrypoints.concat(
-                getChunkGroupsDerivedFromEntrypoint(chunkGroup, appEntryPoint)
-              )
+              chunkGroupsDerivedFromEntrypoints =
+                chunkGroupsDerivedFromEntrypoints.concat(
+                  getChunkGroupsDerivedFromEntrypoint(chunkGroup, appEntryPoint)
+                )
             }
           }
         }
@@ -185,9 +186,11 @@ export class StaticQueryMapper {
             staticQueriesByChunkGroup.get(chunkGroup) ?? []
 
           staticQueryHashes.push(
-            (staticQueryComponents.get(
-              staticQueryId
-            ) as IGatsbyStaticQueryComponents).hash
+            (
+              staticQueryComponents.get(
+                staticQueryId
+              ) as IGatsbyStaticQueryComponents
+            ).hash
           )
 
           staticQueriesByChunkGroup.set(chunkGroup, staticQueryHashes)
@@ -227,9 +230,9 @@ export class StaticQueryMapper {
             component.componentPath
           )
           if (chunkGroup && staticQueriesByChunkGroup.has(chunkGroup)) {
-            ;(staticQueriesByChunkGroup.get(chunkGroup) as Array<
-              string
-            >).forEach(staticQuery => {
+            ;(
+              staticQueriesByChunkGroup.get(chunkGroup) as Array<string>
+            ).forEach(staticQuery => {
               allStaticQueries.add(staticQuery)
             })
           }

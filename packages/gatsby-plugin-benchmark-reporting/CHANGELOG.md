@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@1.12.0-next.2...gatsby-plugin-benchmark-reporting@1.12.0-next.3) (2021-08-09)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+# [1.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@1.12.0-next.1...gatsby-plugin-benchmark-reporting@1.12.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+# [1.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@1.12.0-next.0...gatsby-plugin-benchmark-reporting@1.12.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency fast-glob to ^3.2.7 for gatsby-plugin-benchmark-reporting ([#32584](https://github.com/gatsbyjs/gatsby/issues/32584)) ([5f406a9](https://github.com/gatsbyjs/gatsby/commit/5f406a9848a1eb2f9e0462cd51d6f544e244bb03))
+
 # [1.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@1.11.0-next.0...gatsby-plugin-benchmark-reporting@1.12.0-next.0) (2021-07-29)
 
 **Note:** Version bump only for package gatsby-plugin-benchmark-reporting

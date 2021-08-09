@@ -5,9 +5,7 @@ interface IEvent {
   subject_type: string
 }
 
-export function eventsApi(
-  options: ShopifyPluginOptions
-): {
+export function eventsApi(options: ShopifyPluginOptions): {
   fetchDestroyEventsSince: (date: Date) => Promise<Array<IEvent>>
 } {
   const shopifyFetch = makeShopifyFetch(options)

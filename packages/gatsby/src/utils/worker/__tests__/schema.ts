@@ -71,9 +71,11 @@ describeWhenLMDB(`worker (schema)`, () => {
   })
 
   it(`should have functioning createSchemaCustomization`, async () => {
-    const typeDefinitions = (stateFromWorker.schemaCustomization.types[0] as {
-      typeOrTypeDef: DocumentNode
-    }).typeOrTypeDef.definitions
+    const typeDefinitions = (
+      stateFromWorker.schemaCustomization.types[0] as {
+        typeOrTypeDef: DocumentNode
+      }
+    ).typeOrTypeDef.definitions
 
     expect(typeDefinitions).toEqual(
       expect.arrayContaining([

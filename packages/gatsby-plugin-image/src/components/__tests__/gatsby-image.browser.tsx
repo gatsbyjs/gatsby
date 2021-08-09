@@ -4,7 +4,12 @@ import { render, waitFor } from "@testing-library/react"
 import * as hooks from "../hooks"
 
 // Prevents terser for bailing because we're not in a babel plugin
-jest.mock(`../../../macros/terser.macro`, () => (strs): string => strs.join(``))
+jest.mock(
+  `../../../macros/terser.macro`,
+  () =>
+    (strs): string =>
+      strs.join(``)
+)
 
 describe(`GatsbyImage browser`, () => {
   let beforeHydrationContent: HTMLDivElement

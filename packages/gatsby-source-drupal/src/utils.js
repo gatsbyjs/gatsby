@@ -165,11 +165,10 @@ const handleWebhookUpdate = async (
 
     const nodeFieldName = `${newNode.internal.type}___NODE`
     removedReferencedNodes.forEach(referencedNode => {
-      referencedNode.relationships[
-        nodeFieldName
-      ] = referencedNode.relationships[nodeFieldName].filter(
-        id => id !== newNode.id
-      )
+      referencedNode.relationships[nodeFieldName] =
+        referencedNode.relationships[nodeFieldName].filter(
+          id => id !== newNode.id
+        )
     })
 
     // see what nodes are newly referenced, and make sure to call `createNode` on them

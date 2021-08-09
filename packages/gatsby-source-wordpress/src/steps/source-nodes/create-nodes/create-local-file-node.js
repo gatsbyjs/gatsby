@@ -225,10 +225,8 @@ export const createLocalFileNode = async ({
   const { wpUrl } = state.remoteSchema
   mediaItemUrl = ensureSrcHasHostname({ wpUrl, src: mediaItemUrl })
 
-  const {
-    excludeByMimeTypes,
-    maxFileSizeBytes,
-  } = pluginOptions.type?.MediaItem?.localFile
+  const { excludeByMimeTypes, maxFileSizeBytes } =
+    pluginOptions.type?.MediaItem?.localFile
 
   // if this file is larger than maxFileSizeBytes, don't fetch the remote file
   if (fileSize > maxFileSizeBytes) {

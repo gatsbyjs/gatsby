@@ -103,9 +103,12 @@ export const transformFields = ({
 
   const parentTypeSettings = getTypeSettingsByType(parentType)
 
-  const parentInterfacesImplementingTypeSettings = parentInterfacesImplementingTypes
-    ? parentInterfacesImplementingTypes.map(type => getTypeSettingsByType(type))
-    : null
+  const parentInterfacesImplementingTypeSettings =
+    parentInterfacesImplementingTypes
+      ? parentInterfacesImplementingTypes.map(type =>
+          getTypeSettingsByType(type)
+        )
+      : null
 
   const transformedFields = fields.reduce((fieldsObject, field) => {
     // if there's no field name this field is unusable
