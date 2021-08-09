@@ -117,7 +117,7 @@ const pickNodeBySourceUrlOrCheerioImg = ({
         // at upload time but image urls in html don't have this requirement.
         // the sourceUrl may have -scaled in it but the full size image is still
         // stored on the server (just not in the db)
-        (mediaItemNode.sourceUrl || mediaItemNode.mediaItemUrl).replace(
+        (mediaItemNode.sourceUrl || mediaItemNode.mediaItemUrl)?.replace(
           `-scaled`,
           ``
         )
