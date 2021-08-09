@@ -346,7 +346,7 @@ const BlogPost = ({ data }) => {
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**Note:** `getImage` is a helper function that takes in a File node or an ImageSharp node and returns the `gatsbyImageData` object for that node. You can use it to keep your code a little cleaner and easier to read.
+**Note:** `getImage` is a helper function that takes in a `File` node or an `ImageSharp` node and returns the `gatsbyImageData` object for that node. You can use it to keep your code a little cleaner and easier to read.
 
 Without the `getImage` helper function, you'd have to type out `data.mdx.frontmatter.hero_image.childImageSharp.gatsbyImageData` (which is longer, but gives you back the same data).
 
