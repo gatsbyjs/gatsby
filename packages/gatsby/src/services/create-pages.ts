@@ -24,10 +24,30 @@ export async function createPages({
   activity.start()
   const timestamp = Date.now()
   const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
+
+  // Wrap the GraphQL function so we can measure how long it takes to run.
+  const originalGraphQL = gatsbyNodeGraphQLFunction
+  // eslint-disable-next-line
+  function wrappedGraphQL() {
+    const start = Date.now()
+    // eslint-disable-next-line
+    const returnValue = originalGraphQL.apply(this, arguments)
+    const end = Date.now()
+    const totalMS = end - start
+    if (totalMS > 10000) {
+      reporter.warn(
+        `Your GraphQL query in createPages took ${
+          totalMS / 1000
+        } seconds which is an unexpectedly long time. See https://www.gatsbyjs.com/docs/how-to/performance/improving-build-performance/#query-only-needed-fields-in-createpages for tips on how to improve this.`
+      )
+    }
+    return returnValue
+  }
+
   await apiRunnerNode(
     `createPages`,
     {
-      graphql: gatsbyNodeGraphQLFunction,
+      graphql: wrappedGraphQL,
       traceId: `initial-createPages`,
       waitForCascadingActions: true,
       parentSpan: activity.span,
