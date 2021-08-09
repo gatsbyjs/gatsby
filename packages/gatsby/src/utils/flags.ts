@@ -147,7 +147,7 @@ const activeFlags: Array<IFlag> = [
   {
     name: `PRESERVE_WEBPACK_CACHE`,
     env: `GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE`,
-    command: `all`,
+    command: [`build`, `develop`],
     telemetryId: `PreserveWebpackCache`,
     experimental: false,
     description: `Use webpack's persistent caching and don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
@@ -167,7 +167,7 @@ const activeFlags: Array<IFlag> = [
   {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
     env: `GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE`,
-    command: `all`,
+    command: [`build`, `develop`],
     telemetryId: `PreserveFileDownloadCache`,
     experimental: false,
     description: `Don't delete the downloaded files cache when changing gatsby-node.js & gatsby-config.js files.`,
@@ -177,7 +177,7 @@ const activeFlags: Array<IFlag> = [
   {
     name: `PARALLEL_SOURCING`,
     env: `GATSBY_EXPERIMENTAL_PARALLEL_SOURCING`,
-    command: `all`,
+    command: [`build`, `develop`],
     telemetryId: `ParallelSourcing`,
     experimental: true,
     description: `Run all source plugins at the same time instead of serially. For sites with multiple source plugins, this can speedup sourcing and transforming considerably.`,
