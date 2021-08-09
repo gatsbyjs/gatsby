@@ -130,13 +130,20 @@ class ControllableScript {
       if (signal) {
         this.process.kill(signal)
       } else {
-        this.process.send({
-          type: `COMMAND`,
-          action: {
-            type: `EXIT`,
-            payload: code,
+        this.process.send(
+          {
+            type: `COMMAND`,
+            action: {
+              type: `EXIT`,
+              payload: code,
+            },
           },
-        })
+          () => {
+            // The try/catch won't suffice for this process.send
+            // So use the callback to manually catch the Error, otherwise it'll be thrown
+            // Ref: https://nodejs.org/api/child_process.html#child_process_subprocess_send_message_sendhandle_options_callback
+          }
+        )
       }
     } catch (err) {
       // Ignore error if process has crashed or already quit.
