@@ -107,8 +107,9 @@ export default function PluginView(
     },
   })
 
-  const { fetching: fetchingNpmData, data: npmData } =
-    useNpmPackageData(pluginName)
+  const { fetching: fetchingNpmData, data: npmData } = useNpmPackageData(
+    pluginName
+  )
 
   const [{ fetching: updatingGatsbyPlugin }, updateGatsbyPlugin] = useMutation(`
     mutation updateGatsbyPlugin(
@@ -146,8 +147,10 @@ export default function PluginView(
     }
   `)
 
-  const [{ fetching: installingGatsbyPlugin }, installGatsbyPlugin] =
-    useMutation(`
+  const [
+    { fetching: installingGatsbyPlugin },
+    installGatsbyPlugin,
+  ] = useMutation(`
     mutation installGatsbyPlugin($name: String!) {
       createNpmPackage(npmPackage: {
         name: $name,

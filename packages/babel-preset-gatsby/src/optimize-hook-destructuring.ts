@@ -6,8 +6,7 @@ import { Program } from "@babel/types"
 const isHook = /^use[A-Z]/
 
 // matches only built-in hooks provided by React et al
-const isBuiltInHook =
-  /^use(Callback|Context|DebugValue|Effect|ImperativeHandle|LayoutEffect|Memo|Reducer|Ref|State)$/
+const isBuiltInHook = /^use(Callback|Context|DebugValue|Effect|ImperativeHandle|LayoutEffect|Memo|Reducer|Ref|State)$/
 
 interface IState {
   opts?: {

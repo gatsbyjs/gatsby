@@ -148,9 +148,9 @@ class Reporter {
       //    reporter.error([Error]);
     } else if (Array.isArray(errorMeta)) {
       // when we get an array of messages, call this function once for each error
-      return errorMeta.map(errorItem =>
-        this.error(errorItem)
-      ) as Array<IStructuredError>
+      return errorMeta.map(errorItem => this.error(errorItem)) as Array<
+        IStructuredError
+      >
       // 4.
       //    reporter.error(errorMeta);
     } else if (typeof errorMeta === `object`) {

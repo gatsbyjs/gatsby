@@ -20,8 +20,11 @@ describe(`integration`, () => {
   })
 
   test(`Doesn't dispatch pre-emptive SUCCESS `, async () => {
-    const { createPendingActivity, endActivity, startActivity } =
-      internalActions
+    const {
+      createPendingActivity,
+      endActivity,
+      startActivity,
+    } = internalActions
 
     startActivity({
       id: `activity-1`,
