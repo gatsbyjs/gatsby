@@ -8,13 +8,31 @@ import { MdArrowForward } from 'react-icons/md'
 
 ## Introduction
 
-In Part 3, you used `gatsby-plugin-image` to add static images to your home page. Now that you've worked a bit more with Gatsby's data layer, it's time to revisit `gatsby-plugin-image`. This time, you'll learn how to add dynamic images to your site.
+In [Part 3](/docs/tutorial/part-3/), you used `gatsby-plugin-image` to add static images to your home page. Now that you've worked a bit more with Gatsby's data layer, it's time to revisit `gatsby-plugin-image`. This time, you'll learn how to add dynamic images to your site.
 
 In this part of the Tutorial, you'll use the dynamic `GatsbyImage` component to add hero images to each of your blog posts.
 
 By the end of this part of the Tutorial, you will be able to:
 
 - Use the `GatsbyImage` component to create images dynamically from data.
+
+## What's the difference between `GatsbyImage` and `StaticImage`?
+
+Back in [Part 3](/docs/tutorial/part-3/) of the Tutorial, you learned about how to use the `StaticImage` component from `gatsby-plugin-image`.
+
+How do you know whether to use the `StaticImage` component or the `GatsbyImage` component? The decision ultimately comes down to whether or not your image source is going to be the same every time the component renders.
+
+* The `StaticImage` component is for *static* image sources, like a hard-coded file path or remote URL. In other words, the source for your image is always going to be the same every time the component renders.
+* The `GatsbyImage` component is for *dynamic* image sources, like if the image source gets passed in as a prop.
+
+Here's a quick analogy to help illustrate the difference:
+
+* Using the `StaticImage` component is like asking for directions using a physical address, like "400 Main Street". You'll always end up in the same place, no matter how many people you ask.
+* Using the `GatsbyImage` component is like asking for directions more generically. If you ask someone to point you to the best coffee shop in town, where you end up will depend on whom you ask and what their personal preferences are.
+
+![A side-by-side of two identical cartoon maps of a little town. The first, labeled "StaticImage", labels one of the houses "400 Main Street". The second, labeled "GatsbyImage", labels three of the houses with "coffee shop".](./staticimage-vs-gatsbyimage-towns.png)
+
+In this part of the Tutorial, you'll add a hero image to your blog post page template. You'll also add some frontmatter data to your blog post `.mdx` files to specify which image to use for each post. Since the image source you'll load in the page template will change for each blog post, you'll use the `GatsbyImage` component.
 
 ## Add hero images to blog post frontmatter
 
