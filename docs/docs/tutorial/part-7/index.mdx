@@ -89,7 +89,6 @@ hero_image_credit_link: "https://unsplash.com/photos/7rriIaBH6JY"
 ...
 ```
 
-
 Now that your hero images are set up, it's time to connect them to the data layer so you can pull them into your blog post page template.
 
 ## Install and configure `gatsby-transformer-sharp`
@@ -118,12 +117,12 @@ When Gatsby adds nodes to the data layer at build time, the `gatsby-transformer-
     }
     ```
 
-Now that you've added `gatsby-transformer-sharp` to your site, you'll need to restart your local development server to see the changes in GraphiQL. You'll take a closer look at GraphiQL in the next step.
+Since you've added `gatsby-transformer-sharp` to your site, you'll need to restart your local development server to see the changes in GraphiQL. You'll take a closer look at GraphiQL in the next step.
 
 
 ## Render hero image in the blog post page template
 
-Now that you have all the necessary tools in place, it's time to add your hero image to your blog post page template.
+With all the necessary tools in place, you're ready to add your hero image to your blog post page template.
 
 ### Task: Use GraphiQL to build the query
 
@@ -279,7 +278,7 @@ If you take a closer look at the `gatsbyImageData` object on the `hero_image.chi
 
 ### Task: Add hero image using `GatsbyImage` component
 
-Now that you have your GraphQL query set up, it's time to add it to your blog post page template.
+Once you have your GraphQL query set up, you can to add it to your blog post page template.
 
 1. Replace your existing page query with the query you built in GraphiQL that includes the hero image frontmatter fields.
     ```js:title=src/pages/blog/{mdx.slug}.js
