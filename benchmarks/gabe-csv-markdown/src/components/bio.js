@@ -16,8 +16,8 @@ const Bio = () => {
       }}
     >
       <p>
-        Written by <strong>Bob</strong> who lives and works in Fan
-        Srancisco building useful things.
+        Written by <strong>Bob</strong> who lives and works in San
+        Francisco building useful things.
         {` `}
         <a href={`https://twitter.com/bob`}>
           You should follow him on Twitter
