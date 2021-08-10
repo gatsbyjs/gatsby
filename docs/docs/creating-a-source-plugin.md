@@ -124,11 +124,11 @@ You can read more about the cache API, other types of plugins that leverage the 
 
 ### Adding support for Gatsby Cloud Content Loader
 
-Content Loader is a service that will allow your CMS backend to route from a piece of content to a finally built page in Gatsby. Currently, the primary use-case for this is implementing Content Previews. This allows site admins to preview their content in a Gatsby Preview instance before they decide to push it to their production site.
+Content Loader is a service that will allow the CMS backend to route from a piece of content in the CMS to a built page in the users Gatsby site where that content is rendered. Currently, the primary use-case for this is implementing Content Previews. This allows site admins to preview their content in a Gatsby Preview instance before they decide to push it to their production site.
 
 #### How Content Loader works for users
 
-The feature will display a loading page while the users content is being built in Gatsby. Once the build is finished, the loader will route the user to the correct page. If any errors occur, the loader will let the user know. This way site admins wont be left guessing when they can view their preview content.
+This feature will display a loading page while the users content is being built in Gatsby Cloud. Once the build is finished, the loader will route the user to the correct page. If any errors occur, the loader will let the user know. This way site admins wont be left guessing when they can view their preview content.
 
 TODO: write and then link to the site developer docs on how ownerNodeId in createPage relates to this feature.
 
