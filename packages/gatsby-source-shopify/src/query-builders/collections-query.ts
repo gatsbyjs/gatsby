@@ -38,7 +38,7 @@ export class CollectionsQuery extends BulkQuery {
                     ownerType
                     updatedAt
                     value
-                    valueType
+                    type
                   }
                 }
               }
