@@ -50,9 +50,8 @@ function render(
   const uniqIndex = uniq(usedSubPlugins)
 
   const sanitizedUsedPlugins = usedPlugins.map(plugin => {
-    // Remove pluginOptions as it's separately bundled with gatsby-config.js
-    // Remove other stuff as it's not needed
-    const { pluginOptions, resolve, pluginFilepath, ...rest } = plugin
+    // TODO: We don't support functions in pluginOptions here
+    const { resolve, pluginFilepath, ...rest } = plugin
     return { ...rest }
   })
 
