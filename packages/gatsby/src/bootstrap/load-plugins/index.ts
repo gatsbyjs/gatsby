@@ -6,6 +6,7 @@ import * as nodeAPIs from "../../utils/api-node-docs"
 import * as browserAPIs from "../../utils/api-browser-docs"
 import ssrAPIs from "../../../cache-dir/api-ssr-docs"
 import { loadPlugins as loadPluginsInternal } from "./load"
+import createPluginDigest from "./create-plugin-digest"
 import {
   collatePluginAPIs,
   handleBadExports,
@@ -90,7 +91,7 @@ export async function loadPlugins(
   const config = normalizeConfig(rawConfig)
 
   // Show errors for invalid plugin configuration
-  // await validateConfigPluginsOptions(config, rootDir)
+  await validateConfigPluginsOptions(config, rootDir)
 
   const currentAPIs = getAPI({
     browser: browserAPIs,
@@ -103,6 +104,12 @@ export async function loadPlugins(
 
   // Create a flattened array of the plugins
   const pluginArray = flattenPlugins(pluginInfos)
+
+  const digests = await Promise.all(
+    pluginArray.map(p => createPluginDigest(rootDir, p.resolve))
+  )
+  console.log({ digests })
+  // process.exit()
 
   // Work out which plugins use which APIs, including those which are not
   // valid Gatsby APIs, aka 'badExports'
@@ -126,5 +133,6 @@ export async function loadPlugins(
     payload: flattenedPlugins as IGatsbyState["flattenedPlugins"],
   })
 
+  console.timeEnd(`loadPlugins`)
   return flattenedPlugins
 }
