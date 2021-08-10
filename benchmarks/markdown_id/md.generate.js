@@ -12,7 +12,7 @@ if (
   MAX_NUM_ROWS <= 0
 ) {
   throw new Error(
-    `Error: the valeue for MAX_NUM_ROWS is invalid: \`` +
+    `Error: the value for MAX_NUM_ROWS is invalid: \`` +
       process.env.MAX_NUM_ROWS +
       `\``
   )
@@ -24,7 +24,7 @@ if (
   NUM_PAGES <= 0
 ) {
   throw new Error(
-    `Error: the valeue for MAX_NUM_ROWS is invalid: \`` +
+    `Error: the value for MAX_NUM_ROWS is invalid: \`` +
       process.env.NUM_PAGES +
       `\``
   )
