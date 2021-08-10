@@ -43,5 +43,5 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     enableWebVitalsTracking: Joi.boolean().default(false),
     selfHostedOrigin: Joi.string()
       .default(`https://www.googletagmanager.com`)
-      .description(`Self hosted origin.`),
+      .description(`The origin where GTM is hosted.`),
   })

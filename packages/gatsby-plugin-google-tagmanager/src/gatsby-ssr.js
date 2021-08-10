@@ -66,6 +66,8 @@ exports.onRenderBody = (
       )
     }
 
+    selfHostedOrigin = selfHostedOrigin.replace(/\/$/, ``)
+
     const inlineScripts = []
     if (enableWebVitalsTracking) {
       // web-vitals/polyfill (necessary for non chromium browsers)
