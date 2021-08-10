@@ -1,6 +1,6 @@
 import "jest-extended"
 import { WorkerPool } from "../"
-import { isPromise } from "../utils"
+import { isPromise, isRunning } from "../utils"
 import { MessagesFromChild, MessagesFromParent } from "./fixtures/test-child"
 
 describe(`gatsby-worker`, () => {
@@ -44,6 +44,7 @@ describe(`gatsby-worker`, () => {
       Array [
         "sync",
         "async",
+        "pid",
         "neverEnding",
         "syncThrow",
         "asyncThrow",
@@ -238,6 +239,100 @@ describe(`gatsby-worker`, () => {
       }
 
       await endWorkerPool()
+    })
+  })
+
+  describe(`.restart`, () => {
+    it(`spawns new processes on restart`, async () => {
+      if (!workerPool) {
+        fail(`worker pool not created`)
+      }
+
+      const initialPids = await Promise.all(workerPool.all.pid())
+
+      // sanity checks:
+      expect(initialPids).toBeArrayOfSize(numWorkers)
+      expect(initialPids).toSatisfyAll(value => typeof value === `number`)
+
+      await workerPool.restart()
+      const newPids = await Promise.all(workerPool.all.pid())
+      expect(newPids).toBeArrayOfSize(numWorkers)
+      expect(newPids).toSatisfyAll(value => !initialPids.includes(value))
+    })
+
+    it(`kills old processes on restart`, async () => {
+      if (!workerPool) {
+        fail(`worker pool not created`)
+      }
+
+      const initialPids = await Promise.all(workerPool.all.pid())
+
+      // sanity checks:
+      expect(initialPids).toBeArrayOfSize(numWorkers)
+      expect(initialPids).toSatisfyAll(pid => isRunning(pid))
+
+      await workerPool.restart()
+      expect(initialPids).toSatisfyAll(pid => !isRunning(pid))
+    })
+
+    it(`.single works after restart`, async () => {
+      if (!workerPool) {
+        fail(`worker pool not created`)
+      }
+
+      const returnValue = workerPool.single.async(`.single async`)
+      // promise is preserved
+      expect(isPromise(returnValue)).toEqual(true)
+
+      const resolvedValue = await returnValue
+      expect(resolvedValue).toMatchInlineSnapshot(`"foo .single async"`)
+    })
+
+    it(`.all works after restart`, async () => {
+      if (!workerPool) {
+        fail(`worker pool not created`)
+      }
+
+      const returnValue = workerPool.all.async(`.single async`, {
+        addWorkerId: true,
+      })
+
+      expect(returnValue).toBeArrayOfSize(numWorkers)
+      // promise is preserved
+      expect(returnValue).toSatisfyAll(isPromise)
+
+      const resolvedValue = await Promise.all(returnValue)
+      expect(resolvedValue).toMatchInlineSnapshot(`
+        Array [
+          "foo .single async (worker #1)",
+          "foo .single async (worker #2)",
+        ]
+      `)
+    })
+
+    it(`fails currently executed and pending tasks when worker is restarted`, async () => {
+      if (!workerPool) {
+        fail(`worker pool not created`)
+      }
+
+      expect.assertions(numWorkers * 2)
+
+      // queueing 2 * numWorkers task, so that currently executed tasks reject
+      // as well as pending tasks
+      for (let i = 0; i < numWorkers * 2; i++) {
+        workerPool.single
+          .neverEnding()
+          .then(() => {
+            fail(`promise should reject`)
+          })
+          .catch(e => {
+            expect(e).toMatchInlineSnapshot(
+              `[Error: Worker exited before finishing task]`
+            )
+          })
+      }
+
+      await workerPool.restart()
     })
   })
 

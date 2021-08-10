@@ -33,75 +33,76 @@ export const transformListOfGatsbyNodes = ({ field, fieldName }) => {
   }
 }
 
-export const buildGatsbyNodeObjectResolver = ({ field, fieldName }) => async (
-  source,
-  _,
-  context
-) => {
-  const typeName = buildTypeName(field.type.name)
-  const nodeField = source[fieldName]
+export const buildGatsbyNodeObjectResolver =
+  ({ field, fieldName }) =>
+  async (source, _, context) => {
+    const typeName = buildTypeName(field.type.name)
+    const nodeField = source[fieldName]
 
-  if (!nodeField || (nodeField && !nodeField.id)) {
-    return null
-  }
+    if (!nodeField || (nodeField && !nodeField.id)) {
+      return null
+    }
 
-  const existingNode = context.nodeModel.getNodeById({
-    id: nodeField.id,
-    type: typeName,
-  })
-
-  const {
-    schema: { typePrefix: prefix },
-  } = getPluginOptions()
-
-  if (existingNode?.__typename && !existingNode.__typename.startsWith(prefix)) {
-    existingNode.__typename = buildTypeName(existingNode.__typename)
-  }
-
-  if (existingNode) {
-    return existingNode
-  }
-
-  const queryInfo = getQueryInfoByTypeName(field.type.name)
-
-  if (!queryInfo) {
-    // if we don't have query info for a type
-    // it probably means this type is excluded in plugin options
-    return null
-  }
-
-  const isLazyMediaItem =
-    queryInfo.typeInfo.nodesTypeName === `MediaItem` &&
-    queryInfo.settings.lazyNodes
-
-  if (
-    // only fetch/create nodes in resolvers for media items when they have lazyNodes enabled
-    !isLazyMediaItem &&
-    // but if we're in preview mode we want to lazy fetch nodes
-    // because if nodes are limited we still want to lazy fetch connections
-    !inPreviewMode()
-  ) {
-    return null
-  }
-
-  // if this node doesn't exist, fetch it and create a node
-  const { node } = await fetchAndCreateSingleNode({
-    id: nodeField.id,
-    actionType: `CREATE`,
-    singleName: queryInfo.typeInfo.singularName,
-  })
-
-  if (source.id && node) {
-    const { helpers } = getGatsbyApi()
-
-    await helpers.actions.createParentChildLink({
-      parent: source,
-      child: node,
+    const existingNode = context.nodeModel.getNodeById({
+      id: nodeField.id,
+      type: typeName,
     })
-  }
 
-  return node || null
-}
+    const {
+      schema: { typePrefix: prefix },
+    } = getPluginOptions()
+
+    if (
+      existingNode?.__typename &&
+      !existingNode.__typename.startsWith(prefix)
+    ) {
+      existingNode.__typename = buildTypeName(existingNode.__typename)
+    }
+
+    if (existingNode) {
+      return existingNode
+    }
+
+    const queryInfo = getQueryInfoByTypeName(field.type.name)
+
+    if (!queryInfo) {
+      // if we don't have query info for a type
+      // it probably means this type is excluded in plugin options
+      return null
+    }
+
+    const isLazyMediaItem =
+      queryInfo.typeInfo.nodesTypeName === `MediaItem` &&
+      queryInfo.settings.lazyNodes
+
+    if (
+      // only fetch/create nodes in resolvers for media items when they have lazyNodes enabled
+      !isLazyMediaItem &&
+      // but if we're in preview mode we want to lazy fetch nodes
+      // because if nodes are limited we still want to lazy fetch connections
+      !inPreviewMode()
+    ) {
+      return null
+    }
+
+    // if this node doesn't exist, fetch it and create a node
+    const { node } = await fetchAndCreateSingleNode({
+      id: nodeField.id,
+      actionType: `CREATE`,
+      singleName: queryInfo.typeInfo.singularName,
+    })
+
+    if (source.id && node) {
+      const { helpers } = getGatsbyApi()
+
+      await helpers.actions.createParentChildLink({
+        parent: source,
+        child: node,
+      })
+    }
+
+    return node || null
+  }
 
 export const transformGatsbyNodeObject = transformerApi => {
   const { field } = transformerApi

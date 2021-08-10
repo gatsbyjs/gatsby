@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-wikipedia",
-  "version": "3.10.0-next.1",
+  "version": "3.12.0-next.3",
   "description": "Gatsby source plugin for pulling articles from Wikipedia",
   "main": "index.js",
   "scripts": {
@@ -34,9 +34,9 @@
     "query-string": "^6.13.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.5",
-    "@babel/core": "^7.14.6",
-    "babel-preset-gatsby-package": "^1.10.0-next.1",
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
+    "babel-preset-gatsby-package": "^1.12.0-next.3",
     "cross-env": "^7.0.3"
   },
   "engines": {

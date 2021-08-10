@@ -694,6 +694,7 @@ exports.initialSync = () => {
         },
       ],
     },
+    tagItems: [],
   }
 }
 
@@ -1083,6 +1084,7 @@ exports.createBlogPost = () => {
         },
       ],
     },
+    tagItems: [],
   }
 }
 
@@ -1434,6 +1436,7 @@ exports.updateBlogPost = () => {
         },
       ],
     },
+    tagItems: [],
   }
 }
 
@@ -1747,6 +1750,7 @@ exports.removeBlogPost = () => {
         },
       ],
     },
+    tagItems: [],
   }
 }
 
@@ -2060,5 +2064,6 @@ exports.removeAsset = () => {
         },
       ],
     },
+    tagItems: [],
   }
 }

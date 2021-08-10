@@ -5,11 +5,11 @@ export const handlers = [
     res(
       ctx.json({
         currentBuild: {
-          id: `123`,
+          id: `122`,
           buildStatus: `SUCCESS`,
           createdAt: `2021-05-11T14:45:10.263Z`,
         },
-        latestBuild: { id: `123`, buildStatus: `SUCCESS` },
+        latestBuild: { id: `124`, buildStatus: `SUCCESS` },
         siteInfo: { orgId: `999`, siteId: `111`, sitePrefix: `test` },
       })
     )
@@ -36,16 +36,19 @@ export const handlers = [
     res(
       ctx.json({
         currentBuild: {
-          id: null,
+          id: `123`,
           buildStatus: `SUCCESS`,
           createdAt: `2021-05-11T14:45:10.263Z`,
         },
-        latestBuild: { id: null, buildStatus: `SUCCESS` },
+        latestBuild: { id: `1234`, buildStatus: `SUCCESS` },
         siteInfo: { orgId: `999`, siteId: `111`, sitePrefix: `test` },
       })
     )
   ),
   rest.get(`https://test.com/fetching`, async (req, res, ctx) =>
     res(ctx.json({ currentBuild: {}, latestBuild: {}, siteInfo: {} }))
+  ),
+  rest.post(`http://test.com/events`, async (req, res, ctx) =>
+    res(ctx.json({ message: `success` }))
   ),
 ]

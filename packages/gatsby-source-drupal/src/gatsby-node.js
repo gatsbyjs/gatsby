@@ -443,9 +443,8 @@ exports.sourceNodes = async (
     const fileNodes = [...nodes.values()].filter(isFileNode)
 
     if (fileNodes.length) {
-      const downloadingFilesActivity = reporter.activityTimer(
-        `Remote file download`
-      )
+      const downloadingFilesActivity =
+        reporter.activityTimer(`Remote file download`)
       downloadingFilesActivity.start()
       try {
         await asyncPool(concurrentFileRequests, fileNodes, async node => {

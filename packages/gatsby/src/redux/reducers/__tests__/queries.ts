@@ -20,6 +20,7 @@ import {
   ICreatePageDependencyAction,
   IGatsbyPage,
   IGatsbyState,
+  IMergeWorkerQueryState,
   IPageQueryRunAction,
   IQueryStartAction,
 } from "../../types"
@@ -866,6 +867,155 @@ describe(`delete cache`, () => {
 
     state = reducer(state, { type: `DELETE_CACHE` })
     expect(state).toEqual(initialState)
+  })
+})
+
+describe(`merge worker query state`, () => {
+  beforeEach(() => {
+    state = createPage(state, Pages.foo)
+
+    const action: ICreatePageDependencyAction = {
+      type: `CREATE_COMPONENT_DEPENDENCY`,
+      payload: {
+        path: Pages.foo.path,
+        nodeId: `123`,
+        connection: `Foo`,
+      },
+    }
+
+    state = reducer(state, action)
+  })
+
+  it(`has expected baseline`, () => {
+    const action: IMergeWorkerQueryState = {
+      type: `MERGE_WORKER_QUERY_STATE`,
+      payload: {
+        workerId: 1,
+        queryStateChunk: {
+          byNode: new Map([[`worker-random-id`, new Set([`/worker-page`])]]),
+          byConnection: new Map([[`WorkerType`, new Set([`/worker-page`])]]),
+          queryNodes: new Map(),
+          trackedQueries: new Map([[`/worker-page`, { dirty: 0, running: 0 }]]),
+          deletedQueries: new Set(),
+          dirtyQueriesListToEmitViaWebsocket: [],
+          trackedComponents: new Map(),
+        },
+      },
+    }
+
+    state = reducer(state, action)
+
+    expect(state.trackedQueries.get(`/worker-page`)).not.toEqual({
+      dirty: 0,
+      running: 0,
+    })
+    expect(state.byNode.get(`123`)).toEqual(new Set([`/foo`]))
+    expect(state.byNode.get(`worker-random-id`)).toEqual(
+      new Set([`/worker-page`])
+    )
+    expect(state.byConnection.get(`Foo`)).toEqual(new Set([`/foo`]))
+    expect(state.byConnection.get(`WorkerType`)).toEqual(
+      new Set([`/worker-page`])
+    )
+    expect(state.queryNodes.get(`/foo`)).toEqual(new Set([`123`]))
+    expect(state.queryNodes.get(`/worker-page`)).toEqual(
+      new Set([`worker-random-id`])
+    )
+  })
+
+  it(`checks for deletedQueries`, () => {
+    const action: IMergeWorkerQueryState = {
+      type: `MERGE_WORKER_QUERY_STATE`,
+      payload: {
+        workerId: 1,
+        queryStateChunk: {
+          byNode: new Map(),
+          byConnection: new Map(),
+          queryNodes: new Map(),
+          trackedQueries: new Map(),
+          deletedQueries: new Set(`foo-bar`),
+          dirtyQueriesListToEmitViaWebsocket: [],
+          trackedComponents: new Map(),
+        },
+      },
+    }
+
+    expect(() => reducer(state, action)).toThrow(
+      `Assertion failed: workerState.deletedQueries.size === 0 (worker #1)`
+    )
+  })
+
+  it(`checks for trackedComponents`, () => {
+    const action: IMergeWorkerQueryState = {
+      type: `MERGE_WORKER_QUERY_STATE`,
+      payload: {
+        workerId: 1,
+        queryStateChunk: {
+          byNode: new Map(),
+          byConnection: new Map(),
+          queryNodes: new Map(),
+          trackedQueries: new Map(),
+          deletedQueries: new Set(),
+          dirtyQueriesListToEmitViaWebsocket: [],
+          trackedComponents: new Map([
+            [
+              `test`,
+              {
+                componentPath: `/test`,
+                errors: 0,
+                query: `test`,
+                pages: new Set(`1`),
+              },
+            ],
+          ]),
+        },
+      },
+    }
+
+    expect(() => reducer(state, action)).toThrow(
+      `Assertion failed: queryStateChunk.trackedComponents.size === 0 (worker #1)`
+    )
+  })
+
+  it(`checks for trackedQueries`, () => {
+    const action1: IMergeWorkerQueryState = {
+      type: `MERGE_WORKER_QUERY_STATE`,
+      payload: {
+        workerId: 1,
+        queryStateChunk: {
+          byNode: new Map(),
+          byConnection: new Map(),
+          queryNodes: new Map(),
+          trackedQueries: new Map([[`/worker-page`, { dirty: 1, running: 0 }]]),
+          deletedQueries: new Set(),
+          dirtyQueriesListToEmitViaWebsocket: [],
+          trackedComponents: new Map(),
+        },
+      },
+    }
+
+    const action2: IMergeWorkerQueryState = {
+      type: `MERGE_WORKER_QUERY_STATE`,
+      payload: {
+        workerId: 2,
+        queryStateChunk: {
+          byNode: new Map(),
+          byConnection: new Map(),
+          queryNodes: new Map(),
+          trackedQueries: new Map([[`/worker-page`, { dirty: 0, running: 1 }]]),
+          deletedQueries: new Set(),
+          dirtyQueriesListToEmitViaWebsocket: [],
+          trackedComponents: new Map(),
+        },
+      },
+    }
+
+    expect(() => reducer(state, action1)).toThrow(
+      `Assertion failed: all worker queries are not dirty (worker #1)`
+    )
+    expect(() => reducer(state, action2)).toThrow(
+      `Assertion failed: all worker queries are not running (worker #2)`
+    )
   })
 })
 

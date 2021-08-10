@@ -27,7 +27,7 @@ import {
   IIndexEntry,
 } from "./filter-using-index"
 import { store } from "../../../redux"
-import { isDesc, resolveFieldValue, shouldFilter, compareKey } from "./common"
+import { isDesc, resolveFieldValue, matchesFilter, compareKey } from "./common"
 import { suggestIndex } from "./suggest-index"
 
 interface IDoRunQueryArgs extends IRunQueryArgs {
@@ -64,7 +64,8 @@ export async function doRunQuery(args: IDoRunQueryArgs): Promise<IQueryResult> {
     }
   }
 
-  const totalCount = async (): Promise<number> => runCountOnce(context)
+  const totalCount = async (): Promise<number> =>
+    runCountOnce({ ...context, limit: undefined, skip: 0 })
 
   if (canUseIndex(context)) {
     await Promise.all(
@@ -80,7 +81,20 @@ export async function doRunQuery(args: IDoRunQueryArgs): Promise<IQueryResult> {
 function performIndexScan(context: IQueryContext): GatsbyIterable<IGatsbyNode> {
   const { suggestedIndexFields, sortFields } = context
 
+  const filterContext =
+    context.nodeTypeNames.length === 1
+      ? context
+      : {
+          ...context,
+          skip: 0,
+          limit:
+            typeof context.limit === `undefined`
+              ? undefined
+              : context.skip + context.limit,
+        }
+
   let result = new GatsbyIterable<IGatsbyNode>([])
+  let resultOffset = filterContext.skip
   for (const typeName of context.nodeTypeNames) {
     const indexMetadata = getIndexMetadata(
       context,
@@ -88,20 +102,23 @@ function performIndexScan(context: IQueryContext): GatsbyIterable<IGatsbyNode> {
       suggestedIndexFields
     )
     if (!needsSorting(context)) {
-      const nodes = filterNodes(context, indexMetadata)
+      const { nodes, usedSkip } = filterNodes(filterContext, indexMetadata)
       result = result.concat(nodes)
+      resultOffset = usedSkip
       continue
     }
     if (canUseIndexForSorting(indexMetadata, sortFields)) {
-      const nodes = filterNodes(context, indexMetadata)
+      const { nodes, usedSkip } = filterNodes(filterContext, indexMetadata)
       // Interleave nodes of different types (not expensive for already sorted chunks)
       result = result.mergeSorted(nodes, createNodeSortComparator(sortFields))
+      resultOffset = usedSkip
       continue
     }
     // The sad part - unlimited filter + in-memory sort
     const unlimited = { ...context, skip: 0, limit: undefined }
-    const nodes = filterNodes(unlimited, indexMetadata)
+    const { nodes, usedSkip } = filterNodes(unlimited, indexMetadata)
     const sortedNodes = sortNodesInMemory(context, nodes)
+    resultOffset = usedSkip
 
     result = result.mergeSorted(
       sortedNodes,
@@ -109,9 +126,10 @@ function performIndexScan(context: IQueryContext): GatsbyIterable<IGatsbyNode> {
     )
   }
   const { limit, skip = 0 } = context
+  const actualSkip = skip - resultOffset
 
-  if (limit || skip) {
-    result = result.slice(skip, limit ? skip + limit : undefined)
+  if (limit || actualSkip) {
+    result = result.slice(actualSkip, limit ? actualSkip + limit : undefined)
   }
   return result
 }
@@ -154,7 +172,7 @@ function runCount(context: IQueryContext): number {
       count += countUsingIndexOnly({ ...context, indexMetadata })
     } catch (e) {
       // We cannot reliably count using index - fallback to full iteration :/
-      for (const _ of filterNodes(context, indexMetadata)) count++
+      for (const _ of filterNodes(context, indexMetadata).nodes) count++
     }
   }
   return count
@@ -193,8 +211,8 @@ function performFullTableScan(
 function filterNodes(
   context: IQueryContext,
   indexMetadata: IIndexMetadata
-): GatsbyIterable<IGatsbyNode> {
-  const { entries, usedQueries } = filterUsingIndex({
+): { nodes: GatsbyIterable<IGatsbyNode>; usedSkip: number } {
+  const { entries, usedQueries, usedSkip } = filterUsingIndex({
     ...context,
     indexMetadata,
     reverse: Array.from(context.sortFields.values())[0] === -1,
@@ -203,11 +221,14 @@ function filterNodes(
     .map(({ value }) => context.datastore.getNode(value))
     .filter(Boolean)
 
-  return completeFiltering(
-    context,
-    nodes as GatsbyIterable<IGatsbyNode>,
-    usedQueries
-  )
+  return {
+    nodes: completeFiltering(
+      context,
+      nodes as GatsbyIterable<IGatsbyNode>,
+      usedQueries
+    ),
+    usedSkip,
+  }
 }
 
 /**
@@ -237,7 +258,7 @@ function completeFiltering(
     for (const [dottedField, filter] of filtersToApply) {
       const tmp = resolveFieldValue(dottedField, node, resolvedFields)
       const value = Array.isArray(tmp) ? tmp : [tmp]
-      if (value.some(v => !shouldFilter(filter, v))) {
+      if (value.some(v => !matchesFilter(filter, v))) {
         // Mimic AND semantics
         return false
       }

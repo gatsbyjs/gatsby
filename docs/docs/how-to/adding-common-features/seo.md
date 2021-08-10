@@ -31,7 +31,7 @@ Gatsby's many built-in performance optimizations, such as rendering to static fi
 
 In June 2021, [Google implemented a new ranking factor for site speed](https://developers.google.com/search/blog/2020/11/timing-for-page-experience), calling the algorithm update the "Core Web Vitals Update".
 
-The Gatsby team included information about this in the [Core Web Vitals webinar](https://www.gatsbyjs.com/resources/webinars/understanding-core-web-vitals).
+The Gatsby team included information about this in the [Core Web Vitals webinar](/resources/webinars/understanding-core-web-vitals).
 
 ## Page metadata
 
@@ -41,8 +41,7 @@ A common way to add metadata to pages is to add [react-helmet](https://github.co
 
 Some examples using react-helmet:
 
-- [Official GatsbyJS.org site](https://github.com/gatsbyjs/gatsby/blob/87ad6e81b9bd78b25d089434600750f5903baaee/www/src/components/package-readme.js#L16-L25)
-- [Official GatsbyJS default starter](https://github.com/gatsbyjs/gatsby/blob/776dc1d6fe8d5ce7b5ea6d884736bb3c76280975/starters/default/src/components/seo.js)
+- [Official GatsbyJS default starter](https://github.com/gatsbyjs/gatsby/blob/master/starters/default/src/components/seo.js)
 - [Gatsby Mail](https://github.com/DSchau/gatsby-mail/blob/89b467e5654619ffe3073133ef0ae48b4d7502e3/src/components/meta.js)
 - [Jason Lengstorf’s personal blog](https://github.com/jlengstorf/gatsby-theme-jason-blog/blob/e6d25ca927afdc75c759e611d4ba6ba086452bb8/src/components/SEO/SEO.js)
 
@@ -52,7 +51,7 @@ Google uses structured data that it finds on the web to understand the content o
 
 For example, here is a structured data snippet (added with `react-helmet`) in the [JSON-LD format](https://developers.google.com/search/docs/guides/intro-structured-data) (JavaScript Object Notation for Linked Data), that might appear on the contact page of a company called Spooky Technologies, describing their contact information:
 
-```html
+```jsx
 <Helmet>
   <script type="application/ld+json">
     {`
@@ -79,5 +78,4 @@ After deployment, their [Rich result status reports](https://support.google.com/
 ## Additional resources
 
 - [Blog posts about SEO in Gatsby](/blog/tags/seo/)
-- [An advanced tutorial about SEO and social sharing cards](/tutorial/seo-and-social-sharing-cards-tutorial/).
--
+- [An advanced tutorial about SEO and social sharing cards](/tutorial/seo-and-social-sharing-cards-tutorial/)

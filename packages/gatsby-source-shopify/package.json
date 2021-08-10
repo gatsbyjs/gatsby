@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-shopify",
-  "version": "5.2.0-next.1",
+  "version": "5.4.0-next.3",
   "description": "Gatsby source plugin for building websites using Shopify as a data source.",
   "scripts": {
     "watch": "tsc-watch --outDir .",
@@ -19,20 +19,20 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify#readme",
   "dependencies": {
-    "gatsby-core-utils": "^2.10.0-next.1",
-    "gatsby-source-filesystem": "^3.10.0-next.1",
+    "gatsby-core-utils": "^2.12.0-next.3",
+    "gatsby-source-filesystem": "^3.12.0-next.3",
     "node-fetch": "^2.6.1",
     "sharp": "^0.28.3",
     "shift-left": "^0.1.5"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.23",
-    "@types/node": "^14.17.4",
-    "@types/node-fetch": "^2.5.10",
-    "@types/sharp": "^0.28.3",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^14.17.7",
+    "@types/node-fetch": "^2.5.12",
+    "@types/sharp": "^0.28.5",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-image": "^1.10.0-next.1",
-    "msw": "^0.30.1",
+    "gatsby-plugin-image": "^1.12.0-next.3",
+    "msw": "^0.33.2",
     "prettier": "^2.3.2",
     "prettier-check": "^2.0.0",
     "tsc-watch": "^4.4.0",

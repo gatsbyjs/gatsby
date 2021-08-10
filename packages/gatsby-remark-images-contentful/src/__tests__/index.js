@@ -16,17 +16,32 @@ jest.mock(`../utils/`, () => {
 })
 
 jest.mock(`axios`)
-jest.mock(`sharp`, () => () => {
-  return {
-    metadata: jest.fn(() => {
-      return {
-        width: 200,
-        height: 200,
-        density: 75,
-      }
-    }),
+
+jest.mock(`sharp`, () => {
+  const metadataMock = jest.fn(() => {
+    return {
+      width: 200,
+      height: 200,
+      density: 75,
+    }
+  })
+
+  const sharp = () => {
+    const pipeline = {
+      metadata: metadataMock,
+    }
+    return pipeline
   }
+
+  sharp.metadataMock = metadataMock
+
+  return sharp
 })
+
+const sharp = require(`sharp`)
+const mockSharpFailure = () => {
+  sharp.metadataMock.mockRejectedValueOnce(new Error(`invalid image`))
+}
 
 const createNode = content => {
   const node = {
@@ -131,7 +146,6 @@ test(`it transforms images in markdown`, async () => {
   const content = `
 ![image](${imagePath})
   `.trim()
-
   const nodes = await plugin(createPluginOptions(content, imagePath))
 
   expect(nodes.length).toBe(1)
@@ -236,4 +250,26 @@ test(`it transforms images in markdown with webp srcSets if option is enabled`, 
   expect(node.type).toBe(`html`)
   expect(node.value).toMatchSnapshot()
   expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it shows an useful error message when the file is not a valid image`, async () => {
+  mockSharpFailure()
+
+  const imagePath = `//images.ctfassets.net/k8iqpp6u0ior/752jwCIe9dwtfi9mLbp9m2/bc588ee25cf8299bc33a56ca32f8677b/Gatsby-Logos.zip`
+
+  const content = `
+![image](${imagePath})
+  `.trim()
+
+  const reporter = {
+    panic: jest.fn(),
+  }
+
+  await plugin(createPluginOptions(content, imagePath, { reporter }))
+
+  expect(reporter.panic).toHaveBeenCalledTimes(1)
+  expect(reporter.panic).toHaveBeenCalledWith(
+    `The image "${imagePath}" (with alt text: "image") doesn't appear to be a supported image format.`,
+    expect.any(Error)
+  )
 })

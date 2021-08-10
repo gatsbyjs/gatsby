@@ -1233,9 +1233,9 @@ console.log('hello world')
     `htmlAst`,
     node => {
       expect(node).toMatchSnapshot()
-      expect(
-        node.htmlAst.children[0].children[0].properties.className
-      ).toEqual([`language-js`])
+      expect(node.htmlAst.children[0].children[0].properties.className).toEqual(
+        [`language-js`]
+      )
       expect(node.htmlAst.children[0].children[0].properties.dataMeta).toEqual(
         `foo bar`
       )
