@@ -12,9 +12,8 @@ let store: Store<{ logs: IGatsbyCLIState }> = createStore(
   {}
 )
 
-const diagnosticsMiddleware = createStructuredLoggingDiagnosticsMiddleware(
-  store
-)
+const diagnosticsMiddleware =
+  createStructuredLoggingDiagnosticsMiddleware(store)
 
 export type GatsbyCLIStore = typeof store
 type StoreListener = (store: GatsbyCLIStore) => void

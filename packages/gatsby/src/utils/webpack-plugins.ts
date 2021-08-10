@@ -1,20 +1,20 @@
 import webpack, { WebpackPluginInstance } from "webpack"
 
-const plugin = (
-  name: string,
-  optimize?: boolean,
-  deprecationReason?: string
-): ((...args: any) => WebpackPluginInstance) => (
-  ...args: any
-): WebpackPluginInstance => {
-  if (deprecationReason) {
-    // TODO add proper deprecation function to reporter
-    console.warn(`[deprecated]: ${deprecationReason}`)
-  }
+const plugin =
+  (
+    name: string,
+    optimize?: boolean,
+    deprecationReason?: string
+  ): ((...args: any) => WebpackPluginInstance) =>
+  (...args: any): WebpackPluginInstance => {
+    if (deprecationReason) {
+      // TODO add proper deprecation function to reporter
+      console.warn(`[deprecated]: ${deprecationReason}`)
+    }
 
-  const WebpackPlugin = (optimize ? webpack.optimize : webpack)[name]
-  return new WebpackPlugin(...args)
-}
+    const WebpackPlugin = (optimize ? webpack.optimize : webpack)[name]
+    return new WebpackPlugin(...args)
+  }
 
 export const builtinPlugins = {
   normalModuleReplacement: plugin(`NormalModuleReplacementPlugin`),

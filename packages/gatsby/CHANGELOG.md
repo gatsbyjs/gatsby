@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.12.0-next.2...gatsby@3.12.0-next.3) (2021-08-09)
+
+### Bug Fixes
+
+- **gatsby:** fix incorrect filtering with experimental LMDB indexes ([#32728](https://github.com/gatsbyjs/gatsby/issues/32728)) ([9b456cd](https://github.com/gatsbyjs/gatsby/commit/9b456cd1d9fdf8096d12fd367e679d815e08b6cf))
+- **gatsby:** fix node manifest processing in inc builds ([#32538](https://github.com/gatsbyjs/gatsby/issues/32538)) ([1577f9b](https://github.com/gatsbyjs/gatsby/commit/1577f9b0ab9909cdc4dfe0acca2dbbae89418ad5))
+- **gatsby:** Silence process.send Error ([#32744](https://github.com/gatsbyjs/gatsby/issues/32744)) ([5d7831d](https://github.com/gatsbyjs/gatsby/commit/5d7831d949b3352b7bb39718072b75102707ad99))
+- **gatsby:** Worker support in fast-refresh-module ([#32432](https://github.com/gatsbyjs/gatsby/issues/32432)) ([6daead6](https://github.com/gatsbyjs/gatsby/commit/6daead63ce02c21690a48cdd531fdb2761628703))
+
+### Features
+
+- **gatsby:** add env flag to disable lazy function compilation in develop ([#32707](https://github.com/gatsbyjs/gatsby/issues/32707)) ([ed04979](https://github.com/gatsbyjs/gatsby/commit/ed04979ed66219ed9f5f07a5b859f07217d32393))
+- **gatsby:** write node manifests to public dir instead of .cache ([#32547](https://github.com/gatsbyjs/gatsby/issues/32547)) ([9c41b7a](https://github.com/gatsbyjs/gatsby/commit/9c41b7a90e97d971049dd9b5d296a37ca8912fa8))
+
 # [3.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.12.0-next.1...gatsby@3.12.0-next.2) (2021-08-05)
 
 **Note:** Version bump only for package gatsby

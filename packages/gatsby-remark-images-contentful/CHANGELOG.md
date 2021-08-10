@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.9.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.9.0-next.2...gatsby-remark-images-contentful@4.9.0-next.3) (2021-08-09)
+
+### Bug Fixes
+
+- **gatsby-remark-image-contentful:** show useful error message for files that can not be rendered as image ([#32530](https://github.com/gatsbyjs/gatsby/issues/32530)) ([77e9aab](https://github.com/gatsbyjs/gatsby/commit/77e9aabdff5156d4f037b1b36dbb351bfe043be4)), closes [#32511](https://github.com/gatsbyjs/gatsby/issues/32511)
+
 # [4.9.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.9.0-next.1...gatsby-remark-images-contentful@4.9.0-next.2) (2021-08-05)
 
 **Note:** Version bump only for package gatsby-remark-images-contentful

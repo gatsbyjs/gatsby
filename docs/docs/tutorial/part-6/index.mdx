@@ -2,31 +2,9 @@
 title: "Part 6: Create Pages Programmatically"
 ---
 
-import { Announcement, Notification } from 'gatsby-interface'
+import { Announcement, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
-import { MdInfo } from 'react-icons/md'
-
-<Notification
-  Icon={MdInfo}
-  tone="WARNING"
-  variant="SECONDARY"
-  content={
-    <div>
-      <p>
-        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
-        The first few parts of the new Tutorial have been released here, and subsequent parts
-        will be added as we finish them.
-      </p>
-      <p style={{ marginBottom: 0 }}>
-        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
-        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
-          <strong>Gatsby v2 Tutorial</strong>
-        </a>
-        .
-      </p>
-    </div>
-  }
-/>
+import { MdArrowForward } from 'react-icons/md'
 
 ## Introduction
 
@@ -40,6 +18,18 @@ By the end of this part of the Tutorial, you will be able to:
 
 - Use Gatsby's Filesystem Route API to dynamically create new pages for your blog posts.
 - Add a query variable to a page query.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Prefer a video?**
+
+If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 5.
+
+You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VKQB_XygIzg?start=206" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</Announcement>
 
 ## Create new routes dynamically with Gatsby's File System Route API
 
@@ -363,7 +353,7 @@ The keys in the `pageContext` object get added when you create a page using the 
 
 **Tip:** If you want to test out your query in GraphiQL, you'll need to add an `id` key to the Query Variables section. You can copy one of the `id` values from running an `allMdx` query in GraphiQL.
 
-The JSON object in the Query Variables section should look something like this (use your own `id` as copying the one below won't work):
+The JSON object in the Query Variables section should look something like the one below. (You'll need to use your own `id`, as copying the one below won't work.):
 
 ```json
 {
@@ -373,7 +363,9 @@ The JSON object in the Query Variables section should look something like this (
 
 </Announcement>
 
-2. Add your page query to the blog post page template. Don't forget to import the `graphql` tag!
+2. Add your page query to the blog post page template.
+    * Don't forget to import the `graphql` tag!
+    * You should also delete the query name `MyQuery` or replace it with a unique name.
     ```js:title=src/pages/blog/{mdx.slug}.js
     import * as React from 'react'
     import { graphql } from 'gatsby' // highlight-line
@@ -389,7 +381,7 @@ The JSON object in the Query Variables section should look something like this (
 
     // highlight-start
     export const query = graphql`
-      query MyQuery($id: String) {
+      query ($id: String) {
         mdx(id: {eq: $id}) {
           frontmatter {
             title
@@ -425,7 +417,7 @@ The JSON object in the Query Variables section should look something like this (
     }
 
     export const query = graphql`
-      query MyQuery($id: String) {
+      query ($id: String) {
         mdx(id: {eq: $id}) {
           frontmatter {
             title
@@ -591,24 +583,10 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 
 In Part 7, you'll revisit `gatsby-plugin-image` (from way back in [Part 3](/docs/tutorial/part-3/)). This time, you'll learn how to create dynamic images using the `GatsbyImage` component. You'll put the finishing touches on your blog site by adding hero images to your blog posts.
 
-<Notification
-  Icon={MdInfo}
-  tone="WARNING"
+<LinkButton
+  to="/docs/tutorial/part-7/"
+  rightIcon={<MdArrowForward />}
   variant="SECONDARY"
-  content={
-    <div>
-      <p>
-        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
-        You've reached the end of the new content we've released so far. Subsequent parts
-        will be added as we finish them. Part 7 (the final part!) has a tentative release date of August 11, 2021.
-      </p>
-      <p style={{ marginBottom: 0 }}>
-        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
-        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
-          <strong>Gatsby v2 Tutorial</strong>
-        </a>
-        .
-      </p>
-    </div>
-  }
-/>
+>
+  Continue to Part 7
+</LinkButton>

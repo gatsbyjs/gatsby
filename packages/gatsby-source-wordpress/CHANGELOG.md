@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.12.0-next.2...gatsby-source-wordpress@5.12.0-next.3) (2021-08-09)
+
+### Features
+
+- **gatsby-source-wordpress:** generate webp images ([#30896](https://github.com/gatsbyjs/gatsby/issues/30896)) ([fcd0b44](https://github.com/gatsbyjs/gatsby/commit/fcd0b449edcca4808814fbcd89df82551d566889))
+
 # [5.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.12.0-next.1...gatsby-source-wordpress@5.12.0-next.2) (2021-08-05)
 
 **Note:** Version bump only for package gatsby-source-wordpress

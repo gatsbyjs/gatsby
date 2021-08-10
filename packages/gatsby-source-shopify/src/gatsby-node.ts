@@ -195,9 +195,8 @@ export async function sourceNodes(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: ShopifyPluginOptions
 ): Promise<void> {
-  const pluginStatus = gatsbyApi.store.getState().status.plugins?.[
-    `gatsby-source-shopify`
-  ]
+  const pluginStatus =
+    gatsbyApi.store.getState().status.plugins?.[`gatsby-source-shopify`]
 
   const lastBuildTime =
     pluginStatus?.[`lastBuildTime${pluginOptions.typePrefix || ``}`]

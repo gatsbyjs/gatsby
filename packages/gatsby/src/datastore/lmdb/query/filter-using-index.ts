@@ -15,7 +15,7 @@ import {
   IndexKey,
   undefinedSymbol,
 } from "./create-index"
-import { cartesianProduct, shouldFilter } from "./common"
+import { cartesianProduct, matchesFilter } from "./common"
 import { inspect } from "util"
 
 // JS values encoded by ordered-binary never start with 0 or 255 byte
@@ -331,7 +331,7 @@ function narrowResultsIfPossible(
               ? undefined
               : key[fieldPositionInIndex]
 
-          if (!shouldFilter(filter, value)) {
+          if (!matchesFilter(filter, value)) {
             // Mimic AND semantics
             return false
           }

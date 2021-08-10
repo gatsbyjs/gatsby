@@ -271,7 +271,7 @@ const processAndDedupeImageUrls = urls =>
     }, urls)
   )
 
-const fetchMediaItemsBySourceUrl = async ({
+export const fetchMediaItemsBySourceUrl = async ({
   mediaItemUrls,
   selectionSet,
   builtFragments,
@@ -282,26 +282,24 @@ const fetchMediaItemsBySourceUrl = async ({
 }) => {
   const processedMediaItemUrls = processAndDedupeImageUrls(mediaItemUrls)
 
-  const {
-    cachedMediaItemNodeIds,
-    uncachedMediaItemUrls,
-  } = processedMediaItemUrls.reduce(
-    (accumulator, url) => {
-      const { id } = getFileNodeMetaBySourceUrl(url) || {}
+  const { cachedMediaItemNodeIds, uncachedMediaItemUrls } =
+    processedMediaItemUrls.reduce(
+      (accumulator, url) => {
+        const { id } = getFileNodeMetaBySourceUrl(url) || {}
 
-      // if we have a cached image and we haven't already recorded this cached image
-      if (id && !accumulator.cachedMediaItemNodeIds.includes(id)) {
-        // save it
-        accumulator.cachedMediaItemNodeIds.push(id)
-      } else if (!id) {
-        // otherwise we need to fetch this media item by url
-        accumulator.uncachedMediaItemUrls.push(url)
-      }
+        // if we have a cached image and we haven't already recorded this cached image
+        if (id && !accumulator.cachedMediaItemNodeIds.includes(id)) {
+          // save it
+          accumulator.cachedMediaItemNodeIds.push(id)
+        } else if (!id) {
+          // otherwise we need to fetch this media item by url
+          accumulator.uncachedMediaItemUrls.push(url)
+        }
 
-      return accumulator
-    },
-    { cachedMediaItemNodeIds: [], uncachedMediaItemUrls: [] }
-  )
+        return accumulator
+      },
+      { cachedMediaItemNodeIds: [], uncachedMediaItemUrls: [] }
+    )
 
   // take our previously cached id's and get nodes for them
   const previouslyCachedMediaItemNodes = await Promise.all(
@@ -318,106 +316,105 @@ const fetchMediaItemsBySourceUrl = async ({
   // since we're using an async queue, we need a way to know when it's finished
   // we pass this resolve function into the queue function so it can let us
   // know when it's finished
-  let resolveFutureNodes
-  const futureNodes = new Promise(resolve => {
-    resolveFutureNodes = (nodes = []) =>
-      // combine our resolved nodes we fetched with our cached nodes
-      resolve([...nodes, ...previouslyCachedMediaItemNodes])
-  })
 
   // we have no media items to fetch,
   // so we need to resolve this promise
   // otherwise it will never resolve below.
   if (!mediaItemUrlsPages.length) {
-    resolveFutureNodes()
+    return Promise.resolve([])
   }
 
+  const allPromises = []
   // for all the images we don't have cached, loop through and get them all
   for (const [index, sourceUrls] of mediaItemUrlsPages.entries()) {
-    pushPromiseOntoRetryQueue({
-      helpers,
-      createContentDigest,
-      actions,
-      queue: mediaNodeFetchQueue,
-      retryKey: `Media Item by sourceUrl query #${index}, digest: ${createContentDigest(
-        sourceUrls.join()
-      )}`,
-      retryPromise: async () => {
-        const query = /* GraphQL */ `
-          query MEDIA_ITEMS {
-            ${sourceUrls
-              .map(
-                (sourceUrl, index) => /* GraphQL */ `
-              mediaItem__index_${index}: mediaItem(id: "${sourceUrl}", idType: SOURCE_URL) {
-                ...MediaItemFragment
-              }
-            `
-              )
-              .join(` `)}
-          }
+    const curPromise = new Promise(resolve => {
+      pushPromiseOntoRetryQueue({
+        helpers,
+        createContentDigest,
+        actions,
+        queue: mediaNodeFetchQueue,
+        retryKey: `Media Item by sourceUrl query #${index}, digest: ${createContentDigest(
+          sourceUrls.join()
+        )}`,
+        retryPromise: async () => {
+          const query = /* GraphQL */ `
+            query MEDIA_ITEMS {
+              ${sourceUrls
+                .map(
+                  (sourceUrl, index) => /* GraphQL */ `
+                mediaItem__index_${index}: mediaItem(id: "${sourceUrl}", idType: SOURCE_URL) {
+                  ...MediaItemFragment
+                }
+              `
+                )
+                .join(` `)}
+            }
 
-          fragment MediaItemFragment on MediaItem {
-            ${selectionSet}
-          }
+            fragment MediaItemFragment on MediaItem {
+              ${selectionSet}
+            }
 
-          ${builtFragments || ``}
-        `
+            ${builtFragments || ``}
+          `
 
-        const { data } = await fetchGraphql({
-          query,
-          variables: {
-            first: perPage,
-            after: null,
-          },
-          errorContext: `Error occurred while fetching "MediaItem" nodes in inline html.`,
-        })
-
-        // since we're getting each media item on it's single node root field
-        // we just needs the values of each property in the response
-        // anything that returns null is because we tried to get the source url
-        // plus the source url minus resize patterns. So there will be nulls
-        // since only the full source url will return data
-        const thisPagesNodes = Object.values(data).filter(Boolean)
-
-        // take the WPGraphQL nodes we received and create Gatsby nodes out of them
-        const nodes = await Promise.all(
-          thisPagesNodes.map(node =>
-            createMediaItemNode({
-              node,
-              helpers,
-              createContentDigest,
-              actions,
-              allMediaItemNodes,
-              parentName: `Fetching referenced MediaItem nodes by sourceUrl`,
-            })
-          )
-        )
-
-        nodes.forEach((node, index) => {
-          if (!node) {
-            return
-          }
-
-          // this is how we're caching nodes we've previously fetched.
-          store.dispatch.imageNodes.pushNodeMeta({
-            id: node.localFile.id,
-            sourceUrl: sourceUrls[index],
-            modifiedGmt: node.modifiedGmt,
+          const { data } = await fetchGraphql({
+            query,
+            variables: {
+              first: perPage,
+              after: null,
+            },
+            errorContext: `Error occurred while fetching "MediaItem" nodes in inline html.`,
           })
-        })
 
-        resolveFutureNodes(nodes)
-      },
+          // since we're getting each media item on it's single node root field
+          // we just needs the values of each property in the response
+          // anything that returns null is because we tried to get the source url
+          // plus the source url minus resize patterns. So there will be nulls
+          // since only the full source url will return data
+          const thisPagesNodes = Object.values(data).filter(Boolean)
+
+          // take the WPGraphQL nodes we received and create Gatsby nodes out of them
+          const nodes = await Promise.all(
+            thisPagesNodes.map(node =>
+              createMediaItemNode({
+                node,
+                helpers,
+                createContentDigest,
+                actions,
+                allMediaItemNodes,
+                parentName: `Fetching referenced MediaItem nodes by sourceUrl`,
+              })
+            )
+          )
+
+          nodes.forEach((node, index) => {
+            if (!node) {
+              return
+            }
+
+            // this is how we're caching nodes we've previously fetched.
+            store.dispatch.imageNodes.pushNodeMeta({
+              id: node.localFile.id,
+              sourceUrl: sourceUrls[index],
+              modifiedGmt: node.modifiedGmt,
+            })
+          })
+
+          resolve(nodes)
+        },
+      })
     })
+    allPromises.push(curPromise)
   }
 
   await mediaNodeFetchQueue.onIdle()
   await mediaFileFetchQueue.onIdle()
 
-  return futureNodes
+  const allResults = await Promise.all(allPromises)
+  return allResults.flat()
 }
 
-const fetchMediaItemsById = async ({
+export const fetchMediaItemsById = async ({
   mediaItemIds,
   settings,
   url,
@@ -436,34 +433,31 @@ const fetchMediaItemsById = async ({
 
   const chunkedIds = chunk(newMediaItemIds, perPage)
 
-  let resolveFutureNodes
-  const futureNodes = new Promise(resolve => {
-    resolveFutureNodes = resolve
-  })
-
   if (!newMediaItemIds.length) {
-    resolveFutureNodes([])
+    return Promise.resolve([])
   }
 
   const allMediaItemNodes = []
+  const allPromises = []
 
   for (const [index, relayIds] of chunkedIds.entries()) {
-    pushPromiseOntoRetryQueue({
-      helpers,
-      createContentDigest,
-      actions,
-      queue: mediaNodeFetchQueue,
-      retryKey: `Media Item query #${index}, digest: ${createContentDigest(
-        relayIds.join()
-      )}`,
-      retryPromise: async () => {
-        // relay id's are base64 encoded from strings like attachment:89381
-        // where 89381 is the id we want for our query
-        // so we split on the : and get the last item in the array, which is the id
-        // once we can get a list of media items by relay id's, we can remove atob
-        const ids = relayIds.map(id => atob(id).split(`:`).slice(-1)[0])
+    const curPromise = new Promise(resolve => {
+      pushPromiseOntoRetryQueue({
+        helpers,
+        createContentDigest,
+        actions,
+        queue: mediaNodeFetchQueue,
+        retryKey: `Media Item query #${index}, digest: ${createContentDigest(
+          relayIds.join()
+        )}`,
+        retryPromise: async () => {
+          // relay id's are base64 encoded from strings like attachment:89381
+          // where 89381 is the id we want for our query
+          // so we split on the : and get the last item in the array, which is the id
+          // once we can get a list of media items by relay id's, we can remove atob
+          const ids = relayIds.map(id => atob(id).split(`:`).slice(-1)[0])
 
-        const query = `
+          const query = `
           query MEDIA_ITEMS($in: [ID]) {
             mediaItems(first: ${perPage}, where:{ in: $in }) {
               nodes {
@@ -474,43 +468,45 @@ const fetchMediaItemsById = async ({
 
           ${builtFragments || ``}
         `
+          const allNodesOfContentType = await paginatedWpNodeFetch({
+            first: perPage,
+            contentTypePlural: typeInfo.pluralName,
+            nodeTypeName: typeInfo.nodesTypeName,
+            query,
+            url,
+            helpers,
+            settings,
+            in: ids,
+            // this allows us to retry-on-end-of-queue
+            throwFetchErrors: true,
+          })
 
-        const allNodesOfContentType = await paginatedWpNodeFetch({
-          first: perPage,
-          contentTypePlural: typeInfo.pluralName,
-          nodeTypeName: typeInfo.nodesTypeName,
-          query,
-          url,
-          helpers,
-          settings,
-          in: ids,
-          // this allows us to retry-on-end-of-queue
-          throwFetchErrors: true,
-        })
-
-        const nodes = await Promise.all(
-          allNodesOfContentType.map(node =>
-            createMediaItemNode({
-              node,
-              helpers,
-              createContentDigest,
-              actions,
-              allMediaItemNodes,
-              referencedMediaItemNodeIds: mediaItemIds,
-              parentName: `Fetching referenced MediaItem nodes by id`,
-            })
+          const nodes = await Promise.all(
+            allNodesOfContentType.map(node =>
+              createMediaItemNode({
+                node,
+                helpers,
+                createContentDigest,
+                actions,
+                allMediaItemNodes,
+                referencedMediaItemNodeIds: mediaItemIds,
+                parentName: `Fetching referenced MediaItem nodes by id`,
+              })
+            )
           )
-        )
 
-        resolveFutureNodes(nodes)
-      },
+          resolve(nodes)
+        },
+      })
     })
+    allPromises.push(curPromise)
   }
 
   await mediaNodeFetchQueue.onIdle()
   await mediaFileFetchQueue.onIdle()
 
-  return futureNodes
+  const allResults = await Promise.all(allPromises)
+  return allResults.flat()
 }
 
 export default async function fetchReferencedMediaItemsAndCreateNodes({
