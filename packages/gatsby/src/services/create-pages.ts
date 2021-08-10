@@ -38,7 +38,7 @@ export async function createPages({
       reporter.warn(
         `Your GraphQL query in createPages took ${
           totalMS / 1000
-        } seconds which is an unexpectedly long time. See https://www.gatsbyjs.com/docs/how-to/performance/improving-build-performance/#query-only-needed-fields-in-createpages for tips on how to improve this.`
+        } seconds which is an unexpectedly long time. See https://gatsby.dev/create-pages-performance for tips on how to improve this.`
       )
     }
     return returnValue
