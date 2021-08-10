@@ -158,7 +158,7 @@ There are a few ways Gatsby can find the relationship between a node that was cr
 #### Understanding and constructing node manifest ID's
 
 A node manifest ID is an ID which is unique within the scope of your CMS (not necessarily unique within Gatsby). This ID ties the revision state of a specific piece of content to a point in time.
-For example, the node manifest ID could be The content type of that node plus the ID plus the last time that content was modified by a CMS user - `Post-id-1-modified-1628618395702`.
+For example, the node manifest ID could be a combination of The content type of that node, the node's ID, and the last time that content was modified by a CMS user (`Post-id-1-modified-1628618395702`).
 This node manifest ID will be used inside of your source plugin as well as inside of the Content Loader. In your source plugin it will connect the node being previewed to a page that was built from it (more on that below).
 In the Content Loader UI the same node manifest ID will be used to connect a users intent to view that node's content to a frontend page in their Gatsby site once a page has been built in Gatsby Cloud for that specific manifest ID.
 At this point this may seem abstract to you but further points below will clarify how these pieces interact with each other. The important part to know here is that you need to construct an ID which is unique within your CMS and is tied to the content a user intends to view and which is identifiable to the point in time at which they updated that content.
