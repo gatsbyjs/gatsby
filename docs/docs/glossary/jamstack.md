@@ -1,11 +1,11 @@
 ---
-title: JAMStack
+title: What Is The JAMStack?
 disableTableOfContents: true
 ---
 
 Learn how to use Gatsby to build websites powered by the JAMStack, a modern architecture that uses JavaScript, APIs and markup without requiring the use of a database or server-side programming language.
 
-## What is the JAMStack?
+## Overview Of The JamStack Architecture?
 
 JAMStack is a modern architecture for building websites and applications. The _JAM_ in JAMStack stands for [JavaScript](/docs/glossary#javascript), [APIs](/docs/glossary#api), and HTML markup. Unlike websites built using WordPress or Drupal, JAMStack sites do not require a database. You can even skip the webserver, and opt to host your site using an object storage service and a content delivery network (or CDN).
 
@@ -19,7 +19,7 @@ In a JAMStack architecture, however, the frontend and backend are [decoupled](/d
 
 A JAMStack backend is a content API that returns JSON or XML. This API can be a [hosted datastore](/docs/how-to/sourcing-data/sourcing-from-hosted-services/), a [headless CMS](/docs/how-to/sourcing-data/headless-cms/), or a custom application. It's only concerned with serving JSON or XML, which means you can use the same API for your Gatsby site and native applications.
 
-### Advantages of a JAMStack architecture
+## Advantages of a JAMStack architecture
 
 JAMStack sites, such as those created with Gatsby, offer four key advantages over other website architectures.
 
@@ -30,9 +30,9 @@ JAMStack sites, such as those created with Gatsby, offer four key advantages ove
 
 > **NOTE:** Gatsby and other JAMStack sites can still be affected by [cross-site scripting](https://www.owasp.org/index.php/Types_of_Cross-Site_Scripting) attacks. They can also be compromised if your API endpoints are compromised.
 
-Using Gatsby can help you build faster, more secure websites, with search engine optimization and accessibility features already built in. See how Gatsby [compares](/features/) to other frameworks.
+Using Gatsby can help you build faster, more secure websites, with search engine optimization and accessibility features already built in. See how Gatsby [compares](/) to other frameworks.
 
-### Learn more about JAMStack architecture
+## Learn more about JAMStack architecture
 
 - [JAMStack.org](https://jamstack.org/) website
 - [JAMstack WTF](https://jamstack.wtf/), built with Gatsby
