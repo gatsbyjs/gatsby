@@ -2,31 +2,9 @@
 title: "Part 2: Use and Style React Components"
 ---
 
-import { Announcement, Notification, LinkButton } from 'gatsby-interface'
+import { Announcement, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
-import { MdInfo, MdArrowForward } from 'react-icons/md'
-
-<Notification
-  Icon={MdInfo}
-  tone="WARNING"
-  variant="SECONDARY"
-  content={
-    <div>
-      <p>
-        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
-        The first few parts of the new Tutorial have been released here, and subsequent parts
-        will be added as we finish them.
-      </p>
-      <p style={{ marginBottom: 0 }}>
-        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
-        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
-          <strong>Gatsby v2 Tutorial</strong>
-        </a>
-        .
-      </p>
-    </div>
-  }
-/>
+import { MdArrowForward } from 'react-icons/md'
 
 ## Introduction
 
@@ -237,7 +215,7 @@ Now that you've updated the existing Home page, try creating a new page from scr
 1. Create a new file: `src/pages/about.js`. Use the code below as a starting point for your About page. (Feel free to switch up the content to make it more specific to you. Maybe share your favorite food or go-to vacation spot!)
 
 ```js:title=src/pages/about.js
-// Step 1: Import your component
+// Step 1: Import React
 import * as React from 'react'
 
 // Step 2: Define your component
