@@ -124,15 +124,11 @@ You can read more about the cache API, other types of plugins that leverage the 
 
 ### Adding support for Gatsby Cloud Content Loader
 
-Content Loader is a service that will allow the CMS backend to route from a piece of content in the CMS to a built page in the users Gatsby site where that content is rendered. Currently, the primary use-case for this is implementing Content Previews. This allows site admins to preview their content in a Gatsby Preview instance before they decide to push it to their production site.
+Content Loader is a service that will allow a CMS to route from a piece of content in the CMS to a built page in the users Gatsby site where that content is rendered. Currently, the primary use-case for this is implementing Content Previews. This allows site admins to preview their content in a Gatsby Preview instance before they decide to push it to their production site.
 
 #### How Content Loader works for users
 
 This feature will display a loading page while the users content is being built in Gatsby Cloud. Once the build is finished, the loader will route the user to the correct page. If any errors occur, the loader will let the user know. This way site admins wont be left guessing when they can view their preview content.
-
-TODO: write and then link to the site developer docs on how ownerNodeId in createPage relates to this feature.
-
-TODO: what is a node manifest?
 
 #### Why use Content Loader
 
@@ -143,39 +139,46 @@ Using Content Loader has some advantages over having your CMS load and route to 
 3. The loader can route the user to the correct page even if the page path has been constructed in ways the CMS isn't aware of.
 4. The loader will let the user know if no page was created in the Gatsby site for the content they're attempting to preview.
 
-#### How to support Content Loader
+#### Understanding Node Manifests
 
-Source plugins that wish to support this feature need to do a few things:
+A node manifest is a JSON file which contains information about how a node became a page in Gatsby core. This allows the Content Loader to route a user to a page based on that node manifests ID. For example here's a node manifest with an ID of `Post-id-1-modified-1628618395702`:
 
-##### Understanding and constructing node manifest ID's
+```json
+{
+  "node": { "id": "Page-1" },
+  "page": { "path": "/my-page-path/" },
+  "foundPageBy": "ownerNodeId"
+}
+```
 
-TODO
+Content Loader will wait for this file to exist, read it, and then redirect the user to `/my-page-path/`.
 
-##### Add a new CMS setting field for the Content Loader URL
+There are a few ways Gatsby can find the relationship between a node that was created and a page that was built using that node. The most important way to know about is via the [`ownerNodeId` property users can set when calling the `createPage` action](https://www.gatsbyjs.com/docs/reference/config-files/actions/#createPage). This allows a Gatsby site developer to tell Gatsby which node "owns" a page, allowing Gatsby to more effectively route to that page in the Content Loader. If users do not set an `ownerNodeId`, Gatsby will automatically try to guess which page a node can be viewed on. This is done by looking at query tracking in Gatsby as well as `pageContext` to look for an `id` property.
 
-TODO
+#### Understanding and constructing node manifest ID's
 
-##### Add an "Open Preview" button to the content editing view of your CMS
+A node manifest ID is an ID which is unique within the scope of your CMS (not necessarily unique within Gatsby). This ID ties the revision state of a specific piece of content to a point in time.
+For example, the node manifest ID could be The content type of that node plus the ID plus the last time that content was modified by a CMS user - `Post-id-1-modified-1628618395702`.
+This node manifest ID will be used inside of your source plugin as well as inside of the Content Loader. In your source plugin it will connect the node being previewed to a page that was built from it (more on that below).
+In the Content Loader UI the same node manifest ID will be used to connect a users intent to view that node's content to a frontend page in their Gatsby site once a page has been built in Gatsby Cloud for that specific manifest ID.
+At this point this may seem abstract to you but further points below will clarify how these pieces interact with each other. The important part to know here is that you need to construct an ID which is unique within your CMS and is tied to the content a user intends to view and which is identifiable to the point in time at which they updated that content.
 
-TODO
+#### Add a manifest ID to your Preview Webhooks
 
-##### Always trigger a new build for the previewed content when a user opens the Content Loader
+When sending webhooks to Gatsby Cloud to trigger builds you can send over a manifest ID on the webhook body. Your plugin can use this manifest ID during node sourcing but it doesn't have to if your plugin pulls updates from the CMS rather than pushing them via the webhook body. The current convention for sending the manifest ID on the webhook is `webhookBody.internal.manifestId`. If you plan to send your manifest ID on the webhook body you should stick to this convention for forwards compatibility in the event that Gatsby Cloud later has features added that uses this part of the webhook body.
 
-TODO
+#### Call createNodeManifest during sourceNodes
 
-##### Add a manifest ID to your Preview Webhooks
+During node sourcing, call [`actions.unstable_createNodeManifest()`](https://www.gatsbyjs.com/docs/reference/config-files/actions/#unstable_createNodeManifest) on each node a user is intending to preview.
+This action will link the `manifestId` to a page that was created from this node. This allows Content Loader to connect the `manifestId` to a users intent to view a built page and route them there once it's ready to view.
 
-TODO
+The example below shows using the `internal.manifestId` property from the webhook body but you could just as easily re-construct the `manifestId` on the Gatsby side from your node data, or you could store the manifestId in your CMS and pull it down with your data updates.
 
-##### Call createNodeManifest during sourceNodes
-
-During node sourcing, call [`actions.unstable_createNodeManifest()`](https://www.gatsbyjs.com/docs/reference/config-files/actions/#unstable_createNodeManifest) on each node a user is intending to preview. Be sure to check that this action exists before calling it in case the user is on a version of Gatsby core which doesn't yet support this action.
-
-For example:
+Note that you should not create a node manifest for every node you create, only for the nodes your users are updating. Uncached builds should not create node manifest files when initially syncing data from your CMS. Doing so could significantly slow down builds without benefiting the user.
 
 ```js
 exports.sourceNodes = async ({ webhookBody, actions, createContentDigest }) => {
-  const cmsNodeData = await exampleFunctionFetchCmsNode(webhookBody.nodeId)
+  const cmsNodeData = await exampleFetchCmsNodeUpdate(webhookBody.nodeId)
 
   const node = {
     ...cmsNodeData,
@@ -187,16 +190,27 @@ exports.sourceNodes = async ({ webhookBody, actions, createContentDigest }) => {
 
   actions.createNode(node)
 
+  // Be sure to check that this action exists before calling it in case the user is on a version of Gatsby core which doesn't yet support this action.
   if (cmsNodeData && `unstable_createNodeManifest` in actions) {
     actions.unstable_createNodeManifest({
-      manifestId: webhookBody.manifestId,
+      manifestId: webhookBody.internal.manifestId,
       node,
     })
   }
 }
 ```
 
-This action will link the `manifestId` to a page that was created from this node. This allows Content Loader to connect the `manifestId` to a users intent to view a built page and route them there at the right time.
+#### Add a new CMS setting field for the Content Loader URL
+
+In your CMS settings for Gatsby, you will need to add a field for Gatsby Clouds "Content Loader URL". This URL will be copied from users Gatsby Cloud dashboard into their CMS settings. For example the url will look something like `https://gatsbyjs.com/content-loader/3465891e-6888-40c2-8249-76c31e9f5add`. You'll notice that the url ends with a site id. It's important to have this setting be the full url rather than just the site ID to allow Gatsby Cloud engineers to debug the Content Loader locally if any issues arise with the loader and your CMS.
+
+#### Add an "Open Preview" button to the content editing view of your CMS
+
+This link will be used by your CMS users to open the content loader. It should begin with the "Content Loader URL" CMS setting mentioned in the section above but you should append a couple URL paths to the end of the URL which will be specific to your CMS. The first will be the source plugin name for your CMS and the second will be the manifest ID mentioned above. For example `https://gatsbyjs.com/content-loader/3465891e-6888-40c2-8249-76c31e9f5add/gatsby-source-example-cms/Post-id-1-modified-1628618395702`. Visiting this URL in a browser will cause the loader to start watching for pages being built from a node with the manifest ID `Post-id-1-modified-1628618395702` for the Gatsby Cloud site `3465891e-6888-40c2-8249-76c31e9f5add` within the source plugin `gatsby-source-example-cms`.
+
+#### Always trigger a new build for the previewed content when a user opens the Content Loader
+
+Since your CMS wont know wether or not a build has completed with your manifest ID, you should always send another webhook to Gatsby Cloud each time your user opens the Content Loader. If a build has previously completed with that manifest ID, the user will be redirected to their content immediately. Problems arise though if you send a user to the loader for a build that happened in the past. For example, if a user edited their content on Monday and previewed that content and then came back on Tuesday and opened the preview again via the Content Loader link without sending a webhook, the build from Monday may have been invalidated via a code update or if someone cleared the site cache. Sending a webhook request when the user opens the loader will make sure that the user is routed to the right place every time.
 
 ### Adding relationships between nodes
 
