@@ -1,8 +1,10 @@
 /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
 import * as fs from "fs-extra"
 import * as path from "path"
+import { slash } from "gatsby-core-utils"
 import { store } from "../../redux"
 import { IGatsbyState } from "../../redux/types"
+import { requireGatsbyPlugin } from "../../utils/require-gatsby-plugin"
 
 const schemaCustomizationAPIs = new Set([
   `setFieldsOnGraphQLNodeType`,
@@ -11,6 +13,8 @@ const schemaCustomizationAPIs = new Set([
 ])
 
 const excludePlugins = new Set([`internal-data-bridge`, `default-site-plugin`])
+const includePlugins = new Set([`gatsby-plugin-sharp`])
+
 // Emit file that imports required node APIs
 const schemaCustomizationPluginsPath =
   process.cwd() + `/.cache/query-engine-plugins.js`
@@ -31,15 +35,18 @@ function renderQueryEnginePlugins(): string {
   const { flattenedPlugins } = store.getState()
   const usedPlugins = flattenedPlugins.filter(
     p =>
-      !excludePlugins.has(p.name) &&
-      p.nodeAPIs.some(api => schemaCustomizationAPIs.has(api))
+      includePlugins.has(p.name) ||
+      (!excludePlugins.has(p.name) &&
+        p.nodeAPIs.some(api => schemaCustomizationAPIs.has(api)))
   )
   const usedSubPlugins = findSubPlugins(usedPlugins, flattenedPlugins)
   return render(usedPlugins, usedSubPlugins)
 }
 
 function relativePluginPath(resolve: string): string {
-  return path.relative(path.dirname(schemaCustomizationPluginsPath), resolve)
+  return slash(
+    path.relative(path.dirname(schemaCustomizationPluginsPath), resolve)
+  )
 }
 
 function render(
@@ -55,12 +62,20 @@ function render(
     return { ...rest }
   })
 
+  const pluginsWithWorkers = filterPluginsWithWorkers(uniqGatsbyNode)
+
   const imports: Array<string> = [
     ...uniqGatsbyNode.map(
       (plugin, i) =>
         `import * as pluginGatsbyNode${i} from "${relativePluginPath(
           plugin.resolve
         )}/gatsby-node"`
+    ),
+    ...pluginsWithWorkers.map(
+      (plugin, i) =>
+        `import * as pluginGatsbyWorker${i} from "${relativePluginPath(
+          plugin.resolve
+        )}/gatsby-worker"`
     ),
     ...uniqIndex.map(
       (plugin, i) =>
@@ -72,6 +87,9 @@ function render(
   const gatsbyNodeExports = uniqGatsbyNode.map(
     (plugin, i) => `"${plugin.name}": pluginGatsbyNode${i},`
   )
+  const gatsbyWorkerExports = pluginsWithWorkers.map(
+    (plugin, i) => `"${plugin.name}": pluginGatsbyWorker${i},`
+  )
   const indexExports = uniqIndex.map(
     (plugin, i) => `  "${plugin.name}": pluginIndex${i},`
   )
@@ -82,6 +100,10 @@ export const gatsbyNodes = {
 ${gatsbyNodeExports.join(`\n`)}
 }
 
+export const gatsbyWorkers = {
+${gatsbyWorkerExports.join(`\n`)}
+}
+
 export const indexes = {
 ${indexExports.join(`\n`)}
 }
@@ -89,6 +111,18 @@ ${indexExports.join(`\n`)}
 export const flattenedPlugins = ${JSON.stringify(sanitizedUsedPlugins)}
   `
   return output
+}
+
+function filterPluginsWithWorkers(
+  plugins: IGatsbyState["flattenedPlugins"]
+): IGatsbyState["flattenedPlugins"] {
+  return plugins.filter(plugin => {
+    try {
+      return Boolean(requireGatsbyPlugin(plugin, `gatsby-worker`))
+    } catch (err) {
+      return false
+    }
+  })
 }
 
 function findSubPlugins(

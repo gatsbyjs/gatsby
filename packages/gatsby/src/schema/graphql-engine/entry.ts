@@ -10,12 +10,17 @@ import {
 } from "../../bootstrap/create-graphql-runner"
 // const { builtInFieldExtensions } = require(`./extensions`)
 
-import { setGatsbyNodeCache } from "../../utils/api-runner-node"
+import { setGatsbyPluginCache } from "../../utils/require-gatsby-plugin"
+import apiRunnerNode from "../../utils/api-runner-node"
 import type { IGatsbyPage, IGatsbyState } from "../../redux/types"
 import { findPageByPath } from "../../utils/find-page-by-path"
 import { getDataStore } from "../../datastore"
-// @ts-ignore
-import { gatsbyNodes, flattenedPlugins } from ".cache/query-engine-plugins"
+import {
+  gatsbyNodes,
+  gatsbyWorkers,
+  flattenedPlugins,
+  // @ts-ignore
+} from ".cache/query-engine-plugins"
 
 export class GraphQLEngine {
   // private schema: GraphQLSchema
@@ -40,8 +45,21 @@ export class GraphQLEngine {
     })
 
     for (const pluginName of Object.keys(gatsbyNodes)) {
-      setGatsbyNodeCache(pluginName, gatsbyNodes[pluginName])
+      setGatsbyPluginCache(
+        { name: pluginName, resolve: `` },
+        `gatsby-node`,
+        gatsbyNodes[pluginName]
+      )
     }
+    for (const pluginName of Object.keys(gatsbyWorkers)) {
+      setGatsbyPluginCache(
+        { name: pluginName, resolve: `` },
+        `gatsby-worker`,
+        gatsbyWorkers[pluginName]
+      )
+    }
+    await apiRunnerNode(`unstable_onPluginInit`)
+    await apiRunnerNode(`createSchemaCustomization`)
 
     // Build runs
     await build({ fullMetadataBuild: false, freeze: true })
