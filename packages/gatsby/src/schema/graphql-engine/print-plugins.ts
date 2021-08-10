@@ -1,4 +1,6 @@
+/* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
 import * as fs from "fs-extra"
+import * as path from "path"
 import { store } from "../../redux"
 import { IGatsbyState } from "../../redux/types"
 
@@ -9,12 +11,11 @@ const schemaCustomizationAPIs = new Set([
 ])
 
 const excludePlugins = new Set([`internal-data-bridge`, `default-site-plugin`])
+// Emit file that imports required node APIs
+const schemaCustomizationPluginsPath =
+  process.cwd() + `/.cache/query-engine-plugins.js`
 
 export async function printQueryEnginePlugins(): Promise<void> {
-  // Emit file that imports required node APIs
-  const schemaCustomizationPluginsPath =
-    process.cwd() + `/.cache/query-engine-plugins.js`
-
   try {
     await fs.remove(schemaCustomizationPluginsPath)
   } catch (e) {
@@ -37,6 +38,10 @@ function renderQueryEnginePlugins(): string {
   return render(usedPlugins, usedSubPlugins)
 }
 
+function relativePluginPath(resolve: string): string {
+  return path.relative(path.dirname(schemaCustomizationPluginsPath), resolve)
+}
+
 function render(
   usedPlugins: IGatsbyState["flattenedPlugins"],
   usedSubPlugins: IGatsbyState["flattenedPlugins"]
@@ -45,17 +50,24 @@ function render(
   const uniqIndex = uniq(usedSubPlugins)
 
   const sanitizedUsedPlugins = usedPlugins.map(plugin => {
-    // TODO: remove options as we will separately bundle gatsby-config.js
-    return { ...plugin, resolve: ``, filePath: `` }
+    // Remove pluginOptions as it's separately bundled with gatsby-config.js
+    // Remove other stuff as it's not needed
+    const { pluginOptions, resolve, pluginFilepath, ...rest } = plugin
+    return { ...rest }
   })
 
   const imports: Array<string> = [
     ...uniqGatsbyNode.map(
       (plugin, i) =>
-        `import * as pluginGatsbyNode${i} from "${plugin.name}/gatsby-node"`
+        `import * as pluginGatsbyNode${i} from "${relativePluginPath(
+          plugin.resolve
+        )}/gatsby-node"`
     ),
     ...uniqIndex.map(
-      (plugin, i) => `import * as pluginIndex${i} from "${plugin.name}"`
+      (plugin, i) =>
+        `import * as pluginIndex${i} from "${relativePluginPath(
+          plugin.resolve
+        )}"`
     ),
   ]
   const gatsbyNodeExports = uniqGatsbyNode.map(

@@ -40,6 +40,7 @@ function createFileContentHash(root: string, globPattern: string): string {
  * (docs, blogs).
  *
  * @param name Name of the plugin
+ * @param pluginObject Object of the plugin
  */
 const createPluginId = (
   name: string,
