@@ -268,6 +268,7 @@ describeWhenLMDB(`worker (queries)`, () => {
 
     await Promise.all(worker.all.setComponents())
     await worker.single.runQueries(queryIdsSmall)
+    await Promise.all(worker.all.saveQueriesDependencies())
     const stateFromWorker = await worker.single.getState()
 
     const pageQueryResult = await readPageQueryResult(

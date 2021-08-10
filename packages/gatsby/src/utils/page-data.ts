@@ -180,6 +180,7 @@ export async function flush(): Promise<void> {
     // We're already in the middle of a flush
     return
   }
+  await waitUntilPageQueryResultsAreStored()
   isFlushPending = false
   isFlushing = true
   const {
