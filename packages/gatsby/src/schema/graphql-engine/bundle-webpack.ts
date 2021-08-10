@@ -74,7 +74,6 @@ export async function createGraphqlEngineBundle(): Promise<any> {
       extensions,
       alias: {
         ".cache": process.cwd() + `/.cache/`,
-        "user-gatsby-config": process.cwd() + `/gatsby-config.js`,
       },
     },
     plugins: [

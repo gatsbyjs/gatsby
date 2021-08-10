@@ -74,7 +74,7 @@ function normalizePlugins(plugins?: Array<PluginRef>): Array<IPluginRefObject> {
   return (plugins || []).map(normalizePlugin)
 }
 
-export const normalizeConfig = (config: IRawSiteConfig = {}): ISiteConfig => {
+const normalizeConfig = (config: IRawSiteConfig = {}): ISiteConfig => {
   return {
     ...config,
     plugins: (config.plugins || []).map(normalizePlugin),
