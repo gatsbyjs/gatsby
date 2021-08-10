@@ -44,6 +44,14 @@ jest.mock(`chokidar`, () => {
   return chokidar
 })
 
+jest.mock(`gatsby-telemetry`, () => {
+  return {
+    decorateEvent: jest.fn(),
+    trackError: jest.fn(),
+    trackCli: jest.fn(),
+  }
+})
+
 const dummyKeys = `a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z`.split(
   `,`
 )
