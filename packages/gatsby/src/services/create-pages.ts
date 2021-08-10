@@ -28,10 +28,10 @@ export async function createPages({
   // Wrap the GraphQL function so we can measure how long it takes to run.
   const originalGraphQL = gatsbyNodeGraphQLFunction
   // eslint-disable-next-line
-  function wrappedGraphQL() {
+  async function wrappedGraphQL() {
     const start = Date.now()
     // @ts-ignore not sure how to type the following
-    const returnValue = originalGraphQL.apply(this, arguments) // eslint-disable-line
+    const returnValue = await originalGraphQL.apply(this, arguments) // eslint-disable-line
     const end = Date.now()
     const totalMS = end - start
     if (totalMS > 10000) {
