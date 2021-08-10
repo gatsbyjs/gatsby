@@ -119,6 +119,11 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     // Get flags
     const { enabledConfigFlags } = handleFlags(availableFlags, config.flags)
 
+    //  set process.env for each flag
+    enabledConfigFlags.forEach(flag => {
+      process.env[flag.env] = `true`
+    })
+
     //  track usage of feature
     enabledConfigFlags.forEach(flag => {
       if (flag.telemetryId) {
