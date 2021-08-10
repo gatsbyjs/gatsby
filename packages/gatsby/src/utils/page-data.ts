@@ -145,7 +145,7 @@ export async function writePageData(
   const body = `{
     "componentChunkName": "${componentChunkName}",
     "path": "${pagePath}",
-    "matchPath": "${matchPath}",
+    "matchPath": "${matchPath ?? ``}",
     "result": ${result},
     "staticQueryHashes": ${JSON.stringify(staticQueryHashes)}
   }`
