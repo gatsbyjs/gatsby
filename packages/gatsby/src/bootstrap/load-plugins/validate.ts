@@ -201,7 +201,40 @@ async function validatePluginsOptions(
         GatsbyNode["pluginOptionsSchema"],
         undefined
       >)({
-        Joi,
+        Joi: Joi.extend(joi => {
+          return {
+            base: joi.any(),
+            type: `subPlugin`,
+            args: (_, args): any => {
+              const entry = args?.entry ?? `index`
+
+              return joi
+                .alternatives(
+                  joi.string(),
+                  joi.object({
+                    resolve: Joi.string(),
+                    options: Joi.object({}).unknown(true),
+                  })
+                )
+                .custom(value => {
+                  if (typeof value === `string`) {
+                    value = { resolve: value }
+                  }
+
+                  try {
+                    const resolvedPlugin = resolvePlugin(value, rootDir)
+                    const modulePath = `${resolvedPlugin.resolve}/${entry}`
+                    value.modulePath = modulePath
+                    value.module = require(modulePath)
+                  } catch (err) {
+                    console.log(err)
+                  }
+
+                  return value
+                }, `Gatsby specific subplugin validation`)
+            },
+          }
+        }),
       })
 
       // Validate correct usage of pluginOptionsSchema

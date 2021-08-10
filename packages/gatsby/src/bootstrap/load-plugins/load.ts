@@ -230,6 +230,8 @@ export function loadPlugins(
 
       return {
         ...info,
+        modulePath: plugin.modulePath,
+        module: plugin.module,
         id: createPluginId(info.name, plugin),
         pluginOptions: _.merge({ plugins: [] }, plugin.options),
       }

@@ -64,6 +64,7 @@ function render(
 
   const pluginsWithWorkers = filterPluginsWithWorkers(uniqGatsbyNode)
 
+  const subPluginModuleToImportNameMapping = new Map<string, string>()
   const imports: Array<string> = [
     ...uniqGatsbyNode.map(
       (plugin, i) =>
@@ -77,12 +78,13 @@ function render(
           plugin.resolve
         )}/gatsby-worker"`
     ),
-    ...uniqIndex.map(
-      (plugin, i) =>
-        `import * as pluginIndex${i} from "${relativePluginPath(
-          plugin.resolve
-        )}"`
-    ),
+    ...uniqIndex.map((plugin, i) => {
+      const importName = `pluginIndex${i}`
+      subPluginModuleToImportNameMapping.set(plugin.modulePath, importName)
+      return `import * as ${importName} from "${relativePluginPath(
+        plugin.modulePath
+      )}"`
+    }),
   ]
   const gatsbyNodeExports = uniqGatsbyNode.map(
     (plugin, i) => `"${plugin.name}": pluginGatsbyNode${i},`
@@ -108,8 +110,30 @@ export const indexes = {
 ${indexExports.join(`\n`)}
 }
 
-export const flattenedPlugins = ${JSON.stringify(sanitizedUsedPlugins)}
-  `
+export const flattenedPlugins = 
+  ${JSON.stringify(
+    sanitizedUsedPlugins.map(plugin => {
+      return {
+        ...plugin,
+        pluginOptions: {
+          ...plugin.pluginOptions,
+          plugins: plugin.pluginOptions.plugins.map(
+            ({ module, modulePath, ...subPlugin }) => {
+              return {
+                ...subPlugin,
+                module: `_SKIP_START_${subPluginModuleToImportNameMapping.get(
+                  modulePath
+                )}_SKIP_END_`,
+              }
+            }
+          ),
+        },
+      }
+    }),
+    null,
+    2
+  ).replace(/"_SKIP_START_|_SKIP_END_"/g, ``)}
+`
   return output
 }
 
