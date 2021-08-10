@@ -197,7 +197,7 @@ exports.sourceNodes = async function sourceNodes(
   const cacheKey = "your-source-data-key"
   let sourceData = await cache.get(cacheKey)
 
-  // fetch fresh data if nothiing is found in the cache or a plugin option says not to cache data
+  // fetch fresh data if nothing is found in the cache or a plugin option says not to cache data
   if (!sourceData || !pluginOptions.cacheResponse) {
     console.log("Not using cache for source data, fetching fresh content")
     const { data } = await client.query({
