@@ -56,6 +56,16 @@ The steps below will help you find and download some photos for your hero images
 
 2. When you've found a photo that you like, download it and add it to subdirectory for one of your blog posts. Continue downloading photos until you have a different hero image for each post.
 
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Pro Tip:** Sometimes, the images you download from the internet can be a little *too* high quality. If you know your site will only ever render an image at 1000 pixels wide, there's no point in having a source image that's 5000 pixels wide. All those extra pixels mean extra work to process and optimize your images, which can slow down build times.
+
+As a general guideline, it's a good idea to **preoptimize** your image files by resizing them to be no more than twice the maximum size they'll be rendered at. For example, if your layout is 600 pixels wide, then the highest resolution image you will need is 1200 pixels (to account for 2x pixel density).
+
+For more detailed information, refer to the doc on [Preoptimizing Your Images](/docs/preoptimizing-images/).
+
+</Announcement>
+
 3. Next, add some additional frontmatter fields to each of your blog posts:
     * `hero_image`: the relative path to the hero image file for that post
     * `hero_image_alt`: a short description of the image, to be used as alternative text for screen readers or in case the image doesn't load correctly
@@ -248,7 +258,7 @@ query ($id: String) {
 }
 ```
 
-<Announcement>
+<Announcement style={{marginBottom: "1.5rem"}}>
 
 **Pro Tip:** How does GraphiQL know to add extra fields to the `hero_image` frontmatter field?
 
@@ -303,6 +313,16 @@ Gatsby can tell that the `hero_image` field from your MDX frontmatter matches a 
 ```
 
 If you take a closer look at the `gatsbyImageData` object on the `hero_image.childImageSharp` field, you'll see that it contains a bunch of information about the hero image for that post: dimensions, file paths for the images at different sizes, fallback images to use as a placeholder while the image loads. All this data gets calculated by `gatsby-plugin-sharp` at build time. The `gatsbyImageData` object in your response has the same structure that the `GatsbyImage` component needs to render an image.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Note:** You might have noticed that the `gatsbyImageData` field in GraphiQL accepts several arguments, like `aspectRatio`, `formats`, or `width`. You can use these arguments to pass in extra data about how you want the Sharp image processing library to create your optimized images.
+
+These options are equivalent to the ones you would pass into the `StaticImage` component as props.
+
+For more information, see the [`gatsby-plugin-image` Reference Guide](/docs/reference/built-in-components/gatsby-plugin-image/#image-options).
+
+</Announcement>
 
 ### Task: Add hero image using `GatsbyImage` component
 
