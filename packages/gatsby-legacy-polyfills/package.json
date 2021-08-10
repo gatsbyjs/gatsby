@@ -32,7 +32,7 @@
   "devDependencies": {
     "chokidar-cli": "^2.1.0",
     "codegen.macro": "^4.1.0",
-    "core-js": "3.15.2",
+    "core-js": "3.16.0",
     "cpy-cli": "^3.1.1",
     "cross-env": "^7.0.3",
     "execa": "^5.1.1",
