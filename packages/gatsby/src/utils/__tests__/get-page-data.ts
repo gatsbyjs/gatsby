@@ -93,6 +93,7 @@ describe(`get-page-data-util`, () => {
   beforeAll(() => {
     Pages = {
       foo: {
+        componentChunkName: `foo`,
         path: `/foo`,
         componentPath: `/foo.js`,
         component: `/foo.js`,
