@@ -55,19 +55,13 @@ exports.onPostBuild = async (
 
   const { redirects, pageDataStats, nodes, pages } = store.getState()
 
-  const routes = {}
-  console.log(`Assembling Routes`)
-  for (const [pathname] of pages) {
-    routes[`${pathname.substring(1)}index.html`] = `SSR`
-  }
-
-  console.log(`Routes Manifest`, routes)
-
-  try {
-    console.log(`Emitting Routes`)
-    emitRoutes(routes)
-  } catch (e) {
-    console.error(e.message, e)
+  console.log(`Emitting Routes`)
+  for (const [pathname, page] of pages) {
+    if (page.mode && page.mode !== `SSG`) {
+      emitRoutes({
+        [`${pathname.substring(1)}index.html`]: page.mode,
+      })
+    }
   }
 
   let nodesCount
