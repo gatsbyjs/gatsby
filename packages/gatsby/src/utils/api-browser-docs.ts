@@ -82,7 +82,7 @@ export const onRouteUpdate = true
  * @param {string} $0.pathname The new pathname (for backwards compatibility with v1).
  * @param {function} $0.getSavedScrollPosition Takes a location and returns the
  * coordinates of the last scroll position for that location, or `null` depending on
- * whether a scroll happend or not. Gatsby saves scroll positions for each route
+ * whether a scroll happened or not. Gatsby saves scroll positions for each route
  * in `SessionStorage`, so they are available after page reload.
  * @returns {(boolean|string|Array)} Should return either an [x, y] Array of
  * coordinates to scroll to, a string of the `id` or `name` of an element to
