@@ -12,8 +12,9 @@ export class ProductVariantsQuery extends BulkQuery {
       filters.push(`created_at:>='${isoDate}' OR updated_at:>='${isoDate}'`)
     }
 
-    const includeLocations =
-      this.pluginOptions.shopifyConnections?.includes(`locations`)
+    const includeLocations = this.pluginOptions.shopifyConnections?.includes(
+      `locations`
+    )
 
     const ProductVariantSortKey = `POSITION`
 
@@ -107,6 +108,7 @@ export class ProductVariantsQuery extends BulkQuery {
                           updatedAt
                           value
                           type
+                          valueType: type
                         }
                       }
                     }

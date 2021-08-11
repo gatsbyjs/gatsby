@@ -143,6 +143,7 @@ export class ProductsQuery extends BulkQuery {
                     updatedAt
                     value
                     type
+                    valueType: type
                   }
                 }
               }

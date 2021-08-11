@@ -39,6 +39,7 @@ export class CollectionsQuery extends BulkQuery {
                     updatedAt
                     value
                     type
+                    valueType: type
                   }
                 }
               }
