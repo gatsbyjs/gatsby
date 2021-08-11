@@ -180,7 +180,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       React.useEffect(() => {
         if (!onClientEntryRanRef.current) {
           onClientEntryRanRef.current = true
-          performance.mark(`onInitialClientRender`)
+          if (performance.mark) {
+            performance.mark(`onInitialClientRender`)
+          }
 
           apiRunner(`onInitialClientRender`)
         }
