@@ -106,7 +106,8 @@ export class ProductVariantsQuery extends BulkQuery {
                           ownerType
                           updatedAt
                           value
-                          valueType
+                          type
+                          valueType: type
                         }
                       }
                     }
