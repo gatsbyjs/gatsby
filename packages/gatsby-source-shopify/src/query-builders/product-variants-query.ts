@@ -13,7 +13,7 @@ export class ProductVariantsQuery extends BulkQuery {
     }
 
     const includeLocations =
-      this.pluginOptions.shopifyConnections?.includes(`locations`)
+      !!this.pluginOptions.shopifyConnections?.includes(`locations`)
 
     const ProductVariantSortKey = `POSITION`
 
