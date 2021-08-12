@@ -180,6 +180,10 @@ exports.sourceNodes = async (
       store.getState().status.plugins?.[`gatsby-source-drupal`]?.lastFetched ??
       0
 
+    reporter.verbose(
+      `[gatsby-source-drupal]: value of lastFetched for fastbuilds "${lastFetched}"`
+    )
+
     const drupalFetchIncrementalActivity = reporter.activityTimer(
       `Fetch incremental changes from Drupal`
     )
