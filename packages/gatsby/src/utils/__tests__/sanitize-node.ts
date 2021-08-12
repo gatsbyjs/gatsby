@@ -1,12 +1,12 @@
-const sanitizeNode = require(`../sanitize-node`)
+import { sanitizeNode } from "../sanitize-node"
 
 describe(`node sanitization`, () => {
   let testNode
 
   beforeEach(() => {
-    const circularReference = {}
+    const circularReference: any = {}
     circularReference.self = circularReference
-    const indirectCircular = {
+    const indirectCircular: any = {
       down1: {
         down2: {},
       },
@@ -17,7 +17,7 @@ describe(`node sanitization`, () => {
       id: `id1`,
       parent: null,
       children: [],
-      unsupported: () => {},
+      unsupported: (): void => {},
       inlineObject: {
         field: `fieldOfFirstNode`,
         re: /re/,
@@ -26,7 +26,7 @@ describe(`node sanitization`, () => {
       repeat2: `bar`,
       repeat3: {
         repeat3: {
-          test: () => {},
+          test: (): void => {},
           repeat: `bar`,
         },
       },
