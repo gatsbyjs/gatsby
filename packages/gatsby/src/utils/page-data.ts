@@ -211,8 +211,9 @@ export async function flush(): Promise<void> {
     // This is why we need this check
     if (page) {
       if (
-        program?._?.[0] === `develop` &&
-        process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+        (program?._?.[0] === `develop` &&
+          process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) ||
+        (_CFLAGS_.GATSBY_MAJOR === `4` ? page.mode !== `SSG` : false)
       ) {
         // check if already did run query for this page
         // with query-on-demand we might have pending page-data write due to
