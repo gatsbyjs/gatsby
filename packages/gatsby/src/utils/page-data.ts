@@ -150,7 +150,7 @@ export async function writePageData(
 
   if (matchPath) {
     body += `,
-    "matchPath: "${matchPath}"`
+    "matchPath": "${matchPath}"`
   }
 
   body += `}`
