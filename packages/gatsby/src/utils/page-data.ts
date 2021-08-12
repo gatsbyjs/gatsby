@@ -142,13 +142,18 @@ export async function writePageData(
   const result = await readPageQueryResult(publicDir, pagePath)
 
   const outputFilePath = getFilePath(publicDir, pagePath)
-  const body = `{
+  let body = `{
     "componentChunkName": "${componentChunkName}",
     "path": "${pagePath}",
-    "matchPath": "${matchPath ?? ``}",
     "result": ${result},
-    "staticQueryHashes": ${JSON.stringify(staticQueryHashes)}
-  }`
+    "staticQueryHashes": ${JSON.stringify(staticQueryHashes)}`
+
+  if (matchPath) {
+    body += `,
+    "matchPath: "${matchPath}"`
+  }
+
+  body += `}`
 
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
   const pageDataSize = Buffer.byteLength(body) / 1000

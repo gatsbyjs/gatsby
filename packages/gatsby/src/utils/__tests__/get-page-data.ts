@@ -74,6 +74,7 @@ describe(`get-page-data-util`, () => {
   }
 
   const pageDataContent = {
+    componentChunkName: `foo`,
     path: `/foo`,
     result: queryResultContent,
     staticQueryHashes: [],
