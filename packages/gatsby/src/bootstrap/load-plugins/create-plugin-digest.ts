@@ -7,14 +7,36 @@ import getDependenciesForLocalFile from "./get-dependencies-for-local-file"
 
 const cache = getCache(`plugin-digest`)
 
-function isLocalPlugin(filePath: string): boolean {
-  return filePath.slice(0, 1) === `.`
-}
+// function isLocalPlugin(filePath: string): boolean {
+// return filePath.slice(0, 1) === `.`
+// }
 
 type dependencies = Set<string>
 
+let lockFileJson
+let loadingLockFilePromise
+async function loadLockFile(root, isYarn) {
+  if (lockFileJson) {
+    return lockFileJson
+  } else if (!loadingLockFilePromise) {
+    loadingLockFilePromise = new Promise(async resolve => {
+      console.time(`load lock file`)
+      lockFileJson = await buildDepTreeFromFiles(
+        root,
+        `package.json`,
+        isYarn ? `yarn.lock` : `package-lock.json`
+      )
+      console.timeEnd(`load lock file`)
+      resolve(lockFileJson)
+    })
+
+    return loadingLockFilePromise
+  } else {
+    return loadingLockFilePromise
+  }
+}
+
 function recurse(depObject: any, set: dependencies) {
-  console.log({ depObject })
   set.add(`${depObject.name}@${depObject.version}`)
   if (depObject.dependencies) {
     Object.keys(depObject.dependencies).forEach(d =>
@@ -28,17 +50,26 @@ function recurse(depObject: any, set: dependencies) {
 async function getDependencies(
   root: string,
   dep: string,
+  parentDep: string,
   isYarn: boolean
 ): Promise<dependencies> {
   // let file = fs.readFileSync('yarn.lock', 'utf8');
-  const json = await buildDepTreeFromFiles(
-    root,
-    `package.json`,
-    isYarn ? `yarn.lock` : `package-lock.json`
-  )
-  console.log(json, { dep })
-  const dependencies = recurse(json.dependencies[dep], new Set())
-  return dependencies
+  // console.log(json, { dep })
+  const lockFileJson = await loadLockFile(root, isYarn)
+  let childDepTree
+  if (parentDep !== ``) {
+    console.log({ parentDep, dep })
+    childDepTree = lockFileJson.dependencies[parentDep].dependencies[dep]
+  } else {
+    childDepTree = lockFileJson.dependencies[dep]
+  }
+  if (childDepTree) {
+    const dependencies = recurse(childDepTree, new Set())
+    return dependencies
+  } else {
+    console.log(`MISSING DEPENDENCY`, { dep, parentDep })
+    return new Set()
+  }
 }
 
 async function hasFileChanged(filePath: string): Promise<boolean> {
@@ -93,16 +124,19 @@ type ILocalFiles = Array<string>
 
 async function createPluginDigest(
   root: string,
-  dep: string
+  plugin: any
 ): Promise<IPluginDigest> {
+  let dep = plugin.resolve
   if (dep === ``) {
     return { digest: ``, isCached: false }
   }
 
   // Just return Gatsby's version number for internal plugins
-  if (/gatsby.dist.internal-plugins/.test(dep)) {
+  if (
+    /gatsby.dist.internal-plugins/.test(dep) ||
+    /gatsby-plugin-page-creator/.test(dep)
+  ) {
     const gatsbyVersion = require(`gatsby/package.json`).version
-    console.log({ gatsbyVersion })
     return { digest: gatsbyVersion, isCached: true }
   }
 
@@ -116,20 +150,45 @@ async function createPluginDigest(
     return { digest: ``, isCached: false }
   }
 
+  const packageJson = require(path.join(root, `package.json`))
+
+  // gatsby-plugin-typescript is often a dependency of gatsby and added by it.
+  // Work around this.
+  let parentDep = ``
+  // gatsby-plugin-typescript can be installed directly or as a dependency of gatsby, found out which
+  if (/gatsby-plugin-typescript/.test(dep)) {
+    // Check if it's a direct dependency
+    if (!packageJson.dependencies[`gatsby-plugin-typescript`]) {
+      console.log(`typescript isn't direct dependency`)
+      // It's not so set the parent to gatsby
+      parentDep = `gatsby`
+    } else {
+      console.log(`typescript is a direct dependency`)
+    }
+  }
+
   // Check if the lock file has changed
   const lockFileChanged = await hasFileChanged(lockFilePath)
 
-  const dependencyTree = await buildDepTreeFromFiles(
-    root,
-    `package.json`,
-    isYarn ? `yarn.lock` : `package-lock.json`
-  )
-
-  const isPackage = !!dependencyTree.dependencies[dep]
+  // Is this plugin a direct dependency of the project?
+  const isPackage =
+    !!packageJson.dependencies[parentDep] ||
+    packageJson.dependencies[plugin.name]
 
   if (isPackage) {
+    console.log(`isPackage`, {
+      dep,
+      parentDep,
+      hasCache: !!cachedResult,
+      lockFileChanged,
+    })
     if (lockFileChanged || !cachedResult) {
-      const dependencies = await getDependencies(root, dep, isYarn)
+      const dependencies = await getDependencies(
+        root,
+        plugin.name,
+        parentDep,
+        isYarn
+      )
       const str = Array.from(dependencies).sort().join(``)
       const shasum = crypto.createHash(`sha1`)
       shasum.update(str)
@@ -169,17 +228,30 @@ async function createPluginDigest(
     if (filesChanged || lockFileChanged) {
       let combinedDependencies = new Set()
       const dependencies = await getDependenciesForLocalFile(root, dep)
+      console.log(`getDependenciesForLocalFile`, { dependencies })
       await Promise.all(
         Object.keys(dependencies).map(async dep => {
-          if (dep.slice(0, 1) === `.`) {
+          if (
+            // It's a local dependency found by getDependenciesForLocalFile
+            dep.slice(0, 1) === `.` ||
+            // This is the gatsby-node.js file for the plugin.
+            /node_modules/.test(dep) ||
+            // This is the site's gatsby-node
+            dep.slice(0, 11) === `gatsby-node`
+          ) {
             // This is a local file
             combinedDependencies.add(`${dep}-${dependencies[dep]}`)
             // Call hasFileChanged to cache its last modified time.
-            console.log({ root, dep })
+            // console.log({ root, dep })
             await hasFileChanged(path.join(root, dep))
             localFiles.push(dep)
           } else {
-            const packageDependencies = await getDependencies(root, dep, isYarn)
+            const packageDependencies = await getDependencies(
+              root,
+              dep,
+              parentDep,
+              isYarn
+            )
             combinedDependencies = new Set([
               ...combinedDependencies,
               ...packageDependencies,
@@ -187,6 +259,7 @@ async function createPluginDigest(
           }
         })
       )
+      console.log({ combinedDependencies })
       await cache.set(root + dep + `localFiles`, localFiles)
       const str = Array.from(combinedDependencies).sort().join(``)
       const shasum = crypto.createHash(`sha1`)

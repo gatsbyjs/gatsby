@@ -105,8 +105,14 @@ export async function loadPlugins(
   // Create a flattened array of the plugins
   const pluginArray = flattenPlugins(pluginInfos)
 
+  console.log({ pluginArray })
+  // process.exit()
   const digests = await Promise.all(
-    pluginArray.map(p => createPluginDigest(rootDir, p.resolve))
+    pluginArray.map(p =>
+      createPluginDigest(rootDir, p).then(digest => {
+        return { ...digest, ...p }
+      })
+    )
   )
   console.log({ digests })
   // process.exit()
