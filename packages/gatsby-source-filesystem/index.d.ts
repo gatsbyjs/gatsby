@@ -1,3 +1,4 @@
+import { Agent } from 'http'
 import { Node, Store, NodePluginArgs } from "gatsby"
 
 /**
@@ -37,7 +38,14 @@ export interface CreateRemoteFileNodeArgs {
   auth?: {
     htaccess_user: string
     htaccess_pass: string
-  }
+  },
+  httpOptions?: {
+    auth?: string,
+    agent?: {
+      http?: Agent,
+      https?: Agent
+    }
+  },
   httpHeaders?: object
   ext?: string
   name?: string

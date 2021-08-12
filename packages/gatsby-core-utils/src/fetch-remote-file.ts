@@ -1,7 +1,7 @@
 import got from "got"
 import fileType from "file-type"
 import path from "path"
-import { IncomingMessage, OutgoingHttpHeaders } from "http"
+import { IncomingMessage, OutgoingHttpHeaders, Agent } from "http"
 import fs from "fs-extra"
 import { createContentDigest } from "./create-content-digest"
 import {
@@ -18,7 +18,14 @@ export interface IFetchRemoteFileOptions {
   auth?: {
     htaccess_pass?: string
     htaccess_user?: string
-  }
+  },
+  httpOptions?: {
+    auth?: string
+    agent?: {
+      http?: Agent
+      https?: Agent
+    }
+  },
   httpHeaders?: OutgoingHttpHeaders
   ext?: string
   name?: string
@@ -60,7 +67,7 @@ const requestRemoteNode = (
   url: got.GotUrl,
   headers: OutgoingHttpHeaders,
   tmpFilename: string,
-  httpOpts: got.GotOptions<string | null> | undefined,
+  httpOpts: got.GotOptions | undefined,
   attempt: number = 1
 ): Promise<IncomingMessage> =>
   new Promise((resolve, reject) => {
@@ -163,6 +170,7 @@ export async function fetchRemoteFile({
   url,
   cache,
   auth = {},
+  httpOptions = {},
   httpHeaders = {},
   ext,
   name,
@@ -179,9 +187,8 @@ export async function fetchRemoteFile({
 
   // Add htaccess authentication if passed in. This isn't particularly
   // extensible. We should define a proper API that we validate.
-  const httpOpts: got.GotOptions<string | null> = {}
   if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
-    httpOpts.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
+    httpOptions.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
   }
 
   // Create the temp and permanent file names for the url.
@@ -196,7 +203,7 @@ export async function fetchRemoteFile({
   const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
 
   // Fetch the file.
-  const response = await requestRemoteNode(url, headers, tmpFilename, httpOpts)
+  const response = await requestRemoteNode(url, headers, tmpFilename, httpOptions)
 
   if (response.statusCode === 200) {
     // Save the response headers for future requests.

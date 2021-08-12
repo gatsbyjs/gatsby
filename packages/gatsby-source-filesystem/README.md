@@ -184,6 +184,10 @@ createRemoteFileNode({
   auth: { htaccess_user: `USER`, htaccess_pass: `PASSWORD` },
 
   // OPTIONAL
+  // Adds extra http options for the got module (npm) cf https://github.com/sindresorhus/got#agent
+  httpOptions: { agent: { http: http.Agent, https: https.Agent } },
+
+  // OPTIONAL
   // Adds extra http headers to download request if passed in.
   httpHeaders: { Authorization: `Bearer someAccessToken` },
 
