@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`contentful extend node type createUrl allows you to create URls 1`] = `"//images.contentful.com/dsf/bl.jpg?w=100"`;
+
+exports[`contentful extend node type createUrl ignores options it doesn't understand 1`] = `"//images.contentful.com/dsf/bl.jpg?"`;
