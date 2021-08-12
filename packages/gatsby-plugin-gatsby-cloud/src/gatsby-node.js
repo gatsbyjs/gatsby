@@ -60,6 +60,7 @@ exports.onPostBuild = async (
     if (page.mode && page.mode !== `SSG`) {
       emitRoutes({
         [`${pathname.substring(1)}index.html`]: page.mode,
+        [`page-data/${pathname.substring(1)}/page-data.json`]: page.mode,
       })
     }
   }
