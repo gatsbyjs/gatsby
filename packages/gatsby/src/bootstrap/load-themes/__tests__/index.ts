@@ -1,5 +1,5 @@
-const loadThemes = require(`..`)
-const path = require(`path`)
+import { loadThemes } from ".."
+import path from "path"
 
 describe(`loadThemes`, () => {
   test(`resolves themes and plugins from location of gatsby-config`, async () => {
@@ -33,7 +33,6 @@ describe(`loadThemes`, () => {
       config: { plugins },
       themes,
     } = await loadThemes(config, {
-      useLegacyThemes: false,
       configFilePath,
       rootDir: path.dirname(configFilePath),
     })
