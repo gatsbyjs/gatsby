@@ -32,6 +32,8 @@ many fields that aren't needed to create the pages. Most sites only need to quer
 
 Check how long `createPages` takes for your build. If it's longer than 10s, check if there's fields you can remove from the query.
 
+For very large sites (50k+ pages), your query might always be slower than ideal. In which case, using [getNodesByType](/docs/reference/config-files/node-api-helpers/#getNodesByType) would be the fastest way to get a list of all your nodes.
+
 #### Make sure you're not clearing the cache between builds
 
 In the past, Gatsby's cache was less reliable than it is now. As a result, some sites started clearing the cache between builds. With improvements we've made, that should not be necessary anymore, so if your build script says something like "gatsby clean && gatsby build" you may want to change it to just run gatsby build.
