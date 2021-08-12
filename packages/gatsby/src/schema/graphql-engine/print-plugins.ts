@@ -58,8 +58,7 @@ function render(
 
   const sanitizedUsedPlugins = usedPlugins.map(plugin => {
     // TODO: We don't support functions in pluginOptions here
-    const { resolve, pluginFilepath, ...rest } = plugin
-    return { ...rest }
+    return { ...plugin, resolve: ``, pluginFilepath: `` }
   })
 
   const pluginsWithWorkers = filterPluginsWithWorkers(uniqGatsbyNode)
@@ -110,7 +109,7 @@ export const indexes = {
 ${indexExports.join(`\n`)}
 }
 
-export const flattenedPlugins = 
+export const flattenedPlugins =
   ${JSON.stringify(
     sanitizedUsedPlugins.map(plugin => {
       return {
