@@ -8,6 +8,7 @@ import PQueue from "p-queue"
 import { dump } from "dumper.js"
 import { actions as gatsbyActions } from "gatsby/dist/redux/actions/public"
 
+import { remoteSchemaSupportsFieldNameOnTypeName } from "~/steps/ingest-remote-schema/introspect-remote-schema"
 import { paginatedWpNodeFetch } from "~/steps/source-nodes/fetch-nodes/fetch-nodes-paginated"
 import fetchGraphql from "~/utils/fetch-graphql"
 
@@ -17,7 +18,6 @@ import { fetchAndCreateSingleNode } from "~/steps/source-nodes/update-nodes/wp-a
 import { formatLogMessage } from "~/utils/format-log-message"
 import { touchValidNodes } from "../source-nodes/update-nodes/fetch-node-updates"
 
-import { IPluginOptions } from "~/models/gatsby-api"
 import { Reporter } from "gatsby/reporter"
 
 const inDevelopPreview =
@@ -52,6 +52,7 @@ export interface IPreviewData {
   since?: number
   refreshing?: boolean
   preview?: boolean
+  manifestIds?: Array<string>
 }
 
 interface IPageNode {
@@ -62,9 +63,8 @@ let previewQueue: PQueue
 
 const getPreviewQueue = (): PQueue => {
   if (!previewQueue) {
-    const {
-      previewRequestConcurrency,
-    } = store.getState().gatsbyApi.pluginOptions.schema
+    const { previewRequestConcurrency } =
+      store.getState().gatsbyApi.pluginOptions.schema
 
     previewQueue = new PQueue({
       concurrency: previewRequestConcurrency,
@@ -82,8 +82,8 @@ const previewForIdIsAlreadyBeingProcessed = (id: string): boolean => {
     return false
   }
 
-  const existingCallbacks = store.getState().previewStore
-    .nodePageCreatedCallbacks
+  const existingCallbacks =
+    store.getState().previewStore.nodePageCreatedCallbacks
 
   const alreadyProcessingThisPreview = !!existingCallbacks?.[id]
 
@@ -140,73 +140,77 @@ interface IOnPreviewStatusInput {
   error?: Error
 }
 
-const createPreviewStatusCallback = ({
-  previewData,
-  reporter,
-}: {
-  previewData: IPreviewData
-  reporter: Reporter
-}) => async ({
-  passedNode,
-  pageNode,
-  context,
-  status,
-  graphqlEndpoint,
-  error,
-}: IOnPreviewStatusInput): Promise<void> => {
-  if (status === `PREVIEW_SUCCESS`) {
-    // we might need to write a dummy page-data.json so that
-    // Gatsby doesn't throw 404 errors when WPGatsby tries to read this file
-    // that maybe doesn't exist yet
-    await writeDummyPageDataJsonIfNeeded({ previewData, pageNode })
-  }
+const createPreviewStatusCallback =
+  ({
+    previewData,
+    reporter,
+  }: {
+    previewData: IPreviewData
+    reporter: Reporter
+  }) =>
+  async ({
+    passedNode,
+    pageNode,
+    context,
+    status,
+    graphqlEndpoint,
+    error,
+  }: IOnPreviewStatusInput): Promise<void> => {
+    if (status === `PREVIEW_SUCCESS`) {
+      // we might need to write a dummy page-data.json so that
+      // Gatsby doesn't throw 404 errors when WPGatsby tries to read this file
+      // that maybe doesn't exist yet
+      await writeDummyPageDataJsonIfNeeded({ previewData, pageNode })
+    }
 
-  const statusContext = error?.message
-    ? `${context}\n\n${error.message}`
-    : context
+    const statusContext = error?.message
+      ? `${context}\n\n${error.message}`
+      : context
 
-  const { data } = await fetchGraphql({
-    url: graphqlEndpoint,
-    query: /* GraphQL */ `
-      mutation MUTATE_PREVIEW_NODE($input: WpGatsbyRemotePreviewStatusInput!) {
-        wpGatsbyRemotePreviewStatus(input: $input) {
-          success
+    const { data } = await fetchGraphql({
+      url: graphqlEndpoint,
+      query: /* GraphQL */ `
+        mutation MUTATE_PREVIEW_NODE(
+          $input: WpGatsbyRemotePreviewStatusInput!
+        ) {
+          wpGatsbyRemotePreviewStatus(input: $input) {
+            success
+          }
         }
-      }
-    `,
-    variables: {
-      input: {
-        clientMutationId: `sendPreviewStatus`,
-        modified: passedNode?.modified,
-        pagePath: pageNode?.path,
-        parentDatabaseId:
-          previewData.parentDatabaseId || previewData.previewDatabaseId, // if the parentDatabaseId is 0 we want to use the previewDatabaseId
-        status,
-        statusContext,
+      `,
+      variables: {
+        input: {
+          clientMutationId: `sendPreviewStatus`,
+          modified: passedNode?.modified,
+          pagePath: pageNode?.path,
+          parentDatabaseId:
+            previewData.parentDatabaseId || previewData.previewDatabaseId, // if the parentDatabaseId is 0 we want to use the previewDatabaseId
+          status,
+          statusContext,
+        },
       },
-    },
-    errorContext: `Error occurred while mutating WordPress Preview node meta.`,
-    forceReportCriticalErrors: true,
-    headers: {
-      WPGatsbyPreview: previewData.token,
-      WPGatsbyPreviewUser: previewData.userDatabaseId,
-    },
-  })
+      errorContext: `Error occurred while mutating WordPress Preview node meta.`,
+      forceReportCriticalErrors: true,
+      headers: {
+        WPGatsbyPreview: previewData.token,
+        WPGatsbyPreviewUser: previewData.userDatabaseId,
+      },
+    })
 
-  if (data?.wpGatsbyRemotePreviewStatus?.success) {
-    reporter.log(
-      formatLogMessage(
-        `Successfully sent Preview status back to WordPress post ${previewData.id} during ${context}`
+    if (data?.wpGatsbyRemotePreviewStatus?.success) {
+      reporter.log(
+        formatLogMessage(
+          `Successfully sent Preview status back to WordPress post ${previewData.id} during ${context}`
+        )
       )
-    )
-  } else {
-    reporter.log(
-      formatLogMessage(
-        `failed to mutate WordPress post ${previewData.id} during Preview ${context}.\nCheck your WP server logs for more information.`
+    } else {
+      reporter.log(
+        formatLogMessage(
+          `failed to mutate WordPress post ${previewData.id} during Preview ${context}.\nCheck your WP server logs for more information.`
+        )
       )
-    )
+    }
   }
-}
 
 /**
  * This is called and passed the result from the ActionMonitor.previewData object along with a JWT token
@@ -282,18 +286,27 @@ export const sourcePreview = async ({
     isPreview: true,
   })
 
-  if (`unstable_createNodeManifest` in actions) {
-    const manifestId = node.databaseId + previewData.modified
+  if (
+    previewData?.manifestIds?.length &&
+    `unstable_createNodeManifest` in actions &&
+    node
+  ) {
+    previewData.manifestIds.forEach(manifestId => {
+      actions.unstable_createNodeManifest({
+        manifestId,
+        node,
+      })
+    })
 
     reporter.info(
       formatLogMessage(
-        `Creating node manifest for ${node.id} with manifestId ${manifestId}`
+        `Creating node manifests for ${
+          node.id
+        } with manifestIds: [${previewData.manifestIds
+          .map(id => `"${id}"`)
+          .join(`, `)}]`
       )
     )
-    actions.unstable_createNodeManifest({
-      manifestId,
-      node,
-    })
   }
 }
 
@@ -358,6 +371,12 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
     return
   }
 
+  const wpGatsbyPreviewNodeManifestsAreSupported =
+    await remoteSchemaSupportsFieldNameOnTypeName({
+      typeName: `GatsbyPreviewData`,
+      fieldName: `manifestIds`,
+    })
+
   const previewActions = await paginatedWpNodeFetch({
     contentTypePlural: `actionMonitorActions`,
     nodeTypeName: `ActionMonitor`,
@@ -374,8 +393,9 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
             status: PRIVATE
             orderby: { field: MODIFIED, order: DESC }
             sinceTimestamp: ${
-              // only source previews made in the last 10 minutes
-              Date.now() - 1000 * 60 * 10
+              // only source previews made in the last 60 minutes
+              // We delete every preview action we process so this accounts for very long cold builds between previews.
+              Date.now() - 1000 * 60 * 60
             }
           }
           first: 100
@@ -391,6 +411,7 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
               remoteUrl
               singleName
               userDatabaseId
+              ${wpGatsbyPreviewNodeManifestsAreSupported ? `manifestIds` : ``}
             }
           }
           pageInfo {

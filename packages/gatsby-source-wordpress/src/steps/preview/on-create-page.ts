@@ -51,10 +51,8 @@ export const onCreatePageRespondToPreviewStatusQuery = async (
     return
   }
 
-  const {
-    nodePageCreatedCallbacks,
-    pagePathToNodeDependencyId,
-  } = store.getState().previewStore
+  const { nodePageCreatedCallbacks, pagePathToNodeDependencyId } =
+    store.getState().previewStore
 
   const { page, getNode } = helpers
 

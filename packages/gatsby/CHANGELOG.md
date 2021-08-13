@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.12.0-next.3...gatsby@3.13.0-next.0) (2021-08-12)
+
+### Bug Fixes
+
+- **gatsby:** reduce parse cost writing page-data ([#32763](https://github.com/gatsbyjs/gatsby/issues/32763)) ([b97782f](https://github.com/gatsbyjs/gatsby/commit/b97782f35c92a2c51fdd5c997a0ac3fe45cf2524))
+- **gatsby:** Wrap performance mark in check ([#32778](https://github.com/gatsbyjs/gatsby/issues/32778)) ([365d00b](https://github.com/gatsbyjs/gatsby/commit/365d00b2ee413ef38f56ba4262304865ecd4256e))
+
+### Features
+
+- **gatsby:** measure how long GraphQL takes to run in createPages and warn if > 10s ([#32751](https://github.com/gatsbyjs/gatsby/issues/32751)) ([8bd7cf0](https://github.com/gatsbyjs/gatsby/commit/8bd7cf06a0f0bea14c376b8c0daca8856baf6db6))
+
+# [3.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.12.0-next.2...gatsby@3.12.0-next.3) (2021-08-09)
+
+### Bug Fixes
+
+- **gatsby:** fix incorrect filtering with experimental LMDB indexes ([#32728](https://github.com/gatsbyjs/gatsby/issues/32728)) ([9b456cd](https://github.com/gatsbyjs/gatsby/commit/9b456cd1d9fdf8096d12fd367e679d815e08b6cf))
+- **gatsby:** fix node manifest processing in inc builds ([#32538](https://github.com/gatsbyjs/gatsby/issues/32538)) ([1577f9b](https://github.com/gatsbyjs/gatsby/commit/1577f9b0ab9909cdc4dfe0acca2dbbae89418ad5))
+- **gatsby:** Silence process.send Error ([#32744](https://github.com/gatsbyjs/gatsby/issues/32744)) ([5d7831d](https://github.com/gatsbyjs/gatsby/commit/5d7831d949b3352b7bb39718072b75102707ad99))
+- **gatsby:** Worker support in fast-refresh-module ([#32432](https://github.com/gatsbyjs/gatsby/issues/32432)) ([6daead6](https://github.com/gatsbyjs/gatsby/commit/6daead63ce02c21690a48cdd531fdb2761628703))
+
+### Features
+
+- **gatsby:** add env flag to disable lazy function compilation in develop ([#32707](https://github.com/gatsbyjs/gatsby/issues/32707)) ([ed04979](https://github.com/gatsbyjs/gatsby/commit/ed04979ed66219ed9f5f07a5b859f07217d32393))
+- **gatsby:** write node manifests to public dir instead of .cache ([#32547](https://github.com/gatsbyjs/gatsby/issues/32547)) ([9c41b7a](https://github.com/gatsbyjs/gatsby/commit/9c41b7a90e97d971049dd9b5d296a37ca8912fa8))
+
+# [3.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.12.0-next.1...gatsby@3.12.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby
+
+# [3.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.12.0-next.0...gatsby@3.12.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to ^4.1.2 ([#32576](https://github.com/gatsbyjs/gatsby/issues/32576)) ([5c4e109](https://github.com/gatsbyjs/gatsby/commit/5c4e109313cd1b59f814332fdb4dfdcaf1faed1a))
+- **deps:** update dependency eslint to ^7.32.0 ([#32628](https://github.com/gatsbyjs/gatsby/issues/32628)) ([65fe945](https://github.com/gatsbyjs/gatsby/commit/65fe94547e0892b3978a7c7376ff1297acb0144f))
+- **deps:** update dependency eslint-plugin-flowtype to ^5.8.2 ([#32629](https://github.com/gatsbyjs/gatsby/issues/32629)) ([4391f05](https://github.com/gatsbyjs/gatsby/commit/4391f05bcae65c36820c3407f09df668dacc692e))
+- **deps:** update dependency eslint-plugin-import to ^2.23.4 ([#32581](https://github.com/gatsbyjs/gatsby/issues/32581)) ([769e98f](https://github.com/gatsbyjs/gatsby/commit/769e98f3dbcdbededfa1909d86aad83050a291c7))
+- **deps:** update dependency eslint-plugin-react to ^7.24.0 ([#32582](https://github.com/gatsbyjs/gatsby/issues/32582)) ([de676bc](https://github.com/gatsbyjs/gatsby/commit/de676bc45d4196c78bf88e91346625ef80e93545))
+- **deps:** update dependency eslint-webpack-plugin to ^2.5.4 ([#32583](https://github.com/gatsbyjs/gatsby/issues/32583)) ([170e58b](https://github.com/gatsbyjs/gatsby/commit/170e58b1ea30e3ee9927e9ef61be9c0c629b9534))
+- **deps:** update dependency mini-css-extract-plugin to v1.6.2 ([#32586](https://github.com/gatsbyjs/gatsby/issues/32586)) ([6c6d4e5](https://github.com/gatsbyjs/gatsby/commit/6c6d4e501764614ad737c88ba5810b6fbbcbff68))
+- **docs:** clarify redirectInBrowser option ([#32669](https://github.com/gatsbyjs/gatsby/issues/32669)) ([774e680](https://github.com/gatsbyjs/gatsby/commit/774e680e186f3ac0928a7b178d395d64b7d8a4e9))
+- **gatsby:** load page and static queries texts in PQR only once per worker ([#32545](https://github.com/gatsbyjs/gatsby/issues/32545)) ([bbec42b](https://github.com/gatsbyjs/gatsby/commit/bbec42bd599dfbed4c7a4728f50b3c9fba5f903c))
+
+### Features
+
+- **gatsby:** allow sites to disable the dev 404 page ([#32686](https://github.com/gatsbyjs/gatsby/issues/32686)) ([af5525e](https://github.com/gatsbyjs/gatsby/commit/af5525e59cbc8052ccac1c646ef12a0c5d9843bf))
+
+# [3.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.6...gatsby@3.12.0-next.0) (2021-07-29)
+
+### Bug Fixes
+
+- **gatsby:** correct results for multiple range filters with indexes ([#32406](https://github.com/gatsbyjs/gatsby/issues/32406)) ([9b42793](https://github.com/gatsbyjs/gatsby/commit/9b427936752ec0b107b36331f444366987355fbb))
+
 # [3.11.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.11.0-next.5...gatsby@3.11.0-next.6) (2021-07-27)
 
 ### Bug Fixes

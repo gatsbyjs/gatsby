@@ -2,31 +2,9 @@
 title: "Part 2: Use and Style React Components"
 ---
 
-import { Announcement, Notification, LinkButton } from 'gatsby-interface'
+import { Announcement, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
-import { MdInfo, MdArrowForward } from 'react-icons/md'
-
-<Notification
-  Icon={MdInfo}
-  tone="WARNING"
-  variant="SECONDARY"
-  content={
-    <div>
-      <p>
-        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
-        The first few parts of the new Tutorial have been released here, and subsequent parts
-        will be added as we finish them.
-      </p>
-      <p style={{ marginBottom: 0 }}>
-        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
-        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
-          <strong>Gatsby v2 Tutorial</strong>
-        </a>
-        .
-      </p>
-    </div>
-  }
-/>
+import { MdArrowForward } from 'react-icons/md'
 
 ## Introduction
 
@@ -237,7 +215,7 @@ Now that you've updated the existing Home page, try creating a new page from scr
 1. Create a new file: `src/pages/about.js`. Use the code below as a starting point for your About page. (Feel free to switch up the content to make it more specific to you. Maybe share your favorite food or go-to vacation spot!)
 
 ```js:title=src/pages/about.js
-// Step 1: Import your component
+// Step 1: Import React
 import * as React from 'react'
 
 // Step 2: Define your component
@@ -490,7 +468,7 @@ In the browser, the actual DOM elements will look something like this:
 
 Follow the steps below to create a `Layout` component and add it to your Home and About pages.
 
-1. Create a new file called `src/components/layout.js`. Insert the following code to define your `Layout` component. This component will render a `<main>` element that includes a dynamic page title and heading (from the `pageTitle` prop), a list of navigation links, and the contents passed in with the `children` prop.
+1. Create a new file called `src/components/layout.js`. Insert the following code to define your `Layout` component. This component will render a dynamic page title and heading (from the `pageTitle` prop), a list of navigation links, and the contents passed in with the `children` prop. To improve accessibility, there's also a `<main>` element wrapping the page-specific elements (the `<h1>` heading and the contents from `children`).
 
 ```js:title=src/components/layout.js
 import * as React from 'react'
@@ -498,7 +476,7 @@ import { Link } from 'gatsby'
 
 const Layout = ({ pageTitle, children }) => {
   return (
-    <main>
+    <div>
       <title>{pageTitle}</title>
       <nav>
         <ul>
@@ -506,9 +484,11 @@ const Layout = ({ pageTitle, children }) => {
           <li><Link to="/about">About</Link></li>
         </ul>
       </nav>
-      <h1>{pageTitle}</h1>
-      {children}
-    </main>
+      <main>
+        <h1>{pageTitle}</h1>
+        {children}
+      </main>
+    </div>
   )
 }
 
@@ -652,7 +632,7 @@ Follow the steps below to style your `Layout` component using CSS Modules.
 }
 ```
 
-3. Then import that class into your `Layout` component `.js` file, and use the `className` prop to assign it to the `<main>` element:
+3. Then import that class into your `Layout` component `.js` file, and use the `className` prop to assign it to the top-level `<div>` element:
 
 ```js:title=src/components/layout.js
 import * as React from 'react'
@@ -661,7 +641,7 @@ import { container } from './layout.module.css' // highlight-line
 
 const Layout = ({ pageTitle, children }) => {
   return (
-    <main className={container}> // highlight-line
+    <div className={container}> // highlight-line
       <title>{pageTitle}</title>
       <nav>
         <ul>
@@ -669,9 +649,11 @@ const Layout = ({ pageTitle, children }) => {
           <li><Link to="/about">About</Link></li>
         </ul>
       </nav>
-      <h1>{pageTitle}</h1>
-      {children}
-    </main>
+      <main>
+        <h1>{pageTitle}</h1>
+        {children}
+      </main>
+    </div>
   )
 }
 
@@ -737,7 +719,7 @@ import {
 
 const Layout = ({ pageTitle, children }) => {
   return (
-    <main className={container}>
+    <div className={container}>
       <title>{pageTitle}</title>
       <nav>
         <ul className={navLinks}> // highlight-line
@@ -753,9 +735,11 @@ const Layout = ({ pageTitle, children }) => {
           </li>
         </ul>
       </nav>
-      <h1 className={heading}>{pageTitle}</h1> // highlight-line
-      {children}
-    </main>
+      <main>
+        <h1 className={heading}>{pageTitle}</h1> // highlight-line
+        {children}
+      </main>
+    </div>
   )
 }
 

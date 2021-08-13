@@ -1,18 +1,18 @@
 {
   "name": "gatsby-plugin-jss",
   "description": "Gatsby plugin that adds SSR support for JSS",
-  "version": "3.11.0-next.0",
+  "version": "3.13.0-next.0",
   "author": "Vladimir Guguiev <wizardzloy@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.14.6"
+    "@babel/runtime": "^7.14.8"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.5",
-    "@babel/core": "^7.14.6",
-    "babel-preset-gatsby-package": "^1.11.0-next.0",
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
+    "babel-preset-gatsby-package": "^1.13.0-next.0",
     "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-jss#readme",

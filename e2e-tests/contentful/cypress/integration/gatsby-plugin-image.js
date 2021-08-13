@@ -13,11 +13,11 @@ function hasSVGPlaceholder(el) {
     })
 }
 
-function hasJPEGPlaceholder(el) {
+function hasBase64Placeholder(el) {
   el.children(`img`)
     .should(`have.attr`, `src`)
     .and(src => {
-      expect(src).to.match(/^data:image\/jpeg;base64/)
+      expect(src).to.match(/^data:image\/[a-z]+;base64/)
     })
 }
 
@@ -77,7 +77,7 @@ describe(`gatsby-plugin-image`, () => {
     testGatsbyPluginImage(`traced`, hasSVGPlaceholder)
   )
   it(`blurred`, testConfig, () =>
-    testGatsbyPluginImage(`blurred`, hasJPEGPlaceholder)
+    testGatsbyPluginImage(`blurred`, hasBase64Placeholder)
   )
   it(`sqip`, testConfig, () => testGatsbyPluginImage(`sqip`, hasSVGPlaceholder))
 

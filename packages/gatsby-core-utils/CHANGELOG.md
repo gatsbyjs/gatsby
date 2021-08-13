@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.12.0-next.3...gatsby-core-utils@2.13.0-next.0) (2021-08-12)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+# [2.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.12.0-next.2...gatsby-core-utils@2.12.0-next.3) (2021-08-09)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+# [2.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.12.0-next.1...gatsby-core-utils@2.12.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+# [2.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.12.0-next.0...gatsby-core-utils@2.12.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update minor and patch dependencies for gatsby-core-utils ([#32631](https://github.com/gatsbyjs/gatsby/issues/32631)) ([e82339b](https://github.com/gatsbyjs/gatsby/commit/e82339b4cd47d9fc48f07f66a87f84690001af77))
+- **gatsby-core-utils:** avoid circular imports ([#32675](https://github.com/gatsbyjs/gatsby/issues/32675)) ([57f25bd](https://github.com/gatsbyjs/gatsby/commit/57f25bd3d34c9b5ed7ea092528455a1ae5174261))
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.11.0-next.0...gatsby-core-utils@2.12.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-core-utils
+
 # [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.10.0-next.1...gatsby-core-utils@2.11.0-next.0) (2021-07-15)
 
 **Note:** Version bump only for package gatsby-core-utils

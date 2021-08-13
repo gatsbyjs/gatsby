@@ -55,9 +55,8 @@ const createPagination = <TSource = any, TContext = any>({
   fields: ObjectTypeComposerFieldConfigMapDefinition<TSource, TContext>
   typeName: string
 }): ObjectTypeComposer => {
-  const paginationTypeComposer: ObjectTypeComposer = schemaComposer.getOrCreateOTC(
-    typeName,
-    tc => {
+  const paginationTypeComposer: ObjectTypeComposer =
+    schemaComposer.getOrCreateOTC(typeName, tc => {
       tc.addFields({
         totalCount: `Int!`,
         edges: [getEdge({ schemaComposer, typeComposer }).getTypeNonNull()],
@@ -65,8 +64,7 @@ const createPagination = <TSource = any, TContext = any>({
         pageInfo: getPageInfo({ schemaComposer }).getTypeNonNull(),
         ...fields,
       })
-    }
-  )
+    })
   paginationTypeComposer.makeFieldNonNull(`edges`)
   paginationTypeComposer.makeFieldNonNull(`nodes`)
   addDerivedType({ typeComposer, derivedTypeName: typeName })
@@ -95,7 +93,8 @@ export const getPagination = <TContext = any>({
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
 }): ObjectTypeComposer => {
-  const inputTypeComposer: InputTypeComposer = typeComposer.getInputTypeComposer()
+  const inputTypeComposer: InputTypeComposer =
+    typeComposer.getInputTypeComposer()
   const typeName = `${typeComposer.getTypeName()}Connection`
   const fieldsEnumTC = getFieldsEnum({
     schemaComposer,

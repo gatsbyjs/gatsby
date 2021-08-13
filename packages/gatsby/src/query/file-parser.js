@@ -214,9 +214,12 @@ async function findGraphQLTags(
           taggedTemplateExpressPath,
           isHook = false
         ) => {
-          const { ast: gqlAst, text, hash, isGlobal } = getGraphQLTag(
-            taggedTemplateExpressPath
-          )
+          const {
+            ast: gqlAst,
+            text,
+            hash,
+            isGlobal,
+          } = getGraphQLTag(taggedTemplateExpressPath)
           if (!gqlAst) return
 
           if (isGlobal) {

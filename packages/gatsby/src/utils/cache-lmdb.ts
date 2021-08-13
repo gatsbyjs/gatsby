@@ -75,6 +75,6 @@ export default class GatsbyCacheLmdb {
   }
 
   async del(key: string): Promise<void> {
-    return (this.getDb().remove(key) as unknown) as Promise<void>
+    return this.getDb().remove(key) as unknown as Promise<void>
   }
 }
