@@ -1,9 +1,12 @@
-const fs = require(`fs`)
-const path = require(`path`)
-const crypto = require(`crypto`)
+// @ts-check
+import crypto from "crypto"
+import fs from "fs"
+import path from "path"
 
 import qs from "qs"
+
 import { default as downloadWithRetry } from "./download-with-retry"
+import cacheImage from "./cache-image"
 
 if (process.env.GATSBY_REMOTE_CACHE) {
   console.warn(
@@ -168,5 +171,32 @@ export const getBase64Image = (imageProps, reporter) => {
     inFlightBase64Cache.delete(requestUrl)
     resolvedBase64Cache.set(requestUrl, body)
     return body
+  })
+}
+
+export const getTracedSVG = async (imageData, { store, reporter }) => {
+  const { traceSVG } = require(`gatsby-plugin-sharp`)
+
+  const { image, options } = imageData
+  const {
+    file: { contentType },
+  } = image
+
+  if (contentType.indexOf(`image/`) !== 0) {
+    return null
+  }
+
+  const absolutePath = await cacheImage(store, image, options, reporter)
+  const extension = path.extname(absolutePath)
+
+  return traceSVG({
+    file: {
+      internal: image.internal,
+      name: image.file.fileName,
+      extension,
+      absolutePath,
+    },
+    args: { toFormat: `` },
+    fileArgs: options,
   })
 }

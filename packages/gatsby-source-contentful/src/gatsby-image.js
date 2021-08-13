@@ -12,6 +12,7 @@ const {
   isImage,
   getBasicImageProps,
   getBase64Image,
+  getTracedSVG,
   CONTENTFUL_IMAGE_MAX_SIZE,
 } = require(`./image-helpers`)
 
@@ -267,7 +268,7 @@ export const resolveResize = (image, options) => {
   }
 }
 
-export const fixedNodeType = ({ getTracedSVG, reporter }) => {
+export const fixedNodeType = ({ store, reporter }) => {
   return {
     type: new GraphQLObjectType({
       name: `ContentfulFixed`,
@@ -278,7 +279,7 @@ export const fixedNodeType = ({ getTracedSVG, reporter }) => {
         },
         tracedSVG: {
           type: GraphQLString,
-          resolve: getTracedSVG,
+          resolve: imageData => getTracedSVG(imageData, { store, reporter }),
         },
         aspectRatio: { type: GraphQLFloat },
         width: { type: new GraphQLNonNull(GraphQLFloat) },
@@ -369,7 +370,7 @@ export const fixedNodeType = ({ getTracedSVG, reporter }) => {
   }
 }
 
-export const fluidNodeType = ({ getTracedSVG, reporter }) => {
+export const fluidNodeType = ({ store, reporter }) => {
   return {
     type: new GraphQLObjectType({
       name: `ContentfulFluid`,
@@ -380,7 +381,7 @@ export const fluidNodeType = ({ getTracedSVG, reporter }) => {
         },
         tracedSVG: {
           type: GraphQLString,
-          resolve: getTracedSVG,
+          resolve: imageData => getTracedSVG(imageData, { store, reporter }),
         },
         aspectRatio: { type: new GraphQLNonNull(GraphQLFloat) },
         src: { type: new GraphQLNonNull(GraphQLString) },
@@ -473,7 +474,7 @@ export const fluidNodeType = ({ getTracedSVG, reporter }) => {
   }
 }
 
-export const resizeNodeType = ({ getTracedSVG, reporter }) => {
+export const resizeNodeType = ({ store, reporter }) => {
   return {
     type: new GraphQLObjectType({
       name: `ContentfulResize`,
@@ -484,7 +485,7 @@ export const resizeNodeType = ({ getTracedSVG, reporter }) => {
         },
         tracedSVG: {
           type: GraphQLString,
-          resolve: getTracedSVG,
+          resolve: imageData => getTracedSVG(imageData, { store, reporter }),
         },
         src: { type: GraphQLString },
         width: { type: GraphQLInt },

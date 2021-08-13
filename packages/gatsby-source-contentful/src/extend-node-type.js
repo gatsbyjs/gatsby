@@ -1,6 +1,4 @@
 // @ts-check
-const path = require(`path`)
-
 const {
   GraphQLBoolean,
   GraphQLInt,
@@ -28,6 +26,7 @@ const {
   createUrl,
   getBase64Image,
   getBasicImageProps,
+  getTracedSVG,
   isImage,
 } = require(`./image-helpers`)
 
@@ -99,33 +98,6 @@ const fitMap = new Map([
 exports.extendNodeType = ({ type, store, reporter }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
-  }
-
-  const getTracedSVG = async args => {
-    const { traceSVG } = require(`gatsby-plugin-sharp`)
-
-    const { image, options } = args
-    const {
-      file: { contentType },
-    } = image
-
-    if (contentType.indexOf(`image/`) !== 0) {
-      return null
-    }
-
-    const absolutePath = await cacheImage(store, image, options, reporter)
-    const extension = path.extname(absolutePath)
-
-    return traceSVG({
-      file: {
-        internal: image.internal,
-        name: image.file.fileName,
-        extension,
-        absolutePath,
-      },
-      args: { toFormat: `` },
-      fileArgs: options,
-    })
   }
 
   const getDominantColor = async ({ image, options }) => {
@@ -205,10 +177,13 @@ exports.extendNodeType = ({ type, store, reporter }) => {
     }
 
     if (options.placeholder === `tracedSVG`) {
-      placeholderDataURI = await getTracedSVG({
-        image,
-        options,
-      })
+      placeholderDataURI = await getTracedSVG(
+        {
+          image,
+          options,
+        },
+        { store, reporter }
+      )
     }
 
     if (placeholderDataURI) {
@@ -287,15 +262,15 @@ exports.extendNodeType = ({ type, store, reporter }) => {
 
   return {
     fixed: fixedNodeType({
-      getTracedSVG,
+      store,
       reporter,
     }),
     fluid: fluidNodeType({
-      getTracedSVG,
+      store,
       reporter,
     }),
     resize: resizeNodeType({
-      getTracedSVG,
+      store,
       reporter,
     }),
     gatsbyImageData: getGatsbyImageData(),
