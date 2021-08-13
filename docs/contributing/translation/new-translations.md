@@ -34,6 +34,6 @@ The Gatsby team will choose to approve a translation request based on the follow
 
 ## After approval
 
-Once the translation request is approved, a member of the gatsby team will run the an automated script to create your repository and set everything up.
+Once the translation request is approved, a member of the gatsby team will run an automated script to create your repository and set everything up.
 
 At this point, you and your co-maintainers should read the rest of the [maintainer guide](/contributing/translation/maintainers/) for more information on how to manage your translation repository. You can also check out the [translation contributor guide](/contributing/translation/translators/) for information on contributing translations to your own repo, and start working on your translation [style guide](/contributing/translation/style-guide/).

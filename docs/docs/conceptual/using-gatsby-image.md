@@ -80,6 +80,6 @@ In order to support responsive images, you need to do the image processing befor
 
 ### Better compression
 
-The new [WebP image](https://developers.google.com/speed/webp) standard reduces image size by 25-35% for modern browsers. Additionally, [AVIF Images](https://netflixtechblog.com/avif-for-next-generation-image-coding-b1d75675fe4) are also supported. AVIF is a brand new image format, which offers considerably better filesizes and quality than JPG and even WebP. It's possible to support these standards, but you also need to fall back for older browsers that don't support this, which without framework support adds additional complexity.
+The new [WebP image](https://developers.google.com/speed/webp) standard reduces image size by 25-35% for modern browsers. Additionally, [AVIF Images](https://netflixtechblog.com/avif-for-next-generation-image-coding-b1d75675fe4) are also supported. AVIF is a brand-new image format, which offers considerably better filesizes and quality than JPG and even WebP. It's possible to support these standards, but you also need to fall back for older browsers that don't support this, which without framework support adds additional complexity.
 
 Gatsby supports WebP & AVIF out of the box as a setting on Gatsby Image.

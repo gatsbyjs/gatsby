@@ -12,7 +12,7 @@ This guide will walk you through using Gatsby with the [Ghost Content API](https
 
 ## Quick start
 
-The fastest way to get started is with the official **Gatsby Starter Ghost** repository, which contains a light scaffolding of queries and templates to get a brand new site up and running.
+The fastest way to get started is with the official **Gatsby Starter Ghost** repository, which contains a light scaffolding of queries and templates to get a brand-new site up and running.
 
 - Repository: https://github.com/tryghost/gatsby-starter-ghost
 - Demo: https://gatsby.ghost.org

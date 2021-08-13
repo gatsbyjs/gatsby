@@ -249,4 +249,4 @@ You can read the relevant [Flotiq Gatsby Cloud integration](https://flotiq.com/d
 
 ## Summary
 
-This guide has gone through the key points of setting up a Gatsby starter, configuring it to work with Flotiq, and kicking off your development process. Remember to check out other [Flotiq Gatsby starters](https://github.com/flotiq/?q=gatsby-starter) already prepared to kick start your next project. You can also join the [Flotiq Discord channel](https://discord.gg/FwXcHnX) if you need any help!
+This guide has gone through the key points of setting up a Gatsby starter, configuring it to work with Flotiq, and kicking off your development process. Remember to check out other [Flotiq Gatsby starters](https://github.com/flotiq/?q=gatsby-starter) already prepared to kick-start your next project. You can also join the [Flotiq Discord channel](https://discord.gg/FwXcHnX) if you need any help!
