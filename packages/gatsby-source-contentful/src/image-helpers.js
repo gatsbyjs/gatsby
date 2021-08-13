@@ -20,7 +20,7 @@ const REMOTE_CACHE_FOLDER =
   process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE ??
   process.env.GATSBY_REMOTE_CACHE ??
   path.join(process.cwd(), `.cache/remote_cache`)
-const CACHE_IMG_FOLDER = path.join(REMOTE_CACHE_FOLDER, `images`)
+export const CACHE_IMG_FOLDER = path.join(REMOTE_CACHE_FOLDER, `images`)
 
 // @see https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-width-&-height
 export const CONTENTFUL_IMAGE_MAX_SIZE = 4000
@@ -98,7 +98,7 @@ export const getBase64Image = (imageProps, reporter) => {
     ...imageProps.options,
     toFormat,
     width: 20,
-    height: Math.floor(20 * aspectRatio),
+    height: Math.floor(20 / aspectRatio),
   }
   const requestUrl = `https:${createUrl(imageProps.baseUrl, imageOptions)}`
 
