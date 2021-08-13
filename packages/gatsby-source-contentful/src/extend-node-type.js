@@ -44,15 +44,27 @@ const generateImageSource = (
   height,
   toFormat,
   _fit, // We use resizingBehavior instead
-  {
+  options
+) => {
+  const imageFormatDefaults = options[`${toFormat}Options`]
+
+  if (
+    imageFormatDefaults &&
+    Object.keys(imageFormatDefaults).length !== 0 &&
+    imageFormatDefaults.constructor === Object
+  ) {
+    options = { ...options, ...imageFormatDefaults }
+  }
+
+  const {
     jpegProgressive,
     quality,
     cropFocus,
     backgroundColor,
     resizingBehavior,
     cornerRadius,
-  }
-) => {
+  } = options
+
   // Ensure we stay within Contentfuls Image API limits
   if (width > CONTENTFUL_IMAGE_MAX_SIZE) {
     height = Math.floor((height / width) * CONTENTFUL_IMAGE_MAX_SIZE)
@@ -138,6 +150,32 @@ exports.extendNodeType = ({ type, store, reporter }) => {
 
     const { generateImageData } = require(`gatsby-plugin-image`)
 
+    const {
+      getPluginOptions,
+      doMergeDefaults,
+    } = require(`gatsby-plugin-sharp/plugin-options`)
+
+    const sharpOptions = getPluginOptions()
+
+    const userDefaults = sharpOptions.defaults
+
+    const defaults = {
+      tracedSVGOptions: {},
+      blurredOptions: {},
+      jpgOptions: {},
+      pngOptions: {},
+      webpOptions: {},
+      // Note: Contentful does not support avif yet, but does support gif.
+      gifOptions: {},
+      ...userDefaults,
+      quality: userDefaults.quality || 50,
+      layout: userDefaults.layout || `constrained`,
+      placeholder: userDefaults.placeholder || `dominantColor`,
+      formats: userDefaults.formats || [``, `webp`],
+    }
+
+    options = doMergeDefaults(options, defaults)
+
     const { baseUrl, contentType, width, height } = getBasicImageProps(
       image,
       options
@@ -219,7 +257,6 @@ exports.extendNodeType = ({ type, store, reporter }) => {
       },
       quality: {
         type: GraphQLInt,
-        defaultValue: 50,
       },
       layout: {
         type: ImageLayoutType,
@@ -248,14 +285,10 @@ exports.extendNodeType = ({ type, store, reporter }) => {
             not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying
             both PNG and JPG is not supported and will be ignored.
         `,
-        defaultValue: [``, `webp`],
       },
     })
 
     fieldConfig.type = GraphQLJSON
-
-    fieldConfig.args.placeholder.defaultValue = `dominantColor`
-    fieldConfig.args.layout.defaultValue = `constrained`
 
     return fieldConfig
   }

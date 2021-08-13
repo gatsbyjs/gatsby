@@ -196,7 +196,7 @@ export const getTracedSVG = async (imageData, { store, reporter }) => {
       extension,
       absolutePath,
     },
-    args: { toFormat: `` },
+    args: { toFormat: ``, ...options.tracedSVGOptions },
     fileArgs: options,
   })
 }
