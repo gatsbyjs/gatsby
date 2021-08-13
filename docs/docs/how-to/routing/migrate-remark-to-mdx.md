@@ -128,6 +128,8 @@ For instance, any HTML component with the `class` attribute needs to be changed 
 
 There is a [gatsby-plugin-feed-mdx](https://www.gatsbyjs.com/plugins/gatsby-plugin-feed-mdx/) which replicates the features of `gatsby-plugin-feed` (included in the official `gatsby-starter-blog`).
 
+If you use this plugin, you will need to update to the mdx version.
+
 Uninstall `gatsby-plugin-feed` and install `gatsby-plugin-feed-mdx`
 
 ```
@@ -135,9 +137,9 @@ npm uninstall gatsby-plugin-feed
 npm install gatsby-plugin-feed-mdx
 ```
 
-Update your feeds config to use mdx instead of remark:
+Update your feeds config to use mdx instead of remark in `gatsby-config.js` :
 
-```diff
+```diff:title=gatsby-config.js
 feeds: [
   {
 -    serialize: ({ query: { site, allMarkdownRemark } }) => {
