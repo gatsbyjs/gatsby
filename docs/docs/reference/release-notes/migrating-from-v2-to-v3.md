@@ -158,7 +158,7 @@ The APIs `push`, `replace` & `navigateTo` in `gatsby-link` (an internal package)
 
 ```diff
 import React from "react"
-- import { navigateTo, push, replace } from "gatsby"
+- import { navigateTo, push, replace } from "gatsby-link"
 + import { navigate } from "gatsby"
 
 const Form = () => (
