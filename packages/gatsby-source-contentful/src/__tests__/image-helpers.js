@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import nock from "nock"
 import path from "path"
 import fs from "fs-extra"
@@ -72,7 +76,7 @@ describe(`contentful extend node type`, () => {
         .query({ w: `20`, h: `4`, q: `50` })
         .reply(
           200,
-          fs.readFileSync(`${FIXTURES}/contentful-base64.png`, null),
+          fs.readFileSync(`${FIXTURES}/contentful-logo-base64.png`, null),
           [
             `Content-Type`,
             `image/png`,
@@ -96,7 +100,7 @@ describe(`contentful extend node type`, () => {
         .query({ w: `20`, h: `4`, q: `50`, fm: `jpg` })
         .reply(
           200,
-          fs.readFileSync(`${FIXTURES}/contentful-base64.jpg`, null),
+          fs.readFileSync(`${FIXTURES}/contentful-logo-base64.jpg`, null),
           [
             `Content-Type`,
             `image/jpeg`,

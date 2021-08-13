@@ -1,5 +1,368 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`contentful extend node type gatsby-plugin-image defaults via gatsby-plugin-sharp custom background color 1`] = `
+Object {
+  "backgroundColor": "#663399",
+  "height": 338,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "(min-width: 1646px) 1646px, 100vw",
+      "src": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=png&bg=rgb%3A663399",
+      "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=50&fm=png&bg=rgb%3A663399 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=50&fm=png&bg=rgb%3A663399 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=png&bg=rgb%3A663399 1646w",
+    },
+    "sources": Array [
+      Object {
+        "sizes": "(min-width: 1646px) 1646px, 100vw",
+        "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=50&fm=webp&bg=rgb%3A663399 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=50&fm=webp&bg=rgb%3A663399 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=webp&bg=rgb%3A663399 1646w",
+        "type": "image/webp",
+      },
+    ],
+  },
+  "layout": "constrained",
+  "width": "1646",
+}
+`;
+
+exports[`contentful extend node type gatsby-plugin-image defaults via gatsby-plugin-sharp custom placeholder blurred 1`] = `
+Object {
+  "backgroundColor": undefined,
+  "height": 338,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "(min-width: 1646px) 1646px, 100vw",
+      "src": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=png",
+      "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=50&fm=png 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=50&fm=png 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=png 1646w",
+    },
+    "sources": Array [
+      Object {
+        "sizes": "(min-width: 1646px) 1646px, 100vw",
+        "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=50&fm=webp 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=50&fm=webp 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=webp 1646w",
+        "type": "image/webp",
+      },
+    ],
+  },
+  "layout": "constrained",
+  "placeholder": Object {
+    "fallback": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAADCAMAAACtb39mAAAAeFBMVEUAAABnnshan7U7suU7tOcqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDn/2F8qMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDngZGDsW2jtXGgqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDk0GRLnAAAAKHRSTlMAAIGvmgwbJRMZPiQRO2cKOb9vaYakc5awq3mCxYCvmQ0fLBIvHRQnoY5v5AAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAd0SU1FB+UIDQwhOZLH1wIAAAAoSURBVAjXY2RihIO/LECChf89oyBMhIHxBycLDy+E/VjuEZMsIzsrAHBBBWFd9EvsAAAAAElFTkSuQmCC",
+  },
+  "width": "1646",
+}
+`;
+
+exports[`contentful extend node type gatsby-plugin-image defaults via gatsby-plugin-sharp custom placeholder tracedSVG 1`] = `
+Object {
+  "backgroundColor": undefined,
+  "height": 338,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "(min-width: 1646px) 1646px, 100vw",
+      "src": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=png",
+      "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=50&fm=png 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=50&fm=png 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=png 1646w",
+    },
+    "sources": Array [
+      Object {
+        "sizes": "(min-width: 1646px) 1646px, 100vw",
+        "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=50&fm=webp 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=50&fm=webp 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=webp 1646w",
+        "type": "image/webp",
+      },
+    ],
+  },
+  "layout": "constrained",
+  "placeholder": Object {
+    "fallback": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='400'%20height='82'%20viewBox='0%200%20400%2082'%20preserveAspectRatio='none'%3e%3cpath%20d='M28%203C17%207%2010%2013%2010%2019c0%208%209%2011%2015%205%2010-8%2022-8%2032%200%205%205%2011%204%2014-1%202-4%201-7-3-11-8-9-27-14-40-9m304%207c-5%203-6%208-6%2029s0%2022%205%2022%205-1%205-16V32h4c4%200%206-2%206-5-1-3-2-3-6-3s-4%200-4-2c0-3%203-6%206-6%204-1%206-3%204-6-1-2-10-3-14%200m-130%205l-1%2019v19l3%203c3%203%203%203%209%203l6%201v-4c0-3-1-3-4-4-4-1-5-4-5-13%200-7%201-7%203-7%206%201%209-3%207-7-1-2-2-2-5-2h-5v-4c0-4-1-5-4-5l-4%201m102%200c-2%202-1%2034%200%2038%202%205%206%207%2012%207%204%200%205%200%206-3%200-3-1-5-4-5-4%200-5-2-5-11v-9h4c4%200%206-1%206-4%200-4-2-5-6-5s-4%200-4-3l-1-5h-8m87%200v45l4%201%204-1V15h-8M96%2024c-14%207-15%2027-2%2034%207%204%2019%203%2023-2%201-2%201-2-1-5-3-2-3-2-7-1-10%204-17-3-14-12%202-6%208-9%2014-6%203%201%208-2%208-5%200-4-16-7-21-3m33-1c-16%207-14%2032%203%2037%2015%204%2028-9%2024-24-3-11-16-17-27-13m48%200l-5%202c-3%202-3%202-4%200s-2-2-4-2l-3%201-1%2016c-1%2019-1%2020%205%2020h4V49c1-13%201-14%205-17%204-2%206-1%2010%201%202%203%202%203%203%2015l1%2012h8V46c0-15-1-17-7-21-3-2-9-3-12-2m55%201c-15%207-15%2029%200%2035%207%203%2018%202%2023-2l2-2-2-3c-3-2-3-2-6-1-6%202-13%201-16-1-4-5-3-5%2012-5h14v-5c0-14-14-22-27-16m31%200v36c2%201%207%200%208-1l1-11c0-13%202-16%2010-16%205%200%207%203%207%2016%200%2012%201%2013%206%2012%204%200%204-1%204-14-1-14-2-17-8-21-4-3-11-3-16%200-4%202-4%202-4%200-1-2-6-3-8-1m87%200c-3%202-2%2024%200%2029%204%208%2014%2010%2022%206l3-2%202%202c1%202%205%203%207%201l1-19V25l-4-1c-6%200-6%201-6%2013s-2%2015-9%2015-8-3-8-16c0-10%200-11-2-12h-6M131%2034c-6%205-3%2016%204%2018%209%201%2015-8%2010-16-3-6-9-7-14-2M14%2055c-9%205-5%2015%208%2022%2016%208%2034%205%2046-6%2010-9-1-22-11-13-10%208-23%208-32-1-3-3-8-3-11-2'%20fill='%23639'%20fill-rule='evenodd'/%3e%3c/svg%3e",
+  },
+  "width": "1646",
+}
+`;
+
+exports[`contentful extend node type gatsby-plugin-image defaults via gatsby-plugin-sharp custom quality 1`] = `
+Object {
+  "backgroundColor": "#080808",
+  "height": 338,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "(min-width: 1646px) 1646px, 100vw",
+      "src": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=42&fm=png",
+      "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=42&fm=png 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=42&fm=png 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=42&fm=png 1646w",
+    },
+    "sources": Array [
+      Object {
+        "sizes": "(min-width: 1646px) 1646px, 100vw",
+        "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=42&fm=webp 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=42&fm=webp 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=42&fm=webp 1646w",
+        "type": "image/webp",
+      },
+    ],
+  },
+  "layout": "constrained",
+  "width": "1646",
+}
+`;
+
+exports[`contentful extend node type gatsby-plugin-image defaults via gatsby-plugin-sharp custom quality by format 1`] = `
+Object {
+  "backgroundColor": "#080808",
+  "height": 338,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "(min-width: 1646px) 1646px, 100vw",
+      "src": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=60&fm=png",
+      "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=60&fm=png 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=60&fm=png 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=60&fm=png 1646w",
+    },
+    "sources": Array [
+      Object {
+        "sizes": "(min-width: 1646px) 1646px, 100vw",
+        "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=42&fm=webp 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=42&fm=webp 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=42&fm=webp 1646w",
+        "type": "image/webp",
+      },
+    ],
+  },
+  "layout": "constrained",
+  "width": "1646",
+}
+`;
+
+exports[`contentful extend node type gatsby-plugin-image query arguments custom quality 1`] = `
+Object {
+  "backgroundColor": "#080808",
+  "height": 338,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "(min-width: 1646px) 1646px, 100vw",
+      "src": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=90&fm=png",
+      "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=90&fm=png 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=90&fm=png 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=90&fm=png 1646w",
+    },
+    "sources": Array [
+      Object {
+        "sizes": "(min-width: 1646px) 1646px, 100vw",
+        "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=90&fm=webp 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=90&fm=webp 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=90&fm=webp 1646w",
+        "type": "image/webp",
+      },
+    ],
+  },
+  "layout": "constrained",
+  "width": "1646",
+}
+`;
+
+exports[`contentful extend node type gatsby-plugin-image query arguments custom width 1`] = `
+Object {
+  "backgroundColor": "#080808",
+  "height": 86,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "(min-width: 420px) 420px, 100vw",
+      "src": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=420&h=86&q=50&fm=png",
+      "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=105&h=22&q=50&fm=png 105w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=210&h=43&q=50&fm=png 210w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=420&h=86&q=50&fm=png 420w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=840&h=172&q=50&fm=png 840w",
+    },
+    "sources": Array [
+      Object {
+        "sizes": "(min-width: 420px) 420px, 100vw",
+        "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=105&h=22&q=50&fm=webp 105w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=210&h=43&q=50&fm=webp 210w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=420&h=86&q=50&fm=webp 420w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=840&h=172&q=50&fm=webp 840w",
+        "type": "image/webp",
+      },
+    ],
+  },
+  "layout": "constrained",
+  "width": 420,
+}
+`;
+
+exports[`contentful extend node type gatsby-plugin-image query arguments default 1`] = `
+Object {
+  "backgroundColor": "#080808",
+  "height": 338,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "(min-width: 1646px) 1646px, 100vw",
+      "src": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=png",
+      "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=50&fm=png 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=50&fm=png 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=png 1646w",
+    },
+    "sources": Array [
+      Object {
+        "sizes": "(min-width: 1646px) 1646px, 100vw",
+        "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=50&fm=webp 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=50&fm=webp 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=webp 1646w",
+        "type": "image/webp",
+      },
+    ],
+  },
+  "layout": "constrained",
+  "width": "1646",
+}
+`;
+
+exports[`contentful extend node type gatsby-plugin-image query arguments force format 1`] = `
+Object {
+  "backgroundColor": "#080808",
+  "height": 338,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "(min-width: 1646px) 1646px, 100vw",
+      "src": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=jpg",
+      "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=50&fm=jpg 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=50&fm=jpg 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=jpg 1646w",
+    },
+    "sources": Array [
+      Object {
+        "sizes": "(min-width: 1646px) 1646px, 100vw",
+        "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=50&fm=webp 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=50&fm=webp 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=webp 1646w",
+        "type": "image/webp",
+      },
+    ],
+  },
+  "layout": "constrained",
+  "width": "1646",
+}
+`;
+
+exports[`contentful extend node type gatsby-plugin-image query arguments layout fixed 1`] = `
+Object {
+  "backgroundColor": "#080808",
+  "height": 338,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "1646px",
+      "src": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=png",
+      "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=png 1646w",
+    },
+    "sources": Array [
+      Object {
+        "sizes": "1646px",
+        "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=webp 1646w",
+        "type": "image/webp",
+      },
+    ],
+  },
+  "layout": "fixed",
+  "width": "1646",
+}
+`;
+
+exports[`contentful extend node type gatsby-plugin-image query arguments layout full width 1`] = `
+Object {
+  "backgroundColor": "#080808",
+  "height": 0.20534629404617255,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "100vw",
+      "src": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=750&h=154&q=50&fm=png",
+      "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=750&h=154&q=50&fm=png 750w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1080&h=222&q=50&fm=png 1080w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1366&h=281&q=50&fm=png 1366w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=png 1646w",
+    },
+    "sources": Array [
+      Object {
+        "sizes": "100vw",
+        "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=750&h=154&q=50&fm=webp 750w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1080&h=222&q=50&fm=webp 1080w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1366&h=281&q=50&fm=webp 1366w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=webp 1646w",
+        "type": "image/webp",
+      },
+    ],
+  },
+  "layout": "fullWidth",
+  "width": 1,
+}
+`;
+
+exports[`contentful extend node type gatsby-plugin-image query arguments placeholder blurred 1`] = `
+Object {
+  "backgroundColor": undefined,
+  "height": 338,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "(min-width: 1646px) 1646px, 100vw",
+      "src": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=png",
+      "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=50&fm=png 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=50&fm=png 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=png 1646w",
+    },
+    "sources": Array [
+      Object {
+        "sizes": "(min-width: 1646px) 1646px, 100vw",
+        "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=50&fm=webp 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=50&fm=webp 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=webp 1646w",
+        "type": "image/webp",
+      },
+    ],
+  },
+  "layout": "constrained",
+  "placeholder": Object {
+    "fallback": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAMAAAC5ge+kAAAAllBMVEUAAABHl745rOE7tOc7tOcqMDkqMDkqMDkqMDnfzG9Pm7o7tOc7tOcqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDn4wF/eXWDtXGjtXGgqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDnbVmDpWGbtXGjtXGh1tTylAAAAMnRSTlMATd3gVSUjTCDgHRIscF+MeqB8qpqbk4ienYAxr+AeEipyZI9/aW+No4WJeWuuTdzgVnu3oiUAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAHdElNRQflCAUMFTJ7i9WSAAAAMklEQVQI12NkBII/DCDA+htIsDEy/mBj4WDEBCwiyLwnIpyMjL/ZWASB7PMMMPAZTAIALlUHKTqI1/MAAAAASUVORK5CYII=",
+  },
+  "width": "1646",
+}
+`;
+
+exports[`contentful extend node type gatsby-plugin-image query arguments placeholder traced svg 1`] = `
+Object {
+  "backgroundColor": undefined,
+  "height": 338,
+  "images": Object {
+    "fallback": Object {
+      "sizes": "(min-width: 1646px) 1646px, 100vw",
+      "src": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=png",
+      "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=50&fm=png 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=50&fm=png 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=png 1646w",
+    },
+    "sources": Array [
+      Object {
+        "sizes": "(min-width: 1646px) 1646px, 100vw",
+        "srcSet": "//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=412&h=85&q=50&fm=webp 412w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=823&h=169&q=50&fm=webp 823w,
+//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png?w=1646&h=338&q=50&fm=webp 1646w",
+        "type": "image/webp",
+      },
+    ],
+  },
+  "layout": "constrained",
+  "placeholder": Object {
+    "fallback": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='400'%20height='82'%20viewBox='0%200%20400%2082'%20preserveAspectRatio='none'%3e%3cpath%20d='M28%203C17%207%2010%2013%2010%2019c0%208%209%2011%2015%205%2010-8%2022-8%2032%200%205%205%2011%204%2014-1%202-4%201-7-3-11-8-9-27-14-40-9m304%207c-5%203-6%208-6%2029s0%2022%205%2022%205-1%205-16V32h4c4%200%206-2%206-5-1-3-2-3-6-3s-4%200-4-2c0-3%203-6%206-6%204-1%206-3%204-6-1-2-10-3-14%200m-130%205l-1%2019v19l3%203c3%203%203%203%209%203l6%201v-4c0-3-1-3-4-4-4-1-5-4-5-13%200-7%201-7%203-7%206%201%209-3%207-7-1-2-2-2-5-2h-5v-4c0-4-1-5-4-5l-4%201m102%200c-2%202-1%2034%200%2038%202%205%206%207%2012%207%204%200%205%200%206-3%200-3-1-5-4-5-4%200-5-2-5-11v-9h4c4%200%206-1%206-4%200-4-2-5-6-5s-4%200-4-3l-1-5h-8m87%200v45l4%201%204-1V15h-8M96%2024c-14%207-15%2027-2%2034%207%204%2019%203%2023-2%201-2%201-2-1-5-3-2-3-2-7-1-10%204-17-3-14-12%202-6%208-9%2014-6%203%201%208-2%208-5%200-4-16-7-21-3m33-1c-16%207-14%2032%203%2037%2015%204%2028-9%2024-24-3-11-16-17-27-13m48%200l-5%202c-3%202-3%202-4%200s-2-2-4-2l-3%201-1%2016c-1%2019-1%2020%205%2020h4V49c1-13%201-14%205-17%204-2%206-1%2010%201%202%203%202%203%203%2015l1%2012h8V46c0-15-1-17-7-21-3-2-9-3-12-2m55%201c-15%207-15%2029%200%2035%207%203%2018%202%2023-2l2-2-2-3c-3-2-3-2-6-1-6%202-13%201-16-1-4-5-3-5%2012-5h14v-5c0-14-14-22-27-16m31%200v36c2%201%207%200%208-1l1-11c0-13%202-16%2010-16%205%200%207%203%207%2016%200%2012%201%2013%206%2012%204%200%204-1%204-14-1-14-2-17-8-21-4-3-11-3-16%200-4%202-4%202-4%200-1-2-6-3-8-1m87%200c-3%202-2%2024%200%2029%204%208%2014%2010%2022%206l3-2%202%202c1%202%205%203%207%201l1-19V25l-4-1c-6%200-6%201-6%2013s-2%2015-9%2015-8-3-8-16c0-10%200-11-2-12h-6M131%2034c-6%205-3%2016%204%2018%209%201%2015-8%2010-16-3-6-9-7-14-2M14%2055c-9%205-5%2015%208%2022%2016%208%2034%205%2046-6%2010-9-1-22-11-13-10%208-23%208-32-1-3-3-8-3-11-2'%20fill='%23d3d3d3'%20fill-rule='evenodd'/%3e%3c/svg%3e",
+  },
+  "width": "1646",
+}
+`;
+
 exports[`contentful extend node type generateImageSource default 1`] = `
 Object {
   "format": "webp",

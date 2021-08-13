@@ -157,7 +157,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
 
     const sharpOptions = getPluginOptions()
 
-    const userDefaults = sharpOptions.defaults
+    const userDefaults = sharpOptions.defaults || {}
 
     const defaults = {
       tracedSVGOptions: {},
@@ -204,14 +204,11 @@ exports.extendNodeType = ({ type, store, reporter }) => {
     }
 
     if (options.placeholder === `blurred`) {
-      placeholderDataURI = await getBase64Image(
-        {
-          baseUrl,
-          image,
-          options,
-        },
-        reporter
-      )
+      placeholderDataURI = await getBase64Image({
+        baseUrl,
+        image,
+        options,
+      })
     }
 
     if (options.placeholder === `tracedSVG`) {

@@ -96,12 +96,15 @@ export const getBase64Image = (imageProps, reporter) => {
   // Keep aspect ratio, image format and other transform options
   const { aspectRatio } = imageProps
   const originalFormat = imageProps.image.file.contentType.split(`/`)[1]
-  const toFormat = imageProps.options.toFormat
+  const defaults = imageProps.options?.blurredOptions || {}
+  const toFormat = imageProps.options.toFormat || defaults.toFormat || undefined
+  const width = defaults.width || 20
+  const height = defaults.height || Math.floor(width / aspectRatio)
   const imageOptions = {
     ...imageProps.options,
     toFormat,
-    width: 20,
-    height: Math.floor(20 / aspectRatio),
+    width,
+    height,
   }
   const requestUrl = `https:${createUrl(imageProps.baseUrl, imageOptions)}`
 
