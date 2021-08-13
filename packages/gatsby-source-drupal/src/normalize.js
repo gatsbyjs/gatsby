@@ -56,7 +56,7 @@ const createNodeIdWithVersion = (
   entityReferenceRevisions = []
 ) => {
   // Fallback to default language for entities that don't translate.
-  if (getOptions().languageConfig.nonTranslatableEntities.includes(type)) {
+  if (getOptions()?.languageConfig.nonTranslatableEntities.includes(type)) {
     langcode = getOptions().languageConfig.defaultLanguage
   }
 
