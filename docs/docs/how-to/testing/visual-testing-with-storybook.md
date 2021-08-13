@@ -43,15 +43,14 @@ Then, update your [`.storybook/main.js`](https://storybook.js.org/docs/react/con
 
 ```js:title=.storybook/main.js
 module.exports = {
-  stories:[],
-  addons:[],
+  stories: [],
+  addons: [],
   // highlight-start
   core: {
-    builder: 'webpack5',
+    builder: "webpack5",
   },
   // highlight-end
-};
-
+}
 ```
 
 ## Configuration
@@ -60,7 +59,7 @@ Additional configuration is required to allow Gatsby's components to be manually
 
 ### Manual configuration
 
-Storybook's Webpack configuration will require adjustments to allow you to transpile Gatsby's source files and ensure the proper Babel plugins are used. 
+Storybook's Webpack configuration will require adjustments to allow you to transpile Gatsby's source files and ensure the proper Babel plugins are used.
 
 In your Storybook configuration file (i.e., `.storybook/main.js`) add the following:
 
@@ -72,7 +71,7 @@ module.exports = {
 
     // Use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
     config.module.rules[0].use[0].options.plugins.push(
-      require.resolve('babel-plugin-remove-graphql-queries')
+      require.resolve("babel-plugin-remove-graphql-queries")
     )
 
     return config
@@ -85,11 +84,11 @@ The final `.storybook/main.js` should look something like this:
 ```js:title=.storybook/main.js
 module.exports = {
   // You will want to change this to wherever your Stories will live
-  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
+  stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
+  addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
   // highlight-start
   core: {
-    builder: 'webpack5',
+    builder: "webpack5",
   },
   webpackFinal: async config => {
     // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
@@ -97,7 +96,7 @@ module.exports = {
 
     // Use babel-plugin-remove-graphql-queries to remove static queries from components when rendering in storybook
     config.module.rules[0].use[0].options.plugins.push(
-      require.resolve('babel-plugin-remove-graphql-queries')
+      require.resolve("babel-plugin-remove-graphql-queries")
     )
 
     return config
@@ -106,10 +105,10 @@ module.exports = {
 }
 ```
 
-Next, inside your `.storybook/preview.js` add the following: 
+Next, inside your `.storybook/preview.js` add the following:
 
 ```js:title=.storybook/preview.js
-import { action } from '@storybook/addon-actions'
+import { action } from "@storybook/addon-actions"
 
 // Gatsby's Link overrides:
 // Gatsby Link calls the `enqueue` & `hovering` methods on the global variable ___loader.
@@ -144,15 +143,12 @@ Next, register the addon within Storybook's main configuration file (i.e., `.sto
 
 ```js:title=.storybook/main.js
 module.exports = {
-  stories: [
-    '../src/**/*.stories.mdx', 
-    '../src/**/*.stories.@(js|jsx|ts|tsx)'
-  ],
+  stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-     // highlight-start
-    'storybook-addon-gatsby',
+    "@storybook/addon-links",
+    "@storybook/addon-essentials",
+    // highlight-start
+    "storybook-addon-gatsby",
     // highlight-end
   ],
 }
@@ -161,7 +157,6 @@ module.exports = {
 ## TypeScript Support
 
 The Storybook v6 has [out-of-the-box support for TypeScript](https://storybook.js.org/docs/react/configure/typescript). Your components and stories can be authored with the `.tsx` extension.
-
 
 ## Writing stories
 
@@ -172,20 +167,20 @@ First, create the story file. Storybook looks for all files with a `.stories.js`
 > A good solution is to use the `stories` directory created when Storybook was installed and put any page stories in there.
 
 ```jsx:title=src/components/header.stories.js
-import React from 'react';
+import React from "react"
 
-import Header from './header';
+import Header from "./header"
 
 export default {
   component: Header,
-  title: 'Components/Header',
+  title: "Components/Header",
 }
 
-const Template = (args) => <Header {...args} />
+const Template = args => <Header {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  siteTitle: 'Something',
+  siteTitle: "Something",
 }
 ```
 
