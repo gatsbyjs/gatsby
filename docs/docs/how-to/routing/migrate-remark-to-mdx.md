@@ -124,6 +124,60 @@ For instance, any HTML component with the `class` attribute needs to be changed 
 +<span className="highlight">Hello World</span>
 ```
 
+## Update `gatsby-plugin-feed`
+
+There is a [gatsby-plugin-feed-mdx](https://www.gatsbyjs.com/plugins/gatsby-plugin-feed-mdx/) which replicates the features of `gatsby-plugin-feed` (included in the official `gatsby-starter-blog`).
+
+Uninstall `gatsby-plugin-feed` and install `gatsby-plugin-feed-mdx`
+
+```
+npm uninstall gatsby-plugin-feed
+npm install gatsby-plugin-feed-mdx
+```
+
+Update your feeds config to use mdx instead of remark:
+
+```diff
+feeds: [
+  {
+-    serialize: ({ query: { site, allMarkdownRemark } }) => {
++    serialize: ({ query: { site, allMdx } }) => {
+-      return allMarkdownRemark.nodes.map(node => {
++      return allMdx.nodes.map(node => {
+        return Object.assign({}, node.frontmatter, {
+          description: node.excerpt,
+          date: node.frontmatter.date,
+          url: site.siteMetadata.siteUrl + node.fields.slug,
+          guid: site.siteMetadata.siteUrl + node.fields.slug,
+          custom_elements: [{ "content:encoded": node.html }],
+        })
+      })
+    },
+    query: `
+      {
+-        allMarkdownRemark(
++        allMdx(
+          sort: { order: DESC, fields: [frontmatter___date] },
+        ) {
+          nodes {
+            excerpt
+            html
+            fields {
+              slug
+            }
+            frontmatter {
+              title
+              date
+            }
+          }
+        }
+      }
+    `,
+    output: "/rss.xml",
+  },
+],
+```
+
 ## Additional resources
 
 - Follow [Importing and Using Components in MDX](/docs/mdx/importing-and-using-components/) to find out how you can insert React components in your MDX files.
