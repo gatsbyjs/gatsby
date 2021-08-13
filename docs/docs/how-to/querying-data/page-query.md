@@ -191,5 +191,7 @@ posts.forEach(({ node }, index) => {
   })
 })
 ```
+### Note
+The folder for the page templates (/src/templates) needs to be different from those of the pages (/src/pages) when using Gatsby cloud. 
 
 For more information, check out the docs on [creating pages programmatically](/docs/programmatically-create-pages-from-data/).
