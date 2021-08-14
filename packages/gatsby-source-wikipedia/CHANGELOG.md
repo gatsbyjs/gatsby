@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wikipedia@3.12.0-next.3...gatsby-source-wikipedia@3.13.0-next.0) (2021-08-12)
+
+**Note:** Version bump only for package gatsby-source-wikipedia
+
 # [3.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wikipedia@3.12.0-next.2...gatsby-source-wikipedia@3.12.0-next.3) (2021-08-09)
 
 **Note:** Version bump only for package gatsby-source-wikipedia

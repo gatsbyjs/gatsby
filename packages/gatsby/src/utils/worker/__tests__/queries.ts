@@ -256,7 +256,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       `/foo`
     )
 
-    expect(pageQueryResult.data).toStrictEqual({
+    expect(JSON.parse(pageQueryResult).data).toStrictEqual({
       nodeTypeOne: {
         number: 123,
       },
@@ -276,7 +276,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       `/bar`
     )
 
-    expect(pageQueryResult.data).toStrictEqual({
+    expect(JSON.parse(pageQueryResult).data).toStrictEqual({
       nodeTypeOne: {
         default: `You are not cool`,
         fieldWithArg: `You are cool`,
@@ -299,7 +299,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       `/a`
     )
 
-    expect(pageQueryResultA.data).toStrictEqual({
+    expect(JSON.parse(pageQueryResultA).data).toStrictEqual({
       nodeTypeOne: {
         number: 123,
       },
@@ -310,7 +310,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       `/z`
     )
 
-    expect(pageQueryResultZ.data).toStrictEqual({
+    expect(JSON.parse(pageQueryResultZ).data).toStrictEqual({
       nodeTypeOne: {
         number: 123,
       },
