@@ -94,6 +94,7 @@ exports.sourceNodes = async (
       defaultLanguage: `und`,
       enabledLanguages: [`und`],
       translatableEntities: [],
+      nonTranslatableEntities: [],
     },
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
@@ -179,6 +180,10 @@ exports.sourceNodes = async (
     const lastFetched =
       store.getState().status.plugins?.[`gatsby-source-drupal`]?.lastFetched ??
       0
+
+    reporter.verbose(
+      `[gatsby-source-drupal]: value of lastFetched for fastbuilds "${lastFetched}"`
+    )
 
     const drupalFetchIncrementalActivity = reporter.activityTimer(
       `Fetch incremental changes from Drupal`
@@ -569,5 +574,6 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       defaultLanguage: Joi.string().required(),
       enabledLanguages: Joi.array().items(Joi.string()).required(),
       translatableEntities: Joi.array().items(Joi.string()).required(),
+      nonTranslatableEntities: Joi.array().items(Joi.string()).required(),
     }),
   })

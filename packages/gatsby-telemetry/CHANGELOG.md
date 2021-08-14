@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.12.0-next.3...gatsby-telemetry@2.13.0-next.0) (2021-08-12)
+
+### Bug Fixes
+
+- **deps:** update minor and patch dependencies for gatsby-telemetry ([#32612](https://github.com/gatsbyjs/gatsby/issues/32612)) ([1ca8b9e](https://github.com/gatsbyjs/gatsby/commit/1ca8b9ef8517cfdc700056d92c7c5c6d000593e3))
+
 # [2.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.12.0-next.2...gatsby-telemetry@2.12.0-next.3) (2021-08-09)
 
 **Note:** Version bump only for package gatsby-telemetry
