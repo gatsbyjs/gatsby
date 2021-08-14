@@ -115,7 +115,7 @@ export async function readPageQueryResult(
   if (isLmdbStore()) {
     const stringifiedResult = await getLMDBPageQueryResultsCache().get(pagePath)
     if (typeof stringifiedResult === `string`) {
-      return JSON.parse(stringifiedResult)
+      return stringifiedResult
     }
     throw new Error(`Couldn't find temp query result for "${pagePath}".`)
   } else {
@@ -126,7 +126,7 @@ export async function readPageQueryResult(
       `json`,
       `${pagePath.replace(/\//g, `_`)}.json`
     )
-    return fs.readJSON(pageQueryResultsPath)
+    return fs.readFile(pageQueryResultsPath)
   }
 }
 
@@ -138,21 +138,25 @@ export async function writePageData(
     path: pagePath,
     staticQueryHashes,
   }: IPageData
-): Promise<IPageDataWithQueryResult> {
+): Promise<string> {
   const result = await readPageQueryResult(publicDir, pagePath)
 
   const outputFilePath = getFilePath(publicDir, pagePath)
-  const body = {
-    componentChunkName,
-    path: pagePath,
-    matchPath,
-    result,
-    staticQueryHashes,
+  let body = `{
+    "componentChunkName": "${componentChunkName}",
+    "path": "${pagePath}",
+    "result": ${result},
+    "staticQueryHashes": ${JSON.stringify(staticQueryHashes)}`
+
+  if (matchPath) {
+    body += `,
+    "matchPath": "${matchPath}"`
   }
 
-  const bodyStr = JSON.stringify(body)
+  body += `}`
+
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
-  const pageDataSize = Buffer.byteLength(bodyStr) / 1000
+  const pageDataSize = Buffer.byteLength(body) / 1000
 
   store.dispatch({
     type: `ADD_PAGE_DATA_STATS`,
@@ -160,11 +164,11 @@ export async function writePageData(
       pagePath,
       filePath: outputFilePath,
       size: pageDataSize,
-      pageDataHash: createContentDigest(bodyStr),
+      pageDataHash: createContentDigest(body),
     },
   })
 
-  await fs.outputFile(outputFilePath, bodyStr)
+  await fs.outputFile(outputFilePath, body)
   return body
 }
 
@@ -211,8 +215,9 @@ export async function flush(): Promise<void> {
     // This is why we need this check
     if (page) {
       if (
-        program?._?.[0] === `develop` &&
-        process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+        (program?._?.[0] === `develop` &&
+          process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) ||
+        (_CFLAGS_.GATSBY_MAJOR === `4` ? page.mode !== `SSG` : false)
       ) {
         // check if already did run query for this page
         // with query-on-demand we might have pending page-data write due to
@@ -248,7 +253,7 @@ export async function flush(): Promise<void> {
       if (program?._?.[0] === `develop`) {
         websocketManager.emitPageData({
           id: pagePath,
-          result,
+          result: JSON.parse(result) as IPageDataWithQueryResult,
         })
       }
     }
