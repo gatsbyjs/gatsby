@@ -12,6 +12,7 @@ const handleFlags = (
 ): {
   enabledConfigFlags: Array<IFlag>
   unknownFlagMessage: string
+  unfitFlagMessage: string
   message: string
 } => {
   // Prepare config flags.
@@ -23,6 +24,7 @@ const handleFlags = (
 
   // Find unknown flags someone has in their config to warn them about.
   const unknownConfigFlags: Array<{ flag: string; didYouMean: string }> = []
+  const unfitConfigFlags: Array<{ flag: string; requires: string }> = []
   for (const flagName in configFlags) {
     if (availableFlags.has(flagName)) {
       continue
@@ -99,7 +101,22 @@ const handleFlags = (
     if (fitness === true || fitness === `OPT_IN`) {
       applicableFlags.set(flag.name, flag)
     }
+
+    if (fitness === false && enabledConfigFlags.includes(flag)) {
+      unfitConfigFlags.push({ flag: flag.name, requires: flag.requires ?? `` })
+    }
   })
+
+  let unfitFlagMessage = ``
+  if (unfitConfigFlags.length > 0) {
+    unfitFlagMessage =
+      `The following flag(s) found in your gatsby-config.js are not supported in your environment and will have no effect:\n` +
+      unfitConfigFlags
+        .map(
+          flag => `- ${flag.flag}${flag.requires ? `: ${flag.requires}` : ``}`
+        )
+        .join(`\n`)
+  }
 
   // Filter enabledConfigFlags against various tests
   enabledConfigFlags = enabledConfigFlags.filter(flag => {
@@ -148,7 +165,7 @@ const handleFlags = (
     let message = ``
     message += `\n- ${flag.name}`
     if (flag.experimental) {
-      message += ` · ${chalk.white.bgRed.bold(`EXPERIMENTAL`)}`
+      message += ` · ${chalk.black.bgYellow.bold(`EXPERIMENTAL`)}`
     }
     if (flag.umbrellaIssue) {
       message += ` · (Umbrella Issue (${flag.umbrellaIssue}))`
@@ -203,28 +220,31 @@ The following flags were automatically enabled on your site:`
       })
     }
 
-    const otherFlagSuggestionLines: Array<string> = []
-    const enabledFlagsSet = new Set()
-    enabledConfigFlags.forEach(f => enabledFlagsSet.add(f.name))
-    applicableFlags.forEach(flag => {
-      if (
-        !enabledFlagsSet.has(flag.name) &&
-        typeof configFlags[flag.name] === `undefined`
-      ) {
-        // we want to suggest flag when it's not enabled and user specifically didn't use it in config
-        // we don't want to suggest flag user specifically wanted to disable
-        otherFlagSuggestionLines.push(generateFlagLine(flag))
-      }
-    })
+    if (message.length > 0) {
+      // if we will print anything about flags, let's try to suggest other available ones
+      const otherFlagSuggestionLines: Array<string> = []
+      const enabledFlagsSet = new Set()
+      enabledConfigFlags.forEach(f => enabledFlagsSet.add(f.name))
+      applicableFlags.forEach(flag => {
+        if (
+          !enabledFlagsSet.has(flag.name) &&
+          typeof configFlags[flag.name] === `undefined`
+        ) {
+          // we want to suggest flag when it's not enabled and user specifically didn't use it in config
+          // we don't want to suggest flag user specifically wanted to disable
+          otherFlagSuggestionLines.push(generateFlagLine(flag))
+        }
+      })
 
-    if (otherFlagSuggestionLines.length > 0) {
-      message += `\n\nThere ${
-        otherFlagSuggestionLines.length === 1
-          ? `is one other flag`
-          : `are ${otherFlagSuggestionLines.length} other flags`
-      } available that you might be interested in:${otherFlagSuggestionLines.join(
-        ``
-      )}`
+      if (otherFlagSuggestionLines.length > 0) {
+        message += `\n\nThere ${
+          otherFlagSuggestionLines.length === 1
+            ? `is one other flag`
+            : `are ${otherFlagSuggestionLines.length} other flags`
+        } available that you might be interested in:${otherFlagSuggestionLines.join(
+          ``
+        )}`
+      }
     }
 
     if (message.length > 0) {
@@ -236,6 +256,7 @@ The following flags were automatically enabled on your site:`
     enabledConfigFlags,
     message,
     unknownFlagMessage,
+    unfitFlagMessage,
   }
 }
 

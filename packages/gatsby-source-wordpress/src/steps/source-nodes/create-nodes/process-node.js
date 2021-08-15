@@ -20,7 +20,7 @@ import fetchReferencedMediaItemsAndCreateNodes, {
 } from "../fetch-nodes/fetch-referenced-media-items"
 import btoa from "btoa"
 import store from "~/store"
-import { createRemoteMediaItemNode } from "./create-remote-media-item-node"
+import { createLocalFileNode } from "./create-local-file-node"
 
 const getNodeEditLink = node => {
   const { protocol, hostname } = url.parse(node.link)
@@ -117,7 +117,7 @@ const pickNodeBySourceUrlOrCheerioImg = ({
         // at upload time but image urls in html don't have this requirement.
         // the sourceUrl may have -scaled in it but the full size image is still
         // stored on the server (just not in the db)
-        (mediaItemNode.sourceUrl || mediaItemNode.mediaItemUrl).replace(
+        (mediaItemNode.sourceUrl || mediaItemNode.mediaItemUrl)?.replace(
           `-scaled`,
           ``
         )
@@ -195,11 +195,10 @@ const fetchNodeHtmlImageMediaItemNodes = async ({
     })
 
   // build a query to fetch all media items that we don't already have
-  const mediaItemNodesBySourceUrl = await fetchReferencedMediaItemsAndCreateNodes(
-    {
+  const mediaItemNodesBySourceUrl =
+    await fetchReferencedMediaItemsAndCreateNodes({
       mediaItemUrls,
-    }
-  )
+    })
 
   // images that have been edited from the media library that were previously
   // uploaded to a post/page will have a different sourceUrl so they can't be fetched by it
@@ -246,7 +245,7 @@ const fetchNodeHtmlImageMediaItemNodes = async ({
       // we need to fetch it and create a file node for it with no
       // media item node.
       try {
-        imageNode = await createRemoteMediaItemNode({
+        imageNode = await createLocalFileNode({
           skipExistingNode: true,
           parentName: `Creating File node from URL where we couldn't find a MediaItem node`,
           mediaItemNode: {
@@ -266,7 +265,6 @@ const fetchNodeHtmlImageMediaItemNodes = async ({
         const nodeEditLink = getNodeEditLink(node)
 
         if (typeof e === `string` && e.includes(`404`)) {
-          helpers.reporter.log(``)
           helpers.reporter.warn(
             formatLogMessage(
               `\n\nReceived a 404 ${sharedError}\n\nMost likely this image was uploaded to this ${node.__typename} and then deleted from the media library.\nYou'll need to fix this and re-save this ${node.__typename} to remove this warning at\n${nodeEditLink}.\n\n`
@@ -293,40 +291,42 @@ const fetchNodeHtmlImageMediaItemNodes = async ({
   return htmlMatchesToMediaItemNodesMap
 }
 
-const getCheerioElementFromMatch = wpUrl => ({ match, tag = `img` }) => {
-  // unescape quotes
-  const parsedMatch = JSON.parse(`"${match}"`)
+const getCheerioElementFromMatch =
+  wpUrl =>
+  ({ match, tag = `img` }) => {
+    // unescape quotes
+    const parsedMatch = JSON.parse(`"${match}"`)
 
-  // load our matching img tag into cheerio
-  const $ = cheerio.load(parsedMatch, {
-    xml: {
-      // make sure it's not wrapped in <body></body>
-      withDomLvl1: false,
-      // no need to normalize whitespace, we're dealing with a single element here
-      normalizeWhitespace: false,
-      xmlMode: true,
-      // entity decoding isn't our job here, that will be the responsibility of WPGQL
-      // or of the source plugin elsewhere.
-      decodeEntities: false,
-    },
-  })
+    // load our matching img tag into cheerio
+    const $ = cheerio.load(parsedMatch, {
+      xml: {
+        // make sure it's not wrapped in <body></body>
+        withDomLvl1: false,
+        // no need to normalize whitespace, we're dealing with a single element here
+        normalizeWhitespace: false,
+        xmlMode: true,
+        // entity decoding isn't our job here, that will be the responsibility of WPGQL
+        // or of the source plugin elsewhere.
+        decodeEntities: false,
+      },
+    })
 
-  // there's only ever one element due to our match matching a single tag
-  // $(tag) isn't an array, it's an object with a key of 0
-  const cheerioElement = $(tag)[0]
+    // there's only ever one element due to our match matching a single tag
+    // $(tag) isn't an array, it's an object with a key of 0
+    const cheerioElement = $(tag)[0]
 
-  if (cheerioElement?.attribs?.src?.startsWith(`/wp-content`)) {
-    cheerioElement.attribs.src = `${wpUrl}${cheerioElement.attribs.src}`
+    if (cheerioElement?.attribs?.src?.startsWith(`/wp-content`)) {
+      cheerioElement.attribs.src = `${wpUrl}${cheerioElement.attribs.src}`
+    }
+
+    return {
+      match,
+      cheerioElement,
+      // @todo this is from when this function was just used for images
+      // remove this by refactoring
+      cheerioImg: cheerioElement,
+    }
   }
-
-  return {
-    match,
-    cheerioElement,
-    // @todo this is from when this function was just used for images
-    // remove this by refactoring
-    cheerioImg: cheerioElement,
-  }
-}
 
 const getCheerioElementsFromMatches = ({ imgTagMatches, wpUrl }) =>
   imgTagMatches
@@ -427,23 +427,25 @@ const copyFileToStaticAndReturnUrlPath = async (fileNode, helpers) => {
   return relativeUrl
 }
 
-const filterMatches = wpUrl => ({ match }) => {
-  const { hostname: wpHostname } = url.parse(wpUrl)
+const filterMatches =
+  wpUrl =>
+  ({ match }) => {
+    const { hostname: wpHostname } = url.parse(wpUrl)
 
-  // @todo make it a plugin option to fetch non-wp images
-  // here we're filtering out image tags that don't contain our site url
-  const isHostedInWp =
-    // if it has the full WP url
-    match.includes(wpHostname) ||
-    // or it's an absolute path
-    match.includes(`src=\\"/wp-content`)
+    // @todo make it a plugin option to fetch non-wp images
+    // here we're filtering out image tags that don't contain our site url
+    const isHostedInWp =
+      // if it has the full WP url
+      match.includes(wpHostname) ||
+      // or it's an absolute path
+      match.includes(`src=\\"/wp-content`)
 
-  // six backslashes means we're looking for three backslashes
-  // since we're looking for JSON encoded strings inside of our JSON encoded string
-  const isInJSON = match.includes(`src=\\\\\\"`)
+    // six backslashes means we're looking for three backslashes
+    // since we're looking for JSON encoded strings inside of our JSON encoded string
+    const isInJSON = match.includes(`src=\\\\\\"`)
 
-  return isHostedInWp && !isInJSON
-}
+    return isHostedInWp && !isInJSON
+  }
 
 const cacheCreatedFileNodeBySrc = ({ node, src }) => {
   if (node) {
@@ -456,7 +458,8 @@ const cacheCreatedFileNodeBySrc = ({ node, src }) => {
   }
 }
 
-const imgSrcRemoteFileRegex = /(?:src=\\")((?:(?:https?|ftp|file):\/\/|www\.|ftp\.|\/)(?:[^'"])*\.(?:jpeg|jpg|png|gif|ico|mpg|ogv|svg|bmp|tif|tiff))(\?[^\\" \.]*|)(?=\\"| |\.)/gim
+const imgSrcRemoteFileRegex =
+  /(?:src=\\")((?:(?:https?|ftp|file):\/\/|www\.|ftp\.|\/)(?:[^'"])*\.(?:jpeg|jpg|png|gif|ico|mpg|ogv|svg|bmp|tif|tiff))(\?[^\\" \.]*|)(?=\\"| |\.)/gim
 
 export const getImgSrcRemoteFileMatchesFromNodeString = nodeString =>
   execall(imgSrcRemoteFileRegex, nodeString).filter(({ subMatches }) => {
@@ -500,16 +503,15 @@ const replaceNodeHtmlImages = async ({
       wpUrl,
     })
 
-    const htmlMatchesToMediaItemNodesMap = await fetchNodeHtmlImageMediaItemNodes(
-      {
+    const htmlMatchesToMediaItemNodesMap =
+      await fetchNodeHtmlImageMediaItemNodes({
         cheerioImages,
         nodeString,
         node,
         helpers,
         pluginOptions,
         wpUrl,
-      }
-    )
+      })
 
     // generate gatsby images for each cheerioImage
     const htmlMatchesWithImageResizes = await Promise.all(
@@ -535,6 +537,10 @@ const replaceNodeHtmlImages = async ({
               imageNode
             : // otherwise grab the file node
               helpers.getNode(imageNode.localFile.id)
+
+        if (!fileNode) {
+          return null
+        }
 
         const imgTagMaxWidth = findImgTagMaxWidthFromCheerioImg(cheerioImg)
 
@@ -605,6 +611,22 @@ const replaceNodeHtmlImages = async ({
               reporter,
               cache,
             })
+
+            if (pluginOptions?.html?.generateWebpImages) {
+              const webpResult = await fluid({
+                file: fileNode,
+                args: {
+                  maxWidth,
+                  quality,
+                  pathPrefix,
+                  toFormat: `WEBP`,
+                },
+                reporter,
+                cache,
+              })
+
+              fluidResult.srcSetWebp = webpResult.srcSet
+            }
           } catch (e) {
             reporter.error(e)
             reporter.warn(
@@ -732,11 +754,10 @@ const replaceFileLinks = async ({
       .map(({ url }) => url)
       .filter(isWebUri)
 
-    const mediaItemNodesBySourceUrl = await fetchReferencedMediaItemsAndCreateNodes(
-      {
+    const mediaItemNodesBySourceUrl =
+      await fetchReferencedMediaItemsAndCreateNodes({
         mediaItemUrls,
-      }
-    )
+      })
 
     const findReplaceMaps = []
 
@@ -850,6 +871,40 @@ const replaceNodeHtmlLinks = ({ wpUrl, nodeString, node }) => {
   return nodeString
 }
 
+// replaces specific string or regex with a given string from the plugin options config
+export const searchAndReplaceNodeStrings = ({
+  nodeString,
+  node,
+  pluginOptions,
+}) => {
+  if (Array.isArray(pluginOptions?.searchAndReplace)) {
+    pluginOptions.searchAndReplace.forEach(({ search, replace }) => {
+      const searchRegex = new RegExp(search, `g`)
+
+      const stringMatches = execall(searchRegex, nodeString)
+
+      if (stringMatches.length) {
+        stringMatches.forEach(({ match }) => {
+          if (match) {
+            try {
+              nodeString = nodeString.replace(search, replace)
+            } catch (e) {
+              console.error(e)
+              console.warn(
+                formatLogMessage(
+                  `Failed to process search and replace string in ${node.__typename} ${node.id}`
+                )
+              )
+            }
+          }
+        })
+      }
+    })
+  }
+
+  return nodeString
+}
+
 const processNodeString = async ({
   nodeString,
   node,
@@ -858,6 +913,7 @@ const processNodeString = async ({
   wpUrl,
 }) => {
   const nodeStringFilters = [
+    searchAndReplaceNodeStrings,
     replaceNodeHtmlImages,
     replaceFileLinks,
     replaceNodeHtmlLinks,
@@ -910,11 +966,13 @@ const processNode = async ({
     wpUrl,
   })
 
-  // only parse if the nodeString has changed
-  if (processedNodeString !== nodeString) {
-    return JSON.parse(processedNodeString)
-  } else {
-    return node
+  const processedNode =
+    // only parse if the nodeString has changed
+    processedNodeString !== nodeString ? JSON.parse(processedNodeString) : node
+
+  return {
+    processedNode,
+    nodeMediaItemIdReferences,
   }
 }
 

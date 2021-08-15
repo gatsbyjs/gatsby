@@ -2,7 +2,11 @@ import { runApisInSteps } from "./utils/run-steps"
 import * as steps from "./steps"
 
 module.exports = runApisInSteps({
-  onPreInit: [steps.setErrorMap, steps.tempPreventMultipleInstances],
+  onPreInit: [
+    steps.setGatsbyApiToState,
+    steps.setErrorMap,
+    steps.tempPreventMultipleInstances,
+  ],
 
   pluginOptionsSchema: steps.pluginOptionsSchema,
 
@@ -24,7 +28,7 @@ module.exports = runApisInSteps({
     steps.onPreExtractQueriesInvokeLeftoverPreviewCallbacks,
   ],
 
-  onPostBuild: [steps.setImageNodeIdCache],
+  onPostBuild: [steps.setImageNodeIdCache, steps.logPostBuildWarnings],
 
   onCreatePage: [
     steps.onCreatepageSavePreviewNodeIdToPageDependency,
@@ -33,6 +37,7 @@ module.exports = runApisInSteps({
 
   onCreateDevServer: [
     steps.setImageNodeIdCache,
+    steps.logPostBuildWarnings,
     steps.startPollingForContentUpdates,
   ],
 })

@@ -148,6 +148,10 @@ If you hit any problems along the way, make sure the Gatsby plugin or webpack pl
 
 If you're using Gatsby's default ESLint rules (no custom `eslintrc` file), you shouldn't notice any issues. If you do have a custom ESLint config, make sure to read the [ESLint 6 to 7 migration guide](https://eslint.org/docs/user-guide/migrating-to-7.0.0)
 
+### `src/api` is a reserved directory now
+
+With the [release of Gatsby 3.7](/docs/reference/release-notes/v3.7) we introduced [Functions](/docs/reference/functions/). With this any JavaScript or TypeScript files inside `src/api/*` are mapped to function routes like files in `src/pages/*` become pages. This also means that if you already have an existing `src/api` folder you'll need to rename it to something else as it's a reserved directory now.
+
 ### Gatsby's `Link` component
 
 The APIs `push`, `replace` & `navigateTo` in `gatsby-link` (an internal package) were deprecated in v2 and now with v3 completely removed. Please use `navigate` instead.

@@ -5,6 +5,7 @@ import { assertStore } from "../utils/assert-store"
 import { IGatsbyPage } from "../redux/types"
 import { actions } from "../redux/actions"
 import { deleteUntouchedPages, findChangedPages } from "../utils/changed-pages"
+import { getDataStore } from "../datastore"
 
 export async function createPages({
   parentSpan,
@@ -23,10 +24,30 @@ export async function createPages({
   activity.start()
   const timestamp = Date.now()
   const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
+
+  // Wrap the GraphQL function so we can measure how long it takes to run.
+  const originalGraphQL = gatsbyNodeGraphQLFunction
+  // eslint-disable-next-line
+  async function wrappedGraphQL() {
+    const start = Date.now()
+    // @ts-ignore not sure how to type the following
+    const returnValue = await originalGraphQL.apply(this, arguments) // eslint-disable-line
+    const end = Date.now()
+    const totalMS = end - start
+    if (totalMS > 10000) {
+      reporter.warn(
+        `Your GraphQL query in createPages took ${
+          totalMS / 1000
+        } seconds which is an unexpectedly long time. See https://gatsby.dev/create-pages-performance for tips on how to improve this.`
+      )
+    }
+    return returnValue
+  }
+
   await apiRunnerNode(
     `createPages`,
     {
-      graphql: gatsbyNodeGraphQLFunction,
+      graphql: wrappedGraphQL,
       traceId: `initial-createPages`,
       waitForCascadingActions: true,
       parentSpan: activity.span,
@@ -57,18 +78,19 @@ export async function createPages({
     activity.end()
   }
 
+  const dataStore = getDataStore()
   reporter.info(
-    `Total nodes: ${store.getState().nodes.size}, SitePage nodes: ${
-      store.getState().nodesByType?.get(`SitePage`)?.size
-    } (use --verbose for breakdown)`
+    `Total nodes: ${dataStore.countNodes()}, ` +
+      `SitePage nodes: ${
+        store.getState().pages.size
+      } (use --verbose for breakdown)`
   )
 
   if (process.env.gatsby_log_level === `verbose`) {
+    const types = dataStore.getTypes()
     reporter.verbose(
-      `Number of node types: ${
-        store.getState().nodesByType.size
-      }. Nodes per type: ${[...store.getState().nodesByType.entries()]
-        .map(([type, nodes]) => type + `: ` + nodes.size)
+      `Number of node types: ${types.length}. Nodes per type: ${types
+        .map(type => type + `: ` + dataStore.countNodes(type))
         .join(`, `)}`
     )
   }
@@ -98,6 +120,7 @@ export async function createPages({
       changedPages.length === 1 ? `` : `s`
     }`
   )
+
   tim.end()
 
   store.dispatch(actions.apiFinished({ apiName: `createPages` }))

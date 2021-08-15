@@ -1,3 +1,10 @@
+const testConfig = {
+  retries: {
+    runMode: 2,
+    openMode: 0,
+  },
+}
+
 function hasSVGPlaceholder(el) {
   el.children(`img`)
     .should(`have.attr`, `src`)
@@ -6,11 +13,11 @@ function hasSVGPlaceholder(el) {
     })
 }
 
-function hasJPEGPlaceholder(el) {
+function hasBase64Placeholder(el) {
   el.children(`img`)
     .should(`have.attr`, `src`)
     .and(src => {
-      expect(src).to.match(/^data:image\/jpeg/)
+      expect(src).to.match(/^data:image\/[a-z]+;base64/)
     })
 }
 
@@ -24,8 +31,9 @@ function testGatsbyImage(type, testPlaceholder) {
       })
   }
 
-  cy.get(`[data-cy="${type}"]`).scrollIntoView()
-  // Wait for load
+  cy.get(`[data-cy="${type}"]`).scrollIntoView({ duration: 500 })
+
+  // Wait images for load
   cy.wait(1000)
 
   cy.get(`[data-cy="${type}"]`)
@@ -41,9 +49,24 @@ describe(`gatsby-image`, () => {
   beforeEach(() => {
     cy.visit("/gatsby-image").waitForRouteChange()
   })
-  it(`fluid`, () => testGatsbyImage(`fluid`, hasJPEGPlaceholder))
-  it(`fixed`, () => testGatsbyImage(`fixed`, hasJPEGPlaceholder))
-  it(`webp`, () => testGatsbyImage(`webp`, hasJPEGPlaceholder))
-  it(`traced`, () => testGatsbyImage(`traced`, hasSVGPlaceholder))
-  it(`sqip`, () => testGatsbyImage(`sqip`, hasSVGPlaceholder))
+  it(`fluid`, testConfig, () => testGatsbyImage(`fluid`, hasBase64Placeholder))
+  it(`fixed`, testConfig, () => testGatsbyImage(`fixed`, hasBase64Placeholder))
+  it(`webp`, testConfig, () => testGatsbyImage(`webp`, hasBase64Placeholder))
+  it(`traced`, testConfig, () => testGatsbyImage(`traced`, hasSVGPlaceholder))
+  it(`sqip`, testConfig, () => testGatsbyImage(`sqip`, hasSVGPlaceholder))
+
+  it(`english`, testConfig, () => {
+    testGatsbyImage(`english`, hasBase64Placeholder)
+    cy.get(`[data-cy="english"] p strong`).should(
+      "have.text",
+      "Locale - American English (png)"
+    )
+  })
+  it(`german`, testConfig, () => {
+    testGatsbyImage(`german`, hasBase64Placeholder)
+    cy.get(`[data-cy="german"] p strong`).should(
+      "have.text",
+      "Locale - German (png)"
+    )
+  })
 })

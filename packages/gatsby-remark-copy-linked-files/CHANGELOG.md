@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.9.0-next.3...gatsby-remark-copy-linked-files@4.10.0-next.0) (2021-08-12)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+# [4.9.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.9.0-next.2...gatsby-remark-copy-linked-files@4.9.0-next.3) (2021-08-09)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+# [4.9.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.9.0-next.1...gatsby-remark-copy-linked-files@4.9.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+# [4.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.9.0-next.0...gatsby-remark-copy-linked-files@4.9.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency cheerio to ^1.0.0-rc.10 for gatsby-remark-copy-linked-files ([#32577](https://github.com/gatsbyjs/gatsby/issues/32577)) ([40eb226](https://github.com/gatsbyjs/gatsby/commit/40eb2262be2c840999ea4108a5cb3d2a1bf584c9))
+
+# [4.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.8.0-next.0...gatsby-remark-copy-linked-files@4.9.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+# [4.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.7.0-next.1...gatsby-remark-copy-linked-files@4.8.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+# [4.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.7.0-next.0...gatsby-remark-copy-linked-files@4.7.0-next.1) (2021-07-08)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+# [4.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.6.0-next.0...gatsby-remark-copy-linked-files@4.7.0-next.0) (2021-07-01)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+# [4.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.5.0-next.1...gatsby-remark-copy-linked-files@4.6.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+# [4.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.5.0-next.0...gatsby-remark-copy-linked-files@4.5.0-next.1) (2021-06-10)
+
+### Bug Fixes
+
+- **gatsby-remark-copy-linked-files:** replace checking parent node type to 'dir' ([#31780](https://github.com/gatsbyjs/gatsby/issues/31780)) ([e854dcf](https://github.com/gatsbyjs/gatsby/commit/e854dcf1e98bf1b5bd298d5963cbfb22a907c551))
+
+# [4.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.4.0-next.2...gatsby-remark-copy-linked-files@4.5.0-next.0) (2021-06-03)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+# [4.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.4.0-next.1...gatsby-remark-copy-linked-files@4.4.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+# [4.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.4.0-next.0...gatsby-remark-copy-linked-files@4.4.0-next.1) (2021-05-31)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+# [4.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.3.0-next.1...gatsby-remark-copy-linked-files@4.4.0-next.0) (2021-05-21)
+
+**Note:** Version bump only for package gatsby-remark-copy-linked-files
+
+# [4.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.3.0-next.0...gatsby-remark-copy-linked-files@4.3.0-next.1) (2021-05-12)
+
+### Bug Fixes
+
+- **tests:** update cheerio snapshots ([#31298](https://github.com/gatsbyjs/gatsby/issues/31298)) ([e06599d](https://github.com/gatsbyjs/gatsby/commit/e06599d9acc53442f8830b04f8fa2c749a820cc5))
+
+# [4.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.2.0-next.0...gatsby-remark-copy-linked-files@4.3.0-next.0) (2021-05-06)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-remark-copy-linked-files ([#31163](https://github.com/gatsbyjs/gatsby/issues/31163)) ([2291fbd](https://github.com/gatsbyjs/gatsby/commit/2291fbd962e9813bf1b83851738b438f8d83040b))
+
 # [4.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.1.0-next.0...gatsby-remark-copy-linked-files@4.2.0-next.0) (2021-04-23)
 
 **Note:** Version bump only for package gatsby-remark-copy-linked-files

@@ -2,8 +2,8 @@ import Bluebird from "bluebird"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
-import { chunk } from "lodash"
-import webpack from "webpack"
+import { chunk, truncate } from "lodash"
+import webpack, { Stats } from "webpack"
 import * as path from "path"
 
 import { emitter, store } from "../redux"
@@ -11,13 +11,15 @@ import { IWebpackWatchingPauseResume } from "../utils/start-server"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import * as buildUtils from "./build-utils"
+import { getPageData } from "../utils/get-page-data"
 
 import { Span } from "opentracing"
 import { IProgram, Stage } from "./types"
 import { PackageJson } from "../.."
+import type { GatsbyWorkerPool } from "../utils/worker/pool"
+import { IPageDataWithQueryResult } from "../utils/page-data"
 
 type IActivity = any // TODO
-type IWorkerPool = any // TODO
 
 export interface IBuildArgs extends IProgram {
   directory: string
@@ -58,7 +60,10 @@ const runWebpack = (
   stage: Stage,
   directory,
   parentSpan?: Span
-): Bluebird<{ stats: webpack.Stats; waitForCompilerClose: Promise<void> }> =>
+): Bluebird<{
+  stats: Stats
+  waitForCompilerClose: Promise<void>
+}> =>
   new Bluebird((resolve, reject) => {
     if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR || stage === `build-html`) {
       const compiler = webpack(compilerConfig)
@@ -88,7 +93,7 @@ const runWebpack = (
         if (err) {
           return reject(err)
         } else {
-          return resolve({ stats, waitForCompilerClose })
+          return resolve({ stats: stats as Stats, waitForCompilerClose })
         }
       })
     } else if (
@@ -96,7 +101,7 @@ const runWebpack = (
       stage === `develop-html`
     ) {
       devssrWebpackCompiler = webpack(compilerConfig)
-      devssrWebpackCompiler.hooks.invalid.tap(`ssr file invalidation`, file => {
+      devssrWebpackCompiler.hooks.invalid.tap(`ssr file invalidation`, () => {
         needToRecompileSSRBundle = true
       })
       devssrWebpackWatcher = devssrWebpackCompiler.watch(
@@ -111,7 +116,7 @@ const runWebpack = (
           if (err) {
             return reject(err)
           } else {
-            newHash = stats.hash || ``
+            newHash = stats?.hash || ``
 
             const {
               restartWorker,
@@ -123,7 +128,10 @@ const runWebpack = (
 
             oldHash = newHash
 
-            return resolve({ stats, waitForCompilerClose: Promise.resolve() })
+            return resolve({
+              stats: stats as Stats,
+              waitForCompilerClose: Promise.resolve(),
+            })
           }
         }
       ) as IWebpackWatchingPauseResume
@@ -152,7 +160,7 @@ const doBuildRenderer = async (
   ) {
     store.dispatch({
       type: `SET_SSR_WEBPACK_COMPILATION_HASH`,
-      payload: stats.hash,
+      payload: stats.hash as string,
     })
   }
 
@@ -190,7 +198,7 @@ export interface IRenderHtmlResult {
 }
 
 const renderHTMLQueue = async (
-  workerPool: IWorkerPool,
+  workerPool: GatsbyWorkerPool,
   activity: IActivity,
   htmlComponentRendererPath: string,
   pages: Array<string>,
@@ -198,7 +206,7 @@ const renderHTMLQueue = async (
 ): Promise<void> => {
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
-  const envVars = [
+  const envVars: Array<[string, string | undefined]> = [
     [`NODE_ENV`, process.env.NODE_ENV],
     [`gatsby_executing_command`, process.env.gatsby_executing_command],
     [`gatsby_log_level`, process.env.gatsby_log_level],
@@ -210,14 +218,14 @@ const renderHTMLQueue = async (
 
   const renderHTML =
     stage === `build-html`
-      ? workerPool.renderHTMLProd
-      : workerPool.renderHTMLDev
+      ? workerPool.single.renderHTMLProd
+      : workerPool.single.renderHTMLDev
 
   const uniqueUnsafeBuiltinUsedStacks = new Set<string>()
 
   try {
     await Bluebird.map(segments, async pageSegment => {
-      const htmlRenderMeta: IRenderHtmlResult = await renderHTML({
+      const renderHTMLResult = await renderHTML({
         envVars,
         htmlComponentRendererPath,
         paths: pageSegment,
@@ -225,6 +233,7 @@ const renderHTMLQueue = async (
       })
 
       if (stage === `build-html`) {
+        const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult
         store.dispatch({
           type: `HTML_GENERATED`,
           payload: pageSegment,
@@ -297,11 +306,25 @@ class BuildHTMLError extends Error {
   }
 }
 
+const truncateObjStrings = (obj): IPageDataWithQueryResult => {
+  // Recursively truncate strings nested in object
+  // These objs can be quite large, but we want to preserve each field
+  for (const key in obj) {
+    if (typeof obj[key] === `object`) {
+      truncateObjStrings(obj[key])
+    } else if (typeof obj[key] === `string`) {
+      obj[key] = truncate(obj[key], { length: 250 })
+    }
+  }
+
+  return obj
+}
+
 export const doBuildPages = async (
   rendererPath: string,
   pagePaths: Array<string>,
   activity: IActivity,
-  workerPool: IWorkerPool,
+  workerPool: GatsbyWorkerPool,
   stage: Stage
 ): Promise<void> => {
   try {
@@ -311,8 +334,21 @@ export const doBuildPages = async (
       error.stack,
       `${rendererPath}.map`
     )
+
     const buildError = new BuildHTMLError(prettyError)
     buildError.context = error.context
+
+    if (error?.context?.path) {
+      const pageData = await getPageData(error.context.path)
+      const truncatedPageData = truncateObjStrings(pageData)
+
+      const pageDataMessage = `Page data from page-data.json for the failed page "${
+        error.context.path
+      }": ${JSON.stringify(truncatedPageData, null, 2)}`
+
+      reporter.error(pageDataMessage)
+    }
+
     throw buildError
   }
 }
@@ -329,7 +365,7 @@ export const buildHTML = async ({
   stage: Stage
   pagePaths: Array<string>
   activity: IActivity
-  workerPool: IWorkerPool
+  workerPool: GatsbyWorkerPool
 }): Promise<void> => {
   const { rendererPath } = await buildRenderer(program, stage, activity.span)
   await doBuildPages(rendererPath, pagePaths, activity, workerPool, stage)
@@ -343,7 +379,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   program,
 }: {
   pageRenderer: string
-  workerPool: IWorkerPool
+  workerPool: GatsbyWorkerPool
   buildSpan?: Span
   program: IBuildArgs
 }): Promise<{
@@ -352,11 +388,8 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
 }> {
   buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged()
 
-  const {
-    toRegenerate,
-    toDelete,
-    toCleanupFromTrackedState,
-  } = buildUtils.calcDirtyHtmlFiles(store.getState())
+  const { toRegenerate, toDelete, toCleanupFromTrackedState } =
+    buildUtils.calcDirtyHtmlFiles(store.getState())
 
   store.dispatch({
     type: `HTML_TRACKED_PAGES_CLEANUP`,

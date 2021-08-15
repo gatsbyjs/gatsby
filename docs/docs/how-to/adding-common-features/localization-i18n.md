@@ -1,10 +1,17 @@
 ---
 title: Localization and Internationalization with Gatsby (i18n)
+examples:
+  - label: Using-i18n
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-i18n"
 ---
 
 Serving users content in a way that is adapted to their language & culture is part of a great user experience. When you make an effort to adapt web content to a user's location, that practice is called internationalization (i18n).
 
-In practice i18n involves translating text and formatting dates, numbers, and strings based on the user's detected location. For example, a date displayed for a user in the United States would follow the mm/dd/year date format, but for a user in the UK the date format would change to dd/mm/year.
+There are two hard parts of internationalization:
+
+- **Content storage and workflow.** Coordinating with internal or external translators to translate both existing and new content into required languages can be time-consuming. In addition, adding another approver into the content publishing process can slow things down without careful workflow design.
+
+- **Display, templating, and routing.** At minimum, internationalization means users must be redirected, either to a subdomain (eg fr.example.com/blog) or path prefix (eg example.com/fr/blog). In addition, internationalization efforts also come with logic around sections or pages that should be present in some languages but not others.
 
 This guide is a brief look at the options that exist for enhancing your Gatsby project for internationalization.
 

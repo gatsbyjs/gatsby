@@ -21,8 +21,9 @@ import {
 } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { getSslCert } from "../utils/get-ssl-cert"
-import { startDevelopProxy } from "../utils/develop-proxy"
+import { IProxyControls, startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram, IDebugInfo } from "./types"
+import { flush as telemetryFlush } from "gatsby-telemetry"
 
 // Adapted from https://stackoverflow.com/a/16060619
 const requireUncached = (file: string): any => {
@@ -125,16 +126,28 @@ class ControllableScript {
     }
 
     this.isRunning = false
-    if (signal) {
-      this.process.kill(signal)
-    } else {
-      this.process.send({
-        type: `COMMAND`,
-        action: {
-          type: `EXIT`,
-          payload: code,
-        },
-      })
+    try {
+      if (signal) {
+        this.process.kill(signal)
+      } else {
+        this.process.send(
+          {
+            type: `COMMAND`,
+            action: {
+              type: `EXIT`,
+              payload: code,
+            },
+          },
+          () => {
+            // The try/catch won't suffice for this process.send
+            // So use the callback to manually catch the Error, otherwise it'll be thrown
+            // Ref: https://nodejs.org/api/child_process.html#child_process_subprocess_send_message_sendhandle_options_callback
+          }
+        )
+      }
+    } catch (err) {
+      // Ignore error if process has crashed or already quit.
+      // Ref: https://github.com/gatsbyjs/gatsby/issues/28011#issuecomment-877302917
     }
 
     return new Promise(resolve => {
@@ -178,7 +191,8 @@ class ControllableScript {
 let isRestarting
 
 // checks if a string is a valid ip
-const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
+const REGEX_IP =
+  /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
 
 module.exports = async (program: IProgram): Promise<void> => {
   // In some cases, port can actually be a string. But our codebase is expecting it to be a number.
@@ -216,15 +230,12 @@ module.exports = async (program: IProgram): Promise<void> => {
   // It is exposed for environments where port access needs to be explicit, such as with Docker.
   // As the port is meant for internal usage only, any attempt to interface with features
   // it exposes via third-party software is not supported.
-  const [
-    statusServerPort,
-    developPort,
-    telemetryServerPort,
-  ] = await Promise.all([
-    getRandomPort(process.env.INTERNAL_STATUS_PORT),
-    getRandomPort(),
-    getRandomPort(),
-  ])
+  const [statusServerPort, developPort, telemetryServerPort] =
+    await Promise.all([
+      getRandomPort(process.env.INTERNAL_STATUS_PORT),
+      getRandomPort(),
+      getRandomPort(),
+    ])
 
   // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
   // used together
@@ -295,7 +306,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     null
   )
 
-  let unlocks: Array<UnlockFn> = []
+  let unlocks: Array<UnlockFn | null> = []
   if (!isCI()) {
     const statusUnlock = await createServiceLock(
       program.directory,
@@ -392,6 +403,11 @@ module.exports = async (program: IProgram): Promise<void> => {
   // This needs to be propagated back to the parent process
   developProcess.onExit(
     (code: number | null, signal: NodeJS.Signals | null) => {
+      try {
+        telemetryFlush()
+      } catch (e) {
+        // nop
+      }
       if (isRestarting) return
       if (signal !== null) {
         process.kill(process.pid, signal)
@@ -416,7 +432,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   )
 
   const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
-  let watcher: chokidar.FSWatcher = null
+  let watcher: chokidar.FSWatcher
 
   if (!isCI()) {
     watcher = chokidar.watch(files).on(`change`, filePath => {
@@ -498,6 +514,16 @@ module.exports = async (program: IProgram): Promise<void> => {
     )
   })
 }
+
+interface IShutdownServicesOptions {
+  statusServer: https.Server | http.Server
+  developProcess: ControllableScript
+  proxy: IProxyControls
+  unlocks: Array<UnlockFn | null>
+  watcher: chokidar.FSWatcher
+  telemetryServerProcess: ControllableScript
+}
+
 function shutdownServices(
   {
     statusServer,
@@ -506,9 +532,14 @@ function shutdownServices(
     unlocks,
     watcher,
     telemetryServerProcess,
-  },
+  }: IShutdownServicesOptions,
   signal: NodeJS.Signals
 ): Promise<void> {
+  try {
+    telemetryFlush()
+  } catch (e) {
+    // nop
+  }
   const services = [
     developProcess.stop(signal),
     telemetryServerProcess.stop(),
@@ -518,7 +549,9 @@ function shutdownServices(
   ]
 
   unlocks.forEach(unlock => {
-    services.push(unlock())
+    if (unlock) {
+      services.push(unlock())
+    }
   })
 
   return Promise.all(services)

@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.9.0-next.3...gatsby-remark-images-contentful@4.10.0-next.0) (2021-08-12)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+# [4.9.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.9.0-next.2...gatsby-remark-images-contentful@4.9.0-next.3) (2021-08-09)
+
+### Bug Fixes
+
+- **gatsby-remark-image-contentful:** show useful error message for files that can not be rendered as image ([#32530](https://github.com/gatsbyjs/gatsby/issues/32530)) ([77e9aab](https://github.com/gatsbyjs/gatsby/commit/77e9aabdff5156d4f037b1b36dbb351bfe043be4)), closes [#32511](https://github.com/gatsbyjs/gatsby/issues/32511)
+
+# [4.9.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.9.0-next.1...gatsby-remark-images-contentful@4.9.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+# [4.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.9.0-next.0...gatsby-remark-images-contentful@4.9.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to ^4.1.2 ([#32576](https://github.com/gatsbyjs/gatsby/issues/32576)) ([5c4e109](https://github.com/gatsbyjs/gatsby/commit/5c4e109313cd1b59f814332fdb4dfdcaf1faed1a))
+
+# [4.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.8.0-next.0...gatsby-remark-images-contentful@4.9.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+# [4.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.7.0-next.1...gatsby-remark-images-contentful@4.8.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+# [4.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.7.0-next.0...gatsby-remark-images-contentful@4.7.0-next.1) (2021-07-08)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to ^4.1.1 ([#32250](https://github.com/gatsbyjs/gatsby/issues/32250)) ([bd03035](https://github.com/gatsbyjs/gatsby/commit/bd03035b35d4e2f69e86b9ff3bbcfb8bd3eece4a))
+
+# [4.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.6.0-next.0...gatsby-remark-images-contentful@4.7.0-next.0) (2021-07-01)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+# [4.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.5.0-next.1...gatsby-remark-images-contentful@4.6.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+# [4.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.5.0-next.0...gatsby-remark-images-contentful@4.5.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+# [4.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.4.0-next.2...gatsby-remark-images-contentful@4.5.0-next.0) (2021-06-03)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+# [4.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.4.0-next.1...gatsby-remark-images-contentful@4.4.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+# [4.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.4.0-next.0...gatsby-remark-images-contentful@4.4.0-next.1) (2021-05-31)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+# [4.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.3.0-next.1...gatsby-remark-images-contentful@4.4.0-next.0) (2021-05-21)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
+# [4.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.3.0-next.0...gatsby-remark-images-contentful@4.3.0-next.1) (2021-05-12)
+
+### Bug Fixes
+
+- **tests:** update cheerio snapshots ([#31298](https://github.com/gatsbyjs/gatsby/issues/31298)) ([e06599d](https://github.com/gatsbyjs/gatsby/commit/e06599d9acc53442f8830b04f8fa2c749a820cc5))
+
+# [4.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.2.0-next.0...gatsby-remark-images-contentful@4.3.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-remark-images-contentful
+
 # [4.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.1.0-next.0...gatsby-remark-images-contentful@4.2.0-next.0) (2021-04-23)
 
 **Note:** Version bump only for package gatsby-remark-images-contentful

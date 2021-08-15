@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.9.0-next.3...gatsby-remark-prismjs@5.10.0-next.0) (2021-08-12)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [5.9.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.9.0-next.2...gatsby-remark-prismjs@5.9.0-next.3) (2021-08-09)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [5.9.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.9.0-next.1...gatsby-remark-prismjs@5.9.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [5.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.9.0-next.0...gatsby-remark-prismjs@5.9.0-next.1) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [5.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.8.0-next.0...gatsby-remark-prismjs@5.9.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [5.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.7.0-next.1...gatsby-remark-prismjs@5.8.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [5.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.7.0-next.0...gatsby-remark-prismjs@5.7.0-next.1) (2021-07-08)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [5.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.6.0-next.0...gatsby-remark-prismjs@5.7.0-next.0) (2021-07-01)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [5.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.5.0-next.1...gatsby-remark-prismjs@5.6.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [5.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.5.0-next.0...gatsby-remark-prismjs@5.5.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [5.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.4.0-next.2...gatsby-remark-prismjs@5.5.0-next.0) (2021-06-03)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [5.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.4.0-next.1...gatsby-remark-prismjs@5.4.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [5.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.4.0-next.0...gatsby-remark-prismjs@5.4.0-next.1) (2021-05-31)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [5.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.3.0-next.1...gatsby-remark-prismjs@5.4.0-next.0) (2021-05-21)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [5.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.3.0-next.0...gatsby-remark-prismjs@5.3.0-next.1) (2021-05-12)
+
+### Bug Fixes
+
+- **tests:** update cheerio snapshots ([#31298](https://github.com/gatsbyjs/gatsby/issues/31298)) ([e06599d](https://github.com/gatsbyjs/gatsby/commit/e06599d9acc53442f8830b04f8fa2c749a820cc5))
+
+# [5.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.2.0-next.0...gatsby-remark-prismjs@5.3.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
 # [5.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@5.1.0-next.0...gatsby-remark-prismjs@5.2.0-next.0) (2021-04-23)
 
 **Note:** Version bump only for package gatsby-remark-prismjs

@@ -27,9 +27,14 @@ const promisify = require(`util`).promisify
 const fs = require(`fs`)
 const zlib = require(`zlib`)
 
+interface IExternalBuffer {
+  index: number
+  buffer: Buffer
+}
+
 exports.write = async function (path, data, options): Promise<void> {
-  const externalBuffers = []
-  let dataString = JSON.stringify(data, function replacerFunction(k, value) {
+  const externalBuffers: Array<IExternalBuffer> = []
+  let dataString = JSON.stringify(data, function replacerFunction(_k, value) {
     // Buffers searilize to {data: [...], type: "Buffer"}
     if (
       value &&
@@ -103,10 +108,10 @@ exports.read = async function (path, options): Promise<string> {
     )
   }
 
-  const externalBuffers = []
+  const externalBuffers: Array<IExternalBuffer> = []
   let data
   try {
-    data = JSON.parse(dataString, function bufferReceiver(k, value) {
+    data = JSON.parse(dataString, function bufferReceiver(_k, value) {
       if (value && value.type === `Buffer` && value.data) {
         return Buffer.from(value.data)
       } else if (

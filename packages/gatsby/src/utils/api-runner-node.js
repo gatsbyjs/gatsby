@@ -23,17 +23,12 @@ import {
   buildScalarType,
 } from "../schema/types/type-builders"
 const { emitter, store } = require(`../redux`)
-const {
-  getNodes,
-  getNode,
-  getNodesByType,
-  getNodeAndSavePathDependency,
-} = require(`../redux/nodes`)
+const { getNodes, getNode, getNodesByType } = require(`../datastore`)
+const { getNodeAndSavePathDependency, loadNodeContent } = require(`./nodes`)
 const { getPublicPath } = require(`./get-public-path`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 import errorParser from "./api-runner-error-parser"
-const { loadNodeContent } = require(`../db/nodes`)
 
 if (!process.env.BLUEBIRD_DEBUG && !process.env.BLUEBIRD_LONG_STACK_TRACES) {
   // Unless specified - disable longStackTraces
@@ -91,23 +86,25 @@ const initAPICallTracing = parentSpan => {
   }
 }
 
-const deferredAction = type => (...args) => {
-  // Regular createNode returns a Promise, but when deferred we need
-  // to wrap it in another which we resolve when it's actually called
-  if (type === `createNode`) {
-    return new Promise(resolve => {
-      emitter.emit(`ENQUEUE_NODE_MUTATION`, {
-        type,
-        payload: args,
-        resolve,
+const deferredAction =
+  type =>
+  (...args) => {
+    // Regular createNode returns a Promise, but when deferred we need
+    // to wrap it in another which we resolve when it's actually called
+    if (type === `createNode`) {
+      return new Promise(resolve => {
+        emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+          type,
+          payload: args,
+          resolve,
+        })
       })
+    }
+    return emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+      type,
+      payload: args,
     })
   }
-  return emitter.emit(`ENQUEUE_NODE_MUTATION`, {
-    type,
-    payload: args,
-  })
-}
 
 const NODE_MUTATION_ACTIONS = [
   `createNode`,
@@ -243,6 +240,9 @@ const getUninitializedCache = plugin => {
       throw new Error(message)
     },
     async set() {
+      throw new Error(message)
+    },
+    async del() {
       throw new Error(message)
     },
   }

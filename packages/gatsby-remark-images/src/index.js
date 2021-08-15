@@ -189,6 +189,18 @@ module.exports = (
       )
     }
 
+    const decoding = options.decoding
+
+    if (![`async`, `sync`, `auto`].includes(decoding)) {
+      reporter.warn(
+        reporter.stripIndent(`
+        ${chalk.bold(decoding)} is an invalid value for the ${chalk.bold(
+          `decoding`
+        )} option. Please pass one of "async", "sync" or "auto".
+      `)
+      )
+    }
+
     const imageStyle = `
       width: 100%;
       height: 100%;
@@ -209,6 +221,7 @@ module.exports = (
         sizes="${fluidResult.sizes}"
         style="${imageStyle}"
         loading="${loading}"
+        decoding="${decoding}"
       />
     `.trim()
 
@@ -277,6 +290,7 @@ module.exports = (
             alt="${alt}"
             title="${title}"
             loading="${loading}"
+            decoding="${decoding}"
             style="${imageStyle}"
           />
         </picture>

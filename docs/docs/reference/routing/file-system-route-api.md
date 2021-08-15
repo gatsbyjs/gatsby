@@ -1,44 +1,49 @@
 ---
 title: File System Route API
+examples:
+  - label: Using the FS Routing API
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/route-api"
 ---
 
-Use the File System Route API when you want to programmatically create pages from your GraphQL data, e.g. to create individual blog post pages for your blog. With this API you can control the file path and queried data by adding some extra notation to the names of your files without touching or creating `gatsby-node.js` whatsoever.
+Use the File System Route API when you want to create dynamic pages e.g. to create individual blog post pages for your blog.
 
-This page documents the APIs and conventions for using the file system as the primary way of creating pages. You should be able to accomplish most common tasks with this file-based API. If you want more control over the page creation you should use the [`createPages`](/docs/reference/config-files/gatsby-node#createPages) API.
+You should be able to accomplish most common tasks with this file-based API. If you want more control over the page creation you should use the [`createPages`](/docs/reference/config-files/gatsby-node#createPages) API.
 
-In short, these APIs enable you to programmatically create pages from Gatsby's [GraphQL data layer](/docs/conceptual/graphql-concepts/) and to create [client-only routes](/docs/how-to/routing/client-only-routes-and-user-authentication).
+Dynamic pages can be created from collections in Gatsby's [GraphQL data layer](/docs/conceptual/graphql-concepts/) and to create [client-only routes](/docs/how-to/routing/client-only-routes-and-user-authentication).
 
-A complete example showcasing all options can be found in [Gatsby's "examples" folder](https://github.com/gatsbyjs/gatsby/tree/master/examples/route-api).
+A complete example showcasing all options can be found in [Gatsby's examples folder](https://github.com/gatsbyjs/gatsby/tree/master/examples/route-api).
 
 ## Collection routes
 
-Imagine a Gatsby project that sources a `product.yaml` file and multiple Markdown blog posts. At build time, Gatsby will automatically [infer](/docs/glossary/#inference) the fields and create multiple [nodes](/docs/glossary#node) for both types (`Product` and `MarkdownRemark`). There are two ways you could query for that data:
+Imagine a Gatsby project that sources a `product.yaml` file and multiple Markdown blog posts. At build time, Gatsby will automatically [infer](/docs/glossary/#inference) the fields and create multiple [nodes](/docs/glossary#node) for both types (`Product` and `MarkdownRemark`).
 
-- You can perform GraphQL queries like `allProduct` or `allMarkdownRemark` from inside a component, as usual.
-- You can use the File System Route API to access node information directly from the file path.
-
-To use the File System Route API, use curly braces (`{ }`) in your filenames to signify dynamic URL segments that relate to a field within the node. Here are a few examples:
+To create collection routes, use curly braces (`{ }`) in your filenames to signify dynamic URL segments that relate to a field within the node. Here are a few examples:
 
 - `src/pages/products/{Product.name}.js` will generate a route like `/products/burger`
 - `src/pages/products/{Product.fields__sku}.js` will generate a route like `/products/001923`
 - `src/pages/blog/{MarkdownRemark.parent__(File)__name}.js` will generate a route like `/blog/learning-gatsby`
 
-At build time, Gatsby uses the content within the curly braces to generate GraphQL queries to retrieve the nodes that should be built for a given collection (collection here refers to all nodes of a given type, e.g. all Markdown files for `MarkdownRemark`). Gatsby then runs those queries to grab all the nodes and create a page for each of them. Gatsby also adds an `id` field to every query automatically, to simplify integration with page queries.
+Gatsby creates a page for each node in a collection route. So if you have three markdown files that are blog posts, Gatsby will create the three pages from a collection route. As you add and remove markdown files, Gatsby will add and remove pages.
+
+Collection routes can be created for any GraphQL data type. Creating new collection routes in Gatsby is a process
+of adding a source plugin, use GraphiQL to identify the type and field to construct the route file name, and then code the route component.
 
 ### Syntax (collection routes)
 
 There are some general syntax requirements when using collection routes:
 
-- Filenames must start and end with curly braces (`{ }`).
-- Types can be both lowercase and uppercase (e.g. `MarkdownRemark` or `contentfulMyContentType`).
-- The initial type name must be followed by a period (`.`).
+- Dynamic segments of file paths must start and end with curly braces (`{ }`).
+- Types are case sensitive (e.g. `MarkdownRemark` or `contentfulMyContentType`). Check GraphiQL for the correct names.
+- Dynamic segments must include both a type and a field e.g. `{Type.field}` or `{BlogPost.slug}`.
 
-> Note: To keep things consistent, only capitalized type names are used in the examples.
+### Nested routes
 
-In addition to files, you can also name folders with this syntax. This allows you to create nested routes. For example:
+You can use dynamic segments multiple times in a path. For example, you might want to nest product names within its product category. For example:
 
-- `src/pages/products/{Product.name}/{Product.color}.js` will generate a route like `/products/fidget-spinner/red`
-- `src/pages/products/{Product.name}/template.js` will generate a route like `/products/fidget-spinner/template`
+- `src/pages/products/{Product.category}/{Product.name}.js` will generate a route like `/products/toys/fidget-spinner`
+- `src/pages/products/{Product.category}/{Product.name}/{Product.color}.js` will generate a route like `/products/toys/fidget-spinner/red`
+
+### Field syntax
 
 #### Dot notation
 
@@ -106,11 +111,14 @@ allMarkdownRemark {
 }
 ```
 
-### Component implementation
+### Collection Route Components
 
-Naming your file with the File System Route API will generate routes for each node and will automatically pass the field name via `props.params` to the React component and as a variable to the GraphQL query. As explained in [Querying data in pages with GraphQL](/docs/how-to/querying-data/page-query/) you can render data from a node on the page by filtering only for the given `id` or field name.
+Collection route components are passed two dynamic variables. The `id` of the each page's node and the
+URL path as `param`. The param is passed to the component as `props.params` and the id as `props.pageContext.id`.
 
-For example, in the component itself (e.g. `src/pages/products/{Product.name}.js`) you're able to access the `name` via `props.params` and as a variable in the GraphQL query (as `$name`). However, we recommend filtering by `id` as this is the fastest way to filter.
+Both are also passed as variables to the component's GraphQL query so you can query fields from the node. Page querying, including the use of variables, is explained in more depth in [querying data in pages with GraphQL](/docs/how-to/querying-data/page-query/).
+
+For example:
 
 ```js:title=src/pages/products/{Product.name}.js
 import React from "react"
@@ -135,13 +143,13 @@ export const query = graphql`
 `
 ```
 
-If you need to customize the query used for collecting the nodes (e.g. filtering out any product of type `"Food"`), you should use the [`createPages`](/docs/reference/config-files/gatsby-node#createPages) API instead as File System Route API doesn't support this at the moment.
+If you need to want to create pages for only some nodes in a collection (e.g. filtering out any product of type `"Food"`) or customize the variables passed to the query, you should use the [`createPages`](/docs/reference/config-files/gatsby-node#createPages) API instead as File System Route API doesn't support this at the moment.
 
 ### Routing and linking
 
 Gatsby "slugifies" every route that gets created from collection pages (by using [`sindresorhus/slugify`](https://github.com/sindresorhus/slugify)). Or in other words: If you have a route called `src/pages/wholesome/{Animal.slogan}.js` where `slogan` is `I ♥ Dogs` the final URL will be `/wholesome/i-love-dogs`. Gatsby will convert the field into a human-readable URL format while stripping it of invalid characters.
 
-When you want to link to one of those pages, it may not always be clear how to construct the URL from scratch.
+When you want to link to a collection route page, it may not always be clear how to construct the URL from scratch.
 
 To address this issue, Gatsby automatically includes a `gatsbyPath` field on every type used by collection pages. The `gatsbyPath` field must take an argument of the `filePath` it is trying to resolve. This is necessary because it’s possible that one type is used in multiple collection pages.
 

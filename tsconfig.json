@@ -12,10 +12,10 @@
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
     "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "jsx": "preserve",
+    "typeRoots": ["./types", "**/node_modules/@types", "node_modules/@types"],
     "paths": {
       "@reach/router/*": ["./node_modules/@gatsbyjs/reach-router/*"]
     }

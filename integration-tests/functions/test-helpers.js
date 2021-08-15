@@ -1,4 +1,5 @@
 const fetch = require(`node-fetch`)
+const { createReadStream } = require("fs")
 const execa = require(`execa`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
@@ -178,24 +179,22 @@ export function runTests(env, host) {
         expect(result).toMatchSnapshot()
       })
 
-      // TODO enable when functions support uploading files.
-      // test(`file in multipart/form`, async () => {
-      // const { readFileSync } = require("fs")
+      test(`file in multipart/form`, async () => {
+        const file = createReadStream(
+          path.join(__dirname, "./__tests__/fixtures/test.txt")
+        )
 
-      // const file = readFileSync(path.join(__dirname, "./fixtures/test.txt"))
+        const form = new FormData()
+        form.append("file", file)
+        const result = await fetch(`${host}/api/parser`, {
+          method: `POST`,
+          body: form,
+        }).then(res => res.json())
 
-      // const form = new FormData()
-      // form.append("file", file)
-      // const result = await fetch(`${host}/api/parser`, {
-      // method: `POST`,
-      // body: form,
-      // }).then(res => res.json())
+        expect(result).toMatchSnapshot()
+      })
 
-      // console.log({ result })
-
-      // expect(result).toMatchSnapshot()
-      // })
-
+      // TODO enable when functions support streaming files.
       // test(`stream a file`, async () => {
       // const { createReadStream } = require("fs")
 
@@ -235,6 +234,35 @@ export function runTests(env, host) {
 
         const headers = Object.fromEntries(result.headers)
         expect(headers[`access-control-allow-origin`]).toEqual(`*`)
+      })
+    })
+
+    describe(`plugins can declare functions and they can be shadowed`, () => {
+      test(`shadowing`, async () => {
+        const result = await fetch(
+          `${host}/api/gatsby-plugin-cool/shadowed`
+        ).then(res => res.text())
+        expect(result).toEqual(`I am shadowed`)
+
+        const result2 = await fetch(
+          `${host}/api/gatsby-plugin-cool/not-shadowed`
+        ).then(res => res.text())
+        expect(result2).toEqual(`I am not shadowed`)
+      })
+      test(`plugins can't declare functions outside of their namespace`, async () => {
+        const result = await fetch(
+          `${host}/api/i-will-not-work-cause-namespacing`
+        )
+        expect(result.status).toEqual(404)
+      })
+    })
+
+    describe(`typescript files are resolved without needing to specify their extension`, () => {
+      test(`typescript`, async () => {
+        const result = await fetch(`${host}/api/extensions`).then(res =>
+          res.text()
+        )
+        expect(result).toEqual(`hi`)
       })
     })
 

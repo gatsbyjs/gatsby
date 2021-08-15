@@ -9,6 +9,8 @@ import { websocketManager } from "./websocket-manager"
 import { isWebpackStatusPending } from "./webpack-status"
 import { store } from "../redux"
 import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
+import { isLmdbStore } from "../datastore"
+import type GatsbyCacheLmdb from "./cache-lmdb"
 
 import { IExecutionResult } from "../query/types"
 
@@ -67,6 +69,67 @@ export function pageDataExists(publicDir: string, pagePath: string): boolean {
   return fs.existsSync(getFilePath(publicDir, pagePath))
 }
 
+let lmdbPageQueryResultsCache: GatsbyCacheLmdb
+function getLMDBPageQueryResultsCache(): GatsbyCacheLmdb {
+  if (!lmdbPageQueryResultsCache) {
+    const GatsbyCacheLmdbImpl = require(`./cache-lmdb`).default
+    lmdbPageQueryResultsCache = new GatsbyCacheLmdbImpl({
+      name: `internal-tmp-query-results`,
+      encoding: `string`,
+    }).init()
+  }
+  return lmdbPageQueryResultsCache
+}
+
+let savePageQueryResultsPromise = Promise.resolve()
+
+export function waitUntilPageQueryResultsAreStored(): Promise<void> {
+  return savePageQueryResultsPromise
+}
+
+export async function savePageQueryResult(
+  programDir: string,
+  pagePath: string,
+  stringifiedResult: string
+): Promise<void> {
+  if (isLmdbStore()) {
+    savePageQueryResultsPromise = getLMDBPageQueryResultsCache().set(
+      pagePath,
+      stringifiedResult
+    ) as Promise<void>
+  } else {
+    const pageQueryResultsPath = path.join(
+      programDir,
+      `.cache`,
+      `json`,
+      `${pagePath.replace(/\//g, `_`)}.json`
+    )
+    await fs.outputFile(pageQueryResultsPath, stringifiedResult)
+  }
+}
+
+export async function readPageQueryResult(
+  publicDir: string,
+  pagePath: string
+): Promise<any> {
+  if (isLmdbStore()) {
+    const stringifiedResult = await getLMDBPageQueryResultsCache().get(pagePath)
+    if (typeof stringifiedResult === `string`) {
+      return stringifiedResult
+    }
+    throw new Error(`Couldn't find temp query result for "${pagePath}".`)
+  } else {
+    const pageQueryResultsPath = path.join(
+      publicDir,
+      `..`,
+      `.cache`,
+      `json`,
+      `${pagePath.replace(/\//g, `_`)}.json`
+    )
+    return fs.readFile(pageQueryResultsPath)
+  }
+}
+
 export async function writePageData(
   publicDir: string,
   {
@@ -75,28 +138,25 @@ export async function writePageData(
     path: pagePath,
     staticQueryHashes,
   }: IPageData
-): Promise<IPageDataWithQueryResult> {
-  const inputFilePath = path.join(
-    publicDir,
-    `..`,
-    `.cache`,
-    `json`,
-    `${pagePath.replace(/\//g, `_`)}.json`
-  )
+): Promise<string> {
+  const result = await readPageQueryResult(publicDir, pagePath)
 
   const outputFilePath = getFilePath(publicDir, pagePath)
-  const result = await fs.readJSON(inputFilePath)
-  const body = {
-    componentChunkName,
-    path: pagePath,
-    matchPath,
-    result,
-    staticQueryHashes,
+  let body = `{
+    "componentChunkName": "${componentChunkName}",
+    "path": "${pagePath}",
+    "result": ${result},
+    "staticQueryHashes": ${JSON.stringify(staticQueryHashes)}`
+
+  if (matchPath) {
+    body += `,
+    "matchPath": "${matchPath}"`
   }
 
-  const bodyStr = JSON.stringify(body)
+  body += `}`
+
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
-  const pageDataSize = Buffer.byteLength(bodyStr) / 1000
+  const pageDataSize = Buffer.byteLength(body) / 1000
 
   store.dispatch({
     type: `ADD_PAGE_DATA_STATS`,
@@ -104,11 +164,11 @@ export async function writePageData(
       pagePath,
       filePath: outputFilePath,
       size: pageDataSize,
-      pageDataHash: createContentDigest(bodyStr),
+      pageDataHash: createContentDigest(body),
     },
   })
 
-  await fs.outputFile(outputFilePath, bodyStr)
+  await fs.outputFile(outputFilePath, body)
   return body
 }
 
@@ -124,6 +184,7 @@ export async function flush(): Promise<void> {
     // We're already in the middle of a flush
     return
   }
+  await waitUntilPageQueryResultsAreStored()
   isFlushPending = false
   isFlushing = true
   const {
@@ -136,7 +197,12 @@ export async function flush(): Promise<void> {
 
   const { pagePaths } = pendingPageDataWrites
 
-  const pagesToWrite = pagePaths.values()
+  const writePageDataActivity = reporter.createProgress(
+    `Writing page-data.json files to public directory`,
+    pagePaths.size,
+    0
+  )
+  writePageDataActivity.start()
 
   const flushQueue = fastq(async (pagePath, cb) => {
     const page = pages.get(pagePath)
@@ -149,8 +215,9 @@ export async function flush(): Promise<void> {
     // This is why we need this check
     if (page) {
       if (
-        program?._?.[0] === `develop` &&
-        process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+        (program?._?.[0] === `develop` &&
+          process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) ||
+        (_CFLAGS_.GATSBY_MAJOR === `4` ? page.mode !== `SSG` : false)
       ) {
         // check if already did run query for this page
         // with query-on-demand we might have pending page-data write due to
@@ -181,10 +248,12 @@ export async function flush(): Promise<void> {
         }
       )
 
+      writePageDataActivity.tick()
+
       if (program?._?.[0] === `develop`) {
         websocketManager.emitPageData({
           id: pagePath,
-          result,
+          result: JSON.parse(result) as IPageDataWithQueryResult,
         })
       }
     }
@@ -199,7 +268,7 @@ export async function flush(): Promise<void> {
     return cb(null, true)
   }, 25)
 
-  for (const pagePath of pagesToWrite) {
+  for (const pagePath of pagePaths) {
     flushQueue.push(pagePath, () => {})
   }
 
@@ -209,7 +278,9 @@ export async function flush(): Promise<void> {
     })
   }
 
+  writePageDataActivity.end()
   isFlushing = false
+
   return
 }
 

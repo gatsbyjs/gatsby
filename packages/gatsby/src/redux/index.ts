@@ -2,16 +2,19 @@ import {
   applyMiddleware,
   combineReducers,
   createStore,
+  DeepPartial,
   Middleware,
+  ReducersMapObject,
+  Store,
 } from "redux"
 import _ from "lodash"
 import telemetry from "gatsby-telemetry"
 
 import { mett } from "../utils/mett"
-import thunk, { ThunkMiddleware } from "redux-thunk"
+import thunk, { ThunkMiddleware, ThunkAction, ThunkDispatch } from "redux-thunk"
 import * as reducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
-import { IGatsbyState, ActionsUnion } from "./types"
+import { IGatsbyState, ActionsUnion, GatsbyStateKeys } from "./types"
 
 // Create event emitter for actions
 export const emitter = mett()
@@ -60,29 +63,45 @@ export const readState = (): IGatsbyState => {
 }
 
 export interface IMultiDispatch {
-  <T extends ActionsUnion>(action: Array<T>): Array<T>
+  <T extends ActionsUnion | ThunkAction<any, IGatsbyState, any, ActionsUnion>>(
+    action: Array<T>
+  ): Array<T>
 }
 
 /**
  * Redux middleware handling array of actions
  */
-const multi: Middleware<IMultiDispatch> = ({ dispatch }) => next => (
-  action: ActionsUnion
-): ActionsUnion | Array<ActionsUnion> =>
-  Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
+const multi: Middleware<IMultiDispatch> =
+  ({ dispatch }) =>
+  next =>
+  (action: ActionsUnion): ActionsUnion | Array<ActionsUnion> =>
+    Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
 
-// We're using the inferred type here becauise manually typing it would be very complicated
-// and error-prone. Instead we'll make use of the createStore return value, and export that type.
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const configureStore = (initialState: IGatsbyState) =>
+export type GatsbyReduxStore = Store<IGatsbyState> & {
+  dispatch: ThunkDispatch<IGatsbyState, any, ActionsUnion> & IMultiDispatch
+}
+
+export const configureStore = (initialState: IGatsbyState): GatsbyReduxStore =>
   createStore(
     combineReducers<IGatsbyState>({ ...reducers }),
     initialState,
     applyMiddleware(thunk as ThunkMiddleware<IGatsbyState, ActionsUnion>, multi)
   )
 
-export type GatsbyReduxStore = ReturnType<typeof configureStore>
-export const store: GatsbyReduxStore = configureStore(readState())
+export const store: GatsbyReduxStore = configureStore(
+  process.env.GATSBY_WORKER_POOL_WORKER ? ({} as IGatsbyState) : readState()
+)
+
+/**
+ * Allows overloading some reducers (e.g. when setting a custom datastore)
+ */
+export function replaceReducer(
+  customReducers: Partial<ReducersMapObject<IGatsbyState>>
+): void {
+  store.replaceReducer(
+    combineReducers<IGatsbyState>({ ...reducers, ...customReducers })
+  )
+}
 
 // Persist state.
 export const saveState = (): void => {
@@ -109,6 +128,30 @@ export const saveState = (): void => {
     queries: state.queries,
     html: state.html,
   })
+}
+
+export const savePartialStateToDisk = (
+  slices: Array<GatsbyStateKeys>,
+  optionalPrefix?: string,
+  transformState?: <T extends DeepPartial<IGatsbyState>>(state: T) => T
+): void => {
+  const state = store.getState()
+  const contents = _.pick(state, slices)
+  const savedContents = transformState ? transformState(contents) : contents
+
+  return writeToCache(savedContents, slices, optionalPrefix)
+}
+
+export const loadPartialStateFromDisk = (
+  slices: Array<GatsbyStateKeys>,
+  optionalPrefix?: string
+): DeepPartial<IGatsbyState> => {
+  try {
+    return readFromCache(slices, optionalPrefix) as DeepPartial<IGatsbyState>
+  } catch (e) {
+    // ignore errors.
+  }
+  return {} as IGatsbyState
 }
 
 store.subscribe(() => {

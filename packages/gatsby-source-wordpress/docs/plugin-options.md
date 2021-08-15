@@ -38,12 +38,16 @@
   - [schema.requestConcurrency](#schemarequestconcurrency)
   - [schema.previewRequestConcurrency](#schemapreviewrequestconcurrency)
 - [excludeFieldNames](#excludefieldnames)
+- [searchAndReplace](#searchandreplace)
+  - [searchAndReplace[].search](#searchandreplacesearch)
+  - [searchAndReplace[].replace](#searchandreplacereplace)
 - [html](#html)
   - [html.useGatsbyImage](#htmlusegatsbyimage)
   - [html.imageMaxWidth](#htmlimagemaxwidth)
   - [html.fallbackImageMaxWidth](#htmlfallbackimagemaxwidth)
   - [html.imageQuality](#htmlimagequality)
   - [html.createStaticFiles](#htmlcreatestaticfiles)
+  - [html.generateWebpImages](#htmlgeneratewebpimages)
 - [type](#type)
   - [type.\_\_all](#type__all)
     - [type.\_\_all.where](#type__allwhere)
@@ -222,7 +226,7 @@ An object which contains GraphQL debugging options. See below for options.
 
 #### debug.graphql.showQueryVarsOnError
 
-When a GraphQL error is returned and the process exits, this plugin option determines wether or not to log out the query vars that were used in the query that returned GraphQL errors.
+When a GraphQL error is returned and the process exits, this plugin option determines whether or not to log out the query vars that were used in the query that returned GraphQL errors.
 
 **Field type**: `Boolean`
 
@@ -288,7 +292,7 @@ If enabled, GraphQL queries will be copied to your OS clipboard (if supported) w
 
 #### debug.graphql.panicOnError
 
-Determines wether or not to panic when any GraphQL error is returned.
+Determines whether or not to panic when any GraphQL error is returned.
 
 Default is false because sometimes non-critical errors are returned alongside valid data.
 
@@ -312,7 +316,7 @@ Default is false because sometimes non-critical errors are returned alongside va
 
 #### debug.graphql.onlyReportCriticalErrors
 
-Determines wether or not to log non-critical errors. A non-critical error is any error which is returned alongside valid data. In previous versions of WPGraphQL this was very noisy because trying to access an entity that was private returned errors.
+Determines whether or not to log non-critical errors. A non-critical error is any error which is returned alongside valid data. In previous versions of WPGraphQL this was very noisy because trying to access an entity that was private returned errors.
 
 **Field type**: `Boolean`
 
@@ -778,6 +782,67 @@ A list of field names to globally exclude from the ingested schema.
 
 ```
 
+## searchAndReplace
+
+An array of options to search and replace strings in nodes. See below for options.
+
+**Field type**: `Array`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    searchAndReplace: [
+      {
+        search: "https://some-url.com",
+        replace: "https://some-new-url.com",
+      },
+    ],
+  },
+}
+
+```
+
+### searchAndReplace[].search
+
+The regex rule used to search when replacing strings in node data. It will search the stringified JSON of each node to capture strings at any nested depth.
+
+**Field type**: `String`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    searchAndReplace: [
+      {
+        search: "https://some-url.com",
+      },
+    ],
+  },
+}
+
+```
+
+### searchAndReplace[].replace
+
+The replacement string for each regex match.
+
+**Field type**: `String`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    searchAndReplace: [
+      {
+        replace: "https://some-new-url.com",
+      },
+    ],
+  },
+}
+
+```
+
 ## html
 
 Options related to html field processing.
@@ -896,6 +961,26 @@ When this is true, any url's which are wrapped in "", '', or () and which contai
 
 ```
 
+### html.generateWebpImages
+
+When this is true, .webp images will be generated for images in html fields in addition to the images gatsby-image normally generates.
+
+**Field type**: `Boolean`
+
+**Default value**: `false`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    html: {
+      generateWebpImages: false,
+    },
+  },
+}
+
+```
+
 ## type
 
 Options related to specific types in the remote schema.
@@ -1002,7 +1087,7 @@ Excludes fields on a type by field name.
 
 #### type.\_\_all.nodeInterface
 
-Determines wether or not this type will be treated as an interface comprised entirely of other Gatsby node types.
+Determines whether or not this type will be treated as an interface comprised entirely of other Gatsby node types.
 
 **Field type**: `Boolean`
 
@@ -1231,7 +1316,7 @@ The name of the plugin options preset.
 
 ### presets[].useIf
 
-A function used to determine wether or not to apply this plugin options preset. It should return a boolean value. True will cause the preset to apply, false will disclude it.
+A function used to determine whether or not to apply this plugin options preset. It should return a boolean value. True will cause the preset to apply, false will disclude it.
 
 **Field type**: `Function`
 

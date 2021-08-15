@@ -32,7 +32,8 @@ const {
 // cache is more likely to go stale than the images (which never go stale)
 // Note that the same image might be requested multiple times in the same run
 
-const validImageFormats = new Set([`jpg`, `png`, `webp`])
+// Supported Image Formats from https://www.contentful.com/developers/docs/references/images-api/#/reference/changing-formats/image-format
+const validImageFormats = new Set([`jpg`, `png`, `webp`, `gif`])
 
 if (process.env.GATSBY_REMOTE_CACHE) {
   console.warn(
@@ -65,7 +66,7 @@ const isImage = image =>
   )
 
 // Note: this may return a Promise<body>, body (sync), or null
-const getBase64Image = imageProps => {
+const getBase64Image = (imageProps, reporter) => {
   if (!imageProps) {
     return null
   }
@@ -75,7 +76,17 @@ const getBase64Image = imageProps => {
     return null
   }
 
-  const requestUrl = `https:${imageProps.baseUrl}?w=20`
+  // Keep aspect ratio, image format and other transform options
+  const { aspectRatio } = imageProps
+  const originalFormat = imageProps.image.file.contentType.split(`/`)[1]
+  const toFormat = imageProps.options.toFormat
+  const imageOptions = {
+    ...imageProps.options,
+    toFormat,
+    width: 20,
+    height: Math.floor(20 * aspectRatio),
+  }
+  const requestUrl = `https:${createUrl(imageProps.baseUrl, imageOptions)}`
 
   // Prefer to return data sync if we already have it
   const alreadyFetched = resolvedBase64Cache.get(requestUrl)
@@ -111,14 +122,17 @@ const getBase64Image = imageProps => {
   }
 
   const loadImage = async () => {
-    const imageResponse = await downloadWithRetry({
-      url: requestUrl,
-      responseType: `arraybuffer`,
-    })
+    const imageResponse = await downloadWithRetry(
+      {
+        url: requestUrl,
+        responseType: `arraybuffer`,
+      },
+      reporter
+    )
 
     const base64 = Buffer.from(imageResponse.data, `binary`).toString(`base64`)
 
-    const body = `data:image/jpeg;base64,${base64}`
+    const body = `data:image/${toFormat || originalFormat};base64,${base64}`
 
     try {
       // TODO: against dogma, confirm whether writeFileSync is indeed slower
@@ -142,6 +156,7 @@ const getBase64Image = imageProps => {
     return body
   })
 }
+exports.getBase64Image = getBase64Image
 
 const getBasicImageProps = (image, args) => {
   let aspectRatio
@@ -162,6 +177,10 @@ const getBasicImageProps = (image, args) => {
 }
 
 const createUrl = (imgUrl, options = {}) => {
+  // If radius is -1, we need to pass `max` to the API
+  const cornerRadius =
+    options.cornerRadius === -1 ? `max` : options.cornerRadius
+
   // Convert to Contentful names and filter out undefined/null values.
   const urlArgs = {
     w: options.width || undefined,
@@ -175,6 +194,7 @@ const createUrl = (imgUrl, options = {}) => {
     fit: options.resizingBehavior || undefined,
     f: options.cropFocus || undefined,
     bg: options.background || undefined,
+    r: cornerRadius || undefined,
   }
 
   // Note: qs will ignore keys that are `undefined`. `qs.stringify({a: undefined, b: null, c: 1})` => `b=&c=1`
@@ -188,7 +208,14 @@ const generateImageSource = (
   height,
   toFormat,
   _fit, // We use resizingBehavior instead
-  { jpegProgressive, quality, cropFocus, backgroundColor, resizingBehavior }
+  {
+    jpegProgressive,
+    quality,
+    cropFocus,
+    backgroundColor,
+    resizingBehavior,
+    cornerRadius,
+  }
 ) => {
   // Ensure we stay within Contentfuls Image API limits
   if (width > CONTENTFUL_IMAGE_MAX_SIZE) {
@@ -217,6 +244,7 @@ const generateImageSource = (
     quality,
     jpegProgressive,
     cropFocus,
+    cornerRadius,
   })
   return { width, height, format: toFormat, src }
 }
@@ -470,14 +498,14 @@ const resolveResize = (image, options) => {
 
 exports.resolveResize = resolveResize
 
-const fixedNodeType = ({ name, getTracedSVG }) => {
+const fixedNodeType = ({ name, getTracedSVG, reporter }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
       fields: {
         base64: {
           type: GraphQLString,
-          resolve: getBase64Image,
+          resolve: imageProps => getBase64Image(imageProps, reporter),
         },
         tracedSVG: {
           type: GraphQLString,
@@ -546,6 +574,13 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
         type: ImageCropFocusType,
         defaultValue: null,
       },
+      cornerRadius: {
+        type: GraphQLInt,
+        defaultValue: 0,
+        description: stripIndent`
+         Desired corner radius in pixels. Results in an image with rounded corners.
+         Pass \`-1\` for a full circle/ellipse.`,
+      },
       background: {
         type: GraphQLString,
         defaultValue: null,
@@ -565,14 +600,14 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
   }
 }
 
-const fluidNodeType = ({ name, getTracedSVG }) => {
+const fluidNodeType = ({ name, getTracedSVG, reporter }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
       fields: {
         base64: {
           type: GraphQLString,
-          resolve: getBase64Image,
+          resolve: imageProps => getBase64Image(imageProps, reporter),
         },
         tracedSVG: {
           type: GraphQLString,
@@ -640,6 +675,13 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
         type: ImageCropFocusType,
         defaultValue: null,
       },
+      cornerRadius: {
+        type: GraphQLInt,
+        defaultValue: 0,
+        description: stripIndent`
+         Desired corner radius in pixels. Results in an image with rounded corners.
+         Pass \`-1\` for a full circle/ellipse.`,
+      },
       background: {
         type: GraphQLString,
         defaultValue: null,
@@ -662,7 +704,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
   }
 }
 
-exports.extendNodeType = ({ type, store }) => {
+exports.extendNodeType = ({ type, store, reporter }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
@@ -679,7 +721,7 @@ exports.extendNodeType = ({ type, store }) => {
       return null
     }
 
-    const absolutePath = await cacheImage(store, image, options)
+    const absolutePath = await cacheImage(store, image, options, reporter)
     const extension = path.extname(absolutePath)
 
     return traceSVG({
@@ -695,10 +737,21 @@ exports.extendNodeType = ({ type, store }) => {
   }
 
   const getDominantColor = async ({ image, options }) => {
-    try {
-      const absolutePath = await cacheImage(store, image, options)
+    let pluginSharp
 
-      const pluginSharp = require(`gatsby-plugin-sharp`)
+    try {
+      pluginSharp = require(`gatsby-plugin-sharp`)
+    } catch (e) {
+      console.error(
+        `[gatsby-source-contentful] Please install gatsby-plugin-sharp`,
+        e
+      )
+      return `rgba(0,0,0,0.5)`
+    }
+
+    try {
+      const absolutePath = await cacheImage(store, image, options, reporter)
+
       if (!(`getDominantColor` in pluginSharp)) {
         console.error(
           `[gatsby-source-contentful] Please upgrade gatsby-plugin-sharp`
@@ -709,7 +762,8 @@ exports.extendNodeType = ({ type, store }) => {
       return pluginSharp.getDominantColor(absolutePath)
     } catch (e) {
       console.error(
-        `[gatsby-source-contentful] Please install gatsby-plugin-sharp`
+        `[gatsby-source-contentful] Could not getDominantColor from image`,
+        e
       )
       return `rgba(0,0,0,0.5)`
     }
@@ -748,9 +802,14 @@ exports.extendNodeType = ({ type, store }) => {
     }
 
     if (options.placeholder === `blurred`) {
-      placeholderDataURI = await getBase64Image({
-        baseUrl,
-      })
+      placeholderDataURI = await getBase64Image(
+        {
+          baseUrl,
+          image,
+          options,
+        },
+        reporter
+      )
     }
 
     if (options.placeholder === `tracedSVG`) {
@@ -767,9 +826,17 @@ exports.extendNodeType = ({ type, store }) => {
     return imageProps
   }
 
-  const fixedNode = fixedNodeType({ name: `ContentfulFixed`, getTracedSVG })
+  const fixedNode = fixedNodeType({
+    name: `ContentfulFixed`,
+    getTracedSVG,
+    reporter,
+  })
 
-  const fluidNode = fluidNodeType({ name: `ContentfulFluid`, getTracedSVG })
+  const fluidNode = fluidNodeType({
+    name: `ContentfulFluid`,
+    getTracedSVG,
+    reporter,
+  })
 
   // gatsby-plugin-image
   const getGatsbyImageData = () => {
@@ -788,6 +855,13 @@ exports.extendNodeType = ({ type, store }) => {
       cropFocus: {
         type: ImageCropFocusType,
       },
+      cornerRadius: {
+        type: GraphQLInt,
+        defaultValue: 0,
+        description: stripIndent`
+         Desired corner radius in pixels. Results in an image with rounded corners.
+         Pass \`-1\` for a full circle/ellipse.`,
+      },
       quality: {
         type: GraphQLInt,
         defaultValue: 50,
@@ -796,7 +870,7 @@ exports.extendNodeType = ({ type, store }) => {
         type: ImageLayoutType,
         description: stripIndent`
             The layout for the image.
-            CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size. 
+            CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
             FIXED: A static image size, that does not resize according to the screen width
             FULL_WIDTH: The image resizes to fit its container, even if that is larger than the source image.
             Pass a value to "sizes" if the container is not the full width of the screen.
@@ -841,7 +915,7 @@ exports.extendNodeType = ({ type, store }) => {
         fields: {
           base64: {
             type: GraphQLString,
-            resolve: getBase64Image,
+            resolve: imageProps => getBase64Image(imageProps, reporter),
           },
           tracedSVG: {
             type: GraphQLString,
@@ -882,6 +956,13 @@ exports.extendNodeType = ({ type, store }) => {
         background: {
           type: GraphQLString,
           defaultValue: null,
+        },
+        cornerRadius: {
+          type: GraphQLInt,
+          defaultValue: 0,
+          description: stripIndent`
+         Desired corner radius in pixels. Results in an image with rounded corners.
+         Pass \`-1\` for a full circle/ellipse.`,
         },
       },
       resolve(image, options) {

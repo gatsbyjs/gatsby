@@ -21,7 +21,7 @@ class Dev404Page extends React.Component {
 
     this.state = {
       hasMounted: false,
-      showCustom404: false,
+      showCustom404: process.env.GATSBY_DISABLE_CUSTOM_404 || false,
       initPagePaths: pagePaths,
       pagePathSearchTerms: initialPagePathSearchTerms,
       pagePaths: this.getFilteredPagePaths(
@@ -95,7 +95,7 @@ class Dev404Page extends React.Component {
     // functions are enabled or not to this page.
     // TODO remove when functions are shipped.
     const functionsEnabled = !(
-      this.props.data.allSiteFunction.nodes[0]?.apiRoute === `FAKE`
+      this.props.data.allSiteFunction.nodes[0]?.functionRoute === `FAKE`
     )
     const { pathname } = this.props.location
     let newFilePath
@@ -140,13 +140,20 @@ class Dev404Page extends React.Component {
               Create a React.js component like the following in your site
               directory at
               {` `}"<code>{newFilePath}</code>"{` `}
-              and this page will automatically refresh to show the new page
-              component you created.
+              and then refresh to show the new page component you created.
             </p>
-            <pre>
+            <pre
+              style={{
+                border: `1px solid lightgray`,
+                padding: `8px`,
+                maxWidth: `80ch`,
+                background: `#f3f3f3`,
+              }}
+            >
               <code
                 dangerouslySetInnerHTML={{
-                  __html: `
+                  __html: `import * as React from "react"
+
 export default function Component () {
   return "Hello world"
 }`,
@@ -164,7 +171,14 @@ export default function Component () {
               {` `}"<code>{newAPIPath}</code>"{` `}
               and refresh to execute the new API function you created.
             </p>
-            <pre>
+            <pre
+              style={{
+                border: `1px solid lightgray`,
+                padding: `8px`,
+                maxWidth: `80ch`,
+                background: `#f3f3f3`,
+              }}
+            >
               <code
                 dangerouslySetInnerHTML={{
                   __html: `
@@ -191,10 +205,10 @@ export default function API (req, res) {
                 </h2>
                 <ul>
                   {this.props.data.allSiteFunction.nodes.map(node => {
-                    const apiRoute = `/api/${node.apiRoute}`
+                    const functionRoute = `/api/${node.functionRoute}`
                     return (
-                      <li key={apiRoute}>
-                        <a href={apiRoute}>{apiRoute}</a>
+                      <li key={functionRoute}>
+                        <a href={functionRoute}>{functionRoute}</a>
                       </li>
                     )
                   })}
@@ -250,7 +264,7 @@ export const pagesQuery = graphql`
   query PagesQuery {
     allSiteFunction {
       nodes {
-        apiRoute
+        functionRoute
       }
     }
     allSitePage(filter: { path: { ne: "/dev-404-page/" } }) {

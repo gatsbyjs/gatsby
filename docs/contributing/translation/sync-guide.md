@@ -2,6 +2,8 @@
 title: Keeping Translations Up-to-date
 ---
 
+> ⚠️ Note: At the moment our localization efforts are on pause, as we shifted towards a [redesign of the docs](https://www.gatsbyjs.com/blog/announcing-new-gatsby-docs-site/). Right now, we're prioritizing a new version of the tutorial. As with all prioritization efforts, we will weigh this, amongst other potential features, fixes, and improvements, and may consider picking up on the internationalization efforts of 2020. The repositories inside the GitHub org will remain. For now we archived the respective language channels on our Discord and the role for language maintainers.
+
 Every Friday at 6:00 PM PST, gatsbybot will run a sync script on every translation repo to bring them up-to-date with the current English repo. If there is an update to a page that is already translated, gatsbybot will create a pull request listing the conflicts between the translation and the new English content. Resolving these conflicts and merging these pull requests is essential to keeping your translation repo up-to-date.
 
 ## Gatsbybot sync behavior

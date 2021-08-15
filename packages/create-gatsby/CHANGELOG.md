@@ -3,6 +3,75 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.12.0-next.3...create-gatsby@1.13.0-next.0) (2021-08-12)
+
+**Note:** Version bump only for package create-gatsby
+
+# [1.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.12.0-next.2...create-gatsby@1.12.0-next.3) (2021-08-09)
+
+**Note:** Version bump only for package create-gatsby
+
+# [1.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.12.0-next.1...create-gatsby@1.12.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package create-gatsby
+
+# [1.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.12.0-next.0...create-gatsby@1.12.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency eslint to ^7.32.0 ([#32628](https://github.com/gatsbyjs/gatsby/issues/32628)) ([65fe945](https://github.com/gatsbyjs/gatsby/commit/65fe94547e0892b3978a7c7376ff1297acb0144f))
+
+# [1.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.11.0-next.0...create-gatsby@1.12.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package create-gatsby
+
+# [1.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.10.0-next.1...create-gatsby@1.11.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package create-gatsby
+
+# [1.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.10.0-next.0...create-gatsby@1.10.0-next.1) (2021-07-08)
+
+### Bug Fixes
+
+- **deps:** update dependency execa to v5 ([#32232](https://github.com/gatsbyjs/gatsby/issues/32232)) ([8a13969](https://github.com/gatsbyjs/gatsby/commit/8a1396995c02d45f00f241e22c626a20086fa955))
+- **deps:** update typescript ([#31152](https://github.com/gatsbyjs/gatsby/issues/31152)) ([124cfcc](https://github.com/gatsbyjs/gatsby/commit/124cfcc4cd42a50a992dde5b420610f290227a78))
+
+# [1.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.9.0-next.1...create-gatsby@1.10.0-next.0) (2021-07-01)
+
+**Note:** Version bump only for package create-gatsby
+
+# [1.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.9.0-next.0...create-gatsby@1.9.0-next.1) (2021-06-28)
+
+**Note:** Version bump only for package create-gatsby
+
+# [1.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.8.0-next.1...create-gatsby@1.9.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package create-gatsby
+
+# [1.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.8.0-next.0...create-gatsby@1.8.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package create-gatsby
+
+# [1.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.7.0-next.2...create-gatsby@1.8.0-next.0) (2021-06-03)
+
+**Note:** Version bump only for package create-gatsby
+
+# [1.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.7.0-next.1...create-gatsby@1.7.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package create-gatsby
+
+# [1.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.7.0-next.0...create-gatsby@1.7.0-next.1) (2021-05-31)
+
+**Note:** Version bump only for package create-gatsby
+
+# [1.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.6.0-next.0...create-gatsby@1.7.0-next.0) (2021-05-21)
+
+**Note:** Version bump only for package create-gatsby
+
+# [1.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.5.0-next.0...create-gatsby@1.6.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package create-gatsby
+
 # [1.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.4.0-next.0...create-gatsby@1.5.0-next.0) (2021-04-23)
 
 **Note:** Version bump only for package create-gatsby

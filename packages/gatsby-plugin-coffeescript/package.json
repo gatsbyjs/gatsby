@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-coffeescript",
   "description": "Adds CoffeeScript support for Gatsby",
-  "version": "3.5.0-next.0",
+  "version": "3.13.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -10,15 +10,15 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
+    "@babel/runtime": "^7.14.8",
     "coffee-loader": "^0.9.0",
     "coffee-react-transform": "^5.0.0",
     "coffeescript": "^2.5.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^1.5.0-next.0",
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
+    "babel-preset-gatsby-package": "^1.13.0-next.0",
     "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-coffeescript#readme",

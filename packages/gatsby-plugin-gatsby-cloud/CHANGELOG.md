@@ -3,6 +3,106 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@3.0.0-next.1...gatsby-plugin-gatsby-cloud@3.1.0-next.0) (2021-08-12)
+
+### Bug Fixes
+
+- cloud copy ([#32787](https://github.com/gatsbyjs/gatsby/issues/32787)) ([a66d774](https://github.com/gatsbyjs/gatsby/commit/a66d77493e89f1629da2e2d8c5ea6395bbf067fc))
+
+### Features
+
+- **gatsby-plugin-gatsby-cloud:** setup path-prefix for cloud ([#32708](https://github.com/gatsbyjs/gatsby/issues/32708)) ([fa04f51](https://github.com/gatsbyjs/gatsby/commit/fa04f51690d5850497876463b46e8dc98417740b))
+
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@3.0.0-next.0...gatsby-plugin-gatsby-cloud@3.0.0-next.1) (2021-08-09)
+
+### Features
+
+- **gatsby-plugin-gatsby-cloud:** Reusable preview loader component ([#31717](https://github.com/gatsbyjs/gatsby/issues/31717)) ([b2c30db](https://github.com/gatsbyjs/gatsby/commit/b2c30db1b83d5275c698d3b131832518833d07fc))
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.12.0-next.1...gatsby-plugin-gatsby-cloud@3.0.0-next.0) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
+# [2.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.12.0-next.0...gatsby-plugin-gatsby-cloud@2.12.0-next.1) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.11.0-next.0...gatsby-plugin-gatsby-cloud@2.12.0-next.0) (2021-07-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-gatsby-cloud:** Use fs instead of require to get webpack stats because require is cached ([#32535](https://github.com/gatsbyjs/gatsby/issues/32535)) ([da35203](https://github.com/gatsbyjs/gatsby/commit/da35203b9234f608a4f34b7091bc2e3d651c260e))
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.10.0-next.2...gatsby-plugin-gatsby-cloud@2.11.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
+# [2.10.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.10.0-next.1...gatsby-plugin-gatsby-cloud@2.10.0-next.2) (2021-07-13)
+
+### Bug Fixes
+
+- **gatsby-plugin-gatsby-cloud:** lower peak memory usage by stream writing the \_header.json file ([#32337](https://github.com/gatsbyjs/gatsby/issues/32337)) ([84dfe6d](https://github.com/gatsbyjs/gatsby/commit/84dfe6dc6c6e778f2e47ca086499d9b0960f4f87))
+
+# [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.10.0-next.0...gatsby-plugin-gatsby-cloud@2.10.0-next.1) (2021-07-08)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.9.0-next.1...gatsby-plugin-gatsby-cloud@2.10.0-next.0) (2021-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
+# [2.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.9.0-next.0...gatsby-plugin-gatsby-cloud@2.9.0-next.1) (2021-06-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-gatsby-cloud:** add gatsby-telemetry as a dependency ([#32047](https://github.com/gatsbyjs/gatsby/issues/32047)) ([4ba8c2c](https://github.com/gatsbyjs/gatsby/commit/4ba8c2cae3eb9ece767e65c549d033ecb78b2d7e))
+
+# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.8.0-next.2...gatsby-plugin-gatsby-cloud@2.9.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
+# [2.8.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.8.0-next.1...gatsby-plugin-gatsby-cloud@2.8.0-next.2) (2021-06-17)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
+# [2.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.8.0-next.0...gatsby-plugin-gatsby-cloud@2.8.0-next.1) (2021-06-10)
+
+### Features
+
+- **gatsby-plugin-gatsby-cloud:** Add telemetry event for `GATSBY_CLOUD_METADATA` ([#31831](https://github.com/gatsbyjs/gatsby/issues/31831)) ([424fa84](https://github.com/gatsbyjs/gatsby/commit/424fa844f4c391f9b3242e0ab3c929d5d1d7749f))
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.7.0-next.2...gatsby-plugin-gatsby-cloud@2.8.0-next.0) (2021-06-03)
+
+### Features
+
+- **gatsby-plugin-gatsby-cloud:** Track user engagement in preview UI ([#31642](https://github.com/gatsbyjs/gatsby/issues/31642)) ([58be1c3](https://github.com/gatsbyjs/gatsby/commit/58be1c3762fa3cf14c275d7952c52fb0ded6cbc4))
+
+# [2.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.7.0-next.1...gatsby-plugin-gatsby-cloud@2.7.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
+# [2.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.7.0-next.0...gatsby-plugin-gatsby-cloud@2.7.0-next.1) (2021-05-31)
+
+### Bug Fixes
+
+- **gatsby:** add componentChunkName to components list so don't need to loop over pages ([#31547](https://github.com/gatsbyjs/gatsby/issues/31547)) ([783b937](https://github.com/gatsbyjs/gatsby/commit/783b937c8f70478796bce37808bf8bf967bb4252))
+- **gatsby-plugin-gatsby-cloud:** fix cloud being bundled ([#31604](https://github.com/gatsbyjs/gatsby/issues/31604)) ([4a62a20](https://github.com/gatsbyjs/gatsby/commit/4a62a20450639fab915593f6d61bfc9fdddde1d1))
+- **gatsby-plugin-gatsby-cloud:** only load indicator code when enabled ([#31506](https://github.com/gatsbyjs/gatsby/issues/31506)) ([cb654cd](https://github.com/gatsbyjs/gatsby/commit/cb654cd7dd3a42f5e557736d18b0f7530d4a710e))
+
+# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.6.0-next.1...gatsby-plugin-gatsby-cloud@2.7.0-next.0) (2021-05-21)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
+# [2.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.6.0-next.0...gatsby-plugin-gatsby-cloud@2.6.0-next.1) (2021-05-20)
+
+### Features
+
+- **gatsby-plugin-gatsby-cloud:** enable preview status indicator and tooltip ([#31347](https://github.com/gatsbyjs/gatsby/issues/31347)) ([60a9898](https://github.com/gatsbyjs/gatsby/commit/60a98981056e47abf596bd713c466f64ad3281b8))
+
+# [2.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.5.0-next.1...gatsby-plugin-gatsby-cloud@2.6.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
 # [2.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.5.0-next.0...gatsby-plugin-gatsby-cloud@2.5.0-next.1) (2021-04-29)
 
 ### Bug Fixes

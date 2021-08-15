@@ -145,6 +145,17 @@ describe(`handle flags`, () => {
         }
       },
     },
+    {
+      name: `LMDB_NODE14_ONLY`,
+      env: `GATSBY_LMDB`,
+      command: `all`,
+      description: `test`,
+      umbrellaIssue: `test`,
+      telemetryId: `test`,
+      experimental: false,
+      testFitness: (): fitnessEnum => false,
+      requires: `Requires Node 14.10+`,
+    },
   ]
 
   const configFlags = {
@@ -192,6 +203,24 @@ describe(`handle flags`, () => {
     expect(unknownConfigFlags).toMatchSnapshot()
   })
 
+  it(`returns a message about unfit flags in the config`, () => {
+    const unfitConfigFlags = handleFlags(
+      activeFlags,
+      { LMDB_NODE14_ONLY: true },
+      `develop`
+    )
+    expect(unfitConfigFlags.enabledConfigFlags).not.toContain(
+      expect.objectContaining({
+        name: `LMDB_NODE14_ONLY`,
+      })
+    )
+    expect(unfitConfigFlags.unfitFlagMessage).toMatchInlineSnapshot(`
+      "The following flag(s) found in your gatsby-config.js are not supported in your environment and will have no effect:
+      - LMDB_NODE14_ONLY: Requires Node 14.10+"
+    `)
+    expect(unfitConfigFlags.unknownFlagMessage).toEqual(``)
+  })
+
   it(`opts in sites to a flag if their site is selected for partial release`, () => {
     // Nothing is enabled in their config.
     const response = handleFlags(activeFlags, {}, `develop`)
@@ -226,6 +255,8 @@ describe(`handle flags`, () => {
       Object {
         "enabledConfigFlags": Array [],
         "message": "",
+        "unfitFlagMessage": "The following flag(s) found in your gatsby-config.js are not supported in your environment and will have no effect:
+      - PARTIAL_RELEASE_ONLY_VERY_OLD_LODASH",
         "unknownFlagMessage": "",
       }
     `)
@@ -377,6 +408,7 @@ describe(`handle flags`, () => {
           "message": "The following flags are active:
         - SOME_FLAG · (Umbrella Issue (test)) · test
         ",
+          "unfitFlagMessage": "",
           "unknownFlagMessage": "",
         }
       `)
@@ -555,6 +587,157 @@ describe(`handle flags`, () => {
         - SUB_FLAG_A · (Umbrella Issue (test)) · test
         "
       `)
+    })
+  })
+
+  describe(`other flag suggestions`, () => {
+    it(`suggest other flags when there is flag explicitly enabled`, () => {
+      const response = handleFlags(
+        [
+          {
+            name: `ENABLED_FLAG`,
+            env: `GATSBY_ENABLED_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+          {
+            name: `OTHER_FLAG`,
+            env: `GATSBY_OTHER_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+        ],
+        {
+          ENABLED_FLAG: true,
+        },
+        `build`
+      )
+
+      expect(response.message).toMatchInlineSnapshot(`
+        "The following flags are active:
+        - ENABLED_FLAG · (Umbrella Issue (test)) · test
+
+        There is one other flag available that you might be interested in:
+        - OTHER_FLAG · (Umbrella Issue (test)) · test
+        "
+      `)
+    })
+
+    it(`suggest other flags when there is opted-in flag`, () => {
+      const response = handleFlags(
+        [
+          {
+            name: `OPTED_IN_FLAG`,
+            env: `GATSBY_OPTED_IN_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => `OPT_IN`,
+          },
+          {
+            name: `OTHER_FLAG`,
+            env: `GATSBY_OTHER_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+        ],
+        {},
+        `build`
+      )
+
+      expect(response.message).toMatchInlineSnapshot(`
+        "We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
+        and your site was automatically chosen as one of them. With your help, we'll then release them to everyone in the next minor release.
+
+        We greatly appreciate your help testing the change. Please report any feedback good or bad in the umbrella issue. If you do encounter problems, please disable the flag by setting it to false in your gatsby-config.js like:
+
+        flags: {
+          THE_FLAG: false
+        }
+
+        The following flags were automatically enabled on your site:
+        - OPTED_IN_FLAG · (Umbrella Issue (test)) · test
+
+        There is one other flag available that you might be interested in:
+        - OTHER_FLAG · (Umbrella Issue (test)) · test
+        "
+      `)
+    })
+
+    it(`doesn't suggest other flags if there are no enabled or opted in flags (no locked-in flags)`, () => {
+      const response = handleFlags(
+        [
+          {
+            name: `SOME_FLAG`,
+            env: `GATSBY_SOME_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+          {
+            name: `OTHER_FLAG`,
+            env: `GATSBY_OTHER_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+        ],
+        {},
+        `build`
+      )
+
+      expect(response.message).toMatchInlineSnapshot(`""`)
+    })
+
+    it(`doesn't suggest other flags if there are no enabled or opted in flags (with locked-in flag)`, () => {
+      const response = handleFlags(
+        [
+          {
+            name: `LOCKED_IN_FLAG`,
+            env: `GATSBY_LOCKED_IN_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => `LOCKED_IN`,
+          },
+          {
+            name: `OTHER_FLAG`,
+            env: `GATSBY_OTHER_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+        ],
+        {},
+        `build`
+      )
+
+      expect(response.message).toMatchInlineSnapshot(`""`)
     })
   })
 })

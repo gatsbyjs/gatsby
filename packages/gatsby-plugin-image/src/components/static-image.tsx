@@ -14,9 +14,8 @@ interface IPrivateProps {
   __error?: string
 }
 
-const StaticImage: React.FC<
-  IStaticImageProps & IPrivateProps
-> = _getStaticImage(GatsbyImageBrowser)
+const StaticImage: React.FC<IStaticImageProps & IPrivateProps> =
+  _getStaticImage(GatsbyImageBrowser)
 
 StaticImage.displayName = `StaticImage`
 StaticImage.propTypes = propTypes

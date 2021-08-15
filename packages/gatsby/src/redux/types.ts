@@ -3,7 +3,8 @@ import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import { DocumentNode, GraphQLSchema, DefinitionNode } from "graphql"
 import { SchemaComposer } from "graphql-compose"
 import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
-import { InternalJob, JobResultInterface } from "../utils/jobs-manager"
+import { ThunkAction } from "redux-thunk"
+import { InternalJob, JobResultInterface } from "../utils/jobs/manager"
 import { ITypeMetadata } from "../schema/infer/inference-metadata"
 
 type SystemPath = string
@@ -24,6 +25,8 @@ export enum ProgramStatus {
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
 }
 
+export type PageMode = "SSG" | "DSR" | "SSR"
+
 export interface IGatsbyPage {
   internalComponentName: string
   path: string
@@ -37,10 +40,25 @@ export interface IGatsbyPage {
   pluginCreator___NODE: Identifier
   pluginCreatorId: Identifier
   componentPath: SystemPath
+  ownerNodeId: Identifier
+  mode: PageMode
 }
 
 export interface IGatsbyFunction {
-  path: string
+  /** The route in the browser to access the function **/
+  functionRoute: string
+  /** The absolute path to the original function **/
+  originalAbsoluteFilePath: string
+  /** The relative path to the original function **/
+  originalRelativeFilePath: string
+  /** The relative path to the compiled function (always ends with .js) **/
+  relativeCompiledFilePath: string
+  /** The absolute path to the compiled function (doesn't transfer across machines) **/
+  absoluteCompiledFilePath: string
+  /** The matchPath regex created by path-to-regexp. Only created if the function is dynamic. **/
+  matchPath: string | undefined
+  /** The plugin that owns this function route **/
+  pluginName: string
 }
 
 export interface IGatsbyConfig {
@@ -106,6 +124,7 @@ export interface IGatsbyStaticQueryComponents {
 
 export interface IGatsbyPageComponent {
   componentPath: SystemPath
+  componentChunkName: string
   query: string
   pages: Set<string>
   isInBootstrap: boolean
@@ -128,7 +147,6 @@ type GatsbyNodes = Map<string, IGatsbyNode>
 
 export interface IGatsbyIncompleteJobV2 {
   job: InternalJob
-  plugin: IGatsbyPlugin
 }
 
 export interface IGatsbyIncompleteJob {
@@ -164,6 +182,7 @@ type BabelStageKeys =
 
 export interface IStateProgram extends IProgram {
   extensions: Array<string>
+  browserslist: Array<string>
 }
 
 export interface IQueryState {
@@ -206,6 +225,7 @@ export interface IGatsbyState {
   nodesByType: Map<string, GatsbyNodes>
   resolvedNodesCache: Map<string, any> // TODO
   nodesTouched: Set<string>
+  nodeManifests: Array<INodeManifest>
   lastAction: ActionsUnion
   flattenedPlugins: Array<{
     resolve: SystemPath
@@ -227,7 +247,7 @@ export interface IGatsbyState {
     pluginFilepath: SystemPath
   }>
   config: IGatsbyConfig
-  functions: Map<string, IGatsbyFunction>
+  functions: Array<IGatsbyFunction>
   pages: Map<string, IGatsbyPage>
   schema: GraphQLSchema
   definitions: Map<string, IDefinitionMeta>
@@ -303,6 +323,8 @@ export interface IGatsbyState {
     unsafeBuiltinWasUsedInSSR: boolean
   }
 }
+
+export type GatsbyStateKeys = keyof IGatsbyState
 
 export interface ICachedReduxState {
   nodes?: IGatsbyState["nodes"]
@@ -383,6 +405,8 @@ export type ActionsUnion =
   | IGeneratedHtml
   | IMarkHtmlDirty
   | ISSRUsedUnsafeBuiltin
+  | ISetSiteConfig
+  | IMergeWorkerQueryState
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -422,8 +446,8 @@ export interface ICreateJobV2Action {
   type: `CREATE_JOB_V2`
   payload: {
     job: IGatsbyIncompleteJobV2["job"]
-    plugin: IGatsbyIncompleteJobV2["plugin"]
   }
+  plugin: { name: string }
 }
 
 export interface IEndJobV2Action {
@@ -432,6 +456,7 @@ export interface IEndJobV2Action {
     jobContentDigest: string
     result: JobResultInterface
   }
+  plugin: { name: string }
 }
 
 export interface IRemoveStaleJobV2Action {
@@ -440,6 +465,13 @@ export interface IRemoveStaleJobV2Action {
     contentDigest: string
   }
 }
+
+export type ICreateJobV2FromInternalAction = ThunkAction<
+  Promise<Record<string, unknown>>,
+  IGatsbyState,
+  void,
+  ActionsUnion
+>
 
 interface ICreateJobAction {
   type: `CREATE_JOB`
@@ -855,4 +887,33 @@ interface IMarkHtmlDirty {
 
 interface ISSRUsedUnsafeBuiltin {
   type: `SSR_USED_UNSAFE_BUILTIN`
+}
+
+export interface ICreateNodeManifest {
+  type: `CREATE_NODE_MANIFEST`
+  payload: {
+    manifestId: string
+    node: IGatsbyNode
+    pluginName: string
+  }
+}
+
+export interface IDeleteNodeManifests {
+  type: `DELETE_NODE_MANIFESTS`
+}
+
+export interface INodeManifest {
+  manifestId: string
+  pluginName: string
+  node: {
+    id: string
+  }
+}
+
+export interface IMergeWorkerQueryState {
+  type: `MERGE_WORKER_QUERY_STATE`
+  payload: {
+    workerId: number
+    queryStateChunk: IGatsbyState["queries"]
+  }
 }

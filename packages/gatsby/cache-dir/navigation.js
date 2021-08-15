@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import loader, { PageResourceStatus } from "./loader"
-import redirects from "./redirects.json"
+import { maybeGetBrowserRedirect } from "./redirect-utils.js"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
 import { RouteAnnouncerProps } from "./route-announcer-props"
@@ -9,35 +9,12 @@ import { navigate as reachNavigate } from "@gatsbyjs/reach-router"
 import { globalHistory } from "@gatsbyjs/reach-router/lib/history"
 import { parsePath } from "gatsby-link"
 
-// Convert to a map for faster lookup in maybeRedirect()
-
-const redirectMap = new Map()
-const redirectIgnoreCaseMap = new Map()
-
-redirects.forEach(redirect => {
-  if (redirect.ignoreCase) {
-    redirectIgnoreCaseMap.set(redirect.fromPath, redirect)
-  } else {
-    redirectMap.set(redirect.fromPath, redirect)
-  }
-})
-
 function maybeRedirect(pathname) {
-  let redirect = redirectMap.get(pathname)
-  if (!redirect) {
-    redirect = redirectIgnoreCaseMap.get(pathname.toLowerCase())
-  }
+  const redirect = maybeGetBrowserRedirect(pathname)
+  const { hash, search } = window.location
 
   if (redirect != null) {
-    if (process.env.NODE_ENV !== `production`) {
-      if (!loader.isPageNotFound(pathname)) {
-        console.error(
-          `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`
-        )
-      }
-    }
-
-    window.___replace(redirect.toPath)
+    window.___replace(redirect.toPath + search + hash)
     return true
   } else {
     return false
@@ -71,23 +48,19 @@ const navigate = (to, options = {}) => {
     return
   }
 
-  let { pathname } = parsePath(to)
-  let redirect = redirectMap.get(pathname)
-  if (!redirect) {
-    redirect = redirectIgnoreCaseMap.get(pathname.toLowerCase())
-  }
+  const { pathname, search, hash } = parsePath(to)
+  const redirect = maybeGetBrowserRedirect(pathname)
 
   // If we're redirecting, just replace the passed in pathname
   // to the one we want to redirect to.
   if (redirect) {
-    to = redirect.toPath
-    pathname = parsePath(to).pathname
+    to = redirect.toPath + search + hash
   }
 
   // If we had a service worker update, no matter the path, reload window and
   // reset the pathname whitelist
   if (window.___swUpdated) {
-    window.location = pathname
+    window.location = pathname + search + hash
     return
   }
 
@@ -270,4 +243,4 @@ RouteUpdates.propTypes = {
   location: PropTypes.object.isRequired,
 }
 
-export { init, shouldUpdateScroll, RouteUpdates }
+export { init, shouldUpdateScroll, RouteUpdates, maybeGetBrowserRedirect }

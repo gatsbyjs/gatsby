@@ -530,6 +530,49 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
             excludeFieldNames: [\`viewer\`],
           `),
       }),
+    searchAndReplace: Joi.array()
+      .description(
+        `An array of options to search and replace strings in nodes. See below for options.`
+      )
+      .allow(null)
+      .items(
+        Joi.object({
+          search: Joi.string()
+            .description(
+              `The regex rule used to search when replacing strings in node data. It will search the stringified JSON of each node to capture strings at any nested depth.`
+            )
+            .meta({
+              example: wrapOptions(`
+                searchAndReplace: [
+                  {
+                    search: "https://some-url.com"
+                  },
+                ],
+              `),
+            }),
+          replace: Joi.string()
+            .description(`The replacement string for each regex match.`)
+            .meta({
+              example: wrapOptions(`
+                searchAndReplace: [
+                  {
+                    replace: "https://some-new-url.com",
+                  },
+                ],
+              `),
+            }),
+        })
+      )
+      .meta({
+        example: wrapOptions(`
+          searchAndReplace: [
+            {
+              search:  "https://some-url.com",
+              replace: "https://some-new-url.com",
+            },
+          ],
+        `),
+      }),
     html: Joi.object({
       useGatsbyImage: Joi.boolean()
         .default(true)
@@ -596,6 +639,19 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
           example: wrapOptions(`
               html: {
                 createStaticFiles: true,
+              },
+            `),
+        }),
+      generateWebpImages: Joi.boolean()
+        .default(false)
+        .allow(null)
+        .description(
+          `When this is true, .webp images will be generated for images in html fields in addition to the images gatsby-image normally generates.`
+        )
+        .meta({
+          example: wrapOptions(`
+              html: {
+                generateWebpImages: false,
               },
             `),
         }),

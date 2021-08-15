@@ -347,9 +347,8 @@ class BabelPluginAddPluginsToGatsbyConfig {
 
             if (shouldAdd) {
               if (t.isCallExpression(pluginNodes.value)) {
-                const plugins = pluginNodes.value.callee.object.elements.map(
-                  getPlugin
-                )
+                const plugins =
+                  pluginNodes.value.callee.object.elements.map(getPlugin)
                 const matches = plugins.filter(plugin => {
                   if (!key) {
                     return plugin.name === pluginOrThemeName
@@ -367,8 +366,8 @@ class BabelPluginAddPluginsToGatsbyConfig {
 
                   pluginNodes.value.callee.object.elements.push(pluginNode)
                 } else {
-                  pluginNodes.value.callee.object.elements = pluginNodes.value.callee.object.elements.map(
-                    node => {
+                  pluginNodes.value.callee.object.elements =
+                    pluginNodes.value.callee.object.elements.map(node => {
                       const plugin = getPlugin(node)
 
                       if (plugin.key !== key) {
@@ -384,8 +383,7 @@ class BabelPluginAddPluginsToGatsbyConfig {
                         options,
                         key,
                       })
-                    }
-                  )
+                    })
                 }
               } else {
                 const plugins = pluginNodes.value.elements.map(getPlugin)
@@ -429,8 +427,8 @@ class BabelPluginAddPluginsToGatsbyConfig {
               }
             } else {
               if (t.isCallExpression(pluginNodes.value)) {
-                pluginNodes.value.callee.object.elements = pluginNodes.value.callee.object.elements.filter(
-                  node => {
+                pluginNodes.value.callee.object.elements =
+                  pluginNodes.value.callee.object.elements.filter(node => {
                     const plugin = getPlugin(node)
 
                     if (key) {
@@ -438,8 +436,7 @@ class BabelPluginAddPluginsToGatsbyConfig {
                     }
 
                     return plugin.name !== pluginOrThemeName
-                  }
-                )
+                  })
               } else {
                 pluginNodes.value.elements = pluginNodes.value.elements.filter(
                   node => {

@@ -1,14 +1,18 @@
 import WebpackAssetsManifest from "webpack-assets-manifest"
-
+import { captureEvent } from "gatsby-telemetry"
 import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
 import copyFunctionsManifest from "./copy-functions-manifest"
 import createRedirects from "./create-redirects"
+import createSiteConfig from "./create-site-config"
 import { readJSON } from "fs-extra"
 import { joinPath } from "gatsby-core-utils"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
 
 const assetsManifest = {}
+
+process.env.GATSBY_PREVIEW_INDICATOR_ENABLED =
+  process.env.GATSBY_PREVIEW_INDICATOR_ENABLED || `false`
 
 // Inject a webpack plugin to get the file manifests so we can translate all link headers
 exports.onCreateWebpackConfig = ({ actions, stage }) => {
@@ -33,7 +37,29 @@ exports.onPostBuild = async (
   const pluginData = makePluginData(store, assetsManifest, pathPrefix)
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
-  const { redirects } = store.getState()
+  const { redirects, pageDataStats, nodes } = store.getState()
+
+  let nodesCount
+
+  try {
+    const { getDataStore } = require(`gatsby/dist/datastore`)
+    nodesCount = getDataStore().countNodes()
+  } catch (e) {
+    // swallow exception
+  }
+
+  if (typeof nodesCount === `undefined`) {
+    nodesCount = nodes && nodes.size
+  }
+
+  const pagesCount = pageDataStats && pageDataStats.size
+
+  captureEvent(`GATSBY_CLOUD_METADATA`, {
+    siteMeasurements: {
+      pagesCount,
+      nodesCount,
+    },
+  })
 
   let rewrites = []
   if (pluginOptions.generateMatchPathRewrites) {
@@ -55,6 +81,7 @@ exports.onPostBuild = async (
 
   await Promise.all([
     buildHeadersProgram(pluginData, pluginOptions, reporter),
+    createSiteConfig(pluginData, pluginOptions),
     createRedirects(pluginData, redirects, rewrites),
     copyFunctionsManifest(pluginData),
   ])

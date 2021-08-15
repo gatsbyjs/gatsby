@@ -3,6 +3,79 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.12.0-next.3...gatsby-plugin-netlify-cms@5.13.0-next.0) (2021-08-12)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+# [5.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.12.0-next.2...gatsby-plugin-netlify-cms@5.12.0-next.3) (2021-08-09)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+# [5.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.12.0-next.1...gatsby-plugin-netlify-cms@5.12.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+# [5.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.12.0-next.0...gatsby-plugin-netlify-cms@5.12.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency mini-css-extract-plugin to v1.6.2 ([#32586](https://github.com/gatsbyjs/gatsby/issues/32586)) ([6c6d4e5](https://github.com/gatsbyjs/gatsby/commit/6c6d4e501764614ad737c88ba5810b6fbbcbff68))
+- **deps:** update minor and patch dependencies for gatsby-plugin-netlify-cms ([#32600](https://github.com/gatsbyjs/gatsby/issues/32600)) ([b7b67a9](https://github.com/gatsbyjs/gatsby/commit/b7b67a9cd21abcbc33cae4338da420dd6af02aa6))
+
+# [5.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.11.0-next.0...gatsby-plugin-netlify-cms@5.12.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+# [5.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.10.0-next.1...gatsby-plugin-netlify-cms@5.11.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+# [5.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.10.0-next.0...gatsby-plugin-netlify-cms@5.10.0-next.1) (2021-07-08)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+# [5.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.9.0-next.0...gatsby-plugin-netlify-cms@5.10.0-next.0) (2021-07-01)
+
+### Bug Fixes
+
+- **plugin-netlify-cms:** exclude cms.css from index.html ([#32106](https://github.com/gatsbyjs/gatsby/issues/32106)) ([6ce7c62](https://github.com/gatsbyjs/gatsby/commit/6ce7c6292dc711501b612a56ecb2242b10739661))
+
+# [5.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.8.0-next.1...gatsby-plugin-netlify-cms@5.9.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+# [5.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.8.0-next.0...gatsby-plugin-netlify-cms@5.8.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+# [5.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.7.0-next.2...gatsby-plugin-netlify-cms@5.8.0-next.0) (2021-06-03)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+# [5.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.7.0-next.1...gatsby-plugin-netlify-cms@5.7.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+# [5.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.7.0-next.0...gatsby-plugin-netlify-cms@5.7.0-next.1) (2021-05-31)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+# [5.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.6.0-next.1...gatsby-plugin-netlify-cms@5.7.0-next.0) (2021-05-21)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+# [5.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.6.0-next.0...gatsby-plugin-netlify-cms@5.6.0-next.1) (2021-05-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** use friendly-errors-webpack-plugin package that satisfies webpack@5 peerDependency ([#31446](https://github.com/gatsbyjs/gatsby/issues/31446)) ([1a32958](https://github.com/gatsbyjs/gatsby/commit/1a32958e368ac63d2905bf27e1c2df6ac3aa8f43))
+
+# [5.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.5.0-next.2...gatsby-plugin-netlify-cms@5.6.0-next.0) (2021-05-06)
+
+### Bug Fixes
+
+- **deps:** update dependency mini-css-extract-plugin to v1.6.0 ([#31158](https://github.com/gatsbyjs/gatsby/issues/31158)) ([137630e](https://github.com/gatsbyjs/gatsby/commit/137630ec719ae67836755a44ddd8451ef25435ed))
+
 # [5.5.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.5.0-next.1...gatsby-plugin-netlify-cms@5.5.0-next.2) (2021-05-05)
 
 ### Bug Fixes

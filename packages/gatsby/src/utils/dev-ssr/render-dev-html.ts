@@ -1,50 +1,67 @@
-import JestWorker from "jest-worker"
+import { WorkerPool } from "gatsby-worker"
 import fs from "fs-extra"
 import nodePath from "path"
 import report from "gatsby-cli/lib/reporter"
 import { isCI } from "gatsby-core-utils"
-
+import { Stats } from "webpack"
 import { startListener } from "../../bootstrap/requires-writer"
 import { findPageByPath } from "../find-page-by-path"
 import { getPageData as getPageDataExperimental } from "../get-page-data"
 import { getDevSSRWebpack } from "../../commands/build-html"
-import { emitter } from "../../redux"
-import { Stats } from "webpack"
+import { emitter, GatsbyReduxStore } from "../../redux"
+import { IGatsbyPage } from "../../redux/types"
 
-const startWorker = (): any => {
-  const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
-    exposedMethods: [`renderHTML`, `deleteModuleCache`, `warmup`],
-    numWorkers: 1,
-    forkOptions: {
-      silent: false,
+interface IErrorRenderMeta {
+  codeFrame: string
+  source: string
+  line: number
+  column: number
+  sourceMessage?: string
+  stack?: string
+}
+
+// TODO: convert `render-dev-html-child.js` to TS and use `typeof import("./render-dev-html-child")`
+// instead of defining interface here
+interface IRenderDevHtmlChild {
+  renderHTML: (arg: {
+    path: string
+    componentPath: string
+    htmlComponentRendererPath: string
+    publicDir: string
+    isClientOnlyPage?: boolean
+    error?: IErrorRenderMeta
+    directory?: string
+  }) => Promise<string>
+  deleteModuleCache: (htmlComponentRendererPath: string) => void
+}
+
+const startWorker = (): WorkerPool<IRenderDevHtmlChild> => {
+  const newWorker = new WorkerPool<IRenderDevHtmlChild>(
+    require.resolve(`./render-dev-html-child`),
+    {
+      numWorkers: 1,
       env: {
-        ...process.env,
         NODE_ENV: isCI() ? `production` : `development`,
-        forceColors: true,
-        GATSBY_EXPERIMENTAL_DEV_SSR: true,
+        forceColors: `true`,
+        GATSBY_EXPERIMENTAL_DEV_SSR: `true`,
       },
-    },
-  })
-
-  // jest-worker is lazy with forking but we want to fork immediately so the user
-  // doesn't have to wait.
-  // @ts-ignore
-  newWorker.warmup()
+    }
+  )
 
   return newWorker
 }
 
-let worker
+let worker: WorkerPool<IRenderDevHtmlChild>
 export const initDevWorkerPool = (): void => {
   worker = startWorker()
 }
 
 let changeCount = 0
-export const restartWorker = (htmlComponentRendererPath): void => {
+export const restartWorker = (htmlComponentRendererPath: string): void => {
   changeCount += 1
   // Forking is expensive — each time we re-require the outputted webpack
   // file, memory grows ~10 mb — 25 regenerations means ~250mb which seems
-  // like an accepatable amount of memory to grow before we reclaim it
+  // like an acceptable amount of memory to grow before we reclaim it
   // by rebooting the worker process.
   if (changeCount > 25) {
     const oldWorker = worker
@@ -53,11 +70,14 @@ export const restartWorker = (htmlComponentRendererPath): void => {
     oldWorker.end()
     changeCount = 0
   } else {
-    worker.deleteModuleCache(htmlComponentRendererPath)
+    worker.all.deleteModuleCache(htmlComponentRendererPath)
   }
 }
 
-const searchFileForString = (substring, filePath): Promise<boolean> =>
+const searchFileForString = (
+  substring: string,
+  filePath: string
+): Promise<boolean> =>
   new Promise(resolve => {
     const escapedSubString = substring.replace(/[.*+?^${}()|[\]\\]/g, `\\$&`)
 
@@ -86,7 +106,7 @@ const searchFileForString = (substring, filePath): Promise<boolean> =>
 const ensurePathComponentInSSRBundle = async (
   page,
   directory
-): Promise<any> => {
+): Promise<boolean> => {
   // This shouldn't happen.
   if (!page) {
     report.panic(`page not found`, page)
@@ -128,14 +148,25 @@ const ensurePathComponentInSSRBundle = async (
   return found
 }
 
+interface IRenderDevHtmlProps {
+  path: string
+  page: IGatsbyPage
+  skipSsr?: boolean
+  store: GatsbyReduxStore
+  error?: IErrorRenderMeta
+  htmlComponentRendererPath: string
+  directory: string
+}
+
 export const renderDevHTML = ({
   path,
   page,
   skipSsr = false,
   store,
+  error = undefined,
   htmlComponentRendererPath,
   directory,
-}): Promise<string> =>
+}: IRenderDevHtmlProps): Promise<string> =>
   // eslint-disable-next-line no-async-promise-executor
   new Promise(async (resolve, reject) => {
     startListener()
@@ -222,13 +253,14 @@ export const renderDevHTML = ({
     const publicDir = nodePath.join(directory, `public`)
 
     try {
-      const htmlString = await worker.renderHTML({
+      const htmlString = await worker.single.renderHTML({
         path,
         componentPath: pageObj.component,
         htmlComponentRendererPath,
         directory,
         publicDir,
         isClientOnlyPage,
+        error,
       })
       return resolve(htmlString)
     } catch (error) {

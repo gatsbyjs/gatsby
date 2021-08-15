@@ -1,4 +1,4 @@
-import * as reporterActions from "./redux/actions"
+import * as reporterActionsForTypes from "./redux/actions"
 import { ActivityStatuses, ActivityTypes } from "./constants"
 import { Span } from "opentracing"
 import { reporter as gatsbyReporter } from "./reporter"
@@ -12,6 +12,7 @@ interface ICreateProgressReporterArguments {
   total: number
   span: Span
   reporter: typeof gatsbyReporter
+  reporterActions: typeof reporterActionsForTypes
 }
 
 export interface IProgressReporter {
@@ -36,6 +37,7 @@ export const createProgressReporter = ({
   total,
   span,
   reporter,
+  reporterActions,
 }: ICreateProgressReporterArguments): IProgressReporter => {
   let lastUpdateTime = 0
   let unflushedProgress = 0

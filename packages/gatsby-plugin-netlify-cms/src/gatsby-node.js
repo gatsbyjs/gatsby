@@ -2,9 +2,9 @@ import path from "path"
 import { mapValues, isPlainObject, trim } from "lodash"
 import webpack from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
+import { HtmlWebpackSkipAssetsPlugin } from "html-webpack-skip-assets-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
-// TODO: swap back when https://github.com/geowarin/friendly-errors-webpack-plugin/pull/86 lands
-import FriendlyErrorsPlugin from "@pieh/friendly-errors-webpack-plugin"
+import FriendlyErrorsPlugin from "@soda/friendly-errors-webpack-plugin"
 import CopyPlugin from "copy-webpack-plugin"
 import HtmlWebpackTagsPlugin from "html-webpack-tags-plugin"
 
@@ -189,18 +189,15 @@ exports.onCreateWebpackConfig = (
         title: htmlTitle,
         favicon: htmlFavicon,
         chunks: [`cms`],
-        excludeAssets: [/cms.css/],
         meta: {
           robots: includeRobots ? `all` : `none`, // Control whether search engines index this page
         },
       }),
 
-      // Exclude CSS from index.html, as any imported styles are assumed to be
-      // targeting the editor preview pane. Uses `excludeAssets` option from
-      // `HtmlWebpackPlugin` config
-      // HtmlWebpackExcludeAssetsPlugin is not compatible with webpack 5
-      // TODO: Replace `html-webpack-exclude-assets-plugin` with `html-webpack-skip-assets-plugin`
-      // new HtmlWebpackExcludeAssetsPlugin(),
+      // Exclude CSS from index.html, as any imported styles are assumed to be targeting the editor preview pane.
+      new HtmlWebpackSkipAssetsPlugin({
+        skipAssets: [`cms.css`],
+      }),
 
       // Pass in needed Gatsby config values.
       new webpack.DefinePlugin({

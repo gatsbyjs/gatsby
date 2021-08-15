@@ -91,6 +91,14 @@ Array [
     "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/10/sample.doc",
   },
   Object {
+    "id": "cG9zdDoxMDQ0OQ==",
+    "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/10/sample-mp4-file.mp4",
+  },
+  Object {
+    "id": "cG9zdDoxMDQ1Mw==",
+    "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/10/sample-mov-file.mov",
+  },
+  Object {
     "id": "cG9zdDoxMDQ=",
     "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2018/10/wordpress-logotype-standard.pdf",
   },
@@ -211,6 +219,24 @@ Object {
           },
           "name": "main menu",
         },
+        Object {
+          "count": null,
+          "databaseId": 37,
+          "id": "dGVybTozNw==",
+          "menuItems": Object {
+            "nodes": Array [],
+          },
+          "name": "Primary",
+        },
+        Object {
+          "count": null,
+          "databaseId": 38,
+          "id": "dGVybTozOA==",
+          "menuItems": Object {
+            "nodes": Array [],
+          },
+          "name": "Social Media",
+        },
       ],
     },
   },
@@ -316,6 +342,24 @@ Object {
           },
           "name": "main menu",
         },
+        Object {
+          "count": null,
+          "databaseId": 37,
+          "id": "dGVybTozNw==",
+          "menuItems": Object {
+            "nodes": Array [],
+          },
+          "name": "Primary",
+        },
+        Object {
+          "count": null,
+          "databaseId": 38,
+          "id": "dGVybTozOA==",
+          "menuItems": Object {
+            "nodes": Array [],
+          },
+          "name": "Social Media",
+        },
       ],
     },
   },
@@ -384,6 +428,21 @@ Object {
           },
           "title": "Yoast SEO",
           "uri": "/beautiful_slug/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
+            },
+          },
+          "title": "Featured Image Too Big",
+          "uri": "/featured-image-too-big/",
           "wpChildren": Object {
             "nodes": Array [],
           },
@@ -459,6 +518,21 @@ Object {
           },
           "title": "Yoast SEO",
           "uri": "/beautiful_slug/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
+            },
+          },
+          "title": "Featured Image Too Big",
+          "uri": "/featured-image-too-big/",
           "wpChildren": Object {
             "nodes": Array [],
           },
@@ -579,8 +653,13 @@ Object {
               },
             },
           },
-          "featuredImage": null,
-          "title": "Gutenberg: Common Blocks",
+          "featuredImage": Object {
+            "node": Object {
+              "altText": "",
+              "sourceUrl": "http://localhost:8001/wp-content/uploads/2020/03/1024x1024-300x300-1.png",
+            },
+          },
+          "title": "Gutenberg: Common Blocks DELTA SYNC",
         },
         Object {
           "author": Object {
@@ -696,6 +775,9 @@ Object {
           "pages": Object {
             "nodes": Array [
               Object {
+                "title": "Featured Image Too Big",
+              },
+              Object {
                 "title": "Yoast SEO",
               },
               Object {
@@ -750,6 +832,9 @@ Object {
           "pages": Object {
             "nodes": Array [
               Object {
+                "title": "Featured Image Too Big",
+              },
+              Object {
                 "title": "Yoast SEO",
               },
               Object {
@@ -778,7 +863,7 @@ Object {
                 "title": "Gutenberg: Formatting Blocks",
               },
               Object {
-                "title": "Gutenberg: Common Blocks",
+                "title": "Gutenberg: Common Blocks DELTA SYNC",
               },
             ],
           },
@@ -904,91 +989,6 @@ Array [
       "saveContent",
     ],
     "name": "WpBlock",
-  },
-  Object {
-    "fields": Array [
-      "author",
-      "authorDatabaseId",
-      "authorId",
-      "blocks",
-      "blocksJSON",
-      "content",
-      "contentType",
-      "databaseId",
-      "date",
-      "dateGmt",
-      "desiredSlug",
-      "enclosure",
-      "guid",
-      "id",
-      "lastEditedBy",
-      "lastUpdateTime",
-      "link",
-      "modified",
-      "modifiedGmt",
-      "previewedDatabaseId",
-      "previewedParentDatabaseId",
-      "seo",
-      "slug",
-      "status",
-      "template",
-      "title",
-      "uri",
-      "nodeType",
-      "parent",
-      "children",
-      "internal",
-    ],
-    "name": "WpBlockEditorPreview",
-  },
-  Object {
-    "fields": Array [
-      "totalCount",
-      "edges",
-      "nodes",
-      "pageInfo",
-      "distinct",
-      "max",
-      "min",
-      "sum",
-      "group",
-    ],
-    "name": "WpBlockEditorPreviewConnection",
-  },
-  Object {
-    "fields": Array [
-      "next",
-      "node",
-      "previous",
-    ],
-    "name": "WpBlockEditorPreviewEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "WpBlockEditorPreviewFieldsEnum",
-  },
-  Object {
-    "fields": null,
-    "name": "WpBlockEditorPreviewFilterInput",
-  },
-  Object {
-    "fields": null,
-    "name": "WpBlockEditorPreviewFilterListInput",
-  },
-  Object {
-    "fields": Array [
-      "totalCount",
-      "edges",
-      "nodes",
-      "pageInfo",
-      "field",
-      "fieldValue",
-    ],
-    "name": "WpBlockEditorPreviewGroupConnection",
-  },
-  Object {
-    "fields": null,
-    "name": "WpBlockEditorPreviewSortInput",
   },
   Object {
     "fields": null,
@@ -5910,7 +5910,6 @@ Array [
   Object {
     "fields": Array [
       "avatar",
-      "blockEditorPreviews",
       "capabilities",
       "comments",
       "databaseId",
@@ -6046,16 +6045,6 @@ Array [
   Object {
     "fields": null,
     "name": "WpUserSortInput",
-  },
-  Object {
-    "fields": Array [
-      "nodes",
-    ],
-    "name": "WpUserToBlockEditorPreviewConnection",
-  },
-  Object {
-    "fields": null,
-    "name": "WpUserToBlockEditorPreviewConnectionFilterInput",
   },
   Object {
     "fields": Array [
@@ -6367,6 +6356,17 @@ Array [
   Object {
     "fields": null,
     "name": "ActionMonitorActionToTermNodeConnectionWhereArgs",
+  },
+  Object {
+    "fields": null,
+    "name": "AttachFeaturedImageToNodeByIdInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "success",
+    ],
+    "name": "AttachFeaturedImageToNodeByIdPayload",
   },
   Object {
     "fields": Array [
@@ -10490,6 +10490,17 @@ Array [
   },
   Object {
     "fields": null,
+    "name": "RemoveFeaturedImageFromNodeByIdInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "success",
+    ],
+    "name": "RemoveFeaturedImageFromNodeByIdPayload",
+  },
+  Object {
+    "fields": null,
     "name": "ResetUserPasswordInput",
   },
   Object {
@@ -10561,6 +10572,7 @@ Array [
   },
   Object {
     "fields": Array [
+      "attachFeaturedImageToNodeById",
       "createActionMonitorAction",
       "createCategory",
       "createComment",
@@ -10589,6 +10601,7 @@ Array [
       "deleteUser",
       "increaseCount",
       "registerUser",
+      "removeFeaturedImageFromNodeById",
       "resetUserPassword",
       "restoreComment",
       "sendPasswordResetEmail",

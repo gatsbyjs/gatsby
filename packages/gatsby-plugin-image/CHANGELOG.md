@@ -3,6 +3,98 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.12.0-next.3...gatsby-plugin-image@1.13.0-next.0) (2021-08-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** only log missing plugin error in development ([#32335](https://github.com/gatsbyjs/gatsby/issues/32335)) ([4483ff4](https://github.com/gatsbyjs/gatsby/commit/4483ff44de77fb516fa368ad41f3cf8232c2c294))
+
+# [1.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.12.0-next.2...gatsby-plugin-image@1.12.0-next.3) (2021-08-09)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.12.0-next.1...gatsby-plugin-image@1.12.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.12.0-next.0...gatsby-plugin-image@1.12.0-next.1) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.11.0-next.2...gatsby-plugin-image@1.12.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.11.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.11.0-next.1...gatsby-plugin-image@1.11.0-next.2) (2021-07-22)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Switch react-dom import to remove createRoot warning ([#32457](https://github.com/gatsbyjs/gatsby/issues/32457)) ([9595ccb](https://github.com/gatsbyjs/gatsby/commit/9595ccb0f5efc4a4bdb4beb2fcfcf27a77e589fd))
+
+# [1.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.11.0-next.0...gatsby-plugin-image@1.11.0-next.1) (2021-07-19)
+
+### Bug Fixes
+
+- **gatsby,gatsby-plugin-image:** fix createRoot on React 18 ([#32378](https://github.com/gatsbyjs/gatsby/issues/32378)) ([79b7b04](https://github.com/gatsbyjs/gatsby/commit/79b7b0407ddc6b53c2e86b0cdd16866283a928d2))
+
+# [1.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.10.0-next.1...gatsby-plugin-image@1.11.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.10.0-next.0...gatsby-plugin-image@1.10.0-next.1) (2021-07-08)
+
+### Bug Fixes
+
+- **deps:** update typescript ([#31152](https://github.com/gatsbyjs/gatsby/issues/31152)) ([124cfcc](https://github.com/gatsbyjs/gatsby/commit/124cfcc4cd42a50a992dde5b420610f290227a78))
+
+# [1.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.9.0-next.1...gatsby-plugin-image@1.10.0-next.0) (2021-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.9.0-next.0...gatsby-plugin-image@1.9.0-next.1) (2021-06-28)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.8.0-next.1...gatsby-plugin-image@1.9.0-next.0) (2021-06-18)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.8.0-next.0...gatsby-plugin-image@1.8.0-next.1) (2021-06-10)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.7.0-next.2...gatsby-plugin-image@1.8.0-next.0) (2021-06-03)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.7.0-next.1...gatsby-plugin-image@1.7.0-next.2) (2021-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.7.0-next.0...gatsby-plugin-image@1.7.0-next.1) (2021-05-31)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.6.0-next.1...gatsby-plugin-image@1.7.0-next.0) (2021-05-21)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.6.0-next.0...gatsby-plugin-image@1.6.0-next.1) (2021-05-20)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Extra "margin" on CONSTRAINED ([#31497](https://github.com/gatsbyjs/gatsby/issues/31497)) ([5392cff](https://github.com/gatsbyjs/gatsby/commit/5392cffa6b433c5d26676693fb3961978893a2a0))
+
+# [1.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.5.0-next.1...gatsby-plugin-image@1.6.0-next.0) (2021-05-06)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** print error details ([#30417](https://github.com/gatsbyjs/gatsby/issues/30417)) ([d0dee0d](https://github.com/gatsbyjs/gatsby/commit/d0dee0d11139177842537552ef8a29997b510d63))
+
+### Features
+
+- **gatsby-plugin-image:** Export ImageDataLike type ([#30590](https://github.com/gatsbyjs/gatsby/issues/30590)) ([dad0032](https://github.com/gatsbyjs/gatsby/commit/dad0032db4ea24f6923033906e3b29552f05c7ed))
+
 # [1.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.5.0-next.0...gatsby-plugin-image@1.5.0-next.1) (2021-05-05)
 
 ### Bug Fixes

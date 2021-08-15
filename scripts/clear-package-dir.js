@@ -43,7 +43,7 @@ const argv = yargs
     describe: `Force deletion of file without prompting user to confirm`,
   }).argv
 
-const verbose = argv[`dry-run`] || argv[`verbose`] || !argv[`force`]
+const verbose = argv[`dry-run`] || argv[`verbose`]
 
 const buildIgnoreArray = str =>
   str
@@ -92,13 +92,12 @@ const getListOfFilesToClear = async ({ location, name }) => {
 
   const ig = ignore().add(gitignore)
 
-  if (verbose) {
-    console.log(`Files that will be packed for ${chalk.bold(name)}:`)
-  }
+  console.log(`Files that will be deleted for ${chalk.bold(name)}:`)
+
   const filesToDelete = result
     .filter(file => {
       const willBeDeleted = ig.ignores(file)
-      if (verbose) {
+      if (verbose || willBeDeleted) {
         console.log(
           `[ ${
             willBeDeleted ? chalk.red(`DEL`) : chalk.green(` - `)
