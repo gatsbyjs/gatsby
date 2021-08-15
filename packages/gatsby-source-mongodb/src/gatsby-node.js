@@ -1,7 +1,6 @@
 const MongoClient = require(`mongodb`).MongoClient
 const prepareMappingChildNode = require(`./mapping`)
 const sanitizeName = require(`./sanitize-name`)
-const queryString = require(`query-string`)
 const stringifyObjectIds = require(`./stringify-object-ids`)
 
 exports.sourceNodes = (
@@ -159,7 +158,8 @@ function createNodes(
 function getConnectionExtraParams(extraParams) {
   let connectionSuffix
   if (extraParams) {
-    connectionSuffix = queryString.stringify(extraParams, { sort: false })
+    const qs = new URLSearchParams(Object.entries(extraParams))
+    connectionSuffix = qs.toString()
   }
 
   return connectionSuffix ? `?` + connectionSuffix : ``

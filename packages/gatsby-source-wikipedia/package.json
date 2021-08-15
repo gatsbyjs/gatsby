@@ -30,8 +30,7 @@
   "license": "MIT",
   "dependencies": {
     "bluebird": "^3.7.2",
-    "node-fetch": "^2.6.1",
-    "query-string": "^6.13.3"
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.8",

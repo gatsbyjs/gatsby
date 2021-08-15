@@ -126,7 +126,6 @@
     "postcss-loader": "^5.0.0",
     "prompts": "^2.3.2",
     "prop-types": "^15.7.2",
-    "query-string": "^6.13.1",
     "raw-loader": "^4.0.2",
     "react-dev-utils": "^11.0.3",
     "react-refresh": "^0.9.0",

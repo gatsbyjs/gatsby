@@ -1,8 +1,10 @@
 const Promise = require(`bluebird`)
-const queryString = require(`query-string`)
 const fetch = require(`node-fetch`)
 
 const apiBase = `https://en.wikipedia.org/w/api.php?`
+
+const stringifySearchParameters = parameters =>
+  new URLSearchParams(Object.entries(parameters)).toString()
 
 const fetchNodesFromSearch = ({ query, limit = 15 }) =>
   search({ query, limit }).then(results =>
@@ -22,7 +24,7 @@ const fetchNodesFromSearch = ({ query, limit = 15 }) =>
 
 const getMetaData = name =>
   fetch(
-    `${apiBase}${queryString.stringify({
+    `${apiBase}${stringifySearchParameters({
       action: `query`,
       titles: name,
       format: `json`,
@@ -56,7 +58,7 @@ const getMetaData = name =>
 
 const search = ({ query, limit }) =>
   fetch(
-    `${apiBase}${queryString.stringify({
+    `${apiBase}${stringifySearchParameters({
       action: `opensearch`,
       search: query,
       format: `json`,

@@ -1,7 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { graphql, Link, navigate } from "gatsby"
-import queryString from "query-string"
 
 class Dev404Page extends React.Component {
   static propTypes = {
@@ -14,9 +13,11 @@ class Dev404Page extends React.Component {
     super(props)
     const { data, location } = this.props
     const pagePaths = data.allSitePage.nodes.map(node => node.path)
-    const urlState = queryString.parse(location.search)
+    const urlState = new URLSearchParams(location.search)
 
-    const initialPagePathSearchTerms = urlState.filter ? urlState.filter : ``
+    const initialPagePathSearchTerms = urlState.has(`filter`)
+      ? urlState.get(`filter`)
+      : ``
 
     this.state = {
       hasMounted: false,
@@ -74,10 +75,10 @@ class Dev404Page extends React.Component {
       location: { pathname, search },
     } = this.props
 
-    const searchMap = queryString.parse(search)
-    searchMap.filter = searchValue
+    const searchMap = new URLSearchParams(search)
+    searchMap.set(`filter`, searchValue)
 
-    const newSearch = queryString.stringify(searchMap)
+    const newSearch = searchMap.toString()
 
     if (search !== `?${newSearch}`) {
       navigate(`${pathname}?${newSearch}`, { replace: true })
