@@ -34,7 +34,7 @@ module.exports = {
 
 In the default setup, a blog will be served from the root path (`/`), and the notes content will be served from `/notes`.
 
-Run `gatsby develop` to start a development server and view your the site.
+Run `gatsby develop` to start a development server and view your site.
 
 ## Tutorial
 

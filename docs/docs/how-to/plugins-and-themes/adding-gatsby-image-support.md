@@ -17,7 +17,7 @@ There are three steps to add a basic `gatsbyImageData` resolver:
 
 ### Create the `generateImageSource` function
 
-The `generateImageSource` function is where you generate your image URLs. The image plugin calculates which sizes and formats are needed, according to the format, size and breakpoints requested by the user. For each of these, your function is passed the base URL, width, height and format (i.e. the image filetytpe), as well as any custom options that your plugin needs. You then return the generated URL. The returned object also includes width, height and format. This means you can return a different value from the one requested. For example, if the function requests an unsupported format or size, you can return a different one which will be used instead.
+The `generateImageSource` function is where you generate your image URLs. The image plugin calculates which sizes and formats are needed, according to the format, size and breakpoints requested by the user. For each of these, your function is passed the base URL, width, height and format (i.e. the image filetype), as well as any custom options that your plugin needs. You then return the generated URL. The returned object also includes width, height and format. This means you can return a different value from the one requested. For example, if the function requests an unsupported format or size, you can return a different one which will be used instead.
 
 ```js:title=gatsby-source-example/gatsby-node.js
 // In this example we use a custom `quality` option

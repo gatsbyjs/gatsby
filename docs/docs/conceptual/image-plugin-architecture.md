@@ -18,7 +18,7 @@ This is a React component, and is the actual component used to display all image
 
 #### The `StaticImage` component
 
-A a lightweight wrapper around `GatsbyImage`, this component is detected during the build process and the props are extracted to enable images to be downloaded, and processed by `gatsby-plugin-sharp` without needing GraphQL.
+A lightweight wrapper around `GatsbyImage`, this component is detected during the build process and the props are extracted to enable images to be downloaded, and processed by `gatsby-plugin-sharp` without needing GraphQL.
 
 #### Plugin toolkit
 
@@ -54,7 +54,7 @@ Many source plugins now support `GatsbyImage`. They do this by generating image 
 
 ### Anatomy of the component
 
-The `GatsbyImage` component wraps several other components, which are all exported by the plugin. It was originally designed to allow users to compose their own custom image components, but we have not documented this, so it should currently be considered unsupported. It is something that could be looked-at in future, but until that point `GatsbyImage` and `StaticImage` should be considered the only public components.
+The `GatsbyImage` component wraps several other components, which are all exported by the plugin. It was originally designed to allow users to compose their own custom image components, but we have not documented this, so it should currently be considered unsupported. It is something that could be looked at in the future, but until that point `GatsbyImage` and `StaticImage` should be considered the only public components.
 
 #### Lazy hydration
 
