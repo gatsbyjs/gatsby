@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.12.0-next.3...gatsby@3.13.0-next.0) (2021-08-12)
+
+### Bug Fixes
+
+- **gatsby:** reduce parse cost writing page-data ([#32763](https://github.com/gatsbyjs/gatsby/issues/32763)) ([b97782f](https://github.com/gatsbyjs/gatsby/commit/b97782f35c92a2c51fdd5c997a0ac3fe45cf2524))
+- **gatsby:** Wrap performance mark in check ([#32778](https://github.com/gatsbyjs/gatsby/issues/32778)) ([365d00b](https://github.com/gatsbyjs/gatsby/commit/365d00b2ee413ef38f56ba4262304865ecd4256e))
+
+### Features
+
+- **gatsby:** measure how long GraphQL takes to run in createPages and warn if > 10s ([#32751](https://github.com/gatsbyjs/gatsby/issues/32751)) ([8bd7cf0](https://github.com/gatsbyjs/gatsby/commit/8bd7cf06a0f0bea14c376b8c0daca8856baf6db6))
+
 # [3.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.12.0-next.2...gatsby@3.12.0-next.3) (2021-08-09)
 
 ### Bug Fixes

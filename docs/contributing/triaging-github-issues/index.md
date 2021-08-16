@@ -41,7 +41,7 @@ We do first touch maintenance so that:
 Gatsby is unique among most open source projects because:
 
 - Gatsby integrates with many third party tools (WordPress, Drupal, Contentful etc) via source plugins and hence the typical scope of issues is widened significantly
-- Gatsby aims to be really beginner friendly (we want to be the new way someone gets started with web development) and this means that we need to accommodate a wide range of skill levels
+- Gatsby aims to be really beginner-friendly (we want to be the new way someone gets started with web development) and this means that we need to accommodate a wide range of skill levels
 
 ## How do we do first touch maintenance?
 
@@ -50,7 +50,7 @@ Gatsby is unique among most open source projects because:
 - **Be empathetic.** The author of an issue might be asking something that’s obvious to us but that doesn’t mean it’s obvious to them - it's important to consider the issue from the author’s viewpoint. People often remember how we make them feel, not what we told them.
 - **Add context.** When answering an issue, it can be useful to link to existing documentation, issues, PRs, or provide related context. This means the issue can serve as a reference to future readers.
 - **Encourage community contributions.** Getting people involved makes a huge impact. We often spend the time to write up a task as a `good first issue` instead of fixing the issue ourselves. This can provide a low friction way for someone to get more involved in open source!
-- **Give issue authors time to close their own issues.** Sometimes, it might feel like an issue is resolved but the author could have follow up questions. It's usually best to give them a day or two to close the issue themselves.
+- **Give issue authors time to close their own issues.** Sometimes, it might feel like an issue is resolved but the author could have follow-up questions. It's usually best to give them a day or two to close the issue themselves.
 
 ### Labeling
 
@@ -86,7 +86,7 @@ If the reproduction is successful, label the issue with `status: confirmed` and 
 
 #### Feature Request
 
-Feature Requests are issues that request support for additional functionality not currently covered in the existing codebase. The first step in triaging a feature request is to determine if it's a reasonable request; this is a challenge and is usually the responsibility of a Gatsby team member to make. If it's clear that this isn't a feature it makes sense for Gatsby to implement, provide a comment explaining the decision making and close the issue. Review the [saved replies](#saved-replies) to see if there is an appropriate response already available. If you have any doubt about whether a feature request should be incorporated into Gatsby, label it with `status: needs core review` and leave the issue open.
+Feature Requests are issues that request support for additional functionality not currently covered in the existing codebase. The first step in triaging a feature request is to determine if it's a reasonable request; this is a challenge and is usually the responsibility of a Gatsby team member to make. If it's clear that this isn't a feature it makes sense for Gatsby to implement, provide a comment explaining the decision-making and close the issue. Review the [saved replies](#saved-replies) to see if there is an appropriate response already available. If you have any doubt about whether a feature request should be incorporated into Gatsby, label it with `status: needs core review` and leave the issue open.
 
 If it's determined to be a worthwhile feature, the next decision point is whether the feature should be added to core or upstream. Upstream issues are those that are outside of Gatsby's control and caused by dependencies. Upstream features should be labeled with `type: upstream` and include comments about the scope.
 

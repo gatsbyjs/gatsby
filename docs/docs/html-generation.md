@@ -68,7 +68,7 @@ Now we're ready to create a React component for the page (inside the HTML contai
 
 ### 5. Add Preload Link and Script Tags
 
-This is covered by the [Code Splitting](/docs/how-code-splitting-works/#construct-link-and-script-tags-for-current-page) docs. We essentially create a `<link rel="preload" href="component.js">` in the document head, and a follow up `<script src="component.js">` at the end of the document. For each component and page JSON.
+This is covered by the [Code Splitting](/docs/how-code-splitting-works/#construct-link-and-script-tags-for-current-page) docs. We essentially create a `<link rel="preload" href="component.js">` in the document head, and a follow-up `<script src="component.js">` at the end of the document. For each component and page JSON.
 
 ### 6. Inject Page Info to CDATA
 

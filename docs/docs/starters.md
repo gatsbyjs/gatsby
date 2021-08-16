@@ -26,7 +26,7 @@ This downloads the files and initializes the site by running `npm install`.
 
 ### Using GitHub usernames and repos instead of URLs
 
-Alternatively, you can also supply a GitHub user name and repository:
+Alternatively, you can also supply a GitHub username and repository:
 
 ```shell
 gatsby new [SITE_DIRECTORY] [GITHUB_USER_NAME/REPO]

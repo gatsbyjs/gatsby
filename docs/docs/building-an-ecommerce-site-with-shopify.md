@@ -5,7 +5,7 @@ examples:
     href: "https://github.com/gatsbyjs/gatsby-starter-shopify"
 ---
 
-In this tutorial, you will setup a new Gatsby website that fetches product data from [Shopify](https://www.shopify.com). The site displays a list of all products on a product listing page, and a page for every product in the store.
+In this tutorial, you will set up a new Gatsby website that fetches product data from [Shopify](https://www.shopify.com). The site displays a list of all products on a product listing page, and a page for every product in the store.
 
 If you're already comfortable with Gatsby and Shopify, you might want to check out our [Shopify Starter Demo](https://shopify-demo.gatsbyjs.com/), a proof of concept showcasing 10,000 products and 30,000 SKUs (variants).
 You can clone the starter, host it on Gatsby and connect it to your own Shopify data to develop your own proof of concept in as little as an hour.

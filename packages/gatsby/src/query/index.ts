@@ -259,6 +259,12 @@ function createPageQueryJob(
   }
 
   const { path, componentPath, context } = page
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    const { mode } = page
+    if (mode !== `SSG`) {
+      return undefined
+    }
+  }
   const { query } = component
 
   return {

@@ -185,7 +185,7 @@ For more information, see:
 
 ## `gatsby-source-wordpress@5.0.0`
 
-Recently we’ve announced the brand new WordPress integration. Refer to this post on the Gatsby Blog for the full details: [Announcing Gatsby’s New WordPress Integration](/blog/wordpress-integration/)
+Recently we’ve announced the brand-new WordPress integration. Refer to this post on the Gatsby Blog for the full details: [Announcing Gatsby’s New WordPress Integration](/blog/wordpress-integration/)
 
 The originally published version of renewed `gatsby-source-wordpress` is `4.0.0`. It is
 fully compatible with Gatsby v2.

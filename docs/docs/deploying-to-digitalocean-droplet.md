@@ -94,7 +94,7 @@ sudo chown -R $(whoami) .config
 
 The static files will be hosted publicly on the droplet. The `gatsby build` command provides utility to build the site and generate the static files in the `/public`.
 
-> **Note:** Go to the path where `<my-gatsby-app>` is. You can used the copied path for reference in a [previous step](#clone-your-repository-to-the-droplet).
+> **Note:** Go to the path where `<my-gatsby-app>` is. You can use the copied path for reference in a [previous step](#clone-your-repository-to-the-droplet).
 
 1. Install dependencies.
 

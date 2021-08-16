@@ -1,7 +1,7 @@
 {
   "name": "gatsby-worker",
   "description": "Utility to create worker pools",
-  "version": "0.3.0-next.3",
+  "version": "0.4.0-next.0",
   "author": "Michal Piechowiak<misiek.piechowiak@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -12,7 +12,7 @@
   "devDependencies": {
     "@babel/cli": "^7.14.8",
     "@babel/register": "^7.14.0",
-    "babel-preset-gatsby-package": "^1.12.0-next.3",
+    "babel-preset-gatsby-package": "^1.13.0-next.0",
     "cross-env": "^7.0.3",
     "rimraf": "^3.0.2",
     "typescript": "^4.3.5"
