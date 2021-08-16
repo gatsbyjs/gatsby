@@ -2,8 +2,6 @@
 title: Architecture of Gatsby's image plugins
 ---
 
-# Architecture of Gatsby's image plugins
-
 This is a technical document for anyone who is interested in how images are implemented in Gatsby. This is not for learning [how to use images in Gatsby](/docs/how-to/images-and-media/using-gatsby-plugin-image/), or even [how to add image support to a plugin](/docs/how-to/plugins-and-themes/adding-gatsby-image-support/). This is for if you are working on Gatsby, or if you're curious about how it's implemented.
 
 ## The image plugins
