@@ -306,6 +306,8 @@ At this point, our plugin is now ready to be used. To see the resulting function
 
 ![Output](../docs/images/remark-ast-output.png)
 
+**Note**: In case you don't see the intended effect, try wiping out the cache by running `gatsby clean`, then refresh your browser with `Ctr + Shift + r` (for Windows) or `Cmd + Shift + r` (for MacOS).
+
 ## Publishing the plugin
 
 To share this plugin with others, you can extract the plugin to its own directory outside of this site and then publish it to npm so it can be accessed both on npm and [Submitted to the Plugin Library](/contributing/submit-to-plugin-library).
