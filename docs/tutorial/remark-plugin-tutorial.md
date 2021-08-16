@@ -306,7 +306,7 @@ At this point, our plugin is now ready to be used. To see the resulting function
 
 ![Output](../docs/images/remark-ast-output.png)
 
-**Note**: In case you don't see the intended effect, try wiping out the cache by running `gatsby clean`, then refresh your browser with `Ctr + Shift + r` (for Windows) or `Cmd + Shift + r` (for MacOS).
+**Note**: In case you don't see the intended effect, try wiping out the cache by running `gatsby clean`.
 
 ## Publishing the plugin
 
