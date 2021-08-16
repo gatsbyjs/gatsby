@@ -19,7 +19,7 @@ Pages can also be modified by you after their creation. For example, you could c
 To see what pages are being created by your code or plugins, you can query for
 page information while developing in Graph<em>i</em>QL. Paste the following query in
 the Graph<em>i</em>QL IDE for your site. The Graph<em>i</em>QL IDE is available when running
-your sites development server at `HOST:PORT/___graphql` e.g.
+your site's development server at `HOST:PORT/___graphql` e.g.
 `http://localhost:8000/___graphql`.
 
 ```graphql

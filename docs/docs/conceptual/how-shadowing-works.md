@@ -167,7 +167,7 @@ getThemeAndComponent(filepath) {
 }
 ```
 
-The `resolved` hook is called after Webpack's default resolution process has been completed. At that point, the requested path has been resolved to the absolute path on disk of the file that would have been used if no shadowing was being performed. At that point, `node_modules`, aliases and symlinks have all been resolved. Also, the requested path will contains the file extension that was determined by Webpack.
+The `resolved` hook is called after Webpack's default resolution process has been completed. At that point, the requested path has been resolved to the absolute path on disk of the file that would have been used if no shadowing was being performed. At that point, `node_modules`, aliases and symlinks have all been resolved. Also, the requested path will contain the file extension that was determined by Webpack.
 
 For example, let's assume that user code requires a file named `gatsby-theme-tomato/src/button/heading`. On entering `before-resolved` hook for `GatsbyThemeComponentShadowingResolverPlugin`, `request.path` might looks something like `/some/path/my-site/node_modules/gatsby-theme-tomato/src/button/heading.js` (that is if `gatsby-theme-tomato` has been installed from a npm repository; that would be `/some/path/my-site/packages/gatsby-theme-tomato/src/button/heading.js` if yarn-style workspaces are being used). Now, assuming that theme `gatsby-theme-tomato` has been properly registered in that site's gatsby-config.js, then `getThemeAndComponent` will return:
 
@@ -189,7 +189,7 @@ If there is more than one matching theme there is some sort of ambiguity and we 
 
 #### No matches
 
-If there are no theme matches we return the invoked callback because there's nothing more to do, time to let webpack continue on it's way with module resolution.
+If there are no theme matches we return the invoked callback because there's nothing more to do, time to let webpack continue on its way with module resolution.
 
 ```js
 if (matchingThemes.length === 0) {
@@ -199,7 +199,7 @@ if (matchingThemes.length === 0) {
 
 ### The component shadow
 
-Once it is determined that a file file being required belongs to theme, we need to figure out if that file is actually shadowed by some other file (and if so, which path should it resolve to instead). We do this by calling `resolveComponentPath` which uses the theming algorithm to attempt to find a shadowed component. If nothing is found we let Webpack continue with its default resolution algorithm.
+Once it is determined that a file being required belongs to a theme, we need to figure out if that file is actually shadowed by some other file (and if so, which path should it resolve to instead). We do this by calling `resolveComponentPath` which uses the theming algorithm to attempt to find a shadowed component. If nothing is found we let Webpack continue with its default resolution algorithm.
 
 ```js
 // This is the shadowing algorithm.
