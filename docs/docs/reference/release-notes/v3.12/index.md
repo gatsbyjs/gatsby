@@ -23,23 +23,19 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Improvements to `gatsby-source-shopify`
 
-TODO
-
-- https://github.com/gatsbyjs/gatsby/pull/32674
-- https://github.com/gatsbyjs/gatsby/pull/32710
-- https://github.com/gatsbyjs/gatsby/pull/32144
-- https://github.com/gatsbyjs/gatsby/pull/32775
-- https://github.com/gatsbyjs/gatsby/pull/32774
+- Fix sales channel filter, via [PR #32674](https://github.com/gatsbyjs/gatsby/pull/32674)
+- Only query locations fields when locations are enabled via plugin option, via [PR #32710](https://github.com/gatsbyjs/gatsby/pull/32710)
+- On Gatsby Cloud prioritize production builds over content previews and branch previews, via [PR #32144](https://github.com/gatsbyjs/gatsby/pull/32144)
+- Fix locations GraphQL variable to prevent gql validation errors, via [PR #32775](https://github.com/gatsbyjs/gatsby/pull/32775)
+- Add backwards compatible fix to Shopify API breaking change for `valueType` field, via [PR #32774](https://github.com/gatsbyjs/gatsby/pull/32774)
 
 ## Improvements to `gatsby-source-wordpress`
 
-TODO
-
-- https://github.com/gatsbyjs/gatsby/pull/32723 (hint to new preview loader?)
-- https://github.com/gatsbyjs/gatsby/pull/32488
-- https://github.com/gatsbyjs/gatsby/pull/30896
-- https://github.com/gatsbyjs/gatsby/pull/32679
-- https://github.com/gatsbyjs/gatsby/pull/32752
+- Make support for the upcoming Gatsby Cloud Preview Loader feature more scaleable, via [PR #32723](https://github.com/gatsbyjs/gatsby/pull/32723)
+- Fix accessing property on `undefined` in Preview Loader code, via [PR #32488](https://github.com/gatsbyjs/gatsby/pull/32488)
+- Add the option to generate WebP images in HTML fields while transforming WP images to static Gatsby images, via [PR #30896](https://github.com/gatsbyjs/gatsby/pull/30896)
+- Fix bug where a low perPage option value could prevent some MediaItem nodes from being fetched, via [PR #32679](https://github.com/gatsbyjs/gatsby/pull/32679)
+- Fix accessing property on `undefined` when processing nodes. The code assumed all nodes being processed were the same type but occasionally that wasn't the case, via [PR #32752](https://github.com/gatsbyjs/gatsby/pull/32752)
 
 ## Notable bugfixes & improvements
 
