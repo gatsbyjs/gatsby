@@ -21,13 +21,34 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ---
 
-## TODO
+## Improvements to `gatsby-source-shopify`
 
 TODO
+
+- https://github.com/gatsbyjs/gatsby/pull/32674
+- https://github.com/gatsbyjs/gatsby/pull/32710
+- https://github.com/gatsbyjs/gatsby/pull/32144
+- https://github.com/gatsbyjs/gatsby/pull/32775
+- https://github.com/gatsbyjs/gatsby/pull/32774
+
+## Improvements to `gatsby-source-wordpress`
+
+TODO
+
+- https://github.com/gatsbyjs/gatsby/pull/32723 (hint to new preview loader?)
+- https://github.com/gatsbyjs/gatsby/pull/32488
+- https://github.com/gatsbyjs/gatsby/pull/30896
+- https://github.com/gatsbyjs/gatsby/pull/32679
+- https://github.com/gatsbyjs/gatsby/pull/32752
 
 ## Notable bugfixes & improvements
 
-TODO
+- Dependency Updates: The Renovate bot updated a bunch of dependencies (see [full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.12.0-next.0...gatsby@3.12.0) for more details), most notably: `eslint` (7.28.0 to 7.32.0), `styletron-react` (5.2.7 to 6.0.1)
+- `gatsby-plugin-sitemap`: Add warning that old `exclude` option is obsolete, via [PR #32509](https://github.com/gatsbyjs/gatsby/pull/32509)
+- `gatsby`: Worker support for `gatsby develop`, via [PR #32432](https://github.com/gatsbyjs/gatsby/pull/32432)
+- `gatsby-source-contentful`: base64 previews now reflect all query options, via [PR #32709](https://github.com/gatsbyjs/gatsby/pull/32709)
+- `gatsby-remark-image-contentful`: Show useful error message for files that can not be rendered as image, via [PR #32530](https://github.com/gatsbyjs/gatsby/pull/32530)
+- `gatsby`: Speed up "Writing page-data" step by ~10%, via [PR #32763](https://github.com/gatsbyjs/gatsby/pull/32763)
 
 ## Contributors
 
