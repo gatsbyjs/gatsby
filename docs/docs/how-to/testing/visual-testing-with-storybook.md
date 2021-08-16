@@ -41,13 +41,15 @@ npm i -D @storybook/builder-webpack5 @storybook/manager-webpack5
 
 Then, update your [`.storybook/main.js`](https://storybook.js.org/docs/react/configure/overview) to the following:
 
-```js:title=.storybook/main.js{4-6}
+```js:title=.storybook/main.js
 module.exports = {
   stories: [],
   addons: [],
+  // highlight-start
   core: {
     builder: "webpack5",
   },
+  // highlight-end
 }
 ```
 
