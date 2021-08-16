@@ -7,7 +7,7 @@ title: Visual Testing with Storybook
 Knowing your components look as intended in every permutation is an excellent way to test them visually and provides "living documentation" for them. It makes it easier for teams to:
 
 1. know what components are available to them in a given project and
-2. what props do those components accept, and what all of the states of that component are.
+2. what props do those components accept and what all of the states of that component are.
 
 As your project grows over time, having this information available will be invaluable. This is the function of [Storybook](https://storybook.js.org/). Storybook is a UI development environment for your UI components. With it, you can visualize different states of your UI components and develop them interactively.
 
@@ -21,19 +21,19 @@ To set up Storybook, you need to install dependencies and do some custom configu
 npx sb init --builder webpack5
 ```
 
-> **Note:** Using the builder flag will adjust Storybook's bootstrap process to include Webpack 5 support out of the box.
+> **Note:** Using the builder flag will adjust Storybook's bootstrap process to include webpack 5 support out of the box.
 
 Running this command adds the necessary Storybook dependencies, configuration files, and a set of boilerplate stories that you can browse.
 
 ### Updating from a previous version
 
-If you're upgrading from a previous Storybook version, be advised that Storybook relies on Webpack 4, and Gatsby is currently supporting Webpack 5. To update your Storybook version, run the following command:
+If you're upgrading from a previous Storybook version, be advised that Storybook relies on webpack 4, and Gatsby is currently supporting webpack 5. To update your Storybook version, run the following command:
 
 ```shell
 npx sb upgrade
 ```
 
-Add the following development dependencies to enable Webpack 5 with Storybook:
+Add the following development dependencies to enable webpack 5 with Storybook:
 
 ```shell
 npm i -D @storybook/builder-webpack5 @storybook/manager-webpack5
@@ -41,15 +41,13 @@ npm i -D @storybook/builder-webpack5 @storybook/manager-webpack5
 
 Then, update your [`.storybook/main.js`](https://storybook.js.org/docs/react/configure/overview) to the following:
 
-```js:title=.storybook/main.js
+```js:title=.storybook/main.js{4-6}
 module.exports = {
   stories: [],
   addons: [],
-  // highlight-start
   core: {
     builder: "webpack5",
   },
-  // highlight-end
 }
 ```
 
@@ -59,7 +57,7 @@ Additional configuration is required to allow Gatsby's components to be manually
 
 ### Manual configuration
 
-Storybook's Webpack configuration will require adjustments to allow you to transpile Gatsby's source files and ensure the proper Babel plugins are used.
+Storybook's webpack configuration will require adjustments to allow you to transpile Gatsby's source files and ensure the proper Babel plugins are used.
 
 In your Storybook configuration file (i.e., `.storybook/main.js`) add the following:
 
@@ -156,7 +154,7 @@ module.exports = {
 
 ## TypeScript Support
 
-The Storybook v6 has [out-of-the-box support for TypeScript](https://storybook.js.org/docs/react/configure/typescript). Your components and stories can be authored with the `.tsx` extension.
+Storybook v6 has [out-of-the-box support for TypeScript](https://storybook.js.org/docs/react/configure/typescript). Your components and stories can be authored with the `.tsx` extension.
 
 ## Writing stories
 
@@ -164,7 +162,7 @@ A complete guide to writing stories is beyond the scope of this guide, but we'll
 
 First, create the story file. Storybook looks for all files with a `.stories.js` extension and loads them into Storybook for you. Generally, you will want your stories near where the component is defined. However, since this is Gatsby, you will have to create those files outside the `pages` directory if you want stories for your pages.
 
-> A good solution is to use the `stories` directory created when Storybook was installed and put any page stories in there.
+A good solution is to use the `stories` directory which was created when Storybook was installed and put any page stories in there.
 
 ```jsx:title=src/components/header.stories.js
 import React from "react"
