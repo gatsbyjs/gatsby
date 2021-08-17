@@ -226,7 +226,7 @@ async function getPageDataDigestForPagePath(
       pagePath
     )
 
-    console.info({ pageData: JSON.stringify(pageData, null, 2) })
+    console.info({ pageData: JSON.stringify(pageData) })
 
     const pageDataDigest = createContentDigest(pageData)
 
