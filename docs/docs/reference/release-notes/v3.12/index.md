@@ -8,7 +8,8 @@ Welcome to `gatsby@3.12.0` release (August 2021 #2)
 
 Key highlights of this release:
 
-- [TODO](#todo) - TODO
+- [Improvements to `gatsby-source-shopify`](#improvements-to-gatsby-source-shopify) - Add compat for breaking change in Shopify's API
+- [Improvements to `gatsby-source-wordpress`](#improvements-to-gatsby-source-wordpress) - Support for generating WebP images in HTML fields
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -23,11 +24,9 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Improvements to `gatsby-source-shopify`
 
-- Fix sales channel filter, via [PR #32674](https://github.com/gatsbyjs/gatsby/pull/32674)
-- Only query locations fields when locations are enabled via plugin option, via [PR #32710](https://github.com/gatsbyjs/gatsby/pull/32710)
-- On Gatsby Cloud prioritize production builds over content previews and branch previews, via [PR #32144](https://github.com/gatsbyjs/gatsby/pull/32144)
-- Fix locations GraphQL variable to prevent gql validation errors, via [PR #32775](https://github.com/gatsbyjs/gatsby/pull/32775)
-- Add backwards compatible fix to Shopify API breaking change for `valueType` field, via [PR #32774](https://github.com/gatsbyjs/gatsby/pull/32774)
+Our `gatsby-source-shopify` plugin received mulitple bug fixes and improvements in this release. If you use Sales Channels you might have gotten wrong results in the past. The filter for it was fixed in [PR #32674](https://github.com/gatsbyjs/gatsby/pull/32674). With [PR #32710](https://github.com/gatsbyjs/gatsby/pull/32710) the plugin will also only query location fields when you activate locations since it requires additional permissions. If you're using [Gatsby Cloud](https://www.gatsbyjs.com/products/cloud/) production builds will now be prioritized over content previews and branch previews (via [PR #32144](https://github.com/gatsbyjs/gatsby/pull/32144)).
+
+Shopify recently deprecated the `valueType` field on metafields. We've updated the API version to `2021-07`, added the new `type` field and aliased the old `valueType` to this new field. So the breaking change is backwards compatible, see [PR #32774](https://github.com/gatsbyjs/gatsby/pull/32774) for all details.
 
 ## Improvements to `gatsby-source-wordpress`
 
