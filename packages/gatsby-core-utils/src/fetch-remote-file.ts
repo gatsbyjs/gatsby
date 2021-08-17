@@ -18,14 +18,14 @@ export interface IFetchRemoteFileOptions {
   auth?: {
     htaccess_pass?: string
     htaccess_user?: string
-  },
+  }
   httpOptions?: {
     auth?: string
     agent?: {
       http?: Agent
       https?: Agent
     }
-  },
+  }
   httpHeaders?: OutgoingHttpHeaders
   ext?: string
   name?: string
@@ -203,7 +203,12 @@ export async function fetchRemoteFile({
   const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
 
   // Fetch the file.
-  const response = await requestRemoteNode(url, headers, tmpFilename, httpOptions)
+  const response = await requestRemoteNode(
+    url,
+    headers,
+    tmpFilename,
+    httpOptions
+  )
 
   if (response.statusCode === 200) {
     // Save the response headers for future requests.
