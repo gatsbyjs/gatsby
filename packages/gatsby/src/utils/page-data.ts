@@ -11,6 +11,7 @@ import { store } from "../redux"
 import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
 import { isLmdbStore } from "../datastore"
 import type GatsbyCacheLmdb from "./cache-lmdb"
+import { processNodeManifests } from "./node-manifest"
 
 import { IExecutionResult } from "../query/types"
 
@@ -279,6 +280,9 @@ export async function flush(): Promise<void> {
   }
 
   writePageDataActivity.end()
+
+  await processNodeManifests()
+
   isFlushing = false
 
   return
