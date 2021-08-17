@@ -345,8 +345,8 @@ Once you have your GraphQL query set up, you can to add it to your blog post pag
         mdx(slug: {eq: $slug}) {
           body
           frontmatter {
-            date(formatString: "MMMM DD, YYYY")
             title
+            date(formatString: "MMMM DD, YYYY")
             hero_image_alt
             hero_image_credit_link
             hero_image_credit_text
@@ -457,9 +457,9 @@ const BlogPost = ({ data }) => {
       {/* highlight-start */}
       <p>
         Photo Credit:{" "}
-        <Link to={data.mdx.frontmatter.hero_image_credit_link}>
+        <a href={data.mdx.frontmatter.hero_image_credit_link}>
           {data.mdx.frontmatter.hero_image_credit_text}
-        </Link>
+        </a>
       </p>
       {/* highlight-end */}
       <MDXRenderer>
