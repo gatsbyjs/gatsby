@@ -10456,10 +10456,10 @@ dnserrors@2.1.2:
     lodash.defaults "^4.2.0"
     lodash.omit "^4.5.0"
 
-do-sync@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/do-sync/-/do-sync-2.2.0.tgz#663e78d9e60391141dba8e63cb6f710b50fbd219"
-  integrity sha512-2+QpOyDXuqWJNi3PsrG9cAYc1YIUpRJfWuYivqAOYTgS/T5/5G9p0kgqjpl6wcHPWMjUFvMEGyXFbYsKI8x3Tw==
+do-sync@^3.0.11:
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/do-sync/-/do-sync-3.0.11.tgz#2500fa69a71fba466556fe4ce564569ffa5ab5b1"
+  integrity sha512-LxkTVZflWg0frWsgg3dEiJb0FViDUydK/lNXdqgHdz5Oz1vi77Uw7GRdEPp7CL2kjl96ijCMJWHJv35wQ9FglA==
   dependencies:
     cross-spawn "^7.0.2"
 
