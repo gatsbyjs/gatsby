@@ -52,7 +52,7 @@ const INCOMPLETE_RETRY_LIMIT = process.env.GATSBY_INCOMPLETE_RETRY_LIMIT
  * @param  {String}   url
  * @param  {Headers}  headers
  * @param  {String}   tmpFilename
- * @param  {Object}   httpOpts
+ * @param  {Object}   httpOptions
  * @param  {number}   attempt
  * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
  */
@@ -60,7 +60,7 @@ const requestRemoteNode = (
   url: got.GotUrl,
   headers: OutgoingHttpHeaders,
   tmpFilename: string,
-  httpOpts: got.GotOptions<string | null> | undefined,
+  httpOptions: got.GotOptions<string | null> | undefined,
   attempt: number = 1
 ): Promise<IncomingMessage> =>
   new Promise((resolve, reject) => {
@@ -74,7 +74,7 @@ const requestRemoteNode = (
       if (attempt < STALL_RETRY_LIMIT) {
         // Retry by calling ourself recursively
         resolve(
-          requestRemoteNode(url, headers, tmpFilename, httpOpts, attempt + 1)
+          requestRemoteNode(url, headers, tmpFilename, httpOptions, attempt + 1)
         )
       } else {
         reject(`Failed to download ${url} after ${STALL_RETRY_LIMIT} attempts`)
@@ -92,7 +92,7 @@ const requestRemoteNode = (
       timeout: {
         send: CONNECTION_TIMEOUT, // https://github.com/sindresorhus/got#timeout
       },
-      ...httpOpts,
+      ...httpOptions,
     })
 
     let haveAllBytesBeenWritten = false
@@ -140,7 +140,7 @@ const requestRemoteNode = (
                 url,
                 headers,
                 tmpFilename,
-                httpOpts,
+                httpOptions,
                 attempt + 1
               )
             )
@@ -177,12 +177,15 @@ export async function fetchRemoteFile({
     headers[`If-None-Match`] = cachedHeaders.etag
   }
 
-  // Add htaccess authentication if passed in. This isn't particularly
-  // extensible. We should define a proper API that we validate.
-  const httpOpts: got.GotOptions<string | null> = {}
+  // Add Basic authentication if passed in:
+  // https://github.com/sindresorhus/got/blob/main/documentation/2-options.md#username
+  // The "auth" API isn't particularly extensible, we should define an API that we validate
+  const httpOptions: got.GotOptions<string | null> = {}
   if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
-    httpOpts.username = auth.htaccess_user
-    httpOpts.password = auth.htaccess_pass
+    // @ts-ignore - We use outdated @types/got typings. Once we update got everywhere we can remove @types/got and have correct typings
+    httpOptions.username = auth.htaccess_user
+    // @ts-ignore - see above
+    httpOptions.password = auth.htaccess_pass
   }
 
   // Create the temp and permanent file names for the url.
@@ -197,7 +200,12 @@ export async function fetchRemoteFile({
   const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
 
   // Fetch the file.
-  const response = await requestRemoteNode(url, headers, tmpFilename, httpOpts)
+  const response = await requestRemoteNode(
+    url,
+    headers,
+    tmpFilename,
+    httpOptions
+  )
 
   if (response.statusCode === 200) {
     // Save the response headers for future requests.
