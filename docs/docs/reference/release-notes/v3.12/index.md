@@ -30,11 +30,9 @@ Shopify recently deprecated the `valueType` field on metafields. We've updated t
 
 ## Improvements to `gatsby-source-wordpress`
 
-- Make support for the upcoming Gatsby Cloud Preview Loader feature more scaleable, via [PR #32723](https://github.com/gatsbyjs/gatsby/pull/32723)
-- Fix accessing property on `undefined` in Preview Loader code, via [PR #32488](https://github.com/gatsbyjs/gatsby/pull/32488)
-- Add the option to generate WebP images in HTML fields while transforming WP images to static Gatsby images, via [PR #30896](https://github.com/gatsbyjs/gatsby/pull/30896)
-- Fix bug where a low perPage option value could prevent some MediaItem nodes from being fetched, via [PR #32679](https://github.com/gatsbyjs/gatsby/pull/32679)
-- Fix accessing property on `undefined` when processing nodes. The code assumed all nodes being processed were the same type but occasionally that wasn't the case, via [PR #32752](https://github.com/gatsbyjs/gatsby/pull/32752)
+Also `gatsby-source-wordpress` received some fixes and foundational work for future improvements. A bug was fixed for Gatsby Preview when e.g. you use the `duplicate-post` plugin in WordPress (via [PR #32488](https://github.com/gatsbyjs/gatsby/pull/32488)). The [PR #32679](https://github.com/gatsbyjs/gatsby/pull/32679) fixed the issue that a low `perPage` option could prevent some `MediaItem` nodes from being fetched.
+
+You can set the [`html.generateWebpImages` option](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#htmlgeneratewebpimages) now to `true` to generate WebP images for images in HTML fields. While this will increase the time it takes to generate images it can improve your performance scores since all major browsers support WebP now.
 
 ## Notable bugfixes & improvements
 
