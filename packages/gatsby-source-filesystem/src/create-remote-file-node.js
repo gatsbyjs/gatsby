@@ -1,4 +1,3 @@
-const { Agent } = require('http');
 const fs = require(`fs-extra`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const path = require(`path`)

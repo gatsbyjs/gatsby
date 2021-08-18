@@ -67,7 +67,7 @@ const requestRemoteNode = (
   url: got.GotUrl,
   headers: OutgoingHttpHeaders,
   tmpFilename: string,
-  httpOpts: got.GotOptions | undefined,
+  httpOpts: got.GotOptions<string | null> | undefined,
   attempt: number = 1
 ): Promise<IncomingMessage> =>
   new Promise((resolve, reject) => {
@@ -207,6 +207,7 @@ export async function fetchRemoteFile({
     url,
     headers,
     tmpFilename,
+    // @ts-ignore - Need current got typings to properly type this
     httpOptions
   )
 
