@@ -328,11 +328,7 @@ const writeHeadersFile = ({ publicFolder }) => contents =>
     writeStream.on(`error`, reject)
   })
 
-export default function buildHeadersProgram(
-  pluginData,
-  pluginOptions,
-  reporter
-) {
+export default function buildHeadersProgram(pluginData, pluginOptions) {
   return _.flow(
     mapUserLinkHeaders(pluginData),
     applySecurityHeaders(pluginOptions),

@@ -152,6 +152,7 @@
     "test:peril": "cd peril && yarn test",
     "test:update": "jest --updateSnapshot",
     "test:watch": "jest --watch",
+    "test:specific": "jest",
     "typecheck": "node ./scripts/check-ts",
     "update-dictionary": "node ./scripts/update-dictionary.js",
     "version": "prettier --write \"**/CHANGELOG.md\"",

@@ -46,21 +46,18 @@ function emitRoutes(routes) {
   })
 }
 
-exports.onPostBuild = async (
-  { store, pathPrefix, reporter },
-  userPluginOptions
-) => {
+exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {
   const pluginData = makePluginData(store, assetsManifest, pathPrefix)
+
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
   const { redirects, pageDataStats, nodes, pages } = store.getState()
 
-  console.log(`Emitting Routes`)
   for (const [pathname, page] of pages) {
     if (page.mode && page.mode !== `SSG`) {
       emitRoutes({
         [`${pathname.substring(1)}index.html`]: page.mode,
-        [`page-data/${pathname.substring(1)}/page-data.json`]: page.mode,
+        [`page-data/${pathname.substring(1)}page-data.json`]: page.mode,
       })
     }
   }
@@ -80,12 +77,16 @@ exports.onPostBuild = async (
 
   const pagesCount = pageDataStats && pageDataStats.size
 
-  captureEvent(`GATSBY_CLOUD_METADATA`, {
-    siteMeasurements: {
-      pagesCount,
-      nodesCount,
-    },
-  })
+  try {
+    captureEvent(`GATSBY_CLOUD_METADATA`, {
+      siteMeasurements: {
+        pagesCount,
+        nodesCount,
+      },
+    })
+  } catch (e) {
+    console.error(e)
+  }
 
   let rewrites = []
   if (pluginOptions.generateMatchPathRewrites) {
@@ -106,7 +107,7 @@ exports.onPostBuild = async (
   }
 
   await Promise.all([
-    buildHeadersProgram(pluginData, pluginOptions, reporter),
+    buildHeadersProgram(pluginData, pluginOptions),
     createRedirects(pluginData, redirects, rewrites),
     copyFunctionsManifest(pluginData),
   ])
