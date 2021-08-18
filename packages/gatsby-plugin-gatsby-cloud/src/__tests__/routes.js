@@ -57,7 +57,7 @@ describe(`Routes IPC`, () => {
     expect(process.send).toHaveBeenCalledWith({
       type: `LOG_ACTION`,
       action: {
-        type: `LOG_ROUTES`,
+        type: `CREATE_ROUTE`,
         payload: {
           routes: {
             "path/1/index.html": `DSR`,
@@ -70,7 +70,7 @@ describe(`Routes IPC`, () => {
     expect(process.send).toHaveBeenCalledWith({
       type: `LOG_ACTION`,
       action: {
-        type: `LOG_ROUTES`,
+        type: `CREATE_ROUTE`,
         payload: {
           routes: {
             "path/2/index.html": `SSR`,
@@ -83,7 +83,7 @@ describe(`Routes IPC`, () => {
     expect(process.send).not.toHaveBeenCalledWith({
       type: `LOG_ACTION`,
       action: {
-        type: `LOG_ROUTES`,
+        type: `CREATE_ROUTE`,
         payload: {
           routes: {
             "path/3/index.html": `SSG`,
