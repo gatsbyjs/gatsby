@@ -8,7 +8,7 @@ Welcome to `gatsby@3.12.0` release (August 2021 #2)
 
 Key highlights of this release:
 
-- [`webpack` dev server caching](#webpack-dev-server-caching) - opt-in 20% of users
+- [Ramping up support for webpack caching in development](#ramping-up-support-for-webpack-caching-in-development) - opt-in 20% of users
 - [Improvements to `gatsby-source-shopify`](#improvements-to-gatsby-source-shopify) - Add compat for breaking change in Shopify's API
 - [Improvements to `gatsby-source-wordpress`](#improvements-to-gatsby-source-wordpress) - Support for generating WebP images in HTML fields
 
@@ -23,9 +23,9 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ---
 
-## `webpack` dev server caching
+## Ramping up support for webpack caching in development
 
-We [added caching support for webpack in development in 3.10](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10#experimental-webpack-persistent-caching-for-gatsby-develop) and it's gotten a fair bit of usage since.
+We [added caching support for webpack in development in 3.10](/docs/reference/release-notes/v3.10#experimental-webpack-persistent-caching-for-gatsby-develop) and it's gotten a fair bit of usage since.
 
 With this release we opt-in 20% of users for a final test before the full release.
 
