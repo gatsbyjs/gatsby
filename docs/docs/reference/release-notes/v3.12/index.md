@@ -25,7 +25,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Ramping up support for webpack caching in development
 
-We [added caching support for webpack in development in 3.10](/docs/reference/release-notes/v3.10#experimental-webpack-persistent-caching-for-gatsby-develop) and it's gotten a fair bit of usage since.
+We [added caching support for webpack in development in 3.10](/docs/reference/release-notes/v3.10#experimental-webpack-persistent-caching-for-gatsby-develop) and it's gotten a fair bit of usage since then.
 
 With this release we opt-in 20% of users for a final test before the full release.
 
