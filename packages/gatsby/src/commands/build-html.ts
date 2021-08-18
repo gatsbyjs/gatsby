@@ -460,7 +460,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     deletePageDataActivityTimer.end()
   }
 
-  // we process node manifests in this location because we need to make sure all page-data.json files are written for gatsby as well as inc-builds (both call builHTMLPagesAndDeleteStaleArtifacts). Node manifests include a digest of the corresponding page-data.json file and at this point we can be sure page-data has been written out for the latest updates.
+  // we process node manifests in this location because we need to make sure all page-data.json files are written for gatsby as well as inc-builds (both call builHTMLPagesAndDeleteStaleArtifacts). Node manifests include a digest of the corresponding page-data.json file and at this point we can be sure page-data has been written out for the latest updates in gatsby build AND inc builds.
   await processNodeManifests()
 
   return { toRegenerate, toDelete }
