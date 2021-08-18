@@ -1,20 +1,20 @@
 {
   "name": "gatsby-recipes",
   "description": "Core functionality for Gatsby Recipes",
-  "version": "0.23.0-next.0",
+  "version": "0.24.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/core": "^7.14.6",
-    "@babel/generator": "^7.14.5",
+    "@babel/core": "^7.14.8",
+    "@babel/generator": "^7.14.9",
     "@babel/helper-plugin-utils": "^7.14.0",
     "@babel/plugin-proposal-optional-chaining": "^7.14.5",
-    "@babel/plugin-transform-react-jsx": "^7.14.5",
-    "@babel/standalone": "^7.14.7",
+    "@babel/plugin-transform-react-jsx": "^7.14.9",
+    "@babel/standalone": "^7.14.9",
     "@babel/template": "^7.14.0",
-    "@babel/types": "^7.14.5",
+    "@babel/types": "^7.14.9",
     "@graphql-tools/schema": "^7.0.0",
     "@graphql-tools/utils": "^7.0.2",
     "@hapi/hoek": "8.x.x",
@@ -30,8 +30,8 @@
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
     "fs-extra": "^8.1.0",
-    "gatsby-core-utils": "^2.12.0-next.0",
-    "gatsby-telemetry": "^2.12.0-next.0",
+    "gatsby-core-utils": "^2.13.0-next.0",
+    "gatsby-telemetry": "^2.13.0-next.0",
     "glob": "^7.1.6",
     "graphql": "^15.4.0",
     "graphql-compose": "~7.25.0",
@@ -67,7 +67,7 @@
     "yoga-layout-prebuilt": "^1.9.6"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.5",
+    "@babel/cli": "^7.14.8",
     "@babel/plugin-transform-runtime": "^7.14.5",
     "@mdx-js/mdx": "^2.0.0-next.4",
     "@mdx-js/react": "^2.0.0-next.4",
@@ -117,7 +117,7 @@
     "@mdx-js/react": "^2.0.0-next.4",
     "@mdx-js/runtime": "^2.0.0-next.4",
     "graphql": "^15.5.1",
-    "property-information": "5.5.0",
+    "property-information": "5.6.0",
     "remark-mdx": "^2.0.0-next.4",
     "remark-mdxjs": "^2.0.0-next.4"
   },

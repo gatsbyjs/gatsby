@@ -176,13 +176,16 @@ export const createSingleNode = async ({
 
   const { createContentDigest } = helpers
 
+  const builtTypename = buildTypeName(typeInfo.nodesTypeName)
+
   let remoteNode = {
     ...processedNode,
+    __typename: builtTypename,
     id: id,
     parent: null,
     internal: {
       contentDigest: createContentDigest(updatedNodeContent),
-      type: buildTypeName(typeInfo.nodesTypeName),
+      type: builtTypename,
     },
   }
 
@@ -201,18 +204,17 @@ export const createSingleNode = async ({
       additionalNodeIds: receivedAdditionalNodeIds,
       remoteNode: receivedRemoteNode,
       cancelUpdate: receivedCancelUpdate,
-    } =
-      (await typeSettings.beforeChangeNode({
-        actionType: actionType,
-        remoteNode,
-        actions,
-        helpers,
-        fetchGraphql,
-        typeSettings,
-        buildTypeName,
-        type: typeInfo.nodesTypeName,
-        wpStore: store,
-      })) || {}
+    } = (await typeSettings.beforeChangeNode({
+      actionType: actionType,
+      remoteNode,
+      actions,
+      helpers,
+      fetchGraphql,
+      typeSettings,
+      buildTypeName,
+      type: typeInfo.nodesTypeName,
+      wpStore: store,
+    })) || {}
 
     additionalNodeIds = [
       ...additionalNodeIds,

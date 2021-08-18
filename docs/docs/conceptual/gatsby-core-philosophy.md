@@ -85,7 +85,7 @@ Traditional CMS development [presents many challenges](https://www.gatsbyjs.com/
 
 Modern web development [bundles advances](https://www.gatsbyjs.com/blog/2018-10-11-rise-of-modern-web-development/#modern-frameworks-offer-stability-and-faster-development) in **performance** (bundle splitting, asset prefetching, offline support, image optimization, or server side rendering), **developer experience** (componentization via React, transpilation via Babel, webpack, hot reloading), **accessibility**, and **security** together.
 
-Gatsby's goal is to bundle these advances in an easy to use package. We're open to any and all advances being made in the modern JavaScript world and would love to incorporate them into Gatsby!
+Gatsby's goal is to bundle these advances in an easy-to-use package. We're open to any and all advances being made in the modern JavaScript world and would love to incorporate them into Gatsby!
 
 For more on this, look at [the features Gatsby bundles together](/features).
 

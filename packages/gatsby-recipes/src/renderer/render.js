@@ -67,13 +67,8 @@ const ResourceComponent = ({
   children,
   ...props
 }) => {
-  const {
-    mode,
-    resultCache,
-    inFlightCache,
-    blockedResources,
-    queue,
-  } = useGlobals()
+  const { mode, resultCache, inFlightCache, blockedResources, queue } =
+    useGlobals()
   const step = useRecipeStep()
   const parentResourceContext = useParentResourceContext()
 

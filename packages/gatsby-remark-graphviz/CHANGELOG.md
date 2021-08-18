@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-graphviz@3.9.0-next.3...gatsby-remark-graphviz@3.10.0-next.0) (2021-08-12)
+
+**Note:** Version bump only for package gatsby-remark-graphviz
+
+# [3.9.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-graphviz@3.9.0-next.2...gatsby-remark-graphviz@3.9.0-next.3) (2021-08-09)
+
+**Note:** Version bump only for package gatsby-remark-graphviz
+
+# [3.9.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-graphviz@3.9.0-next.1...gatsby-remark-graphviz@3.9.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-remark-graphviz
+
+# [3.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-graphviz@3.9.0-next.0...gatsby-remark-graphviz@3.9.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency cheerio to ^1.0.0-rc.10 for gatsby-remark-graphviz ([#32578](https://github.com/gatsbyjs/gatsby/issues/32578)) ([09a4723](https://github.com/gatsbyjs/gatsby/commit/09a4723ae8164abc2341b213df794480fafba264))
+
 # [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-graphviz@3.8.0-next.0...gatsby-remark-graphviz@3.9.0-next.0) (2021-07-29)
 
 **Note:** Version bump only for package gatsby-remark-graphviz

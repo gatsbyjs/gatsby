@@ -91,7 +91,7 @@ The GraphQL query to get the transformed markdown would look something like
 this.
 
 ```graphql
-query($id: String!) {
+query ($id: String!) {
   mongodbCloudDocuments(id: { eq: $id }) {
     id
     name

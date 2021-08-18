@@ -338,10 +338,9 @@ const gatsbyApi = {
        * applied based on a `useIf` function (which returns a boolean)
        * If it returns true, that preset is used.
        */
-      const optionsPresets = [
-        ...defaultPresets,
-        ...userPresets,
-      ]?.filter(preset => preset.useIf(payload.helpers, payload.pluginOptions))
+      const optionsPresets = [...defaultPresets, ...userPresets]?.filter(
+        preset => preset.useIf(payload.helpers, payload.pluginOptions)
+      )
 
       if (optionsPresets?.length) {
         state.activePluginOptionsPresets = optionsPresets

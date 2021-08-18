@@ -146,7 +146,7 @@ This is a generated JSON file. It contains the entire `pages.json` contents ([as
 
 It is also used by [Page HTML Generation](/docs/html-generation/) in two ways:
 
-1. `static-entry.js` produces a `page-renderer.js` webpack bundle that generates the HTML for a path. It requires `data.json` and uses the `pages` to lookup the page for the page.
+1. `static-entry.js` produces a `page-renderer.js` webpack bundle that generates the HTML for a path. It requires `data.json` and uses the `pages` to look up the page for the page.
 2. To get the `jsonName` from the page object, and uses it to construct a resource path for the actual JSON result by looking it up in `data.json.dataPaths[jsonName]`.
 
 Now that Gatsby has written out page data, it can start on the [webpack section](/docs/webpack-and-ssr/).

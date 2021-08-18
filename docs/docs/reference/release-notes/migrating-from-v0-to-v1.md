@@ -320,7 +320,7 @@ your `html.js` should look like:
 
 You should be able to copy your `_template.js` file directly making only one
 change making `this.props.children` a function call so `this.props.children()`.
-The rational for this change is described
+The rationale for this change is described
 [in this PR comment](https://github.com/gatsbyjs/gatsby/pull/940#issuecomment-300878300).
 
 Nested layouts (similar to the nested _template feature) are \_not_ supported yet

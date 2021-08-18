@@ -71,10 +71,11 @@ export interface IMultiDispatch {
 /**
  * Redux middleware handling array of actions
  */
-const multi: Middleware<IMultiDispatch> = ({ dispatch }) => next => (
-  action: ActionsUnion
-): ActionsUnion | Array<ActionsUnion> =>
-  Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
+const multi: Middleware<IMultiDispatch> =
+  ({ dispatch }) =>
+  next =>
+  (action: ActionsUnion): ActionsUnion | Array<ActionsUnion> =>
+    Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
 
 export type GatsbyReduxStore = Store<IGatsbyState> & {
   dispatch: ThunkDispatch<IGatsbyState, any, ActionsUnion> & IMultiDispatch

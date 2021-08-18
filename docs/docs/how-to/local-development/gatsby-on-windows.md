@@ -9,7 +9,7 @@ Many Gatsby plugins and themes require building native Node.js modules, e.g.
 To do so, you need a functional build environment (Python and Visual C++ Build
 Tools).
 
-The recommended way to setup your build environment on Windows is to install the
+The recommended way to set up your build environment on Windows is to install the
 [`windows-build-tools`](https://github.com/felixrieseberg/windows-build-tools)
 package by running `npm install --global windows-build-tools --vs2015` on an admin PowerShell
 console. Upon installing this package, it downloads and installs Visual C++

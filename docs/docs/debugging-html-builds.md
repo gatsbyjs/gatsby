@@ -80,7 +80,7 @@ const module = typeof window !== `undefined` ? require("module") : null
 
 So, the worst has happened and you're using an npm module that expects `window`
 to be defined. You may be able to file an issue and get the module patched, but
-what to do in the mean time?
+what to do in the meantime?
 
 One solution is to [customize](/docs/how-to/custom-configuration/add-custom-webpack-config) your webpack
 configuration to replace the offending module with a dummy module during server
