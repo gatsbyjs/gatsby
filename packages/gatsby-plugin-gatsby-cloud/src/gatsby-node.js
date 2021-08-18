@@ -8,6 +8,7 @@ import createSiteConfig from "./create-site-config"
 import { readJSON } from "fs-extra"
 import { joinPath } from "gatsby-core-utils"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
+import { emitRoutes } from "./ipc"
 
 const assetsManifest = {}
 
@@ -27,23 +28,6 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
         merge: true,
       }),
     ],
-  })
-}
-
-function emitRoutes(routes) {
-  if (!process.send) {
-    console.log(`No process send available`)
-    return
-  }
-
-  process.send({
-    type: `LOG_ACTION`,
-    action: {
-      type: `CREATE_ROUTE`,
-      payload: {
-        routes,
-      },
-    },
   })
 }
 
