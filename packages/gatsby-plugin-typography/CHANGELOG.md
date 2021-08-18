@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.12.0-next.3...gatsby-plugin-typography@3.12.0) (2021-08-18)
+
+**Note:** Version bump only for package gatsby-plugin-typography
+
 # [3.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typography@3.12.0-next.2...gatsby-plugin-typography@3.12.0-next.3) (2021-08-09)
 
 **Note:** Version bump only for package gatsby-plugin-typography

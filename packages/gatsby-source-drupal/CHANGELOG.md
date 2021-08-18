@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.12.0-next.3...gatsby-source-drupal@4.12.0) (2021-08-18)
+
+### Features
+
+- **gatsby-source-drupal:** log value of lastFetched ([#32796](https://github.com/gatsbyjs/gatsby/issues/32796)) ([#32838](https://github.com/gatsbyjs/gatsby/issues/32838)) ([448892d](https://github.com/gatsbyjs/gatsby/commit/448892da6fab460874943f3dd358222a1571446c))
+
 # [4.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.12.0-next.2...gatsby-source-drupal@4.12.0-next.3) (2021-08-09)
 
 **Note:** Version bump only for package gatsby-source-drupal

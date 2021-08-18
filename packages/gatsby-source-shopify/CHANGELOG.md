@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.4.0-next.3...gatsby-source-shopify@5.4.0) (2021-08-18)
+
+### Bug Fixes
+
+- **gatsby-source-shopify:** coerce variable to boolean ([#32775](https://github.com/gatsbyjs/gatsby/issues/32775)) ([68a7db5](https://github.com/gatsbyjs/gatsby/commit/68a7db5d8b335711aff273b9941e692a9642b50b))
+- **gatsby-source-shopify:** env variable to check if on preview or production ([#32144](https://github.com/gatsbyjs/gatsby/issues/32144)) ([b1d9c94](https://github.com/gatsbyjs/gatsby/commit/b1d9c949396a183b7476f17f65b12322a6c3eaf1))
+- **gatsby-source-shopify:** update api version to fix metafield type issue ([#32774](https://github.com/gatsbyjs/gatsby/issues/32774)) ([6964287](https://github.com/gatsbyjs/gatsby/commit/6964287be7a8d7d56e62b99b9e0b5e693fbf052e))
+
 # [5.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@5.4.0-next.2...gatsby-source-shopify@5.4.0-next.3) (2021-08-09)
 
 **Note:** Version bump only for package gatsby-source-shopify
