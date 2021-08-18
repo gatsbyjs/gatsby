@@ -46,6 +46,12 @@ describe(`Routes IPC`, () => {
                     componentChunkName: `component---src-templates-blog-post-js`,
                   },
                 ],
+                [
+                  3,
+                  {
+                    componentChunkName: `component---src-templates-post-js`,
+                  },
+                ],
               ]),
             }
           },
