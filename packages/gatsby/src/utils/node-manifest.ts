@@ -307,6 +307,8 @@ export async function processNodeManifest(
  * Manifest files are added via the public unstable_createNodeManifest action in sourceNodes
  */
 export async function processNodeManifests(): Promise<void> {
+  // debugging only
+  await new Promise(resolve => setTimeout(resolve, 5000))
   const { nodeManifests } = store.getState()
 
   const totalManifests = nodeManifests.length
