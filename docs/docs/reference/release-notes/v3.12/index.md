@@ -54,4 +54,35 @@ You can set the [`html.generateWebpImages` option](https://github.com/gatsbyjs/g
 
 A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.12.0-next.0...gatsby@3.12.0) to this release 💜
 
-TODO
+- [teauxfu](https://github.com/teauxfu)
+
+  - chore(docs): Fix typo [PR #32677](https://github.com/gatsbyjs/gatsby/pull/32677)
+  - chore(docs): Fix typo [PR #32676](https://github.com/gatsbyjs/gatsby/pull/32676)
+
+- [njbmartin](https://github.com/njbmartin): chore(docs): Fix URL to sharp [PR #32682](https://github.com/gatsbyjs/gatsby/pull/32682)
+- [Sayanta66](https://github.com/Sayanta66): chore(starters): Update links in README-template [PR #32549](https://github.com/gatsbyjs/gatsby/pull/32549)
+- [orta](https://github.com/orta): fix(gatsby-plugin-sitemap): Add plugin options forbidden for deprecated `exclude` [PR #32509](https://github.com/gatsbyjs/gatsby/pull/32509)
+- [mattmortek](https://github.com/mattmortek): fix(gatsby-source-shopify): update method of generating published_status when salesChannel parameter is used [PR #32674](https://github.com/gatsbyjs/gatsby/pull/32674)
+- [gabts](https://github.com/gabts): chore(starters): Typo on tsconfig [PR #32700](https://github.com/gatsbyjs/gatsby/pull/32700)
+- [nemophrost](https://github.com/nemophrost): fix(gatsby): Worker support in fast-refresh-module [PR #32432](https://github.com/gatsbyjs/gatsby/pull/32432)
+- [axe312ger](https://github.com/axe312ger)
+
+  - fix(contentful): base64 previews now reflect all query options [PR #32709](https://github.com/gatsbyjs/gatsby/pull/32709)
+  - fix(gatsby-remark-image-contentful): show useful error message for files that can not be rendered as image [PR #32530](https://github.com/gatsbyjs/gatsby/pull/32530)
+
+- [kingkero](https://github.com/kingkero): :construction: Check that node is not falsey [PR #32488](https://github.com/gatsbyjs/gatsby/pull/32488)
+- [vi-nastya](https://github.com/vi-nastya): feat(gatsby-source-wordpress): generate webp images [PR #30896](https://github.com/gatsbyjs/gatsby/pull/30896)
+- [iAdityaEmpire](https://github.com/iAdityaEmpire)
+
+  - Fixed broken link "Using MDX Plugins" [PR #32726](https://github.com/gatsbyjs/gatsby/pull/32726)
+  - Removed another broken link and fixed [PR #32727](https://github.com/gatsbyjs/gatsby/pull/32727)
+  - chore(docs): fix typo [PR #32730](https://github.com/gatsbyjs/gatsby/pull/32730)
+
+- [RocketLL](https://github.com/RocketLL): chore(gatsby): fix typo in string enum member [PR #32721](https://github.com/gatsbyjs/gatsby/pull/32721)
+- [ascorbic](https://github.com/ascorbic): feat(gatsby): add env flag to disable lazy function compilation in develop [PR #32707](https://github.com/gatsbyjs/gatsby/pull/32707)
+- [rburgst](https://github.com/rburgst): fix(wordpress): ensure all file links are rewritten [PR #32679](https://github.com/gatsbyjs/gatsby/pull/32679)
+- [SaloniThete](https://github.com/SaloniThete): fix(examples): Correct typo in comment [PR #32762](https://github.com/gatsbyjs/gatsby/pull/32762)
+- [redabacha](https://github.com/redabacha): fix(gatsby-plugin-image): only log missing plugin error in development [PR #32335](https://github.com/gatsbyjs/gatsby/pull/32335)
+- [nategiraudeau](https://github.com/nategiraudeau): chore(docs): Improved getSavedScrollPosition API desc [PR #32765](https://github.com/gatsbyjs/gatsby/pull/32765)
+- [herecydev](https://github.com/herecydev): fix(gatsby): Wrap performance mark in check [PR #32778](https://github.com/gatsbyjs/gatsby/pull/32778)
+- [VallyPepyako](https://github.com/VallyPepyako): chore(docs): Fix typo [PR #32784](https://github.com/gatsbyjs/gatsby/pull/32784)
