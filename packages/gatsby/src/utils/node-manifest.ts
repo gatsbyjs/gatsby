@@ -228,10 +228,6 @@ export async function getPageDataDigestForPagePath(
     )
     const pageData = await readPageData(publicDirectory, pagePath)
 
-    console.info({ publicDirectory, pagePath })
-
-    console.info({ pageData: JSON.stringify(pageData) })
-
     const pageDataDigest = createContentDigest(pageData)
 
     return pageDataDigest
