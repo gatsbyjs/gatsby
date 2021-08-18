@@ -240,4 +240,54 @@ describe(`create-redirects`, () => {
     )
     expect(output).toMatchSnapshot()
   })
+
+  it(`should emit IPC for each redirect/rewrite`, async () => {
+    const pluginData = await createPluginData()
+
+    process.send = jest.fn()
+
+    await createRedirects(
+      pluginData,
+      [
+        {
+          fromPath: `/old-url`,
+          toPath: `/new-url`,
+          isPermanent: true,
+        },
+      ],
+      [
+        {
+          fromPath: `/url_that_is/ugly`,
+          toPath: `/not_ugly/url`,
+        },
+      ]
+    )
+
+    expect(process.send).toHaveBeenCalledWith({
+      type: `LOG_ACTION`,
+      action: {
+        type: `CREATE_REDIRECT_ENTRY`,
+        payload: {
+          redirect: {
+            fromPath: `/old-url`,
+            toPath: `/new-url`,
+            isPermanent: true,
+          },
+        },
+      },
+    })
+
+    expect(process.send).toHaveBeenCalledWith({
+      type: `LOG_ACTION`,
+      action: {
+        type: `CREATE_REWRITE_ENTRY`,
+        payload: {
+          rewrite: {
+            fromPath: `/url_that_is/ugly`,
+            toPath: `/not_ugly/url`,
+          },
+        },
+      },
+    })
+  })
 })
