@@ -208,23 +208,27 @@ export function warnAboutNodeManifestMappingProblems({
 /**
  * Retrieves the content digest of a page-data.json file for use in creating node manifest files.
  */
-async function getPageDataDigestForPagePath(
-  pagePath?: string
+export async function getPageDataDigestForPagePath(
+  pagePath?: string,
+  directory?: string
 ): Promise<string | null> {
   if (
     // if no page was created for the node we're creating a manifest for, there wont be a page path.
     !pagePath ||
     // we only add page data digests to node manifests in production because page-data.json may not exist in development.
-    process.env.NODE_ENV !== `production`
+    (process.env.NODE_ENV !== `production` && process.env.NODE_ENV !== `test`)
   ) {
     return null
   }
 
   try {
-    const pageData = await readPageData(
-      path.join(store.getState().program.directory, `public`),
-      pagePath
+    const publicDirectory = path.join(
+      directory || store.getState().program.directory,
+      `public`
     )
+    const pageData = await readPageData(publicDirectory, pagePath)
+
+    console.info({ publicDirectory, pagePath })
 
     console.info({ pageData: JSON.stringify(pageData) })
 
