@@ -10,10 +10,10 @@ index f06122dc87..b86a428dd3 100644
 +    "node": ">=14.15.0"
    }
  }
-diff --git a/packages/babel-preset-gatsby-package/__tests__/__snapshots__/index.js.snap b/packages/babel-preset-gatsby-package/__tests__/__snapshots__/index.js.snap
+diff --git a/packages/babel-preset-gatsby-package/lib/__tests__/__snapshots__/index.js.snap b/packages/babel-preset-gatsby-package/lib/__tests__/__snapshots__/index.js.snap
 index 3c8396ca3a..06b00135af 100644
---- a/packages/babel-preset-gatsby-package/__tests__/__snapshots__/index.js.snap
-+++ b/packages/babel-preset-gatsby-package/__tests__/__snapshots__/index.js.snap
+--- a/packages/babel-preset-gatsby-package/lib/__tests__/__snapshots__/index.js.snap
++++ b/packages/babel-preset-gatsby-package/lib/__tests__/__snapshots__/index.js.snap
 @@ -118,7 +118,7 @@ Array [
        "modules": "commonjs",
        "shippedProposals": true,
@@ -33,22 +33,22 @@ index 3c8396ca3a..06b00135af 100644
        "useBuiltIns": "entry",
      },
 diff --git a/packages/babel-preset-gatsby-package/package.json b/packages/babel-preset-gatsby-package/package.json
-index 29090efd51..ff593e7179 100644
+index 9e4656e584..6f30be792a 100644
 --- a/packages/babel-preset-gatsby-package/package.json
 +++ b/packages/babel-preset-gatsby-package/package.json
 @@ -33,7 +33,7 @@
    "license": "MIT",
-   "main": "dist/index.js",
+   "main": "lib/index.js",
    "engines": {
 -    "node": ">=12.13.0"
 +    "node": ">=14.15.0"
    },
-   "scripts": {
-     "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --ignore \"**/__mocks__\" --extensions \".ts,.js\"",
-diff --git a/packages/babel-preset-gatsby-package/src/index.js b/packages/babel-preset-gatsby-package/src/index.js
+   "files": [
+     "lib/*.js"
+diff --git a/packages/babel-preset-gatsby-package/lib/index.js b/packages/babel-preset-gatsby-package/lib/index.js
 index 037b1998a7..198f324f00 100644
---- a/packages/babel-preset-gatsby-package/src/index.js
-+++ b/packages/babel-preset-gatsby-package/src/index.js
+--- a/packages/babel-preset-gatsby-package/lib/index.js
++++ b/packages/babel-preset-gatsby-package/lib/index.js
 @@ -4,7 +4,7 @@ function preset(context, options = {}) {
    const {
      browser = false,
