@@ -36,11 +36,23 @@ const getAPI = (
 const flattenPlugins = (plugins: Array<IPluginInfo>): Array<IPluginInfo> => {
   const flattened: Array<IPluginInfo> = []
   const extractPlugins = (plugin: IPluginInfo): void => {
-    if (plugin.pluginOptions && plugin.pluginOptions.plugins) {
-      plugin.pluginOptions.plugins.forEach(subPlugin => {
-        flattened.push(subPlugin)
-        extractPlugins(subPlugin)
-      })
+    if (plugin.subPluginPaths) {
+      for (const subPluginPath of plugin.subPluginPaths) {
+        const segments = subPluginPath.split(`.`)
+        let roots: Array<any> = [plugin.pluginOptions]
+        for (const segment of segments) {
+          if (segment === `[]`) {
+            roots = roots.flat()
+          } else {
+            roots = roots.map(root => root[segment])
+          }
+        }
+
+        roots.forEach(subPlugin => {
+          flattened.push(subPlugin)
+          extractPlugins(subPlugin)
+        })
+      }
     }
   }
 

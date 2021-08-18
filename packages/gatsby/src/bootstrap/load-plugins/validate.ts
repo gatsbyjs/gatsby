@@ -197,6 +197,8 @@ async function validatePluginsOptions(
 
       if (!gatsbyNode.pluginOptionsSchema) return plugin
 
+      const subPluginPaths = new Set<string>()
+
       let optionsSchema = (gatsbyNode.pluginOptionsSchema as Exclude<
         GatsbyNode["pluginOptionsSchema"],
         undefined
@@ -204,41 +206,71 @@ async function validatePluginsOptions(
         Joi: Joi.extend(joi => {
           return {
             base: joi.any(),
-            type: `subPlugin`,
+            type: `subPlugins`,
             args: (_, args): any => {
               const entry = args?.entry ?? `index`
 
               return joi
-                .alternatives(
-                  joi.string(),
-                  joi.object({
-                    resolve: Joi.string(),
-                    options: Joi.object({}).unknown(true),
-                  })
+                .array()
+                .items(
+                  joi
+                    .alternatives(
+                      joi.string(),
+                      joi.object({
+                        resolve: Joi.string(),
+                        options: Joi.object({}).unknown(true),
+                      })
+                    )
+                    .custom((value, helpers) => {
+                      if (typeof value === `string`) {
+                        value = { resolve: value }
+                      }
+
+                      try {
+                        const resolvedPlugin = resolvePlugin(value, rootDir)
+                        const modulePath = `${resolvedPlugin.resolve}/${entry}`
+                        value.modulePath = modulePath
+                        value.module = require(modulePath)
+
+                        const normalizedPath = helpers.state.path
+                          .map((key, index) => {
+                            // if subplugin is part of an array - swap concrete index key with `[]`
+                            if (
+                              typeof key === `number` &&
+                              Array.isArray(
+                                helpers.state.ancestors[
+                                  helpers.state.path.length - index - 1
+                                ]
+                              )
+                            ) {
+                              if (index !== helpers.state.path.length - 1) {
+                                throw new Error(
+                                  `No support for arrays not at the end of path`
+                                )
+                              }
+                              return `[]`
+                            }
+
+                            return key
+                          })
+                          .join(`.`)
+
+                        subPluginPaths.add(normalizedPath)
+                      } catch (err) {
+                        console.log(err)
+                      }
+
+                      return value
+                    }, `Gatsby specific subplugin validation`)
                 )
-                .custom(value => {
-                  if (typeof value === `string`) {
-                    value = { resolve: value }
-                  }
-
-                  try {
-                    const resolvedPlugin = resolvePlugin(value, rootDir)
-                    const modulePath = `${resolvedPlugin.resolve}/${entry}`
-                    value.modulePath = modulePath
-                    value.module = require(modulePath)
-                  } catch (err) {
-                    console.log(err)
-                  }
-
-                  return value
-                }, `Gatsby specific subplugin validation`)
+                .default([])
             },
           }
         }),
       })
 
-      // Validate correct usage of pluginOptionsSchema
       if (!Joi.isSchema(optionsSchema) || optionsSchema.type !== `object`) {
+        // Validate correct usage of pluginOptionsSchema
         reporter.warn(
           `Plugin "${plugin.resolve}" has an invalid options schema so we cannot verify your configuration for it.`
         )
@@ -269,7 +301,14 @@ async function validatePluginsOptions(
             rootDir
           )
           plugin.options.plugins = subPlugins
+          if (subPlugins.length > 0) {
+            subPluginPaths.add(`plugins.[]`)
+          }
           errors += subErrors
+        }
+        if (subPluginPaths.size > 0) {
+          plugin.subPluginPaths = subPluginPaths
+          // console.log({ subPluginPaths })
         }
       } catch (error) {
         if (error instanceof Joi.ValidationError) {

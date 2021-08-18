@@ -1,6 +1,7 @@
 /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
 import * as fs from "fs-extra"
 import * as path from "path"
+import * as _ from "lodash"
 import { slash } from "gatsby-core-utils"
 import { store } from "../../redux"
 import { IGatsbyState } from "../../redux/types"
@@ -54,11 +55,16 @@ function render(
   usedSubPlugins: IGatsbyState["flattenedPlugins"]
 ): string {
   const uniqGatsbyNode = uniq(usedPlugins)
-  const uniqIndex = uniq(usedSubPlugins)
+  const uniqSubPlugins = uniq(usedSubPlugins)
 
   const sanitizedUsedPlugins = usedPlugins.map(plugin => {
     // TODO: We don't support functions in pluginOptions here
-    return { ...plugin, resolve: ``, pluginFilepath: `` }
+    return {
+      ...plugin,
+      resolve: ``,
+      pluginFilepath: ``,
+      subPluginPaths: undefined,
+    }
   })
 
   const pluginsWithWorkers = filterPluginsWithWorkers(uniqGatsbyNode)
@@ -77,8 +83,8 @@ function render(
           plugin.resolve
         )}/gatsby-worker"`
     ),
-    ...uniqIndex.map((plugin, i) => {
-      const importName = `pluginIndex${i}`
+    ...uniqSubPlugins.map((plugin, i) => {
+      const importName = `subPlugin${i}`
       subPluginModuleToImportNameMapping.set(plugin.modulePath, importName)
       return `import * as ${importName} from "${relativePluginPath(
         plugin.modulePath
@@ -91,8 +97,8 @@ function render(
   const gatsbyWorkerExports = pluginsWithWorkers.map(
     (plugin, i) => `"${plugin.name}": pluginGatsbyWorker${i},`
   )
-  const indexExports = uniqIndex.map(
-    (plugin, i) => `  "${plugin.name}": pluginIndex${i},`
+  const indexExports = uniqSubPlugins.map(
+    (plugin, i) => `  "${plugin.name}": subPlugin${i},`
   )
   const output = `
 ${imports.join(`\n`)}
@@ -114,19 +120,23 @@ export const flattenedPlugins =
     sanitizedUsedPlugins.map(plugin => {
       return {
         ...plugin,
-        pluginOptions: {
-          ...plugin.pluginOptions,
-          plugins: plugin.pluginOptions.plugins.map(
-            ({ module, modulePath, ...subPlugin }) => {
+        pluginOptions: _.cloneDeepWith(
+          plugin.pluginOptions,
+          (value: any): any => {
+            if (typeof value === `object` && value.module && value.modulePath) {
+              const { module, modulePath, ...subPlugin } = value
               return {
                 ...subPlugin,
                 module: `_SKIP_START_${subPluginModuleToImportNameMapping.get(
                   modulePath
                 )}_SKIP_END_`,
+                resolve: ``,
+                pluginFilepath: ``,
               }
             }
-          ),
-        },
+            return undefined
+          }
+        ),
       }
     }),
     null,
@@ -148,13 +158,47 @@ function filterPluginsWithWorkers(
   })
 }
 
+type ArrayElement<ArrayType extends Array<unknown>> = ArrayType extends Array<
+  infer ElementType
+>
+  ? ElementType
+  : never
+
+function getSubpluginsByPluginPath(
+  parentPlugin: ArrayElement<IGatsbyState["flattenedPlugins"]>,
+  path: string
+): IGatsbyState["flattenedPlugins"] {
+  const segments = path.split(`.`)
+  let roots: Array<any> = [parentPlugin.pluginOptions]
+
+  for (const segment of segments) {
+    if (segment === `[]`) {
+      roots = roots.flat()
+    } else {
+      roots = roots.map(root => root[segment])
+    }
+  }
+
+  return roots
+}
+
 function findSubPlugins(
   plugins: IGatsbyState["flattenedPlugins"],
   allFlattenedPlugins: IGatsbyState["flattenedPlugins"]
 ): IGatsbyState["flattenedPlugins"] {
   const usedSubPluginNames = new Set<string>(
     plugins
-      .flatMap(plugin => plugin?.pluginOptions?.plugins ?? [])
+      .flatMap(plugin => {
+        if (plugin.subPluginPaths) {
+          const subPlugins: IGatsbyState["flattenedPlugins"] = []
+          for (const subPluginPath of plugin.subPluginPaths) {
+            subPlugins.push(...getSubpluginsByPluginPath(plugin, subPluginPath))
+          }
+          return subPlugins
+        }
+
+        return []
+      })
       .map(plugin => plugin[`name`])
       .filter((p: unknown): p is string => typeof p === `string`)
   )
