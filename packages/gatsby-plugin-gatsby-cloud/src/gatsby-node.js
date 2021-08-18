@@ -54,6 +54,9 @@ exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {
 
   const { redirects, pageDataStats, nodes, pages } = store.getState()
 
+  /**
+   * Emit via IPC routes for which pages are non SSG
+   */
   for (const [pathname, page] of pages) {
     if (page.mode && page.mode !== `SSG`) {
       emitRoutes({
