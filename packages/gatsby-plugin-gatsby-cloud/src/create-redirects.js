@@ -9,7 +9,7 @@ export default async function writeRedirectsFile(
   const { publicFolder } = pluginData
 
   // gatsby adds path-prefix to redirects so we need to remove them again
-  if (redirects && redirects.length && pluginData.pathPrefix) {
+  if (redirects && pluginData.pathPrefix) {
     redirects = redirects.map(redirect => {
       if (redirect.fromPath.startsWith(pluginData.pathPrefix)) {
         redirect.fromPath = redirect.fromPath.slice(
