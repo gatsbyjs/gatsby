@@ -39,7 +39,7 @@ function emitRoutes(routes) {
   process.send({
     type: `LOG_ACTION`,
     action: {
-      type: `LOG_ROUTES`,
+      type: `CREATE_ROUTE`,
       payload: {
         routes,
       },
@@ -108,12 +108,8 @@ exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {
   }
 
   await Promise.all([
-<<<<<<< HEAD
     buildHeadersProgram(pluginData, pluginOptions),
-=======
-    buildHeadersProgram(pluginData, pluginOptions, reporter),
     createSiteConfig(pluginData, pluginOptions),
->>>>>>> fbfe3f63dec23d279a27b54b4057dd611dce74bb
     createRedirects(pluginData, redirects, rewrites),
     copyFunctionsManifest(pluginData),
   ])

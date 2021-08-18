@@ -79,5 +79,18 @@ describe(`Routes IPC`, () => {
         },
       },
     })
+
+    expect(process.send).not.toHaveBeenCalledWith({
+      type: `LOG_ACTION`,
+      action: {
+        type: `LOG_ROUTES`,
+        payload: {
+          routes: {
+            "path/3/index.html": `SSG`,
+            "page-data/path/3/page-data.json": `SSG`,
+          },
+        },
+      },
+    })
   })
 })
