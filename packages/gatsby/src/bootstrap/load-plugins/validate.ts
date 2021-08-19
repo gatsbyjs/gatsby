@@ -197,10 +197,12 @@ async function validatePluginsOptions(
 
       if (!gatsbyNode.pluginOptionsSchema) return plugin
 
-      let optionsSchema = (gatsbyNode.pluginOptionsSchema as Exclude<
-        GatsbyNode["pluginOptionsSchema"],
-        undefined
-      >)({
+      let optionsSchema = (
+        gatsbyNode.pluginOptionsSchema as Exclude<
+          GatsbyNode["pluginOptionsSchema"],
+          undefined
+        >
+      )({
         Joi,
       })
 
@@ -228,13 +230,11 @@ async function validatePluginsOptions(
         )
 
         if (plugin.options?.plugins) {
-          const {
-            errors: subErrors,
-            plugins: subPlugins,
-          } = await validatePluginsOptions(
-            plugin.options.plugins as Array<IPluginRefObject>,
-            rootDir
-          )
+          const { errors: subErrors, plugins: subPlugins } =
+            await validatePluginsOptions(
+              plugin.options.plugins as Array<IPluginRefObject>,
+              rootDir
+            )
           plugin.options.plugins = subPlugins
           errors += subErrors
         }

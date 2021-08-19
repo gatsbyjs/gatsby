@@ -1,21 +1,48 @@
 import React, { useState, useEffect, useCallback, useRef } from "react"
-
 import getBuildInfo from "../utils/getBuildInfo"
 import trackEvent from "../utils/trackEvent"
+import {
+  LinkIndicatorButton,
+  InfoIndicatorButton,
+  GatsbyIndicatorButton,
+} from "./buttons"
 import Style from "./Style"
-
-import GatsbyIndicatorButton from "./GatsbyIndicatorButton"
-import LinkIndicatorButton from "./LinkIndicatorButton"
-import InfoIndicatorButton from "./InfoIndicatorButton"
 
 const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL || 3000
 
-export default function Indicator({ children }) {
+export function PreviewIndicator({ children }) {
+  return (
+    <>
+      <Style />
+      <div
+        data-testid="preview-status-indicator"
+        data-gatsby-preview-indicator="root"
+        aria-live="assertive"
+      >
+        {React.Children.map(children, (child, i) =>
+          React.cloneElement(child, { ...child.props, buttonIndex: i })
+        )}
+      </div>
+    </>
+  )
+}
+
+let buildId
+
+export default function Indicator() {
   const [buildInfo, setBuildInfo] = useState()
+
   const timeoutRef = useRef()
   const shouldPoll = useRef(false)
-  let trackedInitialLoad
-  let buildId
+  const trackedInitialLoad = useRef(false)
+
+  const { siteInfo, currentBuild } = buildInfo || {
+    siteInfo: {},
+    currentBuild: {},
+  }
+
+  const { orgId, siteId } = siteInfo || {}
+
   const pollData = useCallback(async function pollData() {
     const prettyUrlRegex = /^preview-/
     const host = window.location.hostname
@@ -26,65 +53,55 @@ export default function Indicator({ children }) {
     const { siteInfo, currentBuild, latestBuild } = await getBuildInfo()
 
     if (!buildId) {
-      if (isOnPrettyUrl) {
+      if (isOnPrettyUrl || host === `localhost`) {
         buildId = latestBuild?.id
       } else {
         // Match UUID from preview build URL https://build-af44185e-b8e5-11eb-8529-0242ac130003.gtsb.io
-        const buildIdMatch = host.match(/build-(.*?(?=\.))/)
-        buildId = buildIdMatch && buildIdMatch[1]
+        const buildIdMatch = host?.match(/build-(.*?(?=\.))/)
+        if (buildIdMatch) {
+          buildId = buildIdMatch[1]
+        }
       }
     }
 
-    const defaultBuildInfo = {
-      createdAt: currentBuild?.createdAt,
-      orgId: siteInfo?.orgId,
-      siteId: siteInfo?.siteId,
-      buildId,
+    const newBuildInfo = {
+      currentBuild,
+      latestBuild,
+      siteInfo,
       isOnPrettyUrl,
-      sitePrefix: siteInfo?.sitePrefix,
-    }
-
-    if (!trackedInitialLoad) {
-      trackEvent({
-        eventType: `PREVIEW_INDICATOR_LOADED`,
-        orgId: defaultBuildInfo.orgId,
-        siteId: defaultBuildInfo.siteId,
-        buildId,
-      })
-
-      trackedInitialLoad = true
     }
 
     if (currentBuild?.buildStatus === `BUILDING`) {
-      setBuildInfo({
-        status: `BUILDING`,
-        ...defaultBuildInfo,
-      })
+      setBuildInfo({ ...newBuildInfo, buildStatus: `BUILDING` })
     } else if (currentBuild?.buildStatus === `ERROR`) {
-      setBuildInfo({
-        status: `ERROR`,
-        errorBuildId: currentBuild?.id,
-        ...defaultBuildInfo,
-      })
-    } else if (buildId === currentBuild?.id) {
-      setBuildInfo({
-        status: `UPTODATE`,
-        ...defaultBuildInfo,
-      })
+      setBuildInfo({ ...newBuildInfo, buildStatus: `ERROR` })
+    } else if (buildId && buildId === newBuildInfo?.currentBuild?.id) {
+      setBuildInfo({ ...newBuildInfo, buildStatus: `UPTODATE` })
     } else if (
-      buildId !== latestBuild?.id &&
-      latestBuild?.buildStatus === `SUCCESS`
+      buildId &&
+      buildId !== newBuildInfo?.latestBuild?.id &&
+      currentBuild?.buildStatus === `SUCCESS`
     ) {
-      setBuildInfo({
-        status: `SUCCESS`,
-        ...defaultBuildInfo,
-      })
+      setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
     }
 
     if (shouldPoll.current) {
-      setTimeout(pollData, POLLING_INTERVAL)
+      timeoutRef.current = setTimeout(pollData, POLLING_INTERVAL)
     }
   }, [])
+
+  useEffect(() => {
+    if (buildInfo?.siteInfo && !trackedInitialLoad.current) {
+      trackEvent({
+        eventType: `PREVIEW_INDICATOR_LOADED`,
+        buildId,
+        orgId,
+        siteId,
+      })
+
+      trackedInitialLoad.current = true
+    }
+  }, [buildInfo])
 
   useEffect(() => {
     shouldPoll.current = true
@@ -95,23 +112,27 @@ export default function Indicator({ children }) {
 
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
+        timeoutRef.current = null
       }
     }
   }, [])
 
+  const buttonProps = {
+    orgId,
+    siteId,
+    buildId,
+    buildStatus: buildInfo?.buildStatus,
+    isOnPrettyUrl: buildInfo?.isOnPrettyUrl,
+    sitePrefix: siteInfo?.sitePrefix,
+    createdAt: currentBuild?.createdAt,
+    erroredBuildId: currentBuild?.id,
+  }
+
   return (
-    <>
-      <Style />
-      <div
-        data-testid="preview-status-indicator"
-        data-gatsby-preview-indicator="root"
-        aria-live="assertive"
-      >
-        <GatsbyIndicatorButton {...buildInfo} />
-        <LinkIndicatorButton {...buildInfo} />
-        <InfoIndicatorButton {...buildInfo} />
-      </div>
-      {children}
-    </>
+    <PreviewIndicator>
+      <GatsbyIndicatorButton {...buttonProps} />
+      <LinkIndicatorButton {...buttonProps} />
+      <InfoIndicatorButton {...buttonProps} />
+    </PreviewIndicator>
   )
 }

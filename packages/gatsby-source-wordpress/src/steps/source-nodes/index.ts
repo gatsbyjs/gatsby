@@ -35,10 +35,8 @@ const sourceNodes: Step = async helpers => {
       ? webhookBody.since
       : await cache.get(LAST_COMPLETED_SOURCE_TIME)
 
-  const {
-    schemaWasChanged,
-    foundUsableHardCachedData,
-  } = store.getState().remoteSchema
+  const { schemaWasChanged, foundUsableHardCachedData } =
+    store.getState().remoteSchema
 
   const fetchEverything =
     foundUsableHardCachedData ||

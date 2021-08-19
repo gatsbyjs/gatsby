@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@5.9.0-next.3...gatsby-remark-code-repls@5.10.0-next.0) (2021-08-12)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [5.9.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@5.9.0-next.2...gatsby-remark-code-repls@5.9.0-next.3) (2021-08-09)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [5.9.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@5.9.0-next.1...gatsby-remark-code-repls@5.9.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [5.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@5.9.0-next.0...gatsby-remark-code-repls@5.9.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update minor and patch dependencies for gatsby-remark-code-repls ([#32606](https://github.com/gatsbyjs/gatsby/issues/32606)) ([a304fc0](https://github.com/gatsbyjs/gatsby/commit/a304fc05f0f2a7941b70486a9a81162a4417c7bd))
+
+# [5.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@5.8.0-next.0...gatsby-remark-code-repls@5.9.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [5.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@5.7.0-next.1...gatsby-remark-code-repls@5.8.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [5.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@5.7.0-next.0...gatsby-remark-code-repls@5.7.0-next.1) (2021-07-08)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
 # [5.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@5.6.0-next.0...gatsby-remark-code-repls@5.7.0-next.0) (2021-07-01)
 
 **Note:** Version bump only for package gatsby-remark-code-repls

@@ -4,7 +4,7 @@ import {
   getRepositoryId,
   IRepositoryId,
 } from "gatsby-telemetry/lib/repository-id"
-;((getRepositoryId as unknown) as jest.Mock<IRepositoryId>).mockReturnValue({
+;(getRepositoryId as unknown as jest.Mock<IRepositoryId>).mockReturnValue({
   repositoryId: `mockId`,
 })
 

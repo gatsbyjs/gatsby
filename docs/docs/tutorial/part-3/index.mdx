@@ -3,31 +3,9 @@ title: "Part 3: Add Features with Plugins"
 tableOfContentsDepth: 2
 ---
 
-import { Announcement, Notification, LinkButton } from 'gatsby-interface'
+import { Announcement, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
-import { MdInfo } from 'react-icons/md'
-
-<Notification
-  Icon={MdInfo}
-  tone="WARNING"
-  variant="SECONDARY"
-  content={
-    <div>
-      <p>
-        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
-        The first few parts of the new Tutorial have been released here, and subsequent parts
-        will be added as we finish them.
-      </p>
-      <p style={{ marginBottom: 0 }}>
-        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
-        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
-          <strong>Gatsby v2 Tutorial</strong>
-        </a>
-        .
-      </p>
-    </div>
-  }
-/>
+import { MdArrowForward } from 'react-icons/md'
 
 ## Introduction
 
@@ -40,6 +18,18 @@ By the end of this part of the Tutorial, you will be able to:
 * Use the [Gatsby Plugin Library](/plugins) to browse all the available plugins.
 * Add a plugin to your Gatsby site.
 * Configure your plugins in your `gatsby-config.js` file.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Prefer a video?**
+
+If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 3.
+
+You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/C8YxdGGjvOg?start=228" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</Announcement>
 
 ## What is a plugin?
 

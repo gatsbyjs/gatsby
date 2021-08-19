@@ -28,8 +28,8 @@ type AnyTypeComposer<TContext> =
 
 export const SORTABLE_ENUM = {
   SORTABLE: `SORTABLE`,
-  NOT_SORTABLE: `NON_SORTABLE`,
-  DEPRECATED_SORTABLE: `DERPECATED_SORTABLE`,
+  NOT_SORTABLE: `NOT_SORTABLE`,
+  DEPRECATED_SORTABLE: `DEPRECATED_SORTABLE`,
 }
 
 export const getSortOrderEnum = <TContext = any>({
@@ -129,9 +129,8 @@ export const getFieldsEnum = <TSource = any, TContext = any>({
 }): EnumTypeComposer<TContext> => {
   const typeName = typeComposer.getTypeName()
   const fieldsEnumTypeName = `${typeName}FieldsEnum`
-  const fieldsEnumTypeComposer = schemaComposer.getOrCreateETC(
-    fieldsEnumTypeName
-  )
+  const fieldsEnumTypeComposer =
+    schemaComposer.getOrCreateETC(fieldsEnumTypeName)
   addDerivedType({ typeComposer, derivedTypeName: fieldsEnumTypeName })
 
   const fields = convert({

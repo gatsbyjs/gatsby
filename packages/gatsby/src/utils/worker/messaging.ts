@@ -1,4 +1,5 @@
 import { getMessenger, isWorker, IGatsbyWorkerMessenger } from "gatsby-worker"
+import { ReporterMessagesFromChild } from "gatsby-cli/lib/reporter/types"
 import {
   IJobCreatedMessage,
   IJobCompletedMessage,
@@ -6,7 +7,7 @@ import {
 } from "../jobs/types"
 
 export type MessagesFromParent = IJobCompletedMessage | IJobFailed
-export type MessagesFromChild = IJobCreatedMessage
+export type MessagesFromChild = IJobCreatedMessage | ReporterMessagesFromChild
 
 export type GatsbyWorkerMessenger = IGatsbyWorkerMessenger<
   MessagesFromParent,

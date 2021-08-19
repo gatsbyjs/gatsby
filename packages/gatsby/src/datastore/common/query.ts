@@ -86,34 +86,31 @@ function createDbQueriesFromObjectNested(
   path: Array<string> = []
 ): Array<DbQuery> {
   const keys = Object.getOwnPropertyNames(filter)
-  return _.flatMap(
-    keys,
-    (key: string): Array<DbQuery> => {
-      if (key === `$elemMatch`) {
-        const queries = createDbQueriesFromObjectNested(filter[key])
-        return queries.map(query => {
-          return {
-            type: `elemMatch`,
-            path: path,
-            nestedQuery: query,
-          }
-        })
-      } else if (isDbComparator(key)) {
-        return [
-          {
-            type: `query`,
-            path,
-            query: {
-              comparator: key,
-              value: filter[key],
-            },
+  return _.flatMap(keys, (key: string): Array<DbQuery> => {
+    if (key === `$elemMatch`) {
+      const queries = createDbQueriesFromObjectNested(filter[key])
+      return queries.map(query => {
+        return {
+          type: `elemMatch`,
+          path: path,
+          nestedQuery: query,
+        }
+      })
+    } else if (isDbComparator(key)) {
+      return [
+        {
+          type: `query`,
+          path,
+          query: {
+            comparator: key,
+            value: filter[key],
           },
-        ]
-      } else {
-        return createDbQueriesFromObjectNested(filter[key], path.concat([key]))
-      }
+        },
+      ]
+    } else {
+      return createDbQueriesFromObjectNested(filter[key], path.concat([key]))
     }
-  )
+  })
 }
 
 /**
@@ -260,4 +257,35 @@ export function objectToDottedField(
     }
   })
   return result
+}
+
+const comparatorSpecificity = {
+  [DbComparator.EQ]: 80,
+  [DbComparator.IN]: 70,
+  [DbComparator.GTE]: 60,
+  [DbComparator.LTE]: 50,
+  [DbComparator.GT]: 40,
+  [DbComparator.LT]: 30,
+  [DbComparator.NIN]: 20,
+  [DbComparator.NE]: 10,
+}
+
+export function sortBySpecificity(all: Array<DbQuery>): Array<DbQuery> {
+  return [...all].sort(compareBySpecificityDesc)
+}
+
+function compareBySpecificityDesc(a: DbQuery, b: DbQuery): number {
+  const aComparator = getFilterStatement(a).comparator
+  const bComparator = getFilterStatement(b).comparator
+  if (aComparator === bComparator) {
+    return 0
+  }
+  const aSpecificity = comparatorSpecificity[aComparator]
+  const bSpecificity = comparatorSpecificity[bComparator]
+  if (!aSpecificity || !bSpecificity) {
+    throw new Error(
+      `Unexpected comparator pair: ${aComparator}, ${bComparator}`
+    )
+  }
+  return aSpecificity > bSpecificity ? -1 : 1
 }

@@ -22,7 +22,7 @@ describe(`create-redirects`, () => {
     fs.existsSync.mockReturnValue(true)
   })
 
-  const createPluginData = async () => {
+  const createPluginData = async ({ pathPrefix = `` } = {}) => {
     const tmpDir = await fs.mkdtemp(
       path.join(os.tmpdir(), `gatsby-plugin-gatsby-cloud-`)
     )
@@ -160,7 +160,7 @@ describe(`create-redirects`, () => {
           `component---src-pages-index-js-0bdd01c77ee09ef0224c.js`,
         ],
       },
-      pathPrefix: ``,
+      pathPrefix,
       publicFolder: (...files) => path.join(tmpDir, ...files),
     }
   }
@@ -204,6 +204,34 @@ describe(`create-redirects`, () => {
           toPath: `/path4/[param1]/`,
         },
       ]
+    )
+
+    const output = await fs.readFile(
+      pluginData.publicFolder(REDIRECTS_FILENAME),
+      `utf8`
+    )
+    expect(output).toMatchSnapshot()
+  })
+
+  it(`should remove pathPrefix from redirects`, async () => {
+    const pathPrefix = `/nested`
+    const pluginData = await createPluginData({ pathPrefix })
+
+    await createRedirects(
+      pluginData,
+      [
+        {
+          fromPath: `${pathPrefix}/old-url`,
+          toPath: `${pathPrefix}/new-url`,
+          isPermanent: true,
+        },
+        {
+          fromPath: `${pathPrefix}/url_that_is/not_pretty`,
+          toPath: `${pathPrefix}/pretty/url`,
+          statusCode: 201,
+        },
+      ],
+      []
     )
 
     const output = await fs.readFile(

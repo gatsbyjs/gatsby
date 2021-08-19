@@ -487,9 +487,9 @@ const addNodes = (
 }
 
 const possibleTypes = (descriptor: IValueDescriptor = {}): Array<ValueType> =>
-  Object.keys(descriptor).filter(type => descriptor[type].total > 0) as Array<
-    ValueType
-  >
+  Object.keys(descriptor).filter(
+    type => descriptor[type].total > 0
+  ) as Array<ValueType>
 
 const isEmpty = ({ fieldMap }): boolean =>
   Object.keys(fieldMap).every(

@@ -2,7 +2,7 @@
 title: Configuring CA Certificates
 ---
 
-If you're using a private (typically a corporate) package registry that requires a certificate from a CA (certificate authority), you may need to setup the certificate in your `npm`, `yarn`, and `node` config.
+If you're using a private (typically a corporate) package registry that requires a certificate from a CA (certificate authority), you may need to set up the certificate in your `npm`, `yarn`, and `node` config.
 
 ## Common errors from misconfigured certificates
 

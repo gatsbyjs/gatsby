@@ -78,7 +78,11 @@ const buildInferenceMetadata = ({ types }) =>
     processNextType()
   })
 
-const build = async ({ parentSpan, fullMetadataBuild = true }) => {
+const build = async ({
+  parentSpan,
+  fullMetadataBuild = true,
+  freeze = false,
+}) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
   await getDataStore().ready()
@@ -112,6 +116,7 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
     printConfig,
     typeConflictReporter,
     inferenceMetadata,
+    freeze,
     parentSpan,
   })
 

@@ -145,6 +145,13 @@ exports.createPages = ({ actions: { createPage, createRedirect } }) => {
     redirectInBrowser: true,
     ignoreCase: true,
   })
+
+  createRedirect({
+    fromPath: `/redirect-two`,
+    toPath: `/redirect-search-hash`,
+    isPermanent: true,
+    redirectInBrowser: true,
+  })
 }
 
 exports.onCreatePage = ({ page, actions }) => {

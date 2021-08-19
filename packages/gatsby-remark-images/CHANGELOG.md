@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@5.9.0-next.3...gatsby-remark-images@5.10.0-next.0) (2021-08-12)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+# [5.9.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@5.9.0-next.2...gatsby-remark-images@5.9.0-next.3) (2021-08-09)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+# [5.9.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@5.9.0-next.1...gatsby-remark-images@5.9.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+# [5.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@5.9.0-next.0...gatsby-remark-images@5.9.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to ^4.1.2 ([#32576](https://github.com/gatsbyjs/gatsby/issues/32576)) ([5c4e109](https://github.com/gatsbyjs/gatsby/commit/5c4e109313cd1b59f814332fdb4dfdcaf1faed1a))
+- **deps:** update dependency cheerio to ^1.0.0-rc.10 for gatsby-remark-images ([#32579](https://github.com/gatsbyjs/gatsby/issues/32579)) ([0a3c084](https://github.com/gatsbyjs/gatsby/commit/0a3c084c634fcb2f6273eb76426f06663191cb84))
+
+# [5.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@5.8.0-next.0...gatsby-remark-images@5.9.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+# [5.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@5.7.0-next.1...gatsby-remark-images@5.8.0-next.0) (2021-07-15)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+# [5.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@5.7.0-next.0...gatsby-remark-images@5.7.0-next.1) (2021-07-08)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to ^4.1.1 ([#32250](https://github.com/gatsbyjs/gatsby/issues/32250)) ([bd03035](https://github.com/gatsbyjs/gatsby/commit/bd03035b35d4e2f69e86b9ff3bbcfb8bd3eece4a))
+
 # [5.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@5.6.0-next.1...gatsby-remark-images@5.7.0-next.0) (2021-07-01)
 
 **Note:** Version bump only for package gatsby-remark-images

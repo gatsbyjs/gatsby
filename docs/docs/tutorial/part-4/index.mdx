@@ -2,31 +2,9 @@
 title: "Part 4: Query for Data with GraphQL"
 ---
 
-import { Announcement, Notification } from 'gatsby-interface'
+import { Announcement, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
-import { MdInfo } from 'react-icons/md'
-
-<Notification
-  Icon={MdInfo}
-  tone="WARNING"
-  variant="SECONDARY"
-  content={
-    <div>
-      <p>
-        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
-        The first few parts of the new Tutorial have been released here, and subsequent parts
-        will be added as we finish them.
-      </p>
-      <p style={{ marginBottom: 0 }}>
-        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
-        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
-          <strong>Gatsby v2 Tutorial</strong>
-        </a>
-        .
-      </p>
-    </div>
-  }
-/>
+import { MdArrowForward } from 'react-icons/md'
 
 ## Introduction
 
@@ -52,6 +30,18 @@ By the end of this part of the Tutorial, you will be able to:
 - Use the **`useStaticQuery`** hook to pull data into a "building-block" component.
 - Use the **`gatsby-source-filesystem`** plugin to pull data into your site from your computer's filesystem.
 - Create a **page query** to pull data into a page component.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Prefer a video?**
+
+If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 4.
+
+You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/RnaM4Rt05vY?start=244" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</Announcement>
 
 ## Meet Gatsby's GraphQL data layer
 
@@ -400,10 +390,10 @@ const Layout = ({ pageTitle, children }) => {
   `)
 
   return (
-    <main className={container}>
+    <div className={container}>
       {/* highlight-start */}
       <title>{pageTitle} | {data.site.siteMetadata.title}</title>
-      <p>{data.site.siteMetadata.title}</p>
+      <header>{data.site.siteMetadata.title}</header>
       {/* highlight-end */}
       <nav>
         <ul className={navLinks}>
@@ -419,9 +409,11 @@ const Layout = ({ pageTitle, children }) => {
           </li>
         </ul>
       </nav>
-      <h1 className={heading}>{pageTitle}</h1>
-      {children}
-    </main>
+      <main>
+        <h1 className={heading}>{pageTitle}</h1>
+        {children}
+      </main>
+    </div>
   )
 }
 
@@ -439,6 +431,7 @@ export default Layout
   font-size: 3rem;
   color: gray;
   font-weight: 700;
+  margin: 3rem 0;
 }
 ```
 
@@ -468,10 +461,10 @@ const Layout = ({ pageTitle, children }) => {
   `)
 
   return (
-    <main className={container}>
+    <div className={container}>
       <title>{pageTitle} | {data.site.siteMetadata.title}</title>
       {/* highlight-next-line */}
-      <p className={siteTitle}>{data.site.siteMetadata.title}</p>
+      <header className={siteTitle}>{data.site.siteMetadata.title}</header>
       <nav>
         <ul className={navLinks}>
           <li className={navLinkItem}>
@@ -486,8 +479,10 @@ const Layout = ({ pageTitle, children }) => {
           </li>
         </ul>
       </nav>
-      <h1 className={heading}>{pageTitle}</h1>
-      {children}
+      <main>
+        <h1 className={heading}>{pageTitle}</h1>
+        {children}
+      </main>
     </main>
   )
 }
@@ -548,9 +543,9 @@ const Layout = ({ pageTitle, children }) => {
   `)
 
   return (
-    <main className={container}>
+    <div className={container}>
       <title>{pageTitle} | {data.site.siteMetadata.title}</title>
-      <p className={siteTitle}>{data.site.siteMetadata.title}</p>
+      <header className={siteTitle}>{data.site.siteMetadata.title}</header>
       <nav>
         <ul className={navLinks}>
           <li className={navLinkItem}>
@@ -572,9 +567,11 @@ const Layout = ({ pageTitle, children }) => {
           {/* highlight-end */}
         </ul>
       </nav>
-      <h1 className={heading}>{pageTitle}</h1>
-      {children}
-    </main>
+      <main>
+        <h1 className={heading}>{pageTitle}</h1>
+        {children}
+      </main>
+    </div>
   )
 }
 
@@ -761,6 +758,8 @@ export default BlogPage
 
 **Note:** By default, the query you build in GraphiQL will have a query name, like `MyQuery`. You may see an error if you have more than one query with the same name, so after you copy your query over from GraphiQL to your component, delete the name (as in the code example below).
 
+Alternatively, you can give each of your queries a unique name. Query names can be useful for debugging errors that show up in your console when Gatsby executes your queries at build time.
+
 </Announcement>
 
 ```js:title=src/pages/blog.js
@@ -909,24 +908,10 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 
 In Part 5, you'll add some content to your blog posts using a special format called MDX. You'll also learn about transformer plugins, which you can use to convert data in your data layer from one type to another.
 
-<Notification
-  Icon={MdInfo}
-  tone="WARNING"
+<LinkButton
+  to="/docs/tutorial/part-5/"
+  rightIcon={<MdArrowForward />}
   variant="SECONDARY"
-  content={
-    <div>
-      <p>
-        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
-        You've reached the end of the new content we've released so far. Subsequent parts
-        will be added as we finish them.
-      </p>
-      <p style={{ marginBottom: 0 }}>
-        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
-        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
-          <strong>Gatsby v2 Tutorial</strong>
-        </a>
-        .
-      </p>
-    </div>
-  }
-/>
+>
+  Continue to Part 5
+</LinkButton>

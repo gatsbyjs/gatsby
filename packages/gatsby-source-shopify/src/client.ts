@@ -2,7 +2,7 @@ import fetch from "node-fetch"
 import { HttpError } from "./errors"
 
 const adminUrl = (options: ShopifyPluginOptions): string =>
-  `https://@${options.storeUrl}/admin/api/2021-01/graphql.json`
+  `https://@${options.storeUrl}/admin/api/2021-07/graphql.json`
 
 const MAX_BACKOFF_MILLISECONDS = 60000
 

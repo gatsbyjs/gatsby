@@ -25,6 +25,8 @@ export enum ProgramStatus {
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
 }
 
+export type PageMode = "SSG" | "DSR" | "SSR"
+
 export interface IGatsbyPage {
   internalComponentName: string
   path: string
@@ -39,6 +41,7 @@ export interface IGatsbyPage {
   pluginCreatorId: Identifier
   componentPath: SystemPath
   ownerNodeId: Identifier
+  mode: PageMode
 }
 
 export interface IGatsbyFunction {
@@ -403,6 +406,7 @@ export type ActionsUnion =
   | IMarkHtmlDirty
   | ISSRUsedUnsafeBuiltin
   | ISetSiteConfig
+  | IMergeWorkerQueryState
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -903,5 +907,13 @@ export interface INodeManifest {
   pluginName: string
   node: {
     id: string
+  }
+}
+
+export interface IMergeWorkerQueryState {
+  type: `MERGE_WORKER_QUERY_STATE`
+  payload: {
+    workerId: number
+    queryStateChunk: IGatsbyState["queries"]
   }
 }

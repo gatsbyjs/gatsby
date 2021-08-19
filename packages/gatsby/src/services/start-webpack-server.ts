@@ -70,70 +70,70 @@ export async function startWebpackServer({
   let isFirstCompile = true
 
   return new Promise(resolve => {
-    compiler.hooks.done.tapAsync(`print gatsby instructions`, async function (
-      stats,
-      done
-    ) {
-      if (isFirstCompile) {
-        webpackWatching.suspend()
-      }
+    compiler.hooks.done.tapAsync(
+      `print gatsby instructions`,
+      async function (stats, done) {
+        if (isFirstCompile) {
+          webpackWatching.suspend()
+        }
 
-      if (cancelDevJSNotice) {
-        cancelDevJSNotice()
-      }
+        if (cancelDevJSNotice) {
+          cancelDevJSNotice()
+        }
 
-      const urls = prepareUrls(
-        program.https ? `https` : `http`,
-        program.host,
-        program.proxyPort
-      )
-      const isSuccessful = !stats.hasErrors()
-
-      if (isSuccessful && isFirstCompile) {
-        // Show notices to users about potential experiments/feature flags they could
-        // try.
-        showExperimentNotices()
-        printInstructions(
-          program.sitePackageJson.name || `(Unnamed package)`,
-          urls
+        const urls = prepareUrls(
+          program.https ? `https` : `http`,
+          program.host,
+          program.proxyPort
         )
-        printDeprecationWarnings()
-        if (program.open) {
-          try {
-            await openurl(urls.localUrlForBrowser)
-          } catch {
-            console.log(
-              `${chalk.yellow(
-                `warn`
-              )} Browser not opened because no browser was found`
-            )
+        const isSuccessful = !stats.hasErrors()
+
+        if (isSuccessful && isFirstCompile) {
+          // Show notices to users about potential experiments/feature flags they could
+          // try.
+          showExperimentNotices()
+          printInstructions(
+            program.sitePackageJson.name || `(Unnamed package)`,
+            urls
+          )
+          printDeprecationWarnings()
+          if (program.open) {
+            try {
+              await openurl(urls.localUrlForBrowser)
+            } catch {
+              console.log(
+                `${chalk.yellow(
+                  `warn`
+                )} Browser not opened because no browser was found`
+              )
+            }
           }
         }
-      }
 
-      isFirstCompile = false
+        isFirstCompile = false
 
-      if (webpackActivity) {
-        if (stats.hasWarnings()) {
-          const rawMessages = stats.toJson({ moduleTrace: false })
-          reportWebpackWarnings(rawMessages.warnings, report)
+        if (webpackActivity) {
+          if (stats.hasWarnings()) {
+            const rawMessages = stats.toJson({ moduleTrace: false })
+            reportWebpackWarnings(rawMessages.warnings, report)
+          }
+
+          if (!isSuccessful) {
+            const errors = structureWebpackErrors(
+              Stage.Develop,
+              stats.compilation.errors
+            )
+            webpackActivity.panicOnBuild(errors)
+          }
+          webpackActivity.end()
+          webpackActivity = null
         }
 
-        if (!isSuccessful) {
-          const errors = structureWebpackErrors(
-            Stage.Develop,
-            stats.compilation.errors
-          )
-          webpackActivity.panicOnBuild(errors)
-        }
-        webpackActivity.end()
-        webpackActivity = null
+        markWebpackStatusAsDone()
+        done()
+        emitter.emit(`COMPILATION_DONE`, stats)
+        resolve({ compiler, websocketManager, webpackWatching })
       }
-
-      markWebpackStatusAsDone()
-      done()
-      emitter.emit(`COMPILATION_DONE`, stats)
-      resolve({ compiler, websocketManager, webpackWatching })
-    })
+    )
   })
 }

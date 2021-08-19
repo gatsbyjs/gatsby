@@ -15,7 +15,8 @@
  * (asserting correctness of this is not part of this test suite).
  *
  * Mocked systems:
- *  - fs-extra (to not write query results to filesystem)
+ *  - fs-extra (to not write query results to filesystem when LMDB_STORE is not enabled)
+ *  - cache-lmdb (to not write query results to lmdb when LMDB_STORE is enabled)
  *  - reporter (to not spam output of test runner)
  *  - api-runner-node (to be able to dynamically adjust `sourceNodes` and `createPage` API hooks)
  *  - query-runner (it's not really mocked - it still uses real query-runner, this is just cleanest way to add spy to default commonJS export I could find)
@@ -30,6 +31,18 @@ jest.mock(`fs-extra`, () => {
   return {
     outputFile: jest.fn(),
     ensureDir: jest.fn(),
+  }
+})
+
+jest.mock(`../../utils/cache-lmdb`, () => {
+  return {
+    default: class MockedCache {
+      init() {
+        return this
+      }
+      get = jest.fn(() => Promise.resolve())
+      set = jest.fn(() => Promise.resolve())
+    },
   }
 })
 
@@ -78,16 +91,15 @@ const setPageQueries = queries => (pageQueries = queries)
 let staticQueries = {}
 const setStaticQueries = queries => (staticQueries = queries)
 
-const typedNodeCreator = (
-  type,
-  { createNode, createContentDigest }
-) => node => {
-  node.internal = {
-    type,
-    contentDigest: createContentDigest(node),
+const typedNodeCreator =
+  (type, { createNode, createContentDigest }) =>
+  node => {
+    node.internal = {
+      type,
+      contentDigest: createContentDigest(node),
+    }
+    return createNode(node)
   }
-  return createNode(node)
-}
 
 const getTypedNodeCreators = ({
   actions: { createNode },
@@ -131,9 +143,8 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   }
 
   jest.doMock(`../query-runner`, () => {
-    const { queryRunner: actualQueryRunner } = jest.requireActual(
-      `../query-runner`
-    )
+    const { queryRunner: actualQueryRunner } =
+      jest.requireActual(`../query-runner`)
     return {
       queryRunner: jest.fn(actualQueryRunner),
     }
@@ -326,9 +337,8 @@ describe(`query caching between builds`, () => {
     beforeAll(() => {
       setAPIhooks({
         sourceNodes: (nodeApiContext, _pluginOptions) => {
-          const { createSiteNode, createTestNode } = getTypedNodeCreators(
-            nodeApiContext
-          )
+          const { createSiteNode, createTestNode } =
+            getTypedNodeCreators(nodeApiContext)
 
           createTestNode({
             id: `test-1`,
@@ -352,11 +362,8 @@ describe(`query caching between builds`, () => {
     })
 
     it(`first run - should run all queries`, async () => {
-      const {
-        pathsOfPagesWithQueriesThatRan,
-        staticQueriesThatRan,
-        pages,
-      } = await setup()
+      const { pathsOfPagesWithQueriesThatRan, staticQueriesThatRan, pages } =
+        await setup()
 
       // sanity check, to make sure test setup is correct
       expect(pages).toEqual([`/`, `/bar`, `/foo`])
@@ -367,11 +374,8 @@ describe(`query caching between builds`, () => {
     }, 99999)
 
     it(`rerunning without data changes and without restart shouldn't run any queries`, async () => {
-      const {
-        pathsOfPagesWithQueriesThatRan,
-        staticQueriesThatRan,
-        pages,
-      } = await setup()
+      const { pathsOfPagesWithQueriesThatRan, staticQueriesThatRan, pages } =
+        await setup()
 
       // sanity check, to make sure test setup is correct
       expect(pages).toEqual([`/`, `/bar`, `/foo`])
@@ -382,13 +386,10 @@ describe(`query caching between builds`, () => {
     }, 99999)
 
     it(`rerunning without data changes after restart shouldn't run any queries`, async () => {
-      const {
-        pathsOfPagesWithQueriesThatRan,
-        staticQueriesThatRan,
-        pages,
-      } = await setup({
-        restart: true,
-      })
+      const { pathsOfPagesWithQueriesThatRan, staticQueriesThatRan, pages } =
+        await setup({
+          restart: true,
+        })
 
       // sanity check, to make sure test setup is correct
       expect(pages).toEqual([`/`, `/bar`, `/foo`])
@@ -399,14 +400,11 @@ describe(`query caching between builds`, () => {
     }, 99999)
 
     it(`rerunning after cache clearing - should run all queries`, async () => {
-      const {
-        pathsOfPagesWithQueriesThatRan,
-        staticQueriesThatRan,
-        pages,
-      } = await setup({
-        restart: true,
-        clearCache: true,
-      })
+      const { pathsOfPagesWithQueriesThatRan, staticQueriesThatRan, pages } =
+        await setup({
+          restart: true,
+          clearCache: true,
+        })
 
       // sanity check, to make sure test setup is correct
       expect(pages).toEqual([`/`, `/bar`, `/foo`])
@@ -422,9 +420,8 @@ describe(`query caching between builds`, () => {
     beforeEach(() => {
       setAPIhooks({
         sourceNodes: (nodeApiContext, _pluginOptions) => {
-          const { createSiteNode, createTestNode } = getTypedNodeCreators(
-            nodeApiContext
-          )
+          const { createSiteNode, createTestNode } =
+            getTypedNodeCreators(nodeApiContext)
 
           createTestNode({
             id: `test-1`,
@@ -452,14 +449,11 @@ describe(`query caching between builds`, () => {
     })
 
     it(`rerunning after cache clearing - should run all queries`, async () => {
-      const {
-        pathsOfPagesWithQueriesThatRan,
-        staticQueriesThatRan,
-        pages,
-      } = await setup({
-        restart: true,
-        clearCache: true,
-      })
+      const { pathsOfPagesWithQueriesThatRan, staticQueriesThatRan, pages } =
+        await setup({
+          restart: true,
+          clearCache: true,
+        })
 
       // sanity check, to make sure test setup is correct
       expect(pages).toEqual([`/`, `/bar`, `/foo`])
@@ -470,11 +464,8 @@ describe(`query caching between builds`, () => {
     }, 99999)
 
     it(`reruns only static query (no restart)`, async () => {
-      const {
-        pathsOfPagesWithQueriesThatRan,
-        staticQueriesThatRan,
-        pages,
-      } = await setup()
+      const { pathsOfPagesWithQueriesThatRan, staticQueriesThatRan, pages } =
+        await setup()
 
       // sanity check, to make sure test setup is correct
       expect(pages).toEqual([`/`, `/bar`, `/foo`])
@@ -485,13 +476,10 @@ describe(`query caching between builds`, () => {
     }, 999999)
 
     it(`reruns only static query (with restart)`, async () => {
-      const {
-        pathsOfPagesWithQueriesThatRan,
-        staticQueriesThatRan,
-        pages,
-      } = await setup({
-        restart: true,
-      })
+      const { pathsOfPagesWithQueriesThatRan, staticQueriesThatRan, pages } =
+        await setup({
+          restart: true,
+        })
 
       // sanity check, to make sure test setup is correct
       expect(pages).toEqual([`/`, `/bar`, `/foo`])
@@ -507,9 +495,8 @@ describe(`query caching between builds`, () => {
     beforeEach(() => {
       setAPIhooks({
         sourceNodes: (nodeApiContext, _pluginOptions) => {
-          const { createSiteNode, createTestNode } = getTypedNodeCreators(
-            nodeApiContext
-          )
+          const { createSiteNode, createTestNode } =
+            getTypedNodeCreators(nodeApiContext)
 
           createTestNode({
             id: `test-1`,
@@ -537,14 +524,11 @@ describe(`query caching between builds`, () => {
     })
 
     it(`rerunning after cache clearing - should run all queries`, async () => {
-      const {
-        pathsOfPagesWithQueriesThatRan,
-        staticQueriesThatRan,
-        pages,
-      } = await setup({
-        restart: true,
-        clearCache: true,
-      })
+      const { pathsOfPagesWithQueriesThatRan, staticQueriesThatRan, pages } =
+        await setup({
+          restart: true,
+          clearCache: true,
+        })
 
       // sanity check, to make sure test setup is correct
       expect(pages).toEqual([`/`, `/bar`, `/foo`])
@@ -555,11 +539,8 @@ describe(`query caching between builds`, () => {
     }, 99999)
 
     it(`reruns queries only for listing and detail page that uses that node (no restart)`, async () => {
-      const {
-        pathsOfPagesWithQueriesThatRan,
-        staticQueriesThatRan,
-        pages,
-      } = await setup()
+      const { pathsOfPagesWithQueriesThatRan, staticQueriesThatRan, pages } =
+        await setup()
 
       // sanity check, to make sure test setup is correct
       expect(pages).toEqual([`/`, `/bar`, `/foo`])
@@ -570,13 +551,10 @@ describe(`query caching between builds`, () => {
     }, 999999)
 
     it(`reruns queries only for listing and detail page that uses that node (with restart)`, async () => {
-      const {
-        pathsOfPagesWithQueriesThatRan,
-        staticQueriesThatRan,
-        pages,
-      } = await setup({
-        restart: true,
-      })
+      const { pathsOfPagesWithQueriesThatRan, staticQueriesThatRan, pages } =
+        await setup({
+          restart: true,
+        })
 
       // sanity check, to make sure test setup is correct
       expect(pages).toEqual([`/`, `/bar`, `/foo`])
@@ -592,11 +570,8 @@ describe(`query caching between builds`, () => {
     beforeEach(() => {
       setAPIhooks({
         sourceNodes: (nodeApiContext, _pluginOptions) => {
-          const {
-            createSiteNode,
-            createTestNode,
-            createNotUsedNode,
-          } = getTypedNodeCreators(nodeApiContext)
+          const { createSiteNode, createTestNode, createNotUsedNode } =
+            getTypedNodeCreators(nodeApiContext)
 
           createTestNode({
             id: `test-1`,
@@ -627,14 +602,11 @@ describe(`query caching between builds`, () => {
     })
 
     it(`rerunning after cache clearing - should run all queries`, async () => {
-      const {
-        pathsOfPagesWithQueriesThatRan,
-        staticQueriesThatRan,
-        pages,
-      } = await setup({
-        restart: true,
-        clearCache: true,
-      })
+      const { pathsOfPagesWithQueriesThatRan, staticQueriesThatRan, pages } =
+        await setup({
+          restart: true,
+          clearCache: true,
+        })
 
       // sanity check, to make sure test setup is correct
       expect(pages).toEqual([`/`, `/bar`, `/foo`])
@@ -645,11 +617,8 @@ describe(`query caching between builds`, () => {
     }, 99999)
 
     it(`changing node not used by anything doesn't trigger running any queries (no restart)`, async () => {
-      const {
-        pathsOfPagesWithQueriesThatRan,
-        staticQueriesThatRan,
-        pages,
-      } = await setup()
+      const { pathsOfPagesWithQueriesThatRan, staticQueriesThatRan, pages } =
+        await setup()
 
       // sanity check, to make sure test setup is correct
       expect(pages).toEqual([`/`, `/bar`, `/foo`])
@@ -660,13 +629,10 @@ describe(`query caching between builds`, () => {
     }, 999999)
 
     it(`changing node not used by anything doesn't trigger running any queries (with restart)`, async () => {
-      const {
-        pathsOfPagesWithQueriesThatRan,
-        staticQueriesThatRan,
-        pages,
-      } = await setup({
-        restart: true,
-      })
+      const { pathsOfPagesWithQueriesThatRan, staticQueriesThatRan, pages } =
+        await setup({
+          restart: true,
+        })
 
       // sanity check, to make sure test setup is correct
       expect(pages).toEqual([`/`, `/bar`, `/foo`])
@@ -746,9 +712,8 @@ describe(`query caching between builds`, () => {
     beforeAll(() => {
       setAPIhooks({
         sourceNodes: (nodeApiContext, _pluginOptions) => {
-          const { createTestNode, createTestBNode } = getTypedNodeCreators(
-            nodeApiContext
-          )
+          const { createTestNode, createTestBNode } =
+            getTypedNodeCreators(nodeApiContext)
 
           createTestNode({
             id: `test-1`,
@@ -887,9 +852,8 @@ describe(`query caching between builds`, () => {
       let nodeChangeCounter = 1
       setAPIhooks({
         sourceNodes: (nodeApiContext, _pluginOptions) => {
-          const { createTestNode, createSiteNode } = getTypedNodeCreators(
-            nodeApiContext
-          )
+          const { createTestNode, createSiteNode } =
+            getTypedNodeCreators(nodeApiContext)
 
           createTestNode({
             id: `test-1`,
@@ -1053,14 +1017,11 @@ describe(`query caching between builds`, () => {
     const runDataDependencyClearingOnDirtyTest = ({ withRestarts }) => {
       it(`Initial - adds linked node dependency`, async () => {
         stage = `initial`
-        const {
-          staticQueriesThatRan,
-          pathsOfPagesWithQueriesThatRan,
-          pages,
-        } = await setup({
-          restart: true,
-          clearCache: true,
-        })
+        const { staticQueriesThatRan, pathsOfPagesWithQueriesThatRan, pages } =
+          await setup({
+            restart: true,
+            clearCache: true,
+          })
         // sanity check, to make sure test setup is correct
         expect(pages).toEqual([`/`])
 
@@ -1071,11 +1032,8 @@ describe(`query caching between builds`, () => {
 
       it(`Removes linked data - query should be dirty`, async () => {
         stage = `remove-link`
-        const {
-          staticQueriesThatRan,
-          pathsOfPagesWithQueriesThatRan,
-          pages,
-        } = await setup({ restart: withRestarts })
+        const { staticQueriesThatRan, pathsOfPagesWithQueriesThatRan, pages } =
+          await setup({ restart: withRestarts })
 
         // sanity check, to make sure test setup is correct
         expect(pages).toEqual([`/`])
@@ -1088,11 +1046,8 @@ describe(`query caching between builds`, () => {
 
       it(`No change since last run, should not rerun any queries`, async () => {
         stage = `unchanged`
-        const {
-          staticQueriesThatRan,
-          pathsOfPagesWithQueriesThatRan,
-          pages,
-        } = await setup({ restart: withRestarts })
+        const { staticQueriesThatRan, pathsOfPagesWithQueriesThatRan, pages } =
+          await setup({ restart: withRestarts })
 
         // sanity check, to make sure test setup is correct
         expect(pages).toEqual([`/`])
@@ -1285,14 +1240,11 @@ describe(`query caching between builds`, () => {
     })
 
     it(`rerunning after cache clearing - should run all queries`, async () => {
-      const {
-        pathsOfPagesWithQueriesThatRan,
-        staticQueriesThatRan,
-        pages,
-      } = await setup({
-        restart: true,
-        clearCache: true,
-      })
+      const { pathsOfPagesWithQueriesThatRan, staticQueriesThatRan, pages } =
+        await setup({
+          restart: true,
+          clearCache: true,
+        })
 
       // sanity check, to make sure test setup is correct
       expect(pages).toEqual([`/no-dep-page`])
@@ -1303,11 +1255,8 @@ describe(`query caching between builds`, () => {
     }, 99999)
 
     it(`rerunning should not run any queries (no restart)`, async () => {
-      const {
-        pathsOfPagesWithQueriesThatRan,
-        staticQueriesThatRan,
-        pages,
-      } = await setup()
+      const { pathsOfPagesWithQueriesThatRan, staticQueriesThatRan, pages } =
+        await setup()
 
       // sanity check, to make sure test setup is correct
       expect(pages).toEqual([`/no-dep-page`])
@@ -1318,13 +1267,10 @@ describe(`query caching between builds`, () => {
     }, 999999)
 
     it(`rerunning should not run any queries (with restart)`, async () => {
-      const {
-        pathsOfPagesWithQueriesThatRan,
-        staticQueriesThatRan,
-        pages,
-      } = await setup({
-        restart: true,
-      })
+      const { pathsOfPagesWithQueriesThatRan, staticQueriesThatRan, pages } =
+        await setup({
+          restart: true,
+        })
 
       // sanity check, to make sure test setup is correct
       expect(pages).toEqual([`/no-dep-page`])
@@ -1390,11 +1336,8 @@ describe(`query caching between builds`, () => {
           ])
         },
         sourceNodes: nodeApiContext => {
-          const {
-            createTestNode,
-            createFooNode,
-            createBarNode,
-          } = getTypedNodeCreators(nodeApiContext)
+          const { createTestNode, createFooNode, createBarNode } =
+            getTypedNodeCreators(nodeApiContext)
 
           createTestNode({
             id: `test-1`,
