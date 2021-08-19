@@ -11,7 +11,7 @@ There are two hard parts of internationalization:
 
 - **Content storage and workflow.** Coordinating with internal or external translators to translate both existing and new content into required languages can be time-consuming. In addition, adding another approver into the content publishing process can slow things down without careful workflow design.
 
-- **Display, templating, and routing.** At minimum, internationalization means users must be redirected, either to a subdomain (eg fr.example.com/blog) or path prefix (eg example.com/fr/blog). In addition, internationalization efforts also come with logic around sections or pages that should be present in some languages but not others.
+- **Display, templating, and routing.** At minimum, internationalization means users must be redirected, either to a subdomain (eg `fr.example.com/blog`) or path prefix (eg `example.com/fr/blog`). In addition, internationalization efforts also come with logic around sections or pages that should be present in some languages but not others.
 
 This guide is a brief look at the options that exist for enhancing your Gatsby project for internationalization.
 
