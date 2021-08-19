@@ -33,7 +33,7 @@
     "build": "cross-env CYPRESS_SUPPORT=y gatsby build",
     "build:offline": "cross-env TEST_PLUGIN_OFFLINE=y CYPRESS_SUPPORT=y gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write '**/*.js'",
+    "format": "prettier --write '**/*.js' --ignore-path .gitignore",
     "serve": "gatsby serve",
     "start": "npm run develop",
     "test": "npm run build && npm run start-server-and-test && npm run test-env-vars",
