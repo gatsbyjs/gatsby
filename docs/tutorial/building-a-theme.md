@@ -8,7 +8,7 @@ In this tutorial, you'll learn how to build a theme plugin for Gatsby. This tuto
 
 In this section, you'll learn how to structure folders and configure yarn workspaces to develop Gatsby themes. You'll create two workspaces, `gatsby-theme-events` and `site`.
 
-Each workspace can be run separately, as well as one depending on the other. In this example, `gatsby-theme-events` will be a dependency of `site`.
+In this example, `gatsby-theme-events` will be a dependency of `site` so you'll run `site` to see everything working.
 
 ### Create a new empty folder
 
@@ -47,12 +47,7 @@ In the `package.json` file in `gatsby-theme-events`, add the following:
   "name": "gatsby-theme-events",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "build": "gatsby build",
-    "clean": "gatsby clean",
-    "develop": "gatsby develop"
-  }
+  "license": "MIT"
 }
 ```
 
@@ -154,39 +149,15 @@ The `gatsby-theme-events/package.json` file should now include the following:
 }
 ```
 
-During development, we will use the theme as regular gatsby site so we need to install development dependencies:
+### Run `site`
 
-```shell
-yarn workspace gatsby-theme-events add -D gatsby react react-dom
-```
-
-> The `-D` flag is a shorthand for installing development dependencies.
-
-The `gatsby-theme-events/package.json` file should now include devDependencies:
-
-```json:title=gatsby-theme-events/package.json
-{
-  "devDependencies": {
-    "gatsby": "^3.0.0",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
-  }
-}
-```
-
-### Run `site` and `gatsby-theme-events`
-
-Run both `site` and `gatsby-theme-events` to verify that they're working.
+Run `site` to verify that it's working.
 
 ```shell
 yarn workspace site develop
 ```
 
-```shell
-yarn workspace gatsby-theme-events develop
-```
-
-In both cases, you should see a Gatsby site successfully running in development mode. Since there's no content, visiting the site should serve a default Gatsby 404 page.
+You should see a Gatsby site successfully running in development mode. Since there's no content, visiting the site should serve a default Gatsby 404 page.
 
 ## Add static data to a theme
 
@@ -251,7 +222,7 @@ module.exports = {
 }
 ```
 
-With this saved, restart the dev server:
+With this saved, restart the development server:
 
 ```shell
 yarn workspace gatsby-theme-events develop
