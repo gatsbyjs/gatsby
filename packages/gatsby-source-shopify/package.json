@@ -22,7 +22,7 @@
     "gatsby-core-utils": "^2.13.0-next.0",
     "gatsby-source-filesystem": "^3.13.0-next.0",
     "node-fetch": "^2.6.1",
-    "sharp": "^0.28.3",
+    "sharp": "^0.29.0",
     "shift-left": "^0.1.5"
   },
   "devDependencies": {
