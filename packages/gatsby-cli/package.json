@@ -1,7 +1,7 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "3.13.0-next.0",
+  "version": "3.13.0-next.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "cli.js"
@@ -18,7 +18,7 @@
     "common-tags": "^1.8.0",
     "configstore": "^5.0.1",
     "convert-hrtime": "^3.0.0",
-    "create-gatsby": "^1.13.0-next.0",
+    "create-gatsby": "^1.13.0-next.1",
     "envinfo": "^7.7.3",
     "execa": "^5.1.1",
     "fs-exists-cached": "^1.0.0",

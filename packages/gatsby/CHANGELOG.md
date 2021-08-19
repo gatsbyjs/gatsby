@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.13.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.13.0-next.0...gatsby@3.13.0-next.1) (2021-08-19)
+
+### Bug Fixes
+
+- **gatsby:** Hashes and anchors in redirects also work in production ([#32850](https://github.com/gatsbyjs/gatsby/issues/32850)) ([0654800](https://github.com/gatsbyjs/gatsby/commit/0654800d550b6dfaa41d9598842887eb15167ec7))
+- **gatsby:** Remove `removeDimensions` from svgo config ([#32834](https://github.com/gatsbyjs/gatsby/issues/32834)) ([09679a1](https://github.com/gatsbyjs/gatsby/commit/09679a1d1a6cd745591304d069b0266a4b8f5bbf))
+
+### Features
+
+- **gatsby:** Add `defer` to createPage ([#32783](https://github.com/gatsbyjs/gatsby/issues/32783)) ([58d5a2c](https://github.com/gatsbyjs/gatsby/commit/58d5a2c6955f1263dd5f2b28369a9c177485d36a))
+- **gatsby:** Opt in 20% of users to webpack dev server caching ([#32829](https://github.com/gatsbyjs/gatsby/issues/32829)) ([51b8420](https://github.com/gatsbyjs/gatsby/commit/51b8420dd45c42aab1e8da490548eabeaeed67a1))
+
 # [3.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.12.0-next.3...gatsby@3.13.0-next.0) (2021-08-12)
 
 ### Bug Fixes
