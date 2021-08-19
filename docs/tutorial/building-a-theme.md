@@ -154,6 +154,26 @@ The `gatsby-theme-events/package.json` file should now include the following:
 }
 ```
 
+During development, we will use the theme as regular gatsby site so we need to install development dependencies:
+
+```shell
+yarn workspace gatsby-theme-events add -D gatsby react react-dom
+```
+
+> The `-D` flag is a shorthand for installing development dependencies.
+
+The `gatsby-theme-events/package.json` file should now include devDependencies:
+
+```json:title=gatsby-theme-events/package.json
+{
+  "devDependencies": {
+    "gatsby": "^3.0.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
+  }
+}
+```
+
 ### Run `site` and `gatsby-theme-events`
 
 Run both `site` and `gatsby-theme-events` to verify that they're working.
