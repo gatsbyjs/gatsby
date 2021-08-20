@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.13.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.13.0-next.1...gatsby@3.13.0-next.2) (2021-08-20)
+
+### Bug Fixes
+
+- **gatsby:** Correct server type ([#32853](https://github.com/gatsbyjs/gatsby/issues/32853)) ([85faee3](https://github.com/gatsbyjs/gatsby/commit/85faee335497e1a7eab58fbd15d4c14531b021b8))
+
+### Features
+
+- **gatsby:** add node manifest page data digest ([#32837](https://github.com/gatsbyjs/gatsby/issues/32837)) ([c991ab4](https://github.com/gatsbyjs/gatsby/commit/c991ab44e5aa2f040bf336e15ce9cc02baf3f589))
+
 # [3.13.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.13.0-next.0...gatsby@3.13.0-next.1) (2021-08-19)
 
 ### Bug Fixes
