@@ -3,7 +3,7 @@
  */
 
 import os from "os"
-import fs from "fs"
+import fs from "fs-extra"
 import path from "path"
 
 import nock from "nock"
@@ -32,13 +32,14 @@ let cache
 const host = `https://images.ctfassets.net`
 
 describe(`fetch-contentful-assets`, () => {
-  beforeAll(() => {
+  beforeAll(async () => {
     cache = createMockCache()
+    await fs.ensureDir(cache.directory)
   })
 
-  afterAll(() => {
+  afterAll(async () => {
     if (cache) {
-      fs.removeSync(cache.directory)
+      await fs.remove(cache.directory)
     }
   })
 
@@ -47,7 +48,7 @@ describe(`fetch-contentful-assets`, () => {
     reporter.verbose.mockClear()
   })
 
-  test(`resolves regular response`, async () => {
+  it(`resolves regular response`, async () => {
     const path = `/resolves.jpg`
     const url = [host, path].join(``)
     const scope = nock(host).get(path).reply(200)
@@ -58,7 +59,7 @@ describe(`fetch-contentful-assets`, () => {
     expect(scope.isDone()).toBeTruthy()
   })
 
-  test(`returns from cache on second call`, async () => {
+  it(`returns from cache on second call`, async () => {
     const path = `/resolves-from-cache.jpg`
     const url = [host, path].join(``)
     const scope = nock(host).get(path).twice().reply(200)
@@ -73,7 +74,7 @@ describe(`fetch-contentful-assets`, () => {
     ])
   })
 
-  test(`does not retry for no reason`, async () => {
+  it(`does not retry for no reason`, async () => {
     const path = `/no-retry.jpg`
     const url = [host, path].join(``)
     const scope = nock(host).get(path).twice().reply(200)
@@ -84,7 +85,7 @@ describe(`fetch-contentful-assets`, () => {
     expect(scope.isDone()).toBeFalsy()
   })
 
-  test(`does not retry on 404`, async () => {
+  it(`does not retry on 404`, async () => {
     const path = `/no-retry-on-404.jpg`
     const url = [host, path].join(``)
     const scope = nock(host).get(path).twice().reply(404)
@@ -102,7 +103,7 @@ describe(`fetch-contentful-assets`, () => {
     ])
   })
 
-  test(`does retry on 503`, async () => {
+  it(`does retry on 503`, async () => {
     const path = `/retry-on-503.jpg`
     const url = [host, path].join(``)
 
@@ -121,7 +122,7 @@ describe(`fetch-contentful-assets`, () => {
     expect(scope.isDone()).toBeTruthy()
   })
 
-  test(`stops retry after 3 attempts`, async () => {
+  it(`stops retry after 3 attempts`, async () => {
     const path = `/stop-retry-after-3-attempts.jpg`
     const url = [host, path].join(``)
 

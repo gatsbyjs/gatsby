@@ -159,6 +159,7 @@ describe(`create-file-node-from-buffer`, () => {
       expect(() => {
         createFileNodeFromBuffer({
           ...defaultArgs,
+          buffer: createMockBuffer(`test`),
           getCache: () => createMockCache(),
         })
       }).not.toThrow()
@@ -168,6 +169,7 @@ describe(`create-file-node-from-buffer`, () => {
       expect(() => {
         createFileNodeFromBuffer({
           ...defaultArgs,
+          buffer: createMockBuffer(`test`),
           cache: createMockCache(),
         })
       }).not.toThrow()

@@ -239,6 +239,8 @@ describe(`create-remote-file-node`, () => {
         createRemoteFileNode({
           ...defaultArgs,
           getCache: () => createMockCache(),
+        }).catch(err => {
+          // ignore the url error
         })
       }).not.toThrow()
     })
@@ -248,6 +250,8 @@ describe(`create-remote-file-node`, () => {
         createRemoteFileNode({
           ...defaultArgs,
           cache: createMockCache(),
+        }).catch(err => {
+          // ignore the url error
         })
       }).not.toThrow()
     })
