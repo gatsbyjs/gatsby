@@ -43,9 +43,10 @@ exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {
    */
   for (const [pathname, page] of pages) {
     if (page.mode && page.mode !== `SSG`) {
+      const pageDataPath = pathname === `/` ? `/index/` : pathname
       emitRoutes({
         [`${pathname.substring(1)}index.html`]: page.mode,
-        [`page-data/${pathname.substring(1)}page-data.json`]: page.mode,
+        [`page-data${pageDataPath}page-data.json`]: page.mode,
       })
     }
   }

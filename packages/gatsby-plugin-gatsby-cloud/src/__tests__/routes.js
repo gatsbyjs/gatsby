@@ -20,6 +20,7 @@ describe(`Routes IPC`, () => {
 
     const pages = new Map()
 
+    pages.set(`/`, { mode: `DSR`, path: `/` })
     pages.set(`/path/1/`, { mode: `DSR`, path: `/path/1` })
     pages.set(`/path/2/`, { mode: `SSR`, path: `/path/2` })
     pages.set(`/path/3/`, { mode: `SSG`, path: `/path/3` })
@@ -61,6 +62,19 @@ describe(`Routes IPC`, () => {
       },
       {}
     )
+
+    expect(process.send).toHaveBeenCalledWith({
+      type: `LOG_ACTION`,
+      action: {
+        type: `CREATE_ROUTE`,
+        payload: {
+          routes: {
+            "index.html": `DSR`,
+            "page-data/index/page-data.json": `DSR`,
+          },
+        },
+      },
+    })
 
     expect(process.send).toHaveBeenCalledWith({
       type: `LOG_ACTION`,
