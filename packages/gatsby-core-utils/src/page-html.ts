@@ -1,7 +1,8 @@
 import fs from "fs-extra"
 import path from "path"
 
-const checkForHtmlSuffix = pagePath => !/\.(html?)$/i.test(pagePath)
+const checkForHtmlSuffix = (pagePath: string): boolean =>
+  !/\.(html?)$/i.test(pagePath)
 
 export async function remove({ publicDir }, pagePath) {
   const filePath = getPageHtmlFilePath(publicDir, pagePath)
