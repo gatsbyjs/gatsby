@@ -9,7 +9,7 @@ export async function remove({ publicDir }, pagePath) {
   return fs.remove(filePath)
 }
 
-export function getPageHtmlFilePath(dir, outputPath) {
+export function getPageHtmlFilePath(dir: string, outputPath: string): string {
   let outputFileName = outputPath.replace(/^(\/|\\)/, ``) // Remove leading slashes for webpack-dev-server
 
   if (checkForHtmlSuffix(outputPath)) {
