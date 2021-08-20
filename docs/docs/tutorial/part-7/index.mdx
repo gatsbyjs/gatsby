@@ -16,6 +16,19 @@ By the end of this part of the Tutorial, you will be able to:
 
 - Use the `GatsbyImage` component to create images dynamically from data.
 
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Prefer a video?**
+
+If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 7.
+
+You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/NQj3H2Z9vn0?start=229" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</Announcement>
+
+
 ## What's the difference between `GatsbyImage` and `StaticImage`?
 
 Back in [Part 3](/docs/tutorial/part-3/) of the Tutorial, you learned about how to use the `StaticImage` component from `gatsby-plugin-image`.
@@ -55,6 +68,7 @@ The steps below will help you find and download some photos for your hero images
     ![A screenshot of the Unsplash home page](./unsplash.png)
 
 2. When you've found a photo that you like, download it and add it to subdirectory for one of your blog posts. Continue downloading photos until you have a different hero image for each post.
+    ![Diagram of the "blog" folder structure, with the hero image for each post in the subdirectory for that post.](./folder-structure-with-images.png)
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -344,8 +358,8 @@ Once you have your GraphQL query set up, you can to add it to your blog post pag
         mdx(slug: {eq: $slug}) {
           body
           frontmatter {
-            date(formatString: "MMMM DD, YYYY")
             title
+            date(formatString: "MMMM DD, YYYY")
             hero_image_alt
             hero_image_credit_link
             hero_image_credit_text
@@ -456,9 +470,9 @@ const BlogPost = ({ data }) => {
       {/* highlight-start */}
       <p>
         Photo Credit:{" "}
-        <Link to={data.mdx.frontmatter.hero_image_credit_link}>
+        <a href={data.mdx.frontmatter.hero_image_credit_link}>
           {data.mdx.frontmatter.hero_image_credit_text}
-        </Link>
+        </a>
       </p>
       {/* highlight-end */}
       <MDXRenderer>
@@ -484,6 +498,13 @@ Try removing the `{" "}` and see what happens. The paragraph text should end up 
 </Announcement>
 
 ![A screenshot of the My First Post blog page, which now includes a photo credit underneath the hero image. It says, "Photo Credit: Christopher Ayme".](./blog-post-with-hero-image-credit.png)
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Want to see how it all fits together?** Check out the commit history in the [GitHub repo for the finished example site](https://github.com/gatsbyjs/tutorial-example).
+
+</Announcement>
+
 
 ## Summary
 
