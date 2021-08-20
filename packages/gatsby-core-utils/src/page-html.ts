@@ -4,7 +4,7 @@ import path from "path"
 const checkForHtmlSuffix = (pagePath: string): boolean =>
   !/\.(html?)$/i.test(pagePath)
 
-export async function remove({ publicDir }, pagePath) {
+export async function remove({ publicDir }, pagePath): Promise<void> {
   const filePath = getPageHtmlFilePath(publicDir, pagePath)
 
   return fs.remove(filePath)
