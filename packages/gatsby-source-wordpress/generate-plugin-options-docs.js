@@ -10,6 +10,11 @@ const {
   pluginOptionsSchema,
 } = require(`./dist/steps/declare-plugin-options-schema`)
 
+/**
+ * This script generates ./docs/plugin-options.md from the plugin options schema.
+ * ./docs/plugin-options.md should never be edited directly since it's auto-generated. Update ./src/steps/declare-plugin-options-schema.ts instead
+ */
+
 // :( poor children
 const excludeParentsChildren = [`RootQuery`]
 /**
