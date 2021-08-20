@@ -175,17 +175,19 @@ async function generateMdStringFromSchemaDescription(description) {
   return mdStringFormatted
 }
 
-exports.getPluginOptionsMdString = async function () {
+async function getPluginOptionsMdString() {
   const description = pluginOptionsSchema({ Joi }).describe()
   const mdString = generateMdStringFromSchemaDescription(description)
   return mdString
 }
 
 async function writePluginOptionsMdFile() {
-  const mdString = await exports.getPluginOptionsMdString()
+  const mdString = await getPluginOptionsMdString()
   await fs.writeFile(`./docs/plugin-options.md`, mdString)
 }
 
 if (process.env.NODE_ENV !== `test`) {
   writePluginOptionsMdFile()
 }
+
+module.exports = { getPluginOptionsMdString }
