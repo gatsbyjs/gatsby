@@ -8,6 +8,7 @@ const {
 const { ServerLocation, Router, isRedirect } = require(`@gatsbyjs/reach-router`)
 const { merge, flattenDeep, replace } = require(`lodash`)
 const { StaticQueryContext } = require(`gatsby`)
+const { fixedPagePath } = require(`gatsby-core-utils/dist/page-data`)
 const fs = require(`fs`)
 
 const { RouteAnnouncerProps } = require(`./route-announcer-props`)
@@ -44,10 +45,8 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-const getPageDataPath = path => {
-  const fixedPagePath = path === `/` ? `index` : path
-  return join(`page-data`, fixedPagePath, `page-data.json`)
-}
+const getPageDataPath = path =>
+  join(`page-data`, fixedPagePath(path), `page-data.json`)
 
 const getPageDataUrl = pagePath => {
   const pageDataPath = getPageDataPath(pagePath)

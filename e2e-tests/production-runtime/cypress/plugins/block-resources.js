@@ -1,6 +1,6 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
-
+const { fixedPagePath } = require(`gatsby-core-utils/dist/page-data`)
 const publicDir = path.join(__dirname, `..`, `..`, `public`)
 
 function getAssetManifest() {
@@ -9,8 +9,7 @@ function getAssetManifest() {
 }
 
 function getPageDataPath(pagePath) {
-  const fixedPagePath = pagePath === `/` ? `index` : pagePath
-  return path.posix.join(`page-data`, fixedPagePath, `page-data.json`)
+  return path.posix.join(`page-data`, fixedPagePath(pagePath), `page-data.json`)
 }
 
 const filterAssets = (assetsForPath, filter) => {

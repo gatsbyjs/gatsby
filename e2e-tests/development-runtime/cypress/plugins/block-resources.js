@@ -4,6 +4,7 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const glob = require(`glob`)
+const { fixedPagePath } = require(`gatsby-core-utils/dist/page-data`)
 
 const siteDir = path.join(__dirname, `..`, `..`)
 const srcDir = path.join(siteDir, `src`)
@@ -32,13 +33,21 @@ const restoreAsset = hiddenPath => {
 }
 
 const getPageDataPath = pagePath => {
-  const fixedPagePath = pagePath === `/` ? `index` : pagePath
-  return path.join(publicDir, `page-data`, fixedPagePath, `page-data.json`)
+  return path.join(
+    publicDir,
+    `page-data`,
+    fixedPagePath(pagePath),
+    `page-data.json`
+  )
 }
 
 const getHiddenPageDataPath = pagePath => {
-  const fixedPagePath = pagePath === `/` ? `index` : pagePath
-  return path.join(publicDir, `page-data`, fixedPagePath, `_page-data.json`)
+  return path.join(
+    publicDir,
+    `page-data`,
+    fixedPagePath(pagePath),
+    `_page-data.json`
+  )
 }
 
 const blockPageData = pagePath =>
