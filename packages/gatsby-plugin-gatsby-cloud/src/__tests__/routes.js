@@ -6,7 +6,9 @@ const { onPostBuild } = require(`../gatsby-node`)
 describe(`Routes IPC`, () => {
   let tmpDir
   beforeAll(async () => {
-    tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), `item-dir`))
+    tmpDir = await fs.mkdtemp(
+      path.join(os.tmpdir(), `gatsby-plugin-gatsby-cloud-item-dir`)
+    )
     fs.mkdirSync(path.join(tmpDir, `public`))
     fs.writeJsonSync(path.join(tmpDir, `public`, `webpack.stats.json`), {})
     fs.mkdirSync(path.join(tmpDir, `.cache`))
