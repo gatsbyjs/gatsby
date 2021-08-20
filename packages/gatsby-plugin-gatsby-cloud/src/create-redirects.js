@@ -4,12 +4,9 @@ import { REDIRECTS_FILENAME } from "./constants"
 export default async function writeRedirectsFile(
   pluginData,
   redirects,
-  rewrites,
-  pathPrefix
+  rewrites
 ) {
   const { publicFolder } = pluginData
-
-  if (!redirects.length && !rewrites.length) return null
 
   // gatsby adds path-prefix to redirects so we need to remove them again
   if (redirects && pluginData.pathPrefix) {

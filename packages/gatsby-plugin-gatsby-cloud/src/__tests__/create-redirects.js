@@ -12,12 +12,7 @@ jest.mock(`fs-extra`, () => {
 })
 
 describe(`create-redirects`, () => {
-  let reporter
-
   beforeEach(() => {
-    reporter = {
-      warn: jest.fn(),
-    }
     fs.existsSync.mockClear()
     fs.existsSync.mockReturnValue(true)
   })
@@ -164,6 +159,17 @@ describe(`create-redirects`, () => {
       publicFolder: (...files) => path.join(tmpDir, ...files),
     }
   }
+
+  it(`should assemble a redirects file even if there are no redirects`, async () => {
+    const pluginData = await createPluginData()
+    await createRedirects(pluginData, [], [])
+
+    const output = await fs.readFile(
+      pluginData.publicFolder(REDIRECTS_FILENAME),
+      `utf8`
+    )
+    expect(output).toMatchSnapshot()
+  })
 
   it(`should assemble a redirects file`, async () => {
     const pluginData = await createPluginData()
