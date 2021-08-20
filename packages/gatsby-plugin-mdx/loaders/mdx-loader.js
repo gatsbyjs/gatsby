@@ -206,7 +206,7 @@ ${contentWithoutFrontmatter}`
    */
   for (const plugin of options.gatsbyRemarkPlugins) {
     debug(`requiring`, plugin.resolve)
-    const requiredPlugin = interopDefault(require(plugin.resolve))
+    const requiredPlugin = plugin.module // interopDefault(require(plugin.resolve))
     debug(`required`, plugin)
     if (_.isFunction(requiredPlugin.setParserPlugins)) {
       for (const parserPlugin of requiredPlugin.setParserPlugins(
