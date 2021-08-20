@@ -279,6 +279,7 @@ export async function flush(): Promise<void> {
   }
 
   writePageDataActivity.end()
+
   isFlushing = false
 
   return
