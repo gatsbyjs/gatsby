@@ -43,6 +43,7 @@ export async function fetchContentfulAsset({
             cache,
             ...restArgs,
           })
+
           return filename
         } catch (err) {
           // Retry on given status codes

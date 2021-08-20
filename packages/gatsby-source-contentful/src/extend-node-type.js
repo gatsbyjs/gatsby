@@ -74,7 +74,6 @@ const getBase64Image = (imageProps, reporter, cache, CACHE_FOLDER) => {
     height: Math.floor(20 * aspectRatio),
   }
   const requestUrl = `${createUrl(imageProps.baseUrl, imageOptions)}`
-  console.log(requestUrl)
   // Prefer to return data sync if we already have it
   const alreadyFetched = resolvedBase64Cache.get(requestUrl)
   if (alreadyFetched) {

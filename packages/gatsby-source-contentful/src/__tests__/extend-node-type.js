@@ -85,6 +85,9 @@ describe(`contentful extend node type`, () => {
   })
 
   describe(`getBase64Image`, () => {
+    beforeEach(() => {
+      fetchRemoteFile.mockClear()
+    })
     const imageProps = {
       aspectRatio: 4.8698224852071,
       baseUrl: `//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png`,
@@ -109,7 +112,7 @@ describe(`contentful extend node type`, () => {
         background: null,
       },
     }
-    test(`keeps image format`, async () => {
+    it(`keeps image format`, async () => {
       fetchRemoteFile.mockReturnValue(
         Promise.resolve(
           path.resolve(__dirname, `__fixtures__`, `contentful-logo.png`)
@@ -123,10 +126,16 @@ describe(`contentful extend node type`, () => {
       })
 
       expect(result).toBe(
-        `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAMAAAC5ge+kAAAAllBMVEUAAABHl745rOE7tOc7tOcqMDkqMDkqMDkqMDnfzG9Pm7o7tOc7tOcqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDn4wF/eXWDtXGjtXGgqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDnbVmDpWGbtXGjtXGh1tTylAAAAMnRSTlMATd3gVSUjTCDgHRIscF+MeqB8qpqbk4ienYAxr+AeEipyZI9/aW+No4WJeWuuTdzgVnu3oiUAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAHdElNRQflCAUMNjFcK/NJAAAAMklEQVQI12NkBII/DCDA+htIsDEy/mBj4WDEBCwiyLwnIpyMjL/ZWASB7PMMMPAZTAIALlUHKTqI1/MAAAAASUVORK5CYII=`
+        `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAMAAAC5ge+kAAAAllBMVEUAAABHl745rOE7tOc7tOcqMDkqMDkqMDkqMDnfzG9Pm7o7tOc7tOcqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDn4wF/eXWDtXGjtXGgqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDnbVmDpWGbtXGjtXGh1tTylAAAAMnRSTlMATd3gVSUjTCDgHRIscF+MeqB8qpqbk4ienYAxr+AeEipyZI9/aW+No4WJeWuuTdzgVnu3oiUAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAHdElNRQflCBQANxNx70pyAAAAMklEQVQI12NkBII/DCDA+htIsDEy/mBj4WDEBCwiyLwnIpyMjL/ZWASB7PMMMPAZTAIALlUHKTqI1/MAAAAASUVORK5CYII=`
       )
     })
-    test(`uses given image format`, async () => {
+    it(`uses given image format`, async () => {
+      fetchRemoteFile.mockReturnValue(
+        Promise.resolve(
+          path.resolve(__dirname, `__fixtures__`, `contentful-logo.jpg`)
+        )
+      )
+
       const result = await getBase64Image(
         {
           ...imageProps,
@@ -138,12 +147,6 @@ describe(`contentful extend node type`, () => {
           set: jest.fn(() => undefined),
           directory: `/tmp/`,
         }
-      )
-
-      fetchRemoteFile.mockReturnValue(
-        Promise.resolve(
-          path.resolve(__dirname, `__fixtures__`, `contentful-logo.jpg`)
-        )
       )
 
       expect(result).toBe(
