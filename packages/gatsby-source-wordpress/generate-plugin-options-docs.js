@@ -8,7 +8,7 @@ const prettierConfig = require(`../../.prettierrc.js`)
 
 const {
   pluginOptionsSchema,
-} = require(`./dist/steps/declare-plugin-options-schema`)
+} = require(`./src/steps/declare-plugin-options-schema`)
 
 /**
  * This script generates ./docs/plugin-options.md from the plugin options schema.
