@@ -4,7 +4,7 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const glob = require(`glob`)
-const { fixedPagePath } = require(`gatsby-core-utils/dist/page-data`)
+const { fixedPagePath } = require(`gatsby-core-utils`)
 
 const siteDir = path.join(__dirname, `..`, `..`)
 const srcDir = path.join(siteDir, `src`)

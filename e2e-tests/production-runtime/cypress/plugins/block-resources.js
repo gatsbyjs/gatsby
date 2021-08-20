@@ -1,6 +1,6 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const { fixedPagePath } = require(`gatsby-core-utils/dist/page-data`)
+const { fixedPagePath } = require(`gatsby-core-utils`)
 const publicDir = path.join(__dirname, `..`, `..`, `public`)
 
 function getAssetManifest() {
