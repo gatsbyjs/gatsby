@@ -11,6 +11,9 @@ describe(`Plugin options docs`, () => {
 
     const mdString = await getPluginOptionsMdString()
 
-    expect(generatedDocsFileContents).toBe(mdString)
+    expect(generatedDocsFileContents).toBeTruthy()
+    expect(mdString).toBeTruthy()
+
+    expect(generatedDocsFileContents).toEqual(mdString)
   })
 })
