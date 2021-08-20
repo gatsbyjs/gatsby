@@ -3,7 +3,7 @@
 // - start the develop server
 // - run this script
 async function run() {
-  const { getPageHtmlFilePath } = require(`gatsby-core-utils/dist/page-html`)
+  const { generateHtmlPath } = require(`gatsby-core-utils`)
   const { join } = require(`path`)
   const fs = require(`fs-extra`)
   const fetch = require(`node-fetch`)
@@ -38,7 +38,7 @@ async function run() {
     const builtHtml = format(
       filterHtml(
         fs.readFileSync(
-          getPageHtmlFilePath(join(process.cwd(), `public`), path),
+          generateHtmlPath(join(process.cwd(), `public`), path),
           `utf-8`
         )
       )

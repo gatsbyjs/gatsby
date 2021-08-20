@@ -4,7 +4,7 @@ import { platform } from "os"
 import reporter from "gatsby-cli/lib/reporter"
 import {
   remove as removePageHtmlFile,
-  getPageHtmlFilePath,
+  generateHtmlPath,
   fixedPagePath,
 } from "gatsby-core-utils"
 import { removePageData } from "../utils/page-data"
@@ -15,9 +15,7 @@ const checkFolderIsEmpty = (path: string): boolean =>
   fs.existsSync(path) && !fs.readdirSync(path).length
 
 const checkAndRemoveEmptyDir = (publicDir: string, pagePath: string): void => {
-  const pageHtmlDirectory = path.dirname(
-    getPageHtmlFilePath(publicDir, pagePath)
-  )
+  const pageHtmlDirectory = path.dirname(generateHtmlPath(publicDir, pagePath))
   const pageDataDirectory = path.join(
     publicDir,
     `page-data`,
