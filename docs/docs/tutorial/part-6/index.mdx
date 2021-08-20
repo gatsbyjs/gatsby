@@ -405,13 +405,13 @@ The JSON object in the Query Variables section should look something like the on
 
     const BlogPost = ({ data }) => { // highlight-line
       return (
-        {/* highlight-start */}
+        // highlight-start
         <Layout pageTitle={data.mdx.frontmatter.title}>
           <p>{data.mdx.frontmatter.date}</p>
           <MDXRenderer>
             {data.mdx.body}
           </MDXRenderer>
-        {/* highlight-end */}
+        // highlight-end
         </Layout>
       )
     }
@@ -494,13 +494,13 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering the 
           {
             data.allMdx.nodes.map(node => (
               <article key={node.id}>
-                {/* highlight-start */}
+                // highlight-start
                 <h2>
                   <Link to={`/blog/${node.slug}`}>
                     {node.frontmatter.title}
                   </Link>
                 </h2>
-                {/* highlight-end */}
+                // highlight-end
                 <p>Posted: {node.frontmatter.date}</p>
               </article>
             ))
