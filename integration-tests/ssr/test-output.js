@@ -3,7 +3,7 @@
 // - start the develop server
 // - run this script
 async function run() {
-  const { getPageHtmlFilePath } = require(`gatsby/dist/utils/page-html`)
+  const { getPageHtmlFilePath } = require(`gatsby-core-utils/dist/page-html`)
   const { join } = require(`path`)
   const fs = require(`fs-extra`)
   const fetch = require(`node-fetch`)

@@ -3,8 +3,8 @@
 import fs from "fs-extra"
 import Bluebird from "bluebird"
 import * as path from "path"
+import { getPageHtmlFilePath } from "gatsby-core-utils"
 
-import { getPageHtmlFilePath } from "../../page-html"
 import { IPageDataWithQueryResult } from "../../page-data"
 import { IRenderHtmlResult } from "../../../commands/build-html"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls

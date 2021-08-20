@@ -2,11 +2,10 @@ import fs from "fs-extra"
 import path from "path"
 import { platform } from "os"
 import reporter from "gatsby-cli/lib/reporter"
-
 import {
   remove as removePageHtmlFile,
   getPageHtmlFilePath,
-} from "../utils/page-html"
+} from "gatsby-core-utils"
 import { removePageData, fixedPagePath } from "../utils/page-data"
 import { store } from "../redux"
 import { IGatsbyState } from "../redux/types"
