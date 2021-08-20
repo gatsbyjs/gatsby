@@ -1,7 +1,9 @@
-import { Step } from "./../utils/run-steps"
-import prettier from "prettier"
+/**
+ * This file is intentionally not TS so it can be run in a yarn script without being transpiled.
+ */
+const prettier = require(`prettier`)
 
-const wrapOptions = (innerOptions): string =>
+const wrapOptions = innerOptions =>
   prettier
     .format(
       `const something = {
@@ -14,8 +16,8 @@ const wrapOptions = (innerOptions): string =>
     .replace(`const something = `, ``)
     .replace(`;`, ``)
 
-export const pluginOptionsSchema: Step = ({ Joi }) => {
-  const getTypeOptions = (): any =>
+const pluginOptionsSchema = ({ Joi }) => {
+  const getTypeOptions = () =>
     Joi.object({
       where: Joi.string()
         .allow(null)
@@ -899,4 +901,8 @@ This should be the full url of your GraphQL endpoint.`
         )
         .allow(null),
     })
+}
+
+module.exports = {
+  pluginOptionsSchema,
 }
