@@ -5,8 +5,9 @@ import reporter from "gatsby-cli/lib/reporter"
 import {
   remove as removePageHtmlFile,
   getPageHtmlFilePath,
+  fixedPagePath,
 } from "gatsby-core-utils"
-import { removePageData, fixedPagePath } from "../utils/page-data"
+import { removePageData } from "../utils/page-data"
 import { store } from "../redux"
 import { IGatsbyState } from "../redux/types"
 

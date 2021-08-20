@@ -3,7 +3,7 @@
 import fs from "fs-extra"
 import Bluebird from "bluebird"
 import * as path from "path"
-import { getPageHtmlFilePath } from "gatsby-core-utils"
+import { getPageHtmlFilePath, fixedPagePath } from "gatsby-core-utils"
 
 import { IPageDataWithQueryResult } from "../../page-data"
 import { IRenderHtmlResult } from "../../../commands/build-html"
@@ -64,8 +64,12 @@ async function readPageData(
   publicDir: string,
   pagePath: string
 ): Promise<IPageDataWithQueryResult> {
-  const fixedPagePath = pagePath === `/` ? `index` : pagePath
-  const filePath = join(publicDir, `page-data`, fixedPagePath, `page-data.json`)
+  const filePath = join(
+    publicDir,
+    `page-data`,
+    fixedPagePath(pagePath),
+    `page-data.json`
+  )
   const rawPageData = await fs.readFile(filePath, `utf-8`)
 
   return JSON.parse(rawPageData)

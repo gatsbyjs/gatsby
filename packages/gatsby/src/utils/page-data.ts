@@ -3,7 +3,7 @@ import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import fastq from "fastq"
 import path from "path"
-import { createContentDigest } from "gatsby-core-utils"
+import { createContentDigest, pageDataFilePath } from "gatsby-core-utils"
 import { IGatsbyPage } from "../redux/types"
 import { websocketManager } from "./websocket-manager"
 import { isWebpackStatusPending } from "./webpack-status"
@@ -25,28 +25,15 @@ export interface IPageDataWithQueryResult extends IPageData {
   result: IExecutionResult
 }
 
-export function fixedPagePath(pagePath: string): string {
-  return pagePath === `/` ? `index` : pagePath
-}
-
 export function reverseFixedPagePath(pageDataRequestPath: string): string {
   return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
-}
-
-function getFilePath(publicDir: string, pagePath: string): string {
-  return path.join(
-    publicDir,
-    `page-data`,
-    fixedPagePath(pagePath),
-    `page-data.json`
-  )
 }
 
 export async function readPageData(
   publicDir: string,
   pagePath: string
 ): Promise<IPageDataWithQueryResult> {
-  const filePath = getFilePath(publicDir, pagePath)
+  const filePath = pageDataFilePath(publicDir, pagePath)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
 
   return JSON.parse(rawPageData)
@@ -56,7 +43,7 @@ export async function removePageData(
   publicDir: string,
   pagePath: string
 ): Promise<void> {
-  const filePath = getFilePath(publicDir, pagePath)
+  const filePath = pageDataFilePath(publicDir, pagePath)
 
   if (fs.existsSync(filePath)) {
     return await fs.remove(filePath)
@@ -66,7 +53,7 @@ export async function removePageData(
 }
 
 export function pageDataExists(publicDir: string, pagePath: string): boolean {
-  return fs.existsSync(getFilePath(publicDir, pagePath))
+  return fs.existsSync(pageDataFilePath(publicDir, pagePath))
 }
 
 let lmdbPageQueryResultsCache: GatsbyCacheLmdb
@@ -141,7 +128,7 @@ export async function writePageData(
 ): Promise<string> {
   const result = await readPageQueryResult(publicDir, pagePath)
 
-  const outputFilePath = getFilePath(publicDir, pagePath)
+  const outputFilePath = pageDataFilePath(publicDir, pagePath)
   let body = `{
     "componentChunkName": "${componentChunkName}",
     "path": "${pagePath}",
@@ -327,7 +314,7 @@ export async function handleStalePageData(): Promise<void> {
 
   const expectedPageDataFiles = new Set<string>()
   store.getState().pages.forEach(page => {
-    expectedPageDataFiles.add(getFilePath(`public`, page.path))
+    expectedPageDataFiles.add(pageDataFilePath(`public`, page.path))
   })
 
   const deletionPromises: Array<Promise<void>> = []

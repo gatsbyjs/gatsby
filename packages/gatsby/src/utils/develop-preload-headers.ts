@@ -1,8 +1,8 @@
 import { Response } from "express"
 import * as path from "path"
-
+import { fixedPagePath } from "gatsby-core-utils"
 import { findPageByPath } from "./find-page-by-path"
-import { fixedPagePath, readPageData } from "./page-data"
+import { readPageData } from "./page-data"
 import { store } from "../redux"
 
 /**
