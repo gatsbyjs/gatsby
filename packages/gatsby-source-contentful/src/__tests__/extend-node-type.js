@@ -1,3 +1,10 @@
+jest.mock(`gatsby-core-utils`, () => {
+  return {
+    fetchRemoteFile: jest.fn(),
+  }
+})
+
+const path = require(`path`)
 const {
   createUrl,
   resolveFixed,
@@ -6,6 +13,8 @@ const {
   generateImageSource,
   getBase64Image,
 } = require(`../extend-node-type`)
+
+const fetchRemoteFile = require(`gatsby-core-utils`).fetchRemoteFile
 
 describe(`contentful extend node type`, () => {
   describe(`createUrl`, () => {
@@ -40,6 +49,10 @@ describe(`contentful extend node type`, () => {
   const nullFileImage = {
     defaultLocale: `en-US`,
     file: null,
+  }
+
+  const reporter = {
+    verbose: jest.fn(),
   }
 
   describe(`generateImageSource`, () => {
@@ -97,17 +110,43 @@ describe(`contentful extend node type`, () => {
       },
     }
     test(`keeps image format`, async () => {
-      const result = await getBase64Image(imageProps)
-      expect(result).toMatch(
-        `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAMAAAC5ge+kAAAAllBMVEUAAABHl745rOE7tOc7tOcqMDkqMDkqMDkqMDnfzG9Pm7o7tOc7tOcqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDn4wF/eXWDtXGjtXGgqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDnbVmDpWGbtXGjtXGh1tTylAAAAMnRSTlMATd3gVSUjTCDgHRIscF+MeqB8qpqbk4ienYAxr+AeEipyZI9/aW+No4WJeWuuTdzgVnu3oiUAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAHdElNRQflCBQANxNx70pyAAAAMklEQVQI12NkBII/DCDA+htIsDEy/mBj4WDEBCwiyLwnIpyMjL/ZWASB7PMMMPAZTAIALlUHKTqI1/MAAAAASUVORK5CYII=`
+      fetchRemoteFile.mockReturnValue(
+        Promise.resolve(
+          path.resolve(__dirname, `__fixtures__`, `contentful-logo.png`)
+        )
+      )
+
+      const result = await getBase64Image(imageProps, reporter, {
+        get: jest.fn(() => undefined),
+        set: jest.fn(() => undefined),
+        directory: `/tmp/`,
+      })
+
+      expect(result).toBe(
+        `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAMAAAC5ge+kAAAAllBMVEUAAABHl745rOE7tOc7tOcqMDkqMDkqMDkqMDnfzG9Pm7o7tOc7tOcqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDn4wF/eXWDtXGjtXGgqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDnbVmDpWGbtXGjtXGh1tTylAAAAMnRSTlMATd3gVSUjTCDgHRIscF+MeqB8qpqbk4ienYAxr+AeEipyZI9/aW+No4WJeWuuTdzgVnu3oiUAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAHdElNRQflCAUMNjFcK/NJAAAAMklEQVQI12NkBII/DCDA+htIsDEy/mBj4WDEBCwiyLwnIpyMjL/ZWASB7PMMMPAZTAIALlUHKTqI1/MAAAAASUVORK5CYII=`
       )
     })
     test(`uses given image format`, async () => {
-      const result = await getBase64Image({
-        ...imageProps,
-        options: { ...imageProps.options, toFormat: `jpg` },
-      })
-      expect(result).toMatch(
+      const result = await getBase64Image(
+        {
+          ...imageProps,
+          options: { ...imageProps.options, toFormat: `jpg` },
+        },
+        reporter,
+        {
+          get: jest.fn(() => undefined),
+          set: jest.fn(() => undefined),
+          directory: `/tmp/`,
+        }
+      )
+
+      fetchRemoteFile.mockReturnValue(
+        Promise.resolve(
+          path.resolve(__dirname, `__fixtures__`, `contentful-logo.jpg`)
+        )
+      )
+
+      expect(result).toBe(
         `data:image/jpg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAAEABQDASIAAhEBAxEB/8QAFwABAAMAAAAAAAAAAAAAAAAAAAIDBv/EACQQAAIBAgQHAQAAAAAAAAAAAAECAAMRBBITJAUUFSFBUWHB/8QAFQEBAQAAAAAAAAAAAAAAAAAAAgH/xAAXEQEBAQEAAAAAAAAAAAAAAAABAAIx/9oADAMBAAIRAxEAPwDV4NObWqM70dOoVvROUt9Psy7pYud5jO/jWiJM8lsDSFB+Do+Xe4xQosAtW35ERFC//9k=`
       )
     })

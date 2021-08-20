@@ -63,11 +63,18 @@ const getBase64Image = (imageProps, reporter, cache, CACHE_FOLDER) => {
     return null
   }
 
-  const requestUrl = createUrl(imageProps.baseUrl, {
+  // Keep aspect ratio, image format and other transform options
+  const { aspectRatio } = imageProps
+  const originalFormat = imageProps.image.file.contentType.split(`/`)[1]
+  const toFormat = imageProps.options.toFormat
+  const imageOptions = {
+    ...imageProps.options,
+    toFormat,
     width: 20,
-    toFormat: `jpg`,
-  })
-
+    height: Math.floor(20 * aspectRatio),
+  }
+  const requestUrl = `${createUrl(imageProps.baseUrl, imageOptions)}`
+  console.log(requestUrl)
   // Prefer to return data sync if we already have it
   const alreadyFetched = resolvedBase64Cache.get(requestUrl)
   if (alreadyFetched) {
@@ -83,14 +90,18 @@ const getBase64Image = (imageProps, reporter, cache, CACHE_FOLDER) => {
   const loadImageAsBase64 = async () => {
     const filename = await fetchContentfulAsset({
       url: requestUrl,
-      cache,
+      cache: {
+        ...cache,
+        directory: CACHE_FOLDER,
+      },
       reporter,
-      cacheDir: CACHE_FOLDER,
     })
 
     const buffer = await fs.readFile(filename)
 
-    return `data:image/jpeg;base64,${buffer.toString(`base64`)}`
+    return `data:image/${toFormat || originalFormat};base64,${buffer.toString(
+      `base64`
+    )}`
   }
 
   const promise = loadImageAsBase64()
@@ -691,9 +702,11 @@ exports.extendNodeType = ({ type, cache, reporter, store }) => {
     const absolutePath = await fetchContentfulAsset({
       url,
       name,
-      cache,
+      cache: {
+        ...cache,
+        directory: CACHE_FOLDER,
+      },
       reporter,
-      cacheDir: CACHE_FOLDER,
       ext: extension,
     })
 
@@ -743,9 +756,11 @@ exports.extendNodeType = ({ type, cache, reporter, store }) => {
       const absolutePath = await fetchContentfulAsset({
         url,
         name,
-        cache,
+        cache: {
+          ...cache,
+          directory: CACHE_FOLDER,
+        },
         reporter,
-        cacheDir: CACHE_FOLDER,
         ext: extension,
       })
 
