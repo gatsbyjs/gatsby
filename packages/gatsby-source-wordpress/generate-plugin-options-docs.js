@@ -182,6 +182,7 @@ async function getPluginOptionsMdString() {
 }
 
 async function writePluginOptionsMdFile() {
+  console.info(`writing out plugin options schema docs to plugin-options.md`)
   const mdString = await getPluginOptionsMdString()
   await fs.writeFile(`./docs/plugin-options.md`, mdString)
 }
