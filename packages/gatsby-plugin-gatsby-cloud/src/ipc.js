@@ -23,9 +23,7 @@ export function emitRedirects(redirect) {
     type: `LOG_ACTION`,
     action: {
       type: `CREATE_REDIRECT_ENTRY`,
-      payload: {
-        redirect,
-      },
+      payload: redirect,
     },
   })
 }
@@ -39,9 +37,7 @@ export function emitRewrites(rewrite) {
     type: `LOG_ACTION`,
     action: {
       type: `CREATE_REWRITE_ENTRY`,
-      payload: {
-        rewrite,
-      },
+      payload: rewrite,
     },
   })
 }
@@ -55,9 +51,7 @@ export function emitHeaders(header) {
     type: `LOG_ACTION`,
     action: {
       type: `CREATE_HEADER_ENTRY`,
-      payload: {
-        header,
-      },
+      payload: header,
     },
   })
 }
