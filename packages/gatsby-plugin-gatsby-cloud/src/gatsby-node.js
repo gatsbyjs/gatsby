@@ -5,7 +5,7 @@ import buildHeadersProgram from "./build-headers-program"
 import createSSRRoutes from "./create-ssr-routes"
 import copyFunctionsManifest from "./copy-functions-manifest"
 import createRedirects from "./create-redirects"
-import { readJSON } from "fs-extra"
+import { readJSON, writeJSON } from "fs-extra"
 import { joinPath } from "gatsby-core-utils"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
 
@@ -31,7 +31,7 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
 }
 
 exports.onPostBuild = async (
-  { store, pathPrefix, reporter },
+  { store, pathPrefix, reporter, getNodesByType },
   userPluginOptions
 ) => {
   const pluginData = makePluginData(store, assetsManifest, pathPrefix)
@@ -71,6 +71,22 @@ exports.onPostBuild = async (
       })
     }
   }
+
+  const fileNodes = getNodesByType(`File`)
+  const filesAbsolutePaths = fileNodes.map(file => file.absolutePath)
+  const filesToUpload = {
+    fileNodes: filesAbsolutePaths,
+    // Postpone cacheLocations for now
+    // .cache/caches + .cache/caches-lmdb
+    cacheLocations: [],
+  }
+
+  const filesToUploadFile = joinPath(
+    pluginData.program.directory,
+    `.cache`,
+    `query-engine-manifest.json`
+  )
+  await writeJSON(filesToUploadFile, filesToUpload)
 
   let rewrites = []
   if (pluginOptions.generateMatchPathRewrites) {
