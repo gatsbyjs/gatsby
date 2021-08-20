@@ -324,9 +324,8 @@ describe(`build-headers-program`, () => {
       action: {
         type: `CREATE_HEADER_ENTRY`,
         payload: {
-          header: {
-            "/hello": [`X-Frame-Options: SAMEORIGIN`],
-          },
+          url: `/hello`,
+          headers: [`X-Frame-Options: SAMEORIGIN`],
         },
       },
     })

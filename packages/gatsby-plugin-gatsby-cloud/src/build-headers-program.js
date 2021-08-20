@@ -319,7 +319,8 @@ const writeHeadersFile =
        */
       Object.entries(contents).map(([k, val]) => {
         emitHeaders({
-          [k]: val,
+          url: k,
+          headers: val,
         })
       })
 

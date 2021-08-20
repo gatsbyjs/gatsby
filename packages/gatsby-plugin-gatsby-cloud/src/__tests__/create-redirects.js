@@ -268,11 +268,9 @@ describe(`create-redirects`, () => {
       action: {
         type: `CREATE_REDIRECT_ENTRY`,
         payload: {
-          redirect: {
-            fromPath: `/old-url`,
-            toPath: `/new-url`,
-            isPermanent: true,
-          },
+          fromPath: `/old-url`,
+          toPath: `/new-url`,
+          isPermanent: true,
         },
       },
     })
@@ -282,10 +280,8 @@ describe(`create-redirects`, () => {
       action: {
         type: `CREATE_REWRITE_ENTRY`,
         payload: {
-          rewrite: {
-            fromPath: `/url_that_is/ugly`,
-            toPath: `/not_ugly/url`,
-          },
+          fromPath: `/url_that_is/ugly`,
+          toPath: `/not_ugly/url`,
         },
       },
     })
