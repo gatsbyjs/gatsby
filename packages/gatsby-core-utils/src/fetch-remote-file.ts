@@ -15,8 +15,6 @@ import type { GatsbyCache } from "gatsby"
 export interface IFetchRemoteFileOptions {
   url: string
   cache: GatsbyCache
-  cacheDir?: string
-  skipCache?: boolean
   auth?: {
     htaccess_pass?: string
     htaccess_user?: string
@@ -201,17 +199,12 @@ export async function fetchRemoteFile({
 async function fetchFile({
   url,
   cache,
-  cacheDir,
   auth = {},
   httpHeaders = {},
   ext,
   name,
 }: IFetchRemoteFileOptions): Promise<string> {
-  // A custom cacheDir can be used to ensure files won't
-  // get deleted on a regular cache clear.
-  // The GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE flag from gatsby-source-contentful
-  // is using this option to speed up recurring builds.
-  const pluginCacheDir = cacheDir || cache.directory
+  const pluginCacheDir = cache.directory
 
   // See if there's response headers for this url
   // from a previous request.
