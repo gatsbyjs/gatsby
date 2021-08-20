@@ -1,6 +1,7 @@
 import path from "path"
 import { readJSON } from "fs-extra"
 import WebpackAssetsManifest from "webpack-assets-manifest"
+import { joinPath } from "gatsby-core-utils"
 import { captureEvent } from "gatsby-telemetry"
 import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
