@@ -386,7 +386,11 @@ exports.sourceNodes = async (
 
               // Get count of API requests
               // We round down as we've already gotten the first page at this point.
-              const requestsCount = Math.floor(d.body.meta.count / 50)
+              const pageSize = new URL(d.body.links.next.href).searchParams.get(
+                `page[limit]`
+              )
+              const requestsCount = Math.floor(d.body.meta.count / pageSize)
+
               reporter.verbose(
                 `queueing ${requestsCount} API requests for type ${d.body.data[0].type} which has ${d.body.meta.count} entities.`
               )
@@ -397,7 +401,7 @@ exports.sourceNodes = async (
                   pageOffset += 1
                   // Construct URL with new pageOffset.
                   const newUrl = new URL(d.body.links.next.href)
-                  newUrl.searchParams.set(`page[offset]`, pageOffset * 50)
+                  newUrl.searchParams.set(`page[offset]`, pageOffset * pageSize)
                   return getNext(newUrl.toString())
                 })
               )
