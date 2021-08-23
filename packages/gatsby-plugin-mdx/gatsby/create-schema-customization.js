@@ -17,7 +17,6 @@ const getTableOfContents = require(`../utils/get-table-of-content`)
 const defaultOptions = require(`../utils/default-options`)
 const genMDX = require(`../utils/gen-mdx`)
 const { mdxHTMLLoader: loader } = require(`../utils/render-html`)
-const { interopDefault } = require(`../utils/interop-default`)
 
 async function getCounts({ mdast }) {
   const counts = {}
@@ -75,7 +74,7 @@ module.exports = function createSchemaCustomization(
    */
   for (const plugin of options.gatsbyRemarkPlugins) {
     debug(`requiring`, plugin.resolve)
-    const requiredPlugin = plugin.module // interopDefault(require(plugin.resolve))
+    const requiredPlugin = plugin.module
     debug(`required`, plugin)
     if (_.isFunction(requiredPlugin.setParserPlugins)) {
       for (const parserPlugin of requiredPlugin.setParserPlugins(

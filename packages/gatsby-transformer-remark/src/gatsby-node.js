@@ -25,11 +25,5 @@ exports.pluginOptionsSchema = function ({ Joi }) {
     plugins: Joi.subPlugins({ entry: `index` }).description(
       `A list of remark plugins. See also: https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark for examples`
     ),
-
-    // Joi.array()
-    // .items(Joi.subPlugin({ entry: `index` }))
-    // .description(
-    //   `A list of remark plugins. See also: https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark for examples`
-    // ),
   })
 }

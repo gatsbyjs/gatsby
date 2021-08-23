@@ -5,8 +5,7 @@ module.exports = {
     author: `@gatsbyjs`,
   },
   flags: {
-    LMDB_STORE: true,
-    // PARALLEL_QUERY_RUNNING: true,
+    PARALLEL_QUERY_RUNNING: true,
   },
   // plugins: [`gatsby-plugin-benchmark-reporting`],
 }

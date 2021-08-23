@@ -1,5 +1,4 @@
 const visit = require(`unist-util-visit`)
-const { interopDefault } = require(`./interop-default`)
 
 // ensure only one `/` in new url
 const withPathPrefix = (url, pathPrefix) =>
@@ -36,7 +35,6 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
 
   // return list of remarkPlugins
   const userPluginsFiltered = gatsbyRemarkPlugins.filter(
-    // plugin => typeof interopDefault(require(plugin.resolve)) === `function`
     plugin => typeof plugin.module === `function`
   )
 
@@ -45,7 +43,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
   }
 
   const userPlugins = userPluginsFiltered.map(plugin => {
-    const requiredPlugin = plugin.module // interopDefault(require(plugin.resolve))
+    const requiredPlugin = plugin.module
     const wrappedPlugin = () =>
       async function transformer(markdownAST) {
         await requiredPlugin(

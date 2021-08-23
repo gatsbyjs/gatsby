@@ -5,7 +5,6 @@ const path = require(`path`)
 const unified = require(`unified`)
 const babel = require(`@babel/core`)
 const { createRequireFromPath, slash } = require(`gatsby-core-utils`)
-const { interopDefault } = require(`../utils/interop-default`)
 
 const {
   isImport,
@@ -206,7 +205,7 @@ ${contentWithoutFrontmatter}`
    */
   for (const plugin of options.gatsbyRemarkPlugins) {
     debug(`requiring`, plugin.resolve)
-    const requiredPlugin = plugin.module // interopDefault(require(plugin.resolve))
+    const requiredPlugin = plugin.module
     debug(`required`, plugin)
     if (_.isFunction(requiredPlugin.setParserPlugins)) {
       for (const parserPlugin of requiredPlugin.setParserPlugins(

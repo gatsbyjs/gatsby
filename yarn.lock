@@ -19347,7 +19347,7 @@ node-loader@^2.0.0:
   dependencies:
     loader-utils "^2.0.0"
 
-node-match-path@^0.6.0, node-match-path@^0.6.3:
+node-match-path@^0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/node-match-path/-/node-match-path-0.6.3.tgz#55dd8443d547f066937a0752dce462ea7dc27551"
   integrity sha512-fB1reOHKLRZCJMAka28hIxCwQLxGmd7WewOCBDYKpyA1KXi68A7vaGgdZAPhY2E6SXoYt3KqYCCvXLJ+O0Fu/Q==

@@ -122,7 +122,7 @@ module.exports = function remarkExtendNodeType(
       remark = remark.use(remarkFootnotes, { inlineNotes: true })
     }
     for (const plugin of pluginOptions.plugins) {
-      const requiredPlugin = plugin.module // require(plugin.resolve)
+      const requiredPlugin = plugin.module
       if (_.isFunction(requiredPlugin.setParserPlugins)) {
         for (const parserPlugin of requiredPlugin.setParserPlugins(
           plugin.pluginOptions
@@ -200,7 +200,7 @@ module.exports = function remarkExtendNodeType(
       }
       // Use a for loop to run remark plugins serially.
       for (const plugin of pluginOptions.plugins) {
-        const requiredPlugin = plugin.module // require(plugin.resolve)
+        const requiredPlugin = plugin.module
         // Allow both exports = function(), and exports.default = function()
         const defaultFunction = _.isFunction(requiredPlugin)
           ? requiredPlugin
@@ -241,7 +241,7 @@ module.exports = function remarkExtendNodeType(
       //
       // Use for loop to run remark plugins serially.
       for (const plugin of pluginOptions.plugins) {
-        const requiredPlugin = plugin.module // require(plugin.resolve)
+        const requiredPlugin = plugin.module
         if (typeof requiredPlugin.mutateSource === `function`) {
           await requiredPlugin.mutateSource(
             {
