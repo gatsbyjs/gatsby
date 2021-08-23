@@ -3,6 +3,8 @@ const _ = require(`lodash`)
 const urlJoin = require(`url-join`)
 import HttpAgent from "agentkeepalive"
 // const http2wrapper = require(`http2-wrapper`)
+const url = require(`url`)
+const querystring = require(`querystring`)
 
 const { HttpsAgent } = HttpAgent
 
@@ -293,6 +295,7 @@ exports.sourceNodes = async (
   drupalFetchActivity.start()
 
   let allData
+  const typeRequestsQueued = new Set()
   try {
     const res = await requestQueue.push([
       urlJoin(baseUrl, apiBase),
@@ -370,7 +373,44 @@ exports.sourceNodes = async (
           if (d.body.included) {
             dataArray.push(...d.body.included)
           }
-          if (d.body.links && d.body.links.next) {
+
+          // If JSON:API extras is configured to add the resource count, we can queue
+          // all API requests immediately.
+          if (d.body.meta?.count) {
+            // If we hadn't added urls yet
+            if (
+              d.body.meta.count > 50 &&
+              !typeRequestsQueued.has(d.body.data[0]?.type)
+            ) {
+              typeRequestsQueued.add(d.body.data[0]?.type)
+
+              // Get count of API requests
+              // We round down as we've already gotten the first page.
+              const requestsCount = Math.floor(d.body.meta.count / 50)
+              reporter.verbose(
+                `queueing ${requestsCount} API requests for type ${d.body.data[0].type} which has ${d.body.meta.count} entities.`
+              )
+              if (d.body.links.next?.href) {
+                const parsedUrl = url.parse(d.body.links.next?.href)
+                const parsedQueryString = querystring.parse(parsedUrl.query)
+                await Promise.all(
+                  _.range(requestsCount).map(pageOffset => {
+                    pageOffset += 1
+                    // Construct query string.
+                    const newQuerystring = {
+                      ...parsedQueryString,
+                      "page[offset]": pageOffset * 50,
+                    }
+                    const newUrl = url.format({
+                      ...parsedUrl,
+                      search: querystring.stringify(newQuerystring),
+                    })
+                    return getNext(newUrl)
+                  })
+                )
+              }
+            }
+          } else if (d.body.links?.next) {
             await getNext(d.body.links.next)
           }
         }
