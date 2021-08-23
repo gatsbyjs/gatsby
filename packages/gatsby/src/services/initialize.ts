@@ -281,6 +281,18 @@ export async function initialize({
   const state = store.getState()
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 
+  console.log(`DEBUGGING CACHE RESTORATION`, {
+    oldPluginsHash,
+    hashes,
+    pluginVersions: flattenedPlugins.map(p => {
+      return {
+        name: p.name,
+        version: p.version,
+      }
+    }),
+    pluginsHash,
+  })
+
   // Check if anything has changed. If it has, delete the site's .cache
   // directory and tell reducers to empty themselves.
   //

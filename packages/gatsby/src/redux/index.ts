@@ -23,6 +23,11 @@ export const emitter = mett()
 export const readState = (): IGatsbyState => {
   try {
     const state = readFromCache() as IGatsbyState
+    console.log(
+      `DEBUGGING_CACHE_RESTORATION`,
+      `nodes length on restoration`,
+      state.nodes?.length
+    )
     if (state.nodes) {
       // re-create nodesByType
       state.nodesByType = new Map()
