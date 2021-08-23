@@ -1,7 +1,11 @@
 import path from "path"
 import { readJSON } from "fs-extra"
 import WebpackAssetsManifest from "webpack-assets-manifest"
-import { generatePageDataPath, joinPath } from "gatsby-core-utils"
+import {
+  generatePageDataPath,
+  joinPath,
+  generateHtmlPath,
+} from "gatsby-core-utils"
 import { captureEvent } from "gatsby-telemetry"
 import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
@@ -10,7 +14,6 @@ import createRedirects from "./create-redirects"
 import createSiteConfig from "./create-site-config"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
 import { emitRoutes } from "./ipc"
-import { generateHtmlPath } from "gatsby-core-utils"
 
 const assetsManifest = {}
 
