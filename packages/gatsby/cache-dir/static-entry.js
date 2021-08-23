@@ -46,7 +46,7 @@ Html = Html && Html.__esModule ? Html.default : Html
 
 const getPageDataPath = path => {
   const fixedPagePath = path === `/` ? `index` : path
-  return join(`page-data`, fixedPagePath(path), `page-data.json`)
+  return join(`page-data`, fixedPagePath, `page-data.json`)
 }
 
 const getPageDataUrl = pagePath => {

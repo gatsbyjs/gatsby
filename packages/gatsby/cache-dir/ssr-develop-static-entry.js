@@ -4,12 +4,12 @@ import fs from "fs"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { get, merge, isObject, flatten, uniqBy, concat } from "lodash"
 import nodePath from "path"
-import { ServerLocation, Router, isRedirect } from "@reach/router"
 import { apiRunner, apiRunnerAsync } from "./api-runner-ssr"
 import { grabMatchParams } from "./find-path"
 import syncRequires from "$virtual/ssr-sync-requires"
 
 import { RouteAnnouncerProps } from "./route-announcer-props"
+import { ServerLocation, Router, isRedirect } from "@reach/router"
 
 // import testRequireError from "./test-require-error"
 // For some extremely mysterious reason, webpack adds the above module *after*
@@ -140,7 +140,7 @@ export default async function staticPage(
 
     const getPageDataPath = path => {
       const fixedPagePath = path === `/` ? `index` : path
-      return nodePath.join(`page-data`, fixedPagePath(path), `page-data.json`)
+      return nodePath.join(`page-data`, fixedPagePath, `page-data.json`)
     }
 
     const getPageData = pagePath => {
