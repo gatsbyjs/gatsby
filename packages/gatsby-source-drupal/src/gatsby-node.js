@@ -373,32 +373,34 @@ exports.sourceNodes = async (
           }
 
           // If JSON:API extras is configured to add the resource count, we can queue
-          // all API requests immediately.
+          // all API requests immediately instead of waiting for each request to return
+          // the next URL. This lets us request resources in parallel vs. sequentially
+          // which is much faster.
           if (d.body.meta?.count) {
             // If we hadn't added urls yet
             if (
-              d.body.meta.count > 50 &&
+              d.body.links.next?.href &&
               !typeRequestsQueued.has(d.body.data[0]?.type)
             ) {
               typeRequestsQueued.add(d.body.data[0]?.type)
 
               // Get count of API requests
-              // We round down as we've already gotten the first page.
+              // We round down as we've already gotten the first page at this point.
               const requestsCount = Math.floor(d.body.meta.count / 50)
               reporter.verbose(
                 `queueing ${requestsCount} API requests for type ${d.body.data[0].type} which has ${d.body.meta.count} entities.`
               )
-              if (d.body.links.next?.href) {
-                await Promise.all(
-                  _.range(requestsCount).map(pageOffset => {
-                    pageOffset += 1
-                    // Construct URL with new pageOffset.
-                    const newUrl = new URL(d.body.links.next.href)
-                    newUrl.searchParams.set(`page[offset]`, pageOffset * 50)
-                    return getNext(newUrl.toString())
-                  })
-                )
-              }
+
+              await Promise.all(
+                _.range(requestsCount).map(pageOffset => {
+                  // We're starting 1 ahead.
+                  pageOffset += 1
+                  // Construct URL with new pageOffset.
+                  const newUrl = new URL(d.body.links.next.href)
+                  newUrl.searchParams.set(`page[offset]`, pageOffset * 50)
+                  return getNext(newUrl.toString())
+                })
+              )
             }
           } else if (d.body.links?.next) {
             await getNext(d.body.links.next)
