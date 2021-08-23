@@ -90,6 +90,10 @@ const navigate = (to, options = {}) => {
     // If the loaded page has a different compilation hash to the
     // window, then a rebuild has occurred on the server. Reload.
     if (process.env.NODE_ENV === `production` && pageResources) {
+      // window.___webpackCompilationHash gets set in production-app.js after navigationInit() is called
+      // So on a direct visit of a page with a browser redirect this check is truthy and thus the codepath is hit
+      // While the resource actually exists, but only too late
+      // TODO: This should probably be fixed by setting ___webpackCompilationHash before navigationInit() is called
       if (
         pageResources.page.webpackCompilationHash !==
         window.___webpackCompilationHash
@@ -105,7 +109,7 @@ const navigate = (to, options = {}) => {
           })
         }
 
-        window.location = pathname
+        window.location = pathname + search + hash
       }
     }
     reachNavigate(to, options)

@@ -1,10 +1,7 @@
+import { fixedPagePath } from "gatsby-core-utils"
 import { store } from "../../redux"
 import { getPageData, RETRY_INTERVAL } from "../get-page-data"
-import {
-  fixedPagePath,
-  flush as flushPageData,
-  savePageQueryResult,
-} from "../page-data"
+import { flush as flushPageData, savePageQueryResult } from "../page-data"
 import {
   IGatsbyPage,
   IGatsbyPlugin,
