@@ -25,6 +25,10 @@ export interface IPluginInfo {
 
   /** Options passed to the plugin */
   pluginOptions?: IPluginInfoOptions
+
+  subPluginPaths?: Array<string>
+  module?: any
+  modulePath?: string
 }
 
 export interface IPluginInfoOptions {
@@ -44,6 +48,9 @@ export interface IPluginRefObject {
   resolve: string
   options?: IPluginRefOptions
   parentDir?: string
+  subPluginPaths?: Array<string>
+  module?: any
+  modulePath?: string
 }
 
 export type PluginRef = string | IPluginRefObject

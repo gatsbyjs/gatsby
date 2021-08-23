@@ -209,7 +209,7 @@ async function validatePluginsOptions(
           return {
             base: joi.any(),
             type: `subPlugins`,
-            args: (_, args): any => {
+            args: (_, args: any): any => {
               const entry = args?.entry ?? `index`
 
               return joi
@@ -307,8 +307,7 @@ async function validatePluginsOptions(
           errors += subErrors
         }
         if (subPluginPaths.size > 0) {
-          plugin.subPluginPaths = subPluginPaths
-          // console.log({ subPluginPaths })
+          plugin.subPluginPaths = Array.from(subPluginPaths)
         }
       } catch (error) {
         if (error instanceof Joi.ValidationError) {

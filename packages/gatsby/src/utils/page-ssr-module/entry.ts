@@ -80,10 +80,10 @@ export async function renderPageData({
       matchPath: data.page.matchPath,
       staticQueryHashes: data.templateDetails.staticQueryHashes,
     },
-    data.results
+    JSON.stringify(data.results)
   )
 
-  return results.body
+  return JSON.parse(results.body)
 }
 
 const readStaticQueryContext = async (

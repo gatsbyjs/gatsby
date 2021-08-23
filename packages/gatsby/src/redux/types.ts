@@ -245,6 +245,8 @@ export interface IGatsbyState {
     >
     ssrAPIs: Array<"onRenderBody" | "onPreRenderHTML">
     pluginFilepath: SystemPath
+    subPluginPaths?: Array<string>
+    modulePath?: string
   }>
   config: IGatsbyConfig
   functions: Array<IGatsbyFunction>

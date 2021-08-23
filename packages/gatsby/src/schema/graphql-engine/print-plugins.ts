@@ -83,13 +83,15 @@ function render(
           plugin.resolve
         )}/gatsby-worker"`
     ),
-    ...uniqSubPlugins.map((plugin, i) => {
-      const importName = `subPlugin${i}`
-      subPluginModuleToImportNameMapping.set(plugin.modulePath, importName)
-      return `import * as ${importName} from "${relativePluginPath(
-        plugin.modulePath
-      )}"`
-    }),
+    ...uniqSubPlugins
+      .filter(plugin => !!plugin.modulePath)
+      .map((plugin, i) => {
+        const importName = `subPlugin${i}`
+        subPluginModuleToImportNameMapping.set(plugin.modulePath!, importName)
+        return `import * as ${importName} from "${relativePluginPath(
+          plugin.modulePath!
+        )}"`
+      }),
   ]
   const gatsbyNodeExports = uniqGatsbyNode.map(
     (plugin, i) => `"${plugin.name}": pluginGatsbyNode${i},`

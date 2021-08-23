@@ -16,7 +16,6 @@ import {
   fixedPagePath,
 } from "./write-page-data"
 import type GatsbyCacheLmdb from "../cache-lmdb"
-import type { IExecutionResult } from "../../query/types"
 
 export { fixedPagePath, IPageDataWithQueryResult }
 
