@@ -5,7 +5,6 @@ import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { get, merge, isObject, flatten, uniqBy, concat } from "lodash"
 import nodePath from "path"
 import { ServerLocation, Router, isRedirect } from "@reach/router"
-import { fixedPagePath } from "gatsby-core-utils"
 import { apiRunner, apiRunnerAsync } from "./api-runner-ssr"
 import { grabMatchParams } from "./find-path"
 import syncRequires from "$virtual/ssr-sync-requires"
@@ -139,8 +138,10 @@ export default async function staticPage(
       postBodyComponents = components
     }
 
-    const getPageDataPath = path =>
-      nodePath.join(`page-data`, fixedPagePath(path), `page-data.json`)
+    const getPageDataPath = path => {
+      const fixedPagePath = path === `/` ? `index` : path
+      return nodePath.join(`page-data`, fixedPagePath(path), `page-data.json`)
+    }
 
     const getPageData = pagePath => {
       const pageDataPath = getPageDataPath(pagePath)
