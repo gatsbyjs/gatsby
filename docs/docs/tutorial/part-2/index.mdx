@@ -422,6 +422,7 @@ Think of your wrapper component as a picture frame. A frame has its own shape an
 Here's an example of what the code for this scenario might look like. First, when the `<Frame>` component is rendered, it has contents passed in between the opening and closing tag:
 
 ```javascript:title=src/pages/gallery.js
+import React from 'react'
 import Frame from '../components/frame' // highlight-line
 
 const GalleryPage = () => {
@@ -434,7 +435,7 @@ const GalleryPage = () => {
   )
 }
 
-export const GalleryPage
+export default GalleryPage
 ```
 
 Then in the component definition, the `children` prop will get passed whatever elements came between the opening and closing tag. You can render the `children` prop in your JSX to insert the contents.
