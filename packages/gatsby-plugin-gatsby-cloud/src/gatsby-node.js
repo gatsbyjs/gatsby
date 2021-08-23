@@ -1,7 +1,7 @@
 import path from "path"
 import { readJSON } from "fs-extra"
 import WebpackAssetsManifest from "webpack-assets-manifest"
-import { joinPath } from "gatsby-core-utils"
+import { generatePageDataPath, joinPath } from "gatsby-core-utils"
 import { captureEvent } from "gatsby-telemetry"
 import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
@@ -10,6 +10,7 @@ import createRedirects from "./create-redirects"
 import createSiteConfig from "./create-site-config"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
 import { emitRoutes } from "./ipc"
+import { generateHtmlPath } from "gatsby-core-utils"
 
 const assetsManifest = {}
 
@@ -44,10 +45,9 @@ exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {
    */
   for (const [pathname, page] of pages) {
     if (page.mode && page.mode !== `SSG`) {
-      const pageDataPath = pathname === `/` ? `index` : pathname
       emitRoutes({
-        [path.join(pathname, `index.html`).substring(1)]: page.mode,
-        [path.join(`page-data`, pageDataPath, `page-data.json`)]: page.mode,
+        [generateHtmlPath(``, pathname)]: page.mode,
+        [generatePageDataPath(``, pathname)]: page.mode,
       })
     }
   }
