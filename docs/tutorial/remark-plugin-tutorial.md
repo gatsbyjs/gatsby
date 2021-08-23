@@ -164,6 +164,25 @@ If you want to add some options, you could switch to the object syntax:
 }
 ```
 
+In case you use `gatsby-plugin-mdx` in place of `gatsby-transformer-remark`, the former takes an array config option named `gatsbyRemarkPlugins` that allows compatibility with Gatsby Remark plugins.
+
+To make `gatsby-plugin-mdx` recognize a local plugin like `gatsby-remark-purple-headers`, you need to point to its location in the project through `require.resolve`.
+
+```js
+{
+  resolve: `gatsby-plugin-mdx`,
+  options: {
+    gatsbyRemarkPlugins: [
+      {
+        resolve: require.resolve(`./plugins/gatsby-remark-purple-headers`),
+      }
+    ]
+  }
+}
+```
+
+On the other hand, if the sub-plugin is published and installed via npm, simply refer to it by name as the case with using `gatsby-transformer-remark`.
+
 ## Find and Modify Markdown Nodes
 
 When modifying nodes, you'll want to walk the tree and then implement new functionality on specific nodes.
