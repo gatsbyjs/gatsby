@@ -298,7 +298,7 @@ module.exports = async ({ markdownAST }, pluginOptions) => {
 }
 ```
 
-A real-world example of this would be [`gatsby-remark-code-repls`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-remark-code-repls/src/gatsby-node.js).
+A real-world example of this would be [`gatsby-remark-responsive-iframe`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-remark-responsive-iframe/src/index.js).
 
 ## Loading in changes and seeing effect
 
