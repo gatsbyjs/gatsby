@@ -40,7 +40,7 @@ module.exports = (nodeApiArgs, pluginOptions = {}) => {
   // to customize the GraphQL schema. This makes it possible for subplugins to
   // modify types owned by `gatsby-transformer-remark`.
   plugins.forEach(plugin => {
-    const resolvedPlugin = plugin.module // require(plugin.resolve)
+    const resolvedPlugin = plugin.module
     if (typeof resolvedPlugin.createSchemaCustomization === `function`) {
       resolvedPlugin.createSchemaCustomization(
         nodeApiArgs,
