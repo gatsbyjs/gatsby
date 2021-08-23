@@ -378,11 +378,8 @@ exports.sourceNodes = async (
           // which is much faster.
           if (d.body.meta?.count) {
             // If we hadn't added urls yet
-            if (
-              d.body.links.next?.href &&
-              !typeRequestsQueued.has(d.body.data[0]?.type)
-            ) {
-              typeRequestsQueued.add(d.body.data[0]?.type)
+            if (d.body.links.next?.href && !typeRequestsQueued.has(type)) {
+              typeRequestsQueued.add(type)
 
               // Get count of API requests
               // We round down as we've already gotten the first page at this point.
@@ -392,7 +389,7 @@ exports.sourceNodes = async (
               const requestsCount = Math.floor(d.body.meta.count / pageSize)
 
               reporter.verbose(
-                `queueing ${requestsCount} API requests for type ${d.body.data[0].type} which has ${d.body.meta.count} entities.`
+                `queueing ${requestsCount} API requests for type ${type} which has ${d.body.meta.count} entities.`
               )
 
               await Promise.all(
