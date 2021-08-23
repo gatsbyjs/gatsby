@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@4.8.0-next.3...gatsby-plugin-sitemap@4.9.0-next.0) (2021-08-12)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+# [4.8.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@4.8.0-next.2...gatsby-plugin-sitemap@4.8.0-next.3) (2021-08-09)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+# [4.8.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@4.8.0-next.1...gatsby-plugin-sitemap@4.8.0-next.2) (2021-08-05)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+# [4.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@4.8.0-next.0...gatsby-plugin-sitemap@4.8.0-next.1) (2021-08-05)
+
+### Bug Fixes
+
+- **gatsby-plugin-sitemap:** Add plugin options forbidden for deprecated `exclude` ([#32509](https://github.com/gatsbyjs/gatsby/issues/32509)) ([6f60237](https://github.com/gatsbyjs/gatsby/commit/6f60237355a74c96a76a9037a23b66bd836f75df))
+
+# [4.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@4.7.0-next.0...gatsby-plugin-sitemap@4.8.0-next.0) (2021-07-29)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
 # [4.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@4.6.0-next.1...gatsby-plugin-sitemap@4.7.0-next.0) (2021-07-15)
 
 **Note:** Version bump only for package gatsby-plugin-sitemap

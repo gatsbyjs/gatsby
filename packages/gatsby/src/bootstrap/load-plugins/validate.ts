@@ -199,10 +199,12 @@ async function validatePluginsOptions(
 
       const subPluginPaths = new Set<string>()
 
-      let optionsSchema = (gatsbyNode.pluginOptionsSchema as Exclude<
-        GatsbyNode["pluginOptionsSchema"],
-        undefined
-      >)({
+      let optionsSchema = (
+        gatsbyNode.pluginOptionsSchema as Exclude<
+          GatsbyNode["pluginOptionsSchema"],
+          undefined
+        >
+      )({
         Joi: Joi.extend(joi => {
           return {
             base: joi.any(),
@@ -293,13 +295,11 @@ async function validatePluginsOptions(
         )
 
         if (plugin.options?.plugins) {
-          const {
-            errors: subErrors,
-            plugins: subPlugins,
-          } = await validatePluginsOptions(
-            plugin.options.plugins as Array<IPluginRefObject>,
-            rootDir
-          )
+          const { errors: subErrors, plugins: subPlugins } =
+            await validatePluginsOptions(
+              plugin.options.plugins as Array<IPluginRefObject>,
+              rootDir
+            )
           plugin.options.plugins = subPlugins
           if (subPlugins.length > 0) {
             subPluginPaths.add(`plugins.[]`)

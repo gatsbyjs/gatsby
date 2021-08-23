@@ -93,11 +93,11 @@ export async function savePageQueryResult(
 export async function readPageQueryResult(
   publicDir: string,
   pagePath: string
-): Promise<IExecutionResult> {
+): Promise<string | Buffer> {
   if (isLmdbStore()) {
     const stringifiedResult = await getLMDBPageQueryResultsCache().get(pagePath)
     if (typeof stringifiedResult === `string`) {
-      return JSON.parse(stringifiedResult)
+      return stringifiedResult
     }
     throw new Error(`Couldn't find temp query result for "${pagePath}".`)
   } else {
@@ -108,7 +108,7 @@ export async function readPageQueryResult(
       `json`,
       `${pagePath.replace(/\//g, `_`)}.json`
     )
-    return fs.readJSON(pageQueryResultsPath)
+    return fs.readFile(pageQueryResultsPath)
   }
 }
 
@@ -124,6 +124,7 @@ export async function flush(): Promise<void> {
     // We're already in the middle of a flush
     return
   }
+  await waitUntilPageQueryResultsAreStored()
   isFlushPending = false
   isFlushing = true
   const {
@@ -157,7 +158,7 @@ export async function flush(): Promise<void> {
       if (
         (program?._?.[0] === `develop` &&
           process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) ||
-        page.mode !== `SSG`
+        (_CFLAGS_.GATSBY_MAJOR === `4` ? page.mode !== `SSG` : false)
       ) {
         // check if already did run query for this page
         // with query-on-demand we might have pending page-data write due to
@@ -181,7 +182,7 @@ export async function flush(): Promise<void> {
         staticQueriesByTemplate.get(page.componentPath) || []
 
       const pageQueryResult = await readPageQueryResult(publicDir, pagePath)
-      const { body, stringifiedBody, outputFilePath } = await writePageData(
+      const { body, outputFilePath, pageDataSize } = await writePageData(
         publicDir,
         {
           ...page,
@@ -190,14 +191,13 @@ export async function flush(): Promise<void> {
         pageQueryResult
       )
 
-      const pageDataSize = Buffer.byteLength(stringifiedBody) / 1000
       store.dispatch({
         type: `ADD_PAGE_DATA_STATS`,
         payload: {
           pagePath,
           filePath: outputFilePath,
           size: pageDataSize,
-          pageDataHash: createContentDigest(stringifiedBody),
+          pageDataHash: createContentDigest(body),
         },
       })
 
@@ -206,7 +206,7 @@ export async function flush(): Promise<void> {
       if (program?._?.[0] === `develop`) {
         websocketManager.emitPageData({
           id: pagePath,
-          result: body,
+          result: JSON.parse(body) as IPageDataWithQueryResult,
         })
       }
     }
@@ -232,6 +232,7 @@ export async function flush(): Promise<void> {
   }
 
   writePageDataActivity.end()
+
   isFlushing = false
 
   return

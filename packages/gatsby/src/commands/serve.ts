@@ -66,35 +66,37 @@ const readMatchPaths = async (
   return JSON.parse(rawJSON) as Array<IMatchPath>
 }
 
-const matchPathRouter = (
-  matchPaths: Array<IMatchPath>,
-  options: {
-    root: string
-  }
-) => (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-): void => {
-  const { url } = req
-  if (req.accepts(`html`)) {
-    const matchPath = matchPaths.find(
-      ({ matchPath }) => reachMatch(matchPath, url) !== null
-    )
-    if (matchPath) {
-      return res.sendFile(
-        path.join(matchPath.path, `index.html`),
-        options,
-        err => {
-          if (err) {
-            next()
-          }
-        }
-      )
+const matchPathRouter =
+  (
+    matchPaths: Array<IMatchPath>,
+    options: {
+      root: string
     }
+  ) =>
+  (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ): void => {
+    const { url } = req
+    if (req.accepts(`html`)) {
+      const matchPath = matchPaths.find(
+        ({ matchPath }) => reachMatch(matchPath, url) !== null
+      )
+      if (matchPath) {
+        return res.sendFile(
+          path.join(matchPath.path, `index.html`),
+          options,
+          err => {
+            if (err) {
+              next()
+            }
+          }
+        )
+      }
+    }
+    return next()
   }
-  return next()
-}
 
 module.exports = async (program: IServeProgram): Promise<void> => {
   telemetry.trackCli(`SERVE_START`)

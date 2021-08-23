@@ -36,24 +36,29 @@ export async function writePageData(
     path: pagePath,
     staticQueryHashes,
   }: IPageData,
-  pageQueryResult: IExecutionResult
+  pageQueryResult: string | Buffer
 ): Promise<{
-  body: IPageDataWithQueryResult
-  stringifiedBody: string
+  body: string
   outputFilePath: string
+  pageDataSize: number
 }> {
   const outputFilePath = getFilePath(publicDir, pagePath)
-  const body = {
-    componentChunkName,
-    path: pagePath,
-    matchPath,
-    result: pageQueryResult,
-    staticQueryHashes,
+  let body = `{
+    "componentChunkName": "${componentChunkName}",
+    "path": "${pagePath}",
+    "result": ${pageQueryResult},
+    "staticQueryHashes": ${JSON.stringify(staticQueryHashes)}`
+
+  if (matchPath) {
+    body += `,
+    "matchPath": "${matchPath}"`
   }
 
-  const stringifiedBody = JSON.stringify(body)
-  // transform asset size to kB (from bytes) to fit 64 bit to numbers
+  body += `}`
 
-  await fs.outputFile(outputFilePath, stringifiedBody)
-  return { body, stringifiedBody, outputFilePath }
+  // transform asset size to kB (from bytes) to fit 64 bit to numbers
+  const pageDataSize = Buffer.byteLength(body) / 1000
+
+  await fs.outputFile(outputFilePath, body)
+  return { body, outputFilePath, pageDataSize }
 }

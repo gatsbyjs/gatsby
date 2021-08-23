@@ -89,9 +89,7 @@ const pageGenerationActionPriority: Record<PageGenerationAction, number> = {
   delete: 0,
 }
 
-export function calcDirtyHtmlFiles(
-  state: IGatsbyState
-): {
+export function calcDirtyHtmlFiles(state: IGatsbyState): {
   toRegenerate: Array<string>
   toDelete: Array<string>
   toCleanupFromTrackedState: Set<string>
@@ -163,7 +161,15 @@ export function calcDirtyHtmlFiles(
       // and because of that `isDeleted` might not be set ...
       markActionForPage(path, `delete`)
     } else {
-      if (page.mode === `SSG`) {
+      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+        if (page.mode === `SSG`) {
+          if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
+            markActionForPage(path, `regenerate`)
+          } else {
+            markActionForPage(path, `reuse`)
+          }
+        }
+      } else {
         if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
           markActionForPage(path, `regenerate`)
         } else {

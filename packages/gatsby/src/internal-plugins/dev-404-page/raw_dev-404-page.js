@@ -20,7 +20,7 @@ class Dev404Page extends React.Component {
 
     this.state = {
       hasMounted: false,
-      showCustom404: false,
+      showCustom404: process.env.GATSBY_DISABLE_CUSTOM_404 || false,
       initPagePaths: pagePaths,
       pagePathSearchTerms: initialPagePathSearchTerms,
       pagePaths: this.getFilteredPagePaths(

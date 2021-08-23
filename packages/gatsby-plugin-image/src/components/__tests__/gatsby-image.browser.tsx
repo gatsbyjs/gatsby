@@ -4,7 +4,12 @@ import { render, waitFor } from "@testing-library/react"
 import * as hooks from "../hooks"
 
 // Prevents terser for bailing because we're not in a babel plugin
-jest.mock(`../../../macros/terser.macro`, () => (strs): string => strs.join(``))
+jest.mock(
+  `../../../macros/terser.macro`,
+  () =>
+    (strs): string =>
+      strs.join(``)
+)
 
 describe(`GatsbyImage browser`, () => {
   let beforeHydrationContent: HTMLDivElement
@@ -69,10 +74,12 @@ describe(`GatsbyImage browser`, () => {
     jest.clearAllMocks()
     global.SERVER = undefined
     global.GATSBY___IMAGE = undefined
+    process.env.NODE_ENV = `test`
   })
 
   it(`shows a suggestion to switch to the new gatsby-image API when available`, async () => {
     global.GATSBY___IMAGE = undefined
+    process.env.NODE_ENV = `development`
 
     const { container } = render(
       <GatsbyImage image={image} alt="Alt content" />
@@ -80,7 +87,7 @@ describe(`GatsbyImage browser`, () => {
 
     await waitFor(() => container.querySelector(`[data-placeholder-image=""]`))
 
-    expect(console.error).toBeCalledWith(
+    expect(console.warn).toBeCalledWith(
       `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
     )
   })

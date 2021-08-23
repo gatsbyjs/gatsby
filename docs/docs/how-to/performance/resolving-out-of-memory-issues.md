@@ -34,7 +34,7 @@ If you've either experienced, or are worried about OOM memory crashes, we strong
 
 It's a good practice to profile memory periodically once your site crosses 10k or 20k pages, or if you've experienced out-of-memory challenges on smaller sites.
 
-The Gatsby team's recommendation is to run gatsby within a profiling tool like [process-top](https://github.com/mafintosh/process-top). Run your site like the following:
+The Gatsby team's recommendation is to run `gatsby` within a profiling tool like [process-top](https://github.com/mafintosh/process-top). Run your site like the following:
 
 `npx process-top ./node_modules/.bin/gatsby build`
 
@@ -88,7 +88,7 @@ Finally, you can't allocate more memory than is available on your machine, so be
 
 #### Pre-optimize images by downsampling
 
-Overly large images being used by Gatsby image can cause memory spikes. For example, if your image will only ever be 1000 pixels wide, and you're have a 2000 x 3000 pixel source image stored in your repository or headless CMS, it may be worthwhile to convert that source image to a 667 x 1000 pixel version. [This piece on pre-optimizing images](/docs/preoptimizing-images/) can give some guidance.
+Overly large images being used by Gatsby image can cause memory spikes. For example, if your image will only ever be 1000 pixels wide, and you have a 2000 x 3000 pixel source image stored in your repository or headless CMS, it may be worthwhile to convert that source image to a 667 x 1000 pixel version. [This piece on pre-optimizing images](/docs/preoptimizing-images/) can give some guidance.
 
 #### Disable AVIF
 

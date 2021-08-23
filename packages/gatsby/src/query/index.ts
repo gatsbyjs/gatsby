@@ -227,7 +227,7 @@ export async function processPageQueries(
   queryIds: IGroupedQueryIds["pageQueryIds"],
   { state, activity, graphqlRunner, graphqlTracing }
 ): Promise<void> {
-  return processQueries<IGatsbyPage>({
+  const processedQueries = await processQueries<IGatsbyPage>({
     queryIds,
     createJobFn: createPageQueryJob,
     onQueryDone: undefined,
@@ -236,6 +236,8 @@ export async function processPageQueries(
     graphqlRunner,
     graphqlTracing,
   })
+
+  return processedQueries
 }
 
 function createPageQueryJob(
@@ -248,12 +250,14 @@ function createPageQueryJob(
     return undefined
   }
 
-  const { path, componentPath, context, mode } = page
-  const { query } = component
-
-  if (mode !== `SSG`) {
-    return undefined
+  const { path, componentPath, context } = page
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    const { mode } = page
+    if (mode !== `SSG`) {
+      return undefined
+    }
   }
+  const { query } = component
 
   return {
     id: path,

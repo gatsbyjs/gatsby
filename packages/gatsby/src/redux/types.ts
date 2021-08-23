@@ -25,6 +25,8 @@ export enum ProgramStatus {
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
 }
 
+export type PageMode = "SSG" | "DSR" | "SSR"
+
 export interface IGatsbyPage {
   internalComponentName: string
   path: string
@@ -39,7 +41,7 @@ export interface IGatsbyPage {
   pluginCreatorId: Identifier
   componentPath: SystemPath
   ownerNodeId: Identifier
-  mode: "SSG" | "DSR" | "SSR"
+  mode: PageMode
 }
 
 export interface IGatsbyFunction {

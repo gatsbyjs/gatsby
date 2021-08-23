@@ -15,7 +15,7 @@ import {
   IndexKey,
   undefinedSymbol,
 } from "./create-index"
-import { cartesianProduct, shouldFilter } from "./common"
+import { cartesianProduct, matchesFilter } from "./common"
 import { inspect } from "util"
 
 // JS values encoded by ordered-binary never start with 0 or 255 byte
@@ -44,7 +44,7 @@ interface IIndexRange {
 
 enum ValueEdges {
   BEFORE = -1,
-  NONE = 0,
+  EQ = 0,
   AFTER = 1,
 }
 
@@ -59,23 +59,36 @@ export interface IFilterArgs {
 }
 
 interface IFilterContext extends IFilterArgs {
+  usedLimit: number | undefined
+  usedSkip: number
   usedQueries: Set<DbQuery>
 }
 
 export interface IFilterResult {
   entries: GatsbyIterable<IIndexEntry>
   usedQueries: Set<DbQuery>
+  usedLimit: number | undefined
+  usedSkip: number
+}
+
+interface ILmdbStoreRangeOptions {
+  start?: any
+  end?: any
+  limit?: number | undefined
+  offset?: number | undefined
+  revers?: boolean
+  snapshot?: boolean
 }
 
 export function filterUsingIndex(args: IFilterArgs): IFilterResult {
   const context = createFilteringContext(args)
-  const ranges = getIndexRanges(context, args.dbQueries)
+  const ranges = getIndexRanges(context)
 
-  let entries = new GatsbyIterable<IIndexEntry>(() =>
+  let entries =
     ranges.length > 0
       ? performRangeScan(context, ranges)
       : performFullScan(context)
-  )
+
   if (context.usedQueries.size !== args.dbQueries.length) {
     // Try to additionally filter out results using data stored in index
     entries = narrowResultsIfPossible(context, entries)
@@ -83,7 +96,12 @@ export function filterUsingIndex(args: IFilterArgs): IFilterResult {
   if (isMultiKeyIndex(context) && needsDeduplication(context)) {
     entries = entries.deduplicate(getIdentifier)
   }
-  return { entries, usedQueries: context.usedQueries }
+  return {
+    entries,
+    usedQueries: context.usedQueries,
+    usedLimit: context.usedLimit,
+    usedSkip: context.usedSkip,
+  }
 }
 
 export function countUsingIndexOnly(args: IFilterArgs): number {
@@ -94,7 +112,7 @@ export function countUsingIndexOnly(args: IFilterArgs): number {
     indexMetadata: { keyPrefix },
   } = args
 
-  const ranges = getIndexRanges(context, args.dbQueries)
+  const ranges = getIndexRanges(context)
 
   if (context.usedQueries.size !== dbQueries.length) {
     throw new Error(`Cannot count using index only`)
@@ -103,18 +121,20 @@ export function countUsingIndexOnly(args: IFilterArgs): number {
     throw new Error(`Cannot count using MultiKey index.`)
   }
   if (ranges.length === 0) {
-    return indexes.getKeysCount({
+    const range: ILmdbStoreRangeOptions = {
       start: [keyPrefix],
       end: [getValueEdgeAfter(keyPrefix)],
       snapshot: false,
-    } as any)
+    }
+    return indexes.getKeysCount(range)
   }
   let count = 0
   for (let { start, end } of ranges) {
     start = [keyPrefix, ...start]
     end = [keyPrefix, ...end]
     // Assuming ranges are not overlapping
-    count += indexes.getKeysCount({ start, end, snapshot: false } as any)
+    const range: ILmdbStoreRangeOptions = { start, end, snapshot: false }
+    count += indexes.getKeysCount(range)
   }
   return count
 }
@@ -122,6 +142,8 @@ export function countUsingIndexOnly(args: IFilterArgs): number {
 function createFilteringContext(args: IFilterArgs): IFilterContext {
   return {
     ...args,
+    usedLimit: undefined,
+    usedSkip: 0,
     usedQueries: new Set<DbQuery>(),
   }
 }
@@ -147,36 +169,40 @@ function needsDeduplication(context: IFilterContext): boolean {
   )
 }
 
-function* performRangeScan(
+function performRangeScan(
   context: IFilterContext,
   ranges: Array<IIndexRange>
-): Generator<IIndexEntry> {
+): GatsbyIterable<IIndexEntry> {
   const {
-    databases: { indexes },
     indexMetadata: { keyPrefix, stats },
     reverse,
   } = context
 
   let { limit, skip: offset = 0 } = context
 
-  if (limit) {
-    if (ranges.length > 1) {
-      // e.g. { in: [1, 2] }
-      // Cannot use offset: we will run several range queries and it's not clear which one to offset
-      // TODO: assuming ranges are sorted and not overlapping it should be possible to use offsets in this case
-      //   by running first range query, counting results while lazily iterating and
-      //   running the next range query when the previous iterator is done (and count is known)
-      //   with offset = offset - previousRangeCount, limit = limit - previousRangeCount
-      limit = offset + limit
-      offset = 0
-    }
-    if (isMultiKeyIndex(context) && needsDeduplication(context)) {
-      // Cannot use limit:
-      // MultiKey index may contain duplicates - we can only set a safe upper bound
-      limit *= stats.maxKeysPerItem
-    }
+  if (context.dbQueries.length !== context.usedQueries.size) {
+    // Since this query is not fully satisfied by the index, we can't use limit/skip
+    limit = undefined
+    offset = 0
   }
+  if (ranges.length > 1) {
+    // e.g. { in: [1, 2] }
+    // Cannot use offset: we will run several range queries and it's not clear which one to offset
+    // TODO: assuming ranges are sorted and not overlapping it should be possible to use offsets in this case
+    //   by running first range query, counting results while lazily iterating and
+    //   running the next range query when the previous iterator is done (and count is known)
+    //   with offset = offset - previousRangeCount, limit = limit - previousRangeCount
+    limit = typeof limit !== `undefined` ? offset + limit : undefined
+    offset = 0
+  }
+  if (limit && isMultiKeyIndex(context) && needsDeduplication(context)) {
+    // Cannot use limit:
+    // MultiKey index may contain duplicates - we can only set a safe upper bound
+    limit *= stats.maxKeysPerItem
+  }
+
   // Assuming ranges are sorted and not overlapping, we can yield results sequentially
+  const lmdbRanges: Array<ILmdbStoreRangeOptions> = []
   for (let { start, end } of ranges) {
     start = [keyPrefix, ...start]
     end = [keyPrefix, ...end]
@@ -184,18 +210,19 @@ function* performRangeScan(
       ? { start, end, limit, offset, snapshot: false }
       : { start: end, end: start, limit, offset, reverse, snapshot: false }
 
-    // @ts-ignore
-    yield* indexes.getRange(range)
+    lmdbRanges.push(range)
   }
+  context.usedLimit = limit
+  context.usedSkip = offset
+  return new GatsbyIterable(() => traverseRanges(context, lmdbRanges))
 }
 
-function* performFullScan(context: IFilterArgs): Generator<IIndexEntry> {
+function performFullScan(context: IFilterContext): GatsbyIterable<IIndexEntry> {
   // *Caveat*: our old query implementation was putting undefined and null values at the end
   //   of the list when ordered ascending. But lmdb-store keeps them at the top.
   //   So in LMDB case, need to concat two ranges to conform to our old format:
   //     concat(undefinedToEnd, topToUndefined)
   const {
-    databases: { indexes },
     reverse,
     indexMetadata: { keyPrefix },
   } = context
@@ -217,16 +244,24 @@ function* performFullScan(context: IFilterArgs): Generator<IIndexEntry> {
 
   const topToUndefined = range
 
-  if (!reverse) {
+  const ranges: Array<ILmdbStoreRangeOptions> = !reverse
+    ? [undefinedToEnd, topToUndefined]
+    : [topToUndefined, undefinedToEnd]
+
+  return new GatsbyIterable(() => traverseRanges(context, ranges))
+}
+
+function* traverseRanges(
+  context: IFilterContext,
+  ranges: Array<ILmdbStoreRangeOptions>
+): Generator<IIndexEntry> {
+  const {
+    databases: { indexes },
+  } = context
+
+  for (const range of ranges) {
     // @ts-ignore
-    yield* indexes.getRange(undefinedToEnd)
-    // @ts-ignore
-    yield* indexes.getRange(topToUndefined)
-  } else {
-    // @ts-ignore
-    yield* indexes.getRange(topToUndefined)
-    // @ts-ignore
-    yield* indexes.getRange(undefinedToEnd)
+    yield* indexes.getRange(range)
   }
 }
 
@@ -296,7 +331,7 @@ function narrowResultsIfPossible(
               ? undefined
               : key[fieldPositionInIndex]
 
-          if (!shouldFilter(filter, value)) {
+          if (!matchesFilter(filter, value)) {
             // Mimic AND semantics
             return false
           }
@@ -309,7 +344,7 @@ function narrowResultsIfPossible(
  * Returns query clauses that can potentially use index.
  * Returned list is sorted by query specificity
  */
-function getSupportedRangeQueries(
+function getSupportedQueries(
   context: IFilterContext,
   dbQueries: Array<DbQuery>
 ): Array<DbQuery> {
@@ -339,6 +374,14 @@ function getSupportedRangeQueries(
   return sortBySpecificity(supportedQueries)
 }
 
+function isEqualityQuery(query: DbQuery): boolean {
+  const filter = getFilterStatement(query)
+  return (
+    filter.comparator === DbComparator.EQ ||
+    filter.comparator === DbComparator.IN
+  )
+}
+
 function isNegatedQuery(query: DbQuery): boolean {
   const filter = getFilterStatement(query)
   return (
@@ -347,30 +390,53 @@ function isNegatedQuery(query: DbQuery): boolean {
   )
 }
 
-export function getIndexRanges(
-  context: IFilterContext,
-  dbQueries: Array<DbQuery>
-): Array<IIndexRange> {
+export function getIndexRanges(context: IFilterContext): Array<IIndexRange> {
   const {
+    dbQueries,
     indexMetadata: { keyFields },
   } = context
   const rangeStarts: Array<RangeBoundary> = []
   const rangeEndings: Array<RangeBoundary> = []
-  const supportedQueries = getSupportedRangeQueries(context, dbQueries)
+  const supportedQueries = getSupportedQueries(context, dbQueries)
 
-  for (const indexField of new Map(keyFields)) {
-    const result = getIndexFieldRanges(context, supportedQueries, indexField)
-
-    if (!result.rangeStarts.length) {
-      // No point to continue - just use index prefix, not all index fields
+  for (const indexFieldInfo of new Map(keyFields)) {
+    const query = getMostSpecificQuery(supportedQueries, indexFieldInfo)
+    if (!query) {
+      // Use index prefix, not all index fields
       break
     }
+    const result = resolveIndexFieldRanges(context, query, indexFieldInfo)
     rangeStarts.push(result.rangeStarts)
     rangeEndings.push(result.rangeEndings)
+
+    if (!isEqualityQuery(query)) {
+      // Compound index { a: 1, b: 1, c: 1 } supports only one non-eq (range) operator. E.g.:
+      //  Supported: { a: { eq: `foo` }, b: { eq: 8 }, c: { gt: 5 } }
+      //  Not supported: { a: { eq: `foo` }, b: { gt: 5 }, c: { eq: 5 } }
+      //  (or to be precise, can do a range scan only for { a: { eq: `foo` }, b: { gt: 5 } })
+      break
+    }
   }
   if (!rangeStarts.length) {
     return []
   }
+  // Only the last segment encloses the whole range.
+  // For example, given an index { a: 1, b: 1 } and a filter { a: { eq: `foo` }, b: { eq: `bar` } },
+  // It should produce this range:
+  // {
+  //   start: [`foo`, `bar`],
+  //   end: [`foo`, [`bar`, BinaryInfinityPositive]]
+  // }
+  //
+  // Not this:
+  // {
+  //   start: [`foo`, `bar`],
+  //   end: [[`foo`, BinaryInfinityPositive], [`bar`, BinaryInfinityPositive]]
+  // }
+  for (let i = 0; i < rangeStarts.length - 1; i++) {
+    rangeEndings[i] = rangeStarts[i]
+  }
+
   // Example:
   //   rangeStarts: [
   //     [field1Start1, field1Start2],
@@ -404,10 +470,26 @@ export function getIndexRanges(
   return ranges
 }
 
-function getIndexFieldRanges(
-  context: IFilterContext,
+function getFieldQueries(
   queries: Array<DbQuery>,
-  [indexField, sortDirection]: [fieldName: string, sortDirection: number]
+  fieldName: string
+): Array<DbQuery> {
+  return queries.filter(q => dbQueryToDottedField(q) === fieldName)
+}
+
+function getMostSpecificQuery(
+  queries: Array<DbQuery>,
+  [indexField]: [fieldName: string, sortDirection: number]
+): DbQuery | undefined {
+  const fieldQueries = getFieldQueries(queries, indexField)
+  // Assuming queries are sorted by specificity, the best bet is to pick the first query
+  return fieldQueries[0]
+}
+
+function resolveIndexFieldRanges(
+  context: IFilterContext,
+  query: DbQuery,
+  [field, sortDirection]: [fieldName: string, sortDirection: number]
 ): {
   rangeStarts: RangeBoundary
   rangeEndings: RangeBoundary
@@ -417,22 +499,13 @@ function getIndexFieldRanges(
   const rangeStarts: RangeBoundary = []
   const rangeEndings: RangeBoundary = []
 
-  const fieldQueries = queries.filter(
-    q => dbQueryToDottedField(q) === indexField
-  )
-  if (!fieldQueries.length) {
-    return { rangeStarts, rangeEndings }
-  }
-  // Assuming queries are sorted by specificity, the best bet is to pick the first query
-  // TODO: add range intersection for most common cases (e.g. gte + ne)
-  const bestMatchingQuery = fieldQueries[0]
-  const filter = getFilterStatement(bestMatchingQuery)
+  const filter = getFilterStatement(query)
 
   if (filter.comparator === DbComparator.IN && !Array.isArray(filter.value)) {
     throw new Error("The argument to the `in` predicate should be an array")
   }
 
-  context.usedQueries.add(bestMatchingQuery)
+  context.usedQueries.add(query)
 
   switch (filter.comparator) {
     case DbComparator.EQ:
@@ -447,9 +520,6 @@ function getIndexFieldRanges(
         if (sortDirection === 1) return a > b ? 1 : -1
         return a < b ? 1 : -1
       })
-      // TODO: ideally do range intersections with other queries (e.g. $in + $gt + $lt)
-      //  although it is likely something like 0.1% of cases
-      //  (right now it applies additional filters in runQuery.completeFiltering)
 
       let hasNull = false
       for (const item of new Set(arr)) {
@@ -475,10 +545,9 @@ function getIndexFieldRanges(
         filter.comparator === DbComparator.LT ? value : getValueEdgeAfter(value)
 
       // Try to find matching GTE/GT filter
-      const used = context.usedQueries
       const start =
-        findRangeEdge(fieldQueries, used, DbComparator.GTE) ??
-        findRangeEdge(fieldQueries, used, DbComparator.GT, ValueEdges.AFTER)
+        resolveRangeEdge(context, field, DbComparator.GTE) ??
+        resolveRangeEdge(context, field, DbComparator.GT, ValueEdges.AFTER)
 
       // Do not include null or undefined in results unless null was requested explicitly
       //
@@ -512,10 +581,9 @@ function getIndexFieldRanges(
           : getValueEdgeAfter(value)
 
       // Try to find matching LT/LTE
-      const used = context.usedQueries
       const end =
-        findRangeEdge(fieldQueries, used, DbComparator.LTE, ValueEdges.AFTER) ??
-        findRangeEdge(fieldQueries, used, DbComparator.LT)
+        resolveRangeEdge(context, field, DbComparator.LTE, ValueEdges.AFTER) ??
+        resolveRangeEdge(context, field, DbComparator.LT)
 
       const rangeTail =
         value === null ? getValueEdgeAfter(null) : BinaryInfinityPositive
@@ -558,21 +626,22 @@ function getIndexFieldRanges(
   return { rangeStarts, rangeEndings }
 }
 
-function findRangeEdge(
-  queries: Array<DbQuery>,
-  usedQueries: Set<DbQuery>,
+function resolveRangeEdge(
+  context: IFilterContext,
+  indexField: string,
   predicate: DbComparator,
-  edge: ValueEdges = ValueEdges.NONE
+  edge: ValueEdges = ValueEdges.EQ
 ): IndexFieldValue | RangeEdgeBefore | RangeEdgeAfter | undefined {
-  for (const dbQuery of queries) {
-    if (usedQueries.has(dbQuery)) {
+  const fieldQueries = getFieldQueries(context.dbQueries, indexField)
+  for (const dbQuery of fieldQueries) {
+    if (context.usedQueries.has(dbQuery)) {
       continue
     }
     const filterStatement = getFilterStatement(dbQuery)
     if (filterStatement.comparator !== predicate) {
       continue
     }
-    usedQueries.add(dbQuery)
+    context.usedQueries.add(dbQuery)
     const value = filterStatement.value
     if (Array.isArray(value)) {
       throw new Error(`Range filter ${predicate} should not have array value`)

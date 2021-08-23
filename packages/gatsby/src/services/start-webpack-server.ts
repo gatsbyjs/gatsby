@@ -72,92 +72,92 @@ export async function startWebpackServer({
   let isFirstCompile = true
 
   return new Promise(resolve => {
-    compiler.hooks.done.tapAsync(`print gatsby instructions`, async function (
-      stats,
-      done
-    ) {
-      if (isFirstCompile) {
-        webpackWatching.suspend()
-      }
+    compiler.hooks.done.tapAsync(
+      `print gatsby instructions`,
+      async function (stats, done) {
+        if (isFirstCompile) {
+          webpackWatching.suspend()
+        }
 
-      if (cancelDevJSNotice) {
-        cancelDevJSNotice()
-      }
+        if (cancelDevJSNotice) {
+          cancelDevJSNotice()
+        }
 
-      const urls = prepareUrls(
-        program.https ? `https` : `http`,
-        program.host,
-        program.proxyPort
-      )
-      const isSuccessful = !stats.hasErrors()
-
-      if (isSuccessful && isFirstCompile) {
-        // Show notices to users about potential experiments/feature flags they could
-        // try.
-        showExperimentNotices()
-        printInstructions(
-          program.sitePackageJson.name || `(Unnamed package)`,
-          urls
+        const urls = prepareUrls(
+          program.https ? `https` : `http`,
+          program.host,
+          program.proxyPort
         )
-        printDeprecationWarnings()
-        if (program.open) {
-          try {
-            await openurl(urls.localUrlForBrowser)
-          } catch {
-            console.log(
-              `${chalk.yellow(
-                `warn`
-              )} Browser not opened because no browser was found`
-            )
-          }
-        }
-      }
+        const isSuccessful = !stats.hasErrors()
 
-      isFirstCompile = false
-
-      if (webpackActivity) {
-        if (stats.hasWarnings()) {
-          const rawMessages = stats.toJson({ moduleTrace: false })
-          reportWebpackWarnings(rawMessages.warnings, report)
-        }
-
-        if (!isSuccessful) {
-          const errors = structureWebpackErrors(
-            Stage.Develop,
-            stats.compilation.errors
+        if (isSuccessful && isFirstCompile) {
+          // Show notices to users about potential experiments/feature flags they could
+          // try.
+          showExperimentNotices()
+          printInstructions(
+            program.sitePackageJson.name || `(Unnamed package)`,
+            urls
           )
-          webpackActivity.panicOnBuild(errors)
-        }
-        webpackActivity.end()
-        webpackActivity = null
-      }
-
-      markWebpackStatusAsDone()
-      done()
-
-      try {
-        const ssrPages: Array<IGatsbyPage> = []
-        for (const [, page] of store.getState().pages) {
-          if (page.mode === `SSR`) {
-            ssrPages.push(page)
+          printDeprecationWarnings()
+          if (program.open) {
+            try {
+              await openurl(urls.localUrlForBrowser)
+            } catch {
+              console.log(
+                `${chalk.yellow(
+                  `warn`
+                )} Browser not opened because no browser was found`
+              )
+            }
           }
         }
 
-        const functions = await buildSSRRenderer(
-          program,
-          ssrPages,
-          `development`
-        )
-        store.dispatch({
-          type: `SET_SITE_FUNCTIONS`,
-          payload: functions,
-        })
-      } catch (err) {
-        console.log({ err })
-      }
+        isFirstCompile = false
 
-      emitter.emit(`COMPILATION_DONE`, stats)
-      resolve({ compiler, websocketManager, webpackWatching })
-    })
+        if (webpackActivity) {
+          if (stats.hasWarnings()) {
+            const rawMessages = stats.toJson({ moduleTrace: false })
+            reportWebpackWarnings(rawMessages.warnings, report)
+          }
+
+          if (!isSuccessful) {
+            const errors = structureWebpackErrors(
+              Stage.Develop,
+              stats.compilation.errors
+            )
+            webpackActivity.panicOnBuild(errors)
+          }
+          webpackActivity.end()
+          webpackActivity = null
+        }
+
+        markWebpackStatusAsDone()
+        done()
+
+        try {
+          const ssrPages: Array<IGatsbyPage> = []
+          for (const [, page] of store.getState().pages) {
+            if (page.mode === `SSR`) {
+              ssrPages.push(page)
+            }
+          }
+
+          const functions = await buildSSRRenderer(
+            program,
+            ssrPages,
+            `development`
+          )
+          store.dispatch({
+            type: `SET_SITE_FUNCTIONS`,
+            payload: functions,
+          })
+        } catch (err) {
+          console.log({ err })
+        }
+
+        emitter.emit(`COMPILATION_DONE`, stats)
+        resolve({ compiler, websocketManager, webpackWatching })
+      }
+    )
   })
 }

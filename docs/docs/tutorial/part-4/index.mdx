@@ -2,31 +2,9 @@
 title: "Part 4: Query for Data with GraphQL"
 ---
 
-import { Announcement, Notification, LinkButton } from 'gatsby-interface'
+import { Announcement, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
-import { MdInfo } from 'react-icons/md'
-
-<Notification
-  Icon={MdInfo}
-  tone="WARNING"
-  variant="SECONDARY"
-  content={
-    <div>
-      <p>
-        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
-        The first few parts of the new Tutorial have been released here, and subsequent parts
-        will be added as we finish them.
-      </p>
-      <p style={{ marginBottom: 0 }}>
-        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
-        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
-          <strong>Gatsby v2 Tutorial</strong>
-        </a>
-        .
-      </p>
-    </div>
-  }
-/>
+import { MdArrowForward } from 'react-icons/md'
 
 ## Introduction
 
@@ -412,10 +390,10 @@ const Layout = ({ pageTitle, children }) => {
   `)
 
   return (
-    <main className={container}>
+    <div className={container}>
       {/* highlight-start */}
       <title>{pageTitle} | {data.site.siteMetadata.title}</title>
-      <p>{data.site.siteMetadata.title}</p>
+      <header>{data.site.siteMetadata.title}</header>
       {/* highlight-end */}
       <nav>
         <ul className={navLinks}>
@@ -431,9 +409,11 @@ const Layout = ({ pageTitle, children }) => {
           </li>
         </ul>
       </nav>
-      <h1 className={heading}>{pageTitle}</h1>
-      {children}
-    </main>
+      <main>
+        <h1 className={heading}>{pageTitle}</h1>
+        {children}
+      </main>
+    </div>
   )
 }
 
@@ -451,6 +431,7 @@ export default Layout
   font-size: 3rem;
   color: gray;
   font-weight: 700;
+  margin: 3rem 0;
 }
 ```
 
@@ -480,10 +461,10 @@ const Layout = ({ pageTitle, children }) => {
   `)
 
   return (
-    <main className={container}>
+    <div className={container}>
       <title>{pageTitle} | {data.site.siteMetadata.title}</title>
       {/* highlight-next-line */}
-      <p className={siteTitle}>{data.site.siteMetadata.title}</p>
+      <header className={siteTitle}>{data.site.siteMetadata.title}</header>
       <nav>
         <ul className={navLinks}>
           <li className={navLinkItem}>
@@ -498,9 +479,11 @@ const Layout = ({ pageTitle, children }) => {
           </li>
         </ul>
       </nav>
-      <h1 className={heading}>{pageTitle}</h1>
-      {children}
-    </main>
+      <main>
+        <h1 className={heading}>{pageTitle}</h1>
+        {children}
+      </main>
+    </div>
   )
 }
 
@@ -560,9 +543,9 @@ const Layout = ({ pageTitle, children }) => {
   `)
 
   return (
-    <main className={container}>
+    <div className={container}>
       <title>{pageTitle} | {data.site.siteMetadata.title}</title>
-      <p className={siteTitle}>{data.site.siteMetadata.title}</p>
+      <header className={siteTitle}>{data.site.siteMetadata.title}</header>
       <nav>
         <ul className={navLinks}>
           <li className={navLinkItem}>
@@ -584,9 +567,11 @@ const Layout = ({ pageTitle, children }) => {
           {/* highlight-end */}
         </ul>
       </nav>
-      <h1 className={heading}>{pageTitle}</h1>
-      {children}
-    </main>
+      <main>
+        <h1 className={heading}>{pageTitle}</h1>
+        {children}
+      </main>
+    </div>
   )
 }
 
@@ -773,6 +758,8 @@ export default BlogPage
 
 **Note:** By default, the query you build in GraphiQL will have a query name, like `MyQuery`. You may see an error if you have more than one query with the same name, so after you copy your query over from GraphiQL to your component, delete the name (as in the code example below).
 
+Alternatively, you can give each of your queries a unique name. Query names can be useful for debugging errors that show up in your console when Gatsby executes your queries at build time.
+
 </Announcement>
 
 ```js:title=src/pages/blog.js
@@ -858,6 +845,12 @@ export default BlogPage
 Good job! You've finished the first step of your new blog page.
 
 You won't be able to render the contents of your posts just yet, since your site doesn't know how to process MDX. You'll fix that in the next part of the Tutorial!
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Want to see how it all fits together?** Check out the commit history in the [GitHub repo for the finished example site](https://github.com/gatsbyjs/tutorial-example).
+
+</Announcement>
 
 ## Summary
 

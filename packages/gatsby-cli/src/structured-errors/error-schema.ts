@@ -8,8 +8,8 @@ export const Position: Joi.ObjectSchema<ILocationPosition> = Joi.object().keys({
   column: Joi.number(),
 })
 
-export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys(
-  {
+export const errorSchema: Joi.ObjectSchema<IStructuredError> =
+  Joi.object().keys({
     code: Joi.string(),
     text: Joi.string(),
     stack: Joi.array()
@@ -39,5 +39,4 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys
     group: Joi.string(),
     panicOnBuild: Joi.boolean(),
     pluginName: Joi.string(),
-  }
-)
+  })

@@ -82,7 +82,7 @@ description: Learn about other events happening around the globe to connect with
 
 ## Configuring site navigation
 
-The docs include custom built components to aid with navigation. In order to customize the navigation experience, these components allow some configurations without changing any of the React code.
+The docs include custom-built components to aid with navigation. In order to customize the navigation experience, these components allow some configurations without changing any of the React code.
 
 ### Adjusting breadcrumb titles
 

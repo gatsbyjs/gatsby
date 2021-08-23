@@ -2,7 +2,13 @@
 title: Security in Gatsby
 ---
 
-By taking advantage of the benefits of static content, Gatsby inherits several security principles. However, even with this, your users can be exposed to malicious attacks. Read on for further information on potential attack vectors and how you could prevent them.
+Gatsby's architecture provides several security benefits relative to traditional website development:
+
+- Because Gatsby compiles your site to flat files, rather than having running app servers and databases, it reduces the attack surface of the site to outsiders.
+- Gatsby adds a layer of indirection which obscures your CMS — so even if your CMS is vulnerable, bad actors have no idea where to find it. This is in contrast to systems where bad actors can easily locate the admin dashboard at, e.g., `/wp-admin` and attempt to hack in.
+- With Gatsby, you serve your site from a global CDN e.g. Akamai, Cloudflare, Fastly, etc., which effectively eliminates the risk of DDoS attacks.
+
+However, there are still a couple of coding patterns you need to watch out for when building your Gatsby site:
 
 ## Cross-Site Scripting (XSS)
 

@@ -87,7 +87,7 @@ export default App
 
 Environment variable files should not be committed to Git as they often contain secrets
 which are not safe to add to Git. Instead, add `.env.*` to your `.gitignore` file and
-setup the environment variables manually on Gatsby Cloud and locally.
+set up the environment variables manually on Gatsby Cloud and locally.
 
 ## Environment variables on Gatsby Cloud
 

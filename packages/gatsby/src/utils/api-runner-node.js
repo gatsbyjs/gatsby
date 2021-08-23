@@ -87,7 +87,9 @@ const initAPICallTracing = parentSpan => {
   }
 }
 
-const deferredAction = type => (...args) => {
+const deferredAction =
+  type =>
+  (...args) => {
     // Regular createNode returns a Promise, but when deferred we need
     // to wrap it in another which we resolve when it's actually called
     if (type === `createNode`) {

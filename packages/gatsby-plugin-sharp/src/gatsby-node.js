@@ -60,10 +60,8 @@ exports.onCreateDevServer = async ({ app, cache, reporter }) => {
     // and postpone all other operations
     // This speeds up the loading of lazy images in the browser and
     // also helps to free up the browser connection queue earlier.
-    const {
-      matchingJob,
-      jobWithRemainingOperations,
-    } = splitOperationsByRequestedFile(cacheResult, pathOnDisk)
+    const { matchingJob, jobWithRemainingOperations } =
+      splitOperationsByRequestedFile(cacheResult, pathOnDisk)
 
     await _unstable_createJob(matchingJob, { reporter })
     await removeCachedValue(cache, decodedURI)

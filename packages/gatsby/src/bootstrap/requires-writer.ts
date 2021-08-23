@@ -108,8 +108,14 @@ const getMatchPaths = (
   const matchPathPages: Array<IMatchPathEntry> = []
 
   pages.forEach((page: IGatsbyPage, index: number): void => {
-    if (page.matchPath && page.mode === `SSG`) {
-      matchPathPages.push(createMatchPathEntry(page, index))
+    if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+      if (page.matchPath && page.mode === `SSG`) {
+        matchPathPages.push(createMatchPathEntry(page, index))
+      }
+    } else {
+      if (page.matchPath) {
+        matchPathPages.push(createMatchPathEntry(page, index))
+      }
     }
   })
 

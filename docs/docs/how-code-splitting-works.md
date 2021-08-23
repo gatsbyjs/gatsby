@@ -127,7 +127,7 @@ It turns out that webpack provides a way to record the mapping. It provides a co
 
 ### Referencing Chunks
 
-These two files are loaded by [static-entry.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L16) so that it can lookup chunk assets for componentChunkNames. This occurs in two places.
+These two files are loaded by [static-entry.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L16) so that it can look up chunk assets for componentChunkNames. This occurs in two places.
 
 #### Construct link and script tags for current page
 

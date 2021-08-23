@@ -68,6 +68,7 @@
     "url": "https://github.com/gatsbyjs/gatsby"
   },
   "resolutions": {
-    "cypress": "6.1.0"
+    "cypress": "6.1.0",
+    "graphql-config": "3.3.0"
   }
 }

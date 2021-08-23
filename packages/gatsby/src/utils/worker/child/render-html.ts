@@ -150,14 +150,12 @@ export const renderHTMLProd = async ({
         const pageData = await readPageData(publicDir, pagePath)
         const resourcesForTemplate = await getResourcesForTemplate(pageData)
 
-        const {
-          html,
-          unsafeBuiltinsUsage,
-        } = await htmlComponentRenderer.default({
-          pagePath,
-          pageData,
-          ...resourcesForTemplate,
-        })
+        const { html, unsafeBuiltinsUsage } =
+          await htmlComponentRenderer.default({
+            pagePath,
+            pageData,
+            ...resourcesForTemplate,
+          })
 
         if (unsafeBuiltinsUsage.length > 0) {
           unsafeBuiltinsUsageByPagePath[pagePath] = unsafeBuiltinsUsage
