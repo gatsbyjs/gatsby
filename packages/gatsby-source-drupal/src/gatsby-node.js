@@ -3,8 +3,6 @@ const _ = require(`lodash`)
 const urlJoin = require(`url-join`)
 import HttpAgent from "agentkeepalive"
 // const http2wrapper = require(`http2-wrapper`)
-const url = require(`url`)
-const querystring = require(`querystring`)
 
 const { HttpsAgent } = HttpAgent
 
@@ -391,21 +389,13 @@ exports.sourceNodes = async (
                 `queueing ${requestsCount} API requests for type ${d.body.data[0].type} which has ${d.body.meta.count} entities.`
               )
               if (d.body.links.next?.href) {
-                const parsedUrl = url.parse(d.body.links.next?.href)
-                const parsedQueryString = querystring.parse(parsedUrl.query)
                 await Promise.all(
                   _.range(requestsCount).map(pageOffset => {
                     pageOffset += 1
-                    // Construct query string.
-                    const newQuerystring = {
-                      ...parsedQueryString,
-                      "page[offset]": pageOffset * 50,
-                    }
-                    const newUrl = url.format({
-                      ...parsedUrl,
-                      search: querystring.stringify(newQuerystring),
-                    })
-                    return getNext(newUrl)
+                    // Construct URL with new pageOffset.
+                    const newUrl = new URL(d.body.links.next.href)
+                    newUrl.searchParams.set(`page[offset]`, pageOffset * 50)
+                    return getNext(newUrl.toString())
                   })
                 )
               }
