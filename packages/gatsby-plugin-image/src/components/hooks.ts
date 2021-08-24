@@ -293,7 +293,7 @@ export function getMainProps(
     "data-main-image": ``,
     style: {
       ...style,
-      opacity: isLoaded ? 1 : 0,
+      opacity: isLoaded || hasImageLoaded(cacheKey) ? 1 : 0,
     },
     onLoad,
     ref,
