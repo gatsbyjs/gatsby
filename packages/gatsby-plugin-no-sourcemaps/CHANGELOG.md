@@ -1,91 +1,130 @@
-# Change Log
+# Change Log: `gatsby-plugin-no-sourcemaps`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.12.0-next.0...gatsby-plugin-no-sourcemaps@3.13.0-next.0) (2021-08-12)
+## [3.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.12.0-next.0..gatsby-plugin-no-sourcemaps@3.12.0) (2021-08-18)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [3.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.11.0-next.0...gatsby-plugin-no-sourcemaps@3.12.0-next.0) (2021-07-29)
+
+## [3.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.11.0-next.0..gatsby-plugin-no-sourcemaps@3.11.0) (2021-08-04)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.10.0-next.0...gatsby-plugin-no-sourcemaps@3.11.0-next.0) (2021-07-15)
+
+## [3.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.10.0-next.0..gatsby-plugin-no-sourcemaps@3.10.0) (2021-07-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.9.0-next.0...gatsby-plugin-no-sourcemaps@3.10.0-next.0) (2021-07-01)
+
+## [3.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.9.0-next.0..gatsby-plugin-no-sourcemaps@3.9.0) (2021-07-07)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.8.0-next.0...gatsby-plugin-no-sourcemaps@3.9.0-next.0) (2021-06-18)
+
+## [3.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.8.0-next.0..gatsby-plugin-no-sourcemaps@3.8.0) (2021-06-23)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.7.0-next.0...gatsby-plugin-no-sourcemaps@3.8.0-next.0) (2021-06-03)
+
+## [3.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.7.0-next.0..gatsby-plugin-no-sourcemaps@3.7.0) (2021-06-09)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [3.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.6.0-next.0...gatsby-plugin-no-sourcemaps@3.7.0-next.0) (2021-05-21)
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.6.0-next.0..gatsby-plugin-no-sourcemaps@3.6.0) (2021-05-25)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.5.0-next.0...gatsby-plugin-no-sourcemaps@3.6.0-next.0) (2021-05-06)
+
+## [3.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.5.0-next.0..gatsby-plugin-no-sourcemaps@3.5.0) (2021-05-12)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.4.0-next.0...gatsby-plugin-no-sourcemaps@3.5.0-next.0) (2021-04-23)
+
+## [3.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.4.0-next.0..gatsby-plugin-no-sourcemaps@3.4.0) (2021-04-28)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.3.0-next.0...gatsby-plugin-no-sourcemaps@3.4.0-next.0) (2021-04-09)
+
+## [3.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.3.0-next.0..gatsby-plugin-no-sourcemaps@3.3.0) (2021-04-14)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.2.0-next.0...gatsby-plugin-no-sourcemaps@3.3.0-next.0) (2021-03-25)
+
+## [3.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.2.0-next.0..gatsby-plugin-no-sourcemaps@3.2.0) (2021-03-30)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.1.0-next.1...gatsby-plugin-no-sourcemaps@3.2.0-next.0) (2021-03-11)
+
+## [3.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.1.0-next.0..gatsby-plugin-no-sourcemaps@3.1.0) (2021-03-16)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.1.0-next.0...gatsby-plugin-no-sourcemaps@3.1.0-next.1) (2021-02-26)
+
+## [3.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.0.0-next.0..gatsby-plugin-no-sourcemaps@3.0.0) (2021-03-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@3.0.0-next.0...gatsby-plugin-no-sourcemaps@3.1.0-next.0) (2021-02-26)
+
+## [2.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.9.0-next.0..gatsby-plugin-no-sourcemaps@2.9.0) (2021-02-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.10.0-next.0...gatsby-plugin-no-sourcemaps@3.0.0-next.0) (2021-02-05)
+
+## [2.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.8.0-next.0..gatsby-plugin-no-sourcemaps@2.8.0) (2021-01-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.9.0-next.0...gatsby-plugin-no-sourcemaps@2.10.0-next.0) (2021-01-28)
+
+## [2.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.7.0-next.0..gatsby-plugin-no-sourcemaps@2.7.0) (2021-01-06)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.8.0-next.0...gatsby-plugin-no-sourcemaps@2.9.0-next.0) (2021-01-18)
+
+## [2.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.6.0-next.0..gatsby-plugin-no-sourcemaps@2.6.0) (2020-12-15)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.7.0-next.0...gatsby-plugin-no-sourcemaps@2.8.0-next.0) (2020-12-29)
+
+## [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.5.0-next.0..gatsby-plugin-no-sourcemaps@2.5.0) (2020-12-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.6.0-next.0...gatsby-plugin-no-sourcemaps@2.7.0-next.0) (2020-12-10)
+
+## [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.4.0-next.0..gatsby-plugin-no-sourcemaps@2.4.0) (2020-11-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.27)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [2.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.5.0-next.0...gatsby-plugin-no-sourcemaps@2.6.0-next.0) (2020-11-26)
+
+## [2.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.3.0-next.0..gatsby-plugin-no-sourcemaps@2.3.0) (2020-11-12)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.26)
 
 **Note:** Version bump only for package gatsby-plugin-no-sourcemaps
 
-# [2.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.4.0-next.0...gatsby-plugin-no-sourcemaps@2.5.0-next.0) (2020-11-18)
+<a name="before-release-process"></a>
 
-**Note:** Version bump only for package gatsby-plugin-no-sourcemaps
+
 
 ## [2.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.2.0...gatsby-plugin-no-sourcemaps@2.2.1) (2020-10-06)
 

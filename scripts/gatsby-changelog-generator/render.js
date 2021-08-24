@@ -1,28 +1,30 @@
 const { patch } = require(`semver`)
 
-const groupTitles = new Map([
-  ["feat", "Features"],
-  ["fix", "Bug Fixes"],
-  ["perf", "Performance Improvements"],
-  ["refactor", "Refactoring"],
-  ["chore", "Chores"],
-])
+function renderHeader(packageName) {
+  return `
+# Change Log: \`${packageName}\`
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+`.trim()
+}
 
 /**
  * @param {Object} context
  * @param {Map<string, Array<Object>>} commitsByType
  * @returns string
  */
-exports.renderVersion = function renderVersion(context, commitsByType) {
-  const { pkg, fromTag, toTag, version, date } = context
+function renderVersion(context, commitsByType) {
+  const { pkg, fromTag, toTag, version, date, gatsbyRelease } = context
   const isPatch = patch(version) !== 0
   const commitGroups = Array.from(commitsByType)
   const hasCommits = commitGroups.some(([_, commits]) => commits.length > 0)
-  const compareUrl = `https://github.com/gatsbyjs/gatsby/compare/${fromTag}..${toTag}`
+  const compareUrl = `https://github.com/gatsbyjs/gatsby/compare/${fromTag}...${toTag}`
+  const releaseNotesUrl = `https://www.gatsbyjs.com/docs/reference/release-notes/${context.gatsbyRelease}`
 
   return `
 ##${isPatch ? `#` : ``} [${version}](${compareUrl}) (${date})
-
+${releaseNotes(gatsbyRelease)}
 ${
   hasCommits
     ? commitGroups.map(renderCommitGroup).filter(Boolean).join(`\n\n`)
@@ -30,6 +32,20 @@ ${
 }
 `
 }
+
+function releaseNotes(gatsbyRelease) {
+  if (!gatsbyRelease) return ``
+  const releaseNotesUrl = `https://www.gatsbyjs.com/docs/reference/release-notes/v${gatsbyRelease}`
+  return `[🧾 Release notes](${releaseNotesUrl})\n`
+}
+
+const groupTitles = new Map([
+  ["feat", "Features"],
+  ["fix", "Bug Fixes"],
+  ["perf", "Performance Improvements"],
+  ["refactor", "Refactoring"],
+  ["chore", "Chores"],
+])
 
 renderCommitGroup = function renderCommitGroup(commitGroup) {
   const [type, commits] = commitGroup
@@ -60,8 +76,10 @@ function commitReferences(commit) {
 }
 
 function commitReference(commit, reference) {
-  if (!reference) return ``
-  return `[#${reference.issue}](https://github.com/gatsbyjs/gatsby/issues/${reference.issue})`
+  if (!reference || !reference.issue) return ``
+  const issueUrl = `https://github.com/gatsbyjs/gatsby/issues/${reference.issue}`
+  const action = reference.action || ``
+  return `${action} [#${reference.issue}](${issueUrl})`.trim()
 }
 
 function commitHash(commit) {
@@ -97,3 +115,6 @@ function commitHash(commit) {
   committerDate: '2021-08-02'
 }
  */
+
+exports.renderVersion = renderVersion
+exports.renderHeader = renderHeader

@@ -1,153 +1,192 @@
-# Change Log
+# Change Log: `gatsby-link`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.12.0-next.3...gatsby-link@3.13.0-next.0) (2021-08-12)
+## [3.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.12.0-next.0..gatsby-link@3.12.0) (2021-08-18)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
+
+#### Bug Fixes
+
+- update dependency @types/reach__router to ^1.3.9 for gatsby-link [#32574](https://github.com/gatsbyjs/gatsby/issues/32574) ([c2006c8](https://github.com/gatsbyjs/gatsby/commit/c2006c81d20b547b62e8b11e0786c12d68fdbce2))
+
+#### Chores
+
+- update formatting & linting [#32626](https://github.com/gatsbyjs/gatsby/issues/32626) ([4a765b5](https://github.com/gatsbyjs/gatsby/commit/4a765b5c62208d58f0bd7fd59558160c0b9feed3))
+- update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
+
+
+## [3.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.11.0-next.0..gatsby-link@3.11.0) (2021-08-04)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 **Note:** Version bump only for package gatsby-link
 
-# [3.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.12.0-next.2...gatsby-link@3.12.0-next.3) (2021-08-09)
+
+## [3.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.10.0-next.0..gatsby-link@3.10.0) (2021-07-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
+
+#### Chores
+
+- update babel monorepo [#32238](https://github.com/gatsbyjs/gatsby/issues/32238) ([466d4c0](https://github.com/gatsbyjs/gatsby/commit/466d4c087bbc96abb942a02c67243bcc9a4f2a0a))
+
+
+## [3.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.9.0-next.0..gatsby-link@3.9.0) (2021-07-07)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
 
 **Note:** Version bump only for package gatsby-link
 
-# [3.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.12.0-next.1...gatsby-link@3.12.0-next.2) (2021-08-05)
+
+## [3.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.8.0-next.0..gatsby-link@3.8.0) (2021-06-23)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) ([7d42e8d](https://github.com/gatsbyjs/gatsby/commit/7d42e8d866e46e9c39838d812d080d06433f7060))
+
+
+### [3.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.7.0..gatsby-link@3.7.1) (2021-06-10)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) [#31859](https://github.com/gatsbyjs/gatsby/issues/31859) ([8636025](https://github.com/gatsbyjs/gatsby/commit/863602567930a39142ed33d9d1f1813b7dec8686))
+
+
+## [3.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.7.0-next.0..gatsby-link@3.7.0) (2021-06-09)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
+
+#### Chores
+
+- update babel monorepo [#31143](https://github.com/gatsbyjs/gatsby/issues/31143) ([701ab2f](https://github.com/gatsbyjs/gatsby/commit/701ab2f6690c3f1bbaf60cf572513ea566cc9ec9))
+
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.6.0-next.0..gatsby-link@3.6.0) (2021-05-25)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
 
 **Note:** Version bump only for package gatsby-link
 
-# [3.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.12.0-next.0...gatsby-link@3.12.0-next.1) (2021-08-05)
 
-### Bug Fixes
-
-- **deps:** update dependency @types/reach\_\_router to ^1.3.9 for gatsby-link ([#32574](https://github.com/gatsbyjs/gatsby/issues/32574)) ([c2006c8](https://github.com/gatsbyjs/gatsby/commit/c2006c81d20b547b62e8b11e0786c12d68fdbce2))
-
-# [3.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.11.0-next.0...gatsby-link@3.12.0-next.0) (2021-07-29)
+## [3.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.5.0-next.0..gatsby-link@3.5.0) (2021-05-12)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
 
 **Note:** Version bump only for package gatsby-link
 
-# [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.10.0-next.1...gatsby-link@3.11.0-next.0) (2021-07-15)
+
+## [3.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.4.0-next.0..gatsby-link@3.4.0) (2021-04-28)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
 
 **Note:** Version bump only for package gatsby-link
 
-# [3.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.10.0-next.0...gatsby-link@3.10.0-next.1) (2021-07-08)
+
+## [3.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.3.0-next.0..gatsby-link@3.3.0) (2021-04-14)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
 
 **Note:** Version bump only for package gatsby-link
 
-# [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.9.0-next.0...gatsby-link@3.10.0-next.0) (2021-07-01)
+
+## [3.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.2.0-next.0..gatsby-link@3.2.0) (2021-03-30)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
 
 **Note:** Version bump only for package gatsby-link
 
-# [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.8.0-next.1...gatsby-link@3.9.0-next.0) (2021-06-18)
+
+## [3.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.1.0-next.0..gatsby-link@3.1.0) (2021-03-16)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
+
+#### Bug Fixes
+
+- Use vendored @reach/router [#29772](https://github.com/gatsbyjs/gatsby/issues/29772) ([8754e0c](https://github.com/gatsbyjs/gatsby/commit/8754e0c6eb1b8f88422e60f31a1dca37925e8b2e))
+
+#### Chores
+
+- adjust all @reach/router imports to not rely just on webpack alias [#30033](https://github.com/gatsbyjs/gatsby/issues/30033) ([38dab68](https://github.com/gatsbyjs/gatsby/commit/38dab684af7475ea17edf5cefddfe62584a4065a))
+- update eslint to fix linting issues fix [#29988](https://github.com/gatsbyjs/gatsby/issues/29988) ([5636389](https://github.com/gatsbyjs/gatsby/commit/5636389e8fa626c644e90abc14589e9961d98c68))
+- Fix our internal eslint config for monorepo Fix [#29795](https://github.com/gatsbyjs/gatsby/issues/29795) ([0b4664e](https://github.com/gatsbyjs/gatsby/commit/0b4664e52c22902f9fb85b208a63da388ddd0470))
+
+
+### [3.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.0.0..gatsby-link@3.0.1) (2021-03-06)
+
+#### Chores
+
+- adjust all @reach/router imports to not rely just on webpack alias [#30033](https://github.com/gatsbyjs/gatsby/issues/30033) [#30049](https://github.com/gatsbyjs/gatsby/issues/30049) ([8686a42](https://github.com/gatsbyjs/gatsby/commit/8686a42fee8263661f163d2acf3e000642ffa4e7))
+
+
+## [3.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.0.0-next.0..gatsby-link@3.0.0) (2021-03-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
+
+#### Bug Fixes
+
+- Use vendored @reach/router [#29772](https://github.com/gatsbyjs/gatsby/issues/29772) [#29811](https://github.com/gatsbyjs/gatsby/issues/29811) ([bd856ef](https://github.com/gatsbyjs/gatsby/commit/bd856efac1334b2385ced7ecb25c92e046882487))
+
+#### Other Changes
+
+- Move peerdeps to 16.9.0 & 17+ for react & react-dom [#29735](https://github.com/gatsbyjs/gatsby/issues/29735) ([6b86b99](https://github.com/gatsbyjs/gatsby/commit/6b86b99f7e760c6ffa74b1330399d9fdd94e48a2))
+
+
+## [2.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.11.0-next.0..gatsby-link@2.11.0) (2021-02-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
+
+#### Bug Fixes
+
+- update minor and patch for gatsby-link [#29175](https://github.com/gatsbyjs/gatsby/issues/29175) ([7e07e2b](https://github.com/gatsbyjs/gatsby/commit/7e07e2b748c0195fc4a1e2b442c6836338d906dd))
+
+
+## [2.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.10.0-next.0..gatsby-link@2.10.0) (2021-01-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
+
+#### Bug Fixes
+
+- update vulnerable packages, include React 17 in peerDeps [#28545](https://github.com/gatsbyjs/gatsby/issues/28545) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+#### Chores
+
+- Fix all `/packages` links to `/plugins` Fix [#28816](https://github.com/gatsbyjs/gatsby/issues/28816) ([200e307](https://github.com/gatsbyjs/gatsby/commit/200e30748102a478267a67700238304a2a56068b))
+
+
+## [2.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.9.0-next.0..gatsby-link@2.9.0) (2021-01-06)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
 
 **Note:** Version bump only for package gatsby-link
 
-# [3.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.8.0-next.0...gatsby-link@3.8.0-next.1) (2021-06-10)
+
+## [2.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.8.0-next.0..gatsby-link@2.8.0) (2020-12-15)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
+
+#### Chores
+
+- update dependency cross-env to ^7.0.3 [#28505](https://github.com/gatsbyjs/gatsby/issues/28505) ([a819b9b](https://github.com/gatsbyjs/gatsby/commit/a819b9bfb663139f7b06c3ed7d6d6069a2382b2c))
+
+
+## [2.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.7.0-next.0..gatsby-link@2.7.0) (2020-12-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
+
+#### Bug Fixes
+
+- don't prefetch same page [#28307](https://github.com/gatsbyjs/gatsby/issues/28307) ([3666130](https://github.com/gatsbyjs/gatsby/commit/36661308db47696a3b29d2348c190817d81f1595))
+
+
+### [2.6.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.6.0..gatsby-link@2.6.1) (2020-11-27)
+
+#### Bug Fixes
+
+- don't prefetch same page [#28307](https://github.com/gatsbyjs/gatsby/issues/28307) [#28313](https://github.com/gatsbyjs/gatsby/issues/28313) ([58f12d5](https://github.com/gatsbyjs/gatsby/commit/58f12d512e14ee4998d8c0de74c7e29f792aa3e8))
+
+
+## [2.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.6.0-next.0..gatsby-link@2.6.0) (2020-11-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.27)
+
+#### Chores
+
+- update babel monorepo [#27528](https://github.com/gatsbyjs/gatsby/issues/27528) ([539dbb0](https://github.com/gatsbyjs/gatsby/commit/539dbb09166e346a6cee568973d2de3d936e8ef3))
+
+
+## [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.5.0-next.0..gatsby-link@2.5.0) (2020-11-12)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.26)
 
 **Note:** Version bump only for package gatsby-link
 
-# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.7.0-next.2...gatsby-link@3.8.0-next.0) (2021-06-03)
+<a name="before-release-process"></a>
 
-**Note:** Version bump only for package gatsby-link
 
-# [3.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.7.0-next.1...gatsby-link@3.7.0-next.2) (2021-06-02)
-
-**Note:** Version bump only for package gatsby-link
-
-# [3.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.7.0-next.0...gatsby-link@3.7.0-next.1) (2021-05-31)
-
-**Note:** Version bump only for package gatsby-link
-
-# [3.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.6.0-next.0...gatsby-link@3.7.0-next.0) (2021-05-21)
-
-**Note:** Version bump only for package gatsby-link
-
-# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.5.0-next.0...gatsby-link@3.6.0-next.0) (2021-05-06)
-
-**Note:** Version bump only for package gatsby-link
-
-# [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.4.0-next.0...gatsby-link@3.5.0-next.0) (2021-04-23)
-
-**Note:** Version bump only for package gatsby-link
-
-# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.3.0-next.1...gatsby-link@3.4.0-next.0) (2021-04-09)
-
-**Note:** Version bump only for package gatsby-link
-
-# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.3.0-next.0...gatsby-link@3.3.0-next.1) (2021-04-07)
-
-**Note:** Version bump only for package gatsby-link
-
-# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.2.0-next.0...gatsby-link@3.3.0-next.0) (2021-03-25)
-
-**Note:** Version bump only for package gatsby-link
-
-# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.1.0-next.3...gatsby-link@3.2.0-next.0) (2021-03-11)
-
-**Note:** Version bump only for package gatsby-link
-
-# [3.1.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.1.0-next.2...gatsby-link@3.1.0-next.3) (2021-03-10)
-
-**Note:** Version bump only for package gatsby-link
-
-# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.1.0-next.1...gatsby-link@3.1.0-next.2) (2021-02-26)
-
-### Bug Fixes
-
-- **gatsby:** Use vendored @reach/router ([#29772](https://github.com/gatsbyjs/gatsby/issues/29772)) ([8754e0c](https://github.com/gatsbyjs/gatsby/commit/8754e0c6eb1b8f88422e60f31a1dca37925e8b2e))
-
-# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.1.0-next.0...gatsby-link@3.1.0-next.1) (2021-02-26)
-
-**Note:** Version bump only for package gatsby-link
-
-# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.0.0-next.0...gatsby-link@3.1.0-next.0) (2021-02-26)
-
-**Note:** Version bump only for package gatsby-link
-
-# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.12.0-next.1...gatsby-link@3.0.0-next.0) (2021-02-05)
-
-**Note:** Version bump only for package gatsby-link
-
-# [2.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.12.0-next.0...gatsby-link@2.12.0-next.1) (2021-02-04)
-
-**Note:** Version bump only for package gatsby-link
-
-# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.11.0-next.0...gatsby-link@2.12.0-next.0) (2021-01-28)
-
-### Bug Fixes
-
-- **deps:** update minor and patch for gatsby-link ([#29175](https://github.com/gatsbyjs/gatsby/issues/29175)) ([7e07e2b](https://github.com/gatsbyjs/gatsby/commit/7e07e2b748c0195fc4a1e2b442c6836338d906dd))
-
-# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.10.0-next.1...gatsby-link@2.11.0-next.0) (2021-01-18)
-
-### Bug Fixes
-
-- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
-
-# [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.10.0-next.0...gatsby-link@2.10.0-next.1) (2021-01-12)
-
-**Note:** Version bump only for package gatsby-link
-
-# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.9.0-next.0...gatsby-link@2.10.0-next.0) (2020-12-29)
-
-**Note:** Version bump only for package gatsby-link
-
-# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.8.0-next.0...gatsby-link@2.9.0-next.0) (2020-12-10)
-
-**Note:** Version bump only for package gatsby-link
-
-# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.7.0-next.0...gatsby-link@2.8.0-next.0) (2020-11-26)
-
-### Bug Fixes
-
-- **gatsby-link:** don't prefetch same page ([#28307](https://github.com/gatsbyjs/gatsby/issues/28307)) ([3666130](https://github.com/gatsbyjs/gatsby/commit/36661308db47696a3b29d2348c190817d81f1595))
-
-# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.6.0-next.0...gatsby-link@2.7.0-next.0) (2020-11-18)
-
-**Note:** Version bump only for package gatsby-link
-
-# [2.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.5.0-next.0...gatsby-link@2.5.0-next.1) (2020-11-10)
-
-**Note:** Version bump only for package gatsby-link
 
 ## [2.4.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.4.15...gatsby-link@2.4.16) (2020-10-20)
 

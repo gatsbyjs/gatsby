@@ -1,169 +1,179 @@
-# Change Log
+# Change Log: `gatsby-page-utils`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.12.0-next.3...gatsby-page-utils@1.13.0-next.0) (2021-08-12)
+## [1.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.12.0-next.0..gatsby-page-utils@1.12.0) (2021-08-18)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-page-utils [#32598](https://github.com/gatsbyjs/gatsby/issues/32598) ([22cec2e](https://github.com/gatsbyjs/gatsby/commit/22cec2eec1ab43f4410303670c05532504370575))
+
+#### Chores
+
+- update dependency @types/micromatch to ^4.0.2 for gatsby-page-utils [#32565](https://github.com/gatsbyjs/gatsby/issues/32565) ([2438266](https://github.com/gatsbyjs/gatsby/commit/2438266bf325289d41305193b3ff01c13251eaf8))
+- update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
+
+
+## [1.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.11.0-next.0..gatsby-page-utils@1.11.0) (2021-08-04)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 **Note:** Version bump only for package gatsby-page-utils
 
-# [1.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.12.0-next.2...gatsby-page-utils@1.12.0-next.3) (2021-08-09)
+
+## [1.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.10.0-next.0..gatsby-page-utils@1.10.0) (2021-07-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
+
+#### Bug Fixes
+
+- update typescript [#31152](https://github.com/gatsbyjs/gatsby/issues/31152) ([124cfcc](https://github.com/gatsbyjs/gatsby/commit/124cfcc4cd42a50a992dde5b420610f290227a78))
+
+#### Chores
+
+- update babel monorepo [#32238](https://github.com/gatsbyjs/gatsby/issues/32238) ([466d4c0](https://github.com/gatsbyjs/gatsby/commit/466d4c087bbc96abb942a02c67243bcc9a4f2a0a))
+
+
+## [1.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.9.0-next.0..gatsby-page-utils@1.9.0) (2021-07-07)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
 
 **Note:** Version bump only for package gatsby-page-utils
 
-# [1.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.12.0-next.1...gatsby-page-utils@1.12.0-next.2) (2021-08-05)
+
+## [1.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.8.0-next.0..gatsby-page-utils@1.8.0) (2021-06-23)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) ([7d42e8d](https://github.com/gatsbyjs/gatsby/commit/7d42e8d866e46e9c39838d812d080d06433f7060))
+
+
+### [1.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.7.0..gatsby-page-utils@1.7.1) (2021-06-10)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) [#31859](https://github.com/gatsbyjs/gatsby/issues/31859) ([8636025](https://github.com/gatsbyjs/gatsby/commit/863602567930a39142ed33d9d1f1813b7dec8686))
+
+
+## [1.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.7.0-next.0..gatsby-page-utils@1.7.0) (2021-06-09)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
+
+#### Chores
+
+- update babel monorepo [#31143](https://github.com/gatsbyjs/gatsby/issues/31143) ([701ab2f](https://github.com/gatsbyjs/gatsby/commit/701ab2f6690c3f1bbaf60cf572513ea566cc9ec9))
+
+
+## [1.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.6.0-next.0..gatsby-page-utils@1.6.0) (2021-05-25)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
 
 **Note:** Version bump only for package gatsby-page-utils
 
-# [1.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.12.0-next.0...gatsby-page-utils@1.12.0-next.1) (2021-08-05)
 
-### Bug Fixes
-
-- **deps:** update minor and patch dependencies for gatsby-page-utils ([#32598](https://github.com/gatsbyjs/gatsby/issues/32598)) ([22cec2e](https://github.com/gatsbyjs/gatsby/commit/22cec2eec1ab43f4410303670c05532504370575))
-
-# [1.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.11.0-next.0...gatsby-page-utils@1.12.0-next.0) (2021-07-29)
+## [1.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.5.0-next.0..gatsby-page-utils@1.5.0) (2021-05-12)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
 
 **Note:** Version bump only for package gatsby-page-utils
 
-# [1.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.10.0-next.1...gatsby-page-utils@1.11.0-next.0) (2021-07-15)
+
+## [1.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.4.0-next.0..gatsby-page-utils@1.4.0) (2021-04-28)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
 
 **Note:** Version bump only for package gatsby-page-utils
 
-# [1.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.10.0-next.0...gatsby-page-utils@1.10.0-next.1) (2021-07-08)
 
-### Bug Fixes
-
-- **deps:** update typescript ([#31152](https://github.com/gatsbyjs/gatsby/issues/31152)) ([124cfcc](https://github.com/gatsbyjs/gatsby/commit/124cfcc4cd42a50a992dde5b420610f290227a78))
-
-# [1.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.9.0-next.0...gatsby-page-utils@1.10.0-next.0) (2021-07-01)
+## [1.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.3.0-next.0..gatsby-page-utils@1.3.0) (2021-04-14)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
 
 **Note:** Version bump only for package gatsby-page-utils
 
-# [1.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.8.0-next.1...gatsby-page-utils@1.9.0-next.0) (2021-06-18)
+
+## [1.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.2.0-next.0..gatsby-page-utils@1.2.0) (2021-03-30)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
 
 **Note:** Version bump only for package gatsby-page-utils
 
-# [1.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.8.0-next.0...gatsby-page-utils@1.8.0-next.1) (2021-06-10)
+
+## [1.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.1.0-next.0..gatsby-page-utils@1.1.0) (2021-03-16)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
+
+#### Bug Fixes
+
+- update lodash monorepo to ^4.17.21 [#29382](https://github.com/gatsbyjs/gatsby/issues/29382) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
+
+
+## [1.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.0.0-next.0..gatsby-page-utils@1.0.0) (2021-03-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
+
+#### Chores
+
+- Upgrade typescript [#29388](https://github.com/gatsbyjs/gatsby/issues/29388) ([823140f](https://github.com/gatsbyjs/gatsby/commit/823140f2b0bbbcab51923186bab8128bb8e0afe5))
+- update minor and patch for gatsby-page-utils [#29511](https://github.com/gatsbyjs/gatsby/issues/29511) ([e9e56c6](https://github.com/gatsbyjs/gatsby/commit/e9e56c671d0c1da47e387bab72b6e897070a55a3))
+
+
+### [0.9.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.9.0..gatsby-page-utils@0.9.1) (2021-02-24)
 
 **Note:** Version bump only for package gatsby-page-utils
 
-# [1.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.7.0-next.2...gatsby-page-utils@1.8.0-next.0) (2021-06-03)
+
+## [0.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.9.0-next.0..gatsby-page-utils@0.9.0) (2021-02-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
+
+#### Bug Fixes
+
+- update minor and patch for gatsby-page-utils [#29176](https://github.com/gatsbyjs/gatsby/issues/29176) ([3e2084b](https://github.com/gatsbyjs/gatsby/commit/3e2084b1a78339032dbbd31fbe93e7cbfc979cb6))
+
+
+## [0.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.8.0-next.0..gatsby-page-utils@0.8.0) (2021-01-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
 
 **Note:** Version bump only for package gatsby-page-utils
 
-# [1.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.7.0-next.1...gatsby-page-utils@1.7.0-next.2) (2021-06-02)
+
+## [0.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.7.0-next.0..gatsby-page-utils@0.7.0) (2021-01-06)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
 
 **Note:** Version bump only for package gatsby-page-utils
 
-# [1.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.7.0-next.0...gatsby-page-utils@1.7.0-next.1) (2021-05-31)
+
+### [0.6.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.6.0..gatsby-page-utils@0.6.1) (2020-12-23)
 
 **Note:** Version bump only for package gatsby-page-utils
 
-# [1.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.6.0-next.0...gatsby-page-utils@1.7.0-next.0) (2021-05-21)
+
+## [0.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.6.0-next.0..gatsby-page-utils@0.6.0) (2020-12-15)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
+
+#### Features
+
+- Add slugify option [#28485](https://github.com/gatsbyjs/gatsby/issues/28485) ([721f42a](https://github.com/gatsbyjs/gatsby/commit/721f42aa210943a5cfe9b08fe93ad31ae315c447))
+
+#### Chores
+
+- update dependency cross-env to ^7.0.3 [#28505](https://github.com/gatsbyjs/gatsby/issues/28505) ([a819b9b](https://github.com/gatsbyjs/gatsby/commit/a819b9bfb663139f7b06c3ed7d6d6069a2382b2c))
+
+
+## [0.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.5.0-next.0..gatsby-page-utils@0.5.0) (2020-12-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
 
 **Note:** Version bump only for package gatsby-page-utils
 
-# [1.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.5.0-next.0...gatsby-page-utils@1.6.0-next.0) (2021-05-06)
+
+## [0.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.4.0-next.0..gatsby-page-utils@0.4.0) (2020-11-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.27)
+
+#### Chores
+
+- update babel monorepo [#27528](https://github.com/gatsbyjs/gatsby/issues/27528) ([539dbb0](https://github.com/gatsbyjs/gatsby/commit/539dbb09166e346a6cee568973d2de3d936e8ef3))
+
+
+## [0.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.3.0-next.0..gatsby-page-utils@0.3.0) (2020-11-12)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.26)
 
 **Note:** Version bump only for package gatsby-page-utils
 
-# [1.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.4.0-next.3...gatsby-page-utils@1.5.0-next.0) (2021-04-23)
+<a name="before-release-process"></a>
 
-**Note:** Version bump only for package gatsby-page-utils
 
-# [1.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.4.0-next.2...gatsby-page-utils@1.4.0-next.3) (2021-04-20)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [1.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.4.0-next.1...gatsby-page-utils@1.4.0-next.2) (2021-04-20)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [1.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.4.0-next.0...gatsby-page-utils@1.4.0-next.1) (2021-04-16)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [1.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.3.0-next.1...gatsby-page-utils@1.4.0-next.0) (2021-04-09)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [1.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.3.0-next.0...gatsby-page-utils@1.3.0-next.1) (2021-04-07)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [1.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.2.0-next.0...gatsby-page-utils@1.3.0-next.0) (2021-03-25)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [1.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.1.0-next.2...gatsby-page-utils@1.2.0-next.0) (2021-03-11)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [1.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.1.0-next.1...gatsby-page-utils@1.1.0-next.2) (2021-03-10)
-
-### Bug Fixes
-
-- **deps:** update lodash monorepo to ^4.17.21 ([#29382](https://github.com/gatsbyjs/gatsby/issues/29382)) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
-
-# [1.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.1.0-next.0...gatsby-page-utils@1.1.0-next.1) (2021-02-26)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [1.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.0.0-next.2...gatsby-page-utils@1.1.0-next.0) (2021-02-26)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [1.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.0.0-next.1...gatsby-page-utils@1.0.0-next.2) (2021-02-25)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [1.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@1.0.0-next.0...gatsby-page-utils@1.0.0-next.1) (2021-02-22)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [1.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.10.0-next.0...gatsby-page-utils@1.0.0-next.0) (2021-02-05)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [0.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.9.0-next.0...gatsby-page-utils@0.10.0-next.0) (2021-01-28)
-
-### Bug Fixes
-
-- **deps:** update minor and patch for gatsby-page-utils ([#29176](https://github.com/gatsbyjs/gatsby/issues/29176)) ([3e2084b](https://github.com/gatsbyjs/gatsby/commit/3e2084b1a78339032dbbd31fbe93e7cbfc979cb6))
-
-# [0.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.8.0-next.0...gatsby-page-utils@0.9.0-next.0) (2021-01-18)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [0.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.7.0-next.1...gatsby-page-utils@0.8.0-next.0) (2020-12-29)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [0.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.7.0-next.0...gatsby-page-utils@0.7.0-next.1) (2020-12-29)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [0.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.6.0-next.1...gatsby-page-utils@0.7.0-next.0) (2020-12-10)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [0.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.6.0-next.0...gatsby-page-utils@0.6.0-next.1) (2020-12-08)
-
-### Features
-
-- **gatsby-plugin-page-creator:** Add slugify option ([#28485](https://github.com/gatsbyjs/gatsby/issues/28485)) ([721f42a](https://github.com/gatsbyjs/gatsby/commit/721f42aa210943a5cfe9b08fe93ad31ae315c447))
-
-# [0.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.5.0-next.0...gatsby-page-utils@0.6.0-next.0) (2020-11-26)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [0.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.4.0-next.0...gatsby-page-utils@0.5.0-next.0) (2020-11-18)
-
-**Note:** Version bump only for package gatsby-page-utils
-
-# [0.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.3.0-next.0...gatsby-page-utils@0.3.0-next.1) (2020-11-10)
-
-**Note:** Version bump only for package gatsby-page-utils
 
 ## [0.2.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-page-utils@0.2.28...gatsby-page-utils@0.2.29) (2020-10-26)
 

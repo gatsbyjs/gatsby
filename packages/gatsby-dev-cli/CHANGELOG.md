@@ -1,155 +1,182 @@
-# Change Log
+# Change Log: `gatsby-dev-cli`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.12.0-next.3...gatsby-dev-cli@3.13.0-next.0) (2021-08-12)
+## [3.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.12.0-next.0..gatsby-dev-cli@3.12.0) (2021-08-18)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
+
+#### Bug Fixes
+
+- update dependency verdaccio to ^4.12.2 for gatsby-dev-cli [#32597](https://github.com/gatsbyjs/gatsby/issues/32597) ([cd2856d](https://github.com/gatsbyjs/gatsby/commit/cd2856d7f52b1f0de6ee635e4fa7b79f420f477e))
+
+#### Chores
+
+- update formatting & linting [#32626](https://github.com/gatsbyjs/gatsby/issues/32626) ([4a765b5](https://github.com/gatsbyjs/gatsby/commit/4a765b5c62208d58f0bd7fd59558160c0b9feed3))
+- update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
+
+
+## [3.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.11.0-next.0..gatsby-dev-cli@3.11.0) (2021-08-04)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 **Note:** Version bump only for package gatsby-dev-cli
 
-# [3.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.12.0-next.2...gatsby-dev-cli@3.12.0-next.3) (2021-08-09)
+
+## [3.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.10.0-next.0..gatsby-dev-cli@3.10.0) (2021-07-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
+
+#### Bug Fixes
+
+- update dependency execa to v5 [#32232](https://github.com/gatsbyjs/gatsby/issues/32232) ([8a13969](https://github.com/gatsbyjs/gatsby/commit/8a1396995c02d45f00f241e22c626a20086fa955))
+
+#### Chores
+
+- update babel monorepo [#32238](https://github.com/gatsbyjs/gatsby/issues/32238) ([466d4c0](https://github.com/gatsbyjs/gatsby/commit/466d4c087bbc96abb942a02c67243bcc9a4f2a0a))
+
+
+## [3.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.9.0-next.0..gatsby-dev-cli@3.9.0) (2021-07-07)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
 
 **Note:** Version bump only for package gatsby-dev-cli
 
-# [3.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.12.0-next.1...gatsby-dev-cli@3.12.0-next.2) (2021-08-05)
+
+## [3.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.8.0-next.0..gatsby-dev-cli@3.8.0) (2021-06-23)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
+
+#### Chores
+
+- Fix multiple grammar issues Fix [#31946](https://github.com/gatsbyjs/gatsby/issues/31946) ([aa3bad2](https://github.com/gatsbyjs/gatsby/commit/aa3bad2afaea4dcdd935f629d418f082a9451d47))
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) ([7d42e8d](https://github.com/gatsbyjs/gatsby/commit/7d42e8d866e46e9c39838d812d080d06433f7060))
+
+
+### [3.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.7.0..gatsby-dev-cli@3.7.1) (2021-06-10)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) [#31859](https://github.com/gatsbyjs/gatsby/issues/31859) ([8636025](https://github.com/gatsbyjs/gatsby/commit/863602567930a39142ed33d9d1f1813b7dec8686))
+
+
+## [3.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.7.0-next.0..gatsby-dev-cli@3.7.0) (2021-06-09)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
+
+#### Chores
+
+- update babel monorepo [#31143](https://github.com/gatsbyjs/gatsby/issues/31143) ([701ab2f](https://github.com/gatsbyjs/gatsby/commit/701ab2f6690c3f1bbaf60cf572513ea566cc9ec9))
+
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.6.0-next.0..gatsby-dev-cli@3.6.0) (2021-05-25)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
 
 **Note:** Version bump only for package gatsby-dev-cli
 
-# [3.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.12.0-next.0...gatsby-dev-cli@3.12.0-next.1) (2021-08-05)
 
-### Bug Fixes
-
-- **deps:** update dependency verdaccio to ^4.12.2 for gatsby-dev-cli ([#32597](https://github.com/gatsbyjs/gatsby/issues/32597)) ([cd2856d](https://github.com/gatsbyjs/gatsby/commit/cd2856d7f52b1f0de6ee635e4fa7b79f420f477e))
-
-# [3.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.11.0-next.0...gatsby-dev-cli@3.12.0-next.0) (2021-07-29)
+## [3.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.5.0-next.0..gatsby-dev-cli@3.5.0) (2021-05-12)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
 
 **Note:** Version bump only for package gatsby-dev-cli
 
-# [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.10.0-next.1...gatsby-dev-cli@3.11.0-next.0) (2021-07-15)
+
+## [3.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.4.0-next.0..gatsby-dev-cli@3.4.0) (2021-04-28)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
 
 **Note:** Version bump only for package gatsby-dev-cli
 
-# [3.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.10.0-next.0...gatsby-dev-cli@3.10.0-next.1) (2021-07-08)
 
-### Bug Fixes
+## [3.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.3.0-next.0..gatsby-dev-cli@3.3.0) (2021-04-14)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
 
-- **deps:** update dependency execa to v5 ([#32232](https://github.com/gatsbyjs/gatsby/issues/32232)) ([8a13969](https://github.com/gatsbyjs/gatsby/commit/8a1396995c02d45f00f241e22c626a20086fa955))
+#### Bug Fixes
 
-# [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.9.0-next.0...gatsby-dev-cli@3.10.0-next.0) (2021-07-01)
+- update minor and patch for gatsby-dev-cli [#29174](https://github.com/gatsbyjs/gatsby/issues/29174) ([4f8ae3c](https://github.com/gatsbyjs/gatsby/commit/4f8ae3c1087f36619a8c6fecc0e2cc0187b02930))
 
-**Note:** Version bump only for package gatsby-dev-cli
 
-# [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.8.0-next.2...gatsby-dev-cli@3.9.0-next.0) (2021-06-18)
-
-**Note:** Version bump only for package gatsby-dev-cli
-
-# [3.8.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.8.0-next.1...gatsby-dev-cli@3.8.0-next.2) (2021-06-17)
+## [3.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.2.0-next.0..gatsby-dev-cli@3.2.0) (2021-03-30)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
 
 **Note:** Version bump only for package gatsby-dev-cli
 
-# [3.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.8.0-next.0...gatsby-dev-cli@3.8.0-next.1) (2021-06-10)
+
+## [3.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.1.0-next.0..gatsby-dev-cli@3.1.0) (2021-03-16)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
+
+#### Bug Fixes
+
+- update lodash monorepo to ^4.17.21 [#29382](https://github.com/gatsbyjs/gatsby/issues/29382) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
+
+#### Chores
+
+- update eslint to fix linting issues fix [#29988](https://github.com/gatsbyjs/gatsby/issues/29988) ([5636389](https://github.com/gatsbyjs/gatsby/commit/5636389e8fa626c644e90abc14589e9961d98c68))
+
+
+## [3.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.0.0-next.0..gatsby-dev-cli@3.0.0) (2021-03-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
 
 **Note:** Version bump only for package gatsby-dev-cli
 
-# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.7.0-next.2...gatsby-dev-cli@3.8.0-next.0) (2021-06-03)
+
+## [2.14.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.14.0-next.0..gatsby-dev-cli@2.14.0) (2021-02-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
 
 **Note:** Version bump only for package gatsby-dev-cli
 
-# [3.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.7.0-next.1...gatsby-dev-cli@3.7.0-next.2) (2021-06-02)
+
+## [2.13.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.13.0-next.0..gatsby-dev-cli@2.13.0) (2021-01-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
+
+#### Bug Fixes
+
+- update minor and patch for gatsby-dev-cli [#28971](https://github.com/gatsbyjs/gatsby/issues/28971) ([2e10dae](https://github.com/gatsbyjs/gatsby/commit/2e10dae130d77861bb229d21fd7e46046f5c73d7))
+
+
+## [2.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.12.0-next.0..gatsby-dev-cli@2.12.0) (2021-01-06)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
 
 **Note:** Version bump only for package gatsby-dev-cli
 
-# [3.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.7.0-next.0...gatsby-dev-cli@3.7.0-next.1) (2021-05-31)
+
+## [2.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.11.0-next.0..gatsby-dev-cli@2.11.0) (2020-12-15)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
+
+#### Bug Fixes
+
+- Back out resolutions, and add ignore-engines to dev cli [#28464](https://github.com/gatsbyjs/gatsby/issues/28464) ([4add7d2](https://github.com/gatsbyjs/gatsby/commit/4add7d2340af559e3ed08f21d5ad2a2f94896da6))
+
+#### Chores
+
+- update dependency cross-env to ^7.0.3 [#28505](https://github.com/gatsbyjs/gatsby/issues/28505) ([a819b9b](https://github.com/gatsbyjs/gatsby/commit/a819b9bfb663139f7b06c3ed7d6d6069a2382b2c))
+
+
+### [2.10.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.10.0..gatsby-dev-cli@2.10.1) (2020-12-07)
+
+#### Other Changes
+
+- Backport #28459 and #28464 to 2.28 release branch [#28459](https://github.com/gatsbyjs/gatsby/issues/28459) [#28464](https://github.com/gatsbyjs/gatsby/issues/28464) [#28481](https://github.com/gatsbyjs/gatsby/issues/28481) [#28459](https://github.com/gatsbyjs/gatsby/issues/28459) [#28464](https://github.com/gatsbyjs/gatsby/issues/28464) ([4952d54](https://github.com/gatsbyjs/gatsby/commit/4952d545f834b825882c32acadbfa44d6b76c633))
+
+
+## [2.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.10.0-next.0..gatsby-dev-cli@2.10.0) (2020-12-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
+
+#### Bug Fixes
+
+- Correctly catch 404s from NPM when a package hasn't been published yet [#28297](https://github.com/gatsbyjs/gatsby/issues/28297) ([c993d52](https://github.com/gatsbyjs/gatsby/commit/c993d52bff1b2255ba8a2c0d04726bfdb71b070a))
+
+
+## [2.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.9.0-next.0..gatsby-dev-cli@2.9.0) (2020-11-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.27)
+
+#### Chores
+
+- update babel monorepo [#27528](https://github.com/gatsbyjs/gatsby/issues/27528) ([539dbb0](https://github.com/gatsbyjs/gatsby/commit/539dbb09166e346a6cee568973d2de3d936e8ef3))
+
+
+## [2.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.8.0-next.0..gatsby-dev-cli@2.8.0) (2020-11-12)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.26)
 
 **Note:** Version bump only for package gatsby-dev-cli
 
-# [3.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.6.0-next.0...gatsby-dev-cli@3.7.0-next.0) (2021-05-21)
+<a name="before-release-process"></a>
 
-**Note:** Version bump only for package gatsby-dev-cli
 
-# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.5.0-next.0...gatsby-dev-cli@3.6.0-next.0) (2021-05-06)
-
-**Note:** Version bump only for package gatsby-dev-cli
-
-# [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.4.0-next.0...gatsby-dev-cli@3.5.0-next.0) (2021-04-23)
-
-**Note:** Version bump only for package gatsby-dev-cli
-
-# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.3.0-next.1...gatsby-dev-cli@3.4.0-next.0) (2021-04-09)
-
-**Note:** Version bump only for package gatsby-dev-cli
-
-# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.3.0-next.0...gatsby-dev-cli@3.3.0-next.1) (2021-04-07)
-
-### Bug Fixes
-
-- **deps:** update minor and patch for gatsby-dev-cli ([#29174](https://github.com/gatsbyjs/gatsby/issues/29174)) ([4f8ae3c](https://github.com/gatsbyjs/gatsby/commit/4f8ae3c1087f36619a8c6fecc0e2cc0187b02930))
-
-# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.2.0-next.0...gatsby-dev-cli@3.3.0-next.0) (2021-03-25)
-
-**Note:** Version bump only for package gatsby-dev-cli
-
-# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.1.0-next.2...gatsby-dev-cli@3.2.0-next.0) (2021-03-11)
-
-**Note:** Version bump only for package gatsby-dev-cli
-
-# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.1.0-next.1...gatsby-dev-cli@3.1.0-next.2) (2021-03-10)
-
-### Bug Fixes
-
-- **deps:** update lodash monorepo to ^4.17.21 ([#29382](https://github.com/gatsbyjs/gatsby/issues/29382)) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
-
-# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.1.0-next.0...gatsby-dev-cli@3.1.0-next.1) (2021-02-26)
-
-**Note:** Version bump only for package gatsby-dev-cli
-
-# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.0.0-next.0...gatsby-dev-cli@3.1.0-next.0) (2021-02-26)
-
-**Note:** Version bump only for package gatsby-dev-cli
-
-# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.15.0-next.0...gatsby-dev-cli@3.0.0-next.0) (2021-02-05)
-
-**Note:** Version bump only for package gatsby-dev-cli
-
-# [2.15.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.14.0-next.0...gatsby-dev-cli@2.15.0-next.0) (2021-01-28)
-
-**Note:** Version bump only for package gatsby-dev-cli
-
-# [2.14.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.13.0-next.1...gatsby-dev-cli@2.14.0-next.0) (2021-01-18)
-
-**Note:** Version bump only for package gatsby-dev-cli
-
-# [2.13.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.13.0-next.0...gatsby-dev-cli@2.13.0-next.1) (2021-01-12)
-
-### Bug Fixes
-
-- **deps:** update minor and patch for gatsby-dev-cli ([#28971](https://github.com/gatsbyjs/gatsby/issues/28971)) ([2e10dae](https://github.com/gatsbyjs/gatsby/commit/2e10dae130d77861bb229d21fd7e46046f5c73d7))
-
-# [2.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.12.0-next.0...gatsby-dev-cli@2.13.0-next.0) (2020-12-29)
-
-**Note:** Version bump only for package gatsby-dev-cli
-
-# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.11.0-next.1...gatsby-dev-cli@2.12.0-next.0) (2020-12-10)
-
-**Note:** Version bump only for package gatsby-dev-cli
-
-# [2.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.11.0-next.0...gatsby-dev-cli@2.11.0-next.1) (2020-12-03)
-
-**Note:** Version bump only for package gatsby-dev-cli
-
-# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.10.0-next.0...gatsby-dev-cli@2.11.0-next.0) (2020-11-26)
-
-### Bug Fixes
-
-- **gatsby-dev-cli:** Correctly catch 404s from NPM when a package hasn't been published yet ([#28297](https://github.com/gatsbyjs/gatsby/issues/28297)) ([c993d52](https://github.com/gatsbyjs/gatsby/commit/c993d52bff1b2255ba8a2c0d04726bfdb71b070a))
-
-# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.9.0-next.0...gatsby-dev-cli@2.10.0-next.0) (2020-11-18)
-
-**Note:** Version bump only for package gatsby-dev-cli
-
-# [2.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.8.0-next.0...gatsby-dev-cli@2.8.0-next.1) (2020-11-10)
-
-**Note:** Version bump only for package gatsby-dev-cli
 
 ## [2.7.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.7.22...gatsby-dev-cli@2.7.23) (2020-11-02)
 

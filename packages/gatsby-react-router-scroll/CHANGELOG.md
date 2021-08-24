@@ -1,157 +1,184 @@
-# Change Log
+# Change Log: `gatsby-react-router-scroll`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.12.0-next.3...gatsby-react-router-scroll@4.13.0-next.0) (2021-08-12)
+## [4.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.12.0-next.0..gatsby-react-router-scroll@4.12.0) (2021-08-18)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
+
+#### Chores
+
+- update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
+
+
+## [4.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.11.0-next.0..gatsby-react-router-scroll@4.11.0) (2021-08-04)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 **Note:** Version bump only for package gatsby-react-router-scroll
 
-# [4.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.12.0-next.2...gatsby-react-router-scroll@4.12.0-next.3) (2021-08-09)
+
+## [4.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.10.0-next.0..gatsby-react-router-scroll@4.10.0) (2021-07-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
+
+#### Chores
+
+- update babel monorepo [#32238](https://github.com/gatsbyjs/gatsby/issues/32238) ([466d4c0](https://github.com/gatsbyjs/gatsby/commit/466d4c087bbc96abb942a02c67243bcc9a4f2a0a))
+
+
+## [4.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.9.0-next.0..gatsby-react-router-scroll@4.9.0) (2021-07-07)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
 
 **Note:** Version bump only for package gatsby-react-router-scroll
 
-# [4.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.12.0-next.1...gatsby-react-router-scroll@4.12.0-next.2) (2021-08-05)
+
+## [4.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.8.0-next.0..gatsby-react-router-scroll@4.8.0) (2021-06-23)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) ([7d42e8d](https://github.com/gatsbyjs/gatsby/commit/7d42e8d866e46e9c39838d812d080d06433f7060))
+
+
+### [4.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.7.0..gatsby-react-router-scroll@4.7.1) (2021-06-10)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) [#31859](https://github.com/gatsbyjs/gatsby/issues/31859) ([8636025](https://github.com/gatsbyjs/gatsby/commit/863602567930a39142ed33d9d1f1813b7dec8686))
+
+
+## [4.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.7.0-next.0..gatsby-react-router-scroll@4.7.0) (2021-06-09)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
+
+#### Chores
+
+- update babel monorepo [#31143](https://github.com/gatsbyjs/gatsby/issues/31143) ([701ab2f](https://github.com/gatsbyjs/gatsby/commit/701ab2f6690c3f1bbaf60cf572513ea566cc9ec9))
+
+
+## [4.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.6.0-next.0..gatsby-react-router-scroll@4.6.0) (2021-05-25)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
 
 **Note:** Version bump only for package gatsby-react-router-scroll
 
-# [4.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.12.0-next.0...gatsby-react-router-scroll@4.12.0-next.1) (2021-08-05)
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.5.0-next.0..gatsby-react-router-scroll@4.5.0) (2021-05-12)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
+
+#### Bug Fixes
+
+- scroll restoration for layout components [#26861](https://github.com/gatsbyjs/gatsby/issues/26861) [#26458](https://github.com/gatsbyjs/gatsby/issues/26458) ([f57efab](https://github.com/gatsbyjs/gatsby/commit/f57efab81a58b7ba43c57881d8e8ccd01caf1114))
+
+
+## [4.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.4.0-next.0..gatsby-react-router-scroll@4.4.0) (2021-04-28)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
+
+#### Bug Fixes
+
+- scroll restoration for layout components [#26861](https://github.com/gatsbyjs/gatsby/issues/26861) [#31079](https://github.com/gatsbyjs/gatsby/issues/31079) [#26458](https://github.com/gatsbyjs/gatsby/issues/26458) ([3dfa9af](https://github.com/gatsbyjs/gatsby/commit/3dfa9af84e4dfc9e2dc649318fbe1b764c8321d0))
+
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.3.0-next.0..gatsby-react-router-scroll@4.3.0) (2021-04-14)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
 
 **Note:** Version bump only for package gatsby-react-router-scroll
 
-# [4.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.11.0-next.0...gatsby-react-router-scroll@4.12.0-next.0) (2021-07-29)
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.2.0-next.0..gatsby-react-router-scroll@4.2.0) (2021-03-30)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
 
 **Note:** Version bump only for package gatsby-react-router-scroll
 
-# [4.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.10.0-next.1...gatsby-react-router-scroll@4.11.0-next.0) (2021-07-15)
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.1.0-next.0..gatsby-react-router-scroll@4.1.0) (2021-03-16)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
+
+#### Bug Fixes
+
+- debounce function for scollListener [#26933](https://github.com/gatsbyjs/gatsby/issues/26933) ([2f40b0a](https://github.com/gatsbyjs/gatsby/commit/2f40b0a8536316b01b941f4889eb99211cb43160))
+- Use vendored @reach/router [#29772](https://github.com/gatsbyjs/gatsby/issues/29772) ([8754e0c](https://github.com/gatsbyjs/gatsby/commit/8754e0c6eb1b8f88422e60f31a1dca37925e8b2e))
+
+#### Chores
+
+- adjust all @reach/router imports to not rely just on webpack alias [#30033](https://github.com/gatsbyjs/gatsby/issues/30033) ([38dab68](https://github.com/gatsbyjs/gatsby/commit/38dab684af7475ea17edf5cefddfe62584a4065a))
+
+
+### [4.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.0.0..gatsby-react-router-scroll@4.0.1) (2021-03-06)
+
+#### Chores
+
+- adjust all @reach/router imports to not rely just on webpack alias [#30033](https://github.com/gatsbyjs/gatsby/issues/30033) [#30049](https://github.com/gatsbyjs/gatsby/issues/30049) ([8686a42](https://github.com/gatsbyjs/gatsby/commit/8686a42fee8263661f163d2acf3e000642ffa4e7))
+
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.0.0-next.0..gatsby-react-router-scroll@4.0.0) (2021-03-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
+
+#### Bug Fixes
+
+- Use vendored @reach/router [#29772](https://github.com/gatsbyjs/gatsby/issues/29772) [#29811](https://github.com/gatsbyjs/gatsby/issues/29811) ([bd856ef](https://github.com/gatsbyjs/gatsby/commit/bd856efac1334b2385ced7ecb25c92e046882487))
+
+#### Chores
+
+- Upgrade typescript [#29388](https://github.com/gatsbyjs/gatsby/issues/29388) ([823140f](https://github.com/gatsbyjs/gatsby/commit/823140f2b0bbbcab51923186bab8128bb8e0afe5))
+- remove scroll container [#29437](https://github.com/gatsbyjs/gatsby/issues/29437) ([a7c36de](https://github.com/gatsbyjs/gatsby/commit/a7c36de908d848c1d945928539c4661765e723bd))
+
+#### Other Changes
+
+- Move peerdeps to 16.9.0 & 17+ for react & react-dom [#29735](https://github.com/gatsbyjs/gatsby/issues/29735) ([6b86b99](https://github.com/gatsbyjs/gatsby/commit/6b86b99f7e760c6ffa74b1330399d9fdd94e48a2))
+
+
+## [3.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.7.0-next.0..gatsby-react-router-scroll@3.7.0) (2021-02-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
 
 **Note:** Version bump only for package gatsby-react-router-scroll
 
-# [4.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.10.0-next.0...gatsby-react-router-scroll@4.10.0-next.1) (2021-07-08)
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.6.0-next.0..gatsby-react-router-scroll@3.6.0) (2021-01-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
+
+#### Bug Fixes
+
+- update vulnerable packages, include React 17 in peerDeps [#28545](https://github.com/gatsbyjs/gatsby/issues/28545) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+
+## [3.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.5.0-next.0..gatsby-react-router-scroll@3.5.0) (2021-01-06)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
 
 **Note:** Version bump only for package gatsby-react-router-scroll
 
-# [4.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.9.0-next.0...gatsby-react-router-scroll@4.10.0-next.0) (2021-07-01)
+
+## [3.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.4.0-next.0..gatsby-react-router-scroll@3.4.0) (2020-12-15)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
+
+#### Bug Fixes
+
+- Respect hash as source of truth for scroll position [#28555](https://github.com/gatsbyjs/gatsby/issues/28555) ([a066a71](https://github.com/gatsbyjs/gatsby/commit/a066a71491a26b4aa01ac505bb3d7dd33516716d))
+
+#### Chores
+
+- update dependency cross-env to ^7.0.3 [#28505](https://github.com/gatsbyjs/gatsby/issues/28505) ([a819b9b](https://github.com/gatsbyjs/gatsby/commit/a819b9bfb663139f7b06c3ed7d6d6069a2382b2c))
+
+
+## [3.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.3.0-next.0..gatsby-react-router-scroll@3.3.0) (2020-12-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
 
 **Note:** Version bump only for package gatsby-react-router-scroll
 
-# [4.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.8.0-next.1...gatsby-react-router-scroll@4.9.0-next.0) (2021-06-18)
+
+## [3.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.2.0-next.0..gatsby-react-router-scroll@3.2.0) (2020-11-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.27)
+
+#### Chores
+
+- update babel monorepo [#27528](https://github.com/gatsbyjs/gatsby/issues/27528) ([539dbb0](https://github.com/gatsbyjs/gatsby/commit/539dbb09166e346a6cee568973d2de3d936e8ef3))
+
+
+## [3.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.1.0-next.0..gatsby-react-router-scroll@3.1.0) (2020-11-12)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.26)
 
 **Note:** Version bump only for package gatsby-react-router-scroll
 
-# [4.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.8.0-next.0...gatsby-react-router-scroll@4.8.0-next.1) (2021-06-10)
+<a name="before-release-process"></a>
 
-**Note:** Version bump only for package gatsby-react-router-scroll
 
-# [4.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.7.0-next.2...gatsby-react-router-scroll@4.8.0-next.0) (2021-06-03)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [4.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.7.0-next.1...gatsby-react-router-scroll@4.7.0-next.2) (2021-06-02)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [4.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.7.0-next.0...gatsby-react-router-scroll@4.7.0-next.1) (2021-05-31)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [4.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.6.0-next.0...gatsby-react-router-scroll@4.7.0-next.0) (2021-05-21)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [4.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.5.0-next.1...gatsby-react-router-scroll@4.6.0-next.0) (2021-05-06)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [4.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.5.0-next.0...gatsby-react-router-scroll@4.5.0-next.1) (2021-04-28)
-
-### Bug Fixes
-
-- **gatsby-react-router-scroll:** scroll restoration for layout components ([#26861](https://github.com/gatsbyjs/gatsby/issues/26861)) ([f57efab](https://github.com/gatsbyjs/gatsby/commit/f57efab81a58b7ba43c57881d8e8ccd01caf1114)), closes [#26458](https://github.com/gatsbyjs/gatsby/issues/26458)
-
-# [4.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.4.0-next.0...gatsby-react-router-scroll@4.5.0-next.0) (2021-04-23)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [4.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.3.0-next.1...gatsby-react-router-scroll@4.4.0-next.0) (2021-04-09)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [4.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.3.0-next.0...gatsby-react-router-scroll@4.3.0-next.1) (2021-04-07)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [4.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.2.0-next.0...gatsby-react-router-scroll@4.3.0-next.0) (2021-03-25)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [4.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.1.0-next.3...gatsby-react-router-scroll@4.2.0-next.0) (2021-03-11)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [4.1.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.1.0-next.2...gatsby-react-router-scroll@4.1.0-next.3) (2021-03-10)
-
-### Bug Fixes
-
-- **gatsby-react-router-scroll:** debounce function for scollListener ([#26933](https://github.com/gatsbyjs/gatsby/issues/26933)) ([2f40b0a](https://github.com/gatsbyjs/gatsby/commit/2f40b0a8536316b01b941f4889eb99211cb43160))
-
-# [4.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.1.0-next.1...gatsby-react-router-scroll@4.1.0-next.2) (2021-02-26)
-
-### Bug Fixes
-
-- **gatsby:** Use vendored @reach/router ([#29772](https://github.com/gatsbyjs/gatsby/issues/29772)) ([8754e0c](https://github.com/gatsbyjs/gatsby/commit/8754e0c6eb1b8f88422e60f31a1dca37925e8b2e))
-
-# [4.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.1.0-next.0...gatsby-react-router-scroll@4.1.0-next.1) (2021-02-26)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [4.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.0.0-next.2...gatsby-react-router-scroll@4.1.0-next.0) (2021-02-26)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [4.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.0.0-next.1...gatsby-react-router-scroll@4.0.0-next.2) (2021-02-25)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [4.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.0.0-next.0...gatsby-react-router-scroll@4.0.0-next.1) (2021-02-12)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [4.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.8.0-next.0...gatsby-react-router-scroll@4.0.0-next.0) (2021-02-05)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.7.0-next.0...gatsby-react-router-scroll@3.8.0-next.0) (2021-01-28)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [3.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.6.0-next.0...gatsby-react-router-scroll@3.7.0-next.0) (2021-01-18)
-
-### Bug Fixes
-
-- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
-
-# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.5.0-next.0...gatsby-react-router-scroll@3.6.0-next.0) (2020-12-29)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.4.0-next.0...gatsby-react-router-scroll@3.5.0-next.0) (2020-12-10)
-
-### Bug Fixes
-
-- **gatsby-react-router-scroll:** Respect hash as source of truth for scroll position ([#28555](https://github.com/gatsbyjs/gatsby/issues/28555)) ([a066a71](https://github.com/gatsbyjs/gatsby/commit/a066a71491a26b4aa01ac505bb3d7dd33516716d))
-
-# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.3.0-next.0...gatsby-react-router-scroll@3.4.0-next.0) (2020-11-26)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.2.0-next.0...gatsby-react-router-scroll@3.3.0-next.0) (2020-11-18)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
-
-# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.1.0-next.0...gatsby-react-router-scroll@3.1.0-next.1) (2020-11-10)
-
-**Note:** Version bump only for package gatsby-react-router-scroll
 
 ## [3.0.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.0.14...gatsby-react-router-scroll@3.0.15) (2020-10-20)
 

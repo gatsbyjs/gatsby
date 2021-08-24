@@ -1,133 +1,158 @@
-# Change Log
+# Change Log: `gatsby-plugin-styletron`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [6.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.12.0-next.3...gatsby-plugin-styletron@6.13.0-next.0) (2021-08-12)
+## [6.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.12.0-next.0..gatsby-plugin-styletron@6.12.0) (2021-08-18)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
+
+#### Chores
+
+- update dependency styletron-react to v6 for gatsby-plugin-styletron [#32653](https://github.com/gatsbyjs/gatsby/issues/32653) ([84a00d6](https://github.com/gatsbyjs/gatsby/commit/84a00d661a6860a16455859a8c0c3d925e845977))
+- update formatting & linting [#32626](https://github.com/gatsbyjs/gatsby/issues/32626) ([4a765b5](https://github.com/gatsbyjs/gatsby/commit/4a765b5c62208d58f0bd7fd59558160c0b9feed3))
+- update dependency styletron-engine-atomic to ^1.4.8 for gatsby-plugin-styletron [#32569](https://github.com/gatsbyjs/gatsby/issues/32569) ([1f54e3d](https://github.com/gatsbyjs/gatsby/commit/1f54e3dcd3a03cc69bcaf330958d44676f8475a2))
+- update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
+
+
+## [6.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.11.0-next.0..gatsby-plugin-styletron@6.11.0) (2021-08-04)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 **Note:** Version bump only for package gatsby-plugin-styletron
 
-# [6.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.12.0-next.2...gatsby-plugin-styletron@6.12.0-next.3) (2021-08-09)
+
+## [6.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.10.0-next.0..gatsby-plugin-styletron@6.10.0) (2021-07-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
+
+#### Chores
+
+- update babel monorepo [#32238](https://github.com/gatsbyjs/gatsby/issues/32238) ([466d4c0](https://github.com/gatsbyjs/gatsby/commit/466d4c087bbc96abb942a02c67243bcc9a4f2a0a))
+
+
+## [6.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.9.0-next.0..gatsby-plugin-styletron@6.9.0) (2021-07-07)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
 
 **Note:** Version bump only for package gatsby-plugin-styletron
 
-# [6.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.12.0-next.1...gatsby-plugin-styletron@6.12.0-next.2) (2021-08-05)
+
+## [6.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.8.0-next.0..gatsby-plugin-styletron@6.8.0) (2021-06-23)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) ([7d42e8d](https://github.com/gatsbyjs/gatsby/commit/7d42e8d866e46e9c39838d812d080d06433f7060))
+
+
+### [6.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.7.0..gatsby-plugin-styletron@6.7.1) (2021-06-10)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) [#31859](https://github.com/gatsbyjs/gatsby/issues/31859) ([8636025](https://github.com/gatsbyjs/gatsby/commit/863602567930a39142ed33d9d1f1813b7dec8686))
+
+
+## [6.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.7.0-next.0..gatsby-plugin-styletron@6.7.0) (2021-06-09)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
+
+#### Chores
+
+- update babel monorepo [#31143](https://github.com/gatsbyjs/gatsby/issues/31143) ([701ab2f](https://github.com/gatsbyjs/gatsby/commit/701ab2f6690c3f1bbaf60cf572513ea566cc9ec9))
+
+
+## [6.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.6.0-next.0..gatsby-plugin-styletron@6.6.0) (2021-05-25)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
 
 **Note:** Version bump only for package gatsby-plugin-styletron
 
-# [6.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.12.0-next.0...gatsby-plugin-styletron@6.12.0-next.1) (2021-08-05)
+
+## [6.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.5.0-next.0..gatsby-plugin-styletron@6.5.0) (2021-05-12)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
 
 **Note:** Version bump only for package gatsby-plugin-styletron
 
-# [6.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.11.0-next.0...gatsby-plugin-styletron@6.12.0-next.0) (2021-07-29)
+
+## [6.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.4.0-next.0..gatsby-plugin-styletron@6.4.0) (2021-04-28)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
 
 **Note:** Version bump only for package gatsby-plugin-styletron
 
-# [6.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.10.0-next.1...gatsby-plugin-styletron@6.11.0-next.0) (2021-07-15)
+
+## [6.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.3.0-next.0..gatsby-plugin-styletron@6.3.0) (2021-04-14)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
 
 **Note:** Version bump only for package gatsby-plugin-styletron
 
-# [6.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.10.0-next.0...gatsby-plugin-styletron@6.10.0-next.1) (2021-07-08)
+
+## [6.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.2.0-next.0..gatsby-plugin-styletron@6.2.0) (2021-03-30)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
+
+#### Chores
+
+- update minor and patch for gatsby-plugin-styletron [#29847](https://github.com/gatsbyjs/gatsby/issues/29847) ([d35de6b](https://github.com/gatsbyjs/gatsby/commit/d35de6be119f10713daaba54435b2cf2d7973ad3))
+
+
+## [6.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.1.0-next.0..gatsby-plugin-styletron@6.1.0) (2021-03-16)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
 
 **Note:** Version bump only for package gatsby-plugin-styletron
 
-# [6.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.9.0-next.0...gatsby-plugin-styletron@6.10.0-next.0) (2021-07-01)
+
+## [6.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.0.0-next.0..gatsby-plugin-styletron@6.0.0) (2021-03-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
+
+#### Other Changes
+
+- Move peerdeps to 16.9.0 & 17+ for react & react-dom [#29735](https://github.com/gatsbyjs/gatsby/issues/29735) ([6b86b99](https://github.com/gatsbyjs/gatsby/commit/6b86b99f7e760c6ffa74b1330399d9fdd94e48a2))
+
+
+## [5.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.7.0-next.0..gatsby-plugin-styletron@5.7.0) (2021-02-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
 
 **Note:** Version bump only for package gatsby-plugin-styletron
 
-# [6.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.8.0-next.1...gatsby-plugin-styletron@6.9.0-next.0) (2021-06-18)
+
+## [5.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.6.0-next.0..gatsby-plugin-styletron@5.6.0) (2021-01-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
+
+#### Bug Fixes
+
+- update vulnerable packages, include React 17 in peerDeps [#28545](https://github.com/gatsbyjs/gatsby/issues/28545) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+
+## [5.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.5.0-next.0..gatsby-plugin-styletron@5.5.0) (2021-01-06)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
 
 **Note:** Version bump only for package gatsby-plugin-styletron
 
-# [6.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.8.0-next.0...gatsby-plugin-styletron@6.8.0-next.1) (2021-06-10)
+
+## [5.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.4.0-next.0..gatsby-plugin-styletron@5.4.0) (2020-12-15)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
+
+#### Chores
+
+- update dependency cross-env to ^7.0.3 [#28505](https://github.com/gatsbyjs/gatsby/issues/28505) ([a819b9b](https://github.com/gatsbyjs/gatsby/commit/a819b9bfb663139f7b06c3ed7d6d6069a2382b2c))
+
+
+## [5.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.3.0-next.0..gatsby-plugin-styletron@5.3.0) (2020-12-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
 
 **Note:** Version bump only for package gatsby-plugin-styletron
 
-# [6.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.7.0-next.2...gatsby-plugin-styletron@6.8.0-next.0) (2021-06-03)
+
+## [5.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.2.0-next.0..gatsby-plugin-styletron@5.2.0) (2020-11-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.27)
+
+#### Chores
+
+- update babel monorepo [#27528](https://github.com/gatsbyjs/gatsby/issues/27528) ([539dbb0](https://github.com/gatsbyjs/gatsby/commit/539dbb09166e346a6cee568973d2de3d936e8ef3))
+
+
+## [5.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.1.0-next.0..gatsby-plugin-styletron@5.1.0) (2020-11-12)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.26)
 
 **Note:** Version bump only for package gatsby-plugin-styletron
 
-# [6.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.7.0-next.1...gatsby-plugin-styletron@6.7.0-next.2) (2021-06-02)
+<a name="before-release-process"></a>
 
-**Note:** Version bump only for package gatsby-plugin-styletron
 
-# [6.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.7.0-next.0...gatsby-plugin-styletron@6.7.0-next.1) (2021-05-31)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [6.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.6.0-next.0...gatsby-plugin-styletron@6.7.0-next.0) (2021-05-21)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [6.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.5.0-next.0...gatsby-plugin-styletron@6.6.0-next.0) (2021-05-06)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [6.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.4.0-next.0...gatsby-plugin-styletron@6.5.0-next.0) (2021-04-23)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [6.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.3.0-next.1...gatsby-plugin-styletron@6.4.0-next.0) (2021-04-09)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [6.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.3.0-next.0...gatsby-plugin-styletron@6.3.0-next.1) (2021-04-07)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [6.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.2.0-next.1...gatsby-plugin-styletron@6.3.0-next.0) (2021-03-25)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [6.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.2.0-next.0...gatsby-plugin-styletron@6.2.0-next.1) (2021-03-19)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [6.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.1.0-next.1...gatsby-plugin-styletron@6.2.0-next.0) (2021-03-11)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [6.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.1.0-next.0...gatsby-plugin-styletron@6.1.0-next.1) (2021-02-26)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [6.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.0.0-next.0...gatsby-plugin-styletron@6.1.0-next.0) (2021-02-26)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [6.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.8.0-next.0...gatsby-plugin-styletron@6.0.0-next.0) (2021-02-05)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [5.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.7.0-next.0...gatsby-plugin-styletron@5.8.0-next.0) (2021-01-28)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [5.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.6.0-next.0...gatsby-plugin-styletron@5.7.0-next.0) (2021-01-18)
-
-### Bug Fixes
-
-- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
-
-# [5.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.5.0-next.0...gatsby-plugin-styletron@5.6.0-next.0) (2020-12-29)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [5.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.4.0-next.0...gatsby-plugin-styletron@5.5.0-next.0) (2020-12-10)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [5.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.3.0-next.0...gatsby-plugin-styletron@5.4.0-next.0) (2020-11-26)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [5.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.2.0-next.0...gatsby-plugin-styletron@5.3.0-next.0) (2020-11-18)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
-
-# [5.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.1.0-next.0...gatsby-plugin-styletron@5.1.0-next.1) (2020-11-10)
-
-**Note:** Version bump only for package gatsby-plugin-styletron
 
 ## [5.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.0.10...gatsby-plugin-styletron@5.0.11) (2020-09-28)
 

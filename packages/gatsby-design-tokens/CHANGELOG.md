@@ -1,121 +1,146 @@
-# Change Log
+# Change Log: `gatsby-design-tokens`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.12.0-next.1...gatsby-design-tokens@3.13.0-next.0) (2021-08-12)
+## [3.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.12.0-next.0..gatsby-design-tokens@3.12.0) (2021-08-18)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
+
+#### Chores
+
+- update [dev] major dependencies for gatsby-design-tokens (major) [#32637](https://github.com/gatsbyjs/gatsby/issues/32637) ([394840c](https://github.com/gatsbyjs/gatsby/commit/394840c72c5e2a364e4068003ce9c1f94e6c3697))
+
+
+## [3.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.11.0-next.0..gatsby-design-tokens@3.11.0) (2021-08-04)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 **Note:** Version bump only for package gatsby-design-tokens
 
-# [3.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.12.0-next.0...gatsby-design-tokens@3.12.0-next.1) (2021-08-05)
+
+## [3.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.10.0-next.0..gatsby-design-tokens@3.10.0) (2021-07-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
+
+#### Chores
+
+- update dependency microbundle to ^0.13.3 for gatsby-design-tokens [#32240](https://github.com/gatsbyjs/gatsby/issues/32240) ([1fd8f25](https://github.com/gatsbyjs/gatsby/commit/1fd8f258a51cfba89b9c8965d090e177beeca703))
+
+
+## [3.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.9.0-next.0..gatsby-design-tokens@3.9.0) (2021-07-07)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
+
+#### Features
+
+- palette update [#30662](https://github.com/gatsbyjs/gatsby/issues/30662) ([fe853ae](https://github.com/gatsbyjs/gatsby/commit/fe853ae75dc380ad0843aa7b274c2085c077db6c))
+
+
+## [3.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.8.0-next.0..gatsby-design-tokens@3.8.0) (2021-06-23)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
+
+#### Chores
+
+- Fix multiple grammar issues Fix [#31946](https://github.com/gatsbyjs/gatsby/issues/31946) ([aa3bad2](https://github.com/gatsbyjs/gatsby/commit/aa3bad2afaea4dcdd935f629d418f082a9451d47))
+
+
+## [3.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.7.0-next.0..gatsby-design-tokens@3.7.0) (2021-06-09)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
 
 **Note:** Version bump only for package gatsby-design-tokens
 
-# [3.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.11.0-next.0...gatsby-design-tokens@3.12.0-next.0) (2021-07-29)
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.6.0-next.0..gatsby-design-tokens@3.6.0) (2021-05-25)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
 
 **Note:** Version bump only for package gatsby-design-tokens
 
-# [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.10.0-next.1...gatsby-design-tokens@3.11.0-next.0) (2021-07-15)
+
+## [3.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.5.0-next.0..gatsby-design-tokens@3.5.0) (2021-05-12)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
 
 **Note:** Version bump only for package gatsby-design-tokens
 
-# [3.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.10.0-next.0...gatsby-design-tokens@3.10.0-next.1) (2021-07-08)
+
+## [3.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.4.0-next.0..gatsby-design-tokens@3.4.0) (2021-04-28)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
 
 **Note:** Version bump only for package gatsby-design-tokens
 
-# [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.9.0-next.1...gatsby-design-tokens@3.10.0-next.0) (2021-07-01)
+
+## [3.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.3.0-next.0..gatsby-design-tokens@3.3.0) (2021-04-14)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
 
 **Note:** Version bump only for package gatsby-design-tokens
 
-# [3.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.9.0-next.0...gatsby-design-tokens@3.9.0-next.1) (2021-06-28)
 
-### Features
-
-- **gatsby-design-tokens:** palette update ([#30662](https://github.com/gatsbyjs/gatsby/issues/30662)) ([fe853ae](https://github.com/gatsbyjs/gatsby/commit/fe853ae75dc380ad0843aa7b274c2085c077db6c))
-
-# [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.8.0-next.1...gatsby-design-tokens@3.9.0-next.0) (2021-06-18)
+## [3.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.2.0-next.0..gatsby-design-tokens@3.2.0) (2021-03-30)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
 
 **Note:** Version bump only for package gatsby-design-tokens
 
-# [3.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.8.0-next.0...gatsby-design-tokens@3.8.0-next.1) (2021-06-17)
+
+## [3.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.1.0-next.0..gatsby-design-tokens@3.1.0) (2021-03-16)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
+
+#### Chores
+
+- update eslint to fix linting issues fix [#29988](https://github.com/gatsbyjs/gatsby/issues/29988) ([5636389](https://github.com/gatsbyjs/gatsby/commit/5636389e8fa626c644e90abc14589e9961d98c68))
+
+
+## [3.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.0.0-next.0..gatsby-design-tokens@3.0.0) (2021-03-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
+
+#### Chores
+
+- Upgrade typescript [#29388](https://github.com/gatsbyjs/gatsby/issues/29388) ([823140f](https://github.com/gatsbyjs/gatsby/commit/823140f2b0bbbcab51923186bab8128bb8e0afe5))
+
+
+## [2.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.7.0-next.0..gatsby-design-tokens@2.7.0) (2021-02-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
 
 **Note:** Version bump only for package gatsby-design-tokens
 
-# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.7.0-next.0...gatsby-design-tokens@3.8.0-next.0) (2021-06-03)
+
+## [2.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.6.0-next.0..gatsby-design-tokens@2.6.0) (2021-01-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
+
+#### Chores
+
+- add http to localhost [#28896](https://github.com/gatsbyjs/gatsby/issues/28896) ([a2d0ef8](https://github.com/gatsbyjs/gatsby/commit/a2d0ef824303bd65485b6e133dcae764797dd00a))
+
+
+## [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.5.0-next.0..gatsby-design-tokens@2.5.0) (2021-01-06)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
 
 **Note:** Version bump only for package gatsby-design-tokens
 
-# [3.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.6.0-next.0...gatsby-design-tokens@3.7.0-next.0) (2021-05-21)
+
+## [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.4.0-next.0..gatsby-design-tokens@2.4.0) (2020-12-15)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
+
+#### Chores
+
+- update dependency cross-env to ^7.0.3 [#28505](https://github.com/gatsbyjs/gatsby/issues/28505) ([a819b9b](https://github.com/gatsbyjs/gatsby/commit/a819b9bfb663139f7b06c3ed7d6d6069a2382b2c))
+
+
+## [2.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.3.0-next.0..gatsby-design-tokens@2.3.0) (2020-12-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
 
 **Note:** Version bump only for package gatsby-design-tokens
 
-# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.5.0-next.0...gatsby-design-tokens@3.6.0-next.0) (2021-05-06)
+
+## [2.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.2.0-next.0..gatsby-design-tokens@2.2.0) (2020-11-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.27)
 
 **Note:** Version bump only for package gatsby-design-tokens
 
-# [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.4.0-next.0...gatsby-design-tokens@3.5.0-next.0) (2021-04-23)
+
+## [2.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.1.0-next.0..gatsby-design-tokens@2.1.0) (2020-11-12)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.26)
 
 **Note:** Version bump only for package gatsby-design-tokens
 
-# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.3.0-next.0...gatsby-design-tokens@3.4.0-next.0) (2021-04-09)
+<a name="before-release-process"></a>
 
-**Note:** Version bump only for package gatsby-design-tokens
 
-# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.2.0-next.0...gatsby-design-tokens@3.3.0-next.0) (2021-03-25)
-
-**Note:** Version bump only for package gatsby-design-tokens
-
-# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.1.0-next.2...gatsby-design-tokens@3.2.0-next.0) (2021-03-11)
-
-**Note:** Version bump only for package gatsby-design-tokens
-
-# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.1.0-next.1...gatsby-design-tokens@3.1.0-next.2) (2021-03-10)
-
-**Note:** Version bump only for package gatsby-design-tokens
-
-# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.1.0-next.0...gatsby-design-tokens@3.1.0-next.1) (2021-02-26)
-
-**Note:** Version bump only for package gatsby-design-tokens
-
-# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.0.0-next.1...gatsby-design-tokens@3.1.0-next.0) (2021-02-26)
-
-**Note:** Version bump only for package gatsby-design-tokens
-
-# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.0.0-next.0...gatsby-design-tokens@3.0.0-next.1) (2021-02-25)
-
-**Note:** Version bump only for package gatsby-design-tokens
-
-# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.8.0-next.0...gatsby-design-tokens@3.0.0-next.0) (2021-02-05)
-
-**Note:** Version bump only for package gatsby-design-tokens
-
-# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.7.0-next.0...gatsby-design-tokens@2.8.0-next.0) (2021-01-28)
-
-**Note:** Version bump only for package gatsby-design-tokens
-
-# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.6.0-next.1...gatsby-design-tokens@2.7.0-next.0) (2021-01-18)
-
-**Note:** Version bump only for package gatsby-design-tokens
-
-# [2.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.6.0-next.0...gatsby-design-tokens@2.6.0-next.1) (2021-01-12)
-
-**Note:** Version bump only for package gatsby-design-tokens
-
-# [2.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.5.0-next.0...gatsby-design-tokens@2.6.0-next.0) (2020-12-29)
-
-**Note:** Version bump only for package gatsby-design-tokens
-
-# [2.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.4.0-next.0...gatsby-design-tokens@2.5.0-next.0) (2020-12-10)
-
-**Note:** Version bump only for package gatsby-design-tokens
-
-# [2.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.3.0-next.0...gatsby-design-tokens@2.4.0-next.0) (2020-11-26)
-
-**Note:** Version bump only for package gatsby-design-tokens
-
-# [2.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.2.0-next.0...gatsby-design-tokens@2.3.0-next.0) (2020-11-18)
-
-**Note:** Version bump only for package gatsby-design-tokens
 
 ## [2.0.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.12...gatsby-design-tokens@2.0.13) (2020-10-01)
 

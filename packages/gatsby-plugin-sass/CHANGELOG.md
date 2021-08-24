@@ -1,201 +1,214 @@
-# Change Log
+# Change Log: `gatsby-plugin-sass`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.12.0-next.3...gatsby-plugin-sass@4.13.0-next.0) (2021-08-12)
+## [4.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.12.0-next.0..gatsby-plugin-sass@4.12.0) (2021-08-18)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
+
+#### Chores
+
+- update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
+- update dependency autoprefixer to ^10.3.1 for gatsby-plugin-sass [#32619](https://github.com/gatsbyjs/gatsby/issues/32619) ([9e9e98e](https://github.com/gatsbyjs/gatsby/commit/9e9e98e2e4e5e87b2cdd434aa9b1f903230b2939))
+
+
+## [4.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.11.0-next.0..gatsby-plugin-sass@4.11.0) (2021-08-04)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 **Note:** Version bump only for package gatsby-plugin-sass
 
-# [4.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.12.0-next.2...gatsby-plugin-sass@4.12.0-next.3) (2021-08-09)
+
+## [4.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.10.0-next.0..gatsby-plugin-sass@4.10.0) (2021-07-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
+
+#### Chores
+
+- update dependency autoprefixer to ^10.2.6 for gatsby-plugin-sass [#32246](https://github.com/gatsbyjs/gatsby/issues/32246) ([8fdf316](https://github.com/gatsbyjs/gatsby/commit/8fdf3168affbf217fe967b0bcac0ce44fedbd43f))
+- update babel monorepo [#32238](https://github.com/gatsbyjs/gatsby/issues/32238) ([466d4c0](https://github.com/gatsbyjs/gatsby/commit/466d4c087bbc96abb942a02c67243bcc9a4f2a0a))
+
+
+## [4.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.9.0-next.0..gatsby-plugin-sass@4.9.0) (2021-07-07)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
 
 **Note:** Version bump only for package gatsby-plugin-sass
 
-# [4.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.12.0-next.1...gatsby-plugin-sass@4.12.0-next.2) (2021-08-05)
+
+## [4.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.8.0-next.0..gatsby-plugin-sass@4.8.0) (2021-06-23)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) ([7d42e8d](https://github.com/gatsbyjs/gatsby/commit/7d42e8d866e46e9c39838d812d080d06433f7060))
+
+
+### [4.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.7.0..gatsby-plugin-sass@4.7.1) (2021-06-10)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) [#31859](https://github.com/gatsbyjs/gatsby/issues/31859) ([8636025](https://github.com/gatsbyjs/gatsby/commit/863602567930a39142ed33d9d1f1813b7dec8686))
+
+
+## [4.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.7.0-next.0..gatsby-plugin-sass@4.7.0) (2021-06-09)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
+
+#### Chores
+
+- update babel monorepo [#31143](https://github.com/gatsbyjs/gatsby/issues/31143) ([701ab2f](https://github.com/gatsbyjs/gatsby/commit/701ab2f6690c3f1bbaf60cf572513ea566cc9ec9))
+
+
+## [4.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.6.0-next.0..gatsby-plugin-sass@4.6.0) (2021-05-25)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
 
 **Note:** Version bump only for package gatsby-plugin-sass
 
-# [4.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.12.0-next.0...gatsby-plugin-sass@4.12.0-next.1) (2021-08-05)
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.5.0-next.0..gatsby-plugin-sass@4.5.0) (2021-05-12)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
 
 **Note:** Version bump only for package gatsby-plugin-sass
 
-# [4.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.11.0-next.0...gatsby-plugin-sass@4.12.0-next.0) (2021-07-29)
+
+## [4.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.4.0-next.0..gatsby-plugin-sass@4.4.0) (2021-04-28)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
 
 **Note:** Version bump only for package gatsby-plugin-sass
 
-# [4.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.10.0-next.1...gatsby-plugin-sass@4.11.0-next.0) (2021-07-15)
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.3.0-next.0..gatsby-plugin-sass@4.3.0) (2021-04-14)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
 
 **Note:** Version bump only for package gatsby-plugin-sass
 
-# [4.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.10.0-next.0...gatsby-plugin-sass@4.10.0-next.1) (2021-07-08)
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.2.0-next.0..gatsby-plugin-sass@4.2.0) (2021-03-30)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
+
+#### Features
+
+- enable better cssOptions override for modules [#30112](https://github.com/gatsbyjs/gatsby/issues/30112) ([4571d2b](https://github.com/gatsbyjs/gatsby/commit/4571d2b098e1830ae7a9b1ddd0e23cb1abdcc86c))
+
+#### Chores
+
+- Update styling READMEs CSS modules info [#30334](https://github.com/gatsbyjs/gatsby/issues/30334) ([85b6420](https://github.com/gatsbyjs/gatsby/commit/85b642064113b1f6de94dd10cb21cef701d83539))
+
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.1.0-next.0..gatsby-plugin-sass@4.1.0) (2021-03-16)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
+
+#### Bug Fixes
+
+- Change `modules` option around [#29986](https://github.com/gatsbyjs/gatsby/issues/29986) ([bba21cd](https://github.com/gatsbyjs/gatsby/commit/bba21cdeb34ff74f6f2f538780849e6ccbec21fd))
+- don't use loader in ssr [#29801](https://github.com/gatsbyjs/gatsby/issues/29801) ([b2d6617](https://github.com/gatsbyjs/gatsby/commit/b2d66171081dffbfdd9e5def281d09c011a6a821))
+
+#### Chores
+
+- update minor and patch for gatsby-plugin-sass [#30074](https://github.com/gatsbyjs/gatsby/issues/30074) ([4f9a90e](https://github.com/gatsbyjs/gatsby/commit/4f9a90eab4e0eca4c04d26087be0734dea163907))
+- update eslint to fix linting issues fix [#29988](https://github.com/gatsbyjs/gatsby/issues/29988) ([5636389](https://github.com/gatsbyjs/gatsby/commit/5636389e8fa626c644e90abc14589e9961d98c68))
+- Update README [#29965](https://github.com/gatsbyjs/gatsby/issues/29965) ([dfb991f](https://github.com/gatsbyjs/gatsby/commit/dfb991f6d32851356578267c9485a658fae8150a))
+- upgarde postcss & plugins [#29793](https://github.com/gatsbyjs/gatsby/issues/29793) ([95f452c](https://github.com/gatsbyjs/gatsby/commit/95f452c9300490bbf961fa65f11fdf89825acd26))
+
+#### Other Changes
+
+- Revert "fix(gatsby-plugin-sass): Change `modules` option around (#29986)" [#29986](https://github.com/gatsbyjs/gatsby/issues/29986) [#30038](https://github.com/gatsbyjs/gatsby/issues/30038) ([0f4de9d](https://github.com/gatsbyjs/gatsby/commit/0f4de9d6985b4d577604e34ba3ea797ff282216f))
+
+
+### [4.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.0.1..gatsby-plugin-sass@4.0.2) (2021-03-06)
+
+#### Other Changes
+
+- Revert "fix(gatsby-plugin-sass): Change `modules` option around (#29986)" [#29986](https://github.com/gatsbyjs/gatsby/issues/29986) [#30038](https://github.com/gatsbyjs/gatsby/issues/30038) [#30050](https://github.com/gatsbyjs/gatsby/issues/30050) ([1acdbb6](https://github.com/gatsbyjs/gatsby/commit/1acdbb6e83338ce74231af3bbb34eba01d51bd4c))
+
+
+### [4.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.0.0..gatsby-plugin-sass@4.0.1) (2021-03-05)
+
+#### Bug Fixes
+
+- Change `modules` option around [#29986](https://github.com/gatsbyjs/gatsby/issues/29986) [#30002](https://github.com/gatsbyjs/gatsby/issues/30002) ([27db8e7](https://github.com/gatsbyjs/gatsby/commit/27db8e7c4d02bd13b86257092701d6e62c34272a))
+
+#### Chores
+
+- Update README [#29965](https://github.com/gatsbyjs/gatsby/issues/29965) [#30000](https://github.com/gatsbyjs/gatsby/issues/30000) ([82d6500](https://github.com/gatsbyjs/gatsby/commit/82d65002f28430a26344db7ce8ca1cd6f6f2fd6a))
+
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.0.0-next.0..gatsby-plugin-sass@4.0.0) (2021-03-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
+
+#### Bug Fixes
+
+- don't use loader in ssr [#29801](https://github.com/gatsbyjs/gatsby/issues/29801) [#29809](https://github.com/gatsbyjs/gatsby/issues/29809) ([b667111](https://github.com/gatsbyjs/gatsby/commit/b667111c59da23855daffe20ca2b8ed6fbf96809))
+- update minor and patch for gatsby-plugin-sass [#29182](https://github.com/gatsbyjs/gatsby/issues/29182) ([1038069](https://github.com/gatsbyjs/gatsby/commit/10380695cf7016c019d9bee443948ad394a32e66))
+- make minicss-extract-plugin compatible with plugins [#29599](https://github.com/gatsbyjs/gatsby/issues/29599) ([c0ab195](https://github.com/gatsbyjs/gatsby/commit/c0ab19598708750ce98b39448469a39126f55571))
+
+#### Chores
+
+- upgrade postcss & plugins [#29793](https://github.com/gatsbyjs/gatsby/issues/29793) ([76f4f96](https://github.com/gatsbyjs/gatsby/commit/76f4f96b667b1037ffc9f18a4f9d00c45315010e))
+
+
+## [3.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@3.2.0-next.0..gatsby-plugin-sass@3.2.0) (2021-02-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
 
 **Note:** Version bump only for package gatsby-plugin-sass
 
-# [4.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.9.0-next.1...gatsby-plugin-sass@4.10.0-next.0) (2021-07-01)
+
+## [3.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@3.1.0-next.0..gatsby-plugin-sass@3.1.0) (2021-01-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
+
+#### Bug Fixes
+
+- fix brand name, code block around names fix [#28908](https://github.com/gatsbyjs/gatsby/issues/28908) ([6275072](https://github.com/gatsbyjs/gatsby/commit/6275072fc31bb85269b65d702740e36eafe18c34))
+
+
+## [3.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@3.0.0-next.0..gatsby-plugin-sass@3.0.0) (2021-01-06)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
+
+#### Bug Fixes
+
+- Nest sassOptions [#28683](https://github.com/gatsbyjs/gatsby/issues/28683) ([c703eb4](https://github.com/gatsbyjs/gatsby/commit/c703eb4d994e1b7423e811577d0b9024f10a2bb9))
+
+
+## [2.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.8.0-next.0..gatsby-plugin-sass@2.8.0) (2020-12-15)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
+
+#### Chores
+
+- update dependency cross-env to ^7.0.3 [#28505](https://github.com/gatsbyjs/gatsby/issues/28505) ([a819b9b](https://github.com/gatsbyjs/gatsby/commit/a819b9bfb663139f7b06c3ed7d6d6069a2382b2c))
+
+
+## [2.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.7.0-next.0..gatsby-plugin-sass@2.7.0) (2020-12-02)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
 
 **Note:** Version bump only for package gatsby-plugin-sass
 
-# [4.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.9.0-next.0...gatsby-plugin-sass@4.9.0-next.1) (2021-06-28)
 
-**Note:** Version bump only for package gatsby-plugin-sass
+## [2.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.6.0-next.0..gatsby-plugin-sass@2.6.0) (2020-11-20)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.27)
 
-# [4.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.8.0-next.1...gatsby-plugin-sass@4.9.0-next.0) (2021-06-18)
+#### Bug Fixes
 
-**Note:** Version bump only for package gatsby-plugin-sass
+- loosely check postCssPlugins [#27829](https://github.com/gatsbyjs/gatsby/issues/27829) ([ac37599](https://github.com/gatsbyjs/gatsby/commit/ac3759932c582663999aa4384e8e38f9935d7f29))
 
-# [4.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.8.0-next.0...gatsby-plugin-sass@4.8.0-next.1) (2021-06-10)
+#### Chores
 
-**Note:** Version bump only for package gatsby-plugin-sass
+- update babel monorepo [#27528](https://github.com/gatsbyjs/gatsby/issues/27528) ([539dbb0](https://github.com/gatsbyjs/gatsby/commit/539dbb09166e346a6cee568973d2de3d936e8ef3))
 
-# [4.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.7.0-next.2...gatsby-plugin-sass@4.8.0-next.0) (2021-06-03)
 
-**Note:** Version bump only for package gatsby-plugin-sass
+### [2.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.5.0..gatsby-plugin-sass@2.5.1) (2020-11-14)
 
-# [4.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.7.0-next.1...gatsby-plugin-sass@4.7.0-next.2) (2021-06-02)
+#### Bug Fixes
 
-**Note:** Version bump only for package gatsby-plugin-sass
+- loosely check postCssPlugins [#27829](https://github.com/gatsbyjs/gatsby/issues/27829) [#28037](https://github.com/gatsbyjs/gatsby/issues/28037) ([ae4c51e](https://github.com/gatsbyjs/gatsby/commit/ae4c51e6a07374a7a063bf4c302377b93cd249e1))
 
-# [4.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.7.0-next.0...gatsby-plugin-sass@4.7.0-next.1) (2021-05-31)
 
-**Note:** Version bump only for package gatsby-plugin-sass
+## [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.5.0-next.0..gatsby-plugin-sass@2.5.0) (2020-11-12)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.26)
 
-# [4.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.6.0-next.0...gatsby-plugin-sass@4.7.0-next.0) (2021-05-21)
+#### Bug Fixes
 
-**Note:** Version bump only for package gatsby-plugin-sass
+- fix default output style & allow unknown options fix [#27822](https://github.com/gatsbyjs/gatsby/issues/27822) ([decd4ff](https://github.com/gatsbyjs/gatsby/commit/decd4ff5ea73ba2706e4034f3a1f8e089c4cc31e))
 
-# [4.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.5.0-next.0...gatsby-plugin-sass@4.6.0-next.0) (2021-05-06)
+<a name="before-release-process"></a>
 
-**Note:** Version bump only for package gatsby-plugin-sass
 
-# [4.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.4.0-next.0...gatsby-plugin-sass@4.5.0-next.0) (2021-04-23)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [4.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.3.0-next.1...gatsby-plugin-sass@4.4.0-next.0) (2021-04-09)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [4.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.3.0-next.0...gatsby-plugin-sass@4.3.0-next.1) (2021-04-07)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [4.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.2.0-next.1...gatsby-plugin-sass@4.3.0-next.0) (2021-03-25)
-
-### Features
-
-- enable better cssOptions override for modules ([#30112](https://github.com/gatsbyjs/gatsby/issues/30112)) ([4571d2b](https://github.com/gatsbyjs/gatsby/commit/4571d2b098e1830ae7a9b1ddd0e23cb1abdcc86c))
-
-# [4.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.2.0-next.0...gatsby-plugin-sass@4.2.0-next.1) (2021-03-19)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [4.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.1.0-next.3...gatsby-plugin-sass@4.2.0-next.0) (2021-03-11)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [4.1.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.1.0-next.2...gatsby-plugin-sass@4.1.0-next.3) (2021-03-10)
-
-### Bug Fixes
-
-- **gatsby-plugin-sass:** Change `modules` option around ([#29986](https://github.com/gatsbyjs/gatsby/issues/29986)) ([bba21cd](https://github.com/gatsbyjs/gatsby/commit/bba21cdeb34ff74f6f2f538780849e6ccbec21fd))
-
-### Reverts
-
-- Revert "fix(gatsby-plugin-sass): Change `modules` option around (#29986)" (#30038) ([0f4de9d](https://github.com/gatsbyjs/gatsby/commit/0f4de9d6985b4d577604e34ba3ea797ff282216f)), closes [#29986](https://github.com/gatsbyjs/gatsby/issues/29986) [#30038](https://github.com/gatsbyjs/gatsby/issues/30038)
-
-# [4.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.1.0-next.1...gatsby-plugin-sass@4.1.0-next.2) (2021-02-26)
-
-### Bug Fixes
-
-- **mini-css-extract:** don't use loader in ssr ([#29801](https://github.com/gatsbyjs/gatsby/issues/29801)) ([b2d6617](https://github.com/gatsbyjs/gatsby/commit/b2d66171081dffbfdd9e5def281d09c011a6a821))
-
-# [4.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.1.0-next.0...gatsby-plugin-sass@4.1.0-next.1) (2021-02-26)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [4.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.0.0-next.3...gatsby-plugin-sass@4.1.0-next.0) (2021-02-26)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [4.0.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.0.0-next.2...gatsby-plugin-sass@4.0.0-next.3) (2021-02-25)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [4.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.0.0-next.1...gatsby-plugin-sass@4.0.0-next.2) (2021-02-22)
-
-### Bug Fixes
-
-- **deps:** update minor and patch for gatsby-plugin-sass ([#29182](https://github.com/gatsbyjs/gatsby/issues/29182)) ([1038069](https://github.com/gatsbyjs/gatsby/commit/10380695cf7016c019d9bee443948ad394a32e66))
-
-# [4.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.0.0-next.0...gatsby-plugin-sass@4.0.0-next.1) (2021-02-19)
-
-### Bug Fixes
-
-- make minicss-extract-plugin compatible with plugins ([#29599](https://github.com/gatsbyjs/gatsby/issues/29599)) ([c0ab195](https://github.com/gatsbyjs/gatsby/commit/c0ab19598708750ce98b39448469a39126f55571))
-
-# [4.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@3.3.0-next.0...gatsby-plugin-sass@4.0.0-next.0) (2021-02-05)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@3.2.0-next.0...gatsby-plugin-sass@3.3.0-next.0) (2021-01-28)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@3.1.0-next.1...gatsby-plugin-sass@3.2.0-next.0) (2021-01-18)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@3.1.0-next.0...gatsby-plugin-sass@3.1.0-next.1) (2021-01-12)
-
-### Bug Fixes
-
-- **gatsby-plugin-sass:** fix brand name, code block around names ([#28908](https://github.com/gatsbyjs/gatsby/issues/28908)) ([6275072](https://github.com/gatsbyjs/gatsby/commit/6275072fc31bb85269b65d702740e36eafe18c34))
-
-# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@3.0.0-next.2...gatsby-plugin-sass@3.1.0-next.0) (2020-12-29)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [3.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@3.0.0-next.1...gatsby-plugin-sass@3.0.0-next.2) (2020-12-18)
-
-### Bug Fixes
-
-- **gatsby-plugin-sass:** Nest sassOptions ([#28683](https://github.com/gatsbyjs/gatsby/issues/28683)) ([c703eb4](https://github.com/gatsbyjs/gatsby/commit/c703eb4d994e1b7423e811577d0b9024f10a2bb9))
-
-# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@3.0.0-next.0...gatsby-plugin-sass@3.0.0-next.1) (2020-12-17)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.9.0-next.0...gatsby-plugin-sass@3.0.0-next.0) (2020-12-16)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.8.0-next.0...gatsby-plugin-sass@2.9.0-next.0) (2020-12-10)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.7.0-next.0...gatsby-plugin-sass@2.8.0-next.0) (2020-11-26)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.6.0-next.1...gatsby-plugin-sass@2.7.0-next.0) (2020-11-18)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [2.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.6.0-next.0...gatsby-plugin-sass@2.6.0-next.1) (2020-11-16)
-
-### Bug Fixes
-
-- **gatsby-plugin-sass:** loosely check postCssPlugins ([#27829](https://github.com/gatsbyjs/gatsby/issues/27829)) ([ac37599](https://github.com/gatsbyjs/gatsby/commit/ac3759932c582663999aa4384e8e38f9935d7f29))
-
-# [2.5.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.5.0-next.1...gatsby-plugin-sass@2.5.0-next.2) (2020-11-10)
-
-**Note:** Version bump only for package gatsby-plugin-sass
-
-# [2.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.5.0-next.0...gatsby-plugin-sass@2.5.0-next.1) (2020-11-05)
-
-### Bug Fixes
-
-- **gatsby-plugin-sass:** fix default output style & allow unknown options ([#27822](https://github.com/gatsbyjs/gatsby/issues/27822)) ([decd4ff](https://github.com/gatsbyjs/gatsby/commit/decd4ff5ea73ba2706e4034f3a1f8e089c4cc31e))
 
 ## [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@2.4.0...gatsby-plugin-sass@2.4.1) (2020-11-03)
 
