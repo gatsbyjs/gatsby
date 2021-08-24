@@ -7,6 +7,7 @@ import { generateHtmlPath, fixedPagePath } from "gatsby-core-utils"
 
 import { IPageDataWithQueryResult } from "../../page-data"
 import { IRenderHtmlResult } from "../../../commands/build-html"
+import type webpack from "webpack"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
 
@@ -75,7 +76,7 @@ async function readPageData(
   return JSON.parse(rawPageData)
 }
 
-async function readWebpackStats(publicDir: string): Promise<any> {
+export async function readWebpackStats(publicDir: string): Promise<any> {
   const filePath = join(publicDir, `webpack.stats.json`)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
 
@@ -260,7 +261,8 @@ async function doGetResourcesForTemplate(
   }
 }
 
-async function getResourcesForTemplate(
+// TODO: remove this with queryEngine changes
+export async function getResourcesForTemplate(
   pageData: IPageDataWithQueryResult
 ): Promise<IResourcesForTemplate> {
   const memoizedResourcesForTemplate = resourcesForTemplateCache.get(
@@ -284,6 +286,11 @@ async function getResourcesForTemplate(
   inFlightResourcesForTemplate.delete(pageData.componentChunkName)
 
   return resources
+}
+
+// TODO: remove this with queryEngine changes
+export function setWebpackStats(stats: webpack.Stats): void {
+  webpackStats = stats
 }
 
 export const renderHTMLProd = async ({

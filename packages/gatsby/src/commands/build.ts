@@ -47,6 +47,9 @@ import {
   mergeWorkerState,
   runQueriesInWorkersQueue,
 } from "../utils/worker/pool"
+import webpackConfig from "../utils/webpack.config.js"
+import { ROUTE_MANIFEST_PATH } from "../constants"
+import { webpack } from "webpack"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (isTruthy(process.env.VERBOSE)) {
@@ -95,6 +98,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   })
 
   const { queryIds } = await calculateDirtyQueries({ store })
+
+  // only run queries with mode SSG
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
+      query => query.mode === `SSG`
+    )
+  }
 
   let waitForWorkerPoolRestart = Promise.resolve()
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
@@ -223,6 +233,43 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildSSRBundleActivityProgress.end()
   }
 
+  // TODO Move to page-renderer
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    const routesWebpackConfig = await webpackConfig(
+      program,
+      program.directory,
+      `build-ssr`,
+      null,
+      { parentSpan: buildSSRBundleActivityProgress.span }
+    )
+
+    await new Promise((resolve, reject) => {
+      const compiler = webpack(routesWebpackConfig)
+      compiler.run(err => {
+        if (err) {
+          return void reject(err)
+        }
+
+        compiler.close(error => {
+          if (error) {
+            return void reject(error)
+          }
+          return void resolve(undefined)
+        })
+
+        return undefined
+      })
+    })
+  }
+  try {
+    const result = await buildRenderer(program, Stage.BuildHTML, buildSpan)
+    waitForCompilerCloseBuildHtml = result.waitForCompilerClose
+  } catch (err) {
+    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
+  } finally {
+    buildSSRBundleActivityProgress.end()
+  }
+
   await waitForWorkerPoolRestart
   const { toRegenerate, toDelete } =
     await buildHTMLPagesAndDeleteStaleArtifacts({
@@ -231,11 +278,36 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       workerPool,
       buildSpan,
     })
+
+  const pages = store.getState().pages
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    const routeManifestStream = fs.createWriteStream(
+      path.join(program.directory, ROUTE_MANIFEST_PATH)
+    )
+
+    // TODO order by specificity
+    for (const [_, page] of pages) {
+      if (page.mode === `SSG`) {
+        continue
+      }
+      routeManifestStream.write(
+        `{"path":"${page.path}","mode":"${page.mode}","componentChunkName":"${page.componentChunkName}"`
+      )
+
+      if (page.matchPath) {
+        routeManifestStream.write(`,"matchPath":"${page.matchPath}"`)
+      }
+
+      routeManifestStream.write(`}\n`)
+    }
+    routeManifestStream.close()
+  }
+
   const waitWorkerPoolEnd = Promise.all(workerPool.end())
 
   telemetry.addSiteMeasurement(`BUILD_END`, {
     pagesCount: toRegenerate.length, // number of html files that will be written
-    totalPagesCount: store.getState().pages.size, // total number of pages
+    totalPagesCount: pages.size, // total number of pages
   })
 
   const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {

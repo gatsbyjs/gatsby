@@ -441,7 +441,8 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     reporter.info(`There are no new or changed html files to build.`)
   }
 
-  if (!program.keepPageRenderer) {
+  // TODO move to per page builds in _routes directory
+  if (!program.keepPageRenderer && _CFLAGS_.GATSBY_MAJOR !== `4`) {
     try {
       await deleteRenderer(pageRenderer)
     } catch (err) {

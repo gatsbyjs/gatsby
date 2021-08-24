@@ -11,13 +11,23 @@ import multer from "multer"
 import pathToRegexp from "path-to-regexp"
 import cookie from "cookie"
 import telemetry from "gatsby-telemetry"
+import { match } from "node-match-path"
 
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import { getConfigFile } from "../bootstrap/get-config-file"
 import { preferDefault } from "../bootstrap/prefer-default"
+import { parseJSON } from "../utils/json-stream-reader"
+import { ROUTES_DIRECTORY, ROUTE_MANIFEST_PATH } from "../constants"
 import { IProgram } from "./types"
 import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
 import { IGatsbyFunction } from "../redux/types"
+import { reverseFixedPagePath, readPageData } from "../utils/page-data"
+import { getServerData } from "../utils/get-server-data"
+import {
+  getResourcesForTemplate,
+  setWebpackStats,
+  readWebpackStats,
+} from "../utils/worker/child/render-html"
 
 interface IMatchPath {
   path: string
@@ -226,8 +236,118 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     )
   }
 
-  router.use((req, res, next) => {
+  // handle SSR pages
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    app.get(
+      `/page-data/:pagePath(*)/page-data.json`,
+      async (req, res, next) => {
+        const requestedPagePath = req.params.pagePath
+        if (!requestedPagePath) {
+          return void next()
+        }
+
+        const potentialPagePath = reverseFixedPagePath(requestedPagePath)
+        const routes = parseJSON<{
+          path: string
+          matchPath?: string
+          mode: "SSR" | "DSR"
+          componentChunkName: string
+        }>(path.join(program.directory, ROUTE_MANIFEST_PATH))
+        for await (const route of routes) {
+          const { matches } = match(
+            route.matchPath ?? route.path,
+            `/${potentialPagePath}`
+          )
+
+          if (matches) {
+            // TODO use query engine if necessary
+            const [pageData, serverData] = await Promise.all([
+              readPageData(path.join(program.directory, `public`), route.path),
+              getServerData(
+                req,
+                route,
+                path.join(
+                  program.directory,
+                  ROUTES_DIRECTORY,
+                  route.componentChunkName
+                )
+              ),
+            ])
+
+            if (pageData.mode) {
+              delete pageData.mode
+            }
+            pageData.result.serverData = serverData.props
+            pageData.path = `/${requestedPagePath}/`
+
+            return void res.json(pageData)
+          }
+        }
+
+        return void next()
+      }
+    )
+  }
+
+  router.use(async (req, res, next) => {
     if (req.accepts(`html`)) {
+      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+        const potentialPagePath = req.path
+
+        const routes = parseJSON<{
+          path: string
+          matchPath?: string
+          mode: "SSR" | "DSR"
+          componentChunkName: string
+        }>(path.join(program.directory, ROUTE_MANIFEST_PATH))
+        for await (const route of routes) {
+          const { matches } = match(
+            route.matchPath ?? route.path,
+            potentialPagePath
+          )
+
+          if (matches) {
+            // TODO use query engine if necessary
+            const [pageData, serverData] = await Promise.all([
+              readPageData(path.join(program.directory, `public`), route.path),
+              getServerData(
+                req,
+                route,
+                path.join(
+                  program.directory,
+                  ROUTES_DIRECTORY,
+                  route.componentChunkName
+                )
+              ),
+            ])
+
+            delete pageData.mode
+            pageData.result.serverData = serverData.props
+            pageData.path = `${req.path}/`
+
+            const renderPage = require(path.join(
+              program.directory,
+              `public`,
+              `render-page`
+            ))
+            setWebpackStats(
+              await readWebpackStats(path.join(program.directory, `public`))
+            )
+            const resources = await getResourcesForTemplate(pageData)
+            routes.return()
+            return void res.send(
+              (
+                await renderPage.default({
+                  pagePath: `${req.path}`,
+                  pageData: pageData,
+                  ...resources,
+                })
+              ).html
+            )
+          }
+        }
+      }
+
       return res.status(404).sendFile(`404.html`, { root })
     }
     return next()

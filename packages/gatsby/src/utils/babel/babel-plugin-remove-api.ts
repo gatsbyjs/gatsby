@@ -22,10 +22,18 @@ export default declare(function removeApiCalls(
       ExportNamedDeclaration(path): void {
         const declaration = path.node.declaration
 
-        if (!path.node.declaration) {
-          const specifiersToKeep = []
+        if (t.isExportNamedDeclaration(path.node)) {
+          const specifiersToKeep: Array<
+            | t.ExportDefaultSpecifier
+            | t.ExportNamespaceSpecifier
+            | t.ExportSpecifier
+          > = []
           path.node.specifiers.forEach(specifier => {
-            if (apisToRemove.includes(specifier.exported.name)) {
+            if (
+              t.isExportSpecifier(specifier) &&
+              t.isIdentifier(specifier.exported) &&
+              apisToRemove.includes(specifier.exported.name)
+            ) {
               path.scope.bindings[specifier.local.name].path.remove()
             } else {
               specifiersToKeep.push(specifier)
