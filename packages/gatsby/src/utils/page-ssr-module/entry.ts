@@ -9,7 +9,7 @@ import type { IPageDataWithQueryResult } from "../page-data/write-page-data"
 import * as path from "path"
 import * as fs from "fs-extra"
 import { writePageData, fixedPagePath } from "../page-data/write-page-data"
-import { getPageHtmlFilePath } from "../page-html"
+import { generateHtmlPath } from "gatsby-core-utils"
 // @ts-ignore render-page import will become valid later on (it's marked as external)
 import htmlComponentRenderer from "./render-page"
 
@@ -122,7 +122,7 @@ export async function renderHTML({
     ...data.templateDetails.assets,
   })
 
-  const outputPath = getPageHtmlFilePath(
+  const outputPath = generateHtmlPath(
     path.join(process.cwd(), `public`),
     data.page.path
   )
