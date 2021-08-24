@@ -41,6 +41,7 @@ export async function fetchContentfulAsset({
   ...restArgs
 }) {
   let attempts = 1
+  let delay = 1000
 
   try {
     const result = await queue.add(async () => {
@@ -67,7 +68,11 @@ export async function fetchContentfulAsset({
               logMessage = `${logMessage} Retry limit reached. Aborting.`
             }
             reporter.verbose(logMessage)
+
+            // Wait a few seconds before trying again
+            await new Promise(resolve => setTimeout(resolve, delay))
             attempts++
+            delay = delay * 2
           } else {
             // Throw all errors without status code or with status code out of retry range
             throw err

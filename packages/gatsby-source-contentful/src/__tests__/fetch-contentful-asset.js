@@ -129,6 +129,7 @@ Details:
   })
 
   it(`stops retry after 3 attempts`, async () => {
+    jest.setTimeout(10000)
     const path = `/stop-retry-after-3-attempts.jpg`
     const url = [host, path].join(``)
 
@@ -162,7 +163,7 @@ Details:
   })
 
   it(`retries on network errors`, async () => {
-    jest.setTimeout(3000)
+    jest.setTimeout(5000)
 
     const path = `/network-errors.jpg`
     const url = [host, path].join(``)
