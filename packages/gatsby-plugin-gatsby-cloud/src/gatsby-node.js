@@ -1,13 +1,19 @@
+import path from "path"
+import { readJSON } from "fs-extra"
 import WebpackAssetsManifest from "webpack-assets-manifest"
+import {
+  generatePageDataPath,
+  joinPath,
+  generateHtmlPath,
+} from "gatsby-core-utils"
 import { captureEvent } from "gatsby-telemetry"
 import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
 import copyFunctionsManifest from "./copy-functions-manifest"
 import createRedirects from "./create-redirects"
 import createSiteConfig from "./create-site-config"
-import { readJSON } from "fs-extra"
-import { joinPath } from "gatsby-core-utils"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
+import { emitRoutes } from "./ipc"
 
 const assetsManifest = {}
 
@@ -30,14 +36,24 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
   })
 }
 
-exports.onPostBuild = async (
-  { store, pathPrefix, reporter },
-  userPluginOptions
-) => {
+exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {
   const pluginData = makePluginData(store, assetsManifest, pathPrefix)
+
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
-  const { redirects, pageDataStats, nodes } = store.getState()
+  const { redirects, pageDataStats, nodes, pages } = store.getState()
+
+  /**
+   * Emit via IPC routes for which pages are non SSG
+   */
+  for (const [pathname, page] of pages) {
+    if (page.mode && page.mode !== `SSG`) {
+      emitRoutes({
+        [generateHtmlPath(``, pathname)]: page.mode,
+        [generatePageDataPath(``, pathname)]: page.mode,
+      })
+    }
+  }
 
   let nodesCount
 
@@ -54,12 +70,16 @@ exports.onPostBuild = async (
 
   const pagesCount = pageDataStats && pageDataStats.size
 
-  captureEvent(`GATSBY_CLOUD_METADATA`, {
-    siteMeasurements: {
-      pagesCount,
-      nodesCount,
-    },
-  })
+  try {
+    captureEvent(`GATSBY_CLOUD_METADATA`, {
+      siteMeasurements: {
+        pagesCount,
+        nodesCount,
+      },
+    })
+  } catch (e) {
+    console.error(e)
+  }
 
   let rewrites = []
   if (pluginOptions.generateMatchPathRewrites) {
@@ -80,7 +100,7 @@ exports.onPostBuild = async (
   }
 
   await Promise.all([
-    buildHeadersProgram(pluginData, pluginOptions, reporter),
+    buildHeadersProgram(pluginData, pluginOptions),
     createSiteConfig(pluginData, pluginOptions),
     createRedirects(pluginData, redirects, rewrites),
     copyFunctionsManifest(pluginData),
