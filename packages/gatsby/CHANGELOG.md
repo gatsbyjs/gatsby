@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.13.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.13.0-next.1...gatsby@3.13.0-next.2) (2021-08-20)
+
+### Bug Fixes
+
+- **gatsby:** Correct server type ([#32853](https://github.com/gatsbyjs/gatsby/issues/32853)) ([85faee3](https://github.com/gatsbyjs/gatsby/commit/85faee335497e1a7eab58fbd15d4c14531b021b8))
+
+### Features
+
+- **gatsby:** add node manifest page data digest ([#32837](https://github.com/gatsbyjs/gatsby/issues/32837)) ([c991ab4](https://github.com/gatsbyjs/gatsby/commit/c991ab44e5aa2f040bf336e15ce9cc02baf3f589))
+
+# [3.13.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.13.0-next.0...gatsby@3.13.0-next.1) (2021-08-19)
+
+### Bug Fixes
+
+- **gatsby:** Hashes and anchors in redirects also work in production ([#32850](https://github.com/gatsbyjs/gatsby/issues/32850)) ([0654800](https://github.com/gatsbyjs/gatsby/commit/0654800d550b6dfaa41d9598842887eb15167ec7))
+- **gatsby:** Remove `removeDimensions` from svgo config ([#32834](https://github.com/gatsbyjs/gatsby/issues/32834)) ([09679a1](https://github.com/gatsbyjs/gatsby/commit/09679a1d1a6cd745591304d069b0266a4b8f5bbf))
+
+### Features
+
+- **gatsby:** Add `defer` to createPage ([#32783](https://github.com/gatsbyjs/gatsby/issues/32783)) ([58d5a2c](https://github.com/gatsbyjs/gatsby/commit/58d5a2c6955f1263dd5f2b28369a9c177485d36a))
+- **gatsby:** Opt in 20% of users to webpack dev server caching ([#32829](https://github.com/gatsbyjs/gatsby/issues/32829)) ([51b8420](https://github.com/gatsbyjs/gatsby/commit/51b8420dd45c42aab1e8da490548eabeaeed67a1))
+
+# [3.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.12.0-next.3...gatsby@3.13.0-next.0) (2021-08-12)
+
+### Bug Fixes
+
+- **gatsby:** reduce parse cost writing page-data ([#32763](https://github.com/gatsbyjs/gatsby/issues/32763)) ([b97782f](https://github.com/gatsbyjs/gatsby/commit/b97782f35c92a2c51fdd5c997a0ac3fe45cf2524))
+- **gatsby:** Wrap performance mark in check ([#32778](https://github.com/gatsbyjs/gatsby/issues/32778)) ([365d00b](https://github.com/gatsbyjs/gatsby/commit/365d00b2ee413ef38f56ba4262304865ecd4256e))
+
+### Features
+
+- **gatsby:** measure how long GraphQL takes to run in createPages and warn if > 10s ([#32751](https://github.com/gatsbyjs/gatsby/issues/32751)) ([8bd7cf0](https://github.com/gatsbyjs/gatsby/commit/8bd7cf06a0f0bea14c376b8c0daca8856baf6db6))
+
 # [3.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.12.0-next.2...gatsby@3.12.0-next.3) (2021-08-09)
 
 ### Bug Fixes

@@ -23,7 +23,7 @@ Critical patches address issues that prevent the Gatsby framework from deliverin
 ## What does this mean for users of the Gatsby framework?
 
 - To receive the newest enhancements and bug fixes, ensure that you've [migrated to Gatsby Version 3](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v2-to-v3/) by **June 8, 2021**
-- Continue reporting any issues as you typically would, either using [support](https://www.gatsbyjs.com/support/) on Gatsbyjs.com, or by [opening an issues](https://github.com/gatsbyjs/gatsby/issues/new/choose) in our Github repository.
+- Continue reporting any issues as you typically would, either using [support](https://www.gatsbyjs.com/support/) on Gatsbyjs.com, or by [opening an issues](https://github.com/gatsbyjs/gatsby/issues/new/choose) in our GitHub repository.
 
 ## What does this mean for Gatsby Cloud?
 

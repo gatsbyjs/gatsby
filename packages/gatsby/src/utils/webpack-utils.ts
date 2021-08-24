@@ -679,27 +679,27 @@ export const createWebpackUtils = (
               plugins: [
                 // potentially destructive plugins removed - see https://github.com/gatsbyjs/gatsby/issues/15629
                 // use correct config format and remove plugins requiring specific params - see https://github.com/gatsbyjs/gatsby/issues/31619
-                `removeUselessDefs`,
+                // List of default plugins and their defaults: https://github.com/svg/svgo#built-in-plugins
+                // Last update 2021-08-17
                 `cleanupAttrs`,
                 `cleanupEnableBackground`,
                 `cleanupIDs`,
-                `cleanupListOfValues`,
+                `cleanupListOfValues`, // Default: disabled
                 `cleanupNumericValues`,
                 `collapseGroups`,
                 `convertColors`,
                 `convertPathData`,
-                `convertStyleToAttrs`,
+                `convertStyleToAttrs`, // Default: disabled
                 `convertTransform`,
                 `inlineStyles`,
                 `mergePaths`,
                 `minifyStyles`,
                 `moveElemsAttrsToGroup`,
                 `moveGroupAttrsToElems`,
-                `prefixIds`,
-                `removeAttrs`,
+                `prefixIds`, // Default: disabled
+                `removeAttrs`, // Default: disabled
                 `removeComments`,
                 `removeDesc`,
-                `removeDimensions`,
                 `removeDoctype`,
                 `removeEditorsNSData`,
                 `removeEmptyAttrs`,
@@ -708,17 +708,18 @@ export const createWebpackUtils = (
                 `removeHiddenElems`,
                 `removeMetadata`,
                 `removeNonInheritableGroupAttrs`,
-                `removeOffCanvasPaths`,
-                `removeRasterImages`,
-                `removeScriptElement`,
-                `removeStyleElement`,
+                `removeOffCanvasPaths`, // Default: disabled
+                `removeRasterImages`, // Default: disabled
+                `removeScriptElement`, // Default: disabled
+                `removeStyleElement`, // Default: disabled
                 `removeTitle`,
                 `removeUnknownsAndDefaults`,
                 `removeUnusedNS`,
+                `removeUselessDefs`,
                 `removeUselessStrokeAndFill`,
                 `removeXMLProcInst`,
-                `reusePaths`,
-                `sortAttrs`,
+                `reusePaths`, // Default: disabled
+                `sortAttrs`, // Default: disabled
               ],
             },
           },

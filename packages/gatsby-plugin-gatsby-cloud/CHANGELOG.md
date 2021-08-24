@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@3.0.0-next.1...gatsby-plugin-gatsby-cloud@3.1.0-next.0) (2021-08-12)
+
+### Bug Fixes
+
+- cloud copy ([#32787](https://github.com/gatsbyjs/gatsby/issues/32787)) ([a66d774](https://github.com/gatsbyjs/gatsby/commit/a66d77493e89f1629da2e2d8c5ea6395bbf067fc))
+
+### Features
+
+- **gatsby-plugin-gatsby-cloud:** setup path-prefix for cloud ([#32708](https://github.com/gatsbyjs/gatsby/issues/32708)) ([fa04f51](https://github.com/gatsbyjs/gatsby/commit/fa04f51690d5850497876463b46e8dc98417740b))
+
 # [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@3.0.0-next.0...gatsby-plugin-gatsby-cloud@3.0.0-next.1) (2021-08-09)
 
 ### Features

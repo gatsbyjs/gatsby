@@ -2,12 +2,12 @@ import fs from "fs-extra"
 import path from "path"
 import { platform } from "os"
 import reporter from "gatsby-cli/lib/reporter"
-
 import {
   remove as removePageHtmlFile,
-  getPageHtmlFilePath,
-} from "../utils/page-html"
-import { removePageData, fixedPagePath } from "../utils/page-data"
+  generateHtmlPath,
+  fixedPagePath,
+} from "gatsby-core-utils"
+import { removePageData } from "../utils/page-data"
 import { store } from "../redux"
 import { IGatsbyState } from "../redux/types"
 
@@ -15,9 +15,7 @@ const checkFolderIsEmpty = (path: string): boolean =>
   fs.existsSync(path) && !fs.readdirSync(path).length
 
 const checkAndRemoveEmptyDir = (publicDir: string, pagePath: string): void => {
-  const pageHtmlDirectory = path.dirname(
-    getPageHtmlFilePath(publicDir, pagePath)
-  )
+  const pageHtmlDirectory = path.dirname(generateHtmlPath(publicDir, pagePath))
   const pageDataDirectory = path.join(
     publicDir,
     `page-data`,
@@ -155,14 +153,27 @@ export function calcDirtyHtmlFiles(state: IGatsbyState): {
   }
 
   state.html.trackedHtmlFiles.forEach(function (htmlFile, path) {
-    if (htmlFile.isDeleted || !state.pages.has(path)) {
+    const page = state.pages.get(path)
+    if (htmlFile.isDeleted || !page) {
       // FIXME: checking pages state here because pages are not persisted
       // and because of that `isDeleted` might not be set ...
       markActionForPage(path, `delete`)
-    } else if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
-      markActionForPage(path, `regenerate`)
     } else {
-      markActionForPage(path, `reuse`)
+      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+        if (page.mode === `SSG`) {
+          if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
+            markActionForPage(path, `regenerate`)
+          } else {
+            markActionForPage(path, `reuse`)
+          }
+        }
+      } else {
+        if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
+          markActionForPage(path, `regenerate`)
+        } else {
+          markActionForPage(path, `reuse`)
+        }
+      }
     }
   })
 

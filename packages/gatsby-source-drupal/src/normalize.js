@@ -55,6 +55,11 @@ const createNodeIdWithVersion = (
   revisionId,
   entityReferenceRevisions = []
 ) => {
+  // Fallback to default language for entities that don't translate.
+  if (getOptions()?.languageConfig?.nonTranslatableEntities.includes(type)) {
+    langcode = getOptions().languageConfig.defaultLanguage
+  }
+
   // If the source plugin hasn't enabled `translation` then always just set langcode
   // to "undefined".
   let langcodeNormalized = getOptions().languageConfig ? langcode : `und`

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.13.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.13.0-next.1...gatsby-source-wordpress@5.13.0-next.2) (2021-08-20)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** generate plugin options docs ([#32856](https://github.com/gatsbyjs/gatsby/issues/32856)) ([77fc5b5](https://github.com/gatsbyjs/gatsby/commit/77fc5b5ac24da43cae88ff844723a0b085f5b776))
+
+# [5.13.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.13.0-next.0...gatsby-source-wordpress@5.13.0-next.1) (2021-08-19)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.12.0-next.3...gatsby-source-wordpress@5.13.0-next.0) (2021-08-12)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** linting error ([#32749](https://github.com/gatsbyjs/gatsby/issues/32749)) ([2e15bfa](https://github.com/gatsbyjs/gatsby/commit/2e15bfaf3dcb28b4939260cf3795bba3f477fdc6))
+- **gatsby-source-wordpress:** not all stored nodes are media items - protect against that ([#32752](https://github.com/gatsbyjs/gatsby/issues/32752)) ([cf9c051](https://github.com/gatsbyjs/gatsby/commit/cf9c051dc52811b92a4ba60683ed6d51a448c093))
+- **wordpress:** ensure all file links are rewritten ([#32679](https://github.com/gatsbyjs/gatsby/issues/32679)) ([32722f0](https://github.com/gatsbyjs/gatsby/commit/32722f07691d654d19f21bf5bc54f4a6d75b5d88)), closes [#31652](https://github.com/gatsbyjs/gatsby/issues/31652) [#31646](https://github.com/gatsbyjs/gatsby/issues/31646)
+
+### Features
+
+- **gatsby-source-wordpress:** process multiple manifest ids on a preview action ([#32723](https://github.com/gatsbyjs/gatsby/issues/32723)) ([627039a](https://github.com/gatsbyjs/gatsby/commit/627039ac7c3e156f75ec9aea739fd1720a732541))
+
 # [5.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.12.0-next.2...gatsby-source-wordpress@5.12.0-next.3) (2021-08-09)
 
 ### Features

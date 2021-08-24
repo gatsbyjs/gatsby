@@ -298,13 +298,15 @@ module.exports = async ({ markdownAST }, pluginOptions) => {
 }
 ```
 
-A real-world example of this would be [`gatsby-remark-code-repls`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-remark-code-repls/src/gatsby-node.js).
+A real-world example of this would be [`gatsby-remark-responsive-iframe`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-remark-responsive-iframe/src/index.js).
 
 ## Loading in changes and seeing effect
 
 At this point, our plugin is now ready to be used. To see the resulting functionality, it is helpful to re-visit [Part 7 of the Gatsby Tutorial](/docs/tutorial/part-seven/) to programmatically create pages from Markdown data. Once this is set up, you can examine that your plugin works as seen below based on the markdown you wrote earlier.
 
 ![Output](../docs/images/remark-ast-output.png)
+
+**Note**: In case you don't see the intended effect, try wiping out the cache by running `gatsby clean`.
 
 ## Publishing the plugin
 
