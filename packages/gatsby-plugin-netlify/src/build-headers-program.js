@@ -2,6 +2,7 @@ import _ from "lodash"
 import { writeFile, existsSync } from "fs-extra"
 import { parse, posix } from "path"
 import kebabHash from "kebab-hash"
+import { fixedPagePath } from "gatsby-core-utils"
 import { HEADER_COMMENT, IMMUTABLE_CACHING_HEADER } from "./constants"
 
 import {
@@ -55,8 +56,7 @@ function pathChunkName(path) {
 }
 
 function getPageDataPath(path) {
-  const fixedPagePath = path === `/` ? `index` : path
-  return posix.join(`page-data`, fixedPagePath, `page-data.json`)
+  return posix.join(`page-data`, fixedPagePath(path), `page-data.json`)
 }
 
 function getScriptPath(file, manifest) {
