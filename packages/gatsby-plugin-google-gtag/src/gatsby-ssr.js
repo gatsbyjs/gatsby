@@ -68,10 +68,9 @@ exports.onRenderBody = (
         function gtag(){window.dataLayer && window.dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        if (${pluginConfig.defaultConsent ? `true` : `false`}) {
-          console.log('Configuring default consent');
-          gtag('consent', 'default', ${JSON.stringify(pluginConfig.defaultConsent)})
-        }
+      if (${pluginConfig.defaultConsent ? `true` : `false`}) {
+        gtag('consent', 'default', ${JSON.stringify(pluginConfig.defaultConsent)})
+      }
         
         ${pluginOptions.trackingIds
           .map(
