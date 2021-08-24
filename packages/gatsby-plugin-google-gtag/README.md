@@ -46,6 +46,11 @@ module.exports = {
           respectDNT: true,
           // Avoids sending pageview hits from custom paths
           exclude: ["/preview/**", "/do-not-track/me/too/"],
+          // Any default consent options for gtag to use
+          defaultConsent: {
+            ad_storage: 'granted',
+            analytics_storage: 'granted',    
+          },
         },
       },
     },
