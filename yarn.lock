@@ -12588,6 +12588,20 @@ gather-stream@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gather-stream/-/gather-stream-1.0.0.tgz#b33994af457a8115700d410f317733cbe7a0904b"
 
+gatsby-core-utils@2.12.0-coreutils.29+8fa770da4b:
+  version "2.12.0-coreutils.29"
+  resolved "https://registry.yarnpkg.com/gatsby-core-utils/-/gatsby-core-utils-2.12.0-coreutils.29.tgz#417ad8cda8db1d07726422bd08cd7364f896f9da"
+  integrity sha512-Wk/OYFeLXxjqS8azxUZ74yUWqWfJd3k/L7JSht9wiOhVZLloIwCZiZdNqzDOvAsjVXomsU6pd2DEb25LWAW//A==
+  dependencies:
+    ci-info "2.0.0"
+    configstore "^5.0.1"
+    file-type "^16.5.3"
+    fs-extra "^8.1.0"
+    node-object-hash "^2.3.8"
+    proper-lockfile "^4.1.2"
+    tmp "^0.2.1"
+    xdg-basedir "^4.0.0"
+
 gatsby-design-tokens@^2.0.2:
   version "2.0.13"
   resolved "https://registry.yarnpkg.com/gatsby-design-tokens/-/gatsby-design-tokens-2.0.13.tgz#33f5fa84a399b821ae224b9921847d7b37c45600"
