@@ -17,6 +17,7 @@ const cheerio = require(`cheerio`)
 const { slash } = require(`gatsby-core-utils`)
 const chalk = require(`chalk`)
 
+// Should be the same as https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-sharp/src/supported-extensions.js
 const supportedExtensions = {
   jpeg: true,
   jpg: true,
