@@ -36,7 +36,6 @@ const errorCodesToRetry = [
 export async function fetchContentfulAsset({
   url,
   reporter,
-  cache,
   maxAttempts = 3,
   ...restArgs
 }) {
@@ -50,7 +49,6 @@ export async function fetchContentfulAsset({
         try {
           const filename = await fetchRemoteFile({
             url,
-            cache,
             ...restArgs,
           })
 

@@ -134,7 +134,7 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
   }
 }
 
-async function sqipContentful({ type, cache, store }) {
+async function sqipContentful({ type, cache: originalCache, store }) {
   const {
     schemes: { ImageResizingBehavior, ImageCropFocusType },
   } = require(`gatsby-source-contentful`)
@@ -196,6 +196,16 @@ async function sqipContentful({ type, cache, store }) {
         const {
           fetchContentfulAsset,
         } = require(`gatsby-source-contentful/fetch-contentful-asset`)
+
+        const { getCacheFolder } = require(`gatsby-source-contentful/config`)
+
+        const CACHE_FOLDER = getCacheFolder({ store })
+
+        const cache = {
+          get: key => originalCache.get(key),
+          set: (key, value) => originalCache.set(key, value),
+          directory: CACHE_FOLDER,
+        }
 
         const {
           file: { contentType, url: imgUrl, fileName },
