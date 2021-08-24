@@ -90,11 +90,17 @@ describe(`fetch-contentful-assets`, () => {
     const url = [host, path].join(``)
     const scope = nock(host).get(path).twice().reply(404)
 
-    await expect(
-      fetchContentfulAsset({ url, reporter, cache })
-    ).rejects.toThrowError(
-      `Unable to fetch asset from https://images.ctfassets.net/no-retry-on-404.jpg. Response code 404 (Not Found)`
-    )
+    await expect(fetchContentfulAsset({ url, reporter, cache })).rejects
+      .toThrowErrorMatchingInlineSnapshot(`
+"Unable to fetch Contentful asset:
+https://images.ctfassets.net/no-retry-on-404.jpg
+---
+Reason: Response code 404 (Not Found)
+---
+Details:
+{\\"statusCode\\":404}
+---"
+`)
 
     expect(reporter.verbose).not.toHaveBeenCalled()
     expect(scope.isDone()).toBeFalsy()
@@ -113,10 +119,10 @@ describe(`fetch-contentful-assets`, () => {
 
     expect(reporter.verbose.mock.calls).toEqual([
       [
-        `Failed to fetch https://images.ctfassets.net/retry-on-503.jpg due to 503 error. Failed after attempt #1.`,
+        `Failed to fetch https://images.ctfassets.net/retry-on-503.jpg due to 503 error. Attempt #1.`,
       ],
       [
-        `Failed to fetch https://images.ctfassets.net/retry-on-503.jpg due to 503 error. Failed after attempt #2.`,
+        `Failed to fetch https://images.ctfassets.net/retry-on-503.jpg due to 503 error. Attempt #2.`,
       ],
     ])
     expect(scope.isDone()).toBeTruthy()
@@ -128,24 +134,51 @@ describe(`fetch-contentful-assets`, () => {
 
     const scope = nock(host).get(path).times(3).reply(503)
 
-    await expect(
-      fetchContentfulAsset({ url, reporter, cache })
-    ).rejects.toThrowError(
-      `Unable to fetch asset from https://images.ctfassets.net/stop-retry-after-3-attempts.jpg. Exceeded maximum retry attempts (3)`
-    )
+    await expect(fetchContentfulAsset({ url, reporter, cache })).rejects
+      .toThrowErrorMatchingInlineSnapshot(`
+"Unable to fetch Contentful asset:
+https://images.ctfassets.net/stop-retry-after-3-attempts.jpg
+---
+Reason: Exceeded maximum retry attempts (3)
+---
+Details:
+{}
+---"
+`)
 
     expect(reporter.verbose.mock.calls).toEqual([
       [
-        `Failed to fetch https://images.ctfassets.net/stop-retry-after-3-attempts.jpg due to 503 error. Failed after attempt #1.`,
+        `Failed to fetch https://images.ctfassets.net/stop-retry-after-3-attempts.jpg due to 503 error. Attempt #1.`,
       ],
       [
-        `Failed to fetch https://images.ctfassets.net/stop-retry-after-3-attempts.jpg due to 503 error. Failed after attempt #2.`,
+        `Failed to fetch https://images.ctfassets.net/stop-retry-after-3-attempts.jpg due to 503 error. Attempt #2.`,
       ],
       [
-        `Failed to fetch https://images.ctfassets.net/stop-retry-after-3-attempts.jpg due to 503 error. Failed after attempt #3. Aborting.`,
+        `Failed to fetch https://images.ctfassets.net/stop-retry-after-3-attempts.jpg due to 503 error. Attempt #3. Retry limit reached. Aborting.`,
       ],
     ])
     expect(scope.pendingMocks()).toHaveLength(0)
+    expect(scope.isDone()).toBeTruthy()
+  })
+
+  it(`retries on network errors`, async () => {
+    jest.setTimeout(3000)
+
+    const path = `/network-errors.jpg`
+    const url = [host, path].join(``)
+    const scope = nock(host)
+      .get(path)
+      .delay({ head: 1000, body: 1000 })
+      .replyWithError({ code: `ECONNRESET` })
+      .get(path)
+      .reply(200)
+
+    await fetchContentfulAsset({ url, reporter, cache })
+
+    expect(reporter.verbose).toHaveBeenCalledWith(
+      `Failed to fetch https://images.ctfassets.net/network-errors.jpg due to ECONNRESET error. Attempt #1.`
+    )
+    expect(reporter.verbose).toHaveBeenCalledTimes(1)
     expect(scope.isDone()).toBeTruthy()
   })
 })

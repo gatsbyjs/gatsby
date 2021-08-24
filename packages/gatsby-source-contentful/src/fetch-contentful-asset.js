@@ -22,6 +22,16 @@ const queue = new PQueue({
 
 // Based on the defaults of https://github.com/JustinBeckwith/retry-axios
 const statusCodesToRetry = [...range(100, 200), 429, ...range(500, 600)]
+const errorCodesToRetry = [
+  `ETIMEDOUT`,
+  `ECONNRESET`,
+  `EADDRINUSE`,
+  `ECONNREFUSED`,
+  `EPIPE`,
+  `ENOTFOUND`,
+  `ENETUNREACH`,
+  `EAI_AGAIN`,
+]
 
 export async function fetchContentfulAsset({
   url,
@@ -37,7 +47,6 @@ export async function fetchContentfulAsset({
       while (attempts <= maxAttempts) {
         // Fetch the asset
         try {
-          // Skip cache to to force a new network request to the asset
           const filename = await fetchRemoteFile({
             url,
             cache,
@@ -47,10 +56,15 @@ export async function fetchContentfulAsset({
           return filename
         } catch (err) {
           // Retry on given status codes
-          if (err.statusCode && statusCodesToRetry.includes(err.statusCode)) {
-            let logMessage = `Failed to fetch ${url} due to ${err.statusCode} error. Failed after attempt #${attempts}.`
+          if (
+            (err.statusCode && statusCodesToRetry.includes(err.statusCode)) ||
+            (err.code && errorCodesToRetry.includes(err.code))
+          ) {
+            let logMessage = `Failed to fetch ${url} due to ${
+              err.statusCode || err.code
+            } error. Attempt #${attempts}.`
             if (attempts === maxAttempts) {
-              logMessage = `${logMessage} Aborting.`
+              logMessage = `${logMessage} Retry limit reached. Aborting.`
             }
             reporter.verbose(logMessage)
             attempts++
@@ -65,7 +79,29 @@ export async function fetchContentfulAsset({
     return result
   } catch (err) {
     // Throw user friendly error
-    err.message = `Unable to fetch asset from ${url}. ${err.message}`
+    err.message = [
+      `Unable to fetch Contentful asset:`,
+      url,
+      `---`,
+      `Reason: ${err.message}`,
+      `---`,
+      `Details:`,
+      JSON.stringify({
+        headers: restArgs.headers,
+        httpOpts: restArgs.httpOpts,
+        code: err.code,
+        statusCode: err.statusCode,
+        options: err.options,
+        request: err.request,
+        response: err.response,
+      }),
+      `---`,
+    ].join(`\n`)
+
+    err.url = url
+    err.headers = restArgs.headers
+    err.httpOpts = restArgs.httpOpts
+
     throw err
   }
 }
