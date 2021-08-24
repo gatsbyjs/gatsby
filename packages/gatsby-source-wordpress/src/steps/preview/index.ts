@@ -322,36 +322,41 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
     url,
   } = getPluginOptions()
 
-  const { hostname: settingsHostname } = urlUtil.parse(url)
-  const { hostname: remoteHostname } = urlUtil.parse(webhookBody.remoteUrl)
+  // some versions of WPGatsby don't send a remoteUrl on every webhook.
+  // if we check this for every webhookBody errors will occur!
+  if (webhookBody.remoteUrl) {
+    // check if we're receiving preview data fromt the right WP backend
+    const { hostname: settingsHostname } = urlUtil.parse(url)
+    const { hostname: remoteHostname } = urlUtil.parse(webhookBody.remoteUrl)
 
-  if (settingsHostname !== remoteHostname) {
-    const sendPreviewStatus = createPreviewStatusCallback({
-      previewData: webhookBody,
-      reporter,
-    })
+    if (settingsHostname !== remoteHostname) {
+      const sendPreviewStatus = createPreviewStatusCallback({
+        previewData: webhookBody,
+        reporter,
+      })
 
-    await sendPreviewStatus({
-      status: `RECEIVED_PREVIEW_DATA_FROM_WRONG_URL`,
-      context: `check that the preview data came from the right URL.`,
-      passedNode: {
-        modified: webhookBody.modified,
-        databaseId: webhookBody.parentDatabaseId,
-      },
-      graphqlEndpoint: webhookBody.remoteUrl,
-    })
+      await sendPreviewStatus({
+        status: `RECEIVED_PREVIEW_DATA_FROM_WRONG_URL`,
+        context: `check that the preview data came from the right URL.`,
+        passedNode: {
+          modified: webhookBody.modified,
+          databaseId: webhookBody.parentDatabaseId,
+        },
+        graphqlEndpoint: webhookBody.remoteUrl,
+      })
 
-    reporter.warn(
-      formatLogMessage(
-        `Received preview data from a different remote URL than the one specified in plugin options. Preview will not work. Please send preview requests from the WP instance configured in gatsby-config.js.\n\n ${chalk.bold(
-          `Remote URL:`
-        )} ${webhookBody.remoteUrl}\n ${chalk.bold(
-          `Plugin options URL:`
-        )} ${url}\n\n`
+      reporter.warn(
+        formatLogMessage(
+          `Received preview data from a different remote URL than the one specified in plugin options. Preview will not work. Please send preview requests from the WP instance configured in gatsby-config.js.\n\n ${chalk.bold(
+            `Remote URL:`
+          )} ${webhookBody.remoteUrl}\n ${chalk.bold(
+            `Plugin options URL:`
+          )} ${url}\n\n`
+        )
       )
-    )
 
-    return
+      return
+    }
   }
 
   const inPreviewDebugMode =
