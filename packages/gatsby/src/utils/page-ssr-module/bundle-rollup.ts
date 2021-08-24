@@ -21,7 +21,7 @@ const outputOptions = {
   format: `cjs`,
 }
 
-export async function createPageSSRBundle(): Promise<void> {
+export async function createPageSSRBundle(): Promise<any> {
   const { program, components } = store.getState()
   const webpackStats = await readWebpackStats(
     path.join(program.directory, `public`)

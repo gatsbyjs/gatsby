@@ -13,7 +13,7 @@ import { writeStaticQueryContext } from "../static-query-utils"
 const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
 const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
 
-export async function createPageSSRBundle(): Promise<void> {
+export async function createPageSSRBundle(): Promise<any> {
   const { program, components } = store.getState()
   const webpackStats = await readWebpackStats(
     path.join(program.directory, `public`)
