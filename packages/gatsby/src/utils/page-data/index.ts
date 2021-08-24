@@ -3,7 +3,8 @@ import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import fastq from "fastq"
 import path from "path"
-import { createContentDigest } from "gatsby-core-utils"
+
+import { createContentDigest, generatePageDataPath } from "gatsby-core-utils"
 import { websocketManager } from "../websocket-manager"
 import { isWebpackStatusPending } from "../webpack-status"
 import { store } from "../../redux"
@@ -12,7 +13,6 @@ import { isLmdbStore } from "../../datastore"
 import {
   writePageData,
   IPageDataWithQueryResult,
-  getFilePath,
   fixedPagePath,
 } from "./write-page-data"
 import type GatsbyCacheLmdb from "../cache-lmdb"
@@ -27,7 +27,7 @@ export async function readPageData(
   publicDir: string,
   pagePath: string
 ): Promise<IPageDataWithQueryResult> {
-  const filePath = getFilePath(publicDir, pagePath)
+  const filePath = generatePageDataPath(publicDir, pagePath)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
 
   return JSON.parse(rawPageData)
@@ -37,7 +37,7 @@ export async function removePageData(
   publicDir: string,
   pagePath: string
 ): Promise<void> {
-  const filePath = getFilePath(publicDir, pagePath)
+  const filePath = generatePageDataPath(publicDir, pagePath)
 
   if (fs.existsSync(filePath)) {
     return await fs.remove(filePath)
@@ -47,7 +47,7 @@ export async function removePageData(
 }
 
 export function pageDataExists(publicDir: string, pagePath: string): boolean {
-  return fs.existsSync(getFilePath(publicDir, pagePath))
+  return fs.existsSync(generatePageDataPath(publicDir, pagePath))
 }
 
 let lmdbPageQueryResultsCache: GatsbyCacheLmdb
@@ -279,7 +279,7 @@ export async function handleStalePageData(): Promise<void> {
 
   const expectedPageDataFiles = new Set<string>()
   store.getState().pages.forEach(page => {
-    expectedPageDataFiles.add(getFilePath(`public`, page.path))
+    expectedPageDataFiles.add(generatePageDataPath(`public`, page.path))
   })
 
   const deletionPromises: Array<Promise<void>> = []
