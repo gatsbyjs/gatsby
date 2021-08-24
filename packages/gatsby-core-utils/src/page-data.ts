@@ -15,3 +15,20 @@ export function generatePageDataPath(
     `page-data.json`
   )
 }
+
+export function reverseFixedPagePath(pageDataRequestPath: string): string {
+  return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
+}
+
+export function getPagePathFromPageDataPath(
+  pageDataPath: string
+): string | null {
+  const matches = pageDataPath.matchAll(
+    /^\/?page-data\/(.+)\/page-data.json$/gm
+  )
+  for (const [, requestedPagePath] of matches) {
+    return reverseFixedPagePath(requestedPagePath)
+  }
+
+  return null
+}

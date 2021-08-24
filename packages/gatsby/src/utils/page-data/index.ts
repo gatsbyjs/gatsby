@@ -19,10 +19,6 @@ import type GatsbyCacheLmdb from "../cache-lmdb"
 
 export { fixedPagePath, IPageDataWithQueryResult }
 
-export function reverseFixedPagePath(pageDataRequestPath: string): string {
-  return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
-}
-
 export async function readPageData(
   publicDir: string,
   pagePath: string

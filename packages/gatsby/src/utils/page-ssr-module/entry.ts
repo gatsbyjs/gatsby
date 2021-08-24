@@ -9,7 +9,10 @@ import type { IPageDataWithQueryResult } from "../page-data/write-page-data"
 import * as path from "path"
 import * as fs from "fs-extra"
 import { writePageData, fixedPagePath } from "../page-data/write-page-data"
-import { generateHtmlPath } from "gatsby-core-utils"
+import {
+  generateHtmlPath,
+  getPagePathFromPageDataPath,
+} from "gatsby-core-utils"
 // @ts-ignore render-page import will become valid later on (it's marked as external)
 import htmlComponentRenderer from "./render-page"
 
@@ -38,7 +41,14 @@ export async function getData({
   pathName: string
 }): Promise<ISSRData> {
   // 1. Find a page for pathname
-  const page = graphqlEngine.findPageByPath(pathName)
+  let page = graphqlEngine.findPageByPath(pathName)
+  if (!page) {
+    const potentialPagePath = getPagePathFromPageDataPath(pathName)
+    if (potentialPagePath) {
+      pathName = potentialPagePath
+      page = graphqlEngine.findPageByPath(pathName)
+    }
+  }
   if (!page) {
     // page not found, nothing to run query for
     throw new Error(`Page for "${pathName}" not found`)
