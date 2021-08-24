@@ -179,7 +179,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
         }
 
         const pathName = reverseFixedPagePath(requestedPagePath)
-        const page = graphqlEngine.findPageByPath(req.path)
+        const page = graphqlEngine.findPageByPath(pathName)
 
         if (page && page.mode === `DSR`) {
           const data = await getData({ pathName, graphqlEngine })
