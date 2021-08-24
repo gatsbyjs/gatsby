@@ -88,18 +88,29 @@ export async function fetchContentfulAsset({
       `---`,
       `Reason: ${err.message}`,
       `---`,
-      `Details:`,
-      JSON.stringify({
-        headers: restArgs.headers,
-        httpOpts: restArgs.httpOpts,
-        code: err.code,
-        statusCode: err.statusCode,
-        options: err.options,
-        request: err.request,
-        response: err.response,
-      }),
-      `---`,
     ].join(`\n`)
+
+    // Gather details about what went wrong from the error object and the request
+    const details = Object.entries({
+      headers: restArgs.headers,
+      httpOpts: restArgs.httpOpts,
+      code: err.code,
+      statusCode: err.statusCode,
+      options: err.options,
+      request: err.request,
+      response: err.response,
+    })
+      // Remove undefined values
+      .reduce((a, [k, v]) => (v === undefined ? a : ((a[k] = v), a)), {})
+
+    if (Object.keys(details).length) {
+      err.message = [
+        err.message,
+        `Details:`,
+        JSON.stringify(details),
+        `---`,
+      ].join(`\n`)
+    }
 
     err.url = url
     err.headers = restArgs.headers

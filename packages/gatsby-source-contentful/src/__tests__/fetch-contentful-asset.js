@@ -141,9 +141,6 @@ Details:
 https://images.ctfassets.net/stop-retry-after-3-attempts.jpg
 ---
 Reason: Exceeded maximum retry attempts (3)
----
-Details:
-{}
 ---"
 `)
 
