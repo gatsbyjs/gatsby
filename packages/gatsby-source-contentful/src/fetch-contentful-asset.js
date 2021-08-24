@@ -37,7 +37,7 @@ export async function fetchContentfulAsset({
   url,
   reporter,
   cache,
-  maxRetries: maxAttempts = 3,
+  maxAttempts = 3,
   ...restArgs
 }) {
   let attempts = 1
