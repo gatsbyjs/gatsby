@@ -12,28 +12,29 @@ async function run() {
   const branchName = `bot-changelog-update`
   try {
     await execa(`git`, [`checkout`, `-b`, branchName])
-  } catch(e) {
+  } catch (e) {
     await execa(`git`, [`checkout`, branchName])
   }
 
-  const updatedPackages = []
+  const updatedchangelogs = []
   for (const pkg of getAllPackageNames()) {
     try {
       const updated = await updateChangelog(pkg)
       if (updated) {
-        updatedPackages.push(pkg)
+        updatedchangelogs.push(`packages/${pkg}/CHANGELOG.md`)
       }
     } catch (e) {
       console.error(`${pkg}: ${e.stack}`)
     }
   }
 
-  if (!updatedPackages.length) {
+  if (!updatedchangelogs.length) {
     console.log(`Nothing to do`)
     return
   }
 
   const commitMessage = `DO NOT MERGE: testing`
+  await execa(`git`, [`add`, ...updatedchangelogs])
   await execa(`git`, [`commit`, `-m`, commitMessage])
   await execa(`git`, [`push`, `origin`, `${branchName}:${branchName}`])
 
@@ -47,7 +48,7 @@ async function run() {
     title: commitMessage,
     head: branchName,
     base: `vladar/generate-changelogs`,
-    body: `Update changelogs of the following packages:\n\n${updatedPackages
+    body: `Updated following changelogs:\n\n${updatedchangelogs
       .map(p => `- ${p}`)
       .join(`\n`)}`,
   })
