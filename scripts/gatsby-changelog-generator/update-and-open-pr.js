@@ -2,8 +2,8 @@ const execa = require(`execa`)
 const { Octokit } = require(`@octokit/rest`)
 const { getAllPackageNames, updateChangelog } = require(`./generate`)
 
-if (!process.env.GITHUB_ACCESS_TOKEN) {
-  throw new Error(`GITHUB_ACCESS_TOKEN env var not set`)
+if (!process.env.GITHUB_BOT_AUTH_TOKEN) {
+  throw new Error(`GITHUB_BOT_AUTH_TOKEN env var not set`)
 }
 
 async function run() {
@@ -40,7 +40,7 @@ async function run() {
   await execa(`git`, [`push`, `-u`, `origin`, branch])
 
   const octokit = new Octokit({
-    auth: `token ${process.env.GITHUB_ACCESS_TOKEN}`,
+    auth: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
   })
 
   try {
