@@ -27,7 +27,7 @@ Now that your Builds webhook is set up, when content is updated in WordPress you
 
 ## Setting Up Preview
 
-Once configured in the GatsbyJS settings page in wp-admin, Previews will work out of the box. See the [feature page on Preview](../features/preview.md) for more information about how Preview works. WPGatsby has been updated to use Gatsby Cloud's new Preview Loader service. Make sure you've upgraded to the latest versions of WPGatsby and `gatsby-source-wordpress`. For documentation about legacy previews where the preview loader happened in WordPress [see here](./configuring-previews-legacy.md).
+Once configured in the GatsbyJS settings page in wp-admin, Previews will work out of the box. See the [feature page on Preview](../features/preview.md) for more information about how Preview works. WPGatsby has been updated to use Gatsby Cloud's new Content Sync service, which is a service that handles the loading view, error handling, and redirection for users that are previewing content. Make sure you've upgraded to the latest versions of WPGatsby, `gatsby`, and `gatsby-source-wordpress`. For documentation about legacy previews where the preview loader used to live on the WordPress side [see here](./configuring-previews-legacy.md).
 
 ### Connecting Preview
 
@@ -47,15 +47,15 @@ If you don't see this settings page, or you don't see these 4 fields, make sure 
 
 When this checkbox is checked, WPGatsby will override the functionality of the WordPress "preview" button in the page/post edit screen. Clicking "preview" will open the regular WordPress preview template, but the WP frontend will be replaced with your Gatsby Preview instance.
 
-#### 2. Check the "Use Gatsby Preview Loader?" Checkbox
+#### 2. Check the "Use Gatsby Content Sync?" Checkbox
 
 When this checkbox is checked, WPGatsby will use the new Gatsby Cloud Content Loader service for previews. Instead of WPGatsby handling loading previews and redirecting to the right page, Gatsby Cloud will now do it instead. This is optional but recommended as this will become the default in the future and [legacy previews](./configuring-previews-legacy.md) will be removed.
 
-#### 3. Fill the "Preview Loader URL" Field
+#### 3. Fill the "Gatsby Content Sync URL" Field
 
-This field should be filled with the Content Loader URL of your Gatsby Preview instance.
+This field should be filled with the Content Sync URL of your Gatsby Preview instance.
 
-To find your **Preview Instance URL**, navigate to the "Site Settings" tab in [Gatsby Cloud](https://www.gatsbyjs.com/dashboard/sites), scroll down until you see the "Content Loader URL", and copy the URL displayed there.
+To find your **Content Sync URL**, navigate to the "Site Settings" tab in [Gatsby Cloud](https://www.gatsbyjs.com/dashboard/sites), scroll down until you see the "Content Sync URL", and copy the URL displayed there.
 
 #### 4. Fill the "Preview Webhook" Field
 

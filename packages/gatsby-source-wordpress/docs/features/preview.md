@@ -1,6 +1,6 @@
 # Preview
 
-This plugin supports [Preview](https://www.gatsbyjs.com/preview/) and has been designed to replicate the normal WordPress admin preview experience as closely as possible.
+This plugin supports [Preview](https://www.gatsbyjs.com/preview/) and has been designed to make the WordPress admin preview experience as seamless as possible.
 
 ## How Preview works
 
