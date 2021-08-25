@@ -5,6 +5,7 @@ const execa = require(`execa`)
 const { compare, prerelease, patch, gt, lt, parse, valid } = require(`semver`)
 const gitRawCommits = require(`git-raw-commits`)
 const conventionalCommitsParser = require(`conventional-commits-parser`)
+const dateFormat = require(`dateformat`)
 const { renderHeader, renderVersion } = require(`./render`)
 
 class StreamFilter extends stream.Transform {
@@ -26,8 +27,12 @@ class StreamFilter extends stream.Transform {
 const streamFilter = filterCallback => new StreamFilter(filterCallback)
 
 const monorepoRoot = () => process.cwd()
+
+const changelogRelativePath = packageName =>
+  path.join(`packages`, packageName, `CHANGELOG.md`)
+
 const changelogPath = packageName =>
-  path.join(monorepoRoot(), `packages`, packageName, `CHANGELOG.md`)
+  path.join(monorepoRoot(), changelogRelativePath(packageName))
 
 // tags are lerna-style: package@version
 const tagToVersion = tag => tag.split(`@`)[1]
@@ -90,43 +95,20 @@ function findFirstReleaseProcessVersion(packageName, versions) {
   return version
 }
 
-// Map of messed-up releases
-// (e.g. when plugin major changes were merged before bumping its version to -next.0\
-// and so are not seen by the changelog-generator)
-const tagOverrides = new Map([
-  [
-    // https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful%404.0.0/packages/gatsby-source-contentful
-    // (gatsby-source-contentful@4.0.0-next.0 published after commit with a breaking change)
-    `gatsby-source-contentful@4.0.0-next.0`,
-    `5bc1134c7d7f346bfdab0516e1d8660407dde63d`,
-  ],
-  [
-    // https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-emotion%405.0.0/packages/gatsby-plugin-emotion
-    // (gatsby-plugin-emotion@5.0.0-next.0 published after breaking change)
-    `gatsby-plugin-emotion@5.0.0-next.0`,
-    `fe8346543838a1eeffd1bb9b1b278e99135a34d1`,
-  ],
-  [
-    // https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress%404.0.0/packages/gatsby-source-wordpress
-    // (no pre-minor tag at all)
-    `gatsby-source-wordpress@4.0.0-next.0`,
-    `7797522184600284a44929cad5b27f2388eb13ee`,
-  ],
-])
+async function buildChangelogEntry(context) {
+  const { pkg, version, date, fromTag, toTag, gatsbyRelease = `` } = context
 
-async function buildChangelogEntry(pkg, version, prevVersion) {
-  const fromTag = prevVersion ? `${pkg}@${prevVersion}` : ``
-  const toTag = version ? `${pkg}@${version}` : ``
-
+  // See https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/git-raw-commits
   const gitRawCommitsOpts = {
-    from: tagOverrides.get(fromTag) || fromTag,
-    to: tagOverrides.get(toTag) || toTag,
+    from: fromTag,
+    to: toTag,
     path: `./packages/${pkg}`,
     format: "%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%cs",
   }
   const gitRawExecOpts = {}
   const commitsStream = gitRawCommits(gitRawCommitsOpts, gitRawExecOpts)
 
+  // See https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-commits-parser
   const parserOpts = {
     headerPattern: /^\s*(\w*)(?:\(([\w\$\.\-\* \,]*)\))?\: (.*)$/,
     headerCorrespondence: [`type`, `scope`, `subject`],
@@ -150,17 +132,32 @@ async function buildChangelogEntry(pkg, version, prevVersion) {
     const commitGroup = commitGroups.get(type)
     commitGroup.push(commit)
   }
-  const context = {
-    version: version,
-    fromTag,
-    toTag,
-    date: await getTagDate(toTag),
-    gatsbyRelease:
-      patch(version) === 0 ? await resolveGatsbyRelease(toTag) : ``,
-    pkg,
-  }
   return renderVersion(context, commitGroups)
 }
+
+// Map of messed-up releases
+// (e.g. when plugin major changes were merged before bumping its version to -next.0\
+// and so are not seen by the changelog-generator)
+const tagOverrides = new Map([
+  [
+    // https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful%404.0.0/packages/gatsby-source-contentful
+    // (gatsby-source-contentful@4.0.0-next.0 published after commit with a breaking change)
+    `gatsby-source-contentful@4.0.0-next.0`,
+    `5bc1134c7d7f346bfdab0516e1d8660407dde63d`,
+  ],
+  [
+    // https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-emotion%405.0.0/packages/gatsby-plugin-emotion
+    // (gatsby-plugin-emotion@5.0.0-next.0 published after breaking change)
+    `gatsby-plugin-emotion@5.0.0-next.0`,
+    `fe8346543838a1eeffd1bb9b1b278e99135a34d1`,
+  ],
+  [
+    // https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress%404.0.0/packages/gatsby-source-wordpress
+    // (no pre-minor tag at all)
+    `gatsby-source-wordpress@4.0.0-next.0`,
+    `7797522184600284a44929cad5b27f2388eb13ee`,
+  ],
+])
 
 async function generateChangelog(packageName, fromVersion = null) {
   const allVersions = await getAllVersions(packageName)
@@ -197,8 +194,19 @@ async function generateChangelog(packageName, fromVersion = null) {
   })
 
   const chunks = []
-  for (const [from, to] of versionRanges.reverse()) {
-    const chunk = await buildChangelogEntry(packageName, to, from)
+  for (const [fromVersion, toVersion] of versionRanges.reverse()) {
+    const fromTag = `${packageName}@${fromVersion}`
+    const toTag = `${packageName}@${toVersion}`
+
+    const chunk = await buildChangelogEntry({
+      pkg: packageName,
+      version: toVersion,
+      fromTag: tagOverrides.get(fromTag) || fromTag,
+      toTag: tagOverrides.get(toTag) || toTag,
+      date: await getTagDate(toTag),
+      gatsbyRelease:
+        patch(toVersion) === 0 ? await resolveGatsbyRelease(toTag) : ``,
+    })
     chunks.push(chunk)
   }
   return chunks.join(`\n`)
@@ -234,6 +242,20 @@ async function regenerateChangelog(packageName) {
   console.log(`Updated ${path}`)
 }
 
+function addChangelogEntries(packageName, entries) {
+  const header = renderHeader(packageName)
+  const updatedChangelogParts = [
+    header,
+    changeLog.trimRight(),
+    contents.substr(header.length),
+  ]
+  fs.writeFileSync(changelogPath(packageName), updatedChangelogParts.join(``))
+}
+
+/**
+ * Add new versions to the changelog starting from the most recent version listed there
+ * (incremental updates)
+ */
 async function updateChangelog(packageName) {
   const path = changelogPath(packageName)
   const contents = String(fs.readFileSync(path))
@@ -251,17 +273,78 @@ async function updateChangelog(packageName) {
     )
     return
   }
-  const header = renderHeader(packageName)
-  const updatedChangelogParts = [
-    header,
-    changeLog.trimRight(),
-    contents.substr(header.length),
-  ]
 
-  fs.writeFileSync(path, updatedChangelogParts.join(`\n`))
+  addChangelogEntries(packageName, changeLog)
   console.log(`Updated ${path}`)
+}
+
+/**
+ * Hook into publishing process and add new release entry to changelog.
+ *
+ * Should be used inside lerna "version" hook (version is changed in package.json but not committed/tagged yet).
+ * See https://github.com/lerna/lerna/tree/main/commands/version#lifecycle-scripts
+ */
+async function onVersion() {
+  // get list of changed files (package.json of published packages are expected to be dirty)
+  const { stdout } = await execa("git", ["ls-files", "-m"])
+  const packages = String(stdout).split(`\n`).map(toPackageName).filter(Boolean)
+  const gatsbyVersion = packages.includes(`gatsby`)
+    ? parse(resolvePackageVersion(`gatsby`))
+    : undefined
+
+  const updatedChangelogs = []
+  for (const packageName of packages) {
+    try {
+      // Get the version to be published:
+      const version = resolvePackageVersion(packageName)
+
+      // Ignore pre-releases
+      if (!isStableVersion(version)) continue
+
+      // Get the most recent version to compare against
+      const lastVersion = getAllVersions(packageName)
+        .filter(v => isStableVersion(v) || isBranchCutPreminorVersion(v))
+        .slice(-1)
+
+      const entry = await buildChangelogEntry({
+        pkg,
+        version,
+        fromTag: lastVersion ? `${pkg}@${lastVersion}` : ``,
+        toTag: `HEAD`,
+        date: dateFormat(new Date(), `yyyy-mm-dd`),
+        gatsbyRelease:
+          gatsbyVersion && gatsbyVersion.patch === 0
+            ? `${gatsbyVersion.major}.${gatsbyVersion.minor}`
+            : ``,
+      })
+
+      if (entry) {
+        addChangelogEntries(packageName, entry)
+        updatedChangelogs.push(changelogRelativePath(packageName))
+      }
+    } catch (error) {
+      console.error(`${pkg} error: ${error.message}`)
+    }
+  }
+  if (updatedChangelogs.length) {
+    await execa("git", ["add", ...updatedChangelogs])
+  }
+
+  function toPackageName(path) {
+    const parts = path.split(/[\\/]+/)
+    return parts[parts.length - 1] === `package.json` &&
+      parts[parts.length - 3] === `packages`
+      ? parts[parts.length - 2]
+      : undefined
+  }
+
+  function resolvePackageVersion(packageName) {
+    const packagePath = path.join(`packages`, packageName, `package.json`)
+    return JSON.parse(fs.readFileSync(packagePath)).version
+  }
 }
 
 exports.getAllPackageNames = getAllPackageNames
 exports.regenerateChangelog = regenerateChangelog
 exports.updateChangelog = updateChangelog
+exports.onVersion = onVersion
