@@ -7,10 +7,15 @@ if (!process.env.GITHUB_ACCESS_TOKEN) {
 }
 
 async function run() {
+  // Make sure all tags exist
+  await execa(`git`, [`fetch`, `--tags`, `origin`])
+
   // Always use the same branch
   const branchName = `bot-changelog-update`
-
-  await execa(`git`, [`fetch`, `--tags`, `origin`])
+  try {
+    await execa(`git`, [`branch`, `-D`, branchName])
+    // eslint-disable-next-line no-empty
+  } catch {}
   try {
     await execa(`git`, [`checkout`, `-b`, branchName, `origin/${branchName}`])
   } catch (e) {
