@@ -1,4 +1,5 @@
 const execa = require(`execa`)
+const { Octokit } = require(`@octokit/rest`)
 const { getAllPackageNames, updateChangelog } = require(`./generate`)
 
 if (!process.env.GITHUB_ACCESS_TOKEN) {
@@ -6,8 +7,12 @@ if (!process.env.GITHUB_ACCESS_TOKEN) {
 }
 
 async function run() {
-  await execa(`git`, [`checkout`, `master`])
-  await execa(`git`, [`pull`, `--tags`])
+  // TODO: save current branch/commit/hash (and restore on complete)
+  const base = `vladar/generate-changelogs`
+  const branch = `changelog-update-${Date.now()}`
+
+  const args = [`checkout`, `-b`, branch, `origin/${base}`, `--no-track`]
+  await execa(`git`, args)
 
   const updatedPackages = []
   for (const pkg of getAllPackageNames()) {
@@ -26,24 +31,31 @@ async function run() {
     return
   }
 
-  // Commit to the same branch
-  const branchName = `bot-changelog-update`
   const commitMessage = `DO NOT MERGE: testing`
-  try {
-    await execa(`git`, [`checkout`, `-b`, branchName, `origin/${branchName}`])
-  } catch {
-    await execa(`git`, [`checkout`, branchName])
-  }
+  const updatedChangelogs = updatedPackages.map(
+    pkg => `packages/${pkg}/CHANGELOG.md`
+  )
+  await execa(`git`, [`add`, ...updatedChangelogs])
   await execa(`git`, [`commit`, `-m`, commitMessage])
+  await execa(`git`, [`push`, `-u`, `origin`, branch])
+
+  const octokit = new Octokit({
+    auth: `token ${process.env.GITHUB_ACCESS_TOKEN}`,
+  })
 
   try {
+    const owner = `gatsbyjs`
+    const repo = `gatsby`
+
+    // Note: PR may already exist for this branch.
+    // Then it will throw but we don't care too much
     const pr = await octokit.pulls.create({
-      owner: `gatsby`,
-      repo: `gatsbyjs`,
+      owner,
+      repo,
       title: commitMessage,
-      head: branchName,
-      base: `master`,
-      body: `Update changelogs of the following packages:\n\n${updatedPackages
+      head: branch,
+      base,
+      body: `Updated changelogs of the following packages:\n\n${updatedPackages
         .map(p => `- ${p}`)
         .join(`\n`)}`,
     })
@@ -54,9 +66,11 @@ async function run() {
       owner,
       repo,
       issue_number: pr.data.number,
-      labels: [`bot: merge on green`],
+      labels: [`type: maintenance`],
     })
   } catch (e) {
-    console.log(e)
+    console.error(e)
   }
 }
+
+run()
