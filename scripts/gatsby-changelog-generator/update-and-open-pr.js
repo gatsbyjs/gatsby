@@ -35,8 +35,13 @@ async function run() {
     await execa(`git`, [`checkout`, branchName])
   }
   await execa(`git`, [`commit`, `-m`, commitMessage])
+  await execa(`git`, [`push`, `origin`, `${branchName}:${branchName}`])
 
   try {
+    const octokit = new Octokit({
+      auth: `token ${process.env.GITHUB_ACCESS_TOKEN}`,
+    })
+
     const pr = await octokit.pulls.create({
       owner: `gatsby`,
       repo: `gatsbyjs`,
@@ -57,6 +62,6 @@ async function run() {
       labels: [`bot: merge on green`],
     })
   } catch (e) {
-    console.log(e)
+    console.error(e)
   }
 }
