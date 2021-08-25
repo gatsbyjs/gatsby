@@ -3,6 +3,7 @@ import { formatLogMessage } from "~/utils/format-log-message"
 import isInteger from "lodash/isInteger"
 import { IPluginOptions } from "~/models/gatsby-api"
 import { GatsbyNodeApiHelpers } from "~/utils/gatsby-types"
+import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 interface IProcessorOptions {
   userPluginOptions: IPluginOptions
   helpers: GatsbyNodeApiHelpers
@@ -63,6 +64,15 @@ const optionsProcessors: Array<IOptionsProcessor> = [
 
       typeSettings.forEach(([typeName, settings]) => {
         const beforeChangeNodePath = settings?.beforeChangeNode
+
+        if (
+          usingGatsbyV4OrGreater &&
+          typeof beforeChangeNodePath === `function`
+        ) {
+          helpers.reporter.panic(
+            `Since Gatsby v4+ you cannot use the ${typeName}.beforeChangeNode option as a function. Please make the option a relative or absolute path to a JS file where the beforeChangeNode fn is the default export.`
+          )
+        }
 
         if (!beforeChangeNodePath || typeof beforeChangeNodePath !== `string`) {
           return
