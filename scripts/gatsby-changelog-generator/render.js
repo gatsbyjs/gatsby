@@ -19,11 +19,10 @@ function renderVersion(context, commitsByType) {
   const isPatch = patch(version) !== 0
   const commitGroups = Array.from(commitsByType)
   const hasCommits = commitGroups.some(([_, commits]) => commits.length > 0)
-  const compareUrl = `https://github.com/gatsbyjs/gatsby/compare/${fromTag}...${toTag}`
-  const releaseNotesUrl = `https://www.gatsbyjs.com/docs/reference/release-notes/${context.gatsbyRelease}`
+  const tagUrl = `https://github.com/gatsbyjs/gatsby/commits/${toTag}/packages/${pkg}`
 
   return `
-##${isPatch ? `#` : ``} [${version}](${compareUrl}) (${date})
+##${isPatch ? `#` : ``} [${version}](${tagUrl}) (${date})
 ${releaseNotes(gatsbyRelease)}
 ${
   hasCommits

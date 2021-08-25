@@ -2,7 +2,7 @@ const fs = require(`fs`)
 const path = require(`path`)
 const stream = require(`stream`)
 const execa = require(`execa`)
-const { compare, prerelease, patch, gte, lt, parse } = require(`semver`)
+const { compare, prerelease, patch, gt, lt, parse, valid } = require(`semver`)
 const gitRawCommits = require(`git-raw-commits`)
 const conventionalCommitsParser = require(`conventional-commits-parser`)
 const { renderHeader, renderVersion } = require(`./render`)
@@ -55,7 +55,11 @@ async function getTagDate(tag) {
   return result.stdout
 }
 
-async function getGatsbyRelease(tag) {
+/**
+ * E.g. resolveGatsbyRelease(`gatsby-plugin-emotion@6.11.0`) returns `3.11`
+ * Useful to link release notes in the changelog
+ */
+async function resolveGatsbyRelease(tag) {
   // git log -1 --format=%H gatsby-source-contentful@4.0.0
   let result = await execa(`git`, [`rev-list`, `-n`, `1`, tag])
   const hash = String(result.stdout)
@@ -71,17 +75,19 @@ async function getGatsbyRelease(tag) {
   return ``
 }
 
-const stableVersionRegex = /[\d]+\.[\d]+\.[\d]+$/
 const isStableVersion = v => prerelease(v) === null
-const isBranchCutPreminorVersion = v => {
-  const pre = prerelease(v)
-  return pre && pre[0] === `next` && pre[1] === 0
-}
-const haveSameMinor = (v1, v2) => {
-  // All patch version with the same
-  const tmp1 = parse(v1)
-  const tmp2 = parse(v2)
-  return tmp1.major === tmp2.major && tmp1.minor === tmp2.minor
+const isBranchCutPreminorVersion = v => v.endsWith(`.0-next.0`)
+
+function findFirstReleaseProcessVersion(packageName, versions) {
+  // Assuming versions are sorted in ascending order
+  const version = versions.find(version => version.endsWith(`-next.0`))
+  if (!version) {
+    throw new Error(
+      `Could not find the first release process version for ${packageName} ` +
+        `(searched through ${versions.length} existing tags for version "x.y.z-next.0")`
+    )
+  }
+  return version
 }
 
 // Map of messed-up releases
@@ -99,6 +105,12 @@ const tagOverrides = new Map([
     // (gatsby-plugin-emotion@5.0.0-next.0 published after breaking change)
     `gatsby-plugin-emotion@5.0.0-next.0`,
     `fe8346543838a1eeffd1bb9b1b278e99135a34d1`,
+  ],
+  [
+    // https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress%404.0.0/packages/gatsby-source-wordpress
+    // (no pre-minor tag at all)
+    `gatsby-source-wordpress@4.0.0-next.0`,
+    `7797522184600284a44929cad5b27f2388eb13ee`,
   ],
 ])
 
@@ -143,38 +155,12 @@ async function buildChangelogEntry(pkg, version, prevVersion) {
     fromTag,
     toTag,
     date: await getTagDate(toTag),
-    gatsbyRelease: patch(version) === 0 ? await getGatsbyRelease(toTag) : ``,
+    gatsbyRelease:
+      patch(version) === 0 ? await resolveGatsbyRelease(toTag) : ``,
     pkg,
   }
   return renderVersion(context, commitGroups)
 }
-
-function findFirstReleaseProcessVersion(packageName, versions) {
-  // Assuming versions are sorted ascending
-  const version = versions.find(version => version.endsWith(`-next.0`))
-  if (!version) {
-    throw new Error(
-      `Could not find the first release process version for ${packageName} ` +
-        `(searched through ${versions.length} existing tags for version "x.y.z-next.0")`
-    )
-  }
-  return version
-}
-
-// function findLatestVersionBeforeReleaseProcess(packageName, versions) {
-//   const firstReleaseProcessVersion = findFirstReleaseProcessVersion(
-//     packageName,
-//     versions
-//   )
-//   const version = versions.filter(v => lt(v, firstReleaseProcessVersion)).pop()
-//   if (!version) {
-//     throw new Error(
-//       `Could not find the first release process version for ${packageName} ` +
-//         `(searched through ${versions.length} existing tags for version "x.y.z-next.0")`
-//     )
-//   }
-//   return version
-// }
 
 async function generateChangelog(packageName, fromVersion = null) {
   const allVersions = await getAllVersions(packageName)
@@ -187,26 +173,33 @@ async function generateChangelog(packageName, fromVersion = null) {
   //    [`2.32.0`, `2.32.1`]]
   // (we can't do something like [2.31.5, 2.32.0] because those tags are in different branches,
   // and have no common history)
-  const branchCutPreminors = allVersions
-    .filter(v => isBranchCutPreminorVersion(v) && gte(v, startVersion))
-    .reverse()
+  const stableVersions = allVersions.filter(
+    v => isStableVersion(v) && gt(v, startVersion)
+  )
+  const preMinors = allVersions.filter(isBranchCutPreminorVersion)
+
+  const versionRanges = stableVersions.map((v, index, all) => {
+    if (index === 0) return [startVersion, v]
+    if (patch(v) === 0) {
+      // The key part: any minor should be compared with corresponding branch-cut pre-minor (not previous tag)
+      const preMinor = `${v}-next.0`
+      if (
+        !preMinors.includes(preMinor) &&
+        !tagOverrides.has(`${packageName}@${preMinor}`)
+      ) {
+        throw new Error(
+          `Cannot generate changelog entry for ${packageName}@${v}: missing corresponding pre-minor tag ${preMinor}`
+        )
+      }
+      return [preMinor, v]
+    }
+    return [all[index - 1], v]
+  })
 
   const chunks = []
-  for (const preMinor of branchCutPreminors) {
-    const patches = allVersions.filter(
-      v => isStableVersion(v) && haveSameMinor(v, preMinor)
-    )
-    const ranges = patches
-      .map((patch, index) => [
-        index === 0 ? preMinor : patches[index - 1],
-        patch,
-      ])
-      .reverse()
-
-    for (const [from, to] of ranges) {
-      const chunk = await buildChangelogEntry(packageName, to, from)
-      chunks.push(chunk)
-    }
+  for (const [from, to] of versionRanges.reverse()) {
+    const chunk = await buildChangelogEntry(packageName, to, from)
+    chunks.push(chunk)
   }
   return chunks.join(`\n`)
 }
@@ -219,36 +212,56 @@ async function generateChangelog(packageName, fromVersion = null) {
  */
 async function regenerateChangelog(packageName) {
   const path = changelogPath(packageName)
-  const separator = `<a name="before-release-process"></a>\n`
+  const separator = `<a name="before-release-process"></a>`
   const contents = String(fs.readFileSync(path))
   const parts = contents.split(separator)
 
   if (parts.length !== 2) {
     throw new Error(`Could not find demarcation ${separator.trim()} in ${path}`)
   }
-  const releaseProcessChangelog = await generateChangelog(packageName)
+  const changeLog = await generateChangelog(packageName)
 
   const updatedChangelogParts = [
     renderHeader(packageName),
-    releaseProcessChangelog,
+    `\n`,
+    changeLog,
+    `\n`,
     separator,
     parts[1],
+  ]
+
+  fs.writeFileSync(path, updatedChangelogParts.join(``))
+  console.log(`Updated ${path}`)
+}
+
+async function updateChangelog(packageName) {
+  const path = changelogPath(packageName)
+  const contents = String(fs.readFileSync(path))
+  const match = contents.match(/([0-9]+\.[0-9]+\.[0-9]+)/)
+  const latestVersion = match ? match[1] : undefined
+  if (!valid(latestVersion)) {
+    throw new Error(
+      `Could not resolve the latest version of ${packageName} in ${path}`
+    )
+  }
+  const changeLog = await generateChangelog(packageName, latestVersion)
+  if (!changeLog) {
+    console.log(
+      `Skipping ${packageName}: no new versions after ${latestVersion}`
+    )
+    return
+  }
+  const header = renderHeader(packageName)
+  const updatedChangelogParts = [
+    header,
+    changeLog.trimRight(),
+    contents.substr(header.length),
   ]
 
   fs.writeFileSync(path, updatedChangelogParts.join(`\n`))
   console.log(`Updated ${path}`)
 }
 
-async function run() {
-  const tmp = await regenerateChangelog(`gatsby-plugin-emotion`)
-
-  // for (const pkg of getAllPackageNames()) {
-  //   try {
-  //     await regenerateChangelog(pkg)
-  //   } catch (e) {
-  //     console.error(e.message)
-  //   }
-  // }
-}
-
-run().catch(console.error)
+exports.getAllPackageNames = getAllPackageNames
+exports.regenerateChangelog = regenerateChangelog
+exports.updateChangelog = updateChangelog
