@@ -10,16 +10,12 @@ async function run() {
   // Always use the same branch
   const branchName = `bot-changelog-update`
 
-  try {
-    await execa(`git`, [`branch`, `-D`, branchName])
-    // eslint-disable-next-line no-empty
-  } catch {}
-
   await execa(`git`, [`fetch`, `--tags`, `origin`])
   try {
-    await execa(`git`, [`checkout`, `-b`, branchName])
+    await execa(`git`, [`checkout`, `-b`, branchName, `origin/${branchName}`])
   } catch (e) {
     await execa(`git`, [`checkout`, branchName])
+    await execa(`git`, [`pull`])
   }
 
   const updatedPackages = []
