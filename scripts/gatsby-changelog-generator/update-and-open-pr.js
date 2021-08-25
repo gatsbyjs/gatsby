@@ -48,9 +48,12 @@ async function run() {
     auth: `token ${process.env.GITHUB_ACCESS_TOKEN}`,
   })
 
+  const owner = `gatsbyjs`
+  const repo = `gatsby`
+
   const pr = await octokit.pulls.create({
-    owner: `gatsbyjs`,
-    repo: `gatsby`,
+    owner,
+    repo,
     title: commitMessage,
     head: branchName,
     base: `vladar/generate-changelogs`,
