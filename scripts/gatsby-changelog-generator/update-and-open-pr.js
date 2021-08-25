@@ -12,7 +12,12 @@ async function run() {
 
   // Always use the same branch
   const branchName = `bot-changelog-update`
-  await execa(`git`, [`checkout`, `-B`, branchName, `origin/${branchName}`])
+  try {
+    // Try to create a branch from the existing remote as a starting point
+    await execa(`git`, [`checkout`, `-B`, branchName, `origin/${branchName}`])
+  } catch (e) {
+    await execa(`git`, [`checkout`, `-b`, branchName])
+  }
 
   const updatedPackages = []
   for (const pkg of getAllPackageNames()) {
@@ -37,7 +42,7 @@ async function run() {
   )
   await execa(`git`, [`add`, ...updatedChangelogs])
   await execa(`git`, [`commit`, `-m`, commitMessage])
-  await execa(`git`, [`push`, `origin`, `${branchName}:${branchName}`])
+  await execa(`git`, [`push`, `-u`, `origin`, branchName])
 
   const octokit = new Octokit({
     auth: `token ${process.env.GITHUB_ACCESS_TOKEN}`,
