@@ -7,24 +7,20 @@ if (!process.env.GITHUB_ACCESS_TOKEN) {
 }
 
 async function run() {
+  // We may be in a specific tag, but we actually want to update master
+  // TODO: save current branch/commit/hash (and restore on complete)
+
   // Always use the same branch
   const base = `vladar/generate-changelogs`
   const branchName = `bot-changelog-update`
 
   try {
-    await execa(`git`, [`branch`, `-D`, branchName])
-    // eslint-disable-next-line no-empty
-  } catch (e) {}
-
-  await execa(`git`, [`fetch`, `--tags`, `origin`])
-
-  try {
-    // Try to create a branch from the existing remote as a starting point
-    await execa(`git`, [`checkout`, `-B`, branchName, `origin/${branchName}`])
+    await execa(`git`, [`checkout`, branchName])
+    await execa(`git`, [`merge`, base])
   } catch (e) {
-    await execa(`git`, [`checkout`, `-b`, branchName])
+    const args = [`checkout`, `-b`, branchName, `origin/${base}`, `--no-track`]
+    await execa(`git`, args)
   }
-  await execa(`git`, [`merge`, `origin/${base}`])
 
   const updatedPackages = []
   for (const pkg of getAllPackageNames()) {
