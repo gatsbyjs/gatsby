@@ -4,6 +4,9 @@ exports.createSchemaCustomization = ({ actions }) => {
     type WpPage {
       beforeChangeNodeTest: String
     }
+    type WpPost {
+      beforeChangeNodeTest: String
+    }
   `
   createTypes(typeDefs)
 }

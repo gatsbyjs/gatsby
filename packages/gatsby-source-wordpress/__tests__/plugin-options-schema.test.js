@@ -99,6 +99,11 @@ describe(`pluginOptionsSchema`, () => {
           Page: {
             beforeChangeNode: `./docs-generation.test.js`,
           },
+          Post: {
+            beforeChangeNode: () => {
+              console.log(`Hi from an inline fn!`)
+            },
+          },
           EnqueuedScript: {
             exclude: true,
           },
