@@ -51,7 +51,7 @@ When this checkbox is checked, WPGatsby will override the functionality of the W
 
 #### 2. Check the "Use Gatsby Content Sync?" Checkbox
 
-When this checkbox is checked, WPGatsby will use the new Gatsby Cloud Content Loader service for previews. Instead of WPGatsby handling loading previews and redirecting to the right page, Gatsby Cloud will now do it instead. This is optional but recommended as this will become the default in the future and [legacy previews](./configuring-previews-legacy.md) will be removed.
+When this checkbox is checked, WPGatsby will use the new Gatsby Cloud Content Sync service for previews. Instead of WPGatsby handling loading previews and redirecting to the right page, Gatsby Cloud will now do it instead. This is optional but recommended as this will become the default in the future and [legacy previews](./configuring-previews-legacy.md) will be removed.
 
 #### 3. Fill the "Gatsby Content Sync URL" Field
 
