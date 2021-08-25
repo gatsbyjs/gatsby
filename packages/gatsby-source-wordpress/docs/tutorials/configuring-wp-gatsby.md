@@ -39,7 +39,7 @@ To get started, set up a Preview instance on [Gatsby Cloud](https://www.gatsbyjs
 
 Navigate to your GatsbyJS WordPress settings by visiting this path in your WP instance `/wp-admin/options-general.php?page=gatsbyjs` or by hovering on "Settings" in the WordPress admin menu and clicking on "GatsbyJS".
 
-You will see 5 fields related to Gatsby Preview. "Enable Gatsby Preview?", "Use Gatsby Preview Loader?", "Preview Loader URL", "Preview Webhook", and "Preview JWT secret".
+You will see 5 fields related to Gatsby Preview. "Enable Gatsby Preview?", "Use Gatsby Content Sync?", "Content Sync URL", "Preview Webhook", and "Preview JWT secret".
 
 If you don't see this settings page, or you don't see these 4 fields, make sure the latest version of [WPGatsby](https://github.com/gatsbyjs/wp-gatsby) is installed in your WordPress instance.
 
