@@ -4,7 +4,7 @@ import * as path from "path"
 import * as fs from "fs-extra"
 import webpack from "webpack"
 import { printQueryEnginePlugins } from "./print-plugins"
-import { builtinModules } from "module"
+import mod from "module"
 
 const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
 
@@ -35,9 +35,9 @@ export async function createGraphqlEngineBundle(): Promise<any> {
       `cbor-x`, // optional dep of lmdb-store, but we are using `msgpack` (default) encoding, so we don't need it
       `babel-runtime/helpers/asyncToGenerator`, // undeclared dep of yurnalist (but used in code path we don't use)
       `electron`, // :shrug: `got` seems to have electron specific code path
-      builtinModules.reduce((acc, builtinModule) => {
+      mod.builtinModules.reduce((acc, builtinModule) => {
         if (builtinModule === `fs`) {
-          acc[builtinModule] = `global _fsWrapper`
+          acc[builtinModule] = `global _actualFsWrapper`
         } else {
           acc[builtinModule] = `commonjs ${builtinModule}`
         }

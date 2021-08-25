@@ -6,6 +6,7 @@ import type { IScriptsAndStyles } from "../client-assets-for-template"
 import type { IPageDataWithQueryResult } from "../page-data/write-page-data"
 
 // actual imports
+import "../engines-fs-provider"
 import * as path from "path"
 import * as fs from "fs-extra"
 import { writePageData, fixedPagePath } from "../page-data/write-page-data"

@@ -1,6 +1,7 @@
 import * as path from "path"
 import { store } from "../../redux"
 import webpack from "webpack"
+import mod from "module"
 
 import type { ITemplateDetails } from "./entry"
 
@@ -50,7 +51,7 @@ export async function createPageSSRBundle(): Promise<any> {
     },
     target: `node`,
     externalsPresets: {
-      node: true,
+      node: false,
     },
     // those are required in some runtime paths, but we don't need them
     externals: [
@@ -58,6 +59,15 @@ export async function createPageSSRBundle(): Promise<any> {
       // `cbor-x`, // optional dep of lmdb-store, but we are using `msgpack` (default) encoding, so we don't need it
       // `babel-runtime/helpers/asyncToGenerator`, // undeclared dep of yurnalist (but used in code path we don't use)
       `electron`, // :shrug: `got` seems to have electron specific code path
+      mod.builtinModules.reduce((acc, builtinModule) => {
+        if (builtinModule === `fs`) {
+          acc[builtinModule] = `global _actualFsWrapper`
+        } else {
+          acc[builtinModule] = `commonjs ${builtinModule}`
+        }
+
+        return acc
+      }, {}),
     ],
     module: {
       rules: [

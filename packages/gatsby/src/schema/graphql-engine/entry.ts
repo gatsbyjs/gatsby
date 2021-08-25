@@ -1,5 +1,5 @@
 // import { buildSchema } from "../schema"
-// import fs from "fs";
+import "../../utils/engines-fs-provider"
 import { build } from "../index"
 import { setupLmdbStore } from "../../datastore/lmdb/lmdb-datastore"
 import { store } from "../../redux"
