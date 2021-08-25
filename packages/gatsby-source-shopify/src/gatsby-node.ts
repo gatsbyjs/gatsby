@@ -327,7 +327,7 @@ export function onPreInit({ reporter }: NodePluginArgs): void {
 
 if (coreSupportsOnPluginInit) {
   // need to conditionally export otherwise it throw an error for older versions
-  exports.unstable_onPluginInit = async ({ reporter }: NodePluginArgs) => {
+  exports.unstable_onPluginInit = ({ reporter }: NodePluginArgs): void => {
     reporter.setErrorMap(ERROR_MAP)
   }
 }
