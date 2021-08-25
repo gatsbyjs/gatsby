@@ -6,13 +6,13 @@ if (!process.env.GITHUB_ACCESS_TOKEN) {
 }
 
 async function run() {
-  await execa(`git`, [`pull`, `--tags`])
+  await execa(`git`, [`pull`])
 
   // Always commit to the same branch
   const branchName = `bot-changelog-update`
   try {
-    await execa(`git`, [`checkout`, `-b`, branchName, `origin/${branchName}`])
-  } catch {
+    await execa(`git`, [`checkout`, `-b`, branchName])
+  } catch(e) {
     await execa(`git`, [`checkout`, branchName])
   }
 
@@ -46,7 +46,7 @@ async function run() {
     repo: `gatsbyjs`,
     title: commitMessage,
     head: branchName,
-    base: `master`,
+    base: `vladar/generate-changelogs`,
     body: `Update changelogs of the following packages:\n\n${updatedPackages
       .map(p => `- ${p}`)
       .join(`\n`)}`,
