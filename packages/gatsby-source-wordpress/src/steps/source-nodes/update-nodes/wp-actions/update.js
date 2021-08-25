@@ -39,6 +39,16 @@ export const fetchAndCreateSingleNode = async ({
     return query
   }
 
+  dump({
+    singleName,
+    id,
+    actionType,
+    cachedNodeIds,
+    token,
+    isPreview,
+    userDatabaseId,
+  })
+
   const query = getNodeQuery()
 
   const {
