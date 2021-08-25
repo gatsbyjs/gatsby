@@ -2,7 +2,7 @@ const { patch } = require(`semver`)
 
 function renderHeader(packageName) {
   return `
-# Change Log: \`${packageName}\`
+# Changelog: \`${packageName}\`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

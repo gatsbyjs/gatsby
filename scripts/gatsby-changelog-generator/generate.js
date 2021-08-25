@@ -242,14 +242,15 @@ async function regenerateChangelog(packageName) {
   console.log(`Updated ${path}`)
 }
 
-function addChangelogEntries(packageName, entries) {
+function addChangelogEntries(packageName, entries, contents) {
+  contents = contents || String(fs.readFileSync(changelogPath(packageName)))
   const header = renderHeader(packageName)
   const updatedChangelogParts = [
     header,
-    changeLog.trimRight(),
+    entries.trimRight(),
     contents.substr(header.length),
   ]
-  fs.writeFileSync(changelogPath(packageName), updatedChangelogParts.join(``))
+  fs.writeFileSync(changelogPath(packageName), updatedChangelogParts.join(`\n`))
 }
 
 /**
@@ -274,7 +275,7 @@ async function updateChangelog(packageName) {
     return
   }
 
-  addChangelogEntries(packageName, changeLog)
+  addChangelogEntries(packageName, changeLog, contents)
   console.log(`Updated ${path}`)
 }
 
@@ -302,14 +303,15 @@ async function onVersion() {
       if (!isStableVersion(version)) continue
 
       // Get the most recent version to compare against
-      const lastVersion = getAllVersions(packageName)
+      const allVersions = await getAllVersions(packageName)
+      const lastVersion = allVersions
         .filter(v => isStableVersion(v) || isBranchCutPreminorVersion(v))
         .slice(-1)
 
       const entry = await buildChangelogEntry({
-        pkg,
+        pkg: packageName,
         version,
-        fromTag: lastVersion ? `${pkg}@${lastVersion}` : ``,
+        fromTag: lastVersion ? `${packageName}@${lastVersion}` : ``,
         toTag: `HEAD`,
         date: dateFormat(new Date(), `yyyy-mm-dd`),
         gatsbyRelease:
@@ -323,7 +325,7 @@ async function onVersion() {
         updatedChangelogs.push(changelogRelativePath(packageName))
       }
     } catch (error) {
-      console.error(`${pkg} error: ${error.message}`)
+      console.error(`package "${packageName}": ${error.stack}`)
     }
   }
   if (updatedChangelogs.length) {
@@ -344,7 +346,6 @@ async function onVersion() {
   }
 }
 
-exports.getAllPackageNames = getAllPackageNames
 exports.regenerateChangelog = regenerateChangelog
 exports.updateChangelog = updateChangelog
 exports.onVersion = onVersion
