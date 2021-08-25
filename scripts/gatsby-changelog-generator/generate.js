@@ -346,6 +346,7 @@ async function onVersion() {
   }
 }
 
+exports.getAllPackageNames = getAllPackageNames
 exports.regenerateChangelog = regenerateChangelog
 exports.updateChangelog = updateChangelog
 exports.onVersion = onVersion
