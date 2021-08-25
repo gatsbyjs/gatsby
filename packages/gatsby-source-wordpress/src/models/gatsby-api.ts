@@ -105,6 +105,7 @@ export interface IPluginOptions {
       beforeChangeNode?: (any) => Promise<any>
       nodeInterface?: boolean
       lazyNodes?: boolean
+      createFileNodes?: boolean
       localFile?: {
         excludeByMimeTypes?: Array<string>
         maxFileSizeBytes?: number
@@ -210,6 +211,7 @@ const defaultPluginOptions: IPluginOptions = {
     },
     MediaItem: {
       lazyNodes: false,
+      createFileNodes: true,
       localFile: {
         excludeByMimeTypes: [],
         maxFileSizeBytes: 15728640, // 15Mb
@@ -222,8 +224,12 @@ const defaultPluginOptions: IPluginOptions = {
         // @todo type this
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       }): Promise<any> => {
-        // we fetch lazy nodes files in resolvers, no need to fetch them here.
-        if (typeSettings.lazyNodes) {
+        if (
+          // we fetch lazy nodes files in resolvers, no need to fetch them here.
+          typeSettings.lazyNodes ||
+          // or if the user doesn't want us to create file nodes, don't do anything.
+          !typeSettings.createFileNodes
+        ) {
           return {
             remoteNode,
           }

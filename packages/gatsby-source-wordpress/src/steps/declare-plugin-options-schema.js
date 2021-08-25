@@ -700,10 +700,15 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
             `),
         }),
       MediaItem: Joi.object({
+        createFileNodes: Joi.boolean()
+          .default(true)
+          .description(
+            `This option controls whether or not a File node will be automatically created for each MediaItem node (available on MediaItem.localFile). Set this to false if you don't want Gatsby to download the corresponding file for each media item.`
+          ),
         lazyNodes: Joi.boolean()
           .default(false)
           .description(
-            `Enables a different media item sourcing strategy. Instead of fetching Media Items that are referenced by other nodes, Media Items will be fetched in connection resolvers from other nodes. This may be desirable if you're not using all of the connected images in your WP instance. This is not currently recommended because it messes up cli output and can be slow due to query running concurrency.`
+            `Enables a different media item sourcing strategy. Instead of fetching Media Items that are referenced by other nodes, Media Items will be fetched in connection resolvers from other nodes. This may be desirable if you're not using all of the connected images in your WP instance. This is not currently recommended because it messes up cli output and can be slow due to query running concurrency.\n\nThis option no longer works starting in Gatsby v4+. If you want to prevent this plugin from creating File nodes for each MediaItem node, set the type.MediaItem.createFileNodes option to false instead.`
           )
           .meta({
             example: wrapOptions(`
