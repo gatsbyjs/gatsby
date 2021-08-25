@@ -6,8 +6,15 @@ if (!process.env.GITHUB_ACCESS_TOKEN) {
 }
 
 async function run() {
-  await execa(`git`, [`checkout`, `master`])
   await execa(`git`, [`pull`, `--tags`])
+
+  // Always commit to the same branch
+  const branchName = `bot-changelog-update`
+  try {
+    await execa(`git`, [`checkout`, `-b`, branchName, `origin/${branchName}`])
+  } catch {
+    await execa(`git`, [`checkout`, branchName])
+  }
 
   const updatedPackages = []
   for (const pkg of getAllPackageNames()) {
@@ -26,42 +33,33 @@ async function run() {
     return
   }
 
-  // Commit to the same branch
-  const branchName = `bot-changelog-update`
   const commitMessage = `DO NOT MERGE: testing`
-  try {
-    await execa(`git`, [`checkout`, `-b`, branchName, `origin/${branchName}`])
-  } catch {
-    await execa(`git`, [`checkout`, branchName])
-  }
   await execa(`git`, [`commit`, `-m`, commitMessage])
   await execa(`git`, [`push`, `origin`, `${branchName}:${branchName}`])
 
-  try {
-    const octokit = new Octokit({
-      auth: `token ${process.env.GITHUB_ACCESS_TOKEN}`,
-    })
+  const octokit = new Octokit({
+    auth: `token ${process.env.GITHUB_ACCESS_TOKEN}`,
+  })
 
-    const pr = await octokit.pulls.create({
-      owner: `gatsby`,
-      repo: `gatsbyjs`,
-      title: commitMessage,
-      head: branchName,
-      base: `master`,
-      body: `Update changelogs of the following packages:\n\n${updatedPackages
-        .map(p => `- ${p}`)
-        .join(`\n`)}`,
-    })
+  const pr = await octokit.pulls.create({
+    owner: `gatsby`,
+    repo: `gatsbyjs`,
+    title: commitMessage,
+    head: branchName,
+    base: `master`,
+    body: `Update changelogs of the following packages:\n\n${updatedPackages
+      .map(p => `- ${p}`)
+      .join(`\n`)}`,
+  })
 
-    console.log(`\n---\n\nPR opened - ${pr.data.html_url}`)
+  console.log(`\n---\n\nPR opened - ${pr.data.html_url}`)
 
-    await octokit.issues.addLabels({
-      owner,
-      repo,
-      issue_number: pr.data.number,
-      labels: [`bot: merge on green`],
-    })
-  } catch (e) {
-    console.error(e)
-  }
+  await octokit.issues.addLabels({
+    owner,
+    repo,
+    issue_number: pr.data.number,
+    labels: [`bot: merge on green`],
+  })
 }
+
+run().catch(console.error)
