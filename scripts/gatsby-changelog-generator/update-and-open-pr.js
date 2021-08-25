@@ -15,7 +15,7 @@ async function run() {
     await execa(`git`, [`checkout`, `-b`, branchName, `origin/${branchName}`])
   } catch (e) {
     await execa(`git`, [`checkout`, branchName])
-    await execa(`git`, [`pull`])
+    await execa(`git`, [`pull`, `origin`, branchName])
   }
 
   const updatedPackages = []
