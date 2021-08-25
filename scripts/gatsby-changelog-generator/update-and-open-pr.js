@@ -6,7 +6,7 @@ if (!process.env.GITHUB_ACCESS_TOKEN) {
 }
 
 async function run() {
-  await execa(`git`, [`pull`])
+  await execa(`git`, [`fetch`, `--tags`])
 
   // Always commit to the same branch
   const branchName = `bot-changelog-update`
