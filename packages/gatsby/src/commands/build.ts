@@ -227,43 +227,35 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     const result = await buildRenderer(program, Stage.BuildHTML, buildSpan)
     pageRenderer = result.rendererPath
     waitForCompilerCloseBuildHtml = result.waitForCompilerClose
-  } catch (err) {
-    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
-  } finally {
-    buildSSRBundleActivityProgress.end()
-  }
 
-  // TODO Move to page-renderer
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    const routesWebpackConfig = await webpackConfig(
-      program,
-      program.directory,
-      `build-ssr`,
-      null,
-      { parentSpan: buildSSRBundleActivityProgress.span }
-    )
+    // TODO Move to page-renderer
+    if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+      const routesWebpackConfig = await webpackConfig(
+        program,
+        program.directory,
+        `build-ssr`,
+        null,
+        { parentSpan: buildSSRBundleActivityProgress.span }
+      )
 
-    await new Promise((resolve, reject) => {
-      const compiler = webpack(routesWebpackConfig)
-      compiler.run(err => {
-        if (err) {
-          return void reject(err)
-        }
-
-        compiler.close(error => {
-          if (error) {
-            return void reject(error)
+      await new Promise((resolve, reject) => {
+        const compiler = webpack(routesWebpackConfig)
+        compiler.run(err => {
+          if (err) {
+            return void reject(err)
           }
-          return void resolve(undefined)
-        })
 
-        return undefined
+          compiler.close(error => {
+            if (error) {
+              return void reject(error)
+            }
+            return void resolve(undefined)
+          })
+
+          return undefined
+        })
       })
-    })
-  }
-  try {
-    const result = await buildRenderer(program, Stage.BuildHTML, buildSpan)
-    waitForCompilerCloseBuildHtml = result.waitForCompilerClose
+    }
   } catch (err) {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
   } finally {
