@@ -3,7 +3,8 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-worker@0.3.0-next.0..gatsby-worker@0.3.0) (2021-08-18)
+## [0.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@0.3.0/packages/gatsby-worker) (2021-08-18)
+
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
 
 #### Chores
@@ -11,16 +12,16 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update formatting & linting [#32626](https://github.com/gatsbyjs/gatsby/issues/32626) ([4a765b5](https://github.com/gatsbyjs/gatsby/commit/4a765b5c62208d58f0bd7fd59558160c0b9feed3))
 - update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
 
+## [0.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@0.2.0/packages/gatsby-worker) (2021-08-04)
 
-## [0.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-worker@0.2.0-next.0..gatsby-worker@0.2.0) (2021-08-04)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 #### Bug Fixes
 
 - merge data deps state instead of replaying actions [#32440](https://github.com/gatsbyjs/gatsby/issues/32440) ([fd1d8cc](https://github.com/gatsbyjs/gatsby/commit/fd1d8ccc8dd27c316d24f91475a24702d228910c))
 
+## [0.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@0.1.0/packages/gatsby-worker) (2021-07-20)
 
-## [0.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-worker@0.1.0-next.0..gatsby-worker@0.1.0) (2021-07-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
 
 #### Features
@@ -37,5 +38,3 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update babel monorepo [#32238](https://github.com/gatsbyjs/gatsby/issues/32238) ([466d4c0](https://github.com/gatsbyjs/gatsby/commit/466d4c087bbc96abb942a02c67243bcc9a4f2a0a))
 
 <a name="before-release-process"></a>
-
-

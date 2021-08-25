@@ -3,7 +3,8 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.12.0-next.0..gatsby-telemetry@2.12.0) (2021-08-18)
+## [2.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@2.12.0/packages/gatsby-telemetry) (2021-08-18)
+
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
 
 #### Bug Fixes
@@ -15,14 +16,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update formatting & linting [#32626](https://github.com/gatsbyjs/gatsby/issues/32626) ([4a765b5](https://github.com/gatsbyjs/gatsby/commit/4a765b5c62208d58f0bd7fd59558160c0b9feed3))
 - update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
 
+## [2.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@2.11.0/packages/gatsby-telemetry) (2021-08-04)
 
-## [2.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.11.0-next.0..gatsby-telemetry@2.11.0) (2021-08-04)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 **Note:** Version bump only for package gatsby-telemetry
 
+## [2.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@2.10.0/packages/gatsby-telemetry) (2021-07-20)
 
-## [2.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.10.0-next.0..gatsby-telemetry@2.10.0) (2021-07-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
 
 #### Bug Fixes
@@ -34,8 +35,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update babel monorepo [#32238](https://github.com/gatsbyjs/gatsby/issues/32238) ([466d4c0](https://github.com/gatsbyjs/gatsby/commit/466d4c087bbc96abb942a02c67243bcc9a4f2a0a))
 
+## [2.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@2.9.0/packages/gatsby-telemetry) (2021-07-07)
 
-## [2.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.9.0-next.0..gatsby-telemetry@2.9.0) (2021-07-07)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
 
 #### Bug Fixes
@@ -46,8 +47,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Flush more often with gatsby develop [#32015](https://github.com/gatsbyjs/gatsby/issues/32015) ([51804a0](https://github.com/gatsbyjs/gatsby/commit/51804a08f952231f54c1ebcb186437c6c00eaa6f))
 
+## [2.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@2.8.0/packages/gatsby-telemetry) (2021-06-23)
 
-## [2.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.8.0-next.0..gatsby-telemetry@2.8.0) (2021-06-23)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
 
 #### Bug Fixes
@@ -58,62 +59,60 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) ([7d42e8d](https://github.com/gatsbyjs/gatsby/commit/7d42e8d866e46e9c39838d812d080d06433f7060))
 
-
-### [2.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.7.0..gatsby-telemetry@2.7.1) (2021-06-10)
+### [2.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@2.7.1/packages/gatsby-telemetry) (2021-06-10)
 
 #### Chores
 
 - bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) [#31859](https://github.com/gatsbyjs/gatsby/issues/31859) ([8636025](https://github.com/gatsbyjs/gatsby/commit/863602567930a39142ed33d9d1f1813b7dec8686))
 
+## [2.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@2.7.0/packages/gatsby-telemetry) (2021-06-09)
 
-## [2.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.7.0-next.0..gatsby-telemetry@2.7.0) (2021-06-09)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
 
 #### Chores
 
 - update babel monorepo [#31143](https://github.com/gatsbyjs/gatsby/issues/31143) ([701ab2f](https://github.com/gatsbyjs/gatsby/commit/701ab2f6690c3f1bbaf60cf572513ea566cc9ec9))
 
+## [2.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@2.6.0/packages/gatsby-telemetry) (2021-05-25)
 
-## [2.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.6.0-next.0..gatsby-telemetry@2.6.0) (2021-05-25)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
 
 **Note:** Version bump only for package gatsby-telemetry
 
+## [2.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@2.5.0/packages/gatsby-telemetry) (2021-05-12)
 
-## [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.5.0-next.0..gatsby-telemetry@2.5.0) (2021-05-12)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
 
 #### Bug Fixes
 
 - Read installedGatsbyVersion correctly for workspaces [#31196](https://github.com/gatsbyjs/gatsby/issues/31196) ([af12b66](https://github.com/gatsbyjs/gatsby/commit/af12b660f1c4c6f8da2abc537bd07973b8bfd21a))
 
-
-### [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.4.0..gatsby-telemetry@2.4.1) (2021-05-05)
+### [2.4.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@2.4.1/packages/gatsby-telemetry) (2021-05-05)
 
 #### Bug Fixes
 
 - Read installedGatsbyVersion correctly for workspaces [#31196](https://github.com/gatsbyjs/gatsby/issues/31196) [#31244](https://github.com/gatsbyjs/gatsby/issues/31244) ([f0ef523](https://github.com/gatsbyjs/gatsby/commit/f0ef523a1cca6f074861d950fdf2cae48f3d0f1c))
 
+## [2.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@2.4.0/packages/gatsby-telemetry) (2021-04-28)
 
-## [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.4.0-next.0..gatsby-telemetry@2.4.0) (2021-04-28)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
 
 **Note:** Version bump only for package gatsby-telemetry
 
+## [2.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@2.3.0/packages/gatsby-telemetry) (2021-04-14)
 
-## [2.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.3.0-next.0..gatsby-telemetry@2.3.0) (2021-04-14)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
 
 **Note:** Version bump only for package gatsby-telemetry
 
+## [2.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@2.2.0/packages/gatsby-telemetry) (2021-03-30)
 
-## [2.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.2.0-next.0..gatsby-telemetry@2.2.0) (2021-03-30)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
 
 **Note:** Version bump only for package gatsby-telemetry
 
+## [2.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@2.1.0/packages/gatsby-telemetry) (2021-03-16)
 
-## [2.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.1.0-next.0..gatsby-telemetry@2.1.0) (2021-03-16)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
 
 #### Bug Fixes
@@ -124,8 +123,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update eslint to fix linting issues fix [#29988](https://github.com/gatsbyjs/gatsby/issues/29988) ([5636389](https://github.com/gatsbyjs/gatsby/commit/5636389e8fa626c644e90abc14589e9961d98c68))
 
+## [2.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@2.0.0/packages/gatsby-telemetry) (2021-03-02)
 
-## [2.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.0.0-next.0..gatsby-telemetry@2.0.0) (2021-03-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
 
 #### Chores
@@ -133,22 +132,20 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Move isTruthy to gatsby-core-utils [#29707](https://github.com/gatsbyjs/gatsby/issues/29707) ([837fcd2](https://github.com/gatsbyjs/gatsby/commit/837fcd2831cfaab38274466027b5384d4c19ad84))
 - Upgrade typescript [#29388](https://github.com/gatsbyjs/gatsby/issues/29388) ([823140f](https://github.com/gatsbyjs/gatsby/commit/823140f2b0bbbcab51923186bab8128bb8e0afe5))
 
-
-### [1.10.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.10.1..gatsby-telemetry@1.10.2) (2021-05-04)
+### [1.10.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@1.10.2/packages/gatsby-telemetry) (2021-05-04)
 
 #### Bug Fixes
 
 - Read installedGatsbyVersion correctly for workspaces [#31196](https://github.com/gatsbyjs/gatsby/issues/31196) [#31208](https://github.com/gatsbyjs/gatsby/issues/31208) ([c8b9b7c](https://github.com/gatsbyjs/gatsby/commit/c8b9b7c88b0bbd76b87f843447f8d7f71d8b9a0f))
 
-
-### [1.10.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.10.0..gatsby-telemetry@1.10.1) (2021-02-24)
+### [1.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@1.10.1/packages/gatsby-telemetry) (2021-02-24)
 
 #### Chores
 
 - Move isTruthy to gatsby-core-utils [#29707](https://github.com/gatsbyjs/gatsby/issues/29707) [#29710](https://github.com/gatsbyjs/gatsby/issues/29710) ([2022f2b](https://github.com/gatsbyjs/gatsby/commit/2022f2bd5d56d966b17b0c11c94232605a021cd4))
 
+## [1.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@1.10.0/packages/gatsby-telemetry) (2021-02-02)
 
-## [1.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.10.0-next.0..gatsby-telemetry@1.10.0) (2021-02-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
 
 #### Features
@@ -159,8 +156,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Add total pages count to the schema [#29087](https://github.com/gatsbyjs/gatsby/issues/29087) ([6ec792d](https://github.com/gatsbyjs/gatsby/commit/6ec792d3c84c83afd03c6e981f4ac385d3d56360))
 
+## [1.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@1.9.0/packages/gatsby-telemetry) (2021-01-20)
 
-## [1.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.9.0-next.0..gatsby-telemetry@1.9.0) (2021-01-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
 
 #### Chores
@@ -168,36 +165,34 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - allow sharing tags in a file and read it only when things change [#28953](https://github.com/gatsbyjs/gatsby/issues/28953) ([9cb8eeb](https://github.com/gatsbyjs/gatsby/commit/9cb8eeb2cb39bea4f7753f5a50438193e93dc6ca))
 - ensure forked develop child processes have the same sessionId [#28799](https://github.com/gatsbyjs/gatsby/issues/28799) ([b72b5bc](https://github.com/gatsbyjs/gatsby/commit/b72b5bc4dcb87c99c81304e727ba39f18e694f3a))
 
-
-### [1.8.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.8.0..gatsby-telemetry@1.8.1) (2021-01-13)
+### [1.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@1.8.1/packages/gatsby-telemetry) (2021-01-13)
 
 #### Chores
 
 - allow sharing tags in a file and read it only when things change [#28953](https://github.com/gatsbyjs/gatsby/issues/28953) [#28992](https://github.com/gatsbyjs/gatsby/issues/28992) ([1617c6c](https://github.com/gatsbyjs/gatsby/commit/1617c6c8643eb851f0a16547918337b8d81223c4))
 
+## [1.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@1.8.0/packages/gatsby-telemetry) (2021-01-06)
 
-## [1.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.8.0-next.0..gatsby-telemetry@1.8.0) (2021-01-06)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
 
 #### Chores
 
 - add valueBoolean [#28734](https://github.com/gatsbyjs/gatsby/issues/28734) ([338ed78](https://github.com/gatsbyjs/gatsby/commit/338ed78def6c6a70571b08476ed5f53b73bc5a09))
 
-
-### [1.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.7.0..gatsby-telemetry@1.7.1) (2020-12-23)
+### [1.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@1.7.1/packages/gatsby-telemetry) (2020-12-23)
 
 **Note:** Version bump only for package gatsby-telemetry
 
+## [1.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@1.7.0/packages/gatsby-telemetry) (2020-12-15)
 
-## [1.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.7.0-next.0..gatsby-telemetry@1.7.0) (2020-12-15)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
 
 #### Chores
 
 - update dependency cross-env to ^7.0.3 [#28505](https://github.com/gatsbyjs/gatsby/issues/28505) ([a819b9b](https://github.com/gatsbyjs/gatsby/commit/a819b9bfb663139f7b06c3ed7d6d6069a2382b2c))
 
+## [1.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@1.6.0/packages/gatsby-telemetry) (2020-12-02)
 
-## [1.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.6.0-next.0..gatsby-telemetry@1.6.0) (2020-12-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
 
 #### Bug Fixes
@@ -208,15 +203,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - drop seemingly unused dependency [#28129](https://github.com/gatsbyjs/gatsby/issues/28129) ([fed6c9a](https://github.com/gatsbyjs/gatsby/commit/fed6c9a7e1db936233a46ea19cb976307e7201b0))
 
-
-### [1.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.5.0..gatsby-telemetry@1.5.1) (2020-11-25)
+### [1.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@1.5.1/packages/gatsby-telemetry) (2020-11-25)
 
 #### Bug Fixes
 
 - use windowsHide to not show windows command prompt windows [#28258](https://github.com/gatsbyjs/gatsby/issues/28258) [#28285](https://github.com/gatsbyjs/gatsby/issues/28285) ([0c07bb6](https://github.com/gatsbyjs/gatsby/commit/0c07bb67f8692fa7e3662a002790201a98be7bf2))
 
+## [1.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@1.5.0/packages/gatsby-telemetry) (2020-11-20)
 
-## [1.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.5.0-next.0..gatsby-telemetry@1.5.0) (2020-11-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.27)
 
 #### Features
@@ -229,15 +223,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Add new telemetry field for a generic string array [#28025](https://github.com/gatsbyjs/gatsby/issues/28025) ([d5807ac](https://github.com/gatsbyjs/gatsby/commit/d5807ac1d1641b8f181fae6bc6a4b3fdc05ef898))
 - add two more value placeholders. [#27949](https://github.com/gatsbyjs/gatsby/issues/27949) ([c6d754a](https://github.com/gatsbyjs/gatsby/commit/c6d754a83683e505466e6d2b63e04395f4c67ea8))
 
-
-### [1.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.4.0..gatsby-telemetry@1.4.1) (2020-11-14)
+### [1.4.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@1.4.1/packages/gatsby-telemetry) (2020-11-14)
 
 #### Chores
 
 - add more value placeholders. (#27949 and #28025) [#27949](https://github.com/gatsbyjs/gatsby/issues/27949) [#28025](https://github.com/gatsbyjs/gatsby/issues/28025) [#28036](https://github.com/gatsbyjs/gatsby/issues/28036) [#27949](https://github.com/gatsbyjs/gatsby/issues/27949) [#28025](https://github.com/gatsbyjs/gatsby/issues/28025) ([59713ed](https://github.com/gatsbyjs/gatsby/commit/59713eda49520b92f2e88c5d25123bcfb96e4590))
 
+## [1.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@1.4.0/packages/gatsby-telemetry) (2020-11-12)
 
-## [1.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.4.0-next.0..gatsby-telemetry@1.4.0) (2020-11-12)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.26)
 
 #### Features
@@ -249,8 +242,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - ensure plugin validation errors are captured [#27933](https://github.com/gatsbyjs/gatsby/issues/27933) ([f49fe0b](https://github.com/gatsbyjs/gatsby/commit/f49fe0b6a55407f13a3af23abe3ac489794606fe))
 
 <a name="before-release-process"></a>
-
-
 
 ## [1.3.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.3.38...gatsby-telemetry@1.3.39) (2020-11-02)
 

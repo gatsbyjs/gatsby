@@ -3,35 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.12.0-next.0..gatsby-plugin-google-analytics@3.12.0) (2021-08-18)
+## [3.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@3.12.0/packages/gatsby-plugin-google-analytics) (2021-08-18)
+
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
 
 #### Chores
 
 - update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
 
+## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@3.11.0/packages/gatsby-plugin-google-analytics) (2021-08-04)
 
-## [3.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.11.0-next.0..gatsby-plugin-google-analytics@3.11.0) (2021-08-04)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics
 
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@3.10.0/packages/gatsby-plugin-google-analytics) (2021-07-20)
 
-## [3.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.10.0-next.0..gatsby-plugin-google-analytics@3.10.0) (2021-07-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
 
 #### Chores
 
 - update babel monorepo [#32238](https://github.com/gatsbyjs/gatsby/issues/32238) ([466d4c0](https://github.com/gatsbyjs/gatsby/commit/466d4c087bbc96abb942a02c67243bcc9a4f2a0a))
 
+## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@3.9.0/packages/gatsby-plugin-google-analytics) (2021-07-07)
 
-## [3.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.9.0-next.0..gatsby-plugin-google-analytics@3.9.0) (2021-07-07)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics
 
+## [3.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@3.8.0/packages/gatsby-plugin-google-analytics) (2021-06-23)
 
-## [3.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.8.0-next.0..gatsby-plugin-google-analytics@3.8.0) (2021-06-23)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
 
 #### Features
@@ -42,59 +43,58 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) ([7d42e8d](https://github.com/gatsbyjs/gatsby/commit/7d42e8d866e46e9c39838d812d080d06433f7060))
 
-
-### [3.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.7.0..gatsby-plugin-google-analytics@3.7.1) (2021-06-10)
+### [3.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@3.7.1/packages/gatsby-plugin-google-analytics) (2021-06-10)
 
 #### Chores
 
 - bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) [#31859](https://github.com/gatsbyjs/gatsby/issues/31859) ([8636025](https://github.com/gatsbyjs/gatsby/commit/863602567930a39142ed33d9d1f1813b7dec8686))
 
+## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@3.7.0/packages/gatsby-plugin-google-analytics) (2021-06-09)
 
-## [3.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.7.0-next.0..gatsby-plugin-google-analytics@3.7.0) (2021-06-09)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
 
 #### Chores
 
 - update babel monorepo [#31143](https://github.com/gatsbyjs/gatsby/issues/31143) ([701ab2f](https://github.com/gatsbyjs/gatsby/commit/701ab2f6690c3f1bbaf60cf572513ea566cc9ec9))
 
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@3.6.0/packages/gatsby-plugin-google-analytics) (2021-05-25)
 
-## [3.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.6.0-next.0..gatsby-plugin-google-analytics@3.6.0) (2021-05-25)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics
 
+## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@3.5.0/packages/gatsby-plugin-google-analytics) (2021-05-12)
 
-## [3.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.5.0-next.0..gatsby-plugin-google-analytics@3.5.0) (2021-05-12)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics
 
+## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@3.4.0/packages/gatsby-plugin-google-analytics) (2021-04-28)
 
-## [3.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.4.0-next.0..gatsby-plugin-google-analytics@3.4.0) (2021-04-28)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics
 
+## [3.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@3.3.0/packages/gatsby-plugin-google-analytics) (2021-04-14)
 
-## [3.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.3.0-next.0..gatsby-plugin-google-analytics@3.3.0) (2021-04-14)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics
 
+## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@3.2.0/packages/gatsby-plugin-google-analytics) (2021-03-30)
 
-## [3.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.2.0-next.0..gatsby-plugin-google-analytics@3.2.0) (2021-03-30)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics
 
+## [3.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@3.1.0/packages/gatsby-plugin-google-analytics) (2021-03-16)
 
-## [3.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.1.0-next.0..gatsby-plugin-google-analytics@3.1.0) (2021-03-16)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics
 
+## [3.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@3.0.0/packages/gatsby-plugin-google-analytics) (2021-03-02)
 
-## [3.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@3.0.0-next.0..gatsby-plugin-google-analytics@3.0.0) (2021-03-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
 
 #### Other Changes
@@ -102,14 +102,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Move peerdeps to 16.9.0 & 17+ for react & react-dom [#29735](https://github.com/gatsbyjs/gatsby/issues/29735) ([6b86b99](https://github.com/gatsbyjs/gatsby/commit/6b86b99f7e760c6ffa74b1330399d9fdd94e48a2))
 - Address todos for major release [#29413](https://github.com/gatsbyjs/gatsby/issues/29413) ([bde7394](https://github.com/gatsbyjs/gatsby/commit/bde7394fc5245739cdf6b740ccb211a061126828))
 
+## [2.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@2.11.0/packages/gatsby-plugin-google-analytics) (2021-02-02)
 
-## [2.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.11.0-next.0..gatsby-plugin-google-analytics@2.11.0) (2021-02-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics
 
+## [2.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@2.10.0/packages/gatsby-plugin-google-analytics) (2021-01-20)
 
-## [2.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.10.0-next.0..gatsby-plugin-google-analytics@2.10.0) (2021-01-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
 
 #### Bug Fixes
@@ -120,36 +120,36 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - google plugin analytics - upgrade to gtag, fix code fix [#28918](https://github.com/gatsbyjs/gatsby/issues/28918) ([c362463](https://github.com/gatsbyjs/gatsby/commit/c3624631894772f9583998e61bebde0a1f012ef0))
 
+## [2.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@2.9.0/packages/gatsby-plugin-google-analytics) (2021-01-06)
 
-## [2.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.9.0-next.0..gatsby-plugin-google-analytics@2.9.0) (2021-01-06)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics
 
+## [2.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@2.8.0/packages/gatsby-plugin-google-analytics) (2020-12-15)
 
-## [2.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.8.0-next.0..gatsby-plugin-google-analytics@2.8.0) (2020-12-15)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
 
 #### Chores
 
 - update dependency cross-env to ^7.0.3 [#28505](https://github.com/gatsbyjs/gatsby/issues/28505) ([a819b9b](https://github.com/gatsbyjs/gatsby/commit/a819b9bfb663139f7b06c3ed7d6d6069a2382b2c))
 
+## [2.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@2.7.0/packages/gatsby-plugin-google-analytics) (2020-12-02)
 
-## [2.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.7.0-next.0..gatsby-plugin-google-analytics@2.7.0) (2020-12-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
 
 **Note:** Version bump only for package gatsby-plugin-google-analytics
 
+## [2.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@2.6.0/packages/gatsby-plugin-google-analytics) (2020-11-20)
 
-## [2.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.6.0-next.0..gatsby-plugin-google-analytics@2.6.0) (2020-11-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.27)
 
 #### Chores
 
 - update babel monorepo [#27528](https://github.com/gatsbyjs/gatsby/issues/27528) ([539dbb0](https://github.com/gatsbyjs/gatsby/commit/539dbb09166e346a6cee568973d2de3d936e8ef3))
 
+## [2.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@2.5.0/packages/gatsby-plugin-google-analytics) (2020-11-12)
 
-## [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.5.0-next.0..gatsby-plugin-google-analytics@2.5.0) (2020-11-12)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.26)
 
 #### Bug Fixes
@@ -158,8 +158,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add optional options to options schema [#27914](https://github.com/gatsbyjs/gatsby/issues/27914) ([3cdf29f](https://github.com/gatsbyjs/gatsby/commit/3cdf29f2c337a0a0960127f9670d356b34aa1a0c))
 
 <a name="before-release-process"></a>
-
-
 
 # [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-google-analytics@2.3.19...gatsby-plugin-google-analytics@2.4.0) (2020-11-02)
 

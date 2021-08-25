@@ -3,7 +3,8 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.12.0-next.0..gatsby-core-utils@2.12.0) (2021-08-18)
+## [2.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.12.0/packages/gatsby-core-utils) (2021-08-18)
+
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
 
 #### Bug Fixes
@@ -16,14 +17,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update formatting & linting [#32626](https://github.com/gatsbyjs/gatsby/issues/32626) ([4a765b5](https://github.com/gatsbyjs/gatsby/commit/4a765b5c62208d58f0bd7fd59558160c0b9feed3))
 - update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
 
+## [2.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.11.0/packages/gatsby-core-utils) (2021-08-04)
 
-## [2.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.11.0-next.0..gatsby-core-utils@2.11.0) (2021-08-04)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 **Note:** Version bump only for package gatsby-core-utils
 
+## [2.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.10.0/packages/gatsby-core-utils) (2021-07-20)
 
-## [2.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.10.0-next.0..gatsby-core-utils@2.10.0) (2021-07-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
 
 #### Bug Fixes
@@ -34,49 +35,48 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update babel monorepo [#32238](https://github.com/gatsbyjs/gatsby/issues/32238) ([466d4c0](https://github.com/gatsbyjs/gatsby/commit/466d4c087bbc96abb942a02c67243bcc9a4f2a0a))
 
+## [2.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.9.0/packages/gatsby-core-utils) (2021-07-07)
 
-## [2.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.9.0-next.0..gatsby-core-utils@2.9.0) (2021-07-07)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
 
 **Note:** Version bump only for package gatsby-core-utils
 
+## [2.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.8.0/packages/gatsby-core-utils) (2021-06-23)
 
-## [2.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.8.0-next.0..gatsby-core-utils@2.8.0) (2021-06-23)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
 
 #### Chores
 
 - bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) ([7d42e8d](https://github.com/gatsbyjs/gatsby/commit/7d42e8d866e46e9c39838d812d080d06433f7060))
 
-
-### [2.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.7.0..gatsby-core-utils@2.7.1) (2021-06-10)
+### [2.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.7.1/packages/gatsby-core-utils) (2021-06-10)
 
 #### Chores
 
 - bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) [#31859](https://github.com/gatsbyjs/gatsby/issues/31859) ([8636025](https://github.com/gatsbyjs/gatsby/commit/863602567930a39142ed33d9d1f1813b7dec8686))
 
+## [2.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.7.0/packages/gatsby-core-utils) (2021-06-09)
 
-## [2.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.7.0-next.0..gatsby-core-utils@2.7.0) (2021-06-09)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
 
 #### Chores
 
 - update babel monorepo [#31143](https://github.com/gatsbyjs/gatsby/issues/31143) ([701ab2f](https://github.com/gatsbyjs/gatsby/commit/701ab2f6690c3f1bbaf60cf572513ea566cc9ec9))
 
+## [2.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.6.0/packages/gatsby-core-utils) (2021-05-25)
 
-## [2.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.6.0-next.0..gatsby-core-utils@2.6.0) (2021-05-25)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
 
 **Note:** Version bump only for package gatsby-core-utils
 
+## [2.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.5.0/packages/gatsby-core-utils) (2021-05-12)
 
-## [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.5.0-next.0..gatsby-core-utils@2.5.0) (2021-05-12)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
 
 **Note:** Version bump only for package gatsby-core-utils
 
+## [2.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.4.0/packages/gatsby-core-utils) (2021-04-28)
 
-## [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.4.0-next.0..gatsby-core-utils@2.4.0) (2021-04-28)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
 
 #### Features
@@ -89,28 +89,28 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Other Changes
 
-- Copy tweak  ([9111b04](https://github.com/gatsbyjs/gatsby/commit/9111b04fb0e731a87a0c7352c8b2f98a25bb5856))
+- Copy tweak ([9111b04](https://github.com/gatsbyjs/gatsby/commit/9111b04fb0e731a87a0c7352c8b2f98a25bb5856))
 
+## [2.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.3.0/packages/gatsby-core-utils) (2021-04-14)
 
-## [2.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.3.0-next.0..gatsby-core-utils@2.3.0) (2021-04-14)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
 
 **Note:** Version bump only for package gatsby-core-utils
 
+## [2.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.2.0/packages/gatsby-core-utils) (2021-03-30)
 
-## [2.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.2.0-next.0..gatsby-core-utils@2.2.0) (2021-03-30)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
 
 **Note:** Version bump only for package gatsby-core-utils
 
+## [2.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.1.0/packages/gatsby-core-utils) (2021-03-16)
 
-## [2.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.1.0-next.0..gatsby-core-utils@2.1.0) (2021-03-16)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
 
 **Note:** Version bump only for package gatsby-core-utils
 
+## [2.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.0.0/packages/gatsby-core-utils) (2021-03-02)
 
-## [2.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.0.0-next.0..gatsby-core-utils@2.0.0) (2021-03-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
 
 #### Features
@@ -122,71 +122,67 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Move isTruthy to gatsby-core-utils [#29707](https://github.com/gatsbyjs/gatsby/issues/29707) ([837fcd2](https://github.com/gatsbyjs/gatsby/commit/837fcd2831cfaab38274466027b5384d4c19ad84))
 - Upgrade typescript [#29388](https://github.com/gatsbyjs/gatsby/issues/29388) ([823140f](https://github.com/gatsbyjs/gatsby/commit/823140f2b0bbbcab51923186bab8128bb8e0afe5))
 
-
-### [1.10.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.10.0..gatsby-core-utils@1.10.1) (2021-02-24)
+### [1.10.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@1.10.1/packages/gatsby-core-utils) (2021-02-24)
 
 #### Chores
 
 - Move isTruthy to gatsby-core-utils [#29707](https://github.com/gatsbyjs/gatsby/issues/29707) [#29710](https://github.com/gatsbyjs/gatsby/issues/29710) ([2022f2b](https://github.com/gatsbyjs/gatsby/commit/2022f2bd5d56d966b17b0c11c94232605a021cd4))
 
+## [1.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@1.10.0/packages/gatsby-core-utils) (2021-02-02)
 
-## [1.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.10.0-next.0..gatsby-core-utils@1.10.0) (2021-02-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
 
 **Note:** Version bump only for package gatsby-core-utils
 
+## [1.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@1.9.0/packages/gatsby-core-utils) (2021-01-20)
 
-## [1.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.9.0-next.0..gatsby-core-utils@1.9.0) (2021-01-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
 
 **Note:** Version bump only for package gatsby-core-utils
 
+## [1.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@1.8.0/packages/gatsby-core-utils) (2021-01-06)
 
-## [1.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.8.0-next.0..gatsby-core-utils@1.8.0) (2021-01-06)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
 
 #### Other Changes
 
 - chore(telemetry) improve github action and circle detection [#28732](https://github.com/gatsbyjs/gatsby/issues/28732) ([3af7182](https://github.com/gatsbyjs/gatsby/commit/3af7182c2ef92240ca1772375fb24ab9285ce3d6))
 
-
-### [1.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.7.0..gatsby-core-utils@1.7.1) (2020-12-23)
+### [1.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@1.7.1/packages/gatsby-core-utils) (2020-12-23)
 
 #### Other Changes
 
 - chore(telemetry) improve github action and circle detection [#28732](https://github.com/gatsbyjs/gatsby/issues/28732) [#28747](https://github.com/gatsbyjs/gatsby/issues/28747) ([e3992ab](https://github.com/gatsbyjs/gatsby/commit/e3992ab4c4c474d66e4021657dff0ba555aa668b))
 
+## [1.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@1.7.0/packages/gatsby-core-utils) (2020-12-15)
 
-## [1.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.7.0-next.0..gatsby-core-utils@1.7.0) (2020-12-15)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
 
 #### Chores
 
 - update dependency cross-env to ^7.0.3 [#28505](https://github.com/gatsbyjs/gatsby/issues/28505) ([a819b9b](https://github.com/gatsbyjs/gatsby/commit/a819b9bfb663139f7b06c3ed7d6d6069a2382b2c))
 
+## [1.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@1.6.0/packages/gatsby-core-utils) (2020-12-02)
 
-## [1.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.6.0-next.0..gatsby-core-utils@1.6.0) (2020-12-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
 
 **Note:** Version bump only for package gatsby-core-utils
 
+## [1.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@1.5.0/packages/gatsby-core-utils) (2020-11-20)
 
-## [1.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.5.0-next.0..gatsby-core-utils@1.5.0) (2020-11-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.27)
 
 #### Chores
 
 - update babel monorepo [#27528](https://github.com/gatsbyjs/gatsby/issues/27528) ([539dbb0](https://github.com/gatsbyjs/gatsby/commit/539dbb09166e346a6cee568973d2de3d936e8ef3))
 
+## [1.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@1.4.0/packages/gatsby-core-utils) (2020-11-12)
 
-## [1.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.4.0-next.0..gatsby-core-utils@1.4.0) (2020-11-12)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.26)
 
 **Note:** Version bump only for package gatsby-core-utils
 
 <a name="before-release-process"></a>
-
-
 
 ## [1.3.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.3.22...gatsby-core-utils@1.3.23) (2020-10-06)
 

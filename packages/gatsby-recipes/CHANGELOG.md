@@ -3,7 +3,8 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.23.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.23.0-next.0..gatsby-recipes@0.23.0) (2021-08-18)
+## [0.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.23.0/packages/gatsby-recipes) (2021-08-18)
+
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
 
 #### Chores
@@ -12,14 +13,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update formatting & linting [#32626](https://github.com/gatsbyjs/gatsby/issues/32626) ([4a765b5](https://github.com/gatsbyjs/gatsby/commit/4a765b5c62208d58f0bd7fd59558160c0b9feed3))
 - update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
 
+## [0.22.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.22.0/packages/gatsby-recipes) (2021-08-04)
 
-## [0.22.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.22.0-next.0..gatsby-recipes@0.22.0) (2021-08-04)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 **Note:** Version bump only for package gatsby-recipes
 
+## [0.21.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.21.0/packages/gatsby-recipes) (2021-07-20)
 
-## [0.21.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.21.0-next.0..gatsby-recipes@0.21.0) (2021-07-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
 
 #### Bug Fixes
@@ -32,8 +33,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update dependency graphql to ^15.5.1 [#32239](https://github.com/gatsbyjs/gatsby/issues/32239) ([fd6cdf8](https://github.com/gatsbyjs/gatsby/commit/fd6cdf8dd3a8464ca1ba13cccf4ed773acfeb1ca))
 - update babel monorepo [#32238](https://github.com/gatsbyjs/gatsby/issues/32238) ([466d4c0](https://github.com/gatsbyjs/gatsby/commit/466d4c087bbc96abb942a02c67243bcc9a4f2a0a))
 
+## [0.20.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.20.0/packages/gatsby-recipes) (2021-07-07)
 
-## [0.20.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.20.0-next.0..gatsby-recipes@0.20.0) (2021-07-07)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
 
 #### Chores
@@ -41,66 +42,64 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Bumped express-graphql to v0.12.0 [#31178](https://github.com/gatsbyjs/gatsby/issues/31178) ([cb374db](https://github.com/gatsbyjs/gatsby/commit/cb374db42de66d7aa5407d76b457d0d401421db7))
 - update dependency graphql to ^15.5.0 [#31698](https://github.com/gatsbyjs/gatsby/issues/31698) ([a6a6f96](https://github.com/gatsbyjs/gatsby/commit/a6a6f9686ac56797b79e54c090591494c5de3021))
 
+## [0.19.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.19.0/packages/gatsby-recipes) (2021-06-23)
 
-## [0.19.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.19.0-next.0..gatsby-recipes@0.19.0) (2021-06-23)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
 
 #### Chores
 
 - bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) ([7d42e8d](https://github.com/gatsbyjs/gatsby/commit/7d42e8d866e46e9c39838d812d080d06433f7060))
 
-
-### [0.18.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.18.0..gatsby-recipes@0.18.1) (2021-06-10)
+### [0.18.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.18.1/packages/gatsby-recipes) (2021-06-10)
 
 #### Chores
 
 - bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) [#31859](https://github.com/gatsbyjs/gatsby/issues/31859) ([8636025](https://github.com/gatsbyjs/gatsby/commit/863602567930a39142ed33d9d1f1813b7dec8686))
 
+## [0.18.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.18.0/packages/gatsby-recipes) (2021-06-09)
 
-## [0.18.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.18.0-next.0..gatsby-recipes@0.18.0) (2021-06-09)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
 
 #### Chores
 
 - update babel monorepo [#31143](https://github.com/gatsbyjs/gatsby/issues/31143) ([701ab2f](https://github.com/gatsbyjs/gatsby/commit/701ab2f6690c3f1bbaf60cf572513ea566cc9ec9))
 
+## [0.17.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.17.0/packages/gatsby-recipes) (2021-05-25)
 
-## [0.17.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.17.0-next.0..gatsby-recipes@0.17.0) (2021-05-25)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
 
 **Note:** Version bump only for package gatsby-recipes
 
+## [0.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.16.0/packages/gatsby-recipes) (2021-05-12)
 
-## [0.16.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.16.0-next.0..gatsby-recipes@0.16.0) (2021-05-12)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
 
 **Note:** Version bump only for package gatsby-recipes
 
-
-### [0.15.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.15.0..gatsby-recipes@0.15.1) (2021-05-05)
+### [0.15.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.15.1/packages/gatsby-recipes) (2021-05-05)
 
 **Note:** Version bump only for package gatsby-recipes
 
+## [0.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.15.0/packages/gatsby-recipes) (2021-04-28)
 
-## [0.15.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.15.0-next.0..gatsby-recipes@0.15.0) (2021-04-28)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
 
 **Note:** Version bump only for package gatsby-recipes
 
+## [0.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.14.0/packages/gatsby-recipes) (2021-04-14)
 
-## [0.14.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.14.0-next.0..gatsby-recipes@0.14.0) (2021-04-14)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
 
 **Note:** Version bump only for package gatsby-recipes
 
+## [0.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.13.0/packages/gatsby-recipes) (2021-03-30)
 
-## [0.13.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.13.0-next.0..gatsby-recipes@0.13.0) (2021-03-30)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
 
 **Note:** Version bump only for package gatsby-recipes
 
+## [0.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.12.0/packages/gatsby-recipes) (2021-03-16)
 
-## [0.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.12.0-next.0..gatsby-recipes@0.12.0) (2021-03-16)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
 
 #### Bug Fixes
@@ -111,8 +110,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update eslint to fix linting issues fix [#29988](https://github.com/gatsbyjs/gatsby/issues/29988) ([5636389](https://github.com/gatsbyjs/gatsby/commit/5636389e8fa626c644e90abc14589e9961d98c68))
 
+## [0.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.11.0/packages/gatsby-recipes) (2021-03-02)
 
-## [0.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.11.0-next.0..gatsby-recipes@0.11.0) (2021-03-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
 
 #### Bug Fixes
@@ -129,31 +128,28 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Fix URL typo in sass recipe Fix [#29530](https://github.com/gatsbyjs/gatsby/issues/29530) ([ba12247](https://github.com/gatsbyjs/gatsby/commit/ba12247f110bc124eb766881c8063353fcbf0994))
 
-
-### [0.9.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.9.2..gatsby-recipes@0.9.3) (2021-05-04)
-
-**Note:** Version bump only for package gatsby-recipes
-
-
-### [0.9.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.9.1..gatsby-recipes@0.9.2) (2021-02-24)
+### [0.9.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.9.3/packages/gatsby-recipes) (2021-05-04)
 
 **Note:** Version bump only for package gatsby-recipes
 
+### [0.9.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.9.2/packages/gatsby-recipes) (2021-02-24)
 
-### [0.9.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.9.0..gatsby-recipes@0.9.1) (2021-02-04)
+**Note:** Version bump only for package gatsby-recipes
+
+### [0.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.9.1/packages/gatsby-recipes) (2021-02-04)
 
 #### Other Changes
 
 - launch gatsby-source-wordpress v4 [#29150](https://github.com/gatsbyjs/gatsby/issues/29150) [#29330](https://github.com/gatsbyjs/gatsby/issues/29330) [#29150](https://github.com/gatsbyjs/gatsby/issues/29150) ([0a31b64](https://github.com/gatsbyjs/gatsby/commit/0a31b64709a4118730adbf0551f921f7027304bf))
 
+## [0.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.9.0/packages/gatsby-recipes) (2021-02-02)
 
-## [0.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.9.0-next.0..gatsby-recipes@0.9.0) (2021-02-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
 
 **Note:** Version bump only for package gatsby-recipes
 
+## [0.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.8.0/packages/gatsby-recipes) (2021-01-20)
 
-## [0.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.8.0-next.0..gatsby-recipes@0.8.0) (2021-01-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
 
 #### Bug Fixes
@@ -165,26 +161,24 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - fix code block language to shell fix [#28895](https://github.com/gatsbyjs/gatsby/issues/28895) ([ef12dca](https://github.com/gatsbyjs/gatsby/commit/ef12dca08b960ca4c09a59d3e687ec7bd20e7e55))
 - Fix spelling Fix [#28761](https://github.com/gatsbyjs/gatsby/issues/28761) ([b960334](https://github.com/gatsbyjs/gatsby/commit/b960334309e8d7fe894e59d1079ea1150e958078))
 
-
-### [0.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.7.0..gatsby-recipes@0.7.1) (2021-01-13)
+### [0.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.7.1/packages/gatsby-recipes) (2021-01-13)
 
 **Note:** Version bump only for package gatsby-recipes
 
+## [0.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.7.0/packages/gatsby-recipes) (2021-01-06)
 
-## [0.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.7.0-next.0..gatsby-recipes@0.7.0) (2021-01-06)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
 
 #### Chores
 
 - update ink to v3 [#26190](https://github.com/gatsbyjs/gatsby/issues/26190) ([1e702ae](https://github.com/gatsbyjs/gatsby/commit/1e702ae64e08e8b5d22ca448d870c9bb24954bf8))
 
-
-### [0.6.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.6.0..gatsby-recipes@0.6.1) (2020-12-23)
+### [0.6.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.6.1/packages/gatsby-recipes) (2020-12-23)
 
 **Note:** Version bump only for package gatsby-recipes
 
+## [0.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.6.0/packages/gatsby-recipes) (2020-12-15)
 
-## [0.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.6.0-next.0..gatsby-recipes@0.6.0) (2020-12-15)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
 
 #### Bug Fixes
@@ -200,15 +194,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - (gatsby-cli) Add a CLI command for listing plugins [#28018](https://github.com/gatsbyjs/gatsby/issues/28018) ([0e4d026](https://github.com/gatsbyjs/gatsby/commit/0e4d026059d9d0507de9433ed13e4bcd3d7376a6))
 
-
-### [0.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.5.0..gatsby-recipes@0.5.1) (2020-12-10)
+### [0.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.5.1/packages/gatsby-recipes) (2020-12-10)
 
 #### Bug Fixes
 
 - Add postcss as a dependency [#28556](https://github.com/gatsbyjs/gatsby/issues/28556) [#28559](https://github.com/gatsbyjs/gatsby/issues/28559) ([4f50275](https://github.com/gatsbyjs/gatsby/commit/4f5027532b85130a0179b14142c4a40142a62380))
 
+## [0.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.5.0/packages/gatsby-recipes) (2020-12-02)
 
-## [0.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.5.0-next.0..gatsby-recipes@0.5.0) (2020-12-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
 
 #### Bug Fixes
@@ -219,13 +212,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update to emotion@11 [#27981](https://github.com/gatsbyjs/gatsby/issues/27981) ([9c00fc9](https://github.com/gatsbyjs/gatsby/commit/9c00fc9ec27ebedb440b8400aee8b41892b173ee))
 
-
-### [0.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.4.0..gatsby-recipes@0.4.1) (2020-11-25)
+### [0.4.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.4.1/packages/gatsby-recipes) (2020-11-25)
 
 **Note:** Version bump only for package gatsby-recipes
 
+## [0.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.4.0/packages/gatsby-recipes) (2020-11-20)
 
-## [0.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.4.0-next.0..gatsby-recipes@0.4.0) (2020-11-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.27)
 
 #### Features
@@ -242,17 +234,16 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 #### Other Changes
 
 - remove trailing comments when parsing name [#28015](https://github.com/gatsbyjs/gatsby/issues/28015) ([4865ea7](https://github.com/gatsbyjs/gatsby/commit/4865ea7cb4ac721b60d52ed6bd9cd0e4dc74b387))
-- add snipcart to list of recipes  ([e4aeff5](https://github.com/gatsbyjs/gatsby/commit/e4aeff59751207c04c1fe13a4fbfef2661ffedf8))
-- Fixed typo and formating in snipcart.mdx recipe file  ([6ad8120](https://github.com/gatsbyjs/gatsby/commit/6ad81204bddbe3f8a9c5dc657b631aa403885903))
-- Added snipcart recipe to gatsby-recipes package  ([642876d](https://github.com/gatsbyjs/gatsby/commit/642876de0110c2022e3c427a22ac2ab6532f0d1c))
+- add snipcart to list of recipes ([e4aeff5](https://github.com/gatsbyjs/gatsby/commit/e4aeff59751207c04c1fe13a4fbfef2661ffedf8))
+- Fixed typo and formating in snipcart.mdx recipe file ([6ad8120](https://github.com/gatsbyjs/gatsby/commit/6ad81204bddbe3f8a9c5dc657b631aa403885903))
+- Added snipcart recipe to gatsby-recipes package ([642876d](https://github.com/gatsbyjs/gatsby/commit/642876de0110c2022e3c427a22ac2ab6532f0d1c))
 
-
-### [0.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.3.0..gatsby-recipes@0.3.1) (2020-11-14)
+### [0.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.3.1/packages/gatsby-recipes) (2020-11-14)
 
 **Note:** Version bump only for package gatsby-recipes
 
+## [0.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.3.0/packages/gatsby-recipes) (2020-11-12)
 
-## [0.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.3.0-next.0..gatsby-recipes@0.3.0) (2020-11-12)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.26)
 
 #### Bug Fixes
@@ -262,8 +253,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add brackets to directory names [#27812](https://github.com/gatsbyjs/gatsby/issues/27812) ([5f8beb7](https://github.com/gatsbyjs/gatsby/commit/5f8beb77b64505e4e967b9e2307e991988c8cda5))
 
 <a name="before-release-process"></a>
-
-
 
 ## [0.2.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.35...gatsby-recipes@0.2.36) (2020-11-02)
 

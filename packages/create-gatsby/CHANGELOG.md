@@ -3,7 +3,8 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.12.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.12.0-next.0..create-gatsby@1.12.0) (2021-08-18)
+## [1.12.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.12.0/packages/create-gatsby) (2021-08-18)
+
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
 
 #### Bug Fixes
@@ -17,14 +18,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update fs-extra [#32570](https://github.com/gatsbyjs/gatsby/issues/32570) ([bc3410b](https://github.com/gatsbyjs/gatsby/commit/bc3410bff0c31be8e4aba5ce45fd49d93d25118f))
 - update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
 
+## [1.11.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.11.0/packages/create-gatsby) (2021-08-04)
 
-## [1.11.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.11.0-next.0..create-gatsby@1.11.0) (2021-08-04)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 **Note:** Version bump only for package create-gatsby
 
+## [1.10.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.10.0/packages/create-gatsby) (2021-07-20)
 
-## [1.10.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.10.0-next.0..create-gatsby@1.10.0) (2021-07-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
 
 #### Bug Fixes
@@ -38,25 +39,24 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update dependency prettier to ^2.3.2 [#31149](https://github.com/gatsbyjs/gatsby/issues/31149) ([0666d6f](https://github.com/gatsbyjs/gatsby/commit/0666d6fc1b0e3cfd0181bec822b4ae2a9f9ad5f7))
 - update babel monorepo [#32238](https://github.com/gatsbyjs/gatsby/issues/32238) ([466d4c0](https://github.com/gatsbyjs/gatsby/commit/466d4c087bbc96abb942a02c67243bcc9a4f2a0a))
 
+## [1.9.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.9.0/packages/create-gatsby) (2021-07-07)
 
-## [1.9.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.9.0-next.0..create-gatsby@1.9.0) (2021-07-07)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
 
 **Note:** Version bump only for package create-gatsby
 
+## [1.8.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.8.0/packages/create-gatsby) (2021-06-23)
 
-## [1.8.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.8.0-next.0..create-gatsby@1.8.0) (2021-06-23)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
 
 **Note:** Version bump only for package create-gatsby
 
-
-### [1.7.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.7.0..create-gatsby@1.7.1) (2021-06-10)
+### [1.7.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.7.1/packages/create-gatsby) (2021-06-10)
 
 **Note:** Version bump only for package create-gatsby
 
+## [1.7.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.7.0/packages/create-gatsby) (2021-06-09)
 
-## [1.7.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.7.0-next.0..create-gatsby@1.7.0) (2021-06-09)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
 
 #### Chores
@@ -64,42 +64,42 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update minor and patch for create-gatsby [#31680](https://github.com/gatsbyjs/gatsby/issues/31680) ([dd51c37](https://github.com/gatsbyjs/gatsby/commit/dd51c379bbace9c5617dd647e4e74de825b6d981))
 - update babel monorepo [#31143](https://github.com/gatsbyjs/gatsby/issues/31143) ([701ab2f](https://github.com/gatsbyjs/gatsby/commit/701ab2f6690c3f1bbaf60cf572513ea566cc9ec9))
 
+## [1.6.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.6.0/packages/create-gatsby) (2021-05-25)
 
-## [1.6.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.6.0-next.0..create-gatsby@1.6.0) (2021-05-25)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
 
 **Note:** Version bump only for package create-gatsby
 
+## [1.5.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.5.0/packages/create-gatsby) (2021-05-12)
 
-## [1.5.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.5.0-next.0..create-gatsby@1.5.0) (2021-05-12)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
 
 **Note:** Version bump only for package create-gatsby
 
+## [1.4.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.4.0/packages/create-gatsby) (2021-04-28)
 
-## [1.4.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.4.0-next.0..create-gatsby@1.4.0) (2021-04-28)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
 
 #### Chores
 
 - update eslint [#29279](https://github.com/gatsbyjs/gatsby/issues/29279) ([780d6db](https://github.com/gatsbyjs/gatsby/commit/780d6db7e760d4a185df4130154f1a8a2c7a49b8))
 
+## [1.3.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.3.0/packages/create-gatsby) (2021-04-14)
 
-## [1.3.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.3.0-next.0..create-gatsby@1.3.0) (2021-04-14)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
 
 **Note:** Version bump only for package create-gatsby
 
+## [1.2.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.2.0/packages/create-gatsby) (2021-03-30)
 
-## [1.2.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.2.0-next.0..create-gatsby@1.2.0) (2021-03-30)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
 
 #### Bug Fixes
 
 - upgrade webpack-assets-manifest for compatibility with webpack@5 [#30217](https://github.com/gatsbyjs/gatsby/issues/30217) ([ca44a9e](https://github.com/gatsbyjs/gatsby/commit/ca44a9eb04878919ee52874a5e879a1a29ee0463))
 
+## [1.1.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.1.0/packages/create-gatsby) (2021-03-16)
 
-## [1.1.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.1.0-next.0..create-gatsby@1.1.0) (2021-03-16)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
 
 #### Features
@@ -114,8 +114,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update eslint to fix linting issues fix [#29988](https://github.com/gatsbyjs/gatsby/issues/29988) ([5636389](https://github.com/gatsbyjs/gatsby/commit/5636389e8fa626c644e90abc14589e9961d98c68))
 
+## [1.0.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.0.0/packages/create-gatsby) (2021-03-02)
 
-## [1.0.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.0.0-next.0..create-gatsby@1.0.0) (2021-03-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
 
 #### Features
@@ -133,23 +133,22 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Upgrade typescript [#29388](https://github.com/gatsbyjs/gatsby/issues/29388) ([823140f](https://github.com/gatsbyjs/gatsby/commit/823140f2b0bbbcab51923186bab8128bb8e0afe5))
 - Use new image plugin [#29356](https://github.com/gatsbyjs/gatsby/issues/29356) ([936c74e](https://github.com/gatsbyjs/gatsby/commit/936c74ea7ff9965c993541bd8feea82e40c0919b))
 
-
-### [0.5.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.5.0..create-gatsby@0.5.1) (2021-02-04)
+### [0.5.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@0.5.1/packages/create-gatsby) (2021-02-04)
 
 #### Other Changes
 
 - launch gatsby-source-wordpress v4 [#29150](https://github.com/gatsbyjs/gatsby/issues/29150) [#29330](https://github.com/gatsbyjs/gatsby/issues/29330) [#29150](https://github.com/gatsbyjs/gatsby/issues/29150) ([0a31b64](https://github.com/gatsbyjs/gatsby/commit/0a31b64709a4118730adbf0551f921f7027304bf))
 
+## [0.5.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@0.5.0/packages/create-gatsby) (2021-02-02)
 
-## [0.5.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.5.0-next.0..create-gatsby@0.5.0) (2021-02-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
 
 #### Chores
 
 - update dependency eslint to ^7.18.0 [#29172](https://github.com/gatsbyjs/gatsby/issues/29172) ([94936fb](https://github.com/gatsbyjs/gatsby/commit/94936fb5c5699be4c261235dc37f913c70dc420d))
 
+## [0.4.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@0.4.0/packages/create-gatsby) (2021-01-20)
 
-## [0.4.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.4.0-next.0..create-gatsby@0.4.0) (2021-01-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
 
 #### Chores
@@ -161,8 +160,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - fix(create-gatsby) the sessionId is supposed to be the same for the whole duration of the session [#28864](https://github.com/gatsbyjs/gatsby/issues/28864) ([de87590](https://github.com/gatsbyjs/gatsby/commit/de8759002872c8fcf3bf9598dcf19573f9b712d5))
 
+## [0.3.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@0.3.0/packages/create-gatsby) (2021-01-06)
 
-## [0.3.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.0..create-gatsby@0.3.0) (2021-01-06)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
 
 #### Bug Fixes
@@ -176,15 +175,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - fix(create-gatsby) the sessionId is supposed to be the same for the whole duration of the session [#28864](https://github.com/gatsbyjs/gatsby/issues/28864) [#28870](https://github.com/gatsbyjs/gatsby/issues/28870) ([0c1c807](https://github.com/gatsbyjs/gatsby/commit/0c1c8076b442bcf2e4bdaa70dd56b7392ed7e550))
 - fix (creat-gatsby): Remove license information fix [#28644](https://github.com/gatsbyjs/gatsby/issues/28644) ([2050e93](https://github.com/gatsbyjs/gatsby/commit/2050e93c2ccdcbabc48a4769e046da3671337418))
 
-
-### [0.2.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.2.0..create-gatsby@0.2.1) (2020-12-16)
+### [0.2.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@0.2.1/packages/create-gatsby) (2020-12-16)
 
 #### Bug Fixes
 
 - Adds a default icon so plugin-manifest works out of the box [#28635](https://github.com/gatsbyjs/gatsby/issues/28635) [#28661](https://github.com/gatsbyjs/gatsby/issues/28661) ([b5b96bc](https://github.com/gatsbyjs/gatsby/commit/b5b96bcd38f47760cc5ce76e4fe798b2dbda92af))
 
+## [0.2.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@0.2.0/packages/create-gatsby) (2020-12-15)
 
-## [0.2.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.2.0-next.0..create-gatsby@0.2.0) (2020-12-15)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
 
 #### Features
@@ -213,8 +211,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - (gatsby-cli) Add a CLI command for listing plugins [#28018](https://github.com/gatsbyjs/gatsby/issues/28018) ([0e4d026](https://github.com/gatsbyjs/gatsby/commit/0e4d026059d9d0507de9433ed13e4bcd3d7376a6))
 - snapshot plugins-options-form and tiny refactoring [#28366](https://github.com/gatsbyjs/gatsby/issues/28366) ([a19a76d](https://github.com/gatsbyjs/gatsby/commit/a19a76d6aa429cda949ce6802bcd6820cdc4a1f7))
 
+## [0.1.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@0.1.0/packages/create-gatsby) (2020-12-02)
 
-## [0.1.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.1.0-next.0..create-gatsby@0.1.0) (2020-12-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
 
 #### Features
@@ -230,15 +228,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update to emotion@11 [#27981](https://github.com/gatsbyjs/gatsby/issues/27981) ([9c00fc9](https://github.com/gatsbyjs/gatsby/commit/9c00fc9ec27ebedb440b8400aee8b41892b173ee))
 
-
-### [0.0.2](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.0.1..create-gatsby@0.0.2) (2020-11-25)
+### [0.0.2](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@0.0.2/packages/create-gatsby) (2020-11-25)
 
 #### Bug Fixes
 
 - Fix starter publish and scripts Fix [#28260](https://github.com/gatsbyjs/gatsby/issues/28260) Fix [#28282](https://github.com/gatsbyjs/gatsby/issues/28282) [#issuecomment-732506607](https://github.com/gatsbyjs/gatsby/issues/issuecomment-732506607) ([bd3abae](https://github.com/gatsbyjs/gatsby/commit/bd3abae8de6b68c25bd0181b98fcd7a549b2882d))
 
-
-### [0.0.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.0.0-next.0..create-gatsby@0.0.1) (2020-11-20)
+### [0.0.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@0.0.1/packages/create-gatsby) (2020-11-20)
 
 #### Features
 
@@ -256,6 +252,3 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Add Netlify CMS [#28124](https://github.com/gatsbyjs/gatsby/issues/28124) ([061b459](https://github.com/gatsbyjs/gatsby/commit/061b459a73d27f9a2b9bfcc696fb1447e51fe6e4))
 
 <a name="before-release-process"></a>
-
-
-

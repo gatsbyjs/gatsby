@@ -3,7 +3,8 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.12.0-next.0..gatsby-source-wordpress@5.12.0) (2021-08-18)
+## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.12.0/packages/gatsby-source-wordpress) (2021-08-18)
+
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
 
 #### Features
@@ -30,8 +31,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - :construction: Check that node is not falsey [#32488](https://github.com/gatsbyjs/gatsby/issues/32488) ([59a6287](https://github.com/gatsbyjs/gatsby/commit/59a6287a11eb5b136e3e681e7d1d1c08d169b601))
 
+## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.11.0/packages/gatsby-source-wordpress) (2021-08-04)
 
-## [5.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.11.0-next.0..gatsby-source-wordpress@5.11.0) (2021-08-04)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 #### Bug Fixes
@@ -42,8 +43,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Revert "fix(wordpress): ensure all file links are rewritten" [#32398](https://github.com/gatsbyjs/gatsby/issues/32398) ([9e96088](https://github.com/gatsbyjs/gatsby/commit/9e96088645160649dc6880b5debc882f353fd133))
 
+## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.10.0/packages/gatsby-source-wordpress) (2021-07-20)
 
-## [5.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.10.0-next.0..gatsby-source-wordpress@5.10.0) (2021-07-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
 
 #### Bug Fixes
@@ -63,28 +64,26 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Revert "fix(wordpress): ensure all file links are rewritten" [#32398](https://github.com/gatsbyjs/gatsby/issues/32398) [#32422](https://github.com/gatsbyjs/gatsby/issues/32422) ([43cddb3](https://github.com/gatsbyjs/gatsby/commit/43cddb3df185b47179d72bec85b4e2cb5162848c))
 - run setGatsbyApiToState in onPreInit to delete auth options [#32338](https://github.com/gatsbyjs/gatsby/issues/32338) ([514f995](https://github.com/gatsbyjs/gatsby/commit/514f995af50e93db1fe768316ef6eacf9b5fbc02))
 
-
-### [5.9.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.9.1..gatsby-source-wordpress@5.9.2) (2021-07-13)
+### [5.9.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.9.2/packages/gatsby-source-wordpress) (2021-07-13)
 
 #### Other Changes
 
 - run setGatsbyApiToState in onPreInit to delete auth options [#32338](https://github.com/gatsbyjs/gatsby/issues/32338) [#32348](https://github.com/gatsbyjs/gatsby/issues/32348) ([5acf176](https://github.com/gatsbyjs/gatsby/commit/5acf176e33bac3573b22ed0901fc0a04c39c88ff))
 
-
-### [5.9.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.9.0..gatsby-source-wordpress@5.9.1) (2021-07-10)
+### [5.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.9.1/packages/gatsby-source-wordpress) (2021-07-10)
 
 #### Bug Fixes
 
 - don't leak auth details [#32303](https://github.com/gatsbyjs/gatsby/issues/32303) [#32314](https://github.com/gatsbyjs/gatsby/issues/32314) ([ba421d7](https://github.com/gatsbyjs/gatsby/commit/ba421d76285bd4cb4a2da3faae936a2128a7a815))
 
+## [5.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.9.0/packages/gatsby-source-wordpress) (2021-07-07)
 
-## [5.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.9.0-next.0..gatsby-source-wordpress@5.9.0) (2021-07-07)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
 
 **Note:** Version bump only for package gatsby-source-wordpress
 
+## [5.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.8.0/packages/gatsby-source-wordpress) (2021-06-23)
 
-## [5.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.8.0-next.0..gatsby-source-wordpress@5.8.0) (2021-06-23)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
 
 #### Chores
@@ -95,15 +94,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - fix(gatsby-source-wordpress) Use send property for timeout [#31737](https://github.com/gatsbyjs/gatsby/issues/31737) [#31847](https://github.com/gatsbyjs/gatsby/issues/31847) [#31737](https://github.com/gatsbyjs/gatsby/issues/31737) ([c87d1d1](https://github.com/gatsbyjs/gatsby/commit/c87d1d116e33eb693f65bcfc57cc63b072fe4a5c))
 
-
-### [5.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.7.0..gatsby-source-wordpress@5.7.1) (2021-06-10)
+### [5.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.7.1/packages/gatsby-source-wordpress) (2021-06-10)
 
 #### Chores
 
 - bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) [#31859](https://github.com/gatsbyjs/gatsby/issues/31859) ([8636025](https://github.com/gatsbyjs/gatsby/commit/863602567930a39142ed33d9d1f1813b7dec8686))
 
+## [5.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.7.0/packages/gatsby-source-wordpress) (2021-06-09)
 
-## [5.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.7.0-next.0..gatsby-source-wordpress@5.7.0) (2021-06-09)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
 
 #### Features
@@ -125,8 +123,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - feat(gatsby-source-wordpress: architecture.md [#31537](https://github.com/gatsbyjs/gatsby/issues/31537) ([d01f444](https://github.com/gatsbyjs/gatsby/commit/d01f44422615da1be3e79ce20ed69f5e95609b7f))
 
+## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.6.0/packages/gatsby-source-wordpress) (2021-05-25)
 
-## [5.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.6.0-next.0..gatsby-source-wordpress@5.6.0) (2021-05-25)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
 
 #### Features
@@ -143,15 +141,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Update typo in docs [#31405](https://github.com/gatsbyjs/gatsby/issues/31405) ([060f732](https://github.com/gatsbyjs/gatsby/commit/060f7321ee84bf540e8fb582273a945d8a27cc22))
 
-
-### [5.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.5.0..gatsby-source-wordpress@5.5.1) (2021-05-19)
+### [5.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.5.1/packages/gatsby-source-wordpress) (2021-05-19)
 
 #### Bug Fixes
 
 - update cheerio snapshots [#31298](https://github.com/gatsbyjs/gatsby/issues/31298) [#31483](https://github.com/gatsbyjs/gatsby/issues/31483) ([67a4fce](https://github.com/gatsbyjs/gatsby/commit/67a4fcef4651443cbe89923d4ac80e5600d94c41))
 
+## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.5.0/packages/gatsby-source-wordpress) (2021-05-12)
 
-## [5.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.5.0-next.0..gatsby-source-wordpress@5.5.0) (2021-05-12)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
 
 #### Features
@@ -162,15 +159,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - previewing drafts requires using the preview query [#31133](https://github.com/gatsbyjs/gatsby/issues/31133) ([53f7d7d](https://github.com/gatsbyjs/gatsby/commit/53f7d7d06c04d9d8bf13d11f09b4dffb2d73853e))
 
-
-### [5.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.4.0..gatsby-source-wordpress@5.4.1) (2021-05-05)
+### [5.4.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.4.1/packages/gatsby-source-wordpress) (2021-05-05)
 
 #### Bug Fixes
 
 - previewing drafts requires using the preview query [#31133](https://github.com/gatsbyjs/gatsby/issues/31133) [#31243](https://github.com/gatsbyjs/gatsby/issues/31243) ([22590b4](https://github.com/gatsbyjs/gatsby/commit/22590b4c8293f2f3dcec2ef355d6d690280beda8))
 
+## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.4.0/packages/gatsby-source-wordpress) (2021-04-28)
 
-## [5.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.4.0-next.0..gatsby-source-wordpress@5.4.0) (2021-04-28)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
 
 #### Bug Fixes
@@ -182,15 +178,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Change the 'idKey' parameter's default value [#30502](https://github.com/gatsbyjs/gatsby/issues/30502) ([83f140e](https://github.com/gatsbyjs/gatsby/commit/83f140e4caf166cf094ed2083514078bc232a123))
 
-
-### [5.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.3.0..gatsby-source-wordpress@5.3.1) (2021-04-20)
+### [5.3.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.3.1/packages/gatsby-source-wordpress) (2021-04-20)
 
 #### Bug Fixes
 
 - invalidate less queries during previews [#30770](https://github.com/gatsbyjs/gatsby/issues/30770) [#30942](https://github.com/gatsbyjs/gatsby/issues/30942) ([9fdfc57](https://github.com/gatsbyjs/gatsby/commit/9fdfc57def4a834e513628bf0bb1b6f9ff5c7dd4))
 
+## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.3.0/packages/gatsby-source-wordpress) (2021-04-14)
 
-## [5.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.3.0-next.0..gatsby-source-wordpress@5.3.0) (2021-04-14)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
 
 #### Bug Fixes
@@ -210,29 +205,26 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - add htaccess auth docs [#30577](https://github.com/gatsbyjs/gatsby/issues/30577) ([5079b91](https://github.com/gatsbyjs/gatsby/commit/5079b91acea94b47695420a84bbc2071c0f2b023))
 
-
-### [5.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.2.2..gatsby-source-wordpress@5.2.3) (2021-04-09)
+### [5.2.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.2.3/packages/gatsby-source-wordpress) (2021-04-09)
 
 #### Bug Fixes
 
 - only log out duplicate nodes if we have all the data we want to log [#30751](https://github.com/gatsbyjs/gatsby/issues/30751) [#30759](https://github.com/gatsbyjs/gatsby/issues/30759) ([01098dc](https://github.com/gatsbyjs/gatsby/commit/01098dccb33c89f7bb63ca45d3e6359060fcbf4f))
 
-
-### [5.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.2.1..gatsby-source-wordpress@5.2.2) (2021-04-07)
+### [5.2.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.2.2/packages/gatsby-source-wordpress) (2021-04-07)
 
 #### Bug Fixes
 
 - pass missing property helpers to gql fetch util [#30727](https://github.com/gatsbyjs/gatsby/issues/30727) [#30731](https://github.com/gatsbyjs/gatsby/issues/30731) ([29fe049](https://github.com/gatsbyjs/gatsby/commit/29fe04995f7cf856bdb58d544a89991e25c0c67b))
 
-
-### [5.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.2.0..gatsby-source-wordpress@5.2.1) (2021-04-02)
+### [5.2.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.2.1/packages/gatsby-source-wordpress) (2021-04-02)
 
 #### Bug Fixes
 
 - Enable preview mode in PINC builds [#30601](https://github.com/gatsbyjs/gatsby/issues/30601) [#30627](https://github.com/gatsbyjs/gatsby/issues/30627) ([63d3716](https://github.com/gatsbyjs/gatsby/commit/63d37163684a64ac92ad5ca64bf6cb9b0cdba49d))
 
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.2.0/packages/gatsby-source-wordpress) (2021-03-30)
 
-## [5.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.2.0-next.0..gatsby-source-wordpress@5.2.0) (2021-03-30)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
 
 #### Bug Fixes
@@ -242,18 +234,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - improve error message for folks who've never used WP_DEBUG [#30356](https://github.com/gatsbyjs/gatsby/issues/30356) ([7cd9cd3](https://github.com/gatsbyjs/gatsby/commit/7cd9cd3e6eed7c430b367d41171f4592161ba09e))
 - upgrade webpack-assets-manifest for compatibility with webpack@5 [#30217](https://github.com/gatsbyjs/gatsby/issues/30217) ([ca44a9e](https://github.com/gatsbyjs/gatsby/commit/ca44a9eb04878919ee52874a5e879a1a29ee0463))
 
-
-### [5.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.1.0..gatsby-source-wordpress@5.1.1) (2021-03-30)
+### [5.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.1.1/packages/gatsby-source-wordpress) (2021-03-30)
 
 **Note:** Version bump only for package gatsby-source-wordpress
 
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.1.0/packages/gatsby-source-wordpress) (2021-03-16)
 
-## [5.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.1.0-next.0..gatsby-source-wordpress@5.1.0) (2021-03-16)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
 
 #### Features
 
-- Improve 50* error messages [#29972](https://github.com/gatsbyjs/gatsby/issues/29972) ([a7b1062](https://github.com/gatsbyjs/gatsby/commit/a7b106275ca8c0766cdf99a022179a0508c97129))
+- Improve 50\* error messages [#29972](https://github.com/gatsbyjs/gatsby/issues/29972) ([a7b1062](https://github.com/gatsbyjs/gatsby/commit/a7b106275ca8c0766cdf99a022179a0508c97129))
 - Log when nodes are duplicates [#29941](https://github.com/gatsbyjs/gatsby/issues/29941) ([7ee63ea](https://github.com/gatsbyjs/gatsby/commit/7ee63ea623b007c8642341b0bbc020d5674051dc))
 
 #### Bug Fixes
@@ -277,8 +268,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Add WP_GATSBY_PREVIEW_DEBUG env var to enable preview debug mode [#30016](https://github.com/gatsbyjs/gatsby/issues/30016) ([82f2cdd](https://github.com/gatsbyjs/gatsby/commit/82f2cdd790a96d179a3db0284d6e633bf429cd13))
 
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.0.0/packages/gatsby-source-wordpress) (2021-03-02)
 
-## [5.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.0..gatsby-source-wordpress@5.0.0) (2021-03-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
 
 #### Features
@@ -315,14 +306,67 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Update using-self-signed-certificates.md tutorial [#29360](https://github.com/gatsbyjs/gatsby/issues/29360) ([48c3e93](https://github.com/gatsbyjs/gatsby/commit/48c3e934951b37aec93d2899d38fbfb3ebe0b86d))
 - fix broken assets link after migration fix [#29389](https://github.com/gatsbyjs/gatsby/issues/29389) ([b93b8bd](https://github.com/gatsbyjs/gatsby/commit/b93b8bd90fb450518d974f199a83921b97a3715d))
 
+### [4.0.8](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@4.0.8/packages/gatsby-source-wordpress) (2021-07-13)
 
-## [3.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.11.0-next.0..gatsby-source-wordpress@3.11.0) (2021-02-02)
+#### Other Changes
+
+- run setGatsbyApiToState in onPreInit to delete auth options [#32339](https://github.com/gatsbyjs/gatsby/issues/32339) ([f49a976](https://github.com/gatsbyjs/gatsby/commit/f49a976b78b83a8656aac5bc19cebd700778d020))
+
+### [4.0.7](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@4.0.7/packages/gatsby-source-wordpress) (2021-07-10)
+
+#### Bug Fixes
+
+- Backporting auth leak fix fix [#32315](https://github.com/gatsbyjs/gatsby/issues/32315) ([98e726f](https://github.com/gatsbyjs/gatsby/commit/98e726f05145a11a57345a262eeebd2694aa18f9))
+
+### [4.0.6](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@4.0.6/packages/gatsby-source-wordpress) (2021-04-07)
+
+#### Bug Fixes
+
+- schema customization errors [#30358](https://github.com/gatsbyjs/gatsby/issues/30358) [#30650](https://github.com/gatsbyjs/gatsby/issues/30650) ([8d7c3a1](https://github.com/gatsbyjs/gatsby/commit/8d7c3a164d9ec832ee9eff2754cd0fef1467ab3a))
+
+### [4.0.5](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@4.0.5/packages/gatsby-source-wordpress) (2021-03-08)
+
+#### Bug Fixes
+
+- image fixes fixes [#29813](https://github.com/gatsbyjs/gatsby/issues/29813) fixes [#29881](https://github.com/gatsbyjs/gatsby/issues/29881) ([c7a6e9f](https://github.com/gatsbyjs/gatsby/commit/c7a6e9f1b18ef5cdc02d783301f3bb14f56880b2))
+
+### [4.0.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@4.0.4/packages/gatsby-source-wordpress) (2021-03-01)
+
+#### Bug Fixes
+
+- auto-rename types named "Filter" [#29718](https://github.com/gatsbyjs/gatsby/issues/29718) [#29884](https://github.com/gatsbyjs/gatsby/issues/29884) ([8986b12](https://github.com/gatsbyjs/gatsby/commit/8986b12d86d1e7b90b68ca00db89f839d0bf0cd8))
+- HTML image regex's [#29778](https://github.com/gatsbyjs/gatsby/issues/29778) [#29883](https://github.com/gatsbyjs/gatsby/issues/29883) ([c2ea9b9](https://github.com/gatsbyjs/gatsby/commit/c2ea9b952d24796a0837440571600ca4fc30f8c2))
+
+### [4.0.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@4.0.3/packages/gatsby-source-wordpress) (2021-02-24)
+
+#### Other Changes
+
+- fix(gatsby-source-wordpress):issue #29535 not finished createSchemaCu… [#29535](https://github.com/gatsbyjs/gatsby/issues/29535) [#29554](https://github.com/gatsbyjs/gatsby/issues/29554) [#29712](https://github.com/gatsbyjs/gatsby/issues/29712) ([d806703](https://github.com/gatsbyjs/gatsby/commit/d806703fae31e8bce9ae64601b82bd9fa5fe43bd))
+
+### [4.0.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@4.0.2/packages/gatsby-source-wordpress) (2021-02-24)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+### [4.0.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@4.0.1/packages/gatsby-source-wordpress) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@4.0.0/packages/gatsby-source-wordpress) (2021-02-04)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
+
+#### Other Changes
+
+- launch gatsby-source-wordpress v4 [#29150](https://github.com/gatsbyjs/gatsby/issues/29150) [#29330](https://github.com/gatsbyjs/gatsby/issues/29330) [#29150](https://github.com/gatsbyjs/gatsby/issues/29150) ([0a31b64](https://github.com/gatsbyjs/gatsby/commit/0a31b64709a4118730adbf0551f921f7027304bf))
+
+## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@3.11.0/packages/gatsby-source-wordpress) (2021-02-02)
+
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
 
 **Note:** Version bump only for package gatsby-source-wordpress
 
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@3.10.0/packages/gatsby-source-wordpress) (2021-01-20)
 
-## [3.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.10.0-next.0..gatsby-source-wordpress@3.10.0) (2021-01-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
 
 #### Bug Fixes
@@ -333,58 +377,53 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Fix all `/packages` links to `/plugins` Fix [#28816](https://github.com/gatsbyjs/gatsby/issues/28816) ([200e307](https://github.com/gatsbyjs/gatsby/commit/200e30748102a478267a67700238304a2a56068b))
 
-
-### [3.9.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.9.0..gatsby-source-wordpress@3.9.1) (2021-01-16)
+### [3.9.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@3.9.1/packages/gatsby-source-wordpress) (2021-01-16)
 
 **Note:** Version bump only for package gatsby-source-wordpress
 
+## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@3.9.0/packages/gatsby-source-wordpress) (2021-01-06)
 
-## [3.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.9.0-next.0..gatsby-source-wordpress@3.9.0) (2021-01-06)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
 
 **Note:** Version bump only for package gatsby-source-wordpress
 
-
-### [3.8.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.8.0..gatsby-source-wordpress@3.8.1) (2020-12-23)
+### [3.8.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@3.8.1/packages/gatsby-source-wordpress) (2020-12-23)
 
 **Note:** Version bump only for package gatsby-source-wordpress
 
+## [3.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@3.8.0/packages/gatsby-source-wordpress) (2020-12-15)
 
-## [3.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.8.0-next.0..gatsby-source-wordpress@3.8.0) (2020-12-15)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
 
 #### Chores
 
 - update dependency cross-env to ^7.0.3 [#28505](https://github.com/gatsbyjs/gatsby/issues/28505) ([a819b9b](https://github.com/gatsbyjs/gatsby/commit/a819b9bfb663139f7b06c3ed7d6d6069a2382b2c))
 
+## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@3.7.0/packages/gatsby-source-wordpress) (2020-12-02)
 
-## [3.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.7.0-next.0..gatsby-source-wordpress@3.7.0) (2020-12-02)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
 
 **Note:** Version bump only for package gatsby-source-wordpress
 
-
-### [3.6.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.6.0..gatsby-source-wordpress@3.6.1) (2020-11-23)
+### [3.6.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@3.6.1/packages/gatsby-source-wordpress) (2020-11-23)
 
 **Note:** Version bump only for package gatsby-source-wordpress
 
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@3.6.0/packages/gatsby-source-wordpress) (2020-11-20)
 
-## [3.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.6.0-next.0..gatsby-source-wordpress@3.6.0) (2020-11-20)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.27)
 
 #### Chores
 
 - update babel monorepo [#27528](https://github.com/gatsbyjs/gatsby/issues/27528) ([539dbb0](https://github.com/gatsbyjs/gatsby/commit/539dbb09166e346a6cee568973d2de3d936e8ef3))
 
+## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@3.5.0/packages/gatsby-source-wordpress) (2020-11-12)
 
-## [3.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.5.0-next.0..gatsby-source-wordpress@3.5.0) (2020-11-12)
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.26)
 
 **Note:** Version bump only for package gatsby-source-wordpress
 
 <a name="before-release-process"></a>
-
-
 
 # [3.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.41...gatsby-source-wordpress@3.4.0) (2020-11-02)
 
