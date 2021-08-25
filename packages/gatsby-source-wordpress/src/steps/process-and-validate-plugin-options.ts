@@ -2,6 +2,7 @@ import { formatLogMessage } from "~/utils/format-log-message"
 import isInteger from "lodash/isInteger"
 import { IPluginOptions } from "~/models/gatsby-api"
 import { GatsbyNodeApiHelpers } from "~/utils/gatsby-types"
+import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 interface IProcessorOptions {
   userPluginOptions: IPluginOptions
   helpers: GatsbyNodeApiHelpers
@@ -14,6 +15,19 @@ interface IOptionsProcessor {
 }
 
 const optionsProcessors: Array<IOptionsProcessor> = [
+  {
+    name: `MediaItem.lazyNodes doesn't work in Gatsby v4`,
+    test: ({ userPluginOptions }): boolean =>
+      usingGatsbyV4OrGreater &&
+      `lazyNodes` in userPluginOptions?.type?.MediaItem,
+    processor: ({ helpers }): void => {
+      helpers.reporter.panic(
+        formatLogMessage(
+          `The lazyNodes option doesn't work in Gatsby v4+ due to query running using JS workers in PQR (Parallell Query Running). lazyNodes creates nodes in GraphQL resolvers and PQR doesn't support that.`
+        )
+      )
+    },
+  },
   {
     name: `pluginOptions.type.MediaItem.limit is not allowed`,
     test: ({ userPluginOptions }): boolean =>
