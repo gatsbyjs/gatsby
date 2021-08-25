@@ -28,7 +28,7 @@ const argv = yargs
         try {
           await regenerateChangelog(pkg)
         } catch (e) {
-          console.error(`${pkg} error: ${e.message}`)
+          console.error(`${pkg}: ${e.stack}`)
         }
       }
     }
@@ -55,7 +55,7 @@ const argv = yargs
         try {
           await updateChangelog(pkg)
         } catch (e) {
-          console.error(`${pkg} error: ${e.message}`)
+          console.error(`${pkg}: ${e.stack}`)
         }
       }
     }

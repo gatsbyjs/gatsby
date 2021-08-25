@@ -250,7 +250,10 @@ function addChangelogEntries(packageName, entries, contents) {
     entries.trimRight(),
     contents.substr(header.length),
   ]
-  fs.writeFileSync(changelogPath(packageName), updatedChangelogParts.join(`\n\n`))
+  fs.writeFileSync(
+    changelogPath(packageName),
+    updatedChangelogParts.join(`\n\n`)
+  )
 }
 
 /**
@@ -269,14 +272,12 @@ async function updateChangelog(packageName) {
   }
   const changeLog = await generateChangelog(packageName, latestVersion)
   if (!changeLog) {
-    console.log(
-      `Skipping ${packageName}: no new versions after ${latestVersion}`
-    )
-    return
+    return false
   }
 
   addChangelogEntries(packageName, changeLog, contents)
   console.log(`Updated ${path}`)
+  return true
 }
 
 /**
@@ -285,7 +286,7 @@ async function updateChangelog(packageName) {
  * Should be used inside lerna "version" hook (version is changed in package.json but not committed/tagged yet).
  * See https://github.com/lerna/lerna/tree/main/commands/version#lifecycle-scripts
  */
-async function onVersion() {
+async function onNewVersion() {
   // get list of changed files (package.json of published packages are expected to be dirty)
   const { stdout } = await execa("git", ["ls-files", "-m"])
   const packages = String(stdout).split(`\n`).map(toPackageName).filter(Boolean)
@@ -349,4 +350,4 @@ async function onVersion() {
 exports.getAllPackageNames = getAllPackageNames
 exports.regenerateChangelog = regenerateChangelog
 exports.updateChangelog = updateChangelog
-exports.onVersion = onVersion
+exports.onNewVersion = onNewVersion

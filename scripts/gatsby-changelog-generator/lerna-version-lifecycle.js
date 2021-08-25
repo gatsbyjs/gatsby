@@ -1,2 +1,2 @@
-const { onVersion } = require(`./generate`)
-onVersion().catch(console.error)
+const { onNewVersion } = require(`./generate`)
+onNewVersion().catch(console.error)
