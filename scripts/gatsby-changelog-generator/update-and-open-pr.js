@@ -53,6 +53,8 @@ async function run() {
   const owner = `gatsbyjs`
   const repo = `gatsby`
 
+  // Note: PR may already exist for this branch.
+  // Then it will throw but we don't care too much
   const pr = await octokit.pulls.create({
     owner,
     repo,
