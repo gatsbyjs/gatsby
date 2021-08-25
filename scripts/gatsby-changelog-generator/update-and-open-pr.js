@@ -1,4 +1,5 @@
 const execa = require(`execa`)
+const { Octokit } = require(`@octokit/rest`)
 const { getAllPackageNames, updateChangelog } = require(`./generate`)
 
 if (!process.env.GITHUB_ACCESS_TOKEN) {
