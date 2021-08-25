@@ -267,13 +267,12 @@ async function generateBase64({ file, args = {}, reporter }) {
   })
   let pipeline
   try {
-    pipeline = !options.failOnError
-      ? sharp(file.absolutePath, { failOnError: false })
-      : sharp(file.absolutePath)
+    pipeline = !options.failOnError ? sharp({ failOnError: false }) : sharp()
 
     if (!options.rotate) {
       pipeline.rotate()
     }
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return null
@@ -450,7 +449,17 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // images are intended to be displayed at their native resolution.
   let metadata
   try {
-    metadata = await sharp(file.absolutePath).metadata()
+    metadata = await new Promise((resolve, reject) => {
+      fs.createReadStream(file.absolutePath).pipe(
+        sharp().metadata(function (err, metadata) {
+          if (err) {
+            return reject(err)
+          }
+
+          return resolve(metadata)
+        })
+      )
+    })
   } catch (err) {
     reportError(
       `Failed to retrieve metadata from image ${file.absolutePath}`,

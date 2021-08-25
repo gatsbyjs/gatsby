@@ -288,6 +288,7 @@ export const getDominantColor = async absolutePath => {
     return dominantColor
   }
 
+  // TODO: convert to use stream
   const pipeline = sharp(absolutePath)
   const { dominant } = await pipeline.stats()
 

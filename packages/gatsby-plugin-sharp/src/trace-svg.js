@@ -1,4 +1,5 @@
 const { promisify } = require(`bluebird`)
+const fs = require(`fs-extra`)
 const _ = require(`lodash`)
 const tmpDir = require(`os`).tmpdir()
 const path = require(`path`)
@@ -17,13 +18,13 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
 }) => {
   let pipeline
   try {
-    pipeline = sharp(file.absolutePath)
+    pipeline = sharp()
 
     if (!options.rotate) {
       pipeline.rotate()
     }
   } catch (err) {
-    reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
+    reportError(`Failed to process image D ${file.absolutePath}`, err, reporter)
     return
   }
 
@@ -57,7 +58,7 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
     pipeline = await duotone(options.duotone, options.toFormat, pipeline)
   }
 
-  await new Promise((resolve, reject) =>
+  const toFilePromise = new Promise((resolve, reject) =>
     pipeline.toFile(tmpFilePath, err => {
       if (err) {
         return reject(err)
@@ -65,6 +66,10 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
       return resolve()
     })
   )
+
+  fs.createReadStream(file.absolutePath).pipe(pipeline)
+
+  await toFilePromise
 }
 
 const optimize = svg => {

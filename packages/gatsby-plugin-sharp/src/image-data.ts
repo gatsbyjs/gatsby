@@ -44,6 +44,7 @@ export async function getImageMetadata(
   }
 
   try {
+    // TODO: convert to use stream
     const pipeline = sharp(file.absolutePath)
 
     const { width, height, density, format } = await pipeline.metadata()

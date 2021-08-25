@@ -56,9 +56,7 @@ sharp.concurrency(1)
 exports.processFile = (file, transforms, options = {}) => {
   let pipeline
   try {
-    pipeline = !options.failOnError
-      ? sharp(file, { failOnError: false })
-      : sharp(file)
+    pipeline = !options.failOnError ? sharp({ failOnError: false }) : sharp()
 
     // Keep Metadata
     if (!options.stripMetadata) {
@@ -68,7 +66,7 @@ exports.processFile = (file, transforms, options = {}) => {
     throw new SharpError(`Failed to load image ${file} into sharp.`, err)
   }
 
-  return transforms.map(async transform => {
+  const transformsPromises = transforms.map(async transform => {
     try {
       const { outputPath, args } = transform
       debug(`Start processing ${outputPath}`)
@@ -169,6 +167,10 @@ exports.processFile = (file, transforms, options = {}) => {
 
     return transform
   })
+
+  fs.createReadStream(file).pipe(pipeline)
+
+  return transformsPromises
 }
 
 exports.createArgsDigest = args => {
