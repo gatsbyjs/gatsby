@@ -24,6 +24,7 @@ export const fetchAndCreateSingleNode = async ({
   cachedNodeIds,
   token = null,
   isPreview = false,
+  isDraft = false,
   userDatabaseId = null,
 }) => {
   function getNodeQuery() {
@@ -34,20 +35,10 @@ export const fetchAndCreateSingleNode = async ({
     // if it's a preview but it's the initial blank node
     // then use the regular node query as the preview query wont
     // return anything
-    const query = isPreview ? previewQuery : nodeQuery
+    const query = isPreview && !isDraft ? previewQuery : nodeQuery
 
     return query
   }
-
-  dump({
-    singleName,
-    id,
-    actionType,
-    cachedNodeIds,
-    token,
-    isPreview,
-    userDatabaseId,
-  })
 
   const query = getNodeQuery()
 
@@ -90,6 +81,16 @@ export const fetchAndCreateSingleNode = async ({
         `${id} ${singleName} was updated, but no data was returned for this node.`
       )
     )
+
+    reporter.info({
+      singleName,
+      id,
+      actionType,
+      cachedNodeIds,
+      token,
+      isPreview,
+      userDatabaseId,
+    })
 
     return { node: null }
   }
