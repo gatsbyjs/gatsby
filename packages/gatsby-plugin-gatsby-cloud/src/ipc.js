@@ -55,3 +55,17 @@ export function emitHeaders(header) {
     },
   })
 }
+
+export function emitFileNodes(file) {
+  if (!process.send) {
+    return
+  }
+
+  process.send({
+    type: `LOG_ACTION`,
+    action: {
+      type: `CREATE_FILE_NODE`,
+      payload: file,
+    },
+  })
+}

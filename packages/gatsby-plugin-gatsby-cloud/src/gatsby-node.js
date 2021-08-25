@@ -1,4 +1,3 @@
-import path from "path"
 import { readJSON } from "fs-extra"
 import WebpackAssetsManifest from "webpack-assets-manifest"
 import {
@@ -13,7 +12,7 @@ import copyFunctionsManifest from "./copy-functions-manifest"
 import createRedirects from "./create-redirects"
 import createSiteConfig from "./create-site-config"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
-import { emitRoutes } from "./ipc"
+import { emitRoutes, emitFileNodes } from "./ipc"
 
 const assetsManifest = {}
 
@@ -36,7 +35,10 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
   })
 }
 
-exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {
+exports.onPostBuild = async (
+  { store, pathPrefix, getNodesByType },
+  userPluginOptions
+) => {
   const pluginData = makePluginData(store, assetsManifest, pathPrefix)
 
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
@@ -79,6 +81,19 @@ exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {
     })
   } catch (e) {
     console.error(e)
+  }
+
+  /**
+   * Emit via IPC absolute paths to files that should be stored
+   */
+
+  const fileNodes = getNodesByType(`File`)
+
+  // TODO: This is missing the cacheLocations .cache/caches + .cache/caches-lmdb
+  for (const file of fileNodes) {
+    emitFileNodes({
+      path: file.absolutePath,
+    })
   }
 
   let rewrites = []
