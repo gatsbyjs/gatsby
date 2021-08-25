@@ -1,4 +1,4 @@
-# Change Log: `gatsby-plugin-catch-links`
+# Changelog: `gatsby-plugin-catch-links`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

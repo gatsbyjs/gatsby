@@ -1,4 +1,4 @@
-# Change Log: `gatsby-transformer-react-docgen`
+# Changelog: `gatsby-transformer-react-docgen`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

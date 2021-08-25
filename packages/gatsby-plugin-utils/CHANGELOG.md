@@ -1,4 +1,4 @@
-# Change Log: `gatsby-plugin-utils`
+# Changelog: `gatsby-plugin-utils`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

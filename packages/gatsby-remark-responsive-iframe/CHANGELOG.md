@@ -1,4 +1,4 @@
-# Change Log: `gatsby-remark-responsive-iframe`
+# Changelog: `gatsby-remark-responsive-iframe`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

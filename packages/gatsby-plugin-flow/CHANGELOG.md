@@ -1,4 +1,4 @@
-# Change Log: `gatsby-plugin-flow`
+# Changelog: `gatsby-plugin-flow`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

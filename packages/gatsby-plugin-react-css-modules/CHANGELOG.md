@@ -1,4 +1,4 @@
-# Change Log: `gatsby-plugin-react-css-modules`
+# Changelog: `gatsby-plugin-react-css-modules`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

@@ -1,4 +1,4 @@
-# Change Log: `gatsby-remark-copy-linked-files`
+# Changelog: `gatsby-remark-copy-linked-files`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.

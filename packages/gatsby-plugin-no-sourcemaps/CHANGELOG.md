@@ -1,4 +1,4 @@
-# Change Log: `gatsby-plugin-no-sourcemaps`
+# Changelog: `gatsby-plugin-no-sourcemaps`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
