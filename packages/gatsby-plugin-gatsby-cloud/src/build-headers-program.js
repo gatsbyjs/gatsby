@@ -13,6 +13,7 @@ import {
   HEADERS_FILENAME,
   PAGE_DATA_DIR,
 } from "./constants"
+import { emitHeaders } from "./ipc"
 
 function getHeaderName(header) {
   const matches = header.match(/^([^:]+):/)
@@ -313,6 +314,16 @@ const writeHeadersFile =
   ({ publicFolder }) =>
   contents =>
     new Promise((resolve, reject) => {
+      /**
+       * Emit Headers via IPC
+       */
+      Object.entries(contents).map(([k, val]) => {
+        emitHeaders({
+          url: k,
+          headers: val,
+        })
+      })
+
       const contentsStr = JSON.stringify(contents)
       const writeStream = createWriteStream(publicFolder(HEADERS_FILENAME))
       const chunkSize = 10000
@@ -334,11 +345,7 @@ const writeHeadersFile =
       writeStream.on(`error`, reject)
     })
 
-export default function buildHeadersProgram(
-  pluginData,
-  pluginOptions,
-  reporter
-) {
+export default function buildHeadersProgram(pluginData, pluginOptions) {
   return _.flow(
     mapUserLinkHeaders(pluginData),
     applySecurityHeaders(pluginOptions),
