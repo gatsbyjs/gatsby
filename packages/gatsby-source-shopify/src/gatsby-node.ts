@@ -6,6 +6,7 @@ import {
   PluginOptionsSchemaArgs,
   SourceNodesArgs,
 } from "gatsby"
+import { IErrorMapEntry } from "gatsby-cli/lib/structured-errors/error-map"
 import { makeResolveGatsbyImageData } from "./resolve-gatsby-image-data"
 import {
   getGatsbyImageResolver,
@@ -16,11 +17,64 @@ import { pluginErrorCodes as errorCodes } from "./errors"
 import { makeSourceFromOperation } from "./make-source-from-operation"
 export { createSchemaCustomization } from "./create-schema-customization"
 import { createNodeId } from "./node-builder"
-import { JoiObject } from "joi"
 
-export function pluginOptionsSchema({
-  Joi,
-}: PluginOptionsSchemaArgs): JoiObject {
+let coreSupportsOnPluginInit: boolean
+try {
+  const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
+  coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(
+    `unstable_onPluginInit`
+  )
+} catch (e) {
+  coreSupportsOnPluginInit = false
+}
+
+interface IErrorContext {
+  sourceMessage: string
+}
+
+interface IErrorMap {
+  [code: string]: IErrorMapEntry
+}
+
+const getErrorText = (context: IErrorContext): string => context.sourceMessage
+
+const ERROR_MAP: IErrorMap = {
+  [errorCodes.bulkOperationFailed]: {
+    text: getErrorText,
+    level: `ERROR`,
+    category: `USER`,
+  },
+  [errorCodes.apiConflict]: {
+    text: (): string => shiftLeft`
+    Your operation was canceled. You might have another production site for this Shopify store.
+
+    Shopify only allows one bulk operation at a time for a given shop, so we recommend that you
+    avoid having two production sites that point to the same Shopify store.
+
+    If the duplication is intentional, please wait for the other operation to finish before trying
+    again. Otherwise, consider deleting the other site or pointing it to a test store instead.
+  `,
+    level: `ERROR`,
+    category: `USER`,
+  },
+  /**
+   * If we don't know what it is, we haven't done our due
+   * diligence to handle it explicitly. That means it's our
+   * fault, so THIRD_PARTY indicates us, the plugin authors.
+   */
+  [errorCodes.unknownSourcingFailure]: {
+    text: getErrorText,
+    level: `ERROR`,
+    category: `THIRD_PARTY`,
+  },
+  [errorCodes.unknownApiError]: {
+    text: getErrorText,
+    level: `ERROR`,
+    category: `THIRD_PARTY`,
+  },
+}
+
+export function pluginOptionsSchema({ Joi }: PluginOptionsSchemaArgs): any {
   // @ts-ignore TODO: When Gatsby updates Joi version, update type
   // Vague type error that we're not able to figure out related to isJoi missing
   // Probably related to Joi being outdated
@@ -265,46 +319,15 @@ export function createResolvers(
   }
 }
 
-interface IErrorContext {
-  sourceMessage: string
+export function onPreInit({ reporter }: NodePluginArgs): void {
+  if (!coreSupportsOnPluginInit) {
+    reporter.setErrorMap(ERROR_MAP)
+  }
 }
 
-const getErrorText = (context: IErrorContext): string => context.sourceMessage
-
-export function onPreInit({ reporter }: NodePluginArgs): void {
-  reporter.setErrorMap({
-    [errorCodes.bulkOperationFailed]: {
-      text: getErrorText,
-      level: `ERROR`,
-      category: `USER`,
-    },
-    [errorCodes.apiConflict]: {
-      text: (): string => shiftLeft`
-        Your operation was canceled. You might have another production site for this Shopify store.
-
-        Shopify only allows one bulk operation at a time for a given shop, so we recommend that you
-        avoid having two production sites that point to the same Shopify store.
-
-        If the duplication is intentional, please wait for the other operation to finish before trying
-        again. Otherwise, consider deleting the other site or pointing it to a test store instead.
-      `,
-      level: `ERROR`,
-      category: `USER`,
-    },
-    /**
-     * If we don't know what it is, we haven't done our due
-     * diligence to handle it explicitly. That means it's our
-     * fault, so THIRD_PARTY indicates us, the plugin authors.
-     */
-    [errorCodes.unknownSourcingFailure]: {
-      text: getErrorText,
-      level: `ERROR`,
-      category: `THIRD_PARTY`,
-    },
-    [errorCodes.unknownApiError]: {
-      text: getErrorText,
-      level: `ERROR`,
-      category: `THIRD_PARTY`,
-    },
-  })
+if (coreSupportsOnPluginInit) {
+  // need to conditionally export otherwise it throw an error for older versions
+  exports.unstable_onPluginInit = async ({ reporter }: NodePluginArgs) => {
+    reporter.setErrorMap(ERROR_MAP)
+  }
 }
