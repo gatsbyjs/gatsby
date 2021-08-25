@@ -14,6 +14,11 @@ async function run() {
   // Always use the same branch
   const branchName = `bot-changelog-update`
   try {
+    await execa(`git`, [`branch`, `-D`, branchName])
+    // eslint-disable-next-line no-empty
+  } catch (e) {}
+
+  try {
     // Try to create a branch from the existing remote as a starting point
     await execa(`git`, [`checkout`, `-B`, branchName, `origin/${branchName}`])
     await execa(`git`, [`merge`, `origin/${baseBranch}`])
@@ -50,30 +55,34 @@ async function run() {
     auth: `token ${process.env.GITHUB_ACCESS_TOKEN}`,
   })
 
-  const owner = `gatsbyjs`
-  const repo = `gatsby`
+  try {
+    const owner = `gatsbyjs`
+    const repo = `gatsby`
 
-  // Note: PR may already exist for this branch.
-  // Then it will throw but we don't care too much
-  const pr = await octokit.pulls.create({
-    owner,
-    repo,
-    title: commitMessage,
-    head: branchName,
-    base: baseBranch,
-    body: `Updated changelogs of the following packages:\n\n${updatedPackages
-      .map(p => `- ${p}`)
-      .join(`\n`)}`,
-  })
+    // Note: PR may already exist for this branch.
+    // Then it will throw but we don't care too much
+    const pr = await octokit.pulls.create({
+      owner,
+      repo,
+      title: commitMessage,
+      head: branchName,
+      base: baseBranch,
+      body: `Updated changelogs of the following packages:\n\n${updatedPackages
+        .map(p => `- ${p}`)
+        .join(`\n`)}`,
+    })
 
-  console.log(`\n---\n\nPR opened - ${pr.data.html_url}`)
+    console.log(`\n---\n\nPR opened - ${pr.data.html_url}`)
 
-  await octokit.issues.addLabels({
-    owner,
-    repo,
-    issue_number: pr.data.number,
-    labels: [`type: maintenance`],
-  })
+    await octokit.issues.addLabels({
+      owner,
+      repo,
+      issue_number: pr.data.number,
+      labels: [`type: maintenance`],
+    })
+  } catch (e) {
+    console.error(e)
+  }
 }
 
-run().catch(console.error)
+run()
