@@ -22,7 +22,28 @@ const agent = {
   // http2: new http2wrapper.Agent(),
 }
 
+let start
+let apiRequestCount = 0
+let initialSourcing = true
+let globalReporter
 async function worker([url, options]) {
+  // Log out some progress indicators during the initial sourcing
+  if (initialSourcing) {
+    apiRequestCount += 1
+    if (!start) {
+      start = Date.now()
+    }
+    const queueLength = requestQueue.length()
+    if (apiRequestCount % 50 === 0) {
+      globalReporter.verbose(
+        `gatsby-source-drupal has ${queueLength} API requests queued and the current request rate is ${(
+          apiRequestCount /
+          ((Date.now() - start) / 1000)
+        ).toFixed(2)} requests / second`
+      )
+    }
+  }
+
   return got(url, {
     agent,
     cache: false,
@@ -72,6 +93,7 @@ exports.sourceNodes = async (
   },
   pluginOptions
 ) => {
+  globalReporter = reporter
   const {
     baseUrl,
     apiBase = `jsonapi`,
@@ -392,12 +414,12 @@ exports.sourceNodes = async (
                 `queueing ${requestsCount} API requests for type ${type} which has ${d.body.meta.count} entities.`
               )
 
+              const newUrl = new URL(d.body.links.next.href)
               await Promise.all(
                 _.range(requestsCount).map(pageOffset => {
                   // We're starting 1 ahead.
                   pageOffset += 1
                   // Construct URL with new pageOffset.
-                  const newUrl = new URL(d.body.links.next.href)
                   newUrl.searchParams.set(`page[offset]`, pageOffset * pageSize)
                   return getNext(newUrl.toString())
                 })
@@ -512,6 +534,9 @@ exports.sourceNodes = async (
     node.internal.contentDigest = createContentDigest(node)
     createNode(node)
   }
+
+  // We're now down with the initial sourcing.
+  initialSourcing = false
 
   return
 }
