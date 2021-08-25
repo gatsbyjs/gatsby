@@ -209,7 +209,7 @@ async function generateChangelog(packageName, fromVersion = null) {
     })
     chunks.push(chunk)
   }
-  return chunks.join(`\n`)
+  return chunks.join(`\n\n`)
 }
 
 /**
@@ -231,9 +231,9 @@ async function regenerateChangelog(packageName) {
 
   const updatedChangelogParts = [
     renderHeader(packageName),
-    `\n`,
+    `\n\n`,
     changeLog,
-    `\n`,
+    `\n\n`,
     separator,
     parts[1],
   ]
@@ -250,7 +250,7 @@ function addChangelogEntries(packageName, entries, contents) {
     entries.trimRight(),
     contents.substr(header.length),
   ]
-  fs.writeFileSync(changelogPath(packageName), updatedChangelogParts.join(`\n`))
+  fs.writeFileSync(changelogPath(packageName), updatedChangelogParts.join(`\n\n`))
 }
 
 /**

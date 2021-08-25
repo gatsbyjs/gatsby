@@ -29,13 +29,13 @@ ${
     ? commitGroups.map(renderCommitGroup).filter(Boolean).join(`\n\n`)
     : `**Note:** Version bump only for package ${pkg}`
 }
-`
+`.trim()
 }
 
 function releaseNotes(gatsbyRelease) {
   if (!gatsbyRelease) return ``
   const releaseNotesUrl = `https://www.gatsbyjs.com/docs/reference/release-notes/v${gatsbyRelease}`
-  return `[🧾 Release notes](${releaseNotesUrl})\n`
+  return `\n[🧾 Release notes](${releaseNotesUrl})\n`
 }
 
 const groupTitles = new Map([
