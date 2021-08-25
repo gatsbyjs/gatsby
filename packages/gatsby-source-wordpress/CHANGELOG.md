@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.12.0/packages/gatsby-source-wordpress) (2021-08-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
+
+#### Features
+
+- process multiple manifest ids on a preview action [#32723](https://github.com/gatsbyjs/gatsby/issues/32723) ([627039a](https://github.com/gatsbyjs/gatsby/commit/627039ac7c3e156f75ec9aea739fd1720a732541))
+- generate webp images [#30896](https://github.com/gatsbyjs/gatsby/issues/30896) ([fcd0b44](https://github.com/gatsbyjs/gatsby/commit/fcd0b449edcca4808814fbcd89df82551d566889))
+
+#### Bug Fixes
+
+- not all stored nodes are media items - protect against that [#32752](https://github.com/gatsbyjs/gatsby/issues/32752) ([cf9c051](https://github.com/gatsbyjs/gatsby/commit/cf9c051dc52811b92a4ba60683ed6d51a448c093))
+- ensure all file links are rewritten [#32679](https://github.com/gatsbyjs/gatsby/issues/32679) [#31652](https://github.com/gatsbyjs/gatsby/issues/31652) fixes [#31646](https://github.com/gatsbyjs/gatsby/issues/31646) ([32722f0](https://github.com/gatsbyjs/gatsby/commit/32722f07691d654d19f21bf5bc54f4a6d75b5d88))
+- linting error [#32749](https://github.com/gatsbyjs/gatsby/issues/32749) ([2e15bfa](https://github.com/gatsbyjs/gatsby/commit/2e15bfaf3dcb28b4939260cf3795bba3f477fdc6))
+- update dependency chalk to ^4.1.2 [#32576](https://github.com/gatsbyjs/gatsby/issues/32576) ([5c4e109](https://github.com/gatsbyjs/gatsby/commit/5c4e109313cd1b59f814332fdb4dfdcaf1faed1a))
+
+#### Chores
+
+- update formatting & linting [#32626](https://github.com/gatsbyjs/gatsby/issues/32626) ([4a765b5](https://github.com/gatsbyjs/gatsby/commit/4a765b5c62208d58f0bd7fd59558160c0b9feed3))
+- update fs-extra [#32570](https://github.com/gatsbyjs/gatsby/issues/32570) ([bc3410b](https://github.com/gatsbyjs/gatsby/commit/bc3410bff0c31be8e4aba5ce45fd49d93d25118f))
+- move to deprecated plugins [#31654](https://github.com/gatsbyjs/gatsby/issues/31654) ([6d6a70c](https://github.com/gatsbyjs/gatsby/commit/6d6a70c279a3628270fb47b8c836ef579e072967))
+- update [dev] minor and patch dependencies for gatsby-source-wordpress [#32563](https://github.com/gatsbyjs/gatsby/issues/32563) ([1b60d2f](https://github.com/gatsbyjs/gatsby/commit/1b60d2f06359cf089eb499a15fedf77f365d206a))
+- update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
+
+#### Other Changes
+
+- :construction: Check that node is not falsey [#32488](https://github.com/gatsbyjs/gatsby/issues/32488) ([59a6287](https://github.com/gatsbyjs/gatsby/commit/59a6287a11eb5b136e3e681e7d1d1c08d169b601))
+
 ## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.11.0/packages/gatsby-source-wordpress) (2021-08-04)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)

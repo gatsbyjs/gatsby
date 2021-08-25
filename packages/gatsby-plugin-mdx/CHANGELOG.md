@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@2.12.0/packages/gatsby-plugin-mdx) (2021-08-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
+
+#### Chores
+
+- update formatting & linting [#32626](https://github.com/gatsbyjs/gatsby/issues/32626) ([4a765b5](https://github.com/gatsbyjs/gatsby/commit/4a765b5c62208d58f0bd7fd59558160c0b9feed3))
+- update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
+
 ## [2.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@2.11.0/packages/gatsby-plugin-mdx) (2021-08-04)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
