@@ -469,6 +469,16 @@ jobs:
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/*"
 
+  update_changelogs:
+    executor: node
+    steps:
+      - checkout
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - run: git config --global user.name "GatsbyJS Bot"
+      - run: git config --global user.email "core-team@gatsbyjs.com"
+      - run: node scripts/gatsby-changelog-generator/update-and-open-pr.js
+
   update_i18n_source:
     executor: node
     steps:
@@ -605,6 +615,15 @@ workflows:
           nightly: true
           requires:
             - bootstrap-with-experimental-react
+
+  update-changelogs:
+    jobs:
+      - update_changelogs:
+          filters:
+            tags:
+              # trigger on new stable versions only
+              only:
+                - /@[0-9]+\.[0-9]+\.[0-9]+$/
 
   build-test:
     jobs:
