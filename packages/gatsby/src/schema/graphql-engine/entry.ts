@@ -1,4 +1,5 @@
 // import { buildSchema } from "../schema"
+// import fs from "fs";
 import { build } from "../index"
 import { setupLmdbStore } from "../../datastore/lmdb/lmdb-datastore"
 import { store } from "../../redux"
@@ -99,7 +100,7 @@ export class GraphQLEngine {
   public findPageByPath(pathName: string): IGatsbyPage | undefined {
     // adapter so `findPageByPath` use SitePage nodes in datastore
     // instead of `pages` redux slice
-    const state = ({
+    const state = {
       pages: {
         get(pathName: string): IGatsbyPage | undefined {
           return getDataStore().getNode(`SitePage ${pathName}`) as
@@ -107,12 +108,12 @@ export class GraphQLEngine {
             | undefined
         },
         values(): Iterable<IGatsbyPage> {
-          return getDataStore().iterateNodesByType(`SitePage`) as Iterable<
-            IGatsbyPage
-          >
+          return getDataStore().iterateNodesByType(
+            `SitePage`
+          ) as Iterable<IGatsbyPage>
         },
       },
-    } as unknown) as IGatsbyState
+    } as unknown as IGatsbyState
 
     return findPageByPath(state, pathName, false)
   }

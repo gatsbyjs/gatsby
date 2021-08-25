@@ -155,6 +155,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   router.use(matchPathRouter(matchPaths, { root }))
 
   if (process.env.GATSBY_EXPERIMENTAL_GENERATE_ENGINES) {
+    global._fsWrapper = require(`fs`)
     const { GraphQLEngine } = require(path.join(
       program.directory,
       `.cache`,
