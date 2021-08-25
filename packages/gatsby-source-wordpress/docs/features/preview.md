@@ -124,7 +124,7 @@ The preset (as found in src/models/gatsby-api.ts) is:
 
 ## How Preview works behind the scenes
 
-When the WP "preview" button is pressed, a JWT is generated (with an expiry time of 1 hour) and POST'ed to the Gatsby Preview instance webhook. The Preview instance then uses this short-lived JWT to request a list of pending previews for all users. Gatsby starts processing each pending preview. At the same time, WordPress automatically opens the WP preview template which has been overridden by WPGatsby to redirect to Gatsby Cloud's Preview Loader service. This service handles the loading/error states and will redirect the user to the right page when it's been built.
+When the WP "preview" button is pressed, a JWT is generated (with an expiry time of 1 hour) and POST'ed to the Gatsby Preview instance webhook. The Preview instance then uses this short-lived JWT to request a list of pending previews for all users. Gatsby starts processing each pending preview. At the same time, WordPress automatically opens the WP preview template which has been overridden by WPGatsby to redirect to Gatsby Cloud's Content Sync service. This service handles the loading/error states and will redirect the user to the right page when it's been built.
 
 ## Preview Security Considerations
 
