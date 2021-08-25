@@ -22,25 +22,28 @@ async function run() {
     await execa(`git`, [`checkout`, branchName])
   }
 
-  const updatedchangelogs = []
+  const updatedPackages = []
   for (const pkg of getAllPackageNames()) {
     try {
       const updated = await updateChangelog(pkg)
       if (updated) {
-        updatedchangelogs.push(`packages/${pkg}/CHANGELOG.md`)
+        updatedPackages.push(pkg)
       }
     } catch (e) {
       console.error(`${pkg}: ${e.stack}`)
     }
   }
 
-  if (!updatedchangelogs.length) {
+  if (!updatedPackages.length) {
     console.log(`Nothing to do`)
     return
   }
 
   const commitMessage = `DO NOT MERGE: testing`
-  await execa(`git`, [`add`, ...updatedchangelogs])
+  const updatedChangelogs = updatedPackages.map(
+    pkg => `packages/${pkg}/CHANGELOG.md`
+  )
+  await execa(`git`, [`add`, ...updatedChangelogs])
   await execa(`git`, [`commit`, `-m`, commitMessage])
   await execa(`git`, [`push`, `origin`, `${branchName}:${branchName}`])
 
@@ -57,7 +60,7 @@ async function run() {
     title: commitMessage,
     head: branchName,
     base: `vladar/generate-changelogs`,
-    body: `Updated following changelogs:\n\n${updatedchangelogs
+    body: `Updated changelogs of the following packages:\n\n${updatedPackages
       .map(p => `- ${p}`)
       .join(`\n`)}`,
   })
@@ -68,7 +71,7 @@ async function run() {
     owner,
     repo,
     issue_number: pr.data.number,
-    labels: [`bot: merge on green`],
+    labels: [`type: maintenance`],
   })
 }
 
