@@ -7,10 +7,15 @@ if (!process.env.GITHUB_ACCESS_TOKEN) {
 }
 
 async function run() {
-  await execa(`git`, [`fetch`, `--tags`])
-
-  // Always commit to the same branch
+  // Always use the same branch
   const branchName = `bot-changelog-update`
+
+  try {
+    await execa(`git`, [`branch`, `-D`, branchName])
+    // eslint-disable-next-line no-empty
+  } catch {}
+
+  await execa(`git`, [`fetch`, `--tags`, `origin`])
   try {
     await execa(`git`, [`checkout`, `-b`, branchName])
   } catch (e) {
@@ -44,8 +49,8 @@ async function run() {
   })
 
   const pr = await octokit.pulls.create({
-    owner: `gatsby`,
-    repo: `gatsbyjs`,
+    owner: `gatsbyjs`,
+    repo: `gatsby`,
     title: commitMessage,
     head: branchName,
     base: `vladar/generate-changelogs`,
