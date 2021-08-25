@@ -7,16 +7,18 @@ if (!process.env.GITHUB_ACCESS_TOKEN) {
 }
 
 async function run() {
-  // Make sure all tags exist
-  await execa(`git`, [`fetch`, `--tags`, `origin`])
+  const baseBranch = `vladar/generate-changelogs`
+  await execa(`git`, [`checkout`, baseBranch])
+  await execa(`git`, [`pull`, `--tags`, `origin`])
 
   // Always use the same branch
   const branchName = `bot-changelog-update`
   try {
     // Try to create a branch from the existing remote as a starting point
     await execa(`git`, [`checkout`, `-B`, branchName, `origin/${branchName}`])
+    await execa(`git`, [`merge`, `origin/${baseBranch}`])
   } catch (e) {
-    await execa(`git`, [`checkout`, `-b`, branchName])
+    await execa(`git`, [`branch`, branchName])
   }
 
   const updatedPackages = []
@@ -56,7 +58,7 @@ async function run() {
     repo,
     title: commitMessage,
     head: branchName,
-    base: `vladar/generate-changelogs`,
+    base: baseBranch,
     body: `Updated changelogs of the following packages:\n\n${updatedPackages
       .map(p => `- ${p}`)
       .join(`\n`)}`,

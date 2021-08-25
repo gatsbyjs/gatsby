@@ -3,21 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@1.12.0/packages/gatsby-plugin-image) (2021-08-18)
-
-[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
-
-#### Bug Fixes
-
-- only log missing plugin error in development [#32335](https://github.com/gatsbyjs/gatsby/issues/32335) ([4483ff4](https://github.com/gatsbyjs/gatsby/commit/4483ff44de77fb516fa368ad41f3cf8232c2c294))
-
-#### Chores
-
-- Fix typo Fix [#32784](https://github.com/gatsbyjs/gatsby/issues/32784) ([4550c28](https://github.com/gatsbyjs/gatsby/commit/4550c28fa3e2ee8b0965cdcff5f8b784e2afe082))
-- update formatting & linting [#32626](https://github.com/gatsbyjs/gatsby/issues/32626) ([4a765b5](https://github.com/gatsbyjs/gatsby/commit/4a765b5c62208d58f0bd7fd59558160c0b9feed3))
-- update fs-extra [#32570](https://github.com/gatsbyjs/gatsby/issues/32570) ([bc3410b](https://github.com/gatsbyjs/gatsby/commit/bc3410bff0c31be8e4aba5ce45fd49d93d25118f))
-- update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
-
 ## [1.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@1.11.0/packages/gatsby-plugin-image) (2021-08-04)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
