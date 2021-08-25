@@ -1,4 +1,3 @@
-import path from "path"
 import { readJSON } from "fs-extra"
 import WebpackAssetsManifest from "webpack-assets-manifest"
 import {
@@ -12,10 +11,8 @@ import buildHeadersProgram from "./build-headers-program"
 import copyFunctionsManifest from "./copy-functions-manifest"
 import createRedirects from "./create-redirects"
 import createSiteConfig from "./create-site-config"
-import { readJSON, writeJSON } from "fs-extra"
-import { joinPath } from "gatsby-core-utils"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
-import { emitRoutes } from "./ipc"
+import { emitRoutes, emitFileNodes } from "./ipc"
 
 const assetsManifest = {}
 
@@ -86,21 +83,18 @@ exports.onPostBuild = async (
     console.error(e)
   }
 
-  const fileNodes = getNodesByType(`File`)
-  const filesAbsolutePaths = fileNodes.map(file => file.absolutePath)
-  const filesToUpload = {
-    fileNodes: filesAbsolutePaths,
-    // Postpone cacheLocations for now
-    // .cache/caches + .cache/caches-lmdb
-    cacheLocations: [],
-  }
+  /**
+   * Emit via IPC absolute paths to files that should be stored
+   */
 
-  const filesToUploadFile = joinPath(
-    pluginData.program.directory,
-    `.cache`,
-    `query-engine-manifest.json`
-  )
-  await writeJSON(filesToUploadFile, filesToUpload)
+  const fileNodes = getNodesByType(`File`)
+
+  // TODO: This is missing the cacheLocations .cache/caches + .cache/caches-lmdb
+  for (const file of fileNodes) {
+    emitFileNodes({
+      path: file.absolutePath,
+    })
+  }
 
   let rewrites = []
   if (pluginOptions.generateMatchPathRewrites) {
