@@ -530,7 +530,11 @@ module.exports = async (
     config.target = [`web`, `es5`]
   }
 
-  const isCssModule = module => module.type === `css/mini-extract`
+  const isCssModuleType = module => module.type === `css/mini-extract`
+  const usesCssModules = (module, context) =>
+    !!context.moduleGraph.getUsedExports(context.moduleGraph.getIssuer(module))
+      .size
+
   if (stage === `develop`) {
     config.optimization = {
       splitChunks: {
@@ -552,10 +556,9 @@ module.exports = async (
             enforce: true,
           },
           // Bundle all css & lazy css into one stylesheet to make sure lazy components do not break
-          // TODO make an exception for css-modules
           styles: {
-            test(module) {
-              return isCssModule(module)
+            test(module, context) {
+              return isCssModuleType(module) && !usesCssModules(module, context)
             },
 
             name: `commons`,
@@ -570,8 +573,6 @@ module.exports = async (
 
   if (stage === `build-javascript`) {
     const componentsCount = store.getState().components.size
-    const isCssModule = module =>
-      module.type === `css/mini-extract` && !module.issuer.usedExports
 
     const splitChunks = {
       chunks: `all`,
@@ -593,22 +594,26 @@ module.exports = async (
         },
         // if a module is bigger than 160kb from node_modules we make a separate chunk for it
         lib: {
-          test(module) {
+          test(module, context) {
             return (
-              !isCssModule(module) &&
+              (!isCssModuleType(module) || usesCssModules(module, context)) &&
               module.size() > 160000 &&
               /node_modules[/\\]/.test(module.identifier())
             )
           },
           name(module) {
             const hash = crypto.createHash(`sha1`)
-            if (!module.libIdent) {
-              throw new Error(
-                `Encountered unknown module type: ${module.type}. Please open an issue.`
-              )
-            }
+            if (isCssModuleType(module)) {
+              module.updateHash(hash)
+            } else {
+              if (!module.libIdent) {
+                throw new Error(
+                  `Encountered unknown module type: ${module.type}. Please open an issue.`
+                )
+              }
 
-            hash.update(module.libIdent({ context: program.directory }))
+              hash.update(module.libIdent({ context: program.directory }))
+            }
 
             return hash.digest(`hex`).substring(0, 8)
           },
@@ -624,14 +629,15 @@ module.exports = async (
         },
         // If a chunk is used in at least 2 components we create a separate chunk
         shared: {
-          test(module) {
-            return !isCssModule(module)
+          test(module, context) {
+            return !isCssModuleType(module) || usesCssModules(module, context)
           },
           name(module, chunks) {
-            const hash = crypto
-              .createHash(`sha1`)
-              .update(chunks.reduce((acc, chunk) => acc + chunk.name, ``))
-              .digest(`hex`)
+            const hash =
+              crypto
+                .createHash(`sha1`)
+                .update(chunks.reduce((acc, chunk) => acc + chunk.name, ``))
+                .digest(`hex`) + (isCssModuleType(module) ? `_CSS` : ``)
 
             return hash
           },
@@ -641,10 +647,9 @@ module.exports = async (
         },
 
         // Bundle all css & lazy css into one stylesheet to make sure lazy components do not break
-        // TODO make an exception for css-modules
         styles: {
-          test(module) {
-            return isCssModule(module)
+          test(module, context) {
+            return isCssModuleType(module) && !usesCssModules(module, context)
           },
 
           name: `styles`,

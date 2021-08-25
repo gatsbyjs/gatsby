@@ -112,6 +112,8 @@ const IndexPage = ({ pageContext }) => (
         >
           Go to redirect with query param and hash
         </Link>
+      </li>
+      <li>
         <Link to="/cssmodules/" data-testid="cssmodules">
           Go to page with cssmodules
         </Link>

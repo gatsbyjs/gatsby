@@ -4,19 +4,17 @@ describe(`Cssmodule integration`, () => {
 
     const cssModuleEl = cy.getTestElement(`cssmodule`)
     cssModuleEl.should("have.css", "font-size", "48px")
-    cssModuleEl.should($el => {
-      expect($el[0].className).to.have.lengthOf(6)
-    })
 
     cssModuleEl.invoke("attr", "class").then(className => {
-      cy.get("style").contains(className).should("exist")
+      cy.get("style").should("contain.text", className)
     })
-    cy.get("style").should("have.length", 3)
   })
 
   it(`homepage should not have cssmodules`, () => {
+    const cssModuleClassName = "mystyle-module--heading--3vEgy"
     cy.visit(`/`).waitForRouteChange()
     cy.get("style").should("have.length", 2)
+    cy.get("style").should("not.contain.text", cssModuleClassName)
 
     cy.getTestElement("cssmodules").click()
     cy.waitForRouteChange().location(`pathname`).should(`equal`, `/cssmodules/`)
