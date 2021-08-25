@@ -1,4 +1,5 @@
 const execa = require(`execa`)
+const { Octokit } = require(`@octokit/rest`)
 const { getAllPackageNames, updateChangelog } = require(`./generate`)
 
 if (!process.env.GITHUB_ACCESS_TOKEN) {
@@ -6,8 +7,24 @@ if (!process.env.GITHUB_ACCESS_TOKEN) {
 }
 
 async function run() {
-  await execa(`git`, [`checkout`, `master`])
-  await execa(`git`, [`pull`, `--tags`])
+  // Always use the same branch
+  const base = `vladar/generate-changelogs`
+  const branchName = `bot-changelog-update`
+
+  try {
+    await execa(`git`, [`branch`, `-D`, branchName])
+    // eslint-disable-next-line no-empty
+  } catch (e) {}
+
+  await execa(`git`, [`fetch`, `--tags`, `origin`])
+
+  try {
+    // Try to create a branch from the existing remote as a starting point
+    await execa(`git`, [`checkout`, `-B`, branchName, `origin/${branchName}`])
+  } catch (e) {
+    await execa(`git`, [`checkout`, `-b`, branchName])
+  }
+  await execa(`git`, [`merge`, `origin/${base}`])
 
   const updatedPackages = []
   for (const pkg of getAllPackageNames()) {
@@ -26,24 +43,31 @@ async function run() {
     return
   }
 
-  // Commit to the same branch
-  const branchName = `bot-changelog-update`
   const commitMessage = `DO NOT MERGE: testing`
-  try {
-    await execa(`git`, [`checkout`, `-b`, branchName, `origin/${branchName}`])
-  } catch {
-    await execa(`git`, [`checkout`, branchName])
-  }
+  const updatedChangelogs = updatedPackages.map(
+    pkg => `packages/${pkg}/CHANGELOG.md`
+  )
+  await execa(`git`, [`add`, ...updatedChangelogs])
   await execa(`git`, [`commit`, `-m`, commitMessage])
+  await execa(`git`, [`push`, `-u`, `origin`, branchName])
+
+  const octokit = new Octokit({
+    auth: `token ${process.env.GITHUB_ACCESS_TOKEN}`,
+  })
 
   try {
+    const owner = `gatsbyjs`
+    const repo = `gatsby`
+
+    // Note: PR may already exist for this branch.
+    // Then it will throw but we don't care too much
     const pr = await octokit.pulls.create({
-      owner: `gatsby`,
-      repo: `gatsbyjs`,
+      owner,
+      repo,
       title: commitMessage,
       head: branchName,
-      base: `master`,
-      body: `Update changelogs of the following packages:\n\n${updatedPackages
+      base: base,
+      body: `Updated changelogs of the following packages:\n\n${updatedPackages
         .map(p => `- ${p}`)
         .join(`\n`)}`,
     })
@@ -54,9 +78,11 @@ async function run() {
       owner,
       repo,
       issue_number: pr.data.number,
-      labels: [`bot: merge on green`],
+      labels: [`type: maintenance`],
     })
   } catch (e) {
-    console.log(e)
+    console.error(e)
   }
 }
+
+run()
