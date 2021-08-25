@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@3.1.0-next.0...gatsby-plugin-gatsby-cloud@3.1.0-next.1) (2021-08-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-gatsby-cloud:** Always create redirects.json ([#32845](https://github.com/gatsbyjs/gatsby/issues/32845)) ([7f22a27](https://github.com/gatsbyjs/gatsby/commit/7f22a27ced4ce1e8e7b2aad650f2f633c7da5ec5))
+
+### Features
+
+- **gatsby-core-utils:** Move page-data & HTML utils to package ([#32861](https://github.com/gatsbyjs/gatsby/issues/32861)) ([114e3d3](https://github.com/gatsbyjs/gatsby/commit/114e3d39695bd96b8c477a413f5927317a19b4cb))
+- **gatsby-plugin-gatsby-cloud:** Files manifest ([#32879](https://github.com/gatsbyjs/gatsby/issues/32879)) ([90ddcf6](https://github.com/gatsbyjs/gatsby/commit/90ddcf6e61794cfeb56ed4a86697bd3d33e762be))
+- **gatsby-plugin-gatsby-cloud:** IPC events for routes, redirects, rewrites, and headers ([#32847](https://github.com/gatsbyjs/gatsby/issues/32847)) ([ba4b08c](https://github.com/gatsbyjs/gatsby/commit/ba4b08caac00dd286f962849183e99ab7dc84a0a))
+
 # [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@3.0.0-next.1...gatsby-plugin-gatsby-cloud@3.1.0-next.0) (2021-08-12)
 
 ### Bug Fixes

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.13.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.13.0-next.2...gatsby@3.13.0-next.3) (2021-08-25)
+
+### Bug Fixes
+
+- **gatsby:** add react-com as devDep ([#32865](https://github.com/gatsbyjs/gatsby/issues/32865)) ([d81c9e1](https://github.com/gatsbyjs/gatsby/commit/d81c9e1bf0892be990973d80948f9a0b9a7f4037))
+
+### Features
+
+- **gatsby-core-utils:** Move page-data & HTML utils to package ([#32861](https://github.com/gatsbyjs/gatsby/issues/32861)) ([114e3d3](https://github.com/gatsbyjs/gatsby/commit/114e3d39695bd96b8c477a413f5927317a19b4cb))
+
 # [3.13.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.13.0-next.1...gatsby@3.13.0-next.2) (2021-08-20)
 
 ### Bug Fixes
