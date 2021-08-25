@@ -96,6 +96,9 @@ describe(`pluginOptionsSchema`, () => {
           MenuItem: {
             beforeChangeNode: null,
           },
+          Page: {
+            beforeChangeNode: `./docs-generation.test.js`,
+          },
           EnqueuedScript: {
             exclude: true,
           },

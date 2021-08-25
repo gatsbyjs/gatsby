@@ -1107,9 +1107,9 @@ Determines whether or not this type will be treated as an interface comprised en
 
 #### type.\_\_all.beforeChangeNode
 
-A function which is invoked before a node is created, updated, or deleted. This is a hook in point to modify the node or perform side-effects related to it.
+A function which is invoked before a node is created, updated, or deleted. This is a hook in point to modify the node or perform side-effects related to it. This option should be a path to a JS file where the default export is the beforeChangeNode function. The path can be relative to your gatsby-node.js or absolute. Currently you can inline a function by writing it out directly in this option but starting from Gatsby v4 only a path to a function file will work.
 
-**Field type**: `Function`
+**Field type**: `String`
 
 ### type.RootQuery
 

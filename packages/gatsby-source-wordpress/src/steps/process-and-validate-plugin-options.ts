@@ -1,3 +1,4 @@
+import path from "path"
 import { formatLogMessage } from "~/utils/format-log-message"
 import isInteger from "lodash/isInteger"
 import { IPluginOptions } from "~/models/gatsby-api"
@@ -45,6 +46,51 @@ const optionsProcessors: Array<IOptionsProcessor> = [
       )
 
       delete userPluginOptions.schema.queryDepth
+
+      return userPluginOptions
+    },
+  },
+  {
+    name: `Require beforeChangeNode type setting functions by absolute or relative path`,
+    test: ({ userPluginOptions }: IProcessorOptions): boolean =>
+      !!userPluginOptions?.type,
+    processor: ({
+      helpers,
+      userPluginOptions,
+    }: IProcessorOptions): IPluginOptions => {
+      const gatsbyStore = helpers.store.getState()
+      const typeSettings = Object.entries(userPluginOptions.type)
+
+      typeSettings.forEach(([typeName, settings]) => {
+        const beforeChangeNodePath = settings?.beforeChangeNode
+
+        if (!beforeChangeNodePath || typeof beforeChangeNodePath !== `string`) {
+          return
+        }
+
+        try {
+          const absoluteRequirePath: string | undefined = path.isAbsolute(
+            beforeChangeNodePath
+          )
+            ? beforeChangeNodePath
+            : require.resolve(
+                path.join(gatsbyStore.program.directory, beforeChangeNodePath)
+              )
+
+          const beforeChangeNodeFn = require(absoluteRequirePath)
+
+          if (beforeChangeNodeFn) {
+            userPluginOptions.type[typeName].beforeChangeNode =
+              beforeChangeNodeFn
+          }
+        } catch (e) {
+          helpers.reporter.panic(
+            formatLogMessage(
+              `beforeChangeNode type setting for ${typeName} threw error:\n${e.message}`
+            )
+          )
+        }
+      })
 
       return userPluginOptions
     },

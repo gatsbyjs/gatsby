@@ -4380,6 +4380,7 @@ Array [
       "title",
       "uri",
       "nodeType",
+      "beforeChangeNodeTest",
       "parent",
       "children",
       "internal",

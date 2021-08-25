@@ -40,6 +40,7 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
         },
         Page: {
           excludeFieldNames: [`enclosure`],
+          beforeChangeNode: `./src/before-change-page.js`,
         },
         DatabaseIdentifier: {
           exclude: true,
