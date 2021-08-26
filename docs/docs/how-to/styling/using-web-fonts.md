@@ -74,7 +74,7 @@ body {
 
 [Fontsource](https://github.com/fontsource/fontsource) is a project to provide open source fonts from Google Fonts as NPM Packages.
 
-Self-hosting your fonts can increase your site’s loading speed by up to ~300 milliseconds on desktop and 1+ seconds on 3G connections.
+You can decrease your site’s loading time by self-hosting fonts, saving ~300 milliseconds on desktop to 1+ seconds on 3G connections.
 
 This example shows how to install the [Open Sans](https://fonts.google.com/specimen/Open+Sans) font. If you have a different Google Font you want to use, you can find the corresponding package in [NPM](https://www.npmjs.com/search?q=fontsource) or the [packages directory in the Fontsource repository](https://github.com/fontsource/fontsource/tree/master/packages).
 
