@@ -33,7 +33,7 @@
     "gatsby-plugin-catch-links": "^3.14.0-next.0",
     "gatsby-source-filesystem": "^3.14.0-next.0",
     "glob": "^7.1.6",
-    "got": "^11.7.0",
+    "got": "^11.8.2",
     "graphql-query-compress": "^1.2.2",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.0",
