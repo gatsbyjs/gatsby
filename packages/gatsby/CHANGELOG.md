@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@3.12.1/packages/gatsby) (2021-08-27)
+
+#### Bug Fixes
+
+- Hashes and anchors in redirects also work in production [#32850](https://github.com/gatsbyjs/gatsby/issues/32850) [#32920](https://github.com/gatsbyjs/gatsby/issues/32920) ([6c8518d](https://github.com/gatsbyjs/gatsby/commit/6c8518d9d5fda0f9268ac5440e90c9c237bc77e4))
+
 ## [3.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@3.12.0/packages/gatsby) (2021-08-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
