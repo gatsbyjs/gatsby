@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.12.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.12.0...gatsby-source-wordpress@5.12.1) (2021-08-26)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** draft previews ([#32915](https://github.com/gatsbyjs/gatsby/issues/32915)) ([#32921](https://github.com/gatsbyjs/gatsby/issues/32921)) ([734f4fb](https://github.com/gatsbyjs/gatsby/commit/734f4fbd2470417d23bc6ba39fa26bc2051cbf0a))
+
 # [5.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.12.0-next.3...gatsby-source-wordpress@5.12.0) (2021-08-18)
 
 ### Bug Fixes
