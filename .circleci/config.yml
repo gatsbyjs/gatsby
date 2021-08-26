@@ -473,6 +473,7 @@ jobs:
     executor: node
     steps:
       - checkout
+      - run: apt-get update && apt-get install jq python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - run: git config --global user.name "GatsbyJS Bot"
