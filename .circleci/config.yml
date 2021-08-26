@@ -616,15 +616,6 @@ workflows:
           requires:
             - bootstrap-with-experimental-react
 
-  update-changelogs:
-    jobs:
-      - update_changelogs:
-          filters:
-            tags:
-              # trigger on new stable versions only
-              only:
-                - /@[0-9]+\.[0-9]+\.[0-9]+$/
-
   build-test:
     jobs:
       - bootstrap
@@ -711,3 +702,9 @@ workflows:
             branches:
               only:
                 - master
+      - update_changelogs:
+          filters:
+            tags:
+              # trigger on new stable releases only
+              only:
+                - /@[0-9]+\.[0-9]+\.[0-9]+$/
