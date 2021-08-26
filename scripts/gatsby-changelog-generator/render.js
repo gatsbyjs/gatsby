@@ -48,7 +48,7 @@ const groupTitles = new Map([
 
 function renderCommitGroup(commitGroup) {
   const [type, commits] = commitGroup
-  const title = groupTitles.get(type) ?? `Other Changes`
+  const title = groupTitles.get(type) || `Other Changes`
 
   if (!commits.length) {
     return ``
