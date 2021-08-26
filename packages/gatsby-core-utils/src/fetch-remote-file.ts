@@ -1,7 +1,6 @@
-import got from "got"
+import got, { Options as GotOptions, Headers } from "got"
 import fileType from "file-type"
 import path from "path"
-import { IncomingMessage, OutgoingHttpHeaders } from "http"
 import fs from "fs-extra"
 import { createContentDigest } from "./create-content-digest"
 import {
@@ -10,7 +9,8 @@ import {
   createFilePath,
 } from "./filename-utils"
 
-import { GatsbyCache } from "gatsby"
+import type { IncomingMessage } from "http"
+import type { GatsbyCache } from "gatsby"
 
 export interface IFetchRemoteFileOptions {
   url: string
@@ -19,7 +19,7 @@ export interface IFetchRemoteFileOptions {
     htaccess_pass?: string
     htaccess_user?: string
   }
-  httpHeaders?: OutgoingHttpHeaders
+  httpHeaders?: Headers
   ext?: string
   name?: string
 }
@@ -57,10 +57,10 @@ const INCOMPLETE_RETRY_LIMIT = process.env.GATSBY_INCOMPLETE_RETRY_LIMIT
  * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
  */
 const requestRemoteNode = (
-  url: got.GotUrl,
-  headers: OutgoingHttpHeaders,
+  url: string | URL,
+  headers: Headers,
   tmpFilename: string,
-  httpOptions: got.GotOptions<string | null> | undefined,
+  httpOptions?: GotOptions,
   attempt: number = 1
 ): Promise<IncomingMessage> =>
   new Promise((resolve, reject) => {
@@ -77,6 +77,8 @@ const requestRemoteNode = (
           requestRemoteNode(url, headers, tmpFilename, httpOptions, attempt + 1)
         )
       } else {
+        // TODO move to new Error type
+        // eslint-disable-next-line prefer-promise-reject-errors
         reject(`Failed to download ${url} after ${STALL_RETRY_LIMIT} attempts`)
       }
     }
@@ -93,6 +95,7 @@ const requestRemoteNode = (
         send: CONNECTION_TIMEOUT, // https://github.com/sindresorhus/got#timeout
       },
       ...httpOptions,
+      isStream: true,
     })
 
     let haveAllBytesBeenWritten = false
@@ -145,6 +148,8 @@ const requestRemoteNode = (
               )
             )
           } else {
+            // TODO move to new Error type
+            // eslint-disable-next-line prefer-promise-reject-errors
             reject(
               `Failed to download ${url} after ${INCOMPLETE_RETRY_LIMIT} attempts`
             )
