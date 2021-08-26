@@ -20,7 +20,7 @@ const optionsProcessors: Array<IOptionsProcessor> = [
   {
     name: `MediaItem.lazyNodes doesn't work in Gatsby v4+`,
     test: ({ userPluginOptions }): boolean =>
-      `lazyNodes` in userPluginOptions?.type?.MediaItem,
+      `lazyNodes` in (userPluginOptions?.type?.MediaItem || {}),
     processor: ({ helpers, userPluginOptions }): IPluginOptions => {
       if (usingGatsbyV4OrGreater) {
         helpers.reporter.panic(
