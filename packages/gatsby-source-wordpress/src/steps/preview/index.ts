@@ -39,7 +39,6 @@ export type PreviewStatusUnion =
   | `NO_PAGE_CREATED_FOR_PREVIEWED_NODE`
   | `GATSBY_PREVIEW_PROCESS_ERROR`
   | `RECEIVED_PREVIEW_DATA_FROM_WRONG_URL`
-  | `FOUND_LEFTOVER_PREVIEW_CALLBACKS`
 
 export interface IPreviewData {
   previewDatabaseId: number
@@ -371,7 +370,7 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
 
   // in case there are preview callbacks from our last build
   await invokeAndCleanupLeftoverPreviewCallbacks({
-    status: `FOUND_LEFTOVER_PREVIEW_CALLBACKS`,
+    status: `GATSBY_PREVIEW_PROCESS_ERROR`,
     context: `Starting sourcePreviews`,
   })
 
