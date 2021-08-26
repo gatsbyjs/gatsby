@@ -469,6 +469,16 @@ jobs:
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/*"
 
+  update_changelogs:
+    executor: node
+    steps:
+      - checkout
+      - run: apt-get update && apt-get install jq python -y
+      - <<: *restore_cache
+      - run: git config --global user.name "GatsbyJS Bot"
+      - run: git config --global user.email "core-team@gatsbyjs.com"
+      - run: node scripts/gatsby-changelog-generator/update-and-open-pr.js
+
   update_i18n_source:
     executor: node
     steps:
@@ -692,3 +702,8 @@ workflows:
             branches:
               only:
                 - master
+#      - update_changelogs:
+#          filters:
+#            branches:
+#              only:
+#                - /release\/.+/

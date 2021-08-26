@@ -155,7 +155,7 @@
     "test:watch": "jest --watch",
     "typecheck": "node ./scripts/check-ts",
     "update-dictionary": "node ./scripts/update-dictionary.js",
-    "version": "prettier --write \"**/CHANGELOG.md\"",
+    "version": "node ./scripts/gatsby-changelog-generator/lerna-version-lifecycle.js && prettier --write \"**/CHANGELOG.md\"",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
   "workspaces": [
