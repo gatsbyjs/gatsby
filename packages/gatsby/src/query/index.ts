@@ -96,7 +96,7 @@ function createQueue<QueryIDType>({
   function worker(queryId: QueryIDType, cb): void {
     const job = createJobFn(state, queryId)
     if (!job) {
-      cb(null, undefined)
+      process.nextTick(() => cb(null, undefined))
       return
     }
     queryRunner(graphqlRunner, job, activity?.span)
