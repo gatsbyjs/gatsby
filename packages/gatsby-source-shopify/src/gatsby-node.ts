@@ -6,7 +6,6 @@ import {
   PluginOptionsSchemaArgs,
   SourceNodesArgs,
 } from "gatsby"
-import { IErrorMapEntry } from "gatsby-cli/lib/structured-errors/error-map"
 import { makeResolveGatsbyImageData } from "./resolve-gatsby-image-data"
 import {
   getGatsbyImageResolver,
@@ -26,14 +25,6 @@ try {
   )
 } catch (e) {
   coreSupportsOnPluginInit = false
-}
-
-interface IErrorContext {
-  sourceMessage: string
-}
-
-interface IErrorMap {
-  [code: string]: IErrorMapEntry
 }
 
 const getErrorText = (context: IErrorContext): string => context.sourceMessage
@@ -326,7 +317,7 @@ export function onPreInit({ reporter }: NodePluginArgs): void {
 }
 
 if (coreSupportsOnPluginInit) {
-  // need to conditionally export otherwise it throw an error for older versions
+  // need to conditionally export otherwise it throws an error for older versions
   exports.unstable_onPluginInit = ({ reporter }: NodePluginArgs): void => {
     reporter.setErrorMap(ERROR_MAP)
   }

@@ -61,3 +61,40 @@ interface BulkOperationCancelResponse {
     userErrors: UserError[]
   }
 }
+
+interface IErrorContext {
+  sourceMessage: string
+}
+
+enum Level {
+  ERROR = `ERROR`,
+  WARNING = `WARNING`,
+  INFO = `INFO`,
+  DEBUG = `DEBUG`,
+}
+
+enum Type {
+  GRAPHQL = `GRAPHQL`,
+  CONFIG = `CONFIG`,
+  WEBPACK = `WEBPACK`,
+  PLUGIN = `PLUGIN`,
+}
+
+enum ErrorCategory {
+  USER = `USER`,
+  SYSTEM = `SYSTEM`,
+  THIRD_PARTY = `THIRD_PARTY`,
+}
+
+interface IErrorMapEntry {
+  text: (context: IErrorContext) => string
+  // keyof typeof is used for these enums so that the public facing API (e.g. used by setErrorMap) doesn't rely on enum but gives an union
+  level: keyof typeof Level
+  type?: keyof typeof Type
+  category?: keyof typeof ErrorCategory
+  docsUrl?: string
+}
+
+interface IErrorMap {
+  [code: string]: IErrorMapEntry
+}

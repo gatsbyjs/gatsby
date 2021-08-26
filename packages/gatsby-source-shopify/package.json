@@ -19,10 +19,16 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify#readme",
   "dependencies": {
+<<<<<<< HEAD
     "@babel/runtime": "^7.15.4",
     "gatsby-core-utils": "^2.14.0-next.2",
     "gatsby-source-filesystem": "^3.14.0-next.2",
     "gatsby-plugin-utils": "1.13.0-next.0",
+=======
+    "gatsby-core-utils": "^2.13.0-next.1",
+    "gatsby-plugin-utils": "^1.13.0-next.0",
+    "gatsby-source-filesystem": "^3.13.0-next.1",
+>>>>>>> 0ab56904a6 (fix types and package.json)
     "node-fetch": "^2.6.1",
     "sharp": "^0.29.0",
     "shift-left": "^0.1.5"
