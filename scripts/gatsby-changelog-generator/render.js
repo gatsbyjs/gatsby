@@ -39,14 +39,14 @@ function releaseNotes(gatsbyRelease) {
 }
 
 const groupTitles = new Map([
-  ["feat", "Features"],
-  ["fix", "Bug Fixes"],
-  ["perf", "Performance Improvements"],
-  ["refactor", "Refactoring"],
-  ["chore", "Chores"],
+  [`feat`, `Features`],
+  [`fix`, `Bug Fixes`],
+  [`perf`, `Performance Improvements`],
+  [`refactor`, `Refactoring`],
+  [`chore`, `Chores`],
 ])
 
-renderCommitGroup = function renderCommitGroup(commitGroup) {
+function renderCommitGroup(commitGroup) {
   const [type, commits] = commitGroup
   const title = groupTitles.get(type) ?? `Other Changes`
 
@@ -64,7 +64,7 @@ ${commits.map(renderCommitLine).join(`\n`)}
 function renderCommitLine(commit) {
   // Clean up PR references at the end of the subject
   const subject = (commit.subject || commit.header).replace(
-    /(\s*\(\#[\d]+\)\s*)*$/,
+    /(\s*\(#[\d]+\)\s*)*$/,
     ``
   )
   return `- ${subject} ${commitReferences(commit)} ${commitHash(commit)}`
@@ -113,7 +113,7 @@ function commitHash(commit) {
   gitTags: '',
   committerDate: '2021-08-02'
 }
- */
+*/
 
 exports.renderVersion = renderVersion
 exports.renderHeader = renderHeader

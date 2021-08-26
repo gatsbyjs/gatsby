@@ -1,30 +1,11 @@
 const fs = require(`fs`)
 const path = require(`path`)
-const stream = require(`stream`)
 const execa = require(`execa`)
-const { compare, prerelease, patch, gt, lt, parse, valid } = require(`semver`)
+const { compare, prerelease, patch, gt, parse, valid } = require(`semver`)
 const gitRawCommits = require(`git-raw-commits`)
 const conventionalCommitsParser = require(`conventional-commits-parser`)
 const dateFormat = require(`dateformat`)
 const { renderHeader, renderVersion } = require(`./render`)
-
-class StreamFilter extends stream.Transform {
-  constructor(filterCallback) {
-    super({
-      readableObjectMode: true,
-      writableObjectMode: true,
-    })
-    this.filterCallback = filterCallback
-  }
-  _transform(chunk, encoding, next) {
-    if (this.filterCallback(chunk)) {
-      return next(null, chunk)
-    }
-    next()
-  }
-}
-
-const streamFilter = filterCallback => new StreamFilter(filterCallback)
 
 const monorepoRoot = () => process.cwd()
 
@@ -46,7 +27,7 @@ function getAllPackageNames() {
 
 async function getAllVersions(pkg) {
   // `git tag -l "${pkg}@*"`
-  let { stdout } = await execa(`git`, [`tag`, `-l`, `${pkg}@*`])
+  const { stdout } = await execa(`git`, [`tag`, `-l`, `${pkg}@*`])
   return stdout
     .split(/[\r\n]/)
     .map(tagToVersion)
@@ -103,14 +84,14 @@ async function buildChangelogEntry(context) {
     from: fromTag,
     to: toTag,
     path: `./packages/${pkg}`,
-    format: "%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%cs",
+    format: `%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%cs`,
   }
   const gitRawExecOpts = {}
   const commitsStream = gitRawCommits(gitRawCommitsOpts, gitRawExecOpts)
 
   // See https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-commits-parser
   const parserOpts = {
-    headerPattern: /^\s*(\w*)(?:\(([\w\$\.\-\* \,]*)\))?\: (.*)$/,
+    headerPattern: /^\s*(\w*)(?:\(([\w$.\-* ,]*)\))?: (.*)$/,
     headerCorrespondence: [`type`, `scope`, `subject`],
   }
   const stream = commitsStream.pipe(conventionalCommitsParser(parserOpts))
@@ -288,7 +269,7 @@ async function updateChangelog(packageName) {
  */
 async function onNewVersion() {
   // get list of changed files (package.json of published packages are expected to be dirty)
-  const { stdout } = await execa("git", ["ls-files", "-m"])
+  const { stdout } = await execa(`git`, [`ls-files`, `-m`])
   const packages = String(stdout).split(`\n`).map(toPackageName).filter(Boolean)
   const gatsbyVersion = packages.includes(`gatsby`)
     ? parse(resolvePackageVersion(`gatsby`))
@@ -330,7 +311,7 @@ async function onNewVersion() {
     }
   }
   if (updatedChangelogs.length) {
-    await execa("git", ["add", ...updatedChangelogs])
+    await execa(`git`, [`add`, ...updatedChangelogs])
   }
 
   function toPackageName(path) {
