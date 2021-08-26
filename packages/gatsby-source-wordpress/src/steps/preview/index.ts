@@ -19,6 +19,7 @@ import { formatLogMessage } from "~/utils/format-log-message"
 import { touchValidNodes } from "../source-nodes/update-nodes/fetch-node-updates"
 
 import { Reporter } from "gatsby/reporter"
+import { invokeAndCleanupLeftoverPreviewCallbacks } from "./cleanup"
 
 const inDevelopPreview =
   process.env.NODE_ENV === `development` &&
@@ -38,6 +39,7 @@ export type PreviewStatusUnion =
   | `NO_PAGE_CREATED_FOR_PREVIEWED_NODE`
   | `GATSBY_PREVIEW_PROCESS_ERROR`
   | `RECEIVED_PREVIEW_DATA_FROM_WRONG_URL`
+  | `FOUND_LEFTOVER_PREVIEW_CALLBACKS`
 
 export interface IPreviewData {
   previewDatabaseId: number
@@ -367,14 +369,11 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
     dump(webhookBody)
   }
 
-  if (previewForIdIsAlreadyBeingProcessed(webhookBody?.id)) {
-    if (inPreviewDebugMode) {
-      reporter.info(
-        `Preview for id ${webhookBody?.id} is already being sourced.`
-      )
-    }
-    return
-  }
+  // in case there are preview callbacks from our last build
+  await invokeAndCleanupLeftoverPreviewCallbacks({
+    status: `FOUND_LEFTOVER_PREVIEW_CALLBACKS`,
+    context: `Starting sourcePreviews`,
+  })
 
   const wpGatsbyPreviewNodeManifestsAreSupported =
     await remoteSchemaSupportsFieldNameOnTypeName({
