@@ -705,7 +705,6 @@ workflows:
                 - master
       - update_changelogs:
           filters:
-            tags:
-              # trigger on new stable releases only
+            branches:
               only:
-                - /@[0-9]+\.[0-9]+\.[0-9]+$/
+                - /release\/.+/
