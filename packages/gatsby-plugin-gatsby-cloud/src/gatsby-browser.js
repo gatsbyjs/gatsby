@@ -31,7 +31,7 @@ const ShadowPortal = ({ children, identifier }) => {
 export const wrapRootElement = ({ element }, pluginOptions) => {
   if (
     process.env.GATSBY_PREVIEW_INDICATOR_ENABLED === `true` &&
-    !pluginOptions.disablePreviewUI
+    !pluginOptions?.disablePreviewUI
   ) {
     return (
       <>
