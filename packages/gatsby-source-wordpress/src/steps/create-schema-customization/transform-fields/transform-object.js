@@ -83,7 +83,7 @@ export const buildGatsbyNodeObjectResolver =
         // because if nodes are limited we still want to lazy fetch connections
         !inPreviewMode()) ||
       // lazyNodes option isn't supported in Gatsby v4+
-      !usingGatsbyV4OrGreater
+      usingGatsbyV4OrGreater
     ) {
       return null
     }
