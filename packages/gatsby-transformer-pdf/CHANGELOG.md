@@ -95,11 +95,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update eslint to fix linting issues fix [#29988](https://github.com/gatsbyjs/gatsby/issues/29988) ([5636389](https://github.com/gatsbyjs/gatsby/commit/5636389e8fa626c644e90abc14589e9961d98c68))
 
-## [2.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-pdf@2.0.0/packages/gatsby-transformer-pdf) (2017-08-25)
+## [2.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-pdf@2.0.0/packages/gatsby-transformer-pdf) (2021-03-02)
 
-#### Other Changes
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
 
-- Publish ([7ea058b](https://github.com/gatsbyjs/gatsby/commit/7ea058b31c54d8f8c8fb20185072bdb6edae06cc))
+**Note:** Version bump only for package gatsby-transformer-pdf
 
 ## [1.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-pdf@1.10.0/packages/gatsby-transformer-pdf) (2021-02-02)
 
