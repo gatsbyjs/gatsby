@@ -475,7 +475,6 @@ jobs:
       - checkout
       - run: apt-get update && apt-get install jq python -y
       - <<: *restore_cache
-      - <<: *install_node_modules
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: node scripts/gatsby-changelog-generator/update-and-open-pr.js
@@ -703,8 +702,8 @@ workflows:
             branches:
               only:
                 - master
-      - update_changelogs:
-          filters:
-            branches:
-              only:
-                - /release\/.+/
+#      - update_changelogs:
+#          filters:
+#            branches:
+#              only:
+#                - /release\/.+/

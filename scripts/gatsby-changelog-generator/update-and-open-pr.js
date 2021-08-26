@@ -7,12 +7,12 @@ if (!process.env.GITHUB_BOT_AUTH_TOKEN) {
 }
 
 async function run() {
-  // TODO: save current branch/commit/hash (and restore on complete)
-  const base = `vladar/generate-changelogs`
+  const base = `master`
   const branch = `changelog-update-${Date.now()}`
 
   const args = [`checkout`, `-b`, branch, `origin/${base}`, `--no-track`]
-  await execa(`git`, args)
+  const { stdout } = await execa(`git`, args)
+  console.log(stdout)
 
   const updatedPackages = []
   for (const pkg of getAllPackageNames()) {
