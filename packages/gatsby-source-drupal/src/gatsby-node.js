@@ -27,7 +27,7 @@ let apiRequestCount = 0
 let initialSourcing = true
 let globalReporter
 async function worker([url, options]) {
-  // Log out some progress indicators during the initial sourcing
+  // Log out progress during the initial sourcing.
   if (initialSourcing) {
     apiRequestCount += 1
     if (!start) {
@@ -535,7 +535,7 @@ exports.sourceNodes = async (
     createNode(node)
   }
 
-  // We're now down with the initial sourcing.
+  // We're now done with the initial sourcing.
   initialSourcing = false
 
   return
