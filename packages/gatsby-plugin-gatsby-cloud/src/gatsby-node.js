@@ -150,6 +150,9 @@ const pluginOptionsSchema = function ({ Joi }) {
     generateMatchPathRewrites: Joi.boolean().description(
       `When set to false, turns off automatic creation of redirect rules for client only paths`
     ),
+    disablePreviewUI: Joi.boolean().description(
+      `When set to true, turns off Gatsby Preview if enabled`
+    ),
   })
 }
 
