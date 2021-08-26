@@ -169,7 +169,8 @@ export async function flush(): Promise<void> {
 
         if (hasFlag(query.dirty, FLAG_DIRTY_NEW_PAGE)) {
           // query results are not written yet
-          return cb(null, true)
+          process.nextTick(() => cb(null, true))
+          return
         }
       }
 
@@ -213,7 +214,8 @@ export async function flush(): Promise<void> {
       },
     })
 
-    return cb(null, true)
+    cb(null, true)
+    return
   }, 25)
 
   for (const pagePath of pagePaths) {
