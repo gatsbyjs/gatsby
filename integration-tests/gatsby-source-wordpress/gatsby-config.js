@@ -4,8 +4,6 @@ require(`dotenv`).config({
 
 console.log(`Sourcing data from ` + process.env.WPGRAPHQL_URL)
 
-const requestConcurrency = 1
-
 const mediaItemTypeSettings = {
   localFile: {
     excludeByMimeTypes: ["video/mp4"],
