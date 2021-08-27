@@ -24,7 +24,7 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
       pipeline.rotate()
     }
   } catch (err) {
-    reportError(`Failed to process image D ${file.absolutePath}`, err, reporter)
+    reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return
   }
 

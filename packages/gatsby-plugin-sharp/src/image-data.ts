@@ -7,6 +7,7 @@ import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
 import sharp from "./safe-sharp"
 import { createTransformObject, mergeDefaults } from "./plugin-options"
 import { reportError } from "./report-error"
+import fs from "fs-extra"
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 
@@ -15,7 +16,7 @@ const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
 type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
 
 export type FileNode = Node & {
-  absolutePath?: string
+  absolutePath: string
   extension: string
 }
 
@@ -44,8 +45,9 @@ export async function getImageMetadata(
   }
 
   try {
-    // TODO: convert to use stream
-    const pipeline = sharp(file.absolutePath)
+    const pipeline = sharp()
+
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
 
     const { width, height, density, format } = await pipeline.metadata()
 
@@ -224,7 +226,7 @@ export async function generateImageData({
     return transform
   })
 
-  const images = batchQueueImageResizing({
+  const images = await batchQueueImageResizing({
     file,
     transforms,
     reporter,
@@ -283,7 +285,7 @@ export async function generateImageData({
       return transform
     })
 
-    const avifImages = batchQueueImageResizing({
+    const avifImages = await batchQueueImageResizing({
       file,
       transforms,
       reporter,
@@ -312,7 +314,7 @@ export async function generateImageData({
       return transform
     })
 
-    const webpImages = batchQueueImageResizing({
+    const webpImages = await batchQueueImageResizing({
       file,
       transforms,
       reporter,

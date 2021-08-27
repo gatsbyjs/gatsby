@@ -24,13 +24,7 @@ const { getDominantColor } = require(`./utils`)
 
 const imageSizeCache = new Map()
 
-const getImageSizeAsync = async file => {
-  if (
-    process.env.NODE_ENV !== `test` &&
-    imageSizeCache.has(file.internal.contentDigest)
-  ) {
-    return imageSizeCache.get(file.internal.contentDigest)
-  }
+const doGetImageSizeAsync = async file => {
   const input = fs.createReadStream(file.absolutePath)
   const dimensions = await imageSize(input)
 
@@ -40,6 +34,23 @@ const getImageSizeAsync = async file => {
       ``
     )
   }
+  return dimensions
+}
+
+const getImageSizeAsync = async file => {
+  if (
+    process.env.NODE_ENV !== `test` &&
+    imageSizeCache.has(file.internal.contentDigest)
+  ) {
+    return imageSizeCache.get(file.internal.contentDigest)
+  }
+
+  const inFlightPromise = doGetImageSizeAsync(file)
+
+  // we first store promise to also memoize/de-dupe in-flight work
+  imageSizeCache.set(file.internal.contentDigest, inFlightPromise)
+
+  const dimensions = await inFlightPromise
 
   imageSizeCache.set(file.internal.contentDigest, dimensions)
   return dimensions
@@ -78,12 +89,12 @@ exports.setActions = _actions => {
 
 exports.generateImageData = generateImageData
 
-function calculateImageDimensionsAndAspectRatio(file, options) {
-  const dimensions = getImageSize(file)
+async function calculateImageDimensionsAndAspectRatio(file, options) {
+  const dimensions = await getImageSizeAsync(file)
   return getDimensionsAndAspectRatio(dimensions, options)
 }
 
-function prepareQueue({ file, args }) {
+async function prepareQueue({ file, args }) {
   const { pathPrefix, ...options } = args
   const argsDigestShort = createArgsDigest(options)
   const imgSrc = `/${file.name}.${options.toFormat}`
@@ -98,10 +109,8 @@ function prepareQueue({ file, args }) {
   // make sure outputDir is created
   fs.ensureDirSync(outputDir)
 
-  const { width, height, aspectRatio } = calculateImageDimensionsAndAspectRatio(
-    file,
-    options
-  )
+  const { width, height, aspectRatio } =
+    await calculateImageDimensionsAndAspectRatio(file, options)
 
   // encode the file name for URL
   const encodedImgSrc = `/${encodeURIComponent(file.name)}.${options.toFormat}`
@@ -163,10 +172,10 @@ function lazyJobsEnabled() {
   )
 }
 
-function queueImageResizing({ file, args = {}, reporter }) {
+async function queueImageResizing({ file, args = {}, reporter }) {
   const fullOptions = healOptions(getPluginOptions(), args, file.extension)
   const { src, width, height, aspectRatio, relativePath, outputDir, options } =
-    prepareQueue({ file, args: createTransformObject(fullOptions) })
+    await prepareQueue({ file, args: createTransformObject(fullOptions) })
 
   // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
   const finishedPromise = createJob(
@@ -199,38 +208,40 @@ function queueImageResizing({ file, args = {}, reporter }) {
   }
 }
 
-function batchQueueImageResizing({ file, transforms = [], reporter }) {
+async function batchQueueImageResizing({ file, transforms = [], reporter }) {
   const operations = []
   const images = []
 
   // loop through all transforms to set correct variables
-  transforms.forEach(transform => {
-    const {
-      src,
-      width,
-      height,
-      aspectRatio,
-      relativePath,
-      outputDir,
-      options,
-    } = prepareQueue({ file, args: transform })
-    // queue operations of an image
-    operations.push({
-      outputPath: relativePath,
-      args: options,
-    })
+  await Promise.all(
+    transforms.map(async transform => {
+      const {
+        src,
+        width,
+        height,
+        aspectRatio,
+        relativePath,
+        outputDir,
+        options,
+      } = await prepareQueue({ file, args: transform })
+      // queue operations of an image
+      operations.push({
+        outputPath: relativePath,
+        args: options,
+      })
 
-    // create output results
-    images.push({
-      src,
-      absolutePath: path.join(outputDir, relativePath),
-      width,
-      height,
-      aspectRatio,
-      originalName: file.base,
-      finishedPromise: null,
+      // create output results
+      images.push({
+        src,
+        absolutePath: path.join(outputDir, relativePath),
+        width,
+        height,
+        aspectRatio,
+        originalName: file.base,
+        finishedPromise: null,
+      })
     })
-  })
+  )
 
   const finishedPromise = createJob(
     {
@@ -562,7 +573,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     return arrrgs
   })
 
-  const images = batchQueueImageResizing({
+  const images = await batchQueueImageResizing({
     file,
     transforms,
     reporter,
@@ -701,7 +712,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
     return arrrgs
   })
 
-  const images = batchQueueImageResizing({
+  const images = await batchQueueImageResizing({
     file,
     transforms,
     reporter,

@@ -53,8 +53,8 @@ function convertPathsToAbsolute(filePath: string): string {
 /**
  * Get contenthash of a file
  */
-function createFileHash(path: string): string {
-  return hasha.fromFileSync(path, { algorithm: `sha1` })
+function createFileHash(path: string): Promise<string> {
+  return hasha.fromStream(fs.createReadStream(path), { algorithm: `sha1` })
 }
 
 let hasActiveJobs: pDefer.DeferredPromise<void> | null = null
@@ -199,10 +199,10 @@ function isInternalJob(job: JobInput | InternalJob): job is InternalJob {
 /**
  * Create an internal job object
  */
-export function createInternalJob(
+export async function createInternalJob(
   job: JobInput | InternalJob,
   plugin: { name: string; version: string; resolve: string }
-): InternalJob {
+): Promise<InternalJob> {
   // It looks like we already have an augmented job so we shouldn't redo this work
   if (isInternalJob(job)) {
     return job
@@ -213,12 +213,14 @@ export function createInternalJob(
   // TODO see if we can make this async, filehashing might be expensive to wait for
   // currently this needs to be sync as we could miss jobs to have been scheduled and
   // are still processing their hashes
-  const inputPathsWithContentDigest = inputPaths.map((pth: string) => {
-    return {
-      path: convertPathsToAbsolute(pth),
-      contentDigest: createFileHash(pth),
-    }
-  })
+  const inputPathsWithContentDigest = await Promise.all(
+    inputPaths.map(async (pth: string) => {
+      return {
+        path: convertPathsToAbsolute(pth),
+        contentDigest: await createFileHash(pth),
+      }
+    })
+  )
 
   const internalJob: InternalJob = {
     id: uuidv4(),
