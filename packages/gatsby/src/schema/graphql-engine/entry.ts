@@ -9,6 +9,7 @@ import {
   createGraphQLRunner,
   Runner,
 } from "../../bootstrap/create-graphql-runner"
+import { waitUntilAllJobsComplete } from "../../utils/wait-until-jobs-complete"
 // const { builtInFieldExtensions } = require(`./extensions`)
 
 import { setGatsbyPluginCache } from "../../utils/require-gatsby-plugin"
@@ -90,11 +91,16 @@ export class GraphQLEngine {
   }
 
   public async runQuery(...args: Parameters<Runner>): ReturnType<Runner> {
-    return (await this.getRunner())(...args)
+    const result = await (await this.getRunner())(...args)
+    // Def not ideal - this is just waiting for all jobs and not jobs for current
+    // query, but we don't track jobs per query right now
+    // TODO: start tracking jobs per query to be able to await just those
+    await waitUntilAllJobsComplete()
     // return execute({
     //   schema: await this.getSchema(),
     //   document: parse(wat),
     // })
+    return result
   }
 
   public findPageByPath(pathName: string): IGatsbyPage | undefined {
