@@ -99,12 +99,13 @@ const requestRemoteNode = (
     })
 
     let haveAllBytesBeenWritten = false
+    let totalSize = null
     responseStream.on(`downloadProgress`, progress => {
-      if (
-        progress.transferred === progress.total ||
-        progress.total === null ||
-        progress.total === undefined
-      ) {
+      if (progress.total != null && !totalSize) {
+        totalSize = progress.total
+      }
+
+      if (progress.transferred === totalSize || totalSize === null) {
         haveAllBytesBeenWritten = true
       }
     })
@@ -132,7 +133,6 @@ const requestRemoteNode = (
 
       fsWriteStream.on(`finish`, () => {
         fsWriteStream.close()
-
         // We have an incomplete download
         if (!haveAllBytesBeenWritten) {
           fs.removeSync(tmpFilename)
