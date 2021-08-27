@@ -53,8 +53,12 @@ function convertPathsToAbsolute(filePath: string): string {
 /**
  * Get contenthash of a file
  */
-function createFileHash(path: string): Promise<string> {
-  return hasha.fromStream(fs.createReadStream(path), { algorithm: `sha1` })
+async function createFileHash(path: string): Promise<string> {
+  return (
+    (await hasha.fromStream(fs.createReadStream(path), {
+      algorithm: `sha1`,
+    })) ?? ``
+  )
 }
 
 let hasActiveJobs: pDefer.DeferredPromise<void> | null = null
@@ -327,19 +331,20 @@ export function waitUntilAllJobsComplete(): Promise<void> {
   return hasActiveJobs ? hasActiveJobs.promise : Promise.resolve()
 }
 
-export function isJobStale(
+export async function isJobStale(
   job: Partial<InternalJob> & { inputPaths: InternalJob["inputPaths"] }
-): boolean {
-  const areInputPathsStale = job.inputPaths.some(inputPath => {
+): Promise<boolean> {
+  for (const inputPath of job.inputPaths) {
     // does the inputPath still exists?
     if (!fs.existsSync(inputPath.path)) {
       return true
     }
 
     // check if we're talking about the same file
-    const fileHash = createFileHash(inputPath.path)
-    return fileHash !== inputPath.contentDigest
-  })
-
-  return areInputPathsStale
+    const fileHash = await createFileHash(inputPath.path)
+    if (fileHash !== inputPath.contentDigest) {
+      return true
+    }
+  }
+  return false
 }
