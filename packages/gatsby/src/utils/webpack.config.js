@@ -533,7 +533,7 @@ module.exports = async (
   const isCssModuleType = module => module.type === `css/mini-extract`
   const usesCssModules = (module, context) =>
     !!context.moduleGraph.getUsedExports(context.moduleGraph.getIssuer(module))
-      .size
+      ?.size
 
   if (stage === `develop`) {
     config.optimization = {
