@@ -21,14 +21,14 @@ import { whoami } from "./whoami"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
 import reporter from "./reporter"
 
-const handlerP = (fn: (args: yargs.Arguments) => void) => (
-  args: yargs.Arguments
-): void => {
-  Promise.resolve(fn(args)).then(
-    () => process.exit(0),
-    err => report.panic(err)
-  )
-}
+const handlerP =
+  (fn: (args: yargs.Arguments) => void) =>
+  (args: yargs.Arguments): void => {
+    Promise.resolve(fn(args)).then(
+      () => process.exit(0),
+      err => report.panic(err)
+    )
+  }
 
 function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
   const defaultHost = `localhost`

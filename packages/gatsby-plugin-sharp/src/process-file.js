@@ -3,9 +3,6 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const debug = require(`debug`)(`gatsby:gatsby-plugin-sharp`)
 const duotone = require(`./duotone`)
-const imagemin = require(`imagemin`)
-const imageminMozjpeg = require(`imagemin-mozjpeg`)
-const imageminPngquant = require(`imagemin-pngquant`)
 const { healOptions } = require(`./plugin-options`)
 const { SharpError } = require(`./sharp-error`)
 const { createContentDigest } = require(`gatsby-core-utils`)
@@ -113,6 +110,7 @@ exports.processFile = (file, transforms, options = {}) => {
         .png({
           compressionLevel: transformArgs.pngCompressionLevel,
           adaptiveFiltering: false,
+          quality: transformArgs.pngQuality || transformArgs.quality,
           force: transformArgs.toFormat === `png`,
         })
         .webp({
@@ -127,15 +125,12 @@ exports.processFile = (file, transforms, options = {}) => {
           quality: transformArgs.quality,
           force: transformArgs.toFormat === `avif`,
         })
-
-      // jpeg
-      if (!options.useMozJpeg) {
-        clonedPipeline = clonedPipeline.jpeg({
+        .jpeg({
+          mozjpeg: options.useMozJpeg,
           quality: transformArgs.jpegQuality || transformArgs.quality,
           progressive: transformArgs.jpegProgressive,
           force: transformArgs.toFormat === `jpg`,
         })
-      }
 
       // grayscale
       if (transformArgs.grayscale) {
@@ -154,22 +149,6 @@ exports.processFile = (file, transforms, options = {}) => {
           transformArgs.toFormat,
           clonedPipeline
         )
-      }
-
-      // lets decide how we want to save this transform
-      if (transformArgs.toFormat === `png`) {
-        await compressPng(clonedPipeline, outputPath, {
-          pngQuality: transformArgs.pngQuality,
-          quality: transformArgs.quality,
-          pngCompressionSpeed: transformArgs.compressionSpeed,
-          stripMetadata: options.stripMetadata,
-        })
-        return transform
-      }
-
-      if (options.useMozJpeg && transformArgs.toFormat === `jpg`) {
-        await compressJpg(clonedPipeline, outputPath, transformArgs)
-        return transform
       }
 
       try {
@@ -191,40 +170,6 @@ exports.processFile = (file, transforms, options = {}) => {
     return transform
   })
 }
-
-const compressPng = (pipeline, outputPath, options) =>
-  pipeline.toBuffer().then(sharpBuffer =>
-    imagemin
-      .buffer(sharpBuffer, {
-        plugins: [
-          imageminPngquant({
-            quality: [
-              (options.pngQuality || options.quality) / 100,
-              Math.min(((options.pngQuality || options.quality) + 25) / 100, 1),
-            ], // e.g. [0.4, 0.65]
-            speed: options.pngCompressionSpeed
-              ? options.pngCompressionSpeed
-              : undefined,
-            strip: !!options.stripMetadata, // Must be a bool
-          }),
-        ],
-      })
-      .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
-  )
-
-const compressJpg = (pipeline, outputPath, options) =>
-  pipeline.toBuffer().then(sharpBuffer =>
-    imagemin
-      .buffer(sharpBuffer, {
-        plugins: [
-          imageminMozjpeg({
-            quality: options.jpegQuality || options.quality,
-            progressive: options.jpegProgressive,
-          }),
-        ],
-      })
-      .then(imageminBuffer => fs.writeFile(outputPath, imageminBuffer))
-  )
 
 exports.createArgsDigest = args => {
   const argsDigest = createContentDigest(args)

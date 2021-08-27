@@ -104,38 +104,40 @@ const limitedExports: Rule.RuleModule = {
       // const { graphql } = require('gatsby')
       VariableDeclaration: (node): void => {
         // Check if require('gatsby')
-        const requiredFromGatsby = (node as VariableDeclaration).declarations.find(
-          el => {
-            // Handle require(`gatsby`)
-            if (
-              (el.init as CallExpression)?.arguments?.[0]?.type ===
-              `TemplateLiteral`
-            ) {
-              return (
-                ((el.init as CallExpression).arguments[0] as TemplateLiteral)
-                  ?.quasis[0].value.raw === `gatsby`
-              )
-            }
-
+        const requiredFromGatsby = (
+          node as VariableDeclaration
+        ).declarations.find(el => {
+          // Handle require(`gatsby`)
+          if (
+            (el.init as CallExpression)?.arguments?.[0]?.type ===
+            `TemplateLiteral`
+          ) {
             return (
-              ((el.init as CallExpression)?.arguments?.[0] as Literal)
-                ?.value === `gatsby`
+              ((el.init as CallExpression).arguments[0] as TemplateLiteral)
+                ?.quasis[0].value.raw === `gatsby`
             )
           }
-        )
+
+          return (
+            ((el.init as CallExpression)?.arguments?.[0] as Literal)?.value ===
+            `gatsby`
+          )
+        })
 
         if (requiredFromGatsby) {
           // Search for "graphql" in a const { graphql, Link } = require('gatsby')
-          const graphqlTagSpecifier = ((requiredFromGatsby as VariableDeclarator)
-            .id as ObjectPattern)?.properties.find(
+          const graphqlTagSpecifier = (
+            (requiredFromGatsby as VariableDeclarator).id as ObjectPattern
+          )?.properties.find(
             el =>
               ((el as AssignmentProperty).key as Identifier).name ===
               DEFAULT_GRAPHQL_TAG_NAME
           )
 
           if (graphqlTagSpecifier) {
-            graphqlTagName = ((graphqlTagSpecifier as AssignmentProperty)
-              .value as Identifier).name
+            graphqlTagName = (
+              (graphqlTagSpecifier as AssignmentProperty).value as Identifier
+            ).name
           }
         }
 
@@ -145,22 +147,22 @@ const limitedExports: Rule.RuleModule = {
       ImportDeclaration: (node): void => {
         // Make sure that the specifier is imported from "gatsby"
         if ((node as ImportDeclaration).source.value === `gatsby`) {
-          const graphqlTagSpecifier = (node as ImportDeclaration).specifiers.find(
-            el => {
-              // We only want import { graphql } from "gatsby"
-              // Not import graphql from "gatsby"
-              if (el.type === `ImportSpecifier`) {
-                // Only get the specifier with the original name of "graphql"
-                return el.imported.name === DEFAULT_GRAPHQL_TAG_NAME
-              }
-              // import * as Gatsby from "gatsby"
-              if (el.type === `ImportNamespaceSpecifier`) {
-                namespaceSpecifierName = el.local.name
-                return false
-              }
+          const graphqlTagSpecifier = (
+            node as ImportDeclaration
+          ).specifiers.find(el => {
+            // We only want import { graphql } from "gatsby"
+            // Not import graphql from "gatsby"
+            if (el.type === `ImportSpecifier`) {
+              // Only get the specifier with the original name of "graphql"
+              return el.imported.name === DEFAULT_GRAPHQL_TAG_NAME
+            }
+            // import * as Gatsby from "gatsby"
+            if (el.type === `ImportNamespaceSpecifier`) {
+              namespaceSpecifierName = el.local.name
               return false
             }
-          )
+            return false
+          })
           if (graphqlTagSpecifier) {
             // The local.name handles the case for import { graphql as otherName }
             // For normal import { graphql } the imported & local name are the same

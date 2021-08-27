@@ -97,7 +97,10 @@ type PageInput = {
   component: string,
   context?: Object,
   ownerNodeId?: string,
+  defer?: boolean,
 }
+
+type PageMode = "SSG" | "DSR" | "SSR"
 
 type Page = {
   path: string,
@@ -108,6 +111,7 @@ type Page = {
   componentChunkName: string,
   updatedAt: number,
   ownerNodeId?: string,
+  mode: PageMode,
 }
 
 type ActionOptions = {
@@ -405,6 +409,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     // Link page to its plugin.
     pluginCreator___NODE: plugin.id ?? ``,
     pluginCreatorId: plugin.id ?? ``,
+  }
+
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    let pageMode: PageMode = `SSG`
+    if (page.defer) {
+      pageMode = `DSR`
+    }
+    internalPage.mode = pageMode
   }
 
   if (page.ownerNodeId) {
@@ -866,26 +878,28 @@ const createNode = (
   }
 }
 
-actions.createNode = (...args) => dispatch => {
-  const actions = createNode(...args)
+actions.createNode =
+  (...args) =>
+  dispatch => {
+    const actions = createNode(...args)
 
-  dispatch(actions)
-  const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
-    action => action.type === `CREATE_NODE`
-  )
+    dispatch(actions)
+    const createNodeAction = (
+      Array.isArray(actions) ? actions : [actions]
+    ).find(action => action.type === `CREATE_NODE`)
 
-  if (!createNodeAction) {
-    return undefined
+    if (!createNodeAction) {
+      return undefined
+    }
+
+    const { payload: node, traceId, parentSpan } = createNodeAction
+    return apiRunnerNode(`onCreateNode`, {
+      node,
+      traceId,
+      parentSpan,
+      traceTags: { nodeId: node.id, nodeType: node.internal.type },
+    })
   }
-
-  const { payload: node, traceId, parentSpan } = createNodeAction
-  return apiRunnerNode(`onCreateNode`, {
-    node,
-    traceId,
-    parentSpan,
-    traceTags: { nodeId: node.id, nodeType: node.internal.type },
-  })
-}
 
 const touchNodeDeprecationWarningDisplayedMessages = new Set()
 

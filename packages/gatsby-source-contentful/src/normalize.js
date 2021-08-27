@@ -28,8 +28,10 @@ const buildFallbackChain = locales => {
   )
   return localesFallback
 }
-const makeGetLocalizedField = ({ locale, localesFallback }) => field =>
-  getLocalizedField({ field, locale, localesFallback })
+const makeGetLocalizedField =
+  ({ locale, localesFallback }) =>
+  field =>
+    getLocalizedField({ field, locale, localesFallback })
 
 exports.getLocalizedField = getLocalizedField
 exports.buildFallbackChain = buildFallbackChain
@@ -45,11 +47,10 @@ const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
 
 exports.makeId = makeId
 
-const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => (
-  spaceId,
-  id,
-  type
-) => createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
+const makeMakeId =
+  ({ currentLocale, defaultLocale, createNodeId }) =>
+  (spaceId, id, type) =>
+    createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
 exports.buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
@@ -344,9 +345,8 @@ exports.createNodesForContentType = ({
                     )
                   })
                 if (resolvableEntryItemFieldValue.length !== 0) {
-                  entryItemFields[
-                    `${entryItemFieldKey}___NODE`
-                  ] = resolvableEntryItemFieldValue
+                  entryItemFields[`${entryItemFieldKey}___NODE`] =
+                    resolvableEntryItemFieldValue
                 }
 
                 delete entryItemFields[entryItemFieldKey]

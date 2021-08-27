@@ -3,8 +3,8 @@
 import fs from "fs-extra"
 import Bluebird from "bluebird"
 import * as path from "path"
+import { generateHtmlPath, fixedPagePath } from "gatsby-core-utils"
 
-import { getPageHtmlFilePath } from "../../page-html"
 import { IPageDataWithQueryResult } from "../../page-data"
 import { IRenderHtmlResult } from "../../../commands/build-html"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
@@ -64,8 +64,12 @@ async function readPageData(
   publicDir: string,
   pagePath: string
 ): Promise<IPageDataWithQueryResult> {
-  const fixedPagePath = pagePath === `/` ? `index` : pagePath
-  const filePath = join(publicDir, `page-data`, fixedPagePath, `page-data.json`)
+  const filePath = join(
+    publicDir,
+    `page-data`,
+    fixedPagePath(pagePath),
+    `page-data.json`
+  )
   const rawPageData = await fs.readFile(filePath, `utf-8`)
 
   return JSON.parse(rawPageData)
@@ -221,9 +225,8 @@ async function doGetResourcesForTemplate(
   const staticQueryResultPromises: Array<Promise<void>> = []
   const staticQueryContext: Record<string, any> = {}
   for (const staticQueryHash of pageData.staticQueryHashes) {
-    const memoizedStaticQueryResult = staticQueryResultCache.get(
-      staticQueryHash
-    )
+    const memoizedStaticQueryResult =
+      staticQueryResultCache.get(staticQueryHash)
     if (memoizedStaticQueryResult) {
       staticQueryContext[staticQueryHash] = memoizedStaticQueryResult
       continue
@@ -326,20 +329,18 @@ export const renderHTMLProd = async ({
         const pageData = await readPageData(publicDir, pagePath)
         const resourcesForTemplate = await getResourcesForTemplate(pageData)
 
-        const {
-          html,
-          unsafeBuiltinsUsage,
-        } = await htmlComponentRenderer.default({
-          pagePath,
-          pageData,
-          ...resourcesForTemplate,
-        })
+        const { html, unsafeBuiltinsUsage } =
+          await htmlComponentRenderer.default({
+            pagePath,
+            pageData,
+            ...resourcesForTemplate,
+          })
 
         if (unsafeBuiltinsUsage.length > 0) {
           unsafeBuiltinsUsageByPagePath[pagePath] = unsafeBuiltinsUsage
         }
 
-        return fs.outputFile(getPageHtmlFilePath(publicDir, pagePath), html)
+        return fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
       } catch (e) {
         if (e.unsafeBuiltinsUsage && e.unsafeBuiltinsUsage.length > 0) {
           unsafeBuiltinsUsageByPagePath[pagePath] = e.unsafeBuiltinsUsage
@@ -393,10 +394,7 @@ export const renderHTMLDev = async ({
         const htmlString = await htmlComponentRenderer.default({
           pagePath,
         })
-        return fs.outputFile(
-          getPageHtmlFilePath(outputDir, pagePath),
-          htmlString
-        )
+        return fs.outputFile(generateHtmlPath(outputDir, pagePath), htmlString)
       } catch (e) {
         // add some context to error so we can display more helpful message
         e.context = {

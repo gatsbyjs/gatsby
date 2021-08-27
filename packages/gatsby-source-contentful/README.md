@@ -491,6 +491,54 @@ function BlogPostTemplate({ data }) {
 }
 ```
 
+### Embedding an image in a Rich Text field
+
+**Import**
+
+```js
+import { renderRichText } from "gatsby-source-contentful/rich-text"
+```
+
+**GraphQL**
+
+```graphql
+mainContent {
+  raw
+  references {
+    ... on ContentfulAsset {
+      contentful_id
+      __typename
+      gatsbyImageData
+    }
+  }
+}
+```
+
+**Options**
+
+```jsx
+const options = {
+  renderNode: {
+    "embedded-asset-block": node => {
+      const { gatsbyImageData } = node.data.target
+      if (!gatsbyImageData) {
+        // asset is not an image
+        return null
+      }
+      return <GatsbyImage image={image} />
+    },
+  },
+}
+```
+
+**Render**
+
+```jsx
+<article>
+  {blogPost.mainContent && renderRichText(blogPost.mainContent, options)}
+</article>
+```
+
 Check out the examples at [@contentful/rich-text-react-renderer](https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer).
 
 ## Download assets for static distribution

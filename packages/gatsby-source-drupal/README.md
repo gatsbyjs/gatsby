@@ -34,6 +34,12 @@ module.exports = {
 }
 ```
 
+On the Drupal side, we highly recommend installing [JSON:API
+Extras](https://www.drupal.org/project/jsonapi_extras) and enabling "Include
+count in collection queries" `/admin/config/services/jsonapi/extras` as that
+[speeds up fetching data from Drupal by around
+4x](https://github.com/gatsbyjs/gatsby/pull/32883).
+
 ### Filters
 
 You can use the `filters` option to limit the data that is retrieved from Drupal. Filters are applied per JSON API collection. You can use any [valid JSON API filter query](https://www.drupal.org/docs/8/modules/jsonapi/filtering). For large data sets this can reduce the build time of your application by allowing Gatsby to skip content you'll never use.
@@ -317,12 +323,15 @@ module.exports = {
           defaultLanguage: `en`,
           enabledLanguages: [`en`, `fil`],
           translatableEntities: [`node--article`],
+          nonTranslatableEntities: [`file--file`],
         },
       },
     },
   ],
 }
 ```
+
+Some entities are not translatable like Drupal files and will return null result when language code from parent entity doesn't match up. These items can be specified as nonTranslatableEntities and receive the defaultLanguage as fallback.
 
 ## Gatsby Preview (experimental)
 

@@ -271,11 +271,9 @@ module.exports = (
     ).forEach(processUrl)
 
     // Handle video poster.
-    extractUrlAttributeAndElement(
-      $(`video[poster]`),
-      `poster`
-    ).forEach(extractedUrlAttributeAndElement =>
-      processUrl({ ...extractedUrlAttributeAndElement, isRequired: true })
+    extractUrlAttributeAndElement($(`video[poster]`), `poster`).forEach(
+      extractedUrlAttributeAndElement =>
+        processUrl({ ...extractedUrlAttributeAndElement, isRequired: true })
     )
 
     // Handle audio tags.

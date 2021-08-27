@@ -286,10 +286,12 @@ const monoRepoPackages = [
   `gatsby-transformer-yaml`,
 ]
 
-const mockDepsChanges = packagesWithChangedDeps => ({ packageName }) =>
-  Promise.resolve({
-    didDepsChanged: packagesWithChangedDeps.includes(packageName),
-  })
+const mockDepsChanges =
+  packagesWithChangedDeps =>
+  ({ packageName }) =>
+    Promise.resolve({
+      didDepsChanged: packagesWithChangedDeps.includes(packageName),
+    })
 
 jest.mock(`../utils/check-deps-changes`, () => {
   return {

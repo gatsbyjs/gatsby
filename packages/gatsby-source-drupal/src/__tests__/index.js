@@ -47,6 +47,7 @@ describe(`gatsby-source-drupal`, () => {
   }
   const reporter = {
     info: jest.fn(),
+    verbose: jest.fn(),
     activityTimer: jest.fn(() => activity),
     log: jest.fn(),
   }

@@ -190,17 +190,15 @@ describe(`the author might be forcing navigation`, () => {
       expect(catchLinks.authorIsForcingNavigation(testAnchor)).toBe(true)
     })
     test(`target=_parent`, () => {
-      const testAnchor = separateBrowsingContext.contentDocument.createElement(
-        `a`
-      )
+      const testAnchor =
+        separateBrowsingContext.contentDocument.createElement(`a`)
       testAnchor.setAttribute(`target`, `_parent`)
 
       expect(catchLinks.authorIsForcingNavigation(testAnchor)).toBe(true)
     })
     test(`target=_top`, () => {
-      const testAnchor = separateBrowsingContext.contentDocument.createElement(
-        `a`
-      )
+      const testAnchor =
+        separateBrowsingContext.contentDocument.createElement(`a`)
       testAnchor.setAttribute(`target`, `_top`)
 
       expect(catchLinks.authorIsForcingNavigation(testAnchor)).toBe(true)
@@ -232,9 +230,8 @@ describe(`anchor target attribute looks like _self if`, () => {
     expect(catchLinks.anchorsTargetIsEquivalentToSelf(testAnchor)).toBe(true)
   })
   it(`is set to _parent, but window = window.parent`, () => {
-    const testAnchor = separateBrowsingContext.contentDocument.createElement(
-      `a`
-    )
+    const testAnchor =
+      separateBrowsingContext.contentDocument.createElement(`a`)
     testAnchor.setAttribute(`target`, `_parent`)
 
     document.body.appendChild(testAnchor)
@@ -244,9 +241,8 @@ describe(`anchor target attribute looks like _self if`, () => {
     testAnchor.remove()
   })
   it(`is set to _top, but window = window.top`, () => {
-    const testAnchor = separateBrowsingContext.contentDocument.createElement(
-      `a`
-    )
+    const testAnchor =
+      separateBrowsingContext.contentDocument.createElement(`a`)
     testAnchor.setAttribute(`target`, `_top`)
 
     document.body.appendChild(testAnchor)

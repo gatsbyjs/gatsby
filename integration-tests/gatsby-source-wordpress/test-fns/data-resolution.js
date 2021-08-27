@@ -219,6 +219,38 @@ describe(`data resolution`, () => {
     expect(result.data.testUser.name).toEqual(`admin`)
   })
 
+  it(`resolves data added via a fn file in onBeforeChangeNode type option`, async () => {
+    const result = await fetchGraphql({
+      url,
+      query: /* GraphQL */ `
+        {
+          # fn as a file path
+          allWpPage {
+            nodes {
+              id
+              beforeChangeNodeTest
+            }
+          }
+          # inline fn in gatsby-config.js
+          # support for this will be removed in future versions
+          allWpPost {
+            nodes {
+              id
+              beforeChangeNodeTest
+            }
+          }
+        }
+      `,
+    })
+
+    result.data.allWpPage.nodes.forEach(node => {
+      expect(node.beforeChangeNodeTest).toBe(`TEST-${node.id}`)
+    })
+    result.data.allWpPost.nodes.forEach(node => {
+      expect(node.beforeChangeNodeTest).toBe(`TEST-${node.id}`)
+    })
+  })
+
   it(`resolves root fields`, async () => {
     const result = await fetchGraphql({
       url,
