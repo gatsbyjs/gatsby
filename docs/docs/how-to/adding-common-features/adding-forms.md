@@ -69,7 +69,7 @@ The `handleSubmit` function calls `preventDefault()` on the event which prevents
 
 You may want to make addition changes to visual form display after submit, like disabling the form submit button after submission, showing a spinning wheel, or changing the button color.
 
-If you need to use any sort of authentication token to submit data, you can use Gatsby Functions (Gatsby's implementation of serverless functions) to [run this logic while keeping any your credentials secure](https://www.gatsbyjs.com/docs/reference/functions/getting-started/#forms).
+If you need to use any sort of authentication token to submit data, you can use Gatsby Functions (Gatsby's implementation of serverless functions) to [run this logic while keeping any of your credentials secure](https://www.gatsbyjs.com/docs/reference/functions/getting-started/#forms).
 
 ### Triggering additional events
 
@@ -80,17 +80,17 @@ Some examples:
 - sending emails from a service like SendGrid
 - server-side validation on form submission (eg, is this email already in our system?)
 
-Users tend to handle these situations in two ways: either they send data to a middleware service like Zapier that can trigger multiple events based on data submission. Alternately, they use Gatsby Functions to run this logic while keeping auth credentials secure.
+Users tend to handle these situations in two ways: either they send data to a middleware service like Zapier that can trigger multiple events based on data submission. Alternatively, they use Gatsby Functions to run this logic while keeping auth credentials secure.
 
 ## Embedding third-party forms vs writing your own forms.
 
-If you're using a marketing automation vendor like Hubspot or Marketo, you have a few options: you can either write your own form and send the data to the vendor's endpoint, or you can drop-in the vendor's Javascript.
+If you're using a marketing automation vendor like Hubspot or Marketo, you have a few options: you can either write your own form and send the data to the vendor's endpoint, or you can drop in the vendor's Javascript.
 
 ### Using the vendor's form library
 
 Vendors tend to have a JavaScript widget for their forms.
 
-We've found these forms tend to be extremely heavy, weighing several hundred KB. This can often be more than the rest of the page combined, and can delay page load by a full second or two on some devices. For pages where conversion is critical, this can be an unacceptable tradeeoff.
+We've found these forms tend to be extremely heavy, weighing several hundred KB. This can often be more than the rest of the page combined, and can delay page load by a full second or two on some devices. For pages where conversion is critical, this can be an unacceptable trade-off.
 
 ### Sending data
 

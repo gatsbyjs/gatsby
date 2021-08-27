@@ -165,15 +165,8 @@ function lazyJobsEnabled() {
 
 function queueImageResizing({ file, args = {}, reporter }) {
   const fullOptions = healOptions(getPluginOptions(), args, file.extension)
-  const {
-    src,
-    width,
-    height,
-    aspectRatio,
-    relativePath,
-    outputDir,
-    options,
-  } = prepareQueue({ file, args: createTransformObject(fullOptions) })
+  const { src, width, height, aspectRatio, relativePath, outputDir, options } =
+    prepareQueue({ file, args: createTransformObject(fullOptions) })
 
   // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
   const finishedPromise = createJob(

@@ -317,8 +317,8 @@ describe(`processNodeManifests`, () => {
         index + 1,
         `${path.join(
           process.cwd(),
-          `.cache`,
-          `node-manifests`,
+          `public`,
+          `__node-manifests`,
           `test`,
           manifest.manifestId
         )}.json`,

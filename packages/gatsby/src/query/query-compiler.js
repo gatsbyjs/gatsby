@@ -323,14 +323,12 @@ const processDefinitions = ({
       continue
     }
 
-    const {
-      usedFragments,
-      missingFragments,
-    } = determineUsedFragmentsForDefinition(
-      originalDefinition,
-      definitionsByName,
-      fragmentsUsedByFragment
-    )
+    const { usedFragments, missingFragments } =
+      determineUsedFragmentsForDefinition(
+        originalDefinition,
+        definitionsByName,
+        fragmentsUsedByFragment
+      )
 
     if (missingFragments.length > 0) {
       for (const { filePath, definition, node } of missingFragments) {

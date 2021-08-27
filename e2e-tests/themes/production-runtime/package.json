@@ -29,6 +29,9 @@
     "prettier": "2.0.4",
     "start-server-and-test": "^1.7.11"
   },
+  "resolutions": {
+    "graphql-config": "3.3.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby-starter-default"

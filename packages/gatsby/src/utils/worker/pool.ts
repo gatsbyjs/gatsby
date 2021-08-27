@@ -47,31 +47,29 @@ export async function runQueriesInWorkersQueue(
   )
   activity.start()
 
-  const promises: Array<Promise<void>> = []
+  pool.all.setComponents()
 
   for (const segment of staticQuerySegments) {
-    promises.push(
-      pool.single
-        .runQueries({ pageQueryIds: [], staticQueryIds: segment })
-        .then(replayWorkerActions)
-        .then(() => {
-          activity.tick(segment.length)
-        })
-    )
+    pool.single
+      .runQueries({ pageQueryIds: [], staticQueryIds: segment })
+      .then(replayWorkerActions)
+      .then(() => {
+        activity.tick(segment.length)
+      })
   }
 
   for (const segment of pageQuerySegments) {
-    promises.push(
-      pool.single
-        .runQueries({ pageQueryIds: segment, staticQueryIds: [] })
-        .then(replayWorkerActions)
-        .then(() => {
-          activity.tick(segment.length)
-        })
-    )
+    pool.single
+      .runQueries({ pageQueryIds: segment, staticQueryIds: [] })
+      .then(replayWorkerActions)
+      .then(() => {
+        activity.tick(segment.length)
+      })
   }
 
-  Promise.all(promises)
+  // note that we only await on this and not on anything before (`.setComponents()` or `.runQueries()`)
+  // because gatsby-worker will queue tasks internally and worker will never execute multiple tasks at the same time
+  // so awaiting `.saveQueriesDependencies()` is enough to make sure `.setComponents()` and `.runQueries()` finished
   await Promise.all(pool.all.saveQueriesDependencies())
   activity.end()
 }

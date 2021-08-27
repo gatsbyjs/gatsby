@@ -260,40 +260,42 @@ export const actions = {
    *   })
    * }
    */
-  createFieldExtension: (
-    extension: GraphQLFieldExtensionDefinition,
-    plugin: IGatsbyPlugin,
-    traceId?: string
-  ): ThunkAction<
-    void,
-    IGatsbyState,
-    Record<string, unknown>,
-    ICreateFieldExtension
-  > => (dispatch, getState): void => {
-    const { name } = extension || {}
-    const { fieldExtensions } = getState().schemaCustomization
+  createFieldExtension:
+    (
+      extension: GraphQLFieldExtensionDefinition,
+      plugin: IGatsbyPlugin,
+      traceId?: string
+    ): ThunkAction<
+      void,
+      IGatsbyState,
+      Record<string, unknown>,
+      ICreateFieldExtension
+    > =>
+    (dispatch, getState): void => {
+      const { name } = extension || {}
+      const { fieldExtensions } = getState().schemaCustomization
 
-    if (!name) {
-      report.error(
-        `The provided field extension must have a \`name\` property.`
-      )
-    } else if (reservedExtensionNames.includes(name)) {
-      report.error(
-        `The field extension name \`${name}\` is reserved for internal use.`
-      )
-    } else if (fieldExtensions[name]) {
-      report.error(
-        `A field extension with the name \`${name}\` has already been registered.`
-      )
-    } else {
-      dispatch({
-        type: `CREATE_FIELD_EXTENSION`,
-        plugin,
-        traceId,
-        payload: { name, extension },
-      })
-    }
-  },
+      if (!name) {
+        report.error(
+          `The provided field extension must have a \`name\` property.`
+        )
+      } else if (reservedExtensionNames.includes(name)) {
+        report.error(
+          `The field extension name \`${name}\` is reserved for internal use.`
+        )
+      } else if (fieldExtensions[name]) {
+        report.error(
+          `A field extension with the name \`${name}\` has already been registered.`
+        )
+      } else {
+        dispatch({
+          type: `CREATE_FIELD_EXTENSION`,
+          plugin,
+          traceId,
+          payload: { name, extension },
+        })
+      }
+    },
 
   /**
    * Write GraphQL schema to file
@@ -387,56 +389,56 @@ export const actions = {
    *   }))
    * }
    */
-  createResolverContext: (
-    context: IGatsbyPluginContext,
-    plugin: IGatsbyPlugin,
-    traceId?: string
-  ): ThunkAction<
-    void,
-    IGatsbyState,
-    Record<string, unknown>,
-    ICreateResolverContext
-  > => (dispatch): void => {
-    if (!context || typeof context !== `object`) {
-      report.error(
-        `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`
-      )
-    } else {
-      const { name } = plugin || {}
-      const payload =
-        !name || name === `default-site-plugin`
-          ? context
-          : { [camelCase(name.replace(/^gatsby-/, ``))]: context }
-      dispatch({
-        type: `CREATE_RESOLVER_CONTEXT`,
-        plugin,
-        traceId,
-        payload,
-      })
-    }
-  },
+  createResolverContext:
+    (
+      context: IGatsbyPluginContext,
+      plugin: IGatsbyPlugin,
+      traceId?: string
+    ): ThunkAction<
+      void,
+      IGatsbyState,
+      Record<string, unknown>,
+      ICreateResolverContext
+    > =>
+    (dispatch): void => {
+      if (!context || typeof context !== `object`) {
+        report.error(
+          `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`
+        )
+      } else {
+        const { name } = plugin || {}
+        const payload =
+          !name || name === `default-site-plugin`
+            ? context
+            : { [camelCase(name.replace(/^gatsby-/, ``))]: context }
+        dispatch({
+          type: `CREATE_RESOLVER_CONTEXT`,
+          plugin,
+          traceId,
+          payload,
+        })
+      }
+    },
 }
 
-const withDeprecationWarning = (
-  actionName: RestrictionActionNames,
-  action: SomeActionCreator,
-  api: API,
-  allowedIn: Array<API>
-): SomeActionCreator => (
-  ...args: Array<any>
-): ReturnType<ActionCreator<any>> => {
-  report.warn(
-    `Calling \`${actionName}\` in the \`${api}\` API is deprecated. ` +
-      `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
-  )
-  return action(...args)
-}
+const withDeprecationWarning =
+  (
+    actionName: RestrictionActionNames,
+    action: SomeActionCreator,
+    api: API,
+    allowedIn: Array<API>
+  ): SomeActionCreator =>
+  (...args: Array<any>): ReturnType<ActionCreator<any>> => {
+    report.warn(
+      `Calling \`${actionName}\` in the \`${api}\` API is deprecated. ` +
+        `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
+    )
+    return action(...args)
+  }
 
-const withErrorMessage = (
-  actionName: RestrictionActionNames,
-  api: API,
-  allowedIn: Array<API>
-) => () =>
+const withErrorMessage =
+  (actionName: RestrictionActionNames, api: API, allowedIn: Array<API>) =>
+  () =>
   // return a thunk that does not dispatch anything
   (): void => {
     report.error(

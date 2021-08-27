@@ -224,15 +224,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   }
 
   await waitForWorkerPoolRestart
-  const {
-    toRegenerate,
-    toDelete,
-  } = await buildHTMLPagesAndDeleteStaleArtifacts({
-    program,
-    pageRenderer,
-    workerPool,
-    buildSpan,
-  })
+  const { toRegenerate, toDelete } =
+    await buildHTMLPagesAndDeleteStaleArtifacts({
+      program,
+      pageRenderer,
+      workerPool,
+      buildSpan,
+    })
   const waitWorkerPoolEnd = Promise.all(workerPool.end())
 
   telemetry.addSiteMeasurement(`BUILD_END`, {

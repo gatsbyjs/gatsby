@@ -113,7 +113,7 @@ export function lazyHydrate(
         // @ts-ignore react 18 typings
         hydrated.current.render(null)
       } else {
-        ReactDOM.render((null as unknown) as ReactElement, root.current)
+        ReactDOM.render(null as unknown as ReactElement, root.current)
       }
     }
   }

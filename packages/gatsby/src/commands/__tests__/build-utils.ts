@@ -240,8 +240,8 @@ describe(`calcDirtyHtmlFiles`, () => {
       let isolatedCalcDirtyHtmlFiles
       jest.isolateModules(() => {
         platformSpy.mockImplementation(() => `linux`)
-        isolatedCalcDirtyHtmlFiles = require(`../build-utils`)
-          .calcDirtyHtmlFiles
+        isolatedCalcDirtyHtmlFiles =
+          require(`../build-utils`).calcDirtyHtmlFiles
       })
 
       const state = generateStateToTestHelper({
@@ -268,8 +268,8 @@ describe(`calcDirtyHtmlFiles`, () => {
       let isolatedCalcDirtyHtmlFiles
       jest.isolateModules(() => {
         platformSpy.mockImplementation(() => `win32`)
-        isolatedCalcDirtyHtmlFiles = require(`../build-utils`)
-          .calcDirtyHtmlFiles
+        isolatedCalcDirtyHtmlFiles =
+          require(`../build-utils`).calcDirtyHtmlFiles
       })
 
       const state = generateStateToTestHelper({

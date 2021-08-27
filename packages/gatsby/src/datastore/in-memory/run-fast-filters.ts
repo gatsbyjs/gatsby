@@ -101,8 +101,8 @@ export function applyFastFilters(
 
     while (nodesPerValueArrs.length > 1) {
       // TS limitation: cannot guard against .pop(), so we must double cast
-      const a = (nodesPerValueArrs.pop() as unknown) as Array<IGatsbyNode>
-      const b = (nodesPerValueArrs.pop() as unknown) as Array<IGatsbyNode>
+      const a = nodesPerValueArrs.pop() as unknown as Array<IGatsbyNode>
+      const b = nodesPerValueArrs.pop() as unknown as Array<IGatsbyNode>
       nodesPerValueArrs.push(intersectNodesByCounter(a, b))
     }
 
@@ -415,8 +415,10 @@ function sortNodes(
       return field
     }
   })
-  const sortFns = sortFields.map(field => (v): ((any) => any) =>
-    getValueAt(v, field)
+  const sortFns = sortFields.map(
+    field =>
+      (v): ((any) => any) =>
+        getValueAt(v, field)
   )
   const sortOrder = sort.order.map(order =>
     typeof order === `boolean` ? order : order.toLowerCase()

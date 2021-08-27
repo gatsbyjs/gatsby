@@ -124,9 +124,8 @@ export class WebsocketManager {
 
     if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
       // page-data marked stale due to dirty query tracking
-      const boundEmitStalePageDataPathsFromDirtyQueryTracking = this.emitStalePageDataPathsFromDirtyQueryTracking.bind(
-        this
-      )
+      const boundEmitStalePageDataPathsFromDirtyQueryTracking =
+        this.emitStalePageDataPathsFromDirtyQueryTracking.bind(this)
       emitter.on(
         `CREATE_PAGE`,
         boundEmitStalePageDataPathsFromDirtyQueryTracking
@@ -214,8 +213,8 @@ export class WebsocketManager {
   }
 
   emitStalePageDataPathsFromDirtyQueryTracking(): void {
-    const dirtyQueries = store.getState().queries
-      .dirtyQueriesListToEmitViaWebsocket
+    const dirtyQueries =
+      store.getState().queries.dirtyQueriesListToEmitViaWebsocket
 
     if (this.emitStalePageDataPaths(dirtyQueries)) {
       store.dispatch(clearDirtyQueriesListToEmitViaWebsocket())

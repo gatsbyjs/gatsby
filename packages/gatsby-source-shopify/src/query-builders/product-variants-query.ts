@@ -3,7 +3,7 @@ import { BulkQuery } from "./bulk-query"
 export class ProductVariantsQuery extends BulkQuery {
   query(date?: Date): string {
     const publishedStatus = this.pluginOptions.salesChannel
-      ? encodeURIComponent(`${this.pluginOptions.salesChannel}=visible`)
+      ? `'${encodeURIComponent(this.pluginOptions.salesChannel)}:visible'`
       : `published`
 
     const filters = [`status:active`, `published_status:${publishedStatus}`]
@@ -11,6 +11,9 @@ export class ProductVariantsQuery extends BulkQuery {
       const isoDate = date.toISOString()
       filters.push(`created_at:>='${isoDate}' OR updated_at:>='${isoDate}'`)
     }
+
+    const includeLocations =
+      !!this.pluginOptions.shopifyConnections?.includes(`locations`)
 
     const ProductVariantSortKey = `POSITION`
 
@@ -39,7 +42,7 @@ export class ProductVariantsQuery extends BulkQuery {
                       originalSrc
                       transformedSrc
                     }
-                    inventoryItem {
+                    inventoryItem @include(if: ${includeLocations}) {
                       id
                       countryCodeOfOrigin
                       createdAt
@@ -103,7 +106,8 @@ export class ProductVariantsQuery extends BulkQuery {
                           ownerType
                           updatedAt
                           value
-                          valueType
+                          type
+                          valueType: type
                         }
                       }
                     }

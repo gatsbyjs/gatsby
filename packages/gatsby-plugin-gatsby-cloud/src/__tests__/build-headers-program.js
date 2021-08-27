@@ -12,12 +12,7 @@ jest.mock(`fs-extra`, () => {
 })
 
 describe(`build-headers-program`, () => {
-  let reporter
-
   beforeEach(() => {
-    reporter = {
-      warn: jest.fn(),
-    }
     fs.existsSync.mockClear()
     fs.existsSync.mockReturnValue(true)
   })
@@ -199,9 +194,8 @@ describe(`build-headers-program`, () => {
       mergeCachingHeaders: true,
     }
 
-    await buildHeadersProgram(pluginData, pluginOptions, reporter)
+    await buildHeadersProgram(pluginData, pluginOptions)
 
-    expect(reporter.warn).not.toHaveBeenCalled()
     const output = await fs.readFile(
       pluginData.publicFolder(HEADERS_FILENAME),
       `utf8`
@@ -234,9 +228,8 @@ describe(`build-headers-program`, () => {
       mergeCachingHeaders: true,
     }
 
-    await buildHeadersProgram(pluginData, pluginOptions, reporter)
+    await buildHeadersProgram(pluginData, pluginOptions)
 
-    expect(reporter.warn).not.toHaveBeenCalled()
     const output = await fs.readFile(
       pluginData.publicFolder(HEADERS_FILENAME),
       `utf8`
@@ -266,9 +259,8 @@ describe(`build-headers-program`, () => {
       return true
     })
 
-    await buildHeadersProgram(pluginData, pluginOptions, reporter)
+    await buildHeadersProgram(pluginData, pluginOptions)
 
-    expect(reporter.warn).not.toHaveBeenCalled()
     const output = await fs.readFile(
       pluginData.publicFolder(HEADERS_FILENAME),
       `utf8`
@@ -285,9 +277,8 @@ describe(`build-headers-program`, () => {
       mergeCachingHeaders: false,
     }
 
-    await buildHeadersProgram(pluginData, pluginOptions, reporter)
+    await buildHeadersProgram(pluginData, pluginOptions)
 
-    expect(reporter.warn).not.toHaveBeenCalled()
     expect(
       await fs.readFile(pluginData.publicFolder(HEADERS_FILENAME), `utf8`)
     ).toMatchSnapshot()
@@ -308,11 +299,35 @@ describe(`build-headers-program`, () => {
       },
     }
 
-    await buildHeadersProgram(pluginData, pluginOptions, reporter)
+    await buildHeadersProgram(pluginData, pluginOptions)
 
-    expect(reporter.warn).not.toHaveBeenCalled()
     expect(
       await fs.readFile(pluginData.publicFolder(HEADERS_FILENAME), `utf8`)
     ).toMatchSnapshot()
+  })
+
+  it(`should emit headers via ipc`, async () => {
+    const pluginData = await createPluginData()
+    const pluginOptions = {
+      ...DEFAULT_OPTIONS,
+      mergeSecurityHeaders: true,
+      headers: {
+        "/hello": [`X-Frame-Options: SAMEORIGIN`],
+      },
+    }
+
+    process.send = jest.fn()
+    await buildHeadersProgram(pluginData, pluginOptions)
+
+    expect(process.send).toHaveBeenCalledWith({
+      type: `LOG_ACTION`,
+      action: {
+        type: `CREATE_HEADER_ENTRY`,
+        payload: {
+          url: `/hello`,
+          headers: [`X-Frame-Options: SAMEORIGIN`],
+        },
+      },
+    })
   })
 })

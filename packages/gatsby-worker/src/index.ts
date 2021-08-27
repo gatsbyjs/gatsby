@@ -124,9 +124,8 @@ export class WorkerPool<
   private workers: Array<IWorkerInfo<keyof WorkerModuleExports>> = []
   private taskQueue = new TaskQueue<TaskInfo<keyof WorkerModuleExports>>()
   private idleWorkers: Set<IWorkerInfo<keyof WorkerModuleExports>> = new Set()
-  private listeners: Array<
-    (msg: MessagesFromChild, workerId: number) => void
-  > = []
+  private listeners: Array<(msg: MessagesFromChild, workerId: number) => void> =
+    []
 
   constructor(private workerPath: string, private options?: IWorkerOptions) {
     const single: Partial<WorkerPool<WorkerModuleExports>["single"]> = {}
@@ -153,12 +152,10 @@ export class WorkerPool<
           exportName
         ) as WorkerPool<WorkerModuleExports>["single"][typeof exportName]
 
-        all[exportName] = (this.scheduleWorkAll.bind(
+        all[exportName] = this.scheduleWorkAll.bind(
           this,
           exportName
-        ) as unknown) as WorkerPool<
-          WorkerModuleExports
-        >["all"][typeof exportName]
+        ) as unknown as WorkerPool<WorkerModuleExports>["all"][typeof exportName]
       }
     }
 

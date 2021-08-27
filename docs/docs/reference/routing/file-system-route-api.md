@@ -33,7 +33,7 @@ of adding a source plugin, use GraphiQL to identify the type and field to constr
 There are some general syntax requirements when using collection routes:
 
 - Dynamic segments of file paths must start and end with curly braces (`{ }`).
-- Types are case sensitive (e.g. `MarkdownRemark` or `contentfulMyContentType`). Check GraphiQL for the correct names.
+- Types are case-sensitive (e.g. `MarkdownRemark` or `contentfulMyContentType`). Check GraphiQL for the correct names.
 - Dynamic segments must include both a type and a field e.g. `{Type.field}` or `{BlogPost.slug}`.
 
 ### Nested routes
@@ -113,7 +113,7 @@ allMarkdownRemark {
 
 ### Collection Route Components
 
-Collection route components are passed two dynamic variables. The `id` of the each page's node and the
+Collection route components are passed two dynamic variables. The `id` of each page's node and the
 URL path as `param`. The param is passed to the component as `props.params` and the id as `props.pageContext.id`.
 
 Both are also passed as variables to the component's GraphQL query so you can query fields from the node. Page querying, including the use of variables, is explained in more depth in [querying data in pages with GraphQL](/docs/how-to/querying-data/page-query/).

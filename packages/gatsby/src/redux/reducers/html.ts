@@ -196,9 +196,8 @@ export function htmlReducer(
 
       // mark static queries as not dirty anymore (we flushed their dirtiness into pages)
       for (const staticQueryHash of action.payload.staticQueryHashes) {
-        const staticQueryResult = state.trackedStaticQueryResults.get(
-          staticQueryHash
-        )
+        const staticQueryResult =
+          state.trackedStaticQueryResults.get(staticQueryHash)
         if (staticQueryResult) {
           staticQueryResult.dirty = 0
         }

@@ -9,10 +9,8 @@ export const createSchemaComposer = <TSource, TArgs>({
 }: GraphQLFieldExtensionDefinition = {}): SchemaComposer<
   IGatsbyResolverContext<TSource, TArgs>
 > => {
-  const schemaComposer: SchemaComposer<IGatsbyResolverContext<
-    TSource,
-    TArgs
-  >> = new SchemaComposer()
+  const schemaComposer: SchemaComposer<IGatsbyResolverContext<TSource, TArgs>> =
+    new SchemaComposer()
 
   getNodeInterface({ schemaComposer })
   schemaComposer.add(GraphQLDate)

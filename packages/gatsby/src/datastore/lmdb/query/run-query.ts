@@ -27,7 +27,7 @@ import {
   IIndexEntry,
 } from "./filter-using-index"
 import { store } from "../../../redux"
-import { isDesc, resolveFieldValue, shouldFilter, compareKey } from "./common"
+import { isDesc, resolveFieldValue, matchesFilter, compareKey } from "./common"
 import { suggestIndex } from "./suggest-index"
 
 interface IDoRunQueryArgs extends IRunQueryArgs {
@@ -258,7 +258,7 @@ function completeFiltering(
     for (const [dottedField, filter] of filtersToApply) {
       const tmp = resolveFieldValue(dottedField, node, resolvedFields)
       const value = Array.isArray(tmp) ? tmp : [tmp]
-      if (value.some(v => !shouldFilter(filter, v))) {
+      if (value.some(v => !matchesFilter(filter, v))) {
         // Mimic AND semantics
         return false
       }
