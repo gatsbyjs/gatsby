@@ -1,4 +1,4 @@
-import got, { Options as GotOptions, Headers } from "got"
+import got, { Headers, Options } from "got"
 import fileType from "file-type"
 import path from "path"
 import fs from "fs-extra"
@@ -60,7 +60,7 @@ const requestRemoteNode = (
   url: string | URL,
   headers: Headers,
   tmpFilename: string,
-  httpOptions?: GotOptions,
+  httpOptions?: Options,
   attempt: number = 1
 ): Promise<IncomingMessage> =>
   new Promise((resolve, reject) => {
@@ -182,14 +182,11 @@ export async function fetchRemoteFile({
     headers[`If-None-Match`] = cachedHeaders.etag
   }
 
-  // Add Basic authentication if passed in:
-  // https://github.com/sindresorhus/got/blob/main/documentation/2-options.md#username
-  // The "auth" API isn't particularly extensible, we should define an API that we validate
-  const httpOptions: got.GotOptions<string | null> = {}
+  // Add htaccess authentication if passed in. This isn't particularly
+  // extensible. We should define a proper API that we validate.
+  const httpOptions: Options = {}
   if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
-    // @ts-ignore - We use outdated @types/got typings. Once we update got everywhere we can remove @types/got and have correct typings
     httpOptions.username = auth.htaccess_user
-    // @ts-ignore - see above
     httpOptions.password = auth.htaccess_pass
   }
 
