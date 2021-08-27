@@ -63,6 +63,7 @@ aliases:
           - /blog.+/
 
   test_template: &test_template
+    parallelism: 4
     parameters:
       npm_rebuild:
         type: boolean
@@ -75,11 +76,16 @@ aliases:
           condition: << parameters.npm_rebuild >>
           steps:
             - run: npm rebuild
-      - run: yarn list react
-      - run: yarn why lmdb-store
       - run:
-          command: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
+          name: Step debug info
+          command: |
+            yarn list react
+            yarn why lmdb-store
+      - run:
+          name: Run tests
+          command: yarn jest --ci --runInBand $(yarn jest --listTests | sed 's/\/root\/project//g' | circleci tests split --split-by=timings)
           environment:
+            NODE_OPTIONS: --max-old-space-size=2048
             GENERATE_JEST_REPORT: true
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
@@ -193,7 +199,8 @@ jobs:
       - persist_to_workspace:
           root: ./
           paths:
-            - "*"
+            - "packages/"
+            - "node_modules/"
 
   lint:
     executor: node
@@ -506,6 +513,7 @@ jobs:
           working_directory: ~/project/scripts/i18n
 
   windows_unit_tests:
+    parallelism: 4
     executor:
       name: win/default
       shell: powershell.exe
@@ -519,28 +527,30 @@ jobs:
       #     keys:
       #       - yarn-packages-v2-{{ checksum "yarn.lock" }}
       #       - yarn-packages-v2-
+
+      - <<: *attach_to_bootstrap
       - run:
-          name: Install node 12.13
+          name: Install node 12.13 and yarn
           command: |
             nvm install 12.13.0
             nvm alias default 12.13.0
             nvm use 12.13.0
             choco install yarn
       - run:
-          name: Set yarn timeout
-          command: yarn config set network-timeout 300000
+          name: Rebuild packages for windows
+          command: |
+            Remove-Item -Recurse -Force -Path "node_modules/sharp/"
+            yarn
       - run:
-          name: Install node modules
-          command: yarn --frozen-lockfile
-      # Caching is slow, so disabling
-      # - save_cache:
-      #     paths:
-      #       - C:\Users\circleci\AppData\Local\Yarn\Cache
-      #     key: yarn-packages-v2-{{ checksum "yarn.lock" }}
-      - run: yarn npm-run-all -s check-versions "lerna-prepare --concurrency=4 --stream"
-      - run:
-          name: "Run Tests"
-          command: yarn jest -w 1 --ci
+          name: Run tests
+          command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split --split-by=timings)
+          environment:
+            NODE_OPTIONS: --max-old-space-size=2048
+            GENERATE_JEST_REPORT: true
+            JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
+            JEST_JUNIT_OUTPUT_NAME: results.xml
+      - store_test_results:
+          path: ./test-results/jest-node/
 
   bootstrap-with-experimental-react:
     executor: node
@@ -627,6 +637,7 @@ workflows:
           <<: *ignore_docs
           requires:
             - lint
+            - bootstrap
       - unit_tests_node12:
           <<: *ignore_docs
           requires:
