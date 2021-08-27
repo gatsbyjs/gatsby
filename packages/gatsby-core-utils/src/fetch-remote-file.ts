@@ -71,6 +71,7 @@ const requestRemoteNode = (
     const handleTimeout = async (): Promise<void> => {
       fsWriteStream.close()
       fs.removeSync(tmpFilename)
+
       if (attempt < STALL_RETRY_LIMIT) {
         // Retry by calling ourself recursively
         resolve(
@@ -101,7 +102,10 @@ const requestRemoteNode = (
     let haveAllBytesBeenWritten = false
     let totalSize = null
     responseStream.on(`downloadProgress`, progress => {
-      if (progress.total != null && !totalSize) {
+      if (
+        progress.total != null &&
+        (!totalSize || (totalSize as number) < progress.total)
+      ) {
         totalSize = progress.total
       }
 
@@ -117,14 +121,17 @@ const requestRemoteNode = (
       if (timeout) {
         clearTimeout(timeout)
       }
+
+      fsWriteStream.close()
       fs.removeSync(tmpFilename)
       reject(error)
     })
 
-    fsWriteStream.on(`error`, (error: any) => {
+    fsWriteStream.on(`error`, (error: unknown) => {
       if (timeout) {
         clearTimeout(timeout)
       }
+
       reject(error)
     })
 
@@ -132,13 +139,18 @@ const requestRemoteNode = (
       resetTimeout()
 
       fsWriteStream.on(`finish`, () => {
+        if (timeout) {
+          clearTimeout(timeout)
+        }
+
         fsWriteStream.close()
+
         // We have an incomplete download
         if (!haveAllBytesBeenWritten) {
           fs.removeSync(tmpFilename)
 
           if (attempt < INCOMPLETE_RETRY_LIMIT) {
-            resolve(
+            return resolve(
               requestRemoteNode(
                 url,
                 headers,
@@ -150,16 +162,13 @@ const requestRemoteNode = (
           } else {
             // TODO move to new Error type
             // eslint-disable-next-line prefer-promise-reject-errors
-            reject(
+            return reject(
               `Failed to download ${url} after ${INCOMPLETE_RETRY_LIMIT} attempts`
             )
           }
         }
 
-        if (timeout) {
-          clearTimeout(timeout)
-        }
-        resolve(response)
+        return resolve(response)
       })
     })
   })
