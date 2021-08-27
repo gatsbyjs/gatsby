@@ -1,5 +1,5 @@
 import React, { Suspense, useContext } from "react"
-import Queue from "better-queue"
+import Queue from "fastq"
 import lodash from "lodash"
 import mitt from "mitt"
 
@@ -229,13 +229,7 @@ const render = (recipe, cb, context = {}, isApply, isStream, name) => {
   const emitter = mitt()
   const renderState = {}
 
-  const queue = new Queue(
-    async (job, cb) => {
-      const result = await job
-      cb(null, result)
-    },
-    { concurrent: 10000 }
-  )
+  const queue = Queue(worker, 10000)
 
   const resultCache = new Map()
   const inFlightCache = new Map()
@@ -285,7 +279,7 @@ const render = (recipe, cb, context = {}, isApply, isStream, name) => {
         // If there's still nothing on the queue and we've drained the queue, that means we're done.
       } else if (
         isDrained &&
-        queue.length === 0 &&
+        queue.length() === 0 &&
         blockedResources.size === 0
       ) {
         result = true
@@ -311,13 +305,15 @@ const render = (recipe, cb, context = {}, isApply, isStream, name) => {
 
   const throttledRenderResources = lodash.throttle(renderResources, 100)
 
-  queue.on(`task_finish`, function (taskId, r, stats) {
+  async function worker(job, cb) {
+    const result = await job
+    cb(null, result)
     throttledRenderResources()
-  })
+  }
 
-  queue.on(`drain`, () => {
+  queue.drain = () => {
     renderResources(true)
-  })
+  }
 
   // When there's no resources, renderResources finishes synchronously
   // so wait for the next tick so the emitter listeners can be setup first.

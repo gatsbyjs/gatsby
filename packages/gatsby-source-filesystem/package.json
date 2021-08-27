@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.8",
-    "better-queue": "^3.8.10",
+    "fastq": "^1.11.1",
     "chokidar": "^3.4.3",
     "file-type": "^16.0.0",
     "fs-extra": "^8.1.0",
