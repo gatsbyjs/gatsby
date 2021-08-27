@@ -100,11 +100,11 @@ const requestRemoteNode = (
     })
 
     let haveAllBytesBeenWritten = false
-    let totalSize = null
+    let totalSize: number | null = null
     responseStream.on(`downloadProgress`, progress => {
       if (
         progress.total != null &&
-        (!totalSize || (totalSize as number) < progress.total)
+        (!totalSize || totalSize < progress.total)
       ) {
         totalSize = progress.total
       }
