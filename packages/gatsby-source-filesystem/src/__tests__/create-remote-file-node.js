@@ -174,7 +174,8 @@ describe(`create-remote-file-node`, () => {
         expect(got.stream).toHaveBeenCalledWith(
           expect.any(String),
           expect.objectContaining({
-            auth: [auth.htaccess_user, auth.htaccess_pass].join(`:`),
+            username: auth.htaccess_user,
+            password: auth.htaccess_pass,
           })
         )
       })
