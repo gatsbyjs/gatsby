@@ -35,24 +35,24 @@ const pageTemplateDetailsMap: Record<
 > = INLINED_TEMPLATE_TO_DETAILS
 
 export async function getData({
-  pathName,
+  pageOrPageDataPath,
   graphqlEngine,
 }: {
   graphqlEngine: GraphQLEngine
-  pathName: string
+  pageOrPageDataPath: string
 }): Promise<ISSRData> {
-  // 1. Find a page for pathname
-  let page = graphqlEngine.findPageByPath(pathName)
-  if (!page) {
-    const potentialPagePath = getPagePathFromPageDataPath(pathName)
-    if (potentialPagePath) {
-      pathName = potentialPagePath
-      page = graphqlEngine.findPageByPath(pathName)
-    }
+  const potentialPagePath = getPagePathFromPageDataPath(pageOrPageDataPath)
+
+  if (!potentialPagePath) {
+    throw new Error(`Unexpected page path "${pageOrPageDataPath}"`)
   }
+
+  // 1. Find a page for pathname
+  const page = graphqlEngine.findPageByPath(potentialPagePath)
+
   if (!page) {
     // page not found, nothing to run query for
-    throw new Error(`Page for "${pathName}" not found`)
+    throw new Error(`Page for "${pageOrPageDataPath}" not found`)
   }
 
   // 2. Lookup query used for a page (template)
