@@ -35,7 +35,7 @@ describe(`Query schema`, () => {
   let schema
   let schemaComposer
 
-  const runQuery = query =>
+  const runQuery = (query, variables) =>
     graphql(
       schema,
       query,
@@ -43,7 +43,8 @@ describe(`Query schema`, () => {
       withResolverContext({
         schema,
         schemaComposer,
-      })
+      }),
+      variables
     )
 
   beforeAll(async () => {
@@ -1805,6 +1806,90 @@ describe(`Query schema`, () => {
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)
+    })
+  })
+
+  describe(`with skip/limit`, () => {
+    const query = `
+        query ($limit: Int!, $skip: Int!) {
+          allFile(limit: $limit, skip: $skip) {
+            totalCount
+            pageInfo {
+              currentPage
+              hasNextPage
+              hasPreviousPage
+              itemCount
+              pageCount
+              perPage
+              totalCount
+            }
+          }
+        }
+      `
+    it(`return correct pagination info for the first page`, async () => {
+      const results = await runQuery(query, { limit: 1, skip: 0 })
+      expect(results).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "allFile": Object {
+              "pageInfo": Object {
+                "currentPage": 1,
+                "hasNextPage": true,
+                "hasPreviousPage": false,
+                "itemCount": 1,
+                "pageCount": 3,
+                "perPage": 1,
+                "totalCount": 3,
+              },
+              "totalCount": 3,
+            },
+          },
+        }
+      `)
+    })
+
+    it(`return correct pagination info for the page in the middle`, async () => {
+      const results = await runQuery(query, { limit: 1, skip: 1 })
+      expect(results).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "allFile": Object {
+              "pageInfo": Object {
+                "currentPage": 2,
+                "hasNextPage": true,
+                "hasPreviousPage": true,
+                "itemCount": 1,
+                "pageCount": 3,
+                "perPage": 1,
+                "totalCount": 3,
+              },
+              "totalCount": 3,
+            },
+          },
+        }
+      `)
+    })
+
+    it(`return correct pagination info for the last page`, async () => {
+      const results = await runQuery(query, { limit: 1, skip: 2 })
+      expect(results).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "allFile": Object {
+              "pageInfo": Object {
+                "currentPage": 3,
+                "hasNextPage": false,
+                "hasPreviousPage": true,
+                "itemCount": 1,
+                "pageCount": 3,
+                "perPage": 1,
+                "totalCount": 3,
+              },
+              "totalCount": 3,
+            },
+          },
+        }
+      `)
     })
   })
 })

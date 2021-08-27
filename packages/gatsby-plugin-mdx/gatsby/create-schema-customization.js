@@ -93,20 +93,30 @@ module.exports = function createSchemaCustomization(
     }
   }
 
-  const processMDX = ({ node }) =>
-    genMDX({
-      node,
-      options,
-      store,
-      pathPrefix,
-      getNode,
-      getNodes,
-      cache,
-      reporter,
-      actions,
-      schema,
-      ...helpers,
-    })
+  const pendingPromises = new WeakMap()
+  const processMDX = ({ node }) => {
+    let promise = pendingPromises.get(node)
+    if (!promise) {
+      promise = genMDX({
+        node,
+        options,
+        store,
+        pathPrefix,
+        getNode,
+        getNodes,
+        cache,
+        reporter,
+        actions,
+        schema,
+        ...helpers,
+      })
+      pendingPromises.set(node, promise)
+      promise.then(() => {
+        pendingPromises.delete(node)
+      })
+    }
+    return promise
+  }
 
   // New Code // Schema
   const MdxType = schema.buildObjectType({

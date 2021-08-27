@@ -17,94 +17,98 @@ const createNodesQueue = new PQueue({
   concurrency: 2,
 })
 
-export const createNodeWithSideEffects = ({
-  node,
-  state,
-  wpgqlNodesGroup = null,
-  referencedMediaItemNodeIds = new Set(),
-  createdNodeIds = [],
-  createNodesActivity = null,
-  totalSideEffectNodes = null,
-  type = null,
-}) => async () => {
-  const { wpUrl } = state.remoteSchema
-  const { helpers, pluginOptions } = state.gatsbyApi
+export const createNodeWithSideEffects =
+  ({
+    node,
+    state,
+    wpgqlNodesGroup = null,
+    referencedMediaItemNodeIds = new Set(),
+    createdNodeIds = [],
+    createNodesActivity = null,
+    totalSideEffectNodes = null,
+    type = null,
+  }) =>
+  async () => {
+    const { wpUrl } = state.remoteSchema
+    const { helpers, pluginOptions } = state.gatsbyApi
 
-  const { actions, createContentDigest } = helpers
+    const { actions, createContentDigest } = helpers
 
-  if (node.link) {
-    // @todo is this still necessary? I don't think it is but double check
-    // create a pathname for the node using the WP permalink
-    node.path = urlToPath(node.link)
-  }
+    if (node.link) {
+      // @todo is this still necessary? I don't think it is but double check
+      // create a pathname for the node using the WP permalink
+      node.path = urlToPath(node.link)
+    }
 
-  if (wpgqlNodesGroup?.plural !== `mediaItems`) {
-    node = await processNode({
-      node,
-      pluginOptions,
-      referencedMediaItemNodeIds,
-      wpUrl,
-      helpers,
-    })
-  }
-
-  const builtTypename = buildTypeName(node.__typename)
-
-  let remoteNode = {
-    ...node,
-    __typename: builtTypename,
-    id: node.id,
-    parent: null,
-    internal: {
-      contentDigest: createContentDigest(node),
-      type: type || builtTypename,
-    },
-  }
-
-  const typeSettings = getTypeSettingsByType({
-    name: node.type,
-  })
-
-  if (typeof typeSettings?.beforeChangeNode === `function`) {
-    const { additionalNodeIds, remoteNode: changedRemoteNode } =
-      (await typeSettings.beforeChangeNode({
-        actionType: `CREATE_ALL`,
-        remoteNode,
-        actions,
+    if (wpgqlNodesGroup?.plural !== `mediaItems`) {
+      const { processedNode } = await processNode({
+        node,
+        pluginOptions,
+        referencedMediaItemNodeIds,
+        wpUrl,
         helpers,
-        type: node.type,
-        fetchGraphql,
-        typeSettings,
-        buildTypeName,
-        wpStore: store,
-      })) || {}
+      })
 
-    if (changedRemoteNode) {
-      remoteNode = changedRemoteNode
+      node = processedNode
     }
 
-    if (additionalNodeIds?.length && totalSideEffectNodes) {
-      additionalNodeIds.forEach(
-        id => createdNodeIds.push(id) && totalSideEffectNodes.push(id)
-      )
+    const builtTypename = buildTypeName(node.__typename)
+
+    let remoteNode = {
+      ...node,
+      __typename: builtTypename,
+      id: node.id,
+      parent: null,
+      internal: {
+        contentDigest: createContentDigest(node),
+        type: type || builtTypename,
+      },
     }
 
-    if (
-      totalSideEffectNodes &&
-      typeof totalSideEffectNodes?.length === `number` &&
-      totalSideEffectNodes.length > 0 &&
-      createNodesActivity
-    ) {
-      createNodesActivity.setStatus(
-        `awaiting async side effects - ${totalSideEffectNodes.length} additional nodes fetched`
-      )
+    const typeSettings = getTypeSettingsByType({
+      name: node.type,
+    })
+
+    if (typeof typeSettings?.beforeChangeNode === `function`) {
+      const { additionalNodeIds, remoteNode: changedRemoteNode } =
+        (await typeSettings.beforeChangeNode({
+          actionType: `CREATE_ALL`,
+          remoteNode,
+          actions,
+          helpers,
+          type: node.type,
+          fetchGraphql,
+          typeSettings,
+          buildTypeName,
+          wpStore: store,
+        })) || {}
+
+      if (changedRemoteNode) {
+        remoteNode = changedRemoteNode
+      }
+
+      if (additionalNodeIds?.length && totalSideEffectNodes) {
+        additionalNodeIds.forEach(
+          id => createdNodeIds.push(id) && totalSideEffectNodes.push(id)
+        )
+      }
+
+      if (
+        totalSideEffectNodes &&
+        typeof totalSideEffectNodes?.length === `number` &&
+        totalSideEffectNodes.length > 0 &&
+        createNodesActivity
+      ) {
+        createNodesActivity.setStatus(
+          `awaiting async side effects - ${totalSideEffectNodes.length} additional nodes fetched`
+        )
+      }
     }
+
+    await actions.createNode(remoteNode)
+
+    createdNodeIds.push(node.id)
   }
-
-  await actions.createNode(remoteNode)
-
-  createdNodeIds.push(node.id)
-}
 
 export const createGatsbyNodesFromWPGQLContentNodes = async ({
   wpgqlNodesByContentType,

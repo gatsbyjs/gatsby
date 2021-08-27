@@ -5,6 +5,7 @@ import { ProductsQuery } from "./query-builders/products-query"
 import { ProductVariantsQuery } from "./query-builders/product-variants-query"
 import { CollectionsQuery } from "./query-builders/collections-query"
 import { OrdersQuery } from "./query-builders/orders-query"
+import { LocationsQuery } from "./query-builders/locations-query"
 import {
   collectionsProcessor,
   incrementalProductsProcessor,
@@ -34,10 +35,12 @@ interface IOperations {
   incrementalProductVariants: (date: Date) => IShopifyBulkOperation
   incrementalOrders: (date: Date) => IShopifyBulkOperation
   incrementalCollections: (date: Date) => IShopifyBulkOperation
+  incrementalLocations: (date: Date) => IShopifyBulkOperation
   createProductsOperation: IShopifyBulkOperation
   createProductVariantsOperation: IShopifyBulkOperation
   createOrdersOperation: IShopifyBulkOperation
   createCollectionsOperation: IShopifyBulkOperation
+  createLocationsOperation: IShopifyBulkOperation
   cancelOperationInProgress: () => Promise<void>
   cancelOperation: (id: string) => Promise<BulkOperationCancelResponse>
   finishLastOperation: () => Promise<void>
@@ -243,6 +246,13 @@ export function createOperations(
       )
     },
 
+    incrementalLocations(date: Date): IShopifyBulkOperation {
+      return createOperation(
+        new LocationsQuery(options).query(date),
+        `INCREMENTAL_LOCATIONS`
+      )
+    },
+
     createProductsOperation: createOperation(
       new ProductsQuery(options).query(),
       `PRODUCTS`
@@ -263,6 +273,11 @@ export function createOperations(
       new CollectionsQuery(options).query(),
       `COLLECTIONS`,
       collectionsProcessor
+    ),
+
+    createLocationsOperation: createOperation(
+      new LocationsQuery(options).query(),
+      `LOCATIONS`
     ),
 
     cancelOperationInProgress,

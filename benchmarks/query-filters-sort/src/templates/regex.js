@@ -9,12 +9,17 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query($regex: String, $sort: TestSortInput) {
-    allTest(filter: { unique: { regex: $regex } }, sort: $sort, limit: 100) {
+  query($fooBarRegex: String, $sort: TestSortInput, $count: Boolean!) {
+    allTest(
+      filter: { fooBar: { regex: $fooBarRegex } }
+      sort: $sort
+      limit: 100
+    ) {
       nodes {
         nodeNum
         text
       }
+      totalCount @include(if: $count)
     }
   }
 `

@@ -22,7 +22,6 @@ integration-tests
 packages/*/*.js
 packages/gatsby-source-shopify/**/*.js
 packages/gatsby-plugin-preload-fonts/prepare/*.js
-packages/gatsby-image/withIEPolyfill/index.js
 packages/gatsby/cache-dir/commonjs/**/*
 packages/gatsby-admin/public
 packages/gatsby/gatsby-admin-public

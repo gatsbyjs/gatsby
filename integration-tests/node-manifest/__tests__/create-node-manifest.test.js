@@ -5,11 +5,14 @@ const urling = require(`urling`)
 const rimraf = require(`rimraf`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
+const {
+  getPageDataDigestForPagePath,
+} = require(`gatsby/dist/utils/node-manifest`)
 
 const manifestDir = path.join(
   process.cwd(),
-  `.cache`,
-  `node-manifests`,
+  `public`,
+  `__node-manifests`,
   `default-site-plugin`
 )
 
@@ -71,6 +74,17 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
           manifestFileContents.page.path
         )
       ).toBe(true)
+    })
+
+    // this doesn't work in gatsby develop since page-data.json files aren't written out
+    it(`Adds a correct page-data.json digest to the manifest`, async () => {
+      const pageDataDigest = await getPageDataDigestForPagePath(
+        `/one`,
+        process.cwd()
+      )
+      const manifest = await getManifestContents(`1`)
+
+      expect(pageDataDigest).toEqual(manifest.pageDataDigest)
     })
   }
 

@@ -8,12 +8,17 @@ exports.onRenderBody = (
   if (process.env.NODE_ENV !== `production` && process.env.NODE_ENV !== `test`)
     return null
 
-  // Lighthouse recommends pre-connecting to google analytics
+  // Lighthouse recommends pre-connecting to google tag manager
   setHeadComponents([
     <link
-      rel="preconnect dns-prefetch"
-      key="preconnect-google-analytics"
-      href="https://www.google-analytics.com"
+      rel="preconnect"
+      key="preconnect-google-gtag"
+      href="https://www.googletagmanager.com"
+    />,
+    <link
+      rel="dns-prefetch"
+      key="dns-prefetch-google-gtag"
+      href="https://www.googletagmanager.com"
     />,
   ])
 

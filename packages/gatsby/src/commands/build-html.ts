@@ -2,8 +2,8 @@ import Bluebird from "bluebird"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
-import { chunk } from "lodash"
-import webpack from "webpack"
+import { chunk, truncate } from "lodash"
+import webpack, { Stats } from "webpack"
 import * as path from "path"
 
 import { emitter, store } from "../redux"
@@ -11,11 +11,14 @@ import { IWebpackWatchingPauseResume } from "../utils/start-server"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import * as buildUtils from "./build-utils"
+import { getPageData } from "../utils/get-page-data"
 
 import { Span } from "opentracing"
 import { IProgram, Stage } from "./types"
 import { PackageJson } from "../.."
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
+import { IPageDataWithQueryResult } from "../utils/page-data"
+import { processNodeManifests } from "../utils/node-manifest"
 
 type IActivity = any // TODO
 
@@ -59,7 +62,7 @@ const runWebpack = (
   directory,
   parentSpan?: Span
 ): Bluebird<{
-  stats: webpack.Stats | undefined
+  stats: Stats
   waitForCompilerClose: Promise<void>
 }> =>
   new Bluebird((resolve, reject) => {
@@ -91,7 +94,7 @@ const runWebpack = (
         if (err) {
           return reject(err)
         } else {
-          return resolve({ stats, waitForCompilerClose })
+          return resolve({ stats: stats as Stats, waitForCompilerClose })
         }
       })
     } else if (
@@ -126,7 +129,10 @@ const runWebpack = (
 
             oldHash = newHash
 
-            return resolve({ stats, waitForCompilerClose: Promise.resolve() })
+            return resolve({
+              stats: stats as Stats,
+              waitForCompilerClose: Promise.resolve(),
+            })
           }
         }
       ) as IWebpackWatchingPauseResume
@@ -145,17 +151,17 @@ const doBuildRenderer = async (
     directory,
     parentSpan
   )
-  if (stats?.hasErrors()) {
+  if (stats.hasErrors()) {
     reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
   }
 
   if (
     stage === `build-html` &&
-    store.getState().html.ssrCompilationHash !== stats?.hash
+    store.getState().html.ssrCompilationHash !== stats.hash
   ) {
     store.dispatch({
       type: `SET_SSR_WEBPACK_COMPILATION_HASH`,
-      payload: stats?.hash,
+      payload: stats.hash as string,
     })
   }
 
@@ -301,6 +307,20 @@ class BuildHTMLError extends Error {
   }
 }
 
+const truncateObjStrings = (obj): IPageDataWithQueryResult => {
+  // Recursively truncate strings nested in object
+  // These objs can be quite large, but we want to preserve each field
+  for (const key in obj) {
+    if (typeof obj[key] === `object`) {
+      truncateObjStrings(obj[key])
+    } else if (typeof obj[key] === `string`) {
+      obj[key] = truncate(obj[key], { length: 250 })
+    }
+  }
+
+  return obj
+}
+
 export const doBuildPages = async (
   rendererPath: string,
   pagePaths: Array<string>,
@@ -315,8 +335,21 @@ export const doBuildPages = async (
       error.stack,
       `${rendererPath}.map`
     )
+
     const buildError = new BuildHTMLError(prettyError)
     buildError.context = error.context
+
+    if (error?.context?.path) {
+      const pageData = await getPageData(error.context.path)
+      const truncatedPageData = truncateObjStrings(pageData)
+
+      const pageDataMessage = `Page data from page-data.json for the failed page "${
+        error.context.path
+      }": ${JSON.stringify(truncatedPageData, null, 2)}`
+
+      reporter.error(pageDataMessage)
+    }
+
     throw buildError
   }
 }
@@ -356,11 +389,8 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
 }> {
   buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged()
 
-  const {
-    toRegenerate,
-    toDelete,
-    toCleanupFromTrackedState,
-  } = buildUtils.calcDirtyHtmlFiles(store.getState())
+  const { toRegenerate, toDelete, toCleanupFromTrackedState } =
+    buildUtils.calcDirtyHtmlFiles(store.getState())
 
   store.dispatch({
     type: `HTML_TRACKED_PAGES_CLEANUP`,
@@ -429,6 +459,9 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
 
     deletePageDataActivityTimer.end()
   }
+
+  // we process node manifests in this location because we need to make sure all page-data.json files are written for gatsby as well as inc-builds (both call builHTMLPagesAndDeleteStaleArtifacts). Node manifests include a digest of the corresponding page-data.json file and at this point we can be sure page-data has been written out for the latest updates in gatsby build AND inc builds.
+  await processNodeManifests()
 
   return { toRegenerate, toDelete }
 }

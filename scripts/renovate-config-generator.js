@@ -25,6 +25,7 @@ const globalPackageRules = [
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
     commitMessageTopic: `dependencies for Gatsby monorepo`,
+    excludePackagePatterns: [`^@babel`],
   },
 
   // group eslint & prettier
@@ -103,10 +104,43 @@ const globalPackageRules = [
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
   },
+  {
+    groupName: `cheerio`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackageNames: [`cheerio`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `semver`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackageNames: [`semver`, `@types/semver`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `core-js`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackageNames: [`core-js`, `core-js-compat`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `chokidar`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackageNames: [`chokidar`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
 ]
 
+// there is no excludeMatchSourceUrlPrefixes option so we force babel to be disabled
 const globalExcludePackages = []
-const globalExcludePackagePatterns = []
+const globalExcludePackagePatterns = [`^@babel`]
 globalPackageRules.forEach(group => {
   if (group.matchPackagePatterns) {
     globalExcludePackagePatterns.push(...group.matchPackagePatterns)
@@ -118,9 +152,9 @@ globalPackageRules.forEach(group => {
 
 // our default rules
 const defaultPackageRules = [
-  // disable engine upgrades
+  // disable engine upgrades & types/node
   {
-    matchDepTypes: [`engines`],
+    matchDepTypes: [`engines`, `@types/node`],
     enabled: false,
   },
   // host-error on renovate :shrug:
@@ -297,7 +331,7 @@ const renovateConfig = {
     dependencyDashboardApproval: true,
   },
   dependencyDashboard: true,
-  ignoreDeps: [`react`, `react-dom`, `uuid`],
+  ignoreDeps: [`react`, `react-dom`, `uuid`, `gatsby-interface`],
   rangeStrategy: `bump`,
   bumpVersion: null,
   prHourlyLimit: 0,

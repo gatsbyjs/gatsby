@@ -9,7 +9,7 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query($fooBar: String, $sort: TestSortInput) {
+  query($fooBar: String, $sort: TestSortInput, $count: Boolean!) {
     allTest(
       filter: { fooBarArray: { elemMatch: { fooBar: { eq: $fooBar } } } }
       sort: $sort
@@ -19,6 +19,7 @@ export const query = graphql`
         nodeNum
         text
       }
+      totalCount @include(if: $count)
     }
   }
 `

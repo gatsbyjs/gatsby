@@ -15,6 +15,10 @@ export async function async(
   }`
 }
 
+export function pid(): number {
+  return process.pid
+}
+
 export function neverEnding(): Promise<string> {
   return new Promise<string>(() => {})
 }

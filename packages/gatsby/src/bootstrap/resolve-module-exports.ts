@@ -30,7 +30,7 @@ const staticallyAnalyzeExports = (
       const codeFrame = codeFrameColumns(
         code,
         {
-          start: ((err as unknown) as { loc: SourceLocation["start"] }).loc,
+          start: (err as unknown as { loc: SourceLocation["start"] }).loc,
         },
         {
           highlightCode: true,

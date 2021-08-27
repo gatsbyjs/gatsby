@@ -47,6 +47,9 @@ const IndexPage = ({ data }) => (
     <Link to="/new-page" data-testid="hot-reloading-new-file">
       Created by hot-reloading/new-file.js
     </Link>
+    <Link to="/redirect-two#anchor" data-testid="redirect-two-anchor">Go to redirect with hash</Link>
+    <Link to="/redirect-two?query_param=hello" data-testid="redirect-two-search">Go to redirect with query param</Link>
+    <Link to="/redirect-two?query_param=hello#anchor" data-testid="redirect-two-search-anchor">Go to redirect with query param and hash</Link>
     <h2>Blog posts</h2>
     <ul>
       {data.posts.edges.map(({ node }) => (

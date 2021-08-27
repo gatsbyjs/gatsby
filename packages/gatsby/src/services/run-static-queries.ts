@@ -31,7 +31,11 @@ export async function runStaticQueries({
     }
   )
 
-  activity.start()
+  // TODO: This is hacky, remove with a refactor of PQR itself
+  if (!process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    activity.start()
+  }
+
   await processStaticQueries(staticQueryIds, {
     state,
     activity,
@@ -39,5 +43,7 @@ export async function runStaticQueries({
     graphqlTracing: program?.graphqlTracing,
   })
 
-  activity.done()
+  if (!process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    activity.done()
+  }
 }

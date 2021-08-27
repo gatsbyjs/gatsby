@@ -1,7 +1,8 @@
 import _ from "lodash"
-import { writeFile, existsSync } from "fs-extra"
+import { createWriteStream, existsSync } from "fs-extra"
 import { parse, posix } from "path"
 import kebabHash from "kebab-hash"
+import { fixedPagePath } from "gatsby-core-utils"
 import { IMMUTABLE_CACHING_HEADER } from "./constants"
 
 import {
@@ -12,6 +13,7 @@ import {
   HEADERS_FILENAME,
   PAGE_DATA_DIR,
 } from "./constants"
+import { emitHeaders } from "./ipc"
 
 function getHeaderName(header) {
   const matches = header.match(/^([^:]+):/)
@@ -56,8 +58,7 @@ function pathChunkName(path) {
 }
 
 function getPageDataPath(path) {
-  const fixedPagePath = path === `/` ? `index` : path
-  return posix.join(`page-data`, fixedPagePath, `page-data.json`)
+  return posix.join(`page-data`, fixedPagePath(path), `page-data.json`)
 }
 
 function getScriptPath(file, manifest) {
@@ -208,111 +209,143 @@ function stringifyHeaders(headers) {
 
 // program methods
 
-const mapUserLinkHeaders = ({
-  manifest,
-  pathPrefix,
-  publicFolder,
-}) => headers =>
-  _.mapValues(headers, headerList =>
-    _.map(headerList, transformLink(manifest, publicFolder, pathPrefix))
-  )
-
-const mapUserLinkAllPageHeaders = (
-  pluginData,
-  { allPageHeaders }
-) => headers => {
-  if (!allPageHeaders) {
-    return headers
-  }
-
-  const { pages, manifest, publicFolder, pathPrefix } = pluginData
-
-  const headersList = _.map(
-    allPageHeaders,
-    transformLink(manifest, publicFolder, pathPrefix)
-  )
-
-  const duplicateHeadersByPage = {}
-  pages.forEach(page => {
-    const pathKey = headersPath(pathPrefix, page.path)
-    duplicateHeadersByPage[pathKey] = headersList
-  })
-
-  return defaultMerge(headers, duplicateHeadersByPage)
-}
-
-const applyLinkHeaders = (pluginData, { mergeLinkHeaders }) => headers => {
-  if (!mergeLinkHeaders) {
-    return headers
-  }
-
-  const { pages, manifest, pathPrefix, publicFolder } = pluginData
-  const perPageHeaders = preloadHeadersByPage({
-    pages,
-    manifest,
-    pathPrefix,
-    publicFolder,
-  })
-
-  return defaultMerge(headers, perPageHeaders)
-}
-
-const applySecurityHeaders = ({ mergeSecurityHeaders }) => headers => {
-  if (!mergeSecurityHeaders) {
-    return headers
-  }
-
-  return headersMerge(headers, SECURITY_HEADERS)
-}
-
-const applyCachingHeaders = (
-  pluginData,
-  { mergeCachingHeaders }
-) => headers => {
-  if (!mergeCachingHeaders) {
-    return headers
-  }
-
-  let chunks = []
-  // Gatsby v3.5 added componentChunkName to store().components
-  // So we prefer to pull chunk names off that as it gets very expensive to loop
-  // over large numbers of pages.
-  const isComponentChunkSet = !!pluginData.components.entries()?.next()
-    ?.value[1]?.componentChunkName
-  if (isComponentChunkSet) {
-    chunks = [...pluginData.components.values()].map(c => c.componentChunkName)
-  } else {
-    chunks = Array.from(pluginData.pages.values()).map(
-      page => page.componentChunkName
+const mapUserLinkHeaders =
+  ({ manifest, pathPrefix, publicFolder }) =>
+  headers =>
+    _.mapValues(headers, headerList =>
+      _.map(headerList, transformLink(manifest, publicFolder, pathPrefix))
     )
+
+const mapUserLinkAllPageHeaders =
+  (pluginData, { allPageHeaders }) =>
+  headers => {
+    if (!allPageHeaders) {
+      return headers
+    }
+
+    const { pages, manifest, publicFolder, pathPrefix } = pluginData
+
+    const headersList = _.map(
+      allPageHeaders,
+      transformLink(manifest, publicFolder, pathPrefix)
+    )
+
+    const duplicateHeadersByPage = {}
+    pages.forEach(page => {
+      const pathKey = headersPath(pathPrefix, page.path)
+      duplicateHeadersByPage[pathKey] = headersList
+    })
+
+    return defaultMerge(headers, duplicateHeadersByPage)
   }
 
-  chunks.push(`pages-manifest`, `app`)
-
-  const files = [].concat(...chunks.map(chunk => pluginData.manifest[chunk]))
-
-  const cachingHeaders = {}
-
-  files.forEach(file => {
-    if (typeof file === `string`) {
-      cachingHeaders[`/` + file] = [IMMUTABLE_CACHING_HEADER]
+const applyLinkHeaders =
+  (pluginData, { mergeLinkHeaders }) =>
+  headers => {
+    if (!mergeLinkHeaders) {
+      return headers
     }
-  })
 
-  return defaultMerge(headers, cachingHeaders, CACHING_HEADERS)
-}
+    const { pages, manifest, pathPrefix, publicFolder } = pluginData
+    const perPageHeaders = preloadHeadersByPage({
+      pages,
+      manifest,
+      pathPrefix,
+      publicFolder,
+    })
 
-const applyTransfromHeaders = ({ transformHeaders }) => headers =>
-  _.mapValues(headers, transformHeaders)
+    return defaultMerge(headers, perPageHeaders)
+  }
 
-const writeHeadersFile = ({ publicFolder }) => contents =>
-  writeFile(publicFolder(HEADERS_FILENAME), JSON.stringify(contents))
+const applySecurityHeaders =
+  ({ mergeSecurityHeaders }) =>
+  headers => {
+    if (!mergeSecurityHeaders) {
+      return headers
+    }
 
-export default function buildHeadersProgram(
-  pluginData,
-  pluginOptions,
-  reporter
-) {
+    return headersMerge(headers, SECURITY_HEADERS)
+  }
+
+const applyCachingHeaders =
+  (pluginData, { mergeCachingHeaders }) =>
+  headers => {
+    if (!mergeCachingHeaders) {
+      return headers
+    }
+
+    let chunks = []
+    // Gatsby v3.5 added componentChunkName to store().components
+    // So we prefer to pull chunk names off that as it gets very expensive to loop
+    // over large numbers of pages.
+    const isComponentChunkSet = !!pluginData.components.entries()?.next()
+      ?.value[1]?.componentChunkName
+    if (isComponentChunkSet) {
+      chunks = [...pluginData.components.values()].map(
+        c => c.componentChunkName
+      )
+    } else {
+      chunks = Array.from(pluginData.pages.values()).map(
+        page => page.componentChunkName
+      )
+    }
+
+    chunks.push(`pages-manifest`, `app`)
+
+    const files = [].concat(...chunks.map(chunk => pluginData.manifest[chunk]))
+
+    const cachingHeaders = {}
+
+    files.forEach(file => {
+      if (typeof file === `string`) {
+        cachingHeaders[`/` + file] = [IMMUTABLE_CACHING_HEADER]
+      }
+    })
+
+    return defaultMerge(headers, cachingHeaders, CACHING_HEADERS)
+  }
+
+const applyTransfromHeaders =
+  ({ transformHeaders }) =>
+  headers =>
+    _.mapValues(headers, transformHeaders)
+
+const writeHeadersFile =
+  ({ publicFolder }) =>
+  contents =>
+    new Promise((resolve, reject) => {
+      /**
+       * Emit Headers via IPC
+       */
+      Object.entries(contents).map(([k, val]) => {
+        emitHeaders({
+          url: k,
+          headers: val,
+        })
+      })
+
+      const contentsStr = JSON.stringify(contents)
+      const writeStream = createWriteStream(publicFolder(HEADERS_FILENAME))
+      const chunkSize = 10000
+      const numChunks = Math.ceil(contentsStr.length / chunkSize)
+
+      for (let i = 0; i < numChunks; i++) {
+        writeStream.write(
+          contentsStr.slice(
+            i * chunkSize,
+            Math.min((i + 1) * chunkSize, contentsStr.length)
+          )
+        )
+      }
+
+      writeStream.end()
+      writeStream.on(`finish`, () => {
+        resolve()
+      })
+      writeStream.on(`error`, reject)
+    })
+
+export default function buildHeadersProgram(pluginData, pluginOptions) {
   return _.flow(
     mapUserLinkHeaders(pluginData),
     applySecurityHeaders(pluginOptions),

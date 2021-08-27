@@ -1,4 +1,6 @@
-# Architecture of Gatsby's image plugins
+---
+title: Architecture of Gatsby's image plugins
+---
 
 This is a technical document for anyone who is interested in how images are implemented in Gatsby. This is not for learning [how to use images in Gatsby](/docs/how-to/images-and-media/using-gatsby-plugin-image/), or even [how to add image support to a plugin](/docs/how-to/plugins-and-themes/adding-gatsby-image-support/). This is for if you are working on Gatsby, or if you're curious about how it's implemented.
 
@@ -16,7 +18,7 @@ This is a React component, and is the actual component used to display all image
 
 #### The `StaticImage` component
 
-A a lightweight wrapper around `GatsbyImage`, this component is detected during the build process and the props are extracted to enable images to be downloaded, and processed by `gatsby-plugin-sharp` without needing GraphQL.
+A lightweight wrapper around `GatsbyImage`, this component is detected during the build process and the props are extracted to enable images to be downloaded, and processed by `gatsby-plugin-sharp` without needing GraphQL.
 
 #### Plugin toolkit
 
@@ -28,7 +30,7 @@ The plugin exports a number of other helper functions designed to help end-users
 
 ### `gatsby-plugin-sharp`
 
-This includes the actual image processing functions from both sharp but also imagemin and potrace. It includes the functions that generate the image data object, including calculating which srcset sizes to generate. It exports `generateImageData`, which is used by `gatsby-transformer-sharp` and `gatsby-plugin-image`. It takes a `File` node and the image processing arguments, calculates which images to generate, processes these images and returns an image data object suitable for passing to `GatsbyImage`. It also exports helper functions for third party plugins to use, such as `traceSVG`.
+This includes the actual image processing functions from sharp and potrace. It includes the functions that generate the image data object, including calculating which srcset sizes to generate. It exports `generateImageData`, which is used by `gatsby-transformer-sharp` and `gatsby-plugin-image`. It takes a `File` node and the image processing arguments, calculates which images to generate, processes these images and returns an image data object suitable for passing to `GatsbyImage`. It also exports helper functions for third party plugins to use, such as `traceSVG`.
 
 ### `gatsby-transformer-sharp`
 
@@ -52,7 +54,7 @@ Many source plugins now support `GatsbyImage`. They do this by generating image 
 
 ### Anatomy of the component
 
-The `GatsbyImage` component wraps several other components, which are all exported by the plugin. It was originally designed to allow users to compose their own custom image components, but we have not documented this, so it should currently be considered unsupported. It is something that could be looked-at in future, but until that point `GatsbyImage` and `StaticImage` should be considered the only public components.
+The `GatsbyImage` component wraps several other components, which are all exported by the plugin. It was originally designed to allow users to compose their own custom image components, but we have not documented this, so it should currently be considered unsupported. It is something that could be looked at in the future, but until that point `GatsbyImage` and `StaticImage` should be considered the only public components.
 
 #### Lazy hydration
 

@@ -180,7 +180,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       React.useEffect(() => {
         if (!onClientEntryRanRef.current) {
           onClientEntryRanRef.current = true
-          performance.mark(`onInitialClientRender`)
+          if (performance.mark) {
+            performance.mark(`onInitialClientRender`)
+          }
 
           apiRunner(`onInitialClientRender`)
         }
@@ -192,7 +194,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     const renderer = apiRunner(
       `replaceHydrateFunction`,
       undefined,
-      ReactDOM.createRoot ? ReactDOM.createRoot : ReactDOM.hydrate
+      ReactDOM.hydrateRoot ? ReactDOM.hydrateRoot : ReactDOM.hydrate
     )[0]
 
     function runRender() {
@@ -201,10 +203,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           ? document.getElementById(`___gatsby`)
           : null
 
-      if (renderer === ReactDOM.createRoot) {
-        renderer(rootElement, {
-          hydrate: true,
-        }).render(<App />)
+      if (renderer === ReactDOM.hydrateRoot) {
+        renderer(rootElement, <App />)
       } else {
         renderer(<App />, rootElement)
       }

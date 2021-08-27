@@ -28,7 +28,7 @@ There are three options for this:
 
 - Use a third-party service that offers performance monitoring, such as [Calibre](https://calibreapp.com/) or [Speedcurve](https://speedcurve.com/)
 
-- Integrate Webpagetest or Lighthouse reports into your CI/CD process, via eg webhooks or Github Actions.
+- Integrate Webpagetest or Lighthouse reports into your CI/CD process, via eg webhooks or GitHub Actions.
 
 For additional precision, run a test multiple times and take the median result.
 

@@ -8,8 +8,8 @@ const requestConcurrency = 1
 
 const mediaItemTypeSettings = {
   localFile: {
-    excludeByMimeTypes: ['video/mp4'],
-    /** 
+    excludeByMimeTypes: ["video/mp4"],
+    /**
      * This is set to one byte smaller than the largest image in the Gatsby site so that we will have exactly one image that isn't fetched
      * during the site build
      */
@@ -40,8 +40,13 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
         },
         Page: {
           excludeFieldNames: [`enclosure`],
+          beforeChangeNode: `./src/before-change-page.js`,
         },
         DatabaseIdentifier: {
+          exclude: true,
+        },
+        BlockEditorPreview: {
+          // we need to exclude this type because nodes of this type (which are added by wp-graphql-gutenberg) seem to be somewhat unpredictably created in WP and mess up our tests that are counting total nodes of the WpContentNode type (which is an interface that includes all content nodes including WpBlockEditorPreview).
           exclude: true,
         },
         User: {
@@ -62,6 +67,13 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
                 50
               : // and we don't actually need more than 1000 in production
                 1000,
+
+          beforeChangeNode: ({ remoteNode }) => {
+            console.log(`Hi from an inline fn!`)
+            remoteNode.beforeChangeNodeTest = `TEST-${remoteNode.id}`
+
+            return remoteNode
+          },
         },
         // excluding this because it causes Gatsby to throw errors
         BlockEditorContentNode: { exclude: true },
@@ -98,6 +110,12 @@ module.exports = {
         },
         develop: {
           hardCacheMediaFiles: true,
+        },
+        auth: {
+          htaccess: {
+            username: process.env.HTACCESS_USERNAME,
+            password: process.env.HTACCESS_PASSWORD,
+          },
         },
         ...wpPluginOptions,
       },

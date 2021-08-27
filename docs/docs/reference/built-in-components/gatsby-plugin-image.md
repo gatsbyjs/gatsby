@@ -260,7 +260,7 @@ These values are passed in as an object to `transformOptions`, either as a prop 
 
 ## All options
 
-The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.org) for image processing, and supports passing through many advanced options, such as those affecting cropping behavior or image effects including grayscale or duotone, as well as options specific to each format.
+The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.com) for image processing, and supports passing through many advanced options, such as those affecting cropping behavior or image effects including grayscale or duotone, as well as options specific to each format.
 
 | Option                                  | Default                                                              | Description                                                                                                                                                                                                                                                                                                                                                                                                   |
 | --------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

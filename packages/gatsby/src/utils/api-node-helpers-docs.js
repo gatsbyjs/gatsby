@@ -99,6 +99,15 @@ const GatsbyCache = {
    * await cache.set(`unique-key`, value)
    */
   set: true,
+
+  /**
+   * Deletes cached value
+   * @param {string} key Cache key
+   * @returns {Promise<void>} Promise resolving once key is deleted from cache
+   * @example
+   * await cache.del(`unique-key`)
+   */
+  del: true,
 };
 
 /***/

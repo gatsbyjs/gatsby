@@ -3,12 +3,14 @@ import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import fastq from "fastq"
 import path from "path"
-import { createContentDigest } from "gatsby-core-utils"
+import { createContentDigest, generatePageDataPath } from "gatsby-core-utils"
 import { IGatsbyPage } from "../redux/types"
 import { websocketManager } from "./websocket-manager"
 import { isWebpackStatusPending } from "./webpack-status"
 import { store } from "../redux"
 import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
+import { isLmdbStore } from "../datastore"
+import type GatsbyCacheLmdb from "./cache-lmdb"
 
 import { IExecutionResult } from "../query/types"
 
@@ -23,28 +25,15 @@ export interface IPageDataWithQueryResult extends IPageData {
   result: IExecutionResult
 }
 
-export function fixedPagePath(pagePath: string): string {
-  return pagePath === `/` ? `index` : pagePath
-}
-
 export function reverseFixedPagePath(pageDataRequestPath: string): string {
   return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
-}
-
-function getFilePath(publicDir: string, pagePath: string): string {
-  return path.join(
-    publicDir,
-    `page-data`,
-    fixedPagePath(pagePath),
-    `page-data.json`
-  )
 }
 
 export async function readPageData(
   publicDir: string,
   pagePath: string
 ): Promise<IPageDataWithQueryResult> {
-  const filePath = getFilePath(publicDir, pagePath)
+  const filePath = generatePageDataPath(publicDir, pagePath)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
 
   return JSON.parse(rawPageData)
@@ -54,7 +43,7 @@ export async function removePageData(
   publicDir: string,
   pagePath: string
 ): Promise<void> {
-  const filePath = getFilePath(publicDir, pagePath)
+  const filePath = generatePageDataPath(publicDir, pagePath)
 
   if (fs.existsSync(filePath)) {
     return await fs.remove(filePath)
@@ -64,7 +53,68 @@ export async function removePageData(
 }
 
 export function pageDataExists(publicDir: string, pagePath: string): boolean {
-  return fs.existsSync(getFilePath(publicDir, pagePath))
+  return fs.existsSync(generatePageDataPath(publicDir, pagePath))
+}
+
+let lmdbPageQueryResultsCache: GatsbyCacheLmdb
+function getLMDBPageQueryResultsCache(): GatsbyCacheLmdb {
+  if (!lmdbPageQueryResultsCache) {
+    const GatsbyCacheLmdbImpl = require(`./cache-lmdb`).default
+    lmdbPageQueryResultsCache = new GatsbyCacheLmdbImpl({
+      name: `internal-tmp-query-results`,
+      encoding: `string`,
+    }).init()
+  }
+  return lmdbPageQueryResultsCache
+}
+
+let savePageQueryResultsPromise = Promise.resolve()
+
+export function waitUntilPageQueryResultsAreStored(): Promise<void> {
+  return savePageQueryResultsPromise
+}
+
+export async function savePageQueryResult(
+  programDir: string,
+  pagePath: string,
+  stringifiedResult: string
+): Promise<void> {
+  if (isLmdbStore()) {
+    savePageQueryResultsPromise = getLMDBPageQueryResultsCache().set(
+      pagePath,
+      stringifiedResult
+    ) as Promise<void>
+  } else {
+    const pageQueryResultsPath = path.join(
+      programDir,
+      `.cache`,
+      `json`,
+      `${pagePath.replace(/\//g, `_`)}.json`
+    )
+    await fs.outputFile(pageQueryResultsPath, stringifiedResult)
+  }
+}
+
+export async function readPageQueryResult(
+  publicDir: string,
+  pagePath: string
+): Promise<any> {
+  if (isLmdbStore()) {
+    const stringifiedResult = await getLMDBPageQueryResultsCache().get(pagePath)
+    if (typeof stringifiedResult === `string`) {
+      return stringifiedResult
+    }
+    throw new Error(`Couldn't find temp query result for "${pagePath}".`)
+  } else {
+    const pageQueryResultsPath = path.join(
+      publicDir,
+      `..`,
+      `.cache`,
+      `json`,
+      `${pagePath.replace(/\//g, `_`)}.json`
+    )
+    return fs.readFile(pageQueryResultsPath)
+  }
 }
 
 export async function writePageData(
@@ -75,28 +125,25 @@ export async function writePageData(
     path: pagePath,
     staticQueryHashes,
   }: IPageData
-): Promise<IPageDataWithQueryResult> {
-  const inputFilePath = path.join(
-    publicDir,
-    `..`,
-    `.cache`,
-    `json`,
-    `${pagePath.replace(/\//g, `_`)}.json`
-  )
+): Promise<string> {
+  const result = await readPageQueryResult(publicDir, pagePath)
 
-  const outputFilePath = getFilePath(publicDir, pagePath)
-  const result = await fs.readJSON(inputFilePath)
-  const body = {
-    componentChunkName,
-    path: pagePath,
-    matchPath,
-    result,
-    staticQueryHashes,
+  const outputFilePath = generatePageDataPath(publicDir, pagePath)
+  let body = `{
+    "componentChunkName": "${componentChunkName}",
+    "path": "${pagePath}",
+    "result": ${result},
+    "staticQueryHashes": ${JSON.stringify(staticQueryHashes)}`
+
+  if (matchPath) {
+    body += `,
+    "matchPath": "${matchPath}"`
   }
 
-  const bodyStr = JSON.stringify(body)
+  body += `}`
+
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
-  const pageDataSize = Buffer.byteLength(bodyStr) / 1000
+  const pageDataSize = Buffer.byteLength(body) / 1000
 
   store.dispatch({
     type: `ADD_PAGE_DATA_STATS`,
@@ -104,11 +151,11 @@ export async function writePageData(
       pagePath,
       filePath: outputFilePath,
       size: pageDataSize,
-      pageDataHash: createContentDigest(bodyStr),
+      pageDataHash: createContentDigest(body),
     },
   })
 
-  await fs.outputFile(outputFilePath, bodyStr)
+  await fs.outputFile(outputFilePath, body)
   return body
 }
 
@@ -124,6 +171,7 @@ export async function flush(): Promise<void> {
     // We're already in the middle of a flush
     return
   }
+  await waitUntilPageQueryResultsAreStored()
   isFlushPending = false
   isFlushing = true
   const {
@@ -154,8 +202,9 @@ export async function flush(): Promise<void> {
     // This is why we need this check
     if (page) {
       if (
-        program?._?.[0] === `develop` &&
-        process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+        (program?._?.[0] === `develop` &&
+          process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) ||
+        (_CFLAGS_.GATSBY_MAJOR === `4` ? page.mode !== `SSG` : false)
       ) {
         // check if already did run query for this page
         // with query-on-demand we might have pending page-data write due to
@@ -191,7 +240,7 @@ export async function flush(): Promise<void> {
       if (program?._?.[0] === `develop`) {
         websocketManager.emitPageData({
           id: pagePath,
-          result,
+          result: JSON.parse(result) as IPageDataWithQueryResult,
         })
       }
     }
@@ -217,6 +266,7 @@ export async function flush(): Promise<void> {
   }
 
   writePageDataActivity.end()
+
   isFlushing = false
 
   return
@@ -264,7 +314,7 @@ export async function handleStalePageData(): Promise<void> {
 
   const expectedPageDataFiles = new Set<string>()
   store.getState().pages.forEach(page => {
-    expectedPageDataFiles.add(getFilePath(`public`, page.path))
+    expectedPageDataFiles.add(generatePageDataPath(`public`, page.path))
   })
 
   const deletionPromises: Array<Promise<void>> = []

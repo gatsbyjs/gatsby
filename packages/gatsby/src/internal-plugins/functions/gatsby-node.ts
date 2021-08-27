@@ -153,37 +153,35 @@ const createWebpackConfig = async ({
   // Glob and return object with relative/absolute paths + which plugin
   // they belong to.
   const allFunctions = await Promise.all(
-    globs.map(
-      async (glob): Promise<Array<IGatsbyFunction>> => {
-        const knownFunctions: Array<IGatsbyFunction> = []
-        const files = await globAsync(glob.globPattern)
-        files.map(file => {
-          const originalAbsoluteFilePath = file
-          const originalRelativeFilePath = path.relative(glob.rootPath, file)
+    globs.map(async (glob): Promise<Array<IGatsbyFunction>> => {
+      const knownFunctions: Array<IGatsbyFunction> = []
+      const files = await globAsync(glob.globPattern)
+      files.map(file => {
+        const originalAbsoluteFilePath = file
+        const originalRelativeFilePath = path.relative(glob.rootPath, file)
 
-          const { dir, name } = path.parse(originalRelativeFilePath)
-          // Ignore the original extension as all compiled functions now end with js.
-          const compiledFunctionName = path.join(dir, name + `.js`)
-          const compiledPath = path.join(
-            compiledFunctionsDir,
-            compiledFunctionName
-          )
-          const finalName = urlResolve(dir, name === `index` ? `` : name)
+        const { dir, name } = path.parse(originalRelativeFilePath)
+        // Ignore the original extension as all compiled functions now end with js.
+        const compiledFunctionName = path.join(dir, name + `.js`)
+        const compiledPath = path.join(
+          compiledFunctionsDir,
+          compiledFunctionName
+        )
+        const finalName = urlResolve(dir, name === `index` ? `` : name)
 
-          knownFunctions.push({
-            functionRoute: finalName,
-            pluginName: glob.pluginName,
-            originalAbsoluteFilePath,
-            originalRelativeFilePath,
-            relativeCompiledFilePath: compiledFunctionName,
-            absoluteCompiledFilePath: compiledPath,
-            matchPath: getMatchPath(finalName),
-          })
+        knownFunctions.push({
+          functionRoute: finalName,
+          pluginName: glob.pluginName,
+          originalAbsoluteFilePath,
+          originalRelativeFilePath,
+          relativeCompiledFilePath: compiledFunctionName,
+          absoluteCompiledFilePath: compiledPath,
+          matchPath: getMatchPath(finalName),
         })
+      })
 
-        return knownFunctions
-      }
-    )
+      return knownFunctions
+    })
   )
 
   // Combine functions by the route name so that functions in the default
@@ -247,9 +245,16 @@ const createWebpackConfig = async ({
   )
 
   const entries = {}
-  const functionsList = isProductionEnv
+
+  const precompileDevFunctions =
+    isProductionEnv ||
+    process.env.GATSBY_PRECOMPILE_DEVELOP_FUNCTIONS === `true` ||
+    process.env.GATSBY_PRECOMPILE_DEVELOP_FUNCTIONS === `1`
+
+  const functionsList = precompileDevFunctions
     ? knownFunctions
     : activeDevelopmentFunctions
+
   functionsList.forEach(functionObj => {
     // Get path without the extension (as it could be ts or js)
     const parsedFile = path.parse(functionObj.originalRelativeFilePath)
@@ -476,9 +481,8 @@ export async function onCreateDevServer({
     async (req, res, next) => {
       const { "0": pathFragment } = req.params
 
-      const {
-        functions,
-      }: { functions: Array<IGatsbyFunction> } = store.getState()
+      const { functions }: { functions: Array<IGatsbyFunction> } =
+        store.getState()
 
       // Check first for exact matches.
       let functionObj = functions.find(

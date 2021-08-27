@@ -1,11 +1,42 @@
 # gatsby-source-contentful
 
-Source plugin for pulling content types, entries, and assets into Gatsby from
-Contentful spaces. It creates links between entry types and asset so they can be
-queried in Gatsby using GraphQL.
+> Source plugin for pulling content types, entries, and assets into Gatsby from
+> Contentful spaces. It creates links between entry types and asset so they can be
+> queried in Gatsby using GraphQL.
+>
+> An example site for using this plugin is at https://using-contentful.gatsbyjs.org/
 
-An example site for using this plugin is at
-https://using-contentful.gatsbyjs.org/
+<details>
+<summary><strong>Table of contents</strong></summary>
+
+- [gatsby-source-contentful](#gatsby-source-contentful)
+  - [Install](#install)
+  - [How to use](#how-to-use)
+  - [Restrictions and limitations](#restrictions-and-limitations)
+    - [Using Delivery API](#using-delivery-api)
+    - [Using Preview API](#using-preview-api)
+    - [Offline](#offline)
+    - [Configuration options](#configuration-options)
+  - [How to query for nodes](#how-to-query-for-nodes)
+    - [Query for all nodes](#query-for-all-nodes)
+    - [Query for a single node](#query-for-a-single-node)
+      - [A note about LongText fields](#a-note-about-longtext-fields)
+      - [Duplicated entries](#duplicated-entries)
+    - [Query for Assets in ContentType nodes](#query-for-assets-in-contenttype-nodes)
+    - [More on Queries with Contentful and Gatsby](#more-on-queries-with-contentful-and-gatsby)
+  - [Using the new Gatsby image plugin](#using-the-new-gatsby-image-plugin)
+  - [Contentful Tags](#contentful-tags)
+    - [List available tags](#list-available-tags)
+    - [Filter content by tags](#filter-content-by-tags)
+  - [Contentful Rich Text](#contentful-rich-text)
+    - [Query Rich Text content and references](#query-rich-text-content-and-references)
+    - [Rendering](#rendering)
+  - [Download assets for static distribution](#download-assets-for-static-distribution)
+    - [Enable the feature with the `downloadLocal: true` option.](#enable-the-feature-with-the-downloadlocal-true-option)
+    - [Updating Queries for downloadLocal](#updating-queries-for-downloadlocal)
+  - [Sourcing From Multiple Contentful Spaces](#sourcing-from-multiple-contentful-spaces)
+
+</details>
 
 ## Install
 
@@ -135,6 +166,12 @@ Number of workers to use when downloading Contentful assets. Due to technical li
 Additional config which will get passed to [Contentfuls JS SDK](https://github.com/contentful/contentful.js#configuration).
 
 Use this with caution, you might override values this plugin does set for you to connect to Contentful.
+
+**`enableTags`** [boolean][optional] [default: `false`]
+
+Enable the new [tags feature](https://www.contentful.com/blog/2021/04/08/governance-tagging-metadata/). This will disallow the content type name `tags` till the next major version of this plugin.
+
+Learn how to use them at the [Contentful Tags](#contentful-tags) section.
 
 ## How to query for nodes
 
@@ -298,6 +335,11 @@ To get **all** the `CaseStudy` nodes with `ShortText` fields `id`, `slug`, `titl
 
 When querying images you can use the `fixed`, `fluid` or `resize` nodes to get different sizes for the image (for example for using [`gatsby-image`](https://www.gatsbyjs.org/packages/gatsby-image/)). Their usage is documented at the [`gatsby-plugin-sharp`](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/) package. The only difference is that `gatsby-source-contentful` also allows setting only the `width` parameter for these node types, the height will then automatically be calculated according to the aspect ratio.
 
+### More on Queries with Contentful and Gatsby
+
+It is strongly recommended that you take a look at how data flows in a real Contentful and Gatsby application to fully understand how the queries, Node.js functions and React components all come together. Check out the example site at
+[using-contentful.gatsbyjs.org](https://using-contentful.gatsbyjs.org/).
+
 ## Using the new Gatsby image plugin
 
 You can now use the beta [gatsby-plugin-image](https://gatsbyjs.com/plugins/gatsby-plugin-image/) to display high-performance, responsive images from Contentful. This plugin is the replacement for gatsby-image, and is currently in beta, but can help deliver improved performance, with a cleaner API. Support in gatsby-source-contentful is still experimental.
@@ -336,10 +378,46 @@ module.exports = {
 }
 ```
 
-## More on Queries with Contentful and Gatsby
+## [Contentful Tags](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/content-tags)
 
-It is strongly recommended that you take a look at how data flows in a real Contentful and Gatsby application to fully understand how the queries, Node.js functions and React components all come together. Check out the example site at
-[using-contentful.gatsbyjs.org](https://using-contentful.gatsbyjs.org/).
+You need to set the `enableTags` flag to `true` to use this new feature.
+
+### List available tags
+
+This example lists all available tags. The sorting is optional.
+
+```graphql
+query TagsQuery {
+  allContentfulTag(sort: { fields: contentful_id }) {
+    nodes {
+      name
+      contentful_id
+    }
+  }
+}
+```
+
+### Filter content by tags
+
+This filters content entries that are tagged with the `numberInteger` tag.
+
+```graphql
+query FilterByTagsQuery {
+  allContentfulNumber(
+    sort: { fields: contentful_id }
+    filter: {
+      metadata: {
+        tags: { elemMatch: { contentful_id: { eq: "numberInteger" } } }
+      }
+    }
+  ) {
+    nodes {
+      title
+      integer
+    }
+  }
+}
+```
 
 ## [Contentful Rich Text](https://www.contentful.com/developers/docs/concepts/rich-text/)
 
@@ -411,6 +489,54 @@ function BlogPostTemplate({ data }) {
 
   return <div>{bodyRichText && renderRichText(richTextField, options)}</div>
 }
+```
+
+### Embedding an image in a Rich Text field
+
+**Import**
+
+```js
+import { renderRichText } from "gatsby-source-contentful/rich-text"
+```
+
+**GraphQL**
+
+```graphql
+mainContent {
+  raw
+  references {
+    ... on ContentfulAsset {
+      contentful_id
+      __typename
+      gatsbyImageData
+    }
+  }
+}
+```
+
+**Options**
+
+```jsx
+const options = {
+  renderNode: {
+    "embedded-asset-block": node => {
+      const { gatsbyImageData } = node.data.target
+      if (!gatsbyImageData) {
+        // asset is not an image
+        return null
+      }
+      return <GatsbyImage image={image} />
+    },
+  },
+}
+```
+
+**Render**
+
+```jsx
+<article>
+  {blogPost.mainContent && renderRichText(blogPost.mainContent, options)}
+</article>
 ```
 
 Check out the examples at [@contentful/rich-text-react-renderer](https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer).

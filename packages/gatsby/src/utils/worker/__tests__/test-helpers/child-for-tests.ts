@@ -7,6 +7,8 @@ import {
   IGatsbyPageComponent,
   IGatsbyState,
   IGatsbyStaticQueryComponents,
+  IGatsbyIncompleteJobV2,
+  IGatsbyCompleteJobV2,
 } from "../../../../redux/types"
 import { ITypeMetadata } from "../../../../schema/infer/inference-metadata"
 import reporter from "gatsby-cli/lib/reporter"
@@ -43,9 +45,52 @@ export function getInferenceMetadata(typeName: string): ITypeMetadata {
 }
 
 // test: reporter
-export function log(message: string): boolean {
-  reporter.log(message)
+export function log(
+  message: string,
+  method: "log" | "warn" | "info" | "success" | "verbose" | "error" = `log`
+): boolean {
+  if (method === `verbose`) {
+    reporter.setVerbose(true)
+  }
+  reporter[method](message)
   return true
+}
+export async function activityTimer(message: string): Promise<void> {
+  const activity = reporter.activityTimer(message)
+  activity.start()
+
+  await new Promise(resolve => setTimeout(resolve, 50))
+
+  activity.setStatus(`test`)
+
+  await new Promise(resolve => setTimeout(resolve, 50))
+
+  activity.end()
+}
+
+export async function progress(message: string): Promise<void> {
+  const activity = reporter.createProgress(message, 50)
+  activity.start()
+
+  await new Promise(resolve => setTimeout(resolve, 50))
+
+  activity.tick(25)
+
+  await new Promise(resolve => setTimeout(resolve, 50))
+
+  activity.total = 100
+
+  await new Promise(resolve => setTimeout(resolve, 50))
+
+  activity.tick(75)
+
+  await new Promise(resolve => setTimeout(resolve, 50))
+
+  activity.setStatus(`test`)
+
+  await new Promise(resolve => setTimeout(resolve, 50))
+
+  activity.end()
 }
 
 // test: config
@@ -86,4 +131,36 @@ export async function getRunQueryResult(
   const state = store.getState()
 
   return await runQuery(state.schema, state.schemaCustomization.composer, query)
+}
+
+// test: jobs
+;(global as any).jobs = {
+  executedInThisProcess: [],
+  createdInThisProcess: [],
+}
+
+interface ITestJobArgs {
+  description: string
+}
+
+export function getJobsMeta(): {
+  executedInThisProcess: Array<ITestJobArgs>
+  createdInThisProcess: Array<ITestJobArgs>
+  dotThenWasCalledWith: null | Record<string, unknown>
+  dotCatchWasCalledWith: null | string
+  awaitReturnedWith: null | Record<string, unknown>
+  awaitThrewWith: null | string
+} {
+  return (global as any).jobs
+}
+
+export function getReduxJobs(): {
+  complete: Array<IGatsbyCompleteJobV2>
+  incomplete: Array<IGatsbyIncompleteJobV2>
+} {
+  const { complete, incomplete } = store.getState().jobsV2
+  return {
+    complete: Array.from(complete.values()),
+    incomplete: Array.from(incomplete.values()),
+  }
 }

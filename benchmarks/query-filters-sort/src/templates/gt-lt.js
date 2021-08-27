@@ -9,9 +9,14 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-  query($pageNum: Int, $pagesTotal: Int, $sort: TestSortInput) {
+  query(
+    $pageNum: Int
+    $pageNumPlus1000: Int
+    $sort: TestSortInput
+    $count: Boolean!
+  ) {
     allTest(
-      filter: { nodeNum: { gt: $pageNum, lt: $pagesTotal } }
+      filter: { randomPage: { gt: $pageNum, lt: $pageNumPlus1000 } }
       sort: $sort
       limit: 100
     ) {
@@ -19,6 +24,7 @@ export const query = graphql`
         nodeNum
         text
       }
+      totalCount @include(if: $count)
     }
   }
 `

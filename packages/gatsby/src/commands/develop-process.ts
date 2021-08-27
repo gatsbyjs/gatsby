@@ -92,17 +92,14 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   // We want to prompt the feedback request when users quit develop
   // assuming they pass the heuristic check to know they are a user
   // we want to request feedback from, and we're not annoying them.
-  process.on(
-    `SIGINT`,
-    async (): Promise<void> => {
-      if (await userGetsSevenDayFeedback()) {
-        showSevenDayFeedbackRequest()
-      } else if (await userPassesFeedbackRequestHeuristic()) {
-        showFeedbackRequest()
-      }
-      process.exit(0)
+  process.on(`SIGINT`, async (): Promise<void> => {
+    if (await userGetsSevenDayFeedback()) {
+      showSevenDayFeedbackRequest()
+    } else if (await userPassesFeedbackRequestHeuristic()) {
+      showFeedbackRequest()
     }
-  )
+    process.exit(0)
+  })
 
   initTracer(program.openTracingConfigFile)
   markWebpackStatusAsPending()

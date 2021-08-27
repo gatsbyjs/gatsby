@@ -44,15 +44,19 @@ export async function loadConfigAndPlugins({
     // Setup flags
     if (config) {
       // Get flags
-      const { enabledConfigFlags, unknownFlagMessage, message } = handleFlags(
-        availableFlags,
-        config.flags
-      )
+      const {
+        enabledConfigFlags,
+        unknownFlagMessage,
+        unfitFlagMessage,
+        message,
+      } = handleFlags(availableFlags, config.flags)
 
       if (unknownFlagMessage !== ``) {
         reporter.warn(unknownFlagMessage)
       }
-
+      if (unfitFlagMessage !== ``) {
+        reporter.warn(unfitFlagMessage)
+      }
       //  set process.env for each flag
       enabledConfigFlags.forEach(flag => {
         process.env[flag.env] = `true`
