@@ -4,6 +4,7 @@ import { createLocalFileNode } from "~/steps/source-nodes/create-nodes/create-lo
 import { menuBeforeChangeNode } from "~/steps/source-nodes/before-change-node/menu"
 import { cloneDeep } from "lodash"
 import { inPreviewMode } from "~/steps/preview"
+import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 
 export interface IPluginOptionsPreset {
   presetName: string
@@ -22,23 +23,32 @@ export const previewOptimizationPreset: IPluginOptionsPreset = {
       useGatsbyImage: false,
       createStaticFiles: false,
     },
-    type: {
-      __all: {
-        limit: 50,
-      },
-      Comment: {
-        limit: 0,
-      },
-      Menu: {
-        limit: null,
-      },
-      MenuItem: {
-        limit: null,
-      },
-      User: {
-        limit: null,
-      },
-    },
+
+    type:
+      // in Gatsby v4+ we can't fetch nodes in resolvers.
+      // This means if we apply the following settings in v4+
+      // the site will have a lot of missing data when connection
+      // fields reference node's which werent fetched due to the limit option.
+      // so only apply the following settings before Gatsby v4
+      !usingGatsbyV4OrGreater
+        ? {
+            __all: {
+              limit: 50,
+            },
+            Comment: {
+              limit: 0,
+            },
+            Menu: {
+              limit: null,
+            },
+            MenuItem: {
+              limit: null,
+            },
+            User: {
+              limit: null,
+            },
+          }
+        : {},
   },
 }
 export interface IPluginOptions {
