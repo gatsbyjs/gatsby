@@ -12,7 +12,7 @@ A [headless CMS](https://gatsbyjs.com/docs/glossary/what-is-a-headless-cms) is a
 
 A _headless WordPress_ site is one that uses [WordPress](https://gatsbyjs.com/solutions/wordpress) for managing content and some other custom frontend stack to actually display that content to a site visitor. While a site built with headless WordPress has many benefits, one of the primary advantages of this approach is decoupling content editing teams and developers. 
 
-*With Headless WordPress, a marketing team and content team can continue to use their familiar WordPress interface and the development team can use the tools they love like React, GraphQL, in a Git workflow they are comfortable with. * 
+*With Headless WordPress, a marketing team and content team can continue to use their familiar WordPress interface and the development team can use the tools they love like React, GraphQL, in a Git workflow they are comfortable with.* 
 
 ## The Drawbacks of a Monolithic WordPress
 
