@@ -13,6 +13,7 @@ import fs from "fs-extra"
 import { supportedExtensions } from "gatsby-transformer-sharp/supported-extensions"
 import replaceAll from "replaceall"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
+import { fetchReferencedNodesOnNodes } from "../fetch-nodes/fetch-referenced-nodes"
 
 import { formatLogMessage } from "~/utils/format-log-message"
 
@@ -42,11 +43,27 @@ const findReferencedImageNodeIds = ({ nodeString, pluginOptions, node }) => {
   }
 
   // get an array of all referenced media file ID's
+  const matchedIds = findReferencedNodeIdsByTypeName({
+    typeName: `MediaItem`,
+    nodeString,
+    node,
+  })
+
+  return matchedIds
+}
+
+export const findReferencedNodeIdsByTypeName = ({
+  typeName,
+  nodeString,
+  node,
+}) => {
+  // get an array of all referenced node ID's
   const matchedIds = execall(
-    /"__typename":"MediaItem","id":"([^"]*)"/gm,
+    new RegExp(`"__typename":"${typeName}","id":"([^"]*)"`, `gm`),
     nodeString
   )
     .map(match => match.subMatches[0])
+    // except for the node we're finding references on
     .filter(id => id !== node.id)
 
   return matchedIds
@@ -958,6 +975,8 @@ const processNode = async ({
     node,
   })
 
+  fetchReferencedNodesOnNodes()
+
   // push them to our store of referenced id's
   if (nodeMediaItemIdReferences?.length && referencedMediaItemNodeIds) {
     nodeMediaItemIdReferences.forEach(id => referencedMediaItemNodeIds.add(id))
@@ -978,6 +997,7 @@ const processNode = async ({
   return {
     processedNode,
     nodeMediaItemIdReferences,
+    referencedNodeIdsByType,
   }
 }
 

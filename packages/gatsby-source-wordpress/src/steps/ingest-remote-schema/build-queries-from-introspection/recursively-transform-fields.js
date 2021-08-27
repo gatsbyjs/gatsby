@@ -71,7 +71,7 @@ export const transformInlineFragments = ({
 
       if (isAGatsbyNode && !buildGatsbyNodeFields) {
         // we use the id to link to the top level Gatsby node
-        possibleType.fields = [`id`]
+        possibleType.fields = [`__typename`, `id`]
         return possibleType
       }
 
@@ -249,7 +249,7 @@ export function transformField({
   ) {
     return {
       fieldName: fieldName,
-      fields: [`id`],
+      fields: [`__typename`, `id`],
       fieldType,
     }
   } else if (fieldType.kind === `LIST` && isListOfMediaItems && hasIdField) {
@@ -320,17 +320,9 @@ export function transformField({
       fieldType,
     }
   } else if (isAGatsbyNode && hasIdField) {
-    const isAnInterfaceType =
-      // if this is an interface
-      typeKind === `INTERFACE` || fieldType.kind === `INTERFACE`
-
     return {
       fieldName: fieldName,
-      fields: isAnInterfaceType
-        ? // we need the typename for interfaces
-          [`id`, `__typename`]
-        : // or just the id for 1:1 connections to gatsby nodes
-          [`id`],
+      fields: [`__typename`, `id`],
       fieldType,
     }
   }
