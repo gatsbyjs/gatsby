@@ -12,7 +12,7 @@
   "author": "Alex Moon <alex.jared.moon@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^10.0.0",
     "gatsby-plugin-manifest": "^2.2.38"
   },
   "devDependencies": {

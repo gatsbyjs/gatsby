@@ -18,7 +18,7 @@
   "devDependencies": {
     "babel-plugin-dynamic-import-node-sync": "^2.0.1",
     "cpy": "^8.1.2",
-    "fs-extra": "^9.0.1",
+    "fs-extra": "^10.0.0",
     "jest": "^24.0.0",
     "joi": "^17.4.0",
     "lodash": "^4.17.20",

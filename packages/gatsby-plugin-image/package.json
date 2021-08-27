@@ -80,7 +80,7 @@
     "camelcase": "^5.3.1",
     "chokidar": "^3.5.1",
     "common-tags": "^1.8.0",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^10.0.0",
     "gatsby-core-utils": "^2.13.0-next.2",
     "objectFitPolyfill": "^2.3.0",
     "prop-types": "^15.7.2"
