@@ -157,7 +157,7 @@ describe(`redux db`, () => {
 
     store.getState().nodes = getFakeNodes()
 
-    await saveState()
+    saveState()
 
     expect(writeToCache).toBeCalled()
 
@@ -190,7 +190,7 @@ describe(`redux db`, () => {
 
       store.getState().nodes = getFakeNodes()
 
-      await saveState()
+      saveState()
 
       expect(writeToCache).not.toBeCalled()
     })
@@ -358,7 +358,7 @@ describe(`redux db`, () => {
         })
         v8Deserialize.mockImplementation(obj => JSON.parse(obj.toString()))
 
-        await saveState()
+        saveState()
 
         if (expectedPageContextSizeWarning) {
           expect(reporterWarn).toBeCalledWith(

@@ -1,17 +1,16 @@
-const _ = require(`lodash`)
-const report = require(`gatsby-cli/lib/reporter`)
-const { captureEvent } = require(`gatsby-telemetry`)
-const redux = require(`./`)
+import report from "gatsby-cli/lib/reporter"
+import { captureEvent } from "gatsby-telemetry"
+import { saveState as reduxSaveState } from "./"
 
 let saveInProgress = false
-async function saveState() {
+export function saveState() {
   if (saveInProgress) return
   saveInProgress = true
 
   const startTime = Date.now()
 
   try {
-    await redux.saveState()
+    reduxSaveState()
   } catch (err) {
     report.warn(`Error persisting state: ${(err && err.message) || err}`)
   }
@@ -27,8 +26,4 @@ async function saveState() {
   }
 
   saveInProgress = false
-}
-
-module.exports = {
-  saveState,
 }

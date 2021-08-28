@@ -132,7 +132,7 @@ export const clearWebhookBody = assign<IBuildContext, AnyEventObject>({
 export const finishParentSpan = ({ parentSpan }: IBuildContext): void =>
   parentSpan?.finish()
 
-export const saveDbState = (): Promise<void> => saveState()
+export const saveDbState = (): void => saveState()
 
 export const logError: ActionFunction<IBuildContext, AnyEventObject> = (
   _context,

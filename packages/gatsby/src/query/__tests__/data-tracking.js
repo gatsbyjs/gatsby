@@ -251,7 +251,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   await queryUtil.processPageQueries(pageQueryIds, { activity })
   activity.end()
 
-  await saveState()
+  saveState()
 
   const idsOfQueriesThatRan = queryRunner.mock.calls.map(call => call[1].id)
 
