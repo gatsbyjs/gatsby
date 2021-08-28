@@ -3,7 +3,7 @@ import { captureEvent } from "gatsby-telemetry"
 import { saveState as reduxSaveState } from "./"
 
 let saveInProgress = false
-export function saveState() {
+export function saveState(): void {
   if (saveInProgress) return
   saveInProgress = true
 
