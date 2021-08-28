@@ -113,6 +113,7 @@ export function htmlReducer(
           staticQueryResult.staticQueryResultHash !== action.payload.resultHash
         ) {
           staticQueryResult.dirty |= FLAG_DIRTY_STATIC_QUERY_RESULT_CHANGED
+          staticQueryResult.staticQueryResultHash = action.payload.resultHash
         }
       }
 
