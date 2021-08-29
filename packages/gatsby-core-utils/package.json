@@ -29,6 +29,7 @@
     "dist/"
   ],
   "dependencies": {
+    "@babel/runtime": "^7.14.8",
     "ci-info": "2.0.0",
     "configstore": "^5.0.1",
     "file-type": "^16.5.3",

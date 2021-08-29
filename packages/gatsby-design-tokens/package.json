@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-design-tokens#readme",
   "dependencies": {
+    "@babel/runtime": "^7.14.8",
     "hex2rgba": "^0.0.1"
   },
   "devDependencies": {
