@@ -28,5 +28,8 @@
   },
   "engines": {
     "node": ">=12.13.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.14.8"
   }
 }

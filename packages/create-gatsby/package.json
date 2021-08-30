@@ -42,5 +42,8 @@
     "url": "https://github.com/gatsbyjs/gatsby.git",
     "directory": "packages/create-gatsby"
   },
-  "author": "Matt Kane <matt@gatsbyjs.com>"
+  "author": "Matt Kane <matt@gatsbyjs.com>",
+  "dependencies": {
+    "@babel/runtime": "^7.14.8"
+  }
 }

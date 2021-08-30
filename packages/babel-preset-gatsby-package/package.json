@@ -17,6 +17,7 @@
     "@babel/preset-env": "^7.14.9",
     "@babel/preset-flow": "^7.14.0",
     "@babel/preset-react": "^7.14.0",
+    "@babel/runtime": "^7.14.8",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "core-js": "^3.10.0"
   },
