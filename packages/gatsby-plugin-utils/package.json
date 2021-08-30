@@ -22,7 +22,7 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-utils#readme",
   "dependencies": {
     "@babel/runtime": "^7.14.8",
-    "joi": "^17.2.1"
+    "joi": "^17.4.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.8",
