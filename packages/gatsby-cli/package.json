@@ -23,7 +23,7 @@
     "envinfo": "^7.7.3",
     "execa": "^5.1.1",
     "fs-exists-cached": "^1.0.0",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^10.0.0",
     "gatsby-core-utils": "^2.14.0-next.0",
     "gatsby-recipes": "^0.25.0-next.0",
     "gatsby-telemetry": "^2.14.0-next.0",

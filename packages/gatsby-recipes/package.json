@@ -30,7 +30,7 @@
     "execa": "^5.1.1",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^10.0.0",
     "gatsby-core-utils": "^2.14.0-next.0",
     "gatsby-telemetry": "^2.14.0-next.0",
     "glob": "^7.1.6",

@@ -37,7 +37,7 @@
     "cpy-cli": "^3.1.1",
     "cross-env": "^7.0.3",
     "execa": "^5.1.1",
-    "fs-extra": "^9.1.0",
+    "fs-extra": "^10.0.0",
     "microbundle": "^0.13.3",
     "npm-run-all": "^4.1.5",
     "object-assign": "^4.1.1",
