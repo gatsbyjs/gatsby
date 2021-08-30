@@ -22,7 +22,28 @@ const agent = {
   // http2: new http2wrapper.Agent(),
 }
 
+let start
+let apiRequestCount = 0
+let initialSourcing = true
+let globalReporter
 async function worker([url, options]) {
+  // Log out progress during the initial sourcing.
+  if (initialSourcing) {
+    apiRequestCount += 1
+    if (!start) {
+      start = Date.now()
+    }
+    const queueLength = requestQueue.length()
+    if (apiRequestCount % 50 === 0) {
+      globalReporter.verbose(
+        `gatsby-source-drupal has ${queueLength} API requests queued and the current request rate is ${(
+          apiRequestCount /
+          ((Date.now() - start) / 1000)
+        ).toFixed(2)} requests / second`
+      )
+    }
+  }
+
   return got(url, {
     agent,
     cache: false,
@@ -72,6 +93,7 @@ exports.sourceNodes = async (
   },
   pluginOptions
 ) => {
+  globalReporter = reporter
   const {
     baseUrl,
     apiBase = `jsonapi`,
@@ -293,6 +315,7 @@ exports.sourceNodes = async (
   drupalFetchActivity.start()
 
   let allData
+  const typeRequestsQueued = new Set()
   try {
     const res = await requestQueue.push([
       urlJoin(baseUrl, apiBase),
@@ -370,7 +393,39 @@ exports.sourceNodes = async (
           if (d.body.included) {
             dataArray.push(...d.body.included)
           }
-          if (d.body.links && d.body.links.next) {
+
+          // If JSON:API extras is configured to add the resource count, we can queue
+          // all API requests immediately instead of waiting for each request to return
+          // the next URL. This lets us request resources in parallel vs. sequentially
+          // which is much faster.
+          if (d.body.meta?.count) {
+            // If we hadn't added urls yet
+            if (d.body.links.next?.href && !typeRequestsQueued.has(type)) {
+              typeRequestsQueued.add(type)
+
+              // Get count of API requests
+              // We round down as we've already gotten the first page at this point.
+              const pageSize = new URL(d.body.links.next.href).searchParams.get(
+                `page[limit]`
+              )
+              const requestsCount = Math.floor(d.body.meta.count / pageSize)
+
+              reporter.verbose(
+                `queueing ${requestsCount} API requests for type ${type} which has ${d.body.meta.count} entities.`
+              )
+
+              const newUrl = new URL(d.body.links.next.href)
+              await Promise.all(
+                _.range(requestsCount).map(pageOffset => {
+                  // We're starting 1 ahead.
+                  pageOffset += 1
+                  // Construct URL with new pageOffset.
+                  newUrl.searchParams.set(`page[offset]`, pageOffset * pageSize)
+                  return getNext(newUrl.toString())
+                })
+              )
+            }
+          } else if (d.body.links?.next) {
             await getNext(d.body.links.next)
           }
         }
@@ -479,6 +534,9 @@ exports.sourceNodes = async (
     node.internal.contentDigest = createContentDigest(node)
     createNode(node)
   }
+
+  // We're now done with the initial sourcing.
+  initialSourcing = false
 
   return
 }

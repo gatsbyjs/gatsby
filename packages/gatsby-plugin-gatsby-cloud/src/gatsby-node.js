@@ -1,13 +1,18 @@
+import { readJSON } from "fs-extra"
 import WebpackAssetsManifest from "webpack-assets-manifest"
+import {
+  generatePageDataPath,
+  joinPath,
+  generateHtmlPath,
+} from "gatsby-core-utils"
 import { captureEvent } from "gatsby-telemetry"
 import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
 import copyFunctionsManifest from "./copy-functions-manifest"
 import createRedirects from "./create-redirects"
 import createSiteConfig from "./create-site-config"
-import { readJSON } from "fs-extra"
-import { joinPath } from "gatsby-core-utils"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
+import { emitRoutes, emitFileNodes } from "./ipc"
 
 const assetsManifest = {}
 
@@ -31,13 +36,26 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
 }
 
 exports.onPostBuild = async (
-  { store, pathPrefix, reporter },
+  { store, pathPrefix, getNodesByType },
   userPluginOptions
 ) => {
   const pluginData = makePluginData(store, assetsManifest, pathPrefix)
+
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
-  const { redirects, pageDataStats, nodes } = store.getState()
+  const { redirects, pageDataStats, nodes, pages } = store.getState()
+
+  /**
+   * Emit via IPC routes for which pages are non SSG
+   */
+  for (const [pathname, page] of pages) {
+    if (page.mode && page.mode !== `SSG`) {
+      emitRoutes({
+        [generateHtmlPath(``, pathname)]: page.mode,
+        [generatePageDataPath(``, pathname)]: page.mode,
+      })
+    }
+  }
 
   let nodesCount
 
@@ -54,12 +72,29 @@ exports.onPostBuild = async (
 
   const pagesCount = pageDataStats && pageDataStats.size
 
-  captureEvent(`GATSBY_CLOUD_METADATA`, {
-    siteMeasurements: {
-      pagesCount,
-      nodesCount,
-    },
-  })
+  try {
+    captureEvent(`GATSBY_CLOUD_METADATA`, {
+      siteMeasurements: {
+        pagesCount,
+        nodesCount,
+      },
+    })
+  } catch (e) {
+    console.error(e)
+  }
+
+  /**
+   * Emit via IPC absolute paths to files that should be stored
+   */
+
+  const fileNodes = getNodesByType(`File`)
+
+  // TODO: This is missing the cacheLocations .cache/caches + .cache/caches-lmdb
+  for (const file of fileNodes) {
+    emitFileNodes({
+      path: file.absolutePath,
+    })
+  }
 
   let rewrites = []
   if (pluginOptions.generateMatchPathRewrites) {
@@ -80,7 +115,7 @@ exports.onPostBuild = async (
   }
 
   await Promise.all([
-    buildHeadersProgram(pluginData, pluginOptions, reporter),
+    buildHeadersProgram(pluginData, pluginOptions),
     createSiteConfig(pluginData, pluginOptions),
     createRedirects(pluginData, redirects, rewrites),
     copyFunctionsManifest(pluginData),
@@ -114,6 +149,9 @@ const pluginOptionsSchema = function ({ Joi }) {
       ),
     generateMatchPathRewrites: Joi.boolean().description(
       `When set to false, turns off automatic creation of redirect rules for client only paths`
+    ),
+    disablePreviewUI: Joi.boolean().description(
+      `When set to true, turns off Gatsby Preview if enabled`
     ),
   })
 }

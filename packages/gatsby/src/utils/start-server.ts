@@ -15,7 +15,6 @@ import {
 } from "graphql"
 import { isCI } from "gatsby-core-utils"
 import http from "http"
-import https from "https"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
@@ -58,7 +57,7 @@ type ActivityTracker = any // TODO: Replace this with proper type once reporter 
 
 interface IServer {
   compiler: webpack.Compiler
-  listener: http.Server | https.Server
+  listener: http.Server
   webpackActivity: ActivityTracker
   cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
   websocketManager: WebsocketManager

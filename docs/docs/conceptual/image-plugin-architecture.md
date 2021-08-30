@@ -30,7 +30,7 @@ The plugin exports a number of other helper functions designed to help end-users
 
 ### `gatsby-plugin-sharp`
 
-This includes the actual image processing functions from both sharp but also imagemin and potrace. It includes the functions that generate the image data object, including calculating which srcset sizes to generate. It exports `generateImageData`, which is used by `gatsby-transformer-sharp` and `gatsby-plugin-image`. It takes a `File` node and the image processing arguments, calculates which images to generate, processes these images and returns an image data object suitable for passing to `GatsbyImage`. It also exports helper functions for third party plugins to use, such as `traceSVG`.
+This includes the actual image processing functions from sharp and potrace. It includes the functions that generate the image data object, including calculating which srcset sizes to generate. It exports `generateImageData`, which is used by `gatsby-transformer-sharp` and `gatsby-plugin-image`. It takes a `File` node and the image processing arguments, calculates which images to generate, processes these images and returns an image data object suitable for passing to `GatsbyImage`. It also exports helper functions for third party plugins to use, such as `traceSVG`.
 
 ### `gatsby-transformer-sharp`
 

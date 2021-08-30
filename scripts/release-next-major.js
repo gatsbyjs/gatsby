@@ -76,8 +76,11 @@ let currentGitHash = null
     )
 
     const bumpType = `major`
-    const tagName = `alpha-v${nextMajor}`
-    const preId = `alpha-v${nextMajor}`
+    // const tagName = `alpha-v${nextMajor}`
+    // const preId = `alpha-v${nextMajor}`
+    // TODO swap back to above.
+    const tagName = `alpha-9689ff`
+    const preId = `alpha-9689ff`
 
     try {
       await Promise.all([

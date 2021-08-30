@@ -162,13 +162,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Enable webpack's persistent caching during development. Speeds up the start of the development server.`,
     umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => {
-      if (sampleSiteForExperiment(`DEV_WEBPACK_CACHE`, 20)) {
-        return `OPT_IN`
-      } else {
-        return true
-      }
-    },
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
   },
   {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
@@ -209,6 +203,10 @@ const activeFlags: Array<IFlag> = [
     umbrellaIssue: `https://gatsby.dev/lmdb-feedback`,
     description: `Store nodes in a persistent embedded database (vs in-memory). Lowers peak memory usage. Requires Node v14.10 or above.`,
     testFitness: (): fitnessEnum => {
+      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+        return `LOCKED_IN`
+      }
+
       const [major, minor] = process.versions.node.split(`.`)
       return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
     },
@@ -224,6 +222,10 @@ const activeFlags: Array<IFlag> = [
     description: `Parallelize running page queries in order to better saturate all available cores. Improves time it takes to run queries during gatsby build. Requires Node v14.10 or above.`,
     includedFlags: [`LMDB_STORE`],
     testFitness: (): fitnessEnum => {
+      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+        return `LOCKED_IN`
+      }
+
       const [major, minor] = process.versions.node.split(`.`)
       return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
     },
