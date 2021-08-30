@@ -100,6 +100,7 @@ const requestRemoteNode = (
     })
 
     let haveAllBytesBeenWritten = false
+    // Fixes a bug in latest got where progress.total gets reset when stream ends, even if it wasn't complete.
     let totalSize: number | null = null
     responseStream.on(`downloadProgress`, progress => {
       if (
