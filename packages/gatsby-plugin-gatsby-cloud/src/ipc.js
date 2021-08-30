@@ -26,7 +26,7 @@ function sendOrPromise(msg) {
       resolve(true)
     }
   })
-  return sent ? true : promise
+  return sent === false ? promise : true
 }
 
 export function emitRoutes(routes) {
