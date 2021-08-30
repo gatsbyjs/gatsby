@@ -3,7 +3,7 @@ title: What Is Headless or Decoupled Drupal?
 disableTableOfContents: true
 ---
 
-_Decoupled Drupal_ is the practice of using Drupal as a [headless CMS](/docs/how-to/sourcing-data/headless-cms/) for your [JAMstack](/docs/glossary/jamstack/) site. Decoupled Drupal separates the content layer from the presentation layer, so that you can use Drupal, as the content management systems, with whatever frontend you choose.
+_Decoupled Drupal_ is the practice of using Drupal as a [headless CMS](/docs/how-to/sourcing-data/headless-cms/) for your [Jamstack](/docs/glossary/jamstack/) site. Decoupled Drupal separates the content layer from the presentation layer, so that you can use Drupal, as the content management systems, with whatever frontend you choose.
 
 In a tightly coupled Drupal architecture, themes control your site's appearance using PHP and bit of Drupal DSL. A theme is a collection of HTML-based template files, each of which manages the layout for a particular Drupal node or content type.
 
