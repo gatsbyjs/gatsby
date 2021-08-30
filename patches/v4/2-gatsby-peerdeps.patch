@@ -133,7 +133,7 @@ index 0b7931da5d..dbaf39f0aa 100644
 --- a/packages/gatsby-plugin-flow/package.json
 +++ b/packages/gatsby-plugin-flow/package.json
 @@ -35,7 +35,7 @@
-     "gatsby-plugin-utils": "^1.13.0-next.0"
+     "gatsby-plugin-utils": "^1.14.0-next.0"
    },
    "peerDependencies": {
 -    "gatsby": "^3.0.0-next.0"
