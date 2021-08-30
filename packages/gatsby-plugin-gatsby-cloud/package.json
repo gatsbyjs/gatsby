@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.14.8",
     "date-fns": "^2.23.0",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^10.0.0",
     "gatsby-core-utils": "^2.14.0-next.0",
     "gatsby-telemetry": "^2.14.0-next.0",
     "kebab-hash": "^0.1.2",

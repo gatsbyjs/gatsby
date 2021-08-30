@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.14.8",
     "bluebird": "^3.7.2",
     "common-tags": "^1.8.0",
-    "fs-extra": "^9.1.0",
+    "fs-extra": "^10.0.0",
     "potrace": "^2.1.8",
     "probe-image-size": "^6.0.0",
     "semver": "^7.3.5",
