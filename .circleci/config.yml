@@ -713,8 +713,7 @@ workflows:
             branches:
               only:
                 - master
-#      - update_changelogs:
-#          filters:
-#            branches:
-#              only:
-#                - /release\/.+/
+      - update_changelogs:
+          filters:
+            branches:
+              only: /^release\/.+/
