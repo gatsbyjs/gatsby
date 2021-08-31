@@ -76,8 +76,11 @@ let currentGitHash = null
     )
 
     const bumpType = `major`
-    const tagName = `alpha-v${nextMajor}`
-    const preId = `alpha-v${nextMajor}`
+    // const tagName = `alpha-v${nextMajor}`
+    // const preId = `alpha-v${nextMajor}`
+    // TODO swap back to above.
+    const tagName = `alpha-9689ff`
+    const preId = `alpha-9689ff`
 
     try {
       await Promise.all([
@@ -150,6 +153,20 @@ let currentGitHash = null
       },
       stdio: [`inherit`, `inherit`, `inherit`],
     })
+
+    try {
+      await promiseSpawn(
+        `git`,
+        [`commit`, `-am`, `Comitting yarn changes`, `--no-verify`],
+        {
+          cwd: path.resolve(__dirname, `../`),
+          stdio: [`inherit`, `inherit`, `inherit`],
+        }
+      )
+      commitCreated = true
+    } catch (err) {
+      // no catch
+    }
 
     console.log(` `)
     console.log(`=== PUBLISHING V${nextMajor} ALPHA ===`)
