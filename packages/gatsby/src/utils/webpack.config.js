@@ -247,7 +247,9 @@ module.exports = async (
           })
         )
 
-        configPlugins.push(plugins.extractStats())
+        if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+          configPlugins.push(plugins.extractStats())
+        }
 
         const isCustomEslint = hasLocalEslint(program.directory)
         // get schema to pass to eslint config and program for directory

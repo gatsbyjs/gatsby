@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import os from "os"
 import semver from "semver"
 import util from "util"

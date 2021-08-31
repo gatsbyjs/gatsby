@@ -1,6 +1,4 @@
-// suggestions in https://github.com/rollup/plugins/issues/731 didn't seem to work for me
-// joi was getting all bundled, but it couldn't resolve "joi" import, but direct location of entry point seems to work
-import Joi from "joi/lib/index"
+import Joi from "joi"
 import { ILocationPosition, IStructuredError } from "./types"
 
 export const Position: Joi.ObjectSchema<ILocationPosition> = Joi.object().keys({
