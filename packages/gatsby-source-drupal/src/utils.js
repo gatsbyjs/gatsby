@@ -110,6 +110,56 @@ const handleReferences = (
 
 exports.handleReferences = handleReferences
 
+const handleDeletedNode = async ({
+  actions,
+  node,
+  getNode,
+  createNodeId,
+  entityReferenceRevisions,
+}) => {
+  const deletedNode = getNode(
+    createNodeId(
+      createNodeIdWithVersion(
+        node.id,
+        node.type,
+        getOptions().languageConfig ? node.attributes.langcode : `und`,
+        node.attributes?.drupal_internal__revision_id,
+        entityReferenceRevisions
+      )
+    )
+  )
+
+  // Remove relationships from other nodes and re-create them.
+  Object.keys(deletedNode.relationships).forEach(key => {
+    let ids = deletedNode.relationships[key]
+    ids = _.isArray(ids) ? ids : [ids]
+    ids.forEach(id => {
+      const node = getNode(id)
+      // Loop over relationships and cleanup references.
+      Object.entries(node.relationships).forEach(([key, value]) => {
+        // If a string ref matches, delete it.
+        if (_.isString(value) && value === deletedNode.id) {
+          delete node.relationships[key]
+        }
+
+        // If it's an array, filter, then check if the array is empty and then delete
+        // if so
+        if (_.isArray(value)) {
+          value = value.filter(v => v !== deletedNode.id)
+
+          if (value.length === 0) {
+            delete node.relationships[key]
+          } else {
+            node.relationships[key] = value
+          }
+        }
+      })
+    })
+  })
+
+  actions.deleteNode(deletedNode)
+}
+
 const handleWebhookUpdate = async (
   {
     nodeToUpdate,
@@ -216,3 +266,4 @@ const handleWebhookUpdate = async (
 }
 
 exports.handleWebhookUpdate = handleWebhookUpdate
+exports.handleDeletedNode = handleDeletedNode
