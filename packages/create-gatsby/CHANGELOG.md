@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.13.0/packages/create-gatsby) (2021-09-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
+
+#### Bug Fixes
+
+- Clarify multi-choice instructions [#32827](https://github.com/gatsbyjs/gatsby/issues/32827) ([23b7b60](https://github.com/gatsbyjs/gatsby/commit/23b7b60e5016fa8e5d606e8309018d2dd1f8257b))
+
+#### Chores
+
+- re-generate changelogs [#32886](https://github.com/gatsbyjs/gatsby/issues/32886) ([417df15](https://github.com/gatsbyjs/gatsby/commit/417df15230be368a9db91f2ad1a9bc0442733177))
+
 ## [1.12.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.12.0/packages/create-gatsby) (2021-08-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)

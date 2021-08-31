@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@3.13.0/packages/gatsby) (2021-09-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
+
+#### Features
+
+- enable webpack caching in development for everyone [#32922](https://github.com/gatsbyjs/gatsby/issues/32922) ([aba5eba](https://github.com/gatsbyjs/gatsby/commit/aba5eba287f22d21fdf32f1fbcf087cc7572d6ac))
+- Move page-data & HTML utils to package [#32861](https://github.com/gatsbyjs/gatsby/issues/32861) ([114e3d3](https://github.com/gatsbyjs/gatsby/commit/114e3d39695bd96b8c477a413f5927317a19b4cb))
+- add node manifest page data digest [#32837](https://github.com/gatsbyjs/gatsby/issues/32837) ([c991ab4](https://github.com/gatsbyjs/gatsby/commit/c991ab44e5aa2f040bf336e15ce9cc02baf3f589))
+- Opt in 20% of users to webpack dev server caching [#32829](https://github.com/gatsbyjs/gatsby/issues/32829) ([51b8420](https://github.com/gatsbyjs/gatsby/commit/51b8420dd45c42aab1e8da490548eabeaeed67a1))
+- Add `defer` to createPage [#32783](https://github.com/gatsbyjs/gatsby/issues/32783) ([58d5a2c](https://github.com/gatsbyjs/gatsby/commit/58d5a2c6955f1263dd5f2b28369a9c177485d36a))
+
+#### Bug Fixes
+
+- don't log FAST_DEV message for each worker [#32961](https://github.com/gatsbyjs/gatsby/issues/32961) [#32967](https://github.com/gatsbyjs/gatsby/issues/32967) [#32961](https://github.com/gatsbyjs/gatsby/issues/32961) ([91dc167](https://github.com/gatsbyjs/gatsby/commit/91dc167783f3fd73e4e84c73aeac891d594abb06))
+- set staticQueryResultHash to new hash on data change [#32949](https://github.com/gatsbyjs/gatsby/issues/32949) [#32966](https://github.com/gatsbyjs/gatsby/issues/32966) ([f936c93](https://github.com/gatsbyjs/gatsby/commit/f936c93d6f10cafd79644318ccb35dbbec526e2d))
+- add this typings to actions [#32210](https://github.com/gatsbyjs/gatsby/issues/32210) ([cf9c066](https://github.com/gatsbyjs/gatsby/commit/cf9c0669d3351dd09409889975f7efb2520e9e0d))
+- update typescript to ^4.29.3 [#32614](https://github.com/gatsbyjs/gatsby/issues/32614) ([41f5337](https://github.com/gatsbyjs/gatsby/commit/41f5337e75e1bb378af9e4c0bb5ce16e44cda175))
+- add react-com as devDep [#32865](https://github.com/gatsbyjs/gatsby/issues/32865) ([d81c9e1](https://github.com/gatsbyjs/gatsby/commit/d81c9e1bf0892be990973d80948f9a0b9a7f4037))
+- Correct server type [#32853](https://github.com/gatsbyjs/gatsby/issues/32853) ([85faee3](https://github.com/gatsbyjs/gatsby/commit/85faee335497e1a7eab58fbd15d4c14531b021b8))
+- Hashes and anchors in redirects also work in production [#32850](https://github.com/gatsbyjs/gatsby/issues/32850) ([0654800](https://github.com/gatsbyjs/gatsby/commit/0654800d550b6dfaa41d9598842887eb15167ec7))
+- Remove `removeDimensions` from svgo config [#32834](https://github.com/gatsbyjs/gatsby/issues/32834) ([09679a1](https://github.com/gatsbyjs/gatsby/commit/09679a1d1a6cd745591304d069b0266a4b8f5bbf))
+
+#### Chores
+
+- enable test parallelism [#32766](https://github.com/gatsbyjs/gatsby/issues/32766) ([53aa88e](https://github.com/gatsbyjs/gatsby/commit/53aa88ed89f08d434f7da1efb057615aa97acf04))
+- enable lmdb by default and update node for next major [#32695](https://github.com/gatsbyjs/gatsby/issues/32695) ([d87c5cb](https://github.com/gatsbyjs/gatsby/commit/d87c5cba4101ee4406615fde9ed1179695f9a7d2))
+- update changelogs [#32924](https://github.com/gatsbyjs/gatsby/issues/32924) ([f556a00](https://github.com/gatsbyjs/gatsby/commit/f556a00a9ccd9e529423a24c8308886809fb5f75))
+- re-generate changelogs [#32886](https://github.com/gatsbyjs/gatsby/issues/32886) ([417df15](https://github.com/gatsbyjs/gatsby/commit/417df15230be368a9db91f2ad1a9bc0442733177))
+- remove unused packages [#32903](https://github.com/gatsbyjs/gatsby/issues/32903) ([7c72ab8](https://github.com/gatsbyjs/gatsby/commit/7c72ab8f96af41626ff823d1dc5da52d15daa918))
+
 ### [3.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@3.12.1/packages/gatsby) (2021-08-27)
 
 #### Bug Fixes

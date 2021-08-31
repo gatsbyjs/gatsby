@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.13.0/packages/gatsby-source-wordpress) (2021-09-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
+
+#### Features
+
+- allow path to js file for beforeChangeNode option [#32901](https://github.com/gatsbyjs/gatsby/issues/32901) ([ac7bd4e](https://github.com/gatsbyjs/gatsby/commit/ac7bd4ec5b0384fadd11420bb1d86fe7fa8e77ae))
+- PQR support [#32779](https://github.com/gatsbyjs/gatsby/issues/32779) ([2500324](https://github.com/gatsbyjs/gatsby/commit/2500324d38df0c6c2ce4f0b0d1c384fe49cddd59))
+
+#### Bug Fixes
+
+- draft previews [#32915](https://github.com/gatsbyjs/gatsby/issues/32915) ([1810874](https://github.com/gatsbyjs/gatsby/commit/181087474fe7ebceb9c577bbe7a6620e4ce68da1))
+- generate plugin options docs [#32856](https://github.com/gatsbyjs/gatsby/issues/32856) ([77fc5b5](https://github.com/gatsbyjs/gatsby/commit/77fc5b5ac24da43cae88ff844723a0b085f5b776))
+
+#### Chores
+
+- update changelogs [#32924](https://github.com/gatsbyjs/gatsby/issues/32924) ([f556a00](https://github.com/gatsbyjs/gatsby/commit/f556a00a9ccd9e529423a24c8308886809fb5f75))
+- re-generate changelogs [#32886](https://github.com/gatsbyjs/gatsby/issues/32886) ([417df15](https://github.com/gatsbyjs/gatsby/commit/417df15230be368a9db91f2ad1a9bc0442733177))
+
+#### Other Changes
+
+- document content sync [#32768](https://github.com/gatsbyjs/gatsby/issues/32768) ([1a87a8a](https://github.com/gatsbyjs/gatsby/commit/1a87a8afa99901d6a694786e105540fe50b39937))
+- make sure remoteUrl exists before using it [#32885](https://github.com/gatsbyjs/gatsby/issues/32885) ([c409352](https://github.com/gatsbyjs/gatsby/commit/c409352d39ca13ee5a543b354b0b5476a06421a3))
+- Fix typo of wether to whether Fix [#32797](https://github.com/gatsbyjs/gatsby/issues/32797) ([924a49a](https://github.com/gatsbyjs/gatsby/commit/924a49ad8ab85ae6a9e31825bdbcca5e9a5c6f6b))
+
 ### [5.12.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.12.1/packages/gatsby-source-wordpress) (2021-08-27)
 
 #### Bug Fixes
