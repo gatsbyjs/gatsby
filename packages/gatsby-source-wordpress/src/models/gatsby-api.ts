@@ -98,6 +98,7 @@ export interface IPluginOptions {
   excludeFieldNames?: []
   html?: {
     useGatsbyImage?: boolean
+    gatsbyImageOptions?: Record<string, unknown>
     imageMaxWidth?: number
     fallbackImageMaxWidth?: number
     imageQuality?: number

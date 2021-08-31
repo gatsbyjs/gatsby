@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 import { isWebUri } from "valid-url"
 import { fluid } from "gatsby-plugin-sharp"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 import React from "react"
 import ReactDOMServer from "react-dom/server"
 import stringify from "fast-json-stable-stringify"
@@ -685,10 +685,19 @@ const replaceNodeHtmlImages = async ({
       }
 
       let ReactGatsbyImage
+      const gatsbyImageOptions = {
+        ...imgOptions,
+        ...pluginOptions?.html?.gatsbyImageOptions,
+      }
 
       if (imageResize) {
         imgOptions.fluid = imageResize
-        ReactGatsbyImage = React.createElement(Img, imgOptions, null)
+        ReactGatsbyImage = React.createElement(
+          GatsbyImage,
+          gatsbyImageOptions,
+          null
+        )
+        console.log(`RGI`, ReactGatsbyImage)
       } else {
         const { fileNode } = matchResize
 
