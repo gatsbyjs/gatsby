@@ -153,14 +153,14 @@ exports.sourceNodes = async (
         }
 
         for (const nodeToDelete of nodesToDelete) {
-          handleDeletedNode({
+          const deletedNode = await handleDeletedNode({
             actions,
             getNode,
             node: nodeToDelete,
             createNodeId,
             entityReferenceRevisions,
           })
-          reporter.log(`Deleted node: ${nodeIdToDelete}`)
+          reporter.log(`Deleted node: ${deletedNode.id}`)
         }
 
         changesActivity.end()

@@ -168,6 +168,8 @@ const handleDeletedNode = async ({
   })
 
   actions.deleteNode(deletedNode)
+
+  return deletedNode
 }
 
 const handleWebhookUpdate = async (
