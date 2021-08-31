@@ -1,3 +1,4 @@
+import { readJSON } from "fs-extra"
 import WebpackAssetsManifest from "webpack-assets-manifest"
 import {
   generatePageDataPath,
@@ -7,10 +8,8 @@ import {
 import { captureEvent } from "gatsby-telemetry"
 import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
-import createSSRRoutes from "./create-ssr-routes"
 import copyFunctionsManifest from "./copy-functions-manifest"
 import createRedirects from "./create-redirects"
-import { readJSON } from "fs-extra"
 import createSiteConfig from "./create-site-config"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
 import { emitRoutes, emitFileNodes } from "./ipc"
@@ -97,17 +96,6 @@ exports.onPostBuild = async (
     })
   }
 
-  const ssrRoutes = []
-
-  for (const [pathname, page] of pages) {
-    if (page.mode === `SSR`) {
-      ssrRoutes.push({
-        fromPath: pathname,
-        toPath: `_ssr${pathname}`,
-      })
-    }
-  }
-
   let rewrites = []
   if (pluginOptions.generateMatchPathRewrites) {
     const matchPathsFile = joinPath(
@@ -131,7 +119,6 @@ exports.onPostBuild = async (
     createSiteConfig(pluginData, pluginOptions),
     createRedirects(pluginData, redirects, rewrites),
     copyFunctionsManifest(pluginData),
-    createSSRRoutes(pluginData, ssrRoutes),
   ])
 }
 
