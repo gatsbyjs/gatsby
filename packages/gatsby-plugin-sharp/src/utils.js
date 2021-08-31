@@ -291,7 +291,7 @@ export const getDominantColor = async absolutePath => {
 
   const pipeline = sharp()
 
-  fs.createReadStream().pipe(pipeline)
+  fs.createReadStream(absolutePath).pipe(pipeline)
 
   const { dominant } = await pipeline.stats()
 
