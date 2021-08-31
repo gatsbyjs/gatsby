@@ -70,4 +70,36 @@ After ramping up the opt-in of this feature to 20% in [v3.12](/docs/reference/re
 
 A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.13.0-next.0...gatsby@3.13.0) to this release 💜
 
-TODO
+- [glennforrest](https://github.com/glennforrest): Fix typo of wether to whether [PR #32797](https://github.com/gatsbyjs/gatsby/pull/32797)
+- [apmsooner](https://github.com/apmsooner): feat(gatsby-source-drupal): Default language when non translatable. [PR #32548](https://github.com/gatsbyjs/gatsby/pull/32548)
+- [jonniebigodes](https://github.com/jonniebigodes): chore(docs): Update Storybook guide with Addon [PR #32793](https://github.com/gatsbyjs/gatsby/pull/32793)
+- [bytrangle](https://github.com/bytrangle)
+
+  - chore(docs): Remark plugin, add tip for gatsby clean [PR #32822](https://github.com/gatsbyjs/gatsby/pull/32822)
+  - chore(docs): Change example for using async in Remark plugin [PR #32874](https://github.com/gatsbyjs/gatsby/pull/32874)
+  - chore(docs): Add hint for MDX plugin in remark-plugin-tutorial [PR #32876](https://github.com/gatsbyjs/gatsby/pull/32876)
+
+- [vanessayuenn](https://github.com/vanessayuenn): chore(docs): Add title for image-plugin-architecture [PR #32803](https://github.com/gatsbyjs/gatsby/pull/32803)
+- [mundry](https://github.com/mundry): chore(docs): Fix typos throughout docs [PR #32807](https://github.com/gatsbyjs/gatsby/pull/32807)
+- [nategiraudeau](https://github.com/nategiraudeau): docs(gatsby-source-contentful) provide a code example for rendering rich-text embedded assets images [PR #32777](https://github.com/gatsbyjs/gatsby/pull/32777)
+- [Zemnmez](https://github.com/Zemnmez): gatsby-plugin-image: bump do-sync to v3 [PR #32808](https://github.com/gatsbyjs/gatsby/pull/32808)
+- [Dgiordano33](https://github.com/Dgiordano33): chore(docs): Change Jamstack Article [PR #32764](https://github.com/gatsbyjs/gatsby/pull/32764)
+- [SwiftWinds](https://github.com/SwiftWinds): chore(docs): Fix typo in v3.0 release notes [PR #32844](https://github.com/gatsbyjs/gatsby/pull/32844)
+- [ashiishme](https://github.com/ashiishme): chore(docs): Remove outdated information from Theme Guide [PR #32849](https://github.com/gatsbyjs/gatsby/pull/32849)
+- [facundojmaero](https://github.com/facundojmaero): chore(docs): Fix typo in part 5 of the tutorial [PR #32854](https://github.com/gatsbyjs/gatsby/pull/32854)
+- [herecydev](https://github.com/herecydev): fix(gatsby): Correct server type [PR #32853](https://github.com/gatsbyjs/gatsby/pull/32853)
+- [torn4dom4n](https://github.com/torn4dom4n): chore(docs): Fixes typo in tutorial part 4 [PR #32859](https://github.com/gatsbyjs/gatsby/pull/32859)
+- [lovell](https://github.com/lovell): feat(gatsby-plugin-sharp): reduce encoding time and install size [PR #32851](https://github.com/gatsbyjs/gatsby/pull/32851)
+- [frankpengau](https://github.com/frankpengau): chore(docs): Update Gallery example in tutorial part 2 [PR #32872](https://github.com/gatsbyjs/gatsby/pull/32872)
+- [AnilSeervi](https://github.com/AnilSeervi)
+
+  - chore(docs): Fix CSS Modules extension typo [PR #32869](https://github.com/gatsbyjs/gatsby/pull/32869)
+  - chore(docs): Fix code highlighting in part 6 [PR #32900](https://github.com/gatsbyjs/gatsby/pull/32900)
+
+- [moinulmoin](https://github.com/moinulmoin): chore(docs): Fix typo in tutorial part 6 [PR #32866](https://github.com/gatsbyjs/gatsby/pull/32866)
+- [Mike-Dax](https://github.com/Mike-Dax): chore(gatsby-remark-images): Only convert supported image extensions [PR #32868](https://github.com/gatsbyjs/gatsby/pull/32868)
+- [jablko](https://github.com/jablko): fix(gatsby): add react-com as devDep [PR #32865](https://github.com/gatsbyjs/gatsby/pull/32865)
+- [barrymcgee](https://github.com/barrymcgee): Update docs on building eCom with Shopify to work with latest versions [PR #32884](https://github.com/gatsbyjs/gatsby/pull/32884)
+- [jfrosch](https://github.com/jfrosch): chore(docs): Update wording for "using-web-fonts" [PR #32902](https://github.com/gatsbyjs/gatsby/pull/32902)
+- [alvis](https://github.com/alvis): fix(gatsby): add this typings to actions [PR #32210](https://github.com/gatsbyjs/gatsby/pull/32210)
+- [satrix321](https://github.com/satrix321): fix(gatsby-core-utils): Switch `auth` option from got to username/password [PR #32665](https://github.com/gatsbyjs/gatsby/pull/32665)
