@@ -82,14 +82,15 @@ exports.createPages = async ({ graphql, actions }) => {
   const result = await graphql(\`
 ${getQuery(arg, 4)}
   \`)
-
+  const templatePath = path.resolve(\`PATH/TO/TEMPLATE.js\`)
+  
   result.data.${
     arg.operationDataList[0].operationDefinition.selectionSet.selections[0].name
       .value
-  }.edges.forEach(({ node }) => {
+  }.forEach((node) => {
     createPage({
       path: NODE_SLUG,
-      component: path.resolve(\`PATH/TO/TEMPLATE.js\`),
+      component: templatePath,
       context: {
         slug: NODE_SLUG,
       },
