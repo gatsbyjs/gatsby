@@ -83,15 +83,13 @@ function render(
           plugin.resolve
         )}/gatsby-worker"`
     ),
-    ...uniqSubPlugins
-      .filter(plugin => !!plugin.modulePath)
-      .map((plugin, i) => {
-        const importName = `subPlugin${i}`
-        subPluginModuleToImportNameMapping.set(plugin.modulePath!, importName)
-        return `import * as ${importName} from "${relativePluginPath(
-          plugin.modulePath!
-        )}"`
-      }),
+    ...uniqSubPlugins.map((plugin, i) => {
+      const importName = `subPlugin${i}`
+      subPluginModuleToImportNameMapping.set(plugin.modulePath!, importName)
+      return `import * as ${importName} from "${relativePluginPath(
+        plugin.modulePath!
+      )}"`
+    }),
   ]
   const gatsbyNodeExports = uniqGatsbyNode.map(
     (plugin, i) => `"${plugin.name}": pluginGatsbyNode${i},`
@@ -204,7 +202,9 @@ function findSubPlugins(
       .map(plugin => plugin[`name`])
       .filter((p: unknown): p is string => typeof p === `string`)
   )
-  return allFlattenedPlugins.filter(p => usedSubPluginNames.has(p.name))
+  return allFlattenedPlugins.filter(
+    p => usedSubPluginNames.has(p.name) && !!p.modulePath
+  )
 }
 
 function uniq(
