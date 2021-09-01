@@ -1,6 +1,6 @@
 import { parse, DocumentNode } from "graphql"
 
-// TODO v5: mark all built-in types with @dontInfer and add missing fields (maybe as `JSON` type)
+// TODO v4: mark all built-in types with @dontInfer and add missing fields (maybe as `JSON` type)
 
 const fileType = `
   type File implements Node @infer {
@@ -119,7 +119,7 @@ const sitePluginType = `
     browserAPIs: [String]
     ssrAPIs: [String]
     pluginFilepath: String
-    # TODO v5:
+    # TODO v4:
     # pluginOptions: JSON
     # packageJson: JSON
   }
