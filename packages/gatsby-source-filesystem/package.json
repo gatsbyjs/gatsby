@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.14.8",
     "fastq": "^1.11.1",
     "chokidar": "^3.5.2",
-    "file-type": "^16.0.0",
+    "file-type": "^16.5.3",
     "fs-extra": "^10.0.0",
     "gatsby-core-utils": "^2.14.0-next.0",
     "got": "^9.6.0",
