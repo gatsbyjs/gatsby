@@ -5,29 +5,10 @@ import chalk from "chalk"
 import { commaListsAnd } from "common-tags"
 import { distance } from "fastest-levenshtein"
 
-function isFlagMatchingCommand(
-  allowedIn: IFlag["command"],
-  executingCommand: string
-): boolean {
-  if (allowedIn === `all`) {
-    return true
-  }
-
-  if (Array.isArray(allowedIn)) {
-    return allowedIn.some(singleAllowedIn =>
-      isFlagMatchingCommand(singleAllowedIn, executingCommand)
-    )
-  } else if (typeof allowedIn === `string`) {
-    return allowedIn === executingCommand
-  }
-
-  return false
-}
-
 const handleFlags = (
   flags: Array<IFlag>,
   configFlags: Record<string, boolean> = {},
-  executingCommand = process.env.gatsby_executing_command as string
+  executingCommand = process.env.gatsby_executing_command
 ): {
   enabledConfigFlags: Array<IFlag>
   unknownFlagMessage: string
@@ -90,8 +71,8 @@ const handleFlags = (
   const lockedInFlags = new Map<string, IFlag>()
   const lockedInFlagsThatAreInConfig = new Map<string, IFlag>()
   availableFlags.forEach(flag => {
-    if (!isFlagMatchingCommand(flag.command, executingCommand)) {
-      // if flag is no valid for current command - skip
+    if (flag.command !== `all` && flag.command !== executingCommand) {
+      // if flag is not for all commands and current command doesn't match command flag is for - skip
       return
     }
 
@@ -139,8 +120,8 @@ const handleFlags = (
 
   // Filter enabledConfigFlags against various tests
   enabledConfigFlags = enabledConfigFlags.filter(flag => {
-    if (!isFlagMatchingCommand(flag.command, executingCommand)) {
-      // if flag is no valid for current command - skip
+    if (flag.command !== `all` && flag.command !== executingCommand) {
+      // if flag is not for all commands and current command doesn't match command flag is for - skip
       return false
     }
 

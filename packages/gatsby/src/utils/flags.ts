@@ -4,7 +4,7 @@ import semver from "semver"
 import sampleSiteForExperiment from "./sample-site-for-experiment"
 
 // Does this experiment run for only builds
-type ExecutingCommand = "build" | "develop" | "serve"
+type executingCommand = "build" | "develop" | "all"
 
 export const satisfiesSemvers = (
   semverConstraints: Record<string, string>
@@ -36,7 +36,7 @@ export interface IFlag {
   name: string
   env: string
   description: string
-  command: ExecutingCommand | Array<ExecutingCommand> | `all`
+  command: executingCommand
   /**
    * Use string identifier to track enabled flag or false to disable any tracking (useful when flag becomes new defaults)
    */
@@ -147,7 +147,7 @@ const activeFlags: Array<IFlag> = [
   {
     name: `PRESERVE_WEBPACK_CACHE`,
     env: `GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE`,
-    command: [`build`, `develop`],
+    command: `all`,
     telemetryId: `PreserveWebpackCache`,
     experimental: false,
     description: `Use webpack's persistent caching and don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
@@ -167,7 +167,7 @@ const activeFlags: Array<IFlag> = [
   {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
     env: `GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE`,
-    command: [`build`, `develop`],
+    command: `all`,
     telemetryId: `PreserveFileDownloadCache`,
     experimental: false,
     description: `Don't delete the downloaded files cache when changing gatsby-node.js & gatsby-config.js files.`,
@@ -177,7 +177,7 @@ const activeFlags: Array<IFlag> = [
   {
     name: `PARALLEL_SOURCING`,
     env: `GATSBY_EXPERIMENTAL_PARALLEL_SOURCING`,
-    command: [`build`, `develop`],
+    command: `all`,
     telemetryId: `ParallelSourcing`,
     experimental: true,
     description: `Run all source plugins at the same time instead of serially. For sites with multiple source plugins, this can speedup sourcing and transforming considerably.`,
