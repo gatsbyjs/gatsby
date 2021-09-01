@@ -685,8 +685,7 @@ module.exports = async (
   if (stage === `build-html` || stage === `develop-html`) {
     // we want to bundle everything for engines
     const shouldMarkPackagesAsExternal =
-      stage !== `build-html` ||
-      !process.env.GATSBY_EXPERIMENTAL_GENERATE_ENGINES
+      stage !== `build-html` || !_CFLAGS_.GATSBY_MAJOR === `4`
 
     // removes node internals from bundle
     // https://webpack.js.org/configuration/externals/#externalspresets

@@ -154,7 +154,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   const matchPaths = await readMatchPaths(program)
   router.use(matchPathRouter(matchPaths, { root }))
 
-  if (process.env.GATSBY_EXPERIMENTAL_GENERATE_ENGINES) {
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     const { GraphQLEngine } = require(path.join(
       program.directory,
       `.cache`,

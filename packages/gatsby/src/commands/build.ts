@@ -94,7 +94,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   const engineBundlingPromises: Array<Promise<any>> = []
 
   // bundle graphql-engine
-  if (process.env.GATSBY_EXPERIMENTAL_GENERATE_ENGINES) {
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     engineBundlingPromises.push(createGraphqlEngineBundle())
   }
 
@@ -166,7 +166,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   }
 
   // client bundle is produced so static query maps should be ready
-  if (process.env.GATSBY_EXPERIMENTAL_GENERATE_ENGINES) {
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     engineBundlingPromises.push(createPageSSRBundle())
   }
 
@@ -230,7 +230,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   try {
     const result = await buildRenderer(program, Stage.BuildHTML, buildSpan)
     pageRenderer = result.rendererPath
-    if (process.env.GATSBY_EXPERIMENTAL_GENERATE_ENGINES) {
+    if (_CFLAGS_.GATSBY_MAJOR === `4`) {
       // for now copy page-render to `.cache` so page-ssr module can require it as a sibling module
       const outputDir = path.join(program.directory, `.cache`, `page-ssr`)
       engineBundlingPromises.push(
@@ -251,7 +251,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildSSRBundleActivityProgress.end()
   }
 
-  if (process.env.GATSBY_EXPERIMENTAL_GENERATE_ENGINES) {
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
     program.keepPageRenderer = true
   }
