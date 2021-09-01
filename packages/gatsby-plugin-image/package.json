@@ -79,7 +79,7 @@
     "babel-jsx-utils": "^1.1.0",
     "babel-plugin-remove-graphql-queries": "^3.14.0-next.0",
     "camelcase": "^5.3.1",
-    "chokidar": "^3.5.1",
+    "chokidar": "^3.5.2",
     "common-tags": "^1.8.0",
     "fs-extra": "^10.0.0",
     "gatsby-core-utils": "^2.14.0-next.0",

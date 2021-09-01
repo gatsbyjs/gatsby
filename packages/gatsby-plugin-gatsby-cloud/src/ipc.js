@@ -1,9 +1,36 @@
-export function emitRoutes(routes) {
+function sendOrPromise(msg) {
   if (!process.send) {
-    return
+    return false
   }
+  let resolve
+  let reject
+  const promise = new Promise((res, rej) => {
+    resolve = res
+    reject = rej
+  })
+  // `process.send` can buffer messages and delay their delivery. In this case it returns false.
+  //  if process exists before all messages in the buffer are processed - remaining messages will be lost.
+  //
+  //  The function returns sync `true` when message is handled immediately and Promise when
+  //  it is buffered (this is essentially a backpressure for lots of sync calls to `process.send`).
+  //
+  //  Callers must `await` results of this function to ensure process doesn't exit early.
+  //
+  // See also https://github.com/nodejs/node/issues/7657#issuecomment-253744600
+  // and https://nodejs.org/dist/latest-v14.x/docs/api/child_process.html#child_process_subprocess_send_message_sendhandle_options_callback
+  //
+  const sent = process.send(msg, error => {
+    if (error) {
+      reject(error)
+    } else {
+      resolve(true)
+    }
+  })
+  return sent === false ? promise : true
+}
 
-  process.send({
+export function emitRoutes(routes) {
+  return sendOrPromise({
     type: `LOG_ACTION`,
     action: {
       type: `CREATE_ROUTE`,
@@ -15,11 +42,7 @@ export function emitRoutes(routes) {
 }
 
 export function emitRedirects(redirect) {
-  if (!process.send) {
-    return
-  }
-
-  process.send({
+  return sendOrPromise({
     type: `LOG_ACTION`,
     action: {
       type: `CREATE_REDIRECT_ENTRY`,
@@ -29,11 +52,7 @@ export function emitRedirects(redirect) {
 }
 
 export function emitRewrites(rewrite) {
-  if (!process.send) {
-    return
-  }
-
-  process.send({
+  return sendOrPromise({
     type: `LOG_ACTION`,
     action: {
       type: `CREATE_REWRITE_ENTRY`,
@@ -43,11 +62,7 @@ export function emitRewrites(rewrite) {
 }
 
 export function emitHeaders(header) {
-  if (!process.send) {
-    return
-  }
-
-  process.send({
+  return sendOrPromise({
     type: `LOG_ACTION`,
     action: {
       type: `CREATE_HEADER_ENTRY`,
@@ -57,11 +72,7 @@ export function emitHeaders(header) {
 }
 
 export function emitFileNodes(file) {
-  if (!process.send) {
-    return
-  }
-
-  process.send({
+  return sendOrPromise({
     type: `LOG_ACTION`,
     action: {
       type: `CREATE_FILE_NODE`,
