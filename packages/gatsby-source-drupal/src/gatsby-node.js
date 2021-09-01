@@ -158,6 +158,7 @@ exports.sourceNodes = async (
             getNode,
             node: nodeToDelete,
             createNodeId,
+            createContentDigest,
             entityReferenceRevisions,
           })
           reporter.log(`Deleted node: ${deletedNode.id}`)
@@ -252,6 +253,7 @@ exports.sourceNodes = async (
               getNode,
               node: nodeSyncData,
               createNodeId,
+              createContentDigest,
               entityReferenceRevisions,
             })
           } else {

@@ -115,6 +115,7 @@ const handleDeletedNode = async ({
   node,
   getNode,
   createNodeId,
+  createContentDigest,
   entityReferenceRevisions,
 }) => {
   const deletedNode = getNode(
@@ -164,6 +165,15 @@ const handleDeletedNode = async ({
         referencedNodes = referencedNodes.filter(nId => nId !== deletedNode.id)
         referencedNodesLookup.set(node, referencedNodes)
       }
+      // Recreate the referenced node with its now cleaned-up relationships.
+      if (node.internal.owner) {
+        delete node.internal.owner
+      }
+      if (node.fields) {
+        delete node.fields
+      }
+      node.internal.contentDigest = createContentDigest(node)
+      actions.createNode(node)
     })
   })
 
