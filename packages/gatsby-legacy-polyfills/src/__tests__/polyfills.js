@@ -2,9 +2,6 @@ const path = require(`path`)
 const { SourceMapConsumer } = require(`source-map`)
 const execa = require(`execa`)
 const fs = require(`fs-extra`)
-const {
-  default: constructError,
-} = require(`gatsby-cli/src/structured-errors/construct-error`)
 
 jest.setTimeout(60000)
 
