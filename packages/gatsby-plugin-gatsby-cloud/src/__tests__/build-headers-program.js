@@ -319,15 +319,18 @@ describe(`build-headers-program`, () => {
     process.send = jest.fn()
     await buildHeadersProgram(pluginData, pluginOptions)
 
-    expect(process.send).toHaveBeenCalledWith({
-      type: `LOG_ACTION`,
-      action: {
-        type: `CREATE_HEADER_ENTRY`,
-        payload: {
-          url: `/hello`,
-          headers: [`X-Frame-Options: SAMEORIGIN`],
+    expect(process.send).toHaveBeenCalledWith(
+      {
+        type: `LOG_ACTION`,
+        action: {
+          type: `CREATE_HEADER_ENTRY`,
+          payload: {
+            url: `/hello`,
+            headers: [`X-Frame-Options: SAMEORIGIN`],
+          },
         },
       },
-    })
+      expect.any(Function)
+    )
   })
 })
