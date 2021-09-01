@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.8",
-    "async": "^3.2.0",
+    "async": "^3.2.1",
     "bluebird": "^3.7.2",
     "filenamify": "^4.3.0",
     "fs-extra": "^10.0.0",
