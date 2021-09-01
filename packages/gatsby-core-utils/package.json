@@ -35,7 +35,7 @@
     "file-type": "^16.5.3",
     "fs-extra": "^10.0.0",
     "got": "^11.8.2",
-    "node-object-hash": "^2.3.8",
+    "node-object-hash": "^2.3.9",
     "proper-lockfile": "^4.1.2",
     "tmp": "^0.2.1",
     "xdg-basedir": "^4.0.0"
