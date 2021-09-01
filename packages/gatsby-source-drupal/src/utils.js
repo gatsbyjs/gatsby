@@ -135,7 +135,7 @@ const handleDeletedNode = async ({
   // Remove relationships from other nodes and re-create them.
   Object.keys(deletedNode.relationships).forEach(key => {
     let ids = deletedNode.relationships[key]
-    ids = _.isArray(ids) ? ids : [ids]
+    ids = [].concat(ids)
     ids.forEach(id => {
       const node = getNode(id)
       let referencedNodes = referencedNodesLookup.get(node)
