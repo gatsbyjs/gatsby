@@ -49,6 +49,7 @@ import {
 } from "../utils/worker/pool"
 import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpack"
 import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
+import { shouldGenerateEngines } from "../utils/engines-helpers"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (isTruthy(process.env.VERBOSE)) {
@@ -93,8 +94,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const engineBundlingPromises: Array<Promise<any>> = []
 
-  // bundle graphql-engine
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+    // bundle graphql-engine
     engineBundlingPromises.push(createGraphqlEngineBundle())
   }
 
@@ -165,8 +166,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildActivityTimer.end()
   }
 
-  // client bundle is produced so static query maps should be ready
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+    // client bundle is produced so static query maps should be ready
     engineBundlingPromises.push(createPageSSRBundle())
   }
 
@@ -230,7 +231,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   try {
     const result = await buildRenderer(program, Stage.BuildHTML, buildSpan)
     pageRenderer = result.rendererPath
-    if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
       // for now copy page-render to `.cache` so page-ssr module can require it as a sibling module
       const outputDir = path.join(program.directory, `.cache`, `page-ssr`)
       engineBundlingPromises.push(
@@ -251,7 +252,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildSSRBundleActivityProgress.end()
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
     // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
     program.keepPageRenderer = true
   }

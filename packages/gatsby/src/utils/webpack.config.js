@@ -22,6 +22,7 @@ import { StaticQueryMapper } from "./webpack/static-query-mapper"
 import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
 import { hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
+import { shouldGenerateEngines } from "./engines-helpers"
 const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
@@ -685,7 +686,8 @@ module.exports = async (
   if (stage === `build-html` || stage === `develop-html`) {
     // we want to bundle everything for engines
     const shouldMarkPackagesAsExternal =
-      stage !== `build-html` || !_CFLAGS_.GATSBY_MAJOR === `4`
+      stage !== `build-html` ||
+      !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
 
     // removes node internals from bundle
     // https://webpack.js.org/configuration/externals/#externalspresets

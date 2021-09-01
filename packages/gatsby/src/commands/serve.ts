@@ -155,64 +155,68 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   router.use(matchPathRouter(matchPaths, { root }))
 
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    const { GraphQLEngine } = require(path.join(
-      program.directory,
-      `.cache`,
-      `query-engine`
-    ))
-    const { getData, renderPageData, renderHTML } = require(path.join(
-      program.directory,
-      `.cache`,
-      `page-ssr`
-    ))
-    const graphqlEngine = new GraphQLEngine({
-      dbPath: path.join(program.directory, `.cache`, `data`, `datastore`),
-    })
+    try {
+      const { GraphQLEngine } = require(path.join(
+        program.directory,
+        `.cache`,
+        `query-engine`
+      ))
+      const { getData, renderPageData, renderHTML } = require(path.join(
+        program.directory,
+        `.cache`,
+        `page-ssr`
+      ))
+      const graphqlEngine = new GraphQLEngine({
+        dbPath: path.join(program.directory, `.cache`, `data`, `datastore`),
+      })
 
-    router.get(
-      `/page-data/:pagePath(*)/page-data.json`,
-      async (req, res, next): Promise<void> => {
-        const requestedPagePath = req.params.pagePath
-        if (!requestedPagePath) {
+      router.get(
+        `/page-data/:pagePath(*)/page-data.json`,
+        async (req, res, next): Promise<void> => {
+          const requestedPagePath = req.params.pagePath
+          if (!requestedPagePath) {
+            next()
+            return
+          }
+
+          const pathName = reverseFixedPagePath(requestedPagePath)
+          const page = graphqlEngine.findPageByPath(pathName)
+
+          if (page && page.mode === `DSR`) {
+            const data = await getData({ pathName: req.path, graphqlEngine })
+            const results = await renderPageData({ data })
+            res.send(results)
+            return
+          }
+
           next()
           return
         }
+      )
 
-        const pathName = reverseFixedPagePath(requestedPagePath)
-        const page = graphqlEngine.findPageByPath(pathName)
+      router.use(async (req, res, next) => {
+        if (req.accepts(`html`)) {
+          const pathName = req.path
+          if (!pathName) {
+            next()
+            return
+          }
 
-        if (page && page.mode === `DSR`) {
-          const data = await getData({ pathName: req.path, graphqlEngine })
-          const results = await renderPageData({ data })
-          res.send(results)
-          return
+          const page = graphqlEngine.findPageByPath(pathName)
+
+          if (page && page.mode === `DSR`) {
+            const data = await getData({ pathName, graphqlEngine })
+            const results = await renderHTML({ data })
+            res.send(results)
+            return
+          }
         }
-
         next()
         return
-      }
-    )
-
-    router.use(async (req, res, next) => {
-      if (req.accepts(`html`)) {
-        const pathName = req.path
-        if (!pathName) {
-          next()
-          return
-        }
-
-        const page = graphqlEngine.findPageByPath(pathName)
-
-        if (page && page.mode === `DSR`) {
-          const data = await getData({ pathName, graphqlEngine })
-          const results = await renderHTML({ data })
-          res.send(results)
-          return
-        }
-      }
-      next()
-      return
-    })
+      })
+    } catch (_error) {
+      // handling case of engine not being generated
+    }
   }
 
   const compiledFunctionsDir = path.join(
