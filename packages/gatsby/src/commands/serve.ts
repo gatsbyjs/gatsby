@@ -19,8 +19,6 @@ import { preferDefault } from "../bootstrap/prefer-default"
 import { IProgram } from "./types"
 import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
 import { IGatsbyFunction } from "../redux/types"
-import handleFlags from "../utils/handle-flags"
-import availableFlags from "../utils/flags"
 
 interface IMatchPath {
   path: string
@@ -51,7 +49,7 @@ const readMatchPaths = async (
   try {
     rawJSON = await fs.readFile(filePath, `utf8`)
   } catch (error) {
-    report.warn(error.toString())
+    report.warn(error)
     report.warn(
       `Could not read ${chalk.bold(
         `match-paths.json`
@@ -104,40 +102,13 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   let { prefixPaths, port, open, host } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
-  let config
-  try {
-    const { configModule } = await getConfigFile(
-      program.directory,
-      `gatsby-config`
-    )
-    config = preferDefault(configModule)
-  } catch (e) {
-    // ignore
-  }
+  const { configModule } = await getConfigFile(
+    program.directory,
+    `gatsby-config`
+  )
+  const config = preferDefault(configModule)
 
   const { pathPrefix: configPathPrefix } = config || {}
-
-  if (config) {
-    // Get flags
-    const { enabledConfigFlags } = handleFlags(availableFlags, config.flags)
-
-    //  set process.env for each flag
-    enabledConfigFlags.forEach(flag => {
-      process.env[flag.env] = `true`
-    })
-
-    //  track usage of feature
-    enabledConfigFlags.forEach(flag => {
-      if (flag.telemetryId) {
-        telemetry.trackFeatureIsUsed(flag.telemetryId)
-      }
-    })
-
-    // Track the usage of config.flags
-    if (config.flags) {
-      telemetry.trackFeatureIsUsed(`ConfigFlags`)
-    }
-  }
 
   const pathPrefix = prefixPaths && configPathPrefix ? configPathPrefix : `/`
 
