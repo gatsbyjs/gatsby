@@ -1,9 +1,8 @@
 const fs = require(`fs-extra`)
-const { createContentDigest } = require(`gatsby-core-utils`)
+const { createContentDigest, fetchRemoteFile } = require(`gatsby-core-utils`)
 const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
-const { fetchRemoteFile } = require(`gatsby-core-utils`)
 const { createFileNode } = require(`./create-file-node`)
 const { getRemoteFileExtension, createFilePath } = require(`./utils`)
 

@@ -15,7 +15,7 @@
     "gatsby-core-utils": "^2.14.0-next.0",
     "gatsby-plugin-utils": "^1.14.0-next.0",
     "gatsby-telemetry": "^2.14.0-next.0",
-    "got": "^10.7.0",
+    "got": "^11.8.2",
     "lodash": "^4.17.21",
     "mini-svg-data-uri": "^1.3.3",
     "potrace": "^2.1.8",
