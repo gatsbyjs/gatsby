@@ -46,9 +46,6 @@ let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
  * Queue Management *
  ********************/
 
-/**
- * Queue
- */
 const queue = Queue(pushToQueue, process.env.GATSBY_CONCURRENT_DOWNLOAD || 200)
 
 /**
