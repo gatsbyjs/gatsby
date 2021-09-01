@@ -140,7 +140,7 @@ const handleDeletedNode = async ({
     ids.forEach(id => {
       const node = getNode(id)
       let referencedNodes = referencedNodesLookup.get(node)
-      if (referencedNodes.includes(deletedNode.id)) {
+      if (referencedNodes?.includes(deletedNode.id)) {
         // Loop over relationships and cleanup references.
         Object.entries(node.relationships).forEach(([key, value]) => {
           // If a string ref matches, delete it.
