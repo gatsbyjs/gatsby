@@ -3,7 +3,7 @@ title: What is Headless WordPress?
 disableTableOfContents: true
 ---
 
-Learn what headless WordPress means, how it differs from other ways of using WordPress or other CMS, and how you can use headless WordPress with Gatsby.
+Learn what headless WordPress means, how it differs from other ways of using WordPress or other types of Content Management Systems, and how you can use headless WordPress with Gatsby.
 
 ### First, what is a Headless CMS?
 
