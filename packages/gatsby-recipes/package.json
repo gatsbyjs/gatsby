@@ -55,7 +55,7 @@
     "remark-parse": "^6.0.3",
     "remark-stringify": "^8.1.0",
     "resolve-from": "^5.0.0",
-    "semver": "^7.3.2",
+    "semver": "^7.3.5",
     "single-trailing-newline": "^1.0.0",
     "strip-ansi": "^6.0.0",
     "style-to-object": "^0.3.0",
