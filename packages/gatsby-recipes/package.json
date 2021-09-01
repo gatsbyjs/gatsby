@@ -21,7 +21,7 @@
     "@hapi/hoek": "8.x.x",
     "@hapi/joi": "^15.1.1",
     "better-queue": "^3.8.10",
-    "chokidar": "^3.4.2",
+    "chokidar": "^3.5.2",
     "contentful-management": "^7.5.1",
     "cors": "^2.8.5",
     "debug": "^4.3.1",
