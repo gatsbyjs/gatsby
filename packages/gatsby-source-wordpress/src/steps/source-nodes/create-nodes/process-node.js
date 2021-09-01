@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
 import { isWebUri } from "valid-url"
-import { fluid } from "gatsby-plugin-sharp"
+import { generateImageData } from "gatsby-plugin-sharp"
 import { GatsbyImage } from "gatsby-plugin-image"
 import React from "react"
 import ReactDOMServer from "react-dom/server"
@@ -602,36 +602,21 @@ const replaceNodeHtmlImages = async ({
         const gatsbyTransformerSharpSupportsThisFileType =
           supportedExtensions[fileNode?.extension]
 
-        let fluidResult = null
+        let sharpImageData = null
 
         if (gatsbyTransformerSharpSupportsThisFileType) {
           try {
-            fluidResult = await fluid({
+            sharpImageData = await generateImageData({
               file: fileNode,
               args: {
-                maxWidth,
+                width: maxWidth,
                 quality,
-                pathPrefix,
+                ...pluginOptions?.html?.gatsbyImageOptions,
               },
+              pathPrefix,
               reporter,
               cache,
             })
-
-            if (pluginOptions?.html?.generateWebpImages) {
-              const webpResult = await fluid({
-                file: fileNode,
-                args: {
-                  maxWidth,
-                  quality,
-                  pathPrefix,
-                  toFormat: `WEBP`,
-                },
-                reporter,
-                cache,
-              })
-
-              fluidResult.srcSetWebp = webpResult.srcSet
-            }
           } catch (e) {
             reporter.error(e)
             reporter.warn(
@@ -647,7 +632,7 @@ const replaceNodeHtmlImages = async ({
           match,
           cheerioImg,
           fileNode,
-          imageResize: fluidResult,
+          imageResize: sharpImageData,
           maxWidth,
         }
       })
@@ -662,63 +647,49 @@ const replaceNodeHtmlImages = async ({
       const { match, imageResize, cheerioImg, maxWidth } = matchResize
 
       // @todo retain img tag classes and attributes from cheerioImg
-      const imgOptions = {
-        style: {
-          // these styles make it so that the image wont be stretched
-          // beyond it's max width, but it also wont exceed the width
-          // of it's parent element
-          maxWidth: `100%`,
-          width: `${imageResize?.presentationWidth || maxWidth}px`,
-        },
-        placeholderStyle: {
-          opacity: 0,
-        },
-        className: `${
-          cheerioImg?.attribs?.class || ``
-        } inline-gatsby-image-wrapper`,
-        loading: `eager`,
-        alt: cheerioImg?.attribs?.alt,
-        fadeIn: true,
-        imgStyle: {
-          opacity: 1,
-        },
-      }
 
       let ReactGatsbyImage
-      const gatsbyImageOptions = {
-        ...imgOptions,
-        ...pluginOptions?.html?.gatsbyImageOptions,
-      }
 
       if (imageResize) {
-        imgOptions.fluid = imageResize
         ReactGatsbyImage = React.createElement(
           GatsbyImage,
-          gatsbyImageOptions,
+          {
+            image: imageResize,
+            alt: cheerioImg?.attribs?.alt,
+            className: `${
+              cheerioImg?.attribs?.class || ``
+            } inline-gatsby-image-wrapper`,
+          },
           null
         )
-        console.log(`RGI`, ReactGatsbyImage)
       } else {
         const { fileNode } = matchResize
-
         const relativeUrl = await copyFileToStaticAndReturnUrlPath(
           fileNode,
           helpers
         )
 
-        imgOptions.src = relativeUrl
-
-        delete imgOptions.imgStyle
-        delete imgOptions.fadeIn
-        delete imgOptions.placeholderStyle
+        const imgOptions = {
+          style: {
+            // these styles make it so that the image wont be stretched
+            // beyond it's max width, but it also wont exceed the width
+            // of it's parent element
+            maxWidth: `100%`,
+            width: `${maxWidth}px`,
+          },
+          className: `${
+            cheerioImg?.attribs?.class || ``
+          } inline-gatsby-image-wrapper`,
+          loading: `eager`,
+          alt: cheerioImg?.attribs?.alt,
+          src: relativeUrl,
+        }
 
         ReactGatsbyImage = React.createElement(`img`, imgOptions, null)
       }
 
       const gatsbyImageStringJSON = JSON.stringify(
         ReactDOMServer.renderToString(ReactGatsbyImage)
-          .replace(/<div/gm, `<span`)
-          .replace(/<\/div/gm, `</span`)
       )
 
       // need to remove the JSON stringify quotes around our image since we're
