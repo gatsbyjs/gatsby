@@ -139,10 +139,10 @@
   dependencies:
     yargs "15.3.1"
 
-"@asciidoctor/core@2.2.4":
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/@asciidoctor/core/-/core-2.2.4.tgz#b1caa0abb63eca7bae6cea2394fa47c1917b2d9f"
-  integrity sha512-rk7YSD6QAY6kInW5JVYi2ICjC3r90kXGlARwpfKQ99e/qy/2Vq31coL6nFFiWRuQxbh4EBqzUbC5uUUUjiu+Vw==
+"@asciidoctor/core@2.2.5":
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/@asciidoctor/core/-/core-2.2.5.tgz#b2874aff4d6733ba0819dbc8de9aaf1ae444aa11"
+  integrity sha512-jtQPQ5EivgFbwvSyGKas4ANnMGGHPbmu791H9xrZKooA65JNI30jM2em5MvUXTTetSPgb6saUf+PJibEuSB6uw==
   dependencies:
     asciidoctor-opal-runtime "0.3.3"
     unxhr "1.0.1"
@@ -6144,13 +6144,13 @@ asciidoctor-opal-runtime@0.3.3:
     glob "7.1.3"
     unxhr "1.0.1"
 
-asciidoctor@^2.2.4:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/asciidoctor/-/asciidoctor-2.2.4.tgz#3e195c15d6406b11c4baabd67185b6d80de581d9"
-  integrity sha512-/Z7hDwbNwaoGZMcm7HgAza6Z19gIPjiqvh1aQjiObab/Mncf6M1xs08Gy4dGqezfzvFvMH6Ur4s1ohfU/l1x5A==
+asciidoctor@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/asciidoctor/-/asciidoctor-2.2.5.tgz#dfc2ba4fdee2f0d3b28759b21d57a5f302d79982"
+  integrity sha512-rrmCK34faw+w+xGFQggjwPB0/pcISnwOXaulfJvn7j4Nm0bFwz+x4tG3ZANIA9+9i6Csex/PO0fSLBO8CSdzVA==
   dependencies:
     "@asciidoctor/cli" "3.4.0"
-    "@asciidoctor/core" "2.2.4"
+    "@asciidoctor/core" "2.2.5"
 
 asn1@~0.2.3:
   version "0.2.4"
