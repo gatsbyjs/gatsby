@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@3.13.0/packages/gatsby-source-filesystem) (2021-09-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
+
+#### Bug Fixes
+
+- Switch `auth` option from got to username/password [#32665](https://github.com/gatsbyjs/gatsby/issues/32665) ([d6326df](https://github.com/gatsbyjs/gatsby/commit/d6326df78873f4856f7296c4de360c9a7493cebb))
+
+#### Chores
+
+- re-generate changelogs [#32886](https://github.com/gatsbyjs/gatsby/issues/32886) ([417df15](https://github.com/gatsbyjs/gatsby/commit/417df15230be368a9db91f2ad1a9bc0442733177))
+
 ## [3.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@3.12.0/packages/gatsby-source-filesystem) (2021-08-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)

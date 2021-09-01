@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@1.13.0/packages/gatsby-graphiql-explorer) (2021-09-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
+
+#### Features
+
+- upgrade to webpack 5 [#30642](https://github.com/gatsbyjs/gatsby/issues/30642) ([ea161ce](https://github.com/gatsbyjs/gatsby/commit/ea161ce8c04ee3c2b534dfdf4036d53c3cbc01d5))
+
+#### Chores
+
+- re-generate changelogs [#32886](https://github.com/gatsbyjs/gatsby/issues/32886) ([417df15](https://github.com/gatsbyjs/gatsby/commit/417df15230be368a9db91f2ad1a9bc0442733177))
+
 ## [1.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@1.12.0/packages/gatsby-graphiql-explorer) (2021-08-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
