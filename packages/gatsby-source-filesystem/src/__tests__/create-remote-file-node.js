@@ -22,16 +22,22 @@ jest.mock(`got`, () => {
   }
 })
 
+jest.mock(`gatsby-core-utils`, () => {
+  return {
+    fetchRemoteFile: jest.fn(),
+  }
+})
+
 jest.mock(`../create-file-node`, () => {
   return {
     createFileNode: jest.fn(),
   }
 })
-const reporter = require(`gatsby/reporter`)
+const reporter = {}
 
-const got = require(`got`)
 const createRemoteFileNode = require(`../create-remote-file-node`)
 const { createFileNode } = require(`../create-file-node`)
+const { fetchRemoteFile } = require(`gatsby-core-utils`)
 
 const createMockCache = () => {
   return {
@@ -85,38 +91,19 @@ describe(`create-remote-file-node`, () => {
     const setup = (args = {}, response = { statusCode: 200 }) => {
       const url = `https://images.whatever.com/real-image-trust-me-${uuid}.png`
 
-      const gotMock = {
-        pipe: jest.fn(),
-        on: jest.fn(),
+      if (response.statusCode === 404) {
+        fetchRemoteFile.mockImplementation(({ url }) => {
+          // eslint-disable-next-line no-throw-literal
+          throw `failed to process ${url}`
+        })
       }
+
+      fetchRemoteFile.mockClear()
 
       createFileNode.mockImplementationOnce(() => {
         return {
           internal: {},
         }
-      })
-
-      got.stream.mockReturnValueOnce({
-        pipe: jest.fn(() => gotMock),
-        on: jest.fn((mockType, mockCallback) => {
-          if (mockType === `response`) {
-            // got throws on 404/500 so we mimic this behaviour
-            if (response.statusCode === 404) {
-              throw new Error(`Response code 404 (Not Found)`)
-            }
-
-            mockCallback(response)
-          }
-          if (mockType === `downloadProgress`) {
-            mockCallback({
-              progress: 1,
-              transferred: 1,
-              total: 1,
-            })
-          }
-
-          return gotMock
-        }),
       })
 
       uuid += 1
@@ -148,16 +135,19 @@ describe(`create-remote-file-node`, () => {
           url,
         })
 
-        expect(got.stream).toHaveBeenCalledWith(url, expect.any(Object))
+        expect(fetchRemoteFile).toHaveBeenCalledWith(
+          expect.objectContaining({
+            url,
+          })
+        )
       })
 
       it(`passes headers`, async () => {
         await setup()
 
-        expect(got.stream).toHaveBeenCalledWith(
-          expect.any(String),
+        expect(fetchRemoteFile).toHaveBeenCalledWith(
           expect.objectContaining({
-            headers: {},
+            httpHeaders: {},
           })
         )
       })
@@ -171,11 +161,9 @@ describe(`create-remote-file-node`, () => {
           auth,
         })
 
-        expect(got.stream).toHaveBeenCalledWith(
-          expect.any(String),
+        expect(fetchRemoteFile).toHaveBeenCalledWith(
           expect.objectContaining({
-            username: auth.htaccess_user,
-            password: auth.htaccess_pass,
+            auth,
           })
         )
       })
@@ -187,12 +175,11 @@ describe(`create-remote-file-node`, () => {
           },
         })
 
-        expect(got.stream).toHaveBeenCalledWith(
-          expect.any(String),
+        expect(fetchRemoteFile).toHaveBeenCalledWith(
           expect.objectContaining({
-            headers: expect.objectContaining({
+            httpHeaders: {
               Authorization: `Bearer foobar`,
-            }),
+            },
           })
         )
       })
@@ -200,7 +187,7 @@ describe(`create-remote-file-node`, () => {
       it(`fails when 404 is given`, async () => {
         expect.assertions(1)
         try {
-          await setup({}, `response`, { statusCode: 404 })
+          await setup({}, { statusCode: 404 })
         } catch (err) {
           expect(err).toEqual(
             expect.stringContaining(
@@ -208,40 +195,6 @@ describe(`create-remote-file-node`, () => {
             )
           )
         }
-      })
-
-      it(`retries if stalled`, done => {
-        const fs = require(`fs-extra`)
-
-        fs.createWriteStream.mockReturnValue({
-          on: jest.fn(),
-          close: jest.fn(),
-        })
-        jest.useFakeTimers()
-        got.stream.mockReset()
-        got.stream.mockReturnValueOnce({
-          pipe: jest.fn(() => {
-            return {
-              pipe: jest.fn(),
-              on: jest.fn(),
-            }
-          }),
-          on: jest.fn((mockType, mockCallback) => {
-            if (mockType === `response`) {
-              mockCallback({ statusCode: 200 })
-
-              expect(got.stream).toHaveBeenCalledTimes(1)
-              jest.advanceTimersByTime(1000)
-              expect(got.stream).toHaveBeenCalledTimes(1)
-              jest.advanceTimersByTime(30000)
-
-              expect(got.stream).toHaveBeenCalledTimes(2)
-              done()
-            }
-          }),
-        })
-        setup()
-        jest.runAllTimers()
       })
     })
   })

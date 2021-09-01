@@ -154,6 +154,20 @@ let currentGitHash = null
       stdio: [`inherit`, `inherit`, `inherit`],
     })
 
+    try {
+      await promiseSpawn(
+        `git`,
+        [`commit`, `-am`, `Comitting yarn changes`, `--no-verify`],
+        {
+          cwd: path.resolve(__dirname, `../`),
+          stdio: [`inherit`, `inherit`, `inherit`],
+        }
+      )
+      commitCreated = true
+    } catch (err) {
+      // no catch
+    }
+
     console.log(` `)
     console.log(`=== PUBLISHING V${nextMajor} ALPHA ===`)
     await promiseSpawn(

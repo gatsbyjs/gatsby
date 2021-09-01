@@ -3,7 +3,7 @@ index f9b0648b15..bfbd311aca 100644
 --- a/packages/gatsby/package.json
 +++ b/packages/gatsby/package.json
 @@ -101,6 +101,7 @@
-     "json-stringify-safe": "^5.0.1",
+     "json-loader": "^0.5.7",
      "latest-version": "5.1.0",
      "lodash": "^4.17.21",
 +    "lmdb-store": "^1.6.6",

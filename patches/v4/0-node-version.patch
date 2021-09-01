@@ -174,7 +174,7 @@ index 811773db17..fec9f4ba7e 100644
 --- a/packages/gatsby-graphiql-explorer/package.json
 +++ b/packages/gatsby-graphiql-explorer/package.json
 @@ -56,6 +56,6 @@
-     "whatwg-fetch": "^3.5.0"
+     "whatwg-fetch": "^3.6.2"
    },
    "engines": {
 -    "node": ">=12.13.0"

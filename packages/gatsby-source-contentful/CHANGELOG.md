@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@5.13.0/packages/gatsby-source-contentful) (2021-09-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
+
+#### Chores
+
+- re-generate changelogs [#32886](https://github.com/gatsbyjs/gatsby/issues/32886) ([417df15](https://github.com/gatsbyjs/gatsby/commit/417df15230be368a9db91f2ad1a9bc0442733177))
+
+#### Other Changes
+
+- docs(gatsby-source-contentful) provide a code example for rendering rich-text embedded assets images [#32777](https://github.com/gatsbyjs/gatsby/issues/32777) ([8c820d1](https://github.com/gatsbyjs/gatsby/commit/8c820d1b3c55ae28b444364c78e6db92008dee5c))
+
 ## [5.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@5.12.0/packages/gatsby-source-contentful) (2021-08-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)

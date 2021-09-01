@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify@3.13.0/packages/gatsby-plugin-netlify) (2021-09-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
+
+#### Features
+
+- Move page-data & HTML utils to package [#32861](https://github.com/gatsbyjs/gatsby/issues/32861) ([114e3d3](https://github.com/gatsbyjs/gatsby/commit/114e3d39695bd96b8c477a413f5927317a19b4cb))
+
+#### Chores
+
+- re-generate changelogs [#32886](https://github.com/gatsbyjs/gatsby/issues/32886) ([417df15](https://github.com/gatsbyjs/gatsby/commit/417df15230be368a9db91f2ad1a9bc0442733177))
+
 ## [3.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify@3.12.0/packages/gatsby-plugin-netlify) (2021-08-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
