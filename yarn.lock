@@ -16135,10 +16135,10 @@ katex@^0.12.0:
   dependencies:
     commander "^2.19.0"
 
-katex@^0.13.13:
-  version "0.13.13"
-  resolved "https://registry.yarnpkg.com/katex/-/katex-0.13.13.tgz#15a796e95516869bc6d483443b58b2df872ee40f"
-  integrity sha512-cCMcil4jwMm7behpXGiQfXJA29sko/Gd/26iCsr53Dv5Jn2iHbHyEb14dm9uVrIijUXx6Zz1WhlFhHE6DckvkQ==
+katex@^0.13.17:
+  version "0.13.17"
+  resolved "https://registry.yarnpkg.com/katex/-/katex-0.13.17.tgz#1f1e3d6e0f29e6bc685829d86452ea31b0c68255"
+  integrity sha512-Mkxj7uXs9xBRBIWGhcvf0K2c1DAbPqETjEebjur04fqJ4UXfj1ky9vrgkNJIwJJ4J4owS69vAqgBkKyr4Lh0eQ==
   dependencies:
     commander "^6.0.0"
 
