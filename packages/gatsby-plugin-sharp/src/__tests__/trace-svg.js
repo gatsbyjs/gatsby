@@ -6,6 +6,11 @@ jest.mock(`sharp`, () => {
       png: () => pipeline,
       jpeg: () => pipeline,
       toFile: (_, cb) => cb(),
+      on: () => pipeline,
+      once: () => pipeline,
+      write: () => pipeline,
+      end: () => pipeline,
+      emit: () => pipeline,
     }
     return pipeline
   }
@@ -14,6 +19,18 @@ jest.mock(`sharp`, () => {
   sharp.concurrency = jest.fn()
 
   return sharp
+})
+
+jest.mock(`fs-extra`, () => {
+  return {
+    ...jest.requireActual(`fs-extra`),
+    createReadStream: () => {
+      const stream = {
+        pipe: () => stream,
+      }
+      return stream
+    },
+  }
 })
 
 jest.mock(`potrace`, () => {
