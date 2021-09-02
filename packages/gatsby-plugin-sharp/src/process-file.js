@@ -6,6 +6,7 @@ const duotone = require(`./duotone`)
 const { healOptions } = require(`./plugin-options`)
 const { SharpError } = require(`./sharp-error`)
 const { createContentDigest } = require(`gatsby-core-utils`)
+const { promisifiedPipe } = require(`./utils`)
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
 // speedup on resizing heavy loads (~10%). Sharp disables this feature by
@@ -151,7 +152,7 @@ exports.processFile = (file, transforms, options = {}) => {
       }
 
       try {
-        await clonedPipeline.toFile(outputPath)
+        await promisifiedPipe(clonedPipeline, fs.createWriteStream(outputPath))
       } catch (err) {
         throw new Error(
           `Failed to write ${file} into ${outputPath}. (${err.message})`
