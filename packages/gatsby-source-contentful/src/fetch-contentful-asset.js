@@ -10,6 +10,8 @@
 const { fetchRemoteFile } = require(`gatsby-core-utils`)
 const { default: PQueue } = require(`p-queue`)
 const { range } = require(`lodash`)
+const stringify = require(`json-stringify-safe`)
+const { RequestError, HTTPError } = require(`got`)
 
 /**
  * Contentfuls APIs have a general rate limit of 79 uncached requests per second.
@@ -56,11 +58,12 @@ export async function fetchContentfulAsset({
         } catch (err) {
           // Retry on given status codes
           if (
-            (err.statusCode && statusCodesToRetry.includes(err.statusCode)) ||
+            (err instanceof HTTPError &&
+              statusCodesToRetry.includes(err.response.statusCode)) ||
             (err.code && errorCodesToRetry.includes(err.code))
           ) {
             let logMessage = `Failed to fetch ${url} due to ${
-              err.statusCode || err.code
+              err.response?.statusCode || err.code
             } error. Attempt #${attempts}.`
             if (attempts === maxAttempts) {
               logMessage = `${logMessage} Retry limit reached. Aborting.`
@@ -92,13 +95,13 @@ export async function fetchContentfulAsset({
 
     // Gather details about what went wrong from the error object and the request
     const details = Object.entries({
-      headers: restArgs.headers,
-      httpOpts: restArgs.httpOpts,
-      code: err.code,
-      statusCode: err.statusCode,
-      options: err.options,
-      request: err.request,
-      response: err.response,
+      url: err.options?.url,
+      method: err.options?.method,
+      errorCode: err.code,
+      responseStatusCode: err.response?.statusCode,
+      responseStatusMessage: err.response?.statusMessage,
+      requestHeaders: err.options?.headers,
+      responseHeaders: err.response?.headers,
     })
       // Remove undefined values
       .reduce((a, [k, v]) => (v === undefined ? a : ((a[k] = v), a)), {})
@@ -107,7 +110,7 @@ export async function fetchContentfulAsset({
       err.message = [
         err.message,
         `Details:`,
-        JSON.stringify(details),
+        JSON.stringify(details, null, 2),
         `---`,
       ].join(`\n`)
     }

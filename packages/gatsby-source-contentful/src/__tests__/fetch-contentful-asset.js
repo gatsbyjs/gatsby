@@ -98,7 +98,17 @@ https://images.ctfassets.net/no-retry-on-404.jpg
 Reason: Response code 404 (Not Found)
 ---
 Details:
-{\\"statusCode\\":404}
+{
+  \\"url\\": \\"https://images.ctfassets.net/no-retry-on-404.jpg\\",
+  \\"method\\": \\"GET\\",
+  \\"responseStatusCode\\": 404,
+  \\"responseStatusMessage\\": \\"Not Found\\",
+  \\"requestHeaders\\": {
+    \\"user-agent\\": \\"got (https://github.com/sindresorhus/got)\\",
+    \\"accept-encoding\\": \\"gzip, deflate, br\\"
+  },
+  \\"responseHeaders\\": {}
+}
 ---"
 `)
 
