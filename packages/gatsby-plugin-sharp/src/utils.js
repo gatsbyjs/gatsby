@@ -41,41 +41,6 @@ export function calculateImageSizes(args) {
   }
 }
 
-export function promisifiedPipe(input, output) {
-  let ended = false
-  function end() {
-    if (!ended) {
-      ended = true
-      if (output.close) {
-        output.close()
-      }
-      if (input.close) {
-        input.close()
-      }
-
-      return true
-    }
-    return false
-  }
-
-  return new Promise((resolve, reject) => {
-    input.pipe(output)
-    input.on(`error`, errorEnding)
-
-    function niceEnding() {
-      if (end()) resolve()
-    }
-
-    function errorEnding(error) {
-      if (end()) reject(error)
-    }
-
-    output.on(`finish`, niceEnding)
-    output.on(`end`, niceEnding)
-    output.on(`error`, errorEnding)
-  })
-}
-
 export function fixedImageSizes({
   file,
   imgDimensions,
