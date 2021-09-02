@@ -10,8 +10,7 @@
 const { fetchRemoteFile } = require(`gatsby-core-utils`)
 const { default: PQueue } = require(`p-queue`)
 const { range } = require(`lodash`)
-const stringify = require(`json-stringify-safe`)
-const { RequestError, HTTPError } = require(`got`)
+const { HTTPError } = require(`got`)
 
 /**
  * Contentfuls APIs have a general rate limit of 79 uncached requests per second.
