@@ -423,7 +423,10 @@ async function getTracedSVG({ file, options, cache, reporter }) {
 async function stats({ file, reporter }) {
   let imgStats
   try {
-    imgStats = await sharp(file.absolutePath).stats()
+    const pipeline = sharp()
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
+
+    imgStats = await pipeline.stats()
   } catch (err) {
     reportError(
       `Failed to get stats for image ${file.absolutePath}`,

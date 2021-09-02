@@ -2,12 +2,12 @@
 import { IGatsbyImageData, ISharpGatsbyImageArgs } from "gatsby-plugin-image"
 import { GatsbyCache, Node } from "gatsby"
 import { Reporter } from "gatsby/reporter"
+import fs from "fs-extra"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
 import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
 import sharp from "./safe-sharp"
 import { createTransformObject, mergeDefaults } from "./plugin-options"
 import { reportError } from "./report-error"
-import fs from "fs-extra"
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 
