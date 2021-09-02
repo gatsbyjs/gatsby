@@ -20,6 +20,7 @@ const {
 } = require(`graphql-compose`)
 const { getDataStore, getNode, getNodesByType } = require(`../datastore`)
 
+const { shouldGenerateEngines } = require(`../utils/engines-helpers`)
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
@@ -190,11 +191,29 @@ const updateSchemaComposer = async ({
     parentSpan: parentSpan,
   })
   activity.start()
-  await printTypeDefinitions({
-    config: printConfig,
-    schemaComposer,
-    parentSpan: activity.span,
-  })
+  if (!process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE) {
+    await printTypeDefinitions({
+      config: printConfig,
+      schemaComposer,
+      parentSpan: activity.span,
+    })
+    if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+      // make sure to print schema that will be used when bundling graphql-engine
+      const graphqlEngineSnapshotPath = process.cwd() + `/.cache/schema.gql`
+      try {
+        await require(`fs-extra`).remove(graphqlEngineSnapshotPath)
+      } catch (e) {
+        // that's fine, it probably didn't exist yet
+        // we only delete if it exist because printTypeDefinitions will
+        // be noisy no-op if file exists
+      }
+      await printTypeDefinitions({
+        config: { path: graphqlEngineSnapshotPath },
+        schemaComposer,
+        parentSpan: activity.span,
+      })
+    }
+  }
   await addSetFieldsOnGraphQLNodeTypeFields({
     schemaComposer,
     parentSpan: activity.span,
