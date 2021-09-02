@@ -461,7 +461,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   let metadata
   try {
     const pipeline = sharp()
-    fs.createReadStream(file.absolutePath).piple(pipeline)
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
 
     metadata = await pipeline.metadata()
   } catch (err) {
