@@ -213,35 +213,33 @@ async function batchQueueImageResizing({ file, transforms = [], reporter }) {
   const images = []
 
   // loop through all transforms to set correct variables
-  await Promise.all(
-    transforms.map(async transform => {
-      const {
-        src,
-        width,
-        height,
-        aspectRatio,
-        relativePath,
-        outputDir,
-        options,
-      } = await prepareQueue({ file, args: transform })
-      // queue operations of an image
-      operations.push({
-        outputPath: relativePath,
-        args: options,
-      })
-
-      // create output results
-      images.push({
-        src,
-        absolutePath: path.join(outputDir, relativePath),
-        width,
-        height,
-        aspectRatio,
-        originalName: file.base,
-        finishedPromise: null,
-      })
+  for (const transform of transforms) {
+    const {
+      src,
+      width,
+      height,
+      aspectRatio,
+      relativePath,
+      outputDir,
+      options,
+    } = await prepareQueue({ file, args: transform })
+    // queue operations of an image
+    operations.push({
+      outputPath: relativePath,
+      args: options,
     })
-  )
+
+    // create output results
+    images.push({
+      src,
+      absolutePath: path.join(outputDir, relativePath),
+      width,
+      height,
+      aspectRatio,
+      originalName: file.base,
+      finishedPromise: null,
+    })
+  }
 
   const finishedPromise = createJob(
     {
