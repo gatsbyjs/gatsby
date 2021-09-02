@@ -44,7 +44,7 @@
     "common-tags": "^1.8.0",
     "compression": "^1.7.4",
     "cookie": "^0.4.1",
-    "core-js": "^3.9.0",
+    "core-js": "^3.17.2",
     "cors": "^2.8.5",
     "css-loader": "^5.0.1",
     "css-minimizer-webpack-plugin": "^2.0.0",
