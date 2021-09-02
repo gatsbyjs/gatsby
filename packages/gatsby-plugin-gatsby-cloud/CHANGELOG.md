@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@3.1.0/packages/gatsby-plugin-gatsby-cloud) (2021-09-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
+
+#### Features
+
+- Add `disablePreviewUI` option [#32907](https://github.com/gatsbyjs/gatsby/issues/32907) ([818d6c1](https://github.com/gatsbyjs/gatsby/commit/818d6c1509f96cba08acdc67b522d5c60f625982))
+- Files manifest [#32879](https://github.com/gatsbyjs/gatsby/issues/32879) ([90ddcf6](https://github.com/gatsbyjs/gatsby/commit/90ddcf6e61794cfeb56ed4a86697bd3d33e762be))
+- IPC events for routes, redirects, rewrites, and headers [#32847](https://github.com/gatsbyjs/gatsby/issues/32847) ([ba4b08c](https://github.com/gatsbyjs/gatsby/commit/ba4b08caac00dd286f962849183e99ab7dc84a0a))
+- Move page-data & HTML utils to package [#32861](https://github.com/gatsbyjs/gatsby/issues/32861) ([114e3d3](https://github.com/gatsbyjs/gatsby/commit/114e3d39695bd96b8c477a413f5927317a19b4cb))
+
+#### Bug Fixes
+
+- Always create redirects.json [#32845](https://github.com/gatsbyjs/gatsby/issues/32845) ([7f22a27](https://github.com/gatsbyjs/gatsby/commit/7f22a27ced4ce1e8e7b2aad650f2f633c7da5ec5))
+
+#### Chores
+
+- re-generate changelogs [#32886](https://github.com/gatsbyjs/gatsby/issues/32886) ([417df15](https://github.com/gatsbyjs/gatsby/commit/417df15230be368a9db91f2ad1a9bc0442733177))
+
 ## [3.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@3.0.0/packages/gatsby-plugin-gatsby-cloud) (2021-08-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)

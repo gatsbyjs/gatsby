@@ -108,6 +108,20 @@ type SitePage implements Node @dontInfer {
   matchPath: String
 }
 
+type SitePlugin implements Node @dontInfer {
+  resolve: String
+  name: String
+  version: String
+  nodeAPIs: [String]
+  browserAPIs: [String]
+  ssrAPIs: [String]
+  pluginFilepath: String
+}
+
+type SiteBuildMetadata implements Node @dontInfer {
+  buildTime: Date @dateformat
+}
+
 type Inline {
   foo: Nested
 }
@@ -270,6 +284,20 @@ type SitePage implements Node @dontInfer {
   internalComponentName: String!
   componentChunkName: String!
   matchPath: String
+}
+
+type SitePlugin implements Node @dontInfer {
+  resolve: String
+  name: String
+  version: String
+  nodeAPIs: [String]
+  browserAPIs: [String]
+  ssrAPIs: [String]
+  pluginFilepath: String
+}
+
+type SiteBuildMetadata implements Node @dontInfer {
+  buildTime: Date @dateformat
 }
 
 type AnotherTest implements Node & ITest @dontInfer {
@@ -445,6 +473,20 @@ type SitePage implements Node @dontInfer {
   internalComponentName: String!
   componentChunkName: String!
   matchPath: String
+}
+
+type SitePlugin implements Node @dontInfer {
+  resolve: String
+  name: String
+  version: String
+  nodeAPIs: [String]
+  browserAPIs: [String]
+  ssrAPIs: [String]
+  pluginFilepath: String
+}
+
+type SiteBuildMetadata implements Node @dontInfer {
+  buildTime: Date @dateformat
 }
 
 type AnotherTest implements Node & ITest @dontInfer {

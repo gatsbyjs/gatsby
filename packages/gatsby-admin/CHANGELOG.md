@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-admin@0.23.0/packages/gatsby-admin) (2021-09-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
+
+#### Bug Fixes
+
+- update typescript to ^4.29.3 [#32614](https://github.com/gatsbyjs/gatsby/issues/32614) ([41f5337](https://github.com/gatsbyjs/gatsby/commit/41f5337e75e1bb378af9e4c0bb5ce16e44cda175))
+
+#### Chores
+
+- update changelogs [#32924](https://github.com/gatsbyjs/gatsby/issues/32924) ([f556a00](https://github.com/gatsbyjs/gatsby/commit/f556a00a9ccd9e529423a24c8308886809fb5f75))
+- re-generate changelogs [#32886](https://github.com/gatsbyjs/gatsby/issues/32886) ([417df15](https://github.com/gatsbyjs/gatsby/commit/417df15230be368a9db91f2ad1a9bc0442733177))
+
 ### [0.22.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-admin@0.22.1/packages/gatsby-admin) (2021-08-27)
 
 **Note:** Version bump only for package gatsby-admin

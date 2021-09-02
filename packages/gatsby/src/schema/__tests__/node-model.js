@@ -18,6 +18,8 @@ describe(`NodeModel`, () => {
     `Site`,
     `SitePage`,
     `SiteFunction`,
+    `SitePlugin`,
+    `SiteBuildMetadata`,
     `Author`,
     `Contributor`,
     `RemoteFile`,

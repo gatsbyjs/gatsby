@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.13.0/packages/gatsby-core-utils) (2021-09-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
+
+#### Features
+
+- IPC events for routes, redirects, rewrites, and headers [#32847](https://github.com/gatsbyjs/gatsby/issues/32847) ([ba4b08c](https://github.com/gatsbyjs/gatsby/commit/ba4b08caac00dd286f962849183e99ab7dc84a0a))
+- Move page-data & HTML utils to package [#32861](https://github.com/gatsbyjs/gatsby/issues/32861) ([114e3d3](https://github.com/gatsbyjs/gatsby/commit/114e3d39695bd96b8c477a413f5927317a19b4cb))
+
+#### Bug Fixes
+
+- Switch `auth` option from got to username/password [#32665](https://github.com/gatsbyjs/gatsby/issues/32665) ([d6326df](https://github.com/gatsbyjs/gatsby/commit/d6326df78873f4856f7296c4de360c9a7493cebb))
+
+#### Chores
+
+- re-generate changelogs [#32886](https://github.com/gatsbyjs/gatsby/issues/32886) ([417df15](https://github.com/gatsbyjs/gatsby/commit/417df15230be368a9db91f2ad1a9bc0442733177))
+
 ## [2.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.12.0/packages/gatsby-core-utils) (2021-08-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)

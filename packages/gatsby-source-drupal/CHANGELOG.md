@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@4.13.0/packages/gatsby-source-drupal) (2021-09-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
+
+#### Features
+
+- Use the collection count from JSON:API extras to enable parallel API requests for cold builds [#32883](https://github.com/gatsbyjs/gatsby/issues/32883) ([568d4ce](https://github.com/gatsbyjs/gatsby/commit/568d4ceb321209dbc6a0058286d53aaae190f847))
+- Default language when non translatable. [#32548](https://github.com/gatsbyjs/gatsby/issues/32548) Fixes [#32407](https://github.com/gatsbyjs/gatsby/issues/32407) ([d108363](https://github.com/gatsbyjs/gatsby/commit/d108363e84b2544bab5e25e649058eb3297dac55))
+- log value of lastFetched [#32796](https://github.com/gatsbyjs/gatsby/issues/32796) ([4f424af](https://github.com/gatsbyjs/gatsby/commit/4f424afddc8b26a50fe3f1343f45d550c32ba64d))
+
+#### Chores
+
+- re-generate changelogs [#32886](https://github.com/gatsbyjs/gatsby/issues/32886) ([417df15](https://github.com/gatsbyjs/gatsby/commit/417df15230be368a9db91f2ad1a9bc0442733177))
+
 ## [4.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@4.12.0/packages/gatsby-source-drupal) (2021-08-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)

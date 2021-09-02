@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@3.13.0/packages/gatsby-transformer-sharp) (2021-09-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
+
+#### Features
+
+- reduce encoding time and install size [#32851](https://github.com/gatsbyjs/gatsby/issues/32851) [#1](https://github.com/gatsbyjs/gatsby/issues/1) ([ddcfbd8](https://github.com/gatsbyjs/gatsby/commit/ddcfbd8e7b4b68fe31fa77815599b479e0cef6a1))
+
+#### Chores
+
+- re-generate changelogs [#32886](https://github.com/gatsbyjs/gatsby/issues/32886) ([417df15](https://github.com/gatsbyjs/gatsby/commit/417df15230be368a9db91f2ad1a9bc0442733177))
+
 ## [3.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@3.12.0/packages/gatsby-transformer-sharp) (2021-08-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
