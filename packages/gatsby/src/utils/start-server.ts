@@ -1,6 +1,6 @@
 import webpackHotMiddleware from "@gatsbyjs/webpack-hot-middleware"
 import webpackDevMiddleware from "webpack-dev-middleware"
-import got from "got"
+import got, { Method } from "got"
 import webpack from "webpack"
 import express from "express"
 import compression from "compression"
@@ -457,7 +457,11 @@ module.exports = {
         req
           .pipe(
             got
-              .stream(proxiedUrl, { headers, method, decompress: false })
+              .stream(proxiedUrl, {
+                headers,
+                method: method as Method,
+                decompress: false,
+              })
               .on(`response`, response =>
                 res.writeHead(response.statusCode || 200, response.headers)
               )

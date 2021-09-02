@@ -482,6 +482,7 @@ jobs:
       - checkout
       - run: apt-get update && apt-get install jq python -y
       - <<: *restore_cache
+      - <<: *install_node_modules
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: node scripts/gatsby-changelog-generator/update-and-open-pr.js
@@ -626,6 +627,22 @@ workflows:
           requires:
             - bootstrap-with-experimental-react
 
+  # Ideally, we should trigger this when any new release is created, sadly there is no easy way to do it:
+  # - Can't rely on tags: GitHub won't send webhook to CircleCI when there are more than 3 tags in one push
+  #   See: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#push
+  # - Can't rely on pushes to "release/*" branches because we have "Only build pull requests" option enabled
+  #   (so pushes without pull requests are ignored by CircleCI)
+  nightly-update-changelogs:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 1,2,3,4,5"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - update_changelogs
+
   build-test:
     jobs:
       - bootstrap
@@ -713,7 +730,3 @@ workflows:
             branches:
               only:
                 - master
-      - update_changelogs:
-          filters:
-            branches:
-              only: /^release\/.+/

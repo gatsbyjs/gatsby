@@ -203,8 +203,8 @@ describe(`Load plugins`, () => {
     })
   })
 
-  describe(`Gatsby-plugin-gatsby-cloud support`, () => {
-    it(`doesn't gatsby-plugin-gatsby-cloud if not installed`, async () => {
+  describe(`gatsby-plugin-gatsby-cloud support`, () => {
+    it(`doesn't load gatsby-plugin-gatsby-cloud if not installed`, async () => {
       resolveFrom.mockImplementation(() => undefined)
       const config = {
         plugins: [],
@@ -223,7 +223,7 @@ describe(`Load plugins`, () => {
       )
     })
 
-    it(`doesn't loads gatsby-plugin-gatsby-cloud if not provided and installed`, async () => {
+    it(`doesn't load gatsby-plugin-gatsby-cloud if not provided and installed`, async () => {
       resolveFrom.mockImplementation(
         (rootDir, pkg) => rootDir + `/node_modules/` + pkg
       )

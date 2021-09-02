@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@5.10.0/packages/gatsby-remark-images) (2021-09-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
+
+#### Chores
+
+- re-generate changelogs [#32886](https://github.com/gatsbyjs/gatsby/issues/32886) ([417df15](https://github.com/gatsbyjs/gatsby/commit/417df15230be368a9db91f2ad1a9bc0442733177))
+- Only convert supported image extensions [#32868](https://github.com/gatsbyjs/gatsby/issues/32868) ([63eaabf](https://github.com/gatsbyjs/gatsby/commit/63eaabf09465ac44064abb08483e2592415cb7d4))
+
 ## [5.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@5.9.0/packages/gatsby-remark-images) (2021-08-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
