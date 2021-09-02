@@ -38,6 +38,7 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
         },
         Page: {
           excludeFieldNames: [`enclosure`],
+          beforeChangeNode: `./src/before-change-page.js`,
         },
         DatabaseIdentifier: {
           exclude: true,
@@ -64,6 +65,13 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
                 50
               : // and we don't actually need more than 1000 in production
                 1000,
+
+          beforeChangeNode: ({ remoteNode }) => {
+            console.log(`Hi from an inline fn!`)
+            remoteNode.beforeChangeNodeTest = `TEST-${remoteNode.id}`
+
+            return remoteNode
+          },
         },
         // excluding this because it causes Gatsby to throw errors
         BlockEditorContentNode: { exclude: true },

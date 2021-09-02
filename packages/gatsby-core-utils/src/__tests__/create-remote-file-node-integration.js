@@ -129,6 +129,8 @@ function createMockCache() {
     path.join(os.tmpdir(), `gatsby-source-filesystem-`)
   )
 
+  fs.ensureDir(tmpDir)
+
   return {
     get: jest.fn(),
     set: jest.fn(),

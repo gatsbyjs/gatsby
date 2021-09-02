@@ -1,14 +1,16 @@
 import _ from "lodash"
-import { slash } from "gatsby-core-utils"
+import { slash, createRequireFromPath } from "gatsby-core-utils"
 import fs from "fs"
 import path from "path"
 import crypto from "crypto"
 import glob from "glob"
+import { sync as existsSync } from "fs-exists-cached"
+import reporter from "gatsby-cli/lib/reporter"
+import { silent as resolveFromSilent } from "resolve-from"
+import * as semver from "semver"
 import { warnOnIncompatiblePeerDependency } from "./validate"
 import { store } from "../../redux"
-import { sync as existsSync } from "fs-exists-cached"
 import { createNodeId } from "../../utils/create-node-id"
-import { createRequireFromPath } from "gatsby-core-utils"
 import {
   IPluginInfo,
   PluginRef,
@@ -17,8 +19,6 @@ import {
   ISiteConfig,
 } from "./types"
 import { PackageJson } from "../../.."
-import reporter from "gatsby-cli/lib/reporter"
-import { silent as resolveFromSilent } from "resolve-from"
 
 const GATSBY_CLOUD_PLUGIN_NAME = `gatsby-plugin-gatsby-cloud`
 const TYPESCRIPT_PLUGIN_NAME = `gatsby-plugin-typescript`
@@ -165,6 +165,16 @@ function addGatsbyPluginCloudPluginWhenInstalled(
   }
 }
 
+function incompatibleGatsbyCloudPlugin(plugins: Array<IPluginInfo>): boolean {
+  const plugin = plugins.find(
+    plugin => plugin.name === GATSBY_CLOUD_PLUGIN_NAME
+  )
+
+  return !semver.satisfies(plugin!.version, `>=4.0.0-alpha`, {
+    includePrerelease: true,
+  })
+}
+
 export function loadPlugins(
   config: ISiteConfig = {},
   rootDir: string
@@ -275,6 +285,16 @@ export function loadPlugins(
       })
     )
   })
+
+  if (
+    _CFLAGS_.GATSBY_MAJOR === `4` &&
+    configuredPluginNames.has(GATSBY_CLOUD_PLUGIN_NAME) &&
+    incompatibleGatsbyCloudPlugin(plugins)
+  ) {
+    reporter.panic(
+      `Plugin gatsby-plugin-gatsby-cloud is not compatible with your gatsby version. Please upgrade to gatsby-plugin-gatsby-cloud@alpha-9689ff`
+    )
+  }
 
   if (
     !configuredPluginNames.has(GATSBY_CLOUD_PLUGIN_NAME) &&
