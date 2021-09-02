@@ -170,7 +170,7 @@ function incompatibleGatsbyCloudPlugin(plugins: Array<IPluginInfo>): boolean {
     plugin => plugin.name === GATSBY_CLOUD_PLUGIN_NAME
   )
 
-  return !semver.satisfies(plugin!.version, `>=4.0.0`, {
+  return !semver.satisfies(plugin!.version, `>=4.0.0-alpha`, {
     includePrerelease: true,
   })
 }
@@ -292,7 +292,7 @@ export function loadPlugins(
     incompatibleGatsbyCloudPlugin(plugins)
   ) {
     reporter.panic(
-      `Plugin gatsby-plugin-gatsby-cloud is not compatible with your Gatsby version. Please upgrade to gatsby-plugin-gatsby-cloud@^4.0.0`
+      `Plugin gatsby-plugin-gatsby-cloud is not compatible with your gatsby version. Please upgrade to gatsby-plugin-gatsby-cloud@alpha`
     )
   }
 
