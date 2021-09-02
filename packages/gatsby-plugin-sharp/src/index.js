@@ -460,17 +460,10 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // images are intended to be displayed at their native resolution.
   let metadata
   try {
-    metadata = await new Promise((resolve, reject) => {
-      fs.createReadStream(file.absolutePath).pipe(
-        sharp().metadata(function (err, metadata) {
-          if (err) {
-            return reject(err)
-          }
+    const pipeline = sharp()
+    fs.createReadStream(file.absolutePath).piple(pipeline)
 
-          return resolve(metadata)
-        })
-      )
-    })
+    metadata = await pipeline.metadata()
   } catch (err) {
     reportError(
       `Failed to retrieve metadata from image ${file.absolutePath}`,

@@ -19,6 +19,7 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
   let pipeline
   try {
     pipeline = sharp()
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
 
     if (!options.rotate) {
       pipeline.rotate()
@@ -58,7 +59,7 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
     pipeline = await duotone(options.duotone, options.toFormat, pipeline)
   }
 
-  const toFilePromise = new Promise((resolve, reject) =>
+  await new Promise((resolve, reject) =>
     pipeline.toFile(tmpFilePath, err => {
       if (err) {
         return reject(err)
@@ -66,10 +67,6 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
       return resolve()
     })
   )
-
-  fs.createReadStream(file.absolutePath).pipe(pipeline)
-
-  await toFilePromise
 }
 
 const optimize = svg => {

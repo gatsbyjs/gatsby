@@ -62,11 +62,12 @@ exports.processFile = (file, transforms, options = {}) => {
     if (!options.stripMetadata) {
       pipeline = pipeline.withMetadata()
     }
+    fs.createReadStream(file).pipe(pipeline)
   } catch (err) {
     throw new SharpError(`Failed to load image ${file} into sharp.`, err)
   }
 
-  const transformsPromises = transforms.map(async transform => {
+  return transforms.map(async transform => {
     try {
       const { outputPath, args } = transform
       debug(`Start processing ${outputPath}`)
@@ -167,10 +168,6 @@ exports.processFile = (file, transforms, options = {}) => {
 
     return transform
   })
-
-  fs.createReadStream(file).pipe(pipeline)
-
-  return transformsPromises
 }
 
 exports.createArgsDigest = args => {
