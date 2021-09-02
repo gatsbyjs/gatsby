@@ -292,7 +292,7 @@ export function loadPlugins(
     incompatibleGatsbyCloudPlugin(plugins)
   ) {
     reporter.panic(
-      `Plugin gatsby-plugin-gatsby-cloud is not compatible with your gatsby version. Please upgrade to gatsby-plugin-gatsby-cloud@alpha`
+      `Plugin gatsby-plugin-gatsby-cloud is not compatible with your gatsby version. Please upgrade to gatsby-plugin-gatsby-cloud@alpha-9689ff`
     )
   }
 
