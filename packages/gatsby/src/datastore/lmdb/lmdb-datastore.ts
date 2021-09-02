@@ -37,6 +37,8 @@ const rootDbFile =
       }`
     : `datastore`
 
+let fullDbPath = process.cwd() + `/.cache/data/` + rootDbFile
+
 let rootDb
 let databases
 
@@ -44,7 +46,7 @@ function getRootDb(): RootDatabase {
   if (!rootDb) {
     rootDb = open({
       name: `root`,
-      path: process.cwd() + `/.cache/data/` + rootDbFile,
+      path: fullDbPath,
       compression: true,
     })
   }
@@ -211,7 +213,13 @@ async function ready(): Promise<void> {
   await lastOperationPromise
 }
 
-export function setupLmdbStore(): IDataStore {
+export function setupLmdbStore({
+  dbPath,
+}: { dbPath?: string } = {}): IDataStore {
+  if (dbPath) {
+    fullDbPath = dbPath
+  }
+
   replaceReducer({
     nodes: (state = new Map(), action) =>
       action.type === `DELETE_CACHE` ? new Map() : state,

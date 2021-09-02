@@ -96,7 +96,7 @@ function createQueue<QueryIDType>({
   function worker(queryId: QueryIDType, cb): void {
     const job = createJobFn(state, queryId)
     if (!job) {
-      cb(null, undefined)
+      process.nextTick(() => cb(null, undefined))
       return
     }
     queryRunner(graphqlRunner, job, activity?.span)
@@ -253,7 +253,7 @@ function createPageQueryJob(
   const { path, componentPath, context } = page
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     const { mode } = page
-    if (mode !== `SSG`) {
+    if (mode !== `SSG` && state.program?._?.[0] !== `develop`) {
       return undefined
     }
   }
