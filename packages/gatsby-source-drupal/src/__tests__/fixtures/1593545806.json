@@ -2,6 +2,11 @@
   "timestamp": 1593545807,
   "entities": [
     {
+      "action": "delete",
+      "id": "file-4",
+      "type": "file--file"
+    },
+    {
       "jsonapi": {
         "version": "1.0",
         "meta": {

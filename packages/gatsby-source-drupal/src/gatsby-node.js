@@ -14,7 +14,11 @@ const {
   isFileNode,
   createNodeIdWithVersion,
 } = require(`./normalize`)
-const { handleReferences, handleWebhookUpdate } = require(`./utils`)
+const {
+  handleReferences,
+  handleWebhookUpdate,
+  handleDeletedNode,
+} = require(`./utils`)
 
 const agent = {
   http: new HttpAgent(),
@@ -149,19 +153,15 @@ exports.sourceNodes = async (
         }
 
         for (const nodeToDelete of nodesToDelete) {
-          const nodeIdToDelete = createNodeId(
-            createNodeIdWithVersion(
-              nodeToDelete.id,
-              nodeToDelete.type,
-              getOptions().languageConfig
-                ? nodeToDelete.attributes?.langcode
-                : `und`,
-              nodeToDelete.attributes?.drupal_internal__revision_id,
-              entityReferenceRevisions
-            )
-          )
-          actions.deleteNode(getNode(nodeIdToDelete))
-          reporter.log(`Deleted node: ${nodeIdToDelete}`)
+          const deletedNode = await handleDeletedNode({
+            actions,
+            getNode,
+            node: nodeToDelete,
+            createNodeId,
+            createContentDigest,
+            entityReferenceRevisions,
+          })
+          reporter.log(`Deleted node: ${deletedNode.id}`)
         }
 
         changesActivity.end()
@@ -248,21 +248,14 @@ exports.sourceNodes = async (
         const nodesToSync = res.body.entities
         for (const nodeSyncData of nodesToSync) {
           if (nodeSyncData.action === `delete`) {
-            actions.deleteNode(
-              getNode(
-                createNodeId(
-                  createNodeIdWithVersion(
-                    nodeSyncData.id,
-                    nodeSyncData.type,
-                    getOptions().languageConfig
-                      ? nodeSyncData.attributes.langcode
-                      : `und`,
-                    nodeSyncData.attributes?.drupal_internal__revision_id,
-                    entityReferenceRevisions
-                  )
-                )
-              )
-            )
+            handleDeletedNode({
+              actions,
+              getNode,
+              node: nodeSyncData,
+              createNodeId,
+              createContentDigest,
+              entityReferenceRevisions,
+            })
           } else {
             // The data could be a single Drupal entity or an array of Drupal
             // entities to update.
