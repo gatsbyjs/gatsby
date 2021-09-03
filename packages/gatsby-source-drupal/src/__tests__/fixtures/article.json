@@ -43,6 +43,32 @@
             "id": "file-1"
           }
         },
+        "field_secondary_image": {
+          "data": [
+            {
+              "type": "file--file",
+              "id": "file-4"
+            }
+          ]
+        },
+        "field_secondary_multiple_image": {
+          "data": [
+            {
+              "type": "file--file",
+              "id": "file-3"
+            },
+            {
+              "type": "file--file",
+              "id": "file-4"
+            }
+          ]
+        },
+        "field_tertiary_image": {
+          "data": {
+            "type": "file--file",
+            "id": "file-4"
+          }
+        },
         "field_tags": {
           "data": null
         }
