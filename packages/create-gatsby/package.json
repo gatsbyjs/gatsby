@@ -20,7 +20,7 @@
     "@babel/runtime": "^7.14.8",
     "@types/configstore": "^4.0.0",
     "@types/fs-extra": "^9.0.12",
-    "@types/node": "^14.17.9",
+    "@types/node": "^14.17.14",
     "ansi-wordwrap": "^1.0.2",
     "common-tags": "^1.8.0",
     "enquirer": "^2.3.6",
