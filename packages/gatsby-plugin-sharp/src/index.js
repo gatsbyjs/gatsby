@@ -24,7 +24,13 @@ const { getDominantColor } = require(`./utils`)
 
 const imageSizeCache = new Map()
 
-const doGetImageSizeAsync = async file => {
+const getImageSizeAsync = async file => {
+  if (
+    process.env.NODE_ENV !== `test` &&
+    imageSizeCache.has(file.internal.contentDigest)
+  ) {
+    return imageSizeCache.get(file.internal.contentDigest)
+  }
   const input = fs.createReadStream(file.absolutePath)
   const dimensions = await imageSize(input)
 
@@ -34,23 +40,6 @@ const doGetImageSizeAsync = async file => {
       ``
     )
   }
-  return dimensions
-}
-
-const getImageSizeAsync = async file => {
-  if (
-    process.env.NODE_ENV !== `test` &&
-    imageSizeCache.has(file.internal.contentDigest)
-  ) {
-    return imageSizeCache.get(file.internal.contentDigest)
-  }
-
-  const inFlightPromise = doGetImageSizeAsync(file)
-
-  // we first store promise to also memoize/de-dupe in-flight work
-  imageSizeCache.set(file.internal.contentDigest, inFlightPromise)
-
-  const dimensions = await inFlightPromise
 
   imageSizeCache.set(file.internal.contentDigest, dimensions)
   return dimensions
@@ -89,12 +78,12 @@ exports.setActions = _actions => {
 
 exports.generateImageData = generateImageData
 
-async function calculateImageDimensionsAndAspectRatio(file, options) {
-  const dimensions = await getImageSizeAsync(file)
+function calculateImageDimensionsAndAspectRatio(file, options) {
+  const dimensions = getImageSize(file)
   return getDimensionsAndAspectRatio(dimensions, options)
 }
 
-async function prepareQueue({ file, args }) {
+function prepareQueue({ file, args }) {
   const { pathPrefix, ...options } = args
   const argsDigestShort = createArgsDigest(options)
   const imgSrc = `/${file.name}.${options.toFormat}`
@@ -109,8 +98,10 @@ async function prepareQueue({ file, args }) {
   // make sure outputDir is created
   fs.ensureDirSync(outputDir)
 
-  const { width, height, aspectRatio } =
-    await calculateImageDimensionsAndAspectRatio(file, options)
+  const { width, height, aspectRatio } = calculateImageDimensionsAndAspectRatio(
+    file,
+    options
+  )
 
   // encode the file name for URL
   const encodedImgSrc = `/${encodeURIComponent(file.name)}.${options.toFormat}`
@@ -172,10 +163,10 @@ function lazyJobsEnabled() {
   )
 }
 
-async function queueImageResizing({ file, args = {}, reporter }) {
+function queueImageResizing({ file, args = {}, reporter }) {
   const fullOptions = healOptions(getPluginOptions(), args, file.extension)
   const { src, width, height, aspectRatio, relativePath, outputDir, options } =
-    await prepareQueue({ file, args: createTransformObject(fullOptions) })
+    prepareQueue({ file, args: createTransformObject(fullOptions) })
 
   // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
   const finishedPromise = createJob(
@@ -208,12 +199,12 @@ async function queueImageResizing({ file, args = {}, reporter }) {
   }
 }
 
-async function batchQueueImageResizing({ file, transforms = [], reporter }) {
+function batchQueueImageResizing({ file, transforms = [], reporter }) {
   const operations = []
   const images = []
 
   // loop through all transforms to set correct variables
-  for (const transform of transforms) {
+  transforms.forEach(transform => {
     const {
       src,
       width,
@@ -222,7 +213,7 @@ async function batchQueueImageResizing({ file, transforms = [], reporter }) {
       relativePath,
       outputDir,
       options,
-    } = await prepareQueue({ file, args: transform })
+    } = prepareQueue({ file, args: transform })
     // queue operations of an image
     operations.push({
       outputPath: relativePath,
@@ -239,7 +230,7 @@ async function batchQueueImageResizing({ file, transforms = [], reporter }) {
       originalName: file.base,
       finishedPromise: null,
     })
-  }
+  })
 
   const finishedPromise = createJob(
     {
@@ -461,10 +452,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // images are intended to be displayed at their native resolution.
   let metadata
   try {
-    const pipeline = sharp()
-    fs.createReadStream(file.absolutePath).pipe(pipeline)
-
-    metadata = await pipeline.metadata()
+    metadata = await sharp(file.absolutePath).metadata()
   } catch (err) {
     reportError(
       `Failed to retrieve metadata from image ${file.absolutePath}`,
@@ -567,7 +555,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     return arrrgs
   })
 
-  const images = await batchQueueImageResizing({
+  const images = batchQueueImageResizing({
     file,
     transforms,
     reporter,
@@ -706,7 +694,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
     return arrrgs
   })
 
-  const images = await batchQueueImageResizing({
+  const images = batchQueueImageResizing({
     file,
     transforms,
     reporter,
