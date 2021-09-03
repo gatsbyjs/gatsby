@@ -105,6 +105,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const { queryIds } = await calculateDirtyQueries({ store })
 
+  // Only run queries with mode SSG
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
+      query => query.mode === `SSG`
+    )
+  }
+
   let waitForWorkerPoolRestart = Promise.resolve()
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     await runQueriesInWorkersQueue(workerPool, queryIds)

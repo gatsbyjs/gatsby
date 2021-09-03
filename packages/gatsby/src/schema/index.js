@@ -8,6 +8,7 @@ const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
 const { builtInFieldExtensions } = require(`./extensions`)
 const { builtInTypeDefinitions } = require(`./types/built-in-types`)
 const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
+const { shouldGenerateEngines } = require(`../utils/engines-helpers`)
 
 const getAllTypeDefinitions = () => {
   const {
@@ -101,9 +102,18 @@ const build = async ({
     schemaCustomization: { thirdPartySchemas, printConfig },
     inferenceMetadata,
     config: { mapping: typeMapping },
+    program: { directory },
   } = store.getState()
 
   const typeConflictReporter = new TypeConflictReporter()
+
+  const enginePrintConfig =
+    _CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()
+      ? {
+          path: `${directory}/.cache/schema.gql`,
+          rewrite: true,
+        }
+      : undefined
 
   const fieldExtensions = getAllFieldExtensions()
   const schemaComposer = createSchemaComposer({ fieldExtensions })
@@ -114,6 +124,7 @@ const build = async ({
     thirdPartySchemas,
     typeMapping,
     printConfig,
+    enginePrintConfig,
     typeConflictReporter,
     inferenceMetadata,
     freeze,

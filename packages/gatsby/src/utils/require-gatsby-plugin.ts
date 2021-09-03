@@ -17,7 +17,7 @@ export function requireGatsbyPlugin(
 
   let pluginModule = pluginModuleCache.get(key)
   if (!pluginModule) {
-    pluginModule = require(`${plugin.resolve}/${module}`)
+    pluginModule = require(require.resolve(`${plugin.resolve}/${module}`))
     pluginModuleCache.set(key, pluginModule)
   }
   return pluginModule
