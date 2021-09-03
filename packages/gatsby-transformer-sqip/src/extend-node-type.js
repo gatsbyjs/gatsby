@@ -134,7 +134,7 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
   }
 }
 
-async function sqipContentful({ type, cache: originalCache, store }) {
+async function sqipContentful({ cache: originalCache, store, reporter }) {
   const {
     schemes: { ImageResizingBehavior, ImageCropFocusType },
   } = require(`gatsby-source-contentful`)
@@ -248,6 +248,7 @@ async function sqipContentful({ type, cache: originalCache, store }) {
           name,
           cache,
           ext: extension,
+          reporter,
         })
 
         const contentDigest = await md5File(absolutePath)
