@@ -267,13 +267,12 @@ async function generateBase64({ file, args = {}, reporter }) {
   })
   let pipeline
   try {
-    pipeline = !options.failOnError
-      ? sharp(file.absolutePath, { failOnError: false })
-      : sharp(file.absolutePath)
+    pipeline = !options.failOnError ? sharp({ failOnError: false }) : sharp()
 
     if (!options.rotate) {
       pipeline.rotate()
     }
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return null
@@ -413,7 +412,10 @@ async function getTracedSVG({ file, options, cache, reporter }) {
 async function stats({ file, reporter }) {
   let imgStats
   try {
-    imgStats = await sharp(file.absolutePath).stats()
+    const pipeline = sharp()
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
+
+    imgStats = await pipeline.stats()
   } catch (err) {
     reportError(
       `Failed to get stats for image ${file.absolutePath}`,
@@ -450,7 +452,10 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // images are intended to be displayed at their native resolution.
   let metadata
   try {
-    metadata = await sharp(file.absolutePath).metadata()
+    const pipeline = sharp()
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
+
+    metadata = await pipeline.metadata()
   } catch (err) {
     reportError(
       `Failed to retrieve metadata from image ${file.absolutePath}`,
