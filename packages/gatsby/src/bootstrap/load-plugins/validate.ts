@@ -230,7 +230,9 @@ async function validatePluginsOptions(
 
                       try {
                         const resolvedPlugin = resolvePlugin(value, rootDir)
-                        const modulePath = `${resolvedPlugin.resolve}/${entry}`
+                        const modulePath = require.resolve(
+                          `${resolvedPlugin.resolve}/${entry}`
+                        )
                         value.modulePath = modulePath
                         value.module = require(modulePath)
 

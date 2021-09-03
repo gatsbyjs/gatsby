@@ -72,11 +72,7 @@ export async function createGraphqlEngineBundle(): Promise<any> {
         },
         {
           test: /\.txt/,
-          use: [
-            {
-              loader: require.resolve(`file-loader`),
-            },
-          ],
+          type: `asset/resource`,
         },
       ],
     },
@@ -98,11 +94,15 @@ export async function createGraphqlEngineBundle(): Promise<any> {
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
-      if (err) {
-        return reject(err)
-      } else {
+      compiler.close(closeErr => {
+        if (err) {
+          return reject(err)
+        }
+        if (closeErr) {
+          return reject(closeErr)
+        }
         return resolve(stats?.compilation)
-      }
+      })
     })
   })
 }

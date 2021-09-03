@@ -20,7 +20,6 @@ const {
 } = require(`graphql-compose`)
 const { getDataStore, getNode, getNodesByType } = require(`../datastore`)
 
-const { shouldGenerateEngines } = require(`../utils/engines-helpers`)
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
@@ -59,6 +58,7 @@ const buildSchema = async ({
   fieldExtensions,
   thirdPartySchemas,
   printConfig,
+  enginePrintConfig,
   typeConflictReporter,
   inferenceMetadata,
   freeze = false,
@@ -73,6 +73,7 @@ const buildSchema = async ({
     fieldExtensions,
     thirdPartySchemas,
     printConfig,
+    enginePrintConfig,
     typeConflictReporter,
     inferenceMetadata,
     parentSpan,
@@ -160,6 +161,7 @@ const updateSchemaComposer = async ({
   fieldExtensions,
   thirdPartySchemas,
   printConfig,
+  enginePrintConfig,
   typeConflictReporter,
   inferenceMetadata,
   parentSpan,
@@ -197,18 +199,10 @@ const updateSchemaComposer = async ({
       schemaComposer,
       parentSpan: activity.span,
     })
-    if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+    if (enginePrintConfig) {
       // make sure to print schema that will be used when bundling graphql-engine
-      const graphqlEngineSnapshotPath = process.cwd() + `/.cache/schema.gql`
-      try {
-        await require(`fs-extra`).remove(graphqlEngineSnapshotPath)
-      } catch (e) {
-        // that's fine, it probably didn't exist yet
-        // we only delete if it exist because printTypeDefinitions will
-        // be noisy no-op if file exists
-      }
       await printTypeDefinitions({
-        config: { path: graphqlEngineSnapshotPath },
+        config: enginePrintConfig,
         schemaComposer,
         parentSpan: activity.span,
       })

@@ -6,7 +6,6 @@ export function setGatsbyPluginCache(
   moduleObject: any
 ) {
   const key = `${plugin.name}/${module}`
-  console.log(`Setting module: ${key}`)
   pluginModuleCache.set(key, moduleObject)
 }
 
@@ -18,7 +17,7 @@ export function requireGatsbyPlugin(
 
   let pluginModule = pluginModuleCache.get(key)
   if (!pluginModule) {
-    pluginModule = require(`${plugin.resolve}/${module}`)
+    pluginModule = require(require.resolve(`${plugin.resolve}/${module}`))
     pluginModuleCache.set(key, pluginModule)
   }
   return pluginModule
