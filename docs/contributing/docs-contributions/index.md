@@ -10,7 +10,7 @@ When writing (or reviewing) learning materials that show Gatsby users how to com
 
 ## Top priorities
 
-Check the GitHub repo for issues labeled with ["type: documentation" and "good first issue"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22good+first+issue%22) for your first time contributing to Gatsby, or [type: documentation" and "help wanted"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22help+wanted%22) to see all documentation issues that are ready for community help. Once you start a Pull Request to address one of these issues, you can remove the "help wanted" label. As well, examine the list of articles that haven't been fully fleshed out at the [Stub List](/contributing/stub-list).
+Check the GitHub repo for issues labeled with ["type: documentation" and "good first issue"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22good+first+issue%22) for your first time contributing to Gatsby, or [type: documentation" and "help wanted"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22help+wanted%22) to see all documentation issues that are ready for community help. Once you start a Pull Request to address one of these issues, you can remove the "help wanted" label.
 
 ## Options for contributing to the Gatsby docs
 
@@ -37,7 +37,7 @@ For the purposes of an accessible document outline, content headings should go i
 
 ## Modifying Markdown files
 
-> 💡 New to writing Markdown? Check out the Gatsby [guide on Markdown Syntax](/docs/how-to/routing/mdx/markdown-syntax/)!
+> 💡 New to writing Markdown? Check out the Gatsby [guide on Markdown Syntax](/docs/reference/markdown-syntax/)!
 
 1. If you want to add/modify any Gatsby documentation, go to the
    [docs folder](https://github.com/gatsbyjs/gatsby/tree/master/docs) or [contributing folder](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) on GitHub and
@@ -86,9 +86,9 @@ The docs include custom-built components to aid with navigation. In order to cus
 
 ### Adjusting breadcrumb titles
 
-The `<Breadcrumb />` component is used in layout files to display the hierarchy of pages a user is currently browsing on at the top of each doc.
+The `<Breadcrumb />` component is used in layout files to display the hierarchy of pages a user is currently browsing on at the top of each doc. Currently, you can only change the breadcrumb titles if you have access to the private GitHub repo where the Gatsby docs site is built. (This is only available to internal Gatsby staff at this time. We plan to make this available to open-source community members in the future, but we don't yet have a timeline for when that will happen.)
 
-To alter the title of a doc that is displayed in the Breadcrumb component, `breadcrumbTitle` is supported as a key in the [sidebar YAML files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars). It is commonly used to provide an abbreviated version of a doc's title when displayed next to its parent page title, e.g. shortening "Adding a Custom webpack Config" to "webpack Config".
+To alter the title of a doc that is displayed in the Breadcrumb component, `breadcrumbTitle` is supported as a key in the sidebar YAML files. It is commonly used to provide an abbreviated version of a doc's title when displayed next to its parent page title, e.g. shortening "Adding a Custom webpack Config" to "webpack Config".
 
 ```yaml
 - title: Adding Page Transitions
@@ -145,9 +145,9 @@ Sometimes it makes sense to move or rename a file as part of docs restructuring 
 
 - Run proposed structure changes by the Gatsby docs team in [a GitHub issue](/contributing/how-to-file-an-issue/) to ensure your change is accepted.
 - Update all instances of the old URL to your new one. [Find and replace](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) in VS Code can help. Check that the context of the original link reference still makes sense with the new one.
-- For SEO purposes, add a redirect to [`www/redirects.yaml`](https://github.com/gatsbyjs/gatsby/tree/master/www/redirects.yaml). Here's an example:
+- For SEO purposes, add a redirect to `legacy-redirects.yaml`. (This file currently only exists in the private repo where the Gatsby docs site is built. Only internal Gatsby staff have access to it.) Here's an example:
 
-```yaml:title=www/redirects.yaml
+```yaml:title=legacy-redirects.yaml
 - fromPath: /docs/source-plugin-tutorial/
   toPath: /tutorial/source-plugin-tutorial/
 ```
