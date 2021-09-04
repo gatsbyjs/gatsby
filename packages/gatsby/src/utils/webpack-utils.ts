@@ -183,7 +183,6 @@ export const createWebpackUtils = (
   const isSSR = stage.includes(`html`)
   const { config } = store.getState()
 
-  const useJsxAutomaticRuntime = config.jsxAutomaticRuntime
   const makeExternalOnly =
     (original: RuleFactory) =>
     (options = {}): RuleSetRule => {
@@ -367,7 +366,7 @@ export const createWebpackUtils = (
       return {
         options: {
           stage,
-          reactRuntime: useJsxAutomaticRuntime ? `automatic` : `classic`,
+          reactRuntime: config.jsxRuntime,
           cacheDirectory: path.join(
             program.directory,
             `.cache`,
@@ -787,7 +786,7 @@ export const createWebpackUtils = (
         `/bower_components/`,
         VIRTUAL_MODULES_BASE_PATH,
       ],
-      ...eslintConfig(schema, useJsxAutomaticRuntime),
+      ...eslintConfig(schema, config.jsxRuntime === `automatic`),
     }
     // @ts-ignore
     return new ESLintPlugin(options)
