@@ -66,7 +66,7 @@ const getAppDataUrl = () =>
 const createElement = React.createElement
 
 export const sanitizeComponents = components => {
-  const componentsArray = [].concat(components).flat(Infinity)
+  const componentsArray = [].concat(components).flat(Infinity).filter(Boolean)
 
   return componentsArray.map(component => {
     // Ensure manifest is always loaded from content server
