@@ -22,6 +22,7 @@ import {
 import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
 import { eslintConfig, eslintRequiredConfig } from "./eslint-config"
+import { store } from "../redux"
 
 type Loader = string | { loader: string; options?: { [name: string]: any } }
 type LoaderResolver<T = Record<string, unknown>> = (options?: T) => Loader
@@ -180,8 +181,9 @@ export const createWebpackUtils = (
   const PRODUCTION = !stage.includes(`develop`)
 
   const isSSR = stage.includes(`html`)
+  const { config } = store.getState()
 
-  const jsxRuntimeExists = reactHasJsxRuntime()
+  const useJsxAutomaticRuntime = config.jsxAutomaticRuntime
   const makeExternalOnly =
     (original: RuleFactory) =>
     (options = {}): RuleSetRule => {
@@ -365,7 +367,7 @@ export const createWebpackUtils = (
       return {
         options: {
           stage,
-          reactRuntime: jsxRuntimeExists ? `automatic` : `classic`,
+          reactRuntime: useJsxAutomaticRuntime ? `automatic` : `classic`,
           cacheDirectory: path.join(
             program.directory,
             `.cache`,
@@ -785,7 +787,7 @@ export const createWebpackUtils = (
         `/bower_components/`,
         VIRTUAL_MODULES_BASE_PATH,
       ],
-      ...eslintConfig(schema, jsxRuntimeExists),
+      ...eslintConfig(schema, useJsxAutomaticRuntime),
     }
     // @ts-ignore
     return new ESLintPlugin(options)
@@ -809,13 +811,5 @@ export const createWebpackUtils = (
     loaders,
     rules,
     plugins,
-  }
-}
-
-export function reactHasJsxRuntime(): boolean {
-  if (process.env.GATSBY_JSX_AUTOMATIC_RUNTIME) {
-    return true
-  } else {
-    return false
   }
 }

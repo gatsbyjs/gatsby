@@ -94,6 +94,7 @@ export interface IGatsbyConfig {
   pathPrefix?: string
   assetPrefix?: string
   mapping?: Record<string, string>
+  jsxAutomaticRuntime: boolean
 }
 
 export interface IGatsbyNode {

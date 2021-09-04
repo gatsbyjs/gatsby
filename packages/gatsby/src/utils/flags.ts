@@ -226,20 +226,6 @@ const activeFlags: Array<IFlag> = [
     },
     requires: `Requires Node v14.10 or above.`,
   },
-  {
-    name: `JSX_AUTOMATIC_RUNTIME`,
-    env: `GATSBY_JSX_AUTOMATIC_RUNTIME`,
-    command: `all`,
-    telemetryId: false,
-    experimental: false,
-    description: `Use the new React automatic JSX transform.`,
-    testFitness: (): fitnessEnum => {
-      const semverConstraints = {
-        react: `>=17.0.0`,
-      }
-      return satisfiesSemvers(semverConstraints)
-    },
-  },
 ]
 
 export default activeFlags
