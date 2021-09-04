@@ -32,6 +32,7 @@ export interface IBuildArgs extends IProgram {
   profile: boolean
   graphqlTracing: boolean
   openTracingConfigFile: string
+  // TODO remove in v4
   keepPageRenderer: boolean
 }
 
@@ -124,7 +125,7 @@ const runWebpack = (
             } = require(`../utils/dev-ssr/render-dev-html`)
             // Make sure we use the latest version during development
             if (oldHash !== `` && newHash !== oldHash) {
-              restartWorker(`${directory}/public/render-page.js`)
+              restartWorker(`${directory}/.cache/_routes/render-page.js`)
             }
 
             oldHash = newHash
@@ -167,7 +168,7 @@ const doBuildRenderer = async (
 
   // render-page.js is hard coded in webpack.config
   return {
-    rendererPath: `${directory}/public/render-page.js`,
+    rendererPath: `${directory}/.cache/_routes/render-page.js`,
     waitForCompilerClose,
   }
 }
@@ -183,15 +184,6 @@ export const buildRenderer = async (
   })
 
   return doBuildRenderer(program, config, stage, parentSpan)
-}
-
-export const deleteRenderer = async (rendererPath: string): Promise<void> => {
-  try {
-    await fs.remove(rendererPath)
-    await fs.remove(`${rendererPath}.map`)
-  } catch (e) {
-    // This function will fail on Windows with no further consequences.
-  }
 }
 
 export interface IRenderHtmlResult {
@@ -370,7 +362,6 @@ export const buildHTML = async ({
 }): Promise<void> => {
   const { rendererPath } = await buildRenderer(program, stage, activity.span)
   await doBuildPages(rendererPath, pagePaths, activity, workerPool, stage)
-  await deleteRenderer(rendererPath)
 }
 
 export async function buildHTMLPagesAndDeleteStaleArtifacts({
@@ -439,15 +430,6 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     buildHTMLActivityProgress.end()
   } else {
     reporter.info(`There are no new or changed html files to build.`)
-  }
-
-  // TODO move to per page builds in _routes directory
-  if (!program.keepPageRenderer && _CFLAGS_.GATSBY_MAJOR !== `4`) {
-    try {
-      await deleteRenderer(pageRenderer)
-    } catch (err) {
-      // pass through
-    }
   }
 
   if (toDelete.length > 0) {

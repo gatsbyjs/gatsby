@@ -1,6 +1,5 @@
 require(`v8-compile-cache`)
 
-const { isCI } = require(`gatsby-core-utils`)
 const crypto = require(`crypto`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
@@ -164,9 +163,12 @@ module.exports = async (
         // Generate the file needed to SSR pages.
         // Deleted by build-html.js, since it's not needed for production.
         return {
-          path: directoryPath(`public`),
-          filename: `render-page.js`,
-          libraryTarget: `commonjs`,
+          path: directoryPath(`.cache`, `_routes`),
+          filename: `[name].js`,
+          chunkFilename: `[name].js`,
+          library: {
+            type: `commonjs`,
+          },
           publicPath: withTrailingSlash(publicPath),
         }
       case `build-javascript`:
@@ -201,23 +203,15 @@ module.exports = async (
             }
       case `develop-html`:
         return {
-          main: process.env.GATSBY_EXPERIMENTAL_DEV_SSR
+          "render-page": process.env.GATSBY_EXPERIMENTAL_DEV_SSR
             ? directoryPath(`.cache/ssr-develop-static-entry`)
             : directoryPath(`.cache/develop-static-entry`),
         }
-      case `build-ssr`: {
-        const entries = Object.create(null)
-        for (const [, { componentPath, componentChunkName }] of store.getState()
-          .components) {
-          entries[componentChunkName] = componentPath
-        }
-
-        return entries
-      }
-      case `build-html`:
+      case `build-html`: {
         return {
-          main: directoryPath(`.cache/static-entry`),
+          "render-page": directoryPath(`.cache/static-entry`),
         }
+      }
       case `build-javascript`:
         return hasES6ModuleSupport(directory)
           ? {
@@ -487,11 +481,7 @@ module.exports = async (
     }
 
     const target =
-      stage === `build-html` ||
-      stage === `develop-html` ||
-      stage === `build-ssr`
-        ? `node`
-        : `web`
+      stage === `build-html` || stage === `develop-html` ? `node` : `web`
     if (target === `web`) {
       resolve.alias[`@reach/router`] = path.join(
         getPackageRoot(`@gatsbyjs/reach-router`),
@@ -554,11 +544,7 @@ module.exports = async (
     resolve: getResolve(stage),
   }
 
-  if (
-    stage === `build-html` ||
-    stage === `develop-html` ||
-    stage === `build-ssr`
-  ) {
+  if (stage === `build-html` || stage === `develop-html`) {
     const [major, minor] = process.version.replace(`v`, ``).split(`.`)
     config.target = `node14.15`
   } else {
@@ -606,6 +592,12 @@ module.exports = async (
 
   if (stage === `build-html`) {
     config.optimization = {
+      splitChunks: {
+        cacheGroups: {
+          default: false,
+          defaultVendors: false,
+        },
+      },
       minimize: false,
     }
   }
@@ -724,11 +716,7 @@ module.exports = async (
     }
   }
 
-  if (
-    stage === `build-html` ||
-    stage === `develop-html` ||
-    stage === `build-ssr`
-  ) {
+  if (stage === `build-html` || stage === `develop-html`) {
     // externalize react, react-dom when develop-html or build-html(when not generating engines)
     const shouldMarkPackagesAsExternal =
       stage === `develop-html` ||
@@ -848,7 +836,6 @@ module.exports = async (
   if (
     stage === `build-javascript` ||
     stage === `build-html` ||
-    stage === `build-ssr` ||
     (process.env.GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE &&
       (stage === `develop` || stage === `develop-html`))
   ) {
@@ -885,7 +872,7 @@ module.exports = async (
   await apiRunnerNode(`onCreateWebpackConfig`, {
     getConfig,
     // we will converge to build-html later on but for now this was the fastest way to get SSR to work
-    stage: stage === `build-ssr` ? `build-html` : stage,
+    stage,
     rules,
     loaders,
     plugins,

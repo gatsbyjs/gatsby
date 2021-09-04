@@ -112,10 +112,10 @@ const ensurePathComponentInSSRBundle = async (
     report.panic(`page not found`, page)
   }
 
-  // Now check if it's written to public/render-page.js
+  // Now check if it's written to .cache/_routes/render-page.js
   const htmlComponentRendererPath = nodePath.join(
     directory,
-    `public/render-page.js`
+    `.cache/_routes/render-page.js`
   )
 
   // This search takes 1-10ms
@@ -232,7 +232,7 @@ export const renderDevHTML = ({
       })
     }
 
-    // Wait for public/render-page.js to update w/ the page component.
+    // Wait for .cache/_routes/render-page.js to update w/ the page component.
     const found = await ensurePathComponentInSSRBundle(pageObj, directory)
 
     // If we can't find the page, just force set isClientOnlyPage

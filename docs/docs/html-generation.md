@@ -95,7 +95,7 @@ Finally, we call [react-dom](https://reactjs.org/docs/react-dom.html) and render
 
 ## build-html.js
 
-So, we've built the means to generate HTML for a page. This webpack bundle is saved to `public/render-page.js`. Next, we need to use it to generate HTML for all the site's pages.
+So, we've built the means to generate HTML for a page. This webpack bundles are saved to `.cache/_routes/`. Next, we need to use it to generate HTML for all the site's pages.
 
 Page HTML does not depend on other pages. So we can perform this step in parallel. We use the [jest-worker](https://github.com/facebook/jest/tree/master/packages/jest-worker) library to make this easier. By default, the [render-html.ts](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/worker/render-html.ts) creates a pool of workers equal to the number of physical cores on your machine. You can configure the number of pools by passing an optional environment variable, [`GATSBY_CPU_COUNT`](/docs/multi-core-builds). It then partitions the pages into groups and sends them to the workers, which run [worker](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/worker).
 
