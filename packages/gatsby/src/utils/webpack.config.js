@@ -330,13 +330,10 @@ module.exports = async (
   function getMode() {
     switch (stage) {
       case `develop`:
-        return `development`
-      case `build-javascript`:
       case `develop-html`:
         return `development`
       case `build-javascript`:
       case `build-html`:
-        return `production`
       default:
         return `production`
     }
