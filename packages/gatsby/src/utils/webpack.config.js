@@ -303,9 +303,9 @@ module.exports = async (
   function getMode() {
     switch (stage) {
       case `develop`:
+      case `develop-html`:
         return `development`
       case `build-javascript`:
-      case `develop-html`:
       case `build-html`:
         return `production`
       default:
@@ -569,7 +569,7 @@ module.exports = async (
     }
   }
 
-  if (stage === `develop-html` || stage === `build-html`) {
+  if (stage === `build-html`) {
     config.optimization = {
       minimize: false,
     }
