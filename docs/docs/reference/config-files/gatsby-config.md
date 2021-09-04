@@ -355,3 +355,13 @@ See more about [Proxying API Requests in Develop](/docs/api-proxy/).
 ## Advanced proxying with `developMiddleware`
 
 See more about [adding develop middleware](/docs/api-proxy/#advanced-proxying).
+
+## jsxAutomaticRuntime
+
+Allows using JSX without having to import React.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  jsxAutomaticRuntime: true,
+}
+```
