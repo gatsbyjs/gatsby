@@ -50,7 +50,10 @@ export class GatsbyWebpackEslintGraphqlSchemaReload {
 
       // Hackish but works:
       // replacing original eslint options object with updated config
-      Object.assign(options, eslintConfig(schema, config.jsxRuntime))
+      Object.assign(
+        options,
+        eslintConfig(schema, config.jsxRuntime === `automatic`)
+      )
     })
   }
 }
