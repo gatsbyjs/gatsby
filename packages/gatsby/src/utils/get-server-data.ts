@@ -1,6 +1,7 @@
-import { match } from "node-match-path"
 import type { Request } from "express"
 import type { IGatsbyPage } from "../redux/types"
+
+import { match } from "@gatsbyjs/reach-router/lib/utils"
 
 export interface IServerData {
   headers?: Record<string, string>
@@ -18,34 +19,28 @@ interface IModuleWithServerData {
 }
 
 export async function getServerData(
-  req: Request,
-  page: Partial<IGatsbyPage> & { path: IGatsbyPage["path"] },
-  modulePath: string
+  req: Partial<Request> | undefined,
+  page: IGatsbyPage,
+  pagePath: string,
+  mod: IModuleWithServerData | undefined
 ): Promise<IServerData> {
-  // I wanted to use dynamic imports as esm wants us to do but sadly it doesn't support cache-busting yet.
-  // https://github.com/nodejs/modules/issues/307
-  let mod: IModuleWithServerData | undefined
-
-  try {
-    mod = require(modulePath)
-  } catch (err) {
-    return {}
-  }
-
   if (!mod?.getServerData) {
     return {}
   }
 
-  const { params } = match(
-    page.matchPath || page.path,
-    `/${req.params.pagePath}`
-  )
+  const ensuredLeadingSlash = pagePath.startsWith(`/`)
+    ? pagePath
+    : `/${pagePath}`
 
-  return mod.getServerData({
-    headers: new Map(Object.entries(req.headers)),
-    method: req.method,
-    url: req.url,
-    query: req.query,
+  const { params } = match(page.matchPath || page.path, ensuredLeadingSlash)
+
+  const getServerDataArg = {
+    headers: new Map(Object.entries(req?.headers ?? {})),
+    method: req?.method ?? `GET`,
+    url: req?.url ?? `"req" most likely wasn't passed in`,
+    query: req?.query ?? {},
     params,
-  })
+  }
+
+  return mod.getServerData(getServerDataArg)
 }

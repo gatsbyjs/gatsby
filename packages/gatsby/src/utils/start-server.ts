@@ -54,6 +54,7 @@ import {
 import { renderDevHTML } from "./dev-ssr/render-dev-html"
 import pDefer from "p-defer"
 import { getServerData, IServerData } from "./get-server-data"
+import { ROUTES_DIRECTORY } from "../constants"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -367,7 +368,7 @@ module.exports = {
               .get(page.componentChunkName)!
               .getEntrypointChunk().hash as string
             const modulePath = path.resolve(
-              `${program.directory}/.cache/_routes/${page.componentChunkName}.js`
+              `${program.directory}/${ROUTES_DIRECTORY}/${page.componentChunkName}.js`
             )
 
             // if webpack compilation is diff we delete old cache
@@ -378,9 +379,11 @@ module.exports = {
               delete require.cache[modulePath]
             }
 
+            const mod = require(modulePath)
+
             previousHashes.set(page.componentChunkName, componentHash)
 
-            serverDataPromise = getServerData(req, page, modulePath)
+            serverDataPromise = getServerData(req, page, potentialPagePath, mod)
           }
 
           let pageData: IPageDataWithQueryResult

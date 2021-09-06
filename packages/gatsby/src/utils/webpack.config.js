@@ -23,6 +23,7 @@ import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
 import { hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
 import { shouldGenerateEngines } from "./engines-helpers"
+import { ROUTES_DIRECTORY } from "../constants"
 const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
@@ -177,7 +178,7 @@ module.exports = async (
         }
       case `build-ssr`: {
         return {
-          path: directoryPath(`.cache/_routes/`),
+          path: directoryPath(ROUTES_DIRECTORY),
           filename: `[name].js`,
           libraryTarget: `commonjs2`,
         }

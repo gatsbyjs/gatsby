@@ -48,7 +48,6 @@ import {
   runQueriesInWorkersQueue,
 } from "../utils/worker/pool"
 import webpackConfig from "../utils/webpack.config.js"
-import { ROUTE_MANIFEST_PATH } from "../constants"
 import { webpack } from "webpack"
 import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpack"
 import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
@@ -306,35 +305,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       buildSpan,
     })
 
-  const pages = store.getState().pages
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    const routeManifestStream = fs.createWriteStream(
-      path.join(program.directory, ROUTE_MANIFEST_PATH)
-    )
-
-    // TODO order by specificity
-    for (const [_, page] of pages) {
-      if (page.mode === `SSG`) {
-        continue
-      }
-      routeManifestStream.write(
-        `{"path":"${page.path}","mode":"${page.mode}","componentChunkName":"${page.componentChunkName}"`
-      )
-
-      if (page.matchPath) {
-        routeManifestStream.write(`,"matchPath":"${page.matchPath}"`)
-      }
-
-      routeManifestStream.write(`}\n`)
-    }
-    routeManifestStream.close()
-  }
-
   const waitWorkerPoolEnd = Promise.all(workerPool.end())
 
   telemetry.addSiteMeasurement(`BUILD_END`, {
     pagesCount: toRegenerate.length, // number of html files that will be written
-    totalPagesCount: pages.size, // total number of pages
+    totalPagesCount: store.getState().pages.size, // total number of pages
   })
 
   const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {
