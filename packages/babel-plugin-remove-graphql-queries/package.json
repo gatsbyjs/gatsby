@@ -8,6 +8,9 @@
     "directory": "packages/babel-plugin-remove-graphql-queries"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-plugin-remove-graphql-queries#readme",
+  "dependencies": {
+    "@babel/runtime": "^7.14.8"
+  },
   "devDependencies": {
     "@babel/cli": "^7.14.8",
     "@babel/core": "^7.14.8",
@@ -28,8 +31,5 @@
   },
   "engines": {
     "node": ">=12.13.0"
-  },
-  "dependencies": {
-    "@babel/runtime": "^7.14.8"
   }
 }

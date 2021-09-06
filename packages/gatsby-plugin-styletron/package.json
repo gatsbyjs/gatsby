@@ -6,6 +6,9 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
+  "dependencies": {
+    "@babel/runtime": "^7.14.8"
+  },
   "devDependencies": {
     "@babel/cli": "^7.14.8",
     "@babel/core": "^7.14.8",
@@ -39,8 +42,5 @@
   },
   "engines": {
     "node": ">=12.13.0"
-  },
-  "dependencies": {
-    "@babel/runtime": "^7.14.8"
   }
 }

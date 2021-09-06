@@ -133,7 +133,7 @@ index 0b7931da5d..dbaf39f0aa 100644
 --- a/packages/gatsby-plugin-flow/package.json
 +++ b/packages/gatsby-plugin-flow/package.json
 @@ -35,7 +35,7 @@
-     "gatsby-plugin-utils": "^1.14.0-next.0"
+     "gatsby-plugin-utils": "^1.14.0-next.1"
    },
    "peerDependencies": {
 -    "gatsby": "^3.0.0-next.0"
@@ -328,7 +328,7 @@ index af70e129a7..89b2e83272 100644
 --- a/packages/gatsby-plugin-no-sourcemaps/package.json
 +++ b/packages/gatsby-plugin-no-sourcemaps/package.json
 @@ -21,7 +21,7 @@
-     "directory": "packages/gatsby-plugin-no-sourcemaps"
+     "@babel/runtime": "^7.14.8"
    },
    "peerDependencies": {
 -    "gatsby": "^3.0.0-next.0"
@@ -470,9 +470,9 @@ diff --git a/packages/gatsby-plugin-schema-snapshot/package.json b/packages/gats
 index ca7081c0c8..7c9c638a2f 100644
 --- a/packages/gatsby-plugin-schema-snapshot/package.json
 +++ b/packages/gatsby-plugin-schema-snapshot/package.json
-@@ -17,6 +17,6 @@
+@@ -23,6 +23,6 @@
+     "@babel/runtime": "^7.14.8"
    },
-   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-schema-snapshot#readme",
    "peerDependencies": {
 -    "gatsby": "^3.0.0-next.0"
 +    "gatsby": "^4.0.0-alpha-9689ff"

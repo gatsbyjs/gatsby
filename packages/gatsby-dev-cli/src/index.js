@@ -39,7 +39,9 @@ You typically only need to configure this once.`
   .alias(`h`, `help`)
   .nargs(`v`, 0)
   .alias(`v`, `version`)
-  .describe(`v`, `Print the currently installed version of Gatsby Dev CLI`).argv
+  .describe(`v`, `Print the currently installed version of Gatsby Dev CLI`)
+  .array(`compilerOptions`)
+  .describe(`c`, `set compiler options`).argv
 
 if (argv.version) {
   console.log(getVersionInfo())
@@ -114,10 +116,19 @@ gatsby-dev will pick them up.
   }
 }
 
+const compilerOptions = {}
+if (argv.compilerOptions) {
+  argv.compilerOptions.forEach(option => {
+    const [key, value] = option.split(`=`)
+    compilerOptions[key] = value
+  })
+}
+
 watch(gatsbyLocation, argv.packages, {
   localPackages,
   quiet: argv.quiet,
   scanOnce: argv.scanOnce,
   forceInstall: argv.forceInstall,
+  compilerOptions,
   monoRepoPackages,
 })

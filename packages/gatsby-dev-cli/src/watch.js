@@ -13,6 +13,7 @@ const {
   promisifiedSpawn,
 } = require(`./utils/promisified-spawn`)
 const { traversePackagesDeps } = require(`./utils/traverse-package-deps`)
+const { applyPatches, removePatches } = require(`./utils/patches`)
 
 let numCopied = 0
 
@@ -30,7 +31,14 @@ const MAX_COPY_RETRIES = 3
 async function watch(
   root,
   packages,
-  { scanOnce, quiet, forceInstall, monoRepoPackages, localPackages }
+  {
+    scanOnce,
+    quiet,
+    forceInstall,
+    monoRepoPackages,
+    localPackages,
+    compilerOptions,
+  }
 ) {
   setDefaultSpawnStdio(quiet ? `ignore` : `inherit`)
   // determine if in yarn workspace - if in workspace, force using verdaccio
@@ -141,13 +149,24 @@ async function watch(
   if (forceInstall) {
     try {
       if (allPackagesToWatch.length > 0) {
-        await publishPackagesLocallyAndInstall({
-          packagesToPublish: allPackagesToWatch,
-          root,
-          localPackages,
-          ignorePackageJSONChanges,
-          yarnWorkspaceRoot,
-        })
+        try {
+          if (compilerOptions.GATSBY_MAJOR) {
+            await applyPatches(root, compilerOptions.GATSBY_MAJOR)
+          }
+
+          await publishPackagesLocallyAndInstall({
+            packagesToPublish: allPackagesToWatch,
+            root,
+            localPackages,
+            ignorePackageJSONChanges,
+            yarnWorkspaceRoot,
+            compilerOptions,
+          })
+        } finally {
+          if (compilerOptions.GATSBY_MAJOR) {
+            await removePatches(root, compilerOptions.GATSBY_MAJOR)
+          }
+        }
       } else {
         // run `yarn`
         const yarnInstallCmd = [`yarn`]
@@ -315,14 +334,26 @@ async function watch(
         isInitialScan = false
         if (packagesToPublish.size > 0) {
           isPublishing = true
-          await publishPackagesLocallyAndInstall({
-            packagesToPublish: Array.from(packagesToPublish),
-            root,
-            localPackages,
-            ignorePackageJSONChanges,
-          })
-          packagesToPublish.clear()
-          isPublishing = false
+
+          try {
+            if (compilerOptions.GATSBY_MAJOR) {
+              await applyPatches(root, compilerOptions.GATSBY_MAJOR)
+            }
+
+            await publishPackagesLocallyAndInstall({
+              packagesToPublish: Array.from(packagesToPublish),
+              root,
+              localPackages,
+              ignorePackageJSONChanges,
+              compilerOptions,
+            })
+            packagesToPublish.clear()
+            isPublishing = false
+          } finally {
+            if (compilerOptions.GATSBY_MAJOR) {
+              await removePatches(root, compilerOptions.GATSBY_MAJOR)
+            }
+          }
         } else if (anyPackageNotInstalled) {
           // run `yarn`
           const yarnInstallCmd = [`yarn`]

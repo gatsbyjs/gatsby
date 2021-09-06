@@ -102,6 +102,7 @@ const publishPackage = async ({
   root,
   versionPostFix,
   ignorePackageJSONChanges,
+  compilerOptions,
 }) => {
   const monoRepoPackageJsonPath = getMonorepoPackageJsonPath({
     packageName,
@@ -126,6 +127,15 @@ const publishPackage = async ({
     `npm`,
     [`publish`, `--tag`, `gatsby-dev`, `--registry=${registryUrl}`],
     {
+      env: {
+        COMPILER_OPTIONS: Object.keys(compilerOptions)
+          .reduce((env, key) => {
+            env.push(`${key}=${compilerOptions[key]}`)
+
+            return env
+          }, [])
+          .join(`,`),
+      },
       cwd: pathToPackage,
     },
   ]

@@ -48,6 +48,7 @@ exports.publishPackagesLocallyAndInstall = async ({
   root,
   ignorePackageJSONChanges,
   yarnWorkspaceRoot,
+  compilerOptions,
 }) => {
   await startServer()
 
@@ -62,6 +63,7 @@ exports.publishPackagesLocallyAndInstall = async ({
       root,
       versionPostFix,
       ignorePackageJSONChanges,
+      compilerOptions,
     })
   }
 
