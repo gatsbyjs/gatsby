@@ -54,6 +54,7 @@ const args = [
   [`gatsby`],
   {
     localPackages: [`gatsby`],
+    compilerOptions: {},
   },
 ]
 
