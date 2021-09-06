@@ -48,6 +48,7 @@ import {
   runQueriesInWorkersQueue,
 } from "../utils/worker/pool"
 import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpack"
+import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
@@ -172,6 +173,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildActivityTimer.end()
   }
 
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+    // client bundle is produced so static query maps should be ready
+    engineBundlingPromises.push(createPageSSRBundle())
+  }
+
   const webpackCompilationHash = stats.hash
   if (
     webpackCompilationHash !== store.getState().webpackCompilationHash ||
@@ -232,6 +238,20 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   try {
     const result = await buildRenderer(program, Stage.BuildHTML, buildSpan)
     pageRenderer = result.rendererPath
+    if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+      // for now copy page-render to `.cache` so page-ssr module can require it as a sibling module
+      const outputDir = path.join(program.directory, `.cache`, `page-ssr`)
+      engineBundlingPromises.push(
+        fs
+          .ensureDir(outputDir)
+          .then(() =>
+            fs.copyFile(
+              result.rendererPath,
+              path.join(outputDir, `render-page.js`)
+            )
+          )
+      )
+    }
     waitForCompilerCloseBuildHtml = result.waitForCompilerClose
   } catch (err) {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
@@ -239,7 +259,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildSSRBundleActivityProgress.end()
   }
 
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+    // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
+    program.keepPageRenderer = true
+  }
+
   await waitForWorkerPoolRestart
+
   const { toRegenerate, toDelete } =
     await buildHTMLPagesAndDeleteStaleArtifacts({
       program,
