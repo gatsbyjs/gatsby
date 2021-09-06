@@ -429,7 +429,7 @@ export const unstable_onPluginInit = _CFLAGS_.GATSBY_MAJOR !== `4`
  *
  * @example
  * let createJobV2
- * exports.unstable_onPluginInit = ({ actions }) => {
+ * exports.onPluginInit = ({ actions }) => {
  *   // store job creation action to use it later
  *   createJobV2 = actions.createJobV2
  * }
