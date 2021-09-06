@@ -559,7 +559,7 @@ export const publicLoader = {
   // TODO add deprecation to v4 so people use withErrorDetails and then we can remove in v5 and change default behaviour
   loadPageSync: (rawPath, options = {}) =>
     instance.loadPageSync(rawPath, options),
-  prefetch: rawPath => instance.prefetch(rawPath),
+  prefetch: (rawPath, options) => instance.prefetch(rawPath, options),
   isPageNotFound: rawPath => instance.isPageNotFound(rawPath),
   hovering: rawPath => instance.hovering(rawPath),
   loadAppData: () => instance.loadAppData(),

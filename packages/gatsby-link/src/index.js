@@ -1,5 +1,5 @@
-import PropTypes from "prop-types"
-import React from "react"
+import * as React from "react"
+import * as PropTypes from "prop-types"
 import { Link, Location } from "@gatsbyjs/reach-router"
 import { resolve } from "@gatsbyjs/reach-router/lib/utils"
 
@@ -224,7 +224,7 @@ class GatsbyLink extends React.Component {
           if (onMouseEnter) {
             onMouseEnter(e)
           }
-          ___loader.hovering(parsePath(prefixedTo).pathname)
+          ___loader.prefetch(parsePath(prefixedTo).pathname)
         }}
         onClick={e => {
           if (onClick) {

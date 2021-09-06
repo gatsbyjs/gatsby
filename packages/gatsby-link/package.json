@@ -28,18 +28,22 @@
     "gatsby"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "exports": "./dist/index.modern.js",
+  "module": "./dist/index.module.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
     "directory": "packages/gatsby-link"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
+    "build:microbundle": "microbundle build -i src/index.js -f cjs,modern,esm --jsx createElement --no-compress",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\" --extensions \".tsx,.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".tsx,.js\"",
+    "watch:microbundle": "microbundle build -i src/index.js -f cjs,modern,esm --jsx createElement --no-compress"
   },
-  "types": "index.d.ts",
+  "types": "dist/index.d.ts",
   "engines": {
     "node": ">=12.13.0"
   }
