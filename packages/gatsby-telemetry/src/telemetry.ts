@@ -17,7 +17,6 @@ import { showAnalyticsNotification } from "./show-analytics-notification"
 import { cleanPaths } from "./error-helpers"
 import { getDependencies } from "./get-dependencies"
 
-import { join, sep } from "path"
 import isDocker from "is-docker"
 import lodash from "lodash"
 
