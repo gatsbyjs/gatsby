@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@4.13.1/packages/gatsby-source-drupal) (2021-09-04)
+
+#### Bug Fixes
+
+- delete relationships to now deleted nodes [#32971](https://github.com/gatsbyjs/gatsby/issues/32971) [#33041](https://github.com/gatsbyjs/gatsby/issues/33041) ([a584ab0](https://github.com/gatsbyjs/gatsby/commit/a584ab03587de51101e66911b93d544bf91521ef))
+
 ## [4.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@4.13.0/packages/gatsby-source-drupal) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

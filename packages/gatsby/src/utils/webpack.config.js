@@ -303,12 +303,12 @@ module.exports = async (
 
   function getMode() {
     switch (stage) {
-      case `build-javascript`:
-        return `production`
       case `develop`:
       case `develop-html`:
+        return `development`
+      case `build-javascript`:
       case `build-html`:
-        return `development` // So we don't uglify the html bundle
+        return `production`
       default:
         return `production`
     }
@@ -532,6 +532,7 @@ module.exports = async (
   }
 
   const isCssModule = module => module.type === `css/mini-extract`
+
   if (stage === `develop`) {
     config.optimization = {
       splitChunks: {
@@ -565,7 +566,13 @@ module.exports = async (
           },
         },
       },
-      minimizer: [],
+      minimize: false,
+    }
+  }
+
+  if (stage === `build-html`) {
+    config.optimization = {
+      minimize: false,
     }
   }
 

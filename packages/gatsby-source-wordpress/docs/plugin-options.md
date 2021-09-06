@@ -58,6 +58,7 @@
     - [type.\_\_all.beforeChangeNode](#type__allbeforechangenode)
   - [type.RootQuery](#typerootquery)
   - [type.MediaItem](#typemediaitem)
+    - [type.MediaItem.createFileNodes](#typemediaitemcreatefilenodes)
     - [type.MediaItem.lazyNodes](#typemediaitemlazynodes)
     - [type.MediaItem.localFile](#typemediaitemlocalfile)
       - [type.MediaItem.localFile.excludeByMimeTypes](#typemediaitemlocalfileexcludebymimetypes)
@@ -1135,9 +1136,19 @@ A special type which is applied to any non-node root fields that are ingested an
 
 **Field type**: `Object`
 
+#### type.MediaItem.createFileNodes
+
+This option controls whether or not a File node will be automatically created for each MediaItem node (available on MediaItem.localFile). Set this to false if you don't want Gatsby to download the corresponding file for each media item.
+
+**Field type**: `Boolean`
+
+**Default value**: `true`
+
 #### type.MediaItem.lazyNodes
 
 Enables a different media item sourcing strategy. Instead of fetching Media Items that are referenced by other nodes, Media Items will be fetched in connection resolvers from other nodes. This may be desirable if you're not using all of the connected images in your WP instance. This is not currently recommended because it messes up cli output and can be slow due to query running concurrency.
+
+This option no longer works starting in Gatsby v4+. If you want to prevent this plugin from creating File nodes for each MediaItem node, set the type.MediaItem.createFileNodes option to false instead.
 
 **Field type**: `Boolean`
 
