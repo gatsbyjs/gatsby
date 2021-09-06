@@ -12,7 +12,7 @@ import * as fs from "fs-extra"
 import {
   constructPageDataString,
   getPagePathFromPageDataPath,
-} from "../page-data"
+} from "../page-data-helpers"
 // @ts-ignore render-page import will become valid later on (it's marked as external)
 import htmlComponentRenderer from "./render-page"
 
