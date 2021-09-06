@@ -65,6 +65,6 @@
     "watch": "nodemon --watch src --ext js,ts,tsx,json --exec \"yarn run build\""
   },
   "dependencies": {
-    "@babel/runtime": "^7.14.8"
+    "@babel/runtime": "^7.15.4"
   }
 }

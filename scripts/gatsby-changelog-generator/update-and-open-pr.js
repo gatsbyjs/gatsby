@@ -31,7 +31,7 @@ async function run() {
     return
   }
 
-  const commitMessage = `DO NOT MERGE: testing`
+  const commitMessage = `chore(changelogs): update changelogs`
   const updatedChangelogs = updatedPackages.map(
     pkg => `packages/${pkg}/CHANGELOG.md`
   )

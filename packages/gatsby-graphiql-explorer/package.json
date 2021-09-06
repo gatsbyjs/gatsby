@@ -28,18 +28,18 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.15.3"
+    "@babel/runtime": "^7.15.4"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.8",
-    "@babel/core": "^7.14.8",
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
     "@babel/plugin-proposal-class-properties": "^7.14.0",
-    "@babel/plugin-transform-runtime": "^7.14.5",
-    "@babel/preset-env": "^7.14.9",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.15.4",
     "@babel/preset-react": "^7.14.0",
     "babel-loader": "^8.2.2",
     "babel-preset-gatsby-package": "^1.14.0-next.1",
-    "core-js": "^3.8.1",
+    "core-js": "^3.17.2",
     "cross-env": "^7.0.3",
     "css-loader": "^6.2.0",
     "graphiql": "^1.4.0",

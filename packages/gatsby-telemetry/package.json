@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.14.0",
-    "@babel/runtime": "^7.14.8",
+    "@babel/runtime": "^7.15.4",
     "@turist/fetch": "^7.1.7",
     "@turist/time": "^0.0.2",
     "async-retry-ng": "^2.0.1",
@@ -23,8 +23,8 @@
     "uuid": "3.4.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.8",
-    "@babel/core": "^7.14.8",
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
     "babel-jest": "^24.9.0",
     "babel-preset-gatsby-package": "^1.14.0-next.1",
     "cross-env": "^7.0.3",

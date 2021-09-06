@@ -47,6 +47,8 @@ import {
   mergeWorkerState,
   runQueriesInWorkersQueue,
 } from "../utils/worker/pool"
+import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpack"
+import { shouldGenerateEngines } from "../utils/engines-helpers"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (isTruthy(process.env.VERBOSE)) {
@@ -89,12 +91,26 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     parentSpan: buildSpan,
   })
 
+  const engineBundlingPromises: Array<Promise<any>> = []
+
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+    // bundle graphql-engine
+    engineBundlingPromises.push(createGraphqlEngineBundle())
+  }
+
   const graphqlRunner = new GraphQLRunner(store, {
     collectStats: true,
     graphqlTracing: program.graphqlTracing,
   })
 
   const { queryIds } = await calculateDirtyQueries({ store })
+
+  // Only run queries with mode SSG
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
+      query => query.mode === `SSG`
+    )
+  }
 
   let waitForWorkerPoolRestart = Promise.resolve()
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
@@ -310,6 +326,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
     report.info(`.cache/deletedPages.txt created`)
   }
+
+  await Promise.all(engineBundlingPromises)
 
   showExperimentNotices()
 

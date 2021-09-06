@@ -12,6 +12,7 @@ import path from "path"
 import fs from "fs-extra"
 import { supportedExtensions } from "gatsby-transformer-sharp/supported-extensions"
 import replaceAll from "replaceall"
+import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 
 import { formatLogMessage } from "~/utils/format-log-message"
 
@@ -32,7 +33,11 @@ const getNodeEditLink = node => {
 const findReferencedImageNodeIds = ({ nodeString, pluginOptions, node }) => {
   // if the lazyNodes plugin option is set we don't need to find
   // image node id's because those nodes will be fetched lazily in resolvers.
-  if (pluginOptions.type.MediaItem.lazyNodes) {
+  if (
+    pluginOptions.type.MediaItem.lazyNodes &&
+    // but not in Gatsby v4+ because lazyNodes is no longer supported
+    !usingGatsbyV4OrGreater
+  ) {
     return []
   }
 
