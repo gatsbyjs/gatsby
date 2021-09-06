@@ -157,7 +157,7 @@ export const onCreateNode = true
  * then Gatsby will not schedule the `onCreateNode` callback for this node for this plugin.
  * Note: this API does not receive the regular `api` that other callbacks get as first arg.
  *
- * @gatsbyVersion 2.24.80
+ * @gatsbyVersion 2.24.8
  * @example
  * exports.unstable_shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
  */
@@ -422,7 +422,20 @@ export const onPreInit = true
  * @gatsbyVersion 3.9.0
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const unstable_onPluginInit = true
+export const unstable_onPluginInit = _CFLAGS_.GATSBY_MAJOR !== `4`
+
+/**
+ * Lifecycle executed in each process (one time per process). Used to store actions etc for later use.
+ *
+ * @example
+ * let createJobV2
+ * exports.unstable_onPluginInit = ({ actions }) => {
+ *   // store job creation action to use it later
+ *   createJobV2 = actions.createJobV2
+ * }
+ * @gatsbyVersion 4.0.0
+ */
+export const onPluginInit = _CFLAGS_.GATSBY_MAJOR === `4`
 
 /**
  * Called once Gatsby has initialized itself and is ready to bootstrap your site.
