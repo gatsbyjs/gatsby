@@ -5217,6 +5217,11 @@
     async-retry "^1.3.1"
     debug "^3.1.0"
 
+"@vercel/webpack-asset-relocator-loader@^1.6.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@vercel/webpack-asset-relocator-loader/-/webpack-asset-relocator-loader-1.7.0.tgz#d3b707e0aba3111719f941dacb2408eff3c27319"
+  integrity sha512-1Dy3BdOliDwxA7VZSIg55E1d/us2KvsCQOZV25fgufG//CsnZBGiSAL7qewTQf7YVHH0A9PHgzwMmKIZ8aFYVw==
+
 "@verdaccio/commons-api@9.7.1", "@verdaccio/commons-api@^9.7.1":
   version "9.7.1"
   resolved "https://registry.yarnpkg.com/@verdaccio/commons-api/-/commons-api-9.7.1.tgz#816f08eb6cb0dbe345f2546428c837be6804796d"

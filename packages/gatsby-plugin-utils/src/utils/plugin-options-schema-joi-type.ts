@@ -1198,7 +1198,7 @@ interface Context {
 
 interface State {
   key?: string
-  path?: string
+  path: Array<string | number>
   parent?: any
   reference?: any
   ancestors?: any

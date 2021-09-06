@@ -14,7 +14,13 @@ const { internalExtensionNames } = require(`./extensions`)
 const printTypeDefinitions = ({ config, schemaComposer }) => {
   if (!config) return Promise.resolve()
 
-  const { path, include = {}, exclude = {}, withFieldTypes } = config || {}
+  const {
+    path,
+    include = {},
+    exclude = {},
+    withFieldTypes,
+    rewrite = false,
+  } = config || {}
 
   if (!path) {
     report.error(
@@ -23,7 +29,7 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
     return Promise.resolve()
   }
 
-  if (fs.existsSync(path)) {
+  if (!rewrite && fs.existsSync(path)) {
     report.error(
       `Printing type definitions aborted. The file \`${path}\` already exists.`
     )

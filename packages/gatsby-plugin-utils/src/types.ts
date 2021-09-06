@@ -52,6 +52,10 @@ export interface IPluginRefObject {
   resolve: string
   options?: IPluginRefOptions
   parentDir?: string
+
+  subPluginPaths?: Array<string>
+  module?: any
+  modulePath?: string
 }
 
 export type PluginRef = string | IPluginRefObject
