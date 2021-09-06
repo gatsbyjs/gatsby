@@ -4,7 +4,7 @@ export function setGatsbyPluginCache(
   plugin: { name: string; resolve: string },
   module: string,
   moduleObject: any
-) {
+): void {
   const key = `${plugin.name}/${module}`
   pluginModuleCache.set(key, moduleObject)
 }

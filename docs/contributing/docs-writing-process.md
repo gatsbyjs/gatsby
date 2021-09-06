@@ -14,13 +14,11 @@ When identifying a topic, start by:
 
    - This part may be covered if a docs issue is assigned to you, or if you’re signing up voluntarily to take on an issue.
 
-2. Look at the [stub list](/contributing/stub-list/) to find docs that need contributions.
+2. Look at the [learning workflow meta issue](https://github.com/gatsbyjs/gatsby/issues/13708) to find active areas looking for docs.
 
-3. Look at the [learning workflow meta issue](https://github.com/gatsbyjs/gatsby/issues/13708) to find active areas looking for docs.
+3. Read through the existing Gatsby docs information and find gaps in topic coverage. Is there an area you feel is missing? [File an issue](/contributing/how-to-file-an-issue/) to discuss it. If the team determines it warrants documentation, implement in a PR.
 
-4. Read through the existing Gatsby docs information and find gaps in topic coverage. Is there an area you feel is missing? [File an issue](/contributing/how-to-file-an-issue/) to discuss it. If the team determines it warrants documentation, implement in a PR.
-
-5. Observe common points of confusion or rough edges through user feedback and recommend solutions.
+4. Observe common points of confusion or rough edges through user feedback and recommend solutions.
 
 > _Note: It’s required to open a GitHub issue before submitting a PR if one does not already exist._
 
@@ -58,7 +56,7 @@ Create demo sites and examples to provide more authoritative material that suppo
 
 Follow the [docs structure](/contributing/docs-contributions/docs-structure/) to ensure you’re producing content in the right format for its purpose.
 
-Use the [Markdown syntax doc](/docs/how-to/routing/mdx/markdown-syntax/) to understand your options for formatting text with Markdown, and follow [accessibility recommendations](/docs/conceptual/making-your-site-accessible/#how-to-improve-accessibility) for [heading levels](/contributing/docs-contributions/#headings) and image alt text.
+Use the [Markdown syntax doc](/docs/reference/markdown-syntax/) to understand your options for formatting text with Markdown, and follow [accessibility recommendations](/docs/conceptual/making-your-site-accessible/#how-to-improve-accessibility) for [heading levels](/contributing/docs-contributions/#headings) and image alt text.
 
 Run the docs site locally to check formatting and functionality. There are instructions in the [contributing docs](/contributing/docs-contributions/).
 
@@ -76,7 +74,7 @@ Apply feedback from pull request reviews in order for them to be accepted. Furth
 - [Docs Structure](/contributing/docs-contributions/docs-structure/)
 - [How to File an Issue](/contributing/how-to-file-an-issue/)
 - [Gatsby Style Guide](/contributing/gatsby-style-guide/)
-- [Markdown Syntax Doc](/docs/how-to/routing/mdx/markdown-syntax/)
+- [Markdown Syntax Doc](/docs/reference/markdown-syntax/)
 - [Blog Post Guidelines](/contributing/blog-contributions/)
 - [Docs site setup instructions](/contributing/docs-contributions/#docs-site-setup-instructions)
 - [How to Open a Pull Request](/contributing/how-to-open-a-pull-request/)
