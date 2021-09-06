@@ -350,7 +350,7 @@ export interface GatsbyNode<
     callback: PluginCallback<void>
   ): void | Promise<void>
 
-  /** Called at the end of the bootstrap process after all other extension APIs have been called. If you indend to use this API in a plugin, use "onPluginInit" instead. */
+  /** Called at the end of the bootstrap process after all other extension APIs have been called. If you indend to use this API in a plugin, use "unstable_onPluginInit" instead. */
   onPreBootstrap?(
     args: ParentSpanPluginArgs,
     options: PluginOptions,
@@ -376,18 +376,18 @@ export interface GatsbyNode<
    * @gatsbyVersion 3.9.0
    * @example
    * let createJobV2
-   * exports.onPluginInit = ({ actions }) => {
+   * exports.unstable_onPluginInit = ({ actions }) => {
    *   // Store job creation action to use it later
    *   createJobV2 = actions.createJobV2
    * }
    */
-  onPluginInit?(
+  unstable_onPluginInit?(
     args: ParentSpanPluginArgs,
     options: PluginOptions,
     callback: PluginCallback<void>
   ): void | Promise<void>
 
-  /** The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation. If you indend to use this API in a plugin, use "onPluginInit" instead. */
+  /** The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation. If you indend to use this API in a plugin, use "unstable_onPluginInit" instead. */
   onPreInit?(
     args: ParentSpanPluginArgs,
     options: PluginOptions,
