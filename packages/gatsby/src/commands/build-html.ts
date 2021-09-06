@@ -15,6 +15,7 @@ import { getPageData } from "../utils/get-page-data"
 
 import { Span } from "opentracing"
 import { IProgram, Stage } from "./types"
+import { ROUTES_DIRECTORY } from "../constants"
 import { PackageJson } from "../.."
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { IPageDataWithQueryResult } from "../utils/page-data"
@@ -125,7 +126,7 @@ const runWebpack = (
             } = require(`../utils/dev-ssr/render-dev-html`)
             // Make sure we use the latest version during development
             if (oldHash !== `` && newHash !== oldHash) {
-              restartWorker(`${directory}/.cache/_routes/render-page.js`)
+              restartWorker(`${directory}/${ROUTES_DIRECTORY}render-page.js`)
             }
 
             oldHash = newHash
@@ -168,7 +169,7 @@ const doBuildRenderer = async (
 
   // render-page.js is hard coded in webpack.config
   return {
-    rendererPath: `${directory}/.cache/_routes/render-page.js`,
+    rendererPath: `${directory}/${ROUTES_DIRECTORY}render-page.js`,
     waitForCompilerClose,
   }
 }
@@ -186,6 +187,15 @@ export const buildRenderer = async (
   return doBuildRenderer(program, config, stage, parentSpan)
 }
 
+// TODO remove after v4 release and update cloud internals
+export const deleteRenderer = async (rendererPath: string): Promise<void> => {
+  try {
+    await fs.remove(rendererPath)
+    await fs.remove(`${rendererPath}.map`)
+  } catch (e) {
+    // This function will fail on Windows with no further consequences.
+  }
+}
 export interface IRenderHtmlResult {
   unsafeBuiltinsUsageByPagePath: Record<string, Array<string>>
 }
@@ -430,6 +440,14 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     buildHTMLActivityProgress.end()
   } else {
     reporter.info(`There are no new or changed html files to build.`)
+  }
+
+  if (_CFLAGS_.GATSBY_MAJOR !== `4` && !program.keepPageRenderer) {
+    try {
+      await deleteRenderer(pageRenderer)
+    } catch (err) {
+      // pass through
+    }
   }
 
   if (toDelete.length > 0) {

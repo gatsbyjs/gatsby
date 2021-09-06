@@ -4,6 +4,7 @@ import nodePath from "path"
 import report from "gatsby-cli/lib/reporter"
 import { isCI } from "gatsby-core-utils"
 import { Stats } from "webpack"
+import { ROUTES_DIRECTORY } from "../../constants"
 import { startListener } from "../../bootstrap/requires-writer"
 import { findPageByPath } from "../find-page-by-path"
 import { getPageData as getPageDataExperimental } from "../get-page-data"
@@ -112,10 +113,11 @@ const ensurePathComponentInSSRBundle = async (
     report.panic(`page not found`, page)
   }
 
-  // Now check if it's written to .cache/_routes/render-page.js
+  // Now check if it's written to the correct path
   const htmlComponentRendererPath = nodePath.join(
     directory,
-    `.cache/_routes/render-page.js`
+    ROUTES_DIRECTORY,
+    `render-page.js`
   )
 
   // This search takes 1-10ms
@@ -232,7 +234,7 @@ export const renderDevHTML = ({
       })
     }
 
-    // Wait for .cache/_routes/render-page.js to update w/ the page component.
+    // Wait for html-renderer to update w/ the page component.
     const found = await ensurePathComponentInSSRBundle(pageObj, directory)
 
     // If we can't find the page, just force set isClientOnlyPage
