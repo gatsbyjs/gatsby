@@ -642,14 +642,7 @@ workflows:
           requires:
             - bootstrap-with-experimental-react
 
-  next-major-test:
-    triggers:
-      - schedule:
-          cron: "0 0 * * *"
-          filters:
-            branches:
-              only:
-                - master
+  build-test-next-major:
     jobs:
       - bootstrap:
           compiler_options: GATSBY_MAJOR=4
