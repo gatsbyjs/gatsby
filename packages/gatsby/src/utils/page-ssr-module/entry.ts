@@ -13,7 +13,6 @@ import {
   constructPageDataString,
   getPagePathFromPageDataPath,
 } from "../page-data"
-import { generateHtmlPath } from "gatsby-core-utils"
 // @ts-ignore render-page import will become valid later on (it's marked as external)
 import htmlComponentRenderer from "./render-page"
 
@@ -127,13 +126,6 @@ export async function renderHTML({
     staticQueryContext,
     ...data.templateDetails.assets,
   })
-
-  const outputPath = generateHtmlPath(
-    path.join(process.cwd(), `public`),
-    data.page.path
-  )
-
-  await fs.outputFile(outputPath, results.html)
 
   return results.html
 }
