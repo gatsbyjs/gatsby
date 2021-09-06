@@ -426,7 +426,11 @@ export async function initialize({
   await fs.ensureDir(`${publicDirectory}/static`)
 
   // Init plugins once cache is initialized
-  await apiRunnerNode(`unstable_onPluginInit`)
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    await apiRunnerNode(`onPluginInit`)
+  } else {
+    await apiRunnerNode(`unstable_onPluginInit`)
+  }
 
   activity.end()
 
