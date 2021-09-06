@@ -13,7 +13,7 @@ import {
   GraphQLFormattedError,
   Kind,
 } from "graphql"
-import { isCI, reverseFixedPagePath } from "gatsby-core-utils"
+import { isCI } from "gatsby-core-utils"
 import http from "http"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
@@ -33,7 +33,11 @@ import {
   showExperimentNoticeAfterTimeout,
   CancelExperimentNoticeCallbackOrUndefined,
 } from "../utils/show-experiment-notice"
-import { readPageData, IPageDataWithQueryResult } from "./page-data"
+import {
+  reverseFixedPagePath,
+  readPageData,
+  IPageDataWithQueryResult,
+} from "./page-data"
 import { getPageData as getPageDataExperimental } from "./get-page-data"
 import { findPageByPath } from "./find-page-by-path"
 import apiRunnerNode from "../utils/api-runner-node"

@@ -9,11 +9,11 @@ import type { IPageDataWithQueryResult } from "../page-data"
 import "../engines-fs-provider"
 import * as path from "path"
 import * as fs from "fs-extra"
-import { constructPageDataString } from "../page-data"
 import {
-  generateHtmlPath,
+  constructPageDataString,
   getPagePathFromPageDataPath,
-} from "gatsby-core-utils"
+} from "../page-data"
+import { generateHtmlPath } from "gatsby-core-utils"
 // @ts-ignore render-page import will become valid later on (it's marked as external)
 import htmlComponentRenderer from "./render-page"
 

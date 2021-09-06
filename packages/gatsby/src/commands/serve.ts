@@ -10,7 +10,6 @@ import report from "gatsby-cli/lib/reporter"
 import multer from "multer"
 import pathToRegexp from "path-to-regexp"
 import cookie from "cookie"
-import { reverseFixedPagePath } from "gatsby-core-utils"
 import telemetry from "gatsby-telemetry"
 
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
@@ -19,6 +18,7 @@ import { preferDefault } from "../bootstrap/prefer-default"
 import { IProgram } from "./types"
 import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
 import { IGatsbyFunction } from "../redux/types"
+import { reverseFixedPagePath } from "../utils/page-data"
 
 interface IMatchPath {
   path: string
