@@ -10,14 +10,14 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.14.8",
+    "@babel/runtime": "^7.15.4",
     "common-tags": "^1.8.0",
     "minimatch": "^3.0.4",
     "sitemap": "^7.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.8",
-    "@babel/core": "^7.14.8",
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
     "babel-preset-gatsby-package": "^1.14.0-next.1",
     "cross-env": "^7.0.3",
     "gatsby-plugin-utils": "^1.14.0-next.1"
