@@ -183,6 +183,12 @@ version: 2.1
 
 jobs:
   bootstrap:
+    parameters:
+      compiler_options:
+        type: string
+        default:
+    environment:
+      COMPILER_OPTIONS: << parameters.compiler_options >>
     executor: node
     steps:
       - checkout
@@ -626,6 +632,22 @@ workflows:
           nightly: true
           requires:
             - bootstrap-with-experimental-react
+
+  next-major-test:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - bootstrap:
+          compiler_options: GATSBY_MAJOR=4
+      - e2e_tests_development_runtime:
+          <<: *e2e-test-workflow
+      - e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
 
   # Ideally, we should trigger this when any new release is created, sadly there is no easy way to do it:
   # - Can't rely on tags: GitHub won't send webhook to CircleCI when there are more than 3 tags in one push
