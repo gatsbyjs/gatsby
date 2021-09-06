@@ -17,7 +17,6 @@ import {
   IJobNotWhitelisted,
   WorkerError,
 } from "./types"
-import { requireGatsbyPlugin } from "../require-gatsby-plugin"
 
 type IncomingMessages = IJobCompletedMessage | IJobFailed | IJobNotWhitelisted
 
@@ -53,12 +52,8 @@ function convertPathsToAbsolute(filePath: string): string {
 /**
  * Get contenthash of a file
  */
-async function createFileHash(path: string): Promise<string> {
-  return (
-    (await hasha.fromStream(fs.createReadStream(path), {
-      algorithm: `sha1`,
-    })) ?? ``
-  )
+function createFileHash(path: string): string {
+  return hasha.fromFileSync(path, { algorithm: `sha1` })
 }
 
 let hasActiveJobs: pDefer.DeferredPromise<void> | null = null
@@ -162,7 +157,7 @@ function runJob(
 ): Promise<Record<string, unknown>> {
   const { plugin } = job
   try {
-    const worker = requireGatsbyPlugin(plugin, `gatsby-worker`)
+    const worker = require(path.posix.join(plugin.resolve, `gatsby-worker.js`))
     if (!worker[job.name]) {
       throw new Error(`No worker function found for ${job.name}`)
     }
@@ -203,10 +198,10 @@ function isInternalJob(job: JobInput | InternalJob): job is InternalJob {
 /**
  * Create an internal job object
  */
-export async function createInternalJob(
+export function createInternalJob(
   job: JobInput | InternalJob,
   plugin: { name: string; version: string; resolve: string }
-): Promise<InternalJob> {
+): InternalJob {
   // It looks like we already have an augmented job so we shouldn't redo this work
   if (isInternalJob(job)) {
     return job
@@ -217,14 +212,12 @@ export async function createInternalJob(
   // TODO see if we can make this async, filehashing might be expensive to wait for
   // currently this needs to be sync as we could miss jobs to have been scheduled and
   // are still processing their hashes
-  const inputPathsWithContentDigest = await Promise.all(
-    inputPaths.map(async (pth: string) => {
-      return {
-        path: convertPathsToAbsolute(pth),
-        contentDigest: await createFileHash(pth),
-      }
-    })
-  )
+  const inputPathsWithContentDigest = inputPaths.map((pth: string) => {
+    return {
+      path: convertPathsToAbsolute(pth),
+      contentDigest: createFileHash(pth),
+    }
+  })
 
   const internalJob: InternalJob = {
     id: uuidv4(),
@@ -331,20 +324,19 @@ export function waitUntilAllJobsComplete(): Promise<void> {
   return hasActiveJobs ? hasActiveJobs.promise : Promise.resolve()
 }
 
-export async function isJobStale(
+export function isJobStale(
   job: Partial<InternalJob> & { inputPaths: InternalJob["inputPaths"] }
-): Promise<boolean> {
-  for (const inputPath of job.inputPaths) {
+): boolean {
+  const areInputPathsStale = job.inputPaths.some(inputPath => {
     // does the inputPath still exists?
     if (!fs.existsSync(inputPath.path)) {
       return true
     }
 
     // check if we're talking about the same file
-    const fileHash = await createFileHash(inputPath.path)
-    if (fileHash !== inputPath.contentDigest) {
-      return true
-    }
-  }
-  return false
+    const fileHash = createFileHash(inputPath.path)
+    return fileHash !== inputPath.contentDigest
+  })
+
+  return areInputPathsStale
 }

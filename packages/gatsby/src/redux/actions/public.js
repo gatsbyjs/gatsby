@@ -1265,17 +1265,16 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
  * @example
  * createJobV2({ name: `IMAGE_PROCESSING`, inputPaths: [`something.jpeg`], outputDir: `public/static`, args: { width: 100, height: 100 } })
  */
-actions.createJobV2 =
-  (job: JobV2, plugin: Plugin) => async (dispatch, getState) => {
-    const internalJob = await createInternalJob(job, plugin)
+actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
+  const internalJob = createInternalJob(job, plugin)
 
-    const maybeWorkerPromise = maybeSendJobToMainProcess(internalJob)
-    if (maybeWorkerPromise) {
-      return maybeWorkerPromise
-    }
-
-    return createJobV2FromInternalJob(internalJob)(dispatch, getState)
+  const maybeWorkerPromise = maybeSendJobToMainProcess(internalJob)
+  if (maybeWorkerPromise) {
+    return maybeWorkerPromise
   }
+
+  return createJobV2FromInternalJob(internalJob)(dispatch, getState)
+}
 
 /**
  * DEPRECATED. Use createJobV2 instead.

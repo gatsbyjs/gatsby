@@ -184,7 +184,7 @@ export async function initialize({
 
   // run stale jobs
   // @ts-ignore we'll need to fix redux typings https://redux.js.org/usage/usage-with-typescript
-  store.dispatch(await removeStaleJobs(store.getState().jobsV2))
+  store.dispatch(removeStaleJobs(store.getState().jobsV2))
 
   // Multiple occurrences of the same name-version-pair can occur,
   // so we report an array of unique pairs
