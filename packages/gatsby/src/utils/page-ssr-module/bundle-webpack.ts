@@ -41,7 +41,6 @@ export async function createPageSSRBundle(): Promise<any> {
     }
   }
   const compiler = webpack({
-    // mode: `production`,
     mode: `none`,
     entry: path.join(__dirname, `entry.js`),
     output: {
@@ -56,8 +55,6 @@ export async function createPageSSRBundle(): Promise<any> {
     // those are required in some runtime paths, but we don't need them
     externals: [
       `./render-page`,
-      // `cbor-x`, // optional dep of lmdb-store, but we are using `msgpack` (default) encoding, so we don't need it
-      // `babel-runtime/helpers/asyncToGenerator`, // undeclared dep of yurnalist (but used in code path we don't use)
       `electron`, // :shrug: `got` seems to have electron specific code path
       mod.builtinModules.reduce((acc, builtinModule) => {
         if (builtinModule === `fs`) {
@@ -96,11 +93,7 @@ export async function createPageSSRBundle(): Promise<any> {
         },
         {
           test: /\.txt/,
-          use: [
-            {
-              loader: require.resolve(`file-loader`),
-            },
-          ],
+          type: `asset/resource`,
         },
       ],
     },
@@ -119,11 +112,15 @@ export async function createPageSSRBundle(): Promise<any> {
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
-      if (err) {
-        return reject(err)
-      } else {
+      compiler.close(closeErr => {
+        if (err) {
+          return reject(err)
+        }
+        if (closeErr) {
+          return reject(closeErr)
+        }
         return resolve(stats?.compilation)
-      }
+      })
     })
   })
 }

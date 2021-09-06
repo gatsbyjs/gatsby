@@ -691,17 +691,24 @@ module.exports = async (
   }
 
   if (stage === `build-html` || stage === `develop-html`) {
-    // we want to bundle everything for engines
+    // externalize react, react-dom when develop-html or build-html(when not generating engines)
     const shouldMarkPackagesAsExternal =
-      stage !== `build-html` ||
+      stage === `develop-html` ||
+      !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
+
+    // tracking = build-html (when not generating engines)
+    const shouldTrackBuiltins =
+      stage === `build-html` &&
       !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
 
     // removes node internals from bundle
     // https://webpack.js.org/configuration/externals/#externalspresets
 
     config.externalsPresets = {
-      node: shouldMarkPackagesAsExternal ? false : true,
+      // use it only when not tracking builtins (tracking builtins provide their own fallbacks)
+      node: !shouldTrackBuiltins,
     }
+    config.externals = []
 
     if (shouldMarkPackagesAsExternal) {
       // Packages we want to externalize to save some build time
@@ -721,47 +728,50 @@ module.exports = async (
         return false
       }
 
-      config.externals = [
-        function ({ context, getResolve, request }, callback) {
-          // allows us to resolve webpack aliases from our config
-          // helpful for when react is aliased to preact-compat
-          // Force commonjs as we're in node land
-          const resolver = getResolve({
-            dependencyType: `commonjs`,
+      config.externals.push(function (
+        { context, getResolve, request },
+        callback
+      ) {
+        // allows us to resolve webpack aliases from our config
+        // helpful for when react is aliased to preact-compat
+        // Force commonjs as we're in node land
+        const resolver = getResolve({
+          dependencyType: `commonjs`,
+        })
+
+        // User modules that do not need to be part of the bundle
+        if (userExternalList.some(item => checkItem(item, request))) {
+          // TODO figure out to make preact work with this too
+
+          resolver(context, request, (err, newRequest) => {
+            if (err) {
+              callback(err)
+              return
+            }
+
+            callback(null, newRequest)
           })
+          return
+        }
+        // TODO look into re-enabling, breaks builds right now because of esm
+        // User modules that do not need to be part of the bundle
+        // if (externalList.some(item => checkItem(item, request))) {
+        //   resolver(context, request, (err, request) => {
+        //     if (err) {
+        //       callback(err)
+        //       return
+        //     }
 
-          // User modules that do not need to be part of the bundle
-          if (userExternalList.some(item => checkItem(item, request))) {
-            // TODO figure out to make preact work with this too
+        //     callback(null, `commonjs2 ${request}`)
+        //   })
+        //   return
+        // }
 
-            resolver(context, request, (err, newRequest) => {
-              if (err) {
-                callback(err)
-                return
-              }
+        callback()
+      })
+    }
 
-              callback(null, newRequest)
-            })
-            return
-          }
-          // TODO look into re-enabling, breaks builds right now because of esm
-          // User modules that do not need to be part of the bundle
-          // if (externalList.some(item => checkItem(item, request))) {
-          //   resolver(context, request, (err, request) => {
-          //     if (err) {
-          //       callback(err)
-          //       return
-          //     }
-
-          //     callback(null, `commonjs2 ${request}`)
-          //   })
-          //   return
-          // }
-
-          callback()
-        },
-      ]
-
+    if (shouldTrackBuiltins) {
       if (stage === `build-html`) {
         const builtinModulesToTrack = [
           `fs`,
