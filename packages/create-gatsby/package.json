@@ -17,7 +17,7 @@
   ],
   "devDependencies": {
     "@ascorbic/worker-threads-shim": "^1.0.0",
-    "@babel/runtime": "^7.14.8",
+    "@babel/runtime": "^7.15.4",
     "@types/configstore": "^4.0.0",
     "@types/fs-extra": "^9.0.12",
     "@types/node": "^14.17.14",
@@ -44,6 +44,6 @@
   },
   "author": "Matt Kane <matt@gatsbyjs.com>",
   "dependencies": {
-    "@babel/runtime": "^7.14.8"
+    "@babel/runtime": "^7.15.4"
   }
 }

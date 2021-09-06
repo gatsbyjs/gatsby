@@ -1,11 +1,11 @@
 {
   "devDependencies": {
-    "@babel/core": "^7.14.0",
-    "@babel/eslint-parser": "^7.14.0",
+    "@babel/core": "^7.15.5",
+    "@babel/eslint-parser": "^7.15.4",
     "@babel/eslint-plugin": "^7.14.0",
-    "@babel/node": "^7.14.0",
-    "@babel/plugin-transform-typescript": "^7.14.0",
-    "@babel/runtime": "^7.14.0",
+    "@babel/node": "^7.15.4",
+    "@babel/plugin-transform-typescript": "^7.15.4",
+    "@babel/runtime": "^7.15.4",
     "@lerna/prompt": "3.18.5",
     "@types/babel__code-frame": "^7.0.2",
     "@types/better-queue": "^3.8.2",
