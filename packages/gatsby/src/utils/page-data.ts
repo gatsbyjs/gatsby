@@ -4,42 +4,24 @@ import reporter from "gatsby-cli/lib/reporter"
 import fastq from "fastq"
 import path from "path"
 import { createContentDigest, generatePageDataPath } from "gatsby-core-utils"
-import { IGatsbyPage } from "../redux/types"
 import { websocketManager } from "./websocket-manager"
 import { isWebpackStatusPending } from "./webpack-status"
 import { store } from "../redux"
 import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
 import { isLmdbStore } from "../datastore"
 import type GatsbyCacheLmdb from "./cache-lmdb"
+import {
+  constructPageDataString,
+  reverseFixedPagePath,
+  IPageData,
+} from "./page-data-helpers"
+
+export { reverseFixedPagePath }
 
 import { IExecutionResult } from "../query/types"
 
-interface IPageData {
-  componentChunkName: IGatsbyPage["componentChunkName"]
-  matchPath?: IGatsbyPage["matchPath"]
-  path: IGatsbyPage["path"]
-  staticQueryHashes: Array<string>
-}
-
 export interface IPageDataWithQueryResult extends IPageData {
   result: IExecutionResult
-}
-
-export function reverseFixedPagePath(pageDataRequestPath: string): string {
-  return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
-}
-
-export function getPagePathFromPageDataPath(
-  pageDataPath: string
-): string | null {
-  const matches = pageDataPath.matchAll(
-    /^\/?page-data\/(.+)\/page-data.json$/gm
-  )
-  for (const [, requestedPagePath] of matches) {
-    return reverseFixedPagePath(requestedPagePath)
-  }
-
-  return null
 }
 
 export async function readPageData(
@@ -128,31 +110,6 @@ export async function readPageQueryResult(
     )
     return fs.readFile(pageQueryResultsPath)
   }
-}
-
-export function constructPageDataString(
-  {
-    componentChunkName,
-    matchPath,
-    path: pagePath,
-    staticQueryHashes,
-  }: IPageData,
-  result: string | Buffer
-): string {
-  let body = `{
-    "componentChunkName": "${componentChunkName}",
-    "path": "${pagePath}",
-    "result": ${result},
-    "staticQueryHashes": ${JSON.stringify(staticQueryHashes)}`
-
-  if (matchPath) {
-    body += `,
-    "matchPath": "${matchPath}"`
-  }
-
-  body += `}`
-
-  return body
 }
 
 export async function writePageData(
