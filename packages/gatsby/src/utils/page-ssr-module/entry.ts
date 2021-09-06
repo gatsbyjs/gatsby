@@ -3,13 +3,13 @@ import type { GraphQLEngine } from "../../schema/graphql-engine/entry"
 import type { IExecutionResult } from "../../query/types"
 import type { IGatsbyPage } from "../../redux/types"
 import type { IScriptsAndStyles } from "../client-assets-for-template"
-import type { IPageDataWithQueryResult } from "../page-data/write-page-data"
+import type { IPageDataWithQueryResult } from "../page-data"
 
 // actual imports
 import "../engines-fs-provider"
 import * as path from "path"
 import * as fs from "fs-extra"
-import { writePageData, fixedPagePath } from "../page-data/write-page-data"
+import { constructPageDataString } from "../page-data"
 import {
   generateHtmlPath,
   getPagePathFromPageDataPath,
@@ -79,8 +79,7 @@ export async function renderPageData({
 }: {
   data: ISSRData
 }): Promise<IPageDataWithQueryResult> {
-  const results = await writePageData(
-    path.join(process.cwd(), `public`),
+  const results = await constructPageDataString(
     {
       componentChunkName: data.page.componentChunkName,
       path: data.page.path,
@@ -90,7 +89,7 @@ export async function renderPageData({
     JSON.stringify(data.results)
   )
 
-  return JSON.parse(results.body)
+  return JSON.parse(results)
 }
 
 const readStaticQueryContext = async (
@@ -99,7 +98,7 @@ const readStaticQueryContext = async (
   const filePath = path.join(
     __dirname,
     `sq-context`,
-    fixedPagePath(templatePath),
+    templatePath,
     `sq-context.json`
   )
   const rawSQContext = await fs.readFile(filePath, `utf-8`)

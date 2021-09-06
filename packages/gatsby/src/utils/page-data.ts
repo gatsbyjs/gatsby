@@ -3,21 +3,31 @@ import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import fastq from "fastq"
 import path from "path"
-
 import { createContentDigest, generatePageDataPath } from "gatsby-core-utils"
-import { websocketManager } from "../websocket-manager"
-import { isWebpackStatusPending } from "../webpack-status"
-import { store } from "../../redux"
-import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../../redux/reducers/queries"
-import { isLmdbStore } from "../../datastore"
-import {
-  writePageData,
-  IPageDataWithQueryResult,
-  fixedPagePath,
-} from "./write-page-data"
-import type GatsbyCacheLmdb from "../cache-lmdb"
+import { IGatsbyPage } from "../redux/types"
+import { websocketManager } from "./websocket-manager"
+import { isWebpackStatusPending } from "./webpack-status"
+import { store } from "../redux"
+import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
+import { isLmdbStore } from "../datastore"
+import type GatsbyCacheLmdb from "./cache-lmdb"
 
-export { fixedPagePath, IPageDataWithQueryResult }
+import { IExecutionResult } from "../query/types"
+
+interface IPageData {
+  componentChunkName: IGatsbyPage["componentChunkName"]
+  matchPath?: IGatsbyPage["matchPath"]
+  path: IGatsbyPage["path"]
+  staticQueryHashes: Array<string>
+}
+
+export interface IPageDataWithQueryResult extends IPageData {
+  result: IExecutionResult
+}
+
+export function reverseFixedPagePath(pageDataRequestPath: string): string {
+  return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
+}
 
 export async function readPageData(
   publicDir: string,
@@ -49,7 +59,7 @@ export function pageDataExists(publicDir: string, pagePath: string): boolean {
 let lmdbPageQueryResultsCache: GatsbyCacheLmdb
 function getLMDBPageQueryResultsCache(): GatsbyCacheLmdb {
   if (!lmdbPageQueryResultsCache) {
-    const GatsbyCacheLmdbImpl = require(`../cache-lmdb`).default
+    const GatsbyCacheLmdbImpl = require(`./cache-lmdb`).default
     lmdbPageQueryResultsCache = new GatsbyCacheLmdbImpl({
       name: `internal-tmp-query-results`,
       encoding: `string`,
@@ -107,6 +117,58 @@ export async function readPageQueryResult(
   }
 }
 
+export function constructPageDataString(
+  {
+    componentChunkName,
+    matchPath,
+    path: pagePath,
+    staticQueryHashes,
+  }: IPageData,
+  result: string | Buffer
+): string {
+  let body = `{
+    "componentChunkName": "${componentChunkName}",
+    "path": "${pagePath}",
+    "result": ${result},
+    "staticQueryHashes": ${JSON.stringify(staticQueryHashes)}`
+
+  if (matchPath) {
+    body += `,
+    "matchPath": "${matchPath}"`
+  }
+
+  body += `}`
+
+  return body
+}
+
+export async function writePageData(
+  publicDir: string,
+  pageData: IPageData
+): Promise<string> {
+  const result = await readPageQueryResult(publicDir, pageData.path)
+
+  const outputFilePath = generatePageDataPath(publicDir, pageData.path)
+
+  const body = constructPageDataString(pageData, result)
+
+  // transform asset size to kB (from bytes) to fit 64 bit to numbers
+  const pageDataSize = Buffer.byteLength(body) / 1000
+
+  store.dispatch({
+    type: `ADD_PAGE_DATA_STATS`,
+    payload: {
+      pagePath: pageData.path,
+      filePath: outputFilePath,
+      size: pageDataSize,
+      pageDataHash: createContentDigest(body),
+    },
+  })
+
+  await fs.outputFile(outputFilePath, body)
+  return body
+}
+
 let isFlushPending = false
 let isFlushing = false
 
@@ -138,7 +200,6 @@ export async function flush(): Promise<void> {
     0
   )
   writePageDataActivity.start()
-  const publicDir = path.join(program.directory, `public`)
 
   const flushQueue = fastq(async (pagePath, cb) => {
     const page = pages.get(pagePath)
@@ -169,40 +230,27 @@ export async function flush(): Promise<void> {
 
         if (hasFlag(query.dirty, FLAG_DIRTY_NEW_PAGE)) {
           // query results are not written yet
-          process.nextTick(() => cb(null, true))
-          return
+          return cb(null, true)
         }
       }
 
       const staticQueryHashes =
         staticQueriesByTemplate.get(page.componentPath) || []
 
-      const pageQueryResult = await readPageQueryResult(publicDir, pagePath)
-      const { body, outputFilePath, pageDataSize } = await writePageData(
-        publicDir,
+      const result = await writePageData(
+        path.join(program.directory, `public`),
         {
           ...page,
           staticQueryHashes,
-        },
-        pageQueryResult
+        }
       )
-
-      store.dispatch({
-        type: `ADD_PAGE_DATA_STATS`,
-        payload: {
-          pagePath,
-          filePath: outputFilePath,
-          size: pageDataSize,
-          pageDataHash: createContentDigest(body),
-        },
-      })
 
       writePageDataActivity.tick()
 
       if (program?._?.[0] === `develop`) {
         websocketManager.emitPageData({
           id: pagePath,
-          result: JSON.parse(body) as IPageDataWithQueryResult,
+          result: JSON.parse(result) as IPageDataWithQueryResult,
         })
       }
     }
@@ -214,8 +262,7 @@ export async function flush(): Promise<void> {
       },
     })
 
-    cb(null, true)
-    return
+    return cb(null, true)
   }, 25)
 
   for (const pagePath of pagePaths) {

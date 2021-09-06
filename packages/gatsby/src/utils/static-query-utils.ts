@@ -3,7 +3,7 @@ import * as path from "path"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
 import type { IScriptsAndStyles } from "./client-assets-for-template"
-import { fixedPagePath, IPageDataWithQueryResult } from "./page-data"
+import { IPageDataWithQueryResult } from "./page-data"
 
 const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
 
@@ -39,9 +39,8 @@ export const getStaticQueryContext = async (
   const staticQueryContext: IResourcesForTemplate["staticQueryContext"] = {}
 
   for (const staticQueryHash of staticQueryHashes) {
-    const memoizedStaticQueryResult = staticQueryResultCache.get(
-      staticQueryHash
-    )
+    const memoizedStaticQueryResult =
+      staticQueryResultCache.get(staticQueryHash)
     if (memoizedStaticQueryResult) {
       staticQueryContext[staticQueryHash] = memoizedStaticQueryResult
       continue
@@ -77,7 +76,7 @@ export const writeStaticQueryContext = async (
   const outputFilePath = path.join(
     outputDir,
     `sq-context`,
-    fixedPagePath(templatePath),
+    templatePath,
     `sq-context.json`
   )
 
