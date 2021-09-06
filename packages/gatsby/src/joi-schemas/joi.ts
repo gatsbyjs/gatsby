@@ -50,6 +50,7 @@ export const gatsbyConfigSchema: Joi.ObjectSchema<IGatsbyConfig> = Joi.object()
       .single(),
     developMiddleware: Joi.func(),
     jsxRuntime: Joi.string().valid(`automatic`, `classic`).default(`classic`),
+    jsxImportSource: Joi.string(),
   })
   // throws when both assetPrefix and pathPrefix are defined
   .when(

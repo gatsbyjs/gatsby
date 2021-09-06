@@ -95,6 +95,7 @@ export interface IGatsbyConfig {
   assetPrefix?: string
   mapping?: Record<string, string>
   jsxRuntime?: string
+  jsxImportSource?: string
 }
 
 export interface IGatsbyNode {
