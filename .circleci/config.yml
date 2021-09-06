@@ -110,6 +110,11 @@ aliases:
       nightly:
         type: boolean
         default: false
+      compiler_options:
+        type: string
+        default: ""
+    environment:
+      COMPILER_OPTIONS: << parameters.compiler_options >>
     steps:
       - e2e-test:
           test_path: e2e-tests/production-runtime
@@ -124,9 +129,13 @@ aliases:
       nightly:
         type: boolean
         default: false
+      compiler_options:
+        type: string
+        default: ""
     environment:
       CYPRESS_PROJECT_ID: s3j3qj
       CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
+      COMPILER_OPTIONS: << parameters.compiler_options >>
     steps:
       - e2e-test:
           test_path: e2e-tests/development-runtime
@@ -186,7 +195,7 @@ jobs:
     parameters:
       compiler_options:
         type: string
-        default:
+        default: ""
     environment:
       COMPILER_OPTIONS: << parameters.compiler_options >>
     executor: node
@@ -645,9 +654,9 @@ workflows:
       - bootstrap:
           compiler_options: GATSBY_MAJOR=4
       - e2e_tests_development_runtime:
-          <<: *e2e-test-workflow
+          compiler_options: GATSBY_MAJOR=4
       - e2e_tests_production_runtime:
-          <<: *e2e-test-workflow
+          compiler_options: GATSBY_MAJOR=4
 
   # Ideally, we should trigger this when any new release is created, sadly there is no easy way to do it:
   # - Can't rely on tags: GitHub won't send webhook to CircleCI when there are more than 3 tags in one push
