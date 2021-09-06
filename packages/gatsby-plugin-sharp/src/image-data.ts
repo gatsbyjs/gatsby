@@ -226,7 +226,7 @@ export async function generateImageData({
     return transform
   })
 
-  const images = await batchQueueImageResizing({
+  const images = batchQueueImageResizing({
     file,
     transforms,
     reporter,
@@ -285,7 +285,7 @@ export async function generateImageData({
       return transform
     })
 
-    const avifImages = await batchQueueImageResizing({
+    const avifImages = batchQueueImageResizing({
       file,
       transforms,
       reporter,
@@ -314,7 +314,7 @@ export async function generateImageData({
       return transform
     })
 
-    const webpImages = await batchQueueImageResizing({
+    const webpImages = batchQueueImageResizing({
       file,
       transforms,
       reporter,

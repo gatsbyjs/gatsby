@@ -83,9 +83,9 @@ describe(`gatsby-plugin-sharp`, () => {
           scheduleJob.mockClear()
         })
 
-        it(`should round height when auto-calculated ${api}`, async () => {
+        it(`should round height when auto-calculated ${api}`, () => {
           // Resize 144-density.png (281x136) with a 3px width
-          const result = await queueImageResizing({
+          const result = queueImageResizing({
             file: getFileObject(path.join(__dirname, `images/144-density.png`)),
             args: { width: 3 },
           })
@@ -106,7 +106,7 @@ describe(`gatsby-plugin-sharp`, () => {
           // test name encoding with various characters
           const testName = `spaces and '"@#$%^&,`
 
-          const queueResult = await queueImageResizing({
+          const queueResult = queueImageResizing({
             file: getFileObject(
               path.join(__dirname, `images/144-density.png`),
               testName
