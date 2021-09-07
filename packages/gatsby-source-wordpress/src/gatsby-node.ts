@@ -16,8 +16,7 @@ try {
 }
 
 const initializePluginLifeCycleName: string =
-  INITIALIZE_PLUGIN_LIFECYCLE_NAME_MAP[coreSupportsOnPluginInit] ||
-  `onPluginInit`
+  INITIALIZE_PLUGIN_LIFECYCLE_NAME_MAP[coreSupportsOnPluginInit] || `onPreInit`
 
 module.exports = runApisInSteps({
   [initializePluginLifeCycleName]: [
