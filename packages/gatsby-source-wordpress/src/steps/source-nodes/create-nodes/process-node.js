@@ -569,6 +569,11 @@ const replaceNodeHtmlImages = async ({
           fallbackImageMaxWidth = mediaItemNodeWidth
         }
 
+        console.log(`fallbackImageMaxWidth`, fallbackImageMaxWidth)
+        console.log(`mediaItemNodeWidth`, mediaItemNodeWidth)
+        console.log(`imgTagMaxWidth`, imgTagMaxWidth)
+        console.log(`fileNode`, fileNode)
+
         let maxWidth =
           // if we inferred a maxwidth from html
           (imgTagMaxWidth &&
@@ -594,6 +599,8 @@ const replaceNodeHtmlImages = async ({
         if (configuredMaxWidth && configuredMaxWidth < maxWidth) {
           maxWidth = configuredMaxWidth
         }
+
+        console.log(`MAXWIDTH`, maxWidth)
 
         const quality = pluginOptions?.html?.imageQuality
 
@@ -659,6 +666,13 @@ const replaceNodeHtmlImages = async ({
             className: `${
               cheerioImg?.attribs?.class || ``
             } inline-gatsby-image-wrapper`,
+            imgStyle: {
+              // these styles make it so that the image wont be stretched
+              // beyond it's max width, but it also wont exceed the width
+              // of it's parent element
+              maxWidth: `100%`,
+              width: `${maxWidth}px`,
+            },
           },
           null
         )
@@ -699,6 +713,7 @@ const replaceNodeHtmlImages = async ({
         gatsbyImageStringJSON.length - 1
       )
 
+      console.log(gatsbyImageString)
       nodeString = replaceAll(match, gatsbyImageString, nodeString)
     }
   }
