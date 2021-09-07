@@ -79,7 +79,7 @@ For a repository named like `username.github.io`, you don't need to specify `pat
 }
 ```
 
-> If you are deploying to branch different to `master`, replace it with your deployment branch's name in the deploy script.
+> If you are deploying to branch different to `main`, replace it with your deployment branch's name in the deploy script.
 
 After running `npm run deploy` you should see your website at `username.github.io`
 
