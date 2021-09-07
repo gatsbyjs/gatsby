@@ -6,10 +6,22 @@ export {
 export { Placeholder } from "./components/placeholder"
 export { MainImage } from "./components/main-image"
 export { StaticImage } from "./components/static-image.server"
-export { getImage, getSrc, useGatsbyImage } from "./components/hooks"
+export {
+  getImage,
+  getSrc,
+  getSrcSet,
+  getImageData,
+  withArtDirection,
+  IArtDirectedImage,
+  IGetImageDataArgs,
+  IUrlBuilderArgs,
+  ImageDataLike,
+} from "./components/hooks"
 export {
   generateImageData,
+  getLowResolutionImageURL,
   IGatsbyImageHelperArgs,
+  ISharpGatsbyImageArgs,
   IImage,
   ImageFormat,
   Layout,

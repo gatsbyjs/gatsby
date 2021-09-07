@@ -59,7 +59,7 @@ Note: the application of these techniques should be considered analogous to appl
 
 ### Switch off type inference for `SitePage.context`
 
-When using the `createPages` API to pass large amounts of data to pages via `context` (which is generally not recommended), Gatsby's type inference can become slow. In most cases, it is not actually necessary to include the `SitePage.context` field in the GraphQL schema, so switching off type inference for the `SitePage` type should be safe:
+When using the `createPages` API to pass large amounts of data to pages via `context` (which is generally [not recommended](/docs/creating-and-modifying-pages#performance-implications)), Gatsby's type inference can become slow. In most cases, it is not actually necessary to include the `SitePage.context` field in the GraphQL schema, so switching off type inference for the `SitePage` type should be safe:
 
 ```js
 // gatsby-node.js

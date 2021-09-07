@@ -24,7 +24,7 @@ All configuration options are optional.
     plugins: [],
   },
   // ensure all field types are included
-  // dont't turn this off unless you have a very good reason to
+  // don't turn this off unless you have a very good reason to
   withFieldTypes: true,
   // manually control if a saved schema snapshot should be replaced with an
   // updated version

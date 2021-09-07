@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import Image from "gatsby-image"
 
-import styles from "./image-picker.module.css"
+import * as styles from "./image-picker.module.css"
 
 function ImagePicker({ images }) {
   const [activeIndex, setActiveIndex] = useState(0)

@@ -20,7 +20,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
     pathPlugin = () =>
       async function transformer(markdownAST) {
         // Ensure relative links include `pathPrefix`
-        visit(markdownAST, `link`, node => {
+        visit(markdownAST, [`link`, `definition`], node => {
           if (
             node.url &&
             node.url.startsWith(`/`) &&

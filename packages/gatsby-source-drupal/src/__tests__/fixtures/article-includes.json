@@ -16,6 +16,17 @@
             "id": "file-1"
           }
         },
+        "content": {
+          "data": [
+            {
+              "type": "paragraph--text",
+              "id": "08d07c95-26ab-46b8-a56d-0a55567b2e31",
+              "meta": {
+                "target_version": "4"
+              }
+            }
+          ]
+        },
         "field_tags": {
           "data": [
             {
@@ -44,6 +55,28 @@
           "alias": null,
           "pid": null,
           "langcode": "en"
+        }
+      }
+    },
+    {
+      "type": "paragraph--text",
+      "id": "08d07c95-26ab-46b8-a56d-0a55567b2e31",
+      "attributes": {
+        "drupal_internal__id": 14,
+        "drupal_internal__revision_id": 4,
+        "langcode": "en",
+        "status": true,
+        "created": "2020-09-18T07:56:28+00:00",
+        "parent_id": "5",
+        "parent_type": "node",
+        "parent_field_name": "content",
+        "behavior_settings": [],
+        "default_langcode": true,
+        "revision_translation_affected": null,
+        "body": {
+          "value": "Aenean porta turpis quis vulputate blandit",
+          "format": "plain_text",
+          "processed": "Aenean porta turpis quis vulputate blandit"
         }
       }
     }

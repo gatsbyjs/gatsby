@@ -3,11 +3,11 @@ import {
   ObjectTypeComposer,
   InputTypeComposer,
   InterfaceTypeComposer,
-  ComposeFieldConfigMap,
+  ObjectTypeComposerFieldConfigMapDefinition,
 } from "graphql-compose"
 import { getFieldsEnum } from "./sort"
 import { addDerivedType } from "./derived-types"
-import { distinct, group } from "../resolvers"
+import { distinct, group, max, min, sum } from "../resolvers"
 
 export const getPageInfo = <TContext = any>({
   schemaComposer,
@@ -52,12 +52,11 @@ const createPagination = <TSource = any, TContext = any>({
 }: {
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
-  fields: ComposeFieldConfigMap<TSource, TContext>
+  fields: ObjectTypeComposerFieldConfigMapDefinition<TSource, TContext>
   typeName: string
 }): ObjectTypeComposer => {
-  const paginationTypeComposer: ObjectTypeComposer = schemaComposer.getOrCreateOTC(
-    typeName,
-    tc => {
+  const paginationTypeComposer: ObjectTypeComposer =
+    schemaComposer.getOrCreateOTC(typeName, tc => {
       tc.addFields({
         totalCount: `Int!`,
         edges: [getEdge({ schemaComposer, typeComposer }).getTypeNonNull()],
@@ -65,8 +64,7 @@ const createPagination = <TSource = any, TContext = any>({
         pageInfo: getPageInfo({ schemaComposer }).getTypeNonNull(),
         ...fields,
       })
-    }
-  )
+    })
   paginationTypeComposer.makeFieldNonNull(`edges`)
   paginationTypeComposer.makeFieldNonNull(`nodes`)
   addDerivedType({ typeComposer, derivedTypeName: typeName })
@@ -95,7 +93,8 @@ export const getPagination = <TContext = any>({
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer | InterfaceTypeComposer
 }): ObjectTypeComposer => {
-  const inputTypeComposer: InputTypeComposer = typeComposer.getInputTypeComposer()
+  const inputTypeComposer: InputTypeComposer =
+    typeComposer.getInputTypeComposer()
   const typeName = `${typeComposer.getTypeName()}Connection`
   const fieldsEnumTC = getFieldsEnum({
     schemaComposer,
@@ -109,6 +108,27 @@ export const getPagination = <TContext = any>({
         field: fieldsEnumTC.getTypeNonNull(),
       },
       resolve: distinct,
+    },
+    max: {
+      type: `Float`,
+      args: {
+        field: fieldsEnumTC.getTypeNonNull(),
+      },
+      resolve: max,
+    },
+    min: {
+      type: `Float`,
+      args: {
+        field: fieldsEnumTC.getTypeNonNull(),
+      },
+      resolve: min,
+    },
+    sum: {
+      type: `Float`,
+      args: {
+        field: fieldsEnumTC.getTypeNonNull(),
+      },
+      resolve: sum,
     },
     group: {
       type: [getGroup({ schemaComposer, typeComposer }).getTypeNonNull()],

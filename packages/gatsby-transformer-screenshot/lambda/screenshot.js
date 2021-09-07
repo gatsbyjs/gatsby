@@ -43,13 +43,9 @@ class FSScreenshot extends Screenshot {
   }
 
   async putFile(fileBuffer) {
-    try {
-      await fsPromises.writeFile(this.fileUrl, fileBuffer)
-      this.expires = undefined
-      return { url: this.fileUrl, expires: this.expires }
-    } catch (error) {
-      throw error
-    }
+    await fsPromises.writeFile(this.fileUrl, fileBuffer)
+    this.expires = undefined
+    return { url: this.fileUrl, expires: this.expires }
   }
 }
 

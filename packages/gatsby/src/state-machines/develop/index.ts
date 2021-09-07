@@ -76,6 +76,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             parentSpan,
             store,
             webhookBody,
+            shouldRunCreatePagesStatefully: true,
             deferNodeMutation: true,
           }
         },
@@ -276,8 +277,6 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         ADD_NODE_MUTATION: {
           actions: `callApi`,
         },
-        // Ignore, because we're about to extract them anyway
-        SOURCE_FILE_CHANGED: undefined,
       },
       invoke: {
         src: `reloadData`,
@@ -294,6 +293,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             webhookSourcePluginName,
             refresh: true,
             deferNodeMutation: true,
+            shouldRunCreatePagesStatefully: false,
           }
         },
         onDone: {
@@ -322,7 +322,12 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         id: `recreate-pages`,
         src: `recreatePages`,
         data: ({ parentSpan, store }: IBuildContext): IDataLayerContext => {
-          return { parentSpan, store, deferNodeMutation: true }
+          return {
+            parentSpan,
+            store,
+            deferNodeMutation: true,
+            shouldRunCreatePagesStatefully: false,
+          }
         },
         onDone: {
           actions: `assignServiceResult`,

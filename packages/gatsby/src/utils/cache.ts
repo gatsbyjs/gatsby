@@ -5,7 +5,7 @@ import manager, {
   MultiCache,
 } from "cache-manager"
 import fs from "fs-extra"
-import fsStore from "../cache/cache-fs"
+import * as fsStore from "../cache/cache-fs"
 import path from "path"
 
 const MAX_CACHE_SIZE = 250
@@ -20,8 +20,12 @@ export default class GatsbyCache {
   public name: string
   public store: Store
   public directory: string
+  // TODO: remove `.cache` in v4. This is compat mode - cache-manager cache implementation
+  // expose internal cache that gives access to `.del` function that wasn't available in public
+  // cache interface (gatsby-plugin-sharp use it to clear no longer needed data)
   public cache?: MultiCache
 
+  // @ts-ignore - set & get types are missing from fsStore?
   constructor({ name = `db`, store = fsStore }: ICacheProperties = {}) {
     this.name = name
     this.store = store
@@ -82,5 +86,15 @@ export default class GatsbyCache {
         resolve(err ? undefined : value)
       })
     })
+  }
+
+  async del(key: string): Promise<void> {
+    if (!this.cache) {
+      throw new Error(
+        `GatsbyCache wasn't initialised yet, please run the init method first`
+      )
+    }
+
+    return this.cache.del(key)
   }
 }

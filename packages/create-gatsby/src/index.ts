@@ -102,7 +102,7 @@ export const questions = (initialFolderName: string, skip: boolean): any => [
     type: `multiselectinput`,
     name: `features`,
     message: `Would you like to install additional features with other plugins?`,
-    hint: `(Multiple choice) Use arrow keys to move, enter to select, and choose "Done" to confirm your choices`,
+    hint: `(Multiple choice) Use arrow keys to move, spacebar to select, and confirm with an enter on "Done"`,
     choices: makeChoices(features, true),
   },
 ]
@@ -307,7 +307,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
     trackCli(`CREATE_GATSBY_SET_PLUGINS_START`)
 
-    const enquirer = new Enquirer<Record<string, {}>>()
+    const enquirer = new Enquirer<Record<string, Record<string, unknown>>>()
     enquirer.use(plugin)
 
     pluginConfig = { ...pluginConfig, ...(await enquirer.prompt(config)) }

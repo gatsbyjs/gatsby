@@ -16,7 +16,7 @@ jest.mock(`fs`, () => {
  */
 
 jest.mock(`sharp`, () => {
-  let sharp = jest.fn(
+  const sharp = jest.fn(
     () =>
       new (class {
         resize() {

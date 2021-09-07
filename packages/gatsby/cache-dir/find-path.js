@@ -1,6 +1,7 @@
-import { pick } from "@reach/router/lib/utils"
+import { pick } from "@gatsbyjs/reach-router/lib/utils"
 import stripPrefix from "./strip-prefix"
 import normalizePagePath from "./normalize-page-path"
+import { maybeGetBrowserRedirect } from "./redirect-utils.js"
 
 const pathCache = new Map()
 let matchPaths = []
@@ -8,7 +9,10 @@ let matchPaths = []
 const trimPathname = rawPathname => {
   const pathname = decodeURIComponent(rawPathname)
   // Remove the pathPrefix from the pathname.
-  const trimmedPathname = stripPrefix(pathname, __BASE_PATH__)
+  const trimmedPathname = stripPrefix(
+    pathname,
+    decodeURIComponent(__BASE_PATH__)
+  )
     // Remove any hashfragment
     .split(`#`)[0]
     // Remove search query
@@ -110,6 +114,11 @@ export const findPath = rawPathname => {
   const trimmedPathname = trimPathname(absolutify(rawPathname))
   if (pathCache.has(trimmedPathname)) {
     return pathCache.get(trimmedPathname)
+  }
+
+  const redirect = maybeGetBrowserRedirect(rawPathname)
+  if (redirect) {
+    return findPath(redirect.toPath)
   }
 
   let foundPath = findMatchPath(trimmedPathname)

@@ -7,7 +7,7 @@ import buildHeadersProgram from "./build-headers-program"
 import createRedirects from "./create-redirects"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
 
-let assetsManifest = {}
+const assetsManifest = {}
 
 // Inject a webpack plugin to get the file manifests so we can translate all link headers
 exports.onCreateWebpackConfig = ({ actions, stage }) => {

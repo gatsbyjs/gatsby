@@ -435,12 +435,41 @@ type AuthorJson implements Node {
 }
 ```
 
+This example assumes that your markdown frontmatter is in the shape of:
+
+```markdown
+---
+reviewers:
+  - jane@example.com
+  - doe@example.com
+---
+```
+
+And your author JSON looks like this:
+
+```json
+[
+  {
+    "name": "Doe",
+    "firstName": "Jane",
+    "email": "jane@example.com"
+  },
+  {
+    "name": "Doe",
+    "firstName": "Zoe",
+    "email": "zoe@example.com"
+  }
+]
+```
+
 You provide a `@link` directive on a field and Gatsby will internally
 add a resolver that is quite similar to the one written manually above. If no
 argument is provided, Gatsby will use the `id` field as the foreign-key,
 otherwise the foreign-key has to be provided with the `by` argument. The
 optional `from` argument allows getting the field on the current type which acts as the foreign-key to the field specified in `by`.
 In other words, you `link` **on** `from` **to** `by`. This makes `from` especially helpful when adding a field for back-linking.
+
+For the above example you can read `@link` this way: Use the value from the field `Frontmatter.reviewers` and match it by the field `AuthorJson.email`.
 
 Keep in mind that in the example above, the link of `posts` in `AuthorJson` works because `frontmatter` and `author` are both objects. If, for example, the `Frontmatter` type had a list of `authors` instead (`frontmatter.authors.email`), it wouldn't work since the `by` argument doesn't support arrays. In that case, you'd have to provide a custom resolver with [Gatsby Type Builders](/docs/reference/graphql-data-layer/schema-customization/#gatsby-type-builders) or [createResolvers API](/docs/reference/graphql-data-layer/schema-customization/#createresolvers-api).
 
@@ -1000,18 +1029,17 @@ export const query = graphql`
 `
 ```
 
-### Queryable interfaces with the `@nodeInterface` extension
+### Queryable interfaces
 
-Since Gatsby 2.13.22, you can achieve the same thing as above by adding the `@nodeInterface`
-extension to the `TeamMember` interface. This will treat the interface like a normal
-top-level type that implements the `Node` interface, and thus automatically add root
-query fields for the interface.
+Since Gatsby 3.0.0, you can use interface inheritance to achieve the same thing as above:
+`TeamMember implements Node`. This will treat the interface like a normal top-level type that
+implements the `Node` interface, and thus automatically add root query fields for the interface.
 
 ```js:title=gatsby-node.js
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
-    interface TeamMember @nodeInterface {
+    interface TeamMember implements Node {
       id: ID!
       name: String!
       firstName: String!
@@ -1079,8 +1107,7 @@ data.allTeamMember.nodes.map(node => {
 })
 ```
 
-> Note: All types implementing an interface with the `@nodeInterface` extension
-> must also implement the `Node` interface.
+> Note: All types implementing a queryable interface must also implement the `Node` interface
 
 ## Extending third-party types
 

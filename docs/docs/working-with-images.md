@@ -2,6 +2,8 @@
 title: Working with Images in Gatsby
 ---
 
+_This document uses the deprecated image plugin. Please check out how to work with the new [gatsby-plugin-image](/docs/how-to/images-and-media/using-gatsby-plugin-image)._
+
 Optimizing images is a challenge on any website. To utilize best practices for performance across devices, you need multiple sizes and resolutions of each image. Luckily, Gatsby has several useful [plugins](/docs/plugins/) that work together to do that for images on [page components](/docs/conceptual/building-with-components/#page-components).
 
 The recommended approach is to use [GraphQL queries](/docs/conceptual/graphql-concepts/) to get images of the optimal size or resolution, then, display them with the [`gatsby-image`](/plugins/gatsby-image/) component.

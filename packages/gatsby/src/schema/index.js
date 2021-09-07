@@ -2,12 +2,13 @@
 
 const tracer = require(`opentracing`).globalTracer()
 const { store } = require(`../redux`)
-const { getNodesByType, getTypes } = require(`../redux/nodes`)
+const { getDataStore, getTypes } = require(`../datastore`)
 const { createSchemaComposer } = require(`./schema-composer`)
 const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
 const { builtInFieldExtensions } = require(`./extensions`)
 const { builtInTypeDefinitions } = require(`./types/built-in-types`)
 const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
+const { shouldGenerateEngines } = require(`../utils/engines-helpers`)
 
 const getAllTypeDefinitions = () => {
   const {
@@ -65,7 +66,7 @@ const buildInferenceMetadata = ({ types }) =>
         type: `BUILD_TYPE_METADATA`,
         payload: {
           typeName,
-          nodes: getNodesByType(typeName),
+          nodes: getDataStore().iterateNodesByType(typeName),
         },
       })
       if (typeNames.length > 0) {
@@ -78,9 +79,14 @@ const buildInferenceMetadata = ({ types }) =>
     processNextType()
   })
 
-const build = async ({ parentSpan, fullMetadataBuild = true }) => {
+const build = async ({
+  parentSpan,
+  fullMetadataBuild = true,
+  freeze = false,
+}) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
+  await getDataStore().ready()
 
   if (fullMetadataBuild) {
     // Build metadata for type inference and start updating it incrementally
@@ -96,9 +102,18 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
     schemaCustomization: { thirdPartySchemas, printConfig },
     inferenceMetadata,
     config: { mapping: typeMapping },
+    program: { directory },
   } = store.getState()
 
   const typeConflictReporter = new TypeConflictReporter()
+
+  const enginePrintConfig =
+    _CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()
+      ? {
+          path: `${directory}/.cache/schema.gql`,
+          rewrite: true,
+        }
+      : undefined
 
   const fieldExtensions = getAllFieldExtensions()
   const schemaComposer = createSchemaComposer({ fieldExtensions })
@@ -109,8 +124,10 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
     thirdPartySchemas,
     typeMapping,
     printConfig,
+    enginePrintConfig,
     typeConflictReporter,
     inferenceMetadata,
+    freeze,
     parentSpan,
   })
 
@@ -137,6 +154,7 @@ const rebuildWithSitePage = async ({ parentSpan }) => {
     `rebuild schema with SitePage context`,
     spanArgs
   )
+  await getDataStore().ready()
   await buildInferenceMetadata({ types: [`SitePage`] })
 
   // Disabling incremental inference for SitePage after the initial build

@@ -88,8 +88,8 @@ describe(`build-node-types`, () => {
     })
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
 
-    let context = { path: `foo` }
-    let { data, errors } = await graphql(schema, query, undefined, {
+    const context = { path: `foo` }
+    const { data, errors } = await graphql(schema, query, undefined, {
       ...context,
       nodeModel: new LocalNodeModel({
         schemaComposer,
@@ -117,7 +117,7 @@ describe(`build-node-types`, () => {
   })
 
   it(`should result in a valid queryable schema`, async () => {
-    let { parent, child, relative } = await runQuery(
+    const { parent, child, relative } = await runQuery(
       `
       {
         parent(id: { eq: "p1" }) {
@@ -138,7 +138,7 @@ describe(`build-node-types`, () => {
   })
 
   it(`should link children automatically`, async () => {
-    let { parent } = await runQuery(
+    const { parent } = await runQuery(
       `
       {
         parent(id: { eq: "p1" }) {
@@ -176,7 +176,7 @@ describe(`build-node-types`, () => {
   })
 
   it(`should create typed child field for singular children`, async () => {
-    let { parent } = await runQuery(
+    const { parent } = await runQuery(
       `
       {
         parent(id: { eq: "p1" }) {

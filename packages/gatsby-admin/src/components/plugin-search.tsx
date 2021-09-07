@@ -1,5 +1,6 @@
 /* @jsx jsx */
 import { jsx } from "strict-ui"
+import React from "react"
 import { connectAutoComplete } from "react-instantsearch-dom"
 import {
   Combobox,
@@ -36,7 +37,7 @@ const SearchCombobox: React.FC<{
 ))
 
 // the search bar holds the Search component in the InstantSearch widget
-const PluginSearchInput: React.FC<{}> = () => (
+const PluginSearchInput: React.FC<Record<string, unknown>> = () => (
   <div>
     <InstantSearchProvider>
       <SearchCombobox

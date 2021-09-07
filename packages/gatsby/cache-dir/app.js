@@ -1,6 +1,5 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import domReady from "@mikaelkristiansson/domready"
 import io from "socket.io-client"
 
 import socketIo from "./socketIo"
@@ -9,19 +8,32 @@ import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import { setLoader, publicLoader } from "./loader"
 import { Indicator } from "./loading-indicator/indicator"
 import DevLoader from "./dev-loader"
-import syncRequires from "$virtual/sync-requires"
+import asyncRequires from "$virtual/async-requires"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
+import { LoadingIndicatorEventHandler } from "./loading-indicator"
+import Root from "./root"
+import { init as navigationInit } from "./navigation"
+// ensure in develop we have at least some .css (even if it's empty).
+// this is so there is no warning about not matching content-type when site doesn't include any regular css (for example when css-in-js is used)
+// this also make sure that if all css is removed in develop we are not left with stale commons.css that have stale content
+import "./blank.css"
 
-if (process.env.GATSBY_HOT_LOADER === `fast-refresh` && module.hot) {
-  module.hot.accept(`$virtual/sync-requires`, () => {
-    // Manually reload
-  })
-}
+// Enable fast-refresh for virtual sync-requires, gatsby-browser & navigation
+// To ensure that our <Root /> component can hot reload in case anything below doesn't
+// satisfy fast-refresh constraints
+module.hot.accept(
+  [`$virtual/async-requires`, `./api-runner-browser`, `./navigation`],
+  () => {
+    // asyncRequires should be automatically updated here (due to ESM import and webpack HMR spec),
+    // but loader doesn't know that and needs to be manually nudged
+    loader.updateAsyncRequires(asyncRequires)
+  }
+)
 
 window.___emitter = emitter
 
-const loader = new DevLoader(syncRequires, matchPaths)
+const loader = new DevLoader(asyncRequires, matchPaths)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
 
@@ -116,12 +128,23 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   const rootElement = document.getElementById(`___gatsby`)
 
+  const focusEl = document.getElementById(`gatsby-focus-wrapper`)
+
+  // Client only pages have any empty body so we just do a normal
+  // render to avoid React complaining about hydration mis-matches.
+  let defaultRenderer = ReactDOM.render
+  if (focusEl && focusEl.children.length) {
+    if (ReactDOM.hydrateRoot) {
+      defaultRenderer = ReactDOM.hydrateRoot
+    } else {
+      defaultRenderer = ReactDOM.hydrate
+    }
+  }
+
   const renderer = apiRunner(
     `replaceHydrateFunction`,
     undefined,
-    // TODO replace with hydrate once dev SSR is ready
-    // but only for SSRed pages.
-    ReactDOM.render
+    defaultRenderer
   )[0]
 
   let dismissLoadingIndicator
@@ -153,16 +176,82 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     loader.loadPage(`/404.html`),
     loader.loadPage(window.location.pathname),
   ]).then(() => {
-    const preferDefault = m => (m && m.default) || m
-    const Root = preferDefault(require(`./root`))
-    domReady(() => {
+    navigationInit()
+
+    function onHydrated() {
+      apiRunner(`onInitialClientRender`)
+
+      // Render query on demand overlay
+      if (
+        process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR &&
+        process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
+      ) {
+        const indicatorMountElement = document.createElement(`div`)
+        indicatorMountElement.setAttribute(
+          `id`,
+          `query-on-demand-indicator-element`
+        )
+        document.body.append(indicatorMountElement)
+
+        if (renderer === ReactDOM.hydrateRoot) {
+          ReactDOM.createRoot(indicatorMountElement).render(
+            <LoadingIndicatorEventHandler />
+          )
+        } else {
+          ReactDOM.render(
+            <LoadingIndicatorEventHandler />,
+            indicatorMountElement
+          )
+        }
+      }
+    }
+
+    function App() {
+      const onClientEntryRanRef = React.useRef(false)
+
+      React.useEffect(() => {
+        if (!onClientEntryRanRef.current) {
+          onClientEntryRanRef.current = true
+
+          onHydrated()
+        }
+      }, [])
+
+      return <Root />
+    }
+
+    function runRender() {
       if (dismissLoadingIndicator) {
         dismissLoadingIndicator()
       }
 
-      renderer(<Root />, rootElement, () => {
-        apiRunner(`onInitialClientRender`)
-      })
-    })
+      if (renderer === ReactDOM.hydrateRoot) {
+        renderer(rootElement, <App />)
+      } else {
+        renderer(<App />, rootElement)
+      }
+    }
+
+    // https://github.com/madrobby/zepto/blob/b5ed8d607f67724788ec9ff492be297f64d47dfc/src/zepto.js#L439-L450
+    // TODO remove IE 10 support
+    const doc = document
+    if (
+      doc.readyState === `complete` ||
+      (doc.readyState !== `loading` && !doc.documentElement.doScroll)
+    ) {
+      setTimeout(function () {
+        runRender()
+      }, 0)
+    } else {
+      const handler = function () {
+        doc.removeEventListener(`DOMContentLoaded`, handler, false)
+        window.removeEventListener(`load`, handler, false)
+
+        runRender()
+      }
+
+      doc.addEventListener(`DOMContentLoaded`, handler, false)
+      window.addEventListener(`load`, handler, false)
+    }
   })
 })

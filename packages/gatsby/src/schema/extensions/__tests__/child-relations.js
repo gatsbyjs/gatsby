@@ -132,9 +132,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
     expect(parentFields.childChildWithoutNodes.resolve).toBeDefined()
   })
 
-  // NOTE: This will be default behavior in Gatsby v3. In v2 implicitly adding
-  // children fields to types with `@dontInfer` is deprecated
-  it.skip(`does not implicitly add child fields to parent type when parent type is @dontInfer`, async () => {
+  it(`does not implicitly add child fields to parent type when parent type is @dontInfer`, async () => {
     dispatch(
       createTypes(`
         type Parent implements Node @dontInfer {
@@ -156,34 +154,6 @@ describe(`Define parent-child relationships with field extensions`, () => {
     expect(parentFields.childChild).toBeUndefined()
     expect(parentFields.childAnotherChild).toBeUndefined()
     expect(parentFields.childChildWithoutNodes).toBeUndefined()
-  })
-
-  it(`shows deprecation warning when implicitly adding child fields to parent type when parent type is @dontInfer`, async () => {
-    dispatch(
-      createTypes(`
-        type Parent implements Node @dontInfer {
-          id: ID!
-        }
-        type Child implements Node {
-          id: ID!
-        }
-        type AnotherChild implements Node @childOf(types: ["Parent"]) {
-          id: ID!
-        }
-      `)
-    )
-    await buildSchema()
-    expect(report.warn).toBeCalledTimes(1)
-    expect(report.warn.mock.calls[0][0]).toEqual(
-      `Deprecation warning: In Gatsby v3 fields \`Parent.childChild\` and \`Parent.childrenChild\` ` +
-        `will not be added automatically ` +
-        `because type \`Child\` does not explicitly list type \`Parent\` in \`childOf\` extension.\n` +
-        `Add the following type definition to fix this:\n\n` +
-        `  type Child implements Node @childOf(types: ["Parent"]) {\n` +
-        `    id: ID!\n` +
-        `  }\n\n` +
-        `https://www.gatsbyjs.com/docs/actions/#createTypes`
-    )
   })
 
   it(`does not show deprecation warning for inferred child fields`, async () => {
@@ -860,7 +830,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
     await buildSchema()
     expect(report.error).toBeCalledWith(
       `With the \`childOf\` extension, children fields can only be added to ` +
-        `interfaces which have the \`@nodeInterface\` extension.\n` +
+        `interfaces which implement the \`Node\` interface.\n` +
         `Check the type definition of \`Ancestors\`.`
     )
   })

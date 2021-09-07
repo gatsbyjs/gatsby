@@ -93,6 +93,10 @@ describe(`Print type definitions`, () => {
         id: ID!
         date: Date @dateformat(formatString: "YYYY")
       }
+      interface ITest2 implements Node {
+        id: ID!
+        date: Date @dateformat(formatString: "YYYY")
+      }
       union ThisOrThat = AnotherTest | OneMoreTest
     `)
     typeDefs.push(

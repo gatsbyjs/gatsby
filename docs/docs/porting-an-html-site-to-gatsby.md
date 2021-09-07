@@ -2,7 +2,7 @@
 title: Porting an HTML Site to Gatsby
 ---
 
-This guide focuses on the parts of Gatsby that are applicable to a static website. For a more comprehensive walk through Gatsby's features check out the [Gatsby tutorial](/tutorial/). By following the example on this page, you will complete the key stages of porting an HTML website to Gatsby and establish your Gatsby development workflow.
+This guide focuses on the parts of Gatsby that are applicable to a static website. For a more comprehensive walk through Gatsby's features check out the [Gatsby tutorial](/docs/tutorial/). By following the example on this page, you will complete the key stages of porting an HTML website to Gatsby and establish your Gatsby development workflow.
 
 **Note:** This guide can also be used to migrate a section of a site, to be served next to existing files. Pay extra attention to the section on [hosting](#hosting-the-new-website) for guidance.
 
@@ -560,7 +560,7 @@ website-domain
 
 ## Next steps
 
-Gatsby can handle images through direct imports to page and component files too! The [asset import documentation](/docs/how-to/images-and-media/importing-assets-into-files/) covers this. There is also the [Gatsby Image](/docs/reference/built-in-components/gatsby-image/) component for even deeper optimizations. Once assets are handled through Gatsby, plugins can be used to optimize their processing and delivery.
+Gatsby can handle images through direct imports to page and component files too! The [asset import documentation](/docs/how-to/images-and-media/importing-assets-into-files/) covers this. There is also [gatsby-plugin-image](/docs/how-to/images-and-media/using-gatsby-plugin-image) component for even deeper optimizations. Once assets are handled through Gatsby, plugins can be used to optimize their processing and delivery.
 
 The [building with components doc](/docs/conceptual/building-with-components/) has information about why Gatsby uses React component architecture and how it fits into a Gatsby application.
 

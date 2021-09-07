@@ -24,7 +24,7 @@ Cypress.Commands.add(`lifecycleCallOrder`, expectedActionCallOrder =>
     if (expectedActionCallOrderLength > actionsLength) {
       return false
     }
-    
+
     let prevActionIndex = -1
     for (let i = 0; i < actionsLength; i += 1) {
       const nextActionIndex = prevActionIndex + 1
@@ -81,6 +81,35 @@ Cypress.Commands.add(
   }
 )
 
-Cypress.Commands.add(`assertRoute`, (route) => {
+Cypress.Commands.add(`assertRoute`, route => {
   cy.url().should(`equal`, `${window.location.origin}${route}`)
 })
+
+// overwriting visit and creating a waitForHmr function to help us deal with HMR
+Cypress.Commands.overwrite("visit", (orig, url, options = {}) => {
+  const newOptions = {
+    ...options,
+    onBeforeLoad: win => {
+      if (options.onBeforeLoad) {
+        options.onBeforeLoad(win)
+      }
+
+      cy.spy(win.console, "log").as(`hmrConsoleLog`)
+    },
+  }
+
+  return orig(url, newOptions)
+})
+
+Cypress.Commands.add(`waitForHmr`, (message = `App is up to date`) => {
+  cy.get(`@hmrConsoleLog`).should(`be.calledWithMatch`, message)
+  cy.wait(1000)
+})
+
+Cypress.Commands.add(`getFastRefreshOverlay`, () => (
+  cy.get('gatsby-fast-refresh').shadow()
+))
+
+Cypress.Commands.add(`assertNoFastRefreshOverlay`, () => (
+  cy.get('gatsby-fast-refresh').should('not.exist')
+))

@@ -80,7 +80,7 @@ A component can include components within it. In fact, [pages](#page) and [templ
 
 ### Config
 
-The configuration file, `gatsby-config.js` tells Gatsby information about your website. A common option set in config is your sites metadata that can power your SEO meta tags.
+The configuration file, `gatsby-config.js` tells Gatsby information about your website. A common option to set in this config is your site's metadata that can power your SEO meta tags.
 
 ### [Content Delivery Network](/docs/glossary/content-delivery-network/)
 
@@ -180,7 +180,7 @@ A hosting provider keeps a copy of your website or app and makes it accessible t
 
 ### Hot module replacement
 
-A feature in use when you run `gatsby develop` that live updates your site on save of code in a text editor by automatically replacing modules, or chunks of code, in an open browser window.
+A feature in use when you run `gatsby develop` that live updates your site on save of code in a text editor by automatically replacing modules, or chunks of code, in an open browser window. Gatsby uses [Fast Refresh](/docs/reference/local-development/fast-refresh/).
 
 ### [Hydration](/docs/glossary/hydration/)
 

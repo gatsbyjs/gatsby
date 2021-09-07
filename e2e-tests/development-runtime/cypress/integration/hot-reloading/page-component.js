@@ -14,6 +14,8 @@ describe(`hot reloading page component`, () => {
       `npm run update -- --file src/pages/index.js --replacements "GATSBY_SITE:${text}"`
     )
 
+    cy.waitForHmr()
+
     cy.getTestElement(TEST_ID).should(`contain.text`, text)
   })
 })

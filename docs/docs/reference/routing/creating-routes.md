@@ -2,34 +2,42 @@
 title: Routing
 ---
 
-Part of what makes Gatsby sites so fast is that a lot of the work is done at build time and the running site is using mostly [static content](/docs/adding-app-and-website-functionality/#static-pages). During that process, Gatsby creates paths to access that content, handling [routing](/docs/glossary#routing) for you. Navigating in a Gatsby app requires an understanding of what those paths are and how they're generated.
+Part of what makes Gatsby sites so fast is that a lot of the work is done at build time and the running site is [static content](/docs/adding-app-and-website-functionality/#static-pages) served from a CDN. During the build process, Gatsby creates paths to access pages, handling [routing](/docs/glossary#routing) for you. Creating navigation for a Gatsby app requires an understanding of what those paths are and how they're generated.
 
-Alternatively, your application may include functionality that cannot be handled at build time or through [rehydration](/docs/adding-app-and-website-functionality/#how-hydration-makes-apps-possible). This includes things like authentication or retrieving dynamic content. To handle those pages, you can make use of [client-only routes](/docs/how-to/routing/client-only-routes-and-user-authentication) using [`@reach/router`](/docs/reach-router-and-gatsby/) which is built into Gatsby.
-
-With Gatsby's file system routing, each file inside the `src/pages` directory will generate its own route in your Gatsby site. The path for those routes matches the file structure it's found in.
+Often your application will include routes that are not known at build time. This includes routes that need authentication or for dynamic content. To handle those pages, you can make use of [client-only routes](/docs/how-to/routing/client-only-routes-and-user-authentication) using [`@reach/router`](/docs/reach-router-and-gatsby/) which is built into Gatsby.
 
 ## Creating routes
 
 Routes can be created in three ways:
 
-- By creating React components in `src/pages`. (Note that you must make the component the [default export](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export).)
+- By creating React components in `src/pages`
 - By using the [File System Route API](/docs/reference/routing/file-system-route-api/) to programmatically create pages from GraphQL and to create client-only routes.
-- In your site's `gatsby-node.js` by implementing the API [`createPages`](/docs/reference/config-files/gatsby-node/#createPages). ([Plugins](/docs/plugins/) can also implement `createPages` and create pages for you.)
+- By implementing the API [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) in your site's `gatsby-node.js`. ([Plugins](/docs/plugins/) can also implement `createPages` and create pages for you.)
 
-### Routes defined in `src/pages`
+### Define routes in `src/pages`
 
-Each `.js` file inside `src/pages` will generate its own page in your Gatsby site. The path for those pages matches the file structure it's found in.
+Gatsby generates pages for each `.js` file inside `src/pages`. The browser path is generated from the file path.
 
-For example, `src/pages/contact.js` will be found at `yoursite.com/contact`, and `src/pages/home.js` will be found at `yoursite.com/home`. This works at whatever level the file is created at. If `contact.js` is moved to a directory called `information`, located inside `src/pages`, the page will now be found at `yoursite.com/information/contact`.
+Add this component to `src/pages/index.js` to create a home page for your site.
 
-The exception to this rule is any file named `index.js`. Files with this name are matched to the root directory they're found in. That means `index.js` in the root `src/pages` directory is accessed via `yoursite.com`. However, if there is an `index.js` inside the `information` directory, it is found at `yoursite.com/information`.
+```jsx:title=src/pages/index.js
+import * as React from "react"
+
+export default function Index() {
+  return <div>Hello world</div>
+}
+```
+
+For example, `src/pages/contact.js` creates the page `yoursite.com/contact`, and `src/pages/home.js` creates the page `yoursite.com/home`. This works at whatever level the file is created at. If `contact.js` is moved to a directory called `information`, located inside `src/pages`, the page will now be created at `yoursite.com/information/contact`.
+
+The exception to this rule is any file named `index.js`. Files with this name are matched to the root directory they're found in. That means `index.js` in the root `src/pages` directory is accessed via `yoursite.com`. However, if there is an `index.js` inside the `information` directory, it is created at `yoursite.com/information`.
 
 | Path                               | Route                              |
 | ---------------------------------- | ---------------------------------- |
 | `src/pages/contact.js`             | `yoursite.com/contact`             |
 | `src/pages/information/contact.js` | `yoursite.com/information/contact` |
 
-Note that if a particular directory does not have an `index.js` file, then that root page does not exist, and attempts to navigate to it will land you on a [404 page](/docs/how-to/adding-common-features/add-404-page/). For example, `yoursite.com/information/contact` may exist, but that does not guarantee `yoursite.com/information` exists.
+Note that if a particular directory does not have an `index.js` file, then that root page is not created, and attempts to navigate to it will land you on a [404 page](/docs/how-to/adding-common-features/add-404-page/). For example, `yoursite.com/information/contact` may exist, but that does not guarantee `yoursite.com/information` exists.
 
 ### Using the File System Route API
 
@@ -45,7 +53,7 @@ See the [File System Route API](/docs/reference/routing/file-system-route-api/) 
 
 ### Using `gatsby-node.js`
 
-The File System Route API should be enough to get you through most use cases but if you need extra control, e.g. for passing data via `pageContext` or modyfing the `path`, you can use [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/), including the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) function, inside your `gatsby-node.js` file. This function will give you access to the [`createPage`](/docs/reference/config-files/actions/#createPage) action, which is at the core of programmatically creating a page. Here's an example for creating pages from Markdown files sourced by Gatsby's data layer:
+The File System Route API should be enough to get you through most use cases but if you need extra control, e.g. for passing data via `pageContext` or modifying the `path`, you can use [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/), including the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) function, inside your `gatsby-node.js` file. This function will give you access to the [`createPage`](/docs/reference/config-files/actions/#createPage) action, which is at the core of programmatically creating a page. Here's an example for creating pages from Markdown files sourced by Gatsby's data layer:
 
 ```js:title=gatsby-node.js
 exports.createPages = async function ({ actions, graphql }) {

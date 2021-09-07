@@ -19,6 +19,11 @@ jest.mock(`fs-extra`, () => {
   }
 })
 
+// we mock it to make tests faster
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {}
+})
+
 const INTERVAL_TIMEOUT = 500
 const TEST_TIMEOUT = 30000
 
@@ -49,9 +54,13 @@ describe(`websocket-manager`, () => {
   let websocketManager: WebsocketManager
   let httpServerAddr
 
-  async function getClientSocket(): Promise<typeof io.Socket> {
+  function getClientSocket(): typeof io.Socket {
+    return io.default(`http://127.0.0.1:${httpServerAddr.port}`)
+  }
+
+  function getClientSocketAndWaitForConnect(): Promise<typeof io.Socket> {
     return new Promise(resolve => {
-      const clientSocket = io.default(`http://127.0.0.1:${httpServerAddr.port}`)
+      const clientSocket = getClientSocket()
       clientSocket.on(`connect`, () => {
         resolve(clientSocket)
       })
@@ -149,7 +158,7 @@ describe(`websocket-manager`, () => {
     `Can connect`,
     async () => {
       expect.assertions(1)
-      const clientSocket = await getClientSocket()
+      const clientSocket = await getClientSocketAndWaitForConnect()
       expect(clientSocket.connected).toBe(true)
       clientSocket.disconnect()
     },
@@ -170,7 +179,7 @@ describe(`websocket-manager`, () => {
       async () => {
         expect.assertions(3)
 
-        const clientSocket = await getClientSocket()
+        const clientSocket = await getClientSocketAndWaitForConnect()
 
         expect(websocketManager.activePaths).toEqual(new Set())
 
@@ -202,8 +211,8 @@ describe(`websocket-manager`, () => {
       `track individual clients`,
       async () => {
         expect.assertions(5)
-        const clientSocket1 = await getClientSocket()
-        const clientSocket2 = await getClientSocket()
+        const clientSocket1 = await getClientSocketAndWaitForConnect()
+        const clientSocket2 = await getClientSocketAndWaitForConnect()
         expect(websocketManager.activePaths).toEqual(new Set())
 
         let activePathAdjustedPromise = waitUntil(done => {
@@ -261,7 +270,7 @@ describe(`websocket-manager`, () => {
       async function registerPathnameAndGetPath(
         pathname: string
       ): Promise<string> {
-        const clientSocket = await getClientSocket()
+        const clientSocket = await getClientSocketAndWaitForConnect()
 
         if (websocketManager.activePaths.size > 0) {
           throw new Error(`There was client connected already`)
@@ -465,7 +474,7 @@ describe(`websocket-manager`, () => {
         `Client can receive page query update`,
         async () => {
           expect.assertions(1)
-          const clientSocket = await getClientSocket()
+          const clientSocket = await getClientSocketAndWaitForConnect()
 
           const pageQueryId = `/blog/`
           const result = {
@@ -512,7 +521,7 @@ describe(`websocket-manager`, () => {
         `Client can receive static query update`,
         async () => {
           expect.assertions(1)
-          const clientSocket = await getClientSocket()
+          const clientSocket = await getClientSocketAndWaitForConnect()
 
           const staticQueryId = `12345`
           const result = {
@@ -553,7 +562,7 @@ describe(`websocket-manager`, () => {
     it(`Emits errors to display by clients`, async done => {
       expect.assertions(1)
 
-      const clientSocket = await getClientSocket()
+      const clientSocket = await getClientSocketAndWaitForConnect()
 
       function handler(msg): void {
         if (
@@ -575,7 +584,7 @@ describe(`websocket-manager`, () => {
     it(`Emits stored errors to new clients`, async done => {
       expect.assertions(1)
 
-      const clientSocket = await getClientSocket()
+      const clientSocket = getClientSocket()
 
       function handler(msg): void {
         if (
@@ -597,7 +606,7 @@ describe(`websocket-manager`, () => {
     it(`Can clear errors by emitting empty "overlayError" msg`, async done => {
       expect.assertions(1)
 
-      const clientSocket = await getClientSocket()
+      const clientSocket = await getClientSocketAndWaitForConnect()
 
       function handler(msg): void {
         if (

@@ -11,7 +11,7 @@ import { GatsbyImage } from "gatsby-plugin-image";
 export const query = graphql`{
   file(relativePath: {eq: "headers/headshot.jpg"}) {
     childImageSharp {
-      gatsbyImageData(layout: FLUID)
+      gatsbyImageData(layout: FULL_WIDTH)
     }
   }
   banner: file(relativePath: {eq: "headers/default.jpg"}) {

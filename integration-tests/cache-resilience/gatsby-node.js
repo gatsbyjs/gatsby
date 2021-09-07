@@ -4,7 +4,7 @@ const glob = require(`glob`)
 const path = require(`path`)
 const _ = require(`lodash`)
 
-const db = require(`gatsby/dist/db`)
+const { saveState } = require(`gatsby/dist/redux/save-state`)
 
 const {
   ON_PRE_BOOTSTRAP_FILE_PATH,
@@ -82,5 +82,5 @@ exports.onPostBuild = async ({ getNodes, store }) => {
     })
   )
 
-  await db.saveState()
+  await saveState()
 }

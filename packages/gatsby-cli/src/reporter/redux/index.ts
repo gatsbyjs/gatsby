@@ -1,20 +1,19 @@
-import { createStore, combineReducers } from "redux"
+import { createStore, combineReducers, Store } from "redux"
 import { reducer } from "./reducer"
-import { ActionsUnion, ISetLogs } from "./types"
+import { ActionsUnion, ISetLogs, IGatsbyCLIState } from "./types"
 import { isInternalAction } from "./utils"
 import { createStructuredLoggingDiagnosticsMiddleware } from "./diagnostics"
 import { Actions } from "../constants"
 
-let store = createStore(
+let store: Store<{ logs: IGatsbyCLIState }> = createStore(
   combineReducers({
     logs: reducer,
   }),
   {}
 )
 
-const diagnosticsMiddleware = createStructuredLoggingDiagnosticsMiddleware(
-  store
-)
+const diagnosticsMiddleware =
+  createStructuredLoggingDiagnosticsMiddleware(store)
 
 export type GatsbyCLIStore = typeof store
 type StoreListener = (store: GatsbyCLIStore) => void
@@ -41,7 +40,6 @@ export const dispatch = (action: ActionsUnion | Thunk): void => {
 
   action = {
     ...action,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore this is a typescript no-no..
     // And i'm pretty sure this timestamp isn't used anywhere.
     // but for now, the structured logs integration tests expect it

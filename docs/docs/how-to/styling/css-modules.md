@@ -1,8 +1,11 @@
 ---
 title: Component-Scoped Styles with CSS Modules
+examples:
+  - label: Using CSS Modules
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-css-modules"
 ---
 
-Component-scoped CSS allows you to write traditional, portable CSS with minimal side-effects: gone are the worries of selector name collisions or affecting other components' styles.
+Component-scoped CSS allows you to write traditional, portable CSS with minimal side effects: gone are the worries of selector name collisions or affecting other components' styles.
 
 Gatsby works out of the box with [CSS Modules](https://github.com/css-modules/css-modules), a popular solution for writing component-scoped CSS. Here is an [example site that uses CSS Modules](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-css-modules).
 
@@ -28,7 +31,7 @@ The CSS in a CSS module is no different than normal CSS, but the extension of th
 ```jsx:title=src/components/container.js
 import React from "react"
 // highlight-next-line
-import containerStyles from "./container.module.css"
+import * as containerStyles from "./container.module.css"
 
 export default function Container({ children }) {
   return (
@@ -48,7 +51,7 @@ Here's an example where the class name `container` is added to the DOM along wit
 
 ```jsx:title=src/components/container.js
 import React from "react"
-import containerStyles from "./container.module.css"
+import * as containerStyles from "./container.module.css"
 
 export default function Container({ children }) {
   return (

@@ -1,4 +1,6 @@
 const normalize = require(`../normalize`)
+import { createPluginConfig } from "../plugin-options"
+
 const {
   currentSyncData,
   contentTypeItems,
@@ -17,6 +19,8 @@ const restrictedNodeFields = [
   `fields`,
   `internal`,
 ]
+
+const pluginConfig = createPluginConfig({})
 
 describe(`Process contentful data (by name)`, () => {
   let entryList
@@ -73,6 +77,7 @@ describe(`Process contentful data (by name)`, () => {
         locales,
         space,
         useNameForId: true,
+        pluginConfig,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -101,19 +106,19 @@ describe(`Process contentful data (by name)`, () => {
 
 describe(`Skip existing nodes in warm build`, () => {
   it(`creates nodes for each entry`, () => {
-    let entryList = normalize.buildEntryList({
+    const entryList = normalize.buildEntryList({
       mergedSyncData: currentSyncData,
       contentTypeItems,
     })
 
-    let resolvable = normalize.buildResolvableSet({
+    const resolvable = normalize.buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
       defaultLocale,
       locales,
     })
 
-    let foreignReferenceMap = normalize.buildForeignReferenceMap({
+    const foreignReferenceMap = normalize.buildForeignReferenceMap({
       contentTypeItems,
       entryList,
       resolvable,
@@ -155,6 +160,7 @@ describe(`Skip existing nodes in warm build`, () => {
         locales,
         space,
         useNameForId: true,
+        pluginConfig,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -184,19 +190,19 @@ describe(`Skip existing nodes in warm build`, () => {
 
 describe(`Process existing mutated nodes in warm build`, () => {
   it(`creates nodes for each entry`, () => {
-    let entryList = normalize.buildEntryList({
+    const entryList = normalize.buildEntryList({
       mergedSyncData: currentSyncData,
       contentTypeItems,
     })
 
-    let resolvable = normalize.buildResolvableSet({
+    const resolvable = normalize.buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
       defaultLocale,
       locales,
     })
 
-    let foreignReferenceMap = normalize.buildForeignReferenceMap({
+    const foreignReferenceMap = normalize.buildForeignReferenceMap({
       contentTypeItems,
       entryList,
       resolvable,
@@ -240,6 +246,7 @@ describe(`Process existing mutated nodes in warm build`, () => {
         locales,
         space,
         useNameForId: true,
+        pluginConfig,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -322,6 +329,7 @@ describe(`Process contentful data (by id)`, () => {
         locales,
         space,
         useNameForId: false,
+        pluginConfig,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()

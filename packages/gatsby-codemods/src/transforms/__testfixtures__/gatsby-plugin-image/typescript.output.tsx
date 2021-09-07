@@ -5,7 +5,7 @@ export const Hero: React.SFC = ({ children }) => {
     const data = useStaticQuery(graphql`{
   file(relativePath: {eq: "banner.jpg"}) {
     childImageSharp {
-      gatsbyImageData(layout: FLUID)
+      gatsbyImageData(layout: FULL_WIDTH)
     }
   }
 }

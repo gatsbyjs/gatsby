@@ -30,17 +30,29 @@ plugins: [
   {
     resolve: `gatsby-plugin-sharp`,
     options: {
-      // Available options and their defaults:
+      // Defaults used for gatsbyImageData and StaticImage
+      defaults: {},
+      // Set to false to allow builds to continue on image errors
+      failOnError: true,
+      // deprecated options and their defaults:
       base64Width: 20,
       forceBase64Format: ``, // valid formats: png,jpg,webp
       useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
       stripMetadata: true,
       defaultQuality: 50,
-      failOnError: true,
     },
   },
 ]
 ```
+
+## Options
+
+- `defaults`: default values used for `gatsbyImageData` and `StaticImage` from [gatsby-plugin-image](https://www.gatsbyjs.com/plugins/gatsby-plugin-image).
+  Available options are: `formats`,`placeholder`,`quality`,`breakpoints`,`backgroundColor`,`tracedSVGOptions`,`blurredOptions`,`jpgOptions`,`pngOptions`,`webpOptions`,`avifOptions`.
+  For details of these, see [the reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image).
+- `failOnError`: default = `true`. By default builds will fail if there is a corrupted image. Set to false to continue the build on error. The image will return `undefined`.
+
+Other options are deprecated, and should only be used for the legacy `fixed` and `fluid` functions.
 
 ## Methods
 
@@ -155,7 +167,7 @@ Convert the source image to one of the following available options: `NO_CHANGE`,
 
 #### toFormatBase64
 
-base64 image uses the image format from the source , or the value of `toFormat`. This setting allows a different image format instead, available options are: `JPG`, `PNG`, `WEBP`.
+base64 image uses the image format from the source, or the value of `toFormat`. This setting allows a different image format instead, available options are: `JPG`, `PNG`, `WEBP`.
 
 `WEBP` allows for a smaller data size, allowing you to reduce your HTML size when transferring over the network, or to use a larger base64 placeholder width default for improved image placeholder quality.
 

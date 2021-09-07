@@ -2,7 +2,7 @@
 title: Quick Start
 ---
 
-This quick start is intended for intermediate to advanced developers. For a gentler intro to Gatsby, [head to our tutorial](/tutorial/)!
+This quick start is intended for intermediate to advanced developers. For a gentler intro to Gatsby, [head to our tutorial](/docs/tutorial/)!
 
 ## Getting started with Gatsby
 
@@ -18,13 +18,15 @@ Follow the prompts to choose your preferred CMS, styling tools and additional fe
 
 It will look like this, but use your project's directory.
 
-```shell
 Start by going to the directory with
 
+```shell
 cd my-gatsby-site
+```
 
 Start the local development server with
 
+```shell
 npm run develop
 ```
 

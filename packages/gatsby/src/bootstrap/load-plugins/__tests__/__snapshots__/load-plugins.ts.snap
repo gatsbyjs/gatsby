@@ -37,7 +37,6 @@ Array [
     "nodeAPIs": Array [
       "sourceNodes",
       "createResolvers",
-      "onCreatePage",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -50,9 +49,7 @@ Array [
     "browserAPIs": Array [],
     "id": "",
     "name": "prod-404",
-    "nodeAPIs": Array [
-      "onCreatePage",
-    ],
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -92,6 +89,23 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "name": "functions",
+    "nodeAPIs": Array [
+      "onPreBootstrap",
+      "onCreateDevServer",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -105,11 +119,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -123,11 +140,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -141,11 +161,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -159,11 +182,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -177,11 +203,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -195,11 +224,35 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/functions/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-typescript",
     "nodeAPIs": Array [
       "pluginOptionsSchema",
@@ -215,6 +268,7 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
@@ -232,6 +286,8 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -245,6 +301,7 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
 ]
@@ -287,7 +344,6 @@ Array [
     "nodeAPIs": Array [
       "sourceNodes",
       "createResolvers",
-      "onCreatePage",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -300,9 +356,7 @@ Array [
     "browserAPIs": Array [],
     "id": "",
     "name": "prod-404",
-    "nodeAPIs": Array [
-      "onCreatePage",
-    ],
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -342,6 +396,21 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "name": "functions",
+    "nodeAPIs": Array [
+      "onPreBootstrap",
+      "onCreateDevServer",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
     "name": "TEST",
     "nodeAPIs": Array [],
     "pluginOptions": Object {
@@ -354,6 +423,8 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -367,11 +438,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -385,11 +459,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -403,11 +480,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -421,11 +501,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -439,11 +522,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -457,11 +543,35 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/functions/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -475,11 +585,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-typescript",
     "nodeAPIs": Array [
       "pluginOptionsSchema",
@@ -495,6 +608,7 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
@@ -512,6 +626,8 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -525,6 +641,7 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
 ]
@@ -567,7 +684,6 @@ Array [
     "nodeAPIs": Array [
       "sourceNodes",
       "createResolvers",
-      "onCreatePage",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -580,9 +696,7 @@ Array [
     "browserAPIs": Array [],
     "id": "",
     "name": "prod-404",
-    "nodeAPIs": Array [
-      "onCreatePage",
-    ],
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -622,6 +736,23 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "name": "functions",
+    "nodeAPIs": Array [
+      "onPreBootstrap",
+      "onCreateDevServer",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -637,11 +768,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -655,11 +789,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -673,11 +810,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -691,11 +831,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -709,11 +852,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -727,11 +873,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -745,11 +894,35 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
+    "name": "gatsby-plugin-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+      "setFieldsOnGraphQLNodeType",
+      "onPreInit",
+    ],
+    "pluginOptions": Object {
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/functions/src/pages",
+      "pathCheck": false,
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [],
+    "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -763,11 +936,14 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-typescript",
     "nodeAPIs": Array [
       "pluginOptionsSchema",
@@ -783,6 +959,7 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
   Object {
@@ -800,6 +977,8 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
+    "module": undefined,
+    "modulePath": undefined,
     "name": "gatsby-plugin-page-creator",
     "nodeAPIs": Array [
       "createPagesStatefully",
@@ -813,6 +992,7 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "subPluginPaths": undefined,
     "version": "1.0.0",
   },
 ]

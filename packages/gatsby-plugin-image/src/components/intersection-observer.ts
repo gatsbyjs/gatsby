@@ -3,7 +3,7 @@ import { RefObject } from "react"
 
 let intersectionObserver: IntersectionObserver
 
-type Unobserver = () => void
+export type Unobserver = () => void
 
 const ioEntryMap = new WeakMap<HTMLElement, () => void>()
 /* eslint-disable @typescript-eslint/no-explicit-any  */

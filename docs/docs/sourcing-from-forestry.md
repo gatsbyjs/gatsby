@@ -10,7 +10,7 @@ Forestry (also Forestry.io or Forestry CMS) is a Git-backed CMS that is built to
 
 All configurations can be done through your Forestry site dashboard, but they can also be done directly in your Gatsby site repository.
 
-To complete this tutorial, you will need a Forestry account. You can sign-up at [Forestry.io](https://app.forestry.io/signup).
+To complete this tutorial, you will need a Forestry account. You can sign up at [Forestry.io](https://app.forestry.io/signup).
 
 _Note_: You can see the complete example at https://github.com/cameron-yee/gatsby-forestry-example.
 
@@ -22,7 +22,7 @@ First, clone the Gatsby default starter repository.
 git clone https://github.com/gatsbyjs/gatsby-starter-default.git gatsby-forestry-example
 ```
 
-Next, on GitHub create a new repository. The repository must live on a Git provider for it to be available to Forestry CMS. I'm using GitHub, but you can also use GitLab, Bitbucket, or Azure Devops as well. Set your cloned repository's remote url to point to your newly created repository on GitHub.
+Next, on GitHub create a new repository. The repository must live on a Git provider for it to be available to Forestry CMS. I'm using GitHub, but you can also use GitLab, Bitbucket, or Azure DevOps as well. Set your cloned repository's remote url to point to your newly created repository on GitHub.
 
 ```shell
 git remote set-url origin <your-github-repo-link>
@@ -154,7 +154,7 @@ You should now be viewing your Forestry login page. Login to view your dashboard
 
 You can now make changes in your Forestry admin dashboard and see them as commits in your GitHub repo!
 Open the Forestry dashboard on your deployed site at `/admin`, allow access to GitHub when the permissions
-window pops up (check for blocked pop ups if you don't see it), and try creating and publishing a
+window pops up (check for blocked pop-ups if you don't see it), and try creating and publishing a
 new blog post. Once you've done that, you'll find a new `content/posts` directory in your GitHub repo
 containing a Markdown file with your blog post content!
 
