@@ -18,7 +18,7 @@ export function constructPageDataString(
 ): string {
   let body = `{
     "componentChunkName": "${componentChunkName}",
-    "path": JSON.stringify(pagePath),
+    "path": ${JSON.stringify(pagePath)},
     "result": ${result},
     "staticQueryHashes": ${JSON.stringify(staticQueryHashes)}`
 
