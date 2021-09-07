@@ -100,7 +100,7 @@ export async function createPageSSRBundle(): Promise<any> {
     resolve: {
       extensions,
       alias: {
-        ".cache": process.cwd() + `/.cache/`,
+        ".cache": `${program.directory}/.cache/`,
       },
     },
     plugins: [
