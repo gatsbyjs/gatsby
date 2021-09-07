@@ -22,16 +22,22 @@ exports.pluginOptionsSchema = function ({ Joi }) {
     excerpt_separator: Joi.string().description(
       `If your Markdown file contains HTML, excerpt will not return a value. In that case, you can set an excerpt_separator to an HTML tag. Edit your Markdown files to include that HTML tag after the text you’d like to appear in the excerpt.`
     ),
-    plugins: Joi.array()
-      .items(
-        Joi.string(),
-        Joi.object({
-          resolve: Joi.string(),
-          options: Joi.object({}).unknown(true),
-        })
-      )
-      .description(
-        `A list of remark plugins. See also: https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark for examples`
-      ),
+    plugins:
+      _CFLAGS_.GATSBY_MAJOR === `4`
+        ? Joi.subPlugins({ entry: `index` }).description(
+            `A list of remark plugins. See also: https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark for examples`
+          )
+        : Joi.array()
+            .items(
+              Joi.string(),
+              Joi.object({
+                resolve: Joi.string(),
+                options: Joi.object({}).unknown(true),
+              })
+            )
+            .default([])
+            .description(
+              `A list of remark plugins. See also: https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark for examples`
+            ),
   })
 }
