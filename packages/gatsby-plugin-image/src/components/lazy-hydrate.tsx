@@ -1,21 +1,16 @@
 import React, { MutableRefObject } from "react"
-import { hydrate, render } from "react-dom"
+import ReactDOM from "react-dom"
 import { GatsbyImageProps } from "./gatsby-image.browser"
 import { LayoutWrapper } from "./layout-wrapper"
 import { Placeholder } from "./placeholder"
 import { MainImageProps, MainImage } from "./main-image"
-import {
-  getMainProps,
-  getPlaceholderProps,
-  hasNativeLazyLoadSupport,
-  hasImageLoaded,
-} from "./hooks"
+import { getMainProps, getPlaceholderProps } from "./hooks"
 import { ReactElement } from "react"
 
 type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
   isLoading: boolean
   isLoaded: boolean // alwaystype SetStateAction<S> = S | ((prevState: S) => S);
-  toggleIsLoaded: Function
+  toggleIsLoaded: (toggle: boolean) => void
   ref: MutableRefObject<HTMLImageElement | undefined>
 }
 
@@ -27,62 +22,99 @@ export function lazyHydrate(
     isLoaded,
     toggleIsLoaded,
     ref,
+    imgClassName,
+    imgStyle = {},
+    objectPosition,
+    backgroundColor,
+    objectFit = `cover`,
     ...props
   }: LazyHydrateProps,
   root: MutableRefObject<HTMLElement | undefined>,
-  hydrated: MutableRefObject<boolean>
+  hydrated: MutableRefObject<boolean>,
+  forceHydrate: MutableRefObject<boolean>
 ): (() => void) | null {
-  const { width, height, layout, images, placeholder, backgroundColor } = image
-
-  if (!root.current) {
-    return null
-  }
-
-  const hasSSRHtml = root.current.querySelector(`[data-gatsby-image-ssr]`)
-  // On first server hydration do nothing
-  if (hasNativeLazyLoadSupport() && hasSSRHtml && !hydrated.current) {
-    return null
-  }
+  const {
+    width,
+    height,
+    layout,
+    images,
+    placeholder,
+    backgroundColor: wrapperBackgroundColor,
+  } = image
 
   const cacheKey = JSON.stringify(images)
-  const hasLoaded = !hydrated.current && hasImageLoaded(cacheKey)
+
+  imgStyle = {
+    objectFit,
+    objectPosition,
+    backgroundColor,
+    ...imgStyle,
+  }
 
   const component = (
     <LayoutWrapper layout={layout} width={width} height={height}>
-      {!hasLoaded && (
-        <Placeholder
-          {...getPlaceholderProps(
-            placeholder,
-            isLoaded,
-            layout,
-            width,
-            height,
-            backgroundColor
-          )}
-        />
-      )}
+      <Placeholder
+        {...getPlaceholderProps(
+          placeholder,
+          isLoaded,
+          layout,
+          width,
+          height,
+          wrapperBackgroundColor,
+          objectFit,
+          objectPosition
+        )}
+      />
+
       <MainImage
         {...(props as Omit<MainImageProps, "images" | "fallback">)}
+        width={width}
+        height={height}
+        className={imgClassName}
         {...getMainProps(
           isLoading,
-          hasLoaded || isLoaded,
+          isLoaded,
           images,
           loading,
           toggleIsLoaded,
           cacheKey,
-          ref
+          ref,
+          imgStyle
         )}
       />
     </LayoutWrapper>
   )
 
-  const doRender = hydrated.current ? render : hydrate
-  doRender(component, root.current)
-  hydrated.current = true
+  if (root.current) {
+    // Force render to mitigate "Expected server HTML to contain a matching" in develop
+    // @ts-ignore react 18 typings
+    if (ReactDOM.createRoot) {
+      if (!hydrated.current) {
+        // @ts-ignore react 18 typings
+        hydrated.current = ReactDOM.createRoot(root.current)
+      }
+
+      // @ts-ignore react 18 typings
+      hydrated.current.render(component)
+    } else {
+      const doRender =
+        hydrated.current || forceHydrate.current
+          ? ReactDOM.render
+          : ReactDOM.hydrate
+      doRender(component, root.current)
+      hydrated.current = true
+    }
+  }
 
   return (): void => {
     if (root.current) {
-      render((null as unknown) as ReactElement, root.current)
+      // @ts-ignore react 18 typings
+      if (ReactDOM.createRoot) {
+        // @ts-ignore react 18 typings
+        hydrated.current.render(null)
+      } else {
+        ReactDOM.render(null as unknown as ReactElement, root.current)
+      }
     }
   }
 }

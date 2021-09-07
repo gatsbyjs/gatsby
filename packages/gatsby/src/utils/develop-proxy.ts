@@ -8,10 +8,10 @@ import st from "st"
 import restartingScreen from "./restarting-screen"
 import { IProgram } from "../commands/types"
 
-interface IProxyControls {
+export interface IProxyControls {
   serveRestartingScreen: () => void
   serveSite: () => void
-  server: any
+  server: https.Server | http.Server
 }
 
 const noop = (): void => {}

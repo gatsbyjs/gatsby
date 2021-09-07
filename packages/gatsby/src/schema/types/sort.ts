@@ -15,6 +15,7 @@ import {
   InterfaceTypeComposer,
   UnionTypeComposer,
   ScalarTypeComposer,
+  toInputObjectType,
 } from "graphql-compose"
 
 type AnyTypeComposer<TContext> =
@@ -27,8 +28,8 @@ type AnyTypeComposer<TContext> =
 
 export const SORTABLE_ENUM = {
   SORTABLE: `SORTABLE`,
-  NOT_SORTABLE: `NON_SORTABLE`,
-  DEPRECATED_SORTABLE: `DERPECATED_SORTABLE`,
+  NOT_SORTABLE: `NOT_SORTABLE`,
+  DEPRECATED_SORTABLE: `DEPRECATED_SORTABLE`,
 }
 
 export const getSortOrderEnum = <TContext = any>({
@@ -128,15 +129,14 @@ export const getFieldsEnum = <TSource = any, TContext = any>({
 }): EnumTypeComposer<TContext> => {
   const typeName = typeComposer.getTypeName()
   const fieldsEnumTypeName = `${typeName}FieldsEnum`
-  const fieldsEnumTypeComposer = schemaComposer.getOrCreateETC(
-    fieldsEnumTypeName
-  )
+  const fieldsEnumTypeComposer =
+    schemaComposer.getOrCreateETC(fieldsEnumTypeName)
   addDerivedType({ typeComposer, derivedTypeName: fieldsEnumTypeName })
 
   const fields = convert({
     schemaComposer,
     typeComposer,
-    fields: inputTypeComposer.getFields() as GraphQLInputFieldMap,
+    fields: inputTypeComposer.getType().getFields(),
   })
   fieldsEnumTypeComposer.setFields(fields)
   return fieldsEnumTypeComposer
@@ -149,7 +149,15 @@ export const getSortInput = <TSource = any, TContext = any>({
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer<TSource, TContext>
 }): InputTypeComposer<TContext> => {
-  const inputTypeComposer = typeComposer.getInputTypeComposer()
+  // toInputObjectType() will fail to convert fields of union types, e.g.
+  //   union FooBar = Foo | Bar
+  //   type Baz {
+  //     fooBar: FooBar
+  //   }
+  // Passing `fallbackType: null` allows us to skip this field in the input type
+  const inputTypeComposer = toInputObjectType(typeComposer, {
+    fallbackType: null,
+  })
   const sortOrderEnumTC = getSortOrderEnum({ schemaComposer })
   const fieldsEnumTC = getFieldsEnum({
     schemaComposer,

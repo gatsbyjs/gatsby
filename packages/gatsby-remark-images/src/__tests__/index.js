@@ -108,6 +108,17 @@ test(`it leaves non-relative images alone`, async () => {
   expect(result).toEqual([])
 })
 
+test(`it leaves files with unsupported file extensions alone`, async () => {
+  const imagePath = `video/my-video.mp4`
+  const content = `
+![video](./${imagePath})
+  `.trim()
+
+  const result = await plugin(createPluginOptions(content, imagePath))
+
+  expect(result).toEqual([])
+})
+
 test(`it transforms images in markdown`, async () => {
   const imagePath = `images/my-image.jpeg`
   const content = `
@@ -134,6 +145,25 @@ test(`it transforms images in markdown with the "withWebp" option`, async () => 
 
   const nodes = await plugin(createPluginOptions(content, imagePath), {
     withWebp: true,
+  })
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it transforms images in markdown with the "withAvif" option`, async () => {
+  const imagePath = `images/my-image.jpeg`
+  const content = `
+
+![image](./${imagePath})
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath), {
+    withAvif: true,
   })
 
   expect(nodes.length).toBe(1)

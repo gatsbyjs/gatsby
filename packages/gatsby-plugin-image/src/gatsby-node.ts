@@ -35,7 +35,8 @@ export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({
   actions.setWebpackConfig({
     plugins: [
       plugins.define({
-        [`global.GATSBY___IMAGE`]: true,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        GATSBY___IMAGE: true,
       }),
     ],
   })

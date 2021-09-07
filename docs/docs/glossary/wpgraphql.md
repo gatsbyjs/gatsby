@@ -11,7 +11,7 @@ Learn what WPGraphQL is and how to use it with Gatsby and WordPress.
 
 ### Installing WPGraphQL
 
-You can install WPGraphQL using WordPress' _Add Plugins_ screen. You may also want to install the [WPGraphiQL](https://github.com/wp-graphql/wp-graphiql) plugin. WPGraphiQL turns the [GraphiQL IDE](/docs/running-queries-with-graphiql/) (or integrated development environment) into a WordPress plugin. You do not have to install WPGraphiQL, but it helps you explore data and create queries from WordPress' administration interface.
+You can install WPGraphQL using WordPress' _Add Plugins_ screen. You may also want to install the [WPGraphiQL](https://github.com/wp-graphql/wp-graphiql) plugin. WPGraphiQL turns the [GraphiQL IDE](/docs/how-to/querying-data/running-queries-with-graphiql/) (or integrated development environment) into a WordPress plugin. You do not have to install WPGraphiQL, but it helps you explore data and create queries from WordPress' administration interface.
 
 1. Download [WPGraphQL](https://github.com/wp-graphql/wp-graphql) and [WPGraphiQL](https://github.com/wp-graphql/wp-graphiql) as ZIP archives from their respective GitHub repositories.
 2. Upload `wp-graphql-develop.zip` and `wp-graphiql-master.zip`using the _Upload Plugin_ button on the _Add Plugins_ screen. You'll have to upload and install them one at a time.
@@ -45,7 +45,7 @@ Use [npm](/docs/glossary#npm) to install [gatsby-source-graphql](/docs/third-par
 npm install gatsby-source-graphql
 ```
 
-Then update `gatsby-config.js`. Add the plugin to your Gatsby instance. Specify the URL of the GraphQL endpoint and set other [configuration options](/packages/gatsby-source-graphql/).
+Then update `gatsby-config.js`. Add the plugin to your Gatsby instance. Specify the URL of the GraphQL endpoint and set other [configuration options](/plugins/gatsby-source-graphql/).
 
 ```javascript
 module.exports = {

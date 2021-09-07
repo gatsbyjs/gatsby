@@ -19,6 +19,8 @@ describe(`hot-reloading anonymous arrow functions`, () => {
       `npm run update -- --file src/components/title.tsx --replacements "TITLE:${text}"`
     )
 
+    cy.waitForHmr()
+
     cy.getTestElement(IDS.title).should(`have.text`, text)
   })
 })

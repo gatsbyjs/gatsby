@@ -64,30 +64,6 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
       )
     }
 
-    /*
-      Only operation on messages array is to push new message into it. Once
-      message is there it can't change. Because of that we can do single
-      transform from message object to react element and store it.
-      This will avoid calling React.createElement completely for every message
-      that can't change.
-    */
-    if (messages.length > this.memoizedReactElementsForMessages.length) {
-      for (
-        let index = this.memoizedReactElementsForMessages.length;
-        index < messages.length;
-        index++
-      ) {
-        const msg = messages[index]
-        this.memoizedReactElementsForMessages.push(
-          msg.level === `ERROR` ? (
-            <ErrorComponent details={msg as IStructuredError} key={index} />
-          ) : (
-            <Message key={index} {...(msg as IMessageProps)} />
-          )
-        )
-      }
-    }
-
     const spinners: Array<IActivity> = []
     const progressBars: Array<IActivity> = []
     if (showProgress) {
@@ -108,7 +84,21 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
     return (
       <Box flexDirection="column">
         <Box flexDirection="column">
-          <Static>{this.memoizedReactElementsForMessages}</Static>
+          <Static items={messages}>
+            {(message): React.ReactElement =>
+              message.level === `ERROR` ? (
+                <ErrorComponent
+                  details={message as IStructuredError}
+                  key={messages.indexOf(message)}
+                />
+              ) : (
+                <Message
+                  key={messages.indexOf(message)}
+                  {...(message as IMessageProps)}
+                />
+              )
+            }
+          </Static>
 
           {spinners.map(activity => (
             <Spinner key={activity.id} {...activity} />

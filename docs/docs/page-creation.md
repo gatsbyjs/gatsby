@@ -2,7 +2,7 @@
 title: Page Creation
 ---
 
-A page is created by calling the [createPage](/docs/actions/#createPage) action. There are three main side effects that occur when a page is created.
+A page is created by calling the [createPage](/docs/reference/config-files/actions/#createPage) action. There are three main side effects that occur when a page is created.
 
 1. The `pages` Redux namespace is updated
 2. The `components` Redux namespace is updated
@@ -18,4 +18,4 @@ The `components` Redux namespace is a map of [componentPath](/docs/behind-the-sc
 
 ## onCreatePage API
 
-Every time a page is created, plugins have the opportunity to handle its [onCreatePage](/docs/node-apis/#onCreatePage) event. This is used for things like creating `SitePage` nodes in [Internal Data Bridge](/docs/internal-data-bridge/), and for "path" related plugins such as [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/) and [gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/).
+Every time a page is created, plugins have the opportunity to handle its [onCreatePage](/docs/reference/config-files/gatsby-node/#onCreatePage) event. This is used for things like creating `SitePage` nodes in [Internal Data Bridge](/docs/internal-data-bridge/), and for "path" related plugins such as [gatsby-plugin-create-client-paths](/plugins/gatsby-plugin-create-client-paths/) and [gatsby-plugin-remove-trailing-slashes](/plugins/gatsby-plugin-remove-trailing-slashes/).

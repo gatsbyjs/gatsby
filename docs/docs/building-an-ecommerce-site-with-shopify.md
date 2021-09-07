@@ -1,10 +1,14 @@
 ---
 title: Building an E-commerce site with Shopify
+examples:
+  - label: Gatsby Shopify Starter
+    href: "https://github.com/gatsbyjs/gatsby-starter-shopify"
 ---
 
-In this tutorial, you will setup a new Gatsby website that fetches product data from [Shopify](https://www.shopify.com). The site displays a list of all products on a product listing page, and a page for every product in the store.
+In this tutorial, you will set up a new Gatsby website that fetches product data from [Shopify](https://www.shopify.com). The site displays a list of all products on a product listing page, and a page for every product in the store.
 
-If you are already comfortable with Gatsby and Shopify, you might want to check out the [Gatsby Shopify starter](https://www.gatsbyjs.com/starters/AlexanderProd/gatsby-shopify-starter/), which provides many of the same features as this example.
+If you're already comfortable with Gatsby and Shopify, you might want to check out our [Shopify Starter Demo](https://shopify-demo.gatsbyjs.com/), a proof of concept showcasing 10,000 products and 30,000 SKUs (variants).
+You can clone the starter, host it on Gatsby and connect it to your own Shopify data to develop your own proof of concept in as little as an hour.
 
 ## Setting up your Shopify account
 
@@ -12,31 +16,29 @@ If you are already comfortable with Gatsby and Shopify, you might want to check 
 2. Create a private app in your store by navigating to `Apps`, then `Manage private apps`.
 3. Create a new private app, with any "Private app name" and leaving the default permissions as Read access under Admin API.
 4. Enable the [Shopify Storefront API](https://help.shopify.com/en/api/storefront-api) by checking the box that says "Allow this app to access your storefront data using Storefront API". Make sure to also grant access to read product and customer tags by checking their corresponding boxes.
+5. Copy the password, you'll need it to configure your plugin below.
 
 ## Set up the Gatsby Shopify plugin
 
-1. If you do not already have one ready, [create a Gatsby site](https://www.gatsbyjs.com/docs/quick-start).
+1. If you do not already have one ready, [create a Gatsby site](/docs/quick-start).
 
-2. Install the [`gatsby-source-shopify`](/packages/gatsby-source-shopify/) plugin and [`shopify-buy`](https://github.com/Shopify/js-buy-sdk) package.
+2. Install the [`gatsby-source-shopify`](/plugins/gatsby-source-shopify/) plugin.
 
 ```shell
-npm install gatsby-source-shopify shopify-buy
+npm install gatsby-source-shopify
 ```
 
-3. Enable and configure the plugin in your `gatsby-config.js` file, replacing [some-shop] with your shop name and [token] with your Storefront access token.
+3. Enable and configure the plugin in your `gatsby-config.js` file, replacing [app-password] with the password you copied above and [yourstore.myshopify.com] with the canonical address of your store.
 
 ```javascript:title=/gatsby-config.js
 plugins: [
-  {
-    resolve: `gatsby-source-shopify`,
-    options: {
-      // The domain name of your Shopify shop.
-      shopName: `[some-shop]`,
-
-      // The storefront access token
-      accessToken: `[token]`,
+    {
+      resolve: `gatsby-source-shopify`,
+      options: {
+        password: [app-password],
+        storeUrl: [yourstore.myshopify.com],
+      },
     },
-  },
 ]
 ```
 
@@ -52,13 +54,9 @@ Open the Gatsby GraphiQL interface by visiting `http://localhost:8000/___graphql
     edges {
       node {
         title
-        images {
-          originalSrc
-        }
         shopifyId
         description
-        availableForSale
-        priceRange {
+        priceRangeV2 {
           maxVariantPrice {
             amount
           }
@@ -66,6 +64,7 @@ Open the Gatsby GraphiQL interface by visiting `http://localhost:8000/___graphql
             amount
           }
         }
+        status
       }
     }
   }
@@ -87,7 +86,7 @@ const ProductsPage = ({ data }) => (
       {data.allShopifyProduct.edges.map(({ node }) => (
         <li key={node.shopifyId}>
           <h3>
-            <Link to={`/product/${node.handle}`}>{node.title}</Link>
+            <Link to={`/products/${node.handle}`}>{node.title}</Link>
             {" - "}${node.priceRange.minVariantPrice.amount}
           </h3>
           <p>{node.description}</p>
@@ -108,7 +107,7 @@ export const query = graphql`
           shopifyId
           description
           handle
-          priceRange {
+          priceRangeV2 {
             minVariantPrice {
               amount
             }
@@ -122,7 +121,7 @@ export const query = graphql`
 
 ## Generating a page for each product
 
-You can [programmatically create pages](/tutorial/part-seven/) in Gatsby for every product in your Shopify store.
+You can [programmatically create pages](/docs/tutorial/part-seven/) in Gatsby for every product in your Shopify store.
 
 Create a template for your product pages by adding a new file, `/src/templates/product.js`.
 
@@ -163,8 +162,7 @@ exports.createPages = async ({ graphql, actions }) => {
             shopifyId
             handle
             description
-            availableForSale
-            priceRange {
+            priceRangeV2 {
               maxVariantPrice {
                 amount
               }
@@ -172,6 +170,7 @@ exports.createPages = async ({ graphql, actions }) => {
                 amount
               }
             }
+            status
           }
         }
       }
@@ -181,7 +180,7 @@ exports.createPages = async ({ graphql, actions }) => {
   // The product "handle" is generated automatically by Shopify
   result.data.allShopifyProduct.edges.forEach(({ node }) => {
     createPage({
-      path: `/product/${node.handle}`,
+      path: `/products/${node.handle}`,
       component: path.resolve(`./src/templates/product.js`),
       context: {
         product: node,
@@ -193,5 +192,4 @@ exports.createPages = async ({ graphql, actions }) => {
 
 ## Additional Resources
 
-- [Gatsby Shopify Starter](/starters/AlexanderProd/gatsby-shopify-starter/)
-- [Gatsby Shopify Hello World](/starters/ohduran/gatsby-starter-hello-world-shopify/)
+- [Gatsby Shopify Starter](https://shopify-demo.gatsbyjs.com/)

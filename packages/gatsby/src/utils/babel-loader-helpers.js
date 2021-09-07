@@ -21,10 +21,23 @@ const getCustomOptions = stage => {
   return pluginBabelConfig.stages[stage].options
 }
 
-const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
-  const pluginBabelConfig = loadCachedConfig()
+/**
+ * https://babeljs.io/docs/en/babel-core#createconfigitem
+ * If this function is called multiple times for a given plugin,
+ * Babel will call the plugin's function itself multiple times.
+ * If you have a clear set of expected plugins and presets to inject,
+ * pre-constructing the config items would be recommended.
+ */
+const configItemsMemoCache = new Map()
 
+const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
   const { stage, reactRuntime } = options
+
+  if (configItemsMemoCache.has(stage)) {
+    return configItemsMemoCache.get(stage)
+  }
+
+  const pluginBabelConfig = loadCachedConfig()
 
   // Required plugins/presets
   const requiredPlugins = [
@@ -50,21 +63,11 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
   }
 
   if (stage === `develop`) {
-    if (process.env.GATSBY_HOT_LOADER === `fast-refresh`) {
-      requiredPlugins.push(
-        babel.createConfigItem([resolve(`react-refresh/babel`)], {
-          type: `plugin`,
-        })
-      )
-    }
-    // TODO: Remove entire block when we make fast-refresh the default
-    else {
-      requiredPlugins.push(
-        babel.createConfigItem([resolve(`react-hot-loader/babel`)], {
-          type: `plugin`,
-        })
-      )
-    }
+    requiredPlugins.push(
+      babel.createConfigItem([resolve(`react-refresh/babel`)], {
+        type: `plugin`,
+      })
+    )
   }
 
   // Fallback preset
@@ -105,13 +108,40 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
     )
   })
 
-  return [
+  const toReturn = [
     reduxPresets,
     reduxPlugins,
     requiredPresets,
     requiredPlugins,
     fallbackPresets,
   ]
+
+  configItemsMemoCache.set(stage, toReturn)
+
+  return toReturn
+}
+
+const addRequiredPresetOptions = (
+  babel,
+  presets,
+  options = {},
+  resolve = require.resolve
+) => {
+  // Always pass `stage` option to babel-preset-gatsby
+  //  (even if defined in custom babelrc)
+  const gatsbyPresetResolved = resolve(`babel-preset-gatsby`)
+  const index = presets.findIndex(p => p.file.resolved === gatsbyPresetResolved)
+
+  if (index !== -1) {
+    presets[index] = babel.createConfigItem(
+      [
+        gatsbyPresetResolved,
+        { ...presets[index].options, stage: options.stage },
+      ],
+      { type: `preset` }
+    )
+  }
+  return presets
 }
 
 const mergeConfigItemOptions = ({ items, itemToMerge, type, babel }) => {
@@ -143,3 +173,4 @@ exports.getCustomOptions = getCustomOptions
 // Export helper functions for testing
 exports.prepareOptions = prepareOptions
 exports.mergeConfigItemOptions = mergeConfigItemOptions
+exports.addRequiredPresetOptions = addRequiredPresetOptions

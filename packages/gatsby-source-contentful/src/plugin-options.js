@@ -2,7 +2,7 @@ const chalk = require(`chalk`)
 
 const _ = require(`lodash`)
 
-const DEFAULT_PAGE_LIMIT = 100
+const DEFAULT_PAGE_LIMIT = 1000
 
 const defaultOptions = {
   host: `cdn.contentful.com`,
@@ -12,6 +12,7 @@ const defaultOptions = {
   forceFullSync: false,
   pageLimit: DEFAULT_PAGE_LIMIT,
   useNameForId: true,
+  enableTags: false,
 }
 
 const createPluginConfig = pluginOptions => {

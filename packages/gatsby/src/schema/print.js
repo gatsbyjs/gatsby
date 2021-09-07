@@ -14,7 +14,13 @@ const { internalExtensionNames } = require(`./extensions`)
 const printTypeDefinitions = ({ config, schemaComposer }) => {
   if (!config) return Promise.resolve()
 
-  const { path, include = {}, exclude = {}, withFieldTypes } = config || {}
+  const {
+    path,
+    include = {},
+    exclude = {},
+    withFieldTypes,
+    rewrite = false,
+  } = config || {}
 
   if (!path) {
     report.error(
@@ -23,7 +29,7 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
     return Promise.resolve()
   }
 
-  if (fs.existsSync(path)) {
+  if (!rewrite && fs.existsSync(path)) {
     report.error(
       `Printing type definitions aborted. The file \`${path}\` already exists.`
     )
@@ -218,12 +224,16 @@ const printObjectType = tc => {
 
 const printInterfaceType = tc => {
   const type = tc.getType()
+  const interfaces = type.getInterfaces()
+  const implementedInterfaces = interfaces.length
+    ? ` implements ` + interfaces.map(i => i.name).join(` & `)
+    : ``
   const extensions = tc.getExtensions()
   const directives = tc.schemaComposer.getDirectives()
   const printedDirectives = printDirectives(extensions, directives)
   return (
     printDescription(type) +
-    `interface ${type.name}${printedDirectives}` +
+    `interface ${type.name}${implementedInterfaces}${printedDirectives}` +
     printFields(Object.values(type.getFields()), directives)
   )
 }
@@ -402,4 +412,5 @@ const breakLine = (line, maxLen) => {
 
 module.exports = {
   printTypeDefinitions,
+  printDirectives,
 }

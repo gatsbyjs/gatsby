@@ -18,7 +18,7 @@ Throughout the Gatsby code, you'll see the below object fields and variables men
 
 ### Page Object
 
-created by calls to [createPage](/docs/actions/#createPage) (see [Page Creation](/docs/page-creation)).
+created by calls to [createPage](/docs/reference/config-files/actions/#createPage) (see [Page Creation](/docs/page-creation)).
 
 #### path
 
@@ -40,9 +40,9 @@ Contains a map of Page [path](#path) -> [Page object](#page-object).
 
 Think of this instead as `client matchPath`. It is ignored when creating pages during the build. But on the frontend, when resolving the page from the path ([find-path.js]()), it is used (via [reach router](https://github.com/reach/router/blob/master/src/lib/utils.js)) to find the matching page. Note that the [pages are sorted](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/pages-writer.js#L38) so that those with matchPaths are at the end, so that explicit paths are matched first.
 
-This is also used by [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/?=client). It duplicates pages whose path match some client-only prefix (e.g. `/app/`). The duplicated page has a `matchPath` so that it is resolved first on the frontend.
+This is also used by [gatsby-plugin-create-client-paths](/plugins/gatsby-plugin-create-client-paths/?=client). It duplicates pages whose path match some client-only prefix (e.g. `/app/`). The duplicated page has a `matchPath` so that it is resolved first on the frontend.
 
-It is also used by [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/?=netlify) when creating `_redirects`.
+It is also used by [gatsby-plugin-netlify](/plugins/gatsby-plugin-netlify/?=netlify) when creating `_redirects`.
 
 #### jsonName
 

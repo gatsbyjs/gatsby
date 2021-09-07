@@ -14,7 +14,7 @@ Guess.js will download a file from Google Analytics during the production build.
 
 ## Guess.js and Gatsby
 
-See the [Gatsby Guess.js Plugin](/packages/gatsby-plugin-guess-js) for more information on integrating Guess.js with Gatsby.
+See the [Gatsby Guess.js Plugin](/plugins/gatsby-plugin-guess-js) for more information on integrating Guess.js with Gatsby.
 
 ### References:
 

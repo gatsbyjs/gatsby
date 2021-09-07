@@ -40,11 +40,11 @@ The only exception to this is the file `/sw.js`, which needs to be revalidated u
 
 ## Setting up caching on different hosts
 
-How you setup your caching depends on how you host your site. We encourage people to create Gatsby plugins per host to automate the creation of caching headers.
+How you set up your caching depends on how you host your site. We encourage people to create Gatsby plugins per host to automate the creation of caching headers.
 
 The following plugins have been created:
 
-- [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/)
+- [gatsby-plugin-netlify](/plugins/gatsby-plugin-netlify/)
 - [gatsby-plugin-s3](https://github.com/jariz/gatsby-plugin-s3)
 
 When deploying with Vercel, follow the instructions in the [Vercel documentation](https://vercel.com/guides/deploying-gatsby-with-vercel#bonus:-cache-your-gatsby-assets).

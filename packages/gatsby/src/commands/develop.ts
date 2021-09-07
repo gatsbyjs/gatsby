@@ -8,7 +8,7 @@ import execa from "execa"
 import chokidar from "chokidar"
 import getRandomPort from "detect-port"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
-import socket from "socket.io"
+import { Server as SocketIO } from "socket.io"
 import fs from "fs-extra"
 import onExit from "signal-exit"
 import {
@@ -21,8 +21,9 @@ import {
 } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { getSslCert } from "../utils/get-ssl-cert"
-import { startDevelopProxy } from "../utils/develop-proxy"
+import { IProxyControls, startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram, IDebugInfo } from "./types"
+import { flush as telemetryFlush } from "gatsby-telemetry"
 
 // Adapted from https://stackoverflow.com/a/16060619
 const requireUncached = (file: string): any => {
@@ -71,12 +72,12 @@ const doesConfigChangeRequireRestart = (
 const getDebugPort = (port?: number): number => port ?? 9229
 
 export const getDebugInfo = (program: IProgram): IDebugInfo | null => {
-  if (program.hasOwnProperty(`inspect`)) {
+  if (Object.prototype.hasOwnProperty.call(program, `inspect`)) {
     return {
       port: getDebugPort(program.inspect),
       break: false,
     }
-  } else if (program.hasOwnProperty(`inspectBrk`)) {
+  } else if (Object.prototype.hasOwnProperty.call(program, `inspectBrk`)) {
     return {
       port: getDebugPort(program.inspectBrk),
       break: true,
@@ -96,7 +97,7 @@ class ControllableScript {
     this.debugInfo = debugInfo
   }
   start(): void {
-    const args = []
+    const args: Array<string> = []
     const tmpFileName = tmp.tmpNameSync({
       tmpdir: path.join(process.cwd(), `.cache`),
     })
@@ -125,16 +126,28 @@ class ControllableScript {
     }
 
     this.isRunning = false
-    if (signal) {
-      this.process.kill(signal)
-    } else {
-      this.process.send({
-        type: `COMMAND`,
-        action: {
-          type: `EXIT`,
-          payload: code,
-        },
-      })
+    try {
+      if (signal) {
+        this.process.kill(signal)
+      } else {
+        this.process.send(
+          {
+            type: `COMMAND`,
+            action: {
+              type: `EXIT`,
+              payload: code,
+            },
+          },
+          () => {
+            // The try/catch won't suffice for this process.send
+            // So use the callback to manually catch the Error, otherwise it'll be thrown
+            // Ref: https://nodejs.org/api/child_process.html#child_process_subprocess_send_message_sendhandle_options_callback
+          }
+        )
+      }
+    } catch (err) {
+      // Ignore error if process has crashed or already quit.
+      // Ref: https://github.com/gatsbyjs/gatsby/issues/28011#issuecomment-877302917
     }
 
     return new Promise(resolve => {
@@ -178,7 +191,8 @@ class ControllableScript {
 let isRestarting
 
 // checks if a string is a valid ip
-const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
+const REGEX_IP =
+  /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
 
 module.exports = async (program: IProgram): Promise<void> => {
   // In some cases, port can actually be a string. But our codebase is expecting it to be a number.
@@ -204,21 +218,24 @@ module.exports = async (program: IProgram): Promise<void> => {
   const proxyPort = program.port
   const debugInfo = getDebugInfo(program)
 
+  const rootFile = (file: string): string => path.join(program.directory, file)
+
+  // Require gatsby-config.js before accessing process.env, to enable the user to change
+  // environment variables from the config file.
+  let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
+
   // INTERNAL_STATUS_PORT allows for setting the websocket port used for monitoring
   // when the browser should prompt the user to restart the develop process.
   // This port is randomized by default and in most cases should never be required to configure.
   // It is exposed for environments where port access needs to be explicit, such as with Docker.
   // As the port is meant for internal usage only, any attempt to interface with features
   // it exposes via third-party software is not supported.
-  const [
-    statusServerPort,
-    developPort,
-    telemetryServerPort,
-  ] = await Promise.all([
-    getRandomPort(process.env.INTERNAL_STATUS_PORT),
-    getRandomPort(),
-    getRandomPort(),
-  ])
+  const [statusServerPort, developPort, telemetryServerPort] =
+    await Promise.all([
+      getRandomPort(process.env.INTERNAL_STATUS_PORT),
+      getRandomPort(),
+      getRandomPort(),
+    ])
 
   // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
   // used together
@@ -289,7 +306,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     null
   )
 
-  let unlocks: Array<UnlockFn> = []
+  let unlocks: Array<UnlockFn | null> = []
   if (!isCI()) {
     const statusUnlock = await createServiceLock(
       program.directory,
@@ -338,7 +355,13 @@ module.exports = async (program: IProgram): Promise<void> => {
     : http.createServer()
   statusServer.listen(statusServerPort)
 
-  const io = socket(statusServer)
+  const io = new SocketIO(statusServer, {
+    // whitelist all (https://github.com/expressjs/cors#configuration-options)
+    cors: {
+      origin: true,
+    },
+    cookie: true,
+  })
 
   const handleChildProcessIPC = (msg): void => {
     if (msg.type === `HEARTBEAT`) return
@@ -380,6 +403,11 @@ module.exports = async (program: IProgram): Promise<void> => {
   // This needs to be propagated back to the parent process
   developProcess.onExit(
     (code: number | null, signal: NodeJS.Signals | null) => {
+      try {
+        telemetryFlush()
+      } catch (e) {
+        // nop
+      }
       if (isRestarting) return
       if (signal !== null) {
         process.kill(process.pid, signal)
@@ -403,11 +431,8 @@ module.exports = async (program: IProgram): Promise<void> => {
     }
   )
 
-  const rootFile = (file: string): string => path.join(program.directory, file)
-
   const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
-  let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
-  let watcher: chokidar.FSWatcher = null
+  let watcher: chokidar.FSWatcher
 
   if (!isCI()) {
     watcher = chokidar.watch(files).on(`change`, filePath => {
@@ -489,6 +514,16 @@ module.exports = async (program: IProgram): Promise<void> => {
     )
   })
 }
+
+interface IShutdownServicesOptions {
+  statusServer: https.Server | http.Server
+  developProcess: ControllableScript
+  proxy: IProxyControls
+  unlocks: Array<UnlockFn | null>
+  watcher: chokidar.FSWatcher
+  telemetryServerProcess: ControllableScript
+}
+
 function shutdownServices(
   {
     statusServer,
@@ -497,9 +532,14 @@ function shutdownServices(
     unlocks,
     watcher,
     telemetryServerProcess,
-  },
+  }: IShutdownServicesOptions,
   signal: NodeJS.Signals
 ): Promise<void> {
+  try {
+    telemetryFlush()
+  } catch (e) {
+    // nop
+  }
   const services = [
     developProcess.stop(signal),
     telemetryServerProcess.stop(),
@@ -509,7 +549,9 @@ function shutdownServices(
   ]
 
   unlocks.forEach(unlock => {
-    services.push(unlock())
+    if (unlock) {
+      services.push(unlock())
+    }
   })
 
   return Promise.all(services)

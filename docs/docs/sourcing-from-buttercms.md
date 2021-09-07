@@ -153,7 +153,7 @@ With your homepage defined, the ButterCMS GraphQL query will return some data th
 }
 ```
 
-Now lets create the home page:
+Now let's create the home page:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -604,7 +604,7 @@ Making your content dynamic with Butter is a two-step process:
 
 1. **Setup custom content fields in Butter**
 2. **Integrate the fields into your application**
-3. **To setup custom content fields, first sign in to the Butter dashboard.**
+3. **To set up custom content fields, first sign in to the Butter dashboard.**
 
 Create a new workspace or click on an existing one. Workspaces let you organize content fields in a friendly way for content editors and have no effect on development or the API. For example, a real-estate website might have a workspace called "Properties" and another called "About Page".
 
@@ -818,7 +818,7 @@ export const pageQuery = graphql`
 
 ### Creating a blog template
 
-Now you've listed your blog posts in `src/pages/blog.js`, using gatsby [createpages](/docs/node-apis/#createPages) API you would generate blog post pages using a template:
+Now you've listed your blog posts in `src/pages/blog.js`, using gatsby [createpages](/docs/reference/config-files/gatsby-node/#createPages) API you would generate blog post pages using a template:
 
 ```jsx:title=src/pages/template/blog-post.js
 import React from "react"

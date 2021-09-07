@@ -1,5 +1,5 @@
 import React from "react"
-import { Box } from "ink"
+import { Box, Text } from "ink"
 import { calcElapsedTime } from "../../../../util/calc-elapsed-time"
 
 const maxWidth = 30
@@ -38,18 +38,26 @@ export function ProgressBar({
   return (
     <Box flexDirection="row">
       <Box marginRight={3} width={progressBarWidth}>
-        [
+        <Text>[</Text>
         <Box width={progressBarWidth - 2}>
-          {`=`.repeat(((progressBarWidth - 2) * percentage) / 100)}
+          <Text>{`=`.repeat(((progressBarWidth - 2) * percentage) / 100)}</Text>
         </Box>
-        ]
+        <Text>]</Text>
       </Box>
-      <Box marginRight={1}>{calcElapsedTime(startTime)} s</Box>
       <Box marginRight={1}>
-        {current}/{total}
+        <Text>{calcElapsedTime(startTime)} s</Text>
       </Box>
-      <Box marginRight={1}>{`` + percentage}%</Box>
-      <Box textWrap="truncate">{message}</Box>
+      <Box marginRight={1}>
+        <Text>
+          {current}/{total}
+        </Text>
+      </Box>
+      <Box marginRight={1}>
+        <Text>{`` + percentage}%</Text>
+      </Box>
+      <Box>
+        <Text wrap="truncate">{message}</Text>
+      </Box>
     </Box>
   )
 }

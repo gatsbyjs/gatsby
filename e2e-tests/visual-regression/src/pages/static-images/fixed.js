@@ -14,6 +14,7 @@ const Page = () => {
           width={240}
           height={100}
           alt="cornwall"
+          layout="fixed"
         />
       </TestWrapper>
     </Layout>

@@ -1,10 +1,16 @@
 import { Actions, CreatePagesArgs } from "gatsby"
-import { createPath, validatePath, ignorePath } from "gatsby-page-utils"
+import {
+  createPath,
+  validatePath,
+  ignorePath,
+  IPathIgnoreOptions,
+} from "gatsby-page-utils"
+import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
 import { createClientOnlyPage } from "./create-client-only-page"
 import { createPagesFromCollectionBuilder } from "./create-pages-from-collection-builder"
 import systemPath from "path"
 import { trackFeatureIsUsed } from "gatsby-telemetry"
-import { Reporter } from "gatsby"
+import { Reporter } from "gatsby/reporter"
 
 function pathIsCollectionBuilder(path: string): boolean {
   return path.includes(`{`)
@@ -18,9 +24,10 @@ export function createPage(
   filePath: string,
   pagesDirectory: string,
   actions: Actions,
-  ignore: Array<string>,
   graphql: CreatePagesArgs["graphql"],
-  reporter: Reporter
+  reporter: Reporter,
+  ignore?: IPathIgnoreOptions | string | Array<string> | null,
+  slugifyOptions?: ISlugifyOptions
 ): void {
   // Filter out special components that shouldn't be made into
   // pages.
@@ -43,7 +50,8 @@ export function createPage(
       absolutePath,
       actions,
       graphql,
-      reporter
+      reporter,
+      slugifyOptions
     )
     return
   }

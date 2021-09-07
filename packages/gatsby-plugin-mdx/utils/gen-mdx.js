@@ -51,13 +51,14 @@ async function genMDX(
     reporter,
     cache,
     pathPrefix,
+    isolateMDXComponent,
     ...helpers
   },
   { forceDisableCache = false } = {}
 ) {
   const pathPrefixCacheStr = pathPrefix || ``
   const payloadCacheKey = node =>
-    `gatsby-plugin-mdx-entire-payload-${node.internal.contentDigest}-${pathPrefixCacheStr}`
+    `gatsby-plugin-mdx-entire-payload-${node.internal.contentDigest}-${pathPrefixCacheStr}-${isolateMDXComponent}`
 
   if (!forceDisableCache) {
     const cachedPayload = await cache.get(payloadCacheKey(node))
@@ -66,7 +67,7 @@ async function genMDX(
     }
   }
 
-  let results = {
+  const results = {
     mdast: undefined,
     hast: undefined,
     html: undefined,
@@ -89,7 +90,10 @@ async function genMDX(
   // pull classic style frontmatter off the raw MDX body
   debug(`processing classic frontmatter`)
   const { data, content: frontMatterCodeResult } = grayMatter(node.rawBody)
-  const content = `${frontMatterCodeResult}
+
+  const content = isolateMDXComponent
+    ? frontMatterCodeResult
+    : `${frontMatterCodeResult}
 
 export const _frontmatter = ${JSON.stringify(data)}`
 
@@ -108,8 +112,8 @@ export const _frontmatter = ${JSON.stringify(data)}`
    *   cache
    * }); */
 
-  const gatsbyRemarkPluginsAsremarkPlugins = await getSourcePluginsAsRemarkPlugins(
-    {
+  const gatsbyRemarkPluginsAsremarkPlugins =
+    await getSourcePluginsAsRemarkPlugins({
       gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
       mdxNode: node,
       //          files,
@@ -124,11 +128,10 @@ export const _frontmatter = ${JSON.stringify(data)}`
         generateHTML: ast => mdx(ast, options),
       },
       ...helpers,
-    }
-  )
+    })
 
   debug(`running mdx`)
-  let code = await mdx(content, {
+  const code = await mdx(content, {
     filepath: node.fileAbsolutePath,
     ...options,
     remarkPlugins: options.remarkPlugins.concat(
@@ -209,8 +212,8 @@ async function findImports({
 }) {
   const { content } = grayMatter(node.rawBody)
 
-  const gatsbyRemarkPluginsAsremarkPlugins = await getSourcePluginsAsRemarkPlugins(
-    {
+  const gatsbyRemarkPluginsAsremarkPlugins =
+    await getSourcePluginsAsRemarkPlugins({
       gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
       mdxNode: node,
       getNode,
@@ -224,8 +227,7 @@ async function findImports({
         generateHTML: ast => mdx(ast, options),
       },
       ...helpers,
-    }
-  )
+    })
 
   const compilerOptions = {
     filepath: node.fileAbsolutePath,
@@ -289,8 +291,8 @@ async function findImportsExports({
 }) {
   const { data: frontmatter, content } = grayMatter(rawInput)
 
-  const gatsbyRemarkPluginsAsRemarkPlugins = await getSourcePluginsAsRemarkPlugins(
-    {
+  const gatsbyRemarkPluginsAsRemarkPlugins =
+    await getSourcePluginsAsRemarkPlugins({
       gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
       mdxNode,
       getNode,
@@ -304,8 +306,7 @@ async function findImportsExports({
         generateHTML: ast => mdx(ast, options),
       },
       ...helpers,
-    }
-  )
+    })
 
   const compilerOptions = {
     filepath: absolutePath,

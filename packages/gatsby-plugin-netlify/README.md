@@ -70,6 +70,26 @@ any base file names to the hashed variants. If the file is not hashed, it will
 ensure the path is valid relative to the output `public` folder. You should be
 able to reference assets imported through javascript in the `static` folder.
 
+When `mergeLinkHeaders` is true, as it is by default, this plugin will generate HTTP preload headers for the asset paths for all of your application's pages.
+
+An example:
+
+```
+/my-page
+  Link: </webpack-runtime-61d3e010ac286a1ce7e1.js>; rel=preload; as=script
+  Link: </styles-89fd2ae28bdf06750a71.js>; rel=preload; as=script
+  Link: </framework-376edee25eb5f5cd8260.js>; rel=preload; as=script
+  Link: </app-9035e07a2b55474b8eee.js>; rel=preload; as=script
+  Link: </styles-89fd2ae28bdf06750a71.js>; rel=preload; as=script
+  Link: </component---src-pages-index-js-102db70fdea806a1e5b8.js>; rel=preload; as=script
+  Link: </page-data/app-data.json>; rel=preload; as=fetch; crossorigin
+  Link: </page-data/index/page-data.json>; rel=preload; as=fetch; crossorigin
+```
+
+Therefore, expect the size of the `_headers` file to grow linearly with the number of pages in your application.
+
+> **Note:** Gatsby also adds these preload tags in your pages' index.html files, whether or not you are using this plugin.
+
 Do not specify the public path in the config, as the plugin will provide it for
 you.
 

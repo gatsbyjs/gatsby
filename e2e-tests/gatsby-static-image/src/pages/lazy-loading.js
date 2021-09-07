@@ -11,6 +11,7 @@ export default function NativeLazyLoadingPage() {
         height={59}
         alt="Citrus fruits"
         loading="lazy"
+        formats={["jpg"]}
       />
 
       <div style={{ height: `5000px`, background: `#F4F4F4` }} />
@@ -22,6 +23,7 @@ export default function NativeLazyLoadingPage() {
         height={59}
         alt="Citrus fruits"
         loading="lazy"
+        formats={["jpg"]}
       />
     </div>
   )

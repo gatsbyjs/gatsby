@@ -2,8 +2,8 @@
 // - build the site first
 // - start the develop server
 // - run this script
-;(async function () {
-  const { getPageHtmlFilePath } = require(`gatsby/dist/utils/page-html`)
+async function run() {
+  const { generateHtmlPath } = require(`gatsby-core-utils`)
   const { join } = require(`path`)
   const fs = require(`fs-extra`)
   const fetch = require(`node-fetch`)
@@ -21,8 +21,10 @@
       const $ = cheerio.load(htmlStr)
       // There are many script tag differences
       $(`script`).remove()
-      // Only added in production. Dev uses css-loader
-      $(`#gatsby-global-css`).remove()
+      // Only added in production
+      $(`style[data-identity="gatsby-global-css"]`).remove()
+      // Only added in development
+      $(`link[data-identity='gatsby-dev-css']`).remove()
       // Only in prod
       $(`link[rel="preload"]`).remove()
       // Only in prod
@@ -36,15 +38,30 @@
     const builtHtml = format(
       filterHtml(
         fs.readFileSync(
-          getPageHtmlFilePath(join(process.cwd(), `public`), path),
+          generateHtmlPath(join(process.cwd(), `public`), path),
           `utf-8`
         )
       )
     )
 
-    const rawDevHtml = await fetch(`${devSiteBasePath}/${path}`).then(res =>
-      res.text()
-    )
+    // Fetch once to trigger re-compilation.
+    await fetch(`${devSiteBasePath}/${path}`)
+
+    // Then wait for 6 seconds to ensure it's ready to go.
+    // Otherwise, tests are flaky depending on the speed of the testing machine.
+    await new Promise(resolve => {
+      setTimeout(() => resolve(), 6000)
+    })
+
+    let devStatus = 200
+    const rawDevHtml = await fetch(`${devSiteBasePath}/${path}`).then(res => {
+      devStatus = res.status
+      return res.text()
+    })
+
+    if (devStatus !== 200) {
+      return false
+    }
 
     const devHtml = format(filterHtml(rawDevHtml))
     const diffResult = diff(devHtml, builtHtml, {
@@ -93,4 +110,9 @@
   } else {
     process.exit(1)
   }
-})()
+}
+
+run().catch(e => {
+  console.error(e)
+  process.exit(1)
+})

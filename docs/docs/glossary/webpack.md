@@ -19,11 +19,11 @@ module.exports = {
 }
 ```
 
-webpack processes JavaScript and JSON files by default, but you can add support for CSS and media files with additional software and configuration. For example, Gatsby ships with its own [`webpack.config.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js) file that supports [global CSS files](/docs/global-css/), [component-scoped CSS modules](/docs/css-modules/), and [CSS-in-JS](/docs/css-in-js/).
+webpack processes JavaScript and JSON files by default, but you can add support for CSS and media files with additional software and configuration. For example, Gatsby ships with its own [`webpack.config.js`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js) file that supports [global CSS files](/docs/how-to/styling/global-css/), [component-scoped CSS modules](/docs/how-to/styling/css-modules/), and [CSS-in-JS](/docs/how-to/styling/css-in-js/).
 
 You can also use webpack to optimize how CSS and JavaScript are delivered to the browser. webpack supports a feature known as [_code splitting_](https://webpack.js.org/guides/code-splitting/). Code splitting allows you to divide your code across a few bundles that are loaded as needed or as requested. Gatsby is already configured to use this feature. You do not have to do any additional set up to reap the benefits.
 
-If you want to add support for features such as [Sass/SCSS](/docs/sass/), that Gatsby does not support out of the box, you can also [add a custom webpack configuration](/docs/add-custom-webpack-config/), or use one of the [Gatsby plugins](/docs/plugins/) contributed by the community.
+If you want to add support for features such as [Sass/SCSS](/docs/how-to/styling/sass/), that Gatsby does not support out of the box, you can also [add a custom webpack configuration](/docs/how-to/custom-configuration/add-custom-webpack-config/), or use one of the [Gatsby plugins](/docs/plugins/) contributed by the community.
 
 ### Learn more about webpack
 

@@ -69,7 +69,7 @@ And that's enough for you to be able to access content from Kentico Kontent in y
 gatsby develop
 ```
 
-To see all the content that's available from Kentico Kontent, you can test out GraphQL queries in GraphiQL at `http://localhost:8000/___graphql`. The queries generated from Kontent will be be prefixed with `kontentItem` (for single nodes) or `allKontentItem`.
+To see all the content that's available from Kentico Kontent, you can test out GraphQL queries in GraphiQL at `http://localhost:8000/___graphql`. The queries generated from Kontent will be prefixed with `kontentItem` (for single nodes) or `allKontentItem`.
 
 To see how to put that data into your site, first go to `http://localhost:8000/`. Notice that the default title for the site is "Gatsby Default Starter". You can change that by pulling the title for your site from Kentico Kontent.
 
@@ -216,7 +216,7 @@ Now you know how to create pages programmatically and pull their content from Ke
 
 ### Continuous deployment
 
-To keep your site static but always up to date with the latest content from Kentico Kontent, it helps to set up automatic deployment whenever your published content changes. Here, you can see how to set that up using [Netlify](https://docs.netlify.com/site-deploys/create-deploys/#deploy-with-git), but the principle is similar using other services like [Gatsby Cloud](https://www.gatsbyjs.com/docs/kontent/getting-started), or [Travis CI](https://travis-ci.org/), as with another [site sourced from Kentico Kontent](https://github.com/Kentico/kentico.github.io/wiki/How-the-automatic-deployment-works).
+To keep your site static but always up to date with the latest content from Kentico Kontent, it helps to set up automatic deployment whenever your published content changes. Here, you can see how to set that up using [Netlify](https://docs.netlify.com/site-deploys/create-deploys/#deploy-with-git), but the principle is similar using other services like [Gatsby Cloud](/docs/kontent/getting-started), or [Travis CI](https://travis-ci.org/), as with another [site sourced from Kentico Kontent](https://github.com/Kentico/kentico.github.io/wiki/How-the-automatic-deployment-works).
 
 For automatic deployment from Netlify, first store your site's source code in a Git provider such as GitHub. Then log in to Netlify (e.g., through the same Git provider), create a new site from Git, and choose your site's source code. Netlify should automatically detect that you're using Gatsby and include the `gatsby build` command. If so, go ahead and deploy your site. Your site will now automatically build whenever you push changes to the source code in the Git repository.
 

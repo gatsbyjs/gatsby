@@ -1,14 +1,17 @@
 import _ from "lodash"
-import slugify from "@sindresorhus/slugify"
-import { Reporter } from "gatsby"
+import slugify, { Options as ISlugifyOptions } from "@sindresorhus/slugify"
+import { Reporter } from "gatsby/reporter"
 import {
   extractFieldWithoutUnion,
   extractAllCollectionSegments,
   switchToPeriodDelimiters,
   stripTrailingSlash,
+  removeFileExtension,
 } from "./path-utils"
 
 const doubleForwardSlashes = /\/\/+/g
+// Match 0 or 1 of "/"
+const indexRoute = /^\/?$/
 
 // Generates the path for the page from the file path
 // product/{Product.id} => /product/:id, pulls from nodes.id
@@ -17,7 +20,8 @@ const doubleForwardSlashes = /\/\/+/g
 export function derivePath(
   path: string,
   node: Record<string, any>,
-  reporter: Reporter
+  reporter: Reporter,
+  slugifyOptions?: ISlugifyOptions
 ): { errors: number; derivedPath: string } {
   // 0. Since this function will be called for every path times count of nodes the errors will be counted and then the calling function will throw the error once
   let errors = 0
@@ -54,7 +58,7 @@ export function derivePath(
     }
 
     // 3.d  Safely slugify all values (to keep URL structures) and remove any trailing slash
-    const value = stripTrailingSlash(safeSlugify(nodeValue))
+    const value = stripTrailingSlash(safeSlugify(nodeValue, slugifyOptions))
 
     // 3.e  replace the part of the slug with the actual value
     modifiedPath = modifiedPath.replace(slugPart, value)
@@ -62,6 +66,14 @@ export function derivePath(
 
   // 4.  Remove double forward slashes that could occur in the final URL
   modifiedPath = modifiedPath.replace(doubleForwardSlashes, `/`)
+
+  // 5.  Remove trailing slashes that could occur in the final URL
+  modifiedPath = stripTrailingSlash(modifiedPath)
+
+  // 6.  If the final URL appears to be an index path, use the "index" file naming convention
+  if (indexRoute.test(removeFileExtension(modifiedPath))) {
+    modifiedPath = `index${modifiedPath}`
+  }
 
   const derivedPath = modifiedPath
 
@@ -74,10 +86,13 @@ export function derivePath(
 // If the node value is meant to be a slug, like `foo/bar`, the slugify
 // function will remove the slashes. This is a hack to make sure the slashes
 // stick around in the final url structuring
-function safeSlugify(nodeValue: string): string {
+function safeSlugify(
+  nodeValue: string,
+  slugifyOptions?: ISlugifyOptions
+): string {
   // The incoming GraphQL data can also be a number
   const input = String(nodeValue)
   const tempArr = input.split(`/`)
 
-  return tempArr.map(v => slugify(v)).join(`/`)
+  return tempArr.map(v => slugify(v, slugifyOptions)).join(`/`)
 }

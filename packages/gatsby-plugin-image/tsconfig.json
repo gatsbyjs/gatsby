@@ -9,8 +9,10 @@
     "declarationDir": "./dist",
     "lib": ["es2016", "dom"],
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "node"
     // "jsxFactory": "createElement"
   },
-  "include": ["./src/global.d.ts", "./src/index.ts", "./src/index.browser.ts"]
+  "files": ["./src/global.d.ts", "./src/index.ts", "./src/index.browser.ts"]
 }

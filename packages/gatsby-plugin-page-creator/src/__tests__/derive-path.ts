@@ -1,5 +1,5 @@
 import { derivePath } from "../derive-path"
-import reporter from "gatsby-cli/lib/reporter"
+import reporter from "gatsby/reporter"
 
 describe(`derive-path`, () => {
   it(`has basic support`, () => {
@@ -265,6 +265,74 @@ describe(`derive-path`, () => {
     ).toEqual(`foo/dolores/[...name]`)
   })
 
+  it(`supports index paths`, () => {
+    expect(
+      derivePath(
+        `{Page.path}`,
+        {
+          path: `/`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`index`)
+    expect(
+      derivePath(
+        `{Page.path}.js`,
+        {
+          path: `/`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`index.js`)
+    expect(
+      derivePath(
+        `foo/{Page.path}`,
+        {
+          path: `/`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo`)
+    expect(
+      derivePath(
+        `foo/{Page.path}/bar`,
+        {
+          path: `/`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/bar`)
+    expect(
+      derivePath(
+        `foo/{Page.pathOne}/{Page.pathTwo}`,
+        {
+          pathOne: `/`,
+          pathTwo: `bar`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/bar`)
+    expect(
+      derivePath(
+        `foo/{Page.pathOne}/{Page.pathTwo}`,
+        {
+          pathOne: `/`,
+          pathTwo: `/bar`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/bar`)
+    expect(
+      derivePath(
+        `foo/{Page.path}/[...name]`,
+        {
+          path: `/`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/[...name]`)
+  })
+
   it(`handles special chars`, () => {
     expect(
       derivePath(
@@ -311,5 +379,58 @@ describe(`derive-path`, () => {
         reporter
       ).derivedPath
     ).toEqual(`foo/muenchner-weisswuerstchen`)
+  })
+
+  it(`supports custom slugify options`, () => {
+    expect(
+      derivePath(
+        `foo/{Model.name}`,
+        {
+          name: `BAR and baz`,
+        },
+        reporter,
+        { separator: `_` }
+      ).derivedPath
+    ).toEqual(`foo/bar_and_baz`)
+    expect(
+      derivePath(
+        `foo/{Model.name}`,
+        {
+          name: `Déjà Vu!`,
+        },
+        reporter,
+        { lowercase: false }
+      ).derivedPath
+    ).toEqual(`foo/Deja-Vu`)
+    expect(
+      derivePath(
+        `foo/{Model.name}`,
+        {
+          name: `fooBar`,
+        },
+        reporter,
+        { decamelize: false }
+      ).derivedPath
+    ).toEqual(`foo/foobar`)
+    expect(
+      derivePath(
+        `foo/{Model.name}`,
+        {
+          name: `this-is`,
+        },
+        reporter,
+        { customReplacements: [[`this-is`, `the-way`]] }
+      ).derivedPath
+    ).toEqual(`foo/the-way`)
+    expect(
+      derivePath(
+        `foo/{Model.name}`,
+        {
+          name: `_foo_bar`,
+        },
+        reporter,
+        { preserveLeadingUnderscore: true }
+      ).derivedPath
+    ).toEqual(`foo/_foo-bar`)
   })
 })

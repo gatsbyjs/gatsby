@@ -1,4 +1,4 @@
-import normalize from "normalize-path"
+import normalize from "./normalize-path"
 import { IGatsbyState, ActionsUnion } from "../types"
 
 let programStatus = `BOOTSTRAPPING`
@@ -22,6 +22,7 @@ export const componentsReducer = (
       if (!component) {
         component = {
           componentPath: action.payload.componentPath,
+          componentChunkName: action.payload.componentChunkName,
           query: ``,
           pages: new Set(),
           isInBootstrap: true,

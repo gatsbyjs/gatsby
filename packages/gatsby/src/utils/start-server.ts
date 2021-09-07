@@ -1,17 +1,20 @@
-import webpackHotMiddleware from "webpack-hot-middleware"
-import webpackDevMiddleware, {
-  WebpackDevMiddleware,
-} from "webpack-dev-middleware"
-import got from "got"
+import webpackHotMiddleware from "@gatsbyjs/webpack-hot-middleware"
+import webpackDevMiddleware from "webpack-dev-middleware"
+import got, { Method } from "got"
 import webpack from "webpack"
 import express from "express"
 import compression from "compression"
-import graphqlHTTP from "express-graphql"
+import { graphqlHTTP, OptionsData } from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
-import { formatError } from "graphql"
+import {
+  formatError,
+  FragmentDefinitionNode,
+  GraphQLFormattedError,
+  Kind,
+} from "graphql"
+import { isCI } from "gatsby-core-utils"
 import http from "http"
-import https from "https"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
@@ -27,6 +30,10 @@ import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
 import { websocketManager, WebsocketManager } from "../utils/websocket-manager"
 import {
+  showExperimentNoticeAfterTimeout,
+  CancelExperimentNoticeCallbackOrUndefined,
+} from "../utils/show-experiment-notice"
+import {
   reverseFixedPagePath,
   readPageData,
   IPageDataWithQueryResult,
@@ -38,38 +45,35 @@ import { Express } from "express"
 import * as path from "path"
 
 import { Stage, IProgram } from "../commands/types"
-import JestWorker from "jest-worker"
 import { findOriginalSourcePositionAndContent } from "./stack-trace-utils"
+import { appendPreloadHeaders } from "./develop-preload-headers"
+import {
+  routeLoadingIndicatorRequests,
+  writeVirtualLoadingIndicatorModule,
+} from "./loading-indicator"
+import { renderDevHTML } from "./dev-ssr/render-dev-html"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
 interface IServer {
   compiler: webpack.Compiler
-  listener: http.Server | https.Server
+  listener: http.Server
   webpackActivity: ActivityTracker
+  cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
   websocketManager: WebsocketManager
-  workerPool: JestWorker
+  workerPool: WorkerPool.GatsbyWorkerPool
   webpackWatching: IWebpackWatchingPauseResume
 }
 
-export interface IWebpackWatchingPauseResume extends webpack.Watching {
+export interface IWebpackWatchingPauseResume {
   suspend: () => void
   resume: () => void
 }
 
-// context seems to be public, but not documented API
-// see https://github.com/webpack/webpack-dev-middleware/issues/656
-type PatchedWebpackDevMiddleware = WebpackDevMiddleware &
-  express.RequestHandler & {
-    context: {
-      watching: IWebpackWatchingPauseResume
-    }
-  }
-
 export async function startServer(
   program: IProgram,
   app: Express,
-  workerPool: JestWorker = WorkerPool.create()
+  workerPool: WorkerPool.GatsbyWorkerPool = WorkerPool.create()
 ): Promise<IServer> {
   const directory = program.directory
 
@@ -78,18 +82,50 @@ export async function startServer(
   })
   webpackActivity.start()
 
+  // loading indicator
+  // write virtual module always to not fail webpack compilation, but only add express route handlers when
+  // query on demand is enabled and loading indicator is not disabled
+  writeVirtualLoadingIndicatorModule()
+
+  const THIRTY_SECONDS = 30 * 1000
+  let cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
+  if (
+    process.env.gatsby_executing_command === `develop` &&
+    !process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE &&
+    !isCI()
+  ) {
+    cancelDevJSNotice = showExperimentNoticeAfterTimeout(
+      `Preserve webpack's Cache`,
+      `https://github.com/gatsbyjs/gatsby/discussions/28331`,
+      `which changes Gatsby's cache clearing behavior to not clear webpack's
+cache unless you run "gatsby clean" or delete the .cache folder manually.
+Here's how to try it:
+
+module.exports = {
+  flags: { PRESERVE_WEBPACK_CACHE: true },
+  plugins: [...]
+}`,
+      THIRTY_SECONDS
+    )
+  }
+
   // Remove the following when merging GATSBY_EXPERIMENTAL_DEV_SSR
   const directoryPath = withBasePath(directory)
-  const { buildHTML } = require(`../commands/build-html`)
+  const { buildRenderer, doBuildPages } = require(`../commands/build-html`)
   const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
     try {
-      await buildHTML({
+      const { rendererPath } = await buildRenderer(
         program,
-        stage: Stage.DevelopHTML,
-        pagePaths: [`/`],
-        workerPool,
+        Stage.DevelopHTML,
+        activity.span
+      )
+      await doBuildPages(
+        rendererPath,
+        [`/`],
         activity,
-      })
+        workerPool,
+        Stage.DevelopHTML
+      )
     } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
@@ -106,9 +142,11 @@ export async function startServer(
   }
   const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
 
+  let pageRenderer: string
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const { buildRenderer } = require(`../commands/build-html`)
-    await buildRenderer(program, Stage.DevelopHTML)
+    pageRenderer = (await buildRenderer(program, Stage.DevelopHTML))
+      .rendererPath
     const { initDevWorkerPool } = require(`./dev-ssr/render-dev-html`)
     initDevWorkerPool()
   } else {
@@ -160,44 +198,55 @@ export async function startServer(
   } else {
     graphiqlExplorer(app, {
       graphqlEndpoint,
+      getFragments: function getFragments(): Array<FragmentDefinitionNode> {
+        const fragments: Array<FragmentDefinitionNode> = []
+        for (const def of store.getState().definitions.values()) {
+          if (def.def.kind === Kind.FRAGMENT_DEFINITION) {
+            fragments.push(def.def)
+          }
+        }
+        return fragments
+      },
     })
   }
 
   app.use(
     graphqlEndpoint,
-    graphqlHTTP(
-      (): graphqlHTTP.OptionsData => {
-        const { schema, schemaCustomization } = store.getState()
+    graphqlHTTP((): OptionsData => {
+      const { schema, schemaCustomization } = store.getState()
 
-        if (!schemaCustomization.composer) {
-          throw new Error(
-            `A schema composer was not created in time. This is likely a gatsby bug. If you experienced this please create an issue.`
-          )
-        }
-        return {
-          schema,
-          graphiql: false,
-          extensions(): { [key: string]: unknown } {
-            return {
-              enableRefresh: process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
-              refreshToken: process.env.GATSBY_REFRESH_TOKEN,
-            }
-          },
-          context: withResolverContext({
-            schema,
-            schemaComposer: schemaCustomization.composer,
-            context: {},
-            customContext: schemaCustomization.context,
-          }),
-          customFormatErrorFn(err): unknown {
-            return {
-              ...formatError(err),
-              stack: err.stack ? err.stack.split(`\n`) : [],
-            }
-          },
-        }
+      if (!schemaCustomization.composer) {
+        throw new Error(
+          `A schema composer was not created in time. This is likely a gatsby bug. If you experienced this please create an issue.`
+        )
       }
-    )
+      return {
+        schema,
+        graphiql: false,
+        extensions(): { [key: string]: unknown } {
+          return {
+            enableRefresh: process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
+            refreshToken: process.env.GATSBY_REFRESH_TOKEN,
+          }
+        },
+        context: withResolverContext({
+          schema,
+          schemaComposer: schemaCustomization.composer,
+          context: {},
+          customContext: schemaCustomization.context,
+        }),
+        customFormatErrorFn(
+          err
+        ): GraphQLFormattedError<{ stack: Array<string> }> {
+          return {
+            ...formatError(err),
+            extensions: {
+              stack: err.stack ? err.stack.split(`\n`) : [],
+            },
+          }
+        },
+      }
+    })
   )
 
   /**
@@ -206,26 +255,44 @@ export async function startServer(
    * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
    **/
   const REFRESH_ENDPOINT = `/__refresh`
-  const refresh = async (req: express.Request): Promise<void> => {
+  const refresh = async (
+    req: express.Request,
+    pluginName?: string
+  ): Promise<void> => {
     emitter.emit(`WEBHOOK_RECEIVED`, {
       webhookBody: req.body,
+      pluginName,
     })
   }
-  app.use(REFRESH_ENDPOINT, express.json())
-  app.post(REFRESH_ENDPOINT, (req, res) => {
+
+  app.post(`${REFRESH_ENDPOINT}/:plugin_name?`, express.json(), (req, res) => {
+    const pluginName = req.params[`plugin_name`]
+
     const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
     const refreshToken = process.env.GATSBY_REFRESH_TOKEN
     const authorizedRefresh =
       !refreshToken || req.headers.authorization === refreshToken
 
     if (enableRefresh && authorizedRefresh) {
-      refresh(req)
+      refresh(req, pluginName)
+      res.status(200)
+      res.setHeader(`content-type`, `application/json`)
+    } else {
+      res.status(authorizedRefresh ? 404 : 403)
+      res.json({
+        error: enableRefresh
+          ? `Authorization failed. Make sure you add authorization header to your refresh requests`
+          : `Refresh endpoint is not enabled. Run gatsby with "ENABLE_GATSBY_REFRESH_ENDPOINT=true" environment variable set.`,
+        isEnabled: !!process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
+      })
     }
     res.end()
   })
 
   app.get(`/__open-stack-frame-in-editor`, (req, res) => {
-    launchEditor(req.query.fileName, req.query.lineNumber)
+    const fileName = path.resolve(process.cwd(), req.query.fileName)
+    const lineNumber = parseInt(req.query.lineNumber, 10)
+    launchEditor(fileName, isNaN(lineNumber) ? 1 : lineNumber)
     res.end()
   })
 
@@ -243,13 +310,22 @@ export async function startServer(
 
       if (page) {
         try {
-          const pageData: IPageDataWithQueryResult = process.env
-            .GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
-            ? await getPageDataExperimental(page.path)
-            : await readPageData(
-                path.join(store.getState().program.directory, `public`),
-                page.path
-              )
+          let pageData: IPageDataWithQueryResult
+          if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+            const start = Date.now()
+
+            pageData = await getPageDataExperimental(page.path)
+
+            telemetry.trackCli(`RUN_QUERY_ON_DEMAND`, {
+              name: `getPageData`,
+              duration: Date.now() - start,
+            })
+          } else {
+            pageData = await readPageData(
+              path.join(store.getState().program.directory, `public`),
+              page.path
+            )
+          }
 
           res.status(200).send(pageData)
           return
@@ -273,41 +349,62 @@ export async function startServer(
   // We serve by default an empty index.html that sets up the dev environment.
   app.use(developStatic(`public`, { index: false }))
 
-  const webpackDevMiddlewareInstance = (webpackDevMiddleware(compiler, {
-    logLevel: `silent`,
+  const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,
-    watchOptions: devConfig.devServer ? devConfig.devServer.watchOptions : null,
     stats: `errors-only`,
     serverSideRender: true,
-  }) as unknown) as PatchedWebpackDevMiddleware
+  })
 
   app.use(webpackDevMiddlewareInstance)
 
   app.get(`/__original-stack-frame`, async (req, res) => {
-    const {
-      webpackStats: {
-        compilation: { modules },
-      },
-    } = res.locals
+    const compilation = res.locals?.webpack?.devMiddleware?.stats?.compilation
     const emptyResponse = {
       codeFrame: `No codeFrame could be generated`,
       sourcePosition: null,
       sourceContent: null,
     }
 
+    if (!compilation) {
+      res.json(emptyResponse)
+      return
+    }
+
     const moduleId = req?.query?.moduleId
     const lineNumber = parseInt(req.query.lineNumber, 10)
     const columnNumber = parseInt(req.query.columnNumber, 10)
 
-    const fileModule = modules.find(m => m.id === moduleId)
-    const sourceMap = fileModule?._source?._sourceMap
+    let fileModule
+    for (const module of compilation.modules) {
+      const moduleIdentifier = compilation.chunkGraph.getModuleId(module)
+      if (moduleIdentifier === moduleId) {
+        fileModule = module
+        break
+      }
+    }
+
+    if (!fileModule) {
+      res.json(emptyResponse)
+      return
+    }
+
+    // We need the internal webpack file that is used in the bundle, not the module source.
+    // It doesn't have the correct sourceMap.
+    const webpackSource = compilation?.codeGenerationResults
+      ?.get(fileModule)
+      ?.sources.get(`javascript`)
+
+    const sourceMap = webpackSource?.map()
 
     if (!sourceMap) {
       res.json(emptyResponse)
       return
     }
 
-    const position = { line: lineNumber, column: columnNumber }
+    const position = {
+      line: lineNumber,
+      column: columnNumber,
+    }
     const result = await findOriginalSourcePositionAndContent(
       sourceMap,
       position
@@ -364,7 +461,11 @@ export async function startServer(
         req
           .pipe(
             got
-              .stream(proxiedUrl, { headers, method, decompress: false })
+              .stream(proxiedUrl, {
+                headers,
+                method: method as Method,
+                decompress: false,
+              })
               .on(`response`, response =>
                 res.writeHead(response.statusCode || 200, response.headers)
               )
@@ -396,20 +497,151 @@ export async function startServer(
 
   // Render an HTML page and serve it.
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
-    // Setup HTML route.
-    const { route } = require(`./dev-ssr/develop-html-route`)
-    route({ app, program, store })
+    app.get(`*`, async (req, res, next) => {
+      telemetry.trackFeatureIsUsed(`GATSBY_EXPERIMENTAL_DEV_SSR`)
+
+      const pathObj = findPageByPath(store.getState(), decodeURI(req.path))
+
+      if (!pathObj) {
+        return next()
+      }
+
+      await appendPreloadHeaders(pathObj.path, res)
+
+      const htmlActivity = report.phantomActivity(`building HTML for path`, {})
+      htmlActivity.start()
+
+      try {
+        const renderResponse = await renderDevHTML({
+          path: pathObj.path,
+          page: pathObj,
+          skipSsr: req.query[`skip-ssr`] || false,
+          store,
+          htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+          directory: program.directory,
+        })
+        res.status(200).send(renderResponse)
+      } catch (error) {
+        // The page errored but couldn't read the page component.
+        // This is a race condition when a page is deleted but its requested
+        // immediately after before anything can recompile.
+        if (error === `404 page`) {
+          return next()
+        }
+
+        // renderDevHTML throws an error with these information
+        const lineNumber = error?.line as number
+        const columnNumber = error?.column as number
+        const filePath = error?.filename as string
+        const sourceContent = error?.sourceContent as string
+
+        report.error({
+          id: `11614`,
+          context: {
+            path: pathObj.path,
+            filePath: filePath,
+            line: lineNumber,
+            column: columnNumber,
+          },
+        })
+
+        const emptyResponse = {
+          codeFrame: `No codeFrame could be generated`,
+          sourcePosition: null,
+          sourceContent: null,
+        }
+
+        if (!sourceContent || !lineNumber) {
+          res.json(emptyResponse)
+          return null
+        }
+
+        const codeFrame = codeFrameColumns(
+          sourceContent,
+          {
+            start: {
+              line: lineNumber,
+              column: columnNumber ?? 0,
+            },
+          },
+          {
+            highlightCode: true,
+          }
+        )
+
+        const message = {
+          codeFrame,
+          source: filePath,
+          line: lineNumber,
+          column: columnNumber ?? 0,
+          sourceMessage: error?.message,
+          stack: error?.stack,
+        }
+
+        try {
+          // Generate a shell for client-only content -- for the error overlay
+          const clientOnlyShell = await renderDevHTML({
+            path: pathObj.path,
+            page: pathObj,
+            skipSsr: true,
+            store,
+            error: message,
+            htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+            directory: program.directory,
+          })
+
+          res.send(clientOnlyShell)
+        } catch (e) {
+          report.error({
+            id: `11616`,
+            context: {
+              sourceMessage: e.message,
+            },
+            filePath: e.filename,
+            location: {
+              start: {
+                line: e.line,
+                column: e.column,
+              },
+            },
+          })
+
+          const minimalHTML = `<head><title>Failed to Server Render (SSR)</title></head><body><h1>Failed to Server Render (SSR)</h1><h2>Error message:</h2><p>${e.message}</p><h2>File:</h2><p>${e.filename}:${e.line}:${e.column}</p><h2>Stack:</h2><pre><code>${e.stack}</code></pre></body>`
+
+          res.send(minimalHTML).status(500)
+        }
+      }
+
+      htmlActivity.end()
+
+      return null
+    })
+  }
+
+  if (
+    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+    process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
+  ) {
+    routeLoadingIndicatorRequests(app)
   }
 
   app.use(async (req, res) => {
+    // in this catch-all block we don't support POST so we should 404
+    if (req.method === `POST`) {
+      res.status(404).end()
+      return
+    }
+
     const fullUrl = req.protocol + `://` + req.get(`host`) + req.originalUrl
     // This isn't used in development.
     if (fullUrl.endsWith(`app-data.json`)) {
       res.json({ webpackCompilationHash: `123` })
-      // If this gets here, it's a non-existant file so just send back 404.
+      // If this gets here, it's a non-existent file so just send back 404.
     } else if (fullUrl.endsWith(`.json`)) {
       res.json({}).status(404)
     } else {
+      await appendPreloadHeaders(req.path, res)
+
       if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
         try {
           const { renderDevHTML } = require(`./dev-ssr/render-dev-html`)
@@ -418,17 +650,28 @@ export async function startServer(
             // Let renderDevHTML figure it out.
             page: undefined,
             store,
-            htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+            htmlComponentRendererPath: pageRenderer,
             directory: program.directory,
           })
-          const status = process.env.GATSBY_EXPERIMENTAL_DEV_SSR ? 404 : 200
-          res.status(status).send(renderResponse)
+          res.status(404).send(renderResponse)
         } catch (e) {
-          report.error(e)
+          report.error({
+            id: `11615`,
+            context: {
+              sourceMessage: e.message,
+            },
+            filePath: e.filename,
+            location: {
+              start: {
+                line: e.line,
+                column: e.column,
+              },
+            },
+          })
           res.send(e).status(500)
         }
       } else {
-        res.sendFile(directoryPath(`public/index.html`), err => {
+        res.sendFile(directoryPath(`.cache/develop-html/index.html`), err => {
           if (err) {
             res.status(500).end()
           }
@@ -467,6 +710,7 @@ export async function startServer(
     compiler,
     listener,
     webpackActivity,
+    cancelDevJSNotice,
     websocketManager,
     workerPool,
     webpackWatching: webpackDevMiddlewareInstance.context.watching,

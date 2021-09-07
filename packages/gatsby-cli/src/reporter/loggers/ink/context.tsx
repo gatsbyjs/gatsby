@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react"
+import React, { useState, useLayoutEffect, createContext } from "react"
 import { getStore, onLogAction } from "../../redux"
 import { IGatsbyState } from "gatsby/src/redux/types"
 
@@ -7,20 +7,20 @@ import { IGatsbyState } from "gatsby/src/redux/types"
 // to not use it's own store temporarily.
 // By the time this is actually running, it will become an `IGatsbyState`
 const StoreStateContext = createContext<IGatsbyState>(
-  (getStore().getState() as any) as IGatsbyState
+  getStore().getState() as any as IGatsbyState
 )
 
 export const StoreStateProvider: React.FC = ({
   children,
 }): React.ReactElement => {
   const [state, setState] = useState(
-    (getStore().getState() as any) as IGatsbyState
+    getStore().getState() as any as IGatsbyState
   )
 
-  useEffect(
+  useLayoutEffect(
     () =>
       onLogAction(() => {
-        setState((getStore().getState() as any) as IGatsbyState)
+        setState(getStore().getState() as any as IGatsbyState)
       }),
     []
   )

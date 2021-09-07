@@ -1,0 +1,59 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="1.5" focusable="false">
+  <path d="M400 18.452v563.096" fill="none" stroke="#bfbfbf" stroke-width="3"/>
+  <path d="M22.649 300h754.702" fill="none" stroke="#bfbfbf" stroke-width="3.5"/>
+  <path fill="#fff" d="M384.372 121.468h31.007v147.901h-31.007z"/>
+  <text x="1088.45" y="330.01" font-family="'Futura-Medium','Futura',sans-serif" font-weight="500" font-size="20" fill="gray" transform="rotate(90 840.787 -116.901)">
+    Practical steps
+  </text>
+  <path fill="#fff" d="M385.002 332.118h31.007v223.991h-31.007z"/>
+  <text x="1088.45" y="541.01" font-family="'Futura-Medium','Futura',sans-serif" font-weight="500" font-size="20" fill="gray" transform="rotate(90 840.787 94.099)">
+    Theoretical knowledge
+  </text>
+  <path fill="#fff" d="M56.317 286.819h312.446v25.41H56.317z"/>
+  <text x="64.808" y="305.334" font-family="'Futura-Medium','Futura',sans-serif" font-weight="500" font-size="20" fill="gray">
+    Most useful when we&apos;re studying
+  </text>
+  <path fill="#fff" d="M430.317 286.819h312.446v25.41H430.317z"/>
+  <text x="440.808" y="305.334" font-family="'Futura-Medium','Futura',sans-serif" font-weight="500" font-size="20" fill="gray">
+    Most useful when we&apos;re working
+  </text>
+  <text x="447.49" y="239.354" font-family="'Futura-Medium','Futura',sans-serif" font-weight="500" font-size="24">
+    Problem-Oriented
+  </text>
+  <g font-family="'Futura-Bold','Futura',sans-serif" font-weight="700" font-size="14.102" fill="#10a39e">
+    <text x="308.032" y="287.064" transform="translate(-602.179 -842.604) scale(3.40377)">
+      How-To
+    </text>
+    <text x="308.032" y="301.589" transform="translate(-602.179 -842.604) scale(3.40377)">
+      Guides
+    </text>
+  </g>
+  <text x="449.004" y="372.032" font-family="'Futura-Medium','Futura',sans-serif" font-weight="500" font-size="24">
+    Information-Oriented
+  </text>
+  <g font-family="'Futura-Bold','Futura',sans-serif" font-weight="700" font-size="14.102" fill="#bc027f">
+    <text x="305.769" y="287.064" transform="translate(-595.359 -531.555) scale(3.40377)">
+      Reference
+    </text>
+    <text x="305.769" y="301.589" transform="translate(-595.359 -531.555) scale(3.40377)">
+      Guides
+    </text>
+  </g>
+  <text x="94.491" y="372.926" font-family="'Futura-Medium','Futura',sans-serif" font-weight="500" font-size="24">
+    Understanding-Oriented
+  </text>
+  <g font-family="'Futura-Bold','Futura',sans-serif" font-weight="700" font-size="14.102" fill="#0d96f2">
+    <text x="305.382" y="287.064" transform="translate(-965.643 -525.921) scale(3.40377)">
+      Conceptual
+    </text>
+    <text x="336.59" y="301.589" transform="translate(-965.643 -525.921) scale(3.40377)">
+      Guides
+    </text>
+  </g>
+  <text x="159.657" y="238.315" font-family="'Futura-Medium','Futura',sans-serif" font-weight="500" font-size="24">
+    Learning-Oriented
+  </text>
+  <text x="165.362" y="166.224" font-family="'Futura-Bold','Futura',sans-serif" font-weight="700" font-size="48" fill="#e65800">
+    Tutorial
+  </text>
+</svg>

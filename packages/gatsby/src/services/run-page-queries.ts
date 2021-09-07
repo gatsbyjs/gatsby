@@ -8,7 +8,7 @@ import {
 } from "../utils/show-experiment-notice"
 import { isCI } from "gatsby-core-utils"
 
-const TWO_MINUTES = 2 * 60 * 1000
+const ONE_MINUTE = 1 * 60 * 1000
 
 export async function runPageQueries({
   parentSpan,
@@ -18,22 +18,21 @@ export async function runPageQueries({
   graphqlRunner,
 }: Partial<IQueryRunningContext>): Promise<void> {
   assertStore(store)
+  const state = store.getState()
 
   if (!queryIds) {
     return
   }
-  const { pageQueryIds } = queryIds
-  const state = store.getState()
-  const pageQueryIdsCount = pageQueryIds.filter(id => state.pages.has(id))
-    .length
 
-  if (!pageQueryIdsCount) {
+  const { pageQueryIds } = queryIds
+
+  if (pageQueryIds.length === 0) {
     return
   }
 
   const activity = reporter.createProgress(
     `run page queries`,
-    pageQueryIdsCount,
+    pageQueryIds.length,
     0,
     {
       id: `page-query-running`,
@@ -41,7 +40,10 @@ export async function runPageQueries({
     }
   )
 
-  activity.start()
+  // TODO: This is hacky, remove with a refactor of PQR itself
+  if (!process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    activity.start()
+  }
 
   let cancelNotice: CancelExperimentNoticeCallbackOrUndefined
   if (
@@ -50,19 +52,16 @@ export async function runPageQueries({
     !isCI()
   ) {
     cancelNotice = showExperimentNoticeAfterTimeout(
-      `queryOnDemand`,
-      reporter.stripIndent(`
-        Your local development experience is about to get better, faster, and stronger!
+      `Query On Demand`,
+      `https://gatsby.dev/query-on-demand-feedback`,
+      `which avoids running page queries in development until you visit a page — so a lot less upfront work. Here's how to try it:
 
-        Your friendly Gatsby maintainers detected your site takes longer than ideal to run page queries. We're working right now to improve this.
-
-        If you're interested in trialing out one of these future improvements *today* which should make your local development experience faster, go ahead and run your site with QUERY_ON_DEMAND enabled.
-
-        GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND=true gatsby develop
-
-        Please do let us know how it goes (good, bad, or otherwise) and learn more about it at https://gatsby.dev/query-on-demand-feedback
-      `),
-      TWO_MINUTES
+modules.exports = {
+  flags: { QUERY_ON_DEMAND: true },
+  plugins: [...]
+}
+`,
+      ONE_MINUTE
     )
   }
 
@@ -77,5 +76,7 @@ export async function runPageQueries({
     cancelNotice()
   }
 
-  activity.done()
+  if (!process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+    activity.done()
+  }
 }

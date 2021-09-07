@@ -1,4 +1,4 @@
-//@ts-check
+// @ts-check
 const path = require(`path`)
 const fs = require(`fs`)
 const { getPackages } = require(`@lerna/project`)
@@ -19,18 +19,20 @@ function insertKeyAvoidMergeConflict(pkgJson, key, value) {
     const newPkgJson = {}
     let inserted = false
     for (const pkgKey in pkgJson) {
-      if (!inserted && /depend/i.test(pkgKey)) {
-        inserted = true
-        newPkgJson[key] = value
+      if (pkgJson.hasOwnProperty(pkgKey)) {
+        if (!inserted && /depend/i.test(pkgKey)) {
+          inserted = true
+          newPkgJson[key] = value
+        }
+        newPkgJson[pkgKey] = pkgJson[pkgKey]
       }
-      newPkgJson[pkgKey] = pkgJson[pkgKey]
     }
     return newPkgJson
   }
 }
 
 async function main() {
-  let argv = yargs.option(`fix`, {
+  const argv = yargs.option(`fix`, {
     default: false,
     describe: `Fixes outdated dependencies`,
   }).argv

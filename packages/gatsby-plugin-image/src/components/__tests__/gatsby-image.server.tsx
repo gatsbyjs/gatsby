@@ -4,26 +4,25 @@ import { GatsbyImage } from "../gatsby-image.server"
 import { IGatsbyImageData } from "../gatsby-image.browser"
 import { SourceProps } from "../picture"
 
-type GlobalOverride = NodeJS.Global &
-  typeof global.globalThis & {
-    SERVER: boolean | undefined
-    GATSBY___IMAGE: boolean | undefined
-  }
-
 // Prevents terser for bailing because we're not in a babel plugin
-jest.mock(`../../../macros/terser.macro`, () => (strs): string => strs.join(``))
+jest.mock(
+  `../../../macros/terser.macro`,
+  () =>
+    (strs): string =>
+      strs.join(``)
+)
 
 describe(`GatsbyImage server`, () => {
   beforeEach(() => {
     console.warn = jest.fn()
-    ;(global as GlobalOverride).SERVER = true
-    ;(global as GlobalOverride).GATSBY___IMAGE = true
+    global.SERVER = true
+    global.GATSBY___IMAGE = true
   })
 
   afterEach(() => {
     jest.clearAllMocks()
-    ;(global as GlobalOverride).SERVER = false
-    ;(global as GlobalOverride).GATSBY___IMAGE = false
+    global.SERVER = false
+    global.GATSBY___IMAGE = false
   })
 
   it(`shows nothing when the image props is not passed`, () => {
@@ -41,8 +40,8 @@ describe(`GatsbyImage server`, () => {
   })
 
   describe(`style verifications`, () => {
-    it(`has a valid style attributes for fluid layout`, () => {
-      const layout = `fluid`
+    it(`has a valid className for fullWidth layout`, () => {
+      const layout = `fullWidth`
 
       const image: IGatsbyImageData = {
         width: 100,
@@ -59,19 +58,9 @@ describe(`GatsbyImage server`, () => {
       )
 
       const wrapper = document.querySelector(`[data-gatsby-image-wrapper=""]`)
-      expect((wrapper as HTMLElement).style).toMatchInlineSnapshot(`
-        CSSStyleDeclaration {
-          "0": "position",
-          "_importants": Object {
-            "position": undefined,
-          },
-          "_length": 1,
-          "_onChange": [Function],
-          "_values": Object {
-            "position": "relative",
-          },
-        }
-      `)
+      expect((wrapper as HTMLElement).className).toMatchInlineSnapshot(
+        `"gatsby-image-wrapper"`
+      )
     })
 
     it(`has a valid style attributes for fixed layout`, () => {
@@ -94,26 +83,23 @@ describe(`GatsbyImage server`, () => {
       const wrapper = document.querySelector(`[data-gatsby-image-wrapper=""]`)
       expect((wrapper as HTMLElement).style).toMatchInlineSnapshot(`
         CSSStyleDeclaration {
-          "0": "position",
-          "1": "width",
-          "2": "height",
+          "0": "width",
+          "1": "height",
           "_importants": Object {
             "height": undefined,
-            "position": undefined,
             "width": undefined,
           },
-          "_length": 3,
+          "_length": 2,
           "_onChange": [Function],
           "_values": Object {
             "height": "100px",
-            "position": "relative",
             "width": "100px",
           },
         }
       `)
     })
 
-    it(`has a valid style attributes for constrained layout`, () => {
+    it(`has a valid className for constrained layout`, () => {
       const layout = `constrained`
 
       const image: IGatsbyImageData = {
@@ -131,22 +117,9 @@ describe(`GatsbyImage server`, () => {
       )
 
       const wrapper = document.querySelector(`[data-gatsby-image-wrapper=""]`)
-      expect((wrapper as HTMLElement).style).toMatchInlineSnapshot(`
-        CSSStyleDeclaration {
-          "0": "position",
-          "1": "display",
-          "_importants": Object {
-            "display": undefined,
-            "position": undefined,
-          },
-          "_length": 2,
-          "_onChange": [Function],
-          "_values": Object {
-            "display": "inline-block",
-            "position": "relative",
-          },
-        }
-      `)
+      expect((wrapper as HTMLElement).className).toMatchInlineSnapshot(
+        `"gatsby-image-wrapper gatsby-image-wrapper-constrained"`
+      )
     })
   })
 
@@ -161,7 +134,6 @@ describe(`GatsbyImage server`, () => {
         layout: `constrained`,
         images,
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -177,14 +149,15 @@ describe(`GatsbyImage server`, () => {
           data-main-image=""
           decoding="async"
           loading="lazy"
-          sizes="192x192"
           style="opacity: 0;"
         />
       `)
     })
 
     it(`has a valid src value when fallback is provided in images`, () => {
-      const images = { fallback: { src: `some-src-fallback.jpg` } }
+      const images = {
+        fallback: { src: `some-src-fallback.jpg`, sizes: `192x192` },
+      }
 
       const image: IGatsbyImageData = {
         width: 100,
@@ -192,7 +165,6 @@ describe(`GatsbyImage server`, () => {
         layout: `constrained`,
         images,
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -224,6 +196,7 @@ icon64px.png 64w,
 icon-retina.png 2x,
 icon-ultra.png 3x,
 icon.svg`,
+          sizes: `192x192`,
         },
       }
 
@@ -233,7 +206,6 @@ icon.svg`,
         layout: `constrained`,
         images,
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -269,7 +241,6 @@ icon.svg`,
         layout: `constrained`,
         images,
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -285,7 +256,6 @@ icon.svg`,
           data-main-image=""
           decoding="async"
           loading="lazy"
-          sizes="192x192"
           style="opacity: 0;"
         />
       `)
@@ -308,9 +278,11 @@ icon.svg`,
         width: 100,
         height: 100,
         layout: `constrained`,
-        images: { sources },
+        images: {
+          sources,
+          fallback: { src: `some-src-fallback.jpg`, sizes: `192x192` },
+        },
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -323,13 +295,15 @@ icon.svg`,
       expect(picture).toMatchInlineSnapshot(`
         <picture>
           <source
+            data-srcset="icon32px.png 32w,icon64px.png 64w,icon-retina.png 2x,icon-ultra.png 3x,icon.svg"
             media="some-media"
-            srcset="icon32px.png 32w,icon64px.png 64w,icon-retina.png 2x,icon-ultra.png 3x,icon.svg"
+            sizes="192x192"
           />
           <img
             alt="A fake image for testing purpose"
             data-gatsby-image-ssr=""
             data-main-image=""
+            data-src="some-src-fallback.jpg"
             decoding="async"
             loading="lazy"
             sizes="192x192"
@@ -341,14 +315,13 @@ icon.svg`,
   })
 
   describe(`placeholder verifications`, () => {
-    it(`has a placeholder in a div with valid styles for fluid layout`, () => {
+    it(`has a placeholder in a div with valid styles for fullWidth layout`, () => {
       const image: IGatsbyImageData = {
         width: 100,
         height: 100,
-        layout: `fluid`,
+        layout: `fullWidth`,
         images: {},
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -374,7 +347,6 @@ icon.svg`,
         layout: `fixed`,
         images: {},
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -400,7 +372,6 @@ icon.svg`,
         layout: `constrained`,
         images: {},
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 

@@ -6,10 +6,10 @@ title: Themes API Reference
 
 Themes are packaged Gatsby sites shipped as plugins, so you have access to all of Gatsby's APIs for modifying default configuration settings and functionality.
 
-- [Gatsby Config](https://www.gatsbyjs.com/docs/gatsby-config/)
-- [Actions](https://www.gatsbyjs.com/docs/actions/)
-- [Node Interface](https://www.gatsbyjs.com/docs/node-interface/)
-- ... [and more](https://www.gatsbyjs.com/docs/api-specification/)
+- [Gatsby Config](/docs/reference/config-files/gatsby-config/)
+- [Actions](/docs/reference/config-files/actions/)
+- [Node Interface](/docs/reference/graphql-data-layer/node-interface/)
+- ... [and more](/docs/api-specification/)
 
 If you're new to Gatsby you can get started by following along with the guides for building out a site. Converting it to a theme will be straightforward later on since themes are prepackaged Gatsby sites.
 

@@ -2,9 +2,9 @@
 title: "Creating a Remark Transformer Plugin"
 ---
 
-[`gatsby-transformer-remark`](/packages/gatsby-transformer-remark) empowers developers to translate Markdown into HTML to be consumed via Gatsby's GraphQL API. Blogs and other content based sites can highly benefit from functionality enabled with this plugin. With this plugin, authors of content for the site don't need to worry about how the site is written or structured but can rather focus on writing engaging posts and content!
+[`gatsby-transformer-remark`](/plugins/gatsby-transformer-remark) empowers developers to translate Markdown into HTML to be consumed via Gatsby's GraphQL API. Blogs and other content based sites can highly benefit from functionality enabled with this plugin. With this plugin, authors of content for the site don't need to worry about how the site is written or structured but can rather focus on writing engaging posts and content!
 
-In certain instances, a developer may want to customize the content of the Markdown file and extend it functionally in useful ways; for example, use cases such as [adding syntax highlighting](/packages/gatsby-remark-prismjs/), [parsing and creating responsive images](/packages/gatsby-remark-images), [embedding videos](/packages/gatsby-remark-embed-video), and many others. In each of these examples, a plugin will be injected with the Markdown Abstract Syntax Tree (AST) and manipulate content based on certain node types or content in particular nodes.
+In certain instances, a developer may want to customize the content of the Markdown file and extend it functionally in useful ways; for example, use cases such as [adding syntax highlighting](/plugins/gatsby-remark-prismjs/), [parsing and creating responsive images](/plugins/gatsby-remark-images), [embedding videos](/plugins/gatsby-remark-embed-video), and many others. In each of these examples, a plugin will be injected with the Markdown Abstract Syntax Tree (AST) and manipulate content based on certain node types or content in particular nodes.
 
 ## What you will learn in this tutorial
 
@@ -16,7 +16,7 @@ In certain instances, a developer may want to customize the content of the Markd
 
 There a few things that you should have some understanding with:
 
-- How to work with Remark in Gatsby as described in [Part Six](/tutorial/part-six/) and [Part Seven](/tutorial/part-seven/) of the Gatsby Tutorial.
+- How to work with Remark in Gatsby as described in [Part Six](/docs/tutorial/part-six/) and [Part Seven](/docs/tutorial/part-seven/) of the Gatsby Tutorial.
 - Understanding of the Markdown Syntax.
 
 ## Understanding the Abstract Syntax Tree
@@ -164,6 +164,27 @@ If you want to add some options, you could switch to the object syntax:
 }
 ```
 
+### `gatsby-plugin-mdx`
+
+In case you use `gatsby-plugin-mdx` in place of `gatsby-transformer-remark`, the former takes an array config option named `gatsbyRemarkPlugins` that allows compatibility with Gatsby's remark plugins.
+
+To make `gatsby-plugin-mdx` recognize a local plugin like `gatsby-remark-purple-headers`, you need to point to its location in the project through `require.resolve`.
+
+```js
+{
+  resolve: `gatsby-plugin-mdx`,
+  options: {
+    gatsbyRemarkPlugins: [
+      {
+        resolve: require.resolve(`./plugins/gatsby-remark-purple-headers`),
+      }
+    ]
+  }
+}
+```
+
+However, if the sub-plugin is published and installed via npm, simply refer to it by name as the case with using `gatsby-transformer-remark`.
+
 ## Find and Modify Markdown Nodes
 
 When modifying nodes, you'll want to walk the tree and then implement new functionality on specific nodes.
@@ -298,13 +319,15 @@ module.exports = async ({ markdownAST }, pluginOptions) => {
 }
 ```
 
-A real-world example of this would be [`gatsby-remark-code-repls`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-remark-code-repls/src/gatsby-node.js).
+A real-world example of this would be [`gatsby-remark-responsive-iframe`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-remark-responsive-iframe/src/index.js).
 
 ## Loading in changes and seeing effect
 
-At this point, our plugin is now ready to be used. To see the resulting functionality, it is helpful to re-visit [Part 7 of the Gatsby Tutorial](/tutorial/part-seven/) to programmatically create pages from Markdown data. Once this is set up, you can examine that your plugin works as seen below based on the markdown you wrote earlier.
+At this point, our plugin is now ready to be used. To see the resulting functionality, it is helpful to re-visit [Part 7 of the Gatsby Tutorial](/docs/tutorial/part-seven/) to programmatically create pages from Markdown data. Once this is set up, you can examine that your plugin works as seen below based on the markdown you wrote earlier.
 
 ![Output](../docs/images/remark-ast-output.png)
+
+**Note**: In case you don't see the intended effect, try wiping out the cache by running `gatsby clean`.
 
 ## Publishing the plugin
 

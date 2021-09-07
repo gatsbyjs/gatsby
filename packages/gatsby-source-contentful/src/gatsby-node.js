@@ -4,7 +4,8 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const { createClient } = require(`contentful`)
 const v8 = require(`v8`)
-const fetch = require(`node-fetch`)
+const fetch = require(`@vercel/fetch-retry`)(require(`node-fetch`))
+const { CODES } = require(`./report`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
@@ -23,27 +24,34 @@ const restrictedNodeFields = [
   `parent`,
 ]
 
-exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
+exports.setFieldsOnGraphQLNodeType =
+  require(`./extend-node-type`).extendNodeType
 
 const validateContentfulAccess = async pluginOptions => {
   if (process.env.NODE_ENV === `test`) return undefined
 
-  await fetch(`https://${pluginOptions.host}/spaces/${pluginOptions.spaceId}`, {
-    headers: {
-      Authorization: `Bearer ${pluginOptions.accessToken}`,
-      "Content-Type": `application/json`,
-    },
-  })
+  await fetch(
+    `https://${pluginOptions.host}/spaces/${pluginOptions.spaceId}/environments/${pluginOptions.environment}/content_types`,
+    {
+      headers: {
+        Authorization: `Bearer ${pluginOptions.accessToken}`,
+        "Content-Type": `application/json`,
+      },
+    }
+  )
     .then(res => res.ok)
     .then(ok => {
-      if (!ok)
-        throw new Error(
-          `Cannot access Contentful space "${maskText(
-            pluginOptions.spaceId
-          )}" with access token "${maskText(
-            pluginOptions.accessToken
-          )}". Make sure to double check them!`
-        )
+      if (!ok) {
+        const errorMessage = `Cannot access Contentful space "${maskText(
+          pluginOptions.spaceId
+        )}" on environment "${
+          pluginOptions.environment
+        }" with access token "${maskText(
+          pluginOptions.accessToken
+        )}". Make sure to double check them!`
+
+        throw new Error(errorMessage)
+      }
     })
 
   return undefined
@@ -98,7 +106,7 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
         .description(
           `Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g 50.`
         )
-        .default(100),
+        .default(1000),
       assetDownloadWorkers: Joi.number()
         .integer()
         .description(
@@ -127,6 +135,14 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
     If you are confident your Content Types will have natural-language IDs (e.g. \`blogPost\`), then you should set this option to \`false\`. If you are unable to ensure this, then you should leave this option set to \`true\` (the default).`
         )
         .default(true),
+      contentfulClientConfig: Joi.object()
+        .description(
+          `Additional config which will get passed to [Contentfuls JS SDK](https://github.com/contentful/contentful.js#configuration).
+
+          Use this with caution, you might override values this plugin does set for you to connect to Contentful.`
+        )
+        .unknown(true)
+        .default({}),
       // default plugins passed by gatsby
       plugins: Joi.array(),
     })
@@ -163,7 +179,12 @@ exports.sourceNodes = async (
 ) => {
   const { createNode, deleteNode, touchNode, createTypes } = actions
 
-  let currentSyncData, contentTypeItems, defaultLocale, locales, space
+  let currentSyncData
+  let contentTypeItems
+  let tagItems
+  let defaultLocale
+  let locales
+  let space
   if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
     reporter.info(
       `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE: Storing/loading remote data through \`` +
@@ -193,12 +214,12 @@ exports.sourceNodes = async (
    * with all data from subsequent syncs. Afterwards the references get
    * resolved via the Contentful JS SDK.
    */
-  let syncToken = await cache.get(CACHE_SYNC_TOKEN)
+  const syncToken = await cache.get(CACHE_SYNC_TOKEN)
   let previousSyncData = {
     assets: [],
     entries: [],
   }
-  let cachedData = await cache.get(CACHE_SYNC_DATA)
+  const cachedData = await cache.get(CACHE_SYNC_DATA)
 
   if (cachedData) {
     previousSyncData = cachedData
@@ -215,12 +236,12 @@ exports.sourceNodes = async (
     // If the cache has data, use it. Otherwise do a remote fetch anyways and prime the cache now.
     // If present, do NOT contact contentful, skip the round trips entirely
     reporter.info(
-      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Skipping remote fetch, using data stored in`,
-      process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
+      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Skipping remote fetch, using data stored in \`${process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE}\``
     )
     ;({
       currentSyncData,
       contentTypeItems,
+      tagItems,
       defaultLocale,
       locales,
       space,
@@ -241,10 +262,10 @@ exports.sourceNodes = async (
         if (node.internal.owner !== `gatsby-source-contentful`) {
           return
         }
-        touchNode({ nodeId: node.id })
+        touchNode(node)
         if (node.localFile___NODE) {
           // Prevent GraphQL type inference from crashing on this property
-          touchNode({ nodeId: node.localFile___NODE })
+          touchNode(getNode(node.localFile___NODE))
         }
       })
 
@@ -265,6 +286,7 @@ exports.sourceNodes = async (
     ;({
       currentSyncData,
       contentTypeItems,
+      tagItems,
       defaultLocale,
       locales,
       space,
@@ -293,8 +315,77 @@ exports.sourceNodes = async (
     }
   }
 
+  // Check for restricted content type names
+  const useNameForId = pluginConfig.get(`useNameForId`)
+  const restrictedContentTypes = [`entity`, `reference`, `asset`]
+
+  if (pluginConfig.get(`enableTags`)) {
+    restrictedContentTypes.push(`tags`)
+  }
+
+  contentTypeItems.forEach(contentTypeItem => {
+    // Establish identifier for content type
+    //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
+    //  but sometimes a base62 uuid generated by Contentful, hence the option)
+    let contentTypeItemId
+    if (useNameForId) {
+      contentTypeItemId = contentTypeItem.name.toLowerCase()
+    } else {
+      contentTypeItemId = contentTypeItem.sys.id.toLowerCase()
+    }
+
+    if (restrictedContentTypes.includes(contentTypeItemId)) {
+      reporter.panic({
+        id: CODES.FetchContentTypes,
+        context: {
+          sourceMessage: `Restricted ContentType name found. The name "${contentTypeItemId}" is not allowed.`,
+        },
+      })
+    }
+  })
+
+  const allLocales = locales
+  locales = locales.filter(pluginConfig.get(`localeFilter`))
+  reporter.verbose(
+    `Default locale: ${defaultLocale}.   All locales: ${allLocales
+      .map(({ code }) => code)
+      .join(`, `)}`
+  )
+  if (allLocales.length !== locales.length) {
+    reporter.verbose(
+      `After plugin.options.localeFilter: ${locales
+        .map(({ code }) => code)
+        .join(`, `)}`
+    )
+  }
+  if (locales.length === 0) {
+    reporter.panic({
+      id: CODES.LocalesMissing,
+      context: {
+        sourceMessage: `Please check if your localeFilter is configured properly. Locales '${allLocales
+          .map(item => item.code)
+          .join(`,`)}' were found but were filtered down to none.`,
+      },
+    })
+  }
+
+  if (pluginConfig.get(`enableTags`)) {
+    createTypes(
+      schema.buildObjectType({
+        name: `ContentfulTag`,
+        fields: {
+          name: { type: `String!` },
+          contentful_id: { type: `String!` },
+          id: { type: `ID!` },
+        },
+        interfaces: [`Node`],
+        extensions: { dontInfer: {} },
+      })
+    )
+  }
+
   createTypes(`
-  interface ContentfulEntry @nodeInterface {
+  interface ContentfulEntry implements Node {
     contentful_id: String!
     id: ID!
     node_locale: String!
@@ -321,7 +412,15 @@ exports.sourceNodes = async (
 
   const gqlTypes = contentTypeItems.map(contentTypeItem =>
     schema.buildObjectType({
-      name: _.upperFirst(_.camelCase(`Contentful ${contentTypeItem.name}`)),
+      name: _.upperFirst(
+        _.camelCase(
+          `Contentful ${
+            pluginConfig.get(`useNameForId`)
+              ? contentTypeItem.name
+              : contentTypeItem.sys.id
+          }`
+        )
+      ),
       fields: {
         contentful_id: { type: `String!` },
         id: { type: `ID!` },
@@ -336,7 +435,7 @@ exports.sourceNodes = async (
   fetchActivity.end()
 
   const processingActivity = reporter.activityTimer(
-    `Contentful: Proccess data (${sourceId})`,
+    `Contentful: Process data (${sourceId})`,
     {
       parentSpan,
     }
@@ -445,8 +544,8 @@ exports.sourceNodes = async (
 
     localizedNodes.forEach(node => {
       // touchNode first, to populate typeOwners & avoid erroring
-      touchNode({ nodeId: node.id })
-      deleteNode({ node })
+      touchNode(node)
+      deleteNode(node)
     })
   }
 
@@ -454,9 +553,11 @@ exports.sourceNodes = async (
   currentSyncData.deletedAssets.forEach(deleteContentfulNode)
 
   const existingNodes = getNodes().filter(
-    n => n.internal.owner === `gatsby-source-contentful`
+    n =>
+      n.internal.owner === `gatsby-source-contentful` &&
+      (n?.sys?.type === `Asset` || n?.sys?.type === `Entry`)
   )
-  existingNodes.forEach(n => touchNode({ nodeId: n.id }))
+  existingNodes.forEach(n => touchNode(n))
 
   const assets = mergedSyncData.assets
 
@@ -499,17 +600,17 @@ exports.sourceNodes = async (
 
   reporter.verbose(`Resolving Contentful references`)
 
-  const newOrUpdatedEntries = []
+  const newOrUpdatedEntries = new Set()
   entryList.forEach(entries => {
     entries.forEach(entry => {
-      newOrUpdatedEntries.push(`${entry.sys.id}___${entry.sys.type}`)
+      newOrUpdatedEntries.add(`${entry.sys.id}___${entry.sys.type}`)
     })
   })
 
   // Update existing entry nodes that weren't updated but that need reverse
   // links added.
   existingNodes
-    .filter(n => _.includes(newOrUpdatedEntries, `${n.id}___${n.sys.type}`))
+    .filter(n => newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`))
     .forEach(n => {
       if (foreignReferenceMap[`${n.id}___${n.sys.type}`]) {
         foreignReferenceMap[`${n.id}___${n.sys.type}`].forEach(
@@ -558,24 +659,25 @@ exports.sourceNodes = async (
     await Promise.all(
       normalize.createNodesForContentType({
         contentTypeItem,
-        contentTypeItems,
         restrictedNodeFields,
         conflictFieldPrefix,
         entries: entryList[i],
         createNode,
         createNodeId,
+        getNode,
         resolvable,
         foreignReferenceMap,
         defaultLocale,
         locales,
         space,
         useNameForId: pluginConfig.get(`useNameForId`),
+        pluginConfig,
       })
     )
   }
 
   if (assets.length) {
-    reporter.info(`Creating ${assets.length} Contentful asset nodes`)
+    reporter.info(`Creating ${assets.length} Contentful Asset nodes`)
   }
 
   for (let i = 0; i < assets.length; i++) {
@@ -592,6 +694,23 @@ exports.sourceNodes = async (
     )
   }
 
+  // Create tags entities
+  if (tagItems.length) {
+    reporter.info(`Creating ${tagItems.length} Contentful Tag nodes`)
+
+    for (const tag of tagItems) {
+      await createNode({
+        id: createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`),
+        name: tag.name,
+        contentful_id: tag.sys.id,
+        internal: {
+          type: `ContentfulTag`,
+          contentDigest: tag.sys.updatedAt,
+        },
+      })
+    }
+  }
+
   creationActivity.end()
 
   if (pluginConfig.get(`downloadLocal`)) {
@@ -603,6 +722,7 @@ exports.sourceNodes = async (
       store,
       cache,
       getCache,
+      getNode,
       getNodesByType,
       reporter,
       assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),

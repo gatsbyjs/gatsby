@@ -16,17 +16,22 @@ type Schema = Joi.Description & {
 
 type PluginName = keyof typeof pluginSchemas
 
+interface IChoice {
+  name: string
+  initial: unknown
+  message: string
+  hint?: string
+}
+type Choices = Array<IChoice>
+
+type Option = Record<string, Schema> | undefined
+
 interface IFormPrompt {
   type: string
   name: string
   multiple: boolean
   message: string
-  choices: Array<{
-    name: string
-    initial: unknown
-    message: string
-    hint?: string
-  }>
+  choices: Choices
 }
 
 function getName(key: string): string | undefined {
@@ -49,6 +54,22 @@ function docsLink(pluginName: string): string {
   )
 }
 
+const isOptionRequired = ([_, option]: [string, Schema]): boolean =>
+  option?.flags?.presence === `required`
+
+const schemaToChoice = ([name, option]: [string, Schema]): IChoice => {
+  const hasDefaultValue =
+    option.flags?.default &&
+    supportedOptionTypes.includes(typeof option.flags?.default)
+
+  return {
+    name,
+    initial: hasDefaultValue ? option.flags?.default.toString() : undefined,
+    message: name,
+    hint: option.flags?.description,
+  }
+}
+
 export const makePluginConfigQuestions = (
   selectedPlugins: Array<string>
 ): Array<IFormPrompt> => {
@@ -56,44 +77,27 @@ export const makePluginConfigQuestions = (
 
   selectedPlugins.forEach((pluginName: string): void => {
     const schema = pluginSchemas[pluginName as PluginName]
+
     if (!schema || typeof schema === `string` || !(`keys` in schema)) {
       return
     }
-    const options: Record<string, Schema> | undefined = schema?.keys
-    const choices: Array<{
-      name: string
-      initial: string
-      message: string
-      hint?: string
-    }> = []
+    const options: Option = schema?.keys
 
     if (!options) {
       return
     }
 
-    Object.entries(options).forEach(([name, option]) => {
-      if (option?.flags?.presence !== `required`) {
-        return
-      }
-      choices.push({
-        name,
-        initial:
-          option.flags?.default &&
-          supportedOptionTypes.includes(typeof option.flags?.default)
-            ? option.flags?.default.toString()
-            : undefined,
-        message: name,
-        hint: option.flags?.description,
-      })
-    })
+    const choices: Choices = Object.entries(options)
+      .filter(isOptionRequired)
+      .map(schemaToChoice)
 
-    if (choices.length) {
+    if (choices.length > 0) {
       formPrompts.push({
         type: `forminput`,
         name: pluginName,
         multiple: true,
         message: stripIndent`
-          Configure the ${getName(pluginName)} plugin. 
+          Configure the ${getName(pluginName)} plugin.
           See ${docsLink(pluginName)} for help.
           ${
             choices.length > 1
@@ -107,5 +111,6 @@ export const makePluginConfigQuestions = (
       })
     }
   })
+
   return formPrompts
 }

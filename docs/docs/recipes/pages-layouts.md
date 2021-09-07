@@ -33,8 +33,8 @@ Some notable files and their definitions:
 
 ### Additional resources
 
-- For a tour of all the common folders and files, read the docs on [Gatsby's Project Structure](/docs/gatsby-project-structure/)
-- For common commands, check out the [Gatsby CLI docs](/docs/gatsby-cli)
+- For a tour of all the common folders and files, read the docs on [Gatsby's Project Structure](/docs/reference/gatsby-project-structure/)
+- For common commands, check out the [Gatsby CLI docs](/docs/reference/gatsby-cli)
 - Check out the [Gatsby Cheat Sheet](/docs/cheat-sheet/) for downloadable info at a glance
 
 ## Creating pages automatically
@@ -45,7 +45,7 @@ For example, components at `src/pages/index.js` and `src/pages/about.js` would a
 ### Prerequisites
 
 - A [Gatsby site](/docs/quick-start)
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+- The [Gatsby CLI](/docs/reference/gatsby-cli) installed
 
 ### Directions
 
@@ -79,7 +79,7 @@ Routing for links internal to your Gatsby site relies on the `<Link />` componen
 ### Prerequisites
 
 - A Gatsby site with two page components: `index.js` and `contact.js`
-- The [Gatsby CLI](/docs/gatsby-cli/) to run `gatsby develop`
+- The [Gatsby CLI](/docs/reference/gatsby-cli/) to run `gatsby develop`
 
 ### Directions
 
@@ -103,12 +103,12 @@ export default function Home() {
 
 2. Run `gatsby develop` and navigate to the index page. You should have a link that takes you to the contact page when clicked!
 
-> **Note**: Gatsby's `<Link />` component is a wrapper around [`@reach/router`'s Link component](https://reach.tech/router/api/Link). It outputs an HTML anchor when rendered in a browser, with built-in JavaScript functionality for performance. For more information, consult the [API reference for `<Link />`](/docs/gatsby-link/).
+> **Note**: Gatsby's `<Link />` component is a wrapper around [`@reach/router`'s Link component](https://reach.tech/router/api/Link). It outputs an HTML anchor when rendered in a browser, with built-in JavaScript functionality for performance. For more information, consult the [API reference for `<Link />`](/docs/reference/built-in-components/gatsby-link/).
 
 ### Additional resources
 
 - [Linking Between Pages guide](/docs/linking-between-pages)
-- [Gatsby Link API](/docs/gatsby-link)
+- [Gatsby Link API](/docs/reference/built-in-components/gatsby-link)
 
 ## Creating a layout component
 
@@ -153,8 +153,8 @@ export default function Home() {
 
 ### Additional resources
 
-- Create a layout component in [tutorial part three](/tutorial/part-three/#your-first-layout-component)
-- Styling with [Layout Components](/docs/layout-components/)
+- Create a layout component in [tutorial part three](/docs/tutorial/part-three/#your-first-layout-component)
+- Styling with [Layout Components](/docs/how-to/routing/layout-components/)
 
 ## Creating pages programmatically with createPage
 
@@ -244,6 +244,6 @@ export default function DogTemplate({ pageContext: { dog } }) {
 
 ### Additional resources
 
-- Tutorial section on [programmatically creating pages from data](/tutorial/part-seven/)
-- Reference guide on [using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
+- Tutorial section on [programmatically creating pages from data](/docs/tutorial/part-seven/)
+- Reference guide on [using Gatsby without GraphQL](/docs/how-to/querying-data/using-gatsby-without-graphql/)
 - [Example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-createPage) for this recipe

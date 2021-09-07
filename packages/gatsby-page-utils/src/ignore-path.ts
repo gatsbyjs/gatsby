@@ -1,6 +1,6 @@
 import { isMatch, Options as mmOptions } from "micromatch"
 
-interface IPathIgnoreOptions {
+export interface IPathIgnoreOptions {
   patterns?: string | ReadonlyArray<string>
   options?: mmOptions
 }

@@ -1,5 +1,14 @@
 # gatsby-remark-custom-blocks
 
+> **Note**: this plugin is incompatible with `gatsby-transformer-remark@^4.0.0`
+> because the upstream [`remark-custom-blocks`](https://github.com/zestedesavoir/zmarkdown/tree/master/packages/remark-custom-blocks)
+> package is not upgraded to remark 13 yet.
+>
+> The work on upgrading to remark 13 is in progress, so follow [this issue](https://github.com/zestedesavoir/zmarkdown/issues/416)
+> for updates.
+>
+> The latest compatible version is `gatsby-transformer-remark@3.2.0`.
+
 Adds custom blocks to `MarkdownRemark` using [remark-custom-blocks](https://github.com/zestedesavoir/zmarkdown/tree/master/packages/remark-custom-blocks).
 
 Unlike in [gatsby-remark-component](https://www.gatsbyjs.org/packages/gatsby-remark-component/) where you can only use HTML within the custom component tag, custom blocks allow you to use markdown within the block.

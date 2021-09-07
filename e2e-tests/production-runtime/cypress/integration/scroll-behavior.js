@@ -44,11 +44,12 @@ describe(`Scroll behaviour`, () => {
       expect(win.scrollY).not.to.eq(0, 0)
 
       cy.scrollTo(`bottom`)
+      cy.wait(500) // allow ScrollContext to update scroll position store
       cy.go(`back`).waitForRouteChange()
       cy.go(`forward`).waitForRouteChange()
 
       cy.window().then(updatedWindow => {
-        expect(updatedWindow.scrollY).not.to.eq(idScrollY)
+        expect(updatedWindow.scrollY).to.eq(idScrollY)
       })
     })
   })

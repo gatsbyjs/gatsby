@@ -1,6 +1,7 @@
 const sharp = require(`./safe-sharp`)
 const { generateImageData } = require(`./image-data`)
 const imageSize = require(`probe-image-size`)
+const { isCI } = require(`gatsby-core-utils`)
 
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
@@ -19,7 +20,7 @@ const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 const duotone = require(`./duotone`)
 const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
 const { getDimensionsAndAspectRatio } = require(`./utils`)
-// const { rgbToHex } = require(`./utils`)
+const { getDominantColor } = require(`./utils`)
 
 const imageSizeCache = new Map()
 
@@ -65,14 +66,14 @@ const getImageSize = file => {
   }
 }
 
-// Bound action creators should be set when passed to onPreInit in gatsby-node.
+// Actions should be set when passed to onPreInit in gatsby-node.
 // ** It is NOT safe to just directly require the gatsby module **.
 // There is no guarantee that the module resolved is the module executing!
 // This can occur in mono repos depending on how dependencies have been hoisted.
 // The direct require has been left only to avoid breaking changes.
-let boundActionCreators
-exports.setBoundActionCreators = actions => {
-  boundActionCreators = actions
+let actions
+exports.setActions = _actions => {
+  actions = _actions
 }
 
 exports.generateImageData = generateImageData
@@ -124,7 +125,7 @@ function prepareQueue({ file, args }) {
 }
 
 function createJob(job, { reporter }) {
-  if (!boundActionCreators) {
+  if (!actions) {
     reporter.panic(
       `Gatsby-plugin-sharp wasn't setup correctly in gatsby-config.js. Make sure you add it to the plugins array.`
     )
@@ -138,10 +139,10 @@ function createJob(job, { reporter }) {
   // entire closure would keep duplicate job in memory until
   // initial job finish.
   let promise = null
-  if (boundActionCreators.createJobV2) {
-    promise = boundActionCreators.createJobV2(job)
+  if (actions.createJobV2) {
+    promise = actions.createJobV2(job)
   } else {
-    promise = scheduleJob(job, boundActionCreators, reporter)
+    promise = scheduleJob(job, actions, reporter)
   }
 
   promise.catch(err => {
@@ -151,17 +152,21 @@ function createJob(job, { reporter }) {
   return promise
 }
 
+function lazyJobsEnabled() {
+  return (
+    process.env.gatsby_executing_command === `develop` &&
+    !isCI() &&
+    !(
+      process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
+      process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
+    )
+  )
+}
+
 function queueImageResizing({ file, args = {}, reporter }) {
   const fullOptions = healOptions(getPluginOptions(), args, file.extension)
-  const {
-    src,
-    width,
-    height,
-    aspectRatio,
-    relativePath,
-    outputDir,
-    options,
-  } = prepareQueue({ file, args: createTransformObject(fullOptions) })
+  const { src, width, height, aspectRatio, relativePath, outputDir, options } =
+    prepareQueue({ file, args: createTransformObject(fullOptions) })
 
   // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
   const finishedPromise = createJob(
@@ -170,13 +175,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
       inputPaths: [file.absolutePath],
       outputDir,
       args: {
-        isLazy:
-          !(
-            process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
-            process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
-          ) &&
-          process.env.gatsby_executing_command === `develop` &&
-          !!process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES,
+        isLazy: lazyJobsEnabled(),
         operations: [
           {
             outputPath: relativePath,
@@ -244,13 +243,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
         file.internal.contentDigest
       ),
       args: {
-        isLazy:
-          !(
-            process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
-            process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
-          ) &&
-          process.env.gatsby_executing_command === `develop` &&
-          !!process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES,
+        isLazy: lazyJobsEnabled(),
         operations,
         pluginOptions: getPluginOptions(),
       },
@@ -274,11 +267,12 @@ async function generateBase64({ file, args = {}, reporter }) {
   })
   let pipeline
   try {
-    pipeline = sharp(file.absolutePath)
+    pipeline = !options.failOnError ? sharp({ failOnError: false }) : sharp()
 
     if (!options.rotate) {
       pipeline.rotate()
     }
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return null
@@ -329,11 +323,32 @@ async function generateBase64({ file, args = {}, reporter }) {
 
   // duotone
   if (options.duotone) {
-    pipeline = await duotone(options.duotone, options.toFormat, pipeline)
+    if (options.duotone.highlight && options.duotone.shadow) {
+      pipeline = await duotone(options.duotone, options.toFormat, pipeline)
+    } else {
+      reporter.warn(
+        `Invalid duotone option specified for ${file.absolutePath}, ignoring. Please pass an object to duotone with the keys "highlight" and "shadow" set to the corresponding hex values you want to use.`
+      )
+    }
   }
-  const { data: buffer, info } = await pipeline.toBuffer({
-    resolveWithObject: true,
-  })
+  let buffer
+  let info
+  try {
+    const result = await pipeline.toBuffer({
+      resolveWithObject: true,
+    })
+    buffer = result.data
+    info = result.info
+  } catch (err) {
+    reportError(
+      `Failed to process image ${file.absolutePath}.
+It is probably corrupt, so please try replacing it.  If it still fails, please open an issue with the image attached.`,
+      err,
+      reporter
+    )
+    return null
+  }
+
   const base64output = {
     src: `data:image/${info.format};base64,${buffer.toString(`base64`)}`,
     width: info.width,
@@ -397,7 +412,10 @@ async function getTracedSVG({ file, options, cache, reporter }) {
 async function stats({ file, reporter }) {
   let imgStats
   try {
-    imgStats = await sharp(file.absolutePath).stats()
+    const pipeline = sharp()
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
+
+    imgStats = await pipeline.stats()
   } catch (err) {
     reportError(
       `Failed to get stats for image ${file.absolutePath}`,
@@ -434,7 +452,10 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // images are intended to be displayed at their native resolution.
   let metadata
   try {
-    metadata = await sharp(file.absolutePath).metadata()
+    const pipeline = sharp()
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
+
+    metadata = await pipeline.metadata()
   } catch (err) {
     reportError(
       `Failed to retrieve metadata from image ${file.absolutePath}`,
@@ -593,6 +614,9 @@ async function fluid({ file, args = {}, reporter, cache }) {
         break
       case `webp`:
         srcSetType = `image/webp`
+        break
+      case `avif`:
+        srcSetType = `image/avif`
         break
       case ``:
       case `no_change`:
@@ -756,5 +780,7 @@ exports.fluid = fluid
 exports.fixed = fixed
 exports.getImageSize = getImageSize
 exports.getImageSizeAsync = getImageSizeAsync
+exports.getDominantColor = getDominantColor
 exports.stats = stats
 exports._unstable_createJob = createJob
+exports._lazyJobsEnabled = lazyJobsEnabled

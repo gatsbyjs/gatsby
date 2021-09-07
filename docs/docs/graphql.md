@@ -33,6 +33,6 @@ GraphiQL is a UI that lets you:
 1. Run queries against your data in the browser;
 2. Dig into the structure of data available to you through a data type explorer.
 
-If you want to know more about GraphQL, you can read more about [why Gatsby uses it](/docs/why-gatsby-uses-graphql/) and check out this [conceptual guide](/docs/graphql-concepts/) on querying data with GraphQL.
+If you want to know more about GraphQL, you can read more about [why Gatsby uses it](/docs/why-gatsby-uses-graphql/) and check out this [conceptual guide](/docs/conceptual/graphql-concepts/) on querying data with GraphQL.
 
 <GuideList slug={props.slug} />

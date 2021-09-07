@@ -10,9 +10,10 @@ type ComponentPath = string
 type NodeId = string
 type ConnectionName = string
 
-export const FLAG_DIRTY_PAGE = 0b0001
+export const FLAG_DIRTY_NEW_PAGE = 0b0001
 export const FLAG_DIRTY_TEXT = 0b0010
 export const FLAG_DIRTY_DATA = 0b0100
+export const FLAG_DIRTY_PAGE_CONTEXT = 0b1000
 
 export const FLAG_ERROR_EXTRACTION = 0b0001
 
@@ -69,7 +70,10 @@ export function queriesReducer(
       let query = state.trackedQueries.get(path)
       if (!query || action.contextModified) {
         query = registerQuery(state, path)
-        query.dirty = setFlag(query.dirty, FLAG_DIRTY_PAGE)
+        query.dirty = setFlag(
+          query.dirty,
+          action.contextModified ? FLAG_DIRTY_PAGE_CONTEXT : FLAG_DIRTY_NEW_PAGE
+        )
         state = trackDirtyQuery(state, path)
       }
       registerComponent(state, componentPath).pages.add(path)
@@ -216,6 +220,12 @@ export function queriesReducer(
       state.dirtyQueriesListToEmitViaWebsocket = []
       return state
     }
+    case `MERGE_WORKER_QUERY_STATE`: {
+      assertCorrectWorkerState(action.payload)
+
+      state = mergeWorkerDataDependencies(state, action.payload)
+      return state
+    }
     default:
       return state
   }
@@ -329,4 +339,63 @@ function trackDirtyQuery(
   }
 
   return state
+}
+
+interface IWorkerStateChunk {
+  workerId: number
+  queryStateChunk: IGatsbyState["queries"]
+}
+
+function mergeWorkerDataDependencies(
+  state: IGatsbyState["queries"],
+  workerStateChunk: IWorkerStateChunk
+): IGatsbyState["queries"] {
+  const queryState = workerStateChunk.queryStateChunk
+
+  // First clear data dependencies for all queries tracked by worker
+  for (const queryId of queryState.trackedQueries.keys()) {
+    state = clearNodeDependencies(state, queryId)
+    state = clearConnectionDependencies(state, queryId)
+  }
+
+  // Now re-add all data deps from worker
+  for (const [nodeId, queries] of queryState.byNode) {
+    for (const queryId of queries) {
+      state = addNodeDependency(state, queryId, nodeId)
+    }
+  }
+  for (const [connectionName, queries] of queryState.byConnection) {
+    for (const queryId of queries) {
+      state = addConnectionDependency(state, queryId, connectionName)
+    }
+  }
+  return state
+}
+
+function assertCorrectWorkerState({
+  queryStateChunk,
+  workerId,
+}: IWorkerStateChunk): void {
+  if (queryStateChunk.deletedQueries.size !== 0) {
+    throw new Error(
+      `Assertion failed: workerState.deletedQueries.size === 0 (worker #${workerId})`
+    )
+  }
+  if (queryStateChunk.trackedComponents.size !== 0) {
+    throw new Error(
+      `Assertion failed: queryStateChunk.trackedComponents.size === 0 (worker #${workerId})`
+    )
+  }
+  for (const query of queryStateChunk.trackedQueries.values()) {
+    if (query.dirty) {
+      throw new Error(
+        `Assertion failed: all worker queries are not dirty (worker #${workerId})`
+      )
+    }
+    if (query.running) {
+      throw new Error(
+        `Assertion failed: all worker queries are not running (worker #${workerId})`
+      )
+    }
+  }
 }

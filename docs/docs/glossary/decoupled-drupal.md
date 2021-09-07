@@ -1,15 +1,11 @@
 ---
-title: Decoupled Drupal
+title: What Is Headless or Decoupled Drupal?
 disableTableOfContents: true
 ---
 
-Learn what <q>decoupled Drupal</q> means, how it differs from other ways of using Drupal, and how you can use decoupled Drupal with Gatsby.
+_Decoupled Drupal_ is the practice of using Drupal as a [headless CMS](/docs/how-to/sourcing-data/headless-cms/) for your [Jamstack](/docs/glossary/jamstack/) site. Decoupled Drupal separates the content layer from the presentation layer, so that you can use Drupal, as the content management systems, with whatever frontend you choose.
 
-## What is Decoupled Drupal?
-
-_Decoupled Drupal_ is the practice of using Drupal as a [headless CMS](/docs/headless-cms/) for your [JAMstack](/docs/glossary/jamstack/) site. Decoupled Drupal separates the content layer from the presentation layer, so that you can use Drupal with whatever frontend you choose.
-
-In a tightly coupled Drupal architecture, themes control your site's appearance. A theme is a collection of HTML-based template files, each of which manages the layout for a particular Drupal node or content type.
+In a tightly coupled Drupal architecture, themes control your site's appearance using PHP and bit of Drupal DSL. A theme is a collection of HTML-based template files, each of which manages the layout for a particular Drupal node or content type.
 
 When a visitor requests a URL, Drupal retrieves the requested content from the database and merges it with the appropriate template to create an HTML response. The downside of such an architecture is that your site's content is only available as HTML. HTML limits where and how your content can be used.
 
@@ -20,7 +16,7 @@ A decoupled Drupal architecture offers two key advantages over a tightly coupled
 - **You can use one content management system to serve multiple frontends** — for example, your Gatsby site, your mobile application, and your smart TV application.
 - **You can develop, change, and upgrade the frontend and backend independently of each other.** Upgrading Drupal doesn't require you to modify your site's appearance.
 
-To use Drupal as a content source for Gatsby, add the [`gatsby-source-drupal`](/packages/gatsby-source-drupal/) plugin to your project. As with Gatsby itself, you install the `gatsby-source-drupal` plugin using [npm](/docs/glossary/#npm).
+To use Drupal as a content source for Gatsby, add the [`gatsby-source-drupal`](/plugins/gatsby-source-drupal/) plugin to your project. As with Gatsby itself, you install the `gatsby-source-drupal` plugin using [npm](/docs/glossary/#npm).
 
 ```shell
 npm install gatsby-source-drupal
@@ -32,4 +28,4 @@ A decoupled Drupal architecture lets you use the full power of Drupal's content 
 
 - Watch [Kyle Mathews’ presentation on Gatsby + Drupal](https://2017.badcamp.net/session/coding-development/beginner/headless-drupal-building-blazing-fast-websites-reactgatsbyjs)
 - Documentation for the [GraphQL Drupal module](https://drupal-graphql.gitbook.io/graphql/)
-- [Sourcing from Drupal](/docs/sourcing-from-drupal/) in the Gatsby docs
+- [Sourcing from Drupal](/docs/how-to/sourcing-data/sourcing-from-drupal/) in the Gatsby docs

@@ -8,6 +8,7 @@ export default function NavigationEffects({ location }) {
 
   const searchParam = location.search
   const searchHash = location.hash
+  const searchState = location?.state?.message
 
   useEffect(() => {
     setMessage(searchParam)
@@ -17,7 +18,12 @@ export default function NavigationEffects({ location }) {
     setMessage(searchHash)
   }, [searchHash])
 
-  const handleClick = next => navigate(`${next}`, { replace: true })
+  useEffect(() => {
+    setMessage(searchState)
+  }, [searchState])
+
+  const handleClick = (next, options = { replace: true }) =>
+    navigate(`${next}`, options)
 
   return (
     <Layout>
@@ -34,6 +40,17 @@ export default function NavigationEffects({ location }) {
         onClick={() => handleClick("#message-hash")}
       >
         Send Hash
+      </button>
+
+      <button
+        data-testid="send-state-message"
+        onClick={() =>
+          handleClick("/navigation-effects", {
+            state: { message: "this is a message using the state" },
+          })
+        }
+      >
+        Send state
       </button>
     </Layout>
   )

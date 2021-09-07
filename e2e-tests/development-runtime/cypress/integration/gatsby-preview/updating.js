@@ -13,7 +13,7 @@ const reset = () => cy.exec(`npm run reset:preview`)
 
 describe(`Gatsby Preview (Updating)`, () => {
   it(`displays initial data`, () => {
-    cy.get(`li:eq(0) a`).click().waitForRouteChange()
+    cy.get(`#fake-data li:eq(0) a`).click().waitForRouteChange()
 
     cy.findByText(`Hello World (1)`).should(`exist`)
 
@@ -21,7 +21,7 @@ describe(`Gatsby Preview (Updating)`, () => {
   })
 
   it(`updates and hot-reloads changes to content`, () => {
-    cy.get(`li:eq(0) a`).click().waitForRouteChange()
+    cy.get(`#fake-data li:eq(0) a`).click().waitForRouteChange()
 
     update()
 
@@ -32,9 +32,7 @@ describe(`Gatsby Preview (Updating)`, () => {
     const count = 5
     update(count)
 
-    cy.get(`li`)
-      .its(`length`)
-      .should(`be`, count + 1)
+    cy.get(`#fake-data li`).should(`have.length`, count + 1)
   })
 
   it(`updates when content is deleted`, () => {
@@ -42,12 +40,14 @@ describe(`Gatsby Preview (Updating)`, () => {
 
     reset()
 
-    cy.get(`li`).its(`length`).should(`be`, 1)
+    cy.get(`#fake-data li`).should(`have.length`, 1)
   })
 
   it(`can be triggered with webhook data`, () => {
     cy.exec(`npm run update:webhook`)
 
-    cy.findByText(`Hello World from a Webhook (999)`).should(`exist`)
+    cy.get(`#fake-data`)
+      .findByText(`Hello World from a Webhook (999)`)
+      .should(`exist`)
   })
 })

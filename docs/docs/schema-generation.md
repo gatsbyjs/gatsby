@@ -2,7 +2,7 @@
 title: Schema Generation
 ---
 
-Once the nodes have been sourced and transformed, the next step is to generate the GraphQL Schema. Gatsby Schema is different from many regular GraphQL schemas in that it combines plugin or user defined schema information with data inferred from the nodes' shapes. The latter is called _schema inference_. Users or plugins can explicitly define the schema, in whole or in part, using the [schema customization API](/docs/schema-customization). Usually, every node will get a GraphQL Type based on its `node.internal.type` field. When using Schema Customization, all types that implement the `Node` interface become GraphQL Node Types and thus get root level fields for accessing them.
+Once the nodes have been sourced and transformed, the next step is to generate the GraphQL Schema. Gatsby Schema is different from many regular GraphQL schemas in that it combines plugin or user defined schema information with data inferred from the nodes' shapes. The latter is called _schema inference_. Users or plugins can explicitly define the schema, in whole or in part, using the [schema customization API](/docs/reference/graphql-data-layer/schema-customization). Usually, every node will get a GraphQL Type based on its `node.internal.type` field. When using Schema Customization, all types that implement the `Node` interface become GraphQL Node Types and thus get root level fields for accessing them.
 
 ## GraphQL Compose
 
@@ -34,11 +34,11 @@ This allows adding GraphQL Fields to any node type. This operates on GraphQL typ
 
 ### `graphql-config.js` mapping
 
-[Node Type Mapping](/docs/gatsby-config/#mapping-node-types) allows customizing schema by using site configuration. There are currently no plans to deprecate this API at the moment.
+[Node Type Mapping](/docs/reference/config-files/gatsby-config/#mapping-node-types) allows customizing schema by using site configuration. There are currently no plans to deprecate this API at the moment.
 
 ## 4. Parent / children relationships
 
-Nodes can be connected into _child-parent_ relationships either by using [`createParentChildLink`](/docs/actions/#createParentChildLink) or by adding the `parent` field to raw node data. Child types can always access parent with the `parent` field in GraphQL. Parent types also get `children` fields as well as "convenience child fields" `child[TypeName]` or `children[TypeName]`.
+Nodes can be connected into _child-parent_ relationships either by using [`createParentChildLink`](/docs/reference/config-files/actions/#createParentChildLink) or by adding the `parent` field to raw node data. Child types can always access parent with the `parent` field in GraphQL. Parent types also get `children` fields as well as "convenience child fields" `child[TypeName]` and `children[TypeName]`.
 
 Children types are either inferred from data or created using `@childOf` directive, either by parent type name or by `mimeType` (only for File parent types).
 
@@ -58,7 +58,7 @@ If a plugin like `gatsby-source-graphql` is used, all third-party schemas that i
 
 ## 7. Adding custom resolvers
 
-[`createResolvers`](/docs/schema-customization/#createresolvers-api) API is called, allowing users to add additional customization on top of created schema. This is an "escape hatch" API, as it allows to modify any fields or types in the Schema, including Query type.
+[`createResolvers`](/docs/reference/graphql-data-layer/schema-customization/#createresolvers-api) API is called, allowing users to add additional customization on top of created schema. This is an "escape hatch" API, as it allows to modify any fields or types in the Schema, including Query type.
 
 ## 8. Second schema build for `SitePage`
 

@@ -2,10 +2,10 @@ import report from "gatsby-cli/lib/reporter"
 import { Span } from "opentracing"
 import apiRunner from "./api-runner-node"
 import { store } from "../redux"
-import { getNode, getNodes } from "../redux/nodes"
-import { boundActionCreators } from "../redux/actions"
+import { getDataStore, getNode, getNodes } from "../datastore"
+import { actions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
-const { deleteNode } = boundActionCreators
+const { deleteNode } = actions
 import { Node } from "../../index"
 
 /**
@@ -81,18 +81,20 @@ function deleteStaleNodes(state: IGatsbyState, nodes: Array<Node>): void {
   const staleNodes = getStaleNodes(state, nodes)
 
   if (staleNodes.length > 0) {
-    staleNodes.forEach(node => deleteNode({ node }))
+    staleNodes.forEach(node => store.dispatch(deleteNode(node)))
   }
 }
 
 export default async ({
   webhookBody,
+  pluginName,
   parentSpan,
   deferNodeMutation = false,
 }: {
   webhookBody: unknown
-  parentSpan: Span
-  deferNodeMutation: boolean
+  pluginName?: string
+  parentSpan?: Span
+  deferNodeMutation?: boolean
 }): Promise<void> => {
   await apiRunner(`sourceNodes`, {
     traceId: `initial-sourceNodes`,
@@ -100,7 +102,9 @@ export default async ({
     deferNodeMutation,
     parentSpan,
     webhookBody: webhookBody || {},
+    pluginName,
   })
+  await getDataStore().ready()
 
   const state = store.getState()
   const nodes = getNodes()

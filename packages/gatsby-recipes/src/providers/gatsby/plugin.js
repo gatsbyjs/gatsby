@@ -347,9 +347,8 @@ class BabelPluginAddPluginsToGatsbyConfig {
 
             if (shouldAdd) {
               if (t.isCallExpression(pluginNodes.value)) {
-                const plugins = pluginNodes.value.callee.object.elements.map(
-                  getPlugin
-                )
+                const plugins =
+                  pluginNodes.value.callee.object.elements.map(getPlugin)
                 const matches = plugins.filter(plugin => {
                   if (!key) {
                     return plugin.name === pluginOrThemeName
@@ -367,8 +366,8 @@ class BabelPluginAddPluginsToGatsbyConfig {
 
                   pluginNodes.value.callee.object.elements.push(pluginNode)
                 } else {
-                  pluginNodes.value.callee.object.elements = pluginNodes.value.callee.object.elements.map(
-                    node => {
+                  pluginNodes.value.callee.object.elements =
+                    pluginNodes.value.callee.object.elements.map(node => {
                       const plugin = getPlugin(node)
 
                       if (plugin.key !== key) {
@@ -384,8 +383,7 @@ class BabelPluginAddPluginsToGatsbyConfig {
                         options,
                         key,
                       })
-                    }
-                  )
+                    })
                 }
               } else {
                 const plugins = pluginNodes.value.elements.map(getPlugin)
@@ -429,8 +427,8 @@ class BabelPluginAddPluginsToGatsbyConfig {
               }
             } else {
               if (t.isCallExpression(pluginNodes.value)) {
-                pluginNodes.value.callee.object.elements = pluginNodes.value.callee.object.elements.filter(
-                  node => {
+                pluginNodes.value.callee.object.elements =
+                  pluginNodes.value.callee.object.elements.filter(node => {
                     const plugin = getPlugin(node)
 
                     if (key) {
@@ -438,8 +436,7 @@ class BabelPluginAddPluginsToGatsbyConfig {
                     }
 
                     return plugin.name !== pluginOrThemeName
-                  }
-                )
+                  })
               } else {
                 pluginNodes.value.elements = pluginNodes.value.elements.filter(
                   node => {
@@ -511,17 +508,20 @@ export { create, create as update, read, destroy }
 
 export const config = {}
 
-export const all = async ({ root }) => {
+export const all = async ({ root }, processPlugins = true) => {
   const configSrc = await readConfigFile(root)
   const plugins = getPluginsFromConfig(configSrc)
 
-  return Promise.all(plugins.map(({ name }) => read({ root }, name)))
+  return Promise.all(
+    plugins.map(({ name }) => (processPlugins ? read({ root }, name) : name))
+  )
 }
 
 const schema = {
   name: Joi.string(),
   description: Joi.string().optional().allow(null).allow(``),
   options: Joi.object(),
+  isLocal: Joi.boolean(),
   readme: Joi.string().optional().allow(null).allow(``),
   shadowableFiles: Joi.array().items(Joi.string()),
   shadowedFiles: Joi.array().items(Joi.string()),
