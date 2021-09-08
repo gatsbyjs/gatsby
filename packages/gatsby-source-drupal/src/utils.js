@@ -133,7 +133,7 @@ const handleDeletedNode = async ({
   // Perhaps the node was already deleted and Drupal is sending us references
   // to old nodes.
   if (!deletedNode) {
-    return
+    return deletedNode
   }
 
   // Remove the deleted node from backRefsNamesLookup
