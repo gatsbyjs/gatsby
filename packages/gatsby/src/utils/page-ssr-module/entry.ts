@@ -115,7 +115,10 @@ export async function renderPageData({
   const results = await constructPageDataString(
     {
       componentChunkName: data.page.componentChunkName,
-      path: data.page.mode === `SSR` ? data.potentialPagePath : data.page.path,
+      path:
+        data.page.mode !== `SSG` && data.page.matchPath
+          ? data.potentialPagePath
+          : data.page.path,
       matchPath: data.page.matchPath,
       staticQueryHashes: data.templateDetails.staticQueryHashes,
     },
@@ -155,7 +158,10 @@ export async function renderHTML({
   )
 
   const results = await htmlComponentRenderer({
-    pagePath: data.page.path,
+    pagePath:
+      data.page.mode !== `SSG` && data.page.matchPath
+        ? data.potentialPagePath
+        : data.page.path,
     pageData,
     staticQueryContext,
     ...data.templateDetails.assets,
