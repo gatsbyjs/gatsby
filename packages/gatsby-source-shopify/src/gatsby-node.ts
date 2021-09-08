@@ -16,7 +16,7 @@ export { createSchemaCustomization } from "./create-schema-customization"
 import { createNodeId } from "./node-builder"
 import { ERROR_MAP } from "./error-map"
 
-let coreSupportsOnPluginInit: "unstable" | "stable" | undefined
+let coreSupportsOnPluginInit: `unstable` | `stable` | undefined
 
 try {
   const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
