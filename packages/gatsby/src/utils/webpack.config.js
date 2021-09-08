@@ -22,6 +22,7 @@ import { StaticQueryMapper } from "./webpack/static-query-mapper"
 import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
 import { hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
+import { shouldGenerateEngines } from "./engines-helpers"
 const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
@@ -690,31 +691,46 @@ module.exports = async (
   }
 
   if (stage === `build-html` || stage === `develop-html`) {
+    // externalize react, react-dom when develop-html or build-html(when not generating engines)
+    const shouldMarkPackagesAsExternal =
+      stage === `develop-html` ||
+      !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
+
+    // tracking = build-html (when not generating engines)
+    const shouldTrackBuiltins =
+      stage === `build-html` &&
+      !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
+
     // removes node internals from bundle
     // https://webpack.js.org/configuration/externals/#externalspresets
     config.externalsPresets = {
-      node: stage === `build-html` ? false : true,
+      // use it only when not tracking builtins (tracking builtins provide their own fallbacks)
+      node: !shouldTrackBuiltins,
     }
+    config.externals = []
 
-    // Packages we want to externalize to save some build time
-    // https://github.com/gatsbyjs/gatsby/pull/14208#pullrequestreview-240178728
-    // const externalList = [`common-tags`, `lodash`, `semver`, /^lodash\//]
+    if (shouldMarkPackagesAsExternal) {
+      // Packages we want to externalize to save some build time
+      // https://github.com/gatsbyjs/gatsby/pull/14208#pullrequestreview-240178728
+      // const externalList = [`common-tags`, `lodash`, `semver`, /^lodash\//]
 
-    // Packages we want to externalize because meant to be user-provided
-    const userExternalList = [`react`, /^react-dom\//]
+      // Packages we want to externalize because meant to be user-provided
+      const userExternalList = [`react`, /^react-dom\//]
 
-    const checkItem = (item, request) => {
-      if (typeof item === `string` && item === request) {
-        return true
-      } else if (item instanceof RegExp && item.test(request)) {
-        return true
+      const checkItem = (item, request) => {
+        if (typeof item === `string` && item === request) {
+          return true
+        } else if (item instanceof RegExp && item.test(request)) {
+          return true
+        }
+
+        return false
       }
 
-      return false
-    }
-
-    config.externals = [
-      function ({ context, getResolve, request }, callback) {
+      config.externals.push(function (
+        { context, getResolve, request },
+        callback
+      ) {
         // allows us to resolve webpack aliases from our config
         // helpful for when react is aliased to preact-compat
         // Force commonjs as we're in node land
@@ -751,35 +767,37 @@ module.exports = async (
         // }
 
         callback()
-      },
-    ]
+      })
+    }
 
-    if (stage === `build-html`) {
-      const builtinModulesToTrack = [
-        `fs`,
-        `http`,
-        `http2`,
-        `https`,
-        `child_process`,
-      ]
-      const builtinsExternalsDictionary = builtinModules.reduce(
-        (acc, builtinModule) => {
-          if (builtinModulesToTrack.includes(builtinModule)) {
-            acc[builtinModule] = `commonjs ${path.join(
-              program.directory,
-              `.cache`,
-              `ssr-builtin-trackers`,
-              builtinModule
-            )}`
-          } else {
-            acc[builtinModule] = `commonjs ${builtinModule}`
-          }
-          return acc
-        },
-        {}
-      )
+    if (shouldTrackBuiltins) {
+      if (stage === `build-html`) {
+        const builtinModulesToTrack = [
+          `fs`,
+          `http`,
+          `http2`,
+          `https`,
+          `child_process`,
+        ]
+        const builtinsExternalsDictionary = builtinModules.reduce(
+          (acc, builtinModule) => {
+            if (builtinModulesToTrack.includes(builtinModule)) {
+              acc[builtinModule] = `commonjs ${path.join(
+                program.directory,
+                `.cache`,
+                `ssr-builtin-trackers`,
+                builtinModule
+              )}`
+            } else {
+              acc[builtinModule] = `commonjs ${builtinModule}`
+            }
+            return acc
+          },
+          {}
+        )
 
-      config.externals.unshift(builtinsExternalsDictionary)
+        config.externals.unshift(builtinsExternalsDictionary)
+      }
     }
   }
 

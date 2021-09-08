@@ -4,29 +4,24 @@ import reporter from "gatsby-cli/lib/reporter"
 import fastq from "fastq"
 import path from "path"
 import { createContentDigest, generatePageDataPath } from "gatsby-core-utils"
-import { IGatsbyPage } from "../redux/types"
 import { websocketManager } from "./websocket-manager"
 import { isWebpackStatusPending } from "./webpack-status"
 import { store } from "../redux"
 import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
 import { isLmdbStore } from "../datastore"
 import type GatsbyCacheLmdb from "./cache-lmdb"
+import {
+  constructPageDataString,
+  reverseFixedPagePath,
+  IPageData,
+} from "./page-data-helpers"
+
+export { reverseFixedPagePath }
 
 import { IExecutionResult } from "../query/types"
 
-interface IPageData {
-  componentChunkName: IGatsbyPage["componentChunkName"]
-  matchPath?: IGatsbyPage["matchPath"]
-  path: IGatsbyPage["path"]
-  staticQueryHashes: Array<string>
-}
-
 export interface IPageDataWithQueryResult extends IPageData {
   result: IExecutionResult
-}
-
-export function reverseFixedPagePath(pageDataRequestPath: string): string {
-  return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
 }
 
 export async function readPageData(
@@ -98,7 +93,7 @@ export async function savePageQueryResult(
 export async function readPageQueryResult(
   publicDir: string,
   pagePath: string
-): Promise<any> {
+): Promise<string | Buffer> {
   if (isLmdbStore()) {
     const stringifiedResult = await getLMDBPageQueryResultsCache().get(pagePath)
     if (typeof stringifiedResult === `string`) {
@@ -119,28 +114,13 @@ export async function readPageQueryResult(
 
 export async function writePageData(
   publicDir: string,
-  {
-    componentChunkName,
-    matchPath,
-    path: pagePath,
-    staticQueryHashes,
-  }: IPageData
+  pageData: IPageData
 ): Promise<string> {
-  const result = await readPageQueryResult(publicDir, pagePath)
+  const result = await readPageQueryResult(publicDir, pageData.path)
 
-  const outputFilePath = generatePageDataPath(publicDir, pagePath)
-  let body = `{
-    "componentChunkName": "${componentChunkName}",
-    "path": "${pagePath}",
-    "result": ${result},
-    "staticQueryHashes": ${JSON.stringify(staticQueryHashes)}`
+  const outputFilePath = generatePageDataPath(publicDir, pageData.path)
 
-  if (matchPath) {
-    body += `,
-    "matchPath": "${matchPath}"`
-  }
-
-  body += `}`
+  const body = constructPageDataString(pageData, result)
 
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
   const pageDataSize = Buffer.byteLength(body) / 1000
@@ -148,7 +128,7 @@ export async function writePageData(
   store.dispatch({
     type: `ADD_PAGE_DATA_STATS`,
     payload: {
-      pagePath,
+      pagePath: pageData.path,
       filePath: outputFilePath,
       size: pageDataSize,
       pageDataHash: createContentDigest(body),

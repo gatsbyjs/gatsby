@@ -12,11 +12,21 @@ const path = require(`path`)
 const chalk = require(`chalk`)
 const { isNodeInternalModulePath } = require(`gatsby-core-utils`)
 
-const gatsbyLocation = path.dirname(require.resolve(`gatsby/package.json`))
-const reduxThunkLocation = path.dirname(
+const getDirName = (arg: unknown): string => {
+  // Caveat related to executing in engines:
+  // After webpack bundling we would get number here (webpack module id) and that would crash when doing
+  // path.dirname(number).
+  if (typeof arg === `string`) {
+    return path.dirname(arg)
+  }
+  return `-cant-resolve-`
+}
+
+const gatsbyLocation = getDirName(require.resolve(`gatsby/package.json`))
+const reduxThunkLocation = getDirName(
   require.resolve(`redux-thunk/package.json`)
 )
-const reduxLocation = path.dirname(require.resolve(`redux/package.json`))
+const reduxLocation = getDirName(require.resolve(`redux/package.json`))
 
 const getNonGatsbyCallSite = (): StackFrame | undefined =>
   stackTrace

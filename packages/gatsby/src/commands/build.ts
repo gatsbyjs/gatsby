@@ -47,6 +47,9 @@ import {
   mergeWorkerState,
   runQueriesInWorkersQueue,
 } from "../utils/worker/pool"
+import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpack"
+import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
+import { shouldGenerateEngines } from "../utils/engines-helpers"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (isTruthy(process.env.VERBOSE)) {
@@ -89,12 +92,26 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     parentSpan: buildSpan,
   })
 
+  const engineBundlingPromises: Array<Promise<any>> = []
+
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+    // bundle graphql-engine
+    engineBundlingPromises.push(createGraphqlEngineBundle())
+  }
+
   const graphqlRunner = new GraphQLRunner(store, {
     collectStats: true,
     graphqlTracing: program.graphqlTracing,
   })
 
   const { queryIds } = await calculateDirtyQueries({ store })
+
+  // Only run queries with mode SSG
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
+      query => query.mode === `SSG`
+    )
+  }
 
   let waitForWorkerPoolRestart = Promise.resolve()
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
@@ -154,6 +171,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildJavascript, err))
   } finally {
     buildActivityTimer.end()
+  }
+
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+    // client bundle is produced so static query maps should be ready
+    engineBundlingPromises.push(createPageSSRBundle())
   }
 
   const webpackCompilationHash = stats.hash
@@ -216,6 +238,20 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   try {
     const result = await buildRenderer(program, Stage.BuildHTML, buildSpan)
     pageRenderer = result.rendererPath
+    if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+      // for now copy page-render to `.cache` so page-ssr module can require it as a sibling module
+      const outputDir = path.join(program.directory, `.cache`, `page-ssr`)
+      engineBundlingPromises.push(
+        fs
+          .ensureDir(outputDir)
+          .then(() =>
+            fs.copyFile(
+              result.rendererPath,
+              path.join(outputDir, `render-page.js`)
+            )
+          )
+      )
+    }
     waitForCompilerCloseBuildHtml = result.waitForCompilerClose
   } catch (err) {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
@@ -223,7 +259,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildSSRBundleActivityProgress.end()
   }
 
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+    // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
+    program.keepPageRenderer = true
+  }
+
   await waitForWorkerPoolRestart
+
   const { toRegenerate, toDelete } =
     await buildHTMLPagesAndDeleteStaleArtifacts({
       program,
@@ -310,6 +352,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
     report.info(`.cache/deletedPages.txt created`)
   }
+
+  await Promise.all(engineBundlingPromises)
 
   showExperimentNotices()
 
