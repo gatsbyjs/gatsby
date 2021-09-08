@@ -196,6 +196,17 @@ const handleWebhookUpdate = async (
   },
   pluginOptions = {}
 ) => {
+  if (!nodeToUpdate || !nodeToUpdate.attributes) {
+    reporter.warn(
+      `The updated node was empty or is missing the required attributes field. The fact you're seeing this warning means there's probably a bug in how we're creating and processing updates from Drupal.
+
+${JSON.stringify(nodeToUpdate, null, 4)}
+      `
+    )
+
+    return
+  }
+
   const { createNode } = actions
 
   const newNode = nodeFromData(
