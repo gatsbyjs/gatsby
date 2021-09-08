@@ -643,6 +643,9 @@ workflows:
             - bootstrap-with-experimental-react
 
   build-test-next-major:
+    executor:
+      name: node
+      image: "14.17.0"
     jobs:
       - bootstrap:
           name: bootstrap-next-major
