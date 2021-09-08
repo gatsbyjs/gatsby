@@ -4,6 +4,9 @@ const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const slugify = require(`slugify`)
+const { globalTracer, Span } = require(`opentracing`)
+
+const tracer = globalTracer()
 
 // Traverse is a es6 module...
 import traverse from "@babel/traverse"
@@ -106,6 +109,11 @@ Also note that we are currently unable to use queries defined in files other tha
   )
 
 async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
+  const span = tracer.startSpan(`parseToAst`, {
+    childOf: parentSpan,
+  })
+  span.setTag(`file.path`, filePath)
+
   let ast
 
   // Preprocess and attempt to parse source; return an AST if we can, log an
@@ -113,8 +121,13 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
   const transpiled = await apiRunnerNode(`preprocessSource`, {
     filename: filePath,
     contents: fileStr,
-    parentSpan: parentSpan,
+    parentSpan: span,
   })
+
+  const babelParseSpan = tracer.startSpan(`babelParseToAst`, {
+    childOf: span,
+  })
+  span.setTag(`file.path`, filePath)
   if (transpiled && transpiled.length) {
     for (const item of transpiled) {
       try {
@@ -164,6 +177,8 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
     }
   }
 
+  babelParseSpan.finish()
+  span.finish()
   return ast
 }
 
