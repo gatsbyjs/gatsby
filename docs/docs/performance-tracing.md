@@ -51,7 +51,7 @@ to [Honeycomb](https://www.honeycomb.io/).
 npm install @grpc/grpc-js @opentelemetry/api @opentelemetry/auto-instrumentations-node @opentelemetry/exporter-collector-grpc @opentelemetry/sdk-node @opentelemetry/shim-opentracing opentracing
 ```
 
-2. Create a file named `tracing.js` in the root of your site with the following code (replacing honeycomb variables).
+2. Create a file named `tracing.js` in the root of your site with the following code (Adding your honeycomb API key and database).
 
 ```js
 const process = require(`process`)
