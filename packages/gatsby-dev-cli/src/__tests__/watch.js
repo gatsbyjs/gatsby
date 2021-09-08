@@ -139,6 +139,7 @@ describe(`watching`, () => {
     it(`filters duplicate directories`, () => {
       watch(process.cwd(), [`gatsby`, `gatsby`], {
         localPackages: [`gatsby`],
+        compilerOptions: {},
       })
 
       expect(chokidar.watch).toHaveBeenCalledWith(
@@ -174,6 +175,7 @@ describe(`watching`, () => {
       watch(process.cwd(), [`gatsby`], {
         scanOnce: true,
         localPackages: [`gatsby`],
+        compilerOptions: {},
       })
 
       await callReadyCallback()
@@ -401,6 +403,7 @@ describe(`dependency changes`, () => {
         quiet: true,
         monoRepoPackages,
         localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+        compilerOptions: {},
       })
 
       const filePath = path.join(process.cwd(), `packages/gatsby/package.json`)
@@ -426,6 +429,7 @@ describe(`dependency changes`, () => {
         quiet: true,
         monoRepoPackages,
         localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+        compilerOptions: {},
       })
 
       const filePath = path.join(process.cwd(), `packages/gatsby/package.json`)
@@ -458,6 +462,7 @@ describe(`dependency changes`, () => {
         quiet: true,
         monoRepoPackages,
         localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+        compilerOptions: {},
       })
 
       const filePath = path.join(
@@ -492,6 +497,7 @@ describe(`dependency changes`, () => {
           `gatsby-source-wordpress`,
           `gatsby-plugin-sharp`,
         ],
+        compilerOptions: {},
       })
 
       const filePath = path.join(
@@ -526,6 +532,7 @@ describe(`dependency changes`, () => {
           `gatsby-source-filesystem`,
           `gatsby-plugin-sharp`,
         ],
+        compilerOptions: {},
       })
 
       const filePath = path.join(
@@ -556,6 +563,7 @@ describe(`dependency changes`, () => {
         quiet: true,
         monoRepoPackages,
         localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+        compilerOptions: {},
       })
 
       const filePath = path.join(
@@ -601,6 +609,7 @@ describe(`dependency changes`, () => {
           `gatsby-source-filesystem`,
           `gatsby-plugin-sharp`,
         ],
+        compilerOptions: {},
       })
 
       const filePath = path.join(
@@ -644,6 +653,7 @@ describe(`dependency changes`, () => {
         quiet: true,
         monoRepoPackages,
         localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+        compilerOptions: {},
       })
 
       const filePath = path.join(process.cwd(), `packages/gatsby/package.json`)
@@ -686,6 +696,7 @@ describe(`dependency changes`, () => {
         quiet: true,
         monoRepoPackages,
         localPackages: [`gatsby`, `gatsby-plugin-sharp`],
+        compilerOptions: {},
       })
 
       const filePath = path.join(process.cwd(), `packages/gatsby/package.json`)
