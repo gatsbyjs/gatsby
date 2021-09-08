@@ -1294,8 +1294,8 @@ index 1611d48014..63fa7ff6b0 100644
 --- a/packages/gatsby/src/utils/webpack.config.js
 +++ b/packages/gatsby/src/utils/webpack.config.js
 @@ -525,7 +525,7 @@ module.exports = async (
-
-   if (stage === `build-html` || stage === `develop-html`) {
+     stage === `build-ssr`
+   ) {
      const [major, minor] = process.version.replace(`v`, ``).split(`.`)
 -    config.target = `node12.13`
 +    config.target = `node14.15`
