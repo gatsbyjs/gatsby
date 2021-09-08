@@ -645,15 +645,18 @@ workflows:
   build-test-next-major:
     jobs:
       - bootstrap:
+          name: bootstrap-next-major
           compiler_options: GATSBY_MAJOR=4
       - e2e_tests_development_runtime:
+          name: e2e_tests_development_runtime-next-major
           compiler_options: GATSBY_MAJOR=4
           requires:
-            - bootstrap
+            - bootstrap-next-major
       - e2e_tests_production_runtime:
+          name: e2e_tests_production_runtime-next-major
           compiler_options: GATSBY_MAJOR=4
           requires:
-            - bootstrap
+            - bootstrap-next-major
 
   # Ideally, we should trigger this when any new release is created, sadly there is no easy way to do it:
   # - Can't rely on tags: GitHub won't send webhook to CircleCI when there are more than 3 tags in one push
@@ -673,7 +676,8 @@ workflows:
 
   build-test:
     jobs:
-      - bootstrap
+      - bootstrap:
+          name: bootstrap
       - lint
       - typecheck:
           requires:
