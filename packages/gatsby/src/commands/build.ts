@@ -318,7 +318,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   postBuildActivityTimer.start()
   await apiRunnerNode(`onPostBuild`, {
     graphql: gatsbyNodeGraphQLFunction,
-    parentSpan: buildSpan,
+    parentSpan: postBuildActivityTimer.span,
   })
   postBuildActivityTimer.end()
 
