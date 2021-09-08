@@ -85,8 +85,7 @@ async function doGetResourcesForTemplate(
   }
 }
 
-// TODO: remove this with queryEngine changes
-export async function getResourcesForTemplate(
+async function getResourcesForTemplate(
   pageData: IPageDataWithQueryResult
 ): Promise<IResourcesForTemplate> {
   const memoizedResourcesForTemplate = resourcesForTemplateCache.get(
@@ -110,11 +109,6 @@ export async function getResourcesForTemplate(
   inFlightResourcesForTemplate.delete(pageData.componentChunkName)
 
   return resources
-}
-
-// TODO: remove this with queryEngine changes
-export function setWebpackStats(stats: webpack.Stats): void {
-  webpackStats = stats
 }
 
 export const renderHTMLProd = async ({
