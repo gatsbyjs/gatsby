@@ -1,8 +1,8 @@
 diff --git a/packages/babel-plugin-remove-graphql-queries/package.json b/packages/babel-plugin-remove-graphql-queries/package.json
-index 0e2ea49cb8..066c17909b 100644
+index f06122dc87..b86a428dd3 100644
 --- a/packages/babel-plugin-remove-graphql-queries/package.json
 +++ b/packages/babel-plugin-remove-graphql-queries/package.json
-@@ -30,6 +30,6 @@
+@@ -27,6 +27,6 @@
      "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\""
    },
    "engines": {
@@ -11,10 +11,10 @@ index 0e2ea49cb8..066c17909b 100644
    }
  }
 diff --git a/packages/babel-preset-gatsby-package/lib/__tests__/__snapshots__/index.js.snap b/packages/babel-preset-gatsby-package/lib/__tests__/__snapshots__/index.js.snap
-index fede0956dc..fe740e23f8 100644
+index 3c8396ca3a..06b00135af 100644
 --- a/packages/babel-preset-gatsby-package/lib/__tests__/__snapshots__/index.js.snap
 +++ b/packages/babel-preset-gatsby-package/lib/__tests__/__snapshots__/index.js.snap
-@@ -127,7 +127,7 @@ Array [
+@@ -118,7 +118,7 @@ Array [
        "modules": "commonjs",
        "shippedProposals": true,
        "targets": Object {
@@ -23,7 +23,7 @@ index fede0956dc..fe740e23f8 100644
        },
        "useBuiltIns": "entry",
      },
-@@ -151,7 +151,7 @@ Array [
+@@ -142,7 +142,7 @@ Array [
        "modules": "commonjs",
        "shippedProposals": true,
        "targets": Object {
@@ -32,8 +32,21 @@ index fede0956dc..fe740e23f8 100644
        },
        "useBuiltIns": "entry",
      },
+diff --git a/packages/babel-preset-gatsby-package/package.json b/packages/babel-preset-gatsby-package/package.json
+index 9e4656e584..6f30be792a 100644
+--- a/packages/babel-preset-gatsby-package/package.json
++++ b/packages/babel-preset-gatsby-package/package.json
+@@ -33,7 +33,7 @@
+   "license": "MIT",
+   "main": "lib/index.js",
+   "engines": {
+-    "node": ">=12.13.0"
++    "node": ">=14.15.0"
+   },
+   "files": [
+     "lib/*.js"
 diff --git a/packages/babel-preset-gatsby-package/lib/index.js b/packages/babel-preset-gatsby-package/lib/index.js
-index 260bde6474..cfea5bef09 100644
+index 037b1998a7..198f324f00 100644
 --- a/packages/babel-preset-gatsby-package/lib/index.js
 +++ b/packages/babel-preset-gatsby-package/lib/index.js
 @@ -4,7 +4,7 @@ function preset(context, options = {}) {
@@ -45,21 +58,8 @@ index 260bde6474..cfea5bef09 100644
      esm = false,
      availableCompilerFlags = [`GATSBY_MAJOR`],
    } = options
-diff --git a/packages/babel-preset-gatsby-package/package.json b/packages/babel-preset-gatsby-package/package.json
-index 76e6fcb550..b0ec0ddacd 100644
---- a/packages/babel-preset-gatsby-package/package.json
-+++ b/packages/babel-preset-gatsby-package/package.json
-@@ -34,7 +34,7 @@
-   "license": "MIT",
-   "main": "lib/index.js",
-   "engines": {
--    "node": ">=12.13.0"
-+    "node": ">=14.15.0"
-   },
-   "files": [
-     "lib/*.js"
 diff --git a/packages/babel-preset-gatsby/package.json b/packages/babel-preset-gatsby/package.json
-index 82d08aedc2..c0ebc46c31 100644
+index 60ccfdc163..4fac99ab61 100644
 --- a/packages/babel-preset-gatsby/package.json
 +++ b/packages/babel-preset-gatsby/package.json
 @@ -43,6 +43,6 @@
@@ -71,10 +71,10 @@ index 82d08aedc2..c0ebc46c31 100644
    }
  }
 diff --git a/packages/gatsby-cli/package.json b/packages/gatsby-cli/package.json
-index 663bbf8a97..731b9facc9 100644
+index 9e2f252d6b..263790fc55 100644
 --- a/packages/gatsby-cli/package.json
 +++ b/packages/gatsby-cli/package.json
-@@ -100,6 +100,6 @@
+@@ -99,6 +99,6 @@
      "postinstall": "node scripts/postinstall.js"
    },
    "engines": {
@@ -88,28 +88,28 @@ index 7f578dd757..650d019753 100644
 +++ b/packages/gatsby-cli/src/__tests__/index.ts
 @@ -52,8 +52,8 @@ const setup = (version?: string): ReturnType<typeof getCLI> => {
  }
- 
+
  describe(`error handling`, () => {
 -  it(`panics on Node < 12.13.0`, () => {
 -    ;[`6.0.0`, `8.0.0`, `10.0.0`, `12.0.0`].forEach(version => {
 +  it(`panics on Node < 14.15.0`, () => {
 +    ;[`6.0.0`, `8.0.0`, `12.13.0`, `13.0.0`].forEach(version => {
        const { reporter } = setup(version)
- 
+
        expect(reporter.panic).toHaveBeenCalledTimes(1)
 @@ -95,8 +95,8 @@ describe(`error handling`, () => {
  // })
- 
+
  describe(`normal behavior`, () => {
 -  it(`does not panic on Node >= 12.13.0`, () => {
 -    ;[`12.13.0`, `13.0.0`, `14.0.0`].forEach(version => {
 +  it(`does not panic on Node >= 14.15.0`, () => {
 +    ;[`14.15.0`, `15.0.0`, `16.3.0`].forEach(version => {
        const { reporter } = setup(version)
- 
+
        expect(reporter.panic).not.toHaveBeenCalled()
 diff --git a/packages/gatsby-codemods/package.json b/packages/gatsby-codemods/package.json
-index 66fade34f4..f6e0272225 100644
+index b3d35d17c7..fb647fb90b 100644
 --- a/packages/gatsby-codemods/package.json
 +++ b/packages/gatsby-codemods/package.json
 @@ -40,7 +40,7 @@
@@ -122,10 +122,10 @@ index 66fade34f4..f6e0272225 100644
    "bin": "./bin/gatsby-codemods.js"
  }
 diff --git a/packages/gatsby-core-utils/package.json b/packages/gatsby-core-utils/package.json
-index 2c9e0ce2e1..f6b0f17ff4 100644
+index 8ac6435e64..6119bd3827 100644
 --- a/packages/gatsby-core-utils/package.json
 +++ b/packages/gatsby-core-utils/package.json
-@@ -50,6 +50,6 @@
+@@ -47,6 +47,6 @@
      "typescript": "^4.3.5"
    },
    "engines": {
@@ -134,7 +134,7 @@ index 2c9e0ce2e1..f6b0f17ff4 100644
    }
  }
 diff --git a/packages/gatsby-cypress/package.json b/packages/gatsby-cypress/package.json
-index 32c45b07e3..b4347eca51 100644
+index 9f9c70227d..aad3d9660a 100644
 --- a/packages/gatsby-cypress/package.json
 +++ b/packages/gatsby-cypress/package.json
 @@ -39,6 +39,6 @@
@@ -146,10 +146,10 @@ index 32c45b07e3..b4347eca51 100644
    }
  }
 diff --git a/packages/gatsby-design-tokens/package.json b/packages/gatsby-design-tokens/package.json
-index e2fa9ac3af..a082c6fe91 100644
+index a8f1f88464..4339eb55be 100644
 --- a/packages/gatsby-design-tokens/package.json
 +++ b/packages/gatsby-design-tokens/package.json
-@@ -36,6 +36,6 @@
+@@ -35,6 +35,6 @@
      "preval.macro": "^5.0.0"
    },
    "engines": {
@@ -158,7 +158,7 @@ index e2fa9ac3af..a082c6fe91 100644
    }
  }
 diff --git a/packages/gatsby-dev-cli/package.json b/packages/gatsby-dev-cli/package.json
-index 0f258b6980..0e67bd97d0 100644
+index d12a97e607..938b4d5d05 100644
 --- a/packages/gatsby-dev-cli/package.json
 +++ b/packages/gatsby-dev-cli/package.json
 @@ -48,6 +48,6 @@
@@ -170,7 +170,7 @@ index 0f258b6980..0e67bd97d0 100644
    }
  }
 diff --git a/packages/gatsby-graphiql-explorer/package.json b/packages/gatsby-graphiql-explorer/package.json
-index d0b3920cab..24051f2a08 100644
+index 811773db17..fec9f4ba7e 100644
 --- a/packages/gatsby-graphiql-explorer/package.json
 +++ b/packages/gatsby-graphiql-explorer/package.json
 @@ -56,6 +56,6 @@
@@ -182,7 +182,7 @@ index d0b3920cab..24051f2a08 100644
    }
  }
 diff --git a/packages/gatsby-link/package.json b/packages/gatsby-link/package.json
-index f62cf5972d..65632f7f6e 100644
+index eb998cb3cb..b4ca4ea63f 100644
 --- a/packages/gatsby-link/package.json
 +++ b/packages/gatsby-link/package.json
 @@ -41,6 +41,6 @@
@@ -194,7 +194,7 @@ index f62cf5972d..65632f7f6e 100644
    }
  }
 diff --git a/packages/gatsby-page-utils/package.json b/packages/gatsby-page-utils/package.json
-index 48922a001b..61ec42a62a 100644
+index 1f75e269fd..f409e1b1a1 100644
 --- a/packages/gatsby-page-utils/package.json
 +++ b/packages/gatsby-page-utils/package.json
 @@ -44,6 +44,6 @@
@@ -206,10 +206,10 @@ index 48922a001b..61ec42a62a 100644
    }
  }
 diff --git a/packages/gatsby-plugin-benchmark-reporting/package.json b/packages/gatsby-plugin-benchmark-reporting/package.json
-index 29793309e0..69a08c83fc 100644
+index 506de45faa..69742f0bb1 100644
 --- a/packages/gatsby-plugin-benchmark-reporting/package.json
 +++ b/packages/gatsby-plugin-benchmark-reporting/package.json
-@@ -30,6 +30,6 @@
+@@ -29,6 +29,6 @@
      "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
    },
    "engines": {
@@ -218,7 +218,7 @@ index 29793309e0..69a08c83fc 100644
    }
  }
 diff --git a/packages/gatsby-plugin-canonical-urls/package.json b/packages/gatsby-plugin-canonical-urls/package.json
-index 23e75ab06f..7f442a0634 100644
+index 7d37e98c6a..b8ae3f0931 100644
 --- a/packages/gatsby-plugin-canonical-urls/package.json
 +++ b/packages/gatsby-plugin-canonical-urls/package.json
 @@ -36,6 +36,6 @@
@@ -230,7 +230,7 @@ index 23e75ab06f..7f442a0634 100644
    }
  }
 diff --git a/packages/gatsby-plugin-catch-links/package.json b/packages/gatsby-plugin-catch-links/package.json
-index a35e5b99b7..8f34cec420 100644
+index 74155d558f..1276c33ea6 100644
 --- a/packages/gatsby-plugin-catch-links/package.json
 +++ b/packages/gatsby-plugin-catch-links/package.json
 @@ -37,6 +37,6 @@
@@ -242,7 +242,7 @@ index a35e5b99b7..8f34cec420 100644
    }
  }
 diff --git a/packages/gatsby-plugin-coffeescript/package.json b/packages/gatsby-plugin-coffeescript/package.json
-index 40e0432884..687fc32b2d 100644
+index b6e38ffaba..3ef5323827 100644
 --- a/packages/gatsby-plugin-coffeescript/package.json
 +++ b/packages/gatsby-plugin-coffeescript/package.json
 @@ -43,6 +43,6 @@
@@ -254,7 +254,7 @@ index 40e0432884..687fc32b2d 100644
    }
  }
 diff --git a/packages/gatsby-plugin-create-client-paths/package.json b/packages/gatsby-plugin-create-client-paths/package.json
-index e741fe8bfb..2d26413cdf 100644
+index 633225920b..18ec1be79c 100644
 --- a/packages/gatsby-plugin-create-client-paths/package.json
 +++ b/packages/gatsby-plugin-create-client-paths/package.json
 @@ -36,6 +36,6 @@
@@ -266,7 +266,7 @@ index e741fe8bfb..2d26413cdf 100644
    }
  }
 diff --git a/packages/gatsby-plugin-cxs/package.json b/packages/gatsby-plugin-cxs/package.json
-index 400df9c714..20278d7ad9 100644
+index e2c1ccca76..0fb61cd2c1 100644
 --- a/packages/gatsby-plugin-cxs/package.json
 +++ b/packages/gatsby-plugin-cxs/package.json
 @@ -42,6 +42,6 @@
@@ -278,7 +278,7 @@ index 400df9c714..20278d7ad9 100644
    }
  }
 diff --git a/packages/gatsby-plugin-emotion/package.json b/packages/gatsby-plugin-emotion/package.json
-index 968df982da..46381ae43a 100644
+index e6981cfef0..713f7bba51 100644
 --- a/packages/gatsby-plugin-emotion/package.json
 +++ b/packages/gatsby-plugin-emotion/package.json
 @@ -41,6 +41,6 @@
@@ -290,7 +290,7 @@ index 968df982da..46381ae43a 100644
    }
  }
 diff --git a/packages/gatsby-plugin-facebook-analytics/package.json b/packages/gatsby-plugin-facebook-analytics/package.json
-index f8dff5d63f..e331360c54 100644
+index ba9f14276e..8844ae2136 100644
 --- a/packages/gatsby-plugin-facebook-analytics/package.json
 +++ b/packages/gatsby-plugin-facebook-analytics/package.json
 @@ -38,6 +38,6 @@
@@ -302,7 +302,7 @@ index f8dff5d63f..e331360c54 100644
    }
  }
 diff --git a/packages/gatsby-plugin-feed/package.json b/packages/gatsby-plugin-feed/package.json
-index c49c6ade90..76f0e095f2 100644
+index cdf6f1fcdd..f2b8fcdab1 100644
 --- a/packages/gatsby-plugin-feed/package.json
 +++ b/packages/gatsby-plugin-feed/package.json
 @@ -47,6 +47,6 @@
@@ -314,7 +314,7 @@ index c49c6ade90..76f0e095f2 100644
    }
  }
 diff --git a/packages/gatsby-plugin-flow/package.json b/packages/gatsby-plugin-flow/package.json
-index 75b557d905..c458d396d0 100644
+index 7445f602db..455cf62ca8 100644
 --- a/packages/gatsby-plugin-flow/package.json
 +++ b/packages/gatsby-plugin-flow/package.json
 @@ -38,6 +38,6 @@
@@ -326,7 +326,7 @@ index 75b557d905..c458d396d0 100644
    }
  }
 diff --git a/packages/gatsby-plugin-fullstory/package.json b/packages/gatsby-plugin-fullstory/package.json
-index e7bbea38b7..8f1a963aa6 100644
+index 5cdab6f285..b738d13bf5 100644
 --- a/packages/gatsby-plugin-fullstory/package.json
 +++ b/packages/gatsby-plugin-fullstory/package.json
 @@ -38,6 +38,6 @@
@@ -338,10 +338,10 @@ index e7bbea38b7..8f1a963aa6 100644
    }
  }
 diff --git a/packages/gatsby-plugin-gatsby-cloud/package.json b/packages/gatsby-plugin-gatsby-cloud/package.json
-index ac60fb556f..208db2ce13 100644
+index ff5be56471..aece4e6917 100644
 --- a/packages/gatsby-plugin-gatsby-cloud/package.json
 +++ b/packages/gatsby-plugin-gatsby-cloud/package.json
-@@ -59,6 +59,6 @@
+@@ -52,6 +52,6 @@
      "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
    },
    "engines": {
@@ -350,7 +350,7 @@ index ac60fb556f..208db2ce13 100644
    }
  }
 diff --git a/packages/gatsby-plugin-google-analytics/package.json b/packages/gatsby-plugin-google-analytics/package.json
-index 31c260e0e6..d3be7c08f9 100644
+index 7b35d2c6de..d1fbadfb63 100644
 --- a/packages/gatsby-plugin-google-analytics/package.json
 +++ b/packages/gatsby-plugin-google-analytics/package.json
 @@ -42,7 +42,7 @@
@@ -363,7 +363,7 @@ index 31c260e0e6..d3be7c08f9 100644
    "types": "./index.d.ts"
  }
 diff --git a/packages/gatsby-plugin-google-gtag/package.json b/packages/gatsby-plugin-google-gtag/package.json
-index 59fdbba2f9..4a3f7a1623 100644
+index 3714cfb443..058fe6fe55 100644
 --- a/packages/gatsby-plugin-google-gtag/package.json
 +++ b/packages/gatsby-plugin-google-gtag/package.json
 @@ -41,6 +41,6 @@
@@ -375,7 +375,7 @@ index 59fdbba2f9..4a3f7a1623 100644
    }
  }
 diff --git a/packages/gatsby-plugin-google-tagmanager/package.json b/packages/gatsby-plugin-google-tagmanager/package.json
-index ee1dffbfc4..601bb57338 100644
+index 5d781c38b4..8ce596536d 100644
 --- a/packages/gatsby-plugin-google-tagmanager/package.json
 +++ b/packages/gatsby-plugin-google-tagmanager/package.json
 @@ -42,6 +42,6 @@
@@ -387,10 +387,10 @@ index ee1dffbfc4..601bb57338 100644
    }
  }
 diff --git a/packages/gatsby-plugin-graphql-config/package.json b/packages/gatsby-plugin-graphql-config/package.json
-index 46958a3265..0962ebdbda 100644
+index 7df1378e46..29b40ba50d 100644
 --- a/packages/gatsby-plugin-graphql-config/package.json
 +++ b/packages/gatsby-plugin-graphql-config/package.json
-@@ -39,6 +39,6 @@
+@@ -38,6 +38,6 @@
      "prepare": "cross-env NODE_ENV=production npm run build"
    },
    "engines": {
@@ -399,7 +399,7 @@ index 46958a3265..0962ebdbda 100644
    }
  }
 diff --git a/packages/gatsby-plugin-jss/package.json b/packages/gatsby-plugin-jss/package.json
-index c52d2bc4f9..762fea84ef 100644
+index e3be3982af..e01a3d1e7a 100644
 --- a/packages/gatsby-plugin-jss/package.json
 +++ b/packages/gatsby-plugin-jss/package.json
 @@ -40,6 +40,6 @@
@@ -411,7 +411,7 @@ index c52d2bc4f9..762fea84ef 100644
    }
  }
 diff --git a/packages/gatsby-plugin-layout/package.json b/packages/gatsby-plugin-layout/package.json
-index 4d9d8afb89..e2ca3114a5 100644
+index a78ce82ccd..a3c0e97be0 100644
 --- a/packages/gatsby-plugin-layout/package.json
 +++ b/packages/gatsby-plugin-layout/package.json
 @@ -36,6 +36,6 @@
@@ -423,7 +423,7 @@ index 4d9d8afb89..e2ca3114a5 100644
    }
  }
 diff --git a/packages/gatsby-plugin-less/package.json b/packages/gatsby-plugin-less/package.json
-index 5984fb22aa..fdc54ec158 100644
+index 97c8ccdefd..390bf7f60d 100644
 --- a/packages/gatsby-plugin-less/package.json
 +++ b/packages/gatsby-plugin-less/package.json
 @@ -38,6 +38,6 @@
@@ -435,7 +435,7 @@ index 5984fb22aa..fdc54ec158 100644
    }
  }
 diff --git a/packages/gatsby-plugin-lodash/package.json b/packages/gatsby-plugin-lodash/package.json
-index 73d7c6327e..a2e65acbc9 100644
+index cffa370ef6..07efd60a26 100644
 --- a/packages/gatsby-plugin-lodash/package.json
 +++ b/packages/gatsby-plugin-lodash/package.json
 @@ -38,6 +38,6 @@
@@ -447,7 +447,7 @@ index 73d7c6327e..a2e65acbc9 100644
    }
  }
 diff --git a/packages/gatsby-plugin-manifest/package.json b/packages/gatsby-plugin-manifest/package.json
-index ee0a497d3e..5a5f50a42d 100644
+index a81785fbc9..3e5b6daa3b 100644
 --- a/packages/gatsby-plugin-manifest/package.json
 +++ b/packages/gatsby-plugin-manifest/package.json
 @@ -45,6 +45,6 @@
@@ -459,10 +459,10 @@ index ee0a497d3e..5a5f50a42d 100644
    }
  }
 diff --git a/packages/gatsby-plugin-netlify-cms/package.json b/packages/gatsby-plugin-netlify-cms/package.json
-index cdd3644243..e4196508b4 100644
+index 1ff565ef38..d5bb8e134f 100644
 --- a/packages/gatsby-plugin-netlify-cms/package.json
 +++ b/packages/gatsby-plugin-netlify-cms/package.json
-@@ -53,6 +53,6 @@
+@@ -52,6 +52,6 @@
      "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
    },
    "engines": {
@@ -471,10 +471,10 @@ index cdd3644243..e4196508b4 100644
    }
  }
 diff --git a/packages/gatsby-plugin-netlify/package.json b/packages/gatsby-plugin-netlify/package.json
-index 35d0eb4864..2c1175afd4 100644
+index 02abb3a14a..988d38d607 100644
 --- a/packages/gatsby-plugin-netlify/package.json
 +++ b/packages/gatsby-plugin-netlify/package.json
-@@ -50,6 +50,6 @@
+@@ -49,6 +49,6 @@
      "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
    },
    "engines": {
@@ -483,10 +483,10 @@ index 35d0eb4864..2c1175afd4 100644
    }
  }
 diff --git a/packages/gatsby-plugin-no-sourcemaps/package.json b/packages/gatsby-plugin-no-sourcemaps/package.json
-index 9ba968809d..8e48fb3d67 100644
+index 3cab404fbc..82bb36c6d6 100644
 --- a/packages/gatsby-plugin-no-sourcemaps/package.json
 +++ b/packages/gatsby-plugin-no-sourcemaps/package.json
-@@ -27,6 +27,6 @@
+@@ -24,6 +24,6 @@
      "gatsby": "^3.0.0-next.0"
    },
    "engines": {
@@ -495,7 +495,7 @@ index 9ba968809d..8e48fb3d67 100644
    }
  }
 diff --git a/packages/gatsby-plugin-nprogress/package.json b/packages/gatsby-plugin-nprogress/package.json
-index de7e56e838..9ebbfa2ff3 100644
+index e4b3fbe717..2f8b1ec8f5 100644
 --- a/packages/gatsby-plugin-nprogress/package.json
 +++ b/packages/gatsby-plugin-nprogress/package.json
 @@ -37,6 +37,6 @@
@@ -507,7 +507,7 @@ index de7e56e838..9ebbfa2ff3 100644
    }
  }
 diff --git a/packages/gatsby-plugin-offline/package.json b/packages/gatsby-plugin-offline/package.json
-index 0149c710a5..4e518148d5 100644
+index 7db3df810a..a930500f7d 100644
 --- a/packages/gatsby-plugin-offline/package.json
 +++ b/packages/gatsby-plugin-offline/package.json
 @@ -52,6 +52,6 @@
@@ -519,10 +519,10 @@ index 0149c710a5..4e518148d5 100644
    }
  }
 diff --git a/packages/gatsby-plugin-page-creator/package.json b/packages/gatsby-plugin-page-creator/package.json
-index 91197199b2..2c1ad3b923 100644
+index c7f735c18f..86311b862e 100644
 --- a/packages/gatsby-plugin-page-creator/package.json
 +++ b/packages/gatsby-plugin-page-creator/package.json
-@@ -45,6 +45,6 @@
+@@ -44,6 +44,6 @@
      "gatsby": "^3.0.0-next.0"
    },
    "engines": {
@@ -531,7 +531,7 @@ index 91197199b2..2c1ad3b923 100644
    }
  }
 diff --git a/packages/gatsby-plugin-postcss/package.json b/packages/gatsby-plugin-postcss/package.json
-index c9bb07eefa..1935c7cf59 100644
+index 0b00d19c6a..d05007beff 100644
 --- a/packages/gatsby-plugin-postcss/package.json
 +++ b/packages/gatsby-plugin-postcss/package.json
 @@ -39,6 +39,6 @@
@@ -543,10 +543,10 @@ index c9bb07eefa..1935c7cf59 100644
    }
  }
 diff --git a/packages/gatsby-plugin-preact/package.json b/packages/gatsby-plugin-preact/package.json
-index 0f56c79f83..e4c274361c 100644
+index 96b86dc3ef..35e1fdee1a 100644
 --- a/packages/gatsby-plugin-preact/package.json
 +++ b/packages/gatsby-plugin-preact/package.json
-@@ -43,6 +43,6 @@
+@@ -42,6 +42,6 @@
      "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
    },
    "engines": {
@@ -555,7 +555,7 @@ index 0f56c79f83..e4c274361c 100644
    }
  }
 diff --git a/packages/gatsby-plugin-react-css-modules/package.json b/packages/gatsby-plugin-react-css-modules/package.json
-index 3462c34f1c..b09711b8a1 100644
+index e112985970..fb52974000 100644
 --- a/packages/gatsby-plugin-react-css-modules/package.json
 +++ b/packages/gatsby-plugin-react-css-modules/package.json
 @@ -45,6 +45,6 @@
@@ -567,7 +567,7 @@ index 3462c34f1c..b09711b8a1 100644
    }
  }
 diff --git a/packages/gatsby-plugin-react-helmet/package.json b/packages/gatsby-plugin-react-helmet/package.json
-index 8b6c14350e..b37e77fa04 100644
+index 106d907d4b..18612d029c 100644
 --- a/packages/gatsby-plugin-react-helmet/package.json
 +++ b/packages/gatsby-plugin-react-helmet/package.json
 @@ -49,6 +49,6 @@
@@ -579,7 +579,7 @@ index 8b6c14350e..b37e77fa04 100644
    }
  }
 diff --git a/packages/gatsby-plugin-remove-trailing-slashes/package.json b/packages/gatsby-plugin-remove-trailing-slashes/package.json
-index 0c9c906cc4..07f90a568b 100644
+index 7e839648b0..d8a4d1792d 100644
 --- a/packages/gatsby-plugin-remove-trailing-slashes/package.json
 +++ b/packages/gatsby-plugin-remove-trailing-slashes/package.json
 @@ -36,6 +36,6 @@
@@ -591,7 +591,7 @@ index 0c9c906cc4..07f90a568b 100644
    }
  }
 diff --git a/packages/gatsby-plugin-sass/package.json b/packages/gatsby-plugin-sass/package.json
-index 9ff531ef0c..0fcd36f6ed 100644
+index 2de15edd5e..284caa9556 100644
 --- a/packages/gatsby-plugin-sass/package.json
 +++ b/packages/gatsby-plugin-sass/package.json
 @@ -43,6 +43,6 @@
@@ -603,10 +603,10 @@ index 9ff531ef0c..0fcd36f6ed 100644
    }
  }
 diff --git a/packages/gatsby-plugin-sharp/package.json b/packages/gatsby-plugin-sharp/package.json
-index 30e8680db4..9f1a689db2 100644
+index fa37813871..0940db3665 100644
 --- a/packages/gatsby-plugin-sharp/package.json
 +++ b/packages/gatsby-plugin-sharp/package.json
-@@ -57,6 +57,6 @@
+@@ -60,6 +60,6 @@
      "watch": "babel -w src --out-dir . --ignore \"**/__tests__\"  --extensions \".ts,.js\""
    },
    "engines": {
@@ -615,7 +615,7 @@ index 30e8680db4..9f1a689db2 100644
    }
  }
 diff --git a/packages/gatsby-plugin-sitemap/package.json b/packages/gatsby-plugin-sitemap/package.json
-index 8cfa7b44ef..fcfc604aa2 100644
+index 655d62832e..d20ababc75 100644
 --- a/packages/gatsby-plugin-sitemap/package.json
 +++ b/packages/gatsby-plugin-sitemap/package.json
 @@ -47,6 +47,6 @@
@@ -627,7 +627,7 @@ index 8cfa7b44ef..fcfc604aa2 100644
    }
  }
 diff --git a/packages/gatsby-plugin-styled-components/package.json b/packages/gatsby-plugin-styled-components/package.json
-index 22f1ed2309..97cc06ddca 100644
+index 68ac5a09f3..14edd339da 100644
 --- a/packages/gatsby-plugin-styled-components/package.json
 +++ b/packages/gatsby-plugin-styled-components/package.json
 @@ -41,6 +41,6 @@
@@ -639,7 +639,7 @@ index 22f1ed2309..97cc06ddca 100644
    }
  }
 diff --git a/packages/gatsby-plugin-styled-jsx/package.json b/packages/gatsby-plugin-styled-jsx/package.json
-index c61236ca1a..564f3f26a2 100644
+index ed544cce92..5fb6881d2f 100644
 --- a/packages/gatsby-plugin-styled-jsx/package.json
 +++ b/packages/gatsby-plugin-styled-jsx/package.json
 @@ -38,6 +38,6 @@
@@ -651,10 +651,10 @@ index c61236ca1a..564f3f26a2 100644
    }
  }
 diff --git a/packages/gatsby-plugin-styletron/package.json b/packages/gatsby-plugin-styletron/package.json
-index 6174a43166..ec613a3312 100644
+index e3c9c84349..0dba2dfbd7 100644
 --- a/packages/gatsby-plugin-styletron/package.json
 +++ b/packages/gatsby-plugin-styletron/package.json
-@@ -41,6 +41,6 @@
+@@ -38,6 +38,6 @@
      "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
    },
    "engines": {
@@ -663,7 +663,7 @@ index 6174a43166..ec613a3312 100644
    }
  }
 diff --git a/packages/gatsby-plugin-stylus/package.json b/packages/gatsby-plugin-stylus/package.json
-index 287c830aee..7468cbce31 100644
+index 99abf5af30..a4b9aa17a4 100644
 --- a/packages/gatsby-plugin-stylus/package.json
 +++ b/packages/gatsby-plugin-stylus/package.json
 @@ -39,6 +39,6 @@
@@ -675,10 +675,10 @@ index 287c830aee..7468cbce31 100644
    }
  }
 diff --git a/packages/gatsby-plugin-subfont/package.json b/packages/gatsby-plugin-subfont/package.json
-index cba9d947e4..606ad6f5a9 100644
+index d921716eb5..41f5b64813 100644
 --- a/packages/gatsby-plugin-subfont/package.json
 +++ b/packages/gatsby-plugin-subfont/package.json
-@@ -37,6 +37,6 @@
+@@ -36,6 +36,6 @@
      "gatsby": "^3.0.0-next.0"
    },
    "engines": {
@@ -687,7 +687,7 @@ index cba9d947e4..606ad6f5a9 100644
    }
  }
 diff --git a/packages/gatsby-plugin-twitter/package.json b/packages/gatsby-plugin-twitter/package.json
-index 478eb2ad2c..9c8f1463f2 100644
+index d28b304804..85ecd09c69 100644
 --- a/packages/gatsby-plugin-twitter/package.json
 +++ b/packages/gatsby-plugin-twitter/package.json
 @@ -37,6 +37,6 @@
@@ -699,7 +699,7 @@ index 478eb2ad2c..9c8f1463f2 100644
    }
  }
 diff --git a/packages/gatsby-plugin-typescript/package.json b/packages/gatsby-plugin-typescript/package.json
-index a456a6b050..d19a5bd59e 100644
+index 80fa18937a..a2e5e62884 100644
 --- a/packages/gatsby-plugin-typescript/package.json
 +++ b/packages/gatsby-plugin-typescript/package.json
 @@ -46,6 +46,6 @@
@@ -711,7 +711,7 @@ index a456a6b050..d19a5bd59e 100644
    }
  }
 diff --git a/packages/gatsby-plugin-typography/package.json b/packages/gatsby-plugin-typography/package.json
-index 0ece43af9f..abd3aa40a8 100644
+index 4607b8e4ab..caed363471 100644
 --- a/packages/gatsby-plugin-typography/package.json
 +++ b/packages/gatsby-plugin-typography/package.json
 @@ -46,6 +46,6 @@
@@ -723,10 +723,10 @@ index 0ece43af9f..abd3aa40a8 100644
    }
  }
 diff --git a/packages/gatsby-plugin-utils/package.json b/packages/gatsby-plugin-utils/package.json
-index ac542c90e9..19551fa581 100644
+index 8f81bc59bc..9a0d9a3747 100644
 --- a/packages/gatsby-plugin-utils/package.json
 +++ b/packages/gatsby-plugin-utils/package.json
-@@ -40,6 +40,6 @@
+@@ -39,6 +39,6 @@
      "src/"
    ],
    "engines": {
@@ -735,7 +735,7 @@ index ac542c90e9..19551fa581 100644
    }
  }
 diff --git a/packages/gatsby-react-router-scroll/package.json b/packages/gatsby-react-router-scroll/package.json
-index 4d2bcb54e7..764e3e33a2 100644
+index b7edfb862f..4817f29576 100644
 --- a/packages/gatsby-react-router-scroll/package.json
 +++ b/packages/gatsby-react-router-scroll/package.json
 @@ -39,6 +39,6 @@
@@ -747,7 +747,7 @@ index 4d2bcb54e7..764e3e33a2 100644
    }
  }
 diff --git a/packages/gatsby-remark-autolink-headers/package.json b/packages/gatsby-remark-autolink-headers/package.json
-index bb98fef18b..4d983799a6 100644
+index e6e9818a99..c5aa58bac3 100644
 --- a/packages/gatsby-remark-autolink-headers/package.json
 +++ b/packages/gatsby-remark-autolink-headers/package.json
 @@ -44,6 +44,6 @@
@@ -759,7 +759,7 @@ index bb98fef18b..4d983799a6 100644
    }
  }
 diff --git a/packages/gatsby-remark-code-repls/package.json b/packages/gatsby-remark-code-repls/package.json
-index d1577a8aae..48b7d52fa5 100644
+index 6b1b936527..907a3e5189 100644
 --- a/packages/gatsby-remark-code-repls/package.json
 +++ b/packages/gatsby-remark-code-repls/package.json
 @@ -46,6 +46,6 @@
@@ -771,7 +771,7 @@ index d1577a8aae..48b7d52fa5 100644
    }
  }
 diff --git a/packages/gatsby-remark-copy-linked-files/package.json b/packages/gatsby-remark-copy-linked-files/package.json
-index f029011f91..4c7c06c92e 100644
+index c64de19588..131a8eccf8 100644
 --- a/packages/gatsby-remark-copy-linked-files/package.json
 +++ b/packages/gatsby-remark-copy-linked-files/package.json
 @@ -47,6 +47,6 @@
@@ -783,7 +783,7 @@ index f029011f91..4c7c06c92e 100644
    }
  }
 diff --git a/packages/gatsby-remark-custom-blocks/package.json b/packages/gatsby-remark-custom-blocks/package.json
-index cdd2dca4bb..d4b3b8f712 100644
+index 1b5201a1a2..14f1e43921 100644
 --- a/packages/gatsby-remark-custom-blocks/package.json
 +++ b/packages/gatsby-remark-custom-blocks/package.json
 @@ -46,6 +46,6 @@
@@ -795,7 +795,7 @@ index cdd2dca4bb..d4b3b8f712 100644
    }
  }
 diff --git a/packages/gatsby-remark-embed-snippet/package.json b/packages/gatsby-remark-embed-snippet/package.json
-index a3b91894a9..077b9849d3 100644
+index c4cff408b7..6997efc708 100644
 --- a/packages/gatsby-remark-embed-snippet/package.json
 +++ b/packages/gatsby-remark-embed-snippet/package.json
 @@ -42,6 +42,6 @@
@@ -807,7 +807,7 @@ index a3b91894a9..077b9849d3 100644
    }
  }
 diff --git a/packages/gatsby-remark-graphviz/package.json b/packages/gatsby-remark-graphviz/package.json
-index b7915a334a..7b3a3879b9 100644
+index 69effc7ba8..6b2b12c9af 100644
 --- a/packages/gatsby-remark-graphviz/package.json
 +++ b/packages/gatsby-remark-graphviz/package.json
 @@ -50,6 +50,6 @@
@@ -819,7 +819,7 @@ index b7915a334a..7b3a3879b9 100644
    }
  }
 diff --git a/packages/gatsby-remark-images-contentful/package.json b/packages/gatsby-remark-images-contentful/package.json
-index 9105f38344..8676089af3 100644
+index e4b8bf76f4..6d51cf629d 100644
 --- a/packages/gatsby-remark-images-contentful/package.json
 +++ b/packages/gatsby-remark-images-contentful/package.json
 @@ -43,6 +43,6 @@
@@ -831,7 +831,7 @@ index 9105f38344..8676089af3 100644
    }
  }
 diff --git a/packages/gatsby-remark-images/package.json b/packages/gatsby-remark-images/package.json
-index bd3cec6787..ad9a842f3b 100644
+index a54d5e53ca..01d97e9b0b 100644
 --- a/packages/gatsby-remark-images/package.json
 +++ b/packages/gatsby-remark-images/package.json
 @@ -54,6 +54,6 @@
@@ -843,7 +843,7 @@ index bd3cec6787..ad9a842f3b 100644
    }
  }
 diff --git a/packages/gatsby-remark-katex/package.json b/packages/gatsby-remark-katex/package.json
-index 2ba101e474..5d6a248ffe 100644
+index 9728ee603e..1ec869be9c 100644
 --- a/packages/gatsby-remark-katex/package.json
 +++ b/packages/gatsby-remark-katex/package.json
 @@ -46,6 +46,6 @@
@@ -855,7 +855,7 @@ index 2ba101e474..5d6a248ffe 100644
    }
  }
 diff --git a/packages/gatsby-remark-prismjs/package.json b/packages/gatsby-remark-prismjs/package.json
-index 341e872a73..8ddfd8f578 100644
+index 2d249b6186..4a7fc97966 100644
 --- a/packages/gatsby-remark-prismjs/package.json
 +++ b/packages/gatsby-remark-prismjs/package.json
 @@ -44,6 +44,6 @@
@@ -867,7 +867,7 @@ index 341e872a73..8ddfd8f578 100644
    }
  }
 diff --git a/packages/gatsby-remark-responsive-iframe/package.json b/packages/gatsby-remark-responsive-iframe/package.json
-index 4704f074d9..4648709bcc 100644
+index 013ac6e0d2..2e5578e272 100644
 --- a/packages/gatsby-remark-responsive-iframe/package.json
 +++ b/packages/gatsby-remark-responsive-iframe/package.json
 @@ -44,6 +44,6 @@
@@ -879,7 +879,7 @@ index 4704f074d9..4648709bcc 100644
    }
  }
 diff --git a/packages/gatsby-remark-smartypants/package.json b/packages/gatsby-remark-smartypants/package.json
-index 165a8de017..a3798ae079 100644
+index 3abe53afa1..1fbb2c08df 100644
 --- a/packages/gatsby-remark-smartypants/package.json
 +++ b/packages/gatsby-remark-smartypants/package.json
 @@ -40,6 +40,6 @@
@@ -891,7 +891,7 @@ index 165a8de017..a3798ae079 100644
    }
  }
 diff --git a/packages/gatsby-source-contentful/package.json b/packages/gatsby-source-contentful/package.json
-index 47f3bddd6f..450f9d966f 100644
+index a483a7676d..809f939569 100644
 --- a/packages/gatsby-source-contentful/package.json
 +++ b/packages/gatsby-source-contentful/package.json
 @@ -59,7 +59,7 @@
@@ -904,7 +904,7 @@ index 47f3bddd6f..450f9d966f 100644
    "types": "index.d.ts"
  }
 diff --git a/packages/gatsby-source-drupal/package.json b/packages/gatsby-source-drupal/package.json
-index d0b6a3c79d..6bc0a9e2a5 100644
+index 2ca9cde21e..fd87d53f9a 100644
 --- a/packages/gatsby-source-drupal/package.json
 +++ b/packages/gatsby-source-drupal/package.json
 @@ -26,7 +26,7 @@
@@ -917,7 +917,7 @@ index d0b6a3c79d..6bc0a9e2a5 100644
    "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-drupal#readme",
    "keywords": [
 diff --git a/packages/gatsby-source-faker/package.json b/packages/gatsby-source-faker/package.json
-index 7ba307530a..eb6e04f9c4 100644
+index f41ac4b266..bd16e8808d 100644
 --- a/packages/gatsby-source-faker/package.json
 +++ b/packages/gatsby-source-faker/package.json
 @@ -38,6 +38,6 @@
@@ -929,10 +929,10 @@ index 7ba307530a..eb6e04f9c4 100644
    }
  }
 diff --git a/packages/gatsby-source-filesystem/package.json b/packages/gatsby-source-filesystem/package.json
-index 071254aee2..c62d00f06d 100644
+index ee5076e72b..745f38578f 100644
 --- a/packages/gatsby-source-filesystem/package.json
 +++ b/packages/gatsby-source-filesystem/package.json
-@@ -48,6 +48,6 @@
+@@ -49,6 +49,6 @@
    },
    "types": "index.d.ts",
    "engines": {
@@ -941,7 +941,7 @@ index 071254aee2..c62d00f06d 100644
    }
  }
 diff --git a/packages/gatsby-source-graphql/package.json b/packages/gatsby-source-graphql/package.json
-index ee1eff7006..2a221cf0be 100644
+index 0fe4010aad..f8e91ab907 100644
 --- a/packages/gatsby-source-graphql/package.json
 +++ b/packages/gatsby-source-graphql/package.json
 @@ -44,6 +44,6 @@
@@ -953,7 +953,7 @@ index ee1eff7006..2a221cf0be 100644
    }
  }
 diff --git a/packages/gatsby-source-hacker-news/package.json b/packages/gatsby-source-hacker-news/package.json
-index ab7f08a58f..5b01ca9658 100644
+index a6dd73defd..fc2efe3f14 100644
 --- a/packages/gatsby-source-hacker-news/package.json
 +++ b/packages/gatsby-source-hacker-news/package.json
 @@ -38,6 +38,6 @@
@@ -965,7 +965,7 @@ index ab7f08a58f..5b01ca9658 100644
    }
  }
 diff --git a/packages/gatsby-source-lever/package.json b/packages/gatsby-source-lever/package.json
-index 9a8f7ff472..7f55e5fceb 100644
+index 6537bcbbf9..ac63ee3bd8 100644
 --- a/packages/gatsby-source-lever/package.json
 +++ b/packages/gatsby-source-lever/package.json
 @@ -44,6 +44,6 @@
@@ -977,7 +977,7 @@ index 9a8f7ff472..7f55e5fceb 100644
    }
  }
 diff --git a/packages/gatsby-source-medium/package.json b/packages/gatsby-source-medium/package.json
-index 46a4310458..da6f95dcbe 100644
+index 8af716599a..86d5510ebd 100644
 --- a/packages/gatsby-source-medium/package.json
 +++ b/packages/gatsby-source-medium/package.json
 @@ -37,6 +37,6 @@
@@ -989,7 +989,7 @@ index 46a4310458..da6f95dcbe 100644
    }
  }
 diff --git a/packages/gatsby-source-mongodb/package.json b/packages/gatsby-source-mongodb/package.json
-index c07daa1a85..f6e4316d66 100644
+index d7c3f86434..9622931458 100644
 --- a/packages/gatsby-source-mongodb/package.json
 +++ b/packages/gatsby-source-mongodb/package.json
 @@ -43,6 +43,6 @@
@@ -1001,7 +1001,7 @@ index c07daa1a85..f6e4316d66 100644
    }
  }
 diff --git a/packages/gatsby-source-npm-package-search/package.json b/packages/gatsby-source-npm-package-search/package.json
-index 2db935ab96..f6b7131afd 100644
+index 3b8024a125..66dd4491c5 100644
 --- a/packages/gatsby-source-npm-package-search/package.json
 +++ b/packages/gatsby-source-npm-package-search/package.json
 @@ -35,6 +35,6 @@
@@ -1013,10 +1013,10 @@ index 2db935ab96..f6b7131afd 100644
    }
  }
 diff --git a/packages/gatsby-source-wikipedia/package.json b/packages/gatsby-source-wikipedia/package.json
-index f497cadb93..8e549b1d98 100644
+index 5e8e08d8fb..3058ef3a4d 100644
 --- a/packages/gatsby-source-wikipedia/package.json
 +++ b/packages/gatsby-source-wikipedia/package.json
-@@ -41,6 +41,6 @@
+@@ -40,6 +40,6 @@
      "cross-env": "^7.0.3"
    },
    "engines": {
@@ -1025,7 +1025,7 @@ index f497cadb93..8e549b1d98 100644
    }
  }
 diff --git a/packages/gatsby-source-wordpress/package.json b/packages/gatsby-source-wordpress/package.json
-index ea9eaf87d1..140213ed7d 100644
+index 6eac8517ef..7c463054aa 100644
 --- a/packages/gatsby-source-wordpress/package.json
 +++ b/packages/gatsby-source-wordpress/package.json
 @@ -88,6 +88,6 @@
@@ -1037,7 +1037,7 @@ index ea9eaf87d1..140213ed7d 100644
    }
  }
 diff --git a/packages/gatsby-telemetry/package.json b/packages/gatsby-telemetry/package.json
-index 20ffa8544e..105b841d9b 100644
+index 079e5ec5e8..ddf3237f66 100644
 --- a/packages/gatsby-telemetry/package.json
 +++ b/packages/gatsby-telemetry/package.json
 @@ -61,6 +61,6 @@
@@ -1049,7 +1049,7 @@ index 20ffa8544e..105b841d9b 100644
    }
  }
 diff --git a/packages/gatsby-transformer-asciidoc/package.json b/packages/gatsby-transformer-asciidoc/package.json
-index ec0de8d287..24d628dc59 100644
+index 01df5463c9..f3b0ae5556 100644
 --- a/packages/gatsby-transformer-asciidoc/package.json
 +++ b/packages/gatsby-transformer-asciidoc/package.json
 @@ -38,6 +38,6 @@
@@ -1061,7 +1061,7 @@ index ec0de8d287..24d628dc59 100644
    }
  }
 diff --git a/packages/gatsby-transformer-csv/package.json b/packages/gatsby-transformer-csv/package.json
-index 2ab542430a..c4aca040a4 100644
+index ee5b997c71..88da858fdd 100644
 --- a/packages/gatsby-transformer-csv/package.json
 +++ b/packages/gatsby-transformer-csv/package.json
 @@ -39,6 +39,6 @@
@@ -1073,7 +1073,7 @@ index 2ab542430a..c4aca040a4 100644
    }
  }
 diff --git a/packages/gatsby-transformer-documentationjs/package.json b/packages/gatsby-transformer-documentationjs/package.json
-index de65645082..fa2e693dfc 100644
+index 32ea95fd96..4664839d2f 100644
 --- a/packages/gatsby-transformer-documentationjs/package.json
 +++ b/packages/gatsby-transformer-documentationjs/package.json
 @@ -40,6 +40,6 @@
@@ -1085,7 +1085,7 @@ index de65645082..fa2e693dfc 100644
    }
  }
 diff --git a/packages/gatsby-transformer-excel/package.json b/packages/gatsby-transformer-excel/package.json
-index 0c4483960c..58a15e5304 100644
+index 0580915e35..ef881ee5eb 100644
 --- a/packages/gatsby-transformer-excel/package.json
 +++ b/packages/gatsby-transformer-excel/package.json
 @@ -38,6 +38,6 @@
@@ -1097,7 +1097,7 @@ index 0c4483960c..58a15e5304 100644
    }
  }
 diff --git a/packages/gatsby-transformer-hjson/package.json b/packages/gatsby-transformer-hjson/package.json
-index 38cb9d9473..944e165f98 100644
+index c0a3eda709..13c9923145 100644
 --- a/packages/gatsby-transformer-hjson/package.json
 +++ b/packages/gatsby-transformer-hjson/package.json
 @@ -38,6 +38,6 @@
@@ -1109,7 +1109,7 @@ index 38cb9d9473..944e165f98 100644
    }
  }
 diff --git a/packages/gatsby-transformer-javascript-frontmatter/package.json b/packages/gatsby-transformer-javascript-frontmatter/package.json
-index cec3231e7a..a68cb372a1 100644
+index d20b77a6d9..d9ed5102c1 100644
 --- a/packages/gatsby-transformer-javascript-frontmatter/package.json
 +++ b/packages/gatsby-transformer-javascript-frontmatter/package.json
 @@ -37,6 +37,6 @@
@@ -1121,7 +1121,7 @@ index cec3231e7a..a68cb372a1 100644
    }
  }
 diff --git a/packages/gatsby-transformer-javascript-static-exports/package.json b/packages/gatsby-transformer-javascript-static-exports/package.json
-index 26336a2928..09449955b3 100644
+index 3f9847b212..d9777bc174 100644
 --- a/packages/gatsby-transformer-javascript-static-exports/package.json
 +++ b/packages/gatsby-transformer-javascript-static-exports/package.json
 @@ -39,6 +39,6 @@
@@ -1133,7 +1133,7 @@ index 26336a2928..09449955b3 100644
    }
  }
 diff --git a/packages/gatsby-transformer-json/package.json b/packages/gatsby-transformer-json/package.json
-index 77693f6c24..0c3f6f7461 100644
+index 3df7be98ea..071f596908 100644
 --- a/packages/gatsby-transformer-json/package.json
 +++ b/packages/gatsby-transformer-json/package.json
 @@ -37,6 +37,6 @@
@@ -1145,7 +1145,7 @@ index 77693f6c24..0c3f6f7461 100644
    }
  }
 diff --git a/packages/gatsby-transformer-pdf/package.json b/packages/gatsby-transformer-pdf/package.json
-index deede3613c..36d43b604e 100644
+index c2c5db21de..2afd83d852 100644
 --- a/packages/gatsby-transformer-pdf/package.json
 +++ b/packages/gatsby-transformer-pdf/package.json
 @@ -39,6 +39,6 @@
@@ -1157,7 +1157,7 @@ index deede3613c..36d43b604e 100644
    }
  }
 diff --git a/packages/gatsby-transformer-react-docgen/package.json b/packages/gatsby-transformer-react-docgen/package.json
-index 259a96c490..e4939fd201 100644
+index 8be0946fb5..0ee3498501 100644
 --- a/packages/gatsby-transformer-react-docgen/package.json
 +++ b/packages/gatsby-transformer-react-docgen/package.json
 @@ -44,6 +44,6 @@
@@ -1169,7 +1169,7 @@ index 259a96c490..e4939fd201 100644
    }
  }
 diff --git a/packages/gatsby-transformer-remark/package.json b/packages/gatsby-transformer-remark/package.json
-index c379b736e2..036722d220 100644
+index 34e289fb88..2fecdee720 100644
 --- a/packages/gatsby-transformer-remark/package.json
 +++ b/packages/gatsby-transformer-remark/package.json
 @@ -59,6 +59,6 @@
@@ -1181,7 +1181,7 @@ index c379b736e2..036722d220 100644
    }
  }
 diff --git a/packages/gatsby-transformer-screenshot/lambda/package.json b/packages/gatsby-transformer-screenshot/lambda/package.json
-index 180552b415..b2ec0bd767 100644
+index 69036d3a52..6a89414b28 100644
 --- a/packages/gatsby-transformer-screenshot/lambda/package.json
 +++ b/packages/gatsby-transformer-screenshot/lambda/package.json
 @@ -9,6 +9,6 @@
@@ -1193,10 +1193,10 @@ index 180552b415..b2ec0bd767 100644
    }
  }
 diff --git a/packages/gatsby-transformer-screenshot/package.json b/packages/gatsby-transformer-screenshot/package.json
-index 0017c3fa45..4ab5944b10 100644
+index d0eaa7332e..dc6a2859e7 100644
 --- a/packages/gatsby-transformer-screenshot/package.json
 +++ b/packages/gatsby-transformer-screenshot/package.json
-@@ -41,6 +41,6 @@
+@@ -40,6 +40,6 @@
      "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --ignore lambda"
    },
    "engines": {
@@ -1205,7 +1205,7 @@ index 0017c3fa45..4ab5944b10 100644
    }
  }
 diff --git a/packages/gatsby-transformer-sharp/package.json b/packages/gatsby-transformer-sharp/package.json
-index a9370b820a..e97434062e 100644
+index 10532c33b0..4bb26d185b 100644
 --- a/packages/gatsby-transformer-sharp/package.json
 +++ b/packages/gatsby-transformer-sharp/package.json
 @@ -46,6 +46,6 @@
@@ -1217,7 +1217,7 @@ index a9370b820a..e97434062e 100644
    }
  }
 diff --git a/packages/gatsby-transformer-sqip/package.json b/packages/gatsby-transformer-sqip/package.json
-index af307f1840..9aed5b17e3 100644
+index 49dfb6bce2..1bd387e9ba 100644
 --- a/packages/gatsby-transformer-sqip/package.json
 +++ b/packages/gatsby-transformer-sqip/package.json
 @@ -47,6 +47,6 @@
@@ -1229,7 +1229,7 @@ index af307f1840..9aed5b17e3 100644
    }
  }
 diff --git a/packages/gatsby-transformer-toml/package.json b/packages/gatsby-transformer-toml/package.json
-index 6f2cbf7ab8..cb3f9a3fdc 100644
+index 9aff844214..c9aaf62a5a 100644
 --- a/packages/gatsby-transformer-toml/package.json
 +++ b/packages/gatsby-transformer-toml/package.json
 @@ -38,6 +38,6 @@
@@ -1241,7 +1241,7 @@ index 6f2cbf7ab8..cb3f9a3fdc 100644
    }
  }
 diff --git a/packages/gatsby-transformer-xml/package.json b/packages/gatsby-transformer-xml/package.json
-index a71525cee2..c899f0fafa 100644
+index 441d87974f..7a144bdf74 100644
 --- a/packages/gatsby-transformer-xml/package.json
 +++ b/packages/gatsby-transformer-xml/package.json
 @@ -39,6 +39,6 @@
@@ -1253,7 +1253,7 @@ index a71525cee2..c899f0fafa 100644
    }
  }
 diff --git a/packages/gatsby-transformer-yaml/package.json b/packages/gatsby-transformer-yaml/package.json
-index c19037b691..590838d0c6 100644
+index 3129d7f69f..1d9726382c 100644
 --- a/packages/gatsby-transformer-yaml/package.json
 +++ b/packages/gatsby-transformer-yaml/package.json
 @@ -39,6 +39,6 @@
@@ -1265,10 +1265,10 @@ index c19037b691..590838d0c6 100644
    }
  }
 diff --git a/packages/gatsby-worker/package.json b/packages/gatsby-worker/package.json
-index 2353f062c8..712b228537 100644
+index b633dbe27d..906648ae2d 100644
 --- a/packages/gatsby-worker/package.json
 +++ b/packages/gatsby-worker/package.json
-@@ -37,6 +37,6 @@
+@@ -36,6 +36,6 @@
      "typegen": "rimraf \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/"
    },
    "engines": {
@@ -1277,10 +1277,10 @@ index 2353f062c8..712b228537 100644
    }
  }
 diff --git a/packages/gatsby/package.json b/packages/gatsby/package.json
-index 169c1ac65a..715ad37f0d 100644
+index f9b0648b15..0798c38517 100644
 --- a/packages/gatsby/package.json
 +++ b/packages/gatsby/package.json
-@@ -189,7 +189,7 @@
+@@ -191,7 +191,7 @@
      "zipkin-transport-http": "^0.22.0"
    },
    "engines": {
@@ -1290,10 +1290,10 @@ index 169c1ac65a..715ad37f0d 100644
    "files": [
      "apis.json",
 diff --git a/packages/gatsby/src/utils/webpack.config.js b/packages/gatsby/src/utils/webpack.config.js
-index c4e1610de0..4332cbf1e8 100644
+index 1611d48014..63fa7ff6b0 100644
 --- a/packages/gatsby/src/utils/webpack.config.js
 +++ b/packages/gatsby/src/utils/webpack.config.js
-@@ -561,7 +561,7 @@ module.exports = async (
+@@ -525,7 +525,7 @@ module.exports = async (
      stage === `build-ssr`
    ) {
      const [major, minor] = process.version.replace(`v`, ``).split(`.`)
