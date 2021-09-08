@@ -46,7 +46,7 @@ export async function getData({
 }: {
   graphqlEngine: GraphQLEngine
   pathName: string
-  req?: Request
+  req?: Partial<Pick<Request, "query" | "method" | "url" | "headers">>
 }): Promise<ISSRData> {
   const potentialPagePath = getPagePathFromPageDataPath(pathName) || pathName
 

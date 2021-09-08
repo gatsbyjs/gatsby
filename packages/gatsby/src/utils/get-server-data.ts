@@ -13,13 +13,15 @@ interface IModuleWithServerData {
     headers: Map<string, unknown>
     method: string
     url: string
-    query?: string
-    params?: Record<string, unknown> | null
+    query?: Record<string, unknown>
+    params?: Record<string, unknown>
   }) => Promise<IServerData>
 }
 
 export async function getServerData(
-  req: Partial<Request> | undefined,
+  req:
+    | Partial<Pick<Request, "query" | "method" | "url" | "headers">>
+    | undefined,
   page: IGatsbyPage,
   pagePath: string,
   mod: IModuleWithServerData | undefined
