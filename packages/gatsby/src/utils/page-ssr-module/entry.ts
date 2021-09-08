@@ -36,6 +36,9 @@ const pageTemplateDetailsMap: Record<
   // @ts-ignore INLINED_TEMPLATE_TO_DETAILS is being "inlined" by bundler
 > = INLINED_TEMPLATE_TO_DETAILS
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
+declare const __non_webpack_require__: typeof require
+
 export async function getData({
   pathName,
   graphqlEngine,
