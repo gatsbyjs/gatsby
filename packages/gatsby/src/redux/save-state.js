@@ -2,24 +2,16 @@ const _ = require(`lodash`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { captureEvent } = require(`gatsby-telemetry`)
 const redux = require(`./`)
-const { globalTracer } = require(`opentracing`)
-
-const tracer = globalTracer()
 
 let saveInProgress = false
-async function saveState(buildSpan) {
-  const span = tracer.startSpan(`redux.saveState`, { childOf: buildSpan })
-  if (saveInProgress) {
-    span.finish()
-    return
-  }
-
+async function saveState() {
+  if (saveInProgress) return
   saveInProgress = true
 
   const startTime = Date.now()
 
   try {
-    redux.saveState()
+    await redux.saveState()
   } catch (err) {
     report.warn(`Error persisting state: ${(err && err.message) || err}`)
   }
@@ -35,7 +27,6 @@ async function saveState(buildSpan) {
   }
 
   saveInProgress = false
-  span.finish()
 }
 
 module.exports = {

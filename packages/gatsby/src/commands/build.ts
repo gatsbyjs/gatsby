@@ -223,12 +223,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   store.dispatch(actions.setProgramStatus(`BOOTSTRAP_QUERY_RUNNING_FINISHED`))
 
-  await db.saveState(buildSpan)
+  await db.saveState()
 
   await waitUntilAllJobsComplete()
 
   // we need to save it again to make sure our latest state has been saved
-  await db.saveState(buildSpan)
+  await db.saveState()
 
   const buildSSRBundleActivityProgress = report.activityTimer(
     `Building HTML renderer`,
@@ -337,7 +337,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   }
 
   // Make sure we saved the latest state so we have all jobs cached
-  await db.saveState(buildSpan)
+  await db.saveState()
 
   await Promise.all([waitForCompilerClose, waitForCompilerCloseBuildHtml])
 
