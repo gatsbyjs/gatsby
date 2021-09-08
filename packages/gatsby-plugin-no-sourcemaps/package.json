@@ -20,13 +20,13 @@
     "url": "https://github.com/gatsbyjs/gatsby.git",
     "directory": "packages/gatsby-plugin-no-sourcemaps"
   },
+  "dependencies": {
+    "@babel/runtime": "^7.15.4"
+  },
   "peerDependencies": {
     "gatsby": "^3.0.0-next.0"
   },
   "engines": {
     "node": ">=12.13.0"
-  },
-  "dependencies": {
-    "@babel/runtime": "^7.15.4"
   }
 }

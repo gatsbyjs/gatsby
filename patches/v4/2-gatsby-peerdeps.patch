@@ -133,7 +133,7 @@ index 0b7931da5d..dbaf39f0aa 100644
 --- a/packages/gatsby-plugin-flow/package.json
 +++ b/packages/gatsby-plugin-flow/package.json
 @@ -35,7 +35,7 @@
-     "gatsby-plugin-utils": "^1.14.0-next.0"
+     "gatsby-plugin-utils": "^1.14.0-next.2"
    },
    "peerDependencies": {
 -    "gatsby": "^3.0.0-next.0"
@@ -158,15 +158,15 @@ diff --git a/packages/gatsby-plugin-gatsby-cloud/package.json b/packages/gatsby-
 index 4c60d3b69c..13aa3fad31 100644
 --- a/packages/gatsby-plugin-gatsby-cloud/package.json
 +++ b/packages/gatsby-plugin-gatsby-cloud/package.json
-@@ -41,7 +41,7 @@
+@@ -42,7 +42,7 @@
    "license": "MIT",
    "main": "index.js",
    "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
+-    "gatsby": "^3.0.0-next.0",
++    "gatsby": "^4.0.0-alpha-9689ff",
+     "webpack": "*"
    },
    "repository": {
-     "type": "git",
 diff --git a/packages/gatsby-plugin-google-analytics/package.json b/packages/gatsby-plugin-google-analytics/package.json
 index a23803d486..41fa1fa4bd 100644
 --- a/packages/gatsby-plugin-google-analytics/package.json
@@ -328,7 +328,7 @@ index af70e129a7..89b2e83272 100644
 --- a/packages/gatsby-plugin-no-sourcemaps/package.json
 +++ b/packages/gatsby-plugin-no-sourcemaps/package.json
 @@ -21,7 +21,7 @@
-     "directory": "packages/gatsby-plugin-no-sourcemaps"
+     "@babel/runtime": "^7.15.4"
    },
    "peerDependencies": {
 -    "gatsby": "^3.0.0-next.0"
@@ -471,8 +471,8 @@ index ca7081c0c8..7c9c638a2f 100644
 --- a/packages/gatsby-plugin-schema-snapshot/package.json
 +++ b/packages/gatsby-plugin-schema-snapshot/package.json
 @@ -17,6 +17,6 @@
+     "@babel/runtime": "^7.15.4"
    },
-   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-schema-snapshot#readme",
    "peerDependencies": {
 -    "gatsby": "^3.0.0-next.0"
 +    "gatsby": "^4.0.0-alpha-9689ff"
