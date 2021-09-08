@@ -51,6 +51,26 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
       }
     ),
   ]
+
+  if (
+    _CFLAGS_.GATSBY_MAJOR === `4` &&
+    (stage === `develop` || stage === `build-javascript`)
+  ) {
+    requiredPlugins.push(
+      babel.createConfigItem(
+        [
+          resolve(`./babel/babel-plugin-remove-api`),
+          {
+            apis: [`getServerData`],
+          },
+        ],
+        {
+          type: `plugin`,
+        }
+      )
+    )
+  }
+
   const requiredPresets = []
 
   // Stage specific plugins to add

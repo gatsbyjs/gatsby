@@ -4,6 +4,7 @@ import type { IExecutionResult } from "../../query/types"
 import type { IGatsbyPage } from "../../redux/types"
 import type { IScriptsAndStyles } from "../client-assets-for-template"
 import type { IPageDataWithQueryResult } from "../page-data"
+import type { Request } from "express"
 
 // actual imports
 import "../engines-fs-provider"
@@ -15,6 +16,7 @@ import {
 } from "../page-data-helpers"
 // @ts-ignore render-page import will become valid later on (it's marked as external)
 import htmlComponentRenderer from "./render-page"
+import { getServerData } from "../get-server-data"
 
 export interface ITemplateDetails {
   query: string
@@ -25,6 +27,7 @@ export interface ISSRData {
   results: IExecutionResult
   page: IGatsbyPage
   templateDetails: ITemplateDetails
+  potentialPagePath: string
 }
 
 const pageTemplateDetailsMap: Record<
@@ -33,12 +36,17 @@ const pageTemplateDetailsMap: Record<
   // @ts-ignore INLINED_TEMPLATE_TO_DETAILS is being "inlined" by bundler
 > = INLINED_TEMPLATE_TO_DETAILS
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
+declare const __non_webpack_require__: typeof require
+
 export async function getData({
   pathName,
   graphqlEngine,
+  req,
 }: {
   graphqlEngine: GraphQLEngine
   pathName: string
+  req?: Partial<Pick<Request, "query" | "method" | "url" | "headers">>
 }): Promise<ISSRData> {
   const potentialPagePath = getPagePathFromPageDataPath(pathName) || pathName
 
@@ -58,19 +66,45 @@ export async function getData({
     )
   }
 
+  const executionPromises: Array<Promise<any>> = []
+
   // 3. Execute query
   // query-runner handles case when query is not there - so maybe we should consider using that somehow
   let results: IExecutionResult = {}
+  let serverData: any = undefined
   if (templateDetails.query) {
-    results = await graphqlEngine.runQuery(templateDetails.query, {
-      ...page,
-      ...page.context,
-    })
+    executionPromises.push(
+      graphqlEngine
+        .runQuery(templateDetails.query, {
+          ...page,
+          ...page.context,
+        })
+        .then(queryResults => {
+          results = queryResults
+        })
+    )
   }
 
+  // 4. (if SSR) run getServerData
+  if (page.mode === `SSR`) {
+    const mod = __non_webpack_require__(`./routes/${page.componentChunkName}`)
+    executionPromises.push(
+      getServerData(req, page, potentialPagePath, mod).then(
+        serverDataResults => {
+          serverData = serverDataResults
+        }
+      )
+    )
+  }
+
+  await Promise.all(executionPromises)
+
+  if (serverData) {
+    results.serverData = serverData.props
+  }
   results.pageContext = page.context
 
-  return { results, page, templateDetails }
+  return { results, page, templateDetails, potentialPagePath }
 }
 
 export async function renderPageData({
@@ -81,7 +115,7 @@ export async function renderPageData({
   const results = await constructPageDataString(
     {
       componentChunkName: data.page.componentChunkName,
-      path: data.page.path,
+      path: data.page.mode === `SSR` ? data.potentialPagePath : data.page.path,
       matchPath: data.page.matchPath,
       staticQueryHashes: data.templateDetails.staticQueryHashes,
     },

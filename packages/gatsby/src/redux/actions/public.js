@@ -11,7 +11,7 @@ const { slash, createContentDigest } = require(`gatsby-core-utils`)
 const { hasNodeChanged } = require(`../../utils/nodes`)
 const { getNode } = require(`../../datastore`)
 const sanitizeNode = require(`../../utils/sanitize-node`)
-const { store } = require(`..`)
+const { store } = require(`../index`)
 const { validatePageComponent } = require(`../../utils/validate-page-component`)
 import { nodeSchema } from "../../joi-schemas/joi"
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
@@ -25,6 +25,7 @@ const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 import { createJobV2FromInternalJob } from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
+import fs from "fs-extra"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
@@ -281,9 +282,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.component = pageComponentPath
   }
 
+  const rootPath = store.getState().program.directory
   const { error, message, panicOnBuild } = validatePageComponent(
     page,
-    store.getState().program.directory,
+    rootPath,
     name
   )
 
@@ -321,10 +323,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         trueComponentPath = slash(trueCasePathSync(page.component))
       } catch (e) {
         // systems where user doesn't have access to /
-        const commonDir = getCommonDir(
-          store.getState().program.directory,
-          page.component
-        )
+        const commonDir = getCommonDir(rootPath, page.component)
 
         // using `path.win32` to force case insensitive relative path
         const relativePath = slash(
@@ -415,6 +414,17 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     let pageMode: PageMode = `SSG`
     if (page.defer) {
       pageMode = `DSR`
+    }
+
+    // TODO move to AST Check
+    const fileContent = fs.readFileSync(page.component).toString()
+    const isSSR =
+      fileContent.includes(`exports.getServerData`) ||
+      fileContent.includes(`export const getServerData`) ||
+      fileContent.includes(`export function getServerData`) ||
+      fileContent.includes(`export async function getServerData`)
+    if (isSSR) {
+      pageMode = `SSR`
     }
     internalPage.mode = pageMode
   }

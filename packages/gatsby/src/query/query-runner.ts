@@ -157,7 +157,10 @@ export async function queryRunner(
     delete result.pageContext.componentPath
     delete result.pageContext.context
     delete result.pageContext.isCreatedByStatefulCreatePages
+
     if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+      // we shouldn't add matchPath to pageContext but technically this is a breaking change so moving it ot v4
+      delete result.pageContext.matchPath
       delete result.pageContext.mode
     }
   }

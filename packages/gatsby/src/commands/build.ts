@@ -47,6 +47,8 @@ import {
   mergeWorkerState,
   runQueriesInWorkersQueue,
 } from "../utils/worker/pool"
+import webpackConfig from "../utils/webpack.config.js"
+import { webpack } from "webpack"
 import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpack"
 import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
@@ -253,6 +255,35 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       )
     }
     waitForCompilerCloseBuildHtml = result.waitForCompilerClose
+
+    // TODO Move to page-renderer
+    if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+      const routesWebpackConfig = await webpackConfig(
+        program,
+        program.directory,
+        `build-ssr`,
+        null,
+        { parentSpan: buildSSRBundleActivityProgress.span }
+      )
+
+      await new Promise((resolve, reject) => {
+        const compiler = webpack(routesWebpackConfig)
+        compiler.run(err => {
+          if (err) {
+            return void reject(err)
+          }
+
+          compiler.close(error => {
+            if (error) {
+              return void reject(error)
+            }
+            return void resolve(undefined)
+          })
+
+          return undefined
+        })
+      })
+    }
   } catch (err) {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
   } finally {
@@ -273,6 +304,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       workerPool,
       buildSpan,
     })
+
   const waitWorkerPoolEnd = Promise.all(workerPool.end())
 
   telemetry.addSiteMeasurement(`BUILD_END`, {

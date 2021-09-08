@@ -161,9 +161,9 @@ export async function flush(): Promise<void> {
     staticQueriesByTemplate,
     queries,
   } = store.getState()
+  const isBuild = program?._?.[0] !== `develop`
 
   const { pagePaths } = pendingPageDataWrites
-
   const writePageDataActivity = reporter.createProgress(
     `Writing page-data.json files to public directory`,
     pagePaths.size,
@@ -181,11 +181,7 @@ export async function flush(): Promise<void> {
     // them, a page might not exist anymore щ（ﾟДﾟщ）
     // This is why we need this check
     if (page) {
-      if (
-        (program?._?.[0] === `develop` &&
-          process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) ||
-        (_CFLAGS_.GATSBY_MAJOR === `4` ? page.mode !== `SSG` : false)
-      ) {
+      if (!isBuild && process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
         // check if already did run query for this page
         // with query-on-demand we might have pending page-data write due to
         // changes in static queries assigned to page template, but we might not
@@ -204,24 +200,32 @@ export async function flush(): Promise<void> {
         }
       }
 
-      const staticQueryHashes =
-        staticQueriesByTemplate.get(page.componentPath) || []
+      // In develop we rely on QUERY_ON_DEMAND so we just go through
+      // In build we only build these page-json for SSG pages
+      if (
+        _CFLAGS_.GATSBY_MAJOR !== `4` ||
+        !isBuild ||
+        (isBuild && page.mode === `SSG`)
+      ) {
+        const staticQueryHashes =
+          staticQueriesByTemplate.get(page.componentPath) || []
 
-      const result = await writePageData(
-        path.join(program.directory, `public`),
-        {
-          ...page,
-          staticQueryHashes,
+        const result = await writePageData(
+          path.join(program.directory, `public`),
+          {
+            ...page,
+            staticQueryHashes,
+          }
+        )
+
+        writePageDataActivity.tick()
+
+        if (!isBuild) {
+          websocketManager.emitPageData({
+            id: pagePath,
+            result: JSON.parse(result) as IPageDataWithQueryResult,
+          })
         }
-      )
-
-      writePageDataActivity.tick()
-
-      if (program?._?.[0] === `develop`) {
-        websocketManager.emitPageData({
-          id: pagePath,
-          result: JSON.parse(result) as IPageDataWithQueryResult,
-        })
       }
     }
 
