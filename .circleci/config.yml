@@ -15,7 +15,14 @@ executors:
 aliases:
   e2e-executor: &e2e-executor
     docker:
-      - image: cypress/browsers:node12.18.3-chrome87-ff82
+      - image: cypress/browsers:node<< parameters.node_version >>-chrome<< parameters.chrome_version >>
+    parameters:
+      chrome_version:
+        type: string
+        default: "87-ff82"
+      node_version:
+        type: string
+        default: "12.18.3"
 
   restore_cache: &restore_cache
     restore_cache:
@@ -113,6 +120,12 @@ aliases:
       compiler_options:
         type: string
         default: ""
+      chrome_version:
+        type: string
+        default: "87-ff82"
+      node_version:
+        type: string
+        default: "12.18.3"
     environment:
       COMPILER_OPTIONS: << parameters.compiler_options >>
     steps:
@@ -132,6 +145,12 @@ aliases:
       compiler_options:
         type: string
         default: ""
+      chrome_version:
+        type: string
+        default: "87-ff82"
+      node_version:
+        type: string
+        default: "12.18.3"
     environment:
       CYPRESS_PROJECT_ID: s3j3qj
       CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
@@ -196,9 +215,14 @@ jobs:
       compiler_options:
         type: string
         default: ""
+      node_version:
+        type: string
+        default: "12.13.0"
     environment:
       COMPILER_OPTIONS: << parameters.compiler_options >>
-    executor: node
+    executor:
+      name: node
+      image: << parameters.node_version >>
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
@@ -643,21 +667,23 @@ workflows:
             - bootstrap-with-experimental-react
 
   build-test-next-major:
-    executor:
-      name: node
-      image: "14.15.0"
     jobs:
       - bootstrap:
           name: bootstrap-next-major
           compiler_options: GATSBY_MAJOR=4
+          node_version: 14.15.0
       - e2e_tests_development_runtime:
           name: e2e_tests_development_runtime-next-major
           compiler_options: GATSBY_MAJOR=4
+          node_version: 14.15.0
+          chrome_version: 86-ff82
           requires:
             - bootstrap-next-major
       - e2e_tests_production_runtime:
           name: e2e_tests_production_runtime-next-major
           compiler_options: GATSBY_MAJOR=4
+          node_version: 14.15.0
+          chrome_version: 86-ff82
           requires:
             - bootstrap-next-major
 
