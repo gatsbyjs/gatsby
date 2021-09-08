@@ -9,14 +9,14 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-plugin-remove-graphql-queries#readme",
   "dependencies": {
-    "@babel/runtime": "^7.15.4"
+    "@babel/runtime": "^7.15.4",
+    "gatsby-core-utils": "^2.14.0-next.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
     "babel-preset-gatsby-package": "^1.14.0-next.2",
-    "cross-env": "^7.0.3",
-    "gatsby-core-utils": "^2.14.0-next.2"
+    "cross-env": "^7.0.3"
   },
   "peerDependencies": {
     "@babel/core": "^7.0.0",
