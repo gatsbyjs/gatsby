@@ -81,6 +81,8 @@ export async function getData({
         })
     )
   }
+
+  // 4. (if SSR) run getServerData
   if (page.mode === `SSR`) {
     const mod = __non_webpack_require__(`./routes/${page.componentChunkName}`)
     executionPromises.push(

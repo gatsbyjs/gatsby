@@ -354,6 +354,15 @@ jobs:
       - run: # Quick upgrade to the v2 (any version, we just need the real set version)
           command: yarn policies set-version berry
           working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Explicitly set nodeLinker to avoid Yarn selecting node_modules due to the Yarn 1.x lockfile
+          command: yarn config set nodeLinker pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Allow installs to change the lockfile
+          command: yarn config set enableImmutableInstalls false
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Don't allow any fallback to root dependencies
+          command: yarn config set pnpFallbackMode none
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Forces to use the local packages
           command: yarn link --all --private ~/project
           working_directory: /tmp/e2e-tests/gatsby-pnp
