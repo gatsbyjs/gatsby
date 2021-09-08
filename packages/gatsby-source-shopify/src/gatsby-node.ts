@@ -11,58 +11,22 @@ import {
   getGatsbyImageResolver,
   IGatsbyGraphQLResolverArgumentConfig,
 } from "gatsby-plugin-image/graphql-utils"
-import { shiftLeft } from "shift-left"
-import { pluginErrorCodes as errorCodes } from "./errors"
 import { makeSourceFromOperation } from "./make-source-from-operation"
 export { createSchemaCustomization } from "./create-schema-customization"
 import { createNodeId } from "./node-builder"
+import { ERROR_MAP } from "./error-map"
 
-let coreSupportsOnPluginInit: boolean
+let coreSupportsOnPluginInit: "unstable" | "stable" | undefined
+
 try {
   const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
-  coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(
-    `unstable_onPluginInit`
-  )
+  if (isGatsbyNodeLifecycleSupported(`onPluginInit`)) {
+    coreSupportsOnPluginInit = `stable`
+  } else if (isGatsbyNodeLifecycleSupported(`unstable_onPluginInit`)) {
+    coreSupportsOnPluginInit = `unstable`
+  }
 } catch (e) {
-  coreSupportsOnPluginInit = false
-}
-
-const getErrorText = (context: IErrorContext): string => context.sourceMessage
-
-const ERROR_MAP: IErrorMap = {
-  [errorCodes.bulkOperationFailed]: {
-    text: getErrorText,
-    level: `ERROR`,
-    category: `USER`,
-  },
-  [errorCodes.apiConflict]: {
-    text: (): string => shiftLeft`
-    Your operation was canceled. You might have another production site for this Shopify store.
-
-    Shopify only allows one bulk operation at a time for a given shop, so we recommend that you
-    avoid having two production sites that point to the same Shopify store.
-
-    If the duplication is intentional, please wait for the other operation to finish before trying
-    again. Otherwise, consider deleting the other site or pointing it to a test store instead.
-  `,
-    level: `ERROR`,
-    category: `USER`,
-  },
-  /**
-   * If we don't know what it is, we haven't done our due
-   * diligence to handle it explicitly. That means it's our
-   * fault, so THIRD_PARTY indicates us, the plugin authors.
-   */
-  [errorCodes.unknownSourcingFailure]: {
-    text: getErrorText,
-    level: `ERROR`,
-    category: `THIRD_PARTY`,
-  },
-  [errorCodes.unknownApiError]: {
-    text: getErrorText,
-    level: `ERROR`,
-    category: `THIRD_PARTY`,
-  },
+  console.error(`Could not check if Gatsby supports onPluginInit lifecycle`)
 }
 
 export function pluginOptionsSchema({ Joi }: PluginOptionsSchemaArgs): any {
@@ -310,15 +274,15 @@ export function createResolvers(
   }
 }
 
-export function onPreInit({ reporter }: NodePluginArgs): void {
-  if (!coreSupportsOnPluginInit) {
-    reporter.setErrorMap(ERROR_MAP)
-  }
+const initializePlugin = ({ reporter }: NodePluginArgs): void => {
+  reporter.setErrorMap(ERROR_MAP)
 }
 
-if (coreSupportsOnPluginInit) {
+if (coreSupportsOnPluginInit === `unstable`) {
   // need to conditionally export otherwise it throws an error for older versions
-  exports.unstable_onPluginInit = ({ reporter }: NodePluginArgs): void => {
-    reporter.setErrorMap(ERROR_MAP)
-  }
+  exports.unstable_onPluginInit = initializePlugin
+} else if (coreSupportsOnPluginInit === `stable`) {
+  exports.onPluginInit = initializePlugin
+} else {
+  exports.onPreInit = initializePlugin
 }
