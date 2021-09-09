@@ -15,6 +15,7 @@ import {
   reverseFixedPagePath,
   IPageData,
 } from "./page-data-helpers"
+import { Span } from "opentracing"
 
 export { reverseFixedPagePath }
 
@@ -146,7 +147,7 @@ export function isFlushEnqueued(): boolean {
   return isFlushPending
 }
 
-export async function flush(parentSpan): Promise<void> {
+export async function flush(parentSpan?: Span): Promise<void> {
   if (isFlushing) {
     // We're already in the middle of a flush
     return
@@ -259,7 +260,7 @@ export async function flush(parentSpan): Promise<void> {
   return
 }
 
-export function enqueueFlush(parentSpan): void {
+export function enqueueFlush(parentSpan?: Span): void {
   if (isWebpackStatusPending()) {
     isFlushPending = true
   } else {
@@ -267,7 +268,7 @@ export function enqueueFlush(parentSpan): void {
   }
 }
 
-export async function handleStalePageData(parentSpan): Promise<void> {
+export async function handleStalePageData(parentSpan: Span): Promise<void> {
   if (!(await fs.pathExists(`public/page-data`))) {
     return
   }
