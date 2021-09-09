@@ -5,12 +5,12 @@ import apiRunnerNode from "../../api-runner-node"
 export async function loadConfigAndPlugins(
   ...args: Parameters<typeof internalLoadConfigAndPlugins>
 ): Promise<void> {
-  const [{ siteDirectory }] = args
+  const [{ siteDirectory, program }] = args
 
   store.dispatch({
     type: `SET_PROGRAM`,
     payload: {
-      ...store.getState().program,
+      ...program,
       directory: siteDirectory,
     },
   })
