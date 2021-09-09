@@ -32,7 +32,7 @@ Please change this to: "${filePath.replace(/index$/, ``)}"`
   }
 
   const absolutePath = systemPath.join(process.cwd(), `src/pages`, filePath)
-  console.log(`EXTENSIONS2`, extensions)
+
   const file = _.flatten(
     extensions.map(ext =>
       [``, `${systemPath.sep}index`].map(index => {

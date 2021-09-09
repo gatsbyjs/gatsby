@@ -51,7 +51,7 @@ export async function createPagesFromCollectionBuilder(
     )
     return
   }
-  console.log(`QUERY`, queryString)
+
   const { data, errors } = await graphql<{ nodes: Record<string, unknown> }>(
     queryString
   )
