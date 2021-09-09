@@ -67,7 +67,7 @@ export async function bootstrap(
 
   await createPages(context)
 
-  await handleStalePageData()
+  await handleStalePageData(parentSpan)
 
   await rebuildSchemaWithSitePage(context)
 

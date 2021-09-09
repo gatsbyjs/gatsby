@@ -267,7 +267,7 @@ export function enqueueFlush(parentSpan): void {
   }
 }
 
-export async function handleStalePageData(): Promise<void> {
+export async function handleStalePageData(parentSpan): Promise<void> {
   if (!(await fs.pathExists(`public/page-data`))) {
     return
   }
@@ -276,7 +276,9 @@ export async function handleStalePageData(): Promise<void> {
   // we get the list of those and compare against expected page-data files
   // and remove ones that shouldn't be there anymore
 
-  const activity = reporter.activityTimer(`Cleaning up stale page-data`)
+  const activity = reporter.activityTimer(`Cleaning up stale page-data`, {
+    parentSpan,
+  })
   activity.start()
 
   const pageDataFilesFromPreviousBuilds = await new Promise<Set<string>>(
