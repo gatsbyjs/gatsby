@@ -7,8 +7,8 @@ import {
 } from "xstate"
 import { enqueueFlush } from "../../utils/page-data"
 
-export const flushPageData = (): void => {
-  enqueueFlush()
+export const flushPageData = ({ parentSpan }): void => {
+  enqueueFlush(parentSpan)
 }
 
 export const assignDirtyQueries = assign<

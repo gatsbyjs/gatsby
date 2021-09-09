@@ -146,7 +146,7 @@ export function isFlushEnqueued(): boolean {
   return isFlushPending
 }
 
-export async function flush(): Promise<void> {
+export async function flush(parentSpan): Promise<void> {
   if (isFlushing) {
     // We're already in the middle of a flush
     return
@@ -167,7 +167,8 @@ export async function flush(): Promise<void> {
   const writePageDataActivity = reporter.createProgress(
     `Writing page-data.json files to public directory`,
     pagePaths.size,
-    0
+    0,
+    { id: `write-page-data-public-directory`, parentSpan }
   )
   writePageDataActivity.start()
 
@@ -258,11 +259,11 @@ export async function flush(): Promise<void> {
   return
 }
 
-export function enqueueFlush(): void {
+export function enqueueFlush(parentSpan): void {
   if (isWebpackStatusPending()) {
     isFlushPending = true
   } else {
-    flush()
+    flush(parentSpan)
   }
 }
 

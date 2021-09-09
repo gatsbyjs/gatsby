@@ -203,7 +203,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     rewriteActivityTimer.end()
   }
 
-  await flushPendingPageDataWrites()
+  await flushPendingPageDataWrites(buildSpan)
   markWebpackStatusAsDone()
 
   if (telemetry.isTrackingEnabled()) {
