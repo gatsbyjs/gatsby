@@ -1,10 +1,10 @@
 ---
-title: Using Server Side Rendering (SSR)
+title: Using Server-side Rendering (SSR)
 ---
 
 ## Introduction
 
-Server Side Rendering (SSR) is one of [Gatsby's rendering options](#link-to-rendering-options-doc) and allows you to pre-render a page with data that is fetched when a user visits the page. While it is recommended to use [Static Site Generation (SSG)](#link) or [Deferred Static Generation (DSG)](#) over SSR you might have use cases that require it, e.g. dynamic personalization, authenticated data, A/B testing, configurability based on location or user data. If you don't need to pre-render the page you can use [client-only routes](/docs/how-to/routing/client-only-routes-and-user-authentication/).
+Server-side Rendering (SSR) is one of [Gatsby's rendering options](#link-to-rendering-options-doc) and allows you to pre-render a page with data that is fetched when a user visits the page. While it is recommended to use [Static Site Generation (SSG)](#link) or [Deferred Static Generation (DSG)](#) over SSR you might have use cases that require it, e.g. dynamic personalization, authenticated data, A/B testing, configurability based on location or user data. If you don't need to pre-render the page you can use [client-only routes](/docs/how-to/routing/client-only-routes-and-user-authentication/).
 
 In this guide, you'll learn how to use `getServerData`, fetch an image from a dog API, and display it dynamically on the page.
 
