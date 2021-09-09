@@ -117,9 +117,41 @@ export async function generateImageData({
 
   const {
     fit = `cover`,
-    cropFocus = sharp.strategy.attention,
     duotone,
   } = transformOptions
+
+  let cropFocus = transformOptions.cropFocus || `attention`
+
+  const cropFocusOptions = [
+    `top`,
+    `right top`,
+    `right`,
+    `right bottom`,
+    `bottom`,
+    `left bottom`,
+    `left`,
+    `left top`,
+    `north`,
+    `northeast`,
+    `east`,
+    `southeast`,
+    `south`,
+    `southwest`,
+    `west`,
+    `northwest`,
+    `center`,
+    `centre`,
+    `entropy`,
+    `attention`
+  ]
+
+  if(typeof cropFocus !== 'number' && !cropFocusOptions.includes(cropFocus)) {
+    reporter.error(
+      `Invalid cropFocus option '${cropFocus}' specified for ${file.name}.${file.extension}. See https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/#transformoptions for more information about cropFocus.`
+    )
+
+    cropFocus = `attention`;
+  }
 
   if (duotone && (!duotone.highlight || !duotone.shadow)) {
     reporter.warn(
