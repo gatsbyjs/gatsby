@@ -88,7 +88,7 @@ posts.forEach((post, index) => {
       slug: post.slug,
     },
     // index is zero-based index
-    defer: index + 1 > 100,
+    defer: index + 1 > 100, // highlight-line
   })
 })
 ```
