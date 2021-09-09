@@ -75,7 +75,9 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   markWebpackStatusAsPending()
 
   const publicDir = path.join(program.directory, `public`)
-  initTracer(process.env.OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile)
+  initTracer(
+    process.env.OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
+  )
   const buildActivity = report.phantomActivity(`build`)
   buildActivity.start()
 
