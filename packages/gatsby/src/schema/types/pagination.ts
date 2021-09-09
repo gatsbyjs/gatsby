@@ -81,15 +81,15 @@ function createPagination<TSource = any, TContext = any>({
   typeName: string
   fields?: ObjectTypeComposerFieldConfigMapDefinition<TSource, TContext>
 }): ObjectTypeComposer {
-  const inputTypeComposer: InputTypeComposer = typeComposer.getInputTypeComposer()
+  const inputTypeComposer: InputTypeComposer =
+    typeComposer.getInputTypeComposer()
   const fieldsEnumTC = getFieldsEnum({
     schemaComposer,
     typeComposer,
     inputTypeComposer,
   })
-  const paginationTypeComposer: ObjectTypeComposer = schemaComposer.getOrCreateOTC(
-    typeName,
-    tc => {
+  const paginationTypeComposer: ObjectTypeComposer =
+    schemaComposer.getOrCreateOTC(typeName, tc => {
       // getGroup() will create a recursive call to pagination,
       // so only add it and other aggregate functions on onCreate.
       // Cast into their own category to avoid Typescript conflicts.
@@ -141,8 +141,7 @@ function createPagination<TSource = any, TContext = any>({
         ...aggregationFields,
         ...fields,
       })
-    }
-  )
+    })
   paginationTypeComposer.makeFieldNonNull(`edges`)
   paginationTypeComposer.makeFieldNonNull(`nodes`)
   paginationTypeComposer.makeFieldNonNull(`distinct`)
