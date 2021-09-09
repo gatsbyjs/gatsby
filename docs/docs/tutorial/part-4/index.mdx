@@ -221,7 +221,7 @@ const Header = () => {
     graphql tag to query for data
     (The query gets run at build time) */
   const data = useStaticQuery(graphql`
-    query {
+    {
       site {
         siteMetadata {
           title
@@ -252,7 +252,7 @@ For example, if you need data from both the `site` field and the `siteBuildMetad
 
 ```js
 const data = useStaticQuery(graphql`
-  query {
+  {
     site {
       siteMetadata {
         title
@@ -314,7 +314,7 @@ import {
 const Layout = ({ pageTitle, children }) => {
   // highlight-start
   const data = useStaticQuery(graphql`
-    query {
+    {
       site {
         siteMetadata {
           title
@@ -380,7 +380,7 @@ import {
 
 const Layout = ({ pageTitle, children }) => {
   const data = useStaticQuery(graphql`
-    query {
+    {
       site {
         siteMetadata {
           title
@@ -451,7 +451,7 @@ import {
 
 const Layout = ({ pageTitle, children }) => {
   const data = useStaticQuery(graphql`
-    query {
+    {
       site {
         siteMetadata {
           title
@@ -533,7 +533,7 @@ export default BlogPage
 
 const Layout = ({ pageTitle, children }) => {
   const data = useStaticQuery(graphql`
-    query {
+    {
       site {
         siteMetadata {
           title
@@ -717,7 +717,7 @@ const HomePage = ({ data }) => {
 
 // Step 2: Export a page query
 export const query = graphql`
-  query {
+  {
     site {
       siteMetadata {
         description
@@ -776,7 +776,7 @@ const BlogPage = () => {
 
 // highlight-start
 export const query = graphql`
-  query {
+  {
     allFile {
       nodes {
         name
@@ -825,7 +825,7 @@ const BlogPage = ({ data }) => { // highlight-line
 }
 
 export const query = graphql`
-  query {
+  {
     allFile {
       nodes {
         name
