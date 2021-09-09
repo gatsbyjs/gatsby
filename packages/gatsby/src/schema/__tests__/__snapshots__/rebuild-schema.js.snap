@@ -1510,6 +1510,11 @@ type SitePluginGroupConnection {
   edges: [SitePluginEdge!]!
   nodes: [SitePlugin!]!
   pageInfo: PageInfo!
+  distinct(field: SitePluginFieldsEnum!): [String!]!
+  max(field: SitePluginFieldsEnum!): Float
+  min(field: SitePluginFieldsEnum!): Float
+  sum(field: SitePluginFieldsEnum!): Float
+  group(skip: Int, limit: Int, field: SitePluginFieldsEnum!): [SitePluginGroupConnection!]!
   field: String!
   fieldValue: String
 }
@@ -1646,6 +1651,11 @@ type SiteBuildMetadataGroupConnection {
   edges: [SiteBuildMetadataEdge!]!
   nodes: [SiteBuildMetadata!]!
   pageInfo: PageInfo!
+  distinct(field: SiteBuildMetadataFieldsEnum!): [String!]!
+  max(field: SiteBuildMetadataFieldsEnum!): Float
+  min(field: SiteBuildMetadataFieldsEnum!): Float
+  sum(field: SiteBuildMetadataFieldsEnum!): Float
+  group(skip: Int, limit: Int, field: SiteBuildMetadataFieldsEnum!): [SiteBuildMetadataGroupConnection!]!
   field: String!
   fieldValue: String
 }
