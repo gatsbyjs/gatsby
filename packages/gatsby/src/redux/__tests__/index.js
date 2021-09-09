@@ -1,8 +1,8 @@
 const _ = require(`lodash`)
 const path = require(`path`)
 const v8 = require(`v8`)
+const telemetry = require(`gatsby-telemetry`)
 const reporter = require(`gatsby-cli/lib/reporter`)
-
 const writeToCache = jest.spyOn(require(`../persist`), `writeToCache`)
 const v8Serialize = jest.spyOn(v8, `serialize`)
 const v8Deserialize = jest.spyOn(v8, `deserialize`)
@@ -148,6 +148,26 @@ describe(`redux db`, () => {
     mockWrittenContent.clear()
     reporterWarn.mockClear()
     reporterInfo.mockClear()
+  })
+
+  it(`should have cache status telemetry event`, async () => {
+    jest.spyOn(telemetry, `trackCli`)
+
+    readState()
+
+    expect(telemetry.trackCli).toHaveBeenCalledWith(`CACHE_STATUS`, {
+      cacheStatus: `COLD`,
+    })
+
+    store.getState().nodes = getFakeNodes()
+
+    await saveState()
+
+    readState()
+
+    expect(telemetry.trackCli).toHaveBeenCalledWith(`CACHE_STATUS`, {
+      cacheStatus: `WARM`,
+    })
   })
 
   it(`should write redux cache to disk`, async () => {

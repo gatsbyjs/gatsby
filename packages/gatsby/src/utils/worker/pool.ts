@@ -21,6 +21,7 @@ export const create = (): GatsbyWorkerPool => {
     numWorkers,
     env: {
       GATSBY_WORKER_POOL_WORKER: `true`,
+      GATSBY_SKIP_WRITING_SCHEMA_TO_FILE: `true`,
     },
   })
 

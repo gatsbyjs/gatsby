@@ -18,6 +18,7 @@ import { preferDefault } from "../bootstrap/prefer-default"
 import { IProgram } from "./types"
 import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
 import { IGatsbyFunction } from "../redux/types"
+import { reverseFixedPagePath } from "../utils/page-data"
 
 interface IMatchPath {
   path: string
@@ -121,8 +122,6 @@ module.exports = async (program: IServeProgram): Promise<void> => {
 
   router.use(compression())
   router.use(express.static(`public`, { dotfiles: `allow` }))
-  const matchPaths = await readMatchPaths(program)
-  router.use(matchPathRouter(matchPaths, { root }))
 
   const compiledFunctionsDir = path.join(
     program.directory,
@@ -226,6 +225,76 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     )
   }
 
+  // Handle SSR & DSR Pages
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    try {
+      const { GraphQLEngine } = require(path.join(
+        program.directory,
+        `.cache`,
+        `query-engine`
+      ))
+      const { getData, renderPageData, renderHTML } = require(path.join(
+        program.directory,
+        `.cache`,
+        `page-ssr`
+      ))
+      const graphqlEngine = new GraphQLEngine({
+        dbPath: path.join(program.directory, `.cache`, `data`, `datastore`),
+      })
+
+      app.get(
+        `/page-data/:pagePath(*)/page-data.json`,
+        async (req, res, next) => {
+          const requestedPagePath = req.params.pagePath
+          if (!requestedPagePath) {
+            return void next()
+          }
+
+          const potentialPagePath = reverseFixedPagePath(requestedPagePath)
+          const page = graphqlEngine.findPageByPath(potentialPagePath)
+
+          if (page && (page.mode === `DSR` || page.mode === `SSR`)) {
+            const data = await getData({
+              pathName: req.path,
+              graphqlEngine,
+              req,
+            })
+            const results = await renderPageData({ data })
+            return void res.send(results)
+          }
+
+          return void next()
+        }
+      )
+
+      router.use(async (req, res, next) => {
+        if (req.accepts(`html`)) {
+          const potentialPagePath = req.path
+          const page = graphqlEngine.findPageByPath(potentialPagePath)
+
+          if (page && (page.mode === `DSR` || page.mode === `SSR`)) {
+            const data = await getData({
+              pathName: potentialPagePath,
+              graphqlEngine,
+              req,
+            })
+            const results = await renderHTML({ data })
+            return res.send(results)
+          }
+
+          return res.status(404).sendFile(`404.html`, { root })
+        }
+        return next()
+      })
+    } catch (error) {
+      // TODO: Handle case of engine not being generated
+    }
+  }
+
+  const matchPaths = await readMatchPaths(program)
+  router.use(matchPathRouter(matchPaths, { root }))
+
+  // TODO: Remove/merge with above same block
   router.use((req, res, next) => {
     if (req.accepts(`html`)) {
       return res.status(404).sendFile(`404.html`, { root })

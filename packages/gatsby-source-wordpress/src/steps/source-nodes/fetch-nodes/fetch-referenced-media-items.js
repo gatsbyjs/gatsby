@@ -159,11 +159,17 @@ export const createMediaItemNode = async ({
         )
       }, 15000)
 
-      const localFileNode = await createLocalFileNode({
-        mediaItemNode: node,
-        helpers,
-        parentName,
-      })
+      const pluginOptions = getPluginOptions()
+
+      const { createFileNodes } = pluginOptions.type.MediaItem
+
+      const localFileNode = createFileNodes
+        ? await createLocalFileNode({
+            mediaItemNode: node,
+            helpers,
+            parentName,
+          })
+        : null
 
       clearTimeout(fetchTimeout)
 

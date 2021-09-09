@@ -18,6 +18,7 @@ import { IProgram, Stage } from "./types"
 import { PackageJson } from "../.."
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { IPageDataWithQueryResult } from "../utils/page-data"
+import { processNodeManifests } from "../utils/node-manifest"
 
 type IActivity = any // TODO
 
@@ -440,7 +441,8 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     reporter.info(`There are no new or changed html files to build.`)
   }
 
-  if (!program.keepPageRenderer) {
+  // TODO move to per page builds in _routes directory
+  if (!program.keepPageRenderer && _CFLAGS_.GATSBY_MAJOR !== `4`) {
     try {
       await deleteRenderer(pageRenderer)
     } catch (err) {
@@ -458,6 +460,9 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
 
     deletePageDataActivityTimer.end()
   }
+
+  // we process node manifests in this location because we need to make sure all page-data.json files are written for gatsby as well as inc-builds (both call builHTMLPagesAndDeleteStaleArtifacts). Node manifests include a digest of the corresponding page-data.json file and at this point we can be sure page-data has been written out for the latest updates in gatsby build AND inc builds.
+  await processNodeManifests()
 
   return { toRegenerate, toDelete }
 }

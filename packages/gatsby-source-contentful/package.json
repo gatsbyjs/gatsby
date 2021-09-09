@@ -1,13 +1,13 @@
 {
   "name": "gatsby-source-contentful",
   "description": "Gatsby source plugin for building websites using the Contentful CMS as a data source",
-  "version": "5.13.0-next.1",
+  "version": "5.14.0-next.2",
   "author": "Marcus Ericsson <mericsson@gmail.com> (mericsson.com)",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.14.8",
+    "@babel/runtime": "^7.15.4",
     "@contentful/rich-text-react-renderer": "^14.1.3",
     "@contentful/rich-text-types": "^14.1.2",
     "@hapi/joi": "^15.1.1",
@@ -16,10 +16,10 @@
     "chalk": "^4.1.2",
     "common-tags": "^1.8.0",
     "contentful": "^8.4.2",
-    "fs-extra": "^9.1.0",
-    "gatsby-core-utils": "^2.13.0-next.0",
-    "gatsby-plugin-utils": "^1.13.0-next.0",
-    "gatsby-source-filesystem": "^3.13.0-next.0",
+    "fs-extra": "^10.0.0",
+    "gatsby-core-utils": "^2.14.0-next.2",
+    "gatsby-plugin-utils": "^1.14.0-next.2",
+    "gatsby-source-filesystem": "^3.14.0-next.2",
     "is-online": "^8.5.1",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.21",
@@ -29,11 +29,11 @@
     "retry-axios": "^2.4.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.8",
-    "@babel/core": "^7.14.8",
-    "babel-preset-gatsby-package": "^1.13.0-next.0",
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "babel-preset-gatsby-package": "^1.14.0-next.2",
     "cross-env": "^7.0.3",
-    "nock": "^13.1.1"
+    "nock": "^13.1.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful#readme",
   "keywords": [

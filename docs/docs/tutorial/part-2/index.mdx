@@ -51,7 +51,7 @@ You can also create components from other components. For example, you might dec
 
 **Try it!**
 
-Look back at the [finished example blog site](https://introworkshopexamplesitev3.gatsbyjs.io). How might you break down the pages into components?
+Look back at the [finished example blog site](https://gatsbytutorialexample.gatsbyjs.io/). How might you break down the pages into components?
 
 Not sure where to start? Look for parts of the UI that repeat within a page or across multiple pages.
 
@@ -387,7 +387,7 @@ export default AboutPage
 
 ## Create a reusable layout component
 
-If you take another look at the [finished example blog](https://introworkshopexamplesitev3.gatsbyjs.io), you might notice that there are some repeated parts of the UI across each page, like the site title and the navigation menu.
+If you take another look at the [finished example blog](https://gatsbytutorialexample.gatsbyjs.io/), you might notice that there are some repeated parts of the UI across each page, like the site title and the navigation menu.
 
 You could copy those elements into each page of your site separately. But imagine your site had dozens (or even thousands) of pages. If you wanted to make a change to the structure of your navigation menu, you'd have to go and update every one of those files separately. Yuck.
 
@@ -422,6 +422,7 @@ Think of your wrapper component as a picture frame. A frame has its own shape an
 Here's an example of what the code for this scenario might look like. First, when the `<Frame>` component is rendered, it has contents passed in between the opening and closing tag:
 
 ```javascript:title=src/pages/gallery.js
+import React from 'react'
 import Frame from '../components/frame' // highlight-line
 
 const GalleryPage = () => {
@@ -434,7 +435,7 @@ const GalleryPage = () => {
   )
 }
 
-export const GalleryPage
+export default GalleryPage
 ```
 
 Then in the component definition, the `children` prop will get passed whatever elements came between the opening and closing tag. You can render the `children` prop in your JSX to insert the contents.
@@ -750,13 +751,19 @@ export default Layout
 
 **Syntax Hint:** In CSS, the convention is to name classes using kebab case (like `.nav-links`). But in JavaScript, the convention is to name variables using camel case (like `navLinks`).
 
-Luckily, when you use CSS Modules with Gatsby, you can have both! Your kebab-case class names in your `.modules.css` files will automatically be converted to camel-case variables that you can import in your `.js` files.
+Luckily, when you use CSS Modules with Gatsby, you can have both! Your kebab-case class names in your `.module.css` files will automatically be converted to camel-case variables that you can import in your `.js` files.
 
 </Announcement>
 
 7. Once your development server finishes rebuilding your site, you should see your new styles applied in your web browser:
 
 ![A screenshot of the Home page. The styles have been updated so now the page title is in purple, and the navigation links at the top of the page are in a single line instead of a bulleted list.](./index-page-styled.png)
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Want to see how it all fits together?** Check out the commit history in the [GitHub repo for the finished example site](https://github.com/gatsbyjs/tutorial-example).
+
+</Announcement>
 
 ## Summary
 

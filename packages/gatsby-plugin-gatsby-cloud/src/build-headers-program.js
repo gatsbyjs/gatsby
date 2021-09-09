@@ -2,6 +2,7 @@ import _ from "lodash"
 import { createWriteStream, existsSync } from "fs-extra"
 import { parse, posix } from "path"
 import kebabHash from "kebab-hash"
+import { fixedPagePath } from "gatsby-core-utils"
 import { IMMUTABLE_CACHING_HEADER } from "./constants"
 
 import {
@@ -12,6 +13,7 @@ import {
   HEADERS_FILENAME,
   PAGE_DATA_DIR,
 } from "./constants"
+import { emitHeaders } from "./ipc"
 
 function getHeaderName(header) {
   const matches = header.match(/^([^:]+):/)
@@ -56,8 +58,7 @@ function pathChunkName(path) {
 }
 
 function getPageDataPath(path) {
-  const fixedPagePath = path === `/` ? `index` : path
-  return posix.join(`page-data`, fixedPagePath, `page-data.json`)
+  return posix.join(`page-data`, fixedPagePath(path), `page-data.json`)
 }
 
 function getScriptPath(file, manifest) {
@@ -309,36 +310,52 @@ const applyTransfromHeaders =
   headers =>
     _.mapValues(headers, transformHeaders)
 
-const writeHeadersFile =
+const sendHeadersViaIPC = async headers => {
+  /**
+   * Emit Headers via IPC
+   */
+  let lastMessage
+  Object.entries(headers).forEach(([k, val]) => {
+    lastMessage = emitHeaders({
+      url: k,
+      headers: val,
+    })
+  })
+  await lastMessage
+}
+
+const writeHeadersFile = async (publicFolder, contents) =>
+  new Promise((resolve, reject) => {
+    const contentsStr = JSON.stringify(contents)
+    const writeStream = createWriteStream(publicFolder(HEADERS_FILENAME))
+    const chunkSize = 10000
+    const numChunks = Math.ceil(contentsStr.length / chunkSize)
+
+    for (let i = 0; i < numChunks; i++) {
+      writeStream.write(
+        contentsStr.slice(
+          i * chunkSize,
+          Math.min((i + 1) * chunkSize, contentsStr.length)
+        )
+      )
+    }
+
+    writeStream.end()
+    writeStream.on(`finish`, () => {
+      resolve()
+    })
+    writeStream.on(`error`, reject)
+  })
+
+const saveHeaders =
   ({ publicFolder }) =>
   contents =>
-    new Promise((resolve, reject) => {
-      const contentsStr = JSON.stringify(contents)
-      const writeStream = createWriteStream(publicFolder(HEADERS_FILENAME))
-      const chunkSize = 10000
-      const numChunks = Math.ceil(contentsStr.length / chunkSize)
+    Promise.all([
+      sendHeadersViaIPC(contents),
+      writeHeadersFile(publicFolder, contents),
+    ])
 
-      for (let i = 0; i < numChunks; i++) {
-        writeStream.write(
-          contentsStr.slice(
-            i * chunkSize,
-            Math.min((i + 1) * chunkSize, contentsStr.length)
-          )
-        )
-      }
-
-      writeStream.end()
-      writeStream.on(`finish`, () => {
-        resolve()
-      })
-      writeStream.on(`error`, reject)
-    })
-
-export default function buildHeadersProgram(
-  pluginData,
-  pluginOptions,
-  reporter
-) {
+export default function buildHeadersProgram(pluginData, pluginOptions) {
   return _.flow(
     mapUserLinkHeaders(pluginData),
     applySecurityHeaders(pluginOptions),
@@ -346,6 +363,6 @@ export default function buildHeadersProgram(
     mapUserLinkAllPageHeaders(pluginData, pluginOptions),
     applyLinkHeaders(pluginData, pluginOptions),
     applyTransfromHeaders(pluginOptions),
-    writeHeadersFile(pluginData)
+    saveHeaders(pluginData)
   )(pluginOptions.headers)
 }
