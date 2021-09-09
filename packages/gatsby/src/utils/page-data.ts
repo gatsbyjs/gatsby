@@ -237,7 +237,9 @@ export async function flush(): Promise<void> {
       },
     })
 
-    cb(null, true)
+    // `process.nextTick` below is a workaround against stack overflow
+    // occurring when there are many non-SSG pages
+    process.nextTick(() => cb(null, true))
     return
   }, 25)
 
