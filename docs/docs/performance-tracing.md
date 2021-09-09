@@ -108,7 +108,7 @@ exports.stop = async () => {
    we run Gatsby in a special way telling Node to require our tracing file immediately.
 
 ```shell
-node -r ./tracing.js node_modules/.bin/gatsby build --open-tracing-config-file tracing.js
+node -r ./tracing.js node_modules/gatsby/cli.js build --open-tracing-config-file tracing.js
 ```
 
 ### Local Jaeger with Docker
