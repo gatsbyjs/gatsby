@@ -50,8 +50,8 @@ export async function bootstrap(
   const workerPool = context.workerPool
 
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    const directory = slash(context.store.getState().program.directory)
     const program = context.store.getState().program
+    const directory = slash(program.directory)
 
     workerPool.all.loadConfigAndPlugins({ siteDirectory: directory, program })
   }
