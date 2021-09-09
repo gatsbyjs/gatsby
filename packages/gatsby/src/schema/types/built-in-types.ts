@@ -1,5 +1,7 @@
 import { parse, DocumentNode } from "graphql"
 
+// TODO v4: mark all built-in types with @dontInfer and add missing fields (maybe as `JSON` type)
+
 const fileType = `
   type File implements Node @infer {
     sourceInstanceName: String!
@@ -84,14 +86,14 @@ const directoryType = `
   }
 `
 
-const site = `
+const siteType = `
   type Site implements Node @infer {
     buildTime: Date @dateformat
     siteMetadata: SiteSiteMetadata
   }
 `
 
-const siteSiteMetadata = `
+const siteSiteMetadataType = `
   type SiteSiteMetadata {
     title: String
     description: String
@@ -108,13 +110,36 @@ const sitePageType = `
   }
 `
 
+const sitePluginType = `
+  type SitePlugin implements Node @infer {
+    resolve: String
+    name: String
+    version: String
+    nodeAPIs: [String]
+    browserAPIs: [String]
+    ssrAPIs: [String]
+    pluginFilepath: String
+    # TODO v4:
+    # pluginOptions: JSON
+    # packageJson: JSON
+  }
+`
+
+const siteBuildMetadataType = `
+  type SiteBuildMetadata implements Node @infer {
+    buildTime: Date @dateformat
+  }
+`
+
 const allSdlTypes = [
   fileType,
   directoryType,
-  site,
-  siteSiteMetadata,
+  siteType,
+  siteSiteMetadataType,
   siteFunctionType,
   sitePageType,
+  sitePluginType,
+  siteBuildMetadataType,
 ]
 
 export const overridableBuiltInTypeNames = new Set([`SiteSiteMetadata`])

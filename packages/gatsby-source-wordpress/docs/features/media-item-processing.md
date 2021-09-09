@@ -30,7 +30,7 @@ Note that there's currently a hard requirement for both kinds of url's to includ
 
 ## Preventing Image/File sourcing
 
-If you would prefer to let WordPress handle serving images for you, you can prevent Gatsby from fetching any images with the following plugin options:
+If you would prefer to let WordPress handle serving images for you, you can prevent Gatsby from fetching any images or files with the following plugin options:
 
 ```js
 {
@@ -42,14 +42,11 @@ If you would prefer to let WordPress handle serving images for you, you can prev
             useGatsbyImage: false,
         },
         type: {
-            MediaItem: { lazyNodes: true },
+            MediaItem: { createFileNodes: false },
         },
     },
 }
 ```
-
-Note that if you make a GraphQL request for any media item in Gatsby, it will still fetch that media item while resolving the GraphQL response data.
-If you don't want this to happen you will have to make sure you don't query for those fields.
 
 :point_left: [Back to Features](./index.md)
 

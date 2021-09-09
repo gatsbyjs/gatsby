@@ -4,6 +4,7 @@ import { getQueryInfoByTypeName } from "~/steps/source-nodes/helpers"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { inPreviewMode } from "~/steps/preview/index"
 import { getPluginOptions } from "../../../utils/get-gatsby-api"
+import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 
 export const transformListOfGatsbyNodes = ({ field, fieldName }) => {
   const typeName = buildTypeName(field.type.ofType.name)
@@ -77,10 +78,12 @@ export const buildGatsbyNodeObjectResolver =
 
     if (
       // only fetch/create nodes in resolvers for media items when they have lazyNodes enabled
-      !isLazyMediaItem &&
-      // but if we're in preview mode we want to lazy fetch nodes
-      // because if nodes are limited we still want to lazy fetch connections
-      !inPreviewMode()
+      (!isLazyMediaItem &&
+        // but if we're in preview mode we want to lazy fetch nodes
+        // because if nodes are limited we still want to lazy fetch connections
+        !inPreviewMode()) ||
+      // lazyNodes option isn't supported in Gatsby v4+
+      usingGatsbyV4OrGreater
     ) {
       return null
     }

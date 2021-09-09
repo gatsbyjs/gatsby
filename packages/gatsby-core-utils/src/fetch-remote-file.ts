@@ -1,7 +1,6 @@
-import got from "got"
+import got, { Headers, Options } from "got"
 import fileType from "file-type"
 import path from "path"
-import { IncomingMessage, OutgoingHttpHeaders } from "http"
 import fs from "fs-extra"
 import { createContentDigest } from "./create-content-digest"
 import {
@@ -10,7 +9,8 @@ import {
   createFilePath,
 } from "./filename-utils"
 
-import { GatsbyCache } from "gatsby"
+import type { IncomingMessage } from "http"
+import type { GatsbyCache } from "gatsby"
 
 export interface IFetchRemoteFileOptions {
   url: string
@@ -19,7 +19,7 @@ export interface IFetchRemoteFileOptions {
     htaccess_pass?: string
     htaccess_user?: string
   }
-  httpHeaders?: OutgoingHttpHeaders
+  httpHeaders?: Headers
   ext?: string
   name?: string
 }
@@ -52,15 +52,15 @@ const INCOMPLETE_RETRY_LIMIT = process.env.GATSBY_INCOMPLETE_RETRY_LIMIT
  * @param  {String}   url
  * @param  {Headers}  headers
  * @param  {String}   tmpFilename
- * @param  {Object}   httpOpts
+ * @param  {Object}   httpOptions
  * @param  {number}   attempt
  * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
  */
 const requestRemoteNode = (
-  url: got.GotUrl,
-  headers: OutgoingHttpHeaders,
+  url: string | URL,
+  headers: Headers,
   tmpFilename: string,
-  httpOpts: got.GotOptions<string | null> | undefined,
+  httpOptions?: Options,
   attempt: number = 1
 ): Promise<IncomingMessage> =>
   new Promise((resolve, reject) => {
@@ -71,12 +71,15 @@ const requestRemoteNode = (
     const handleTimeout = async (): Promise<void> => {
       fsWriteStream.close()
       fs.removeSync(tmpFilename)
+
       if (attempt < STALL_RETRY_LIMIT) {
         // Retry by calling ourself recursively
         resolve(
-          requestRemoteNode(url, headers, tmpFilename, httpOpts, attempt + 1)
+          requestRemoteNode(url, headers, tmpFilename, httpOptions, attempt + 1)
         )
       } else {
+        // TODO move to new Error type
+        // eslint-disable-next-line prefer-promise-reject-errors
         reject(`Failed to download ${url} after ${STALL_RETRY_LIMIT} attempts`)
       }
     }
@@ -92,16 +95,22 @@ const requestRemoteNode = (
       timeout: {
         send: CONNECTION_TIMEOUT, // https://github.com/sindresorhus/got#timeout
       },
-      ...httpOpts,
+      ...httpOptions,
+      isStream: true,
     })
 
     let haveAllBytesBeenWritten = false
+    // Fixes a bug in latest got where progress.total gets reset when stream ends, even if it wasn't complete.
+    let totalSize: number | null = null
     responseStream.on(`downloadProgress`, progress => {
       if (
-        progress.transferred === progress.total ||
-        progress.total === null ||
-        progress.total === undefined
+        progress.total != null &&
+        (!totalSize || totalSize < progress.total)
       ) {
+        totalSize = progress.total
+      }
+
+      if (progress.transferred === totalSize || totalSize === null) {
         haveAllBytesBeenWritten = true
       }
     })
@@ -113,14 +122,17 @@ const requestRemoteNode = (
       if (timeout) {
         clearTimeout(timeout)
       }
+
+      fsWriteStream.close()
       fs.removeSync(tmpFilename)
       reject(error)
     })
 
-    fsWriteStream.on(`error`, (error: any) => {
+    fsWriteStream.on(`error`, (error: unknown) => {
       if (timeout) {
         clearTimeout(timeout)
       }
+
       reject(error)
     })
 
@@ -128,6 +140,10 @@ const requestRemoteNode = (
       resetTimeout()
 
       fsWriteStream.on(`finish`, () => {
+        if (timeout) {
+          clearTimeout(timeout)
+        }
+
         fsWriteStream.close()
 
         // We have an incomplete download
@@ -135,26 +151,25 @@ const requestRemoteNode = (
           fs.removeSync(tmpFilename)
 
           if (attempt < INCOMPLETE_RETRY_LIMIT) {
-            resolve(
+            return resolve(
               requestRemoteNode(
                 url,
                 headers,
                 tmpFilename,
-                httpOpts,
+                httpOptions,
                 attempt + 1
               )
             )
           } else {
-            reject(
+            // TODO move to new Error type
+            // eslint-disable-next-line prefer-promise-reject-errors
+            return reject(
               `Failed to download ${url} after ${INCOMPLETE_RETRY_LIMIT} attempts`
             )
           }
         }
 
-        if (timeout) {
-          clearTimeout(timeout)
-        }
-        resolve(response)
+        return resolve(response)
       })
     })
   })
@@ -179,9 +194,10 @@ export async function fetchRemoteFile({
 
   // Add htaccess authentication if passed in. This isn't particularly
   // extensible. We should define a proper API that we validate.
-  const httpOpts: got.GotOptions<string | null> = {}
+  const httpOptions: Options = {}
   if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
-    httpOpts.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
+    httpOptions.username = auth.htaccess_user
+    httpOptions.password = auth.htaccess_pass
   }
 
   // Create the temp and permanent file names for the url.
@@ -196,7 +212,12 @@ export async function fetchRemoteFile({
   const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
 
   // Fetch the file.
-  const response = await requestRemoteNode(url, headers, tmpFilename, httpOpts)
+  const response = await requestRemoteNode(
+    url,
+    headers,
+    tmpFilename,
+    httpOptions
+  )
 
   if (response.statusCode === 200) {
     // Save the response headers for future requests.

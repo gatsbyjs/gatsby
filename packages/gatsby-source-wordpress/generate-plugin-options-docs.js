@@ -60,7 +60,10 @@ function joiKeysToMD({
         (value.meta && value.meta.find(meta => `trueType` in meta)) || {}
 
       mdString += `\n\n`
-      mdString += `**Field type**: \`${_.startCase(trueType || value.type)}\``
+      mdString += `**Field type**: \`${(trueType || value.type)
+        .split(`|`)
+        .map(typename => _.startCase(typename))
+        .join(` | `)}\``
     }
 
     if (
@@ -68,8 +71,8 @@ function joiKeysToMD({
       (value.meta && value.meta.find(meta => `default` in meta))
     ) {
       const defaultValue =
-        (value.meta.find(meta => `default` in meta) || {}).default ||
-        value.flags.default
+        ((value.meta && value.meta.find(meta => `default` in meta)) || {})
+          .default || value.flags.default
 
       let printedValue
 

@@ -736,7 +736,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
     })
   }
 
-  const getDominantColor = async ({ image, options }) => {
+  const getDominantColor = async ({ image, options, reporter }) => {
     let pluginSharp
 
     try {
@@ -798,6 +798,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
       imageProps.backgroundColor = await getDominantColor({
         image,
         options,
+        reporter,
       })
     }
 
