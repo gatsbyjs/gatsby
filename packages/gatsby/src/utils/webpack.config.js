@@ -594,8 +594,7 @@ module.exports = async (
           // Bundle all css & lazy css into one stylesheet to make sure lazy components do not break
           styles: {
             test(module, context) {
-              return 
-           Type(module) && !usesCssModules(module, context)
+              return isCssModuleType(module) && !usesCssModules(module, context)
             },
 
             name: `commons`,
