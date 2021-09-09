@@ -69,7 +69,7 @@ And that's enough for you to be able to access content from Kentico Kontent in y
 gatsby develop
 ```
 
-To see all the content that's available from Kentico Kontent, you can test out GraphQL queries in GraphiQL at `http://localhost:8000/___graphql`. The queries generated from Kontent will be be prefixed with `kontentItem` (for single nodes) or `allKontentItem`.
+To see all the content that's available from Kentico Kontent, you can test out GraphQL queries in GraphiQL at `http://localhost:8000/___graphql`. The queries generated from Kontent will be prefixed with `kontentItem` (for single nodes) or `allKontentItem`.
 
 To see how to put that data into your site, first go to `http://localhost:8000/`. Notice that the default title for the site is "Gatsby Default Starter". You can change that by pulling the title for your site from Kentico Kontent.
 

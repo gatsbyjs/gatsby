@@ -332,8 +332,8 @@ describe(`gatsby-node`, () => {
       .mockImplementationOnce(startersBlogFixture.initialSync)
       .mockImplementationOnce(startersBlogFixture.createBlogPost)
 
-    const createdBlogEntry = startersBlogFixture.createBlogPost()
-      .currentSyncData.entries[0]
+    const createdBlogEntry =
+      startersBlogFixture.createBlogPost().currentSyncData.entries[0]
     const createdBlogEntryIds = locales.map(locale =>
       normalize.makeId({
         spaceId: createdBlogEntry.sys.space.sys.id,
@@ -407,8 +407,8 @@ describe(`gatsby-node`, () => {
       .mockImplementationOnce(startersBlogFixture.createBlogPost)
       .mockImplementationOnce(startersBlogFixture.updateBlogPost)
 
-    const updatedBlogEntry = startersBlogFixture.updateBlogPost()
-      .currentSyncData.entries[0]
+    const updatedBlogEntry =
+      startersBlogFixture.updateBlogPost().currentSyncData.entries[0]
     const updatedBlogEntryIds = locales.map(locale =>
       normalize.makeId({
         spaceId: updatedBlogEntry.sys.space.sys.id,
@@ -499,8 +499,8 @@ describe(`gatsby-node`, () => {
       .mockImplementationOnce(startersBlogFixture.createBlogPost)
       .mockImplementationOnce(startersBlogFixture.removeBlogPost)
 
-    const removedBlogEntry = startersBlogFixture.removeBlogPost()
-      .currentSyncData.deletedEntries[0]
+    const removedBlogEntry =
+      startersBlogFixture.removeBlogPost().currentSyncData.deletedEntries[0]
     const normalizedType = removedBlogEntry.sys.type.startsWith(`Deleted`)
       ? removedBlogEntry.sys.type.substring(`Deleted`.length)
       : removedBlogEntry.sys.type
@@ -592,8 +592,8 @@ describe(`gatsby-node`, () => {
       .mockImplementationOnce(startersBlogFixture.createBlogPost)
       .mockImplementationOnce(startersBlogFixture.removeAsset)
 
-    const removedAssetEntry = startersBlogFixture.createBlogPost()
-      .currentSyncData.entries[0]
+    const removedAssetEntry =
+      startersBlogFixture.createBlogPost().currentSyncData.entries[0]
     const removedAssetEntryIds = locales.map(locale =>
       normalize.makeId({
         spaceId: removedAssetEntry.sys.space.sys.id,

@@ -17,7 +17,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 })
 
 jest.mock(
-  `/node_modules/gatsby-plugin-test/gatsby-worker.js`,
+  `/node_modules/gatsby-plugin-test/gatsby-worker`,
   () => {
     return {
       TEST_JOB: jest.fn(),
@@ -27,7 +27,7 @@ jest.mock(
 )
 
 jest.mock(
-  `/gatsby-plugin-local/gatsby-worker.js`,
+  `/gatsby-plugin-local/gatsby-worker`,
   () => {
     return {
       TEST_JOB: jest.fn(),
@@ -40,7 +40,7 @@ jest.mock(`uuid/v4`, () =>
   jest.fn().mockImplementation(jest.requireActual(`uuid/v4`))
 )
 
-const worker = require(`/node_modules/gatsby-plugin-test/gatsby-worker.js`)
+const worker = require(`/node_modules/gatsby-plugin-test/gatsby-worker`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const hasha = require(`hasha`)
 const fs = require(`fs-extra`)
@@ -489,7 +489,7 @@ describe(`Jobs manager`, () => {
 
     it(`should run the worker locally when it's a local plugin`, async () => {
       jest.useRealTimers()
-      const worker = require(`/gatsby-plugin-local/gatsby-worker.js`)
+      const worker = require(`/gatsby-plugin-local/gatsby-worker`)
       const { enqueueJob, createInternalJob } = jobManager
       const jobArgs = createInternalJob(createMockJob(), {
         name: `gatsby-plugin-local`,

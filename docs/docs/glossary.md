@@ -80,7 +80,7 @@ A component can include components within it. In fact, [pages](#page) and [templ
 
 ### Config
 
-The configuration file, `gatsby-config.js` tells Gatsby information about your website. A common option set in config is your sites metadata that can power your SEO meta tags.
+The configuration file, `gatsby-config.js` tells Gatsby information about your website. A common option to set in this config is your site's metadata that can power your SEO meta tags.
 
 ### [Content Delivery Network](/docs/glossary/content-delivery-network/)
 

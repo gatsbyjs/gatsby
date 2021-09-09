@@ -11,7 +11,7 @@ const { slash, createContentDigest } = require(`gatsby-core-utils`)
 const { hasNodeChanged } = require(`../../utils/nodes`)
 const { getNode } = require(`../../datastore`)
 const sanitizeNode = require(`../../utils/sanitize-node`)
-const { store } = require(`..`)
+const { store } = require(`../index`)
 const { validatePageComponent } = require(`../../utils/validate-page-component`)
 import { nodeSchema } from "../../joi-schemas/joi"
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
@@ -25,6 +25,7 @@ const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 import { createJobV2FromInternalJob } from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
+import fs from "fs-extra"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
@@ -97,7 +98,10 @@ type PageInput = {
   component: string,
   context?: Object,
   ownerNodeId?: string,
+  defer?: boolean,
 }
+
+type PageMode = "SSG" | "DSR" | "SSR"
 
 type Page = {
   path: string,
@@ -108,6 +112,7 @@ type Page = {
   componentChunkName: string,
   updatedAt: number,
   ownerNodeId?: string,
+  mode: PageMode,
 }
 
 type ActionOptions = {
@@ -277,9 +282,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.component = pageComponentPath
   }
 
+  const rootPath = store.getState().program.directory
   const { error, message, panicOnBuild } = validatePageComponent(
     page,
-    store.getState().program.directory,
+    rootPath,
     name
   )
 
@@ -317,10 +323,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         trueComponentPath = slash(trueCasePathSync(page.component))
       } catch (e) {
         // systems where user doesn't have access to /
-        const commonDir = getCommonDir(
-          store.getState().program.directory,
-          page.component
-        )
+        const commonDir = getCommonDir(rootPath, page.component)
 
         // using `path.win32` to force case insensitive relative path
         const relativePath = slash(
@@ -405,6 +408,26 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     // Link page to its plugin.
     pluginCreator___NODE: plugin.id ?? ``,
     pluginCreatorId: plugin.id ?? ``,
+  }
+
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    let pageMode: PageMode = `SSG`
+    if (page.defer) {
+      pageMode = `DSR`
+      internalPage.defer = true
+    }
+
+    // TODO move to AST Check
+    const fileContent = fs.readFileSync(page.component).toString()
+    const isSSR =
+      fileContent.includes(`exports.getServerData`) ||
+      fileContent.includes(`export const getServerData`) ||
+      fileContent.includes(`export function getServerData`) ||
+      fileContent.includes(`export async function getServerData`)
+    if (isSSR) {
+      pageMode = `SSR`
+    }
+    internalPage.mode = pageMode
   }
 
   if (page.ownerNodeId) {
@@ -866,26 +889,28 @@ const createNode = (
   }
 }
 
-actions.createNode = (...args) => dispatch => {
-  const actions = createNode(...args)
+actions.createNode =
+  (...args) =>
+  dispatch => {
+    const actions = createNode(...args)
 
-  dispatch(actions)
-  const createNodeAction = (Array.isArray(actions) ? actions : [actions]).find(
-    action => action.type === `CREATE_NODE`
-  )
+    dispatch(actions)
+    const createNodeAction = (
+      Array.isArray(actions) ? actions : [actions]
+    ).find(action => action.type === `CREATE_NODE`)
 
-  if (!createNodeAction) {
-    return undefined
+    if (!createNodeAction) {
+      return undefined
+    }
+
+    const { payload: node, traceId, parentSpan } = createNodeAction
+    return apiRunnerNode(`onCreateNode`, {
+      node,
+      traceId,
+      parentSpan,
+      traceTags: { nodeId: node.id, nodeType: node.internal.type },
+    })
   }
-
-  const { payload: node, traceId, parentSpan } = createNodeAction
-  return apiRunnerNode(`onCreateNode`, {
-    node,
-    traceId,
-    parentSpan,
-    traceTags: { nodeId: node.id, nodeType: node.internal.type },
-  })
-}
 
 const touchNodeDeprecationWarningDisplayedMessages = new Set()
 
@@ -1357,7 +1382,7 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
  * @param {boolean} redirect.isPermanent This is a permanent redirect; defaults to temporary
  * @param {string} redirect.toPath URL of a created page (see `createPage`)
- * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
+ * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration on the server. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well. You almost never need this so be sure your use case fits before enabling.
  * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @param {boolean} redirect.ignoreCase (Plugin-specific) Ignore case when looking for redirects

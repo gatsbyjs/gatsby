@@ -85,8 +85,15 @@ export class WebsocketManager {
             newActivePath,
             fallbackTo404
           )
+
           if (page) {
-            activePagePath = page.path
+            // when it's SSR we don't want to return the page path but the actualy url used,
+            // this is necessary when matchPaths are used.
+            if (page.mode === `SSR`) {
+              activePagePath = newActivePath
+            } else {
+              activePagePath = page.path
+            }
           }
         }
         clientInfo.activePath = activePagePath
@@ -124,9 +131,8 @@ export class WebsocketManager {
 
     if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
       // page-data marked stale due to dirty query tracking
-      const boundEmitStalePageDataPathsFromDirtyQueryTracking = this.emitStalePageDataPathsFromDirtyQueryTracking.bind(
-        this
-      )
+      const boundEmitStalePageDataPathsFromDirtyQueryTracking =
+        this.emitStalePageDataPathsFromDirtyQueryTracking.bind(this)
       emitter.on(
         `CREATE_PAGE`,
         boundEmitStalePageDataPathsFromDirtyQueryTracking
@@ -214,8 +220,8 @@ export class WebsocketManager {
   }
 
   emitStalePageDataPathsFromDirtyQueryTracking(): void {
-    const dirtyQueries = store.getState().queries
-      .dirtyQueriesListToEmitViaWebsocket
+    const dirtyQueries =
+      store.getState().queries.dirtyQueriesListToEmitViaWebsocket
 
     if (this.emitStalePageDataPaths(dirtyQueries)) {
       store.dispatch(clearDirtyQueriesListToEmitViaWebsocket())

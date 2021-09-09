@@ -14,9 +14,13 @@ const path = require(`path`)
 let coreSupportsOnPluginInit
 try {
   const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
-  coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(
-    `unstable_onPluginInit`
-  )
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(`onPluginInit`)
+  } else {
+    coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(
+      `unstable_onPluginInit`
+    )
+  }
 } catch (e) {
   coreSupportsOnPluginInit = false
 }
@@ -60,10 +64,8 @@ exports.onCreateDevServer = async ({ app, cache, reporter }) => {
     // and postpone all other operations
     // This speeds up the loading of lazy images in the browser and
     // also helps to free up the browser connection queue earlier.
-    const {
-      matchingJob,
-      jobWithRemainingOperations,
-    } = splitOperationsByRequestedFile(cacheResult, pathOnDisk)
+    const { matchingJob, jobWithRemainingOperations } =
+      splitOperationsByRequestedFile(cacheResult, pathOnDisk)
 
     await _unstable_createJob(matchingJob, { reporter })
     await removeCachedValue(cache, decodedURI)
@@ -129,9 +131,16 @@ exports.onPostBootstrap = async ({ reporter, cache, store }) => {
 
 if (coreSupportsOnPluginInit) {
   // to properly initialize plugin in worker (`onPreBootstrap` won't run in workers)
-  exports.unstable_onPluginInit = async ({ actions }, pluginOptions) => {
-    setActions(actions)
-    setPluginOptions(pluginOptions)
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    exports.onPluginInit = async ({ actions }, pluginOptions) => {
+      setActions(actions)
+      setPluginOptions(pluginOptions)
+    }
+  } else {
+    exports.unstable_onPluginInit = async ({ actions }, pluginOptions) => {
+      setActions(actions)
+      setPluginOptions(pluginOptions)
+    }
   }
 }
 

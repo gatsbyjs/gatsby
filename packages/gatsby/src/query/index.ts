@@ -227,7 +227,7 @@ export async function processPageQueries(
   queryIds: IGroupedQueryIds["pageQueryIds"],
   { state, activity, graphqlRunner, graphqlTracing }
 ): Promise<void> {
-  return processQueries<IGatsbyPage>({
+  const processedQueries = await processQueries<IGatsbyPage>({
     queryIds,
     createJobFn: createPageQueryJob,
     onQueryDone: undefined,
@@ -236,6 +236,8 @@ export async function processPageQueries(
     graphqlRunner,
     graphqlTracing,
   })
+
+  return processedQueries
 }
 
 function createPageQueryJob(

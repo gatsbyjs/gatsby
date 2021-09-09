@@ -113,8 +113,9 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
   const transpiled = await apiRunnerNode(`preprocessSource`, {
     filename: filePath,
     contents: fileStr,
-    parentSpan: parentSpan,
+    parentSpan,
   })
+
   if (transpiled && transpiled.length) {
     for (const item of transpiled) {
       try {
@@ -214,9 +215,12 @@ async function findGraphQLTags(
           taggedTemplateExpressPath,
           isHook = false
         ) => {
-          const { ast: gqlAst, text, hash, isGlobal } = getGraphQLTag(
-            taggedTemplateExpressPath
-          )
+          const {
+            ast: gqlAst,
+            text,
+            hash,
+            isGlobal,
+          } = getGraphQLTag(taggedTemplateExpressPath)
           if (!gqlAst) return
 
           if (isGlobal) {

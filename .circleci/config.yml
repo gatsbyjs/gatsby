@@ -63,6 +63,7 @@ aliases:
           - /blog.+/
 
   test_template: &test_template
+    parallelism: 4
     parameters:
       npm_rebuild:
         type: boolean
@@ -75,11 +76,16 @@ aliases:
           condition: << parameters.npm_rebuild >>
           steps:
             - run: npm rebuild
-      - run: yarn list react
-      - run: yarn why lmdb-store
       - run:
-          command: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
+          name: Step debug info
+          command: |
+            yarn list react
+            yarn why lmdb-store
+      - run:
+          name: Run tests
+          command: yarn jest --ci --runInBand $(yarn jest --listTests | sed 's/\/root\/project//g' | circleci tests split --split-by=timings)
           environment:
+            NODE_OPTIONS: --max-old-space-size=2048
             GENERATE_JEST_REPORT: true
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
@@ -124,22 +130,6 @@ aliases:
     steps:
       - e2e-test:
           test_path: e2e-tests/development-runtime
-          skip_file_change_test: << parameters.nightly >>
-      - notify-status:
-          condition: << parameters.nightly >>
-
-  e2e_tests_gatsby-image_alias: &e2e_tests_gatsby-image_alias
-    <<: *e2e-executor
-    parameters:
-      nightly:
-        type: boolean
-        default: false
-    environment:
-      CYPRESS_PROJECT_ID: ave32k
-      CYPRESS_RECORD_KEY: fb3cb6e0-a0f9-48b2-aa9a-95e8ef150a85
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/gatsby-image
           skip_file_change_test: << parameters.nightly >>
       - notify-status:
           condition: << parameters.nightly >>
@@ -209,7 +199,8 @@ jobs:
       - persist_to_workspace:
           root: ./
           paths:
-            - "*"
+            - "packages/"
+            - "node_modules/"
 
   lint:
     executor: node
@@ -363,6 +354,15 @@ jobs:
       - run: # Quick upgrade to the v2 (any version, we just need the real set version)
           command: yarn policies set-version berry
           working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Explicitly set nodeLinker to avoid Yarn selecting node_modules due to the Yarn 1.x lockfile
+          command: yarn config set nodeLinker pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Allow installs to change the lockfile
+          command: yarn config set enableImmutableInstalls false
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Don't allow any fallback to root dependencies
+          command: yarn config set pnpFallbackMode none
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Forces to use the local packages
           command: yarn link --all --private ~/project
           working_directory: /tmp/e2e-tests/gatsby-pnp
@@ -378,15 +378,6 @@ jobs:
       - run:
           command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
           working_directory: /tmp/e2e-tests/gatsby-pnp
-
-  e2e_tests_gatsby-image:
-    <<: *e2e_tests_gatsby-image_alias
-
-  e2e_tests_gatsby-image_with_experimental_react:
-    <<: *e2e_tests_gatsby-image_alias
-
-  e2e_tests_gatsby-image_with_next_react:
-    <<: *e2e_tests_gatsby-image_alias
 
   e2e_tests_development_runtime:
     <<: *e2e_tests_development_runtime_alias
@@ -494,6 +485,17 @@ jobs:
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/*"
 
+  update_changelogs:
+    executor: node
+    steps:
+      - checkout
+      - run: apt-get update && apt-get install jq python -y
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - run: git config --global user.name "GatsbyJS Bot"
+      - run: git config --global user.email "core-team@gatsbyjs.com"
+      - run: node scripts/gatsby-changelog-generator/update-and-open-pr.js
+
   update_i18n_source:
     executor: node
     steps:
@@ -521,6 +523,7 @@ jobs:
           working_directory: ~/project/scripts/i18n
 
   windows_unit_tests:
+    parallelism: 4
     executor:
       name: win/default
       shell: powershell.exe
@@ -534,28 +537,30 @@ jobs:
       #     keys:
       #       - yarn-packages-v2-{{ checksum "yarn.lock" }}
       #       - yarn-packages-v2-
+
+      - <<: *attach_to_bootstrap
       - run:
-          name: Install node 12.13
+          name: Install node 12.13 and yarn
           command: |
             nvm install 12.13.0
             nvm alias default 12.13.0
             nvm use 12.13.0
             choco install yarn
       - run:
-          name: Set yarn timeout
-          command: yarn config set network-timeout 300000
+          name: Rebuild packages for windows
+          command: |
+            Remove-Item -Recurse -Force -Path "node_modules/sharp/"
+            yarn
       - run:
-          name: Install node modules
-          command: yarn --frozen-lockfile
-      # Caching is slow, so disabling
-      # - save_cache:
-      #     paths:
-      #       - C:\Users\circleci\AppData\Local\Yarn\Cache
-      #     key: yarn-packages-v2-{{ checksum "yarn.lock" }}
-      - run: yarn npm-run-all -s check-versions "lerna-prepare --concurrency=4 --stream"
-      - run:
-          name: "Run Tests"
-          command: yarn jest -w 1 --ci
+          name: Run tests
+          command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split --split-by=timings)
+          environment:
+            NODE_OPTIONS: --max-old-space-size=2048
+            GENERATE_JEST_REPORT: true
+            JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
+            JEST_JUNIT_OUTPUT_NAME: results.xml
+      - store_test_results:
+          path: ./test-results/jest-node/
 
   bootstrap-with-experimental-react:
     executor: node
@@ -603,10 +608,6 @@ workflows:
     jobs:
       - bootstrap-with-experimental-react:
           version: "next"
-      - e2e_tests_gatsby-image_with_next_react:
-          nightly: true
-          requires:
-            - bootstrap-with-experimental-react
       - e2e_tests_development_runtime_with_next_react:
           nightly: true
           requires:
@@ -626,10 +627,6 @@ workflows:
     jobs:
       - bootstrap-with-experimental-react:
           version: "experimental"
-      - e2e_tests_gatsby-image_with_experimental_react:
-          nightly: true
-          requires:
-            - bootstrap-with-experimental-react
       - e2e_tests_development_runtime_with_experimental_react:
           nightly: true
           requires:
@@ -638,6 +635,22 @@ workflows:
           nightly: true
           requires:
             - bootstrap-with-experimental-react
+
+  # Ideally, we should trigger this when any new release is created, sadly there is no easy way to do it:
+  # - Can't rely on tags: GitHub won't send webhook to CircleCI when there are more than 3 tags in one push
+  #   See: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#push
+  # - Can't rely on pushes to "release/*" branches because we have "Only build pull requests" option enabled
+  #   (so pushes without pull requests are ignored by CircleCI)
+  nightly-update-changelogs:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 1,2,3,4,5"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - update_changelogs
 
   build-test:
     jobs:
@@ -650,6 +663,7 @@ workflows:
           <<: *ignore_docs
           requires:
             - lint
+            - bootstrap
       - unit_tests_node12:
           <<: *ignore_docs
           requires:
@@ -696,8 +710,6 @@ workflows:
       - e2e_tests_pnp:
           <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
-          <<: *e2e-test-workflow
-      - e2e_tests_gatsby-image:
           <<: *e2e-test-workflow
       - e2e_tests_gatsby-static-image:
           <<: *e2e-test-workflow
