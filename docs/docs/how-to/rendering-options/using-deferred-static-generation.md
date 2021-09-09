@@ -23,6 +23,15 @@ The general process for using DSG looks like this:
 
 - Adding `defer: true` to your `createPage` call.
 
+  ```js
+  createPage({
+    path: "page-path",
+    component: "component-path",
+    context: {},
+    defer: true, // highlight-line
+  })
+  ```
+
 For the purpose of this guide let's assume you have a blog powered by MDX and have blog posts dating back years (in total 1000 blog posts). Via your analytics tracking you're seeing that only the latest 100 posts are regularly visited, the rest gets occasional or no visits at all.
 
 The `gatsby-node.js` file:
