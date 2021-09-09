@@ -53,7 +53,7 @@
     "@types/semver": "^7.3.8",
     "gatsby-plugin-image": "^1.14.0-next.0",
     "babel-plugin-import-globals": "^2.0.0",
-    "babel-plugin-module-resolver": "4.1.0",
+    "babel-plugin-module-resolver": "^4.1.0",
     "babel-preset-gatsby": "^1.14.0-next.2",
     "babel-preset-gatsby-package": "^1.14.0-next.2",
     "cross-env": "^7.0.3",
@@ -86,7 +86,7 @@
   "scripts": {
     "prepare": "npm run build",
     "build": "rimraf dist && babel src --out-dir dist --ignore **/__tests__ --extensions \".ts,.js\" --source-maps && npm run generate-plugin-options-docs",
-    "watch": "npm run build && babel -w src --out-dir dist --ignore **/__tests__ --verbose --extensions \".ts,.js\" --source-maps",
+    "watch": "npm run build && babel -w src --out-dir dist --ignore **/__tests__ --extensions \".ts,.js\" --source-maps",
     "generate-plugin-options-docs": "node ./generate-plugin-options-docs.js"
   },
   "engines": {
