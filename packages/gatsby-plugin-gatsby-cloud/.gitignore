@@ -2,6 +2,6 @@ yarn.lock
 /*.js
 !index.js
 
-components/
+/components/
 assets/
 utils/

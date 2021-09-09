@@ -52,15 +52,13 @@ export function createSchemaCustomization(
   { actions, schema }: CreateSchemaCustomizationArgs,
   pluginOptions: ShopifyPluginOptions
 ): void {
-  const includeCollections = pluginOptions.shopifyConnections?.includes(
-    `collections`
-  )
+  const includeCollections =
+    pluginOptions.shopifyConnections?.includes(`collections`)
 
   const includeOrders = pluginOptions.shopifyConnections?.includes(`orders`)
 
-  const includeLocations = pluginOptions.shopifyConnections?.includes(
-    `locations`
-  )
+  const includeLocations =
+    pluginOptions.shopifyConnections?.includes(`locations`)
 
   const name = (name: string): string =>
     `${pluginOptions.typePrefix || ``}${name}`
@@ -74,7 +72,11 @@ export function createSchemaCustomization(
     ownerType: `String!`,
     updatedAt: `Date!`,
     value: `String!`,
-    valueType: `String!`,
+    type: `String!`,
+    valueType: {
+      type: `String!`,
+      deprecationReason: `Shopify has deprecated this field`,
+    },
   }
 
   const metafieldInterface = schema.buildInterfaceType({

@@ -1,5 +1,6 @@
 import {
   createDbQueriesFromObject,
+  DbQuery,
   getFilterStatement,
 } from "../../../common/query"
 import {
@@ -217,9 +218,12 @@ describe(`getIndexRanges`, () => {
         [`$in`],
       ],
     ])(`%o`, (filter, expectedRange, expectedUsed = []) => {
-      const context = createContext({ keyFields: [[`field`, 1]] })
       const dbQueries = createDbQueriesFromObject({ field: filter })
-      const ranges = getIndexRanges(context, dbQueries)
+      const context = createContext({
+        indexMetadata: { keyFields: [[`field`, 1]] },
+        dbQueries,
+      })
+      const ranges = getIndexRanges(context)
       expect(ranges).toEqual(expectedRange)
 
       if (expectedUsed.length) {
@@ -236,22 +240,27 @@ describe(`getIndexRanges`, () => {
 
     it(`does not support $ne with multiKey indexes`, () => {
       const context = createContext({
-        keyFields: [[`field`, 1]],
-        multiKeyFields: [`field`],
+        indexMetadata: {
+          keyFields: [[`field`, 1]],
+          multiKeyFields: [`field`],
+        },
+        dbQueries: createDbQueriesFromObject({ field: { $ne: 1 } }),
       })
-      const dbQueries = createDbQueriesFromObject({ field: { $ne: 1 } })
-      const ranges = getIndexRanges(context, dbQueries)
+      const ranges = getIndexRanges(context)
       expect(ranges).toEqual([])
       expect(context.usedQueries.size).toEqual(0)
     })
 
     it(`does not support $nin with multiKey indexes`, () => {
-      const context = createContext({
-        keyFields: [[`field`, 1]],
-        multiKeyFields: [`field`],
-      })
       const dbQueries = createDbQueriesFromObject({ field: { $nin: [1] } })
-      const ranges = getIndexRanges(context, dbQueries)
+      const context = createContext({
+        indexMetadata: {
+          keyFields: [[`field`, 1]],
+          multiKeyFields: [`field`],
+        },
+        dbQueries,
+      })
+      const ranges = getIndexRanges(context)
       expect(ranges).toEqual([])
       expect(context.usedQueries.size).toEqual(0)
     })
@@ -267,31 +276,20 @@ describe(`getIndexRanges`, () => {
         [
           {
             start: [1, `bar`],
-            end: [
-              [1, BinaryInfinityPositive],
-              [`bar`, BinaryInfinityPositive],
-            ],
+            end: [1, [`bar`, BinaryInfinityPositive]],
           },
         ],
       ],
-      // TODO: actual range intersection
-      //  (ATM we will return a subset and then additionally apply remaining filters outside of the index scan)
       [
         { foo: { $eq: 1, $gt: 2 }, bar: { $in: [`bar`, `baz`], $lt: `foo` } },
         [
           {
             start: [1, `bar`],
-            end: [
-              [1, BinaryInfinityPositive],
-              [`bar`, BinaryInfinityPositive],
-            ],
+            end: [1, [`bar`, BinaryInfinityPositive]],
           },
           {
             start: [1, `baz`],
-            end: [
-              [1, BinaryInfinityPositive],
-              [`baz`, BinaryInfinityPositive],
-            ],
+            end: [1, [`baz`, BinaryInfinityPositive]],
           },
         ],
         { foo: [`$eq`], bar: [`$in`] },
@@ -299,14 +297,17 @@ describe(`getIndexRanges`, () => {
     ])(
       `%o`,
       (filters, expectedRange, expectedUsed: any = { foo: [], bar: [] }) => {
-        const context = createContext({
-          keyFields: [
-            [`foo`, 1],
-            [`bar`, 1],
-          ],
-        })
         const dbQueries = createDbQueriesFromObject(filters)
-        const ranges = getIndexRanges(context, dbQueries)
+        const context = createContext({
+          indexMetadata: {
+            keyFields: [
+              [`foo`, 1],
+              [`bar`, 1],
+            ],
+          },
+          dbQueries,
+        })
+        const ranges = getIndexRanges(context)
         expect(ranges).toEqual(expectedRange)
 
         if (expectedUsed.foo.length) {
@@ -330,13 +331,20 @@ describe(`getIndexRanges`, () => {
     )
   })
 
-  function createContext(indexMetadata: Partial<IIndexMetadata>): any {
+  function createContext({
+    indexMetadata,
+    dbQueries,
+  }: {
+    indexMetadata: Partial<IIndexMetadata>
+    dbQueries: Array<DbQuery>
+  }): any {
     return {
       indexMetadata: {
         keyFields: [],
         multiKeyFields: [],
         ...indexMetadata,
       },
+      dbQueries,
       usedQueries: new Set(),
     }
   }

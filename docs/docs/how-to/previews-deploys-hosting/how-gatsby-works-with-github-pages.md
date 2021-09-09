@@ -68,6 +68,7 @@ For a repository named like `username.github.io`, you don't need to specify `pat
 >   1. To create a new branch called `source` run this command:
 >      `git checkout -b source main`
 >   2. Change the default branch in your repository settings ("Branches" menu item) from `main` to `source`
+> - **Note**: GitHub Pages lets you use any branch for deployment, see [this docs page](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#choosing-a-publishing-source) on how to do this. This means you do not necessarily have to change your default branch.
 > - Have a separate repository for your source code (so `username.github.io` is used only for deployment and not really for tracking your source code)
 
 ```json:title=package.json
@@ -77,6 +78,8 @@ For a repository named like `username.github.io`, you don't need to specify `pat
   }
 }
 ```
+
+> If you are deploying to branch different to `main`, replace it with your deployment branch's name in the deploy script.
 
 After running `npm run deploy` you should see your website at `username.github.io`
 
@@ -134,7 +137,7 @@ deploy:
     branch: main
 ```
 
-To break-down the important bits here for deploying the Gatsby website from Travis to GitHub Pages:
+To break down the important bits here for deploying the Gatsby website from Travis to GitHub Pages:
 
 1. `before_script` is used to install the Gatsby CLI so it can be used in the project's run script to build the Gatsby website
 2. `deploy` will only fire when the build runs on the `main` branch, in which case it will fire off the deploy script. In the above example, the Gatsby site is located in a `docs/` directory. The script changes into that directory, installs all the website dependencies, and runs the deploy script as was set in the previous step.

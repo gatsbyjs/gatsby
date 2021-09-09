@@ -93,9 +93,9 @@ The regular `gatsby-cli` received a new command to list out all plugins in your 
 
 ## Experimental: Parallel data sourcing
 
-In [v2.28](/docs/reference/release-notes/v2.28#experimental-parallel-data-sourcing) we gave a sneak peak at a new feature that enables parallel data sourcing. As a recap:
+In [v2.28](/docs/reference/release-notes/v2.28#experimental-parallel-data-sourcing) we gave a sneak peek at a new feature that enables parallel data sourcing. As a recap:
 
-> Plugin APIs in Gatsby run serially. Generally this what we want as most API calls are CPU/IO bound so things are fastest letting each plugin have the full undivided attention of your computer. But source plugins are often _network_ bound as they're hitting remote APIs and waiting for responses. We tried [changing the invocation of `sourceNodes` to parallel](https://github.com/gatsbyjs/gatsby/pull/28214) on a few sites with 4+ source plugins and saw a big speedup on sourcing (40%+) as they were no longer waiting on each other to start their API calls.
+> Plugin APIs in Gatsby run serially. Generally this is what we want as most API calls are CPU/IO bound so things are fastest letting each plugin have the full undivided attention of your computer. But source plugins are often _network_ bound as they're hitting remote APIs and waiting for responses. We tried [changing the invocation of `sourceNodes` to parallel](https://github.com/gatsbyjs/gatsby/pull/28214) on a few sites with 4+ source plugins and saw a big speedup on sourcing (40%+) as they were no longer waiting on each other to start their API calls.
 
 You're now able to activate this experiment in the stable release of Gatsby by adding a flag to your `gatsby-config.js`:
 

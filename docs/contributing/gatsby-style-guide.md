@@ -94,7 +94,7 @@ In English, your articles should use the second person ("you") to provide a conv
 
 For other languages, refer to each translation's guidelines (if applicable) for consistent phrasing. When appropriate, we suggest starting with the informal "you" to keep a conversational tone.
 
-Using "you" in English is also more accurate than saying "we," because typically only one person is reading the tutorial or guide at a time and the person who wrote the tutorial is not actually going through it with them, so "we" would be inaccurate. You might notice that some technical documentation uses third person pronouns and nouns like "they" and "the user," which add more distance and feel colder than the conversational and warm "you" and "your."
+Using "you" in English is also more accurate than saying "we," because typically only one person is reading the tutorial or guide at a time and the person who wrote the tutorial is not actually going through it with them, so "we" would be inaccurate. You might notice that some technical documentation uses third-person pronouns and nouns like "they" and "the user," which add more distance and feel colder than the conversational and warm "you" and "your."
 
 When updating a doc to adhere to this part of the Gatsby Style Guide, one exception in English is when "we" refers to Gatsby's core processes. The subject is the code in this case, rather than a teacher/reader connotation, and should be rewritten or restructured to not confuse the reader about what they are responsible for doing when something is happening automatically behind the scenes.
 
@@ -248,7 +248,7 @@ Use the following as reference when creating and editing docs:
 - [adding images to articles](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images).
   If the images aren’t already hosted somewhere else on the web, you’ll need to put them online yourself.
   A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub.
-  Then you can right click the image and copy its image source. And don't forget image alt text for accessibility!
+  Then you can right-click the image and copy its image source. And don't forget image alt text for accessibility!
   For help with crafting efficient screen reader text, refer to the [W3C's alt decision tree](https://www.w3.org/WAI/tutorials/images/decision-tree/).
 - [header formatting](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#headers). Avoid using H1 header; that is reserved for the title of each document.
 

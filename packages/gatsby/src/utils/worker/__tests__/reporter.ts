@@ -2,18 +2,14 @@ import { createTestWorker, GatsbyTestWorkerPool } from "./test-helpers"
 import * as ActionCreators from "gatsby-cli/lib/reporter/redux/actions"
 
 let worker: GatsbyTestWorkerPool | undefined
-const spies: Record<
-  keyof typeof ActionCreators,
-  jest.SpyInstance
-> = (Object.keys(ActionCreators) as Array<keyof typeof ActionCreators>).reduce(
-  (acc, key) => {
-    if (typeof ActionCreators[key] === `function`) {
-      acc[key] = jest.spyOn(ActionCreators, key)
-    }
-    return acc
-  },
-  {} as any
-)
+const spies: Record<keyof typeof ActionCreators, jest.SpyInstance> = (
+  Object.keys(ActionCreators) as Array<keyof typeof ActionCreators>
+).reduce((acc, key) => {
+  if (typeof ActionCreators[key] === `function`) {
+    acc[key] = jest.spyOn(ActionCreators, key)
+  }
+  return acc
+}, {} as any)
 
 afterEach(() => {
   for (const spy of Object.values(spies)) {

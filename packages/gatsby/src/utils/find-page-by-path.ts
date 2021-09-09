@@ -46,7 +46,7 @@ export function findPageByPath(
   }
 
   // we didn't find exact static page, time to check matchPaths
-  for (const [, page] of pages) {
+  for (const page of pages.values()) {
     if (page.matchPath && match(page.matchPath, path)) {
       return page
     }

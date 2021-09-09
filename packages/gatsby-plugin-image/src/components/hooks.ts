@@ -118,6 +118,7 @@ export async function applyPolyfill(
 ): Promise<void> {
   if (!(`objectFitPolyfill` in window)) {
     await import(
+      // @ts-ignore typescript can't find the module for some reason ¯\_(ツ)_/¯
       /* webpackChunkName: "gatsby-plugin-image-objectfit-polyfill" */ `objectFitPolyfill`
     )
   }

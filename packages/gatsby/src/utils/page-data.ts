@@ -3,50 +3,32 @@ import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import fastq from "fastq"
 import path from "path"
-import { createContentDigest } from "gatsby-core-utils"
-import { IGatsbyPage } from "../redux/types"
+import { createContentDigest, generatePageDataPath } from "gatsby-core-utils"
 import { websocketManager } from "./websocket-manager"
 import { isWebpackStatusPending } from "./webpack-status"
 import { store } from "../redux"
 import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
 import { isLmdbStore } from "../datastore"
 import type GatsbyCacheLmdb from "./cache-lmdb"
+import {
+  constructPageDataString,
+  reverseFixedPagePath,
+  IPageData,
+} from "./page-data-helpers"
+
+export { reverseFixedPagePath }
 
 import { IExecutionResult } from "../query/types"
 
-interface IPageData {
-  componentChunkName: IGatsbyPage["componentChunkName"]
-  matchPath?: IGatsbyPage["matchPath"]
-  path: IGatsbyPage["path"]
-  staticQueryHashes: Array<string>
-}
-
 export interface IPageDataWithQueryResult extends IPageData {
   result: IExecutionResult
-}
-
-export function fixedPagePath(pagePath: string): string {
-  return pagePath === `/` ? `index` : pagePath
-}
-
-export function reverseFixedPagePath(pageDataRequestPath: string): string {
-  return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
-}
-
-function getFilePath(publicDir: string, pagePath: string): string {
-  return path.join(
-    publicDir,
-    `page-data`,
-    fixedPagePath(pagePath),
-    `page-data.json`
-  )
 }
 
 export async function readPageData(
   publicDir: string,
   pagePath: string
 ): Promise<IPageDataWithQueryResult> {
-  const filePath = getFilePath(publicDir, pagePath)
+  const filePath = generatePageDataPath(publicDir, pagePath)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
 
   return JSON.parse(rawPageData)
@@ -56,7 +38,7 @@ export async function removePageData(
   publicDir: string,
   pagePath: string
 ): Promise<void> {
-  const filePath = getFilePath(publicDir, pagePath)
+  const filePath = generatePageDataPath(publicDir, pagePath)
 
   if (fs.existsSync(filePath)) {
     return await fs.remove(filePath)
@@ -66,7 +48,7 @@ export async function removePageData(
 }
 
 export function pageDataExists(publicDir: string, pagePath: string): boolean {
-  return fs.existsSync(getFilePath(publicDir, pagePath))
+  return fs.existsSync(generatePageDataPath(publicDir, pagePath))
 }
 
 let lmdbPageQueryResultsCache: GatsbyCacheLmdb
@@ -111,11 +93,11 @@ export async function savePageQueryResult(
 export async function readPageQueryResult(
   publicDir: string,
   pagePath: string
-): Promise<any> {
+): Promise<string | Buffer> {
   if (isLmdbStore()) {
     const stringifiedResult = await getLMDBPageQueryResultsCache().get(pagePath)
     if (typeof stringifiedResult === `string`) {
-      return JSON.parse(stringifiedResult)
+      return stringifiedResult
     }
     throw new Error(`Couldn't find temp query result for "${pagePath}".`)
   } else {
@@ -126,45 +108,34 @@ export async function readPageQueryResult(
       `json`,
       `${pagePath.replace(/\//g, `_`)}.json`
     )
-    return fs.readJSON(pageQueryResultsPath)
+    return fs.readFile(pageQueryResultsPath)
   }
 }
 
 export async function writePageData(
   publicDir: string,
-  {
-    componentChunkName,
-    matchPath,
-    path: pagePath,
-    staticQueryHashes,
-  }: IPageData
-): Promise<IPageDataWithQueryResult> {
-  const result = await readPageQueryResult(publicDir, pagePath)
+  pageData: IPageData
+): Promise<string> {
+  const result = await readPageQueryResult(publicDir, pageData.path)
 
-  const outputFilePath = getFilePath(publicDir, pagePath)
-  const body = {
-    componentChunkName,
-    path: pagePath,
-    matchPath,
-    result,
-    staticQueryHashes,
-  }
+  const outputFilePath = generatePageDataPath(publicDir, pageData.path)
 
-  const bodyStr = JSON.stringify(body)
+  const body = constructPageDataString(pageData, result)
+
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
-  const pageDataSize = Buffer.byteLength(bodyStr) / 1000
+  const pageDataSize = Buffer.byteLength(body) / 1000
 
   store.dispatch({
     type: `ADD_PAGE_DATA_STATS`,
     payload: {
-      pagePath,
+      pagePath: pageData.path,
       filePath: outputFilePath,
       size: pageDataSize,
-      pageDataHash: createContentDigest(bodyStr),
+      pageDataHash: createContentDigest(body),
     },
   })
 
-  await fs.outputFile(outputFilePath, bodyStr)
+  await fs.outputFile(outputFilePath, body)
   return body
 }
 
@@ -180,6 +151,7 @@ export async function flush(): Promise<void> {
     // We're already in the middle of a flush
     return
   }
+  await waitUntilPageQueryResultsAreStored()
   isFlushPending = false
   isFlushing = true
   const {
@@ -189,9 +161,9 @@ export async function flush(): Promise<void> {
     staticQueriesByTemplate,
     queries,
   } = store.getState()
+  const isBuild = program?._?.[0] !== `develop`
 
   const { pagePaths } = pendingPageDataWrites
-
   const writePageDataActivity = reporter.createProgress(
     `Writing page-data.json files to public directory`,
     pagePaths.size,
@@ -209,10 +181,7 @@ export async function flush(): Promise<void> {
     // them, a page might not exist anymore щ（ﾟДﾟщ）
     // This is why we need this check
     if (page) {
-      if (
-        program?._?.[0] === `develop` &&
-        process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
-      ) {
+      if (!isBuild && process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
         // check if already did run query for this page
         // with query-on-demand we might have pending page-data write due to
         // changes in static queries assigned to page template, but we might not
@@ -227,28 +196,37 @@ export async function flush(): Promise<void> {
 
         if (hasFlag(query.dirty, FLAG_DIRTY_NEW_PAGE)) {
           // query results are not written yet
-          return cb(null, true)
+          process.nextTick(() => cb(null, true))
+          return
         }
       }
 
-      const staticQueryHashes =
-        staticQueriesByTemplate.get(page.componentPath) || []
+      // In develop we rely on QUERY_ON_DEMAND so we just go through
+      // In build we only build these page-json for SSG pages
+      if (
+        _CFLAGS_.GATSBY_MAJOR !== `4` ||
+        !isBuild ||
+        (isBuild && page.mode === `SSG`)
+      ) {
+        const staticQueryHashes =
+          staticQueriesByTemplate.get(page.componentPath) || []
 
-      const result = await writePageData(
-        path.join(program.directory, `public`),
-        {
-          ...page,
-          staticQueryHashes,
+        const result = await writePageData(
+          path.join(program.directory, `public`),
+          {
+            ...page,
+            staticQueryHashes,
+          }
+        )
+
+        writePageDataActivity.tick()
+
+        if (!isBuild) {
+          websocketManager.emitPageData({
+            id: pagePath,
+            result: JSON.parse(result) as IPageDataWithQueryResult,
+          })
         }
-      )
-
-      writePageDataActivity.tick()
-
-      if (program?._?.[0] === `develop`) {
-        websocketManager.emitPageData({
-          id: pagePath,
-          result,
-        })
       }
     }
 
@@ -259,7 +237,8 @@ export async function flush(): Promise<void> {
       },
     })
 
-    return cb(null, true)
+    cb(null, true)
+    return
   }, 25)
 
   for (const pagePath of pagePaths) {
@@ -273,6 +252,7 @@ export async function flush(): Promise<void> {
   }
 
   writePageDataActivity.end()
+
   isFlushing = false
 
   return
@@ -320,7 +300,7 @@ export async function handleStalePageData(): Promise<void> {
 
   const expectedPageDataFiles = new Set<string>()
   store.getState().pages.forEach(page => {
-    expectedPageDataFiles.add(getFilePath(`public`, page.path))
+    expectedPageDataFiles.add(generatePageDataPath(`public`, page.path))
   })
 
   const deletionPromises: Array<Promise<void>> = []

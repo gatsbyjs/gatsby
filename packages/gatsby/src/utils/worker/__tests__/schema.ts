@@ -37,6 +37,14 @@ jest.mock(`chokidar`, () => {
   return chokidar
 })
 
+jest.mock(`gatsby-telemetry`, () => {
+  return {
+    decorateEvent: jest.fn(),
+    trackError: jest.fn(),
+    trackCli: jest.fn(),
+  }
+})
+
 describeWhenLMDB(`worker (schema)`, () => {
   let stateFromWorker: CombinedState<IGatsbyState>
 
@@ -71,9 +79,11 @@ describeWhenLMDB(`worker (schema)`, () => {
   })
 
   it(`should have functioning createSchemaCustomization`, async () => {
-    const typeDefinitions = (stateFromWorker.schemaCustomization.types[0] as {
-      typeOrTypeDef: DocumentNode
-    }).typeOrTypeDef.definitions
+    const typeDefinitions = (
+      stateFromWorker.schemaCustomization.types[0] as {
+        typeOrTypeDef: DocumentNode
+      }
+    ).typeOrTypeDef.definitions
 
     expect(typeDefinitions).toEqual(
       expect.arrayContaining([

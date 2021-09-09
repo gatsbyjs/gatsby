@@ -18,6 +18,8 @@ describe(`NodeModel`, () => {
     `Site`,
     `SitePage`,
     `SiteFunction`,
+    `SitePlugin`,
+    `SiteBuildMetadata`,
     `Author`,
     `Contributor`,
     `RemoteFile`,
@@ -1223,9 +1225,8 @@ describe(`NodeModel`, () => {
       it(`Doesn't track copied objects`, () => {
         const node = nodeModel.getNodeById({ id: `id1` })
         const copiedInlineObject = { ...node.inlineObject }
-        const trackedRootNode = nodeModel.findRootNodeAncestor(
-          copiedInlineObject
-        )
+        const trackedRootNode =
+          nodeModel.findRootNodeAncestor(copiedInlineObject)
 
         expect(trackedRootNode).not.toEqual(node)
       })
@@ -1249,9 +1250,8 @@ describe(`NodeModel`, () => {
       it(`Doesn't track copied objects`, () => {
         const node = nodeModel.getNodesByIds({ ids: [`id1`] })[0]
         const copiedInlineObject = { ...node.inlineObject }
-        const trackedRootNode = nodeModel.findRootNodeAncestor(
-          copiedInlineObject
-        )
+        const trackedRootNode =
+          nodeModel.findRootNodeAncestor(copiedInlineObject)
 
         expect(trackedRootNode).not.toEqual(node)
       })
@@ -1275,9 +1275,8 @@ describe(`NodeModel`, () => {
       it(`Doesn't track copied objects`, () => {
         const node = nodeModel.getAllNodes({ type: `Test` })[0]
         const copiedInlineObject = { ...node.inlineObject }
-        const trackedRootNode = nodeModel.findRootNodeAncestor(
-          copiedInlineObject
-        )
+        const trackedRootNode =
+          nodeModel.findRootNodeAncestor(copiedInlineObject)
 
         expect(trackedRootNode).not.toEqual(node)
       })

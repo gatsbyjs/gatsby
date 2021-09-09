@@ -47,6 +47,7 @@
   - [html.fallbackImageMaxWidth](#htmlfallbackimagemaxwidth)
   - [html.imageQuality](#htmlimagequality)
   - [html.createStaticFiles](#htmlcreatestaticfiles)
+  - [html.generateWebpImages](#htmlgeneratewebpimages)
 - [type](#type)
   - [type.\_\_all](#type__all)
     - [type.\_\_all.where](#type__allwhere)
@@ -57,6 +58,7 @@
     - [type.\_\_all.beforeChangeNode](#type__allbeforechangenode)
   - [type.RootQuery](#typerootquery)
   - [type.MediaItem](#typemediaitem)
+    - [type.MediaItem.createFileNodes](#typemediaitemcreatefilenodes)
     - [type.MediaItem.lazyNodes](#typemediaitemlazynodes)
     - [type.MediaItem.localFile](#typemediaitemlocalfile)
       - [type.MediaItem.localFile.excludeByMimeTypes](#typemediaitemlocalfileexcludebymimetypes)
@@ -225,7 +227,7 @@ An object which contains GraphQL debugging options. See below for options.
 
 #### debug.graphql.showQueryVarsOnError
 
-When a GraphQL error is returned and the process exits, this plugin option determines wether or not to log out the query vars that were used in the query that returned GraphQL errors.
+When a GraphQL error is returned and the process exits, this plugin option determines whether or not to log out the query vars that were used in the query that returned GraphQL errors.
 
 **Field type**: `Boolean`
 
@@ -291,7 +293,7 @@ If enabled, GraphQL queries will be copied to your OS clipboard (if supported) w
 
 #### debug.graphql.panicOnError
 
-Determines wether or not to panic when any GraphQL error is returned.
+Determines whether or not to panic when any GraphQL error is returned.
 
 Default is false because sometimes non-critical errors are returned alongside valid data.
 
@@ -315,7 +317,7 @@ Default is false because sometimes non-critical errors are returned alongside va
 
 #### debug.graphql.onlyReportCriticalErrors
 
-Determines wether or not to log non-critical errors. A non-critical error is any error which is returned alongside valid data. In previous versions of WPGraphQL this was very noisy because trying to access an entity that was private returned errors.
+Determines whether or not to log non-critical errors. A non-critical error is any error which is returned alongside valid data. In previous versions of WPGraphQL this was very noisy because trying to access an entity that was private returned errors.
 
 **Field type**: `Boolean`
 
@@ -960,6 +962,26 @@ When this is true, any url's which are wrapped in "", '', or () and which contai
 
 ```
 
+### html.generateWebpImages
+
+When this is true, .webp images will be generated for images in html fields in addition to the images gatsby-image normally generates.
+
+**Field type**: `Boolean`
+
+**Default value**: `false`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    html: {
+      generateWebpImages: false,
+    },
+  },
+}
+
+```
+
 ## type
 
 Options related to specific types in the remote schema.
@@ -1066,7 +1088,7 @@ Excludes fields on a type by field name.
 
 #### type.\_\_all.nodeInterface
 
-Determines wether or not this type will be treated as an interface comprised entirely of other Gatsby node types.
+Determines whether or not this type will be treated as an interface comprised entirely of other Gatsby node types.
 
 **Field type**: `Boolean`
 
@@ -1086,9 +1108,9 @@ Determines wether or not this type will be treated as an interface comprised ent
 
 #### type.\_\_all.beforeChangeNode
 
-A function which is invoked before a node is created, updated, or deleted. This is a hook in point to modify the node or perform side-effects related to it.
+A function which is invoked before a node is created, updated, or deleted. This is a hook in point to modify the node or perform side-effects related to it. This option should be a path to a JS file where the default export is the beforeChangeNode function. The path can be relative to your gatsby-node.js or absolute. Currently you can inline a function by writing it out directly in this option but starting from Gatsby v4 only a path to a function file will work.
 
-**Field type**: `Function`
+**Field type**: `String | Function`
 
 ### type.RootQuery
 
@@ -1114,9 +1136,19 @@ A special type which is applied to any non-node root fields that are ingested an
 
 **Field type**: `Object`
 
+#### type.MediaItem.createFileNodes
+
+This option controls whether or not a File node will be automatically created for each MediaItem node (available on MediaItem.localFile). Set this to false if you don't want Gatsby to download the corresponding file for each media item.
+
+**Field type**: `Boolean`
+
+**Default value**: `true`
+
 #### type.MediaItem.lazyNodes
 
 Enables a different media item sourcing strategy. Instead of fetching Media Items that are referenced by other nodes, Media Items will be fetched in connection resolvers from other nodes. This may be desirable if you're not using all of the connected images in your WP instance. This is not currently recommended because it messes up cli output and can be slow due to query running concurrency.
+
+This option no longer works starting in Gatsby v4+. If you want to prevent this plugin from creating File nodes for each MediaItem node, set the type.MediaItem.createFileNodes option to false instead.
 
 **Field type**: `Boolean`
 
@@ -1295,7 +1327,7 @@ The name of the plugin options preset.
 
 ### presets[].useIf
 
-A function used to determine wether or not to apply this plugin options preset. It should return a boolean value. True will cause the preset to apply, false will disclude it.
+A function used to determine whether or not to apply this plugin options preset. It should return a boolean value. True will cause the preset to apply, false will disclude it.
 
 **Field type**: `Function`
 

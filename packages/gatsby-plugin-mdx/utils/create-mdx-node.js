@@ -51,17 +51,13 @@ async function createMdxNodeExtraBabel({ id, node, content }) {
 }
 
 async function createMdxNodeLessBabel({ id, node, content, ...helpers }) {
-  const {
-    frontmatter,
-    scopeImports,
-    scopeExports,
-    scopeIdentifiers,
-  } = await findImportsExports({
-    mdxNode: node,
-    rawInput: content,
-    absolutePath: node.absolutePath,
-    ...helpers,
-  })
+  const { frontmatter, scopeImports, scopeExports, scopeIdentifiers } =
+    await findImportsExports({
+      mdxNode: node,
+      rawInput: content,
+      absolutePath: node.absolutePath,
+      ...helpers,
+    })
 
   const mdxNode = {
     id,

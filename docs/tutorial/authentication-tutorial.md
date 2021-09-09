@@ -302,7 +302,7 @@ export default App
 
 With the client-only routes in place, you must now refactor some files to account for the user data available.
 
-The navigation bar will show the user name and logout option to registered users:
+The navigation bar will show the username and logout option to registered users:
 
 ```jsx:title=src/components/nav-bar.js
 import React from "react"
@@ -353,7 +353,7 @@ export default function NavBar() {
 } // highlight-line
 ```
 
-The index page will suggest to login or check the profile accordingly:
+The index page will suggest to log in or check the profile accordingly:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
