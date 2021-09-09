@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-shopify",
-  "version": "5.6.0-next.4",
+  "version": "5.6.0-next.5",
   "description": "Gatsby source plugin for building websites using Shopify as a data source.",
   "scripts": {
     "watch": "tsc-watch --outDir .",
@@ -21,8 +21,8 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "gatsby-core-utils": "^2.14.0-next.2",
-    "gatsby-source-filesystem": "^3.14.0-next.2",
     "gatsby-plugin-utils": "^1.14.0-next.2",
+    "gatsby-source-filesystem": "^3.14.0-next.2",
     "node-fetch": "^2.6.1",
     "sharp": "^0.29.0",
     "shift-left": "^0.1.5"
