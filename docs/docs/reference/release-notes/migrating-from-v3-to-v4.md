@@ -4,7 +4,7 @@ title: Migrating from v3 to v4
 
 Looking for the [v3 docs](https://v3.gatsbyjs.com)?
 
-> Have you run into something that's not covered here? [Add your changes to GitHub](https://github.com/gatsbyjs/gatsby/tree/master/docs/docs/reference/release-notes/migrating-from-v3-to-v4.md)!
+> Have you run into something that's not covered here? [Add your changes to GitHub](https://github.com/gatsbyjs/gatsby/tree/v4-docs/docs/docs/reference/release-notes/migrating-from-v3-to-v4.md)!
 
 ## Introduction
 
@@ -104,7 +104,7 @@ exports.sourceNodes = async ({ actions, getNodesByType, cache }) => {
   const { touchNode, getNode } = actions
   const myNodeId = await cache.get("some-key")
 
-  touchNode(getNode(myNodeId))
+  touchNode(getNode(myNodeId)) // highlight-line
 }
 ```
 
@@ -141,13 +141,89 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 ### Setting values on module context outside of `onPluginInit`
 
-Sites and in particular plugins that rely on setting values on module context to access them later in other lifecycles will need to use `onPluginInit`.
+Sites and in particular plugins that rely on setting values on module context to access them later in other lifecycles will need to use `onPluginInit`. This is also the case for when you use `onPreInit` or `onPreBootstrap`. The `onPluginInit` API will run in each worker as it is initialized and thus each worker then has the initial plugin state.
 
-> TODO: More explanation & examples
+Here's an example of a plugin fetching a GraphQL schema at the earliest stage in order to use it in later lifecycles:
 
-This also applies to using the `reporter.setErrorMap` function. It now also needs to be run inside `onPluginInit`.
+```js:title=gatsby-node.js
+const stateCache = {}
 
-> TODO: Example
+const initializePlugin = async (args, pluginOptions) => {
+  const res = await getRemoteGraphQLSchema()
+  const graphqlSdl = await generateSdl(res)
+  const typeMap = await generateTypeMap(res)
+
+  stateCache['sdl'] = graphqlSdl
+  stateCache['typeMap'] = typeMap
+}
+
+// highlight-start
+exports.onPreBootstrap = async (args, pluginOptions) => {
+  await initializePlugin(args, pluginOptions)
+}
+// highlight-end
+
+exports.createResolvers = ({ createResolvers }, pluginOptions) => {
+  const typeMap = stateCache['typeMap']
+
+  createResolvers(generateResolvers(typeMap))
+}
+
+exports.createSchemaCustomization = ({ actions }, pluginOptions) => {
+  const { createTypes } = actions
+
+  const sdl = stateCache['sdl']
+
+  createTypes(sdl)
+}
+```
+
+In order to make this work for Gatsby 4 & Parallel Query Running the logic inside `onPreBootstrap` must be moved to `onPluginInit`:
+
+```js:title=gatsby-node.js
+// Rest of initializePlugin stays the same
+
+exports.onPluginInit = async (args, pluginOptions) => {
+  await initializePlugin(args, pluginOptions)
+}
+
+// Schema APIs stay the same
+```
+
+This also applies to using the `reporter.setErrorMap` function. It now also needs to be run inside `onPluginInit` instead of in `onPreInit`.
+
+```js
+const ERROR_MAP = {
+  10000: {
+    text: context => context.sourceMessage,
+    level: "ERROR",
+    category: "SYSTEM",
+  },
+}
+
+// highlight-start
+exports.onPluginInit = ({ reporter }) => {
+  reporter.setErrorMap(ERROR_MAP)
+}
+// highlight-end
+
+const getDataFromAPI = async ({ reporter }) => {
+  let data
+  try {
+    const res = await requestAPI()
+    data = res
+  } catch (error) {
+    reporter.panic({
+      id: "10000",
+      context: {
+        sourceMessage: error.message,
+      },
+    })
+  }
+
+  return data
+}
+```
 
 ### Removal of obsolete flags
 
@@ -163,15 +239,19 @@ This section explains deprecations that were made for Gatsby 4. These old behavi
 
 ### `nodeModel.runQuery`
 
-TODO
+This method is available in custom resolvers and returns an unbound array of nodes (without any limit and skip applied). While this is cheap with an in-memory store, with the new LMDB database this is quite expensive. You should instead use `nodeModel.findOne` and `nodeModel.findAll` as they support limit and skip directly.
+
+> TODO: Example code before/after
 
 ### `nodeModel.getAllNodes`
 
-TODO
+Similar to `nodeModel.runQuery` the `nodeModel.getAllNodes` returns an unbound array of **all** nodes which is also quite expensive to run. We recommend using `nodeModel.findAll` instead as it at least returns an iterable and not an array.
+
+> TODO: Example code before/after
 
 ### `___NODE` convention
 
-TODO
+> TODO: Example code before/after
 
 ## For Plugin Maintainers
 
