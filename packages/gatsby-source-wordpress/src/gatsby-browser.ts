@@ -54,6 +54,7 @@ function hydrateImages(): void {
           if (ReactDOM.createRoot) {
             // @ts-ignore - createRoot is on ReactDOM
             const root = ReactDOM.createRoot(image.parentNode.parentNode)
+            // @ts-ignore - not same as below, not sure why it's complaining
             root.render(React.createElement(mod.default, imageProps), {
               hydrate: true,
             })
