@@ -4,11 +4,11 @@ title: Using Server-side Rendering (SSR)
 
 ## Introduction
 
-Server-side Rendering (SSR) is one of [Gatsby's rendering options](#link-to-rendering-options-doc) and allows you to pre-render a page with data that is fetched when a user visits the page. While it is recommended to use [Static Site Generation (SSG)](#link) or [Deferred Static Generation (DSG)](#) over SSR you might have use cases that require it, e.g. dynamic personalization, authenticated data, A/B testing, configurability based on location or user data. If you don't need to pre-render the page you can use [client-only routes](/docs/how-to/routing/client-only-routes-and-user-authentication/).
+Server-side Rendering (SSR) is one of [Gatsby's rendering options](/docs/conceptual/rendering-options/) and allows you to pre-render a page with data that is fetched when a user visits the page. While it is recommended to use [Static Site Generation (SSG)](/docs/conceptual/rendering-options#static-site-generation-ssg) or [Deferred Static Generation (DSG)](/docs/conceptual/rendering-options#deferred-static-generation-dsg) over SSR you might have use cases that require it, e.g. dynamic personalization, authenticated data, A/B testing, configurability based on location or user data. If you don't need to pre-render the page you can use [client-only routes](/docs/how-to/routing/client-only-routes-and-user-authentication/).
 
 In this guide, you'll learn how to use `getServerData`, fetch an image from a dog API, and display it dynamically on the page.
 
-For full documentation on all options, see [the reference guide](#shared-rendering-options-guide).
+For full documentation on all options, see [the reference guide](/docs/reference/rendering-options/server-side-rendering/).
 
 ## Prerequisites
 
@@ -117,5 +117,5 @@ If you haven't already, start `gatsby develop` and visit `http://localhost:8000/
 
 ## Additional Resources
 
-- [API Reference guide](#shared-rendering-options-guide)
+- [API Reference guide](/docs/reference/rendering-options/server-side-rendering/)
 - [Link to GatsbyCamp Video?](#)
