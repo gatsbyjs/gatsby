@@ -570,7 +570,7 @@ export async function initialize({
 
   store.dispatch({
     type: `SET_PROGRAM_EXTENSIONS`,
-    payload: _.flattenDeep([extensions, apiResults]),
+    payload: _.compact(_.flattenDeep([extensions, apiResults])),
   })
 
   const workerPool = WorkerPool.create()
