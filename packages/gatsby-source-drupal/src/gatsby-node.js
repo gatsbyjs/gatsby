@@ -574,8 +574,10 @@ ${JSON.stringify(webhookBody, null, 4)}
     const fileNodes = [...nodes.values()].filter(isFileNode)
 
     if (fileNodes.length) {
-      const downloadingFilesActivity =
-        reporter.activityTimer(`Remote file download`)
+      const downloadingFilesActivity = reporter.activityTimer(
+        `Remote file download`,
+        { parentSpan }
+      )
       downloadingFilesActivity.start()
       try {
         await asyncPool(concurrentFileRequests, fileNodes, async node => {
