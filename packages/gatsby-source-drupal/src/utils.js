@@ -136,8 +136,9 @@ const handleDeletedNode = async ({
     return deletedNode
   }
 
-  // Remove the deleted node from backRefsNamesLookup
+  // Remove the deleted node from backRefsNamesLookup and referencedNodesLookup
   backRefsNamesLookup.delete(deletedNode)
+  referencedNodesLookup.delete(deletedNode)
 
   // Remove relationships from other nodes and re-create them.
   Object.keys(deletedNode.relationships).forEach(key => {
@@ -145,41 +146,48 @@ const handleDeletedNode = async ({
     ids = [].concat(ids)
     ids.forEach(id => {
       const node = getNode(id)
-      let referencedNodes = referencedNodesLookup.get(node)
-      if (referencedNodes?.includes(deletedNode.id)) {
-        // Loop over relationships and cleanup references.
-        Object.entries(node.relationships).forEach(([key, value]) => {
-          // If a string ref matches, delete it.
-          if (_.isString(value) && value === deletedNode.id) {
-            delete node.relationships[key]
-          }
 
-          // If it's an array, filter, then check if the array is empty and then delete
-          // if so
-          if (_.isArray(value)) {
-            value = value.filter(v => v !== deletedNode.id)
-
-            if (value.length === 0) {
+      // The referenced node might have already been deleted.
+      if (node) {
+        let referencedNodes = referencedNodesLookup.get(node)
+        if (referencedNodes?.includes(deletedNode.id)) {
+          // Loop over relationships and cleanup references.
+          Object.entries(node.relationships).forEach(([key, value]) => {
+            // If a string ref matches, delete it.
+            if (_.isString(value) && value === deletedNode.id) {
               delete node.relationships[key]
-            } else {
-              node.relationships[key] = value
             }
-          }
-        })
 
-        // Remove deleted node from array of referencedNodes
-        referencedNodes = referencedNodes.filter(nId => nId !== deletedNode.id)
-        referencedNodesLookup.set(node, referencedNodes)
+            // If it's an array, filter, then check if the array is empty and then delete
+            // if so
+            if (_.isArray(value)) {
+              value = value.filter(v => v !== deletedNode.id)
+
+              if (value.length === 0) {
+                delete node.relationships[key]
+              } else {
+                node.relationships[key] = value
+              }
+            }
+          })
+
+          // Remove deleted node from array of referencedNodes
+          referencedNodes = referencedNodes.filter(
+            nId => nId !== deletedNode.id
+          )
+          referencedNodesLookup.set(node, referencedNodes)
+        }
+
+        // Recreate the referenced node with its now cleaned-up relationships.
+        if (node.internal.owner) {
+          delete node.internal.owner
+        }
+        if (node.fields) {
+          delete node.fields
+        }
+        node.internal.contentDigest = createContentDigest(node)
+        actions.createNode(node)
       }
-      // Recreate the referenced node with its now cleaned-up relationships.
-      if (node.internal.owner) {
-        delete node.internal.owner
-      }
-      if (node.fields) {
-        delete node.fields
-      }
-      node.internal.contentDigest = createContentDigest(node)
-      actions.createNode(node)
     })
   })
 

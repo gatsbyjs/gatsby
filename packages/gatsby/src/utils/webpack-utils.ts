@@ -765,7 +765,7 @@ export const createWebpackUtils = (
     })
 
   plugins.moment = (): WebpackPluginInstance =>
-    plugins.ignore(/^\.\/locale$/, /moment$/)
+    plugins.ignore({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ })
 
   plugins.extractStats = (): GatsbyWebpackStatsExtractor =>
     new GatsbyWebpackStatsExtractor()
