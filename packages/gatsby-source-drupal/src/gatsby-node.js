@@ -140,11 +140,6 @@ exports.sourceNodes = async (
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
 
-  const drupalSouceSpan = tracer.startSpan(`sourceNodes`, {
-    childOf: parentSpan,
-  })
-  drupalSouceSpan.setTag(`plugin`, `gatsby-source-drupal`)
-
   // Update the concurrency limit from the plugin options
   requestQueue.concurrency = concurrentAPIRequests
 
@@ -152,7 +147,7 @@ exports.sourceNodes = async (
     const changesActivity = reporter.activityTimer(
       `loading Drupal content changes`,
       {
-        parentSpan: drupalSouceSpan,
+        parentSpan,
       }
     )
     changesActivity.start()
@@ -233,10 +228,11 @@ ${JSON.stringify(webhookBody, null, 4)}
   }
 
   if (fastBuilds) {
-    const fastBuildsSpan = tracer.startSpan(`sourceNodes.deltaFetch`, {
-      childOf: drupalSouceSpan,
+    const fastBuildsSpan = tracer.startSpan(`sourceNodes.fetch`, {
+      childOf: parentSpan,
     })
     fastBuildsSpan.setTag(`plugin`, `gatsby-source-drupal`)
+    fastBuildsSpan.setTag(`sourceNodes.fetch.type`, `delta`)
 
     const lastFetched =
       store.getState().status.plugins?.[`gatsby-source-drupal`]?.lastFetched ??
@@ -278,29 +274,31 @@ ${JSON.stringify(webhookBody, null, 4)}
         setPluginStatus({ lastFetched: res.body.timestamp })
         requireFullRebuild = true
       } else {
-        fastBuildsSpan.setTag(
-          `sourceNodes.deltaFetch.nodesChanged`,
-          res.body.entities?.length
-        )
-
-        const touchNodesSpan = tracer.startSpan(`touchNodes`, {
+        const touchNodesSpan = tracer.startSpan(`sourceNodes.touchNodes`, {
           childOf: fastBuildsSpan,
         })
         touchNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
 
         // Touch nodes so they are not garbage collected by Gatsby.
+        let touchCount = 0
         getNodes().forEach(node => {
           if (node.internal.owner === `gatsby-source-drupal`) {
+            touchCount += 1
             touchNode(node)
           }
         })
+        touchNodesSpan.setTag(`sourceNodes.touchNodes.count`, touchCount)
         touchNodesSpan.finish()
 
-        const createNodesSpan = tracer.startSpan(`sourceNodes.createnodes`, {
-          childOf: fastBuildsSpan,
+        const createNodesSpan = tracer.startSpan(`sourceNodes.createNodes`, {
+          childOf: parentSpan,
         })
         createNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
-        createNodesSpan.setTag(`sourceNodes.type`, `delta-fetch`)
+        createNodesSpan.setTag(`sourceNodes.fetch.type`, `delta`)
+        createNodesSpan.setTag(
+          `sourceNodes.createNodes.count`,
+          res.body.entities?.length
+        )
 
         // Process sync data from Drupal.
         const nodesToSync = res.body.entities
@@ -350,7 +348,6 @@ ${JSON.stringify(webhookBody, null, 4)}
 
       drupalFetchIncrementalActivity.end()
       fastBuildsSpan.finish()
-      drupalSouceSpan.finish()
       return
     }
 
@@ -358,15 +355,19 @@ ${JSON.stringify(webhookBody, null, 4)}
     fastBuildsSpan.finish()
 
     if (!requireFullRebuild) {
-      drupalSouceSpan.finish()
       return
     }
   }
 
   const drupalFetchActivity = reporter.activityTimer(
     `Fetch all data from Drupal`,
-    { parentSpan: drupalSouceSpan }
+    { parentSpan }
   )
+  const fullFetchSpan = tracer.startSpan(`sourceNodes.fetch`, {
+    childOf: parentSpan,
+  })
+  fullFetchSpan.setTag(`plugin`, `gatsby-source-drupal`)
+  fullFetchSpan.setTag(`sourceNodes.fetch.type`, `full`)
 
   // Fetch articles.
   reporter.info(`Starting to fetch all data from Drupal`)
@@ -384,7 +385,7 @@ ${JSON.stringify(webhookBody, null, 4)}
         headers,
         searchParams: params,
         responseType: `json`,
-        parentSpan: drupalFetchActivity.span,
+        parentSpan: fullFetchSpan,
       },
     ])
     allData = await Promise.all(
@@ -433,7 +434,7 @@ ${JSON.stringify(webhookBody, null, 4)}
                 password: basicAuth.password,
                 headers,
                 responseType: `json`,
-                parentSpan: drupalFetchActivity.span,
+                parentSpan: fullFetchSpan,
               },
             ])
           } catch (error) {
@@ -533,12 +534,13 @@ ${JSON.stringify(webhookBody, null, 4)}
   }
 
   drupalFetchActivity.end()
+  fullFetchSpan.finish()
 
   const createNodesSpan = tracer.startSpan(`sourceNodes.createNodes`, {
-    childOf: drupalSouceSpan,
+    childOf: parentSpan,
   })
   createNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
-  createNodesSpan.setTag(`sourceNodes.type`, `full-fetch`)
+  createNodesSpan.setTag(`sourceNodes.fetch.type`, `full`)
 
   const nodes = new Map()
 
@@ -552,7 +554,7 @@ ${JSON.stringify(webhookBody, null, 4)}
     })
   })
 
-  createNodesSpan.setTag(`sourceNodes.nodes.count`, nodes.size)
+  createNodesSpan.setTag(`sourceNodes.createNodes.count`, nodes.size)
 
   // second pass - handle relationships and back references
   nodes.forEach(node => {
@@ -608,7 +610,6 @@ ${JSON.stringify(webhookBody, null, 4)}
   initialSourcing = false
 
   createNodesSpan.finish()
-  drupalSouceSpan.finish()
   return
 }
 
