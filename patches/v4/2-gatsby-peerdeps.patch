@@ -314,19 +314,6 @@ index e4196508b4..7baca2a7c3 100644
      "netlify-cms-app": "^2.9.0",
      "react": "^16.9.0 || ^17.0.0",
      "react-dom": "^16.9.0 || ^17.0.0"
-diff --git a/packages/gatsby-plugin-netlify/package.json b/packages/gatsby-plugin-netlify/package.json
-index 2c1175afd4..77f06f0532 100644
---- a/packages/gatsby-plugin-netlify/package.json
-+++ b/packages/gatsby-plugin-netlify/package.json
-@@ -37,7 +37,7 @@
-   "license": "MIT",
-   "main": "index.js",
-   "peerDependencies": {
--    "gatsby": "^3.0.0-next.0"
-+    "gatsby": "^4.0.0-alpha-9689ff"
-   },
-   "repository": {
-     "type": "git",
 diff --git a/packages/gatsby-plugin-no-sourcemaps/package.json b/packages/gatsby-plugin-no-sourcemaps/package.json
 index 8e48fb3d67..23d9fb9d1c 100644
 --- a/packages/gatsby-plugin-no-sourcemaps/package.json
