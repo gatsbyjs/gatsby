@@ -63,7 +63,7 @@ async function worker([url, options]) {
   httpSpan.setTag(`http.status_message`, response.statusMessage)
   httpSpan.setTag(`http.method`, `GET`)
   httpSpan.setTag(`net.peer_ip`, response.ip)
-  httpSpan.setTag(`http.response_content_length`, response.rawBody.length)
+  httpSpan.setTag(`http.response_content_length`, response.rawBody?.length)
 
   httpSpan.finish()
 
@@ -280,7 +280,7 @@ ${JSON.stringify(webhookBody, null, 4)}
       } else {
         fastBuildsSpan.setTag(
           `sourceNodes.deltaFetch.nodesChanged`,
-          res.body.entities.length
+          res.body.entities?.length
         )
 
         const touchNodesSpan = tracer.startSpan(`touchNodes`, {
@@ -295,6 +295,12 @@ ${JSON.stringify(webhookBody, null, 4)}
           }
         })
         touchNodesSpan.finish()
+
+        const createNodesSpan = tracer.startSpan(`sourceNodes.createnodes`, {
+          childOf: fastBuildsSpan,
+        })
+        createNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
+        createNodesSpan.setTag(`sourceNodes.type`, `delta-fetch`)
 
         // Process sync data from Drupal.
         const nodesToSync = res.body.entities
@@ -336,6 +342,7 @@ ${JSON.stringify(webhookBody, null, 4)}
           }
         }
 
+        createNodesSpan.finish()
         setPluginStatus({ lastFetched: res.body.timestamp })
       }
     } catch (e) {
@@ -527,6 +534,12 @@ ${JSON.stringify(webhookBody, null, 4)}
 
   drupalFetchActivity.end()
 
+  const createNodesSpan = tracer.startSpan(`sourceNodes.createNodes`, {
+    childOf: drupalSouceSpan,
+  })
+  createNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
+  createNodesSpan.setTag(`sourceNodes.type`, `full-fetch`)
+
   const nodes = new Map()
 
   // first pass - create basic nodes
@@ -538,6 +551,8 @@ ${JSON.stringify(webhookBody, null, 4)}
       nodes.set(node.id, node)
     })
   })
+
+  createNodesSpan.setTag(`sourceNodes.nodes.count`, nodes.size)
 
   // second pass - handle relationships and back references
   nodes.forEach(node => {
@@ -592,6 +607,7 @@ ${JSON.stringify(webhookBody, null, 4)}
   // We're now done with the initial sourcing.
   initialSourcing = false
 
+  createNodesSpan.finish()
   drupalSouceSpan.finish()
   return
 }
