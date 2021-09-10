@@ -33,7 +33,7 @@ The configuration file is a JavaScript file that exports two functions: `create`
 
 ### 3. Start Gatsby with tracing turned on
 
-The above configuration file can be passed to Gatsby with the `--open-tracing-config-file` command-line option. When Gatsby is started with this option, it will load the supplied tracing configuration file, and call its `create` function. The returned Tracer will be used for tracing the build. Once the build has stopped, the configuration file's `stop` method will be called, allowing the tracing implementation to perform any cleanup.
+The above configuration file can be passed to Gatsby with the `--open-tracing-config-file` command-line option or an environment variable named `GATSBY_OPEN_TRACING_CONFIG_FILE`. When Gatsby is started with this option, it will load the supplied tracing configuration file, and call its `create` function. The returned Tracer will be used for tracing the build. Once the build has stopped, the configuration file's `stop` method will be called, allowing the tracing implementation to perform any cleanup.
 
 ## Tracing backend examples
 
@@ -108,7 +108,7 @@ exports.stop = async () => {
    we run Gatsby in a special way telling Node to require our tracing file immediately.
 
 ```shell
-node -r ./tracing.js node_modules/gatsby/cli.js build --open-tracing-config-file tracing.js
+GATSBY_OPEN_TRACING_CONFIG_FILE=tracing.js node -r ./tracing.js node_modules/gatsby/cli.js build
 ```
 
 ### Local Jaeger with Docker
