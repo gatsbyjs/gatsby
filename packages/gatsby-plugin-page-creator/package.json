@@ -30,6 +30,7 @@
     "chokidar": "^3.5.2",
     "fs-exists-cached": "^1.0.0",
     "gatsby-core-utils": "^2.14.0-next.2",
+    "gatsby-plugin-utils": "^1.14.0-next.2",
     "gatsby-page-utils": "^1.14.0-next.2",
     "gatsby-telemetry": "^2.14.0-next.2",
     "globby": "^11.0.4",
