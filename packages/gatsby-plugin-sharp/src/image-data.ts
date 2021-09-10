@@ -115,10 +115,7 @@ export async function generateImageData({
       : DEFAULT_BREAKPOINTS
   }
 
-  const {
-    fit = `cover`,
-    duotone,
-  } = transformOptions
+  const { fit = `cover`, duotone } = transformOptions
 
   let cropFocus = transformOptions.cropFocus || `attention`
 
@@ -142,15 +139,15 @@ export async function generateImageData({
     `center`,
     `centre`,
     `entropy`,
-    `attention`
+    `attention`,
   ]
 
-  if(typeof cropFocus !== 'number' && !cropFocusOptions.includes(cropFocus)) {
+  if (typeof cropFocus !== `number` && !cropFocusOptions.includes(cropFocus)) {
     reporter.error(
       `Invalid cropFocus option '${cropFocus}' specified for ${file.name}.${file.extension}. See https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/#transformoptions for more information about cropFocus.`
     )
 
-    cropFocus = `attention`;
+    cropFocus = `attention`
   }
 
   if (duotone && (!duotone.highlight || !duotone.shadow)) {
