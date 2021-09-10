@@ -4,11 +4,11 @@ title: Using Deferred Static Generation (DSG)
 
 ## Introduction
 
-Deferred Static Generation (DSG) is one of [Gatsby's rendering options](#link-to-rendering-options-doc) and allows you to defer non-critical page generation to user request, speeding up build times. Instead of generating _every_ page up-front you can decide to build certain pages up-front and others only when a user accesses the page. For large sites, with content that is infrequently visited (e.g. old blog posts or certain content types) this can dramatically reduce build times.
+Deferred Static Generation (DSG) is one of [Gatsby's rendering options](/docs/conceptual/rendering-options/) and allows you to defer non-critical page generation to user request, speeding up build times. Instead of generating _every_ page up-front you can decide to build certain pages up-front and others only when a user accesses the page. For large sites, with content that is infrequently visited (e.g. old blog posts or certain content types) this can dramatically reduce build times.
 
 In this guide, you'll learn how to modify your `createPage` calls to only build your preferred pages up-front and leave the rest deferred to the first user request.
 
-For full documentation on all options, see [the reference guide](#shared-rendering-options-guide).
+For full documentation on all options, see [the reference guide](/docs/reference/rendering-options/deferred-static-generation/).
 
 ## Prerequisites
 
@@ -97,5 +97,5 @@ The first 100 pages will receive `defer: false`, the other 900 pages receive `de
 
 ## Additional Resources
 
-- [API Reference guide](#shared-rendering-options-guide)
+- [API Reference guide](/docs/reference/rendering-options/deferred-static-generation/)
 - [Link to GatsbyCamp Video?](#)
