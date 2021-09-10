@@ -798,7 +798,7 @@ index 450f9d966f..ad7b9d0a05 100644
 -    "gatsby-plugin-sharp": "^3.0.0-next.0",
 -    "sharp": "^0.26.0"
 +    "gatsby": "^4.0.0-alpha-9689ff",
-+    "gatsby-plugin-image": "^4.0.0-alpha-9689ff",
++    "gatsby-plugin-image": "^2.0.0-alpha-9689ff",
 +    "gatsby-plugin-sharp": "^4.0.0-alpha-9689ff",
 +    "sharp": "^0.29.0"
    },
