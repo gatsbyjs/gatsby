@@ -92,20 +92,6 @@ exports.onPostBuild = async (
     console.error(e)
   }
 
-  /**
-   * Emit via IPC absolute paths to files that should be stored
-   */
-
-  const fileNodes = getNodesByType(`File`)
-
-  // TODO: This is missing the cacheLocations .cache/caches + .cache/caches-lmdb
-  let fileNodesEmitted
-  for (const file of fileNodes) {
-    fileNodesEmitted = emitFileNodes({
-      path: file.absolutePath,
-    })
-  }
-
   let rewrites = []
   if (pluginOptions.generateMatchPathRewrites) {
     const matchPathsFile = joinPath(
@@ -125,7 +111,6 @@ exports.onPostBuild = async (
   }
 
   await Promise.all([
-    fileNodesEmitted,
     buildHeadersProgram(pluginData, pluginOptions),
     createSiteConfig(pluginData, pluginOptions),
     createRedirects(pluginData, redirects, rewrites),
@@ -168,3 +153,19 @@ const pluginOptionsSchema = function ({ Joi }) {
 }
 
 exports.pluginOptionsSchema = pluginOptionsSchema
+
+exports.onPostBootstrap = async ({ getNodesByType }) => {
+  /**
+   * Emit via IPC absolute paths to files that should be stored
+   */
+  const fileNodes = getNodesByType(`File`)
+
+  // TODO: This is missing the cacheLocations .cache/caches + .cache/caches-lmdb
+  let fileNodesEmitted
+  for (const file of fileNodes) {
+    fileNodesEmitted = emitFileNodes({
+      path: file.absolutePath,
+    })
+  }
+  await fileNodesEmitted
+}
