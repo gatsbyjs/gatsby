@@ -119,28 +119,7 @@ export async function generateImageData({
 
   let cropFocus = transformOptions.cropFocus || `attention`
 
-  const cropFocusOptions = [
-    `top`,
-    `right top`,
-    `right`,
-    `right bottom`,
-    `bottom`,
-    `left bottom`,
-    `left`,
-    `left top`,
-    `north`,
-    `northeast`,
-    `east`,
-    `southeast`,
-    `south`,
-    `southwest`,
-    `west`,
-    `northwest`,
-    `center`,
-    `centre`,
-    `entropy`,
-    `attention`,
-  ]
+  const cropFocusOptions = Object.keys(sharp.position).concat(Object.keys(sharp.gravity)).concat(Object.keys(sharp.strategy))
 
   if (typeof cropFocus !== `number` && !cropFocusOptions.includes(cropFocus)) {
     reporter.error(
