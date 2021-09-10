@@ -238,7 +238,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   let pageRenderer = ``
   let waitForCompilerCloseBuildHtml
   try {
-    const result = await buildRenderer(program, Stage.BuildHTML, buildSpan)
+    const result = await buildRenderer(
+      program,
+      Stage.BuildHTML,
+      buildSSRBundleActivityProgress.span
+    )
     pageRenderer = result.rendererPath
     if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
       // for now copy page-render to `.cache` so page-ssr module can require it as a sibling module
@@ -255,6 +259,19 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       )
     }
     waitForCompilerCloseBuildHtml = result.waitForCompilerClose
+
+    if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+      Promise.all(engineBundlingPromises).then(() => {
+        if (process.send) {
+          process.send({
+            type: `LOG_ACTION`,
+            action: {
+              type: `ENGINES_READY`,
+            },
+          })
+        }
+      })
+    }
 
     // TODO Move to page-renderer
     if (_CFLAGS_.GATSBY_MAJOR === `4`) {
@@ -318,7 +335,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   postBuildActivityTimer.start()
   await apiRunnerNode(`onPostBuild`, {
     graphql: gatsbyNodeGraphQLFunction,
-    parentSpan: buildSpan,
+    parentSpan: postBuildActivityTimer.span,
   })
   postBuildActivityTimer.end()
 

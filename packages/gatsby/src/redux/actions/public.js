@@ -414,6 +414,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     let pageMode: PageMode = `SSG`
     if (page.defer) {
       pageMode = `DSR`
+      internalPage.defer = true
     }
 
     // TODO move to AST Check
