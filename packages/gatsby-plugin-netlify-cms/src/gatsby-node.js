@@ -200,9 +200,11 @@ exports.onCreateWebpackConfig = (
       }),
 
       // Pass in needed Gatsby config values.
-      new webpack.DefinePlugin({
+      plugins.define({
         __PATH__PREFIX__: pathPrefix,
         CMS_PUBLIC_PATH: JSON.stringify(publicPath),
+        CMS_MANUAL_INIT: JSON.stringify(manualInit),
+        PRODUCTION: JSON.stringify(stage !== `develop`),
       }),
 
       new CopyPlugin({
@@ -224,11 +226,6 @@ exports.onCreateWebpackConfig = (
       new HtmlWebpackTagsPlugin({
         tags: externals.map(({ assetName }) => assetName),
         append: false,
-      }),
-
-      new webpack.DefinePlugin({
-        CMS_MANUAL_INIT: JSON.stringify(manualInit),
-        PRODUCTION: JSON.stringify(stage !== `develop`),
       }),
     ].filter(p => p),
 
@@ -281,7 +278,7 @@ exports.onCreateWebpackConfig = (
     plugins: enableIdentityWidget
       ? []
       : [
-          new webpack.IgnorePlugin({
+          plugins.ignore({
             resourceRegExp: /^netlify-identity-widget$/,
           }),
         ],
