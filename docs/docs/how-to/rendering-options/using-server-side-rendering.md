@@ -27,7 +27,7 @@ To follow this guide, create a new page at `src/pages/ssr.js`.
 
 ### Step 1: Adding `getServerData` function
 
-By adding a `getServerData` function to your page you tell Gatsby to choose the SSR rendering option. The function can be async. Add it to your new page:
+By adding an async function called `getServerData` to your page you tell Gatsby to choose the SSR rendering option. Add it to your new page:
 
 ```js:title=src/pages/ssr.js
 import * as React from "react"
