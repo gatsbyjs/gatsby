@@ -57,7 +57,11 @@ export class GraphQLEngine {
         gatsbyWorkers[pluginName]
       )
     }
-    await apiRunnerNode(`unstable_onPluginInit`)
+    if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+      await apiRunnerNode(`onPluginInit`)
+    } else {
+      await apiRunnerNode(`unstable_onPluginInit`)
+    }
     await apiRunnerNode(`createSchemaCustomization`)
 
     // Build runs
