@@ -3,17 +3,13 @@ const _ = require(`lodash`)
 const urlJoin = require(`url-join`)
 import HttpAgent from "agentkeepalive"
 // const http2wrapper = require(`http2-wrapper`)
+const opentracing = require(`opentracing`)
 
 const { HttpsAgent } = HttpAgent
 
 const { setOptions, getOptions } = require(`./plugin-options`)
 
-const {
-  nodeFromData,
-  downloadFile,
-  isFileNode,
-  createNodeIdWithVersion,
-} = require(`./normalize`)
+const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
 const {
   handleReferences,
   handleWebhookUpdate,
@@ -31,6 +27,13 @@ let apiRequestCount = 0
 let initialSourcing = true
 let globalReporter
 async function worker([url, options]) {
+  const tracer = opentracing.globalTracer()
+  const httpSpan = tracer.startSpan(`http.get`, {
+    childOf: options.parentSpan,
+  })
+  httpSpan.setTag(`http.url`, url)
+  httpSpan.setTag(`plugin`, `gatsby-source-drupal`)
+
   // Log out progress during the initial sourcing.
   if (initialSourcing) {
     apiRequestCount += 1
@@ -48,13 +51,23 @@ async function worker([url, options]) {
     }
   }
 
-  return got(url, {
+  const response = await got(url, {
     agent,
     cache: false,
     // request: http2wrapper.auto,
     // http2: true,
     ...options,
   })
+
+  httpSpan.setTag(`http.status_code`, response.statusCode)
+  httpSpan.setTag(`http.status_message`, response.statusMessage)
+  httpSpan.setTag(`http.method`, `GET`)
+  httpSpan.setTag(`net.peer_ip`, response.ip)
+  httpSpan.setTag(`http.response_content_length`, response.rawBody.length)
+
+  httpSpan.finish()
+
+  return response
 }
 
 const requestQueue = require(`fastq`).promise(worker, 20)
@@ -97,6 +110,8 @@ exports.sourceNodes = async (
   },
   pluginOptions
 ) => {
+  const tracer = opentracing.globalTracer()
+
   globalReporter = reporter
   const {
     baseUrl,
@@ -125,6 +140,11 @@ exports.sourceNodes = async (
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
 
+  const drupalSouceSpan = tracer.startSpan(`sourceNodes`, {
+    childOf: parentSpan,
+  })
+  drupalSouceSpan.setTag(`plugin`, `gatsby-source-drupal`)
+
   // Update the concurrency limit from the plugin options
   requestQueue.concurrency = concurrentAPIRequests
 
@@ -132,7 +152,7 @@ exports.sourceNodes = async (
     const changesActivity = reporter.activityTimer(
       `loading Drupal content changes`,
       {
-        parentSpan,
+        parentSpan: drupalSouceSpan,
       }
     )
     changesActivity.start()
@@ -213,6 +233,11 @@ ${JSON.stringify(webhookBody, null, 4)}
   }
 
   if (fastBuilds) {
+    const fastBuildsSpan = tracer.startSpan(`sourceNodes.deltaFetch`, {
+      childOf: drupalSouceSpan,
+    })
+    fastBuildsSpan.setTag(`plugin`, `gatsby-source-drupal`)
+
     const lastFetched =
       store.getState().status.plugins?.[`gatsby-source-drupal`]?.lastFetched ??
       0
@@ -222,7 +247,8 @@ ${JSON.stringify(webhookBody, null, 4)}
     )
 
     const drupalFetchIncrementalActivity = reporter.activityTimer(
-      `Fetch incremental changes from Drupal`
+      `Fetch incremental changes from Drupal`,
+      { parentSpan: fastBuildsSpan }
     )
     let requireFullRebuild = false
 
@@ -238,6 +264,7 @@ ${JSON.stringify(webhookBody, null, 4)}
           headers,
           searchParams: params,
           responseType: `json`,
+          parentSpan: fastBuildsSpan,
         },
       ])
 
@@ -251,12 +278,23 @@ ${JSON.stringify(webhookBody, null, 4)}
         setPluginStatus({ lastFetched: res.body.timestamp })
         requireFullRebuild = true
       } else {
+        fastBuildsSpan.setTag(
+          `sourceNodes.deltaFetch.nodesChanged`,
+          res.body.entities.length
+        )
+
+        const touchNodesSpan = tracer.startSpan(`touchNodes`, {
+          childOf: fastBuildsSpan,
+        })
+        touchNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
+
         // Touch nodes so they are not garbage collected by Gatsby.
         getNodes().forEach(node => {
           if (node.internal.owner === `gatsby-source-drupal`) {
             touchNode(node)
           }
         })
+        touchNodesSpan.finish()
 
         // Process sync data from Drupal.
         const nodesToSync = res.body.entities
@@ -302,18 +340,25 @@ ${JSON.stringify(webhookBody, null, 4)}
       }
     } catch (e) {
       gracefullyRethrow(drupalFetchIncrementalActivity, e)
+
+      drupalFetchIncrementalActivity.end()
+      fastBuildsSpan.finish()
+      drupalSouceSpan.finish()
       return
     }
 
     drupalFetchIncrementalActivity.end()
+    fastBuildsSpan.finish()
 
     if (!requireFullRebuild) {
+      drupalSouceSpan.finish()
       return
     }
   }
 
   const drupalFetchActivity = reporter.activityTimer(
-    `Fetch all data from Drupal`
+    `Fetch all data from Drupal`,
+    { parentSpan: drupalSouceSpan }
   )
 
   // Fetch articles.
@@ -332,6 +377,7 @@ ${JSON.stringify(webhookBody, null, 4)}
         headers,
         searchParams: params,
         responseType: `json`,
+        parentSpan: drupalFetchActivity.span,
       },
     ])
     allData = await Promise.all(
@@ -380,6 +426,7 @@ ${JSON.stringify(webhookBody, null, 4)}
                 password: basicAuth.password,
                 headers,
                 responseType: `json`,
+                parentSpan: drupalFetchActivity.span,
               },
             ])
           } catch (error) {
@@ -545,6 +592,7 @@ ${JSON.stringify(webhookBody, null, 4)}
   // We're now done with the initial sourcing.
   initialSourcing = false
 
+  drupalSouceSpan.finish()
   return
 }
 
