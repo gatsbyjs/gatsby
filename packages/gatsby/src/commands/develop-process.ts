@@ -101,7 +101,9 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     process.exit(0)
   })
 
-  initTracer(program.openTracingConfigFile)
+  initTracer(
+    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
+  )
   markWebpackStatusAsPending()
   reporter.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)
