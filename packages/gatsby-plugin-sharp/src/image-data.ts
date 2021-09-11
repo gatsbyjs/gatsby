@@ -122,7 +122,7 @@ export async function generateImageData({
   const cropFocusOptions = Object.keys(sharp.position).concat(Object.keys(sharp.gravity)).concat(Object.keys(sharp.strategy))
 
   if (typeof cropFocus !== `number` && !cropFocusOptions.includes(cropFocus)) {
-    reporter.error(
+    reporter.panicOnBuild(
       `Invalid cropFocus option '${cropFocus}' specified for ${file.name}.${file.extension}. See https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/#transformoptions for more information about cropFocus.`
     )
 
