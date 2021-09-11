@@ -487,7 +487,7 @@ const createComponentUrls = componentChunkName =>
   )
 
 export class ProdLoader extends BaseLoader {
-  constructor(asyncRequires, matchPaths) {
+  constructor(asyncRequires, matchPaths, pageData) {
     const loadComponent = chunkName => {
       if (!asyncRequires.components[chunkName]) {
         throw new Error(
@@ -504,6 +504,14 @@ export class ProdLoader extends BaseLoader {
     }
 
     super(loadComponent, matchPaths)
+
+    if (pageData) {
+      this.pageDataDb.set(pageData.path, {
+        pagePath: pageData.path,
+        payload: pageData,
+        status: `success`,
+      })
+    }
   }
 
   doPrefetch(pagePath) {

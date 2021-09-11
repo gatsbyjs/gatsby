@@ -25,7 +25,7 @@ import stripPrefix from "./strip-prefix"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
 
-const loader = new ProdLoader(asyncRequires, matchPaths)
+const loader = new ProdLoader(asyncRequires, matchPaths, window.pageData)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
 
