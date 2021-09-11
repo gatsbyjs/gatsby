@@ -46,16 +46,12 @@ module.exports = async (
 
   // we will converge to build-html later on but for now this was the fastest way to get SSR to work
   // TODO remove in v4 - we deprecated this in v3
-  process.env.GATSBY_BUILD_STAGE =
-    suppliedStage === `build-ssr` ? `build-html` : suppliedStage
+  process.env.GATSBY_BUILD_STAGE = suppliedStage
 
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
   const stage = suppliedStage
-  const { rules, loaders, plugins } = createWebpackUtils(
-    suppliedStage === `build-ssr` ? `build-html` : stage,
-    program
-  )
+  const { rules, loaders, plugins } = createWebpackUtils(stage, program)
 
   const { assetPrefix, pathPrefix } = store.getState().config
 
@@ -97,9 +93,7 @@ module.exports = async (
     // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
     envObject.NODE_ENV = JSON.stringify(nodeEnv)
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
-    envObject.BUILD_STAGE = JSON.stringify(
-      stage === `build-ssr` ? `build-html` : stage
-    )
+    envObject.BUILD_STAGE = JSON.stringify(stage)
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
     envObject.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = JSON.stringify(
       !!process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
@@ -165,7 +159,7 @@ module.exports = async (
         return {
           path:
             _CFLAGS_.GATSBY_MAJOR === `4`
-              ? directoryPath(`.cache`, `_routes`)
+              ? directoryPath(ROUTES_DIRECTORY)
               : directoryPath(`public`),
           filename: `[name].js`,
           chunkFilename: `[name].js`,
@@ -181,13 +175,6 @@ module.exports = async (
           path: directoryPath(`public`),
           publicPath: withTrailingSlash(publicPath),
         }
-      case `build-ssr`: {
-        return {
-          path: directoryPath(ROUTES_DIRECTORY),
-          filename: `[name].js`,
-          libraryTarget: `commonjs2`,
-        }
-      }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
     }
@@ -316,7 +303,6 @@ module.exports = async (
       // it gives better line and column numbers
       case `develop-html`:
       case `build-html`:
-      case `build-ssr`:
       case `build-javascript`:
         return `source-map`
       default:
@@ -410,7 +396,6 @@ module.exports = async (
       }
       case `build-html`:
       case `develop-html`:
-      case `build-ssr`:
         // We don't deal with CSS at all when building the HTML.
         // The 'null' loader is used to prevent 'module not found' errors.
         // On the other hand CSS modules loaders are necessary.

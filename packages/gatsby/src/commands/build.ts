@@ -274,35 +274,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
         }
       })
     }
-
-    // TODO Move to page-renderer
-    if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-      const routesWebpackConfig = await webpackConfig(
-        program,
-        program.directory,
-        `build-ssr`,
-        null,
-        { parentSpan: buildSSRBundleActivityProgress.span }
-      )
-
-      await new Promise((resolve, reject) => {
-        const compiler = webpack(routesWebpackConfig)
-        compiler.run(err => {
-          if (err) {
-            return void reject(err)
-          }
-
-          compiler.close(error => {
-            if (error) {
-              return void reject(error)
-            }
-            return void resolve(undefined)
-          })
-
-          return undefined
-        })
-      })
-    }
   } catch (err) {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
   } finally {
