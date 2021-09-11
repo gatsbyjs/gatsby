@@ -33,13 +33,85 @@ The configuration file is a JavaScript file that exports two functions: `create`
 
 ### 3. Start Gatsby with tracing turned on
 
-The above configuration file can be passed to Gatsby with the `--open-tracing-config-file` command-line option. When Gatsby is started with this option, it will load the supplied tracing configuration file, and call its `create` function. The returned Tracer will be used for tracing the build. Once the build has stopped, the configuration file's `stop` method will be called, allowing the tracing implementation to perform any cleanup.
+The above configuration file can be passed to Gatsby with the `--open-tracing-config-file` command-line option or an environment variable named `GATSBY_OPEN_TRACING_CONFIG_FILE`. When Gatsby is started with this option, it will load the supplied tracing configuration file, and call its `create` function. The returned Tracer will be used for tracing the build. Once the build has stopped, the configuration file's `stop` method will be called, allowing the tracing implementation to perform any cleanup.
 
 ## Tracing backend examples
 
 There are many OpenTracing compatible backends available. Below are examples of how to hook [Jaeger](/docs/performance-tracing/#local-jaeger-with-docker) or [Zipkin](/docs/performance-tracing/#local-zipkin-with-docker) into Gatsby.
 
-### local Jaeger with Docker
+### OpenTelemetry
+
+[OpenTelemetry](https://opentelemetry.io/) is the new industry standard for tracing. Most vendors now have
+built-in support for OpenTelemetry. The following is an example of configuring Gatsby to send build traces
+to [Honeycomb](https://www.honeycomb.io/).
+
+1. Install necesary dependencies
+
+```shell
+npm install @grpc/grpc-js @opentelemetry/api @opentelemetry/auto-instrumentations-node @opentelemetry/exporter-collector-grpc @opentelemetry/sdk-node @opentelemetry/shim-opentracing opentracing
+```
+
+2. Create a file named `tracing.js` in the root of your site with the following code (adding your honeycomb API key and database).
+
+```js
+const process = require(`process`)
+const { Metadata, credentials } = require(`@grpc/grpc-js`)
+const api = require(`@opentelemetry/api`)
+const { TracerShim } = require(`@opentelemetry/shim-opentracing`)
+const opentracing = require(`opentracing`)
+const { NodeSDK } = require(`@opentelemetry/sdk-node`)
+const {
+  getNodeAutoInstrumentations,
+} = require(`@opentelemetry/auto-instrumentations-node`)
+const { Resource } = require(`@opentelemetry/resources`)
+const {
+  SemanticResourceAttributes,
+} = require(`@opentelemetry/semantic-conventions`)
+const {
+  CollectorTraceExporter,
+} = require(`@opentelemetry/exporter-collector-grpc`)
+
+const metadata = new Metadata()
+metadata.set(`x-honeycomb-team`, `ADD YOUR API KEY`)
+metadata.set(`x-honeycomb-dataset`, `ADD YOUR DATASET NAME`)
+const traceExporter = new CollectorTraceExporter({
+  url: `grpc://api.honeycomb.io:443/`,
+  credentials: credentials.createSsl(),
+  metadata,
+})
+
+const sdk = new NodeSDK({
+  resource: new Resource({
+    [SemanticResourceAttributes.SERVICE_NAME]: `gatsby`,
+  }),
+  traceExporter,
+  instrumentations: [getNodeAutoInstrumentations()],
+})
+
+sdk
+  .start()
+  .then(() => console.log(`Tracing initialized`))
+  .catch(error => console.log(`Error initializing tracing`, error))
+
+exports.create = () => {
+  // We shim Gatsby's use of OpenTracing for OpenTelemetry
+  const tracer = api.trace.getTracer(`my-tracer`)
+  return new TracerShim(tracer)
+}
+
+exports.stop = async () => {
+  await sdk.shutdown()
+}
+```
+
+3. OpenTelemetry includes a built-in collector which needs to be started first. So
+   we run Gatsby in a special way telling Node to require our tracing file immediately.
+
+```shell
+GATSBY_OPEN_TRACING_CONFIG_FILE=tracing.js node -r ./tracing.js node_modules/gatsby/cli.js build
+```
+
+### Local Jaeger with Docker
 
 [Jaeger](https://www.jaegertracing.io/) is an open source tracing system that can be run locally using Docker.
 

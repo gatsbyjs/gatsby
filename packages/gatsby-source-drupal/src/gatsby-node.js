@@ -146,6 +146,20 @@ exports.sourceNodes = async (
         changesActivity.end()
         return
       }
+
+      if (!action || !data) {
+        reporter.warn(
+          `The webhook body was malformed
+
+${JSON.stringify(webhookBody, null, 4)}
+
+          `
+        )
+
+        changesActivity.end()
+        return
+      }
+
       if (action === `delete`) {
         let nodesToDelete = data
         if (!Array.isArray(data)) {

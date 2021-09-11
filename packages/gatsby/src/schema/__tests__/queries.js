@@ -861,6 +861,87 @@ describe(`Query schema`, () => {
         expect(results.data).toEqual(expected)
       })
 
+      it(`recursively groups query results`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              group(field: frontmatter___title) {
+                fieldValue
+                group(field: frontmatter___authors___name) {
+                  fieldValue
+                  edges {
+                    node {
+                      frontmatter {
+                        title
+                        date(formatString: "YYYY-MM-DD")
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `
+        const results = await runQuery(query)
+        const expected = {
+          allMarkdown: {
+            group: [
+              {
+                fieldValue: `Markdown File 1`,
+                group: [
+                  {
+                    fieldValue: `Author 1`,
+                    edges: [
+                      {
+                        node: {
+                          frontmatter: {
+                            title: `Markdown File 1`,
+                            date: `2019-01-01`,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    fieldValue: `Author 2`,
+                    edges: [
+                      {
+                        node: {
+                          frontmatter: {
+                            title: `Markdown File 1`,
+                            date: `2019-01-01`,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                fieldValue: `Markdown File 2`,
+                group: [
+                  {
+                    fieldValue: `Author 1`,
+                    edges: [
+                      {
+                        node: {
+                          frontmatter: {
+                            title: `Markdown File 2`,
+                            date: null,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        }
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toEqual(expected)
+      })
+
       it(`handles groups added in fragment`, async () => {
         const query = `
           fragment GroupTest on MarkdownConnection {
@@ -1321,6 +1402,53 @@ describe(`Query schema`, () => {
       const results = await runQuery(query)
       expect(results.errors).toBeUndefined()
       expect(results.data.allMarkdown.sum).toBeNull()
+    })
+
+    it(`calculates aggregation in recursively grouped query results`, async () => {
+      const query = `
+        {
+          allMarkdown {
+            group(field: frontmatter___authors___name) {
+              fieldValue
+              group(field: frontmatter___title) {
+                fieldValue
+                max(field: frontmatter___price)
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        allMarkdown: {
+          group: [
+            {
+              fieldValue: `Author 1`,
+              group: [
+                {
+                  fieldValue: `Markdown File 1`,
+                  max: 1.99,
+                },
+                {
+                  fieldValue: `Markdown File 2`,
+                  max: 3.99,
+                },
+              ],
+            },
+            {
+              fieldValue: `Author 2`,
+              group: [
+                {
+                  fieldValue: `Markdown File 1`,
+                  max: 1.99,
+                },
+              ],
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
     })
   })
 
