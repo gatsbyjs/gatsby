@@ -605,7 +605,11 @@ module.exports = {
           page: pathObj,
           skipSsr: req.query[`skip-ssr`] || false,
           store,
-          htmlComponentRendererPath: `${program.directory}/${ROUTES_DIRECTORY}render-page.js`,
+          htmlComponentRendererPath: path.posix.join(
+            program.directory,
+            ROUTES_DIRECTORY,
+            `render-page.js`
+          ),
           directory: program.directory,
         })
         res.status(200).send(renderResponse)
@@ -674,7 +678,11 @@ module.exports = {
             skipSsr: true,
             store,
             error: message,
-            htmlComponentRendererPath: `${program.directory}/${ROUTES_DIRECTORY}render-page.js`,
+            htmlComponentRendererPath: path.posix.join(
+              program.directory,
+              ROUTES_DIRECTORY,
+              `render-page.js`
+            ),
             directory: program.directory,
           })
 
