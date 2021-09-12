@@ -157,10 +157,7 @@ module.exports = async (
         // Generate the file needed to SSR pages.
         // Deleted by build-html.js, since it's not needed for production.
         return {
-          path:
-            _CFLAGS_.GATSBY_MAJOR === `4`
-              ? directoryPath(ROUTES_DIRECTORY)
-              : directoryPath(`public`),
+          path: directoryPath(ROUTES_DIRECTORY),
           filename: `[name].js`,
           chunkFilename: `[name].js`,
           library: {

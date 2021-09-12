@@ -177,7 +177,7 @@ module.exports = {
     const serverDevConfig = await webpackConfig(
       program,
       directory,
-      Stage.SSR,
+      Stage.BuildHTML,
       program.port,
       {
         parentSpan: webpackActivity.span,
@@ -368,7 +368,11 @@ module.exports = {
               .get(page.componentChunkName)!
               .getEntrypointChunk().hash as string
             const modulePath = path.resolve(
-              `${program.directory}/${ROUTES_DIRECTORY}/${page.componentChunkName}.js`
+              path.posix.join(
+                program.directory,
+                ROUTES_DIRECTORY,
+                `${page.componentChunkName}.js`
+              )
             )
 
             // if webpack compilation is diff we delete old cache

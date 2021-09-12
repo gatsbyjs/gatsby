@@ -47,8 +47,6 @@ import {
   mergeWorkerState,
   runQueriesInWorkersQueue,
 } from "../utils/worker/pool"
-import webpackConfig from "../utils/webpack.config.js"
-import { webpack } from "webpack"
 import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpack"
 import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
@@ -246,20 +244,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       buildSSRBundleActivityProgress.span
     )
     pageRenderer = result.rendererPath
-    if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
-      // for now copy page-render to `.cache` so page-ssr module can require it as a sibling module
-      const outputDir = path.join(program.directory, `.cache`, `page-ssr`)
-      engineBundlingPromises.push(
-        fs
-          .ensureDir(outputDir)
-          .then(() =>
-            fs.copyFile(
-              result.rendererPath,
-              path.join(outputDir, `render-page.js`)
-            )
-          )
-      )
-    }
     waitForCompilerCloseBuildHtml = result.waitForCompilerClose
 
     if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
