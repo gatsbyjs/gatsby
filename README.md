@@ -16,7 +16,7 @@
   </strong>
 </p>
 <p align="center">
-  Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps
+  Gatsby is a free and open source framework which is based on React that helps developers to build blazing fast websites and apps
 </p>
 <p align="center">
   <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
@@ -67,7 +67,7 @@ Gatsby is a modern web framework for blazing fast websites.
   dynamic web apps, from blogs to e-commerce sites to user dashboards.
 
 - **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are
-  built using React and GraphQL. Build a uniform workflow for you and your team, regardless of
+  built using React and GraphQL which Builds a uniform workflow for you and your team, regardless of
   whether the data is coming from the same backend.
 
 - **Load Data From Anywhere.** Gatsby pulls in data from any data source, whether it’s Markdown
@@ -76,10 +76,10 @@ Gatsby is a modern web framework for blazing fast websites.
 
 - **Performance Is Baked In.** Ace your performance audits by default. Gatsby automates code
   splitting, image optimization, inlining critical styles, lazy-loading, prefetching resources,
-  and more to ensure your site is fast — no manual tuning required.
+  and much more to ensure that your site is fast — no manual tuning required.
 
 - **Host at Scale for Pennies.** Gatsby sites don’t require servers, so you can host your entire
-  site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be
+  site on a CDN for a fraction of the cost of a server-rendered sites. Many Gatsby sites can be
   hosted entirely free on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/) and other similar services.
 
 [**Learn how to use Gatsby for your next project.**](https://www.gatsbyjs.com/docs/)
@@ -124,7 +124,7 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
 4. **Open the source code and start editing!**
 
-   Your site is now running at `http://localhost:8000`. Open the `my-gatsby-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes, and the browser will update in real time!
+   Your site is now running at `http://localhost:8000`. Open the `my-gatsby-site` directory in your code editor of choice and edit `src/pages/index.js`. Then Save your changes, and the browser will update in real time!
 
 At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://gatsbyjs.com/plugins/) and [the official tutorial](https://www.gatsbyjs.com/tutorial/).
 
@@ -132,7 +132,7 @@ At this point, you’ve got a fully functional Gatsby website. For additional in
 
 Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.com/).
 
-- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
+- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/tutorial/).** It starts with zero assumptions about your level of ability and walks through each and every step of the process.
 
 - **To dive straight into code samples head [to our documentation](https://www.gatsbyjs.com/docs/).** In particular, check out the “<i>How-to Guides</i>”, “<i>Reference</i>”, and “<i>Conceptual Guides</i>” sections in the sidebar.
 
@@ -153,7 +153,7 @@ Already have a Gatsby site? These handy guides will help you add the improvement
 
 ## ❗ Code of Conduct
 
-Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [**Code of Conduct**](https://www.gatsbyjs.com/contributing/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
+Gatsby is dedicated to building a welcoming, diverse and a safe community. We expect everyone participating in the Gatsby community to abide by our [**Code of Conduct**](https://www.gatsbyjs.com/contributing/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
 
 ## 🤝 How to Contribute
 
@@ -177,4 +177,4 @@ Licensed under the [MIT License](./LICENSE).
 
 Thanks go out to all our many contributors creating plugins, starters, videos, and blog posts. And a special appreciation for our community members helping with issues and PRs, or answering questions on Discord and GitHub Discussions.
 
-A big part of what makes Gatsby great is each and every one of you in the community. Your contributions enrich the Gatsby experience and make it better every day.
+A big part of what makes Gatsby great is that each and every one of you in the community. Your contributions enrich the Gatsby experience and make it better every day.
