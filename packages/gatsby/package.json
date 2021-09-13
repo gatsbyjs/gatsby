@@ -207,6 +207,8 @@
     "utils.js",
     "internal.js",
     "internal.d.ts",
+    "webpack.js",
+    "webpack.d.ts",
     "!**/__tests__/"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby#readme",
