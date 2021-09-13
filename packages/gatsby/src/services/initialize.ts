@@ -427,9 +427,13 @@ export async function initialize({
 
   // Init plugins once cache is initialized
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    await apiRunnerNode(`onPluginInit`)
+    await apiRunnerNode(`onPluginInit`, {
+      parentSpan: activity.span,
+    })
   } else {
-    await apiRunnerNode(`unstable_onPluginInit`)
+    await apiRunnerNode(`unstable_onPluginInit`, {
+      parentSpan: activity.span,
+    })
   }
 
   activity.end()

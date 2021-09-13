@@ -3,6 +3,7 @@ import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
 import { WindowLocation, NavigateFn, NavigateOptions } from "@reach/router"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
+import { Span } from "opentracing"
 export { Reporter }
 import {
   EnumTypeComposerAsObjectDefinition as ComposeEnumTypeConfig,
@@ -916,7 +917,7 @@ export interface WrapRootElementNodeArgs extends NodePluginArgs {
 }
 
 export interface ParentSpanPluginArgs extends NodePluginArgs {
-  parentSpan: object
+  parentSpan: Span
 }
 
 export interface NodePluginArgs {
