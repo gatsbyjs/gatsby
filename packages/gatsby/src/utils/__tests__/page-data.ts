@@ -31,7 +31,7 @@ describe(`savePageQueryResults / readPageQueryResults`, () => {
     await waitUntilPageQueryResultsAreStored()
 
     const result = await readPageQueryResult(publicDir, pagePath)
-    expect(result).toEqual(inputResult)
+    expect(JSON.parse(result)).toEqual(inputResult)
     // we expect partial page data file only in non-lmdb mode
     expect(fs.existsSync(pageQueryResultsPath)).toEqual(!isLmdbStore())
   })

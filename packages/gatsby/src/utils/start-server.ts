@@ -1,6 +1,6 @@
 import webpackHotMiddleware from "@gatsbyjs/webpack-hot-middleware"
 import webpackDevMiddleware from "webpack-dev-middleware"
-import got from "got"
+import got, { Method } from "got"
 import webpack from "webpack"
 import express from "express"
 import compression from "compression"
@@ -15,7 +15,6 @@ import {
 } from "graphql"
 import { isCI } from "gatsby-core-utils"
 import http from "http"
-import https from "https"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
@@ -53,12 +52,15 @@ import {
   writeVirtualLoadingIndicatorModule,
 } from "./loading-indicator"
 import { renderDevHTML } from "./dev-ssr/render-dev-html"
+import pDefer from "p-defer"
+import { getServerData, IServerData } from "./get-server-data"
+import { ROUTES_DIRECTORY } from "../constants"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
 interface IServer {
   compiler: webpack.Compiler
-  listener: http.Server | https.Server
+  listener: http.Server
   webpackActivity: ActivityTracker
   cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
   websocketManager: WebsocketManager
@@ -161,12 +163,46 @@ module.exports = {
   const devConfig = await webpackConfig(
     program,
     directory,
-    `develop`,
+    Stage.Develop,
     program.port,
-    { parentSpan: webpackActivity.span }
+    {
+      parentSpan: webpackActivity.span,
+    }
   )
 
   const compiler = webpack(devConfig)
+  let waitForServerCompilation = (): Promise<webpack.Stats | undefined> =>
+    Promise.resolve(undefined)
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    const serverDevConfig = await webpackConfig(
+      program,
+      directory,
+      Stage.SSR,
+      program.port,
+      {
+        parentSpan: webpackActivity.span,
+      }
+    )
+    const serverCompiler = webpack(serverDevConfig)
+
+    const waitForServerCompilationDeferred = pDefer<webpack.Stats>()
+    waitForServerCompilation = (): Promise<webpack.Stats | undefined> =>
+      waitForServerCompilationDeferred.promise
+    let compileCounter = 0
+    serverCompiler.watch(
+      {
+        ignored: /node_modules/,
+      },
+      (_, stats) => {
+        if (compileCounter++ > 0) {
+          waitForServerCompilation = (): Promise<webpack.Stats | undefined> =>
+            Promise.resolve(stats as webpack.Stats)
+        } else {
+          waitForServerCompilationDeferred.resolve(stats)
+        }
+      }
+    )
+  }
 
   /**
    * Set up the express app.
@@ -297,6 +333,7 @@ module.exports = {
     res.end()
   })
 
+  const previousHashes: Map<string, string> = new Map()
   app.get(
     `/page-data/:pagePath(*)/page-data.json`,
     async (req, res, next): Promise<void> => {
@@ -311,7 +348,46 @@ module.exports = {
 
       if (page) {
         try {
+          let serverDataPromise: Promise<IServerData> = Promise.resolve({})
+
+          if (page.mode === `SSR`) {
+            // get dynamic serverModule$
+            const stats = await waitForServerCompilation()
+
+            if (
+              !stats ||
+              !stats.compilation.entrypoints.has(page.componentChunkName)
+            ) {
+              report.error(
+                `Error loading a result for the page query in "${requestedPagePath}" / "${potentialPagePath}". getServerData threw an error.`
+              )
+            }
+
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const componentHash = stats!.compilation.entrypoints
+              .get(page.componentChunkName)!
+              .getEntrypointChunk().hash as string
+            const modulePath = path.resolve(
+              `${program.directory}/${ROUTES_DIRECTORY}/${page.componentChunkName}.js`
+            )
+
+            // if webpack compilation is diff we delete old cache
+            if (
+              previousHashes.has(page.componentChunkName) &&
+              previousHashes.get(page.componentChunkName) === componentHash
+            ) {
+              delete require.cache[modulePath]
+            }
+
+            const mod = require(modulePath)
+
+            previousHashes.set(page.componentChunkName, componentHash)
+
+            serverDataPromise = getServerData(req, page, potentialPagePath, mod)
+          }
+
           let pageData: IPageDataWithQueryResult
+          // TODO move to query-engine
           if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
             const start = Date.now()
 
@@ -326,6 +402,13 @@ module.exports = {
               path.join(store.getState().program.directory, `public`),
               page.path
             )
+          }
+
+          if (page.mode === `SSR`) {
+            const { props } = await serverDataPromise
+
+            pageData.result.serverData = props
+            pageData.path = `/${requestedPagePath}`
           }
 
           res.status(200).send(pageData)
@@ -462,7 +545,11 @@ module.exports = {
         req
           .pipe(
             got
-              .stream(proxiedUrl, { headers, method, decompress: false })
+              .stream(proxiedUrl, {
+                headers,
+                method: method as Method,
+                decompress: false,
+              })
               .on(`response`, response =>
                 res.writeHead(response.statusCode || 200, response.headers)
               )

@@ -25,6 +25,8 @@ export enum ProgramStatus {
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
 }
 
+export type PageMode = "SSG" | "DSR" | "SSR"
+
 export interface IGatsbyPage {
   internalComponentName: string
   path: string
@@ -39,6 +41,7 @@ export interface IGatsbyPage {
   pluginCreatorId: Identifier
   componentPath: SystemPath
   ownerNodeId: Identifier
+  mode: PageMode
 }
 
 export interface IGatsbyFunction {
@@ -242,6 +245,8 @@ export interface IGatsbyState {
     >
     ssrAPIs: Array<"onRenderBody" | "onPreRenderHTML">
     pluginFilepath: SystemPath
+    subPluginPaths?: Array<string>
+    modulePath?: string
   }>
   config: IGatsbyConfig
   functions: Array<IGatsbyFunction>

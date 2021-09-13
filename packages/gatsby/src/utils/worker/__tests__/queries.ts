@@ -44,6 +44,14 @@ jest.mock(`chokidar`, () => {
   return chokidar
 })
 
+jest.mock(`gatsby-telemetry`, () => {
+  return {
+    decorateEvent: jest.fn(),
+    trackError: jest.fn(),
+    trackCli: jest.fn(),
+  }
+})
+
 const dummyKeys = `a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z`.split(
   `,`
 )
@@ -256,7 +264,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       `/foo`
     )
 
-    expect(pageQueryResult.data).toStrictEqual({
+    expect(JSON.parse(pageQueryResult).data).toStrictEqual({
       nodeTypeOne: {
         number: 123,
       },
@@ -268,6 +276,7 @@ describeWhenLMDB(`worker (queries)`, () => {
 
     await Promise.all(worker.all.setComponents())
     await worker.single.runQueries(queryIdsSmall)
+    await Promise.all(worker.all.saveQueriesDependencies())
     const stateFromWorker = await worker.single.getState()
 
     const pageQueryResult = await readPageQueryResult(
@@ -275,7 +284,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       `/bar`
     )
 
-    expect(pageQueryResult.data).toStrictEqual({
+    expect(JSON.parse(pageQueryResult).data).toStrictEqual({
       nodeTypeOne: {
         default: `You are not cool`,
         fieldWithArg: `You are cool`,
@@ -298,7 +307,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       `/a`
     )
 
-    expect(pageQueryResultA.data).toStrictEqual({
+    expect(JSON.parse(pageQueryResultA).data).toStrictEqual({
       nodeTypeOne: {
         number: 123,
       },
@@ -309,7 +318,7 @@ describeWhenLMDB(`worker (queries)`, () => {
       `/z`
     )
 
-    expect(pageQueryResultZ.data).toStrictEqual({
+    expect(JSON.parse(pageQueryResultZ).data).toStrictEqual({
       nodeTypeOne: {
         number: 123,
       },

@@ -152,7 +152,7 @@ serialize: ({ query: { site, allMarkdownRemark } }) => {
 },
 ```
 
-To see your feed in action, run `gatsby build && gatsby serve` and you can then inspect the content and URLs in your RSS file at `http://localhost:9000/rss.xml`. You can checkout the validation of your RSS feed on [W3C Feed Validation Service](https://validator.w3.org/feed/ "W3C Feed Validation Service").
+To see your feed in action, run `gatsby build && gatsby serve` and you can then inspect the content and URLs in your RSS file at `http://localhost:9000/rss.xml`. You can check out the validation of your RSS feed on [W3C Feed Validation Service](https://validator.w3.org/feed/ "W3C Feed Validation Service").
 
 > NOTE: if your blog has custom permalinks, such as links with or without dates in them, you may need to [customize `gatsby-node.js`](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/gatsby-node.js#L57) to output the correct URLs in your RSS feed. [Get in touch with us](/contributing/how-to-contribute/) if you need any help!
 

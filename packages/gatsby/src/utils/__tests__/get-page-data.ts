@@ -1,10 +1,7 @@
+import { fixedPagePath } from "gatsby-core-utils"
 import { store } from "../../redux"
 import { getPageData, RETRY_INTERVAL } from "../get-page-data"
-import {
-  fixedPagePath,
-  flush as flushPageData,
-  savePageQueryResult,
-} from "../page-data"
+import { flush as flushPageData, savePageQueryResult } from "../page-data"
 import {
   IGatsbyPage,
   IGatsbyPlugin,
@@ -74,6 +71,7 @@ describe(`get-page-data-util`, () => {
   }
 
   const pageDataContent = {
+    componentChunkName: `foo`,
     path: `/foo`,
     result: queryResultContent,
     staticQueryHashes: [],
@@ -93,6 +91,7 @@ describe(`get-page-data-util`, () => {
   beforeAll(() => {
     Pages = {
       foo: {
+        componentChunkName: `foo`,
         path: `/foo`,
         componentPath: `/foo.js`,
         component: `/foo.js`,

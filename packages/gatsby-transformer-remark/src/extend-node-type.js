@@ -123,7 +123,8 @@ module.exports = function remarkExtendNodeType(
     }
 
     for (const plugin of pluginOptions.plugins) {
-      const requiredPlugin = require(plugin.resolve)
+      const requiredPlugin =
+        _CFLAGS_.GATSBY_MAJOR === `4` ? plugin.module : require(plugin.resolve)
       if (_.isFunction(requiredPlugin.setParserPlugins)) {
         for (const parserPlugin of requiredPlugin.setParserPlugins(
           plugin.pluginOptions
@@ -201,7 +202,10 @@ module.exports = function remarkExtendNodeType(
       }
       // Use a for loop to run remark plugins serially.
       for (const plugin of pluginOptions.plugins) {
-        const requiredPlugin = require(plugin.resolve)
+        const requiredPlugin =
+          _CFLAGS_.GATSBY_MAJOR === `4`
+            ? plugin.module
+            : require(plugin.resolve)
         // Allow both exports = function(), and exports.default = function()
         const defaultFunction = _.isFunction(requiredPlugin)
           ? requiredPlugin
@@ -242,7 +246,10 @@ module.exports = function remarkExtendNodeType(
       //
       // Use for loop to run remark plugins serially.
       for (const plugin of pluginOptions.plugins) {
-        const requiredPlugin = require(plugin.resolve)
+        const requiredPlugin =
+          _CFLAGS_.GATSBY_MAJOR === `4`
+            ? plugin.module
+            : require(plugin.resolve)
         if (typeof requiredPlugin.mutateSource === `function`) {
           await requiredPlugin.mutateSource(
             {

@@ -23,7 +23,7 @@ The Gatsby team is constantly updating plugins to use less memory and run faster
 
 #### Audit plugin configuration and queries and remove unused ones
 
-As your site's codebase evolves, you might accumulate plugins that are not longer needed. Try looking through your `gatsby-config.js` to make sure you're using all the plugins you have installed. In addition, you may want to look through queries to make sure you're using them (and the fields in each query).
+As your site's codebase evolves, you might accumulate plugins that are no longer needed. Try looking through your `gatsby-config.js` to make sure you're using all the plugins you have installed. In addition, you may want to look through queries to make sure you're using them (and the fields in each query).
 
 #### Query only needed fields in `createPages`
 

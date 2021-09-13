@@ -4,10 +4,17 @@ import { ServerStyleSheet, StyleSheetManager } from "styled-components"
 const sheetByPathname = new Map()
 
 // eslint-disable-next-line react/prop-types,react/display-name
-exports.wrapRootElement = ({ element, pathname }) => {
+exports.wrapRootElement = ({ element, pathname }, pluginOptions) => {
   const sheet = new ServerStyleSheet()
   sheetByPathname.set(pathname, sheet)
-  return <StyleSheetManager sheet={sheet.instance}>{element}</StyleSheetManager>
+  return (
+    <StyleSheetManager
+      sheet={sheet.instance}
+      disableVendorPrefixes={pluginOptions?.disableVendorPrefixes}
+    >
+      {element}
+    </StyleSheetManager>
+  )
 }
 
 exports.onRenderBody = ({ setHeadComponents, pathname }) => {

@@ -24,7 +24,7 @@ The general process for adding a plugin to your site looks like this:
 
 In this guide, you'll add the [`gatsby-plugin-sitemap`](/plugins/gatsby-plugin-sitemap) plugin to your Gatsby site, but you can use a similar procedure with any other plugin.
 
-**Using a different plugin?** Check the plugin's README in the [Gatsby Plugin Library](/plugins) for more details on how to set it up.)
+**Using a different plugin?** Check the plugin's README in the [Gatsby Plugin Library](/plugins) for more details on how to set it up.
 
 ### Step 1: Install the plugin
 
@@ -34,7 +34,7 @@ Add the plugin as a project dependency in your `package.json` file by running th
 npm install gatsby-plugin-sitemap
 ```
 
-Check the plugin's README file to see if there are any other dependencies that you also need to installed. (For example, [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/) also requires `@mdx-js/mdx` and `@mdx-js/react` to be installed.)
+Check the plugin's README file to see if there are any other dependencies that you also need to install. (For example, [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/) also requires `@mdx-js/mdx` and `@mdx-js/react` to be installed.)
 
 ### Step 2: Configure the plugin in your `gatsby-config.js` file
 

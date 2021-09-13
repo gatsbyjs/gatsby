@@ -16,12 +16,13 @@ import {
   IQueryStartAction,
 } from "../../../redux/types"
 import { DeepPartial } from "redux"
+import { waitUntilPageQueryResultsAreStored } from "../../page-data"
 
 export function setComponents(): void {
   setState([`components`, `staticQueryComponents`])
 }
 
-export function saveQueriesDependencies(): void {
+export async function saveQueriesDependencies(): Promise<void> {
   // Drop `queryNodes` from query state - it can be restored from other pieces of state
   // and is there only as a perf optimization
   const pickNecessaryQueryState = <T extends DeepPartial<IGatsbyState>>(
@@ -35,6 +36,9 @@ export function saveQueriesDependencies(): void {
     process.env.GATSBY_WORKER_ID,
     pickNecessaryQueryState
   )
+
+  // make sure page query results we put in lmdb-store are flushed
+  await waitUntilPageQueryResultsAreStored()
 }
 
 let gqlRunner

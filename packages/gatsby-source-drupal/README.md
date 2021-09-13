@@ -34,6 +34,12 @@ module.exports = {
 }
 ```
 
+On the Drupal side, we highly recommend installing [JSON:API
+Extras](https://www.drupal.org/project/jsonapi_extras) and enabling "Include
+count in collection queries" `/admin/config/services/jsonapi/extras` as that
+[speeds up fetching data from Drupal by around
+4x](https://github.com/gatsbyjs/gatsby/pull/32883).
+
 ### Filters
 
 You can use the `filters` option to limit the data that is retrieved from Drupal. Filters are applied per JSON API collection. You can use any [valid JSON API filter query](https://www.drupal.org/docs/8/modules/jsonapi/filtering). For large data sets this can reduce the build time of your application by allowing Gatsby to skip content you'll never use.
@@ -194,6 +200,27 @@ module.exports = {
 }
 ```
 
+You can also filter out temporary files. This will help to avoid Gatsby throwing an error when a 404 is returned from a file that does not exist:
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`,
+        filters: {
+          // collection : filter
+          "file--file": "filter[status][value]=1",
+        },
+      },
+    },
+  ],
+}
+```
+
 ## Concurrent File Requests
 
 You can use the `concurrentFileRequests` option to change how many simultaneous file requests are made to the server/service. This benefits build speed, however too many concurrent file request could cause memory exhaustion depending on the server's memory size so change with caution.
@@ -317,12 +344,15 @@ module.exports = {
           defaultLanguage: `en`,
           enabledLanguages: [`en`, `fil`],
           translatableEntities: [`node--article`],
+          nonTranslatableEntities: [`file--file`],
         },
       },
     },
   ],
 }
 ```
+
+Some entities are not translatable like Drupal files and will return null result when language code from parent entity doesn't match up. These items can be specified as nonTranslatableEntities and receive the defaultLanguage as fallback.
 
 ## Gatsby Preview (experimental)
 
