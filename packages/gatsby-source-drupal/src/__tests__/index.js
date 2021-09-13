@@ -553,7 +553,8 @@ describe(`gatsby-source-drupal`, () => {
         expect(reporter.activityTimer).toHaveBeenCalledTimes(1)
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           1,
-          `Fetch all data from Drupal`
+          `Fetch all data from Drupal`,
+          { parentSpan: undefined }
         )
 
         expect(activity.start).toHaveBeenCalledTimes(1)
@@ -576,11 +577,13 @@ describe(`gatsby-source-drupal`, () => {
         expect(reporter.activityTimer).toHaveBeenCalledTimes(2)
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           1,
-          `Fetch all data from Drupal`
+          `Fetch all data from Drupal`,
+          { parentSpan: undefined }
         )
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           2,
-          `Remote file download`
+          `Remote file download`,
+          { parentSpan: undefined }
         )
 
         expect(activity.start).toHaveBeenCalledTimes(2)
@@ -639,7 +642,8 @@ describe(`gatsby-source-drupal`, () => {
         expect(reporter.activityTimer).toHaveBeenCalledTimes(1)
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           1,
-          `Fetch incremental changes from Drupal`
+          `Fetch incremental changes from Drupal`,
+          { parentSpan: {} }
         )
 
         expect(activity.start).toHaveBeenCalledTimes(1)

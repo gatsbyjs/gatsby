@@ -375,6 +375,7 @@ const runAPI = async (plugin, api, args, activity) => {
     const apiCallArgs = [
       {
         ...args,
+        parentSpan: pluginSpan,
         basePath: pathPrefix,
         pathPrefix: publicPath,
         actions,

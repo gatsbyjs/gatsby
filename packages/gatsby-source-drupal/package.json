@@ -8,10 +8,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
+    "@opentelemetry/semantic-conventions": "0.24.0",
     "agentkeepalive": "^4.1.4",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "fastq": "^1.11.1",
+    "opentracing": "^0.14.4",
     "gatsby-source-filesystem": "^3.14.0-next.2",
     "got": "^11.8.2",
     "http2-wrapper": "^2.0.5",
