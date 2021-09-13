@@ -4,6 +4,7 @@ const os = require(`os`)
 const path = require(`path`)
 const uuid = require(`uuid`)
 const fs = require(`fs-extra`)
+const resolveFrom = require(`resolve-from`)
 
 // TODO start with yarn but also add npm versions in parallel.
 function createTmpDirectory() {
@@ -20,174 +21,230 @@ async function npmPackageInstall(packageName, root) {
   await execa(`npm`, [`install`, packageName], { cwd: root })
 }
 
-describe(`createPluginDigest`, () => {
-  describe(`packages`, () => {
-    let yarnRoot
-    let npmRoot
-    let packageName
-    beforeAll(async () => {
-      // Install a package in a temp dir
-      yarnRoot = createTmpDirectory()
-      npmRoot = createTmpDirectory()
-      packageName = `@kylemathews/primary-dep`
-      await yarnPackageInstall(`${packageName}@1.0.0`, yarnRoot)
-      await yarnPackageInstall(`@kylemathews/secondary-dep@1.0.0`, yarnRoot)
-      await npmPackageInstall(`${packageName}@1.0.0`, npmRoot)
-      await npmPackageInstall(`@kylemathews/secondary-dep@1.0.0`, npmRoot)
-      await fs.emptyDir(
-        path.join(process.cwd(), `.cache`, `caches`, `plugin-digest`)
-      )
-    })
-    describe(`yarn`, () => {
-      it(`creates a digest for a package`, async () => {
-        const digest = await createPluginDigest(yarnRoot, packageName)
-        expect(digest).toMatchSnapshot()
-        expect(digest.isCached).toEqual(false)
-      })
+describe(`create plugin dependecies digest`, () => {
+  beforeAll(async () => {
+    // Delete cache directory
+    await fs.emptyDir(
+      path.join(process.cwd(), `.cache`, `caches`, `plugin-digest`)
+    )
 
-      it(`creates digests for multiple packages`, async () => {
-        const digest = await createPluginDigest(yarnRoot, packageName)
-        const digest2 = await createPluginDigest(
-          yarnRoot,
-          `@kylemathews/secondary-dep`
-        )
-        expect(digest).toMatchSnapshot()
-        expect(digest2).toMatchSnapshot()
-        expect(digest.isCached).toEqual(true)
-        expect(digest2.isCached).toEqual(false)
-      })
+    const fixtureSite = path.join(__dirname, `fixtures`, `simplesite`)
 
-      it(`returns a cached response if the lock file hasn't changed`, async () => {
-        // Calling it again with no changes returns a cached response.
-        const cachedDigest = await createPluginDigest(yarnRoot, packageName)
-        expect(cachedDigest.isCached).toEqual(true)
-      })
+    await fs.writeFile(
+      path.join(
+        fixtureSite,
+        `plugins`,
+        `gatsby-plugin-cool-local`,
+        `gatsby-node.js`
+      ),
+      `const secondary = require('@kylemathews/secondary-dep')\n//yo, me old`
+    )
 
-      it(`returns a different digest when the package version changes`, async () => {
-        const digest = await createPluginDigest(yarnRoot, packageName)
-
-        // Update the version of the package
-        await yarnPackageInstall(`${packageName}@1.0.1`, yarnRoot)
-
-        // Get digest again
-        const newDigest = await createPluginDigest(yarnRoot, packageName)
-        expect(newDigest).toMatchSnapshot()
-        expect(newDigest.digest !== digest.digest).toBeTruthy()
-      })
-
-      it(`It returns the correct tree when transitive dependencies get updated`, async () => {
-        const digest = await createPluginDigest(yarnRoot, packageName)
-        expect(digest).toMatchSnapshot()
-
-        // Install a newer version of our tertiary dependency.
-        await yarnPackageInstall(`@kylemathews/tertiary-dep@1.0.1`, yarnRoot)
-
-        const newDigest = await createPluginDigest(yarnRoot, packageName)
-        expect(newDigest).toMatchSnapshot()
-        expect(digest.isCached).toEqual(true)
-        expect(newDigest.isCached).toEqual(false)
-        expect(newDigest !== digest).toBeTruthy()
-      })
-    })
-    describe(`npm`, () => {
-      it(`creates a digest for a package`, async () => {
-        const digest = await createPluginDigest(npmRoot, packageName)
-        expect(digest).toMatchSnapshot()
-        expect(digest.isCached).toEqual(false)
-      })
-
-      it(`creates digests for multiple packages`, async () => {
-        const digest = await createPluginDigest(npmRoot, packageName)
-        const digest2 = await createPluginDigest(
-          npmRoot,
-          `@kylemathews/secondary-dep`
-        )
-        expect(digest).toMatchSnapshot()
-        expect(digest2).toMatchSnapshot()
-        expect(digest.isCached).toEqual(true)
-        expect(digest2.isCached).toEqual(false)
-      })
-
-      it(`returns a cached response if the lock file hasn't changed`, async () => {
-        // Calling it again with no changes returns a cached response.
-        const cachedDigest = await createPluginDigest(npmRoot, packageName)
-        expect(cachedDigest.isCached).toEqual(true)
-      })
-
-      it(`returns a different digest when the package version changes`, async () => {
-        const digest = await createPluginDigest(npmRoot, packageName)
-
-        // Update the version of the package
-        await yarnPackageInstall(`${packageName}@1.0.1`, npmRoot)
-
-        // Get digest again
-        const newDigest = await createPluginDigest(npmRoot, packageName)
-        expect(newDigest).toMatchSnapshot()
-        expect(newDigest.digest !== digest.digest).toBeTruthy()
-      })
-
-      it(`It returns the correct tree when transitive dependencies get updated`, async () => {
-        const digest = await createPluginDigest(npmRoot, packageName)
-        expect(digest).toMatchSnapshot()
-
-        // Install a newer version of our tertiary dependency.
-        await yarnPackageInstall(`@kylemathews/tertiary-dep@1.0.1`, npmRoot)
-
-        const newDigest = await createPluginDigest(npmRoot, packageName)
-        expect(newDigest).toMatchSnapshot()
-        expect(digest.isCached).toEqual(true)
-        expect(newDigest.isCached).toEqual(false)
-        expect(newDigest !== digest).toBeTruthy()
-      })
-    })
+    await fs.writeFile(
+      path.join(fixtureSite, `plugins`, `gatsby-plugin-cool-local`, `dep.js`),
+      `// some old code`
+    )
   })
 
-  describe(`local plugins`, () => {
-    let yarnRoot
-    let npmRoot
-    let packageName
-    beforeAll(async () => {
-      // Install a package in a temp dir
-      yarnRoot = createTmpDirectory()
-      npmRoot = createTmpDirectory()
-      packageName = `@kylemathews/primary-dep`
-      await yarnPackageInstall(`${packageName}@1.0.0`, yarnRoot)
-      await yarnPackageInstall(`@kylemathews/secondary-dep@1.0.0`, yarnRoot)
-      await npmPackageInstall(`${packageName}@1.0.0`, npmRoot)
-      await npmPackageInstall(`@kylemathews/secondary-dep@1.0.0`, npmRoot)
-      await fs.emptyDir(
-        path.join(process.cwd(), `.cache`, `caches`, `plugin-digest`)
-      )
-    })
-    it(`creates a digest for a local file by tracing its dependencies`, async () => {
-      // Add a file which requires a file which requires the package.
-      const pathToFile = path.join(yarnRoot, `./a-file.js`)
-      const pathToFile2 = path.join(yarnRoot, `./a-file2.js`)
-      await fs.writeFile(pathToFile, `import "@kylemathews/primary-dep"`)
-      await fs.writeFile(pathToFile2, `import "./a-file"`)
-      const digest = await createPluginDigest(yarnRoot, `./a-file2.js`)
-      expect(digest).toMatchSnapshot()
+  describe(`package plugin dependency digest`, () => {
+    it(`returns the Gatsby version for internal plugins`, async () => {
+      const root = path.join(__dirname, `fixtures`, `simplesite`)
+      const pageCreator = `gatsby-plugin-page-creator`
+
+      const digest = await createPluginDigest(root, {
+        name: pageCreator,
+        resolve: resolveFrom(root, pageCreator),
+      })
+
+      expect(digest).toMatchInlineSnapshot(`
+        Object {
+          "digest": "3.13.0",
+          "isCached": true,
+        }
+      `)
     })
 
-    it(`returns a cached response if the lock file and src files haven't changed`, async () => {
-      // Calling it again with no changes returns a cached response.
-      const digest = await createPluginDigest(yarnRoot, `./a-file2.js`)
-      expect(digest.isCached).toEqual(true)
+    // There's some special logic around gatsby-plugin-typescript depending
+    // on whether it's a direct dependency of the project or a dependency of gatsby.
+    it(`returns a digest for gatsby-plugin-typescript`, async () => {
+      const root = path.join(__dirname, `fixtures`, `simplesite`)
+      const typescript = `gatsby-plugin-typescript`
+
+      const typescriptDigest = await createPluginDigest(root, {
+        name: typescript,
+        resolve: resolveFrom(root, typescript),
+      })
+      expect(typescriptDigest).toMatchInlineSnapshot(`
+        Object {
+          "digest": "5d7f4b534e493ee70584574760fa7c91f77eda40",
+          "isCached": false,
+        }
+      `)
     })
 
-    it(`returns a different digest when the src files change`, async () => {
-      const digest = await createPluginDigest(yarnRoot, `./a-file2.js`)
-      // Change one of the files
-      const pathToFile = path.join(yarnRoot, `./a-file.js`)
+    it(`returns a digest for gatsby-source-drupal`, async () => {
+      const root = path.join(__dirname, `fixtures`, `simplesite`)
+      const name = `gatsby-source-drupal`
+
+      const digest = await createPluginDigest(root, {
+        name,
+        resolve: resolveFrom(root, name),
+      })
+      expect(digest).toMatchInlineSnapshot(`
+        Object {
+          "digest": "1ef6573345fc36e04a49cdf0506a1c26955d22a0",
+          "isCached": false,
+        }
+      `)
+    })
+
+    it(`repeated calls to the same plugin returns a cached version`, async () => {
+      const root = path.join(__dirname, `fixtures`, `simplesite`)
+      const name = `gatsby-source-drupal`
+
+      const digest = await createPluginDigest(root, {
+        name,
+        resolve: resolveFrom(root, name),
+      })
+      expect(digest).toMatchInlineSnapshot(`
+        Object {
+          "digest": "1ef6573345fc36e04a49cdf0506a1c26955d22a0",
+          "isCached": true,
+        }
+      `)
+    })
+
+    let oldDigest = ``
+    it(`returns a digest for local plugins generated from the source and dependencies`, async () => {
+      const root = path.join(__dirname, `fixtures`, `simplesite`)
+
+      const name = `gatsby-plugin-cool-local`
+      const digest = await createPluginDigest(root, {
+        name,
+        resolve: path.join(root, `plugins`, name),
+      })
+      oldDigest = digest.digest
+      expect(digest).toMatchInlineSnapshot(`
+        Object {
+          "digest": "e725ff4236880cf5c13d827bb09e460550e49ec1",
+          "isCached": false,
+        }
+      `)
+    })
+    it(`returns a new digest for a local plugin when the source changes`, async () => {
+      const root = path.join(__dirname, `fixtures`, `simplesite`)
+
+      const name = `gatsby-plugin-cool-local`
+
       await fs.writeFile(
-        pathToFile,
-        `import "@kylemathews/primary-dep"\nconst a = 3`
+        path.join(root, `plugins`, name, `gatsby-node.js`),
+        `const secondary = require('@kylemathews/secondary-dep')\n//yo, me new`
       )
-      const newDigest = await createPluginDigest(yarnRoot, `./a-file2.js`)
-      expect(newDigest).toMatchSnapshot()
-      expect(newDigest !== digest).toEqual(true)
-      expect(digest.isCached).toEqual(true)
-      expect(newDigest.isCached).toEqual(false)
+
+      const digest = await createPluginDigest(root, {
+        name,
+        resolve: path.join(root, `plugins`, name),
+      })
+
+      expect(oldDigest !== digest.digest).toBeTruthy()
+      oldDigest = digest.digest
+      expect(digest).toMatchInlineSnapshot(`
+        Object {
+          "digest": "820a198912c1d9ac3b95dd3d4277f1f3ded00f06",
+          "isCached": false,
+        }
+      `)
+    })
+    it(`touching a file (updating its mtime) doesn't change the digest`, async () => {
+      const root = path.join(__dirname, `fixtures`, `simplesite`)
+
+      const name = `gatsby-plugin-cool-local`
+
+      // Touch
+      const time = new Date()
+      fs.utimesSync(
+        path.join(root, `plugins`, name, `gatsby-node.js`),
+        time,
+        time
+      )
+
+      const digest = await createPluginDigest(root, {
+        name,
+        resolve: path.join(root, `plugins`, name),
+      })
+
+      expect(oldDigest === digest.digest).toBeTruthy()
+      expect(digest).toMatchInlineSnapshot(`
+        Object {
+          "digest": "820a198912c1d9ac3b95dd3d4277f1f3ded00f06",
+          "isCached": false,
+        }
+      `)
+    })
+    it(`returns a new digest when a local dependency is added`, async () => {
+      const root = path.join(__dirname, `fixtures`, `simplesite`)
+
+      const name = `gatsby-plugin-cool-local`
+
+      await fs.writeFile(
+        path.join(root, `plugins`, name, `gatsby-node.js`),
+        `const secondary = require('@kylemathews/secondary-dep')\nrequire('./dep')//yo, me new`
+      )
+
+      const digest = await createPluginDigest(root, {
+        name,
+        resolve: path.join(root, `plugins`, name),
+      })
+
+      expect(oldDigest !== digest.digest).toBeTruthy()
+      oldDigest = digest.digest
+      expect(digest).toMatchInlineSnapshot(`
+        Object {
+          "digest": "ab74e3b7c7f97e2b83575bd096314b1b9d533fed",
+          "isCached": false,
+        }
+      `)
+    })
+    it(`returns a new digest when a local dependency is changed`, async () => {
+      const root = path.join(__dirname, `fixtures`, `simplesite`)
+
+      const name = `gatsby-plugin-cool-local`
+
+      await fs.writeFile(
+        path.join(root, `plugins`, name, `dep.js`),
+        `// some new code`
+      )
+
+      const digest = await createPluginDigest(root, {
+        name,
+        resolve: path.join(root, `plugins`, name),
+      })
+
+      expect(oldDigest !== digest.digest).toBeTruthy()
+      oldDigest = digest.digest
+      expect(digest).toMatchInlineSnapshot(`
+        Object {
+          "digest": "8ea702af88f2ffc4b40e6d06221ccec15d2d5037",
+          "isCached": false,
+        }
+      `)
+    })
+    it(`returns a cached version if repeatedly called`, async () => {
+      const root = path.join(__dirname, `fixtures`, `simplesite`)
+
+      const name = `gatsby-plugin-cool-local`
+
+      const digest = await createPluginDigest(root, {
+        name,
+        resolve: path.join(root, `plugins`, name),
+      })
+
+      expect(digest).toMatchInlineSnapshot(`
+        Object {
+          "digest": "8ea702af88f2ffc4b40e6d06221ccec15d2d5037",
+          "isCached": true,
+        }
+      `)
     })
   })
 })

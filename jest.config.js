@@ -37,6 +37,9 @@ module.exports = {
     `__tests__/fixtures`,
     `__testfixtures__/`,
   ],
+  watchPathIgnorePatterns: [
+    `<rootDir>/packages/gatsby/src/bootstrap/load-plugins/__tests__/fixtures/`,
+  ],
   transform: {
     "^.+\\.[jt]sx?$": `<rootDir>/jest-transformer.js`,
   },
