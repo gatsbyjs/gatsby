@@ -232,12 +232,12 @@ module.exports = async (program: IServeProgram): Promise<void> => {
         program.directory,
         `.cache`,
         `query-engine`
-      ))
+      )) as typeof import("../schema/graphql-engine/entry")
       const { getData, renderPageData, renderHTML } = require(path.join(
         program.directory,
         `.cache`,
         `page-ssr`
-      ))
+      )) as typeof import("../utils/page-ssr-module/entry")
       const graphqlEngine = new GraphQLEngine({
         dbPath: path.join(program.directory, `.cache`, `data`, `datastore`),
       })
@@ -260,6 +260,13 @@ module.exports = async (program: IServeProgram): Promise<void> => {
               req,
             })
             const results = await renderPageData({ data })
+            if (page.mode === `SSR` && data.serverDataHeaders) {
+              for (const [name, value] of Object.entries(
+                data.serverDataHeaders
+              )) {
+                res.setHeader(name, value)
+              }
+            }
             return void res.send(results)
           }
 
@@ -279,6 +286,13 @@ module.exports = async (program: IServeProgram): Promise<void> => {
               req,
             })
             const results = await renderHTML({ data })
+            if (page.mode === `SSR` && data.serverDataHeaders) {
+              for (const [name, value] of Object.entries(
+                data.serverDataHeaders
+              )) {
+                res.setHeader(name, value)
+              }
+            }
             return res.send(results)
           }
 

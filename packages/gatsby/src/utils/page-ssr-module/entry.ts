@@ -16,7 +16,7 @@ import {
 } from "../page-data-helpers"
 // @ts-ignore render-page import will become valid later on (it's marked as external)
 import htmlComponentRenderer from "./render-page"
-import { getServerData } from "../get-server-data"
+import { getServerData, IServerData } from "../get-server-data"
 
 export interface ITemplateDetails {
   query: string
@@ -28,6 +28,7 @@ export interface ISSRData {
   page: IGatsbyPage
   templateDetails: ITemplateDetails
   potentialPagePath: string
+  serverDataHeaders?: Record<string, string>
 }
 
 const pageTemplateDetailsMap: Record<
@@ -71,7 +72,7 @@ export async function getData({
   // 3. Execute query
   // query-runner handles case when query is not there - so maybe we should consider using that somehow
   let results: IExecutionResult = {}
-  let serverData: any = undefined
+  let serverData: IServerData | undefined
   if (templateDetails.query) {
     executionPromises.push(
       graphqlEngine
@@ -104,7 +105,13 @@ export async function getData({
   }
   results.pageContext = page.context
 
-  return { results, page, templateDetails, potentialPagePath }
+  return {
+    results,
+    page,
+    templateDetails,
+    potentialPagePath,
+    serverDataHeaders: serverData?.headers,
+  }
 }
 
 export async function renderPageData({
