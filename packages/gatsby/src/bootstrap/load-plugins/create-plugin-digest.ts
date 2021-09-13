@@ -193,7 +193,18 @@ async function createPluginDigest(
       return cachedResult
     }
   } else {
+    const depDir = dep
     dep = path.relative(root, path.join(dep, `gatsby-node.js`))
+
+    // If there's no gatsby-node.js, the plugin can't cache anything
+    // so a digest isn't meaningful. So we'll just return a unique
+    // string of the path to the (non-existant) gatsby-node.js.
+    if (!fs.existsSync(path.join(depDir, `gatsby-node.js`))) {
+      return {
+        digest: dep,
+        isCached: false
+      }
+    }
     // This is a local plugin
     // so to create a digest, we hash all its src files + get the dependency tree
     // of each of its npm dependencies.

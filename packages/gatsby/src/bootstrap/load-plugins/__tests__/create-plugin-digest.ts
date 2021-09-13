@@ -246,5 +246,25 @@ describe(`create plugin dependecies digest`, () => {
         }
       `)
     })
+
+    // If there's no gatsby-node.js, the plugin can't cache anything
+    // so a digest isn't meaningful.
+    it(`returns the directory name if there's no gatsby-node.js`, async () => {
+      const root = path.join(__dirname, `fixtures`, `simplesite`)
+
+      const name = `gatsby-plugin-no-gatsby-node.js`
+
+      const digest = await createPluginDigest(root, {
+        name,
+        resolve: path.join(root, `plugins`, name),
+      })
+
+      expect(digest).toMatchInlineSnapshot(`
+        Object {
+          "digest": "plugins/gatsby-plugin-no-gatsby-node.js/gatsby-node.js",
+          "isCached": false,
+        }
+      `)
+    })
   })
 })
