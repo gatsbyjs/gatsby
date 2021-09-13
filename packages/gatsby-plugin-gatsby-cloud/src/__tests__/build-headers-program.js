@@ -126,6 +126,22 @@ describe(`build-headers-program`, () => {
           },
         ],
         [
+          `/test/`,
+          {
+            jsonName: `test`,
+            internalComponentName: `ComponentTest`,
+            path: `/test/`,
+            matchPath: undefined,
+            componentChunkName: `component---src-pages-test-js`,
+            isCreatedByStatefulCreatePages: true,
+            context: {},
+            updatedAt: 1557740602361,
+            pluginCreator___NODE: `049c1cfd-95f7-5555-a4ac-9b396d098b26`,
+            pluginCreatorId: `049c1cfd-95f7-5555-a4ac-9b396d098b26`,
+            mode: `SSR`,
+          },
+        ],
+        [
           `/`,
           {
             jsonName: `index`,
@@ -203,8 +219,8 @@ describe(`build-headers-program`, () => {
     expect(output).toMatchSnapshot()
     expect(output).toMatch(/app-data\.json/)
     expect(output).toMatch(/page-data\.json/)
-    // we should only check page-data & app-data once which leads to 2 times
-    expect(fs.existsSync).toBeCalledTimes(2)
+    // we should only check app-data once which leads to 1 time
+    expect(fs.existsSync).toBeCalledTimes(1)
   })
 
   it(`with manifest['pages-manifest']`, async () => {
@@ -237,7 +253,7 @@ describe(`build-headers-program`, () => {
     expect(output).toMatchSnapshot()
     expect(output).toMatch(/\/pages-manifest-ab11f09e0ca7ecd3b43e\.js/g)
     expect(output).not.toMatch(/\/app-data\.json/g)
-    expect(output).not.toMatch(/\/page-data\.json/g)
+    expect(output).toMatch(/\/page-data\.json/g)
     expect(output).not.toMatch(/\/undefined/g)
   })
 
