@@ -20,6 +20,7 @@ export const create = (): GatsbyWorkerPool => {
   const worker: GatsbyWorkerPool = new WorkerPool(require.resolve(`./child`), {
     numWorkers,
     env: {
+      GATSBY_NODE_GLOBALS: JSON.stringify(global.__GATSBY ?? {}),
       GATSBY_WORKER_POOL_WORKER: `true`,
       GATSBY_SKIP_WRITING_SCHEMA_TO_FILE: `true`,
     },
