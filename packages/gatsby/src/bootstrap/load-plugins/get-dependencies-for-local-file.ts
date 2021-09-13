@@ -64,9 +64,8 @@ async function getDependencies(root, filePath) {
               try {
                 // this resolves the requested import also against any set up NODE_PATH extensions, etc.
                 const resolved = require.resolve(dep)
-                dependencies[
-                  `./` + path.relative(root, resolved)
-                ] = await getFileHash(resolved)
+                dependencies[`./` + path.relative(root, resolved)] =
+                  await getFileHash(resolved)
                 localFilesToProcess.push(resolved)
                 return
               } catch (e) {
