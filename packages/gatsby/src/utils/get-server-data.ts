@@ -5,7 +5,7 @@ import { match } from "@gatsbyjs/reach-router/lib/utils"
 
 export interface IServerData {
   headers?: Record<string, string>
-  props?: Record<string, unknown>
+  props?: Record<string, string | number | Array<string>>
 }
 
 interface IModuleWithServerData {
