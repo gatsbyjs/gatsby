@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-gatsby-cloud",
   "description": "A Gatsby plugin which optimizes working with Gatsby Cloud",
-  "version": "3.2.0-next.2",
+  "version": "3.2.0-next.4",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -26,10 +26,10 @@
     "babel-preset-gatsby-package": "^1.14.0-next.2",
     "cpy-cli": "^3.1.1",
     "cross-env": "^7.0.3",
+    "del-cli": "^3.0.1",
     "jest": "^26.6.3",
     "msw": "^0.35.0",
-    "node-fetch": "^2.6.1",
-    "rimraf": "^3.0.2"
+    "node-fetch": "^2.6.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-gatsby-cloud#readme",
   "keywords": [
@@ -53,8 +53,8 @@
   "sideEffects": false,
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\" && npm run clean && npm run copy-type-declarations",
-    "clean": "rimraf ./components/index.d.ts",
-    "copy-type-declarations": "cpy src/components/index.d.ts components/index.d.ts",
+    "clean": "del-cli ./components/index.d.ts",
+    "copy-type-declarations": "cpy src/components/index.d.ts components/",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },

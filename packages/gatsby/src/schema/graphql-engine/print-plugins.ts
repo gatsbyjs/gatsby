@@ -97,9 +97,6 @@ function render(
   const gatsbyWorkerExports = pluginsWithWorkers.map(
     (plugin, i) => `"${plugin.name}": pluginGatsbyWorker${i},`
   )
-  const indexExports = uniqSubPlugins.map(
-    (plugin, i) => `  "${plugin.name}": subPlugin${i},`
-  )
   const output = `
 ${imports.join(`\n`)}
 
@@ -109,10 +106,6 @@ ${gatsbyNodeExports.join(`\n`)}
 
 export const gatsbyWorkers = {
 ${gatsbyWorkerExports.join(`\n`)}
-}
-
-export const indexes = {
-${indexExports.join(`\n`)}
 }
 
 export const flattenedPlugins =
@@ -186,7 +179,7 @@ function findSubPlugins(
   plugins: IGatsbyState["flattenedPlugins"],
   allFlattenedPlugins: IGatsbyState["flattenedPlugins"]
 ): IGatsbyState["flattenedPlugins"] {
-  const usedSubPluginNames = new Set<string>(
+  const usedSubPluginResolves = new Set<string>(
     plugins
       .flatMap(plugin => {
         if (plugin.subPluginPaths) {
@@ -199,16 +192,16 @@ function findSubPlugins(
 
         return []
       })
-      .map(plugin => plugin[`name`])
+      .map(plugin => plugin[`resolve`])
       .filter((p: unknown): p is string => typeof p === `string`)
   )
   return allFlattenedPlugins.filter(
-    p => usedSubPluginNames.has(p.name) && !!p.modulePath
+    p => usedSubPluginResolves.has(p.resolve) && !!p.modulePath
   )
 }
 
 function uniq(
   plugins: IGatsbyState["flattenedPlugins"]
 ): IGatsbyState["flattenedPlugins"] {
-  return Array.from(new Map(plugins.map(p => [p.name, p])).values())
+  return Array.from(new Map(plugins.map(p => [p.resolve, p])).values())
 }

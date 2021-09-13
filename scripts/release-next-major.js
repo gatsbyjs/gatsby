@@ -149,6 +149,7 @@ let currentGitHash = null
     await promiseSpawn(`yarn`, [`bootstrap`], {
       shell: true,
       env: {
+        ...process.env,
         COMPILER_OPTIONS,
       },
       stdio: [`inherit`, `inherit`, `inherit`],

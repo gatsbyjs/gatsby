@@ -123,7 +123,7 @@ Redirect rules are automatically added for [client only paths](https://www.gatsb
 
 If those rules are conflicting with custom rules or if you want to have more control over them you can disable them in [configuration](#configuration) by setting `generateMatchPathRewrites` to `false`.
 
-An asterix, `*`, will match anything that follows. i.e. `/packages/gatsby-plugin-gatsby-cloud/` will be redirected to `/plugins/gatsby-plugin-gatsby-cloud/`.
+An asterisk, `*`, will match anything that follows. i.e. `/packages/gatsby-plugin-gatsby-cloud/` will be redirected to `/plugins/gatsby-plugin-gatsby-cloud/`.
 
 ### HTTP Strict Transport Security
 

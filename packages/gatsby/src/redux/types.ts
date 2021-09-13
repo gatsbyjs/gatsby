@@ -6,6 +6,7 @@ import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
 import { ThunkAction } from "redux-thunk"
 import { InternalJob, JobResultInterface } from "../utils/jobs/manager"
 import { ITypeMetadata } from "../schema/infer/inference-metadata"
+import { Span } from "opentracing"
 
 type SystemPath = string
 type Identifier = string
@@ -790,6 +791,9 @@ export interface ICreateNodeAction {
   type: `CREATE_NODE`
   payload: IGatsbyNode
   oldNode?: IGatsbyNode
+  traceId: string
+  parentSpan: Span
+  followsSpan: Span
 }
 
 export interface IAddFieldToNodeAction {

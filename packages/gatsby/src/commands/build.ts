@@ -47,6 +47,8 @@ import {
   mergeWorkerState,
   runQueriesInWorkersQueue,
 } from "../utils/worker/pool"
+import webpackConfig from "../utils/webpack.config.js"
+import { webpack } from "webpack"
 import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpack"
 import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
@@ -73,7 +75,9 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   markWebpackStatusAsPending()
 
   const publicDir = path.join(program.directory, `public`)
-  initTracer(program.openTracingConfigFile)
+  initTracer(
+    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
+  )
   const buildActivity = report.phantomActivity(`build`)
   buildActivity.start()
 
@@ -201,7 +205,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     rewriteActivityTimer.end()
   }
 
-  await flushPendingPageDataWrites()
+  await flushPendingPageDataWrites(buildSpan)
   markWebpackStatusAsDone()
 
   if (telemetry.isTrackingEnabled()) {
@@ -236,7 +240,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   let pageRenderer = ``
   let waitForCompilerCloseBuildHtml
   try {
-    const result = await buildRenderer(program, Stage.BuildHTML, buildSpan)
+    const result = await buildRenderer(
+      program,
+      Stage.BuildHTML,
+      buildSSRBundleActivityProgress.span
+    )
     pageRenderer = result.rendererPath
     if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
       // for now copy page-render to `.cache` so page-ssr module can require it as a sibling module
@@ -253,6 +261,48 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       )
     }
     waitForCompilerCloseBuildHtml = result.waitForCompilerClose
+
+    if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+      Promise.all(engineBundlingPromises).then(() => {
+        if (process.send) {
+          process.send({
+            type: `LOG_ACTION`,
+            action: {
+              type: `ENGINES_READY`,
+            },
+          })
+        }
+      })
+    }
+
+    // TODO Move to page-renderer
+    if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+      const routesWebpackConfig = await webpackConfig(
+        program,
+        program.directory,
+        `build-ssr`,
+        null,
+        { parentSpan: buildSSRBundleActivityProgress.span }
+      )
+
+      await new Promise((resolve, reject) => {
+        const compiler = webpack(routesWebpackConfig)
+        compiler.run(err => {
+          if (err) {
+            return void reject(err)
+          }
+
+          compiler.close(error => {
+            if (error) {
+              return void reject(error)
+            }
+            return void resolve(undefined)
+          })
+
+          return undefined
+        })
+      })
+    }
   } catch (err) {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
   } finally {
@@ -273,6 +323,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       workerPool,
       buildSpan,
     })
+
   const waitWorkerPoolEnd = Promise.all(workerPool.end())
 
   telemetry.addSiteMeasurement(`BUILD_END`, {
@@ -286,7 +337,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   postBuildActivityTimer.start()
   await apiRunnerNode(`onPostBuild`, {
     graphql: gatsbyNodeGraphQLFunction,
-    parentSpan: buildSpan,
+    parentSpan: postBuildActivityTimer.span,
   })
   postBuildActivityTimer.end()
 

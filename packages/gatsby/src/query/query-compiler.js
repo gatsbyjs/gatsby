@@ -72,14 +72,14 @@ export default async function compile({ parentSpan } = {}): Promise<
       })
     ),
     addError,
-    parentSpan,
+    parentSpan: activity.span,
   })
 
   const queries = processQueries({
     schema,
     parsedQueries,
     addError,
-    parentSpan,
+    parentSpan: activity.span,
   })
 
   if (errors.length !== 0) {

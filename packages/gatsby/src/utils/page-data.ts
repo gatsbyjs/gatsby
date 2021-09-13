@@ -15,6 +15,7 @@ import {
   reverseFixedPagePath,
   IPageData,
 } from "./page-data-helpers"
+import { Span } from "opentracing"
 
 export { reverseFixedPagePath }
 
@@ -146,7 +147,7 @@ export function isFlushEnqueued(): boolean {
   return isFlushPending
 }
 
-export async function flush(): Promise<void> {
+export async function flush(parentSpan?: Span): Promise<void> {
   if (isFlushing) {
     // We're already in the middle of a flush
     return
@@ -161,13 +162,14 @@ export async function flush(): Promise<void> {
     staticQueriesByTemplate,
     queries,
   } = store.getState()
+  const isBuild = program?._?.[0] !== `develop`
 
   const { pagePaths } = pendingPageDataWrites
-
   const writePageDataActivity = reporter.createProgress(
     `Writing page-data.json files to public directory`,
     pagePaths.size,
-    0
+    0,
+    { id: `write-page-data-public-directory`, parentSpan }
   )
   writePageDataActivity.start()
 
@@ -181,11 +183,7 @@ export async function flush(): Promise<void> {
     // them, a page might not exist anymore щ（ﾟДﾟщ）
     // This is why we need this check
     if (page) {
-      if (
-        (program?._?.[0] === `develop` &&
-          process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) ||
-        (_CFLAGS_.GATSBY_MAJOR === `4` ? page.mode !== `SSG` : false)
-      ) {
+      if (!isBuild && process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
         // check if already did run query for this page
         // with query-on-demand we might have pending page-data write due to
         // changes in static queries assigned to page template, but we might not
@@ -200,28 +198,37 @@ export async function flush(): Promise<void> {
 
         if (hasFlag(query.dirty, FLAG_DIRTY_NEW_PAGE)) {
           // query results are not written yet
-          return cb(null, true)
+          process.nextTick(() => cb(null, true))
+          return
         }
       }
 
-      const staticQueryHashes =
-        staticQueriesByTemplate.get(page.componentPath) || []
+      // In develop we rely on QUERY_ON_DEMAND so we just go through
+      // In build we only build these page-json for SSG pages
+      if (
+        _CFLAGS_.GATSBY_MAJOR !== `4` ||
+        !isBuild ||
+        (isBuild && page.mode === `SSG`)
+      ) {
+        const staticQueryHashes =
+          staticQueriesByTemplate.get(page.componentPath) || []
 
-      const result = await writePageData(
-        path.join(program.directory, `public`),
-        {
-          ...page,
-          staticQueryHashes,
+        const result = await writePageData(
+          path.join(program.directory, `public`),
+          {
+            ...page,
+            staticQueryHashes,
+          }
+        )
+
+        writePageDataActivity.tick()
+
+        if (!isBuild) {
+          websocketManager.emitPageData({
+            id: pagePath,
+            result: JSON.parse(result) as IPageDataWithQueryResult,
+          })
         }
-      )
-
-      writePageDataActivity.tick()
-
-      if (program?._?.[0] === `develop`) {
-        websocketManager.emitPageData({
-          id: pagePath,
-          result: JSON.parse(result) as IPageDataWithQueryResult,
-        })
       }
     }
 
@@ -232,7 +239,10 @@ export async function flush(): Promise<void> {
       },
     })
 
-    return cb(null, true)
+    // `process.nextTick` below is a workaround against stack overflow
+    // occurring when there are many non-SSG pages
+    process.nextTick(() => cb(null, true))
+    return
   }, 25)
 
   for (const pagePath of pagePaths) {
@@ -252,15 +262,15 @@ export async function flush(): Promise<void> {
   return
 }
 
-export function enqueueFlush(): void {
+export function enqueueFlush(parentSpan?: Span): void {
   if (isWebpackStatusPending()) {
     isFlushPending = true
   } else {
-    flush()
+    flush(parentSpan)
   }
 }
 
-export async function handleStalePageData(): Promise<void> {
+export async function handleStalePageData(parentSpan: Span): Promise<void> {
   if (!(await fs.pathExists(`public/page-data`))) {
     return
   }
@@ -269,7 +279,9 @@ export async function handleStalePageData(): Promise<void> {
   // we get the list of those and compare against expected page-data files
   // and remove ones that shouldn't be there anymore
 
-  const activity = reporter.activityTimer(`Cleaning up stale page-data`)
+  const activity = reporter.activityTimer(`Cleaning up stale page-data`, {
+    parentSpan,
+  })
   activity.start()
 
   const pageDataFilesFromPreviousBuilds = await new Promise<Set<string>>(
