@@ -165,6 +165,7 @@ export async function renderHTML({
     pageData,
     staticQueryContext,
     ...data.templateDetails.assets,
+    inlinePageData: data.page.mode === `SSR` && data.results.serverData,
   })
 
   return results.html
