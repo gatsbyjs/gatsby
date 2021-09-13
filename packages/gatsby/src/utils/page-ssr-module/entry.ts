@@ -28,7 +28,7 @@ export interface ISSRData {
   page: IGatsbyPage
   templateDetails: ITemplateDetails
   potentialPagePath: string
-  serverDataHeaders?: Record<string, string | number | Array<string>>
+  serverDataHeaders?: Record<string, string>
 }
 
 const pageTemplateDetailsMap: Record<

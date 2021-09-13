@@ -30,7 +30,7 @@ type Opaque<K, T> = T & { __TYPE__: K }
 type ISSRData = Opaque<
   "ISSRData",
   {
-    serverDataHeaders?: Record<string, string | number | Array<string>>
+    serverDataHeaders?: Record<string, string>
   }
 >
 
