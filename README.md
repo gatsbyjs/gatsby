@@ -58,7 +58,10 @@
   Support: <a href="https://twitter.com/AskGatsbyJS">Twitter</a>, <a href="https://github.com/gatsbyjs/gatsby/discussions">Discussions</a>
   <span> & </span>
   <a href="https://gatsby.dev/discord">Discord</a>
+  <br /><a href="https://www.gatsbyjs.com/camp-fall-2021/">Join Us At GatsbyCamp:Fall '21</a>
 </h2>
+
+
 
 Gatsby is a modern web framework for blazing fast websites.
 
@@ -137,6 +140,7 @@ Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.com/).
 - **To dive straight into code samples head [to our documentation](https://www.gatsbyjs.com/docs/).** In particular, check out the “<i>How-to Guides</i>”, “<i>Reference</i>”, and “<i>Conceptual Guides</i>” sections in the sidebar.
 
 We welcome suggestions for improving our docs. See the [“how to contribute”](https://www.gatsbyjs.com/contributing/how-to-contribute/) documentation for more details.
+
 
 **Start Learning Gatsby: [Follow the Tutorial](https://www.gatsbyjs.com/tutorial/) · [Read the Docs](https://www.gatsbyjs.com/docs/)**
 
