@@ -4,6 +4,7 @@ const urlJoin = require(`url-join`)
 import HttpAgent from "agentkeepalive"
 // const http2wrapper = require(`http2-wrapper`)
 const opentracing = require(`opentracing`)
+const { SemanticAttributes } = require(`@opentelemetry/semantic-conventions`)
 
 const { HttpsAgent } = HttpAgent
 
@@ -31,7 +32,14 @@ async function worker([url, options]) {
   const httpSpan = tracer.startSpan(`http.get`, {
     childOf: options.parentSpan,
   })
-  httpSpan.setTag(`http.url`, url)
+  const parsedUrl = new URL(url)
+  httpSpan.setTag(SemanticAttributes.HTTP_URL, url)
+  httpSpan.setTag(SemanticAttributes.HTTP_HOST, parsedUrl.host)
+  httpSpan.setTag(
+    SemanticAttributes.HTTP_SCHEME,
+    parsedUrl.protocol.replace(/:$/, ``)
+  )
+  httpSpan.setTag(SemanticAttributes.HTTP_TARGET, parsedUrl.pathname)
   httpSpan.setTag(`plugin`, `gatsby-source-drupal`)
 
   // Log out progress during the initial sourcing.
@@ -59,11 +67,13 @@ async function worker([url, options]) {
     ...options,
   })
 
-  httpSpan.setTag(`http.status_code`, response.statusCode)
-  httpSpan.setTag(`http.status_message`, response.statusMessage)
-  httpSpan.setTag(`http.method`, `GET`)
-  httpSpan.setTag(`net.peer_ip`, response.ip)
-  httpSpan.setTag(`http.response_content_length`, response.rawBody?.length)
+  httpSpan.setTag(SemanticAttributes.HTTP_STATUS_CODE, response.statusCode)
+  httpSpan.setTag(SemanticAttributes.HTTP_METHOD, `GET`)
+  httpSpan.setTag(SemanticAttributes.NET_PEER_IP, response.ip)
+  httpSpan.setTag(
+    SemanticAttributes.HTTP_RESPONSE_CONTENT_LENGTH,
+    response.rawBody?.length
+  )
 
   httpSpan.finish()
 
