@@ -1573,7 +1573,7 @@ export interface GatsbyFunctionRequest extends IncomingMessage {
   cookies: Record<string, string>
 }
 
-declare namespace NodeJS {
+declare module NodeJS {
   interface Global {
     __GATSBY: {
       buildId: string

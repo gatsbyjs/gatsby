@@ -313,10 +313,18 @@ function requestRemoteNode(
     responseStream.pipe(fsWriteStream)
 
     // If there's a 400/500 response or other error.
+    // it will trigger a finish event on fsWriteStream
     responseStream.on(`error`, error => {
       if (timeout) {
         clearTimeout(timeout)
       }
+
+      fsWriteStream.close()
+      fs.removeSync(tmpFilename)
+
+      process.nextTick(() => {
+        reject(error)
+      })
     })
 
     responseStream.on(`response`, response => {

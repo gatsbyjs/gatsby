@@ -73,7 +73,7 @@ async function getFileContent(file, req, options = {}) {
     contentLength:
       req.url.searchParams.get(`contentLength`) === `false`
         ? undefined
-        : fileContentBuffer.length,
+        : String(fileContentBuffer.length),
   }
 }
 
@@ -118,6 +118,26 @@ const server = setupServer(
       ctx.set(`Content-Type`, `image/svg+xml`),
       ctx.set(`Content-Length`, contentLength),
       ctx.status(200),
+      ctx.body(content)
+    )
+  }),
+  rest.get(`http://external.com/404.jpg`, async (req, res, ctx) => {
+    const content = `Page not found`
+
+    return res(
+      ctx.set(`Content-Type`, `text/html`),
+      ctx.set(`Content-Length`, String(content.length)),
+      ctx.status(404),
+      ctx.body(content)
+    )
+  }),
+  rest.get(`http://external.com/500.jpg`, async (req, res, ctx) => {
+    const content = `Server error`
+
+    return res(
+      ctx.set(`Content-Type`, `text/html`),
+      ctx.set(`Content-Length`, String(content.length)),
+      ctx.status(500),
       ctx.body(content)
     )
   })
@@ -350,6 +370,24 @@ describe(`fetch-remote-file`, () => {
     // we still expect 4 fetches because cache can't save fast enough
     expect(gotStream).toBeCalledTimes(4)
     expect(fsMove).toBeCalledTimes(2)
+  })
+
+  it(`fails when 404 is triggered`, async () => {
+    await expect(
+      fetchRemoteFile({
+        url: `http://external.com/404.jpg`,
+        cache,
+      })
+    ).rejects.toThrow(`Response code 404 (Not Found)`)
+  })
+
+  it(`fails when 500 is triggered`, async () => {
+    await expect(
+      fetchRemoteFile({
+        url: `http://external.com/500.jpg`,
+        cache,
+      })
+    ).rejects.toThrow(`Response code 500 (Internal Server Error)`)
   })
 
   describe(`retries the download`, () => {

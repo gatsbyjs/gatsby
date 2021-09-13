@@ -58,7 +58,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // global gatsby object to use without store
   global.__GATSBY = {
     buildId: uuidv4(),
-    root: program.directory,
+    root: program!.directory,
   }
 
   if (isTruthy(process.env.VERBOSE)) {
