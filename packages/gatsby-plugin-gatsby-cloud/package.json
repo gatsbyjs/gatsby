@@ -29,7 +29,7 @@
     "jest": "^26.6.3",
     "msw": "^0.35.0",
     "node-fetch": "^2.6.1",
-    "rimraf": "^3.0.2"
+    "del-cli": "^3.0.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-gatsby-cloud#readme",
   "keywords": [
@@ -53,8 +53,8 @@
   "sideEffects": false,
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\" && npm run clean && npm run copy-type-declarations",
-    "clean": "rimraf ./components/index.d.ts",
-    "copy-type-declarations": "cpy src/components/index.d.ts components/index.d.ts",
+    "clean": "del-cli ./components/index.d.ts",
+    "copy-type-declarations": "cpy src/components/index.d.ts components/",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
