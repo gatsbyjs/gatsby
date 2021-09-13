@@ -112,6 +112,7 @@
     "mitt": "^1.2.0",
     "moment": "^2.27.0",
     "multer": "^1.4.2",
+    "node-fetch": "^2.6.2",
     "normalize-path": "^3.0.0",
     "null-loader": "^4.0.1",
     "opentracing": "^0.14.4",

@@ -287,6 +287,17 @@ module.exports = async (
         ])
         break
       }
+      case `develop-html`:
+      case `build-html`: {
+        // Add global fetch in node environments
+        configPlugins.push(
+          plugins.provide({
+            fetch: require.resolve(`node-fetch`),
+            "global.fetch": require.resolve(`node-fetch`),
+          })
+        )
+        break
+      }
     }
 
     return configPlugins
