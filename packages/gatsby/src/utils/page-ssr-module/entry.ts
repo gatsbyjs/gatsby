@@ -15,7 +15,7 @@ import {
   getPagePathFromPageDataPath,
 } from "../page-data-helpers"
 // @ts-ignore render-page import will become valid later on (it's marked as external)
-import htmlComponentRenderer from "./routes/render-page"
+import htmlComponentRenderer, { getPageChunk } from "./routes/render-page"
 import { getServerData } from "../get-server-data"
 
 export interface ITemplateDetails {
@@ -85,13 +85,12 @@ export async function getData({
 
   // 4. (if SSR) run getServerData
   if (page.mode === `SSR`) {
-    const mod = require(`./routes/${page.componentChunkName}`)
     executionPromises.push(
-      getServerData(req, page, potentialPagePath, mod).then(
-        serverDataResults => {
+      getPageChunk(page)
+        .then(mod => getServerData(req, page, potentialPagePath, mod))
+        .then(serverDataResults => {
           serverData = serverDataResults
-        }
-      )
+        })
     )
   }
 

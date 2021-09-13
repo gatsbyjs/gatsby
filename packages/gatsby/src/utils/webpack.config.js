@@ -575,7 +575,7 @@ module.exports = async (
     }
   }
 
-  if (stage === `build-html`) {
+  if (stage === `build-html` || stage === `develop-html`) {
     config.optimization = {
       splitChunks: {
         cacheGroups: {

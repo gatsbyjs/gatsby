@@ -477,3 +477,7 @@ export default async function staticPage({
     throw e
   }
 }
+
+export function getPageChunk({ componentChunkName }) {
+  return asyncRequires.components[componentChunkName]()
+}
