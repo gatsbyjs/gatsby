@@ -3,6 +3,7 @@ import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
 import { WindowLocation, NavigateFn, NavigateOptions } from "@reach/router"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
+import { Span } from "opentracing"
 export { Reporter }
 import {
   EnumTypeComposerAsObjectDefinition as ComposeEnumTypeConfig,
@@ -350,7 +351,7 @@ export interface GatsbyNode<
     callback: PluginCallback<void>
   ): void | Promise<void>
 
-  /** Called at the end of the bootstrap process after all other extension APIs have been called. If you indend to use this API in a plugin, use "unstable_onPluginInit" instead. */
+  /** Called at the end of the bootstrap process after all other extension APIs have been called. If you indend to use this API in a plugin, use "onPluginInit" instead. */
   onPreBootstrap?(
     args: ParentSpanPluginArgs,
     options: PluginOptions,
@@ -376,18 +377,18 @@ export interface GatsbyNode<
    * @gatsbyVersion 3.9.0
    * @example
    * let createJobV2
-   * exports.unstable_onPluginInit = ({ actions }) => {
+   * exports.onPluginInit = ({ actions }) => {
    *   // Store job creation action to use it later
    *   createJobV2 = actions.createJobV2
    * }
    */
-  unstable_onPluginInit?(
+  onPluginInit?(
     args: ParentSpanPluginArgs,
     options: PluginOptions,
     callback: PluginCallback<void>
   ): void | Promise<void>
 
-  /** The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation. If you indend to use this API in a plugin, use "unstable_onPluginInit" instead. */
+  /** The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation. If you indend to use this API in a plugin, use "onPluginInit" instead. */
   onPreInit?(
     args: ParentSpanPluginArgs,
     options: PluginOptions,
@@ -916,7 +917,7 @@ export interface WrapRootElementNodeArgs extends NodePluginArgs {
 }
 
 export interface ParentSpanPluginArgs extends NodePluginArgs {
-  parentSpan: object
+  parentSpan: Span
 }
 
 export interface NodePluginArgs {

@@ -75,7 +75,9 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   markWebpackStatusAsPending()
 
   const publicDir = path.join(program.directory, `public`)
-  initTracer(program.openTracingConfigFile)
+  initTracer(
+    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
+  )
   const buildActivity = report.phantomActivity(`build`)
   buildActivity.start()
 
@@ -203,7 +205,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     rewriteActivityTimer.end()
   }
 
-  await flushPendingPageDataWrites()
+  await flushPendingPageDataWrites(buildSpan)
   markWebpackStatusAsDone()
 
   if (telemetry.isTrackingEnabled()) {
@@ -260,19 +262,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     }
     waitForCompilerCloseBuildHtml = result.waitForCompilerClose
 
-    if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
-      Promise.all(engineBundlingPromises).then(() => {
-        if (process.send) {
-          process.send({
-            type: `LOG_ACTION`,
-            action: {
-              type: `ENGINES_READY`,
-            },
-          })
-        }
-      })
-    }
-
     // TODO Move to page-renderer
     if (_CFLAGS_.GATSBY_MAJOR === `4`) {
       const routesWebpackConfig = await webpackConfig(
@@ -299,6 +288,19 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
           return undefined
         })
+      })
+    }
+
+    if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+      Promise.all(engineBundlingPromises).then(() => {
+        if (process.send) {
+          process.send({
+            type: `LOG_ACTION`,
+            action: {
+              type: `ENGINES_READY`,
+            },
+          })
+        }
       })
     }
   } catch (err) {

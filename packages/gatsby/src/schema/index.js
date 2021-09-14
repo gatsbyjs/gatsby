@@ -8,7 +8,7 @@ const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
 const { builtInFieldExtensions } = require(`./extensions`)
 const { builtInTypeDefinitions } = require(`./types/built-in-types`)
 const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
-const { shouldGenerateEngines } = require(`../utils/engines-helpers`)
+const { shouldPrintEngineSnapshot } = require(`../utils/engines-helpers`)
 
 const getAllTypeDefinitions = () => {
   const {
@@ -108,7 +108,7 @@ const build = async ({
   const typeConflictReporter = new TypeConflictReporter()
 
   const enginePrintConfig =
-    _CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()
+    _CFLAGS_.GATSBY_MAJOR === `4` && shouldPrintEngineSnapshot()
       ? {
           path: `${directory}/.cache/schema.gql`,
           rewrite: true,

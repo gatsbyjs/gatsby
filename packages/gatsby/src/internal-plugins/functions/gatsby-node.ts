@@ -327,8 +327,11 @@ let isFirstBuild = true
 export async function onPreBootstrap({
   reporter,
   store,
+  parentSpan,
 }: ParentSpanPluginArgs): Promise<void> {
-  const activity = reporter.activityTimer(`Compiling Gatsby Functions`)
+  const activity = reporter.activityTimer(`Compiling Gatsby Functions`, {
+    parentSpan,
+  })
   activity.start()
 
   const {

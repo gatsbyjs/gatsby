@@ -95,6 +95,7 @@ describe(`get-page-data-util`, () => {
         path: `/foo`,
         componentPath: `/foo.js`,
         component: `/foo.js`,
+        mode: `SSG`, // TODO: need to test other modes in non-build environment
       },
     }
 
