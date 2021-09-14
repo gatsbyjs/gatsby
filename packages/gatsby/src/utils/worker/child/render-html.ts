@@ -175,6 +175,14 @@ export const renderHTMLProd = async ({
           path: pagePath,
           unsafeBuiltinsUsageByPagePath,
         }
+
+        // If we're in Preview-mode, write out a simple error html file.
+        const html = `<p>Building ${pagePath} failed.</p>
+        <h3>Error</h3>
+        <pre><code>${e.message}</code></pre>`
+
+        await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
+
         throw e
       }
     },
