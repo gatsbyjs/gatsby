@@ -348,10 +348,17 @@ export const doBuildPages = async (
         error.context.path
       }": ${JSON.stringify(truncatedPageData, null, 2)}`
 
-      reporter.error({
-        context: { sourceMessage: pageDataMessage },
-        error: prettyError,
-      })
+      // This is our only error during preview so customize it a bit + add the
+      // pretty build error.
+      if (process.env.GATSBY_IS_PREVIEW) {
+        reporter.error({
+          id: `95314`,
+          context: { pageData: pageDataMessage },
+          error: buildError,
+        })
+      } else {
+        reporter.error(pageDataMessage)
+      }
     }
 
     // Don't crash the builder when we're in preview-mode.
