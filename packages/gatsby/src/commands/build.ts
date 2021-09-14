@@ -235,7 +235,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     { parentSpan: buildSpan }
   )
   buildSSRBundleActivityProgress.start()
-  let pageRenderer = ``
   let waitForCompilerCloseBuildHtml
   try {
     const result = await buildRenderer(
@@ -243,7 +242,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       Stage.BuildHTML,
       buildSSRBundleActivityProgress.span
     )
-    pageRenderer = result.rendererPath
     waitForCompilerCloseBuildHtml = result.waitForCompilerClose
 
     if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
