@@ -188,7 +188,7 @@ jobs:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
       # python 2 is not built in and node-gyp needs it to build lmdb
-      - run: apt-get update && apt-get install python -y
+      - run: sudo apt-get update && sudo apt-get install python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *check_lockfile
@@ -472,7 +472,7 @@ jobs:
     steps:
       - checkout
       # jq is helpful for parsing json & python required for node-gyp to build lmdb
-      - run: apt-get update && apt-get install jq python -y
+      - run: sudo apt-get update && sudo apt-get install jq python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - run: yarn markdown
@@ -484,7 +484,7 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: apt-get update && apt-get install jq python -y
+      - run: sudo apt-get update && sudo apt-get install jq python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - run: git config --global user.name "GatsbyJS Bot"
@@ -566,7 +566,7 @@ jobs:
     steps:
       - checkout
       # python 2 is not built in and node-gyp needs it to build lmdb
-      - run: apt-get update && apt-get install python -y
+      - run: sudo apt-get update && sudo apt-get install python -y
       - run:
           name: "Update React to prerelease"
           command: "REACT_CHANNEL=<< parameters.version >> node ./scripts/upgrade-react"
