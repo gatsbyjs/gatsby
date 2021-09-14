@@ -23,9 +23,11 @@ exports.onCreateWebpackConfig = function onCreateWebpackConfig({
     "object-assign$": objectAssignStub,
     "@babel/runtime/helpers/extends.js$": objectAssignStub,
     // Stub package: fetch
+    "node-fetch$": fetchStub,
     unfetch$: fetchStub,
     "unfetch/polyfill$": noOp,
     "isomorphic-unfetch$": fetchStub,
+    "isomorphic-fetch$": fetchStub,
     "whatwg-fetch$": whatwgFetchStub,
   }
 
