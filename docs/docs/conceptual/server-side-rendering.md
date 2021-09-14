@@ -4,6 +4,9 @@ title: Server-Side Rendering
 
 _Server-side rendering_ means using a server to generate HTML from JavaScript modules in response to a URL request. That's in contrast to client-side rendering, which uses the browser to create HTML using the DOM.
 
+
+![Alt](../images/ssr-diagram.jpg)
+
 Server-side rendering with JavaScript works similarly to other server-side languages such as PHP or .NET, but with [Node.js](/docs/glossary/node/) as the runtime environment. When the server receives a request, it parses the JavaScript modules and data required to generate a response, and returns a rendered HTML page to the browser.
 
 Single-page applications use client-side rendering. All URL requests are redirected to the same bare-bones HTML document, like the example that follows.
@@ -44,4 +47,3 @@ Instead of purely server-side rendering, Gatsby uses the same APIs to create sta
 - [What is a Static Site Generator?](/docs/glossary/static-site-generator/#what-is-a-static-site-generator) from the Gatsby docs
 
 
-![Alt](../images/ssr-diagram.jpg)
