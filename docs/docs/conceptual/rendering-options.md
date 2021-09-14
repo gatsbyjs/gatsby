@@ -6,7 +6,7 @@ When you visit a website, there a few different methods of generating and then r
 
 ## Static Site Generation (SSG)
 
-![Alt](../images/ssg-diagram.jpg)
+![Alt](../images/ssg-diagram.png)
 
 Static-site generation is the default rendering method in the Gatsby Framework. While the word has static in it, it doesn't at all mean boring or lifeless. It simply means the entire site is generated into bite-sized, pre-rendered HTML, CSS, and Javascript and served as a static-asset to the browser. Because all of that HTML, CSS, and JS is preprocessed and rendered at build-time, Static-Site Generation serves websites to users in the fastest possible way - it's ready to go before the visitor even visits the site. 
 
@@ -21,7 +21,7 @@ Deferred Static Generation is an innovative feature available in Gatsby Cloud th
 - [What is the difference between DSG and SSG]()
 - [How to enable DSG?]()
 
-![Alt](../images/dsg-diagram.jpg)
+![Alt](../images/dsg-diagram.png)
 
 ## Server-side Rendering (SSR)
 Server-Side Rendering is a method of content rendering in which each web page is served to a site visitor at runtime, meaning that a portion of the build process happens on each page request. Because the content is rendering during run-time, visitors will always get the latest version of content directly from the server - though they may have to wait a few seconds for it display. 
@@ -29,4 +29,4 @@ Server-Side Rendering is a method of content rendering in which each web page is
 - [What is Server-side Rendering?]()
 - [How to enable SSR?]()
 
-![Alt](../images/ssr-diagram.jpg)
+![Alt](../images/ssr-diagram.png)
