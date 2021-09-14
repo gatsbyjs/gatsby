@@ -177,11 +177,13 @@ export const renderHTMLProd = async ({
         }
 
         // If we're in Preview-mode, write out a simple error html file.
-        const html = `<p>Building ${pagePath} failed.</p>
+        if (process.env.GATSBY_IS_PREVIEW) {
+          const html = `<p>Building ${pagePath} failed.</p>
         <h3>Error</h3>
         <pre><code>${e.message}</code></pre>`
 
-        await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
+          await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
+        }
 
         throw e
       }
