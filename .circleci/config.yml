@@ -8,7 +8,7 @@ executors:
       image:
         type: string
         # First 10.x LTS release, but old Yarn
-        default: "14.15.0"
+        default: "14.17.0"
     docker:
       - image: cimg/node:<< parameters.image >>
 
@@ -535,11 +535,11 @@ jobs:
 
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 14.15 and yarn
+          name: Install node 14.17 and yarn
           command: |
-            nvm install 14.15.0
-            nvm alias default 14.15.0
-            nvm use 14.15.0
+            nvm install 14.17.0
+            nvm alias default 14.17.0
+            nvm use 14.17.0
             choco install yarn
       - run:
           name: Rebuild packages for windows

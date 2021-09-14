@@ -8,7 +8,11 @@ function preset(context, options = {}) {
     esm = false,
     availableCompilerFlags = [`GATSBY_MAJOR`],
   } = options
-  const { NODE_ENV, BABEL_ENV, COMPILER_OPTIONS } = process.env
+  const {
+    NODE_ENV,
+    BABEL_ENV,
+    COMPILER_OPTIONS = `GATSBY_MAJOR=4`,
+  } = process.env
 
   const IS_TEST = (BABEL_ENV || NODE_ENV) === `test`
 
