@@ -33,7 +33,7 @@
     "typescript": "^4.3.5"
   },
   "peerDependencies": {
-    "gatsby": "^4.0.0-alpha-9689ff"
+    "gatsby": "^4.0.0-next"
   },
   "files": [
     "dist/",

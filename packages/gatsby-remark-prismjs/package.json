@@ -21,7 +21,7 @@
     "remark": "^13.0.0"
   },
   "peerDependencies": {
-    "gatsby": "^4.0.0-alpha-9689ff",
+    "gatsby": "^4.0.0-next",
     "prismjs": "^1.15.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs#readme",

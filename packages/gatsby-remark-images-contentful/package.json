@@ -40,7 +40,7 @@
   "author": "Khaled Garbaya <khaledgarbaya@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^4.0.0-alpha-9689ff"
+    "gatsby": "^4.0.0-next"
   },
   "engines": {
     "node": ">=14.15.0"

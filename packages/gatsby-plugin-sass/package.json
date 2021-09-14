@@ -29,7 +29,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^4.0.0-alpha-9689ff",
+    "gatsby": "^4.0.0-next",
     "sass": "^1.30.0"
   },
   "repository": {

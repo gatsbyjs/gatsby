@@ -28,7 +28,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^4.0.0-alpha-9689ff",
+    "gatsby": "^4.0.0-next",
     "preact": "^10.3.4",
     "preact-render-to-string": "^5.1.8"
   },

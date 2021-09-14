@@ -27,7 +27,7 @@
   "main": "index.js",
   "peerDependencies": {
     "cxs": ">=5.0.0",
-    "gatsby": "^4.0.0-alpha-9689ff",
+    "gatsby": "^4.0.0-next",
     "react": "^16.9.0 || ^17.0.0",
     "react-dom": "^16.9.0 || ^17.0.0"
   },

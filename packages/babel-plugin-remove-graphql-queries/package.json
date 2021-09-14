@@ -20,7 +20,7 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.0.0",
-    "gatsby": "^4.0.0-alpha-9689ff"
+    "gatsby": "^4.0.0-next"
   },
   "license": "MIT",
   "main": "index.js",
