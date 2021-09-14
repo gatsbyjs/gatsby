@@ -561,7 +561,7 @@ module.exports = async (
     stage === `build-ssr`
   ) {
     const [major, minor] = process.version.replace(`v`, ``).split(`.`)
-    config.target = `node12.13`
+    config.target = `node14.15`
   } else {
     config.target = [`web`, `es5`]
   }

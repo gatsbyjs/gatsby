@@ -23,9 +23,9 @@
     "debug": "^4.3.2"
   },
   "peerDependencies": {
-    "gatsby": "^3.0.0-next.0",
-    "gatsby-source-contentful": "^5.0.0-next.0",
-    "gatsby-transformer-sharp": "^3.0.0-next.0"
+    "gatsby": "^4.0.0-next",
+    "gatsby-source-contentful": "^6.0.0-next",
+    "gatsby-transformer-sharp": "^4.0.0-next"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sqip#readme",
   "keywords": [
@@ -47,6 +47,6 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=12.13.0"
+    "node": ">=14.15.0"
   }
 }

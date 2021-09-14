@@ -72,9 +72,9 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^3.0.0-next.0",
-    "gatsby-plugin-sharp": "^3.0.0-next.0",
-    "gatsby-transformer-sharp": "^3.0.0-next.0"
+    "gatsby": "^4.0.0-next",
+    "gatsby-plugin-sharp": "^4.0.0-next",
+    "gatsby-transformer-sharp": "^4.0.0-next"
   },
   "repository": {
     "type": "git",
@@ -88,6 +88,6 @@
     "generate-plugin-options-docs": "node ./generate-plugin-options-docs.js"
   },
   "engines": {
-    "node": ">=12.13.0"
+    "node": ">=14.15.0"
   }
 }

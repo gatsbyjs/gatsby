@@ -35,7 +35,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^3.0.0-next.0",
+    "gatsby": "^4.0.0-next",
     "react": "^16.9.0 || ^17.0.0",
     "react-dom": "^16.9.0 || ^17.0.0"
   },
@@ -52,6 +52,6 @@
     "watch": "npm run build:sw-append -- --watch & npm run build:src -- --watch"
   },
   "engines": {
-    "node": ">=12.13.0"
+    "node": ">=14.15.0"
   }
 }

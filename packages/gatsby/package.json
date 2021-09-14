@@ -102,6 +102,7 @@
     "json-loader": "^0.5.7",
     "latest-version": "5.1.0",
     "lodash": "^4.17.21",
+    "lmdb-store": "^1.6.6",
     "md5-file": "^5.0.0",
     "meant": "^1.0.1",
     "memoizee": "^0.4.15",
@@ -178,7 +179,6 @@
     "cross-env": "^7.0.3",
     "documentation": "^13.1.0",
     "enhanced-resolve": "^5.8.2",
-    "lmdb-store": "~1.5.5",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "rimraf": "^3.0.2",
@@ -189,7 +189,7 @@
     "zipkin-transport-http": "^0.22.0"
   },
   "engines": {
-    "node": ">=12.13.0"
+    "node": ">=14.15.0"
   },
   "files": [
     "apis.json",

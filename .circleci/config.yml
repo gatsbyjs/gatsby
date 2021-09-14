@@ -8,14 +8,14 @@ executors:
       image:
         type: string
         # First 10.x LTS release, but old Yarn
-        default: "12.13.0"
+        default: "14.17.0"
     docker:
       - image: cimg/node:<< parameters.image >>
 
 aliases:
   e2e-executor: &e2e-executor
     docker:
-      - image: cypress/browsers:node12.18.3-chrome87-ff82
+      - image: cypress/browsers:node14.15.0-chrome86-ff82
 
   restore_cache: &restore_cache
     restore_cache:
@@ -102,7 +102,7 @@ aliases:
     requires:
       - lint
       - typecheck
-      - unit_tests_node12
+      - unit_tests_node14
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
     <<: *e2e-executor
@@ -188,7 +188,7 @@ jobs:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
       # python 2 is not built in and node-gyp needs it to build lmdb
-      - run: apt-get update && apt-get install python -y
+      - run: sudo apt-get update && sudo apt-get install python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *check_lockfile
@@ -227,11 +227,6 @@ jobs:
       - run: yarn typecheck
       - run: yarn check-repo-fields
 
-  unit_tests_node12:
-    executor:
-      name: node
-    <<: *test_template
-
   unit_tests_node14:
     executor:
       name: node
@@ -255,9 +250,9 @@ jobs:
           command: |
             echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
             echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-      - run: nvm install v12
-      - run: nvm alias default v12
-      - run: nvm use v12
+      - run: nvm install v14
+      - run: nvm alias default v14
+      - run: nvm use v14
       - run: npm i -g yarn@1.22.10
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
@@ -477,7 +472,7 @@ jobs:
     steps:
       - checkout
       # jq is helpful for parsing json & python required for node-gyp to build lmdb
-      - run: apt-get update && apt-get install jq python -y
+      - run: sudo apt-get update && sudo apt-get install jq python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - run: yarn markdown
@@ -489,7 +484,7 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: apt-get update && apt-get install jq python -y
+      - run: sudo apt-get update && sudo apt-get install jq python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - run: git config --global user.name "GatsbyJS Bot"
@@ -540,11 +535,11 @@ jobs:
 
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 12.13 and yarn
+          name: Install node 14.17 and yarn
           command: |
-            nvm install 12.13.0
-            nvm alias default 12.13.0
-            nvm use 12.13.0
+            nvm install 14.17.0
+            nvm alias default 14.17.0
+            nvm use 14.17.0
             choco install yarn
       - run:
           name: Rebuild packages for windows
@@ -571,7 +566,7 @@ jobs:
     steps:
       - checkout
       # python 2 is not built in and node-gyp needs it to build lmdb
-      - run: apt-get update && apt-get install python -y
+      - run: sudo apt-get update && sudo apt-get install python -y
       - run:
           name: "Update React to prerelease"
           command: "REACT_CHANNEL=<< parameters.version >> node ./scripts/upgrade-react"
@@ -663,12 +658,6 @@ workflows:
           <<: *ignore_docs
           requires:
             - lint
-            - bootstrap
-      - unit_tests_node12:
-          <<: *ignore_docs
-          requires:
-            - lint
-            - typecheck
             - bootstrap
       - unit_tests_node14:
           <<: *ignore_docs

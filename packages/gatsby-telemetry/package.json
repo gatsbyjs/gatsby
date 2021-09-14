@@ -61,6 +61,6 @@
     "boolean-negation": false
   },
   "engines": {
-    "node": ">=12.13.0"
+    "node": ">=14.15.0"
   }
 }

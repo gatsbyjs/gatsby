@@ -127,7 +127,7 @@ Array [
       "modules": "commonjs",
       "shippedProposals": true,
       "targets": Object {
-        "node": "12.13.0",
+        "node": "14.15.0",
       },
       "useBuiltIns": "entry",
     },
@@ -151,7 +151,7 @@ Array [
       "modules": "commonjs",
       "shippedProposals": true,
       "targets": Object {
-        "node": "12.13.0",
+        "node": "14.15.0",
       },
       "useBuiltIns": "entry",
     },
