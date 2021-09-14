@@ -11,6 +11,7 @@ import {
 
 import type { IncomingMessage } from "http"
 import type { GatsbyCache } from "gatsby"
+import { reject } from "bluebird"
 
 export interface IFetchRemoteFileOptions {
   url: string
@@ -81,20 +82,22 @@ function pollUntilComplete(
   cache: GatsbyCache,
   url: string,
   buildId: string,
-  cb: (result: string | null) => void
+  cb: (err?: Error, result?: string) => void
 ): void {
   if (!IS_WORKER) {
     // We are not in a worker, so we shouldn't use the cache
-    return void cb(null)
+    return void cb()
   }
 
   cache.get(cacheIdForWorkers(url)).then(entry => {
     if (!entry || entry.buildId !== buildId) {
-      return void cb(null)
+      return void cb()
     }
 
     if (entry.status === `complete`) {
-      cb(entry.result)
+      cb(undefined, entry.result)
+    } else if (entry.status === `failed`) {
+      cb(new Error(entry.result))
     } else {
       setTimeout(() => {
         pollUntilComplete(cache, url, buildId, cb)
@@ -117,12 +120,19 @@ async function fetchFile({
   ext,
   name,
 }: IFetchRemoteFileOptions): Promise<string> {
-  // global introduced in gatsby 3.14.0
+  // global introduced in gatsby 4.0.0
   const BUILD_ID = global.__GATSBY?.buildId ?? ``
   const pluginCacheDir = cache.directory
 
-  const result = await new Promise<string | null>(resolve => {
-    pollUntilComplete(cache, url, BUILD_ID, resolve)
+  // when a cache entry is present we wait until it completes
+  const result = await new Promise<string | undefined>((resolve, reject) => {
+    pollUntilComplete(cache, url, BUILD_ID, (err, result) => {
+      if (err) {
+        return reject(err)
+      }
+
+      return resolve(result)
+    })
   })
 
   if (result) {
@@ -173,63 +183,91 @@ async function fetchFile({
   const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
 
   // Fetch the file.
-  const response = await requestRemoteNode(
-    url,
-    headers,
-    tmpFilename,
-    httpOptions
-  )
+  try {
+    const response = await requestRemoteNode(
+      url,
+      headers,
+      tmpFilename,
+      httpOptions
+    )
 
-  if (response.statusCode === 200) {
-    // Save the response headers for future requests.
-    await cache.set(cacheIdForHeaders(url), response.headers)
+    if (response.statusCode === 200) {
+      // Save the response headers for future requests.
+      await cache.set(cacheIdForHeaders(url), response.headers)
 
-    // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
-    if (!ext) {
-      // if this is fresh response - try to guess extension and cache result for future
-      const filetype = await fileType.fromFile(tmpFilename)
-      if (filetype) {
-        ext = `.${filetype.ext}`
-        await cache.set(cacheIdForExtensions(url), ext)
+      // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
+      if (!ext) {
+        // if this is fresh response - try to guess extension and cache result for future
+        const filetype = await fileType.fromFile(tmpFilename)
+        if (filetype) {
+          ext = `.${filetype.ext}`
+          await cache.set(cacheIdForExtensions(url), ext)
+        }
+      }
+    } else if (response.statusCode === 304) {
+      if (!ext) {
+        ext = await cache.get(cacheIdForExtensions(url))
       }
     }
-  } else if (response.statusCode === 304) {
-    if (!ext) {
-      ext = await cache.get(cacheIdForExtensions(url))
+
+    // Multiple workers have started the fetch and we need another check to only let one complete
+    const cacheEntry = await cache.get(cacheIdForWorkers(url))
+    if (cacheEntry && cacheEntry.workerId !== WORKER_ID) {
+      return new Promise<string>((resolve, reject) => {
+        pollUntilComplete(cache, url, BUILD_ID, (err, result) => {
+          if (err) {
+            return reject(err)
+          }
+
+          return resolve(result as string)
+        })
+      })
     }
-  }
 
-  const cacheEntry = await cache.get(cacheIdForWorkers(url))
-  if (cacheEntry && cacheEntry.workerId !== WORKER_ID) {
-    return new Promise<string>(resolve => {
-      pollUntilComplete(cache, url, BUILD_ID, res => resolve(res as string))
-    })
-  }
+    // If the status code is 200, move the piped temp file to the real name.
+    const filename = createFilePath(
+      path.join(pluginCacheDir, digest),
+      name,
+      ext as string
+    )
+    if (response.statusCode === 200) {
+      await fs.move(tmpFilename, filename, { overwrite: true })
+      // Else if 304, remove the empty response.
+    } else {
+      await fs.remove(tmpFilename)
+    }
 
-  // If the status code is 200, move the piped temp file to the real name.
-  const filename = createFilePath(
-    path.join(pluginCacheDir, digest),
-    name,
-    ext as string
-  )
-  if (response.statusCode === 200) {
-    await fs.move(tmpFilename, filename, { overwrite: true })
-    // Else if 304, remove the empty response.
-  } else {
-    await fs.remove(tmpFilename)
-  }
+    if (IS_WORKER) {
+      await cache.set(cacheIdForWorkers(url), {
+        status: `complete`,
+        result: filename,
+        workerId: WORKER_ID,
+        buildId: BUILD_ID,
+      })
+    }
 
-  // enable multiple workers to continue when done
-  if (IS_WORKER) {
-    await cache.set(cacheIdForWorkers(url), {
-      status: `complete`,
-      result: filename,
-      workerId: WORKER_ID,
-      buildId: BUILD_ID,
-    })
-  }
+    return filename
+  } catch (err) {
+    // enable multiple workers to continue when done
+    if (IS_WORKER) {
+      const cacheEntry = await cache.get(cacheIdForWorkers(url))
 
-  return filename
+      if (!cacheEntry || cacheEntry.workerId === WORKER_ID) {
+        await cache.set(cacheIdForWorkers(url), {
+          status: `failed`,
+          result: err.toString
+            ? err.toString()
+            : err.message
+            ? err.message
+            : err,
+          workerId: WORKER_ID,
+          buildId: BUILD_ID,
+        })
+      }
+    }
+
+    throw err
+  }
 }
 
 /**

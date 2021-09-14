@@ -372,6 +372,47 @@ describe(`fetch-remote-file`, () => {
     expect(fsMove).toBeCalledTimes(2)
   })
 
+  it(`doesn't keep lock when file download failed`, async () => {
+    // we don't want to wait for polling to finish
+    jest.useFakeTimers()
+    jest.runAllTimers()
+
+    const cacheInternals = new Map()
+    const workerCache = {
+      get(key) {
+        return Promise.resolve(cacheInternals.get(key))
+      },
+      set(key, value) {
+        return Promise.resolve(cacheInternals.set(key, value))
+      },
+      directory: cache.directory,
+    }
+
+    const fetchRemoteFileInstanceOne = getFetchInWorkerContext(`1`)
+    const fetchRemoteFileInstanceTwo = getFetchInWorkerContext(`2`)
+
+    await expect(
+      fetchRemoteFileInstanceOne({
+        url: `http://external.com/500.jpg`,
+        cache: workerCache,
+      })
+    ).rejects.toThrow()
+
+    jest.runAllTimers()
+
+    await expect(
+      fetchRemoteFileInstanceTwo({
+        url: `http://external.com/500.jpg`,
+        cache: workerCache,
+      })
+    ).rejects.toThrow()
+
+    jest.useRealTimers()
+
+    expect(gotStream).toBeCalledTimes(1)
+    expect(fsMove).toBeCalledTimes(0)
+  })
+
   it(`fails when 404 is triggered`, async () => {
     await expect(
       fetchRemoteFile({
