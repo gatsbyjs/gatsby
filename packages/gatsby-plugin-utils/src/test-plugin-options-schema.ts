@@ -29,7 +29,7 @@ export async function testPluginOptionsSchema(
                     options: Joi.object({}).unknown(true),
                   })
                 )
-                .custom((value, helpers) => {
+                .custom(value => {
                   if (typeof value === `string`) {
                     value = { resolve: value }
                   }
