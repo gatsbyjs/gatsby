@@ -274,7 +274,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   const { toRegenerate, toDelete } =
     await buildHTMLPagesAndDeleteStaleArtifacts({
       program,
-      pageRenderer,
       workerPool,
       buildSpan,
     })

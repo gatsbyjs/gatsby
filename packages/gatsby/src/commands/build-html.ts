@@ -375,12 +375,10 @@ export const buildHTML = async ({
 }
 
 export async function buildHTMLPagesAndDeleteStaleArtifacts({
-  pageRenderer,
   workerPool,
   buildSpan,
   program,
 }: {
-  pageRenderer: string
   workerPool: GatsbyWorkerPool
   buildSpan?: Span
   program: IBuildArgs
@@ -388,6 +386,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   toRegenerate: Array<string>
   toDelete: Array<string>
 }> {
+  const pageRenderer = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
   buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged()
 
   const { toRegenerate, toDelete, toCleanupFromTrackedState } =
