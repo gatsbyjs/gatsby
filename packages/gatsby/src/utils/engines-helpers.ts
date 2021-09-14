@@ -1,19 +1,15 @@
-import { store } from "../redux"
-import memoize from "memoizee"
+import { emitter } from "../redux"
+import { ICreatePageAction } from "../redux/types"
 
-// Memoize assuming pages cannot change during the build command
-export const shouldGenerateEngines = memoize(shouldGenerateEnginesImpl)
-
-function shouldGenerateEnginesImpl(): boolean {
-  return process.env.gatsby_executing_command === `build` && hasDynamicPage()
+export function shouldPrintEngineSnapshot(): boolean {
+  return process.env.gatsby_executing_command === `build`
 }
 
-function hasDynamicPage(): boolean {
-  const { pages } = store.getState()
-  for (const page of pages.values()) {
-    if (page.mode !== `SSG`) {
-      return true
-    }
-  }
-  return false
+let generate = false
+export function shouldGenerateEngines(): boolean {
+  return process.env.gatsby_executing_command === `build` && generate
 }
+
+emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {
+  if (action.payload.mode !== `SSG`) generate = true
+})
