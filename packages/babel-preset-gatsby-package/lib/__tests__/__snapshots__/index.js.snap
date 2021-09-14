@@ -90,7 +90,9 @@ Array [
       "availableFlags": Array [
         "GATSBY_MAJOR",
       ],
-      "flags": Object {},
+      "flags": Object {
+        "GATSBY_MAJOR": "4",
+      },
     },
   ],
 ]
@@ -109,7 +111,9 @@ Array [
       "availableFlags": Array [
         "MAJOR",
       ],
-      "flags": Object {},
+      "flags": Object {
+        "GATSBY_MAJOR": "4",
+      },
     },
   ],
 ]
@@ -176,7 +180,9 @@ Array [
       "availableFlags": Array [
         "GATSBY_MAJOR",
       ],
-      "flags": Object {},
+      "flags": Object {
+        "GATSBY_MAJOR": "4",
+      },
     },
   ],
 ]

@@ -83,7 +83,7 @@ aliases:
             yarn why lmdb-store
       - run:
           name: Run tests
-          command: yarn jest --ci --runInBand $(yarn jest --listTests | sed 's/\/root\/project//g' | circleci tests split --split-by=timings)
+          command: yarn jest --ci --runInBand  $(yarn -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
             GENERATE_JEST_REPORT: true

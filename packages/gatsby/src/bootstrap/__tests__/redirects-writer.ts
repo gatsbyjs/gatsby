@@ -5,7 +5,7 @@ import { store } from "../../redux"
 import { actions } from "../../redux/actions"
 
 jest.mock(`fs-extra`, () => {
-  return { writeFile: jest.fn() }
+  return { writeFile: jest.fn(), readFileSync: jest.fn(() => `foo`) }
 })
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
