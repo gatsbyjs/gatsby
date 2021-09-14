@@ -4,7 +4,7 @@ function preset(context, options = {}) {
   const {
     browser = false,
     debug = false,
-    nodeVersion = `12.13.0`,
+    nodeVersion = `14.15.0`,
     esm = false,
     availableCompilerFlags = [`GATSBY_MAJOR`],
   } = options

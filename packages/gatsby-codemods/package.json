@@ -40,7 +40,7 @@
     "cross-env": "^7.0.3"
   },
   "engines": {
-    "node": ">=12.13.0"
+    "node": ">=14.15.0"
   },
   "bin": "./bin/gatsby-codemods.js"
 }
