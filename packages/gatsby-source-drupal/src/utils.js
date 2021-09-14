@@ -261,7 +261,7 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
 
     const nodeFieldName = `${newNode.internal.type}___NODE`
     removedReferencedNodes.forEach(referencedNode => {
-      if (referencedNode.relationships[nodeFieldName]) {
+      if (referencedNode.relationships && referencedNode.relationships[nodeFieldName]) {
         referencedNode.relationships[nodeFieldName] =
           referencedNode.relationships[nodeFieldName].filter(
             id => id !== newNode.id
