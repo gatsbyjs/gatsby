@@ -165,6 +165,21 @@ exports.createSchemaCustomization = async (
     reporter,
   })
 
+  if (pluginConfig.get(`enableTags`)) {
+    createTypes(
+      schema.buildObjectType({
+        name: `ContentfulTag`,
+        fields: {
+          name: { type: `String!` },
+          contentful_id: { type: `String!` },
+          id: { type: `ID!` },
+        },
+        interfaces: [`Node`],
+        extensions: { dontInfer: {} },
+      })
+    )
+  }
+
   createTypes(`
     interface ContentfulEntry implements Node {
       contentful_id: String!
