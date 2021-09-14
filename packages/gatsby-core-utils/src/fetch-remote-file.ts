@@ -11,7 +11,6 @@ import {
 
 import type { IncomingMessage } from "http"
 import type { GatsbyCache } from "gatsby"
-import { reject } from "bluebird"
 
 export interface IFetchRemoteFileOptions {
   url: string
