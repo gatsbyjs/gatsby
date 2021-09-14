@@ -1,6 +1,6 @@
 {
   "name": "gatsby-core-utils",
-  "version": "2.14.0-next.2",
+  "version": "3.0.0-next.0",
   "description": "A collection of gatsby utils used in different gatsby packages",
   "keywords": [
     "gatsby",
@@ -44,7 +44,7 @@
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
     "@types/ci-info": "2.0.0",
-    "babel-preset-gatsby-package": "^1.14.0-next.2",
+    "babel-preset-gatsby-package": "^2.0.0-next.0",
     "cross-env": "^7.0.3",
     "msw": "^0.35.0",
     "typescript": "^4.3.5"
