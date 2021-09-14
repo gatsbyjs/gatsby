@@ -4,7 +4,6 @@ const {
   nodeFromData,
   downloadFile,
   isFileNode,
-  getHref,
   createNodeIdWithVersion,
 } = require(`./normalize`)
 
@@ -262,10 +261,15 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
 
     const nodeFieldName = `${newNode.internal.type}___NODE`
     removedReferencedNodes.forEach(referencedNode => {
-      referencedNode.relationships[nodeFieldName] =
-        referencedNode.relationships[nodeFieldName].filter(
-          id => id !== newNode.id
-        )
+      if (
+        referencedNode.relationships &&
+        referencedNode.relationships[nodeFieldName]
+      ) {
+        referencedNode.relationships[nodeFieldName] =
+          referencedNode.relationships[nodeFieldName].filter(
+            id => id !== newNode.id
+          )
+      }
     })
 
     // see what nodes are newly referenced, and make sure to call `createNode` on them
