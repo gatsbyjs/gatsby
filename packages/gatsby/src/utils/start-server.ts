@@ -305,12 +305,6 @@ module.exports = {
     res.end()
   })
 
-  // Disable directory indexing i.e. serving index.html from a directory.
-  // This can lead to serving stale html files during development.
-  //
-  // We serve by default an empty index.html that sets up the dev environment.
-  app.use(developStatic(`public`, { index: false }))
-
   const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,
     stats: `errors-only`,
@@ -476,6 +470,12 @@ module.exports = {
   if (developMiddleware) {
     developMiddleware(app, program)
   }
+
+  // Disable directory indexing i.e. serving index.html from a directory.
+  // This can lead to serving stale html files during development.
+  //
+  // We serve by default an empty index.html that sets up the dev environment.
+  app.use(developStatic(`public`, { index: false }))
 
   // Set up API proxy.
   const { proxy } = store.getState().config
