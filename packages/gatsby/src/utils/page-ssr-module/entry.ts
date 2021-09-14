@@ -16,7 +16,7 @@ import {
 } from "../page-data-helpers"
 // @ts-ignore render-page import will become valid later on (it's marked as external)
 import htmlComponentRenderer, { getPageChunk } from "./routes/render-page"
-import { getServerData } from "../get-server-data"
+import { getServerData, IServerData } from "../get-server-data"
 
 export interface ITemplateDetails {
   query: string
