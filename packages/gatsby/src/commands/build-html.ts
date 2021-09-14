@@ -213,7 +213,8 @@ const renderHTMLQueue = async (
     [`gatsby_log_level`, process.env.gatsby_log_level],
   ]
 
-  const segments = chunk(pages, 50)
+  const chunkSize = process.env.GATSBY_IS_PREVIEW ? 1 : 50
+  const segments = chunk(pages, chunkSize)
 
   const sessionId = Date.now()
 
@@ -347,10 +348,16 @@ export const doBuildPages = async (
         error.context.path
       }": ${JSON.stringify(truncatedPageData, null, 2)}`
 
-      reporter.error(pageDataMessage)
+      reporter.error({
+        context: { sourceMessage: pageDataMessage },
+        error: prettyError,
+      })
     }
 
-    throw buildError
+    // Don't crash the builder when we're in preview-mode.
+    if (!process.env.GATSBY_IS_PREVIEW) {
+      throw buildError
+    }
   }
 }
 
