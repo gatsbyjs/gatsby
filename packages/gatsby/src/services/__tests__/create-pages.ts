@@ -10,6 +10,12 @@ jest.mock(`../../utils/js-chunk-names`, () => {
   return { generateComponentChunkName: (): string => `--mocked--` }
 })
 
+jest.mock(`fs-extra`, () => {
+  return {
+    readFileSync: jest.fn(() => `foo`), // createPage action reads the page template file trying to find `getServerData`
+  }
+})
+
 let mockAPIs = {}
 
 const component = path.join(process.cwd(), `wat`)
