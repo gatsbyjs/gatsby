@@ -14,6 +14,7 @@
     "@babel/runtime": "^7.15.4",
     "@types/common-tags": "^1.8.0",
     "better-opn": "^2.0.0",
+    "boxen": "^5.1.1",
     "chalk": "^4.1.2",
     "clipboardy": "^2.3.0",
     "common-tags": "^1.8.0",
