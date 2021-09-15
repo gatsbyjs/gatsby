@@ -8,8 +8,17 @@ const ConnectedCLI: React.FC = (): React.ReactElement => {
   const showStatusBar =
     state.program?._?.[0] === `develop` &&
     state.program?.status === `BOOTSTRAP_FINISHED`
+  const showPageTree =
+    state.program?._?.[0] === `build` &&
+    state.logs.messages.find(message => message?.text?.includes(`onPostBuild`))
 
-  return <CLI showStatusBar={Boolean(showStatusBar)} logs={state.logs} />
+  return (
+    <CLI
+      showStatusBar={Boolean(showStatusBar)}
+      showPageTree={Boolean(showPageTree)}
+      logs={state.logs}
+    />
+  )
 }
 
 export function initializeINKLogger(): void {

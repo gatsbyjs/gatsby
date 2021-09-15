@@ -1,4 +1,5 @@
-import { onLogAction } from "../../redux"
+import path from "path"
+import { getStore, onLogAction } from "../../redux"
 import {
   Actions,
   LogLevels,
@@ -9,7 +10,14 @@ import {
 import { createReporter } from "yurnalist"
 import ProgressBar from "progress"
 import chalk from "chalk"
+import boxen from "boxen"
 import { IUpdateActivity } from "../../redux/types"
+import {
+  generatePageTree,
+  IComponentWithPageModes,
+} from "../../../util/generate-page-tree"
+// TODO remove and copy types
+import { IGatsbyState } from "gatsby/src/redux/types"
 
 interface IYurnalistActivities {
   [activityId: string]: {
@@ -18,6 +26,100 @@ interface IYurnalistActivities {
     update(payload: IUpdateActivity["payload"]): void
     end(): void
   }
+}
+
+function generatePageTreeToConsole(yurnalist: any): void {
+  const state = getStore().getState() as IGatsbyState
+
+  // TODO use program
+  const root = state.program.directory
+  const componentWithPages = new Map<string, IComponentWithPageModes>()
+  for (const { componentPath, pages } of state.components.values()) {
+    const pagesByMode = {
+      SSG: new Set<string>(),
+      DSG: new Set<string>(),
+      SSR: new Set<string>(),
+      FN: new Set<string>(),
+    }
+    pages.forEach(pagePath => {
+      const gatsbyPage = state.pages.get(pagePath)
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      pagesByMode[gatsbyPage!.mode].add(pagePath)
+    })
+
+    componentWithPages.set(
+      path.posix.relative(root, componentPath),
+      pagesByMode
+    )
+  }
+
+  for (const {
+    originalAbsoluteFilePath,
+    functionRoute,
+  } of state.functions.values()) {
+    componentWithPages.set(
+      path.posix.relative(root, originalAbsoluteFilePath),
+      {
+        SSG: new Set<string>(),
+        DSG: new Set<string>(),
+        SSR: new Set<string>(),
+        FN: new Set<string>([`/api/${functionRoute}`]),
+      }
+    )
+  }
+
+  yurnalist.log(`\n${chalk.underline(`Pages`)}\n`)
+
+  let i = 0
+  for (const [componentPath, pages] of componentWithPages) {
+    const isLast = i === componentWithPages.size - 1
+    let topLevelIcon = `├`
+    if (i === 0) {
+      topLevelIcon = `┌`
+    }
+    if (isLast) {
+      topLevelIcon = `└`
+    }
+    const componentTree = [`${topLevelIcon} ${componentPath}`]
+
+    const sortedPages = generatePageTree(pages)
+    sortedPages.map((page, index) => {
+      componentTree.push(
+        [
+          isLast ? ` ` : `│`,
+          ` ${index === sortedPages.length - 1 ? `└` : `├`} `,
+          `${page.symbol} ${page.text}`,
+        ].join(``)
+      )
+    })
+
+    yurnalist.log(componentTree.join(`\n`))
+
+    i++
+  }
+
+  yurnalist.log(``)
+  yurnalist.log(
+    boxen(
+      [
+        `  (SSG) Generated at build time`,
+        `D (DSG) Defered static generation - page generated at runtime`,
+        `∞ (SSR) Server-side renders at runtime (uses getServerDate)`,
+        `λ (Function) Gatsby function`,
+      ].join(`\n`),
+      {
+        padding: 1,
+        margin: {
+          left: 2,
+          right: 2,
+          top: 0,
+          bottom: 0,
+        },
+        // @ts-ignore - bad type in boxen
+        borderStyle: `round`,
+      }
+    )
+  )
 }
 
 export function initializeYurnalistLogger(): void {
@@ -56,6 +158,11 @@ export function initializeYurnalistLogger(): void {
           }
           yurnalistMethod(message)
         }
+
+        if (action.payload.text?.includes(`onPostBuild`)) {
+          generatePageTreeToConsole(yurnalist)
+        }
+
         break
       }
       case Actions.StartActivity: {
