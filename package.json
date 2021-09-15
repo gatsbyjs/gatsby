@@ -141,7 +141,7 @@
     "prettier": "prettier \"**/*.{md,css,scss,yaml,yml}\"",
     "publish": "echo \"Use 'yarn publish-next' or 'yarn publish-release' instead of 'yarn run publish'\"",
     "publish-canary": "node scripts/check-publish-access && lerna publish --canary --yes",
-    "publish-next": "node scripts/check-publish-access && node scripts/clear-package-dir prerelease --verbose && cross-env COMPILER_OPTIONS=\"GATSBY_MAJOR=4\" lerna publish prerelease --pre-dist-tag=next --preid=next --allow-branch=master --message=\"chore(release): Publish next\"",
+    "publish-next": "node scripts/check-publish-access && node scripts/clear-package-dir prerelease --verbose && cross-env COMPILER_OPTIONS=\"GATSBY_MAJOR=4\" lerna publish from-git prerelease --pre-dist-tag=next --preid=zz-next --allow-branch=master --message=\"chore(release): Publish next\"",
     "publish-preminor": "node scripts/check-publish-access && node scripts/clear-package-dir preminor --verbose && lerna publish preminor --pre-dist-tag=next --preid=next --force-publish --allow-branch=master --message=\"chore(release): Publish next pre-minor\"",
     "publish-rc": "node scripts/check-publish-access && node scripts/clear-package-dir prerelease --verbose && lerna publish prerelease --pre-dist-tag=rc --preid=rc --message=\"chore(release): Publish rc\"",
     "publish-release": "node scripts/check-publish-access && node scripts/clear-package-dir patch --verbose && lerna publish patch",
