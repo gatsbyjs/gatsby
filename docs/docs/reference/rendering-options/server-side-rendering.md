@@ -66,6 +66,47 @@ export async function getServerData() {
 export default Page
 ```
 
+## Interplay with build-time GraphQL queries
+
+Server-rendered pages also support regular Gatsby GraphQL page queries. The page query is executed at build-time
+and the data is passed to React component as `data` prop on each render (along with `serverData` prop).
+
+Keep in mind that `data` will be the same every time but `serverData` will change according to return value of your `getServerData` function.
+Runtime GraphQL queries are not supported yet.
+
+```js
+import * as React from "react"
+
+const Page = ({ data, serverData }) => {
+  const { site } = data
+  const { dogImage } = serverData
+  // Use dogImage and site info in your page...
+}
+
+export const pageQuery = graphql`
+  query PageData {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
+
+export async function getServerData() {
+  const res = await fetch(`https://a-dog-image.com/random`)
+  const data = await res.json()
+
+  return {
+    props: {
+      dogImage: data,
+    },
+  }
+}
+
+export default Page
+```
+
 ## Working with server-rendered pages locally
 
 Server-rendered pages work with both `gatsby develop` and `gatsby serve`. Page will be
