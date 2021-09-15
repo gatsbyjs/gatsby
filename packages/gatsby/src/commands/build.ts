@@ -51,6 +51,7 @@ import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpa
 import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
 import uuidv4 from "uuid/v4"
+import reporter from "gatsby-cli/lib/reporter"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   // global gatsby object to use without store
@@ -314,6 +315,14 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   await db.saveState()
 
   await Promise.all([waitForCompilerClose, waitForCompilerCloseBuildHtml])
+
+  const state = store.getState()
+  reporter._renderPageTree({
+    components: state.components,
+    functions: state.functions,
+    pages: state.pages,
+    root: state.program.directory,
+  })
 
   report.info(`Done building in ${process.uptime()} sec`)
 

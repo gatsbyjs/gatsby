@@ -1,5 +1,5 @@
 import path from "path"
-import { getStore, onLogAction } from "../../redux"
+import { onLogAction } from "../../redux"
 import {
   Actions,
   LogLevels,
@@ -16,8 +16,7 @@ import {
   generatePageTree,
   IComponentWithPageModes,
 } from "../../../util/generate-page-tree"
-// TODO remove and copy types
-import { IGatsbyState } from "gatsby/src/redux/types"
+import { IRenderPageArgs } from "../../types"
 
 interface IYurnalistActivities {
   [activityId: string]: {
@@ -28,11 +27,11 @@ interface IYurnalistActivities {
   }
 }
 
-function generatePageTreeToConsole(yurnalist: any): void {
-  const state = getStore().getState() as IGatsbyState
-
-  // TODO use program
-  const root = state.program.directory
+function generatePageTreeToConsole(
+  yurnalist: any,
+  state: IRenderPageArgs
+): void {
+  const root = state.root
   const componentWithPages = new Map<string, IComponentWithPageModes>()
   for (const { componentPath, pages } of state.components.values()) {
     const pagesByMode = {
@@ -159,10 +158,6 @@ export function initializeYurnalistLogger(): void {
           yurnalistMethod(message)
         }
 
-        if (action.payload.text?.includes(`onPostBuild`)) {
-          generatePageTreeToConsole(yurnalist)
-        }
-
         break
       }
       case Actions.StartActivity: {
@@ -252,6 +247,12 @@ export function initializeYurnalistLogger(): void {
           activity.end()
           delete activities[action.payload.id]
         }
+        break
+      }
+
+      case Actions.RenderPageTree: {
+        generatePageTreeToConsole(yurnalist, action.payload)
+        break
       }
     }
   })
