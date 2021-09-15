@@ -44,24 +44,6 @@ plugins: [
 You should pass in an object with string keys (representing the paths) and an
 array of strings for each header.
 
-An example:
-
-```javascript
-{
-  options: {
-    headers: {
-      "/*": [
-        "Basic-Auth: someuser:somepassword anotheruser:anotherpassword",
-      ],
-      "/my-page": [
-        // matching headers (by type) are replaced by Gatsby Cloud with more specific routes
-        "Basic-Auth: differentuser:differentpassword",
-      ],
-    },
-  }
-}
-```
-
 Link paths are specially handled by this plugin. Since most files are processed
 and cache-busted through Gatsby (with a file hash), the plugin will transform
 any base file names to the hashed variants. If the file is not hashed, it will
