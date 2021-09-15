@@ -2,24 +2,34 @@
 title: Server-side Rendering API
 ---
 
-Server-side Rendering (SSR) allows you to pre-render a page with data that is fetched when a user visits the page. The server generates the full HTML for a page on the server and serves it to the user. The API is focused on data fetching outside of the Gatsby data-layer.
+> **Note:** this feature requires running NodeJS server.
+> It is currently fully supported with [`gatsby serve`](/docs/reference/gatsby-cli/#serve) and in [Gatsby Cloud](/products/cloud/).
 
-## `getServerData`
+Server-side Rendering (SSR) allows you to render a page at run-time with data that is fetched when a user visits the page.
+The server generates the full HTML during HTTP request and sends it to the user. The API is focused on data fetching outside of the Gatsby data-layer.
 
-Export an async function called `getServerData` from a page and it'll be pre-rendered on each request using the data returned by `getServerData`.
+## Creating server-rendered pages
+
+You can create server-rendered pages [the same way as regular pages](/docs/reference/routing/creating-routes/) (including using the File System Route API).
+
+The main difference is that page component must export an async function called `getServerData`:
 
 ```js
 export async function getServerData(context) {
   return {
     props: {}, // Will be passed to the page component as "serverData" prop
+    headers: {}, // HTTP response headers for this page
   }
 }
 ```
 
+When a page component exports `getServerData` function, Gatsby treats all pages built with this component
+as server-rendered.
+
 The `context` parameter is an object with the following keys:
 
-- `headers`: The headers sent to the page, e.g. cache-headers
-- `method`: The request method `GET`
+- `headers`: The request headers
+- `method`: The request method, e.g. `GET`
 - `url`: The request URL
 - `query`: An object representing the query string
 - `params`: If you use [File System Route API](/docs/reference/routing/file-system-route-api/) the URL path gets passed in as `params`. For example, if your page is at `src/pages/{Product.name}.js` the `params` will be an object like `{ name: 'value' }`.
@@ -27,24 +37,11 @@ The `context` parameter is an object with the following keys:
 `getServerData` can return an object with two keys:
 
 - `props` (optional): Object containing the data passed to `serverData` page prop. Should be a serializable object.
-- `headers` (optional): Object containing `headers` that should be passed, e.g. cache-headers
+- `headers` (optional): Object containing `headers` that are sent to the browser and caching proxies/CDNs, e.g. cache headers
 
-```js
-export async function getServerData(context) {
-  return {
-    props: {
-      data: "Error",
-    },
-    headers: {
-      status: 500,
-    },
-  }
-}
-```
+### Use `serverData` prop in React page component
 
-### `serverData` Page Prop
-
-The data you return from `getServerData` gets passed to the page component as `serverData` prop.
+The `props` object you return from `getServerData` gets passed to the page component as `serverData` prop.
 
 ```js
 import * as React from "react"
@@ -69,9 +66,21 @@ export async function getServerData() {
 export default Page
 ```
 
-## TODO
+## Working with server-rendered pages locally
 
-For SSR every request only runs on server-side and goes through Gatsby Cloud. On Gatsby Cloud the request is sent to a worker process that runs your `getServerData` function and returns HTML back to the user. By default every request is a cache miss and for caching you'll need to set custom cache-headers.
+Server-rendered pages work with both `gatsby develop` and `gatsby serve`. Page will be
+re-generated on each request.
+
+## Using in production
+
+Server-side rendering requires a running NodeJS server. You can put NodeJS running `gatsby serve`
+behind a CDN, however it requires additional infrastructure: monitoring, logging, crash-recovery, etc.
+
+Complete setup with auto-scaling is available for you in [Gatsby Cloud](/products/cloud/) out-of-the-box.
+
+## How it works
+
+For SSR every request only runs on server-side. On Gatsby Cloud the request is sent to a worker process that runs your `getServerData` function, passes this data to React component and returns HTML back to the user. By default, every request is a cache miss and for caching you'll need to set custom HTTP Cache-Control headers.
 
 When you directly visit a page you'll get served the HTML. If you request a page on client-side navigation through Gatsby's Link component the response will be JSON. Gatsby's router uses this to render the page on the client.
 
