@@ -4,18 +4,18 @@ title: Using Deferred Static Generation (DSG)
 
 ## Introduction
 
-Deferred Static Generation (DSG) is one of [Gatsby's rendering options](/docs/conceptual/rendering-options/) and allows you to defer non-critical page generation to user request, speeding up build times. Instead of generating _every_ page up-front you can decide to build certain pages up-front and others only when a user accesses the page. For large sites, with content that is infrequently visited (e.g. old blog posts or certain content types) this can dramatically reduce build times.
+Deferred Static Generation (DSG) is one of [Gatsby's rendering options](/docs/conceptual/rendering-options/) and allows you to defer non-critical page generation to user request, speeding up build times. Instead of generating _every_ page at build time, you can decide to build certain pages up front and others only when a user accesses the page at run time. For large sites, with content that is infrequently visited (e.g. old blog posts or certain content types), this can dramatically reduce build times.
 
 In this guide, you'll learn how to modify your `createPage` calls to only build your preferred pages up-front and leave the rest deferred to the first user request.
 
-For full documentation on all options, see [the reference guide](/docs/reference/rendering-options/deferred-static-generation/).
+For full documentation on all options, see the [Reference Guide on Deferred Static Generation](/docs/reference/rendering-options/deferred-static-generation/).
 
 ## Prerequisites
 
 Before you begin, you should already have:
 
-- An existing Gatsby site. (Need help creating one? Follow the [Quick Start](/docs/quick-start/))
-- A `gatsby-node.js` file where you're creating pages with the [`createPages`](/docs/reference/config-files/gatsby-node#createPages) API. (The [File System Route API](/docs/reference/routing/file-system-route-api) will be supported soon!)
+- An existing Gatsby site. (Need help creating one? Follow the [Quick Start](/docs/quick-start/).)
+- A `gatsby-node.js` file where you're creating pages with the [`createPages`](/docs/reference/config-files/gatsby-node#createPages) API. (The [File System Route API](/docs/reference/routing/file-system-route-api) isn't yet supported, but it will be soon!)
 
 ## Directions
 
@@ -32,7 +32,7 @@ The general process for using DSG looks like this:
   })
   ```
 
-For the purpose of this guide let's assume you have a blog powered by MDX and have blog posts dating back years (in total 1000 blog posts). Via your analytics tracking you're seeing that only the latest 100 posts are regularly visited, the rest gets occasional or no visits at all.
+For the purpose of this guide, let's assume you have a blog powered by MDX and have blog posts dating back years (with 1000 blog posts in total). Via your analytics tracking, you're seeing that only the latest 100 posts are regularly visited. The rest gets occasional or no visits at all.
 
 The `gatsby-node.js` file:
 
