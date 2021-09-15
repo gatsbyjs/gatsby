@@ -58,12 +58,7 @@ describe(`create plugin dependecies digest`, () => {
 
       const pkg = require(path.join(root, `node_modules/gatsby/package.json`))
 
-      expect(digest).toMatchInlineSnapshot(`
-        Object {
-          "digest": "${pkg.version}",
-          "isCached": true,
-        }
-      `)
+      expect(digest.digest).toEqual(pkg.version)
     })
 
     // There's some special logic around gatsby-plugin-typescript depending
@@ -264,6 +259,56 @@ describe(`create plugin dependecies digest`, () => {
       expect(digest).toMatchInlineSnapshot(`
         Object {
           "digest": "plugins/gatsby-plugin-no-gatsby-node.js/gatsby-node.js",
+          "isCached": false,
+        }
+      `)
+    })
+  })
+
+  describe(`package plugin dependency digest w/o a lockfile`, () => {
+    it(`returns the Gatsby version for internal plugins`, async () => {
+      const root = path.join(__dirname, `fixtures`, `no-lockfile`)
+      const pageCreator = `gatsby-plugin-page-creator`
+
+      const digest = await createPluginDigest(root, {
+        name: pageCreator,
+        resolve: resolveFrom(root, pageCreator),
+      })
+
+      const pkg = require(path.join(root, `node_modules/gatsby/package.json`))
+
+      expect(digest.digest).toEqual(pkg.version)
+    })
+
+    // There's some special logic around gatsby-plugin-typescript depending
+    // on whether it's a direct dependency of the project or a dependency of gatsby.
+    it(`returns a digest for gatsby-plugin-typescript`, async () => {
+      const root = path.join(__dirname, `fixtures`, `no-lockfile`)
+      const typescript = `gatsby-plugin-typescript`
+
+      const typescriptDigest = await createPluginDigest(root, {
+        name: typescript,
+        resolve: resolveFrom(root, typescript),
+      })
+      expect(typescriptDigest).toMatchInlineSnapshot(`
+        Object {
+          "digest": "NO_SITE_DIGEST",
+          "isCached": false,
+        }
+      `)
+    })
+
+    it(`returns a digest for gatsby-source-drupal`, async () => {
+      const root = path.join(__dirname, `fixtures`, `no-lockfile`)
+      const name = `gatsby-source-drupal`
+
+      const digest = await createPluginDigest(root, {
+        name,
+        resolve: resolveFrom(root, name),
+      })
+      expect(digest).toMatchInlineSnapshot(`
+        Object {
+          "digest": "NO_SITE_DIGEST",
           "isCached": false,
         }
       `)

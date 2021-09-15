@@ -5,6 +5,7 @@ import fs from "fs-extra"
 import path from "path"
 import getDependenciesForLocalFile from "./get-dependencies-for-local-file"
 import resolveFrom from "resolve-from"
+import { store } from "../../redux"
 
 const cache = getCache(`plugin-digest`)
 
@@ -83,6 +84,7 @@ interface ILockFileInfo {
   isYarn: boolean
   isNpm: boolean
   lockFilePath: string
+  noLockfileFallback?: string
 }
 
 function getLockFile(root: string): ILockFileInfo {
@@ -107,7 +109,10 @@ function getLockFile(root: string): ILockFileInfo {
   } else if (isNpm) {
     return { lockFilePath: packageLockPath, isYarn, isNpm }
   } else {
-    return { isNpm, isYarn, lockFilePath: `` }
+    const state = store.getState()
+    const pluginsHash = state?.status?.PLUGINS_HASH || `NO_SITE_DIGEST`
+    console.log(state.status, pluginsHash)
+    return { isNpm, isYarn, lockFilePath: ``, noLockfileFallback: pluginsHash }
   }
 }
 
@@ -143,10 +148,10 @@ async function createPluginDigest(
     root + dep
   )) as IPluginDigest
 
-  const { lockFilePath, isYarn } = getLockFile(root)
+  const { lockFilePath, isYarn, noLockfileFallback } = getLockFile(root)
 
-  if (lockFilePath === ``) {
-    return { digest: ``, isCached: false }
+  if (lockFilePath === `` && noLockfileFallback) {
+    return { digest: noLockfileFallback, isCached: false }
   }
 
   const packageJson = require(path.join(root, `package.json`))
