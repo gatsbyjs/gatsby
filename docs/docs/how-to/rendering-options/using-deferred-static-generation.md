@@ -98,4 +98,4 @@ The first 100 pages will receive `defer: false`, the other 900 pages receive `de
 ## Additional Resources
 
 - [API Reference guide](/docs/reference/rendering-options/deferred-static-generation/)
-- [Link to GatsbyCamp Video?](#)
+- [Conceptual Guide](/docs/conceptual/rendering-options/)
