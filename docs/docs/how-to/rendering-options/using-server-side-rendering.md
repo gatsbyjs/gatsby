@@ -118,4 +118,4 @@ If you haven't already, start `gatsby develop` and visit `http://localhost:8000/
 ## Additional Resources
 
 - [API Reference guide](/docs/reference/rendering-options/server-side-rendering/)
-- [Link to GatsbyCamp Video?](#)
+- [Conceptual Guide](/docs/conceptual/rendering-options/)
