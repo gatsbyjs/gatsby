@@ -4,6 +4,7 @@ import { getCache } from "../../utils/get-cache"
 import fs from "fs-extra"
 import path from "path"
 import getDependenciesForLocalFile from "./get-dependencies-for-local-file"
+import resolveFrom from "resolve-from"
 
 const cache = getCache(`plugin-digest`)
 
@@ -131,7 +132,10 @@ async function createPluginDigest(
     /gatsby.dist.internal-plugins/.test(dep) ||
     /gatsby-plugin-page-creator/.test(dep)
   ) {
-    const gatsbyVersion = require(`gatsby/package.json`).version
+    const gatsbyVersion = require(resolveFrom(
+      root,
+      `gatsby/package.json`
+    )).version
     return { digest: gatsbyVersion, isCached: true }
   }
 
@@ -202,7 +206,7 @@ async function createPluginDigest(
     if (!fs.existsSync(path.join(depDir, `gatsby-node.js`))) {
       return {
         digest: dep,
-        isCached: false
+        isCached: false,
       }
     }
     // This is a local plugin
@@ -233,7 +237,7 @@ async function createPluginDigest(
             dep.slice(0, 1) === `.` ||
             // This is the gatsby-node.js file for the plugin.
             /node_modules/.test(dep) ||
-            dep.slice(0,8) === `plugins/` ||
+            dep.slice(0, 8) === `plugins/` ||
             // This is the site's gatsby-node
             dep.slice(0, 11) === `gatsby-node`
           ) {

@@ -56,9 +56,11 @@ describe(`create plugin dependecies digest`, () => {
         resolve: resolveFrom(root, pageCreator),
       })
 
+      const pkg = require(path.join(root, `node_modules/gatsby/package.json`))
+
       expect(digest).toMatchInlineSnapshot(`
         Object {
-          "digest": "3.13.0",
+          "digest": "${pkg.version}",
           "isCached": true,
         }
       `)
