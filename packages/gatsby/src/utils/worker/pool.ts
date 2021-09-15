@@ -35,45 +35,59 @@ export const create = (): GatsbyWorkerPool => {
 const queriesChunkSize =
   Number(process.env.GATSBY_PARALLEL_QUERY_CHUNK_SIZE) || 50
 
+function handleRunQueriesInWorkersQueueError(e: Error): never {
+  reporter.panic({
+    id: `85928`,
+    context: {},
+    error: e,
+  })
+}
+
 export async function runQueriesInWorkersQueue(
   pool: GatsbyWorkerPool,
   queryIds: IGroupedQueryIds,
   chunkSize = queriesChunkSize
 ): Promise<void> {
-  const staticQuerySegments = chunk(queryIds.staticQueryIds, chunkSize)
-  const pageQuerySegments = chunk(queryIds.pageQueryIds, chunkSize)
-
   const activity = reporter.createProgress(
     `run queries in workers`,
     queryIds.staticQueryIds.length + queryIds.pageQueryIds.length
   )
   activity.start()
+  try {
+    const staticQuerySegments = chunk(queryIds.staticQueryIds, chunkSize)
+    const pageQuerySegments = chunk(queryIds.pageQueryIds, chunkSize)
 
-  pool.all.setComponents()
+    pool.all.setComponents()
 
-  for (const segment of staticQuerySegments) {
-    pool.single
-      .runQueries({ pageQueryIds: [], staticQueryIds: segment })
-      .then(replayWorkerActions)
-      .then(() => {
-        activity.tick(segment.length)
-      })
+    for (const segment of staticQuerySegments) {
+      pool.single
+        .runQueries({ pageQueryIds: [], staticQueryIds: segment })
+        .then(replayWorkerActions)
+        .then(() => {
+          activity.tick(segment.length)
+        })
+        .catch(handleRunQueriesInWorkersQueueError)
+    }
+
+    for (const segment of pageQuerySegments) {
+      pool.single
+        .runQueries({ pageQueryIds: segment, staticQueryIds: [] })
+        .then(replayWorkerActions)
+        .then(() => {
+          activity.tick(segment.length)
+        })
+        .catch(handleRunQueriesInWorkersQueueError)
+    }
+
+    // note that we only await on this and not on anything before (`.setComponents()` or `.runQueries()`)
+    // because gatsby-worker will queue tasks internally and worker will never execute multiple tasks at the same time
+    // so awaiting `.saveQueriesDependencies()` is enough to make sure `.setComponents()` and `.runQueries()` finished
+    await Promise.all(pool.all.saveQueriesDependencies())
+  } catch (e) {
+    handleRunQueriesInWorkersQueueError(e)
+  } finally {
+    activity.end()
   }
-
-  for (const segment of pageQuerySegments) {
-    pool.single
-      .runQueries({ pageQueryIds: segment, staticQueryIds: [] })
-      .then(replayWorkerActions)
-      .then(() => {
-        activity.tick(segment.length)
-      })
-  }
-
-  // note that we only await on this and not on anything before (`.setComponents()` or `.runQueries()`)
-  // because gatsby-worker will queue tasks internally and worker will never execute multiple tasks at the same time
-  // so awaiting `.saveQueriesDependencies()` is enough to make sure `.setComponents()` and `.runQueries()` finished
-  await Promise.all(pool.all.saveQueriesDependencies())
-  activity.end()
 }
 
 export async function mergeWorkerState(pool: GatsbyWorkerPool): Promise<void> {
