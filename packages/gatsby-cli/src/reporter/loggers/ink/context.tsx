@@ -1,5 +1,6 @@
 import React, { useState, useLayoutEffect, createContext } from "react"
 import { getStore, onLogAction } from "../../redux"
+// TODO remove and copy types
 import { IGatsbyState } from "gatsby/src/redux/types"
 
 // These weird castings we are doing in this file is because the way gatsby-cli works is that it starts with it's own store

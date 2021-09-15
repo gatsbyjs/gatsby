@@ -225,19 +225,19 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     )
   }
 
-  // Handle SSR & DSR Pages
+  // Handle SSR & DSG Pages
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     try {
       const { GraphQLEngine } = require(path.join(
         program.directory,
         `.cache`,
         `query-engine`
-      ))
+      )) as typeof import("../schema/graphql-engine/entry")
       const { getData, renderPageData, renderHTML } = require(path.join(
         program.directory,
         `.cache`,
         `page-ssr`
-      ))
+      )) as typeof import("../utils/page-ssr-module/entry")
       const graphqlEngine = new GraphQLEngine({
         dbPath: path.join(program.directory, `.cache`, `data`, `datastore`),
       })
@@ -253,13 +253,20 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           const potentialPagePath = reverseFixedPagePath(requestedPagePath)
           const page = graphqlEngine.findPageByPath(potentialPagePath)
 
-          if (page && (page.mode === `DSR` || page.mode === `SSR`)) {
+          if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
             const data = await getData({
               pathName: req.path,
               graphqlEngine,
               req,
             })
             const results = await renderPageData({ data })
+            if (page.mode === `SSR` && data.serverDataHeaders) {
+              for (const [name, value] of Object.entries(
+                data.serverDataHeaders
+              )) {
+                res.setHeader(name, value)
+              }
+            }
             return void res.send(results)
           }
 
@@ -272,13 +279,20 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           const potentialPagePath = req.path
           const page = graphqlEngine.findPageByPath(potentialPagePath)
 
-          if (page && (page.mode === `DSR` || page.mode === `SSR`)) {
+          if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
             const data = await getData({
               pathName: potentialPagePath,
               graphqlEngine,
               req,
             })
             const results = await renderHTML({ data })
+            if (page.mode === `SSR` && data.serverDataHeaders) {
+              for (const [name, value] of Object.entries(
+                data.serverDataHeaders
+              )) {
+                res.setHeader(name, value)
+              }
+            }
             return res.send(results)
           }
 

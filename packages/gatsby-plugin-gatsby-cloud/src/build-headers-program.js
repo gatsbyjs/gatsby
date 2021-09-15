@@ -100,15 +100,6 @@ function preloadHeadersByPage({ pages, manifest, pathPrefix, publicFolder }) {
   const appDataPath = publicFolder(PAGE_DATA_DIR, `app-data.json`)
   const hasAppData = existsSync(appDataPath)
 
-  let hasPageData = false
-  if (pages.size) {
-    // test if 1 page-data file exists, if it does we know we're on a gatsby version that supports page-data
-    const pageDataPath = publicFolder(
-      getPageDataPath(pages.get(pages.keys().next().value).path)
-    )
-    hasPageData = existsSync(pageDataPath)
-  }
-
   pages.forEach(page => {
     const scripts = _.flatMap(COMMON_BUNDLES, file =>
       getScriptPath(file, manifest)
@@ -121,7 +112,9 @@ function preloadHeadersByPage({ pages, manifest, pathPrefix, publicFolder }) {
       json.push(posix.join(PAGE_DATA_DIR, `app-data.json`))
     }
 
-    if (hasPageData) {
+    // page-data gets inline for SSR, so we won't be doing page-data request
+    // and we shouldn't add preload link header for it.
+    if (page.mode !== `SSR`) {
       json.push(getPageDataPath(page.path))
     }
 

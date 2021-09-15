@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-gatsby-cloud",
   "description": "A Gatsby plugin which optimizes working with Gatsby Cloud",
-  "version": "3.2.0-next.2",
+  "version": "4.0.0-next.2",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -10,8 +10,8 @@
     "@babel/runtime": "^7.15.4",
     "date-fns": "^2.23.0",
     "fs-extra": "^10.0.0",
-    "gatsby-core-utils": "^2.14.0-next.2",
-    "gatsby-telemetry": "^2.14.0-next.2",
+    "gatsby-core-utils": "^3.0.0-next.2",
+    "gatsby-telemetry": "^3.0.0-next.2",
     "kebab-hash": "^0.1.2",
     "lodash": "^4.17.21",
     "webpack-assets-manifest": "^5.0.6"
@@ -23,13 +23,13 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.2.1",
-    "babel-preset-gatsby-package": "^1.14.0-next.2",
+    "babel-preset-gatsby-package": "^2.0.0-next.1",
     "cpy-cli": "^3.1.1",
     "cross-env": "^7.0.3",
+    "del-cli": "^3.0.1",
     "jest": "^26.6.3",
     "msw": "^0.35.0",
-    "node-fetch": "^2.6.1",
-    "rimraf": "^3.0.2"
+    "node-fetch": "^2.6.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-gatsby-cloud#readme",
   "keywords": [
@@ -42,7 +42,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^3.0.0-next.0",
+    "gatsby": "^4.0.0-next",
     "webpack": "*"
   },
   "repository": {
@@ -53,12 +53,12 @@
   "sideEffects": false,
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\" && npm run clean && npm run copy-type-declarations",
-    "clean": "rimraf ./components/index.d.ts",
-    "copy-type-declarations": "cpy src/components/index.d.ts components/index.d.ts",
+    "clean": "del-cli ./components/index.d.ts",
+    "copy-type-declarations": "cpy src/components/index.d.ts components/",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=12.13.0"
+    "node": ">=14.15.0"
   }
 }

@@ -470,18 +470,6 @@ index 1ff565ef38..d5bb8e134f 100644
 +    "node": ">=14.15.0"
    }
  }
-diff --git a/packages/gatsby-plugin-netlify/package.json b/packages/gatsby-plugin-netlify/package.json
-index 02abb3a14a..988d38d607 100644
---- a/packages/gatsby-plugin-netlify/package.json
-+++ b/packages/gatsby-plugin-netlify/package.json
-@@ -49,6 +49,6 @@
-     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
-   },
-   "engines": {
--    "node": ">=12.13.0"
-+    "node": ">=14.15.0"
-   }
- }
 diff --git a/packages/gatsby-plugin-no-sourcemaps/package.json b/packages/gatsby-plugin-no-sourcemaps/package.json
 index 3cab404fbc..82bb36c6d6 100644
 --- a/packages/gatsby-plugin-no-sourcemaps/package.json

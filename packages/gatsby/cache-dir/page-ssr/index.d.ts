@@ -27,7 +27,12 @@ interface IQueryResult {
 // https://codemix.com/opaque-types-in-javascript/
 type Opaque<K, T> = T & { __TYPE__: K }
 // redacted details as this is meant to be opaque internal type that shouldn't be relied on by integrators (can change any time)
-type ISSRData = Opaque<"ISSRData", {}>
+type ISSRData = Opaque<
+  "ISSRData",
+  {
+    serverDataHeaders?: Record<string, string>
+  }
+>
 
 type PageContext = Record<string, any>
 
@@ -52,6 +57,12 @@ export function getData(args: {
     runQuery(query: string, context: Record<string, any>): Promise<IQueryResult>
     findPageByPath(pathName: string): IGatsbyPage | undefined
   }
+  req: Partial<{
+    query: Record<string, unknown>
+    method: string
+    url: string
+    headers: Record<string, string>
+  }>
 }): Promise<ISSRData>
 
 export function renderPageData(args: {
