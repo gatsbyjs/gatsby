@@ -67,7 +67,8 @@ function generatePageTreeToConsole(
     )
   }
 
-  yurnalist.log(`\n${chalk.underline(`Pages`)}\n`)
+  const pageTreeConsole: Array<string> = []
+  pageTreeConsole.push(`\n${chalk.underline(`Pages`)}\n`)
 
   let i = 0
   for (const [componentPath, pages] of componentWithPages) {
@@ -92,13 +93,13 @@ function generatePageTreeToConsole(
       )
     })
 
-    yurnalist.log(componentTree.join(`\n`))
+    pageTreeConsole.push(componentTree.join(`\n`))
 
     i++
   }
 
-  yurnalist.log(``)
-  yurnalist.log(
+  pageTreeConsole.push(``)
+  pageTreeConsole.push(
     boxen(
       [
         `  (SSG) Generated at build time`,
@@ -119,6 +120,8 @@ function generatePageTreeToConsole(
       }
     )
   )
+
+  yurnalist.log(pageTreeConsole.join(`\n`))
 }
 
 export function initializeYurnalistLogger(): void {
