@@ -10,7 +10,7 @@ import {
 import { createReporter } from "yurnalist"
 import ProgressBar from "progress"
 import chalk from "chalk"
-import boxen, { BorderStyle } from "boxen"
+import boxen from "boxen"
 import { IUpdateActivity } from "../../redux/types"
 import {
   generatePageTree,
