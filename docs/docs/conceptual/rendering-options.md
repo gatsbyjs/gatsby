@@ -21,7 +21,7 @@ Let's dive into what each of those modes mean.
 
 ## Static Site Generation (SSG)
 
-SSG is the default rendering mode in Gatsby. Gatsby generates all assets and HTML for all pages at build time on a
+SSG is the default rendering mode in Gatsby. Gatsby generates all assets and HTML for all SSG pages at build time on a
 build server (this could be your laptop, any build service, or Gatsby Cloud worker if you use [Gatsby Cloud][6]).
 
 Then, the produced static files are uploaded to the CDN provider of choice and served to end-users.
