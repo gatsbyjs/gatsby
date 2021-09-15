@@ -47,8 +47,6 @@ import {
   mergeWorkerState,
   runQueriesInWorkersQueue,
 } from "../utils/worker/pool"
-import webpackConfig from "../utils/webpack.config.js"
-import { webpack } from "webpack"
 import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpack"
 import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
@@ -237,7 +235,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     { parentSpan: buildSpan }
   )
   buildSSRBundleActivityProgress.start()
-  let pageRenderer = ``
   let waitForCompilerCloseBuildHtml
   try {
     const result = await buildRenderer(
@@ -245,51 +242,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       Stage.BuildHTML,
       buildSSRBundleActivityProgress.span
     )
-    pageRenderer = result.rendererPath
-    if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
-      // for now copy page-render to `.cache` so page-ssr module can require it as a sibling module
-      const outputDir = path.join(program.directory, `.cache`, `page-ssr`)
-      engineBundlingPromises.push(
-        fs
-          .ensureDir(outputDir)
-          .then(() =>
-            fs.copyFile(
-              result.rendererPath,
-              path.join(outputDir, `render-page.js`)
-            )
-          )
-      )
-    }
     waitForCompilerCloseBuildHtml = result.waitForCompilerClose
-
-    // TODO Move to page-renderer
-    if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-      const routesWebpackConfig = await webpackConfig(
-        program,
-        program.directory,
-        `build-ssr`,
-        null,
-        { parentSpan: buildSSRBundleActivityProgress.span }
-      )
-
-      await new Promise((resolve, reject) => {
-        const compiler = webpack(routesWebpackConfig)
-        compiler.run(err => {
-          if (err) {
-            return void reject(err)
-          }
-
-          compiler.close(error => {
-            if (error) {
-              return void reject(error)
-            }
-            return void resolve(undefined)
-          })
-
-          return undefined
-        })
-      })
-    }
 
     if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
       Promise.all(engineBundlingPromises).then(() => {
@@ -319,7 +272,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   const { toRegenerate, toDelete } =
     await buildHTMLPagesAndDeleteStaleArtifacts({
       program,
-      pageRenderer,
       workerPool,
       buildSpan,
     })

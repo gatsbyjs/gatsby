@@ -52,7 +52,6 @@ import {
   writeVirtualLoadingIndicatorModule,
 } from "./loading-indicator"
 import { renderDevHTML } from "./dev-ssr/render-dev-html"
-import pDefer from "p-defer"
 import { getServerData, IServerData } from "./get-server-data"
 import { ROUTES_DIRECTORY } from "../constants"
 
@@ -79,6 +78,11 @@ export async function startServer(
   workerPool: WorkerPool.GatsbyWorkerPool = WorkerPool.create()
 ): Promise<IServer> {
   const directory = program.directory
+  const PAGE_RENDERER_PATH = path.join(
+    program.directory,
+    ROUTES_DIRECTORY,
+    `render-page.js`
+  )
 
   const webpackActivity = report.activityTimer(`Building development bundle`, {
     id: `webpack-develop`,
@@ -171,38 +175,6 @@ module.exports = {
   )
 
   const compiler = webpack(devConfig)
-  let waitForServerCompilation = (): Promise<webpack.Stats | undefined> =>
-    Promise.resolve(undefined)
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    const serverDevConfig = await webpackConfig(
-      program,
-      directory,
-      Stage.SSR,
-      program.port,
-      {
-        parentSpan: webpackActivity.span,
-      }
-    )
-    const serverCompiler = webpack(serverDevConfig)
-
-    const waitForServerCompilationDeferred = pDefer<webpack.Stats>()
-    waitForServerCompilation = (): Promise<webpack.Stats | undefined> =>
-      waitForServerCompilationDeferred.promise
-    let compileCounter = 0
-    serverCompiler.watch(
-      {
-        ignored: /node_modules/,
-      },
-      (_, stats) => {
-        if (compileCounter++ > 0) {
-          waitForServerCompilation = (): Promise<webpack.Stats | undefined> =>
-            Promise.resolve(stats as webpack.Stats)
-        } else {
-          waitForServerCompilationDeferred.resolve(stats)
-        }
-      }
-    )
-  }
 
   /**
    * Set up the express app.
@@ -333,7 +305,14 @@ module.exports = {
     res.end()
   })
 
-  const previousHashes: Map<string, string> = new Map()
+  const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
+    publicPath: devConfig.output.publicPath,
+    stats: `errors-only`,
+    serverSideRender: true,
+  })
+
+  app.use(webpackDevMiddlewareInstance)
+
   app.get(
     `/page-data/:pagePath(*)/page-data.json`,
     async (req, res, next): Promise<void> => {
@@ -351,39 +330,15 @@ module.exports = {
           let serverDataPromise: Promise<IServerData> = Promise.resolve({})
 
           if (page.mode === `SSR`) {
-            // get dynamic serverModule$
-            const stats = await waitForServerCompilation()
+            const renderer = require(PAGE_RENDERER_PATH)
+            const componentInstance = await renderer.getPageChunk(page)
 
-            if (
-              !stats ||
-              !stats.compilation.entrypoints.has(page.componentChunkName)
-            ) {
-              report.error(
-                `Error loading a result for the page query in "${requestedPagePath}" / "${potentialPagePath}". getServerData threw an error.`
-              )
-            }
-
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const componentHash = stats!.compilation.entrypoints
-              .get(page.componentChunkName)!
-              .getEntrypointChunk().hash as string
-            const modulePath = path.resolve(
-              `${program.directory}/${ROUTES_DIRECTORY}/${page.componentChunkName}.js`
+            serverDataPromise = getServerData(
+              req,
+              page,
+              potentialPagePath,
+              componentInstance
             )
-
-            // if webpack compilation is diff we delete old cache
-            if (
-              previousHashes.has(page.componentChunkName) &&
-              previousHashes.get(page.componentChunkName) === componentHash
-            ) {
-              delete require.cache[modulePath]
-            }
-
-            const mod = require(modulePath)
-
-            previousHashes.set(page.componentChunkName, componentHash)
-
-            serverDataPromise = getServerData(req, page, potentialPagePath, mod)
           }
 
           let pageData: IPageDataWithQueryResult
@@ -426,20 +381,6 @@ module.exports = {
       })
     }
   )
-
-  // Disable directory indexing i.e. serving index.html from a directory.
-  // This can lead to serving stale html files during development.
-  //
-  // We serve by default an empty index.html that sets up the dev environment.
-  app.use(developStatic(`public`, { index: false }))
-
-  const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
-    publicPath: devConfig.output.publicPath,
-    stats: `errors-only`,
-    serverSideRender: true,
-  })
-
-  app.use(webpackDevMiddlewareInstance)
 
   app.get(`/__original-stack-frame`, async (req, res) => {
     const compilation = res.locals?.webpack?.devMiddleware?.stats?.compilation
@@ -530,6 +471,12 @@ module.exports = {
     developMiddleware(app, program)
   }
 
+  // Disable directory indexing i.e. serving index.html from a directory.
+  // This can lead to serving stale html files during development.
+  //
+  // We serve by default an empty index.html that sets up the dev environment.
+  app.use(developStatic(`public`, { index: false }))
+
   // Set up API proxy.
   const { proxy } = store.getState().config
   if (proxy) {
@@ -601,7 +548,7 @@ module.exports = {
           page: pathObj,
           skipSsr: req.query[`skip-ssr`] || false,
           store,
-          htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+          htmlComponentRendererPath: PAGE_RENDERER_PATH,
           directory: program.directory,
         })
         res.status(200).send(renderResponse)
@@ -670,7 +617,7 @@ module.exports = {
             skipSsr: true,
             store,
             error: message,
-            htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+            htmlComponentRendererPath: PAGE_RENDERER_PATH,
             directory: program.directory,
           })
 
