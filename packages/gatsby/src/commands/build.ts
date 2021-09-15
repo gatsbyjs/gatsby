@@ -50,8 +50,15 @@ import {
 import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpack"
 import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
+import uuidv4 from "uuid/v4"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
+  // global gatsby object to use without store
+  global.__GATSBY = {
+    buildId: uuidv4(),
+    root: program!.directory,
+  }
+
   if (isTruthy(process.env.VERBOSE)) {
     program.verbose = true
   }

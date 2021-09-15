@@ -25,9 +25,7 @@ export {
   withAssetPrefix,
 } from "gatsby-link"
 
-export const useScrollRestoration: (
-  key: string
-) => {
+export const useScrollRestoration: (key: string) => {
   ref: React.MutableRefObject<HTMLElement | undefined>
   onScroll(): void
 }
@@ -371,7 +369,7 @@ export interface GatsbyNode<
     options: PluginOptions,
     callback: PluginCallback<void>
   ): void | Promise<void>
-      
+
   /**
    * Lifecycle executed in each process (one time per process). Used to store actions, etc. for later use. Plugins should use this over other APIs like "onPreBootstrap" or "onPreInit" since onPluginInit will run in main process + all workers to support Parallel Query Running.
    * @gatsbyVersion 3.9.0
@@ -1186,8 +1184,8 @@ export interface Actions {
   setPluginStatus(
     this: void,
     status: Record<string, unknown>,
-    plugin?: ActionPlugin,
-  ): void;
+    plugin?: ActionPlugin
+  ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createRedirect */
   createRedirect(
@@ -1573,4 +1571,13 @@ export interface GatsbyFunctionRequest extends IncomingMessage {
    * Object of `cookies` from header
    */
   cookies: Record<string, string>
+}
+
+declare module NodeJS {
+  interface Global {
+    __GATSBY: {
+      buildId: string
+      root: string
+    }
+  }
 }

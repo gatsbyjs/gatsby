@@ -19,6 +19,7 @@ import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
 import { codeFrameColumns } from "@babel/code-frame"
+import uuidv4 from "uuid/v4"
 
 import { withBasePath } from "../utils/path"
 import webpackConfig from "../utils/webpack.config"
@@ -268,6 +269,8 @@ module.exports = {
     req: express.Request,
     pluginName?: string
   ): Promise<void> => {
+    global.__GATSBY.buildId = uuidv4()
+
     emitter.emit(`WEBHOOK_RECEIVED`, {
       webhookBody: req.body,
       pluginName,
