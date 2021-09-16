@@ -24,22 +24,22 @@ Let's dive into what each of those modes mean.
 SSG is the default rendering mode in Gatsby. Gatsby generates all assets and HTML for all SSG pages at build time on a
 build server (this could be your laptop, any build service, or Gatsby Cloud worker if you use [Gatsby Cloud][6]).
 
-Then, the produced static files are uploaded to the CDN provider of choice and served to end-users.
+Then, the produced static files are uploaded to the content delivery network (CDN) provider of choice and served to end users.
 The build server is not needed after the build step and could even be turned off.
 
 This mode provides the most pleasant user experience, the highest level of security, and run-time scalability for your site.
 
 > **Note:** SSG doesn't mean your site is not dynamic. You can still use JavaScript to communicate with any APIs,
 > add private sections of your site for authorized users via [client-side rendering][4] and
-> have any features SPA can have
+> have any features that single-page applications (SPAs) can have.
 
-Here is how SSG works in Gatsby Cloud (the principle remains the same with any build and CDN provider):
+Here is how SSG works in Gatsby Cloud (although the principle remains the same with any build and CDN provider):
 
 ![Static Site Generation diagram](../images/ssg-diagram.jpg)
 
-One downside of SSG is building time. As the number of pages of your site grows, so does the build time.
-Gatsby supports [incremental builds][5] to make sure the 2nd and subsequent builds only rebuild what was changed
-but for the initial build (the build without the cache), build times may become an issue. That's where the
+One downside of SSG is longer build times. As the number of pages of your site grows, so does the build time.
+Gatsby supports [incremental builds][5] to make sure the 2nd and subsequent builds only rebuild the parts of your site that changed,
+but for the initial build (the build without the cache), build times may become an issue. That's where
 Deferred Static Generation could be beneficial.
 
 ## Deferred Static Generation (DSG)
@@ -50,11 +50,11 @@ pages are not generated at build time and instead generated during the first HTT
 The subsequent requests will hit the CDN cache the same way as with SSG.
 
 For example: maybe you have an archive of old articles that no longer receive significant traffic. There is
-no practical reason to generate them on each build and thus delay the delivery of fresh articles.
+no practical reason to generate them on each build (and thus delay the delivery of fresh articles).
 
 In this case, you may choose to defer the generation of old pages, and Gatsby will skip them during the build step.
 
-- [How to use deferred static generation][7]
+- [How-To Guide: Using Deferred Static Generation][7]
 
 ![Deferred Static Generation diagram](../images/dsg-diagram.jpg)
 
@@ -63,9 +63,9 @@ It implies a different deployment model and requires backend infrastructure.
 
 But don't worry, [Gatsby Cloud][6] supports it out-of-the-box.
 
-## Server-side Rendering (SSR)
+## Server-Side Rendering (SSR)
 
-SSG, DSG, and client-side rendering can handle a vast majority of use-cases in web development.
+SSG, DSG, and client-side rendering can handle a vast majority of use cases in web development.
 
 But there is a small niche when you may still need to generate HTML on-the-fly.
 
@@ -73,8 +73,8 @@ For example: maybe you are building a site with user reviews and want those revi
 immediately indexed by search engines as soon as they are posted. So the client-side rendering is not an option.
 
 In this case, you may choose server-side rendering for pages with user reviews. Any time someone
-requests this page, Gatsby will call `getServerData` function defined in the page component.
-That's where you can request any data from 3rd-party APIs. Gatsby passes the returned result as `serverData`
+requests this page, Gatsby will call the `getServerData` function defined in the page component.
+That's where you can request any data from 3rd-party APIs. Gatsby passes the returned result as a `serverData`
 prop to your page component.
 
 You can also return HTTP headers along with data to control page caching strategy in CDN.
