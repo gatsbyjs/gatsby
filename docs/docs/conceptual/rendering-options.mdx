@@ -2,6 +2,8 @@
 title: Rendering Options
 ---
 
+import { Announcement } from 'gatsby-interface'
+
 Gatsby is historically known as a static site generator enhanced with [React Hydration][1].
 But starting with Gatsby 4, you can choose alternative rendering modes in addition to static site generation (SSG)—on a per-page basis.
 This type of granular control allows development to optimize for performance and productivity without sacrficing one for the other.
@@ -12,8 +14,12 @@ A rendering mode defines the stage at which your page's user-facing HTML is gene
 (SSG or pre-rendering), during HTTP request (server-side rendering) or locally in the browser
 with Javascript (client-side rendering).
 
-> For an in-depth explanation of each of those approaches and their trade-offs we
-> highly recommend the ["Rendering on the Web"][3] article from the Chrome team.
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+For an in-depth explanation of each of those approaches and their trade-offs we
+highly recommend the ["Rendering on the Web"][3] article from the Chrome team.
+
+</Announcement>
 
 As already mentioned, Gatsby always supported SSG and [client-side rendering][4]. Now, two other rendering options are available: Deferred Static Generation (DSG) and Server-Side rendering (SSR).
 This guide dives into the what each of those modes means and when you might choose one over another.
@@ -29,9 +35,13 @@ How does SSG work?
 
 This mode provides the most pleasant user experience, the highest level of security, and run-time scalability for your site.
 
-> **Note:** SSG doesn't mean your site is not dynamic. You can still use JavaScript to communicate with any APIs,
-> add private sections of your site for authorized users via [client-side rendering][4] and
-> have any features that single-page applications (SPAs) can have.
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Note:** SSG doesn't mean your site is not dynamic. You can still use JavaScript to communicate with any APIs,
+add private sections of your site for authorized users via [client-side rendering][4] and
+have any features that single-page applications (SPAs) can have.
+
+</Announcement>
 
 Here is how SSG works in Gatsby Cloud (although the principle remains the same with any build and CDN provider):
 
