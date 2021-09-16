@@ -1,3 +1,25 @@
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    error: jest.fn(),
+    panic: jest.fn(),
+    warn: jest.fn(),
+    log: jest.fn(),
+    phantomActivity: jest.fn(() => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    }),
+    activityTimer: jest.fn(() => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    }),
+  }
+})
 const { GraphQLString, graphql } = require(`graphql`)
 const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
@@ -6,25 +28,7 @@ const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
 const { dispatch } = store
 const { createFieldExtension, createTypes } = actions
-
 const report = require(`gatsby-cli/lib/reporter`)
-report.error = jest.fn()
-report.panic = jest.fn()
-report.warn = jest.fn()
-report.log = jest.fn()
-report.activityTimer = jest.fn(() => {
-  return {
-    start: jest.fn(),
-    setStatus: jest.fn(),
-    end: jest.fn(),
-  }
-})
-afterEach(() => {
-  report.error.mockClear()
-  report.panic.mockClear()
-  report.warn.mockClear()
-  report.log.mockClear()
-})
 
 describe(`GraphQL field extensions`, () => {
   beforeEach(() => {
@@ -115,6 +119,13 @@ describe(`GraphQL field extensions`, () => {
     nodes.forEach(node =>
       actions.createNode(node, { name: `test` })(store.dispatch)
     )
+  })
+
+  afterEach(() => {
+    report.error.mockClear()
+    report.panic.mockClear()
+    report.warn.mockClear()
+    report.log.mockClear()
   })
 
   it(`allows creating a custom field extension`, async () => {

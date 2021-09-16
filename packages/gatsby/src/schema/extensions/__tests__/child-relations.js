@@ -1,23 +1,35 @@
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    error: jest.fn(),
+    panic: jest.fn(),
+    warn: jest.fn(),
+    phantomActivity: jest.fn(() => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    }),
+    activityTimer: jest.fn(() => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    }),
+  }
+})
+
 const { graphql } = require(`graphql`)
 const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
 import { buildObjectType } from "../../types/type-builders"
 const { store } = require(`../../../redux`)
-const { dispatch } = store
 const { actions } = require(`../../../redux/actions`)
+const report = require(`gatsby-cli/lib/reporter`)
+const { dispatch } = store
 const { createTypes } = actions
 
-const report = require(`gatsby-cli/lib/reporter`)
-report.error = jest.fn()
-report.panic = jest.fn()
-report.warn = jest.fn()
-report.activityTimer = jest.fn(() => {
-  return {
-    start: jest.fn(),
-    setStatus: jest.fn(),
-    end: jest.fn(),
-  }
-})
 afterEach(() => {
   report.error.mockClear()
   report.panic.mockClear()

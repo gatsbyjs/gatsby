@@ -1,3 +1,26 @@
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    log: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    panic: jest.fn(),
+    activityTimer: jest.fn(() => {
+      return {
+        start: jest.fn(),
+        setStatus: jest.fn(),
+        end: jest.fn(),
+      }
+    }),
+    phantomActivity: jest.fn(() => {
+      return {
+        start: jest.fn(),
+        end: jest.fn(),
+      }
+    }),
+  }
+})
+
 const { graphql } = require(`graphql`)
 const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
@@ -6,41 +29,18 @@ const { store } = require(`../../../redux`)
 const { dispatch } = store
 const { actions } = require(`../../../redux/actions`)
 const { createTypes, createFieldExtension } = actions
+const reporter = require(`gatsby-cli/lib/reporter`)
 
-const report = require(`gatsby-cli/lib/reporter`)
-report.panic = jest.fn()
-report.warn = jest.fn()
 afterEach(() => {
-  report.panic.mockClear()
-  report.warn.mockClear()
-})
-
-jest.mock(`gatsby-cli/lib/reporter`, () => {
-  return {
-    log: jest.fn(),
-    info: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    activityTimer: () => {
-      return {
-        start: jest.fn(),
-        setStatus: jest.fn(),
-        end: jest.fn(),
-      }
-    },
-    phantomActivity: () => {
-      return {
-        start: jest.fn(),
-        end: jest.fn(),
-      }
-    },
-  }
+  reporter.panic.mockClear()
+  reporter.warn.mockClear()
 })
 
 // TODO: remove @nodeInterface in Gatsby v4
 describe(`Queryable Node interfaces with @nodeInterface`, () => {
   beforeEach(() => {
     dispatch({ type: `DELETE_CACHE` })
+
     const nodes = [
       {
         id: `test1`,
@@ -110,8 +110,8 @@ describe(`Queryable Node interfaces with @nodeInterface`, () => {
       ])
     )
     await buildSchema()
-    expect(report.warn).toBeCalledTimes(2)
-    expect(report.warn).toBeCalledWith(
+    expect(reporter.warn).toBeCalledTimes(2)
+    expect(reporter.warn).toBeCalledWith(
       `Deprecation warning: \`@nodeInterface\` extension is deprecated and will be removed in Gatsby v4. ` +
         `Use interface inheritance instead.\n` +
         `To upgrade replace the old format:\n` +
@@ -121,7 +121,7 @@ describe(`Queryable Node interfaces with @nodeInterface`, () => {
         `Read more about schema customization here:\n` +
         `https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/`
     )
-    expect(report.warn).toBeCalledWith(
+    expect(reporter.warn).toBeCalledWith(
       `Deprecation warning: \`@nodeInterface\` extension is deprecated and will be removed in Gatsby v4. ` +
         `Use interface inheritance instead.\n` +
         `To upgrade replace the old format:\n` +
@@ -179,7 +179,7 @@ describe(`Queryable Node interfaces with @nodeInterface`, () => {
       `)
     )
     await buildSchema()
-    expect(report.panic).toBeCalledWith(
+    expect(reporter.panic).toBeCalledWith(
       `Types implementing queryable interfaces must also implement the \`Node\` interface. ` +
         `Check the type definition of \`Wrong\`, \`WrongAgain\`.`
     )
@@ -391,8 +391,8 @@ describe(`Queryable Node interfaces with @nodeInterface`, () => {
       `)
     )
     await build({})
-    expect(report.panic).toBeCalledTimes(1)
-    expect(report.panic).toBeCalledWith(
+    expect(reporter.panic).toBeCalledTimes(1)
+    expect(reporter.panic).toBeCalledWith(
       `Interfaces with the \`nodeInterface\` extension must have a field ` +
         `\`id\` of type \`ID!\`. Check the type definition of \`WrongInterface\`.`
     )
@@ -718,7 +718,7 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
       `)
     )
     await buildSchema()
-    expect(report.panic).toBeCalledWith(
+    expect(reporter.panic).toBeCalledWith(
       `Types implementing queryable interfaces must also implement the \`Node\` interface. ` +
         `Check the type definition of \`Wrong\`, \`WrongAgain\`.`
     )
@@ -928,8 +928,8 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
       `)
     )
     await build({})
-    expect(report.panic).toBeCalledTimes(1)
-    expect(report.panic).toBeCalledWith(
+    expect(reporter.panic).toBeCalledTimes(1)
+    expect(reporter.panic).toBeCalledWith(
       `Interfaces with the \`nodeInterface\` extension must have a field ` +
         `\`id\` of type \`ID!\`. Check the type definition of \`WrongInterface\`.`
     )
