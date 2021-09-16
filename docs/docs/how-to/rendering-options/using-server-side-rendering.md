@@ -14,7 +14,7 @@ For full documentation on all options, see [the reference guide](/docs/reference
 
 Before you begin, you should already have:
 
-- An existing Gatsby site. (Need help creating one? Follow the [Quick Start](/docs/quick-start/))
+- An existing Gatsby site. (Need help creating one? Follow the [Quick Start](/docs/quick-start/).)
 
 ## Directions
 
@@ -27,7 +27,7 @@ To follow this guide, create a new page at `src/pages/ssr.js`.
 
 ### Step 1: Adding `getServerData` function
 
-By adding an async function called `getServerData` to your page you tell Gatsby to choose the SSR rendering option. Add it to your new page:
+By adding an async function called `getServerData` to your page, you tell Gatsby to choose the SSR rendering option. Add it to your new page:
 
 ```js:title=src/pages/ssr.js
 import * as React from "react"
@@ -45,7 +45,7 @@ export async function getServerData() {} // highlight-line
 
 ### Step 2: Requesting data inside `getServerData` & displaying it
 
-Inside the `getServerData` function you can execute anything you want but you need to return an object containing `props`. You then can (similarily to `data` for page queries) access the data as a `serverData` prop inside your page component.
+You can execute anything you want inside the `getServerData` function, but you need to return an object containing `props`. You then can access the data as a `serverData` prop inside your page component (similarly to how page queries automatically pass in a `data` prop to page components).
 
 Use `fetch` to pull data from the [dog.ceo API](https://dog.ceo/):
 
@@ -117,5 +117,5 @@ If you haven't already, start `gatsby develop` and visit `http://localhost:8000/
 
 ## Additional Resources
 
-- [API Reference guide](/docs/reference/rendering-options/server-side-rendering/)
+- [API Reference Guide](/docs/reference/rendering-options/server-side-rendering/)
 - [Conceptual Guide](/docs/conceptual/rendering-options/)
