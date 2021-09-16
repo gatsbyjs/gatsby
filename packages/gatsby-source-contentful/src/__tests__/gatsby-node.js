@@ -31,7 +31,11 @@ const createMockCache = () => {
 describe(`gatsby-node`, () => {
   const actions = { createTypes: jest.fn() }
   const schema = { buildObjectType: jest.fn() }
-  const store = {}
+  const store = {
+    getState: jest.fn(() => {
+      return { program: { directory: process.cwd() }, status: {} }
+    }),
+  }
   const cache = createMockCache()
   const getCache = jest.fn(() => cache)
   const reporter = {
@@ -55,15 +59,7 @@ describe(`gatsby-node`, () => {
     pluginOptions = defaultPluginOptions
   ) {
     await gatsbyNode.onPreBootstrap(
-      {
-        reporter,
-        cache,
-        actions,
-        parentSpan,
-        getNode,
-        getNodes,
-        createNodeId,
-      },
+      { reporter, cache, parentSpan, store },
       pluginOptions
     )
 
@@ -304,11 +300,7 @@ describe(`gatsby-node`, () => {
     }
     actions.touchNode = jest.fn()
     actions.setPluginStatus = jest.fn()
-    store.getState = jest.fn(() => {
-      return {
-        status: {},
-      }
-    })
+    store.getState.mockClear()
     cache.actualMap.clear()
   })
 
