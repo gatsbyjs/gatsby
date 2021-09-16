@@ -233,7 +233,7 @@ module.exports = async (
 
       plugins.virtualModules(),
       new BabelConfigItemsCacheInvalidatorPlugin(),
-      process.env.GATSBY_WEBPACK_LOGGING.split(`,`).includes(stage) &&
+      process.env.GATSBY_WEBPACK_LOGGING?.split(`,`)?.includes(stage) &&
         new WebpackLoggingPlugin(program.directory, report, program.verbose),
     ].filter(Boolean)
 
@@ -247,7 +247,7 @@ module.exports = async (
             plugins.noEmitOnErrors(),
             plugins.eslintGraphqlSchemaReload(),
             new StaticQueryMapper(store),
-          ])
+          ])git push
           .filter(Boolean)
 
         configPlugins.push(
