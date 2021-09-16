@@ -10,7 +10,9 @@ class EnsureResources extends React.Component {
       location: { ...location },
       pageResources:
         pageResources ||
-        loader.loadPageSync(location.pathname, { withErrorDetails: true }),
+        loader.loadPageSync(location.pathname + location.search, {
+          withErrorDetails: true,
+        }),
     }
   }
 
@@ -48,7 +50,9 @@ class EnsureResources extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     // Always return false if we're missing resources.
     if (!nextState.pageResources) {
-      this.loadResources(nextProps.location.pathname)
+      this.loadResources(
+        nextProps.location.pathname + nextProps.location.search
+      )
       return false
     }
 
@@ -56,7 +60,9 @@ class EnsureResources extends React.Component {
       process.env.BUILD_STAGE === `develop` &&
       nextState.pageResources.stale
     ) {
-      this.loadResources(nextProps.location.pathname)
+      this.loadResources(
+        nextProps.location.pathname + nextProps.location.search
+      )
       return false
     }
 

@@ -32,7 +32,7 @@ export async function appendPreloadHeaders(
     // add page-data.json preload
     // our runtime also demands 404 and dev-404 page-data to be fetched to even render (see cache-dir/app.js)
     const pagePathsToPreload = [`/404.html`, `/dev-404-page/`]
-    if (!pagePathsToPreload.includes(page.path)) {
+    if (page.mode !== `SSR` && !pagePathsToPreload.includes(page.path)) {
       // let's make sure page path is first one (order shouldn't matter, just for reasonable order)
       pagePathsToPreload.unshift(page.path)
     }

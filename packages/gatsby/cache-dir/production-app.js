@@ -107,8 +107,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                       pageResources.page.path === `/404.html`
                         ? stripPrefix(location.pathname, __BASE_PATH__)
                         : encodeURI(
-                            pageResources.page.matchPath ||
+                            (
+                              pageResources.page.matchPath ||
                               pageResources.page.path
+                            ).split(`?`)[0]
                           )
                     }
                     {...this.props}
@@ -149,7 +151,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     })
   }
 
-  publicLoader.loadPage(browserLoc.pathname).then(page => {
+  publicLoader.loadPage(browserLoc.pathname + browserLoc.search).then(page => {
     if (!page || page.status === PageResourceStatus.Error) {
       const message = `page resources for ${browserLoc.pathname} not found. Not rendering React`
 

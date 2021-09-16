@@ -24,9 +24,12 @@ const stripSurroundingSlashes = s => {
   return s
 }
 
-const createPageDataUrl = path => {
+const createPageDataUrl = rawPath => {
+  const [path, maybeSearch] = rawPath.split(`?`)
   const fixedPath = path === `/` ? `index` : stripSurroundingSlashes(path)
-  return `${__PATH_PREFIX__}/page-data/${fixedPath}/page-data.json`
+  return `${__PATH_PREFIX__}/page-data/${fixedPath}/page-data.json${
+    maybeSearch ? `?${maybeSearch}` : ``
+  }`
 }
 
 function doFetch(url, method = `GET`) {
@@ -139,6 +142,11 @@ export class BaseLoader {
           const jsonPayload = JSON.parse(responseText)
           if (jsonPayload.path === undefined) {
             throw new Error(`not a valid pageData response`)
+          }
+
+          const maybeSearch = pagePath.split(`?`)[1]
+          if (maybeSearch) {
+            jsonPayload.path += `?${maybeSearch}`
           }
 
           return Object.assign(loadObj, {
@@ -383,33 +391,34 @@ export class BaseLoader {
   }
 
   prefetch(pagePath) {
-    if (!this.shouldPrefetch(pagePath)) {
-      return false
-    }
+    return false
+    // if (!this.shouldPrefetch(pagePath)) {
+    //   return false
+    // }
 
-    // Tell plugins with custom prefetching logic that they should start
-    // prefetching this path.
-    if (!this.prefetchTriggered.has(pagePath)) {
-      this.apiRunner(`onPrefetchPathname`, { pathname: pagePath })
-      this.prefetchTriggered.add(pagePath)
-    }
+    // // Tell plugins with custom prefetching logic that they should start
+    // // prefetching this path.
+    // if (!this.prefetchTriggered.has(pagePath)) {
+    //   this.apiRunner(`onPrefetchPathname`, { pathname: pagePath })
+    //   this.prefetchTriggered.add(pagePath)
+    // }
 
-    // If a plugin has disabled core prefetching, stop now.
-    if (this.prefetchDisabled) {
-      return false
-    }
+    // // If a plugin has disabled core prefetching, stop now.
+    // if (this.prefetchDisabled) {
+    //   return false
+    // }
 
-    const realPath = findPath(pagePath)
-    // Todo make doPrefetch logic cacheable
-    // eslint-disable-next-line consistent-return
-    this.doPrefetch(realPath).then(() => {
-      if (!this.prefetchCompleted.has(pagePath)) {
-        this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
-        this.prefetchCompleted.add(pagePath)
-      }
-    })
+    // const realPath = findPath(pagePath)
+    // // Todo make doPrefetch logic cacheable
+    // // eslint-disable-next-line consistent-return
+    // this.doPrefetch(realPath).then(() => {
+    //   if (!this.prefetchCompleted.has(pagePath)) {
+    //     this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
+    //     this.prefetchCompleted.add(pagePath)
+    //   }
+    // })
 
-    return true
+    // return true
   }
 
   doPrefetch(pagePath) {
@@ -571,6 +580,7 @@ export const publicLoader = {
   isPageNotFound: rawPath => instance.isPageNotFound(rawPath),
   hovering: rawPath => instance.hovering(rawPath),
   loadAppData: () => instance.loadAppData(),
+  instance: () => instance,
 }
 
 export default publicLoader
