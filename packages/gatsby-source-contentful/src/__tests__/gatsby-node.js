@@ -10,6 +10,7 @@ jest.mock(`gatsby-core-utils`, () => {
 const gatsbyNode = require(`../gatsby-node`)
 const fetch = require(`../fetch`)
 const normalize = require(`../normalize`)
+const _ = require(`lodash`)
 
 const startersBlogFixture = require(`../__fixtures__/starter-blog-data`)
 const richTextFixture = require(`../__fixtures__/rich-text-data`)
@@ -20,7 +21,7 @@ const defaultPluginOptions = { spaceId: `testSpaceId` }
 const createMockCache = () => {
   const actualCacheMap = new Map()
   return {
-    get: jest.fn(key => actualCacheMap.get(key)),
+    get: jest.fn(key => _.cloneDeep(actualCacheMap.get(key))),
     set: jest.fn((key, value) => actualCacheMap.set(key, value)),
     directory: __dirname,
     actualMap: actualCacheMap,
@@ -348,6 +349,9 @@ describe(`gatsby-node`, () => {
         ],
         Array [
           "contentful-sync-result-testSpaceId-master",
+        ],
+        Array [
+          "contentful-sync-data-testSpaceId-master",
         ],
         Array [
           "contentful-sync-result-testSpaceId-master",

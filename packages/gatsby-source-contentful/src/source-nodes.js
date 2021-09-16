@@ -3,6 +3,7 @@ import _ from "lodash"
 const path = require(`path`)
 const fs = require(`fs-extra`)
 import normalize from "./normalize"
+const { createClient } = require(`contentful`)
 
 const { createPluginConfig } = require(`./plugin-options`)
 import { downloadContentfulAssets } from "./download-contentful-assets"
@@ -82,8 +83,9 @@ export async function sourceNodes(
     `environment`
   )}`
 
+  const mergedSyncData = await cache.get(`contentful-sync-data-${sourceId}`)
+
   const {
-    mergedSyncData,
     contentTypeItems,
     locales,
     space,
@@ -92,6 +94,63 @@ export async function sourceNodes(
     deletedEntries,
     deletedAssets,
   } = await cache.get(`contentful-sync-result-${sourceId}`)
+
+  // Process data fetch results and turn them into GraphQL entities
+  const processingActivity = reporter.activityTimer(
+    `Contentful: Process data (${sourceId})`,
+    {
+      parentSpan,
+    }
+  )
+  processingActivity.start()
+
+  // Store a raw and unresolved copy of the data for caching
+  const mergedSyncDataRaw = _.cloneDeep(mergedSyncData)
+
+  // Use the JS-SDK to resolve the entries and assets
+  const res = createClient({
+    space: `none`,
+    accessToken: `fake-access-token`,
+  }).parseEntries({
+    items: mergedSyncData.entries,
+    includes: {
+      assets: mergedSyncData.assets,
+      entries: mergedSyncData.entries,
+    },
+  })
+
+  mergedSyncData.entries = res.items
+
+  // Inject raw API output to rich text fields
+  const richTextFieldMap = new Map()
+  contentTypeItems.forEach(contentType => {
+    richTextFieldMap.set(
+      contentType.sys.id,
+      contentType.fields
+        .filter(field => field.type === `RichText`)
+        .map(field => field.id)
+    )
+  })
+
+  const rawEntries = new Map()
+  mergedSyncDataRaw.entries.forEach(rawEntry =>
+    rawEntries.set(rawEntry.sys.id, rawEntry)
+  )
+
+  mergedSyncData.entries.forEach(entry => {
+    const contentTypeId = entry.sys.contentType.sys.id
+    const richTextFieldIds = richTextFieldMap.get(contentTypeId)
+    if (richTextFieldIds) {
+      richTextFieldIds.forEach(richTextFieldId => {
+        if (!entry.fields[richTextFieldId]) {
+          return
+        }
+        entry.fields[richTextFieldId] = rawEntries.get(entry.sys.id).fields[
+          richTextFieldId
+        ]
+      })
+    }
+  })
 
   const { assets } = mergedSyncData
 
@@ -287,15 +346,6 @@ export async function sourceNodes(
 
   if (pluginConfig.get(`downloadLocal`)) {
     reporter.info(`Download Contentful asset files`)
-
-    // Ensure cache dir exists for downloadLocal
-    const program = store.getState().program
-
-    const CACHE_DIR = path.resolve(
-      `${program.directory}/.cache/contentful/assets/`
-    )
-
-    await fs.ensureDir(CACHE_DIR)
 
     await downloadContentfulAssets({
       actions,

@@ -2,18 +2,26 @@
 const isOnline = require(`is-online`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
-const { createClient } = require(`contentful`)
+const path = require(`path`)
 const v8 = require(`v8`)
 const { CODES } = require(`./report`)
 const fetchData = require(`./fetch`)
 const { createPluginConfig } = require(`./plugin-options`)
 
 export async function onPreBootstrap(
-  { reporter, cache, parentSpan },
+  { reporter, cache, parentSpan, store },
   pluginOptions
 ) {
-  // Fetch data for sourceNodes & createSchemaCustomization
+  // Ensure cache dir exists for downloadLocal
+  const program = store.getState().program
 
+  const CACHE_DIR = path.resolve(
+    `${program.directory}/.cache/contentful/assets/`
+  )
+
+  await fs.ensureDir(CACHE_DIR)
+
+  // Fetch data for sourceNodes & createSchemaCustomization
   let currentSyncData
   let contentTypeItems
   let tagItems
@@ -188,17 +196,6 @@ export async function onPreBootstrap(
     })
   }
 
-  fetchActivity.end()
-
-  // Process data fetch results and turn them into GraphQL entities
-  const processingActivity = reporter.activityTimer(
-    `Contentful: Process data (${sourceId})`,
-    {
-      parentSpan,
-    }
-  )
-  processingActivity.start()
-
   // Create a map of up to date entries and assets
   function mergeSyncData(previous, current, deletedEntities) {
     const deleted = new Set(deletedEntities.map(e => e.sys.id))
@@ -221,54 +218,6 @@ export async function onPreBootstrap(
     ),
   }
 
-  // Store a raw and unresolved copy of the data for caching
-  const mergedSyncDataRaw = _.cloneDeep(mergedSyncData)
-
-  // Use the JS-SDK to resolve the entries and assets
-  const res = createClient({
-    space: `none`,
-    accessToken: `fake-access-token`,
-  }).parseEntries({
-    items: mergedSyncData.entries,
-    includes: {
-      assets: mergedSyncData.assets,
-      entries: mergedSyncData.entries,
-    },
-  })
-
-  mergedSyncData.entries = res.items
-
-  // Inject raw API output to rich text fields
-  const richTextFieldMap = new Map()
-  contentTypeItems.forEach(contentType => {
-    richTextFieldMap.set(
-      contentType.sys.id,
-      contentType.fields
-        .filter(field => field.type === `RichText`)
-        .map(field => field.id)
-    )
-  })
-
-  const rawEntries = new Map()
-  mergedSyncDataRaw.entries.forEach(rawEntry =>
-    rawEntries.set(rawEntry.sys.id, rawEntry)
-  )
-
-  mergedSyncData.entries.forEach(entry => {
-    const contentTypeId = entry.sys.contentType.sys.id
-    const richTextFieldIds = richTextFieldMap.get(contentTypeId)
-    if (richTextFieldIds) {
-      richTextFieldIds.forEach(richTextFieldId => {
-        if (!entry.fields[richTextFieldId]) {
-          return
-        }
-        entry.fields[richTextFieldId] = rawEntries.get(entry.sys.id).fields[
-          richTextFieldId
-        ]
-      })
-    }
-  })
-
   // @todo based on the sys metadata we should be able to differentiate new and updated entities
   reporter.info(
     `Contentful: ${currentSyncData.entries.length} new/updated entries`
@@ -285,17 +234,13 @@ export async function onPreBootstrap(
     `Contentful: ${currentSyncData.deletedAssets.length} deleted assets`
   )
 
-  // Remove deleted entries & assets
-  reporter.verbose(`Removing deleted Contentful entries & assets`)
-
   // Update syncToken
   const nextSyncToken = currentSyncData.nextSyncToken
 
   await Promise.all([
-    cache.set(CACHE_SYNC_DATA, mergedSyncDataRaw),
+    cache.set(CACHE_SYNC_DATA, mergedSyncData),
     cache.set(CACHE_SYNC_TOKEN, nextSyncToken),
     cache.set(`contentful-sync-result-${sourceId}`, {
-      mergedSyncData,
       contentTypeItems,
       locales,
       space,
@@ -306,5 +251,5 @@ export async function onPreBootstrap(
     }),
   ])
 
-  processingActivity.end()
+  fetchActivity.end()
 }
