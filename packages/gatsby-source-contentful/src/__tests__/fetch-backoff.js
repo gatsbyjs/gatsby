@@ -1,6 +1,7 @@
 /**
  * @jest-environment node
  */
+// @ts-check
 
 import nock from "nock"
 import { fetchContent } from "../fetch"
@@ -82,7 +83,7 @@ describe(`fetch-backoff`, () => {
         `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=444`
       )
       .reply(200, { items: [] })
-    await fetchContent({ pluginConfig, reporter })
+    await fetchContent({ pluginConfig, reporter, syncToken: null })
 
     expect(reporter.panic).not.toBeCalled()
     expect(reporter.warn.mock.calls).toMatchInlineSnapshot(`
@@ -120,7 +121,7 @@ describe(`fetch-backoff`, () => {
       )
       .reply(200, { items: [] })
 
-    await fetchContent({ pluginConfig, reporter })
+    await fetchContent({ pluginConfig, reporter, syncToken: null })
 
     expect(reporter.panic).not.toBeCalled()
     expect(reporter.warn).not.toBeCalled()
