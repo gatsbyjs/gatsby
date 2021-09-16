@@ -391,34 +391,33 @@ export class BaseLoader {
   }
 
   prefetch(pagePath) {
-    return false
-    // if (!this.shouldPrefetch(pagePath)) {
-    //   return false
-    // }
+    if (!this.shouldPrefetch(pagePath)) {
+      return false
+    }
 
-    // // Tell plugins with custom prefetching logic that they should start
-    // // prefetching this path.
-    // if (!this.prefetchTriggered.has(pagePath)) {
-    //   this.apiRunner(`onPrefetchPathname`, { pathname: pagePath })
-    //   this.prefetchTriggered.add(pagePath)
-    // }
+    // Tell plugins with custom prefetching logic that they should start
+    // prefetching this path.
+    if (!this.prefetchTriggered.has(pagePath)) {
+      this.apiRunner(`onPrefetchPathname`, { pathname: pagePath })
+      this.prefetchTriggered.add(pagePath)
+    }
 
-    // // If a plugin has disabled core prefetching, stop now.
-    // if (this.prefetchDisabled) {
-    //   return false
-    // }
+    // If a plugin has disabled core prefetching, stop now.
+    if (this.prefetchDisabled) {
+      return false
+    }
 
-    // const realPath = findPath(pagePath)
-    // // Todo make doPrefetch logic cacheable
-    // // eslint-disable-next-line consistent-return
-    // this.doPrefetch(realPath).then(() => {
-    //   if (!this.prefetchCompleted.has(pagePath)) {
-    //     this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
-    //     this.prefetchCompleted.add(pagePath)
-    //   }
-    // })
+    const realPath = findPath(pagePath)
+    // Todo make doPrefetch logic cacheable
+    // eslint-disable-next-line consistent-return
+    this.doPrefetch(realPath).then(() => {
+      if (!this.prefetchCompleted.has(pagePath)) {
+        this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
+        this.prefetchCompleted.add(pagePath)
+      }
+    })
 
-    // return true
+    return true
   }
 
   doPrefetch(pagePath) {

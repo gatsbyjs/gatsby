@@ -138,7 +138,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   // - it's the offline plugin shell (/offline-plugin-app-shell-fallback/)
   if (
     pagePath &&
-    __BASE_PATH__ + pagePath !== browserLoc.pathname &&
+    __BASE_PATH__ + pagePath !== browserLoc.pathname + browserLoc.search &&
     !(
       loader.findMatchPath(stripPrefix(browserLoc.pathname, __BASE_PATH__)) ||
       pagePath === `/404.html` ||
@@ -146,7 +146,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
     )
   ) {
-    navigate(__BASE_PATH__ + pagePath + browserLoc.search + browserLoc.hash, {
+    navigate(__BASE_PATH__ + pagePath + browserLoc.hash, {
       replace: true,
     })
   }
