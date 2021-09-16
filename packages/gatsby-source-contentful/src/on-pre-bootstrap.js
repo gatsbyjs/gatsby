@@ -134,6 +134,7 @@ export async function onPreBootstrap(
         v8.serialize({
           currentSyncData,
           contentTypeItems,
+          tagItems,
           defaultLocale,
           locales,
           space,
