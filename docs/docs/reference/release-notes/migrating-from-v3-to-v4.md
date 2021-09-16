@@ -12,15 +12,26 @@ This is a reference for upgrading your site from Gatsby 3 to Gatsby 4. Version 4
 
 ## Table of Contents
 
+- [Handling Deprecations](#handling-deprecations)
 - [Updating Your Dependencies](#updating-your-dependencies)
 - [Handling Breaking Changes](#handling-breaking-changes)
 - [Future Breaking Changes](#future-breaking-changes)
 - [For Plugin Maintainers](#for-plugin-maintainers)
 - [Known Issues](#known-issues)
 
+## Handling Deprecations
+
+Before upgrading to v4 we highly recommend upgrading `gatsby` (and all plugins) to the latest v3 version.
+Some changes required for Gatsby v4 could be applied incrementally to the latest v3 which should contribute to smoother upgrade experience.
+
+> Use `npm outdated` or `yarn upgrade-interactive --latest` for automatic upgrade to the latest v3 release.
+
+After upgrading, run `gatsby build` and look for deprecation messages in the build log.
+Follow instructions to fix those deprecations.
+
 ## Updating Your Dependencies
 
-First, you need to update your dependencies.
+Next, you need to update your dependencies to v4 beta.
 
 ### Update Gatsby version
 
@@ -48,9 +59,7 @@ npm install gatsby@next --legacy-peer-deps
 
 ### Update Gatsby related packages
 
-Update your `package.json` to use the `next` version of Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note, this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. If you're using community plugins, they might not be upgraded yet. Please check their repository for the current status. You can run an npm script to see all outdated dependencies.
-
-> TODO: Add npm/yarn section once stable as they don't show `next` tags, only `latest`
+Update your `package.json` to use the `next` version of Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note, this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. If you're using community plugins, they might not be upgraded yet. Please check their repository for the current status.
 
 #### Updating community plugins
 
@@ -80,11 +89,12 @@ Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-rele
 
 ### Disallow schema-related APIs in `sourceNodes`
 
-You can no longer use `createFieldExtension`, `createTypes` & `addThirdPartySchema` inside the [`sourceNodes`](/docs/reference/config-files/gatsby-node#sourceNodes) lifecycle.
+You can no longer use `createFieldExtension`, `createTypes` & `addThirdPartySchema` actions inside the [`sourceNodes`](/docs/reference/config-files/gatsby-node#sourceNodes) lifecycle.
+Instead, move them to [`createSchemaCustomization`](/docs/reference/config-files/gatsby-node#createSchemaCustomization) API. Or alternatively use [`createResolvers`](/docs/reference/config-files/gatsby-node#createResolvers) API.
 
-You'll need to use the [`createSchemaCustomization`](/docs/reference/config-files/gatsby-node#createSchemaCustomization) & [`createResolvers`](/docs/reference/config-files/gatsby-node#createResolvers) APIs to execute schema-related actions. The reasoning behind this is that this way Gatsby can safely build the schema and run queries in a separate process without running sourcing.
+The reasoning behind this is that this way Gatsby can safely build the schema and run queries in a separate process without running sourcing.
 
-### `touchNode`
+### Change arguments passed to `touchNode` action
 
 For Gatsby v2 & v3 the `touchNode` API accepted `nodeId` as a named argument. This now has been changed in favor of passing the full `node` to the function.
 
@@ -108,7 +118,7 @@ exports.sourceNodes = async ({ actions, getNodesByType, cache }) => {
 }
 ```
 
-### `deleteNode`
+### Change arguments passed to `deleteNode` action
 
 For Gatsby v2 & v3, the `deleteNode` API accepted `node` as a named argument. This now has been changed in favor of passing the full `node` to the function.
 
@@ -121,7 +131,7 @@ exports.onCreateNode = ({ actions, node }) => {
 }
 ```
 
-### `@nodeInterface`
+### Replace `@nodeInterface` with interface inheritance
 
 For Gatsby v2 & v3, `@nodeInterface` was the recommended way to implement [queryable interfaces](/docs/reference/graphql-data-layer/schema-customization/#queryable-interfaces-with-the-nodeinterface-extension).
 Now it is changed in favor of interface inheritance:
@@ -139,11 +149,11 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-### Setting values on module context outside of `onPluginInit`
+### Use `onPluginInit` API to share context with other lifecycle APIs
 
 Sites and in particular plugins that rely on setting values on module context to access them later in other lifecycles will need to use `onPluginInit`. This is also the case for when you use `onPreInit` or `onPreBootstrap`. The `onPluginInit` API will run in each worker as it is initialized and thus each worker then has the initial plugin state.
 
-Here's an example of a plugin fetching a GraphQL schema at the earliest stage in order to use it in later lifecycles:
+Here's an example of a v3 plugin fetching a GraphQL schema at the earliest stage in order to use it in later lifecycles:
 
 ```js:title=gatsby-node.js
 const stateCache = {}
@@ -225,33 +235,151 @@ const getDataFromAPI = async ({ reporter }) => {
 }
 ```
 
-### Removal of obsolete flags
+### Remove obsolete flags
 
-The config flags for `QUERY_ON_DEMAND` and `PRESERVE_WEBPACK_CACHE` have been removed since the features are enabled by default. Thus you can't explicitly opt-out of these anymore.
+Remove the flags for `QUERY_ON_DEMAND` and `PRESERVE_WEBPACK_CACHE` from `gatsby-config`. Those features are a part of gatsby core now and don't need to be enabled nor can't be disabled using those flags.
 
-### Node mutation & creation in custom resolvers
+### Do not create nodes in custom resolvers
 
-TODO
+The most typical scenario is when people use `createRemoteFileNode` in custom resolvers to lazily download
+only those files that are referenced in page queries.
+
+It is a well-known workaround aimed for build time optimization, however it breaks a contract Gatsby establishes
+with plugins and prevents us from running queries in parallel and makes other use-cases harder
+(like using GraphQL layer in functions).
+
+The recommended approach is to always create nodes in `sourceNodes`. We are going to come up with alternatives to
+this workaround that will work using `sourceNodes`. It is still being worked on, please post your use-cases and ideas
+in [this discussion](https://github.com/gatsbyjs/gatsby/discussions/32860#discussioncomment-1262874) to help us shape this new APIs.
 
 ## Future Breaking Changes
 
 This section explains deprecations that were made for Gatsby 4. These old behaviors will be removed in v5, at which point they will no longer work. For now, you can still use the old behaviors in v4, but we recommend updating to the new signatures to make future updates easier.
 
-### `nodeModel.runQuery`
+### `nodeModel.runQuery` is deprecated
 
-This method is available in custom resolvers and returns an unbound array of nodes (without any limit and skip applied). While this is cheap with an in-memory store, with the new LMDB database this is quite expensive. You should instead use `nodeModel.findOne` and `nodeModel.findAll` as they support limit and skip directly.
+Use `nodeModel.findAll` and `nodeModel.findOne` instead. Those are almost a drop-in replacement for `runQuery`:
 
-> TODO: Example code before/after
+```js
+const entries = await nodeModel.runQuery({
+  type: `MyType`,
+  query: {
+    /* ... */
+  },
+  firstOnly: false,
+})
+// is the same as:
+const { entries } = await nodeModel.findAll({
+  type: `MyType`,
+  query: {
+    /* ... */
+  },
+})
 
-### `nodeModel.getAllNodes`
+const node = await nodeModel.runQuery({
+  type: `MyType`,
+  query: {
+    /* ... */
+  },
+  firstOnly: true,
+})
+// is the same as:
+const node = await nodeModel.findOne({
+  type: `MyType`,
+  query: {
+    /* ... */
+  },
+})
+```
 
-Similar to `nodeModel.runQuery` the `nodeModel.getAllNodes` returns an unbound array of **all** nodes which is also quite expensive to run. We recommend using `nodeModel.findAll` instead as it at least returns an iterable and not an array.
+The two differences are:
 
-> TODO: Example code before/after
+1. `findAll` supports `limit`/`skip` arguments. `runQuery` ignores them when passed.
+2. `findAll` returns an object with `{ entries: GatsbyIterable, totalCount: () => Promise<number> }` while `runQuery`
+   returns a plain array of nodes
 
-### `___NODE` convention
+```js
+// Assuming we have 100,000 nodes of the type `MyQuery`,
+// the following returns an array with all 100,000 nodes
+const entries = await nodeModel.runQuery({
+  type: `MyType`,
+  query: { limit: 20, skip: 10 },
+})
 
-> TODO: Example code before/after
+// findAll returns 20 entries (starting from 10th)
+// and allows to get total count using totalCount() if required:
+const { entries, totalCount } = await nodeModel.findAll({
+  type: `MyType`,
+  query: { limit: 20, skip: 10 },
+})
+const count = await totalCount()
+```
+
+If you don't pass `limit` and `skip`, `findAll` returns all nodes in `{ entries }` iterable.
+Check out the [source code of GatsbyIterable](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/datastore/common/iterable.ts)
+for usage.
+
+### `nodeModel.getAllNodes` is deprecated
+
+Gatsby v4 uses persisted data store for nodes (using [lmdb-store](https://github.com/DoctorEvidence/lmdb-store))
+and fetching an unbounded number of nodes won't play well with it in the long run.
+
+We recommend using `nodeModel.findAll` instead with empty query as it at least returns an iterable and not an array.
+
+```js
+// replace:
+const entries = nodeModel.getAllNodes(`MyType`)
+
+// with
+const { entries } = await nodeModel.findAll({ type: `MyType`, query: {} })
+```
+
+However, we highly recommend restricting the number of fetched nodes at once. So this is even better:
+
+```js
+const { entries } = await nodeModel.findAll({
+  type: `MyType`,
+  query: { limit: 20 },
+})
+```
+
+### `___NODE` convention is deprecated
+
+Gatsby was using `___NODE` suffix of node fields to magically detect relations between nodes. But starting
+with [gatsby 2.5](/blog/2019-05-17-improvements-to-schema-customization/) `@link` directive is a preferred method:
+
+Before:
+
+```js
+exports.sourceNodes = ({ actions }) => {
+  actions.createNode({
+    // ...required node fields
+    author___NODE: userNode.id,
+    internal: { type: `BlogPost` /*...*/ },
+  })
+}
+```
+
+After:
+
+```js
+exports.sourceNodes = ({ actions }) => {
+  actions.createNode({
+    // ...required node fields
+    author: userNode.id,
+    internal: { type: `BlogPost` /*...*/ },
+  })
+}
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createTypes(`
+    type BlogPost implements Node {
+      author: User @link
+    }
+  `)
+}
+```
+
+Follow [this how-to guide](/docs/how-to/plugins-and-themes/creating-a-source-plugin/#create-foreign-key-relationships-between-data) for up-to-date guide on sourcing and defining data relations.
 
 ## For Plugin Maintainers
 
@@ -281,18 +409,44 @@ If your plugin supports both versions:
 }
 ```
 
-### Don't mutate data outside of expected APIs
+### Don't mutate nodes outside of expected APIs
 
-This is an anti-pattern in some plugins that will no longer work with LMDB. You shouldn't mutate data after the `createNode` call. In Gatsby 4 the nodes are only stored once (when sourcing them) and any mutations afterwards are lost.
+Before v4 you could do something like this, and it was working:
 
-> TODO: Example of current anti-pattern + proposed better solution
+```js
+exports.sourceNodes = ({ actions }) => {
+  const node = {
+    /* */
+  }
+  actions.createNode(node)
+
+  // somewhere else:
+  node.image___NODE = `uuid-of-some-other-node`
+}
+```
+
+This was never an intended feature of Gatsby and is considered an anti-pattern (see [#19876](https://github.com/gatsbyjs/gatsby/issues/19876) for additional information).
+
+Starting with v4 Gatsby introduces a persisted storage for nodes and thus this pattern will no longer work
+because nodes are persisted after `createNode` call and all direct mutations after that will be lost.
+
+Unfortunately it is hard to detect it automatically (without sacrificing performance), so we recommend you to
+check your code to ensure you don't mutate nodes directly.
+
+Gatsby provides several actions available in `sourceNodes` and `onCreateNode` APIs to use instead:
+
+- [createNode](/docs/reference/config-files/actions/#createNode)
+- [deleteNode](/docs/reference/config-files/actions/#deleteNode)
+- [createNodeField](/docs/reference/config-files/actions/#createNodeField)
 
 ### No support for circular references in data
 
 The current state persistence mechanism supported circular references in nodes. With Gatsby 4 and LMDB this is no longer supported.
 
-> TODO: More details here?
+This is just a theoretical problem that might arise in v4. Most source plugins already avoid circular dependencies in data.
 
 ## Known Issues
 
 This section is a work in progress and will be expanded when necessary. It's a list of known issues you might run into while upgrading Gatsby to v4 and how to solve them.
+
+If you encounter any problem, please let us know in this [GitHub discussion](https://github.com/gatsbyjs/gatsby/discussions/32860).
