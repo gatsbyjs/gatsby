@@ -14,13 +14,14 @@ const joi = require(`joi`)
 // const { inspect } = require(`util`)
 
 // https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
-const ISO8601 = /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i
+const ISO8601 =
+  /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i
 
 jest.setTimeout(100000)
 
 const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
-const defaultStdio = `ignore`
+const defaultStdio = `inherit`
 
 const collectEventsForDevelop = (events, env = {}) => {
   const gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {
@@ -292,9 +293,8 @@ describe(`develop`, () => {
       let events = []
 
       beforeAll(done => {
-        const { finishedPromise, gatsbyProcess } = collectEventsForDevelop(
-          events
-        )
+        const { finishedPromise, gatsbyProcess } =
+          collectEventsForDevelop(events)
 
         setTimeout(() => {
           gatsbyProcess.kill(`SIGTERM`)
