@@ -101,6 +101,11 @@ export async function onPreBootstrap(
       process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
       process.env.NODE_ENV !== `production`
     ) {
+      reporter.info(`Using Contentful Offline cache ⚠️`)
+      reporter.info(
+        `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`
+      )
+
       return
     }
     if (process.env.GATSBY_CONTENTFUL_OFFLINE) {

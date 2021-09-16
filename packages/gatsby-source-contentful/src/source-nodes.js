@@ -46,6 +46,7 @@ export async function sourceNodes(
   },
   pluginOptions
 ) {
+  const { createNode, touchNode, deleteNode } = actions
   const isOnline = require(`is-online`)
   const online = await isOnline()
   const forceCache = await fs.exists(
@@ -68,15 +69,8 @@ export async function sourceNodes(
       }
     })
 
-    reporter.info(`Using Contentful Offline cache ⚠️`)
-    reporter.info(
-      `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`
-    )
-
     return
   }
-
-  const { createNode, touchNode, deleteNode } = actions
 
   const pluginConfig = createPluginConfig(pluginOptions)
   const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
