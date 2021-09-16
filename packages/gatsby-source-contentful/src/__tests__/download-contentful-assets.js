@@ -54,7 +54,7 @@ const fixtures = [
   },
 ]
 
-describe.only(`downloadContentfulAssets`, () => {
+describe(`downloadContentfulAssets`, () => {
   it(`derives unique cache key from node locale and id`, async () => {
     const cache = {
       get: jest.fn(() => Promise.resolve(null)),
