@@ -154,7 +154,9 @@ export async function sourceNodes(
   })
 
   const existingNodes = getNodes().filter(
-    n => n.internal.owner === `gatsby-source-contentful`
+    n =>
+      n.internal.owner === `gatsby-source-contentful` &&
+      n.internal.type !== `ContentfulTag`
   )
   existingNodes.forEach(n => touchNode(n))
 
