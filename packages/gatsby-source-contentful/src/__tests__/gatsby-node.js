@@ -365,7 +365,6 @@ describe(`gatsby-node`, () => {
       {
         entries: startersBlogFixture.initialSync().currentSyncData.entries,
         assets: startersBlogFixture.initialSync().currentSyncData.assets,
-        tagItems: [],
       }
     )
     expect(cache.set.mock.calls.map(v => v[0])).toMatchInlineSnapshot(`

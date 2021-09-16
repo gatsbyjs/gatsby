@@ -1,5 +1,4 @@
 // @todo import syntax!
-import normalize from "./normalize"
 const isOnline = require(`is-online`)
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
@@ -10,11 +9,10 @@ const fetchData = require(`./fetch`)
 const { createPluginConfig } = require(`./plugin-options`)
 
 export async function onPreBootstrap(
-  { reporter, cache, actions, parentSpan, getNode, getNodes, createNodeId },
+  { reporter, cache, parentSpan },
   pluginOptions
 ) {
   // Fetch data for sourceNodes & createSchemaCustomization
-  const { deleteNode, touchNode } = actions
 
   let currentSyncData
   let contentTypeItems
@@ -95,22 +93,6 @@ export async function onPreBootstrap(
       process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
       process.env.NODE_ENV !== `production`
     ) {
-      getNodes().forEach(node => {
-        if (node.internal.owner !== `gatsby-source-contentful`) {
-          return
-        }
-        touchNode(node)
-        if (node.localFile___NODE) {
-          // Prevent GraphQL type inference from crashing on this property
-          touchNode(getNode(node.localFile___NODE))
-        }
-      })
-
-      reporter.info(`Using Contentful Offline cache ⚠️`)
-      reporter.info(
-        `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`
-      )
-
       return
     }
     if (process.env.GATSBY_CONTENTFUL_OFFLINE) {
@@ -218,7 +200,8 @@ export async function onPreBootstrap(
   processingActivity.start()
 
   // Create a map of up to date entries and assets
-  function mergeSyncData(previous, current, deleted) {
+  function mergeSyncData(previous, current, deletedEntities) {
+    const deleted = new Set(deletedEntities.map(e => e.sys.id))
     const entryMap = new Map()
     previous.forEach(e => !deleted.has(e.sys.id) && entryMap.set(e.sys.id, e))
     current.forEach(e => !deleted.has(e.sys.id) && entryMap.set(e.sys.id, e))
@@ -229,14 +212,13 @@ export async function onPreBootstrap(
     entries: mergeSyncData(
       previousSyncData.entries,
       currentSyncData.entries,
-      new Set(currentSyncData.deletedEntries.map(e => e.sys.id))
+      currentSyncData.deletedEntries
     ),
     assets: mergeSyncData(
       previousSyncData.assets,
       currentSyncData.assets,
-      new Set(currentSyncData.deletedAssets.map(e => e.sys.id))
+      currentSyncData.deletedAssets
     ),
-    tagItems,
   }
 
   // Store a raw and unresolved copy of the data for caching
@@ -306,37 +288,6 @@ export async function onPreBootstrap(
   // Remove deleted entries & assets
   reporter.verbose(`Removing deleted Contentful entries & assets`)
 
-  // @todo this should happen when sourcing?
-  function deleteContentfulNode(node) {
-    const normalizedType = node.sys.type.startsWith(`Deleted`)
-      ? node.sys.type.substring(`Deleted`.length)
-      : node.sys.type
-
-    const localizedNodes = locales
-      .map(locale => {
-        const nodeId = createNodeId(
-          normalize.makeId({
-            spaceId: space.sys.id,
-            id: node.sys.id,
-            type: normalizedType,
-            currentLocale: locale.code,
-            defaultLocale,
-          })
-        )
-        return getNode(nodeId)
-      })
-      .filter(node => node)
-
-    localizedNodes.forEach(node => {
-      // touchNode first, to populate typeOwners & avoid erroring
-      touchNode(node)
-      deleteNode(node)
-    })
-  }
-
-  currentSyncData.deletedEntries.forEach(deleteContentfulNode)
-  currentSyncData.deletedAssets.forEach(deleteContentfulNode)
-
   // Update syncToken
   const nextSyncToken = currentSyncData.nextSyncToken
 
@@ -349,6 +300,9 @@ export async function onPreBootstrap(
       locales,
       space,
       defaultLocale,
+      tagItems,
+      deletedEntries: currentSyncData.deletedEntries,
+      deletedAssets: currentSyncData.deletedAssets,
     }),
   ])
 

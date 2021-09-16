@@ -45,17 +45,55 @@ export async function sourceNodes(
   },
   pluginOptions
 ) {
-  const { createNode, touchNode } = actions
+  const isOnline = require(`is-online`)
+  const online = await isOnline()
+  const forceCache = await fs.exists(
+    process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
+  )
+  if (
+    !online &&
+    !forceCache &&
+    process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
+    process.env.NODE_ENV !== `production`
+  ) {
+    getNodes().forEach(node => {
+      if (node.internal.owner !== `gatsby-source-contentful`) {
+        return
+      }
+      touchNode(node)
+      if (node.localFile___NODE) {
+        // Prevent GraphQL type inference from crashing on this property
+        touchNode(getNode(node.localFile___NODE))
+      }
+    })
+
+    reporter.info(`Using Contentful Offline cache ⚠️`)
+    reporter.info(
+      `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`
+    )
+
+    return
+  }
+
+  const { createNode, touchNode, deleteNode } = actions
 
   const pluginConfig = createPluginConfig(pluginOptions)
   const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
     `environment`
   )}`
 
-  const { mergedSyncData, contentTypeItems, locales, space, defaultLocale } =
-    await cache.get(`contentful-sync-result-${sourceId}`)
+  const {
+    mergedSyncData,
+    contentTypeItems,
+    locales,
+    space,
+    defaultLocale,
+    tagItems,
+    deletedEntries,
+    deletedAssets,
+  } = await cache.get(`contentful-sync-result-${sourceId}`)
 
-  const { assets, tagItems } = mergedSyncData
+  const { assets } = mergedSyncData
 
   const entryList = normalize.buildEntryList({
     mergedSyncData,
@@ -122,6 +160,46 @@ export async function sourceNodes(
         )
       }
     })
+
+  function deleteContentfulNode(node) {
+    const normalizedType = node.sys.type.startsWith(`Deleted`)
+      ? node.sys.type.substring(`Deleted`.length)
+      : node.sys.type
+
+    const localizedNodes = locales
+      .map(locale => {
+        const nodeId = createNodeId(
+          normalize.makeId({
+            spaceId: space.sys.id,
+            id: node.sys.id,
+            type: normalizedType,
+            currentLocale: locale.code,
+            defaultLocale,
+          })
+        )
+        return getNode(nodeId)
+      })
+      .filter(node => node)
+
+    localizedNodes.forEach(node => {
+      // touchNode first, to populate typeOwners & avoid erroring
+      touchNode(node)
+      deleteNode(node)
+    })
+  }
+
+  if (deletedEntries.length || deletedAssets.length) {
+    const deletionActivity = reporter.activityTimer(
+      `Contentful: Deleting ${deletedEntries.length} nodes and ${deletedAssets.length} assets (${sourceId})`,
+      {
+        parentSpan,
+      }
+    )
+    deletionActivity.start()
+    deletedEntries.forEach(deleteContentfulNode)
+    deletedAssets.forEach(deleteContentfulNode)
+    deletionActivity.end()
+  }
 
   const creationActivity = reporter.activityTimer(
     `Contentful: Create nodes (${sourceId})`,
