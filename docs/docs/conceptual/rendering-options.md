@@ -3,29 +3,29 @@ title: Rendering Options
 ---
 
 Gatsby is historically known as a static site generator enhanced with [React Hydration][1].
-But starting with Gatsby 4, you can choose alternative rendering modes in addition to static site generation (SSG).
-Now Gatsby covers all possible use-cases you may face as a web developer.
+But starting with Gatsby 4, you can choose alternative rendering modes in addition to static site generation (SSG)—on a per-page basis.
+This type of granular control allows development to optimize for performance and productivity without sacrficing one for the other.
 
 ### What is a rendering mode?
 
-Rendering mode defines at what stage the user-facing HTML is generated. It can happen at build time
+A rendering mode defines the stage at which your page's user-facing HTML is generated. It can happen at build time
 (SSG or pre-rendering), during HTTP request (server-side rendering) or locally in the browser
 with Javascript (client-side rendering).
 
 > For an in-depth explanation of each of those approaches and their trade-offs we
 > highly recommend the ["Rendering on the Web"][3] article from the Chrome team.
 
-As already mentioned, Gatsby always supported SSG and [client-side rendering][4], and now the two
-other rendering options are available: Deferred Static Generation (DSG) and Server-side rendering (SSR).
-Let's dive into what each of those modes mean.
+As already mentioned, Gatsby always supported SSG and [client-side rendering][4]. Now, two other rendering options are available: Deferred Static Generation (DSG) and Server-Side rendering (SSR).
+This guide dives into the what each of those modes means and when you might choose one over another.
 
 ## Static Site Generation (SSG)
 
-SSG is the default rendering mode in Gatsby. Gatsby generates all assets and HTML for all SSG pages at build time on a
-build server (this could be your laptop, any build service, or Gatsby Cloud worker if you use [Gatsby Cloud][6]).
+SSG is the default rendering mode in Gatsby. While the name has the word "static" in it, it doesn't at all mean boring or lifeless. It simply means the entire site is pre-rendered into HTML, CSS, and JavaScript at build time, which then get served as static assets to the browser. Because all of that HTML, CSS, and JS is preprocessed and rendered at build time, Static Site Generation serves websites to users in the fastest possible way—your content is ready to go before the visitor even visits the site.
 
-Then, the produced static files are uploaded to the content delivery network (CDN) provider of choice and served to end users.
-The build server is not needed after the build step and could even be turned off.
+How does SSG work?
+
+1. First, Gatsby generates all assets and HTML for all SSG pages at build time on a build server (this could be your laptop, any build service, or Gatsby Cloud worker if you use [Gatsby Cloud][6]).
+2. Then, the produced static files are uploaded to the content delivery network (CDN) provider of choice and served to end users. The build server is not needed after the build step and could even be turned off.
 
 This mode provides the most pleasant user experience, the highest level of security, and run-time scalability for your site.
 
@@ -44,40 +44,34 @@ Deferred Static Generation could be beneficial.
 
 ## Deferred Static Generation (DSG)
 
-As the title suggests, Deferred Static Generation is conceptually very similar to SSG. The only difference is that some
-pages are not generated at build time and instead generated during the first HTTP request to this page.
+As the title suggests, Deferred Static Generation is conceptually very similar to SSG. The only difference with Deferred Static Generation is developers can choose to defer building certain pages until the first time a user requests it. Deferred Static Generation gives developers greater control over their site's build times.
 
-The subsequent requests will hit the CDN cache the same way as with SSG.
+For example, imagine you have an archive of old articles that no longer receive significant traffic. There is
+no practical reason to generate them on each build (and thus delay the delivery of fresh articles). In this case, you may choose to defer the generation of old pages, and Gatsby will skip them during the build step.
 
-For example: maybe you have an archive of old articles that no longer receive significant traffic. There is
-no practical reason to generate them on each build (and thus delay the delivery of fresh articles).
-
-In this case, you may choose to defer the generation of old pages, and Gatsby will skip them during the build step.
+Subsequent requests to pages using DSG will hit the CDN cache the same way as with SSG.
 
 - [How-To Guide: Using Deferred Static Generation][7]
 
 ![Deferred Static Generation diagram](../images/dsg-diagram.jpg)
 
-Unlike SSG, deferred static generation requires you to keep the build server running after the initial build.
-It implies a different deployment model and requires backend infrastructure.
-
-But don't worry, [Gatsby Cloud][6] supports it out-of-the-box.
+Unlike SSG, Deferred Static Generation requires you to keep the build server running after the initial build (using the `gatsby serve` command).
+It implies a different deployment model and requires backend infrastructure. But don't worry: [Gatsby Cloud][6] supports it out-of-the-box.
 
 ## Server-Side Rendering (SSR)
 
-SSG, DSG, and client-side rendering can handle a vast majority of use cases in web development.
+SSG, DSG, and client-side rendering can handle a vast majority of use cases in web development. But there is a small niche when you may still need to generate HTML on-the-fly. That's when you'll need Server-Side Rendering.
 
-But there is a small niche when you may still need to generate HTML on-the-fly.
+Server-Side Rendering is a method of content rendering in which each web page is served to a site visitor at runtime, meaning that a portion of the build process happens on each page request. Because the content is rendering during runtime, visitors will always get the latest version of content directly from the server—though they may have to wait a few seconds for it display.
 
-For example: maybe you are building a site with user reviews and want those reviews to be
-immediately indexed by search engines as soon as they are posted. So the client-side rendering is not an option.
+For example, imagine you are building a site with user reviews. You want those reviews to be immediately indexed by search engines as soon as they are posted, so client-side rendering is not an option.
 
 In this case, you may choose server-side rendering for pages with user reviews. Any time someone
 requests this page, Gatsby will call the `getServerData` function defined in the page component.
 That's where you can request any data from 3rd-party APIs. Gatsby passes the returned result as a `serverData`
 prop to your page component.
 
-You can also return HTTP headers along with data to control page caching strategy in CDN.
+You can also return HTTP headers along with data to control the page-caching strategy in your CDN.
 
 - [How to use server-side rendering][8]
 
