@@ -162,45 +162,30 @@ The plugin is moved to https://github.com/netlify/gatsby-plugin-netlify Go check
 
 A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.14.0-next.0...gatsby@3.14.0) to this release 💜
 
-- [tackaberry](https://github.com/tackaberry): feat(gatsby-plugin-google-tagmanager): add option for se
-  lfHostedOrigin [PR #32733](https://github.com/gatsbyjs/gatsby/pull/32733)
+- [tackaberry](https://github.com/tackaberry): feat(gatsby-plugin-google-tagmanager): add option for selfHostedOrigin [PR #32733](https://github.com/gatsbyjs/gatsby/pull/32733)
 - [herecydev](https://github.com/herecydev)
 
-  - fix(gatsby): set staticQueryResultHash to new hash on data change [PR #32949](https://github.com/ga
-    tsbyjs/gatsby/pull/32949)
-  - feat(gatsby-plugin-styled-components): Add ability to disable vendor prefixes [PR #33147](https://g
-    ithub.com/gatsbyjs/gatsby/pull/33147)
+  - fix(gatsby): set staticQueryResultHash to new hash on data change [PR #32949](https://github.com/gatsbyjs/gatsby/pull/32949)
+  - feat(gatsby-plugin-styled-components): Add ability to disable vendor prefixes [PR #33147](https://github.com/gatsbyjs/gatsby/pull/33147)
 
-- [ascorbic](https://github.com/ascorbic): chore: add missing `@babel/runtime` dependencies [PR #32954]
-  (https://github.com/gatsbyjs/gatsby/pull/32954)
+- [ascorbic](https://github.com/ascorbic): chore: add missing `@babel/runtime` dependencies [PR #32954](https://github.com/gatsbyjs/gatsby/pull/32954)
 - [axe312ger](https://github.com/axe312ger)
 
   - fix(contentful): asset download retry [PR #33024](https://github.com/gatsbyjs/gatsby/pull/33024)
-  - test(CTF): ensure changing base64 previews don't break rich text tests [PR #33027](https://github.c
-    om/gatsbyjs/gatsby/pull/33027)
-  - fix(sqip): ensure failed asset downloads do not break build [PR #33037](https://github.com/gatsbyjs
-    /gatsby/pull/33037)
+  - test(CTF): ensure changing base64 previews don't break rich text tests [PR #33027](https://github.com/gatsbyjs/gatsby/pull/33027)
+  - fix(sqip): ensure failed asset downloads do not break build [PR #33037](https://github.com/gatsbyjs/gatsby/pull/33037)
 
-- [Himadu2000](https://github.com/Himadu2000): fix(starters): Formats for StaticImage [PR #33057](https
-  ://github.com/gatsbyjs/gatsby/pull/33057)
-- [merceyz](https://github.com/merceyz): fix: add missing dependencies [PR #31837](https://github.com/g
-  atsbyjs/gatsby/pull/31837)
-- [actuallyatiger](https://github.com/actuallyatiger): chore(docs): Update GitHub Pages doc [PR #29031]
-  (https://github.com/gatsbyjs/gatsby/pull/29031)
-- [acbramley](https://github.com/acbramley): Document filtering temporary files [PR #32048](https://git
-  hub.com/gatsbyjs/gatsby/pull/32048)
-- [jabrks](https://github.com/jabrks): fix(gatsby): Don't bundle moment locale files [PR #33092](https:
-  //github.com/gatsbyjs/gatsby/pull/33092)
-- [nagiek](https://github.com/nagiek): feat(gatsby): Add aggregation resolvers to group [PR #32533](htt
-  ps://github.com/gatsbyjs/gatsby/pull/32533)
+- [Himadu2000](https://github.com/Himadu2000): fix(starters): Formats for StaticImage [PR #33057](https://github.com/gatsbyjs/gatsby/pull/33057)
+- [merceyz](https://github.com/merceyz): fix: add missing dependencies [PR #31837](https://github.com/gatsbyjs/gatsby/pull/31837)
+- [actuallyatiger](https://github.com/actuallyatiger): chore(docs): Update GitHub Pages doc [PR #29031](https://github.com/gatsbyjs/gatsby/pull/29031)
+- [acbramley](https://github.com/acbramley): Document filtering temporary files [PR #32048](https://github.com/gatsbyjs/gatsby/pull/32048)
+- [jabrks](https://github.com/jabrks): fix(gatsby): Don't bundle moment locale files [PR #33092](https://github.com/gatsbyjs/gatsby/pull/33092)
+- [nagiek](https://github.com/nagiek): feat(gatsby): Add aggregation resolvers to group [PR #32533](https://github.com/gatsbyjs/gatsby/pull/32533)
 - [aleksanderantropov](https://github.com/aleksanderantropov)
 
-  - chore(docs): Correct gatsby-cloud plugin in tutorial part 3 [PR #33118](https://github.com/gatsbyjs
-    /gatsby/pull/33118)
+  - chore(docs): Correct gatsby-cloud plugin in tutorial part 3 [PR #33118](https://github.com/gatsbyjs/gatsby/pull/33118)
   - docs: fix typo [PR #33137](https://github.com/gatsbyjs/gatsby/pull/33137)
 
-- [bartveneman](https://github.com/bartveneman): docs(gatsby-plugin-gatsby-cloud): fix typo: asterix ->
-  asterisk [PR #33135](https://github.com/gatsbyjs/gatsby/pull/33135)
-- [rudouglas](https://github.com/rudouglas): chore(gatsby): add environment variable for setting tracin
-  g config file [PR #32513](https://github.com/gatsbyjs/gatsby/pull/32513)
+- [bartveneman](https://github.com/bartveneman): docs(gatsby-plugin-gatsby-cloud): fix typo: asterix -> asterisk [PR #33135](https://github.com/gatsbyjs/gatsby/pull/33135)
+- [rudouglas](https://github.com/rudouglas): chore(gatsby): add environment variable for setting tracing config file [PR #32513](https://github.com/gatsbyjs/gatsby/pull/32513)
 - [minimalsm](https://github.com/minimalsm): docs: Fix broken link on Getting Started with MDX page [PR #33148](https://github.com/gatsbyjs/gatsby/pull/33148)
