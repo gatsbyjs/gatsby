@@ -259,6 +259,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
             type: `LOG_ACTION`,
             action: {
               type: `ENGINES_READY`,
+              timestamp: new Date().toJSON(),
             },
           })
         }
