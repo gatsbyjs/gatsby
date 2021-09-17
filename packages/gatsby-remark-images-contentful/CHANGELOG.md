@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images-contentful@4.11.0/packages/gatsby-remark-images-contentful) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Bug Fixes
+
+- update dependency cheerio to ^1.0.0-rc.10 [#32984](https://github.com/gatsbyjs/gatsby/issues/32984) ([7805783](https://github.com/gatsbyjs/gatsby/commit/7805783335394bfedddc3af8e61a71fb763b9608))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- update semver [#32979](https://github.com/gatsbyjs/gatsby/issues/32979) ([ecf1fa7](https://github.com/gatsbyjs/gatsby/commit/ecf1fa7ef10a60e7631a8f8fad8a33c1d0acaad6))
+
 ## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images-contentful@4.10.0/packages/gatsby-remark-images-contentful) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

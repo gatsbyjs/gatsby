@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.14.0/packages/gatsby-source-wordpress) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Features
+
+- Support on plugin init [#33080](https://github.com/gatsbyjs/gatsby/issues/33080) ([b9f114f](https://github.com/gatsbyjs/gatsby/commit/b9f114f89556021fe432dcfbe275f033f690dfdd))
+- replace lazynodes option for v4 [#32929](https://github.com/gatsbyjs/gatsby/issues/32929) ([78e9aca](https://github.com/gatsbyjs/gatsby/commit/78e9aca141395e301b341e7b163c564dc5a300be))
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-wordpress [#32611](https://github.com/gatsbyjs/gatsby/issues/32611) ([cb73a5a](https://github.com/gatsbyjs/gatsby/commit/cb73a5a889d6e130976805ac866f12bafcfd8ace))
+- update dependency cheerio to ^1.0.0-rc.10 [#32984](https://github.com/gatsbyjs/gatsby/issues/32984) ([7805783](https://github.com/gatsbyjs/gatsby/commit/7805783335394bfedddc3af8e61a71fb763b9608))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- update semver [#32979](https://github.com/gatsbyjs/gatsby/issues/32979) ([ecf1fa7](https://github.com/gatsbyjs/gatsby/commit/ecf1fa7ef10a60e7631a8f8fad8a33c1d0acaad6))
+- upgrade got package [#32928](https://github.com/gatsbyjs/gatsby/issues/32928) ([2ac366e](https://github.com/gatsbyjs/gatsby/commit/2ac366e3745990d47c01f19875f185d0355c89b5))
+- update fs-extra (major) [#32654](https://github.com/gatsbyjs/gatsby/issues/32654) ([eea2687](https://github.com/gatsbyjs/gatsby/commit/eea26873f386d02f27c1708291da0c56585663eb))
+
+#### Other Changes
+
+- Revert "chore(release): Publish next" ([a0c4d44](https://github.com/gatsbyjs/gatsby/commit/a0c4d44488ce00c8917b4d364e4369d337fdcfd9))
+
 ## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.13.0/packages/gatsby-source-wordpress) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

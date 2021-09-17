@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@3.14.0/packages/gatsby-plugin-sharp) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Features
+
+- Use file streams instead of file paths [#33029](https://github.com/gatsbyjs/gatsby/issues/33029) ([e6d9eb3](https://github.com/gatsbyjs/gatsby/commit/e6d9eb37f95ad096febbf513d330c8e5b06299e2))
+
+#### Bug Fixes
+
+- Add TS type/v4 patches for `unstable_onPluginInit` [#33062](https://github.com/gatsbyjs/gatsby/issues/33062) ([8901eb2](https://github.com/gatsbyjs/gatsby/commit/8901eb2afe46791a654f0ef67828a12c577b3f2a))
+- update dependency async to ^3.2.1 for gatsby-plugin-sharp [#32983](https://github.com/gatsbyjs/gatsby/issues/32983) ([6857e26](https://github.com/gatsbyjs/gatsby/commit/6857e26ea6d564b60fed95d01be2f7bae881776f))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- update semver [#32979](https://github.com/gatsbyjs/gatsby/issues/32979) ([ecf1fa7](https://github.com/gatsbyjs/gatsby/commit/ecf1fa7ef10a60e7631a8f8fad8a33c1d0acaad6))
+- upgrade got package [#32928](https://github.com/gatsbyjs/gatsby/issues/32928) ([2ac366e](https://github.com/gatsbyjs/gatsby/commit/2ac366e3745990d47c01f19875f185d0355c89b5))
+- update fs-extra (major) [#32654](https://github.com/gatsbyjs/gatsby/issues/32654) ([eea2687](https://github.com/gatsbyjs/gatsby/commit/eea26873f386d02f27c1708291da0c56585663eb))
+
+#### Other Changes
+
+- Revert "chore(release): Publish next" ([a0c4d44](https://github.com/gatsbyjs/gatsby/commit/a0c4d44488ce00c8917b4d364e4369d337fdcfd9))
+
 ## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@3.13.0/packages/gatsby-plugin-sharp) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
