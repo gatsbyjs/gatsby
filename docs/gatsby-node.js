@@ -1,14 +1,110 @@
-const docs = require('./src/docs-util')
+const path = require('path')
+const { createFilePath } = require('gatsby-source-filesystem')
+const { createPath } = require('gatsby-page-utils')
 
 exports.sourceNodes = ({ actions }) => {
-  const { createTypes } = actions
+  actions.createTypes(/* GraphQL */ `
+    type Mdx implements Node {
+      frontmatter: MdxFrontmatter
+      fields: MdxFields
+    }
+    type MDXFrontmatterExample @dontInfer {
+      label: String!
+      href: String!
+    }
+    type MdxFrontmatter @dontInfer {
+      title: String!
+      examples: [MDXFrontmatterExample]
+      subtitle: String
+      description: String
+      contentsHeading: String
+      showTopLevelSignatures: Boolean
+      disableTableOfContents: Boolean
+      tableOfContentsDepth: Int
+      overview: Boolean
+      issue: String
+      jsdoc: [String!]
+      apiCalls: String
+      redirects: [String]
+      snippet: Boolean
+    }
+    type MdxFields @dontInfer {
+      slug: String
+      anchor: String
+      section: String
+      locale: String
+      released: Boolean
+      # ossDoc: Boolean
+      relPath: String
+    }
 
-  docs.sourceNodes({ actions: { createTypes } })
+    ## TODO make this work
+    ## type File implements Node {
+    ##   childrenDocumentationJs: DocumentationJs
+    ##   fields: FileFields
+    ## }
+
+    # Added by gatsby-transformer-gitinfo
+    # TODO add these back upstream
+    type FileFields {
+      gitLogLatestDate: Date @dateformat
+      gitLogLatestAuthorName: String
+      gitLogLatestAuthorEmail: String
+    }
+    type DocumentationJSComponentDescription implements Node {
+      childMdx: Mdx
+    }
+    type GatsbyAPICall implements Node @derivedTypes @dontInfer {
+      name: String
+      file: String
+      group: String
+      codeLocation: GatsbyAPICallCodeLocation
+    }
+    type GatsbyAPICallCodeLocation @dontInfer {
+      filename: Boolean
+      end: GatsbyAPICallEndpoint
+      start: GatsbyAPICallEndpoint
+    }
+    type GatsbyAPICallEndpoint @dontInfer {
+      column: Int
+      line: Int
+    }
+  `)
 }
 
 exports.createResolvers = async ({ createResolvers, reporter }) => {
-  await docs.createResolvers({ createResolvers })
+  /* TODO: JSDoc
+  createResolvers({
+    DocumentationJs: {
+      availableIn: {
+        type: `[String]`,
+        resolve(source) {
+          const { tags } = source
+          if (!tags || !tags.length) {
+            return []
+          }
+
+          const availableIn = tags.find(tag => tag.title === `availableIn`)
+          if (availableIn) {
+            return availableIn.description
+              .split(`\n`)[0]
+              .replace(/[[\]]/g, ``)
+              .split(`,`)
+              .map(api => api.trim())
+          }
+
+          return []
+        },
+      },
+    },
+  })
+  */
 }
+
+const slugToAnchor = slug => slug
+  .split(`/`) // split on dir separators
+  .filter(item => item !== ``) // remove empty values
+  .pop() // take last item
 
 exports.onCreateNode = async ({
   node,
@@ -20,56 +116,28 @@ exports.onCreateNode = async ({
 }) => {
   const { createNodeField, createNode, createParentChildLink } = actions
 
-  const slug =
-    node.internal.type === `Mdx` &&
-    getNode(node.parent).sourceInstanceName === `docs`
-      ? createFilePath({
-          node,
-          getNode,
-        })
-      : node.slug
+  if (node.internal.type !== 'Mdx') return
+  const slug = createFilePath({ node, getNode })
 
-  // assign fields to MDX nodes based on where they came from
-  if (
-    node.internal.type === `Mdx` &&
-    getNode(node.parent).sourceInstanceName === `gatsbyjs`
-  ) {
-    const relPath = getNode(node.parent).relativePath
-    createNodeField({
-      node,
-      name: `relPath`,
-      value: relPath,
-    })
-
-    // TODO
-    let ossSlug = createPath(relPath)
-    ossSlug = ossSlug.slice(5)
-
-    createNodeField({
-      node,
-      name: `slug`,
-      value: ossSlug,
-    })
-    createNodeField({
-      node,
-      name: `ossDoc`,
-      value: true,
-    })
-  }
-
-  await docs.onCreateNode({
+  const relPath = getNode(node.parent).relativePath
+  createNodeField({
     node,
-    actions: { createNode, createParentChildLink, createNodeField },
-    getNode,
-    loadNodeContent,
-    createNodeId,
-    createContentDigest,
+    name: `relPath`,
+    value: relPath,
   })
+
+  let ossSlug = createPath(relPath)
+
+  createNodeField({
+    node,
+    name: `slug`,
+    value: ossSlug,
+  })
+
+  if (!slug) return
+  const section = slug.split(`/`)[1]
+
+  createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
+  createNodeField({ node, name: `section`, value: section })
 }
 
-exports.createPages = async ({
-  graphql,
-  actions: { createPage, createRedirect },
-}) => {
-  await docs.createPages({ graphql, actions: { createPage } })
-}
