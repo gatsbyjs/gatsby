@@ -1,6 +1,6 @@
 import webpackHotMiddleware from "@gatsbyjs/webpack-hot-middleware"
 import webpackDevMiddleware from "webpack-dev-middleware"
-import got from "got"
+import got, { Method } from "got"
 import webpack from "webpack"
 import express from "express"
 import compression from "compression"
@@ -19,6 +19,7 @@ import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
 import { codeFrameColumns } from "@babel/code-frame"
+import uuidv4 from "uuid/v4"
 
 import { withBasePath } from "../utils/path"
 import webpackConfig from "../utils/webpack.config"
@@ -52,6 +53,8 @@ import {
   writeVirtualLoadingIndicatorModule,
 } from "./loading-indicator"
 import { renderDevHTML } from "./dev-ssr/render-dev-html"
+import { getServerData, IServerData } from "./get-server-data"
+import { ROUTES_DIRECTORY } from "../constants"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -76,6 +79,11 @@ export async function startServer(
   workerPool: WorkerPool.GatsbyWorkerPool = WorkerPool.create()
 ): Promise<IServer> {
   const directory = program.directory
+  const PAGE_RENDERER_PATH = path.join(
+    program.directory,
+    ROUTES_DIRECTORY,
+    `render-page.js`
+  )
 
   const webpackActivity = report.activityTimer(`Building development bundle`, {
     id: `webpack-develop`,
@@ -160,9 +168,11 @@ module.exports = {
   const devConfig = await webpackConfig(
     program,
     directory,
-    `develop`,
+    Stage.Develop,
     program.port,
-    { parentSpan: webpackActivity.span }
+    {
+      parentSpan: webpackActivity.span,
+    }
   )
 
   const compiler = webpack(devConfig)
@@ -259,6 +269,8 @@ module.exports = {
     req: express.Request,
     pluginName?: string
   ): Promise<void> => {
+    global.__GATSBY.buildId = uuidv4()
+
     emitter.emit(`WEBHOOK_RECEIVED`, {
       webhookBody: req.body,
       pluginName,
@@ -296,6 +308,14 @@ module.exports = {
     res.end()
   })
 
+  const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
+    publicPath: devConfig.output.publicPath,
+    stats: `errors-only`,
+    serverSideRender: true,
+  })
+
+  app.use(webpackDevMiddlewareInstance)
+
   app.get(
     `/page-data/:pagePath(*)/page-data.json`,
     async (req, res, next): Promise<void> => {
@@ -310,7 +330,22 @@ module.exports = {
 
       if (page) {
         try {
+          let serverDataPromise: Promise<IServerData> = Promise.resolve({})
+
+          if (page.mode === `SSR`) {
+            const renderer = require(PAGE_RENDERER_PATH)
+            const componentInstance = await renderer.getPageChunk(page)
+
+            serverDataPromise = getServerData(
+              req,
+              page,
+              potentialPagePath,
+              componentInstance
+            )
+          }
+
           let pageData: IPageDataWithQueryResult
+          // TODO move to query-engine
           if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
             const start = Date.now()
 
@@ -325,6 +360,13 @@ module.exports = {
               path.join(store.getState().program.directory, `public`),
               page.path
             )
+          }
+
+          if (page.mode === `SSR`) {
+            const { props } = await serverDataPromise
+
+            pageData.result.serverData = props
+            pageData.path = `/${requestedPagePath}`
           }
 
           res.status(200).send(pageData)
@@ -342,20 +384,6 @@ module.exports = {
       })
     }
   )
-
-  // Disable directory indexing i.e. serving index.html from a directory.
-  // This can lead to serving stale html files during development.
-  //
-  // We serve by default an empty index.html that sets up the dev environment.
-  app.use(developStatic(`public`, { index: false }))
-
-  const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
-    publicPath: devConfig.output.publicPath,
-    stats: `errors-only`,
-    serverSideRender: true,
-  })
-
-  app.use(webpackDevMiddlewareInstance)
 
   app.get(`/__original-stack-frame`, async (req, res) => {
     const compilation = res.locals?.webpack?.devMiddleware?.stats?.compilation
@@ -446,6 +474,12 @@ module.exports = {
     developMiddleware(app, program)
   }
 
+  // Disable directory indexing i.e. serving index.html from a directory.
+  // This can lead to serving stale html files during development.
+  //
+  // We serve by default an empty index.html that sets up the dev environment.
+  app.use(developStatic(`public`, { index: false }))
+
   // Set up API proxy.
   const { proxy } = store.getState().config
   if (proxy) {
@@ -461,7 +495,11 @@ module.exports = {
         req
           .pipe(
             got
-              .stream(proxiedUrl, { headers, method, decompress: false })
+              .stream(proxiedUrl, {
+                headers,
+                method: method as Method,
+                decompress: false,
+              })
               .on(`response`, response =>
                 res.writeHead(response.statusCode || 200, response.headers)
               )
@@ -513,7 +551,7 @@ module.exports = {
           page: pathObj,
           skipSsr: req.query[`skip-ssr`] || false,
           store,
-          htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+          htmlComponentRendererPath: PAGE_RENDERER_PATH,
           directory: program.directory,
         })
         res.status(200).send(renderResponse)
@@ -582,7 +620,7 @@ module.exports = {
             skipSsr: true,
             store,
             error: message,
-            htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+            htmlComponentRendererPath: PAGE_RENDERER_PATH,
             directory: program.directory,
           })
 

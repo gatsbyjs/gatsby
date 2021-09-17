@@ -80,6 +80,11 @@ const openDebuggerPort = (debugInfo: IDebugInfo): void => {
 }
 
 module.exports = async (program: IDevelopArgs): Promise<void> => {
+  // provide global Gatsby object
+  global.__GATSBY = process.env.GATSBY_NODE_GLOBALS
+    ? JSON.parse(process.env.GATSBY_NODE_GLOBALS)
+    : {}
+
   if (isTruthy(process.env.VERBOSE)) {
     program.verbose = true
   }
@@ -101,7 +106,9 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     process.exit(0)
   })
 
-  initTracer(program.openTracingConfigFile)
+  initTracer(
+    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
+  )
   markWebpackStatusAsPending()
   reporter.pendingActivity({ id: `webpack-develop` })
   telemetry.trackCli(`DEVELOP_START`)

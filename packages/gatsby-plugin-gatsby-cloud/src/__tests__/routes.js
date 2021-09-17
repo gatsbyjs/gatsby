@@ -20,8 +20,8 @@ describe(`Routes IPC`, () => {
 
     const pages = new Map()
 
-    pages.set(`/`, { mode: `DSR`, path: `/` })
-    pages.set(`/path/1/`, { mode: `DSR`, path: `/path/1` })
+    pages.set(`/`, { mode: `DSG`, path: `/` })
+    pages.set(`/path/1/`, { mode: `DSG`, path: `/path/1` })
     pages.set(`/path/2/`, { mode: `SSR`, path: `/path/2` })
     pages.set(`/path/3/`, { mode: `SSG`, path: `/path/3` })
 
@@ -64,111 +64,79 @@ describe(`Routes IPC`, () => {
     )
 
     if (os.platform() !== `win32`) {
-      expect(process.send).toHaveBeenCalledWith({
-        type: `LOG_ACTION`,
-        action: {
-          type: `CREATE_ROUTE`,
-          payload: {
-            routes: {
-              "index.html": `DSR`,
-              "page-data/index/page-data.json": `DSR`,
+      expect(process.send).toHaveBeenCalledWith(
+        {
+          type: `LOG_ACTION`,
+          action: {
+            type: `CREATE_ROUTE`,
+            payload: {
+              routes: {
+                "index.html": `DSG`,
+                "page-data/index/page-data.json": `DSG`,
+                "path/1/index.html": `DSG`,
+                "page-data/path/1/page-data.json": `DSG`,
+                "path/2/index.html": `SSR`,
+                "page-data/path/2/page-data.json": `SSR`,
+              },
             },
           },
         },
-      })
+        expect.any(Function)
+      )
 
-      expect(process.send).toHaveBeenCalledWith({
-        type: `LOG_ACTION`,
-        action: {
-          type: `CREATE_ROUTE`,
-          payload: {
-            routes: {
-              "path/1/index.html": `DSR`,
-              "page-data/path/1/page-data.json": `DSR`,
+      expect(process.send).not.toHaveBeenCalledWith(
+        {
+          type: `LOG_ACTION`,
+          action: {
+            type: `CREATE_ROUTE`,
+            payload: {
+              routes: {
+                "path/3/index.html": `SSG`,
+                "page-data/path/3/page-data.json": `SSG`,
+              },
             },
           },
         },
-      })
-
-      expect(process.send).toHaveBeenCalledWith({
-        type: `LOG_ACTION`,
-        action: {
-          type: `CREATE_ROUTE`,
-          payload: {
-            routes: {
-              "path/2/index.html": `SSR`,
-              "page-data/path/2/page-data.json": `SSR`,
-            },
-          },
-        },
-      })
-
-      expect(process.send).not.toHaveBeenCalledWith({
-        type: `LOG_ACTION`,
-        action: {
-          type: `CREATE_ROUTE`,
-          payload: {
-            routes: {
-              "path/3/index.html": `SSG`,
-              "page-data/path/3/page-data.json": `SSG`,
-            },
-          },
-        },
-      })
+        expect.any(Function)
+      )
     }
 
     if (os.platform() === `win32`) {
-      expect(process.send).toHaveBeenCalledWith({
-        type: `LOG_ACTION`,
-        action: {
-          type: `CREATE_ROUTE`,
-          payload: {
-            routes: {
-              "index.html": `DSR`,
-              "page-data\\index\\page-data.json": `DSR`,
+      expect(process.send).toHaveBeenCalledWith(
+        {
+          type: `LOG_ACTION`,
+          action: {
+            type: `CREATE_ROUTE`,
+            payload: {
+              routes: {
+                "index.html": `DSG`,
+                "page-data\\index\\page-data.json": `DSG`,
+                "path\\1\\index.html": `DSG`,
+                "page-data\\path\\1\\page-data.json": `DSG`,
+                "path\\2\\index.html": `SSR`,
+                "page-data\\path\\2\\page-data.json": `SSR`,
+              },
             },
           },
         },
-      })
+        expect.any(Function)
+      )
 
-      expect(process.send).toHaveBeenCalledWith({
-        type: `LOG_ACTION`,
-        action: {
-          type: `CREATE_ROUTE`,
-          payload: {
-            routes: {
-              "path\\1\\index.html": `DSR`,
-              "page-data\\path\\1\\page-data.json": `DSR`,
+      expect(process.send).not.toHaveBeenCalledWith(
+        {
+          type: `LOG_ACTION`,
+          action: {
+            type: `CREATE_ROUTE`,
+            payload: {
+              routes: {
+                "path\\3\\index.html": `SSG`,
+                "page-data\\path\\3\\page-data.json": `SSG`,
+              },
             },
           },
         },
-      })
-
-      expect(process.send).toHaveBeenCalledWith({
-        type: `LOG_ACTION`,
-        action: {
-          type: `CREATE_ROUTE`,
-          payload: {
-            routes: {
-              "path\\2\\index.html": `SSR`,
-              "page-data\\path\\2\\page-data.json": `SSR`,
-            },
-          },
-        },
-      })
-
-      expect(process.send).not.toHaveBeenCalledWith({
-        type: `LOG_ACTION`,
-        action: {
-          type: `CREATE_ROUTE`,
-          payload: {
-            routes: {
-              "path\\3\\index.html": `SSG`,
-              "page-data\\path\\3\\page-data.json": `SSG`,
-            },
-          },
-        },
-      })
+        expect.any(Function)
+      )
     }
   })
 })

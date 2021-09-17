@@ -10,5 +10,6 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "typeRoots": ["../../types", "**/node_modules/@types", "node_modules/@types"]
 }

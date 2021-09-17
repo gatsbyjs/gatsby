@@ -71,8 +71,8 @@ function joiKeysToMD({
       (value.meta && value.meta.find(meta => `default` in meta))
     ) {
       const defaultValue =
-        (value.meta.find(meta => `default` in meta) || {}).default ||
-        value.flags.default
+        ((value.meta && value.meta.find(meta => `default` in meta)) || {})
+          .default || value.flags.default
 
       let printedValue
 

@@ -84,6 +84,7 @@ describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
       }
     } catch (e) {
       console.info(`Threw errors while mutating or unmutating WordPress`)
+      console.error(e.stack)
       await new Promise(resolve => setTimeout(resolve, 1000))
       process.exit(1)
     }
