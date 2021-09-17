@@ -88,11 +88,6 @@ For example, to filter locales on only germany \`localeFilter: locale => locale.
 List of locales and their codes can be found in Contentful app -> Settings -> Locales`
         )
         .default(() => () => true),
-      forceFullSync: Joi.boolean()
-        .description(
-          `Prevents the use of sync tokens when accessing the Contentful API.`
-        )
-        .default(false),
       pageLimit: Joi.number()
         .integer()
         .description(
@@ -117,6 +112,11 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
         .description(
           `Axios proxy configuration. See the [axios request config documentation](https://github.com/mzabriskie/axios#request-config) for further information about the supported values.`
         ),
+      enableTags: Joi.boolean()
+        .description(
+          `Enable the new tags feature. This will disallow the content type name "tags" till the next major version of this plugin.`
+        )
+        .default(false),
       useNameForId: Joi.boolean()
         .description(
           `Use the content's \`name\` when generating the GraphQL schema e.g. a Content Type called \`[Component] Navigation bar\` will be named \`contentfulComponentNavigationBar\`.
@@ -125,11 +125,6 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
     Using the ID is a much more stable property to work with as it will change less often. However, in some scenarios, Content Types' IDs will be auto-generated (e.g. when creating a new Content Type without specifying an ID) which means the name in the GraphQL schema will be something like \`contentfulC6XwpTaSiiI2Ak2Ww0oi6qa\`. This won't change and will still function perfectly as a valid field name but it is obviously pretty ugly to work with.
 
     If you are confident your Content Types will have natural-language IDs (e.g. \`blogPost\`), then you should set this option to \`false\`. If you are unable to ensure this, then you should leave this option set to \`true\` (the default).`
-        )
-        .default(true),
-      enableTags: Joi.boolean()
-        .description(
-          `Enable the new tags feature. This will disallow the content type name "tags" till the next major version of this plugin.`
         )
         .default(true),
       contentfulClientConfig: Joi.object()

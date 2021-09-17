@@ -9,7 +9,6 @@ const defaultOptions = {
   environment: `master`,
   downloadLocal: false,
   localeFilter: () => true,
-  forceFullSync: false,
   pageLimit: DEFAULT_PAGE_LIMIT,
   useNameForId: true,
   enableTags: false,
