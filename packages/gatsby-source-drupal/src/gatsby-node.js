@@ -67,12 +67,12 @@ async function worker([url, options]) {
     ...options,
   })
 
-  httpSpan.setTag(SemanticAttributes.HTTP_STATUS_CODE, response.statusCode)
+  httpSpan.setTag(SemanticAttributes.HTTP_STATUS_CODE, response?.statusCode)
   httpSpan.setTag(SemanticAttributes.HTTP_METHOD, `GET`)
-  httpSpan.setTag(SemanticAttributes.NET_PEER_IP, response.ip)
+  httpSpan.setTag(SemanticAttributes.NET_PEER_IP, response?.ip)
   httpSpan.setTag(
     SemanticAttributes.HTTP_RESPONSE_CONTENT_LENGTH,
-    response.rawBody?.length
+    response?.rawBody?.length
   )
 
   httpSpan.finish()
