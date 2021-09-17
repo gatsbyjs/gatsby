@@ -18,10 +18,6 @@ const restrictedContentTypeFixture = require(`../__fixtures__/restricted-content
 
 const defaultPluginOptions = { spaceId: `testSpaceId` }
 
-fetchContentTypes.mockImplementation(() =>
-  startersBlogFixture.contentTypeItems()
-)
-
 const createMockCache = () => {
   const actualCacheMap = new Map()
   return {
@@ -66,7 +62,7 @@ describe(`gatsby-node`, () => {
     await gatsbyNode.onPreBootstrap({ store })
 
     await gatsbyNode.createSchemaCustomization(
-      { schema, actions, cache, reporter },
+      { schema, actions, reporter },
       pluginOptions
     )
 
@@ -293,6 +289,7 @@ describe(`gatsby-node`, () => {
   beforeEach(() => {
     fetchContent.mockClear()
     fetchContentTypes.mockClear()
+    fetchContentTypes.mockImplementation(startersBlogFixture.contentTypeItems)
     currentNodeMap = new Map()
     actions.createNode = jest.fn(async node => {
       node.internal.owner = `gatsby-source-contentful`
@@ -341,9 +338,6 @@ describe(`gatsby-node`, () => {
           "contentful-sync-token-testSpaceId-master",
         ],
         Array [
-          "contentful-content-types-testSpaceId-master",
-        ],
-        Array [
           "contentful-sync-data-testSpaceId-master",
         ],
       ]
@@ -370,7 +364,6 @@ describe(`gatsby-node`, () => {
 
     expect(cache.set.mock.calls.map(v => v[0])).toMatchInlineSnapshot(`
       Array [
-        "contentful-content-types-testSpaceId-master",
         "contentful-sync-data-testSpaceId-master",
         "contentful-sync-token-testSpaceId-master",
       ]
@@ -581,7 +574,7 @@ describe(`gatsby-node`, () => {
 
   it(`stores rich text as raw with references attached`, async () => {
     fetchContent.mockImplementationOnce(richTextFixture.initialSync)
-    fetchContentTypes.mockImplementationOnce(richTextFixture.contentTypeItems)
+    fetchContentTypes.mockImplementation(richTextFixture.contentTypeItems)
 
     // initial sync
     await simulateGatsbyBuild()
@@ -624,7 +617,7 @@ describe(`gatsby-node`, () => {
     fetchContent.mockImplementationOnce(
       restrictedContentTypeFixture.initialSync
     )
-    fetchContentTypes.mockImplementationOnce(
+    fetchContentTypes.mockImplementation(
       restrictedContentTypeFixture.contentTypeItems
     )
 
