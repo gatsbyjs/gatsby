@@ -134,10 +134,84 @@ function createContentfulClientOptions({
   return contentfulClientOptions
 }
 
+function handleContentfulError({
+  e,
+  reporter,
+  contentfulClientOptions,
+  pluginConfig,
+}) {
+  let details
+  let errors
+  if (e.code === `ENOTFOUND`) {
+    details = `You seem to be offline`
+  } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
+    reporter.panic({
+      id: CODES.SelfSignedCertificate,
+      context: {
+        sourceMessage: `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
+      },
+    })
+  } else if (e.responseData) {
+    if (
+      e.responseData.status === 404 &&
+      contentfulClientOptions.environment &&
+      contentfulClientOptions.environment !== `master`
+    ) {
+      // environments need to have access to master
+      details = `Unable to access your space. Check if ${chalk.yellow(
+        `environment`
+      )} is correct and your ${chalk.yellow(
+        `accessToken`
+      )} has access to the ${chalk.yellow(
+        contentfulClientOptions.environment
+      )} and the ${chalk.yellow(`master`)} environments.`
+      errors = {
+        accessToken: `Check if setting is correct`,
+        environment: `Check if setting is correct`,
+      }
+    } else if (e.responseData.status === 404) {
+      // host and space used to generate url
+      details = `Endpoint not found. Check if ${chalk.yellow(
+        `host`
+      )} and ${chalk.yellow(`spaceId`)} settings are correct`
+      errors = {
+        host: `Check if setting is correct`,
+        spaceId: `Check if setting is correct`,
+      }
+    } else if (e.responseData.status === 401) {
+      // authorization error
+      details = `Authorization error. Check if ${chalk.yellow(
+        `accessToken`
+      )} and ${chalk.yellow(`environment`)} are correct`
+      errors = {
+        accessToken: `Check if setting is correct`,
+        environment: `Check if setting is correct`,
+      }
+    }
+  }
+
+  reporter.panic({
+    context: {
+      sourceMessage: `Accessing your Contentful space failed: ${createContentfulErrorMessage(
+        e
+      )}
+
+Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
+${details ? `\n${details}\n` : ``}
+Used options:
+${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
+    },
+  })
+}
+
+/**
+ * Fetches:
+ * * Locales with default locale
+ * * Entries and assets
+ * * Tags
+ */
 async function fetchContent({ syncToken, pluginConfig, reporter }) {
-  // Fetch articles.
-  let syncProgress
-  const pageLimit = pluginConfig.get(`pageLimit`)
+  // Fetch locales and check connectivity
   const contentfulClientOptions = createContentfulClientOptions({
     pluginConfig,
     reporter,
@@ -146,8 +220,6 @@ async function fetchContent({ syncToken, pluginConfig, reporter }) {
 
   // The sync API puts the locale in all fields in this format { fieldName:
   // {'locale': value} } so we need to get the space and its default local.
-  //
-  // We'll extend this soon to support multiple locales.
   let space
   let locales
   let defaultLocale = `en-US`
@@ -160,69 +232,17 @@ async function fetchContent({ syncToken, pluginConfig, reporter }) {
       `Default locale is: ${defaultLocale}. There are ${locales.length} locales in total.`
     )
   } catch (e) {
-    let details
-    let errors
-    if (e.code === `ENOTFOUND`) {
-      details = `You seem to be offline`
-    } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
-      reporter.panic({
-        id: CODES.SelfSignedCertificate,
-        context: {
-          sourceMessage: `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
-        },
-      })
-    } else if (e.responseData) {
-      if (
-        e.responseData.status === 404 &&
-        contentfulClientOptions.environment &&
-        contentfulClientOptions.environment !== `master`
-      ) {
-        // environments need to have access to master
-        details = `Unable to access your space. Check if ${chalk.yellow(
-          `environment`
-        )} is correct and your ${chalk.yellow(
-          `accessToken`
-        )} has access to the ${chalk.yellow(
-          contentfulClientOptions.environment
-        )} and the ${chalk.yellow(`master`)} environments.`
-        errors = {
-          accessToken: `Check if setting is correct`,
-          environment: `Check if setting is correct`,
-        }
-      } else if (e.responseData.status === 404) {
-        // host and space used to generate url
-        details = `Endpoint not found. Check if ${chalk.yellow(
-          `host`
-        )} and ${chalk.yellow(`spaceId`)} settings are correct`
-        errors = {
-          host: `Check if setting is correct`,
-          spaceId: `Check if setting is correct`,
-        }
-      } else if (e.responseData.status === 401) {
-        // authorization error
-        details = `Authorization error. Check if ${chalk.yellow(
-          `accessToken`
-        )} and ${chalk.yellow(`environment`)} are correct`
-        errors = {
-          accessToken: `Check if setting is correct`,
-          environment: `Check if setting is correct`,
-        }
-      }
-    }
-
-    reporter.panic({
-      context: {
-        sourceMessage: `Accessing your Contentful space failed: ${createContentfulErrorMessage(
-          e
-        )}
-
-Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
-${details ? `\n${details}\n` : ``}
-Used options:
-${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
-      },
+    handleContentfulError({
+      e,
+      reporter,
+      contentfulClientOptions,
+      pluginConfig,
     })
   }
+
+  // Fetch entries and assets via Contentful CDA sync API
+  let syncProgress
+  const pageLimit = pluginConfig.get(`pageLimit`)
 
   let currentSyncData
   let currentPageLimit = pageLimit
@@ -319,6 +339,10 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
 
 module.exports.fetchContent = fetchContent
 
+/**
+ * Fetches:
+ * * Content types
+ */
 async function fetchContentTypes({ pluginConfig, reporter }) {
   const contentfulClientOptions = createContentfulClientOptions({
     pluginConfig,
@@ -353,68 +377,7 @@ async function fetchContentTypes({ pluginConfig, reporter }) {
 
     contentTypes = contentTypes.items
   } catch (e) {
-    let details
-    let errors
-    if (e.code === `ENOTFOUND`) {
-      details = `You seem to be offline`
-    } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
-      reporter.panic({
-        id: CODES.SelfSignedCertificate,
-        context: {
-          sourceMessage: `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
-        },
-      })
-    } else if (e.responseData) {
-      if (
-        e.responseData.status === 404 &&
-        contentfulClientOptions.environment &&
-        contentfulClientOptions.environment !== `master`
-      ) {
-        // environments need to have access to master
-        details = `Unable to access your space. Check if ${chalk.yellow(
-          `environment`
-        )} is correct and your ${chalk.yellow(
-          `accessToken`
-        )} has access to the ${chalk.yellow(
-          contentfulClientOptions.environment
-        )} and the ${chalk.yellow(`master`)} environments.`
-        errors = {
-          accessToken: `Check if setting is correct`,
-          environment: `Check if setting is correct`,
-        }
-      } else if (e.responseData.status === 404) {
-        // host and space used to generate url
-        details = `Endpoint not found. Check if ${chalk.yellow(
-          `host`
-        )} and ${chalk.yellow(`spaceId`)} settings are correct`
-        errors = {
-          host: `Check if setting is correct`,
-          spaceId: `Check if setting is correct`,
-        }
-      } else if (e.responseData.status === 401) {
-        // authorization error
-        details = `Authorization error. Check if ${chalk.yellow(
-          `accessToken`
-        )} and ${chalk.yellow(`environment`)} are correct`
-        errors = {
-          accessToken: `Check if setting is correct`,
-          environment: `Check if setting is correct`,
-        }
-      }
-    }
-
-    reporter.panic({
-      context: {
-        sourceMessage: `Accessing your Contentful space failed: ${createContentfulErrorMessage(
-          e
-        )}
-
-Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
-${details ? `\n${details}\n` : ``}
-Used options:
-${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
-      },
-    })
+    handleContentfulError(e)
   }
 
   return contentTypes
