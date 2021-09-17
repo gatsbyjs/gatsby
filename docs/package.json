@@ -1,0 +1,41 @@
+{
+  "name": "gatsby-theme-official-docs",
+  "version": "0.1.0",
+  "description": "Gatsby theme for rendering the docs section of gatsbyjs.com",
+  "main": "index.js",
+  "scripts": {
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@mdx-js/mdx": "^1.6.22",
+    "@mdx-js/react": "^1.6.22",
+    "gatsby-alias-imports": "^1.0.6",
+    "gatsby-interface": "^0.0.270",
+    "gatsby-plugin-mdx": "^2.13.0",
+    "gatsby-plugin-sharp": "^3.13.0",
+    "gatsby-remark-autolink-headers": "^4.10.0",
+    "gatsby-remark-copy-linked-files": "^4.10.0",
+    "gatsby-remark-embed-video": "^3.1.1",
+    "gatsby-remark-images": "^5.10.0",
+    "gatsby-remark-responsive-iframe": "^4.10.0",
+    "gatsby-remark-smartypants": "^4.10.0",
+    "gatsby-source-filesystem": "^3.13.0",
+    "lodash": "^4.17.21",
+    "minimatch": "^3.0.4"
+  },
+  "devDependencies": {
+    "gatsby": "^3.13.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "peerDependencies": {
+    "gatsby": "^3.13.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}
