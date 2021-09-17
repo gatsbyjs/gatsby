@@ -15,7 +15,7 @@ Welcome to `gatsby@3.14.0` release (September 2021 #1)
 Key highlights of this release:
 
 - [Better UX for navigation in the middle of deployment](#better-ux-for-navigation-in-the-middle-of-deployment)
-- [Improved developer tools](#improved-developer-tools) - `createPages` snippet in GraphiQL and new GraphQL capability
+- [New developer tools](#new-developer-tools) - `createPages` snippet in GraphiQL and new GraphQL capability
 - [Preparations for gatsby v4](#preparations-for-gatsby-v4) - API deprecations; migration guide; docs
 - [Improvements for `gatsby-source-drupal`](#gatsby-source-drupal-improvements)
 - [New home for `gatsby-plugin-netlify`](#new-home-for-gatsby-plugin-netlify)
@@ -48,7 +48,7 @@ This problem is now addressed in Gatsby automatically. Once we spot this error, 
 This was one of the most [upvoted issues](https://github.com/gatsbyjs/gatsby/issues/18866) in our repo.
 See [PR #33032](https://github.com/gatsbyjs/gatsby/pull/33032) for details.
 
-## Improved developer tools
+## New developer tools
 
 ### `createPages` snippet in GraphiQL
 
