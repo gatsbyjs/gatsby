@@ -122,7 +122,7 @@ const handleDeletedNode = async ({
       createNodeIdWithVersion(
         node.id,
         node.type,
-        getOptions().languageConfig ? node.attributes.langcode : `und`,
+        getOptions().languageConfig ? node.attributes?.langcode : `und`,
         node.attributes?.drupal_internal__revision_id,
         entityReferenceRevisions
       )
@@ -209,9 +209,9 @@ const handleWebhookUpdate = async (
   },
   pluginOptions = {}
 ) => {
-  if (!nodeToUpdate || !nodeToUpdate.attributes) {
+  if (!nodeToUpdate) {
     reporter.warn(
-      `The updated node was empty or is missing the required attributes field. The fact you're seeing this warning means there's probably a bug in how we're creating and processing updates from Drupal.
+      `The updated node was empty. The fact you're seeing this warning means there's probably a bug in how we're creating and processing updates from Drupal.
 
 ${JSON.stringify(nodeToUpdate, null, 4)}
       `

@@ -176,9 +176,7 @@ exports.sourceNodes = async (
         reporter.warn(
           `The webhook body was malformed
 
-${JSON.stringify(webhookBody, null, 4)}
-
-          `
+${JSON.stringify(webhookBody, null, 4)}`
         )
 
         changesActivity.end()
