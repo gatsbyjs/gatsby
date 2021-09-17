@@ -8,7 +8,7 @@ jest.mock(`gatsby-core-utils`, () => {
 })
 
 const gatsbyNode = require(`../gatsby-node`)
-const fetch = require(`../fetch`)
+const { fetchContent, fetchContentTypes } = require(`../fetch`)
 const normalize = require(`../normalize`)
 const _ = require(`lodash`)
 
@@ -17,6 +17,10 @@ const richTextFixture = require(`../__fixtures__/rich-text-data`)
 const restrictedContentTypeFixture = require(`../__fixtures__/restricted-content-type`)
 
 const defaultPluginOptions = { spaceId: `testSpaceId` }
+
+fetchContentTypes.mockImplementation(() =>
+  startersBlogFixture.contentTypeItems()
+)
 
 const createMockCache = () => {
   const actualCacheMap = new Map()
@@ -51,6 +55,7 @@ describe(`gatsby-node`, () => {
   let currentNodeMap
   const getNodes = () => Array.from(currentNodeMap.values())
   const getNode = id => currentNodeMap.get(id)
+  const getNodesByType = jest.fn()
 
   const getFieldValue = (value, locale, defaultLocale) =>
     value[locale] ?? value[defaultLocale]
@@ -58,27 +63,25 @@ describe(`gatsby-node`, () => {
   const simulateGatsbyBuild = async function (
     pluginOptions = defaultPluginOptions
   ) {
-    await gatsbyNode.onPreBootstrap(
-      { reporter, cache, parentSpan, store },
-      pluginOptions
-    )
+    await gatsbyNode.onPreBootstrap({ store })
 
     await gatsbyNode.createSchemaCustomization(
-      { schema, actions, cache },
+      { schema, actions, cache, reporter },
       pluginOptions
     )
 
     await gatsbyNode.sourceNodes(
       {
         actions,
-        store,
-        getNodes,
         getNode,
-        reporter,
+        getNodes,
+        getNodesByType,
         createNodeId,
+        store,
         cache,
         getCache,
-        schema,
+        reporter,
+        parentSpan,
       },
       pluginOptions
     )
@@ -288,7 +291,8 @@ describe(`gatsby-node`, () => {
   }
 
   beforeEach(() => {
-    fetch.mockClear()
+    fetchContent.mockClear()
+    fetchContentTypes.mockClear()
     currentNodeMap = new Map()
     actions.createNode = jest.fn(async node => {
       node.internal.owner = `gatsby-source-contentful`
@@ -302,20 +306,20 @@ describe(`gatsby-node`, () => {
     actions.setPluginStatus = jest.fn()
     store.getState.mockClear()
     cache.actualMap.clear()
+    cache.get.mockClear()
+    cache.set.mockClear()
   })
 
   it(`should create nodes from initial payload`, async () => {
-    cache.get.mockClear()
-    cache.set.mockClear()
-    fetch.mockImplementationOnce(startersBlogFixture.initialSync)
+    fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
     const locales = [`en-US`, `nl`]
 
     await simulateGatsbyBuild()
 
-    testIfContentTypesExists(startersBlogFixture.initialSync().contentTypeItems)
+    testIfContentTypesExists(startersBlogFixture.contentTypeItems())
     testIfEntriesExists(
       startersBlogFixture.initialSync().currentSyncData.entries,
-      startersBlogFixture.initialSync().contentTypeItems,
+      startersBlogFixture.contentTypeItems(),
       locales
     )
     testIfAssetsExistsAndMatch(
@@ -337,16 +341,10 @@ describe(`gatsby-node`, () => {
           "contentful-sync-token-testSpaceId-master",
         ],
         Array [
-          "contentful-sync-data-testSpaceId-master",
-        ],
-        Array [
-          "contentful-sync-result-testSpaceId-master",
+          "contentful-content-types-testSpaceId-master",
         ],
         Array [
           "contentful-sync-data-testSpaceId-master",
-        ],
-        Array [
-          "contentful-sync-result-testSpaceId-master",
         ],
       ]
     `)
@@ -356,18 +354,25 @@ describe(`gatsby-node`, () => {
       `contentful-sync-token-testSpaceId-master`,
       startersBlogFixture.initialSync().currentSyncData.nextSyncToken
     )
-    expect(cache.set).toHaveBeenCalledWith(
-      `contentful-sync-data-testSpaceId-master`,
-      {
-        entries: startersBlogFixture.initialSync().currentSyncData.entries,
-        assets: startersBlogFixture.initialSync().currentSyncData.assets,
-      }
+
+    // Check for valid cache data
+    const cacheCall = cache.set.mock.calls.filter(
+      args => args[0] === `contentful-sync-data-testSpaceId-master`
     )
+
+    expect(cacheCall).toBeTruthy()
+    expect(cacheCall[0][1].entries).toHaveLength(
+      startersBlogFixture.initialSync().currentSyncData.entries.length
+    )
+    expect(cacheCall[0][1].assets).toHaveLength(
+      startersBlogFixture.initialSync().currentSyncData.assets.length
+    )
+
     expect(cache.set.mock.calls.map(v => v[0])).toMatchInlineSnapshot(`
       Array [
+        "contentful-content-types-testSpaceId-master",
         "contentful-sync-data-testSpaceId-master",
         "contentful-sync-token-testSpaceId-master",
-        "contentful-sync-result-testSpaceId-master",
       ]
     `)
   })
@@ -375,7 +380,7 @@ describe(`gatsby-node`, () => {
   it(`should add a new blogpost and update linkedNodes`, async () => {
     const locales = [`en-US`, `nl`]
 
-    fetch
+    fetchContent
       .mockImplementationOnce(startersBlogFixture.initialSync)
       .mockImplementationOnce(startersBlogFixture.createBlogPost)
 
@@ -402,12 +407,10 @@ describe(`gatsby-node`, () => {
     // add new blog post
     await simulateGatsbyBuild()
 
-    testIfContentTypesExists(
-      startersBlogFixture.createBlogPost().contentTypeItems
-    )
+    testIfContentTypesExists(startersBlogFixture.contentTypeItems())
     testIfEntriesExists(
       startersBlogFixture.createBlogPost().currentSyncData.entries,
-      startersBlogFixture.createBlogPost().contentTypeItems,
+      startersBlogFixture.contentTypeItems(),
       locales
     )
     testIfAssetsExistsAndMatch(
@@ -424,7 +427,7 @@ describe(`gatsby-node`, () => {
 
   it(`should update a blogpost`, async () => {
     const locales = [`en-US`, `nl`]
-    fetch
+    fetchContent
       .mockImplementationOnce(startersBlogFixture.initialSync)
       .mockImplementationOnce(startersBlogFixture.createBlogPost)
       .mockImplementationOnce(startersBlogFixture.updateBlogPost)
@@ -454,12 +457,10 @@ describe(`gatsby-node`, () => {
     // updated blog post
     await simulateGatsbyBuild()
 
-    testIfContentTypesExists(
-      startersBlogFixture.updateBlogPost().contentTypeItems
-    )
+    testIfContentTypesExists(startersBlogFixture.contentTypeItems())
     testIfEntriesExists(
       startersBlogFixture.updateBlogPost().currentSyncData.entries,
-      startersBlogFixture.updateBlogPost().contentTypeItems,
+      startersBlogFixture.contentTypeItems(),
       locales
     )
     testIfAssetsExistsAndMatch(
@@ -477,7 +478,7 @@ describe(`gatsby-node`, () => {
 
   it(`should remove a blogpost and update linkedNodes`, async () => {
     const locales = [`en-US`, `nl`]
-    fetch
+    fetchContent
       .mockImplementationOnce(startersBlogFixture.initialSync)
       .mockImplementationOnce(startersBlogFixture.createBlogPost)
       .mockImplementationOnce(startersBlogFixture.removeBlogPost)
@@ -514,9 +515,7 @@ describe(`gatsby-node`, () => {
     // remove blog post
     await simulateGatsbyBuild()
 
-    testIfContentTypesExists(
-      startersBlogFixture.removeBlogPost().contentTypeItems
-    )
+    testIfContentTypesExists(startersBlogFixture.contentTypeItems())
     testIfEntriesDeleted(
       startersBlogFixture.removeBlogPost().currentSyncData.assets,
       locales
@@ -531,7 +530,7 @@ describe(`gatsby-node`, () => {
   it(`should remove an asset`, async () => {
     const locales = [`en-US`, `nl`]
 
-    fetch
+    fetchContent
       .mockImplementationOnce(startersBlogFixture.initialSync)
       .mockImplementationOnce(startersBlogFixture.createBlogPost)
       .mockImplementationOnce(startersBlogFixture.removeAsset)
@@ -568,7 +567,7 @@ describe(`gatsby-node`, () => {
     // remove asset
     await simulateGatsbyBuild()
 
-    testIfContentTypesExists(startersBlogFixture.removeAsset().contentTypeItems)
+    testIfContentTypesExists(startersBlogFixture.contentTypeItems())
     testIfEntriesExists(
       startersBlogFixture.removeAsset().currentSyncData.entries,
       startersBlogFixture.removeAsset().contentTypeItems,
@@ -581,7 +580,8 @@ describe(`gatsby-node`, () => {
   })
 
   it(`stores rich text as raw with references attached`, async () => {
-    fetch.mockImplementationOnce(richTextFixture.initialSync)
+    fetchContent.mockImplementationOnce(richTextFixture.initialSync)
+    fetchContentTypes.mockImplementationOnce(richTextFixture.contentTypeItems)
 
     // initial sync
     await simulateGatsbyBuild()
@@ -591,6 +591,7 @@ describe(`gatsby-node`, () => {
     const homeNodes = initNodes.filter(
       ({ contentful_id: id }) => id === `6KpLS2NZyB3KAvDzWf4Ukh`
     )
+    expect(homeNodes).toHaveLength(2)
     homeNodes.forEach(homeNode => {
       expect(homeNode.content.references___NODE).toStrictEqual([
         ...new Set(homeNode.content.references___NODE),
@@ -600,9 +601,7 @@ describe(`gatsby-node`, () => {
   })
 
   it(`panics when localeFilter reduces locale list to 0`, async () => {
-    cache.get.mockClear()
-    cache.set.mockClear()
-    fetch.mockImplementationOnce(startersBlogFixture.initialSync)
+    fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
     const locales = [`en-US`, `nl`]
 
     await simulateGatsbyBuild({
@@ -622,9 +621,12 @@ describe(`gatsby-node`, () => {
   })
 
   it(`panics when response contains restricted content types`, async () => {
-    cache.get.mockClear()
-    cache.set.mockClear()
-    fetch.mockImplementationOnce(restrictedContentTypeFixture.initialSync)
+    fetchContent.mockImplementationOnce(
+      restrictedContentTypeFixture.initialSync
+    )
+    fetchContentTypes.mockImplementationOnce(
+      restrictedContentTypeFixture.contentTypeItems
+    )
 
     await simulateGatsbyBuild()
 

@@ -1,12 +1,15 @@
 // @todo import syntax!
 import _ from "lodash"
-const path = require(`path`)
 const fs = require(`fs-extra`)
-import normalize from "./normalize"
+const v8 = require(`v8`)
 const { createClient } = require(`contentful`)
 
+import normalize from "./normalize"
 const { createPluginConfig } = require(`./plugin-options`)
+const { fetchContent } = require(`./fetch`)
+const { CODES } = require(`./report`)
 import { downloadContentfulAssets } from "./download-contentful-assets"
+import { getFileSystemCachePath } from "./fs-cache"
 
 const conflictFieldPrefix = `contentful`
 
@@ -49,12 +52,12 @@ export async function sourceNodes(
   const { createNode, touchNode, deleteNode } = actions
   const isOnline = require(`is-online`)
   const online = await isOnline()
-  const forceCache = await fs.exists(
-    process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
-  )
+  const { fsForceCache, fsCacheFileExists, fsCacheFilePath } =
+    await getFileSystemCachePath()
+
   if (
     !online &&
-    !forceCache &&
+    !fsForceCache &&
     process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
     process.env.NODE_ENV !== `production`
   ) {
@@ -77,17 +80,191 @@ export async function sourceNodes(
     `environment`
   )}`
 
-  const mergedSyncData = await cache.get(`contentful-sync-data-${sourceId}`)
+  const fetchActivity = reporter.activityTimer(
+    `Contentful: Fetch data (${sourceId})`,
+    {
+      parentSpan,
+    }
+  )
+  fetchActivity.start()
 
-  const {
-    contentTypeItems,
-    locales,
-    space,
-    defaultLocale,
-    tagItems,
-    deletedEntries,
-    deletedAssets,
-  } = await cache.get(`contentful-sync-result-${sourceId}`)
+  let currentSyncData
+  let contentTypeItems
+  let tagItems
+  let defaultLocale
+  let locales
+  let space
+
+  const CACHE_SYNC_TOKEN = `contentful-sync-token-${sourceId}`
+  const CACHE_SYNC_DATA = `contentful-sync-data-${sourceId}`
+  const CACHE_CONTENT_TYPES = `contentful-content-types-${sourceId}`
+
+  /*
+   * Subsequent calls of Contentfuls sync API return only changed data.
+   *
+   * In some cases, especially when using rich-text fields, there can be data
+   * missing from referenced entries. This breaks the reference matching.
+   *
+   * To workround this, we cache the initial sync data and merge it
+   * with all data from subsequent syncs. Afterwards the references get
+   * resolved via the Contentful JS SDK.
+   */
+  const syncToken = await cache.get(CACHE_SYNC_TOKEN)
+
+  // If the cache has data, use it. Otherwise do a remote fetch anyways and prime the cache now.
+  // If present, do NOT contact contentful, skip the round trips entirely
+  if (fsCacheFileExists) {
+    reporter.info(
+      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Skipping remote fetch, using data stored in \`${fsCacheFilePath}\``
+    )
+    const dataCacheBuffer = await fs.readFile(fsCacheFilePath)
+    ;({
+      currentSyncData,
+      contentTypeItems,
+      tagItems,
+      defaultLocale,
+      locales,
+      space,
+    } = v8.deserialize(dataCacheBuffer))
+    console.log({
+      currentSyncData,
+      contentTypeItems,
+      tagItems,
+      defaultLocale,
+      locales,
+      space,
+    })
+  } else {
+    const online = await isOnline()
+
+    // If the user knows they are offline, serve them cached result
+    // For prod builds though always fail if we can't get the latest data
+    if (
+      !online &&
+      process.env.GATSBY_CONTENTFUL_OFFLINE === `true` &&
+      process.env.NODE_ENV !== `production`
+    ) {
+      reporter.info(`Using Contentful Offline cache ⚠️`)
+      reporter.info(
+        `Cache may be invalidated if you edit package.json, gatsby-node.js or gatsby-config.js files`
+      )
+
+      return
+    }
+    if (process.env.GATSBY_CONTENTFUL_OFFLINE) {
+      reporter.info(
+        `Note: \`GATSBY_CONTENTFUL_OFFLINE\` was set but it either was not \`true\`, we _are_ online, or we are in production mode, so the flag is ignored.`
+      )
+    }
+
+    // Actual fetch of data from Contentful
+    ;({ currentSyncData, tagItems, defaultLocale, locales, space } =
+      await fetchContent({ syncToken, pluginConfig, reporter }))
+
+    contentTypeItems = await cache.get(CACHE_CONTENT_TYPES)
+
+    // Write to FS cache if desired
+    if (fsForceCache) {
+      reporter.info(
+        `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Writing v8 serialized glob of remote data to: ` +
+          fsCacheFilePath
+      )
+      await fs.writeFile(
+        fsCacheFilePath,
+        v8.serialize({
+          currentSyncData,
+          contentTypeItems,
+          tagItems,
+          defaultLocale,
+          locales,
+          space,
+        })
+      )
+    }
+  }
+
+  const allLocales = locales
+  locales = locales.filter(pluginConfig.get(`localeFilter`))
+  reporter.verbose(
+    `Default locale: ${defaultLocale}.   All locales: ${allLocales
+      .map(({ code }) => code)
+      .join(`, `)}`
+  )
+  if (allLocales.length !== locales.length) {
+    reporter.verbose(
+      `After plugin.options.localeFilter: ${locales
+        .map(({ code }) => code)
+        .join(`, `)}`
+    )
+  }
+  if (locales.length === 0) {
+    reporter.panic({
+      id: CODES.LocalesMissing,
+      context: {
+        sourceMessage: `Please check if your localeFilter is configured properly. Locales '${allLocales
+          .map(item => item.code)
+          .join(`,`)}' were found but were filtered down to none.`,
+      },
+    })
+  }
+
+  // Create a map of up to date entries and assets
+  function mergeSyncData(previous, current, deletedEntities) {
+    const deleted = new Set(deletedEntities.map(e => e.sys.id))
+    const entryMap = new Map()
+    previous.forEach(e => !deleted.has(e.sys.id) && entryMap.set(e.sys.id, e))
+    current.forEach(e => !deleted.has(e.sys.id) && entryMap.set(e.sys.id, e))
+    return [...entryMap.values()]
+  }
+
+  let previousSyncData = {
+    assets: [],
+    entries: [],
+  }
+  const cachedData = await cache.get(CACHE_SYNC_DATA)
+
+  if (cachedData) {
+    previousSyncData = cachedData
+  }
+
+  const mergedSyncData = {
+    entries: mergeSyncData(
+      previousSyncData.entries,
+      currentSyncData.entries,
+      currentSyncData.deletedEntries
+    ),
+    assets: mergeSyncData(
+      previousSyncData.assets,
+      currentSyncData.assets,
+      currentSyncData.deletedAssets
+    ),
+  }
+
+  // @todo based on the sys metadata we should be able to differentiate new and updated entities
+  reporter.info(
+    `Contentful: ${currentSyncData.entries.length} new/updated entries`
+  )
+  reporter.info(
+    `Contentful: ${currentSyncData.deletedEntries.length} deleted entries`
+  )
+  reporter.info(`Contentful: ${previousSyncData.entries.length} cached entries`)
+  reporter.info(
+    `Contentful: ${currentSyncData.assets.length} new/updated assets`
+  )
+  reporter.info(`Contentful: ${previousSyncData.assets.length} cached assets`)
+  reporter.info(
+    `Contentful: ${currentSyncData.deletedAssets.length} deleted assets`
+  )
+
+  // Update syncToken
+  const nextSyncToken = currentSyncData.nextSyncToken
+
+  await Promise.all([
+    cache.set(CACHE_SYNC_DATA, mergedSyncData),
+    cache.set(CACHE_SYNC_TOKEN, nextSyncToken),
+  ])
+
+  fetchActivity.end()
 
   // Process data fetch results and turn them into GraphQL entities
   const processingActivity = reporter.activityTimer(
@@ -102,7 +279,7 @@ export async function sourceNodes(
   const mergedSyncDataRaw = _.cloneDeep(mergedSyncData)
 
   // Use the JS-SDK to resolve the entries and assets
-  const res = createClient({
+  const res = await createClient({
     space: `none`,
     accessToken: `fake-access-token`,
   }).parseEntries({
@@ -242,6 +419,8 @@ export async function sourceNodes(
       deleteNode(node)
     })
   }
+
+  const { deletedEntries, deletedAssets } = currentSyncData
 
   if (deletedEntries.length || deletedAssets.length) {
     const deletionActivity = reporter.activityTimer(

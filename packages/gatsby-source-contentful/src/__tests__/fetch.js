@@ -59,7 +59,7 @@ jest.mock(`../plugin-options`, () => {
 global.console = { log: jest.fn(), time: jest.fn(), timeEnd: jest.fn() }
 
 const contentful = require(`contentful`)
-const fetchData = require(`../fetch`)
+const { fetchContent, fetchContentTypes } = require(`../fetch`)
 const {
   formatPluginOptionsForCLI,
   createPluginConfig,
@@ -119,7 +119,7 @@ afterAll(() => {
 })
 
 it(`calls contentful.createClient with expected params`, async () => {
-  await fetchData({ pluginConfig, reporter })
+  await fetchContent({ pluginConfig, reporter })
   expect(reporter.panic).not.toBeCalled()
   expect(contentful.createClient).toBeCalledWith(
     expect.objectContaining({
@@ -133,7 +133,7 @@ it(`calls contentful.createClient with expected params`, async () => {
 })
 
 it(`calls contentful.createClient with expected params and default fallbacks`, async () => {
-  await fetchData({
+  await fetchContent({
     pluginConfig: createPluginConfig({
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
       spaceId: `rocybtov1ozk`,
@@ -153,7 +153,7 @@ it(`calls contentful.createClient with expected params and default fallbacks`, a
 })
 
 it(`calls contentful.getContentTypes with default page limit`, async () => {
-  await fetchData({
+  await fetchContentTypes({
     pluginConfig: createPluginConfig({
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
       spaceId: `rocybtov1ozk`,
@@ -170,7 +170,7 @@ it(`calls contentful.getContentTypes with default page limit`, async () => {
 })
 
 it(`calls contentful.getContentTypes with custom plugin option page limit`, async () => {
-  await fetchData({
+  await fetchContentTypes({
     pluginConfig: createPluginConfig({
       accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
       spaceId: `rocybtov1ozk`,
@@ -189,7 +189,7 @@ it(`calls contentful.getContentTypes with custom plugin option page limit`, asyn
 
 describe(`Tags feature`, () => {
   it(`tags are disabled by default`, async () => {
-    await fetchData({
+    await fetchContent({
       pluginConfig: createPluginConfig({
         accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
         spaceId: `rocybtov1ozk`,
@@ -202,7 +202,7 @@ describe(`Tags feature`, () => {
     expect(mockClient.getTags).not.toBeCalled()
   })
   it(`calls contentful.getTags when enabled`, async () => {
-    await fetchData({
+    await fetchContent({
       pluginConfig: createPluginConfig({
         accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
         spaceId: `rocybtov1ozk`,
@@ -227,7 +227,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       throw new Error(`error`)
     })
 
-    await fetchData({ pluginConfig, reporter })
+    await fetchContent({ pluginConfig, reporter })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
@@ -264,7 +264,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       throw err
     })
 
-    await fetchData({ pluginConfig, reporter })
+    await fetchContent({ pluginConfig, reporter })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
@@ -301,7 +301,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
     const masterOptions = { ...options, environment: `master` }
     const masterConfig = createPluginConfig(masterOptions)
 
-    await fetchData({
+    await fetchContent({
       pluginConfig: masterConfig,
       reporter,
     })
@@ -344,7 +344,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       throw err
     })
 
-    await fetchData({ pluginConfig, reporter })
+    await fetchContent({ pluginConfig, reporter })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
@@ -384,7 +384,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       throw err
     })
 
-    await fetchData({ pluginConfig, reporter })
+    await fetchContent({ pluginConfig, reporter })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
