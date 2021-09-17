@@ -119,7 +119,14 @@ exports.onCreateNode = async ({
   if (node.internal.type !== 'Mdx') return
   const slug = createFilePath({ node, getNode })
 
+  const parent = getNode(node.parent)
+  if (parent.internal.type !== 'File') return
   const relPath = getNode(node.parent).relativePath
+  if (!relPath) {
+    console.log('no relpath', getNode(node.parent).internal.type)
+    return
+  }
+
   createNodeField({
     node,
     name: `relPath`,
