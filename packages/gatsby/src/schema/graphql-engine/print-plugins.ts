@@ -116,7 +116,12 @@ export const flattenedPlugins =
         pluginOptions: _.cloneDeepWith(
           plugin.pluginOptions,
           (value: any): any => {
-            if (typeof value === `object` && value.module && value.modulePath) {
+            if (
+              typeof value === `object` &&
+              value !== null &&
+              value.module &&
+              value.modulePath
+            ) {
               const { module, modulePath, ...subPlugin } = value
               return {
                 ...subPlugin,
