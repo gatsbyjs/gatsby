@@ -96,11 +96,6 @@ For example, to filter locales on only germany \`localeFilter: locale => locale.
 List of locales and their codes can be found in Contentful app -> Settings -> Locales`
         )
         .default(() => () => true),
-      forceFullSync: Joi.boolean()
-        .description(
-          `Prevents the use of sync tokens when accessing the Contentful API.`
-        )
-        .default(false),
       pageLimit: Joi.number()
         .integer()
         .description(
@@ -125,6 +120,9 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
         .description(
           `Axios proxy configuration. See the [axios request config documentation](https://github.com/mzabriskie/axios#request-config) for further information about the supported values.`
         ),
+      enableTags: Joi.boolean()
+        .description(`Enable the new Contentful tags feature`)
+        .default(false),
       useNameForId: Joi.boolean()
         .description(
           `Use the content's \`name\` when generating the GraphQL schema e.g. a Content Type called \`[Component] Navigation bar\` will be named \`contentfulComponentNavigationBar\`.
