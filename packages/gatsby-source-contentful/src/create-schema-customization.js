@@ -1,46 +1,20 @@
 // @ts-check
 const _ = require(`lodash`)
-const v8 = require(`v8`)
-const fs = require(`fs-extra`)
 
 const { createPluginConfig } = require(`./plugin-options`)
 const { fetchContentTypes } = require(`./fetch`)
 const { CODES } = require(`./report`)
-import { getFileSystemCachePath } from "./fs-cache"
 
 export async function createSchemaCustomization(
   { schema, actions, reporter, cache },
   pluginOptions
 ) {
-  const { fsForceCache, fsCacheFileExists, fsCacheFilePath } =
-    await getFileSystemCachePath({ suffix: `content-type` })
   const { createTypes } = actions
 
   const pluginConfig = createPluginConfig(pluginOptions)
 
   // Get content type items from Contentful
-  let contentTypeItems
-  if (!fsCacheFileExists) {
-    // Fetch content types as long fs cache is disabled or the fs cache file does not exist
-    contentTypeItems = await fetchContentTypes({ pluginConfig, reporter })
-
-    // Cache file to FS if required
-    if (fsForceCache) {
-      reporter.info(
-        `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Writing v8 serialized glob of remote content type data to: ` +
-          fsCacheFilePath
-      )
-      await fs.writeFile(fsCacheFilePath, v8.serialize(contentTypeItems))
-    }
-  } else {
-    // Load the content type item data from FS
-    reporter.info(
-      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Reading v8 serialized glob of remote content type data from: ` +
-        fsCacheFilePath
-    )
-    const contentTypeItemsCacheBuffer = await fs.readFile(fsCacheFilePath)
-    contentTypeItems = v8.deserialize(contentTypeItemsCacheBuffer)
-  }
+  const contentTypeItems = await fetchContentTypes({ pluginConfig, reporter })
 
   // Check for restricted content type names and set id based on useNameForId
   const useNameForId = pluginConfig.get(`useNameForId`)
