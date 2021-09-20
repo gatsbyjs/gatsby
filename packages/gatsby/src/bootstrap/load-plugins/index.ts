@@ -6,7 +6,7 @@ import * as nodeAPIs from "../../utils/api-node-docs"
 import * as browserAPIs from "../../utils/api-browser-docs"
 import ssrAPIs from "../../../cache-dir/api-ssr-docs"
 import { loadPlugins as loadPluginsInternal } from "./load"
-import createPluginDigest from "./create-plugin-digest"
+import createPluginDependencyDigest from "./create-plugin-dependency-digest"
 import {
   collatePluginAPIs,
   handleBadExports,
@@ -121,17 +121,19 @@ export async function loadPlugins(
   // Create a flattened array of the plugins
   const pluginArray = flattenPlugins(pluginInfos)
 
-  console.log({ pluginArray })
+  // console.log({ pluginArray })
+  console.time(`create dependency digests`)
   // process.exit()
   const digests = await Promise.all(
     pluginArray.map(p =>
-      createPluginDigest(rootDir, p).then(digest => {
+      createPluginDependencyDigest(rootDir, p).then(digest => {
         return { ...digest, ...p }
       })
     )
   )
-  console.log({ digests })
-  // process.exit()
+  // console.log({ digests })
+  console.timeEnd(`create dependency digests`)
+  process.exit()
 
   // Work out which plugins use which APIs, including those which are not
   // valid Gatsby APIs, aka 'badExports'

@@ -69,6 +69,25 @@ async function getDependencies(
   }
 }
 
+let hasLockfileChangedBool: boolean
+let inflightLockfileCheckPromise: Promise<boolean>
+async function hasLockfileChanged(filePath: string): Promise<boolean> {
+  if (typeof hasLockfileChangedBool !== `undefined`) {
+    return hasLockfileChangedBool
+  } else {
+    if (inflightLockfileCheckPromise) {
+      return inflightLockfileCheckPromise
+    } else {
+      let resolve
+      inflightLockfileCheckPromise = new Promise(resolveVar => {
+        resolve = resolveVar
+      })
+      hasLockfileChangedBool = await hasFileChanged(filePath)
+      return resolve(hasLockfileChangedBool)
+    }
+  }
+}
+
 async function hasFileChanged(filePath: string): Promise<boolean> {
   if (filePath === ``) {
     return false
@@ -111,7 +130,6 @@ function getLockFile(root: string): ILockFileInfo {
   } else {
     const state = store.getState()
     const pluginsHash = state?.status?.PLUGINS_HASH || `NO_SITE_DIGEST`
-    console.log(state.status, pluginsHash)
     return { isNpm, isYarn, lockFilePath: ``, noLockfileFallback: pluginsHash }
   }
 }
@@ -123,7 +141,7 @@ interface IPluginDigest {
 
 type ILocalFiles = Array<string>
 
-async function createPluginDigest(
+async function createPluginDependencyDigest(
   root: string,
   plugin: any
 ): Promise<IPluginDigest> {
@@ -169,7 +187,8 @@ async function createPluginDigest(
   }
 
   // Check if the lock file has changed
-  const lockFileChanged = await hasFileChanged(lockFilePath)
+  const lockFileChanged = await hasLockfileChanged(lockFilePath)
+  // const lockFileChanged = false
 
   // Is this plugin a direct dependency of the project?
   const isPackage =
@@ -232,7 +251,11 @@ async function createPluginDigest(
     // Reset as the files might have changed.
     localFiles = []
 
-    if (filesChanged || lockFileChanged) {
+    const cachedResult: IPluginDigest = (await cache.get(
+      root + dep
+    )) as IPluginDigest
+
+    if (!cachedResult || filesChanged || lockFileChanged) {
       let combinedDependencies = new Set()
       const dependencies = await getDependenciesForLocalFile(root, dep)
       await Promise.all(
@@ -276,13 +299,10 @@ async function createPluginDigest(
       cache.set(root + dep, result)
       return result
     } else {
-      const result: IPluginDigest = (await cache.get(
-        root + dep
-      )) as IPluginDigest
-      result.isCached = true
-      return result
+      cachedResult.isCached = true
+      return cachedResult
     }
   }
 }
 
-export default createPluginDigest
+export default createPluginDependencyDigest

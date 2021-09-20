@@ -1,4 +1,4 @@
-import createPluginDigest from "../create-plugin-digest"
+import createPluginDependencyDigest from "../create-plugin-dependency-digest"
 import execa from "execa"
 const os = require(`os`)
 const path = require(`path`)
@@ -51,7 +51,7 @@ describe(`create plugin dependecies digest`, () => {
       const root = path.join(__dirname, `fixtures`, `simplesite`)
       const pageCreator = `gatsby-plugin-page-creator`
 
-      const digest = await createPluginDigest(root, {
+      const digest = await createPluginDependencyDigest(root, {
         name: pageCreator,
         resolve: resolveFrom(root, pageCreator),
       })
@@ -67,7 +67,7 @@ describe(`create plugin dependecies digest`, () => {
       const root = path.join(__dirname, `fixtures`, `simplesite`)
       const typescript = `gatsby-plugin-typescript`
 
-      const typescriptDigest = await createPluginDigest(root, {
+      const typescriptDigest = await createPluginDependencyDigest(root, {
         name: typescript,
         resolve: resolveFrom(root, typescript),
       })
@@ -83,7 +83,7 @@ describe(`create plugin dependecies digest`, () => {
       const root = path.join(__dirname, `fixtures`, `simplesite`)
       const name = `gatsby-source-drupal`
 
-      const digest = await createPluginDigest(root, {
+      const digest = await createPluginDependencyDigest(root, {
         name,
         resolve: resolveFrom(root, name),
       })
@@ -99,7 +99,7 @@ describe(`create plugin dependecies digest`, () => {
       const root = path.join(__dirname, `fixtures`, `simplesite`)
       const name = `gatsby-source-drupal`
 
-      const digest = await createPluginDigest(root, {
+      const digest = await createPluginDependencyDigest(root, {
         name,
         resolve: resolveFrom(root, name),
       })
@@ -116,7 +116,7 @@ describe(`create plugin dependecies digest`, () => {
       const root = path.join(__dirname, `fixtures`, `simplesite`)
 
       const name = `gatsby-plugin-cool-local`
-      const digest = await createPluginDigest(root, {
+      const digest = await createPluginDependencyDigest(root, {
         name,
         resolve: path.join(root, `plugins`, name),
       })
@@ -138,7 +138,7 @@ describe(`create plugin dependecies digest`, () => {
         `const secondary = require('@kylemathews/secondary-dep')\n//yo, me new`
       )
 
-      const digest = await createPluginDigest(root, {
+      const digest = await createPluginDependencyDigest(root, {
         name,
         resolve: path.join(root, `plugins`, name),
       })
@@ -165,7 +165,7 @@ describe(`create plugin dependecies digest`, () => {
         time
       )
 
-      const digest = await createPluginDigest(root, {
+      const digest = await createPluginDependencyDigest(root, {
         name,
         resolve: path.join(root, `plugins`, name),
       })
@@ -188,7 +188,7 @@ describe(`create plugin dependecies digest`, () => {
         `const secondary = require('@kylemathews/secondary-dep')\nrequire('./dep')//yo, me new`
       )
 
-      const digest = await createPluginDigest(root, {
+      const digest = await createPluginDependencyDigest(root, {
         name,
         resolve: path.join(root, `plugins`, name),
       })
@@ -212,7 +212,7 @@ describe(`create plugin dependecies digest`, () => {
         `// some new code`
       )
 
-      const digest = await createPluginDigest(root, {
+      const digest = await createPluginDependencyDigest(root, {
         name,
         resolve: path.join(root, `plugins`, name),
       })
@@ -231,7 +231,7 @@ describe(`create plugin dependecies digest`, () => {
 
       const name = `gatsby-plugin-cool-local`
 
-      const digest = await createPluginDigest(root, {
+      const digest = await createPluginDependencyDigest(root, {
         name,
         resolve: path.join(root, `plugins`, name),
       })
@@ -251,7 +251,7 @@ describe(`create plugin dependecies digest`, () => {
 
       const name = `gatsby-plugin-no-gatsby-node.js`
 
-      const digest = await createPluginDigest(root, {
+      const digest = await createPluginDependencyDigest(root, {
         name,
         resolve: path.join(root, `plugins`, name),
       })
@@ -270,7 +270,7 @@ describe(`create plugin dependecies digest`, () => {
       const root = path.join(__dirname, `fixtures`, `no-lockfile`)
       const pageCreator = `gatsby-plugin-page-creator`
 
-      const digest = await createPluginDigest(root, {
+      const digest = await createPluginDependencyDigest(root, {
         name: pageCreator,
         resolve: resolveFrom(root, pageCreator),
       })
@@ -286,7 +286,7 @@ describe(`create plugin dependecies digest`, () => {
       const root = path.join(__dirname, `fixtures`, `no-lockfile`)
       const typescript = `gatsby-plugin-typescript`
 
-      const typescriptDigest = await createPluginDigest(root, {
+      const typescriptDigest = await createPluginDependencyDigest(root, {
         name: typescript,
         resolve: resolveFrom(root, typescript),
       })
@@ -302,7 +302,7 @@ describe(`create plugin dependecies digest`, () => {
       const root = path.join(__dirname, `fixtures`, `no-lockfile`)
       const name = `gatsby-source-drupal`
 
-      const digest = await createPluginDigest(root, {
+      const digest = await createPluginDependencyDigest(root, {
         name,
         resolve: resolveFrom(root, name),
       })
