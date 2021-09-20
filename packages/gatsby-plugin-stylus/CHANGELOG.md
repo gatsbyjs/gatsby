@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-stylus@3.14.0/packages/gatsby-plugin-stylus) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+
 ## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-stylus@3.13.0/packages/gatsby-plugin-stylus) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

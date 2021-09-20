@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-npm-package-search@3.14.0/packages/gatsby-source-npm-package-search) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- upgrade got package [#32928](https://github.com/gatsbyjs/gatsby/issues/32928) ([2ac366e](https://github.com/gatsbyjs/gatsby/commit/2ac366e3745990d47c01f19875f185d0355c89b5))
+
 ## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-npm-package-search@3.13.0/packages/gatsby-source-npm-package-search) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@1.14.0/packages/gatsby-plugin-utils) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Features
+
+- graphql engine [#33030](https://github.com/gatsbyjs/gatsby/issues/33030) ([48cff06](https://github.com/gatsbyjs/gatsby/commit/48cff061dfca53b8f5236bc9c65289cc08f5a8c3))
+
+#### Bug Fixes
+
+- update dependency joi to ^17.4.2 for gatsby-plugin-utils [#32585](https://github.com/gatsbyjs/gatsby/issues/32585) ([ed8301e](https://github.com/gatsbyjs/gatsby/commit/ed8301e8144975776ad3e3e11fb6bcdc968956a7))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- add missing `@babel/runtime` dependencies [#32954](https://github.com/gatsbyjs/gatsby/issues/32954) ([401b358](https://github.com/gatsbyjs/gatsby/commit/401b3589771135ec35ab8f68406a64de6b387d9d))
+
 ## [1.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@1.13.0/packages/gatsby-plugin-utils) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby-package@1.14.0/packages/babel-preset-gatsby-package) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Bug Fixes
+
+- update dependency core-js to ^3.17.2 [#32980](https://github.com/gatsbyjs/gatsby/issues/32980) ([efdf037](https://github.com/gatsbyjs/gatsby/commit/efdf0378a98dddd898c4a051ec7b4fd0da211a5e))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- add missing `@babel/runtime` dependencies [#32954](https://github.com/gatsbyjs/gatsby/issues/32954) ([401b358](https://github.com/gatsbyjs/gatsby/commit/401b3589771135ec35ab8f68406a64de6b387d9d))
+
 ## [1.13.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby-package@1.13.0/packages/babel-preset-gatsby-package) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
