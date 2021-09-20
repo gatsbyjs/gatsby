@@ -247,7 +247,7 @@ module.exports = async (
             plugins.noEmitOnErrors(),
             plugins.eslintGraphqlSchemaReload(),
             new StaticQueryMapper(store),
-          ])git push
+          ])
           .filter(Boolean)
 
         configPlugins.push(
