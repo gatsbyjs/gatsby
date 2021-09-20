@@ -116,7 +116,7 @@ exports.onCreateNode = async ({
 }) => {
   const { createNodeField, createNode, createParentChildLink } = actions
 
-  if (node.internal.type !== 'Mdx') return
+  if (node.internal.type !== 'Mdx' && node.sourceInstanceName !== 'new-docs') return
   const slug = createFilePath({ node, getNode })
 
   const parent = getNode(node.parent)

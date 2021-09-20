@@ -24,7 +24,8 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'docs',
+        // TODO: rename this after deprecating existing docs in mansion/dotcom
+        name: 'new-docs',
         path: path.join(__dirname, 'docs'),
       },
     },
