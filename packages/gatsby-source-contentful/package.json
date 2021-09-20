@@ -25,7 +25,6 @@
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.1",
     "p-queue": "^6.6.2",
-    "qs": "^6.10.1",
     "retry-axios": "^2.4.0"
   },
   "devDependencies": {
