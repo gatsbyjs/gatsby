@@ -7,7 +7,6 @@ executors:
     parameters:
       image:
         type: string
-        # First 10.x LTS release, but old Yarn
         default: "14.17.0"
     docker:
       - image: cimg/node:<< parameters.image >>
@@ -15,7 +14,7 @@ executors:
 aliases:
   e2e-executor: &e2e-executor
     docker:
-      - image: cypress/browsers:node14.15.0-chrome86-ff82
+      - image: cypress/browsers:node14.17.0-chrome91-ff89
 
   restore_cache: &restore_cache
     restore_cache:
@@ -86,7 +85,7 @@ aliases:
           command: yarn jest --ci --runInBand  $(yarn -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
-            GENERATE_JEST_REPORT: true
+            GENERATE_JEST_REPORT: "true"
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
       - store_test_results:
@@ -549,7 +548,7 @@ jobs:
           command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split --split-by=timings)
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
-            GENERATE_JEST_REPORT: true
+            GENERATE_JEST_REPORT: "true"
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
       - store_test_results:
