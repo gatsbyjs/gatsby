@@ -32,7 +32,7 @@ class IndexPage extends React.Component {
             Hello World, this is my first component styled with Styletron!
           </Title>
           <p>
-            <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-styletron/">
+            <a href="https://www.gatsbyjs.com/plugins/gatsby-plugin-styletron/">
               gatsby-plugin-styletron docs
             </a>
           </p>

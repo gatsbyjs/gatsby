@@ -19,6 +19,14 @@ describe(`test-require-error`, () => {
       ).toEqual(true)
     }
   })
+  it(`handles windows paths with double slashes`, () => {
+    expect(
+      testRequireError(
+        `C:\\fixtures\\nothing`,
+        `Error: Cannot find module 'C:\\\\fixtures\\\\nothing'`
+      )
+    ).toEqual(true)
+  })
   it(`Only returns true on not found errors for actual module not "not found" errors of requires inside the module`, () => {
     try {
       require(`./fixtures/bad-module-require`)
@@ -40,7 +48,8 @@ describe(`test-require-error`, () => {
 
   describe(`handles error message thrown by Bazel`, () => {
     it(`detects require errors`, () => {
-      const bazelModuleNotFoundError = new Error(`Error: //:build_bin cannot find module './fixtures/module-does-not-exist' required by '/private/var/tmp/_bazel_misiek/eba1803983a26276494495d851e478a5/execroot/com_github_bweston92_debug_gatsby_bazel_rules_nodejs/bazel-out/darwin-fastbuild/bin/build.runfiles/com_github_bweston92_debug_gatsby_bazel_rules_nodejs/node_modules/gatsby/dist/bootstrap/get-config-file.js'
+      const bazelModuleNotFoundError =
+        new Error(`Error: //:build_bin cannot find module './fixtures/module-does-not-exist' required by '/private/var/tmp/_bazel_misiek/eba1803983a26276494495d851e478a5/execroot/com_github_bweston92_debug_gatsby_bazel_rules_nodejs/bazel-out/darwin-fastbuild/bin/build.runfiles/com_github_bweston92_debug_gatsby_bazel_rules_nodejs/node_modules/gatsby/dist/bootstrap/get-config-file.js'
       looked in:
         built-in, relative, absolute, nested node_modules - Error: Cannot find module './fixtures/module-does-not-exist'
         runfiles - Error: Cannot find module '/private/var/tmp/_bazel_misiek/eba1803983a26276494495d851e478a5/execroot/com_github_bweston92_debug_gatsby_bazel_rules_nodejs/bazel-out/darwin-fastbuild/bin/build.runfiles/fixtures/module-does-not-exist'
@@ -55,7 +64,8 @@ describe(`test-require-error`, () => {
     })
 
     it(`detects require errors`, () => {
-      const bazelModuleNotFoundError = new Error(`Error: //:build_bin cannot find module 'cheese' required by '/private/var/tmp/_bazel_misiek/eba1803983a26276494495d851e478a5/execroot/com_github_bweston92_debug_gatsby_bazel_rules_nodejs/bazel-out/darwin-fastbuild/bin/build.runfiles/com_github_bweston92_debug_gatsby_bazel_rules_nodejs/node_modules/gatsby/dist/bootstrap/fixtures/bad-module-require.js'
+      const bazelModuleNotFoundError =
+        new Error(`Error: //:build_bin cannot find module 'cheese' required by '/private/var/tmp/_bazel_misiek/eba1803983a26276494495d851e478a5/execroot/com_github_bweston92_debug_gatsby_bazel_rules_nodejs/bazel-out/darwin-fastbuild/bin/build.runfiles/com_github_bweston92_debug_gatsby_bazel_rules_nodejs/node_modules/gatsby/dist/bootstrap/fixtures/bad-module-require.js'
       looked in:
         built-in, relative, absolute, nested node_modules - Error: Cannot find module 'cheese'
         runfiles - Error: Cannot find module '/private/var/tmp/_bazel_misiek/eba1803983a26276494495d851e478a5/execroot/com_github_bweston92_debug_gatsby_bazel_rules_nodejs/bazel-out/darwin-fastbuild/bin/build.runfiles/cheese'

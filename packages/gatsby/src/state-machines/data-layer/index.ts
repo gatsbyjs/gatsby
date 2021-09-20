@@ -45,22 +45,12 @@ const initialCreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
     },
   },
   creatingPages: {
-    on: { ADD_NODE_MUTATION: { actions: [`markNodesDirty`, `callApi`] } },
     invoke: {
       id: `creating-pages`,
       src: `createPages`,
       onDone: {
-        target: `creatingPagesStatefully`,
-        actions: `assignChangedPages`,
-      },
-    },
-  },
-  creatingPagesStatefully: {
-    invoke: {
-      src: `createPagesStatefully`,
-      id: `creating-pages-statefully`,
-      onDone: {
         target: `rebuildingSchemaWithSitePage`,
+        actions: `assignChangedPages`,
       },
     },
   },
@@ -94,7 +84,6 @@ const recreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
     },
   },
   creatingPages: {
-    on: { ADD_NODE_MUTATION: { actions: [`markNodesDirty`, `callApi`] } },
     invoke: {
       id: `creating-pages`,
       src: `createPages`,

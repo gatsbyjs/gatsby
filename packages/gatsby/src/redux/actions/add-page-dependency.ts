@@ -11,7 +11,7 @@ export const createPageDependency = ({
   nodeId: string
   connection?: string
 }): void => {
-  const { componentDataDependencies } = store.getState()
+  const { queries } = store.getState()
 
   // Check that the dependencies aren't already recorded so we
   // can avoid creating lots of very noisy actions.
@@ -22,8 +22,8 @@ export const createPageDependency = ({
   }
   if (
     nodeId &&
-    componentDataDependencies.nodes.has(nodeId) &&
-    componentDataDependencies.nodes.get(nodeId)!.has(path)
+    queries.byNode.has(nodeId) &&
+    queries.byNode.get(nodeId)!.has(path)
   ) {
     nodeDependencyExists = true
   }
@@ -32,8 +32,8 @@ export const createPageDependency = ({
   }
   if (
     connection &&
-    componentDataDependencies.connections.has(connection) &&
-    componentDataDependencies.connections.get(connection)!.has(path)
+    queries.byConnection.has(connection) &&
+    queries.byConnection.get(connection)!.has(path)
   ) {
     connectionDependencyExists = true
   }

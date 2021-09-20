@@ -2,9 +2,13 @@
 
 Easily add Google Analytics to your Gatsby site.
 
+## Upgrade note
+
+This plugin uses Google's `analytics.js` file under the hood. Google has a [guide recommending users upgrade to `gtag.js` instead](https://developers.google.com/analytics/devguides/collection/upgrade/analyticsjs). There is another plugin [`gatsby-plugin-gtag`](https://gatsbyjs.com/plugins/gatsby-plugin-google-gtag/) which uses `gtag.js`.
+
 ## Install
 
-`npm install --save gatsby-plugin-google-analytics`
+`npm install gatsby-plugin-google-analytics`
 
 ## How to use
 
@@ -39,6 +43,8 @@ module.exports = {
         sampleRate: 5,
         siteSpeedSampleRate: 10,
         cookieDomain: "example.com",
+        // defaults to false
+        enableWebVitalsTracking: true,
       },
     },
   ],
@@ -60,13 +66,15 @@ To use it, simply import it and use it like you would the `<a>` element e.g.
 import React from "react"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-export default () => (
+const Component = () => (
   <div>
-    <OutboundLink href="https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/">
+    <OutboundLink href="https://www.gatsbyjs.com/plugins/gatsby-plugin-google-analytics/">
       Visit the Google Analytics plugin page!
     </OutboundLink>
   </div>
 )
+
+export default Component
 ```
 
 ## Options
@@ -127,6 +135,16 @@ If you need to set up SERVER_SIDE Google Optimize experiment, you can add the ex
 
 Besides the experiment ID you also need the variation ID for SERVER_SIDE experiments in Google Optimize. Set 0 for original version.
 
+### `enableWebVitalsTracking`
+
+Optimizing for the quality of user experience is key to the long-term success of any site on the web. Capturing Real user metrics (RUM) helps you understand the experience of your user/customer. By setting `enableWebVitalsTracking` to `true`, Google Analytics will get ["core-web-vitals"](https://web.dev/vitals/) events with their values.
+
+We send three metrics:
+
+- **Largest Contentful Paint (LCP)**: measures loading performance. To provide a good user experience, LCP should occur within 2.5 seconds of when the page first starts loading.
+- **First Input Delay (FID)**: measures interactivity. To provide a good user experience, pages should have a FID of 100 milliseconds or less.
+- **Cumulative Layout Shift (CLS)**: measures visual stability. To provide a good user experience, pages should maintain a CLS of 1 or less.
+
 ## Optional Fields
 
 This plugin supports all optional Create Only Fields documented in [Google Analytics](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create):
@@ -164,10 +182,10 @@ To allow custom events to be tracked, the plugin exposes a function to include i
 To use it, import the package and call the event within your components and business logic.
 
 ```jsx
-import React
-import { trackCustomEvent } from 'gatsby-plugin-google-analytics'
+import React from "react"
+import { trackCustomEvent } from "gatsby-plugin-google-analytics"
 
-export default () => {
+const Component = () => (
   <div>
     <button
       onClick={e => {
@@ -182,7 +200,7 @@ export default () => {
           // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
           label: "Gatsby Plugin Example Campaign",
           // number - optional - Numeric value associated with the event. (e.g. A product ID)
-          value: 43
+          value: 43,
         })
         //... Other logic here
       }}
@@ -190,7 +208,9 @@ export default () => {
       Tap that!
     </button>
   </div>
-}
+)
+
+export default Component
 ```
 
 ### All Fields Options

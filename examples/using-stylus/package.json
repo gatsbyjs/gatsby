@@ -11,13 +11,13 @@
   "author": "Ian Sinnott <ian@iansinnott.com>",
   "license": "MIT",
   "dependencies": {
-    "gatsby": "^2.23.12",
-    "gatsby-plugin-google-analytics": "^2.3.6",
-    "gatsby-plugin-offline": "^2.2.10",
-    "gatsby-plugin-stylus": "^2.3.6",
-    "gatsby-plugin-typography": "^2.5.6",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "gatsby": "next",
+    "gatsby-plugin-google-analytics": "next",
+    "gatsby-plugin-offline": "next",
+    "gatsby-plugin-stylus": "next",
+    "gatsby-plugin-typography": "next",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-typography": "^0.16.19",
     "typography": "^0.16.19"
   }

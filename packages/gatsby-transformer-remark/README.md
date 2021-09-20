@@ -4,7 +4,7 @@ Parses Markdown files using [Remark](http://remark.js.org/).
 
 ## Install
 
-`npm install --save gatsby-transformer-remark`
+`npm install gatsby-transformer-remark`
 
 ## How to use
 
@@ -14,12 +14,8 @@ plugins: [
   {
     resolve: `gatsby-transformer-remark`,
     options: {
-      // CommonMark mode (default: true)
-      commonmark: true,
       // Footnotes mode (default: true)
       footnotes: true,
-      // Pedantic mode (default: true)
-      pedantic: true,
       // GitHub Flavored Markdown mode (default: true)
       gfm: true,
       // Plugins configs
@@ -29,14 +25,11 @@ plugins: [
 ],
 ```
 
-The following parts of `options` are passed down to Remark as options:
+The following parts of `options` enable the `remark-footnotes` and `remark-gfm`
+plugins:
 
-- `options.commonmark`
 - `options.footnotes`
-- `options.pedantic`
 - `options.gfm`
-
-The details of the Remark options above could be found in [`remark-parse`'s documentation](https://github.com/remarkjs/remark/tree/main/packages/remark-parse#processoruseparse-options)
 
 A full explanation of how to use markdown in Gatsby can be found here:
 [Creating a Blog with Gatsby](https://www.gatsbyjs.org/blog/2017-07-19-creating-a-blog-with-gatsby/)
@@ -102,7 +95,7 @@ Using the following GraphQL query you'll be able to get the table of contents
 
 ### Configuring the tableOfContents
 
-By default the tableOfContents is using the field `slug` to generate absolute URLs. You can however provide another field using the pathToSlugField parameter. **Note** that providing a non existing field will cause the result to be null. You can also pass `absolute: false` to generate relative path. To alter the default values for tableOfContents generation, include values for `heading` (string) and/or `maxDepth` (number 1 to 6) in GraphQL query. If a value for `heading` is given, the first heading that matches will be omitted and the toc is generated from the next heading of the same depth onwards. Value for `maxDepth` sets the maximum depth of the toc (i.e. if a maxDepth of 3 is set, only h1 to h3 headings will appear in the toc).
+By default, `absolute` is set to false, generating a relative path. If you'd like to generate an absolute path, pass `absolute: true`. In that case, be sure to pass the `pathToSlugField` parameter, often `fields.slug`, to create absolute URLs. **Note** that providing a non-existent field will cause the result to be null. To alter the default values for tableOfContents generation, include values for `heading` (string) and/or `maxDepth` (number 1 to 6) in GraphQL query. If a value for `heading` is given, the first heading that matches will be omitted and the toc is generated from the next heading of the same depth onwards. Value for `maxDepth` sets the maximum depth of the toc (i.e. if a maxDepth of 3 is set, only h1 to h3 headings will appear in the toc).
 
 ```graphql
 {
@@ -269,7 +262,7 @@ date: "2017-09-18T23:19:51.246Z"
 <p>Is he in the stable or down by the stream?</p>
 ```
 
-Then specify `MARKDOWN` as the format in your graphql query:
+Then specify `MARKDOWN` as the format in your GraphQL query:
 
 ```graphql
 {

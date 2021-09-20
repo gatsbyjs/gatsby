@@ -1,7 +1,7 @@
-const resources = require(`./resources`)
-const _ = require(`lodash`)
+import * as resources from "./resources"
+import _ from "lodash"
 
-module.exports = plan => {
+export default function validateRecipe(plan) {
   const validationErrors = _.compact(
     _.flattenDeep(
       plan.map((step, i) =>

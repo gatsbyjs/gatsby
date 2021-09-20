@@ -6,14 +6,19 @@ const SCREENSHOT_ENDPOINT = `https://h7iqvn4842.execute-api.us-east-2.amazonaws.
 const LAMBDA_CONCURRENCY_LIMIT = 50
 const USE_PLACEHOLDER_IMAGE = process.env.GATSBY_SCREENSHOT_PLACEHOLDER
 
-const screenshotQueue = new Queue(
-  (input, cb) => {
-    createScreenshotNode(input)
-      .then(r => cb(null, r))
-      .catch(e => cb(e))
-  },
-  { concurrent: LAMBDA_CONCURRENCY_LIMIT, maxRetries: 3, retryDelay: 1000 }
-)
+const screenshotQueue = Queue.promise(worker, LAMBDA_CONCURRENCY_LIMIT)
+
+async function worker(input) {
+  // maxRetries: 3, retryDelay: 1000
+  for (let i = 0; i < 2; i++) {
+    try {
+      return await createScreenshotNode(input)
+    } catch (e) {
+      await new Promise(resolve => setTimeout(resolve, 1000))
+    }
+  }
+  return await createScreenshotNode(input)
+}
 
 exports.onPreBootstrap = (
   {
@@ -22,6 +27,7 @@ exports.onPreBootstrap = (
     actions,
     createNodeId,
     getCache,
+    getNode,
     getNodesByType,
     createContentDigest,
     reporter,
@@ -61,7 +67,7 @@ exports.onPreBootstrap = (
     } else {
       // Screenshot hasn't yet expired, touch the image node
       // to prevent garbage collection
-      touchNode({ nodeId: n.screenshotFile___NODE })
+      touchNode(getNode(n.screenshotFile___NODE))
     }
   })
 
@@ -69,32 +75,38 @@ exports.onPreBootstrap = (
     return null
   }
 
-  return new Promise((resolve, reject) => {
-    screenshotQueue.on(`drain`, () => {
+  return new Promise(resolve => {
+    screenshotQueue.drain = () => {
       resolve()
-    })
+    }
   })
 }
 
-exports.onCreateNode = async (
-  { node, actions, store, cache, createNodeId, createContentDigest, getCache },
-  pluginOptions
-) => {
-  const { createNode, createParentChildLink } = actions
-
+function unstable_shouldOnCreateNode({ node }, pluginOptions) {
   /*
    * Check if node is of a type we care about, and has a url field
    * (originally only checked sites.yml, hence including by default)
    */
   const validNodeTypes = [`SitesYaml`].concat(pluginOptions.nodeTypes || [])
-  if (!validNodeTypes.includes(node.internal.type) || !node.url) {
+  return validNodeTypes.includes(node.internal.type) && node.url
+}
+
+exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+
+exports.onCreateNode = async (
+  { node, actions, store, cache, createNodeId, createContentDigest, getCache },
+  pluginOptions
+) => {
+  if (!unstable_shouldOnCreateNode({ node }, pluginOptions)) {
     return
   }
 
+  const { createNode, createParentChildLink } = actions
+
   try {
     const screenshotNode = await new Promise((resolve, reject) => {
-      screenshotQueue
-        .push({
+      screenshotQueue.push(
+        {
           url: node.url,
           parent: node.id,
           store,
@@ -104,13 +116,15 @@ exports.onCreateNode = async (
           getCache,
           createContentDigest,
           parentNodeId: node.id,
-        })
-        .on(`finish`, r => {
-          resolve(r)
-        })
-        .on(`failed`, e => {
-          reject(e)
-        })
+        },
+        (err, result) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(result)
+          }
+        }
+      )
     })
 
     createParentChildLink({
@@ -135,7 +149,8 @@ const createScreenshotNode = async ({
   reporter,
 }) => {
   try {
-    let fileNode, expires
+    let fileNode
+    let expires
     if (USE_PLACEHOLDER_IMAGE) {
       const getPlaceholderFileNode = require(`./placeholder-file-node`)
       fileNode = await getPlaceholderFileNode({

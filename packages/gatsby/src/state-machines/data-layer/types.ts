@@ -4,16 +4,8 @@ import { Runner } from "../../bootstrap/create-graphql-runner"
 import { GraphQLRunner } from "../../query/graphql-runner"
 import { Store, AnyAction } from "redux"
 import { IGatsbyState } from "../../redux/types"
-import JestWorker from "jest-worker"
-export interface IGroupedQueryIds {
-  pageQueryIds: string[]
-  staticQueryIds: string[]
-}
+import type { GatsbyWorkerPool } from "../../utils/worker/pool"
 
-export interface IMutationAction {
-  type: string
-  payload: unknown[]
-}
 export interface IDataLayerContext {
   deferNodeMutation?: boolean
   nodesMutatedDuringQueryRun?: boolean
@@ -23,8 +15,10 @@ export interface IDataLayerContext {
   gatsbyNodeGraphQLFunction?: Runner
   graphqlRunner?: GraphQLRunner
   webhookBody?: Record<string, unknown>
+  webhookSourcePluginName?: string
   refresh?: boolean
-  workerPool?: JestWorker
-  pagesToBuild?: string[]
-  pagesToDelete?: string[]
+  workerPool?: GatsbyWorkerPool
+  pagesToBuild?: Array<string>
+  pagesToDelete?: Array<string>
+  shouldRunCreatePagesStatefully?: boolean
 }

@@ -8,11 +8,9 @@ describe(`hot-reloading anonymous arrow functions`, () => {
     cy.visit(`/arrows`).waitForRouteChange()
   })
   it(`displays placeholders on launch`, () => {
-    cy.getTestElement(IDS.title).invoke(`text`).should(`contain`, `%TITLE%`)
+    cy.getTestElement(IDS.title).should(`have.text`, `%TITLE%`)
 
-    cy.getTestElement(IDS.subTitle)
-      .invoke(`text`)
-      .should(`contain`, `%SUB_TITLE%`)
+    cy.getTestElement(IDS.subTitle).should(`have.text`, `%SUB_TITLE%`)
   })
 
   it(`updates on change`, () => {
@@ -21,6 +19,8 @@ describe(`hot-reloading anonymous arrow functions`, () => {
       `npm run update -- --file src/components/title.tsx --replacements "TITLE:${text}"`
     )
 
-    cy.getTestElement(IDS.title).invoke(`text`).should(`eq`, text)
+    cy.waitForHmr()
+
+    cy.getTestElement(IDS.title).should(`have.text`, text)
   })
 })

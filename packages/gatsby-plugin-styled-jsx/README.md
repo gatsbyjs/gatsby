@@ -4,7 +4,7 @@ Provides drop-in support for [styled-jsx](https://github.com/vercel/styled-jsx).
 
 ## Install
 
-`npm install --save styled-jsx gatsby-plugin-styled-jsx`
+`npm install styled-jsx gatsby-plugin-styled-jsx`
 
 ## How to use
 

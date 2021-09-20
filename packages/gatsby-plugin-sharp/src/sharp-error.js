@@ -13,6 +13,7 @@ export class SharpError extends Error {
       fullErrorMessage += `
 
 Original error:
+${err.shortMessage ?? ``}
 ${err.message}`
     }
 

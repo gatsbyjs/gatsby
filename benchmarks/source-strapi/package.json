@@ -1,0 +1,43 @@
+{
+  "name": "gatsby-strapi-willitbuild-front",
+  "private": true,
+  "version": "0.1.0",
+  "dependencies": {
+    "gatsby": "^2.24.27",
+    "gatsby-image": "^2.4.5",
+    "gatsby-plugin-benchmark-reporting": "^0.2.14",
+    "gatsby-plugin-sharp": "^2.6.24",
+    "gatsby-source-filesystem": "^2.3.23",
+    "gatsby-source-strapi": "^0.0.12",
+    "gatsby-transformer-sharp": "^2.5.12",
+    "node-fetch": "^2.6.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "sharp": "^0.26.3"
+  },
+  "devDependencies": {
+    "prettier": "2.0.5"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "data-update": "NODE_ENV=production node update-post.js",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  }
+}

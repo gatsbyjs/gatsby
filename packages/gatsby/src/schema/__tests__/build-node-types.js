@@ -88,8 +88,8 @@ describe(`build-node-types`, () => {
     })
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
 
-    let context = { path: `foo` }
-    let { data, errors } = await graphql(schema, query, undefined, {
+    const context = { path: `foo` }
+    const { data, errors } = await graphql(schema, query, undefined, {
       ...context,
       nodeModel: new LocalNodeModel({
         schemaComposer,
@@ -117,7 +117,7 @@ describe(`build-node-types`, () => {
   })
 
   it(`should result in a valid queryable schema`, async () => {
-    let { parent, child, relative } = await runQuery(
+    const { parent, child, relative } = await runQuery(
       `
       {
         parent(id: { eq: "p1" }) {
@@ -138,7 +138,7 @@ describe(`build-node-types`, () => {
   })
 
   it(`should link children automatically`, async () => {
-    let { parent } = await runQuery(
+    const { parent } = await runQuery(
       `
       {
         parent(id: { eq: "p1" }) {
@@ -154,11 +154,14 @@ describe(`build-node-types`, () => {
   })
 
   it(`should create typed children fields`, async () => {
-    let { parent } = await runQuery(
+    const { parent } = await runQuery(
       `
       {
         parent(id: { eq: "p1" }) {
           childrenChild { # lol
+            id
+          }
+          childChild {
             id
           }
         }
@@ -167,10 +170,13 @@ describe(`build-node-types`, () => {
     )
     expect(parent.childrenChild).toBeDefined()
     expect(parent.childrenChild.map(c => c.id)).toEqual([`c1`, `c2`])
+
+    expect(parent.childChild).toBeDefined()
+    expect(parent.childChild).toEqual({ id: `c1` })
   })
 
   it(`should create typed child field for singular children`, async () => {
-    let { parent } = await runQuery(
+    const { parent } = await runQuery(
       `
       {
         parent(id: { eq: "p1" }) {

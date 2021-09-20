@@ -1,5 +1,5 @@
 import { parse } from "path"
-import * as mm from "micromatch"
+import { isMatch } from "micromatch"
 
 const tsDeclarationExtTest = /\.d\.tsx?$/
 const jsonYamlExtTest = /\.(json|ya?ml)$/
@@ -11,7 +11,7 @@ function isTestFile(filePath: string): boolean {
     `**/(*.)+(spec|test).(js|ts|jsx|tsx)`,
   ]
 
-  return mm.isMatch(filePath, testPatterns)
+  return isMatch(filePath, testPatterns)
 }
 
 export function validatePath(path: string): boolean {

@@ -7,7 +7,7 @@ This is a plugin that allows you to use [faker.js](https://github.com/marak/Fake
 Install `gatsby-source-faker`
 
 ```shell
-npm install --save gatsby-source-faker
+npm install gatsby-source-faker
 ```
 
 or

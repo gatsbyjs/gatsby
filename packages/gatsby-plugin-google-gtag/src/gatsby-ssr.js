@@ -8,12 +8,17 @@ exports.onRenderBody = (
   if (process.env.NODE_ENV !== `production` && process.env.NODE_ENV !== `test`)
     return null
 
-  // Lighthouse recommends pre-connecting to google analytics
+  // Lighthouse recommends pre-connecting to google tag manager
   setHeadComponents([
     <link
-      rel="preconnect dns-prefetch"
-      key="preconnect-google-analytics"
-      href="https://www.google-analytics.com"
+      rel="preconnect"
+      key="preconnect-google-gtag"
+      href="https://www.googletagmanager.com"
+    />,
+    <link
+      rel="dns-prefetch"
+      key="dns-prefetch-google-gtag"
+      href="https://www.googletagmanager.com"
     />,
   ])
 
@@ -42,10 +47,6 @@ exports.onRenderBody = (
     ? setHeadComponents
     : setPostBodyComponents
 
-  // TODO: remove pluginOptions.respectDNT in the next major release of this plugin.
-  // See issue https://github.com/gatsbyjs/gatsby/issues/11159 for the discussion.
-  const respectDNT = pluginConfig.respectDNT || pluginOptions.respectDNT
-
   const renderHtml = () => `
       ${
         excludeGtagPaths.length
@@ -59,7 +60,7 @@ exports.onRenderBody = (
           : ``
       }
       if(${
-        respectDNT
+        pluginConfig.respectDNT
           ? `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
           : `true`
       }) {

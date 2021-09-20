@@ -9,7 +9,7 @@ You will be notified when installing Gatsby and when running it for the first ti
 
 ## How to opt-out
 
-Users may always opt-out from the telemetry with `gatsby telemetry --disable` or setting the environment variable `GATSBY_TELEMETRY_DISABLED` to `1`
+Users may always opt out from the telemetry with `gatsby telemetry --disable` or setting the environment variable `GATSBY_TELEMETRY_DISABLED` to `1`
 
 ## Why?
 
@@ -44,6 +44,6 @@ The access to the raw data is highly controlled, and we cannot identify individu
 
 ## What about sensitive data? (e.g. secrets)
 
-We perform additional steps to ensure that secure data (e.g. environment variables used to store secrets for the build process) **do not** make their way into our analytics. [We strip logs, error messages, etc.](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-telemetry/src/error-helpers.js) of this sensitive data to ensure we _never_ gain access to this sensitive data.
+We perform additional steps to ensure that secure data (e.g. environment variables used to store secrets for the build process) **do not** make their way into our analytics. [We strip logs, error messages, etc.](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-telemetry/src/error-helpers.ts) of this sensitive data to ensure we _never_ gain access to this sensitive data.
 
 You can view all the information that is sent by Gatsby’s telemetry by setting the environment variable `GATSBY_TELEMETRY_DEBUG`to `1` to print the telemetry data instead of sending it over.

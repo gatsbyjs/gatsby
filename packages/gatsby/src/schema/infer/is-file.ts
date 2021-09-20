@@ -4,12 +4,12 @@ import mime from "mime"
 import isRelative from "is-relative"
 import isRelativeUrl from "is-relative-url"
 import { getValueAt } from "../../utils/get-value-at"
-import { getNode, getNodesByType } from "../../redux/nodes"
+import { getNode, getNodesByType } from "../../datastore"
 import { IGatsbyNode } from "../../redux/types"
 
 const getFirstValueAt = (
   node: IGatsbyNode,
-  selector: string | string[]
+  selector: string | Array<string>
 ): string => {
   let value = getValueAt(node, selector)
   while (Array.isArray(value)) {
@@ -18,8 +18,10 @@ const getFirstValueAt = (
   return value
 }
 
-const withBaseDir = (dir: string) => (p: string): string =>
-  path.posix.join(dir, slash(p))
+const withBaseDir =
+  (dir: string) =>
+  (p: string): string =>
+    path.posix.join(dir, slash(p))
 
 const findAncestorNode = (
   childNode: IGatsbyNode,
@@ -49,7 +51,7 @@ const getBaseDir = (node: IGatsbyNode): string | null => {
 const getAbsolutePath = (
   node: IGatsbyNode,
   relativePath: string
-): string | string[] | null => {
+): string | Array<string> | null => {
   const dir = getBaseDir(node)
   const withDir = withBaseDir(dir ?? ``)
   return dir
@@ -62,7 +64,7 @@ const getAbsolutePath = (
 const getFilePath = (
   fieldPath: string,
   relativePath: string
-): string | string[] | null => {
+): string | Array<string> | null => {
   const [typeName, ...selector] = Array.isArray(fieldPath)
     ? fieldPath
     : fieldPath.split(`.`)

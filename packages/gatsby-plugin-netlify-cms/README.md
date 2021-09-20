@@ -20,7 +20,7 @@ site](https://netlifycms.org).
 ## Install
 
 ```shell
-npm install --save netlify-cms-app gatsby-plugin-netlify-cms
+npm install netlify-cms-app gatsby-plugin-netlify-cms
 ```
 
 ## How to use
@@ -260,7 +260,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
 ## Support
 
 For help with integrating Netlify CMS with Gatsby, check out the community
-[Slack](https://join.slack.com/t/netlifycms/shared_invite/enQtODE1NTcxODA5Mjg1LTRjYWExM2MyZDJmODA3YmVkMjI2YmQwZDg2ZDUyYTMyM2Y3Zjc1ZTJhNDBkYmMwNjA2ZTkwODY4YjZjNGNlNTE).
+[Slack](https://www.netlifycms.org/chat).
 
 [1]: https://github.com/gatsbyjs/gatsby/blob/gatsby-plugin-netlify-cms@2.0.1/packages/gatsby-plugin-netlify-cms/README.md
 [2]: https://github.com/gatsbyjs/gatsby/blob/gatsby-plugin-netlify-cms@3.0.18/packages/gatsby-plugin-netlify-cms/README.md

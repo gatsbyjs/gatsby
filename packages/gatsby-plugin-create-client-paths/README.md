@@ -9,7 +9,7 @@ For more information refer to [client-only routes & user authentication](https:/
 Install:
 
 ```shell
-npm install --save gatsby-plugin-create-client-paths
+npm install gatsby-plugin-create-client-paths
 ```
 
 Then configure via `gatsby-config.js`:

@@ -7,7 +7,7 @@ See it in action in the [Tutorial](https://www.gatsbyjs.org/tutorial/part-three/
 
 ## Install
 
-`npm install --save gatsby-plugin-typography react-typography typography`
+`npm install gatsby-plugin-typography react-typography typography`
 
 ## Why to use
 

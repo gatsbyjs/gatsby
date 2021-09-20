@@ -1,8 +1,5 @@
 * text=auto eol=lf
 
-/docs/sites.yml merge=union
-/docs/starters.yml merge=union
-
 # These files are binary and should be left untouched
 *.png binary
 *.jpg binary

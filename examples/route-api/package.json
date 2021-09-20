@@ -1,0 +1,25 @@
+{
+  "name": "gatsby-example-file-system-route-api",
+  "private": true,
+  "description": "Gatsby example site demoing File System Route API",
+  "version": "1.0.0",
+  "author": "LekoArts <lekoarts@gmail.com>",
+  "dependencies": {
+    "gatsby": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-transformer-remark": "next",
+    "gatsby-transformer-yaml": "next",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "start": "npm run develop"
+  }
+}

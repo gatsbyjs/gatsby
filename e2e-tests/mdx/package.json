@@ -5,12 +5,13 @@
   "dependencies": {
     "@mdx-js/mdx": "^1.6.6",
     "@mdx-js/react": "^1.6.6",
-    "cypress": "^3.1.0",
-    "gatsby": "^2.0.118",
-    "gatsby-plugin-mdx": "^1.2.19",
-    "gatsby-source-filesystem": "^2.3.14",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
+    "cypress": "^7.2.0",
+    "fs-extra": "^8.1.0",
+    "gatsby": "^3.0.0",
+    "gatsby-plugin-mdx": "^2.0.0",
+    "gatsby-source-filesystem": "^3.0.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
     "theme-ui": "^0.3.1"
   },
   "keywords": [
@@ -18,14 +19,21 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
+    "build": "cross-env CYPRESS_SUPPORT=y gatsby build",
+    "develop": "cross-env CYPRESS_SUPPORT=y gatsby develop",
     "format": "prettier --write '**/*.js'",
-    "test": "cross-env CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test",
-    "start-server-and-test": "start-server-and-test serve http://localhost:9000 cy:run",
+    "test:build": "cross-env CYPRESS_SUPPORT=y npm run build && npm run start-server-and-test:build",
+    "test:develop": "npm run start-server-and-test:develop || (npm run reset && exit 1)",
+    "test": "npm run test:build && npm run test:develop",
+    "start-server-and-test:develop": "start-server-and-test develop http://localhost:8000 cy:run:develop",
+    "start-server-and-test:build": "start-server-and-test serve http://localhost:9000 cy:run:build",
     "serve": "gatsby serve",
-    "cy:open": "cypress open",
-    "cy:run": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome"
+    "cy:open:develop": "cypress open --config-file cypress-dev.json",
+    "cy:open:build": "cypress open",
+    "cy:run:build": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --group production",
+    "cy:run:develop": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --config-file cypress-dev.json --group development",
+    "reset": "node scripts/reset.js",
+    "update": "node scripts/update.js"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",

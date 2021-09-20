@@ -7,7 +7,7 @@ Plugin for connecting arbitrary GraphQL APIs to Gatsby's GraphQL. Remote schemas
 
 ## Install
 
-`npm install --save gatsby-source-graphql`
+`npm install gatsby-source-graphql`
 
 ## How to use
 
@@ -150,7 +150,117 @@ module.exports = {
 }
 ```
 
-# Refetching data
+## Composing Apollo Links for production network setup
+
+Network requests can fail, return errors or take too long. Use [Apollo Link](https://www.apollographql.com/docs/link/) to
+add retries, error handling, logging and more to your GraphQL requests.
+
+Use the plugin's `createLink` option to add a custom Apollo Link to your GraphQL requests.
+
+You can compose different types of links, depending on the functionality you're trying to achieve.
+The most common links are:
+
+- `apollo-link-retry` for retrying queries that fail or time out
+- `apollo-link-error` for error handling
+- `apollo-link-http` for sending queries in http requests (used by default)
+
+For more explanation of how Apollo Links work together, check out this Medium article: [Productionizing Apollo Links](https://medium.com/@joanvila/productionizing-apollo-links-4cdc11d278eb).
+
+Here's an example of using the HTTP link with retries (using [apollo-link-retry](https://www.npmjs.com/package/apollo-link-retry)):
+
+```js
+// gatsby-config.js
+const { createHttpLink } = require(`apollo-link-http`)
+const { RetryLink } = require(`apollo-link-retry`)
+
+const retryLink = new RetryLink({
+  delay: {
+    initial: 100,
+    max: 2000,
+    jitter: true,
+  },
+  attempts: {
+    max: 5,
+    retryIf: (error, operation) =>
+      Boolean(error) && ![500, 400].includes(error.statusCode),
+  },
+})
+
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "SWAPI",
+        fieldName: "swapi",
+        url: "https://api.graphcms.com/simple/v1/swapi",
+
+        // `pluginOptions`: all plugin options
+        //   (i.e. in this example object with keys `typeName`, `fieldName`, `url`, `createLink`)
+        createLink: pluginOptions =>
+          ApolloLink.from([
+            retryLink,
+            createHttpLink({ uri: pluginOptions.url }),
+          ]),
+      },
+    },
+  ],
+}
+```
+
+## Custom transform schema function (advanced)
+
+It's possible to modify the remote schema, via a `transformSchema` option which customizes the way the default schema is transformed before it is merged on the Gatsby schema by the stitching process.
+
+The `transformSchema` function gets an object argument with the following fields:
+
+- schema (introspected remote schema)
+- link (default link)
+- resolver (default resolver)
+- defaultTransforms (an array with the default transforms)
+- options (plugin options)
+
+The return value is expected to be the final schema used for stitching.
+
+Below an example configuration that uses the default implementation (equivalent to not using the `transformSchema` option at all):
+
+```js
+const { wrapSchema } = require(`@graphql-tools/wrap`)
+const { linkToExecutor } = require(`@graphql-tools/links`)
+
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "SWAPI",
+        fieldName: "swapi",
+        url: "https://api.graphcms.com/simple/v1/swapi",
+        transformSchema: ({
+          schema,
+          link,
+          resolver,
+          defaultTransforms,
+          options,
+        }) => {
+          return wrapSchema(
+            {
+              schema,
+              executor: linkToExecutor(link),
+            },
+            defaultTransforms
+          )
+        }
+    },
+  ]
+}
+```
+
+For details, refer to [https://www.graphql-tools.com/docs/schema-wrapping](https://www.graphql-tools.com/docs/schema-wrapping).
+
+An use case for this feature can be seen in [this issue](https://github.com/gatsbyjs/gatsby/issues/23552).
+
+## Refetching data
 
 By default, `gatsby-source-graphql` will only refetch the data once the server is restarted. It's also possible to configure the plugin to periodically refetch the data. The option is called `refetchInterval` and specifies the timeout in seconds.
 
@@ -176,7 +286,7 @@ module.exports = {
 }
 ```
 
-# Performance tuning
+## Performance tuning
 
 By default, `gatsby-source-graphql` executes each query in a separate network request.
 But the plugin also supports query batching to improve query performance.

@@ -112,7 +112,7 @@ We've internally discussed something called `gatsby doctor` which can be run pri
 
 This proposal requires documentation to be updated. Our documentation can be considered a code style-guide and oftentimes developers directly copy and paste from our documentation. If we are documenting what we think is a best practice (e.g. Node 6 features like async/await) we are implicitly easing the migration cost of any developer who reads our documentation--which is hopefully all of them!
 
-I strongly feel that tweaking the documentation, as well as minimum version requirements, will lead to developers having a _better_ experience using Gatsby, and Gatsby as a whole becomes easier to teach. It resolves the idiosyncracy of _why_ do I need a global install and _when_ do I use `async` / `await` or `return new Promise`. This change should have a net positive impact on the ease-of-use of teaching Gatsby to new and experienced developers, alike.
+I strongly feel that tweaking the documentation, as well as minimum version requirements, will lead to developers having a _better_ experience using Gatsby, and Gatsby as a whole becomes easier to teach. It resolves the idiosyncrasy of _why_ do I need a global install and _when_ do I use `async` / `await` or `return new Promise`. This change should have a net positive impact on the ease-of-use of teaching Gatsby to new and experienced developers, alike.
 
 # Unresolved questions
 

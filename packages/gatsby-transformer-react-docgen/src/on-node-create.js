@@ -55,11 +55,11 @@ function createPropNodes(
   createContentDigest
 ) {
   const { createNode } = actions
-  let children = new Array(component.props.length)
+  const children = new Array(component.props.length)
 
   component.props.forEach((prop, i) => {
-    let propNodeId = propsId(node.id, prop.name)
-    let content = JSON.stringify(prop)
+    const propNodeId = propsId(node.id, prop.name)
+    const content = JSON.stringify(prop)
 
     let propNode = {
       ...prop,
@@ -88,7 +88,11 @@ function createPropNodes(
   return node
 }
 
-export default async function onCreateNode(
+export function unstable_shouldOnCreateNode({ node }) {
+  return canParse(node)
+}
+
+export async function onCreateNode(
   {
     node,
     loadNodeContent,
@@ -99,9 +103,9 @@ export default async function onCreateNode(
   },
   pluginOptions
 ) {
-  const { createNode, createParentChildLink } = actions
-
   if (!canParse(node)) return
+
+  const { createNode, createParentChildLink } = actions
 
   const content = await loadNodeContent(node)
 

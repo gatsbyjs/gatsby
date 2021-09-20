@@ -120,7 +120,7 @@ specified examples directory. (This will avoid broken links at runtime.)
 
 ## Installation
 
-`npm install --save gatsby-remark-code-repls`
+`npm install gatsby-remark-code-repls`
 
 ## Usage
 

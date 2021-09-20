@@ -9,17 +9,46 @@ function _loadNodeContent(fileNode, fallback) {
     : fallback(fileNode)
 }
 
+const extensions = [
+  `xls`,
+  `xlsx`,
+  `xlsm`,
+  `xlsb`,
+  `xml`,
+  `xlw`,
+  `xlc`,
+  `csv`,
+  `txt`,
+  `dif`,
+  `sylk`,
+  `slk`,
+  `prn`,
+  `ods`,
+  `fods`,
+  `uos`,
+  `dbf`,
+  `wks`,
+  `123`,
+  `wq1`,
+  `qpw`,
+  `htm`,
+  `html`,
+]
+
+function unstable_shouldOnCreateNode({ node }) {
+  return extensions.includes((node.extension || ``).toLowerCase())
+}
+
 async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
   options = {}
 ) {
-  const { createNode, createParentChildLink } = actions
-  const extensions = `xls|xlsx|xlsm|xlsb|xml|xlw|xlc|csv|txt|dif|sylk|slk|prn|ods|fods|uos|dbf|wks|123|wq1|qpw|htm|html`.split(
-    `|`
-  )
-  if (extensions.indexOf((node.extension || ``).toLowerCase()) == -1) {
+  if (!unstable_shouldOnCreateNode({ node })) {
     return
   }
+
+  const { createNode, createParentChildLink } = actions
+
   // Load binary string
   const content = await _loadNodeContent(node, loadNodeContent)
 
@@ -37,10 +66,10 @@ async function onCreateNode(
   delete xlsxOptions.plugins
 
   // Parse
-  let wb = XLSX.read(content, { type: `binary`, cellDates: true })
+  const wb = XLSX.read(content, { type: `binary`, cellDates: true })
   wb.SheetNames.forEach((n, idx) => {
-    let ws = wb.Sheets[n]
-    let parsedContent = XLSX.utils.sheet_to_json(ws, xlsxOptions)
+    const ws = wb.Sheets[n]
+    const parsedContent = XLSX.utils.sheet_to_json(ws, xlsxOptions)
 
     if (_.isArray(parsedContent)) {
       const csvArray = parsedContent.map((obj, i) => {
@@ -86,4 +115,5 @@ async function onCreateNode(
   return
 }
 
+exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
 exports.onCreateNode = onCreateNode

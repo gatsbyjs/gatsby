@@ -4,20 +4,14 @@ const path = require(`path`)
 
 jest.setTimeout(100000)
 
-const gatsbyBin = path.join(
-  `node_modules`,
-  `gatsby`,
-  `dist`,
-  `bin`,
-  `gatsby.js`
-)
+const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
 describe(`Successful Build`, () => {
   let gatsbyProcess
   let events = []
 
   beforeAll(async done => {
-    gatsbyProcess = spawn(gatsbyBin, [`build`], {
+    gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
       // inherit lets us see logs in console
       stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
       // stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
@@ -94,7 +88,7 @@ const IndexPage = () => <div>Hello world!</div>
 
     `
     )
-    gatsbyProcess = spawn(gatsbyBin, [`build`], {
+    gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
       // inherit lets us see logs in console
       stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
       // stdio: [`inherit`, `inherit`, `inherit`, `ipc`],

@@ -52,6 +52,10 @@ module.exports = {
   dbFilePath: path.join(__dirname, `db.json`),
   nodeType: NODE_TYPE,
   nodes: [],
+  addNode(node) {
+    this.nodes = this.nodes.concat(node)
+    return node
+  },
   async sync(helpers) {
     // empty array
     const nodes = await readFile(this.dbFilePath)

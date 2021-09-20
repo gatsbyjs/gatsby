@@ -1,10 +1,13 @@
 ---
 title: Adding Search with JS Search
+examples:
+  - label: Using js-search
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-js-search"
 ---
 
 ## Prerequisites
 
-Before you go through the steps needed for adding client-side search to your Gatsby website, you should be familiar with the basics of Gatsby. Check out the [tutorial](/tutorial/) and brush up on the [documentation](/docs/) if you need to. In addition, some knowledge of [ES6 syntax](https://medium.freecodecamp.org/write-less-do-more-with-javascript-es6-5fd4a8e50ee2) will be useful.
+Before you go through the steps needed for adding client-side search to your Gatsby website, you should be familiar with the basics of Gatsby. Check out the [tutorial](/docs/tutorial/) and brush up on the [documentation](/docs/) if you need to. In addition, some knowledge of [ES6 syntax](https://medium.freecodecamp.org/write-less-do-more-with-javascript-es6-5fd4a8e50ee2) will be useful.
 
 ## What is JS Search
 
@@ -25,7 +28,7 @@ After the process is complete, some additional packages are needed.
 Change directories to the `js-search-example` folder and issue the following command:
 
 ```shell
-npm install --save js-search axios
+npm install js-search axios
 ```
 
 Or if Yarn is being used:

@@ -108,6 +108,17 @@ test(`it leaves non-relative images alone`, async () => {
   expect(result).toEqual([])
 })
 
+test(`it leaves files with unsupported file extensions alone`, async () => {
+  const imagePath = `video/my-video.mp4`
+  const content = `
+![video](./${imagePath})
+  `.trim()
+
+  const result = await plugin(createPluginOptions(content, imagePath))
+
+  expect(result).toEqual([])
+})
+
 test(`it transforms images in markdown`, async () => {
   const imagePath = `images/my-image.jpeg`
   const content = `
@@ -134,6 +145,25 @@ test(`it transforms images in markdown with the "withWebp" option`, async () => 
 
   const nodes = await plugin(createPluginOptions(content, imagePath), {
     withWebp: true,
+  })
+
+  expect(nodes.length).toBe(1)
+
+  const node = nodes.pop()
+  expect(node.type).toBe(`html`)
+  expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
+})
+
+test(`it transforms images in markdown with the "withAvif" option`, async () => {
+  const imagePath = `images/my-image.jpeg`
+  const content = `
+
+![image](./${imagePath})
+  `.trim()
+
+  const nodes = await plugin(createPluginOptions(content, imagePath), {
+    withAvif: true,
   })
 
   expect(nodes.length).toBe(1)
@@ -669,5 +699,43 @@ describe(`disableBgImage`, () => {
     const node = nodes.pop()
     expect(node.type).toBe(`html`)
     expect(node.value).toMatchSnapshot()
+  })
+})
+
+describe(`image alt attribute`, () => {
+  it(`should be generated correctly`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![testing-if-alt-is-correct](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath))
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`img`).attr(`alt`)).toEqual(`testing-if-alt-is-correct`)
+  })
+
+  it(`should use escaped filename as fallback`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath))
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`img`).attr(`alt`)).toEqual(`my image`)
+  })
+
+  it(`should be able to consider EMPTY_ALT`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![GATSBY_EMPTY_ALT](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath))
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`img`).attr(`alt`)).toEqual(``)
   })
 })

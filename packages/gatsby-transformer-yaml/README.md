@@ -8,7 +8,7 @@ Both `.yaml` and `.yml` are treated in the same way. This document uses both of 
 
 ## Install
 
-`npm install --save gatsby-transformer-yaml`
+`npm install gatsby-transformer-yaml`
 
 **Note:** You also need to have `gatsby-source-filesystem` installed and configured so it
 points to your files.

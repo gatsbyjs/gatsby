@@ -11,7 +11,7 @@ for details.
 
 ## Install
 
-`npm install --save gatsby-plugin-react-css-modules`
+`npm install gatsby-plugin-react-css-modules`
 
 ## How to use
 

@@ -1,3 +1,4 @@
+const highlightCode = require(`../highlight-code`)
 const highlightLineRange = require(`../directives`)
 const fixtures = require(`./fixtures`)
 const output = highlighted => highlighted.map(({ code }) => code).join(`\n`)
@@ -135,6 +136,40 @@ describe(`highlighting lines`, () => {
     it(`highlights multiple directives`, () => {
       const highlights = highlightLineRange(fixtures.highlightKitchenSink)
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
+    })
+  })
+
+  describe(`with multiline tokens`, () => {
+    const highlights = highlightCode(
+      `python`,
+      fixtures.multilineSpanAndHighlight,
+      {},
+      [2, 3]
+    )
+
+    expect.assertions(17)
+
+    expect(highlights).toMatchInlineSnapshot(`
+      "<span class=\\"token keyword\\">class</span> <span class=\\"token class-name\\">bbueModule</span><span class=\\"token punctuation\\">(</span>cda<span class=\\"token punctuation\\">.</span>Module<span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">:</span>
+      <span class=\\"gatsby-highlight-code-line\\">    <span class=\\"token triple-quoted-string string\\">\\"\\"\\"</span></span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token triple-quoted-string string\\">    This is a one line description of the bbue CDA Module.</span></span><span class=\\"token triple-quoted-string string\\">    </span>
+      <span class=\\"token triple-quoted-string string\\">    his text will be used for the GDB help command and</span>
+      <span class=\\"token triple-quoted-string string\\">    also for the module description in the cdae html report.</span>
+      <span class=\\"token triple-quoted-string string\\">    \\"\\"\\"</span>
+          <span class=\\"token keyword\\">def</span> <span class=\\"token function\\">__init__</span><span class=\\"token punctuation\\">(</span>self<span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">:</span>
+             <span class=\\"token builtin\\">super</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">.</span>__init__<span class=\\"token punctuation\\">(</span><span class=\\"token string\\">'bbue'</span><span class=\\"token punctuation\\">)</span>"
+    `)
+
+    // Each line need to have same amount of opening and closing spans, otherwise formatting can produce
+    // weird results. If there is multiline span (like triple-quote-string or plain-text) and we highlight some of it
+    // we add closing spans on line ends and add opening tags on new lines to avoid broken markup
+    const numberOfSpansInLines = [6, 5, 1, 1, 1, 5, 7]
+    const lines = highlights.split(`\n`)
+    lines.forEach((line, index) => {
+      const numberOfOpeningSpanTags = (line.match(/<span/gi) || []).length
+      const numberOfClosingSpanTags = (line.match(/<\/span/gi) || []).length
+
+      expect(numberOfOpeningSpanTags).toEqual(numberOfClosingSpanTags)
+      expect(numberOfOpeningSpanTags).toEqual(numberOfSpansInLines[index])
     })
   })
 })

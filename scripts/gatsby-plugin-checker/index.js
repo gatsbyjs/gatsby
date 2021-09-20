@@ -8,13 +8,7 @@ require(`dotenv`).config()
 const keywords = [`gatsby-plugin`, `gatsby-source`, `gatsby-transformer`]
 const pluginsFile = path.join(__dirname, `plugins.json`)
 
-const loadPlugins = async () => {
-  try {
-    return require(pluginsFile)
-  } catch (err) {
-    throw err
-  }
-}
+const loadPlugins = async () => require(pluginsFile)
 
 const savePlugins = plugins =>
   new Promise((resolve, reject) => {
@@ -97,7 +91,7 @@ const hasReadMe = pkg => {
 }
 
 const updatePlugins = (updates, plugins) => {
-  let res = plugins.map(p => Object.assign({}, p))
+  const res = plugins.map(p => Object.assign({}, p))
   updates.forEach(u => {
     const idx = res.findIndex(r => r.name === u.name)
     if (idx >= 0) {

@@ -1,13 +1,15 @@
-const React = require(`react`)
+import React, { Suspense } from "react"
 
-const resources = require(`../resources`)
+import * as resources from "../resources"
 
-const { ResourceComponent } = require(`./render`)
+import { ResourceComponent } from "./render"
 
-const resourceComponents = Object.keys(resources).reduce(
+export const resourceComponents = Object.keys(resources).reduce(
   (acc, resourceName) => {
     acc[resourceName] = props => (
-      <ResourceComponent _resourceName={resourceName} {...props} />
+      <Suspense fallback={<p>Reading {resourceName}...</p>}>
+        <ResourceComponent _resourceName={resourceName} {...props} />
+      </Suspense>
     )
 
     // Make sure the component is pretty printed in reconciler output
@@ -17,5 +19,3 @@ const resourceComponents = Object.keys(resources).reduce(
   },
   {}
 )
-
-module.exports = resourceComponents

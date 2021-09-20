@@ -5,12 +5,12 @@
   "version": "1.0.0",
   "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.23.12",
-    "gatsby-plugin-google-analytics": "^2.3.6",
-    "gatsby-plugin-offline": "^2.2.10",
-    "lodash": "^4.17.15",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
+    "gatsby": "next",
+    "gatsby-plugin-google-analytics": "next",
+    "gatsby-plugin-offline": "next",
+    "lodash": "^4.17.20",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "slash": "^1.0.0"
   },
   "keywords": [

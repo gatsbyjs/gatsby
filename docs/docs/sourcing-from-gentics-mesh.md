@@ -24,7 +24,7 @@ The demo Gentics server that gets setup has a UI that can be accessed on `http:/
 
 ### Install the boilerplate
 
-Now create a simple Gatsby site from the default Gatsby starter.
+Now create a Gatsby site from the default Gatsby starter.
 
 ```shell
 gatsby new gatsby-site https://github.com/gatsbyjs/gatsby-starter-default
@@ -39,7 +39,7 @@ Additionally, you need the `gatsby-source-graphql` plugin. Because Gentics Mesh 
 Install the plugin:
 
 ```shell
-npm install --save gatsby-source-graphql
+npm install gatsby-source-graphql
 ```
 
 ### Configure the plugin
@@ -188,7 +188,7 @@ You now have:
 2. Fetched some vehicles from the demo data, namely the name and weight.
 3. Rendered the list in the StaticQuery's RenderProp called "render".
 
-Hopefully you've seen how easy it is to start working with Gentics Mesh and Gatsby.
+Hopefully this has helped you see what it's like to start working with Gentics Mesh and Gatsby.
 
 ## Learn more
 

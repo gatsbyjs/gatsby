@@ -23,7 +23,7 @@ type DateResolver = (
   args: any,
   context: any,
   info: any
-) => Promise<null | string | number | (string | number)[]>
+) => Promise<null | string | number | Array<string | number>>
 
 const ISO_8601_FORMAT = [
   `YYYY`,
@@ -114,7 +114,8 @@ export const GraphQLDate = new GraphQLScalarType({
   },
 })
 
-const momentFormattingTokens = /(\[[^[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g
+const momentFormattingTokens =
+  /(\[[^[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g
 const momentFormattingRegexes = {
   YYYY: `\\d{4}`,
   MM: `\\d{2}`,
@@ -147,7 +148,7 @@ const ISO_8601_FORMAT_AS_REGEX = ISO_8601_FORMAT.map(format => {
 // calculate all lengths of the formats, if a string is longer or smaller it can't be valid
 const ISO_8601_FORMAT_LENGTHS = [
   ...new Set(
-    ISO_8601_FORMAT.reduce((acc: number[], val: string) => {
+    ISO_8601_FORMAT.reduce((acc: Array<number>, val: string) => {
       if (!val.endsWith(`Z`)) {
         return acc.concat(val.length)
       }

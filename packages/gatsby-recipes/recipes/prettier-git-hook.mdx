@@ -1,12 +1,14 @@
-# Automaically run Prettier on commits
+# Automatically run Prettier on commits
 
-Make sure all of your code is run through Prettier when you commit it to git.
-We achieve this by configuring prettier to run on git hooks using husky and
-lint-staged.
+Make sure all of your code is run through `prettier` when you commit it to git.
+We achieve this by configuring prettier to run on git hooks using `husky` and
+`lint-staged`.
+
+This recipe:
 
 ---
 
-Install packages.
+Installs packages.
 
 <NPMPackage name="husky" />
 <NPMPackage name="prettier" />
@@ -14,7 +16,7 @@ Install packages.
 
 ---
 
-Implement git hooks for prettier.
+Implements git hooks for `prettier`.
 
 <NPMPackageJson
   name="husky"
@@ -35,7 +37,7 @@ Implement git hooks for prettier.
 
 ---
 
-Write prettier config files.
+Writes `prettier` config files.
 
 <File
   path=".prettierrc"
@@ -55,5 +57,5 @@ node_modules
 
 ---
 
-Prettier, husky, and lint-staged are now installed! You can edit your `.prettierrc`
-if you'd like to change your prettier configuration.
+Once you've installed this recipe, `prettier`, `husky`, and `lint-staged` will be installed! You can edit your `.prettierrc`
+if you'd like to change your `prettier` configuration.

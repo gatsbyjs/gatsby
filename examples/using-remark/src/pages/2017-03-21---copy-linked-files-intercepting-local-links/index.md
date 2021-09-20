@@ -36,5 +36,5 @@ Also, let's link to "[Rendering math equations with KaTeX](https://using-remark.
 
 And this [link will be excluded](/excluded-link).
 
-[1]: https://www.gatsbyjs.org/packages/gatsby-remark-copy-linked-files/
-[2]: https://www.gatsbyjs.org/packages/gatsby-plugin-catch-links/
+[1]: https://www.gatsbyjs.com/plugins/gatsby-remark-copy-linked-files/
+[2]: https://www.gatsbyjs.com/plugins/gatsby-plugin-catch-links/

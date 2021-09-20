@@ -11,12 +11,12 @@
     "start": "npm run develop"
   },
   "dependencies": {
-    "@mdx-js/mdx": "^1.6.6",
-    "@mdx-js/react": "^1.6.6",
-    "gatsby": "^2.23.12",
-    "gatsby-plugin-mdx": "^1.2.19",
-    "gatsby-source-filesystem": "^2.3.14",
-    "gatsby-transformer-json": "^2.4.7",
+    "@mdx-js/mdx": "^1.6.18",
+    "@mdx-js/react": "^1.6.18",
+    "gatsby": "next",
+    "gatsby-plugin-mdx": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-transformer-json": "next",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   }

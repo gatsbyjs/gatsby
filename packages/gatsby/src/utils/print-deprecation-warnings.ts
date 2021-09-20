@@ -3,21 +3,9 @@ import glob from "glob"
 import chalk from "chalk"
 
 export function printDeprecationWarnings(): void {
-  const deprecatedApis = [`boundActionCreators`, `pathContext`]
-  const fixMap = {
-    boundActionCreators: {
-      newName: `actions`,
-      docsLink: `https://gatsby.dev/boundActionCreators`,
-    },
-    pathContext: {
-      newName: `pageContext`,
-      docsLink: `https://gatsby.dev/pathContext`,
-    },
-  }
-  const deprecatedLocations: Record<string, string[]> = {
-    boundActionCreators: [],
-    pathContext: [],
-  }
+  const deprecatedApis: ReadonlyArray<string> = []
+  const fixMap: Record<string, Record<"newName" | "docsLink", string>> = {}
+  const deprecatedLocations: Record<string, Array<string>> = {}
 
   glob
     .sync(`{,!(node_modules|public)/**/}*.js`, { nodir: true })

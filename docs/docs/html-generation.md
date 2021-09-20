@@ -16,7 +16,7 @@ The high level process is:
 
 1. Create a webpack configuration for Node.js Server Side Rendering (SSR)
 2. Build a `render-page.js` that takes a page path and renders its HTML
-3. For each page in redux, call `render-page.js`
+3. For each page in Redux, call `render-page.js`
 
 ## webpack
 
@@ -60,7 +60,7 @@ We create an `html` React component that will eventually be rendered to a file. 
 
 ### 3. Load Page and Data
 
-The only input to `static-entry.js` is a path. So we must look up the page for that path in order to find its `componentChunkName` and `jsonName`. This is achieved by simply looking up the pages array contained in `data.json`. We can then load its data by looking it up in `dataPaths`.
+The only input to `static-entry.js` is a path. So we must look up the page for that path in order to find its `componentChunkName` and `jsonName`. This is achieved by looking up the pages array contained in `data.json`. We can then load its data by looking it up in `dataPaths`.
 
 ### 4. Create Page Component
 
@@ -68,7 +68,7 @@ Now we're ready to create a React component for the page (inside the HTML contai
 
 ### 5. Add Preload Link and Script Tags
 
-This is covered by the [Code Splitting](/docs/how-code-splitting-works/#construct-link-and-script-tags-for-current-page) docs. We essentially create a `<link rel="preload" href="component.js">` in the document head, and a follow up `<script src="component.js">` at the end of the document. For each component and page JSON.
+This is covered by the [Code Splitting](/docs/how-code-splitting-works/#construct-link-and-script-tags-for-current-page) docs. We essentially create a `<link rel="preload" href="component.js">` in the document head, and a follow-up `<script src="component.js">` at the end of the document. For each component and page JSON.
 
 ### 6. Inject Page Info to CDATA
 
@@ -95,10 +95,10 @@ Finally, we call [react-dom](https://reactjs.org/docs/react-dom.html) and render
 
 ## build-html.js
 
-So, we've built the means to generate HTML for a page. This webpack bundle is saved to `public/render-page.js`. Next, we need to use it to generate HTML for all the site's pages.
+So, we've built the means to generate HTML for a page. These webpack bundles are saved to `.cache/page-ssr/routes`. Next, we need to use it to generate HTML for all the site's pages.
 
 Page HTML does not depend on other pages. So we can perform this step in parallel. We use the [jest-worker](https://github.com/facebook/jest/tree/master/packages/jest-worker) library to make this easier. By default, the [render-html.ts](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/worker/render-html.ts) creates a pool of workers equal to the number of physical cores on your machine. You can configure the number of pools by passing an optional environment variable, [`GATSBY_CPU_COUNT`](/docs/multi-core-builds). It then partitions the pages into groups and sends them to the workers, which run [worker](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/worker).
 
-The workers simply iterate over each page in their partition, and call the `render-page.js` with the page. It then saves the HTML for the page's path in `/public`.
+The workers iterate over each page in their partition, and call the `render-page.js` with the page. It then saves the HTML for the page's path in `/public`.
 
 Once all workers have finished, we're done!

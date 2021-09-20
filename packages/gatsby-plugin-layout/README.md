@@ -14,7 +14,7 @@ This plugin reimplements the behavior of layout components in `gatsby@1`, which 
 ## Install
 
 ```shell
-npm install --save gatsby-plugin-layout
+npm install gatsby-plugin-layout
 ```
 
 ## How to use

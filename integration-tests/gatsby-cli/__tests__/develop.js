@@ -18,7 +18,7 @@ describe(`gatsby develop`, () => {
     // 1. Start the `gatsby develop` command
     const [childProcess, getLogs] = GatsbyCLI.from(cwd).invokeAsync(
       `develop`,
-      log => log.includes("To create a production build, use gatsby build")
+      log => log.includes(`Building development bundle`)
     )
 
     // 2. kill the `gatsby develop` command so we can get logs
@@ -26,8 +26,9 @@ describe(`gatsby develop`, () => {
 
     // 3. Make sure logs for the user contain expected results
     const logs = getLogs()
-    logs.should.contain(`success open and validate gatsby-configs`)
-    logs.should.contain(`success load plugins`)
+    logs.should.contain(
+      `success open and validate gatsby-configs, load plugins`
+    )
     logs.should.contain(`success onPreInit`)
     logs.should.contain(`success initialize cache`)
     logs.should.contain(`success copy gatsby files`)

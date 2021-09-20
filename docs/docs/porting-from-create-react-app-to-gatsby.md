@@ -19,7 +19,7 @@ _Both_ Create React App and Gatsby use React and allow users to build apps more 
 Gatsby enables some useful performance optimizations for you, by default. Route-based code splitting and pre-loading of the _next_ resources make your application lightning fast, without any additional effort! Further still, the following optimizations and techniques are also available to you:
 
 - `gatsby-link` uses an [intersection observer to preload linked pages](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#intersectionobserver) when they appear in the viewport, making them feel like they load _instantly_
-- `gatsby-image` will create optimized versions of your images in different sizes, loading a smaller, optimized version of an image and replacing it with a higher resolution version when loading has finished. It also uses an intersection observer to cheaply lazy load images. Check out [the demo](https://using-gatsby-image.gatsbyjs.org/) to see for yourself
+- `gatsby-plugin-image` will create optimized versions of your images in different sizes, loading a smaller, optimized version of an image and replacing it with a higher resolution version when loading has finished. It also uses an intersection observer to cheaply lazy load images. Check out [the demo](https://using-gatsby-image.gatsbyjs.org/) to see for yourself
 
 These features and more work together to make your Gatsby site fast by default. If you'd like a deep dive on these and other performance optimizations, check out [this blog post](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/)
 
@@ -29,11 +29,11 @@ Gatsby still works with all the `react` packages running in a Create React App p
 
 ### Unified GraphQL data layer
 
-Plugins can also pull in data from any number of sources like APIs, CMSs, or the filesystem. That data is combined into a unified data layer that you can [query with GraphQL](/docs/graphql-concepts/) throughout your app.
+Plugins can also pull in data from any number of sources like APIs, CMSs, or the filesystem. That data is combined into a unified data layer that you can [query with GraphQL](/docs/conceptual/graphql-concepts/) throughout your app.
 
 This data layer simplifies the process of pulling data from different sources and providing them in your pages and components. This combination of data from different sources stitched together in a modern workflow is referred to as [the content mesh](/blog/2018-10-04-journey-to-the-content-mesh/).
 
-> **Note**: GraphQL isn't required for managing data in a Gatsby app. Feel free to look over the guide on [using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/) as well
+> **Note**: GraphQL isn't required for managing data in a Gatsby app. Feel free to look over the guide on [using Gatsby without GraphQL](/docs/how-to/querying-data/using-gatsby-without-graphql/) as well
 
 ---
 
@@ -44,7 +44,7 @@ In order to transition your codebase over to using Gatsby, a few things need to 
 In order to use Gatsby, you have to install it:
 
 ```shell
-npm install --save gatsby
+npm install gatsby
 ```
 
 > **Note**: rather than using the `gatsby new` command like you would initializing a new Gatsby site, this will install Gatsby as a dependency in your project
@@ -55,7 +55,7 @@ After installation, the key things that need to change are:
 
 2. converting routes into pages in the `/pages` directory
 
-The following sections explain the above steps as well as other changes that you might need to make depending on the complexity of your app. A default Create React App project is able to run with just the above steps.
+The following sections explain the above steps as well as other changes that you might need to make depending on the complexity of your app. A default Create React App project is able to run with the above steps.
 
 ### Project structure
 
@@ -101,11 +101,11 @@ Whereas a default Gatsby project will look something like this (files that are d
   └── yarn.lock
 ```
 
-The structure of a [Gatsby project](/docs/gatsby-project-structure/) adds some additional configuration files to hook into specific Gatsby APIs for the [browser](/docs/browser-apis/) and for [server-side rendering](/docs/ssr-apis/), though much of the project structure is similar enough to feel comfortable quickly.
+The structure of a [Gatsby project](/docs/reference/gatsby-project-structure/) adds some additional configuration files to hook into specific Gatsby APIs for the [browser](/docs/reference/config-files/gatsby-browser/) and for [server-side rendering](/docs/reference/config-files/gatsby-ssr/), though much of the project structure is similar enough to feel comfortable quickly.
 
 An important difference to note is the `/pages` folder in the Gatsby project structure where components will automatically be turned into static pages by Gatsby. This is discussed more in the [routing](#routing) section below.
 
-The `src/pages/index.js` file in Gatsby is a little different from the `src/index.js` file in Create React App where the root React element mounts, because it is a sibling to other pages in the app -- rather than a parent like Create React App. This means in order to share state or wrap multiple pages you should use the [wrapRootElement](/docs/browser-apis/#wrapRootElement) Gatsby API.
+The `src/pages/index.js` file in Gatsby is a little different from the `src/index.js` file in Create React App where the root React element mounts, because it is a sibling to other pages in the app -- rather than a parent like Create React App. This means in order to share state or wrap multiple pages you should use the [wrapRootElement](/docs/reference/config-files/gatsby-browser/#wrapRootElement) Gatsby API.
 
 ### Server-side rendering and browser APIs
 
@@ -237,7 +237,7 @@ const App = () => (
 export default App
 ```
 
-Gatsby provides a `<Link />` component and a `navigate` function to help you direct users through pages on your site. You can read about how to use each in the [`gatsby-link` doc](/docs/gatsby-link/).
+Gatsby provides a `<Link />` component and a `navigate` function to help you direct users through pages on your site. You can read about how to use each in the [`gatsby-link` doc](/docs/reference/built-in-components/gatsby-link/).
 
 ### Handling state
 
@@ -245,7 +245,7 @@ Because Gatsby rehydrates into a regular React app, state can be handled inside 
 
 ### Environment variables
 
-Create React App requires you to create environment variables prefixed with `REACT_APP_`. Gatsby instead uses the `GATSBY_` prefix to [make environment variables accessible](/docs/environment-variables) in the browser context.
+Create React App requires you to create environment variables prefixed with `REACT_APP_`. Gatsby instead uses the `GATSBY_` prefix to [make environment variables accessible](/docs/how-to/local-development/environment-variables) in the browser context.
 
 ```env:title=my-create-react-app/.env
 REACT_APP_API_URL=http://someapi.com
@@ -257,13 +257,13 @@ GATSBY_API_URL=http://someapi.com
 
 ### Advanced customizations
 
-Part of Gatsby's philosophy around tooling is [progressively disclosing complexity](/docs/gatsby-core-philosophy/#progressively-disclose-complexity); this simplifies the experience for a wider audience while still allowing the option to configure more advanced features for those that feel inclined. You won't have to "eject" your Gatsby app to edit more complex configurations.
+Part of Gatsby's philosophy around tooling is [progressively disclosing complexity](/docs/conceptual/gatsby-core-philosophy/#progressively-disclose-complexity); this simplifies the experience for a wider audience while still allowing the option to configure more advanced features for those that feel inclined. You won't have to "eject" your Gatsby app to edit more complex configurations.
 
 In terms of levels of abstraction, Gatsby allows you to move up or down to tap into more sophisticated, lower-level APIs without needing to eject like you would in Create React App.
 
 #### webpack
 
-Create React App will require you to eject or rely on another workaround to edit the webpack configuration. Gatsby allows [custom configuration of webpack](/docs/add-custom-webpack-config/) via the `gatsby-node.js` file.
+Create React App will require you to eject or rely on another workaround to edit the webpack configuration. Gatsby allows [custom configuration of webpack](/docs/how-to/custom-configuration/add-custom-webpack-config/) via the `gatsby-node.js` file.
 
 #### Context providers
 

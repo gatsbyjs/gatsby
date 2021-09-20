@@ -2,7 +2,7 @@
 
 This example walks through linking between pages in a Gatsby site using Gatsby Link.
 
-Docs recipe: https://gatsbyjs.org/docs/recipes/pages-layouts#linking-between-pages
+Docs recipe: https://www.gatsbyjs.com/docs/recipes/pages-layouts#linking-between-pages
 
 ## Install example
 

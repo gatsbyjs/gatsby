@@ -86,7 +86,7 @@ const monoRepoPackages = fs.readdirSync(path.join(gatsbyLocation, `packages`))
 
 const localPkg = JSON.parse(fs.readFileSync(`package.json`))
 // intersect dependencies with monoRepoPackages to get list of packages that are used
-let localPackages = _.intersection(
+const localPackages = _.intersection(
   monoRepoPackages,
   Object.keys(_.merge({}, localPkg.dependencies, localPkg.devDependencies))
 )
@@ -105,7 +105,13 @@ If you prefer to place them in your package.json dependencies instead,
 gatsby-dev will pick them up.
 `
   )
-  process.exit()
+  if (!argv.forceInstall) {
+    process.exit()
+  } else {
+    console.log(
+      `Continuing other dependencies installation due to "--forceInstall" flag`
+    )
+  }
 }
 
 watch(gatsbyLocation, argv.packages, {

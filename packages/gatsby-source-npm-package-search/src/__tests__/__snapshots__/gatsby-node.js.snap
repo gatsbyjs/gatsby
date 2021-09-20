@@ -32,7 +32,7 @@ Array [
     "modified": Date { NaN },
     "objectID": "foo",
     "parent": null,
-    "readme___NODE": "readme foo",
+    "readme": "readme foo",
     "slug": "/packages/foo/",
     "title": "foo",
   },

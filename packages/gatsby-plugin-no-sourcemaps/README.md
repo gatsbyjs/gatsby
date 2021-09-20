@@ -5,7 +5,7 @@ For the times when your JavaScript sourcemaps are just too big to upload to your
 ## Install
 
 ```shell
-npm install --save gatsby-plugin-no-sourcemaps
+npm install gatsby-plugin-no-sourcemaps
 ```
 
 ## Usage

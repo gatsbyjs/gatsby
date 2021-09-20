@@ -11,7 +11,7 @@ tags:
 
 ## Rendering dot code blocks
 
-By adding [gatsby-remark-graphviz](https://www.gatsbyjs.org/packages/gatsby-remark-graphviz/) to your Gatsby site, you can create graphs powered by [Viz.js](https://github.com/mdaines/viz.js) by adding `dot` code blocks in your Markdown files:
+By adding [gatsby-remark-graphviz](https://www.gatsbyjs.com/plugins/gatsby-remark-graphviz/) to your Gatsby site, you can create graphs powered by [Viz.js](https://github.com/mdaines/viz.js) by adding `dot` code blocks in your Markdown files:
 
     ```dot
     digraph graphname {
@@ -116,7 +116,7 @@ max-width: 100%;
 height: auto;
 ```
 
-This will make graphs work as expected most of the time - small graphs will remain small and big ones will shrink to fit the parent's box. Graphs can get really big ([from Gatsby the docs](https://www.gatsbyjs.org/docs/behind-the-scenes/)):
+This will make graphs work as expected most of the time - small graphs will remain small and big ones will shrink to fit the parent's box. Graphs can get really big ([from Gatsby the docs](https://www.gatsbyjs.com/docs/behind-the-scenes/)):
 
 ```dot id="gatsby-diagram"
 digraph graphname {

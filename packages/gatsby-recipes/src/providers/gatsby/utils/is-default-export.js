@@ -1,6 +1,6 @@
-const t = require(`@babel/types`)
+import * as t from "@babel/types"
 
-module.exports = node => {
+export default function isDefaultExport(node) {
   if (!node || !t.isMemberExpression(node)) {
     return false
   }

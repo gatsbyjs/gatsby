@@ -4,7 +4,7 @@ Provides drop-in support for Less stylesheets
 
 ## Install
 
-`npm install --save gatsby-plugin-less`
+`npm install gatsby-plugin-less`
 
 ## How to use
 
@@ -37,8 +37,8 @@ plugins: [
 ]
 ```
 
-If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader/tree/version-1)
-**Note:** Gatsby is using `css-loader@1.0.1`.
+If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader)
+**Note:** Gatsby is using `css-loader@^5.0.0`.
 
 ```javascript
 // in gatsby-config.js
@@ -56,8 +56,8 @@ plugins: [
 
 ### With CSS Modules
 
-Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.less` -> `App.module.less`.
-Any file with the `module` extension will use CSS modules.
+Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `app.less` -> `app.module.less`.
+Any file with the `module` extension will use CSS modules. CSS modules are imported as ES Modules to support treeshaking. You'll need to import styles as: `import { yourClassName, anotherClassName } from './app.module.less'`.
 
 ### PostCSS plugins
 
@@ -90,7 +90,7 @@ plugins: [
 ### v2.0.0
 
 - `less` is moved to a peer dependency. Installing the package
-  alongside `gatsby-plugin-less` is now required. Use `npm install --save less`
+  alongside `gatsby-plugin-less` is now required. Use `npm install less`
 
 - support Gatsby v2 only
 

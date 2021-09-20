@@ -16,8 +16,8 @@ We welcome all contributions from you in the community, and would be thrilled to
 
 ...and anything else you can think of. Our showcase and library contribution docs are a great place to start:
 
-- [Submit to Site Showcase](/contributing/site-showcase-submissions)
-- [Submit to Starter Library](/contributing/submit-to-starter-library/)
 - [Submit to Plugin Library](/contributing/submit-to-plugin-library/)
+
+**Note:** Showcase and starter contributions are currently paused while the Gatsby team develops a new workflow for sharing your Gatsby sites with the community.
 
 Peruse the rest of our contributor docs and reach out to us on [Twitter](https://twitter.com/gatsbyjs), [Discord](https://gatsby.dev/discord), or in a [GitHub issue](/contributing/how-to-file-an-issue/) if you have any questions about contributing!

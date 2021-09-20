@@ -2,6 +2,8 @@
 title: Translation Maintainer Guide
 ---
 
+> ⚠️ Note: At the moment our localization efforts are on pause, as we shifted towards a [redesign of the docs](https://www.gatsbyjs.com/blog/announcing-new-gatsby-docs-site/). Right now, we're prioritizing a new version of the tutorial. As with all prioritization efforts, we will weigh this, amongst other potential features, fixes, and improvements, and may consider picking up on the internationalization efforts of 2020. The repositories inside the GitHub org will remain. For now we archived the respective language channels on our Discord and the role for language maintainers.
+
 This page lists the responsibilities of translation maintainers and provides tips on how to better manage your repository.
 
 ## Maintainer responsibilities
@@ -20,7 +22,7 @@ As a maintainer, you are welcome to add a contributing doc written in your langu
 
 ### Set up a style guide and glossary
 
-Your language repo comes with a template [style guide](https://github.com/gatsbyjs/gatsby-i18n-source/blob/master/style-guide.md) that you can use to put in style rules specific to your language. Refer to the [translation style guide](#translation-style-guide) section for more information.
+Your language repo comes with a template [style guide](https://github.com/gatsbyjs/gatsby-i18n-source/blob/master/style-guide.md) that you can use to put in style rules specific to your language. Refer to the [translation style guide](/contributing/translation/style-guide/) for more information.
 
 ### Set up a review process
 
@@ -34,7 +36,7 @@ The repo creation script will create a progress issue listing the list of [core 
 
 The Gatsby learning team is in charge of determining priorities for which docs should be translated. Refer to the [i18n page spreadsheet](https://docs.google.com/spreadsheets/d/1u2amGnqFLKxJuL5h9UrDblUueFgg0EBt7xbau4n8iTM/edit) to get the most up-to-date priority list, which includes frequently-visited pages in the Gatsby docs, tutorial, recipes, and other important pages.
 
-[Reference guide overview pages](/contributing/docs-templates/how-to-write-a-reference-guide/#what-are-reference-guide-overview-pages) are also worth translating to establish a fully translated path to a frequently visited [reference guide](/contributing/how-to-write-a-reference-guide/#what-are-reference-guide-articles), though overview pages are listed at a lower priority.
+[Reference guide overview pages](/contributing/how-to-write-a-reference-guide/#what-are-reference-guide-overview-pages) are also worth translating to establish a fully translated path to a frequently visited [reference guide](/contributing/how-to-write-a-reference-guide/#what-are-reference-guide-articles), though overview pages are listed at a lower priority.
 
 ### Ask for help
 

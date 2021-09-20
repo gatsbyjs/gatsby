@@ -1,9 +1,7 @@
-"use strict"
-
-const { GraphQLObjectType, GraphQLSchema } = require(`graphql`)
-const Hoek = require(`@hapi/hoek`)
-const Joi = require(`@hapi/joi`)
-const { typeDictionary } = require(`../helpers`)
+import { GraphQLObjectType, GraphQLSchema } from "graphql"
+import Hoek from "@hapi/hoek"
+import * as Joi from "@hapi/joi"
+import { typeDictionary } from "../helpers"
 const internals = {}
 
 internals.inputSchema = Joi.object().keys({
@@ -12,7 +10,7 @@ internals.inputSchema = Joi.object().keys({
   subscription: Joi.object(),
 })
 
-module.exports = (schema = {}) => {
+export default function composeSchema(schema = {}) {
   schema = Joi.attempt(schema, internals.inputSchema)
 
   Hoek.assert(Object.keys(schema).length > 0, `Must provide a schema`)

@@ -1,0 +1,308 @@
+{
+  "gatsby-source-wordpress": {
+    "type": "object",
+    "keys": {
+      "url": {
+        "type": "string",
+        "flags": {
+          "description": "This should be the full url of your GraphQL endpoint set up by WP GraphQL",
+          "presence": "required"
+        }
+      }
+    }
+  },
+  "gatsby-source-contentful": {
+    "type": "object",
+    "externals": [{}],
+    "keys": {
+      "accessToken": {
+        "type": "string",
+        "flags": {
+          "description": "Contentful delivery api key, when using the Preview API use your Preview API key",
+          "presence": "required"
+        }
+      },
+      "spaceId": {
+        "type": "string",
+        "flags": { "description": "Contentful spaceId", "presence": "required" }
+      },
+      "host": {
+        "type": "string",
+        "flags": {
+          "description": "The base host for all the API requests, by default it's 'cdn.contentful.com', if you want to use the Preview API set it to 'preview.contentful.com'. You can use your own host for debugging/testing purposes as long as you respect the same Contentful JSON structure.",
+          "default": "cdn.contentful.com"
+        }
+      },
+      "environment": {
+        "type": "string",
+        "flags": {
+          "description": "The environment to pull the content from, for more info on environments check out this [Guide](https://www.contentful.com/developers/docs/concepts/multiple-environments/).",
+          "default": "master"
+        }
+      },
+      "downloadLocal": {
+        "type": "boolean",
+        "flags": {
+          "description": "Downloads and caches ContentfulAsset's to the local filesystem. Allows you to query a ContentfulAsset's localFile field, which is not linked to Contentful's CDN. Useful for reducing data usage.\nYou can pass in any other options available in the [contentful.js SDK](https://github.com/contentful/contentful.js#configuration).",
+          "default": false
+        }
+      },
+      "localeFilter": {
+        "type": "function",
+        "flags": {
+          "description": "Possibility to limit how many locales/nodes are created in GraphQL. This can limit the memory usage by reducing the amount of nodes created. Useful if you have a large space in contentful and only want to get the data from one selected locale.\nFor example, to filter locales on only germany `localeFilter: locale => locale.code === 'de-DE'`\n\nList of locales and their codes can be found in Contentful app -> Settings -> Locales"
+        }
+      },
+      "forceFullSync": {
+        "type": "boolean",
+        "flags": {
+          "description": "Prevents the use of sync tokens when accessing the Contentful API.",
+          "default": false
+        }
+      },
+      "pageLimit": {
+        "type": "number",
+        "flags": {
+          "description": "Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g 50.",
+          "default": 100
+        },
+        "rules": [{ "name": "integer" }]
+      },
+      "assetDownloadWorkers": {
+        "type": "number",
+        "flags": {
+          "description": "Number of workers to use when downloading contentful assets. Due to technical limitations, opening too many concurrent requests can cause stalled downloads. If you encounter this issue you can set this param to a lower number than 50, e.g 25.",
+          "default": 50
+        },
+        "rules": [{ "name": "integer" }]
+      },
+      "proxy": {
+        "type": "object",
+        "flags": {
+          "description": "Axios proxy configuration. See the [axios request config documentation](https://github.com/mzabriskie/axios#request-config) for further information about the supported values."
+        },
+        "keys": {
+          "host": { "type": "string", "flags": { "presence": "required" } },
+          "port": { "type": "number", "flags": { "presence": "required" } },
+          "auth": {
+            "type": "object",
+            "keys": {
+              "username": { "type": "string" },
+              "password": { "type": "string" }
+            }
+          }
+        }
+      },
+      "useNameForId": {
+        "type": "boolean",
+        "flags": {
+          "description": "Use the content's `name` when generating the GraphQL schema e.g. a Content Type called `[Component] Navigation bar` will be named `contentfulComponentNavigationBar`.\n    When set to `false`, the content's internal ID will be used instead e.g. a Content Type with the ID `navigationBar` will be called `contentfulNavigationBar`.\n\n    Using the ID is a much more stable property to work with as it will change less often. However, in some scenarios, Content Types' IDs will be auto-generated (e.g. when creating a new Content Type without specifying an ID) which means the name in the GraphQL schema will be something like `contentfulC6XwpTaSiiI2Ak2Ww0oi6qa`. This won't change and will still function perfectly as a valid field name but it is obviously pretty ugly to work with.\n\n    If you are confident your Content Types will have natural-language IDs (e.g. `blogPost`), then you should set this option to `false`. If you are unable to ensure this, then you should leave this option set to `true` (the default).",
+          "default": true
+        }
+      },
+      "plugins": { "type": "array" },
+      "richText": {
+        "type": "object",
+        "flags": { "default": {} },
+        "keys": {
+          "resolveFieldLocales": {
+            "type": "boolean",
+            "flags": {
+              "description": "If you want to resolve the locales in fields of assets and entries that are referenced by rich text (e.g., via embedded entries or entry hyperlinks), set this to `true`. Otherwise, fields of referenced assets or entries will be objects keyed by locale.",
+              "default": false
+            }
+          }
+        }
+      }
+    }
+  },
+  "gatsby-source-sanity": {
+    "type": "object",
+    "keys": {
+      "projectId": {
+        "type": "string",
+        "flags": {
+          "description": "Your Sanity project's ID",
+          "presence": "required"
+        }
+      },
+      "dataset": {
+        "type": "string",
+        "flags": {
+          "description": "The dataset to fetch from",
+          "presence": "required"
+        }
+      }
+    }
+  },
+  "gatsby-source-shopify": {
+    "type": "object",
+    "keys": {
+      "shopName": {
+        "type": "string",
+        "flags": {
+          "description": "The domain name of your Shopify shop",
+          "presence": "required"
+        }
+      },
+      "accessToken": {
+        "type": "string",
+        "flags": {
+          "description": "An API access token to your Shopify shop",
+          "presence": "required"
+        }
+      }
+    }
+  },
+  "gatsby-source-datocms": {
+    "type": "object",
+    "keys": {
+      "apiToken": {
+        "type": "string",
+        "flags": {
+          "description": "Your read-only API token under the Settings > API tokens section of your administrative area in DatoCMS",
+          "presence": "required"
+        }
+      }
+    }
+  },
+  "gatsby-source-agility": {
+    "type": "object",
+    "keys": {
+      "guid": {
+        "type": "string",
+        "flags": {
+          "description": "your Agility Content Fetch API Guid",
+          "presence": "required"
+        }
+      }
+    }
+  },
+  "gatsby-plugin-postcss": {},
+  "gatsby-plugin-styled-components": {},
+  "gatsby-plugin-emotion": {},
+  "gatsby-plugin-sass": {},
+  "gatsby-plugin-theme-ui": {},
+  "gatsby-plugin-google-analytics": {
+    "type": "object",
+    "keys": {
+      "trackingId": {
+        "type": "string",
+        "flags": {
+          "description": "The property ID; the tracking code won't be generated without it",
+          "presence": "required"
+        }
+      },
+      "head": {
+        "type": "boolean",
+        "flags": {
+          "default": false,
+          "description": "Defines where to place the tracking script - `true` in the head and `false` in the body"
+        }
+      },
+      "anonymize": { "type": "boolean", "flags": { "default": false } },
+      "respectDNT": { "type": "boolean", "flags": { "default": false } },
+      "exclude": {
+        "type": "array",
+        "flags": {
+          "default": [],
+          "description": "Avoids sending pageview hits from custom paths"
+        },
+        "items": [{ "type": "string" }]
+      },
+      "pageTransitionDelay": {
+        "type": "number",
+        "flags": {
+          "default": 0,
+          "description": "Delays sending pageview hits on route update (in milliseconds)"
+        }
+      },
+      "optimizeId": {
+        "type": "string",
+        "flags": {
+          "description": "Enables Google Optimize using your container Id"
+        }
+      },
+      "experimentId": {
+        "type": "string",
+        "flags": { "description": "Enables Google Optimize Experiment ID" }
+      },
+      "variationId": {
+        "type": "string",
+        "flags": { "description": "Set Variation ID. 0 for original 1,2,3...." }
+      },
+      "defer": {
+        "type": "boolean",
+        "flags": {
+          "description": "Defers execution of google analytics script after page load"
+        }
+      },
+      "sampleRate": { "type": "number" },
+      "siteSpeedSampleRate": { "type": "number" },
+      "cookieDomain": { "type": "string" }
+    }
+  },
+  "gatsby-plugin-sitemap": {},
+  "gatsby-plugin-mdx": {},
+  "gatsby-plugin-offline": {},
+  "gatsby-plugin-manifest": {
+    "type": "object",
+    "keys": {
+      "name": { "type": "string" },
+      "short_name": { "type": "string" },
+      "description": { "type": "string" },
+      "lang": { "type": "string" },
+      "localize": {
+        "type": "array",
+        "items": [
+          {
+            "type": "object",
+            "keys": {
+              "start_url": { "type": "string" },
+              "name": { "type": "string" },
+              "short_name": { "type": "string" },
+              "description": { "type": "string" },
+              "lang": { "type": "string" }
+            }
+          }
+        ]
+      },
+      "start_url": { "type": "string" },
+      "background_color": { "type": "string" },
+      "theme_color": { "type": "string" },
+      "display": { "type": "string" },
+      "legacy": { "type": "boolean" },
+      "include_favicon": { "type": "boolean" },
+      "icon": { "type": "string" },
+      "theme_color_in_head": { "type": "boolean" },
+      "crossOrigin": {
+        "type": "string",
+        "flags": { "only": true },
+        "allow": ["use-credentials", "anonymous"]
+      },
+      "cache_busting_mode": {
+        "type": "string",
+        "flags": { "only": true },
+        "allow": ["query", "name", "none"]
+      },
+      "icons": {
+        "type": "array",
+        "items": [
+          {
+            "type": "object",
+            "keys": {
+              "src": { "type": "string" },
+              "sizes": { "type": "string" },
+              "type": { "type": "string" },
+              "purpose": { "type": "string" }
+            }
+          }
+        ]
+      },
+      "icon_options": {
+        "type": "object",
+        "keys": { "purpose": { "type": "string" } }
+      }
+    }
+  }
+}

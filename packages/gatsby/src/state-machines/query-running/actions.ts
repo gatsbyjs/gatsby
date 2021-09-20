@@ -1,9 +1,14 @@
 import { IQueryRunningContext } from "./types"
-import { DoneInvokeEvent, assign, ActionFunctionMap } from "xstate"
+import {
+  DoneInvokeEvent,
+  assign,
+  ActionFunctionMap,
+  AnyEventObject,
+} from "xstate"
 import { enqueueFlush } from "../../utils/page-data"
 
-export const flushPageData = (): void => {
-  enqueueFlush()
+export const flushPageData = (context: IQueryRunningContext): void => {
+  enqueueFlush(context.parentSpan)
 }
 
 export const assignDirtyQueries = assign<
@@ -16,10 +21,37 @@ export const assignDirtyQueries = assign<
   }
 })
 
-export const queryActions: ActionFunctionMap<
+export const markSourceFilesDirty = assign<IQueryRunningContext>({
+  filesDirty: true,
+})
+
+export const markSourceFilesClean = assign<IQueryRunningContext>({
+  filesDirty: false,
+})
+
+export const trackRequestedQueryRun = assign<
   IQueryRunningContext,
-  DoneInvokeEvent<any>
-> = {
+  AnyEventObject
+>({
+  pendingQueryRuns: (context, { payload }) => {
+    const pendingQueryRuns = context.pendingQueryRuns || new Set<string>()
+    if (payload?.pagePath) {
+      pendingQueryRuns.add(payload.pagePath)
+    }
+    return pendingQueryRuns
+  },
+})
+
+export const clearCurrentlyHandledPendingQueryRuns =
+  assign<IQueryRunningContext>({
+    currentlyHandledPendingQueryRuns: undefined,
+  })
+
+export const queryActions: ActionFunctionMap<IQueryRunningContext, any> = {
   assignDirtyQueries,
   flushPageData,
+  markSourceFilesDirty,
+  markSourceFilesClean,
+  trackRequestedQueryRun,
+  clearCurrentlyHandledPendingQueryRuns,
 }

@@ -17,7 +17,7 @@ exports[`<Link /> matches basic snapshot 1`] = `
 <div>
   <a
     class="link"
-    href="/"
+    href="/active"
     style="color: black;"
   >
     link

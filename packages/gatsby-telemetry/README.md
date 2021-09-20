@@ -4,7 +4,13 @@ Check out: [gatsby.dev/telemetry](https://gatsby.dev/telemetry)
 
 ## API
 
+### captureEvent(type, tags)
+
+Capture an event of type `type` and decorate the generated event with these tags (note: allowed tags are filtered on server side)
+
 ### trackCli(type, tags)
+
+_This one does the same thing as the `captureEvent` function described above._
 
 Capture an event of type `type` and decorate the generated event with these tags (note: allowed tags are filtered on server side)
 

@@ -6,39 +6,16 @@ import {
   ActionFunctionMap,
   DoneEventObject,
 } from "xstate"
-import { Store } from "redux"
-import { IBuildContext, IMutationAction } from "../../services"
-import { actions, boundActionCreators } from "../../redux/actions"
+import { IBuildContext } from "../../services"
+import { actions } from "../../redux/actions"
 import { listenForMutations } from "../../services/listen-for-mutations"
 import { DataLayerResult } from "../data-layer"
-import { assertStore } from "../../utils/assert-store"
-import { saveState } from "../../db"
+import { saveState } from "../../redux/save-state"
 import reporter from "gatsby-cli/lib/reporter"
+import { store } from "../../redux"
 import { ProgramStatus } from "../../redux/types"
 import { createWebpackWatcher } from "../../services/listen-to-webpack"
-
-/**
- * These are the deferred redux actions sent from api-runner-node
- * They may include a `resolve` prop (if they are createNode actions).
- * If so, we resolve the promise when we're done
- */
-export const callRealApi = (event: IMutationAction, store?: Store): void => {
-  assertStore(store)
-  const { type, payload, resolve } = event
-  if (type in actions) {
-    // If this is a createNode action then this will be a thunk.
-    // No worries, we just dispatch it like any other
-    const action = actions[type](...payload)
-    const result = store.dispatch(action)
-    // Somebody may be waiting for this
-    if (resolve) {
-      resolve(result)
-    }
-  } else {
-    reporter.log(`Could not dispatch unknown action "${type}`)
-  }
-}
-
+import { callRealApi } from "../../utils/call-deferred-api"
 /**
  * Handler for when we're inside handlers that should be able to mutate nodes
  * Instead of queueing, we call it right away
@@ -71,8 +48,8 @@ export const assignStoreAndWorkerPool = assign<IBuildContext, DoneEventObject>(
 )
 
 const setQueryRunningFinished = async (): Promise<void> => {
-  boundActionCreators.setProgramStatus(
-    ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
+  store.dispatch(
+    actions.setProgramStatus(ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED)
   )
 }
 
@@ -86,6 +63,32 @@ export const markSourceFilesDirty = assign<IBuildContext>({
 
 export const markSourceFilesClean = assign<IBuildContext>({
   sourceFilesDirty: false,
+})
+
+export const markNodesDirty = assign<IBuildContext>({
+  nodesMutatedDuringQueryRun: true,
+})
+
+export const markNodesClean = assign<IBuildContext>({
+  nodesMutatedDuringQueryRun: false,
+})
+
+export const incrementRecompileCount = assign<IBuildContext>({
+  nodesMutatedDuringQueryRunRecompileCount: ({
+    nodesMutatedDuringQueryRunRecompileCount: count = 0,
+  }) => {
+    reporter.verbose(
+      `Re-running queries because nodes mutated during query run. Count: ${
+        count + 1
+      }`
+    )
+    return count + 1
+  },
+})
+
+export const resetRecompileCount = assign<IBuildContext>({
+  nodesMutatedDuringQueryRunRecompileCount: 0,
+  nodesMutatedDuringQueryRun: false,
 })
 
 export const assignServiceResult = assign<IBuildContext, DoneEventObject>(
@@ -118,10 +121,12 @@ export const spawnWebpackListener = assign<IBuildContext, AnyEventObject>({
 
 export const assignWebhookBody = assign<IBuildContext, AnyEventObject>({
   webhookBody: (_context, { payload }) => payload?.webhookBody,
+  webhookSourcePluginName: (_context, { payload }) => payload?.pluginName,
 })
 
 export const clearWebhookBody = assign<IBuildContext, AnyEventObject>({
   webhookBody: undefined,
+  webhookSourcePluginName: undefined,
 })
 
 export const finishParentSpan = ({ parentSpan }: IBuildContext): void =>
@@ -129,16 +134,46 @@ export const finishParentSpan = ({ parentSpan }: IBuildContext): void =>
 
 export const saveDbState = (): Promise<void> => saveState()
 
-/**
- * Event handler used in all states where we're not ready to process a file change
- * Instead we add it to a batch to process when we're next idle
- */
-// export const markFilesDirty: BuildMachineAction = assign<IBuildContext>({
-//   filesDirty: true,
-// })
+export const logError: ActionFunction<IBuildContext, AnyEventObject> = (
+  _context,
+  event
+) => {
+  reporter.error(event.data)
+}
 
-export const markNodesDirty = assign<IBuildContext>({
-  nodesMutatedDuringQueryRun: true,
+export const panic: ActionFunction<IBuildContext, AnyEventObject> = (
+  _context,
+  event
+) => {
+  reporter.panic(event.data)
+}
+
+export const panicBecauseOfInfiniteLoop: ActionFunction<
+  IBuildContext,
+  AnyEventObject
+> = () => {
+  reporter.panic(
+    reporter.stripIndent(`
+  Panicking because nodes appear to be being changed every time we run queries. This would cause the site to recompile infinitely.
+  Check custom resolvers to see if they are unconditionally creating or mutating nodes on every query.
+  This may happen if they create nodes with a field that is different every time, such as a timestamp or unique id.`)
+  )
+}
+
+export const trackRequestedQueryRun = assign<IBuildContext, AnyEventObject>({
+  pendingQueryRuns: (context, { payload }) => {
+    const pendingQueryRuns = context.pendingQueryRuns || new Set<string>()
+    if (payload?.pagePath) {
+      pendingQueryRuns.add(payload.pagePath)
+    }
+    return pendingQueryRuns
+  },
+})
+
+export const clearPendingQueryRuns = assign<IBuildContext>(() => {
+  return {
+    pendingQueryRuns: new Set<string>(),
+  }
 })
 
 export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
@@ -156,6 +191,14 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   spawnWebpackListener,
   markSourceFilesDirty,
   markSourceFilesClean,
+  markNodesClean,
+  incrementRecompileCount,
+  resetRecompileCount,
+  panicBecauseOfInfiniteLoop,
   saveDbState,
   setQueryRunningFinished,
+  panic,
+  logError,
+  trackRequestedQueryRun,
+  clearPendingQueryRuns,
 }

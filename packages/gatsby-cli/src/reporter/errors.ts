@@ -13,8 +13,8 @@ const packagesToSkipTest = new RegExp(
 // TO-DO: move this this out of this file (and probably delete this file completely)
 // it's here because it re-implements similar thing as `pretty-error` already does
 export const sanitizeStructuredStackTrace = (
-  stack: stackTrace.StackFrame[]
-): IStructuredStackFrame[] => {
+  stack: Array<stackTrace.StackFrame>
+): Array<IStructuredStackFrame> => {
   // first filter out not useful call sites
   stack = stack.filter(callSite => {
     if (!callSite.getFileName()) {
@@ -86,7 +86,7 @@ export function getErrorFormatter(): PrettyError {
   }
 
   prettyError.render = (
-    err: PrettyRenderError | PrettyRenderError[]
+    err: PrettyRenderError | Array<PrettyRenderError>
   ): string => {
     if (Array.isArray(err)) {
       return err.map(e => prettyError.render(e)).join(`\n`)
@@ -106,7 +106,7 @@ export function getErrorFormatter(): PrettyError {
 export async function createErrorFromString(
   errorStr: string = ``,
   sourceMapFile: string
-): Promise<Error | ErrorWithCodeFrame> {
+): Promise<ErrorWithCodeFrame> {
   let [message, ...rest] = errorStr.split(/\r\n|[\n\r]/g)
   // pull the message from the first line then remove the `Error:` prefix
   // FIXME: when https://github.com/AriaMinaei/pretty-error/pull/49 is merged

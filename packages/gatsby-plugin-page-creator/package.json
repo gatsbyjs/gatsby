@@ -1,11 +1,11 @@
 {
   "name": "gatsby-plugin-page-creator",
-  "version": "2.3.18",
+  "version": "4.0.0-zz-next.1",
   "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
-    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\"",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\"",
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build"
   },
   "keywords": [
@@ -24,24 +24,28 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator#readme",
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
-    "bluebird": "^3.7.2",
+    "@babel/runtime": "^7.15.4",
+    "@babel/traverse": "^7.15.4",
+    "@sindresorhus/slugify": "^1.1.2",
+    "chokidar": "^3.5.2",
     "fs-exists-cached": "^1.0.0",
-    "gatsby-page-utils": "^0.2.18",
-    "glob": "^7.1.6",
-    "lodash": "^4.17.15",
-    "micromatch": "^3.1.10"
+    "gatsby-core-utils": "^3.0.0-zz-next.1",
+    "gatsby-page-utils": "^2.0.0-zz-next.1",
+    "gatsby-plugin-utils": "^2.0.0-zz-next.1",
+    "gatsby-telemetry": "^3.0.0-zz-next.1",
+    "globby": "^11.0.4",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "babel-preset-gatsby-package": "^0.5.2",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "babel-preset-gatsby-package": "^2.0.0-zz-next.1",
+    "cross-env": "^7.0.3"
   },
   "peerDependencies": {
-    "gatsby": "^2.0.0"
+    "gatsby": "^4.0.0-next"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=14.15.0"
   }
 }

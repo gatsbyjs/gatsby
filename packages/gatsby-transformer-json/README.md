@@ -5,7 +5,7 @@ arrays of objects and single objects.
 
 ## Install
 
-`npm install --save gatsby-transformer-json`
+`npm install gatsby-transformer-json`
 
 If you want to transform json files, you also need to have `gatsby-source-filesystem` installed and configured so it
 points to your files.

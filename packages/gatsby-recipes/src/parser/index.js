@@ -1,20 +1,57 @@
-const unified = require(`unified`)
-const remarkMdx = require(`remark-mdx`)
-const remarkParse = require(`remark-parse`)
-const remarkStringify = require(`remark-stringify`)
-const fetch = require(`node-fetch`)
-const fs = require(`fs-extra`)
-const isUrl = require(`is-url`)
-const path = require(`path`)
+import unified from "unified"
+import remarkMdx from "remark-mdx"
+import remarkMdxjs from "remark-mdxjs"
+import remarkParse from "remark-parse"
+import remarkStringify from "remark-stringify"
+import visit from "unist-util-visit"
+import remove from "unist-util-remove"
+import transformMdx from "../transform-recipe-mdx"
+import { uuid } from "./util"
 
-const asRoot = nodes => {
+const IGNORED_COMPONENTS = [`RecipeIntroduction`, `RecipeStep`]
+
+const asRoot = node => {
   return {
     type: `root`,
-    children: nodes,
+    children: [node],
   }
 }
 
-const u = unified().use(remarkParse).use(remarkStringify).use(remarkMdx)
+const pluckExports = tree => {
+  const exports = []
+  visit(tree, `export`, node => {
+    exports.push(node)
+  })
+
+  remove(tree, `export`)
+
+  return exports
+}
+
+const applyUuid = tree => {
+  visit(tree, `mdxBlockElement`, node => {
+    if (!IGNORED_COMPONENTS.includes(node.name)) {
+      node.attributes.push({
+        type: `mdxAttribute`,
+        name: `_uuid`,
+        value: uuid(),
+      })
+      node.attributes.push({
+        type: `mdxAttribute`,
+        name: `_type`,
+        value: node.name,
+      })
+    }
+  })
+
+  return tree
+}
+
+const u = unified()
+  .use(remarkParse)
+  .use(remarkStringify)
+  .use(remarkMdx)
+  .use(remarkMdxjs)
 
 const partitionSteps = ast => {
   const steps = []
@@ -34,75 +71,61 @@ const partitionSteps = ast => {
 }
 
 const toMdx = nodes => {
-  const stepAst = asRoot(nodes)
-  return u.stringify(stepAst)
+  const stepAst = applyUuid(asRoot(nodes))
+  const mdxSrc = u.stringify(stepAst)
+
+  return mdxSrc
 }
 
 const parse = async src => {
-  try {
-    const ast = u.parse(src)
-    const steps = partitionSteps(ast)
+  const ast = u.parse(src)
+  const exportNodes = pluckExports(ast)
+  const [intro, ...resourceSteps] = partitionSteps(ast)
 
+  const wrappedIntroStep = {
+    type: `mdxBlockElement`,
+    name: `RecipeIntroduction`,
+    attributes: [],
+    children: intro,
+  }
+
+  const wrappedResourceSteps = resourceSteps.map((step, i) => {
     return {
-      ast,
-      steps,
-      stepsAsMdx: steps.map(toMdx),
+      type: `mdxBlockElement`,
+      name: `RecipeStep`,
+      attributes: [
+        {
+          type: `mdxAttribute`,
+          name: `step`,
+          value: String(i + 1),
+        },
+        {
+          type: `mdxAttribute`,
+          name: `totalSteps`,
+          value: String(resourceSteps.length),
+        },
+      ],
+      children: step,
     }
-  } catch (e) {
-    throw e
+  })
+
+  const steps = [wrappedIntroStep, ...wrappedResourceSteps]
+  ast.children = [...exportNodes, ...ast.children]
+
+  const exportsAsMdx = exportNodes.map(toMdx)
+  const stepsAsMdx = steps.map(toMdx)
+  const stepsAsJS = stepsAsMdx.map(transformMdx)
+
+  return {
+    ast,
+    steps,
+    exports: exportNodes,
+    exportsAsMdx,
+    stepsAsMdx,
+    stepsAsJS,
+    recipe: exportsAsMdx.join(`\n`) + `\n\n` + stepsAsMdx.join(`\n`),
   }
 }
 
-const isRelative = path => {
-  if (path.slice(0, 1) == `.`) {
-    return true
-  }
-
-  return false
-}
-
-const getSource = async (pathOrUrl, projectRoot) => {
-  let recipePath
-  if (isUrl(pathOrUrl)) {
-    const res = await fetch(pathOrUrl)
-    const src = await res.text()
-    return src
-  }
-  if (isRelative(pathOrUrl)) {
-    recipePath = path.join(projectRoot, pathOrUrl)
-  } else {
-    const url = `https://unpkg.com/gatsby-recipes/recipes/${pathOrUrl}`
-    const res = await fetch(url.endsWith(`.mdx`) ? url : url + `.mdx`)
-
-    if (res.status !== 200) {
-      throw new Error(
-        JSON.stringify({
-          fetchError: `Could not fetch ${pathOrUrl} from official recipes`,
-        })
-      )
-    }
-
-    const src = await res.text()
-    return src
-  }
-  if (recipePath.slice(-4) !== `.mdx`) {
-    recipePath += `.mdx`
-  }
-
-  const src = await fs.readFile(recipePath, `utf8`)
-  return src
-}
-
-module.exports = async (recipePath, projectRoot) => {
-  const src = await getSource(recipePath, projectRoot)
-  try {
-    const result = await parse(src)
-    return result
-  } catch (e) {
-    console.log(e)
-    throw e
-  }
-}
-
-module.exports.parse = parse
-module.exports.u = u
+export default parse
+export { parse, u }

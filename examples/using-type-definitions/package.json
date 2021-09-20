@@ -4,15 +4,15 @@
   "description": "An example site using createTypes action and createResolvers API",
   "version": "0.1.0",
   "dependencies": {
-    "gatsby": "^2.23.12",
-    "gatsby-image": "^2.4.9",
-    "gatsby-plugin-sharp": "^2.6.14",
-    "gatsby-source-filesystem": "^2.3.14",
-    "gatsby-transformer-json": "^2.4.7",
-    "gatsby-transformer-sharp": "^2.5.7",
+    "gatsby": "next",
+    "gatsby-image": "next",
+    "gatsby-plugin-sharp": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-transformer-json": "next",
+    "gatsby-transformer-sharp": "next",
     "prop-types": "^15.7.2",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1"
   },
   "keywords": [
@@ -27,7 +27,7 @@
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
   "devDependencies": {
-    "prettier": "2.0.5"
+    "prettier": "2.1.1"
   },
   "repository": {
     "type": "git",

@@ -9,6 +9,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, `..`, `..`),
     filename: `./app.js`,
+    publicPath: `/___graphql`,
   },
   devtool: false,
   module: {
@@ -25,8 +26,9 @@ module.exports = {
                 {
                   corejs: 3,
                   loose: true,
+                  bugfixes: true,
                   modules: `commonjs`,
-                  useBuiltIns: `usage`,
+                  useBuiltIns: `entry`,
                   targets: [`>0.25%`, `not dead`],
                 },
               ],
@@ -35,7 +37,7 @@ module.exports = {
                 {
                   useBuiltIns: true,
                   pragma: `React.createElement`,
-                  development: false,
+                  development: mode !== `production`,
                 },
               ],
             ],

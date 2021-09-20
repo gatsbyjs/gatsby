@@ -12,12 +12,10 @@ describe(`gatsby build`, () => {
   it(`creates a built gatsby site`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke(`build`)
 
-    logs.should.contain(`success open and validate gatsby-configs`)
-    logs.should.contain(`success load plugins`)
-    logs.should.contain(`success onPreInit`)
     logs.should.contain(
-      `success delete html and css files from previous builds`
+      `success open and validate gatsby-configs, load plugins`
     )
+    logs.should.contain(`success onPreInit`)
     logs.should.contain(`success initialize cache`)
     logs.should.contain(`success copy gatsby files`)
     logs.should.contain(`success onPreBootstrap`)
@@ -36,7 +34,7 @@ describe(`gatsby build`, () => {
     logs.should.contain(
       `success Building production JavaScript and CSS bundles`
     )
-    logs.should.contain(`success run queries`)
+    logs.should.contain(`success run page queries`)
     logs.should.contain(`success Building static HTML for pages`)
     logs.should.contain(`success onPostBuild`)
     logs.should.contain(`info Done building`)

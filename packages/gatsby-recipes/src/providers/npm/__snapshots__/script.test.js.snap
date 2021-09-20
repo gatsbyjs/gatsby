@@ -2,7 +2,7 @@
 
 exports[`npm script resource e2e script resource test: NPMScript create 1`] = `
 Object {
-  "_message": "Wrote script apple to your package.json",
+  "_message": "Added script \\"apple\\" to your package.json",
   "command": "foot",
   "id": "apple",
   "name": "apple",
@@ -12,7 +12,7 @@ Object {
 exports[`npm script resource e2e script resource test: NPMScript create plan 1`] = `
 Object {
   "currentState": "",
-  "describe": "Add new command to your package.json",
+  "describe": "Add script \\"apple\\" to your package.json",
   "diff": "- Original  - 1
 + Modified  + 3
 
@@ -31,7 +31,7 @@ exports[`npm script resource e2e script resource test: NPMScript destroy 1`] = `
 
 exports[`npm script resource e2e script resource test: NPMScript update 1`] = `
 Object {
-  "_message": "Wrote script apple to your package.json",
+  "_message": "Added script \\"apple\\" to your package.json",
   "command": "foot2",
   "id": "apple",
   "name": "apple",
@@ -41,7 +41,7 @@ Object {
 exports[`npm script resource e2e script resource test: NPMScript update plan 1`] = `
 Object {
   "currentState": "\\"apple\\": \\"foot\\"",
-  "describe": "Add new command to your package.json",
+  "describe": "Add script \\"apple\\" to your package.json",
   "diff": "- Original  - 1
 + Modified  + 1
 
@@ -53,5 +53,23 @@ Object {
     },
   }",
   "newState": "\\"apple\\": \\"foot2\\"",
+}
+`;
+
+exports[`npm script resource handles multiple parallel create calls 1`] = `
+Object {
+  "_message": "Added script \\"husky\\" to your package.json",
+  "command": "hi",
+  "id": "husky",
+  "name": "husky",
+}
+`;
+
+exports[`npm script resource handles multiple parallel create calls 2`] = `
+Object {
+  "_message": "Added script \\"husky2\\" to your package.json",
+  "command": "hi",
+  "id": "husky2",
+  "name": "husky2",
 }
 `;

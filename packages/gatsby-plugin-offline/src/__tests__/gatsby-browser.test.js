@@ -3,7 +3,7 @@ const { onServiceWorkerActive } = require(`../gatsby-browser`)
 it(`does not add prefetch for preconnect/prefetch/prerender`, () => {
   const addHeadElement = (tagName, attributes) => {
     const el = document.createElement(tagName)
-    for (let key in attributes) {
+    for (const key in attributes) {
       el.setAttribute(key, attributes[key])
     }
     document.head.appendChild(el)

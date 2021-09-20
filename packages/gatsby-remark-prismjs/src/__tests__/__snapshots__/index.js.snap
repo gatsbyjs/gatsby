@@ -1,18 +1,58 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`remark prism plugin diff supports language specifier 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "lang": "diff-javascript",
+      "meta": null,
+      "position": Object {
+        "end": Object {
+          "column": 4,
+          "line": 6,
+          "offset": 141,
+        },
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "html",
+      "value": "<div class=\\"gatsby-highlight\\" data-language=\\"diff\\"><pre class=\\"language-diff-javascript\\"><code class=\\"language-diff-javascript\\"><span class=\\"token deleted-sign deleted language-javascript\\"><span class=\\"token prefix deleted\\">-</span>    <span class=\\"token keyword\\">let</span> foo <span class=\\"token operator\\">=</span> bar<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">baz</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">[</span><span class=\\"token number\\">1</span><span class=\\"token punctuation\\">,</span> <span class=\\"token number\\">2</span><span class=\\"token punctuation\\">,</span> <span class=\\"token number\\">3</span><span class=\\"token punctuation\\">]</span><span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">;</span>
+<span class=\\"token prefix deleted\\">-</span>    foo <span class=\\"token operator\\">=</span> foo <span class=\\"token operator\\">+</span> <span class=\\"token number\\">1</span><span class=\\"token punctuation\\">;</span>
+</span><span class=\\"token inserted-sign inserted language-javascript\\"><span class=\\"token prefix inserted\\">+</span>    <span class=\\"token keyword\\">const</span> foo <span class=\\"token operator\\">=</span> bar<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">baz</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">[</span><span class=\\"token number\\">1</span><span class=\\"token punctuation\\">,</span> <span class=\\"token number\\">2</span><span class=\\"token punctuation\\">,</span> <span class=\\"token number\\">3</span><span class=\\"token punctuation\\">]</span><span class=\\"token punctuation\\">)</span> <span class=\\"token operator\\">+</span> <span class=\\"token number\\">1</span><span class=\\"token punctuation\\">;</span>
+</span><span class=\\"token unchanged language-javascript\\"><span class=\\"token prefix unchanged\\"> </span>    console<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">log</span><span class=\\"token punctuation\\">(</span>foo<span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">;</span></span></code></pre></div>",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 4,
+      "line": 6,
+      "offset": 141,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
 exports[`remark prism plugin does not handle inline code if noInlineHighlight: true 1`] = `
 Object {
   "children": Array [
     Object {
       "children": Array [
         Object {
-          "position": Position {
+          "position": Object {
             "end": Object {
               "column": 11,
               "line": 1,
               "offset": 10,
             },
-            "indent": Array [],
             "start": Object {
               "column": 1,
               "line": 1,
@@ -23,13 +63,12 @@ Object {
           "value": "some text ",
         },
         Object {
-          "position": Position {
+          "position": Object {
             "end": Object {
               "column": 35,
               "line": 1,
               "offset": 34,
             },
-            "indent": Array [],
             "start": Object {
               "column": 11,
               "line": 1,
@@ -40,13 +79,12 @@ Object {
           "value": "containing inline code",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 35,
           "line": 1,
           "offset": 34,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -77,16 +115,13 @@ Object {
   "children": Array [
     Object {
       "lang": "js",
-      "position": Position {
+      "meta": null,
+      "position": Object {
         "end": Object {
           "column": 4,
           "line": 3,
           "offset": 17,
         },
-        "indent": Array [
-          1,
-          1,
-        ],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -118,16 +153,13 @@ Object {
   "children": Array [
     Object {
       "lang": "foobar",
-      "position": Position {
+      "meta": null,
+      "position": Object {
         "end": Object {
           "column": 4,
           "line": 3,
           "offset": 21,
         },
-        "indent": Array [
-          1,
-          1,
-        ],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -159,16 +191,13 @@ Object {
   "children": Array [
     Object {
       "lang": "foobar",
-      "position": Position {
+      "meta": null,
+      "position": Object {
         "end": Object {
           "column": 4,
           "line": 3,
           "offset": 21,
         },
-        "indent": Array [
-          1,
-          1,
-        ],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -200,16 +229,13 @@ Object {
   "children": Array [
     Object {
       "lang": "js",
-      "position": Position {
+      "meta": null,
+      "position": Object {
         "end": Object {
           "column": 4,
           "line": 3,
           "offset": 17,
         },
-        "indent": Array [
-          1,
-          1,
-        ],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -241,18 +267,13 @@ Object {
   "children": Array [
     Object {
       "lang": "js{2}",
-      "position": Position {
+      "meta": null,
+      "position": Object {
         "end": Object {
           "column": 4,
           "line": 5,
           "offset": 27,
         },
-        "indent": Array [
-          1,
-          1,
-          1,
-          1,
-        ],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -286,13 +307,12 @@ Object {
     Object {
       "children": Array [
         Object {
-          "position": Position {
+          "position": Object {
             "end": Object {
               "column": 29,
               "line": 1,
               "offset": 28,
             },
-            "indent": Array [],
             "start": Object {
               "column": 1,
               "line": 1,
@@ -303,13 +323,12 @@ Object {
           "value": "<code class=\\"language-css\\"><span class=\\"token selector\\">.foo</span> <span class=\\"token punctuation\\">{</span> <span class=\\"token property\\">color</span><span class=\\"token punctuation\\">:</span> red <span class=\\"token punctuation\\">}</span></code>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 29,
           "line": 1,
           "offset": 28,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -341,13 +360,12 @@ Object {
     Object {
       "children": Array [
         Object {
-          "position": Position {
+          "position": Object {
             "end": Object {
               "column": 10,
               "line": 1,
               "offset": 9,
             },
-            "indent": Array [],
             "start": Object {
               "column": 1,
               "line": 1,
@@ -358,13 +376,12 @@ Object {
           "value": "<code class=\\"custom-text\\">foo bar</code>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 10,
           "line": 1,
           "offset": 9,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -396,13 +413,12 @@ Object {
     Object {
       "children": Array [
         Object {
-          "position": Position {
+          "position": Object {
             "end": Object {
               "column": 16,
               "line": 1,
               "offset": 15,
             },
-            "indent": Array [],
             "start": Object {
               "column": 1,
               "line": 1,
@@ -413,13 +429,12 @@ Object {
           "value": "<code class=\\"language-javascript\\">Fake</code>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 16,
           "line": 1,
           "offset": 15,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -451,13 +466,12 @@ Object {
     Object {
       "children": Array [
         Object {
-          "position": Position {
+          "position": Object {
             "end": Object {
               "column": 10,
               "line": 1,
               "offset": 9,
             },
-            "indent": Array [],
             "start": Object {
               "column": 1,
               "line": 1,
@@ -468,13 +482,12 @@ Object {
           "value": "<code class=\\"language-text\\">foo bar</code>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 10,
           "line": 1,
           "offset": 9,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -505,17 +518,13 @@ Object {
   "children": Array [
     Object {
       "lang": "js",
-      "position": Position {
+      "meta": null,
+      "position": Object {
         "end": Object {
           "column": 4,
           "line": 4,
           "offset": 31,
         },
-        "indent": Array [
-          1,
-          1,
-          1,
-        ],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -549,17 +558,13 @@ Object {
   "children": Array [
     Object {
       "lang": "js{numberLines:5}",
-      "position": Position {
+      "meta": null,
+      "position": Object {
         "end": Object {
           "column": 4,
           "line": 4,
           "offset": 46,
         },
-        "indent": Array [
-          1,
-          1,
-          1,
-        ],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -593,17 +598,13 @@ Object {
   "children": Array [
     Object {
       "lang": "js",
-      "position": Position {
+      "meta": null,
+      "position": Object {
         "end": Object {
           "column": 4,
           "line": 4,
           "offset": 31,
         },
-        "indent": Array [
-          1,
-          1,
-          1,
-        ],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -637,15 +638,13 @@ Object {
   "children": Array [
     Object {
       "lang": "bash{promptHost:server}",
-      "position": Position {
+      "meta": null,
+      "position": Object {
         "end": Object {
           "column": 15,
           "line": 2,
           "offset": 41,
         },
-        "indent": Array [
-          1,
-        ],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -677,15 +676,13 @@ Object {
   "children": Array [
     Object {
       "lang": "bash{promptUser:alice}{promptHost:server}",
-      "position": Position {
+      "meta": null,
+      "position": Object {
         "end": Object {
           "column": 15,
           "line": 2,
           "offset": 59,
         },
-        "indent": Array [
-          1,
-        ],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -717,15 +714,13 @@ Object {
   "children": Array [
     Object {
       "lang": "bash{promptUser:alice}",
-      "position": Position {
+      "meta": null,
+      "position": Object {
         "end": Object {
           "column": 15,
           "line": 2,
           "offset": 40,
         },
-        "indent": Array [
-          1,
-        ],
         "start": Object {
           "column": 1,
           "line": 1,

@@ -4,7 +4,7 @@ import { Runner } from "../../bootstrap/create-graphql-runner"
 import { GraphQLRunner } from "../../query/graphql-runner"
 import { Store, AnyAction } from "redux"
 import { IGatsbyState } from "../../redux/types"
-import { IGroupedQueryIds } from "../data-layer/types"
+import { IGroupedQueryIds } from "../../services/types"
 import { WebsocketManager } from "../../utils/websocket-manager"
 
 export interface IQueryRunningContext {
@@ -14,9 +14,11 @@ export interface IQueryRunningContext {
   parentSpan?: Span
   gatsbyNodeGraphQLFunction?: Runner
   graphqlRunner?: GraphQLRunner
-  pagesToBuild?: string[]
-  pagesToDelete?: string[]
+  pagesToBuild?: Array<string>
+  pagesToDelete?: Array<string>
   queryIds?: IGroupedQueryIds
   websocketManager?: WebsocketManager
   filesDirty?: boolean
+  pendingQueryRuns?: Set<string>
+  currentlyHandledPendingQueryRuns?: Set<string>
 }

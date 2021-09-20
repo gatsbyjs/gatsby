@@ -1,3 +1,4 @@
+/* global plugins */
 // During bootstrap, we write requires at top of this file which looks like:
 // var plugins = [
 //   {
@@ -12,31 +13,76 @@
 
 const apis = require(`./api-ssr-docs`)
 
-// Run the specified API in any plugins that have implemented it
-module.exports = (api, args, defaultReturn, argTransform) => {
+function augmentErrorWithPlugin(plugin, err) {
+  if (plugin.name !== `default-site-plugin`) {
+    // default-site-plugin is user code and will print proper stack trace,
+    // so no point in annotating error message pointing out which plugin is root of the problem
+    err.message += ` (from plugin: ${plugin.name})`
+  }
+
+  throw err
+}
+
+export function apiRunner(api, args, defaultReturn, argTransform) {
   if (!apis[api]) {
     console.log(`This API doesn't exist`, api)
   }
 
-  // Run each plugin in series.
-  // eslint-disable-next-line no-undef
-  let results = plugins.map(plugin => {
-    if (!plugin.plugin[api]) {
-      return undefined
+  const results = []
+  plugins.forEach(plugin => {
+    const apiFn = plugin.plugin[api]
+    if (!apiFn) {
+      return
     }
-    const result = plugin.plugin[api](args, plugin.options)
-    if (result && argTransform) {
-      args = argTransform({ args, result })
+
+    try {
+      const result = apiFn(args, plugin.options)
+
+      if (result && argTransform) {
+        args = argTransform({ args, result })
+      }
+
+      // This if case keeps behaviour as before, we should allow undefined here as the api is defined
+      // TODO V4
+      if (typeof result !== `undefined`) {
+        results.push(result)
+      }
+    } catch (e) {
+      augmentErrorWithPlugin(plugin, e)
     }
-    return result
   })
 
-  // Filter out undefined results.
-  results = results.filter(result => typeof result !== `undefined`)
+  return results.length ? results : [defaultReturn]
+}
 
-  if (results.length > 0) {
-    return results
-  } else {
-    return [defaultReturn]
+export async function apiRunnerAsync(api, args, defaultReturn, argTransform) {
+  if (!apis[api]) {
+    console.log(`This API doesn't exist`, api)
   }
+
+  const results = []
+  for (const plugin of plugins) {
+    const apiFn = plugin.plugin[api]
+    if (!apiFn) {
+      continue
+    }
+
+    try {
+      const result = await apiFn(args, plugin.options)
+
+      if (result && argTransform) {
+        args = argTransform({ args, result })
+      }
+
+      // This if case keeps behaviour as before, we should allow undefined here as the api is defined
+      // TODO V4
+      if (typeof result !== `undefined`) {
+        results.push(result)
+      }
+    } catch (e) {
+      augmentErrorWithPlugin(plugin, e)
+    }
+  }
+
+  return results.length ? results : [defaultReturn]
 }

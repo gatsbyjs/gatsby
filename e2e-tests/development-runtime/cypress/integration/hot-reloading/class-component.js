@@ -5,9 +5,7 @@ describe(`reloading class component`, () => {
     cy.visit(`/`).waitForRouteChange()
   })
   it(`displays placeholder on launch`, () => {
-    cy.getTestElement(TEST_ID)
-      .invoke(`text`)
-      .should(`contain`, `%CLASS_COMPONENT%`)
+    cy.getTestElement(TEST_ID).should(`contain.text`, `%CLASS_COMPONENT%`)
   })
 
   it(`updates placeholder and hot reloads`, () => {
@@ -16,7 +14,7 @@ describe(`reloading class component`, () => {
       `npm run update -- --file src/components/class-component.js --replacements "CLASS_COMPONENT:${text}"`
     )
 
-    cy.getTestElement(TEST_ID).invoke(`text`).should(`contain`, text)
+    cy.getTestElement(TEST_ID).should(`contain.text`, text)
   })
 
   it(`updates state and hot reloads`, () => {
@@ -25,8 +23,11 @@ describe(`reloading class component`, () => {
       `npm run update -- --file src/components/class-component.js --replacements "CUSTOM_STATE:${value}"`
     )
 
-    cy.getTestElement(`stateful-${TEST_ID}`)
-      .invoke(`text`)
-      .should(`eq`, `Custom Message`)
+    cy.waitForHmr()
+
+    cy.getTestElement(`stateful-${TEST_ID}`).should(
+      `have.text`,
+      `Custom Message`
+    )
   })
 })

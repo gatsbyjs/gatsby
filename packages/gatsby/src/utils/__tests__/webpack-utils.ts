@@ -6,7 +6,7 @@ import autoprefixer from "autoprefixer"
 
 jest.mock(`../browserslist`, () => {
   return {
-    getBrowsersList: (): string[] => [],
+    getBrowsersList: (): Array<string> => [],
   }
 })
 
@@ -188,7 +188,7 @@ describe(`webpack utils`, () => {
         postcss = config.loaders.postcss()
       })
       it(`initialises autoprefixer with defaults`, () => {
-        postcss.options.plugins(postcss.loader)
+        postcss.options.postcssOptions(postcss.loader)
         expect(autoprefixer).toBeCalled()
         expect(autoprefixer).toBeCalledWith({
           flexbox: `no-2009`,
@@ -209,7 +209,7 @@ describe(`webpack utils`, () => {
         })
       })
       it(`initialises autoprefixer with overrides`, () => {
-        postcss.options.plugins(postcss.loader)
+        postcss.options.postcssOptions(postcss.loader)
         expect(autoprefixer).toBeCalled()
         expect(autoprefixer).toBeCalledWith({
           flexbox: `no-2009`,

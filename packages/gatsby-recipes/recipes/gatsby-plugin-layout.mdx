@@ -1,7 +1,6 @@
 # Setup gatsby-plugin-layout
-Setup [gatsby-plugin-layout](https://www.gatsbyjs.org/packages/gatsby-plugin-layout/?=gatsby%20layout)
 
-This plugin enables adding components which live above the page components and persist across page changes.
+This plugin sets up [gatsby-plugin-layout](https://www.gatsbyjs.org/packages/gatsby-plugin-layout/?=gatsby%20layout), which enables adding components that live above the page components and persist across page changes.
 
 This can be helpful for:
 
@@ -10,23 +9,23 @@ This can be helpful for:
 - Custom error handling using componentDidCatch
 - Inject additional data into pages using React Context.
 
+This recipe:
+
 ---
 
-Install necessary NPM packages
+Installs necessary NPM packages
 
 <NPMPackage name="gatsby-plugin-layout"/>
 
 ---
 
-Install the Layout plugin in gatsby-config.js
+Installs the Layout plugin in gatsby-config.js
 
 <GatsbyPlugin name="gatsby-plugin-layout"/>
 
 ---
 
-Sweet, now it's ready to go!
-
-Let's also write out a sample layout component to get started with.
+Writes out a sample layout component to get started with.
 
 <File
     path="src/layouts/index.js"

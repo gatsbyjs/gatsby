@@ -1,6 +1,6 @@
-const template = require(`@babel/template`).default
+import template from "@babel/template"
 
-const getObjectFromNode = require(`./get-object-from-node`)
+import getObjectFromNode from "./get-object-from-node"
 
 const buildFixture = () => {
   const ast = template(`

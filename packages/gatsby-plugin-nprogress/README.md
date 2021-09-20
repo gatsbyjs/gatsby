@@ -6,7 +6,7 @@ clicking on a link).
 
 ## Install
 
-`npm install --save gatsby-plugin-nprogress`
+`npm install gatsby-plugin-nprogress`
 
 ## How to use
 

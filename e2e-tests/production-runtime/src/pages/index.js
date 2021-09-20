@@ -57,18 +57,60 @@ const IndexPage = ({ pageContext }) => (
         </Link>
       </li>
       <li>
-        <Link to="/path-context/" data-testid="path-context">
-          Path Context
+        <Link to="/안녕" data-testid="page-with-unicode-path">
+          Go to page with unicode path
         </Link>
       </li>
       <li>
-        <Link to="/안녕" data-testid="page-with-unicode-path">
+        <Link to="/foo/@something/bar" data-testid="page-with-encodable-path">
           Go to page with unicode path
         </Link>
       </li>
       <li>
         <Link to="subdirectory/page-1" data-testid="subdir-link">
           Go to subdirectory
+        </Link>
+      </li>
+      <li>
+        <Link to="collection-routing/root" data-testid="collection-link">
+          Go to collection routing
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="client-dynamic-route/foo"
+          data-testid="client-dynamic-route-foo"
+        >
+          Go to dynamic route (id: foo)
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="client-dynamic-route/splat/blah/blah/blah"
+          data-testid="client-dynamic-route-splat"
+        >
+          Go to client route splat (splat: blah/blah/blah)
+        </Link>
+      </li>
+      <li>
+        <Link to="/redirect-two#anchor" data-testid="redirect-two-anchor">
+          Go to redirect with hash
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="/redirect-two?query_param=hello"
+          data-testid="redirect-two-search"
+        >
+          Go to redirect with query param
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="/redirect-two?query_param=hello#anchor"
+          data-testid="redirect-two-search-anchor"
+        >
+          Go to redirect with query param and hash
         </Link>
       </li>
     </ul>

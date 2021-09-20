@@ -1,9 +1,10 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const Joi = require(`@hapi/joi`)
+import fs from "fs-extra"
+import path from "path"
+import * as Joi from "@hapi/joi"
+import lock from "../lock"
 
-const getDiff = require(`../utils/get-diff`)
-const resourceSchema = require(`../resource-schema`)
+import getDiff from "../utils/get-diff"
+import resourceSchema from "../resource-schema"
 const readPackageJson = async root => {
   const fullPath = path.join(root, `package.json`)
   const contents = await fs.readFile(fullPath, `utf8`)
@@ -18,12 +19,15 @@ const writePackageJson = async (root, obj) => {
 }
 
 const create = async ({ root }, { name, command }) => {
+  const release = await lock(`package.json`)
   const pkg = await readPackageJson(root)
   pkg.scripts = pkg.scripts || {}
   pkg.scripts[name] = command
   await writePackageJson(root, pkg)
 
-  return await read({ root }, name)
+  const readPackagejson = await read({ root }, name)
+  release()
+  return readPackagejson
 }
 
 const read = async ({ root }, id) => {
@@ -34,7 +38,7 @@ const read = async ({ root }, id) => {
       id,
       name: id,
       command: pkg.scripts[id],
-      _message: `Wrote script ${id} to your package.json`,
+      _message: `Added script "${id}" to your package.json`,
     }
   }
 
@@ -56,10 +60,9 @@ const schema = {
 const validate = resource =>
   Joi.validate(resource, schema, { abortEarly: false })
 
-exports.schema = schema
-exports.validate = validate
+export { schema, validate }
 
-module.exports.all = async ({ root }) => {
+export const all = async ({ root }) => {
   const pkg = await readPackageJson(root)
   const scripts = pkg.scripts || {}
 
@@ -68,7 +71,7 @@ module.exports.all = async ({ root }) => {
   })
 }
 
-module.exports.plan = async ({ root }, { name, command }) => {
+export const plan = async ({ root }, { name, command }) => {
   const resource = await read({ root }, name)
 
   const pkg = await readPackageJson(root)
@@ -89,14 +92,12 @@ module.exports.plan = async ({ root }, { name, command }) => {
     currentState,
     newState: scriptDescription(name, command),
     diff,
-    describe: `Add new command to your package.json`,
+    describe: `Add script "${name}" to your package.json`,
   }
 }
 
-module.exports.create = create
-module.exports.update = create
-module.exports.read = read
-module.exports.destroy = destroy
-module.exports.config = {
+export { create, create as update, read, destroy }
+
+export const config = {
   serial: true,
 }

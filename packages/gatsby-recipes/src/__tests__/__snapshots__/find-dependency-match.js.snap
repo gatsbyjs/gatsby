@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`findDependencyMatch basic matching 1`] = `
+Array [
+  Object {
+    "resourceDefinitions": Object {
+      "name": "bar",
+    },
+    "resourceName": "foo",
+  },
+]
+`;
+
+exports[`findDependencyMatch basic matching 2`] = `
+Array [
+  Object {
+    "error": "A resource (undefined: {\\"otherKey\\":\\"hi\\"}) is missing its dependency on {\\"resourceName\\":\\"foo\\",\\"name\\":\\"bar2\\"}",
+  },
+]
+`;

@@ -1,34 +1,43 @@
-import uuidV4 from "uuid/v4"
-import { isCI, getCIName } from "gatsby-core-utils"
+import uuidv4 from "uuid/v4"
+import * as fs from "fs-extra"
+import os from "os"
+import {
+  isCI,
+  getCIName,
+  createContentDigest,
+  getTermProgram,
+} from "gatsby-core-utils"
 import {
   getRepositoryId as _getRepositoryId,
   IRepositoryId,
 } from "./repository-id"
-import os from "os"
-
-import { join, sep } from "path"
-import isDocker from "is-docker"
+import { createFlush } from "./create-flush"
+import { EventStorage } from "./event-storage"
 import { showAnalyticsNotification } from "./show-analytics-notification"
+import { cleanPaths } from "./error-helpers"
+import { getDependencies } from "./get-dependencies"
+
+import isDocker from "is-docker"
 import lodash from "lodash"
 
-// TODO convert to TypeScript
-const EventStorage = require(`./event-storage`)
-const { cleanPaths } = require(`./error-helpers`)
+const typedUUIDv4 = uuidv4 as () => string
 
+const finalEventRegex = /(END|STOP)$/
 const dbEngine = `redux`
 
-type UUID = string
-type SemVer = string | undefined
+export type SemVer = string
 
 interface IOSInfo {
   nodeVersion: SemVer
   platform: string
   release: string
-  cpus: string | undefined
+  cpus?: string
   arch: string
-  ci: boolean | undefined
+  ci?: boolean
   ciName: string | null
-  docker: boolean | undefined
+  docker?: boolean
+  termProgram?: string
+  isTTY: boolean
 }
 
 export interface IAggregateStats {
@@ -42,8 +51,83 @@ export interface IAggregateStats {
   skewness: number
 }
 
+interface IAnalyticsTrackerConstructorParameters {
+  componentId?: SemVer
+  gatsbyCliVersion?: SemVer
+  trackingEnabled?: boolean
+}
+
+export interface IStructuredError {
+  id?: string
+  code?: string
+  text: string
+  level?: string
+  type?: string
+  context?: unknown
+  error?: {
+    stack?: string
+  }
+}
+
+export interface IStructuredErrorV2 {
+  id?: string
+  text: string
+  level?: string
+  type?: string
+  context?: string
+  stack?: string
+}
+
+export interface ITelemetryTagsPayload {
+  name?: string
+  starterName?: string
+  siteName?: string
+  siteHash?: string
+  userAgent?: string
+  pluginName?: string
+  exitCode?: number
+  duration?: number
+  uiSource?: string
+  valid?: boolean
+  plugins?: Array<string>
+  pathname?: string
+  error?: IStructuredError | Array<IStructuredError>
+  cacheStatus?: string
+  pluginCachePurged?: string
+  dependencies?: Array<string>
+  devDependencies?: Array<string>
+  siteMeasurements?: {
+    pagesCount?: number
+    totalPagesCount?: number
+    createdNodesCount?: number
+    touchedNodesCount?: number
+    updatedNodesCount?: number
+    deletedNodesCount?: number
+    clientsCount?: number
+    paths?: Array<string | undefined>
+    bundleStats?: unknown
+    pageDataStats?: unknown
+    queryStats?: unknown
+  }
+  errorV2?: IStructuredErrorV2
+  valueString?: string
+  valueStringArray?: Array<string>
+  valueInteger?: number
+  valueBoolean?: boolean
+}
+
+export interface IDefaultTelemetryTagsPayload extends ITelemetryTagsPayload {
+  gatsbyCliVersion?: SemVer
+  installedGatsbyVersion?: SemVer
+}
+
+export interface ITelemetryOptsPayload {
+  debounce?: boolean
+}
+
 export class AnalyticsTracker {
   store = new EventStorage()
+  componentId: string
   debouncer = {}
   metadataCache = {}
   defaultTags = {}
@@ -54,32 +138,61 @@ export class AnalyticsTracker {
   gatsbyCliVersion?: SemVer
   installedGatsbyVersion?: SemVer
   repositoryId?: IRepositoryId
-  machineId?: UUID
+  features = new Set<string>()
+  machineId: string
+  siteHash?: string = createContentDigest(process.cwd())
+  lastEnvTagsFromFileTime = 0
+  lastEnvTagsFromFileValue: ITelemetryTagsPayload = {}
 
-  constructor() {
+  constructor({
+    componentId,
+    gatsbyCliVersion,
+    trackingEnabled,
+  }: IAnalyticsTrackerConstructorParameters = {}) {
+    this.componentId = componentId || `gatsby-cli`
     try {
       if (this.store.isTrackingDisabled()) {
         this.trackingEnabled = false
+      }
+      if (trackingEnabled !== undefined) {
+        this.trackingEnabled = trackingEnabled
       }
 
       this.defaultTags = this.getTagsFromEnv()
 
       // These may throw and should be last
       this.componentVersion = require(`../package.json`).version
-      this.gatsbyCliVersion = this.getGatsbyCliVersion()
+      this.gatsbyCliVersion = gatsbyCliVersion || this.getGatsbyCliVersion()
       this.installedGatsbyVersion = this.getGatsbyVersion()
     } catch (e) {
       // ignore
     }
+    this.machineId = this.getMachineId()
+    this.captureMetadataEvent()
   }
 
   // We might have two instances of this lib loaded, one from globally installed gatsby-cli and one from local gatsby.
-  // Hence we need to use process level globals that are not scoped to this module
-  getSessionId(): UUID {
-    return (
-      process.gatsbyTelemetrySessionId ||
-      (process.gatsbyTelemetrySessionId = uuidV4())
-    )
+  // Hence we need to use process level globals that are not scoped to this module.
+  // Due to the forking on develop process, we also need to pass this via process.env so that child processes have the same sessionId
+  getSessionId(): string {
+    const p = process as any
+    if (!p.gatsbyTelemetrySessionId) {
+      const inherited = process.env.INTERNAL_GATSBY_TELEMETRY_SESSION_ID
+      if (inherited) {
+        p.gatsbyTelemetrySessionId = inherited
+      } else {
+        p.gatsbyTelemetrySessionId = uuidv4()
+        process.env.INTERNAL_GATSBY_TELEMETRY_SESSION_ID =
+          p.gatsbyTelemetrySessionId
+      }
+    } else if (!process.env.INTERNAL_GATSBY_TELEMETRY_SESSION_ID) {
+      // in case older `gatsby-telemetry` already set `gatsbyTelemetrySessionId` property on process
+      // but didn't set env var - let's make sure env var is set
+      process.env.INTERNAL_GATSBY_TELEMETRY_SESSION_ID =
+        p.gatsbyTelemetrySessionId
+    }
+
+    return p.gatsbyTelemetrySessionId
   }
 
   getRepositoryId(): IRepositoryId {
@@ -101,38 +214,46 @@ export class AnalyticsTracker {
   }
 
   getGatsbyVersion(): SemVer {
-    const packageInfo = require(join(
-      process.cwd(),
-      `node_modules`,
-      `gatsby`,
-      `package.json`
-    ))
     try {
-      return packageInfo.version
-    } catch (e) {
-      // ignore
-    }
-    return undefined
-  }
-
-  getGatsbyCliVersion(): SemVer {
-    try {
-      const jsonfile = join(
-        require
-          .resolve(`gatsby-cli`) // Resolve where current gatsby-cli would be loaded from.
-          .split(sep)
-          .slice(0, -2) // drop lib/index.js
-          .join(sep),
-        `package.json`
-      )
-      const { version } = require(jsonfile).version
+      const packageJson = require.resolve(`gatsby/package.json`)
+      const { version } = JSON.parse(fs.readFileSync(packageJson, `utf-8`))
       return version
     } catch (e) {
       // ignore
     }
-    return undefined
+    return `-0.0.0`
   }
-  captureEvent(type = ``, tags = {}, opts = { debounce: false }): void {
+
+  getGatsbyCliVersion(): SemVer {
+    try {
+      const jsonfile = require.resolve(`gatsby-cli/package.json`)
+      const { version } = JSON.parse(fs.readFileSync(jsonfile, `utf-8`))
+      return version
+    } catch (e) {
+      // ignore
+    }
+    return `-0.0.0`
+  }
+
+  trackCli(
+    type: string | Array<string> = ``,
+    tags: ITelemetryTagsPayload = {},
+    opts: ITelemetryOptsPayload = { debounce: false }
+  ): void {
+    if (!this.isTrackingEnabled()) {
+      return
+    }
+    if (typeof tags.siteHash === `undefined`) {
+      tags.siteHash = this.siteHash
+    }
+    this.captureEvent(type, tags, opts)
+  }
+
+  captureEvent(
+    type: string | Array<string> = ``,
+    tags: ITelemetryTagsPayload = {},
+    opts: ITelemetryOptsPayload = { debounce: false }
+  ): void {
     if (!this.isTrackingEnabled()) {
       return
     }
@@ -160,7 +281,11 @@ export class AnalyticsTracker {
     this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
   }
 
-  captureError(type, tags = {}): void {
+  isFinalEvent(event: string): boolean {
+    return finalEventRegex.test(event)
+  }
+
+  captureError(type: string, tags: ITelemetryTagsPayload = {}): void {
     if (!this.isTrackingEnabled()) {
       return
     }
@@ -172,7 +297,7 @@ export class AnalyticsTracker {
     this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
   }
 
-  captureBuildError(type, tags = {}): void {
+  captureBuildError(type: string, tags: ITelemetryTagsPayload = {}): void {
     if (!this.isTrackingEnabled()) {
       return
     }
@@ -183,7 +308,10 @@ export class AnalyticsTracker {
     this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
   }
 
-  formatErrorAndStoreEvent(eventType, tags): void {
+  formatErrorAndStoreEvent(
+    eventType: string,
+    tags: ITelemetryTagsPayload
+  ): void {
     if (tags.error) {
       // `error` ought to have been `errors` but is `error` in the database
       if (Array.isArray(tags.error)) {
@@ -214,7 +342,7 @@ export class AnalyticsTracker {
     this.buildAndStoreEvent(eventType, tags)
   }
 
-  buildAndStoreEvent(eventType, tags): void {
+  buildAndStoreEvent(eventType: string, tags: ITelemetryTagsPayload): void {
     const event = {
       installedGatsbyVersion: this.installedGatsbyVersion,
       gatsbyCliVersion: this.gatsbyCliVersion,
@@ -223,23 +351,54 @@ export class AnalyticsTracker {
       sessionId: this.sessionId,
       time: new Date(),
       machineId: this.getMachineId(),
-      componentId: `gatsby-cli`,
+      componentId: this.componentId,
       osInformation: this.getOsInfo(),
       componentVersion: this.componentVersion,
       dbEngine,
+      features: Array.from(this.features),
       ...this.getRepositoryId(),
+      ...this.getTagsFromPath(),
     }
     this.store.addEvent(event)
+    if (this.isFinalEvent(eventType)) {
+      // call create flush
+      const flush = createFlush(this.isTrackingEnabled())
+      flush()
+    }
   }
 
-  getMachineId(): UUID {
+  getTagsFromPath(): ITelemetryTagsPayload {
+    const path = process.env.GATSBY_TELEMETRY_METADATA_PATH
+
+    if (!path) {
+      return {}
+    }
+    try {
+      const stat = fs.statSync(path)
+      if (this.lastEnvTagsFromFileTime < stat.mtimeMs) {
+        this.lastEnvTagsFromFileTime = stat.mtimeMs
+        const data = fs.readFileSync(path, `utf8`)
+        this.lastEnvTagsFromFileValue = JSON.parse(data)
+      }
+    } catch (e) {
+      // nop
+      return {}
+    }
+    return this.lastEnvTagsFromFileValue
+  }
+
+  getIsTTY(): boolean {
+    return Boolean(process.stdout?.isTTY)
+  }
+
+  getMachineId(): string {
     // Cache the result
     if (this.machineId) {
       return this.machineId
     }
     let machineId = this.store.getConfig(`telemetry.machineId`)
-    if (!machineId) {
-      machineId = uuidV4()
+    if (typeof machineId !== `string`) {
+      machineId = typedUUIDv4()
       this.store.updateConfig(`telemetry.machineId`, machineId)
     }
     this.machineId = machineId
@@ -251,7 +410,7 @@ export class AnalyticsTracker {
     if (this.trackingEnabled !== undefined) {
       return this.trackingEnabled
     }
-    let enabled = this.store.getConfig(`telemetry.enabled`)
+    let enabled = this.store.getConfig(`telemetry.enabled`) as boolean | null
     if (enabled === undefined || enabled === null) {
       if (!isCI()) {
         showAnalyticsNotification()
@@ -277,12 +436,14 @@ export class AnalyticsTracker {
       ci: isCI(),
       ciName: getCIName(),
       docker: isDocker(),
+      termProgram: getTermProgram(),
+      isTTY: this.getIsTTY(),
     }
     this.osInfo = osInfo
     return osInfo
   }
 
-  trackActivity(source): void {
+  trackActivity(source: string, tags: ITelemetryTagsPayload = {}): void {
     if (!this.isTrackingEnabled()) {
       return
     }
@@ -292,17 +453,20 @@ export class AnalyticsTracker {
     const debounceTime = 5 * 1000 // 5 sec
 
     if (now - last > debounceTime) {
-      this.captureEvent(source)
+      this.captureEvent(source, tags)
     }
     this.debouncer[source] = now
   }
 
-  decorateNextEvent(event, obj): void {
+  decorateNextEvent(event: string, obj): void {
     const cached = this.metadataCache[event] || {}
     this.metadataCache[event] = Object.assign(cached, obj)
   }
 
-  addSiteMeasurement(event, obj): void {
+  addSiteMeasurement(
+    event: string,
+    obj: ITelemetryTagsPayload["siteMeasurements"]
+  ): void {
     const cachedEvent = this.metadataCache[event] || {}
     const cachedMeasurements = cachedEvent.siteMeasurements || {}
     this.metadataCache[event] = Object.assign(cachedEvent, {
@@ -310,7 +474,7 @@ export class AnalyticsTracker {
     })
   }
 
-  decorateAll(tags): void {
+  decorateAll(tags: ITelemetryTagsPayload): void {
     this.defaultTags = Object.assign(this.defaultTags, tags)
   }
 
@@ -319,7 +483,7 @@ export class AnalyticsTracker {
     this.store.updateConfig(`telemetry.enabled`, enabled)
   }
 
-  aggregateStats(data): IAggregateStats {
+  aggregateStats(data: Array<number>): IAggregateStats {
     const sum = data.reduce((acc, x) => acc + x, 0)
     const mean = sum / data.length || 0
     const median = data.sort()[Math.floor((data.length - 1) / 2)] || 0
@@ -346,11 +510,28 @@ export class AnalyticsTracker {
     }
   }
 
+  captureMetadataEvent(): void {
+    if (!this.isTrackingEnabled()) {
+      return
+    }
+    const deps = getDependencies()
+    const evt = {
+      dependencies: deps?.dependencies,
+      devDependencies: deps?.devDependencies,
+    }
+
+    this.captureEvent(`METADATA`, evt)
+  }
+
   async sendEvents(): Promise<boolean> {
     if (!this.isTrackingEnabled()) {
-      return Promise.resolve(true)
+      return true
     }
 
     return this.store.sendEvents()
+  }
+
+  trackFeatureIsUsed(name: string): void {
+    this.features.add(name)
   }
 }

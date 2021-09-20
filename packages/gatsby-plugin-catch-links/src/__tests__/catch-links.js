@@ -190,17 +190,15 @@ describe(`the author might be forcing navigation`, () => {
       expect(catchLinks.authorIsForcingNavigation(testAnchor)).toBe(true)
     })
     test(`target=_parent`, () => {
-      const testAnchor = separateBrowsingContext.contentDocument.createElement(
-        `a`
-      )
+      const testAnchor =
+        separateBrowsingContext.contentDocument.createElement(`a`)
       testAnchor.setAttribute(`target`, `_parent`)
 
       expect(catchLinks.authorIsForcingNavigation(testAnchor)).toBe(true)
     })
     test(`target=_top`, () => {
-      const testAnchor = separateBrowsingContext.contentDocument.createElement(
-        `a`
-      )
+      const testAnchor =
+        separateBrowsingContext.contentDocument.createElement(`a`)
       testAnchor.setAttribute(`target`, `_top`)
 
       expect(catchLinks.authorIsForcingNavigation(testAnchor)).toBe(true)
@@ -232,9 +230,8 @@ describe(`anchor target attribute looks like _self if`, () => {
     expect(catchLinks.anchorsTargetIsEquivalentToSelf(testAnchor)).toBe(true)
   })
   it(`is set to _parent, but window = window.parent`, () => {
-    const testAnchor = separateBrowsingContext.contentDocument.createElement(
-      `a`
-    )
+    const testAnchor =
+      separateBrowsingContext.contentDocument.createElement(`a`)
     testAnchor.setAttribute(`target`, `_parent`)
 
     document.body.appendChild(testAnchor)
@@ -244,9 +241,8 @@ describe(`anchor target attribute looks like _self if`, () => {
     testAnchor.remove()
   })
   it(`is set to _top, but window = window.top`, () => {
-    const testAnchor = separateBrowsingContext.contentDocument.createElement(
-      `a`
-    )
+    const testAnchor =
+      separateBrowsingContext.contentDocument.createElement(`a`)
     testAnchor.setAttribute(`target`, `_top`)
 
     document.body.appendChild(testAnchor)
@@ -488,5 +484,43 @@ describe(`pathPrefix is handled if caught link to ${pathPrefix}/article navigate
 
     // and trigger click
     clickElement.dispatchEvent(clickEvent)
+  })
+})
+
+describe(`navigation is routed through browser without SVGAnimatedString support`, () => {
+  let hrefHandler
+  let eventDestroyer
+  const oldSVGAnimatedString = SVGAnimatedString
+
+  beforeAll(() => {
+    hrefHandler = jest.fn()
+    eventDestroyer = catchLinks.default(window, {}, hrefHandler)
+    delete global.SVGAnimatedString
+  })
+
+  afterAll(() => {
+    eventDestroyer()
+    global.SVGAnimatedString = oldSVGAnimatedString
+  })
+
+  test(`works without throwing an error`, () => {
+    // create a click element to use for testing
+    const clickElement = document.createElement(`a`)
+    clickElement.setAttribute(`href`, `${window.location.href}/article`)
+    document.body.appendChild(clickElement)
+
+    // create the click event we'll be using for testing
+    const clickEvent = new MouseEvent(`click`, {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    })
+
+    // and trigger click
+    clickElement.dispatchEvent(clickEvent)
+
+    expect(() =>
+      catchLinks.routeThroughBrowserOrApp(jest.fn())(clickEvent)
+    ).not.toThrow()
   })
 })

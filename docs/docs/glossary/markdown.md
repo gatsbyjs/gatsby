@@ -21,7 +21,7 @@ Markdown, by contrast, only defines a syntax for a small subset of HTML elements
 ```markdown
 # Markdown!
 
-You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.org/).
+You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.com/).
 
 <figure class="chart">
   <object data="chart.svg" type="image/svg+xml"></object>
@@ -37,7 +37,7 @@ When converted to HTML, the preceding Markdown will become the markup below.
 <h1>Markdown!</h1>
 <p>
   You can use Markdown to create documents for
-  <a href="https://www.gatsbyjs.org/">Gatsby</a>.
+  <a href="https://www.gatsbyjs.com/">Gatsby</a>.
 </p>
 <figure class="chart">
   <object data="chart.svg" type="image/svg+xml"></object>
@@ -47,19 +47,19 @@ When converted to HTML, the preceding Markdown will become the markup below.
 </figure>
 ```
 
-You can use Markdown files as a content source for your Gatsby site. To do so, you'll need to install two plugins: [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem) and [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/). As with Gatsby itself, you can install both using [npm](/docs/glossary/#npm).
+You can use Markdown files as a content source for your Gatsby site. To do so, you'll need to install two plugins: [`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem) and [`gatsby-transformer-remark`](/plugins/gatsby-transformer-remark/). As with Gatsby itself, you can install both using [npm](/docs/glossary/#npm).
 
 ```shell
-npm install --save gatsby-source-filesystem gatsby-transformer-remark
+npm install gatsby-source-filesystem gatsby-transformer-remark
 ```
 
 The `gatsby-source-filesystem` plugin reads files from your computer. The `gatsby-transformer-remark` plugin makes the contents of your Markdown files available to GraphQL.
 
-You can also try a [Gatsby starter](https://www.gatsbyjs.org/starters/?c=Markdown) package that has Markdown support already included.
+You can also try a [Gatsby starter](https://www.gatsbyjs.com/starters/?c=Markdown) package that has Markdown support already included.
 
 ## Learn more about Markdown
 
-- [Markdown syntax](/docs/mdx/markdown-syntax/) from the Gatsby docs
+- [Markdown syntax](/docs/reference/markdown-syntax/) from the Gatsby docs
 - [CommonMark](https://commonmark.org/), a proposed Markdown specification
-- [Sourcing from the Filesystem](/docs/sourcing-from-the-filesystem/) from the Gatsby docs
-- [Adding Markdown Pages](/docs/adding-markdown-pages/) from the Gatsby docs
+- [Sourcing from the Filesystem](/docs/how-to/sourcing-data/sourcing-from-the-filesystem) from the Gatsby docs
+- [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages/) from the Gatsby docs

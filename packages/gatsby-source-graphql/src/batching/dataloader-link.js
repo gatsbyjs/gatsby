@@ -1,6 +1,6 @@
 const DataLoader = require(`dataloader`)
 const { ApolloLink, Observable } = require(`apollo-link`)
-const { print } = require(`graphql`)
+const { print } = require(`gatsby/graphql`)
 const { merge, resolveResult } = require(`./merge-queries`)
 
 export function createDataloaderLink(options) {
