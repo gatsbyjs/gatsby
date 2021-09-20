@@ -705,6 +705,14 @@ module.exports = {
           res.send(e).status(500)
         }
       } else {
+        const potentialPagePath = reverseFixedPagePath(req.path)
+        const page = findPageByPath(store.getState(), potentialPagePath, false)
+
+        // When we can't find a page we send 404
+        if (!page) {
+          res.status(404)
+        }
+
         res.sendFile(directoryPath(`.cache/develop-html/index.html`), err => {
           if (err) {
             res.status(500).end()
