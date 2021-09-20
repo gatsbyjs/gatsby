@@ -190,6 +190,16 @@ export default function FormPage() {
 }
 ```
 
+## Functions in plugins and themes
+
+Plugins and themes can ship functions! This is powerful as it lets you pair frontend code with backend code. E.g. imagine a plugin for an authorization service that includes a login component with a function to connect to the remote API.
+
+### Namespacing
+
+Plugin/theme Functions work exactly the same as normal functions except their routes must be created under the plugin's namespace e.g.: `${PLUGIN_ROOT}/src/api/{pluginName}/my-plugin-function.js`.
+
+Shadowing work with functions similar to how it does in general. You can shadow a plugin/theme Function by copying the file from its src tree into the site's src tree e.g. copy `node_modules/gatsby-plugin-cool/src/api/gatsby-plugin-cool/function.js` => `src/api/gatsby-plugin-cool/function.js`.
+
 ## Limitations
 
 - Gatsby Functions do not support dynamic routes in Gatsby Cloud at the moment
