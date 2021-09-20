@@ -58,7 +58,8 @@ function formatError(message: string, filePath: string, codeFrame: string) {
 }
 
 function extractError(error: Error): { message: string, docName: string } {
-  const docRegex = /Error:.(RelayParser|GraphQLParser):(.*)Source: document.`(.*)`.file.*(GraphQL.request.*^\s*$)/gms
+  const docRegex =
+    /Error:.(RelayParser|GraphQLParser):(.*)Source: document.`(.*)`.file.*(GraphQL.request.*^\s*$)/gms
   let matches
   let message = ``
   let docName = ``

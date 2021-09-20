@@ -11,6 +11,26 @@ describe(`Production pathPrefix`, () => {
     cy.location(`pathname`).should(`eq`, withTrailingSlash(pathPrefix))
   })
 
+  it(`renders static image`, () => {
+    cy.getTestElement(`static-image`)
+      .should(`have.attr`, `srcset`)
+      .and(srcset => {
+        srcset.split(/\s*,\s*/).forEach(part => {
+          expect(part).to.contain(`/blog`)
+        })
+      })
+  })
+
+  it(`renders dynamic image`, () => {
+    cy.getTestElement(`gatsby-image`)
+      .should(`have.attr`, `srcset`)
+      .and(srcset => {
+        srcset.split(/\s*,\s*/).forEach(part => {
+          expect(part).to.contain(`/blog`)
+        })
+      })
+  })
+
   describe(`navigation`, () => {
     it(`prefixes link with /blog`, () => {
       cy.getTestElement(`page-2-link`)

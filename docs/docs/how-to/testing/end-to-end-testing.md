@@ -1,5 +1,8 @@
 ---
 title: End-to-End Testing
+examples:
+  - label: Using Cypress
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-cypress"
 ---
 
 [Cypress](https://www.cypress.io/) is one of the options when it comes to end-to-end (E2E) testing. Cypress is an all-in-one testing framework focused on E2E testing, meaning that you don't have to install 10 different things to get your test suite set up. You can write your first passing test in minutes without any configuration with the help of Cypress' API, which is easy to read and understand. It runs tests as fast as your browser can render content, which also makes test-driven development possible. You'll also profit from the time travel feature or the extensive debugging capabilities with Chrome DevTools. You can also use it with Gatsby, and this guide will explain how.
@@ -34,7 +37,7 @@ Last but not least you add additional scripts to your `package.json` to run Cypr
 
 Type `npm run test:e2e` in your command line and see Cypress running for the first time. A folder named `cypress` will be created at the root of your project and a new application window will pop up. [Cypress' getting started guide](https://docs.cypress.io/guides/getting-started/writing-your-first-test.html#) is a good start to learn how to write tests!
 
-_Important note_: If you are running Gatsby with the `--https` flag, whether using your own or automatically generated certificates, you will also need to tell `start-server-and-test` to disable HTTPS certificate checks (otherwise it will wait forever and never actually launch Cypress. You do this by passing in an environmental variable: `START_SERVER_AND_TEST_INSECURE=1`. [start-server-and-test docs](https://github.com/bahmutov/start-server-and-test#disable-https-certificate-checks).
+_Important note_: If you are running Gatsby with the `--https` flag, whether using your own or automatically generated certificates, you will also need to tell `start-server-and-test` to disable HTTPS certificate checks (otherwise it will wait forever and never actually launch Cypress. You do this by passing in an environmental variable: `START_SERVER_AND_TEST_INSECURE=1`. [start-server-and-test docs](https://github.com/bahmutov/start-server-and-test#disable-https-certificate-checks)).
 
 This means your `test:e2e` script would look like this:
 
@@ -58,7 +61,7 @@ If you want to run Cypress in Continuous Integration (CI), you have to use `cypr
 }
 ```
 
-Please read the [Cypress' official documentation](https://docs.cypress.io/guides/guides/continuous-integration.html) on CI if you want to know how to setup Travis or GitLab with Cypress. You can also use a GitHub Action to implement basic CI directly in GitHub with the official [Cypress GitHub action](https://github.com/cypress-io/github-action).
+Please read the [Cypress' official documentation](https://docs.cypress.io/guides/guides/continuous-integration.html) on CI if you want to know how to set up Travis or GitLab with Cypress. You can also use a GitHub Action to implement basic CI directly in GitHub with the official [Cypress GitHub action](https://github.com/cypress-io/github-action).
 
 ## Writing tests
 
@@ -192,7 +195,7 @@ const axeRunOptions = {
 cy.checkA11y(null, axeRunOptions)
 ```
 
-The `checkA11y` command runs the `axe.run` method under the hood. This method can slow down Cypress and make the window unresponsive if you have a lot of elements on the page. To overcome this, you can use the [axe.run context](https://www.deque.com/axe/axe-for-web/documentation/api-documentation/#context-parameter) and exclude some elements to improve speed. For example, code blocks from [gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/) can slow down your tests. You can test if they are accessible in a single test, and exclude them in the rest of your tests.
+The `checkA11y` command runs the `axe.run` method under the hood. This method can slow down Cypress and make the window unresponsive if you have a lot of elements on the page. To overcome this, you can use the [axe.run context](https://www.deque.com/axe/axe-for-web/documentation/api-documentation/#context-parameter) and exclude some elements to improve speed. For example, code blocks from [gatsby-remark-prismjs](/plugins/gatsby-remark-prismjs/) can slow down your tests. You can test if they are accessible in a single test, and exclude them in the rest of your tests.
 
 ```js:title=cypress/e2e/accessibility.test.js
 const axeRunOptions = {

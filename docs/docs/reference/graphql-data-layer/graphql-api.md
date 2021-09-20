@@ -226,7 +226,7 @@ For more information, check out the docs guide on [using fragments in Gatsby](/d
 
 ### Gatsby fragments
 
-Some fragments come included in Gatsby plugins, such as fragments for returning optimized image data in various formats with `gatsby-image` and `gatsby-transformer-sharp`, or data fragments with `gatsby-source-contentful`. For more information on what plugins include fragments, see the [`gatsby-image` README](/packages/gatsby-image#fragments).
+Some fragments come included in Gatsby plugins, such as fragments for returning optimized image data in various formats with `gatsby-image` and `gatsby-transformer-sharp`, or data fragments with `gatsby-source-contentful`. For more information on what plugins include fragments, see the [`gatsby-image` README](/plugins/gatsby-image#fragments).
 
 ## Advanced customizations
 

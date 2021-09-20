@@ -130,7 +130,7 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
 ## Blockquote
 
 - Use `>` to declare a blockquote
-- Adding multiple `>` with create nested blockquotes
+- Adding multiple `>` will create nested blockquotes
 - It is recommended to place `>` before each line
 - You can use other Markdown syntax inside blockquotes
 
@@ -170,7 +170,7 @@ This pattern is appropriate for [decorative or repetitive images](https://www.w3
 ## Processing Markdown and MDX in Gatsby:
 
 - In order to process and use Markdown or MDX in Gatsby, you can use the [gatsby-source-filesystem](/docs/sourcing-from-the-filesystem) plugin
-- You can check out the package [README](/packages/gatsby-source-filesystem) for more information on how it works!
+- You can check out the package [README](/plugins/gatsby-source-filesystem) for more information on how it works!
 
 ## Frontmatter
 

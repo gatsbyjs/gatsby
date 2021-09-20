@@ -1,5 +1,6 @@
 // Initial file from https://github.com/rolandstarke/node-cache-manager-fs-hash @ af52d2d
-/*!
+/* eslint-disable @babel/no-invalid-this, no-useless-catch */
+/* !
 The MIT License (MIT)
 
 Copyright (c) 2017 Roland Starke
@@ -22,7 +23,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
 const fs = require(`fs`)
 const crypto = require(`crypto`)
 const path = require(`path`)
@@ -54,7 +54,7 @@ exports.create = function (args): typeof DiskStore {
   return new DiskStore(args && args.options ? args.options : args)
 }
 
-function DiskStore(options): void {
+function DiskStore(this: any, options): void {
   options = options || {}
 
   this.options = {
@@ -67,7 +67,7 @@ function DiskStore(options): void {
     subdirs: options.subdirs || false,
     zip: options.zip || false,
     lockFile: {
-      //check lock at 0ms 50ms 100ms ... 400ms 1400ms 1450ms... up to 10 seconds, after that just asume the lock is staled
+      // check lock at 0ms 50ms 100ms ... 400ms 1400ms 1450ms... up to 10 seconds, after that just assume the lock is staled
       wait: 400,
       pollPeriod: 50,
       stale: 10 * 1000,
@@ -91,7 +91,12 @@ function DiskStore(options): void {
  * @param {function} [cb]
  * @returns {Promise}
  */
-DiskStore.prototype.set = wrapCallback(async function (key, val, options) {
+DiskStore.prototype.set = wrapCallback(async function (
+  this: any,
+  key,
+  val,
+  options
+) {
   key = key + ``
   const filePath = this._getFilePathByKey(key)
 
@@ -103,7 +108,7 @@ DiskStore.prototype.set = wrapCallback(async function (key, val, options) {
   }
 
   if (this.options.subdirs) {
-    //check if subdir exists or create it
+    // check if subdir exists or create it
     const dir = path.dirname(filePath)
     await promisify(fs.access)(dir, fs.constants.W_OK).catch(function () {
       return promisify(fs.mkdir)(dir).catch(err => {
@@ -128,7 +133,7 @@ DiskStore.prototype.set = wrapCallback(async function (key, val, options) {
  * @param {function} [cb]
  * @returns {Promise}
  */
-DiskStore.prototype.get = wrapCallback(async function (key) {
+DiskStore.prototype.get = wrapCallback(async function (this: any, key) {
   key = key + ``
   const filePath = this._getFilePathByKey(key)
 
@@ -139,7 +144,7 @@ DiskStore.prototype.get = wrapCallback(async function (key) {
         if (err.code === `ENOENT`) {
           throw err
         }
-        //maybe the file is currently written to, lets lock it and read again
+        // maybe the file is currently written to, lets lock it and read again
         try {
           await this._lock(filePath)
           return await jsonFileStore.read(filePath, this.options)
@@ -150,17 +155,17 @@ DiskStore.prototype.get = wrapCallback(async function (key) {
         }
       })
     if (data.expireTime <= Date.now()) {
-      //cache expired
+      // cache expired
       this.del(key).catch(() => 0 /* ignore */)
       return undefined
     }
     if (data.key !== key) {
-      //hash collision
+      // hash collision
       return undefined
     }
     return data.val
   } catch (err) {
-    //file does not exist lets return a cache miss
+    // file does not exist lets return a cache miss
     if (err.code === `ENOENT`) {
       return undefined
     } else {
@@ -172,11 +177,11 @@ DiskStore.prototype.get = wrapCallback(async function (key) {
 /**
  * delete entry from cache
  */
-DiskStore.prototype.del = wrapCallback(async function (key) {
+DiskStore.prototype.del = wrapCallback(async function (this: any, key) {
   const filePath = this._getFilePathByKey(key)
   try {
     if (this.options.subdirs) {
-      //check if the folder exists to fail faster
+      // check if the folder exists to fail faster
       const dir = path.dirname(filePath)
       await promisify(fs.access)(dir, fs.constants.W_OK)
     }
@@ -184,7 +189,7 @@ DiskStore.prototype.del = wrapCallback(async function (key) {
     await this._lock(filePath)
     await jsonFileStore.delete(filePath, this.options)
   } catch (err) {
-    //ignore deleting non existing keys
+    // ignore deleting non existing keys
     if (err.code !== `ENOENT`) {
       throw err
     }
@@ -196,7 +201,9 @@ DiskStore.prototype.del = wrapCallback(async function (key) {
 /**
  * cleanup cache on disk -> delete all files from the cache
  */
-DiskStore.prototype.reset = wrapCallback(async function (): Promise<void> {
+DiskStore.prototype.reset = wrapCallback(async function (
+  this: any
+): Promise<void> {
   const readdir = promisify(fs.readdir)
   const stat = promisify(fs.stat)
   const unlink = promisify(fs.unlink)
@@ -217,7 +224,7 @@ DiskStore.prototype.reset = wrapCallback(async function (): Promise<void> {
       stats.isFile() &&
       /[/\\]diskstore-[0-9a-fA-F/\\]+(\.json|-\d\.bin)/.test(fileOrDir)
     ) {
-      //delete the file if it is a diskstore file
+      // delete the file if it is a diskstore file
       await unlink(fileOrDir)
     }
   }
@@ -265,10 +272,10 @@ function innerLock(resolve, reject, filePath): void {
  * unlocks a file path
  * @type {Function}
  * @param {string} filePath
- * @returns {Promise}
+ * @returns {void}
  * @private
  */
-DiskStore.prototype._unlock = function _unlock(filePath): Promise<void> {
+DiskStore.prototype._unlock = function _unlock(filePath): void {
   globalGatsbyCacheLock.delete(filePath)
 }
 
@@ -284,7 +291,7 @@ DiskStore.prototype._getFilePathByKey = function (key): string {
     .update(key + ``)
     .digest(`hex`)
   if (this.options.subdirs) {
-    //create subdirs with the first 3 chars of the hash
+    // create subdirs with the first 3 chars of the hash
     return path.join(
       this.options.path,
       `diskstore-` + hash.substr(0, 3),

@@ -2,6 +2,21 @@
   "timestamp": 1593545807,
   "entities": [
     {
+      "action": "delete",
+      "id": "article-71",
+      "type": "node--article"
+    },
+    {
+      "action": "delete",
+      "id": "file-4",
+      "type": "file--file"
+    },
+    {
+      "action": "delete",
+      "id": "does-not-exist",
+      "type": "file--file"
+    },
+    {
       "jsonapi": {
         "version": "1.0",
         "meta": {

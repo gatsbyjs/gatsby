@@ -5,7 +5,7 @@ import { useQuery } from "urql"
 import { Spinner } from "theme-ui"
 import { Global } from "@emotion/react"
 import { useMutation } from "urql"
-import { useState, Fragment, useEffect } from "react"
+import { useState, Fragment, useEffect, FormEvent } from "react"
 import {
   AnchorButton,
   Button,
@@ -70,8 +70,10 @@ const markdownRenderers = {
           style={style}
         >
           {tokens.map((line, i) => (
+            // eslint-disable-next-line react/jsx-key
             <div {...getLineProps({ line, key: i })}>
               {line.map((token, key) => (
+                // eslint-disable-next-line react/jsx-key
                 <span {...getTokenProps({ token, key })} />
               ))}
             </div>
@@ -105,9 +107,8 @@ export default function PluginView(
     },
   })
 
-  const { fetching: fetchingNpmData, data: npmData } = useNpmPackageData(
-    pluginName
-  )
+  const { fetching: fetchingNpmData, data: npmData } =
+    useNpmPackageData(pluginName)
 
   const [{ fetching: updatingGatsbyPlugin }, updateGatsbyPlugin] = useMutation(`
     mutation updateGatsbyPlugin(
@@ -145,10 +146,8 @@ export default function PluginView(
     }
   `)
 
-  const [
-    { fetching: installingGatsbyPlugin },
-    installGatsbyPlugin,
-  ] = useMutation(`
+  const [{ fetching: installingGatsbyPlugin }, installGatsbyPlugin] =
+    useMutation(`
     mutation installGatsbyPlugin($name: String!) {
       createNpmPackage(npmPackage: {
         name: $name,
@@ -319,7 +318,7 @@ export default function PluginView(
           <Flex
             as="form"
             // @ts-ignore
-            onSubmit={(evt: React.FormEvent): void => {
+            onSubmit={(evt: FormEvent): void => {
               evt.preventDefault()
               setValidationError(null)
               let json

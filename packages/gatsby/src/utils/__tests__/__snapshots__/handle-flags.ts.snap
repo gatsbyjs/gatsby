@@ -50,13 +50,11 @@ The following flags were automatically enabled on your site:
 - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
 - PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
 
-There are 5 other flags available that you might be interested in:
+There are 2 other flags available that you might be interested in:
 - FAST_DEV · Enable all experiments aimed at improving develop server start time
-- DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
-- QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
-- ONLY_BUILDS · (Umbrella Issue (test)) · test
 - YET_ANOTHER · (Umbrella Issue (test)) · test
 ",
+  "unfitFlagMessage": "",
   "unknownFlagMessage": "",
 }
 `;
@@ -85,9 +83,7 @@ Object {
       "umbrellaIssue": "test",
     },
   ],
-  "message": "
-
-We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
+  "message": "We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
 and your site was automatically chosen as one of them. With your help, we'll then release them to everyone in the next minor release.
 
 We greatly appreciate your help testing the change. Please report any feedback good or bad in the umbrella issue. If you do encounter problems, please disable the flag by setting it to false in your gatsby-config.js like:
@@ -99,7 +95,14 @@ flags: {
 The following flags were automatically enabled on your site:
 - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
 - PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
+
+There are 4 other flags available that you might be interested in:
+- FAST_DEV · Enable all experiments aimed at improving develop server start time
+- DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
+- ALL_COMMANDS · (Umbrella Issue (test)) · test
+- YET_ANOTHER · (Umbrella Issue (test)) · test
 ",
+  "unfitFlagMessage": "",
   "unknownFlagMessage": "",
 }
 `;
@@ -154,13 +157,12 @@ The following flags were automatically enabled on your site:
 - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
 - PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
 
-There are 5 other flags available that you might be interested in:
+There are 3 other flags available that you might be interested in:
 - FAST_DEV · Enable all experiments aimed at improving develop server start time
 - DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
-- QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
-- ONLY_BUILDS · (Umbrella Issue (test)) · test
 - YET_ANOTHER · (Umbrella Issue (test)) · test
 ",
+  "unfitFlagMessage": "",
   "unknownFlagMessage": "The following flag(s) found in your gatsby-config.js are not known:
 - FASTLY_DEV (did you mean: FAST_DEV)
 - SUPER_COOL_FLAG",
@@ -254,10 +256,10 @@ The following flags were automatically enabled on your site:
 - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
 - PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
 
-There are 2 other flags available that you might be interested in:
-- ONLY_BUILDS · (Umbrella Issue (test)) · test
+There is one other flag available that you might be interested in:
 - YET_ANOTHER · (Umbrella Issue (test)) · test
 ",
+  "unfitFlagMessage": "",
   "unknownFlagMessage": "",
 }
 `;

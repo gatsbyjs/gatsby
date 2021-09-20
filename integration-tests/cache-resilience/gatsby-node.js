@@ -3,8 +3,9 @@ const v8 = require(`v8`)
 const glob = require(`glob`)
 const path = require(`path`)
 const _ = require(`lodash`)
+const { open } = require(`lmdb-store`)
 
-const db = require(`gatsby/dist/db`)
+const { saveState } = require(`gatsby/dist/redux/save-state`)
 
 const {
   ON_PRE_BOOTSTRAP_FILE_PATH,
@@ -16,17 +17,30 @@ const getDiskCacheSnapshot = () => {
   const plugins = getAllPlugins()
 
   const snapshot = {}
-  plugins.forEach(pluginName => {
-    const cacheDirectory = path.join(__dirname, `.cache`, `caches`, pluginName)
-
-    const files = glob.sync(path.join(cacheDirectory, `**`), {
-      nodir: true,
+  let store
+  try {
+    store = open({
+      name: `root`,
+      path: path.join(process.cwd(), `.cache/caches-lmdb`),
+      compression: true,
+      maxDbs: 200,
     })
+    plugins.forEach(pluginName => {
+      const pluginDb = store.openDB({
+        name: pluginName,
+        encoding: `json`,
+      })
 
-    snapshot[pluginName] = files.map(absolutePath =>
-      path.relative(cacheDirectory, absolutePath)
-    )
-  })
+      snapshot[pluginName] = Array.from(pluginDb.getKeys({ snapshot: false }))
+    })
+  } catch (e) {
+    console.error(e)
+  } finally {
+    if (store) {
+      store.close()
+    }
+  }
+
   return snapshot
 }
 
@@ -82,5 +96,5 @@ exports.onPostBuild = async ({ getNodes, store }) => {
     })
   )
 
-  await db.saveState()
+  await saveState()
 }

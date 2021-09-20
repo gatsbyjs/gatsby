@@ -235,7 +235,7 @@ exports.downloadMediaFiles = ({
 }
 ```
 
-The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) to use in the component [gatsby-image](/packages/gatsby-image/).
+The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/plugins/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/plugins/gatsby-transformer-sharp/) to use in the component [gatsby-image](/plugins/gatsby-image/).
 
 #### Retrieving the remote file name and extension
 
@@ -341,6 +341,6 @@ module.exports = createMySqlNodes
 
 In case that due to spotty network, or slow connection, some remote files fail to download. Even after multiple retries and adjusting concurrent downloads, you can adjust timeout and retry settings with these environment variables:
 
-- `STALL_RETRY_LIMIT`, default: `3`
-- `STALL_TIMEOUT`, default: `30000`
-- `CONNECTION_TIMEOUT`, default: `30000`
+- `GATSBY_STALL_RETRY_LIMIT`, default: `3`
+- `GATSBY_STALL_TIMEOUT`, default: `30000`
+- `GATSBY_CONNECTION_TIMEOUT`, default: `30000`

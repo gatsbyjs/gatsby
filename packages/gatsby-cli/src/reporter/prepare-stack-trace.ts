@@ -13,7 +13,7 @@ import {
 } from "source-map"
 
 export class ErrorWithCodeFrame extends Error {
-  codeFrame = ``
+  codeFrame?: string = ``
 
   constructor(error: Error) {
     super(error.message)
@@ -109,6 +109,19 @@ function getPosition({
   map: BasicSourceMapConsumer | IndexedSourceMapConsumer
   frame: stackTrace.StackFrame
 }): NullableMappedPosition {
+  if (frame.getFileName().includes(`webpack:`)) {
+    // if source-map-register is initiated, stack traces would already be converted
+    return {
+      column: frame.getColumnNumber() - 1,
+      line: frame.getLineNumber(),
+      source: frame
+        .getFileName()
+        .substr(frame.getFileName().indexOf(`webpack:`))
+        .replace(/webpack:\/+/g, `webpack://`),
+      name: null,
+    }
+  }
+
   const line = frame.getLineNumber()
   const column = frame.getColumnNumber()
   return map.originalPositionFor({ line, column })

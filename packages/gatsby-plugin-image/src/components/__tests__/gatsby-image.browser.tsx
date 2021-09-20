@@ -1,44 +1,44 @@
 import React from "react"
-import { GatsbyImage, ISharpGatsbyImageData } from "../gatsby-image.browser"
+import { GatsbyImage, IGatsbyImageData } from "../gatsby-image.browser"
 import { render, waitFor } from "@testing-library/react"
 import * as hooks from "../hooks"
 
-type GlobalOverride = NodeJS.Global &
-  typeof global.globalThis & {
-    GATSBY___IMAGE: boolean
-    SERVER: boolean
-  }
-
 // Prevents terser for bailing because we're not in a babel plugin
-jest.mock(`../../../macros/terser.macro`, () => (strs): string => strs.join(``))
+jest.mock(
+  `../../../macros/terser.macro`,
+  () =>
+    (strs): string =>
+      strs.join(``)
+)
 
 describe(`GatsbyImage browser`, () => {
   let beforeHydrationContent: HTMLDivElement
-  let image: ISharpGatsbyImageData
+  let image: IGatsbyImageData
 
   beforeEach(() => {
     console.warn = jest.fn()
-    ;(global as GlobalOverride).SERVER = true
-    ;(global as GlobalOverride).GATSBY___IMAGE = true
+    console.error = jest.fn()
+    global.SERVER = true
+    global.GATSBY___IMAGE = true
   })
 
   beforeEach(() => {
     image = {
       width: 100,
       height: 100,
-      layout: `fluid`,
-      images: { fallback: { src: `some-src-fallback.jpg` } },
+      layout: `fullWidth`,
+      images: { fallback: { src: `some-src-fallback.jpg`, sizes: `192x192` } },
       placeholder: { sources: [] },
-      sizes: `192x192`,
+
       backgroundColor: `red`,
     }
 
     beforeHydrationContent = document.createElement(`div`)
     beforeHydrationContent.innerHTML = `
       <div
-        class="gatsby-image-wrapper"
+        class="gatsby-image-wrapper gatsby-image-wrapper-constrained"
         data-gatsby-image-wrapper=""
-        style="position: relative; display: inline-block;"
+        style="position: relative;"
       >
         <div
           style="max-width: 100px; display: block;"
@@ -72,12 +72,14 @@ describe(`GatsbyImage browser`, () => {
 
   afterEach(() => {
     jest.clearAllMocks()
-    ;(global as GlobalOverride).SERVER = undefined
-    ;(global as GlobalOverride).GATSBY___IMAGE = undefined
+    global.SERVER = undefined
+    global.GATSBY___IMAGE = undefined
+    process.env.NODE_ENV = `test`
   })
 
   it(`shows a suggestion to switch to the new gatsby-image API when available`, async () => {
-    ;(global as GlobalOverride).GATSBY___IMAGE = false
+    global.GATSBY___IMAGE = undefined
+    process.env.NODE_ENV = `development`
 
     const { container } = render(
       <GatsbyImage image={image} alt="Alt content" />
@@ -163,12 +165,12 @@ describe(`GatsbyImage browser`, () => {
       container.querySelector(`[data-main-image=""]`)
     )
 
-    img.dispatchEvent(new Event(`load`))
+    img?.dispatchEvent(new Event(`load`))
 
     expect(onStartLoadSpy).toBeCalledWith({ wasCached: false })
     expect(onLoadSpy).toBeCalled()
     expect(hooks.storeImageloaded).toBeCalledWith(
-      `{"fallback":{"src":"some-src-fallback.jpg"}}`
+      `{"fallback":{"src":"some-src-fallback.jpg","sizes":"192x192"}}`
     )
   })
 

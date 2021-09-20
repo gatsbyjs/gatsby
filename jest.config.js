@@ -31,6 +31,9 @@ module.exports = {
     `<rootDir>/dist/`,
     `<rootDir>/node_modules/`,
     `<rootDir>/packages/gatsby-admin/.cache/`,
+    `<rootDir>/packages/gatsby-plugin-gatsby-cloud/src/__tests__/mocks/`,
+    `<rootDir>/packages/gatsby/src/utils/worker/__tests__/test-helpers/`,
+    `<rootDir>/deprecated-packages/`,
     `__tests__/fixtures`,
     `__testfixtures__/`,
   ],
@@ -39,6 +42,7 @@ module.exports = {
   },
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
+    "^@reach/router(.*)": `<rootDir>/node_modules/@gatsbyjs/reach-router$1`,
   },
   snapshotSerializers: [`jest-serializer-path`],
   collectCoverageFrom: coverageDirs,
@@ -50,4 +54,5 @@ module.exports = {
   testEnvironment: `jest-environment-jsdom-fourteen`,
   moduleFileExtensions: [`js`, `jsx`, `ts`, `tsx`, `json`],
   setupFiles: [`<rootDir>/.jestSetup.js`],
+  setupFilesAfterEnv: [`jest-extended`],
 }

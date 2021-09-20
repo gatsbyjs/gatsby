@@ -1,5 +1,8 @@
 ---
 title: Processing Payments with Stripe
+examples:
+  - label: Using Stripe
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/ecommerce-tutorial-with-stripe"
 ---
 
 ## Why Stripe and Gatsby?
@@ -31,7 +34,7 @@ Several tutorials, plugins and starters exist to help you get up and running wit
 
 ### Plugins
 
-- [gatsby-source-stripe](/packages/gatsby-source-stripe/): This plugin allows you to bring your product and SKU data into your Gatsby site at build time to be [used with Stripe Checkout](/tutorial/ecommerce-tutorial/#example-2-import-skus-via-source-plugin).
+- [gatsby-source-stripe](/plugins/gatsby-source-stripe/): This plugin allows you to bring your product and SKU data into your Gatsby site at build time to be [used with Stripe Checkout](/tutorial/ecommerce-tutorial/#example-2-import-skus-via-source-plugin).
 
 ### Starters & Examples
 

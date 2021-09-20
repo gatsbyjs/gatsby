@@ -25,6 +25,7 @@ exports[`disableBgImage disables background image when disableBgImage === true 1
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>"
@@ -55,6 +56,7 @@ exports[`disableBgImage does not disable background image when disableBgImage ==
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>"
@@ -85,6 +87,7 @@ exports[`disableBgImageOnAlpha disables background image on transparent images w
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>"
@@ -115,6 +118,7 @@ exports[`disableBgImageOnAlpha does not disable background image on transparent 
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>"
@@ -138,6 +142,7 @@ exports[`it handles goofy nesting properly 1`] = `
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
     </span>"
 `;
@@ -160,6 +165,7 @@ exports[`it leaves images that are already linked alone 1`] = `
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
     </span>"
 `;
@@ -167,24 +173,24 @@ exports[`it leaves images that are already linked alone 1`] = `
 exports[`it leaves linked HTML img tags alone 1`] = `
 "<a href=\\"https://example.org\\">
   <span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 300px; \\">
-      <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw&apos;); background-size: cover; display: block;\\"></span>
-  <img class=\\"gatsby-resp-image-image\\" alt=\\"this image already has a link\\" title=\\"this image already has a link\\" src=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" srcset=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg, not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\">
+      <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"></span>
+  <img class=\\"gatsby-resp-image-image\\" alt=\\"this image already has a link\\" title=\\"this image already has a link\\" src=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" srcset=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg, not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\" decoding=\\"async\\">
     </span>
 </a>"
 `;
 
 exports[`it leaves single-line linked HTML img tags alone 1`] = `
 "<span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 300px; \\">
-      <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw&apos;); background-size: cover; display: block;\\"></span>
-  <img class=\\"gatsby-resp-image-image\\" alt=\\"this image already has a link\\" title=\\"this image already has a link\\" src=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" srcset=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg, not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\">
+      <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"></span>
+  <img class=\\"gatsby-resp-image-image\\" alt=\\"this image already has a link\\" title=\\"this image already has a link\\" src=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" srcset=\\"not-a-real-dir/images/this-image-already-has-a-link.jpeg, not-a-real-dir/images/this-image-already-has-a-link.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\" decoding=\\"async\\">
     </span>"
 `;
 
 exports[`it transforms HTML img tags 1`] = `
 "<span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 300px; \\">
       <a class=\\"gatsby-resp-image-link\\" href=\\"not-a-real-dir/image/my-image.jpeg\\" style=\\"display: block\\" target=\\"_blank\\" rel=\\"noopener\\">
-    <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw&apos;); background-size: cover; display: block;\\"></span>
-  <img class=\\"gatsby-resp-image-image\\" alt=\\"my image\\" title=\\"my image\\" src=\\"not-a-real-dir/image/my-image.jpeg\\" srcset=\\"not-a-real-dir/image/my-image.jpeg, not-a-real-dir/image/my-image.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\">
+    <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"></span>
+  <img class=\\"gatsby-resp-image-image\\" alt=\\"my image\\" title=\\"my image\\" src=\\"not-a-real-dir/image/my-image.jpeg\\" srcset=\\"not-a-real-dir/image/my-image.jpeg, not-a-real-dir/image/my-image.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\" decoding=\\"async\\">
   </a>
     </span>"
 `;
@@ -192,8 +198,8 @@ exports[`it transforms HTML img tags 1`] = `
 exports[`it transforms HTML img tags with query strings 1`] = `
 "<span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 300px; \\">
       <a class=\\"gatsby-resp-image-link\\" href=\\"not-a-real-dir/image/my-image.jpeg\\" style=\\"display: block\\" target=\\"_blank\\" rel=\\"noopener\\">
-    <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw&apos;); background-size: cover; display: block;\\"></span>
-  <img class=\\"gatsby-resp-image-image\\" alt=\\"my image\\" title=\\"my image\\" src=\\"not-a-real-dir/image/my-image.jpeg\\" srcset=\\"not-a-real-dir/image/my-image.jpeg, not-a-real-dir/image/my-image.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\">
+    <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"></span>
+  <img class=\\"gatsby-resp-image-image\\" alt=\\"my image\\" title=\\"my image\\" src=\\"not-a-real-dir/image/my-image.jpeg\\" srcset=\\"not-a-real-dir/image/my-image.jpeg, not-a-real-dir/image/my-image.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\" style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\" loading=\\"lazy\\" decoding=\\"async\\">
   </a>
     </span>"
 `;
@@ -223,6 +229,7 @@ exports[`it transforms image references in markdown 1`] = `
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>"
@@ -253,6 +260,7 @@ exports[`it transforms images in markdown 1`] = `
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>"
@@ -283,7 +291,49 @@ exports[`it transforms images in markdown with query strings 1`] = `
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
+  </a>
+    </span>"
+`;
+
+exports[`it transforms images in markdown with the "withAvif" option 1`] = `
+"<span
+      class=\\"gatsby-resp-image-wrapper\\"
+      style=\\"position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 300px; \\"
+    >
+      <a
+    class=\\"gatsby-resp-image-link\\"
+    href=\\"not-a-real-dir/images/my-image.jpeg\\"
+    style=\\"display: block\\"
+    target=\\"_blank\\"
+    rel=\\"noopener\\"
+  >
+    <span
+    class=\\"gatsby-resp-image-background-image\\"
+    style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
+  ></span>
+  <picture>
+          <source
+              srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+              sizes=\\"(max-width: 650px) 100vw, 650px\\"
+              type=\\"undefined\\"
+            />
+          <source
+            srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+            sizes=\\"(max-width: 650px) 100vw, 650px\\"
+            type=\\"undefined\\"
+          />
+          <img
+            class=\\"gatsby-resp-image-image\\"
+            src=\\"not-a-real-dir/images/my-image.jpeg\\"
+            alt=\\"image\\"
+            title=\\"image\\"
+            loading=\\"lazy\\"
+            decoding=\\"async\\"
+            style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+          />
+        </picture>
   </a>
     </span>"
 `;
@@ -305,25 +355,26 @@ exports[`it transforms images in markdown with the "withWebp" option 1`] = `
     style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw'); background-size: cover; display: block;\\"
   ></span>
   <picture>
-        <source
-          srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
-          sizes=\\"(max-width: 650px) 100vw, 650px\\"
-          type=\\"undefined\\"
-        />
-        <source
-          srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
-          sizes=\\"(max-width: 650px) 100vw, 650px\\"
-          type=\\"undefined\\"
-        />
-        <img
-          class=\\"gatsby-resp-image-image\\"
-          src=\\"not-a-real-dir/images/my-image.jpeg\\"
-          alt=\\"image\\"
-          title=\\"image\\"
-          loading=\\"lazy\\"
-          style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
-        />
-      </picture>
+          <source
+              srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+              sizes=\\"(max-width: 650px) 100vw, 650px\\"
+              type=\\"undefined\\"
+            />
+          <source
+            srcset=\\"not-a-real-dir/images/my-image.jpeg, not-a-real-dir/images/my-image.jpeg\\"
+            sizes=\\"(max-width: 650px) 100vw, 650px\\"
+            type=\\"undefined\\"
+          />
+          <img
+            class=\\"gatsby-resp-image-image\\"
+            src=\\"not-a-real-dir/images/my-image.jpeg\\"
+            alt=\\"image\\"
+            title=\\"image\\"
+            loading=\\"lazy\\"
+            decoding=\\"async\\"
+            style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
+          />
+        </picture>
   </a>
     </span>"
 `;
@@ -353,6 +404,7 @@ exports[`it uses tracedSVG placeholder when enabled 1`] = `
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>"
@@ -384,6 +436,7 @@ exports[`markdownCaptions display title in markdown as caption when showCaptions
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>
@@ -417,6 +470,7 @@ exports[`markdownCaptions display title in text as caption when showCaptions ===
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>
@@ -450,6 +504,7 @@ exports[`showCaptions display alt as caption if specified first in showCaptions 
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>
@@ -483,6 +538,7 @@ exports[`showCaptions display alt as caption if specified in showCaptions array 
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>
@@ -516,6 +572,7 @@ exports[`showCaptions display alt as caption if specified in showCaptions array,
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>
@@ -549,6 +606,7 @@ exports[`showCaptions display alt as caption if title was not found and showCapt
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>
@@ -582,6 +640,7 @@ exports[`showCaptions display title as caption if specified first in showCaption
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>
@@ -615,6 +674,7 @@ exports[`showCaptions display title as caption if specified in showCaptions arra
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>
@@ -648,6 +708,7 @@ exports[`showCaptions display title as caption when showCaptions === true 1`] = 
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>
@@ -681,6 +742,7 @@ exports[`showCaptions fallback to alt as caption if specified second in showCapt
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>
@@ -714,6 +776,7 @@ exports[`showCaptions fallback to title as caption if specified second in showCa
         sizes=\\"(max-width: 650px) 100vw, 650px\\"
         style=\\"width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;\\"
         loading=\\"lazy\\"
+        decoding=\\"async\\"
       />
   </a>
     </span>

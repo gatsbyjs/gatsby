@@ -53,7 +53,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
 }
 ```
 
-The above code block creates a node called `"Test Node"` as seen from the `title` parameter. If this process is successful restarting the server will make the `allTestNode` query available at `localhost:8000/___graphql`.
+The above code block creates a node called `"Test Node"` as seen from the `title` parameter. If this process is successful restarting the server will make the `allTestNode` query available at `http://localhost:8000/___graphql`.
 
 > Libraries like [Axios](https://www.npmjs.com/package/axios) can be used to handle calls in the `gatsby-node.js` file
 

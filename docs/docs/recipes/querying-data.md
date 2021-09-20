@@ -145,7 +145,7 @@ export default NonPageComponent
 - [More on Static Query for querying data in components](/docs/how-to/querying-data/static-query/)
 - [The difference between a static query and a page query](/docs/how-to/querying-data/static-query/#how-staticquery-differs-from-page-query)
 - [More on the useStaticQuery hook](/docs/how-to/querying-data/use-static-query/)
-- [Visualize your data with GraphiQL](/docs/introducing-graphiql/)
+- [Visualize your data with GraphiQL](/docs/how-to/querying-data/running-queries-with-graphiql/)
 
 ## Limiting with GraphQL
 

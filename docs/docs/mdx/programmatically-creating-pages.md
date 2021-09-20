@@ -24,7 +24,7 @@ root.
 
 > **Note**: `gatsby-plugin-mdx` uses `.mdx` by default as a file extension to
 > recognize which files to use. You can also [use `.md` as a file
-> extension](/packages/gatsby-plugin-mdx#extensions) if you want.
+> extension](/plugins/gatsby-plugin-mdx#extensions) if you want.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -46,7 +46,7 @@ module.exports = {
 ```
 
 You can read about
-[`gatsby-source-filesystem`](/packages/gatsby-source-filesystem)
+[`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem)
 if you'd like to learn more.
 
 ## Add MDX files
@@ -243,7 +243,7 @@ export default function PageTemplate({ data: { mdx } }) {
     <div>
       <h1>{mdx.frontmatter.title}</h1>
       <MDXProvider components={shortcodes}>
-        <MDXRenderer>{mdx.body}</MDXRenderer>
+        <MDXRenderer frontmatter={mdx.frontmatter}>{mdx.body}</MDXRenderer>
       </MDXProvider>
     </div>
   )
@@ -285,7 +285,7 @@ export default function PageTemplate({ data: { mdx } }) {
     <div>
       <h1>{mdx.frontmatter.title}</h1>
       <MDXProvider components={shortcodes}>
-        <MDXRenderer>{mdx.body}</MDXRenderer>
+        <MDXRenderer frontmatter={mdx.frontmatter}>{mdx.body}</MDXRenderer>
       </MDXProvider>
     </div>
   )

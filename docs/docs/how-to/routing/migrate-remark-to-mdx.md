@@ -62,6 +62,13 @@ const result = await graphql(
       ) {
 ```
 
+Don't forget to update the `posts` constant by replacing `allMarkdownRemark` with `allMdx`.
+
+```diff:title=gatsby-node.js
+-const posts = result.data.allMarkdownRemark.nodes
++const posts = result.data.allMdx.nodes
+```
+
 Also, update `onCreateNode` which creates the blog post slugs to watch for the node type of `Mdx` instead of `MarkdownRemark`.
 
 ```diff:title=gatsby-node.js
@@ -119,5 +126,5 @@ For instance, any HTML component with the `class` attribute needs to be changed 
 
 ## Additional resources
 
-- Follow [Importing and Using Components in MDX](/docs/how-to/routing/mdx/importing-and-using-components) to find out how you can insert React components in your MDX files.
-- Follow [Using MDX Plugins](/docs/how-to/routing/advanced/mdx-plugins/) on how to add and use Gatsby Remark or Remark plugins to your MDX site.
+- Follow [Importing and Using Components in MDX](/docs/mdx/importing-and-using-components/) to find out how you can insert React components in your MDX files.
+- Follow [Using MDX Plugins](/docs/how-to/routing/mdx-plugins/) on how to add and use Gatsby Remark or Remark plugins to your MDX site.

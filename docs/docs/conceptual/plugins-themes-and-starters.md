@@ -92,7 +92,7 @@ Plugins and themes both allow options to be passed in when installed in the plug
 
 Theme [shadowing](/docs/how-to/plugins-and-themes/shadowing/) exists to allow users to override or otherwise extend individual components provided by a theme. For example, a plugin or theme can provide a specific path to `gatsby-config` so the plugin knows where to build pages from, but the user wouldn't be able adjust _how_ those pages are built, only from what path. Theme shadowing allows users to replace a file with their own version of it, allowing them to rewrite that logic to use the path in a different way.
 
-An example of a plugin that uses shadowing is [`gatsby-plugin-theme-ui`](/packages/gatsby-plugin-theme-ui/?=theme-ui#customizing-the-theme) which allows you to shadow a theme file to use in your own theme.
+An example of a plugin that uses shadowing is [`gatsby-plugin-theme-ui`](/plugins/gatsby-plugin-theme-ui/?=theme-ui#customizing-the-theme) which allows you to shadow a theme file to use in your own theme.
 
 Starters aren't capable of shadowing (and they don't need to be), because a user of a starter can adjust any file by editing it directly.
 
@@ -104,7 +104,7 @@ Themes are intended to abstract several plugins into one, by making a `gatsby-co
 
 Custom components are most traditionally distributed as packages in the React ecosystem. Components don't need to hook into the Gatsby build system, so if shipped with a plugin they don't need to be included in a `gatsby-config`'s plugin array. This is the case with `gatsby-image` which is a React component. It doesn't need to be included in the plugins array because it is merely a component.
 
-Some plugins ship with components you can use in a Gatsby site. An example is the [`<OutboundLink />` component from `gatsby-plugin-google-analytics`](/packages/gatsby-plugin-google-analytics/?=#outboundlink-component). Other plugins, like [`gatsby-plugin-react-helmet`](/packages/gatsby-plugin-react-helmet), require you to install components from other libraries.
+Some plugins ship with components you can use in a Gatsby site. An example is the [`<OutboundLink />` component from `gatsby-plugin-google-analytics`](/plugins/gatsby-plugin-google-analytics/?=#outboundlink-component). Other plugins, like [`gatsby-plugin-react-helmet`](/plugins/gatsby-plugin-react-helmet), require you to install components from other libraries.
 
 Themes by convention are more suited to ship with components that could then be shadowed for customization.
 

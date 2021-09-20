@@ -79,7 +79,7 @@ Finally, install `git` which will be necessary for creating your first Gatsby pr
 sudo dnf install git
 ```
 
-## Archlinux and other `pacman` based distros
+## Arch Linux and other `pacman` based distros
 
 Begin by updating.
 

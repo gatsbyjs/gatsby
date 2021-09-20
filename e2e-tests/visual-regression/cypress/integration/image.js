@@ -1,14 +1,16 @@
 const testCases = [
   ["fixed image", "/images/fixed"],
   ["fixed image smaller than requested size", "/images/fixed-too-big"],
-  ["fluid image", "/images/fluid"],
+  ["fluid image", "/images/fullWidth"],
   ["constrained image", "/images/constrained"],
+  ["avif format", "/images/avif"],
 ]
 const staticImageTestCases = [
   ["fixed image", "/static-images/fixed"],
   ["fixed image smaller than requested size", "/static-images/fixed-too-big"],
-  ["fluid image", "/static-images/fluid"],
+  ["fluid image", "/static-images/fullWidth"],
   ["constrained image", "/static-images/constrained"],
+  ["avif format", "/static-images/avif"],
 ]
 
 const sizes = [["iphone-6"], ["ipad-2"], [1027, 768]]

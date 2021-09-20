@@ -10,7 +10,7 @@ There are three ways you can use Tailwind with Gatsby:
 
 1. Standard: Use PostCSS to generate Tailwind classes, then you can apply those classes using `className`.
 2. CSS-in-JS: Integrate Tailwind classes into Styled Components.
-3. SCSS: Use [gatsby-plugin-sass](/packages/gatsby-plugin-sass) to support Tailwind classes in your SCSS files.
+3. SCSS: Use [gatsby-plugin-sass](/plugins/gatsby-plugin-sass) to support Tailwind classes in your SCSS files.
 
 You have to install and configure Tailwind for all of these methods, so this guide will walk through that step first, then you can follow the instructions for PostCSS, CSS-in-JS or SCSS.
 
@@ -21,7 +21,7 @@ This guide assumes that you have a Gatsby project set up. If you need to set up 
 ### 1. Install Tailwind
 
 ```shell
-npm install tailwindcss --save-dev
+npm install tailwindcss autoprefixer
 ```
 
 ### 2. Generate Tailwind config file (optional)
@@ -36,7 +36,7 @@ npx tailwindcss init
 
 #### Option #1: PostCSS
 
-1. Install the Gatsby PostCSS plugin [**gatsby-plugin-postcss**](/packages/gatsby-plugin-postcss).
+1. Install the Gatsby PostCSS plugin [**gatsby-plugin-postcss**](/plugins/gatsby-plugin-postcss).
 
 ```shell
 npm install postcss gatsby-plugin-postcss
@@ -114,11 +114,11 @@ const IndexPage = () => (
 export default IndexPage
 ```
 
-See the [Twin + Gatsby + Emotion installation guide](https://github.com/ben-rogerson/twin.macro/blob/master/docs/how-to/styling/emotion/gatsby.md) for more information.
+See the [Twin + Gatsby + Emotion installation guide](https://github.com/ben-rogerson/twin.examples/tree/master/gatsby-emotion) for more information.
 
 #### Option #3: SCSS
 
-1. Install the Gatsby SCSS plugin [**gatsby-plugin-sass**](/packages/gatsby-plugin-sass) and `sass`.
+1. Install the Gatsby SCSS plugin [**gatsby-plugin-sass**](/plugins/gatsby-plugin-sass) and `sass`.
 
 ```shell
 npm install sass gatsby-plugin-sass
@@ -143,7 +143,7 @@ plugins: [
 **Note:** Optionally you can add a corresponding configuration file (by default it will be `tailwind.config.js`).
 If you are adding a custom configuration, you will need to load it after `tailwindcss`.
 
-### 3. Add custom CSS/SCSS files
+### 3. Add base CSS/SCSS files
 
 **Note**: This approach is not needed if you chose CSS-in-JS above, as you can already nest styles and `@apply` rules directly from your `.js` files.
 
@@ -173,9 +173,11 @@ This will be your 'master' CSS file, which you will import all other CSS within.
 }
 ```
 
-3. Apply these additional styles to the browser
+Tailwind will swap these directives out at build-time with all of the styles it generates based on your configured design system.
 
-In `gatsby-browser.js` add an import rule for your Tailwind directives and custom CSS so that they are accounted for in build.
+3. Import this file into your `gatsby-browser.js`
+
+In `gatsby-browser.js` add an import rule for your Tailwind directives and custom CSS to pull them into your site.
 
 ```js:title=gatsby-browser.js
 import "./src/css/index.css"
@@ -195,7 +197,7 @@ In 1.4.0 you can purge your CSS directly from your Tailwind config. You need to 
 
 ```js:title=tailwind.config.js
 module.exports = {
-  purge: ["./src/**/*.js", "./src/**/*.jsx", "./src/**/*.ts", "./src/**/*.tsx"],
+  purge: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {},
   variants: {},
   plugins: [],

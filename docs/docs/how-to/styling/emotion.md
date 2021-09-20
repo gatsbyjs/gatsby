@@ -1,5 +1,8 @@
 ---
 title: Emotion
+examples:
+  - label: Using Emotion
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-emotion"
 ---
 
 In this guide, you will learn how to set up a site with the CSS-in-JS library [Emotion](https://emotion.sh).
@@ -118,7 +121,7 @@ export default function UsersList() {
 
 ## Adding global styles in Gatsby with Emotion
 
-To start, create a new Gatsby site with the [hello world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world) and install [`gatsby-plugin-emotion`](/packages/gatsby-plugin-emotion/) and its dependencies:
+To start, create a new Gatsby site with the [hello world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world) and install [`gatsby-plugin-emotion`](/plugins/gatsby-plugin-emotion/) and its dependencies:
 
 ```shell
 gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world

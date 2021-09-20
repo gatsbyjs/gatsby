@@ -30,7 +30,7 @@ Note: the various props that are rendered into pages _are_ required e.g.
 Anything you render in the `html.js` component will _not_ be made "live" in
 the client like other components. If you want to dynamically update your
 `<head>` we recommend using
-[React Helmet](/packages/gatsby-plugin-react-helmet/)
+[React Helmet](/plugins/gatsby-plugin-react-helmet/)
 
 ## Inserting HTML into the `<footer>`
 

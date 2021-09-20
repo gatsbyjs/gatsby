@@ -29,6 +29,8 @@ describe(`hot-reloading static queries`, () => {
         `npm run update -- --file src/components/static-query/use-static-query/hot.js --replacements "# %AUTHOR%:author" --exact`
       )
 
+      cy.waitForHmr()
+
       cy.getTestElement(`use-static-query-hot`)
         .invoke(`text`)
         .should(`contain`, author)

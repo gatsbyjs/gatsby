@@ -2,7 +2,7 @@
 title: Writing Pages in MDX
 ---
 
-After [installing](/docs/how-to/routing/mdx/getting-started) `gatsby-plugin-mdx`, MDX files
+After [installing](/docs/how-to/routing/mdx/#part-1-getting-started-with-mdx) `gatsby-plugin-mdx`, MDX files
 located in `src/pages` will turn into pages.
 
 Pages are rendered at a URL that is constructed from the filesystem
@@ -48,7 +48,7 @@ query {
 
 > **Note:** To query `MDX` content, it must be included in the node system using a
 > source like the `gatsby-source-filesystem` plugin first. Instructions for sourcing
-> content from somewhere like your `/src/pages` directory can be found on the [plugin's README](/packages/gatsby-source-filesystem/).
+> content from somewhere like your `/src/pages` directory can be found on the [plugin's README](/plugins/gatsby-source-filesystem/).
 
 Frontmatter is also available in `props.pageContext.frontmatter` and
 can be accessed in blocks of JSX in your MDX document:
@@ -186,7 +186,7 @@ query MdxExports {
 
 ### Defining a layout
 
-If you have [provided a default layout](/packages/gatsby-plugin-mdx/?=mdx#default-layouts) in your `gatsby-config.js`
+If you have [provided a default layout](/plugins/gatsby-plugin-mdx/?=mdx#default-layouts) in your `gatsby-config.js`
 through the `gatsby-plugin-mdx` plugin options, the exported component you define
 from this file will replace the default.
 

@@ -25,9 +25,25 @@ const legacyFragmentsSVGPlaceholder = [
   `GatsbyImageSharpFluid_withWebp_tracedSVG`,
 ]
 
+const transformOptions = [
+  `grayscale`,
+  `duotone`,
+  `rotate`,
+  `trim`,
+  `cropFocus`,
+  `fit`,
+]
+
+const otherOptions = [
+  `jpegQuality`,
+  `webpQuality`,
+  `pngQuality`,
+  `pngCompressionSpeed`,
+]
+
 const typeMapper = {
   fixed: `FIXED`,
-  fluid: `FLUID`,
+  fluid: `FULL_WIDTH`,
   constrained: `CONSTRAINED`,
 }
 
@@ -122,6 +138,14 @@ export function updateImport(babel) {
           propNames.includes(path.node.property.name) &&
           path.node?.object?.property?.name === `childImageSharp`
         ) {
+          if (
+            t.isMemberExpression(path.parent) ||
+            t.isOptionalMemberExpression(path.parent)
+          ) {
+            console.log(
+              `It appears you're accessing src or similar. This structure has changed. Please inspect ${state.opts.filename} manually, you likely want to use a helper function like getSrc.`
+            )
+          }
           const updatedExpression = t.memberExpression(
             path.node.object,
             t.identifier(`gatsbyImageData`)
@@ -135,6 +159,14 @@ export function updateImport(babel) {
           propNames.includes(path.node.property.name) &&
           path.node?.object?.property?.name === `childImageSharp`
         ) {
+          if (
+            t.isMemberExpression(path.parent) ||
+            t.isOptionalMemberExpression(path.parent)
+          ) {
+            console.log(
+              `It appears you're accessing src or similar. This structure has changed. Please inspect ${state.opts.filename} manually, you likely want to use a helper function like getSrc.`
+            )
+          }
           const updatedExpression = t.optionalMemberExpression(
             path.node.object,
             t.identifier(`gatsbyImageData`),
@@ -151,10 +183,8 @@ export function updateImport(babel) {
         }
         const query = node.quasi?.quasis?.[0]?.value?.raw
         if (query) {
-          const {
-            ast: transformedGraphQLQuery,
-            hasChanged,
-          } = processGraphQLQuery(query)
+          const { ast: transformedGraphQLQuery, hasChanged } =
+            processGraphQLQuery(query, state)
 
           if (hasChanged) {
             node.quasi.quasis[0].value.raw = graphql.print(
@@ -171,10 +201,8 @@ export function updateImport(babel) {
         const query = node.arguments?.[0].quasis?.[0]?.value?.raw
 
         if (query) {
-          const {
-            ast: transformedGraphQLQuery,
-            hasChanged,
-          } = processGraphQLQuery(query)
+          const { ast: transformedGraphQLQuery, hasChanged } =
+            processGraphQLQuery(query, state)
 
           if (hasChanged) {
             node.arguments[0].quasis[0].value.raw = graphql.print(
@@ -251,19 +279,9 @@ function processImportUsage(path, t, template, state) {
 
     newImageExpression.extra.parenthesized = false // the template adds parens and we don't want it to
   } else if (t.isObjectExpression(expressionValue)) {
-    expressionValue.properties.map(item => {
-      if (item.key?.name !== `src`) return
-      if (t.isMemberExpression(item.value)) {
-        let subObject = item.value?.object
-        while (subObject) {
-          if (propNames.includes(subObject.property?.name)) {
-            subObject.property.name = `gatsbyImageData`
-            break
-          }
-          subObject = subObject?.object
-        }
-      }
-    })
+    console.log(
+      `It appears you're passing src or srcSet directly. This API is no longer exposed, please update ${state.opts.filename} manually.`
+    )
   } else if (expressionValue) {
     console.log(
       `It appears you're passing a variable to your image component. We haven't changed it, but we have updated it to use the new GatsbyImage component. Please check ${state.opts.filename} manually.`
@@ -286,7 +304,7 @@ function processImportUsage(path, t, template, state) {
   path.skip() // prevent us from revisiting these nodes
 }
 
-function processArguments(queryArguments, fragment) {
+function processArguments(queryArguments, fragment, layout, state) {
   if (!legacyFragments.includes(fragment.name.value)) {
     let placeholderEnum = `BLURRED` // just in case these aren't the discrete cases we expect
     if (legacyFragmentsNoPlaceholder.includes(fragment.name?.value)) {
@@ -307,10 +325,54 @@ function processArguments(queryArguments, fragment) {
     }
     queryArguments.push(placeholderArgument)
   }
-  return
+  const transformOptionsToNest = []
+  let newLayout = layout
+  queryArguments.forEach((argument, index) => {
+    if (argument.name.value === `maxWidth`) {
+      argument.name.value = `width`
+      if (layout === `fluid` && Number(argument.value.value) >= 1000) {
+        delete queryArguments[index]
+        const maxHeightIndex = queryArguments.findIndex(
+          arg => arg?.name?.value === `maxHeight`
+        )
+
+        delete queryArguments?.[maxHeightIndex]
+
+        console.log(
+          `maxWidth is no longer supported for fluid (now fullWidth) images. It's been removed from your query in ${state.opts.filename}.`
+        )
+      } else if (layout === `fluid` && Number(argument.value.value) < 1000) {
+        console.log(
+          `maxWidth is no longer supported for fluid (now fullWidth) images. We've updated the query in ${state.opts.filename} to use a constrained image instead.`
+        )
+        newLayout = `constrained`
+      }
+    } else if (argument.name.value === `maxHeight`) {
+      argument.name.value = `height`
+      console.log(
+        `maxHeight is no longer supported for fluid (now fullWidth) images. It's been removed from your query in ${state.opts.filename}.`
+      )
+    } else if (transformOptions.includes(argument.name.value)) {
+      transformOptionsToNest.push(argument)
+      delete queryArguments[index]
+    } else if (otherOptions.includes(argument.name.value)) {
+      console.log(
+        `${argument.name.value} is now a nested value, please see the API docs and update the query in ${state.opts.filename} manually.`
+      )
+    }
+  })
+  if (transformOptionsToNest.length > 0) {
+    const newOptions = {
+      kind: `Argument`,
+      name: { kind: `Name`, value: `transformOptions` },
+      value: { kind: `ObjectValue`, fields: transformOptionsToNest },
+    }
+    queryArguments.push(newOptions)
+  }
+  return newLayout
 }
 
-function processGraphQLQuery(query) {
+function processGraphQLQuery(query, state) {
   try {
     let hasChanged = false // this is sort of a hack, but print changes formatting and we only want to use it when we have to
     const ast = graphql.parse(query)
@@ -324,16 +386,14 @@ function processGraphQLQuery(query) {
         if (!sharpField) {
           return
         }
-        const [
-          fixedOrFluidField,
-        ] = sharpField.selectionSet.selections.filter(({ name }) =>
-          propNames.includes(name?.value)
+        const [fixedOrFluidField] = sharpField.selectionSet.selections.filter(
+          ({ name }) => propNames.includes(name?.value)
         )
 
         if (!fixedOrFluidField) {
           return
         }
-        let imageType = fixedOrFluidField.name.value
+        let layout = fixedOrFluidField.name.value
         const fragments = fixedOrFluidField.selectionSet.selections
 
         const presentationSizeFragment = fragments.find(
@@ -341,10 +401,15 @@ function processGraphQLQuery(query) {
             name.value === `GatsbyImageSharpFluidLimitPresentationSize`
         )
         if (presentationSizeFragment) {
-          imageType = `constrained`
+          layout = `constrained`
           delete fragments[presentationSizeFragment]
         }
-        processArguments(fixedOrFluidField.arguments, fragments?.[0])
+        layout = processArguments(
+          fixedOrFluidField.arguments,
+          fragments?.[0],
+          layout,
+          state
+        )
 
         const typeArgument = {
           kind: `Argument`,
@@ -354,7 +419,7 @@ function processGraphQLQuery(query) {
           },
           value: {
             kind: `EnumValue`,
-            value: typeMapper[imageType],
+            value: typeMapper[layout],
           },
         }
 

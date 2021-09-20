@@ -2,15 +2,13 @@
 title: Deploying to Cloudflare Workers
 ---
 
-[Cloudflare Workers](https://workers.cloudflare.com/) is a serverless platform for creating entirely new applications or augmenting existing ones without configuring or maintaining infrastructure. With [Workers Sites](https://developers.cloudflare.com/workers/sites/start-from-existing/) you can deploy any static site including your Gatsby projects to a domain on Cloudflare or for free on your [workers.dev](https://workers.dev) subdomain.
-
-To enable the KV store required to serve the Gatsby files, you'll need the [Workers Unlimited plan](https://developers.cloudflare.com/workers/about/pricing/) for \$5/month.
+[Cloudflare Workers](https://workers.cloudflare.com/) is a serverless platform for creating entirely new applications or augmenting existing ones without configuring or maintaining infrastructure. With [Workers Sites](https://developers.cloudflare.com/workers/sites/start-from-existing/) you can build any static site locally (e.g. your Gatsby project), and deploy to a [workers.dev](https://workers.dev) subdomain or custom domain.
 
 This guide will get you started in a few steps:
 
 1. Installing wrangler CLI
 
-Workers Sites requires [wrangler](https://developers.cloudflare.com/workers/tooling/wrangler/). The more straight forward way to install wrangler is with [npm](https://www.npmjs.com/), run the following command:
+Workers Sites requires [wrangler](https://developers.cloudflare.com/workers/tooling/wrangler/), a tool to upload your static files. The most straight forward way to install wrangler is with [npm](https://www.npmjs.com/), run the following command:
 
 ```shell
 npm install -g @cloudflare/wrangler
@@ -40,7 +38,15 @@ You'll notice your project structure should now look something like:
   ├── package.json
 ```
 
-3. Configure
+3. Build the project
+
+To run your application on Cloudflare Workers Sites, you first need to build your application locally. This should generate your files in `./public`.
+
+```shell
+npm run build # Or npx gatsby build
+```
+
+4. Configure
 
 To authenticate into your Cloudflare account run:
 
@@ -71,7 +77,7 @@ entry-point = "workers-site"
 
 This deploys to your workers.dev subdomain. For a custom domain see [Quick Start](https://developers.cloudflare.com/workers/quickstart/#publish-to-your-domain).
 
-4. Deploy
+5. Deploy
 
 You can deploy your application by running the following command in the root of the project directory:
 
@@ -81,9 +87,9 @@ wrangler publish
 
 Now your site is available at gatsby-project.subdomain.workers.dev!
 
-5. CI with GitHub Actions
+6. CI with GitHub Actions
 
-Use wrangler's GitHub action [plugin](https://github.com/cloudflare/wrangler-action) to automatically deploy to Workers every time you push to master.
+Use wrangler's GitHub action [plugin](https://github.com/cloudflare/wrangler-action) to automatically deploy to Workers every time you push to master. Alternatively, you can use [Gatsby Cloud Hosting](/products/cloud/hosting/) or [Cloudflare Pages](https://pages.cloudflare.com/).
 
 Once GitHub Actions is enabled on your repo, add a file to your project's root called `.github/workflows/main.yml` with the contents:
 

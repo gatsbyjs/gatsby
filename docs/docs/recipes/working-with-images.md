@@ -110,7 +110,7 @@ Gatsby will generate optimized resources which can be queried with GraphQL and p
 ### Prerequisites
 
 - The `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed and added to the plugins array in `gatsby-config`
-- [Images sourced](/packages/gatsby-image/#install) in your `gatsby-config` using a plugin like `gatsby-source-filesystem`
+- [Images sourced](/plugins/gatsby-image/#install) in your `gatsby-config` using a plugin like `gatsby-source-filesystem`
 
 ### Directions
 
@@ -306,12 +306,12 @@ return (
 
 For use cases like a featured image in a blog post, you can _still_ use `gatsby-image`. The `Img` component needs processed image data, which can come from a local (or remote) file, including from a URL in the frontmatter of a `.md` or `.mdx` file.
 
-To inline images in markdown (using the `![]()` syntax), consider using a plugin like [`gatsby-remark-images`](/packages/gatsby-remark-images/)
+To inline images in markdown (using the `![]()` syntax), consider using a plugin like [`gatsby-remark-images`](/plugins/gatsby-remark-images/)
 
 ### Prerequisites
 
 - The `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed and added to the plugins array in `gatsby-config`
-- [Images sourced](/packages/gatsby-image/#install) in your `gatsby-config` using a plugin like `gatsby-source-filesystem`
+- [Images sourced](/plugins/gatsby-image/#install) in your `gatsby-config` using a plugin like `gatsby-source-filesystem`
 - Markdown files sourced in your `gatsby-config` with image URLs in frontmatter
 - [Pages created](/docs/creating-and-modifying-pages/) from Markdown using [`createPages`](/docs/reference/config-files/gatsby-node/#createPages)
 

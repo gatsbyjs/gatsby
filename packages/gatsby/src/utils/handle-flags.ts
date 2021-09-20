@@ -1,6 +1,5 @@
 import _ from "lodash"
 import { isCI } from "gatsby-core-utils"
-import terminalLink from "terminal-link"
 import { IFlag } from "./flags"
 import chalk from "chalk"
 import { commaListsAnd } from "common-tags"
@@ -13,6 +12,7 @@ const handleFlags = (
 ): {
   enabledConfigFlags: Array<IFlag>
   unknownFlagMessage: string
+  unfitFlagMessage: string
   message: string
 } => {
   // Prepare config flags.
@@ -24,6 +24,7 @@ const handleFlags = (
 
   // Find unknown flags someone has in their config to warn them about.
   const unknownConfigFlags: Array<{ flag: string; didYouMean: string }> = []
+  const unfitConfigFlags: Array<{ flag: string; requires: string }> = []
   for (const flagName in configFlags) {
     if (availableFlags.has(flagName)) {
       continue
@@ -67,32 +68,70 @@ const handleFlags = (
   // Test flags to see if it wants opted in.
   const optedInFlags = new Map<string, IFlag>()
   const applicableFlags = new Map<string, IFlag>()
+  const lockedInFlags = new Map<string, IFlag>()
+  const lockedInFlagsThatAreInConfig = new Map<string, IFlag>()
   availableFlags.forEach(flag => {
+    if (flag.command !== `all` && flag.command !== executingCommand) {
+      // if flag is not for all commands and current command doesn't match command flag is for - skip
+      return
+    }
+
+    if (flag.noCI && isCI()) {
+      // If we're in CI and flag is not available for CI - skip
+      return
+    }
+
     const fitness = flag.testFitness(flag)
 
-    // if user didn't explicitly set a flag (either true or false)
-    // and it qualifies for auto opt-in - add it to optedInFlags
-    if (typeof configFlags[flag.name] === `undefined` && fitness === `OPT_IN`) {
+    const flagIsSetInConfig = typeof configFlags[flag.name] !== `undefined`
+
+    if (fitness === `LOCKED_IN`) {
+      enabledConfigFlags.push(flag)
+      lockedInFlags.set(flag.name, flag)
+      if (flagIsSetInConfig) {
+        lockedInFlagsThatAreInConfig.set(flag.name, flag)
+      }
+    } else if (!flagIsSetInConfig && fitness === `OPT_IN`) {
+      // if user didn't explicitly set a flag (either true or false)
+      // and it qualifies for auto opt-in - add it to optedInFlags
       enabledConfigFlags.push(flag)
       optedInFlags.set(flag.name, flag)
     }
 
-    if (fitness) {
+    if (fitness === true || fitness === `OPT_IN`) {
       applicableFlags.set(flag.name, flag)
+    }
+
+    if (fitness === false && enabledConfigFlags.includes(flag)) {
+      unfitConfigFlags.push({ flag: flag.name, requires: flag.requires ?? `` })
     }
   })
 
+  let unfitFlagMessage = ``
+  if (unfitConfigFlags.length > 0) {
+    unfitFlagMessage =
+      `The following flag(s) found in your gatsby-config.js are not supported in your environment and will have no effect:\n` +
+      unfitConfigFlags
+        .map(
+          flag => `- ${flag.flag}${flag.requires ? `: ${flag.requires}` : ``}`
+        )
+        .join(`\n`)
+  }
+
   // Filter enabledConfigFlags against various tests
   enabledConfigFlags = enabledConfigFlags.filter(flag => {
-    // Is this flag available for this command?
-    const isForCommand =
-      flag.command === `all` || flag.command === executingCommand
-    // If we're in CI, filter out any flags that don't want to be enabled in CI
-    const isForCi = isCI() ? flag.noCI !== true : true
+    if (flag.command !== `all` && flag.command !== executingCommand) {
+      // if flag is not for all commands and current command doesn't match command flag is for - skip
+      return false
+    }
 
-    const passesFitness = flag.testFitness(flag)
+    if (flag.noCI && isCI()) {
+      // If we're in CI and flag is not available for CI - skip
+      return false
+    }
 
-    return isForCommand && isForCi && passesFitness
+    // finally check if flag passes fitness check
+    return flag.testFitness(flag)
   })
 
   const addIncluded = (flag): void => {
@@ -100,8 +139,14 @@ const handleFlags = (
       flag.includedFlags.forEach(includedName => {
         const incExp = flags.find(e => e.name == includedName)
         if (incExp) {
-          enabledConfigFlags.push(incExp)
-          addIncluded(incExp)
+          const flagIsDisabledByUser =
+            typeof configFlags[includedName] !== `undefined` &&
+            !configFlags[includedName]
+
+          if (!flagIsDisabledByUser) {
+            enabledConfigFlags.push(incExp)
+            addIncluded(incExp)
+          }
         }
       })
     }
@@ -120,10 +165,10 @@ const handleFlags = (
     let message = ``
     message += `\n- ${flag.name}`
     if (flag.experimental) {
-      message += ` · ${chalk.white.bgRed.bold(`EXPERIMENTAL`)}`
+      message += ` · ${chalk.black.bgYellow.bold(`EXPERIMENTAL`)}`
     }
     if (flag.umbrellaIssue) {
-      message += ` · (${terminalLink(`Umbrella Issue`, flag.umbrellaIssue)})`
+      message += ` · (Umbrella Issue (${flag.umbrellaIssue}))`
     }
     message += ` · ${flag.description}`
 
@@ -133,17 +178,33 @@ const handleFlags = (
   let message = ``
   //  Create message about what flags are active.
   if (enabledConfigFlags.length > 0) {
-    if (enabledConfigFlags.length - optedInFlags.size > 0) {
+    if (
+      enabledConfigFlags.length - optedInFlags.size - lockedInFlags.size >
+      0
+    ) {
       message = `The following flags are active:`
       enabledConfigFlags.forEach(flag => {
-        if (!optedInFlags.has(flag.name)) {
+        if (!optedInFlags.has(flag.name) && !lockedInFlags.has(flag.name)) {
           message += generateFlagLine(flag)
         }
       })
     }
 
+    if (lockedInFlagsThatAreInConfig.size > 0) {
+      if (message.length > 0) {
+        message += `\n\n`
+      }
+      message += `Some features you configured with flags are used natively now.
+Those flags no longer have any effect and you can remove them from config:`
+      lockedInFlagsThatAreInConfig.forEach(flag => {
+        message += generateFlagLine(flag)
+      })
+    }
+
     if (optedInFlags.size > 0) {
-      message += `\n\n`
+      if (message.length > 0) {
+        message += `\n\n`
+      }
       message += `We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
 and your site was automatically chosen as one of them. With your help, we'll then release them to everyone in the next minor release.
 
@@ -159,32 +220,43 @@ The following flags were automatically enabled on your site:`
       })
     }
 
-    const otherFlagsCount = applicableFlags.size - enabledConfigFlags.length
-    // Check if there is other flags and if the user actually set any flags themselves.
-    // Don't count flags they were automatically opted into.
-    if (otherFlagsCount > 0 && Object.keys(configFlags).length > 0) {
-      message += `\n\nThere ${
-        otherFlagsCount === 1
-          ? `is one other flag`
-          : `are ${otherFlagsCount} other flags`
-      } available that you might be interested in:`
-
+    if (message.length > 0) {
+      // if we will print anything about flags, let's try to suggest other available ones
+      const otherFlagSuggestionLines: Array<string> = []
       const enabledFlagsSet = new Set()
       enabledConfigFlags.forEach(f => enabledFlagsSet.add(f.name))
       applicableFlags.forEach(flag => {
-        if (!enabledFlagsSet.has(flag.name)) {
-          message += generateFlagLine(flag)
+        if (
+          !enabledFlagsSet.has(flag.name) &&
+          typeof configFlags[flag.name] === `undefined`
+        ) {
+          // we want to suggest flag when it's not enabled and user specifically didn't use it in config
+          // we don't want to suggest flag user specifically wanted to disable
+          otherFlagSuggestionLines.push(generateFlagLine(flag))
         }
       })
+
+      if (otherFlagSuggestionLines.length > 0) {
+        message += `\n\nThere ${
+          otherFlagSuggestionLines.length === 1
+            ? `is one other flag`
+            : `are ${otherFlagSuggestionLines.length} other flags`
+        } available that you might be interested in:${otherFlagSuggestionLines.join(
+          ``
+        )}`
+      }
     }
 
-    message += `\n`
+    if (message.length > 0) {
+      message += `\n`
+    }
   }
 
   return {
     enabledConfigFlags,
     message,
     unknownFlagMessage,
+    unfitFlagMessage,
   }
 }
 

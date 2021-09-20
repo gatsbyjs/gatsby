@@ -62,7 +62,7 @@ async function queryResult(nodes, query) {
 
 describe(`filtering on linked nodes`, () => {
   it(`filters on linked nodes via id`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes().concat([
         {
           id: `child_2_link`,
@@ -94,7 +94,7 @@ describe(`filtering on linked nodes`, () => {
   })
 
   it(`returns nested linked fields`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       [
         {
           id: `child_2`,
@@ -129,7 +129,7 @@ describe(`filtering on linked nodes`, () => {
   })
 
   it(`returns all matching linked nodes`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes().concat([
         {
           id: `child_2_link`,
@@ -161,7 +161,7 @@ describe(`filtering on linked nodes`, () => {
   })
 
   it(`handles elemMatch operator`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes().concat([
         {
           id: `1`,
@@ -285,12 +285,20 @@ describe(`filtering on linked nodes`, () => {
     }
 
     expect(result.data.eq.edges).toEqual([`bar`, `baz`].map(itemToEdge))
-    expect(result.data.in.edges).toEqual([`bar`, `baz`, `foo`].map(itemToEdge))
+    // In case of LMDB results are also sorted by the filter field,
+    // so first - all parents with children having "hair: blonde", next - all with "hair: brown"
+    const expectedIn = process.env.GATSBY_EXPERIMENTAL_LMDB_INDEXES
+      ? [`bar`, `foo`, `baz`]
+      : [`bar`, `baz`, `foo`]
+    expect(result.data.in.edges).toEqual(expectedIn.map(itemToEdge))
     expect(result.data.insideInlineArrayEq.edges).toEqual(
       [`lorem`, `ipsum`, `sit`].map(itemToEdge)
     )
+    const expectedArrayIn = process.env.GATSBY_EXPERIMENTAL_LMDB_INDEXES
+      ? [`lorem`, `ipsum`, `dolor`, `sit`]
+      : [`lorem`, `ipsum`, `sit`, `dolor`]
     expect(result.data.insideInlineArrayIn.edges).toEqual(
-      [`lorem`, `ipsum`, `sit`, `dolor`].map(itemToEdge)
+      expectedArrayIn.map(itemToEdge)
     )
   })
 

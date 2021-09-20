@@ -22,23 +22,23 @@ _Note: if you aren't using yarn, you can navigate into each of the 3 folders and
 
 Then you can run the api or example projects in separate terminal windows with the commands below.
 
-For the API which runs at `localhost:4000`, use this command:
+For the API which runs at `http://localhost:4000`, use this command:
 
 ```
 yarn workspace api start
 ```
 
-And to run the example site with `gatsby develop` at `localhost:8000`, use this command:
+And to run the example site with `gatsby develop` at `http://localhost:8000`, use this command:
 
 ```
 yarn workspace example-site develop
 ```
 
-Running the example site also runs the plugin because it is included in the site's config. You'll see output in the console for different functionality and then can open up the browser to `localhost:8000` to see the site.
+Running the example site also runs the plugin because it is included in the site's config. You'll see output in the console for different functionality and then can open up the browser to `http://localhost:8000` to see the site.
 
 ## Developing and Experimenting
 
-You can open up `localhost:4000` with the API running, which will load a GraphQL Playground, which is a GraphQL IDE (like GraphiQL, that Gatsby runs at `localhost:8000/___graphql`) for running queries and mutations on the data from the API.
+You can open up `http://localhost:4000` with the API running, which will load a GraphQL Playground, which is a GraphQL IDE (like GraphiQL, that Gatsby runs at `http://localhost:8000/___graphql`) for running queries and mutations on the data from the API.
 
 You can test a query like this to see data returned:
 
@@ -53,7 +53,7 @@ query {
 
 This query will return the IDs for all posts in the API. You can copy one of these IDs and provide it as an argument to a mutation to update information about that post.
 
-You can run 3 different mutations from the GraphQL Playground (at `localhost:4000`): `createPost`, `updatePost`, and `deletePost`. These methods would mimic CRUD operations happening on the API of the data source like a headless CMS. An example `updatePost` mutation is outlined below.
+You can run 3 different mutations from the GraphQL Playground (at `http://localhost:4000`): `createPost`, `updatePost`, and `deletePost`. These methods would mimic CRUD operations happening on the API of the data source like a headless CMS. An example `updatePost` mutation is outlined below.
 
 When you run a mutation on a post, a subscription event is published, which lets the plugin know it should respond and update nodes. The following mutation can be copied into the left side of the GraphQL playground so long as you replace "post-id" with a value returned for an ID from a query (like the one above).
 

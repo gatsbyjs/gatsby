@@ -36,7 +36,7 @@ npm install gatsby-theme-blog
 
 Follow the instructions found in the README of the theme you're using to determine what configuration it requires.
 
-> To learn how to further customize the blog theme, check out the available configuration options in the [Gatsby-theme-blog Documentation](/packages/gatsby-theme-blog/#theme-options).
+> To learn how to further customize the blog theme, check out the available configuration options in the [Gatsby-theme-blog Documentation](/plugins/gatsby-theme-blog/#theme-options).
 
 ```javascript:title=gatsby-config.js
 module.exports = {

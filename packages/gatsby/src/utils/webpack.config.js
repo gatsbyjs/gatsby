@@ -4,8 +4,8 @@ const crypto = require(`crypto`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
-const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
 const { CoreJSResolver } = require(`./webpack/corejs-resolver`)
+const { CacheFolderResolver } = require(`./webpack/cache-folder-resolver`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const { getPublicPath } = require(`./get-public-path`)
@@ -17,6 +17,13 @@ const apiRunnerNode = require(`./api-runner-node`)
 import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
+import { StaticQueryMapper } from "./webpack/static-query-mapper"
+import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
+import { hasES6ModuleSupport } from "./browserslist"
+import { builtinModules } from "module"
+import { shouldGenerateEngines } from "./engines-helpers"
+import { ROUTES_DIRECTORY } from "../constants"
+const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -33,9 +40,12 @@ module.exports = async (
   port,
   { parentSpan } = {}
 ) => {
+  let fastRefreshPlugin
   const modulesThatUseGatsby = await getGatsbyDependents()
   const directoryPath = withBasePath(directory)
 
+  // we will converge to build-html later on but for now this was the fastest way to get SSR to work
+  // TODO remove in v4 - we deprecated this in v3
   process.env.GATSBY_BUILD_STAGE = suppliedStage
 
   // We combine develop & develop-html stages for purposes of generating the
@@ -147,12 +157,12 @@ module.exports = async (
         // Generate the file needed to SSR pages.
         // Deleted by build-html.js, since it's not needed for production.
         return {
-          path: directoryPath(`public`),
-          filename: `render-page.js`,
-          libraryTarget: `umd`,
-          library: `lib`,
-          umdNamedDefine: true,
-          globalObject: `this`,
+          path: directoryPath(ROUTES_DIRECTORY),
+          filename: `[name].js`,
+          chunkFilename: `[name].js`,
+          library: {
+            type: `commonjs`,
+          },
           publicPath: withTrailingSlash(publicPath),
         }
       case `build-javascript`:
@@ -170,31 +180,34 @@ module.exports = async (
   function getEntry() {
     switch (stage) {
       case `develop`:
-        return {
-          polyfill: directoryPath(`.cache/polyfill-entry`),
-          commons: [
-            process.env.GATSBY_HOT_LOADER !== `fast-refresh` &&
-              `${require.resolve(
-                `webpack-hot-middleware/client`
-              )}?path=${getHmrPath()}`,
-            directoryPath(`.cache/app`),
-          ].filter(Boolean),
-        }
+        return hasES6ModuleSupport(directory)
+          ? {
+              commons: [directoryPath(`.cache/app`)],
+            }
+          : {
+              polyfill: directoryPath(`.cache/polyfill-entry`),
+              commons: [directoryPath(`.cache/app`)],
+            }
       case `develop-html`:
         return {
-          main: process.env.GATSBY_EXPERIMENTAL_DEV_SSR
+          "render-page": process.env.GATSBY_EXPERIMENTAL_DEV_SSR
             ? directoryPath(`.cache/ssr-develop-static-entry`)
             : directoryPath(`.cache/develop-static-entry`),
         }
-      case `build-html`:
+      case `build-html`: {
         return {
-          main: directoryPath(`.cache/static-entry`),
+          "render-page": directoryPath(`.cache/static-entry`),
         }
+      }
       case `build-javascript`:
-        return {
-          polyfill: directoryPath(`.cache/polyfill-entry`),
-          app: directoryPath(`.cache/production-app`),
-        }
+        return hasES6ModuleSupport(directory)
+          ? {
+              app: directoryPath(`.cache/production-app`),
+            }
+          : {
+              polyfill: directoryPath(`.cache/polyfill-entry`),
+              app: directoryPath(`.cache/production-app`),
+            }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
     }
@@ -213,30 +226,76 @@ module.exports = async (
         __ASSET_PREFIX__: JSON.stringify(
           program.prefixPaths ? assetPrefix : ``
         ),
+        // TODO Improve asset passing to pages
+        BROWSER_ESM_ONLY: JSON.stringify(hasES6ModuleSupport(directory)),
       }),
 
       plugins.virtualModules(),
+      new BabelConfigItemsCacheInvalidatorPlugin(),
     ]
 
     switch (stage) {
-      case `develop`:
+      case `develop`: {
         configPlugins = configPlugins
           .concat([
-            process.env.GATSBY_HOT_LOADER === `fast-refresh` &&
-              plugins.fastRefresh(),
+            (fastRefreshPlugin = plugins.fastRefresh({ modulesThatUseGatsby })),
+            new ForceCssHMRForEdgeCases(),
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
             plugins.eslintGraphqlSchemaReload(),
+            new StaticQueryMapper(store),
           ])
           .filter(Boolean)
+
+        configPlugins.push(
+          plugins.extractText({
+            filename: `[name].css`,
+            chunkFilename: `[id].css`,
+          })
+        )
+
+        if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+          configPlugins.push(plugins.extractStats())
+        }
+
+        const isCustomEslint = hasLocalEslint(program.directory)
+        // get schema to pass to eslint config and program for directory
+        const { schema } = store.getState()
+
+        // if no local eslint config, then add gatsby config
+        if (!isCustomEslint) {
+          configPlugins.push(plugins.eslint(schema))
+        }
+
+        // Enforce fast-refresh rules even with local eslint config
+        if (isCustomEslint) {
+          configPlugins.push(plugins.eslintRequired())
+        }
+
         break
+      }
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
-          plugins.extractText(),
+          plugins.extractText({
+            filename: `[name].[contenthash].css`,
+            chunkFilename: `[name].[contenthash].css`,
+          }),
           // Write out stats object mapping named dynamic imports (aka page
           // components) to all their async chunks.
           plugins.extractStats(),
+          new StaticQueryMapper(store),
         ])
+        break
+      }
+      case `develop-html`:
+      case `build-html`: {
+        // Add global fetch in node environments
+        configPlugins.push(
+          plugins.provide({
+            fetch: require.resolve(`node-fetch`),
+            "global.fetch": require.resolve(`node-fetch`),
+          })
+        )
         break
       }
     }
@@ -247,9 +306,7 @@ module.exports = async (
   function getDevtool() {
     switch (stage) {
       case `develop`:
-        return process.env.GATSBY_HOT_LOADER !== `fast-refresh`
-          ? `cheap-module-source-map`
-          : `eval-cheap-module-source-map`
+        return `eval-cheap-module-source-map`
       // use a normal `source-map` for the html phases since
       // it gives better line and column numbers
       case `develop-html`:
@@ -263,12 +320,11 @@ module.exports = async (
 
   function getMode() {
     switch (stage) {
-      case `build-javascript`:
-        return `production`
       case `develop`:
       case `develop-html`:
+        return `development`
+      case `build-javascript`:
       case `build-html`:
-        return `development` // So we don't uglify the html bundle
       default:
         return `production`
     }
@@ -278,6 +334,32 @@ module.exports = async (
     // Common config for every env.
     // prettier-ignore
     let configRules = [
+      // Webpack expects extensions when importing ESM modules as that's what the spec describes.
+      // Not all libraries have adapted so we don't enforce its behaviour
+      // @see https://github.com/webpack/webpack/issues/11467
+      {
+        test: /\.mjs$/i,
+        resolve: {
+          byDependency: {
+            esm: {
+              fullySpecified: false
+            }
+          }
+        }
+      },
+      {
+        test: /\.js$/i,
+        descriptionData: {
+          type: `module`
+        },
+        resolve: {
+          byDependency: {
+            esm: {
+              fullySpecified: false
+            }
+          }
+        }
+      },
       rules.js({
         modulesThatUseGatsby,
       }),
@@ -292,7 +374,7 @@ module.exports = async (
       // Gatsby main router changes it, to keep v2 behaviour.
       // We will need to most likely remove this for v3.
       {
-        test: require.resolve(`@reach/router/es/index`),
+        test: require.resolve(`@gatsbyjs/reach-router/es/index`),
         type: `javascript/auto`,
         use: [{
           loader: require.resolve(`./reach-router-add-basecontext-export-loader`),
@@ -310,46 +392,13 @@ module.exports = async (
       )
     }
 
-    if (store.getState().themes.themes) {
-      configRules = configRules.concat(
-        store.getState().themes.themes.map(theme => {
-          return {
-            test: /\.jsx?$/,
-            include: theme.themeDir,
-            use: [loaders.js()],
-          }
-        })
-      )
-    }
-
     switch (stage) {
       case `develop`: {
-        // get schema to pass to eslint config and program for directory
-        const { schema, program } = store.getState()
-
-        // if no local eslint config, then add gatsby config
-        if (!hasLocalEslint(program.directory)) {
-          configRules = configRules.concat([rules.eslint(schema)])
-        }
-
         configRules = configRules.concat([
           {
             oneOf: [rules.cssModules(), rules.css()],
           },
         ])
-
-        // RHL will patch React, replace React-DOM by React-🔥-DOM and work with fiber directly
-        // It's necessary to remove the warning in console (https://github.com/gatsbyjs/gatsby/issues/11934)
-        // TODO: Remove entire block when we make fast-refresh the default
-        if (process.env.GATSBY_HOT_LOADER !== `fast-refresh`) {
-          configRules.push({
-            include: /node_modules\/react-dom/,
-            test: /\.jsx?$/,
-            use: {
-              loader: require.resolve(`./webpack-hmr-hooks-patch`),
-            },
-          })
-        }
 
         break
       }
@@ -392,6 +441,10 @@ module.exports = async (
     return { rules: configRules }
   }
 
+  function getPackageRoot(pkg) {
+    return path.dirname(require.resolve(`${pkg}/package.json`))
+  }
+
   function getResolve(stage) {
     const { program } = store.getState()
     const resolve = {
@@ -403,54 +456,32 @@ module.exports = async (
         // Using directories for module resolution is mandatory because
         // relative path imports are used sometimes
         // See https://stackoverflow.com/a/49455609/6420957 for more details
-        "@babel/runtime": path.dirname(
-          require.resolve(`@babel/runtime/package.json`)
-        ),
-        // TODO: Remove entire block when we make fast-refresh the default
-        ...(process.env.GATSBY_HOT_LOADER !== `fast-refresh`
-          ? {
-              "react-hot-loader": path.dirname(
-                require.resolve(`react-hot-loader/package.json`)
-              ),
-            }
-          : {}),
+        "@babel/runtime": getPackageRoot(`@babel/runtime`),
+        "@reach/router": getPackageRoot(`@gatsbyjs/reach-router`),
         "react-lifecycles-compat": directoryPath(
           `.cache/react-lifecycles-compat.js`
         ),
-        "create-react-context": directoryPath(`.cache/create-react-context.js`),
-        "@pmmmwh/react-refresh-webpack-plugin": path.dirname(
-          require.resolve(`@pmmmwh/react-refresh-webpack-plugin/package.json`)
+        "@pmmmwh/react-refresh-webpack-plugin": getPackageRoot(
+          `@pmmmwh/react-refresh-webpack-plugin`
         ),
-        "socket.io-client": path.dirname(
-          require.resolve(`socket.io-client/package.json`)
+        "socket.io-client": getPackageRoot(`socket.io-client`),
+        "webpack-hot-middleware": getPackageRoot(
+          `@gatsbyjs/webpack-hot-middleware`
         ),
         $virtual: getAbsolutePathForVirtualModule(`$virtual`),
       },
       plugins: [
-        // Those two folders are special and contain gatsby-generated files
-        // whose dependencies should be resolved through the `gatsby` package
-        PnpWebpackPlugin.bind(directoryPath(`.cache`), module),
-        PnpWebpackPlugin.bind(directoryPath(`public`), module),
-        // Transparently resolve packages via PnP when needed; noop otherwise
-        PnpWebpackPlugin,
         new CoreJSResolver(),
+        new CacheFolderResolver(path.join(program.directory, `.cache`)),
       ],
     }
 
     const target =
       stage === `build-html` || stage === `develop-html` ? `node` : `web`
     if (target === `web`) {
-      resolve.alias = Object.assign(
-        {},
-        {
-          // force to use es modules when importing internals of @reach.router
-          // for browser bundles
-          "@reach/router": path.join(
-            path.dirname(require.resolve(`@reach/router/package.json`)),
-            `es`
-          ),
-        },
-        resolve.alias
+      resolve.alias[`@reach/router`] = path.join(
+        getPackageRoot(`@gatsbyjs/reach-router`),
+        `es`
       )
     }
 
@@ -458,6 +489,15 @@ module.exports = async (
       resolve.alias[`react-dom$`] = `react-dom/profiling`
       resolve.alias[`scheduler/tracing`] = `scheduler/tracing-profiling`
     }
+
+    // SSR can have many react versions as some packages use their own version. React works best with 1 version.
+    // By resolving react,react-dom from gatsby we'll get the site versions of react & react-dom because it's specified as a peerdependency.
+    //
+    // we need to put this below our resolve.alias for profiling as webpack picks the first one that matches
+    // @see https://github.com/gatsbyjs/gatsby/issues/31098
+    resolve.alias[`react`] = getPackageRoot(`react`)
+    resolve.alias[`react-dom`] = getPackageRoot(`react-dom`)
+
     return resolve
   }
 
@@ -476,9 +516,6 @@ module.exports = async (
 
     return {
       modules: [...root, path.join(__dirname, `../loaders`), `node_modules`],
-      // Bare loaders should always be loaded via the user dependencies (loaders
-      // configured via third-party like gatsby use require.resolve)
-      plugins: [PnpWebpackPlugin.moduleLoader(`${directory}/`)],
     }
   }
 
@@ -491,12 +528,6 @@ module.exports = async (
     module: getModule(),
     plugins: getPlugins(),
 
-    // Certain "isomorphic" packages have different entry points for browser
-    // and server (see
-    // https://github.com/defunctzombie/package-browser-field-spec); setting
-    // the target tells webpack which file to include, ie. browser vs main.
-    target: stage === `build-html` || stage === `develop-html` ? `node` : `web`,
-
     devtool: getDevtool(),
     // Turn off performance hints as we (for now) don't want to show the normal
     // webpack output anywhere.
@@ -507,21 +538,74 @@ module.exports = async (
 
     resolveLoader: getResolveLoader(),
     resolve: getResolve(stage),
+  }
 
-    node: {
-      __filename: true,
-    },
+  if (stage === `build-html` || stage === `develop-html`) {
+    const [major, minor] = process.version.replace(`v`, ``).split(`.`)
+    config.target = `node14.15`
+  } else {
+    config.target = [`web`, `es5`]
+  }
+
+  const isCssModule = module => module.type === `css/mini-extract`
+
+  if (stage === `develop`) {
+    config.optimization = {
+      splitChunks: {
+        chunks: `all`,
+        cacheGroups: {
+          default: false,
+          defaultVendors: false,
+          framework: {
+            chunks: `all`,
+            name: `framework`,
+            // This regex ignores nested copies of framework libraries so they're bundled with their issuer.
+            test: new RegExp(
+              `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join(
+                `|`
+              )})[\\\\/]`
+            ),
+            priority: 40,
+            // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
+            enforce: true,
+          },
+          // Bundle all css & lazy css into one stylesheet to make sure lazy components do not break
+          // TODO make an exception for css-modules
+          styles: {
+            test(module) {
+              return isCssModule(module)
+            },
+
+            name: `commons`,
+            priority: 40,
+            enforce: true,
+          },
+        },
+      },
+      minimize: false,
+    }
+  }
+
+  if (stage === `build-html` || stage === `develop-html`) {
+    config.optimization = {
+      splitChunks: {
+        cacheGroups: {
+          default: false,
+          defaultVendors: false,
+        },
+      },
+      minimize: false,
+    }
   }
 
   if (stage === `build-javascript`) {
     const componentsCount = store.getState().components.size
-    const isCssModule = module => module.type === `css/mini-extract`
 
     const splitChunks = {
       chunks: `all`,
       cacheGroups: {
         default: false,
-        vendors: false,
+        defaultVendors: false,
         framework: {
           chunks: `all`,
           name: `framework`,
@@ -609,10 +693,6 @@ module.exports = async (
       runtimeChunk: {
         name: `webpack-runtime`,
       },
-      // use hashes instead of ids for module identifiers
-      // TODO update to deterministic in webpack 5 (hashed is deprecated)
-      // @see https://webpack.js.org/guides/caching/#module-identifiers
-      moduleIds: `hashed`,
       splitChunks,
       minimizer: [
         // TODO: maybe this option should be noMinimize?
@@ -633,56 +713,114 @@ module.exports = async (
   }
 
   if (stage === `build-html` || stage === `develop-html`) {
-    // Packages we want to externalize to save some build time
-    // https://github.com/gatsbyjs/gatsby/pull/14208#pullrequestreview-240178728
-    const externalList = [
-      `@reach/router/lib/history`,
-      `@reach/router`,
-      `common-tags`,
-      `crypto`,
-      `debug`,
-      `fs`,
-      `https`,
-      `http`,
-      `lodash`,
-      `path`,
-      `semver`,
-      /^lodash\//,
-      `zlib`,
-    ]
+    // externalize react, react-dom when develop-html or build-html(when not generating engines)
+    const shouldMarkPackagesAsExternal =
+      stage === `develop-html` ||
+      !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
 
-    // Packages we want to externalize because meant to be user-provided
-    const userExternalList = [`react-helmet`, `react`, /^react-dom\//]
+    // tracking = build-html (when not generating engines)
+    const shouldTrackBuiltins =
+      stage === `build-html` &&
+      !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
 
-    const checkItem = (item, request) => {
-      if (typeof item === `string` && item === request) {
-        return true
-      } else if (item instanceof RegExp && item.test(request)) {
-        return true
-      }
-      return false
+    // removes node internals from bundle
+    // https://webpack.js.org/configuration/externals/#externalspresets
+    config.externalsPresets = {
+      // use it only when not tracking builtins (tracking builtins provide their own fallbacks)
+      node: !shouldTrackBuiltins,
     }
+    config.externals = []
 
-    const isExternal = request => {
-      if (externalList.some(item => checkItem(item, request))) {
-        return `umd ${require.resolve(request)}`
-      }
-      if (userExternalList.some(item => checkItem(item, request))) {
-        return `umd ${request}`
-      }
-      return null
-    }
+    if (shouldMarkPackagesAsExternal) {
+      // Packages we want to externalize to save some build time
+      // https://github.com/gatsbyjs/gatsby/pull/14208#pullrequestreview-240178728
+      // const externalList = [`common-tags`, `lodash`, `semver`, /^lodash\//]
 
-    config.externals = [
-      function (context, request, callback) {
-        const external = isExternal(request)
-        if (external !== null) {
-          callback(null, external)
-        } else {
-          callback()
+      // Packages we want to externalize because meant to be user-provided
+      const userExternalList = [`react`, /^react-dom\//]
+
+      const checkItem = (item, request) => {
+        if (typeof item === `string` && item === request) {
+          return true
+        } else if (item instanceof RegExp && item.test(request)) {
+          return true
         }
-      },
-    ]
+
+        return false
+      }
+
+      config.externals.push(function (
+        { context, getResolve, request },
+        callback
+      ) {
+        // allows us to resolve webpack aliases from our config
+        // helpful for when react is aliased to preact-compat
+        // Force commonjs as we're in node land
+        const resolver = getResolve({
+          dependencyType: `commonjs`,
+        })
+
+        // User modules that do not need to be part of the bundle
+        if (userExternalList.some(item => checkItem(item, request))) {
+          // TODO figure out to make preact work with this too
+
+          resolver(context, request, (err, newRequest) => {
+            if (err) {
+              callback(err)
+              return
+            }
+
+            callback(null, newRequest)
+          })
+          return
+        }
+        // TODO look into re-enabling, breaks builds right now because of esm
+        // User modules that do not need to be part of the bundle
+        // if (externalList.some(item => checkItem(item, request))) {
+        //   resolver(context, request, (err, request) => {
+        //     if (err) {
+        //       callback(err)
+        //       return
+        //     }
+
+        //     callback(null, `commonjs2 ${request}`)
+        //   })
+        //   return
+        // }
+
+        callback()
+      })
+    }
+
+    if (shouldTrackBuiltins) {
+      if (stage === `build-html`) {
+        const builtinModulesToTrack = [
+          `fs`,
+          `http`,
+          `http2`,
+          `https`,
+          `child_process`,
+        ]
+        const builtinsExternalsDictionary = builtinModules.reduce(
+          (acc, builtinModule) => {
+            if (builtinModulesToTrack.includes(builtinModule)) {
+              acc[builtinModule] = `commonjs ${path.join(
+                program.directory,
+                `.cache`,
+                `ssr-builtin-trackers`,
+                builtinModule
+              )}`
+            } else {
+              acc[builtinModule] = `commonjs ${builtinModule}`
+            }
+            return acc
+          },
+          {}
+        )
+
+        config.externals.unshift(builtinsExternalsDictionary)
+      }
+    }
   }
 
   if (stage === `develop`) {
@@ -691,17 +829,94 @@ module.exports = async (
     }
   }
 
+  if (
+    stage === `build-javascript` ||
+    stage === `build-html` ||
+    (process.env.GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE &&
+      (stage === `develop` || stage === `develop-html`))
+  ) {
+    const cacheLocation = path.join(
+      program.directory,
+      `.cache`,
+      `webpack`,
+      `stage-` + stage
+    )
+
+    const cacheConfig = {
+      type: `filesystem`,
+      name: stage,
+      cacheLocation,
+      buildDependencies: {
+        config: [
+          __filename,
+          ...store
+            .getState()
+            .flattenedPlugins.filter(plugin =>
+              plugin.nodeAPIs.includes(`onCreateWebpackConfig`)
+            )
+            .map(plugin => path.join(plugin.resolve, `gatsby-node.js`)),
+        ],
+      },
+    }
+
+    config.cache = cacheConfig
+  }
+
   store.dispatch(actions.replaceWebpackConfig(config))
   const getConfig = () => store.getState().webpack
 
   await apiRunnerNode(`onCreateWebpackConfig`, {
     getConfig,
+    // we will converge to build-html later on but for now this was the fastest way to get SSR to work
     stage,
     rules,
     loaders,
     plugins,
     parentSpan,
   })
+
+  if (fastRefreshPlugin) {
+    // Fast refresh plugin has `include` option that determines
+    // wether HMR code gets injected. We need to make sure all custom loaders
+    // (like .ts or .mdx) that use our babel-loader will be taken into account
+    // when deciding which modules get fast-refresh HMR addition.
+    const fastRefreshIncludes = []
+    const babelLoaderLoc = require.resolve(`./babel-loader`)
+    for (const rule of getConfig().module.rules) {
+      if (!rule.use && !rule.loader) {
+        continue
+      }
+
+      const ruleLoaders = Array.isArray(rule.use)
+        ? rule.use.map(useEntry =>
+            typeof useEntry === `string` ? useEntry : useEntry.loader
+          )
+        : [rule.use?.loader ?? rule.loader]
+
+      const hasBabelLoader = ruleLoaders.some(
+        loader => loader === babelLoaderLoc
+      )
+
+      if (hasBabelLoader) {
+        fastRefreshIncludes.push(rule.test)
+      }
+    }
+
+    // start with default include of fast refresh plugin
+    const includeRegex = /\.([jt]sx?|flow)$/i
+    includeRegex.test = modulePath => {
+      // drop query param from request (i.e. ?type=component for mdx-loader)
+      // so loader rule test work well
+      const queryParamStartIndex = modulePath.indexOf(`?`)
+      if (queryParamStartIndex !== -1) {
+        modulePath = modulePath.substr(0, queryParamStartIndex)
+      }
+
+      return fastRefreshIncludes.some(re => re.test(modulePath))
+    }
+
+    fastRefreshPlugin.options.include = includeRegex
+  }
 
   return getConfig()
 }

@@ -11,7 +11,7 @@ const Page = () => {
         <StaticImage
           src="../../images/cornwall.jpg"
           alt="cornwall"
-          maxWidth={1024}
+          width={1024}
         />
       </TestWrapper>
     </Layout>

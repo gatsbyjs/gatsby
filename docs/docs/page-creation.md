@@ -18,4 +18,4 @@ The `components` Redux namespace is a map of [componentPath](/docs/behind-the-sc
 
 ## onCreatePage API
 
-Every time a page is created, plugins have the opportunity to handle its [onCreatePage](/docs/reference/config-files/gatsby-node/#onCreatePage) event. This is used for things like creating `SitePage` nodes in [Internal Data Bridge](/docs/internal-data-bridge/), and for "path" related plugins such as [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/) and [gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/).
+Every time a page is created, plugins have the opportunity to handle its [onCreatePage](/docs/reference/config-files/gatsby-node/#onCreatePage) event. This is used for things like creating `SitePage` nodes in [Internal Data Bridge](/docs/internal-data-bridge/), and for "path" related plugins such as [gatsby-plugin-create-client-paths](/plugins/gatsby-plugin-create-client-paths/) and [gatsby-plugin-remove-trailing-slashes](/plugins/gatsby-plugin-remove-trailing-slashes/).

@@ -1,10 +1,7 @@
 ---
 date: "2020-12-15"
 version: "2.29.0"
----
-
-# [v2.29](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.29.0-next.0...gatsby@2.29.0) (December 2020 #2)
-
+title: "v2.29 Release Notes"
 ---
 
 Welcome to `gatsby@2.29.0` release (December 2020 #2)
@@ -20,18 +17,19 @@ Other notable changes:
 
 - [Performance improvements](#performance-improvements)
 - [Slugify option for File System Route API](#slugify-option-for-file-system-route-api)
-- [gatsby-image codemod](#gatsby-image-codemod)
+- [`gatsby-image` codemod](#gatsby-image-codemod)
 - [Notable bugfixes](#notable-bugfixes)
 
 **Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
 if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
-[Previous release notes](../v2.28/index.md)
+[Previous release notes](/docs/reference/release-notes/v2.28)
+
 [Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.29.0-next.0...gatsby@2.29.0)
 
 ## Query on Demand
 
-Starting with v2.29, 10% of our users are automatically opt-in to this feature. We've first shipped this feature behind a flag in [v2.27](../v2.27/index.md#experimental-queries-on-demand) and feel confident now that more people can try it out. Opt-in users will receive a notice in their terminal about that opt-in behavior and a hint on how to turn it off (in case it disturbs your workflow). As a recap of what Query on Demand will improve:
+Starting with v2.29, 10% of our users are automatically opt-in to this feature. We've first shipped this feature behind a flag in [v2.27](/docs/reference/release-notes/v2.27#experimental-queries-on-demand) and feel confident now that more people can try it out. Opt-in users will receive a notice in their terminal about that opt-in behavior and a hint on how to turn it off (in case it disturbs your workflow). As a recap of what Query on Demand will improve:
 
 > Gatsby will run queries for pages as they're requested by a browser. Think of it like lazily loading the data your pages need, when they need it! This avoids having to wait for slower queries (like image processing) if you're editing an unrelated part of a site. What this means for you: faster local development experience, up to 2x faster in many cases!
 
@@ -63,7 +61,7 @@ The loading indicator respects the user's settings for `prefers-reduced-motion` 
 
 ## Lazy Images
 
-Similarily as with Query on Demand also Lazy Images will be automatically delivered to 10% of our users with this v2.29 release. We've first shipped this feature behind a flag in [v2.28](../v2.28/index.md#experimental-lazy-images-in-develop). Opt-in users will receive a notice in their terminal about that opt-in behavior and a hint on how to turn it off (in case it disturbs your workflow). As a recap of what Lazy Images will improve:
+Similarly as with Query on Demand also Lazy Images will be automatically delivered to 10% of our users with this v2.29 release. We've first shipped this feature behind a flag in [v2.28](/docs/reference/release-notes/v2.28#experimental-lazy-images-in-develop). Opt-in users will receive a notice in their terminal about that opt-in behavior and a hint on how to turn it off (in case it disturbs your workflow). As a recap of what Lazy Images will improve:
 
 > As more and more images are added to a Gatsby site, the slower the local development experience oftentimes becomes. You spend time waiting for images to process, instead of you know, developing! No longer! This experimental version of `gatsby-plugin-sharp` only does image processing when the page gets requested.
 
@@ -83,7 +81,7 @@ module.exports = {
 
 ## Improvements to our CLI
 
-In [v2.27](../v.27/index.md#create-gatsby) we introduced `create-gatsby`, a new and interactive way to create a Gatsby site. You can run it in your terminal with `npm init gatsby`.
+In [v2.27](/docs/reference/release-notes/v2.27#create-gatsby) we introduced `create-gatsby`, a new and interactive way to create a Gatsby site. You can run it in your terminal with `npm init gatsby`.
 
 A couple of papercuts were fixed but we also added new features:
 
@@ -95,9 +93,9 @@ The regular `gatsby-cli` received a new command to list out all plugins in your 
 
 ## Experimental: Parallel data sourcing
 
-In [v2.28](../v2.28/index.md#experimental-parallel-data-sourcing) we gave a sneak peak at a new feature that enables parallel data sourcing. As a recap:
+In [v2.28](/docs/reference/release-notes/v2.28#experimental-parallel-data-sourcing) we gave a sneak peek at a new feature that enables parallel data sourcing. As a recap:
 
-> Plugin APIs in Gatsby run serially. Generally this what we want as most API calls are CPU/IO bound so things are fastest letting each plugin have the full undivided attention of your computer. But source plugins are often _network_ bound as they're hitting remote APIs and waiting for responses. We tried [changing the invocation of `sourceNodes` to parallel](https://github.com/gatsbyjs/gatsby/pull/28214) on a few sites with 4+ source plugins and saw a big speedup on sourcing (40%+) as they were no longer waiting on each other to start their API calls.
+> Plugin APIs in Gatsby run serially. Generally this is what we want as most API calls are CPU/IO bound so things are fastest letting each plugin have the full undivided attention of your computer. But source plugins are often _network_ bound as they're hitting remote APIs and waiting for responses. We tried [changing the invocation of `sourceNodes` to parallel](https://github.com/gatsbyjs/gatsby/pull/28214) on a few sites with 4+ source plugins and saw a big speedup on sourcing (40%+) as they were no longer waiting on each other to start their API calls.
 
 You're now able to activate this experiment in the stable release of Gatsby by adding a flag to your `gatsby-config.js`:
 
@@ -130,9 +128,9 @@ We were able to ship a bunch of performance improvements both to Gatsby itself a
 
 The File System Route API uses [slugify](https://github.com/sindresorhus/slugify) to create slugs for the generated routes. You're now able to pass custom options to that instance, e.g. when you want to change the separator. The full details are listed in the [README](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator) of `gatsby-plugin-page-creator`.
 
-## gatsby-image codemod
+## `gatsby-image` codemod
 
-We introduced some API changes for working with images when we published the new `gatsby-plugin-image` in [v2.26](../v2.26/index.md#gatsby-plugin-image010-beta). In order to make it easier to migrate your code to work with the new plugin, we've created a codemod. Follow the migration instructions in the [README](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image#upgrading-from-the-gatsby-image2) in order to run the codemod against your project.
+We introduced some API changes for working with images when we published the new `gatsby-plugin-image` in [v2.26](/docs/reference/release-notes/v2.26#gatsby-plugin-image010-beta). In order to make it easier to migrate your code to work with the new plugin, we've created a codemod. Follow the migration instructions in the [README](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image#upgrading-from-the-gatsby-image2) in order to run the codemod against your project.
 
 ## Notable bugfixes
 

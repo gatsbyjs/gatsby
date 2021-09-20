@@ -107,7 +107,7 @@ ga('send', 'pageview', {
 </script>
 ```
 
-![Add Google Analytics script via Netlify's post processing feature](../../images/netlify-post-processing.gif)
+![Add Google Analytics script via Netlify's post-processing feature](../../images/netlify-post-processing.gif)
 
 ## Checking your results on Google Analytics
 

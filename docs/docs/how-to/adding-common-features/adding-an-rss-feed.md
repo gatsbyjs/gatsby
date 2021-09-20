@@ -1,5 +1,8 @@
 ---
 title: Adding an RSS Feed
+examples:
+  - label: Using RSS Feed
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/feed"
 ---
 
 ## What is an RSS feed?
@@ -10,13 +13,13 @@ Think of it as a syndicated distribution channel for your site's content.
 
 ## Install
 
-To generate an RSS feed, you can use the [`gatsby-plugin-feed`](/packages/gatsby-plugin-feed/) package. To install this package, run the following command:
+To generate an RSS feed, you can use the [`gatsby-plugin-feed`](/plugins/gatsby-plugin-feed/) package. To install this package, run the following command:
 
 ```shell
 npm install gatsby-plugin-feed
 ```
 
-## How to use [gatsby-plugin-feed](/packages/gatsby-plugin-feed/)
+## How to use [gatsby-plugin-feed](/plugins/gatsby-plugin-feed/)
 
 Once installation is complete, you can now add this plugin to your site's config file, like so:
 
@@ -132,7 +135,24 @@ The `output` field in your feed object allows you to customize the filename for 
 
 By default, feed is referenced in every page. You can customize this behavior by providing an extra field `match` of type `string`. This string will be used to build a `RegExp`, and this regular expression will be used to test the `pathname` of current page. Only pages that satisfied the regular expression will have feed reference included.
 
-To see your feed in action, run `gatsby build && gatsby serve` and you can then inspect the content and URLs in your RSS file at `http://localhost:9000/rss.xml`.
+If your site has none-English link (or none-ASCII link), you may need to encode URI in advance. You can use the build-in function `encodeURI(string)` for your link:
+
+```js:title=gatsby-config.js
+serialize: ({ query: { site, allMarkdownRemark } }) => {
+  return allMarkdownRemark.edges.map(edge => {
+    return Object.assign({}, edge.node.frontmatter, {
+      description: edge.node.excerpt,
+      date: edge.node.frontmatter.date,
+      // highlight-next-line
+      url: encodeURI(site.siteMetadata.siteUrl + edge.node.fields.slug),
+      guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
+      custom_elements: [{ "content:encoded": edge.node.html }],
+    })
+  })
+},
+```
+
+To see your feed in action, run `gatsby build && gatsby serve` and you can then inspect the content and URLs in your RSS file at `http://localhost:9000/rss.xml`. You can check out the validation of your RSS feed on [W3C Feed Validation Service](https://validator.w3.org/feed/ "W3C Feed Validation Service").
 
 > NOTE: if your blog has custom permalinks, such as links with or without dates in them, you may need to [customize `gatsby-node.js`](https://github.com/gatsbyjs/gatsby-starter-blog/blob/master/gatsby-node.js#L57) to output the correct URLs in your RSS feed. [Get in touch with us](/contributing/how-to-contribute/) if you need any help!
 
@@ -183,7 +203,7 @@ module.exports = {
 
 ## Happy blogging!
 
-With the [Gatsby feed plugin](/packages/gatsby-plugin-feed/), you can share your writing easily with people subscribed through RSS readers like Feedly or RSS Feed Reader. Now that your feed is set up, you won't really have to think about it; publish a new post, and your RSS feed will automatically update with your Gatsby build. Voilà!
+With the [Gatsby feed plugin](/plugins/gatsby-plugin-feed/), you can share your writing easily with people subscribed through RSS readers like Feedly or RSS Feed Reader. Now that your feed is set up, you won't really have to think about it; publish a new post, and your RSS feed will automatically update with your Gatsby build. Voilà!
 
 ## More resources
 

@@ -1,3 +1,4 @@
+import path from "path"
 import { onLogAction } from "../../redux"
 import {
   Actions,
@@ -9,7 +10,13 @@ import {
 import { createReporter } from "yurnalist"
 import ProgressBar from "progress"
 import chalk from "chalk"
+import boxen from "boxen"
 import { IUpdateActivity } from "../../redux/types"
+import {
+  generatePageTree,
+  IComponentWithPageModes,
+} from "../../../util/generate-page-tree"
+import { IRenderPageArgs } from "../../types"
 
 interface IYurnalistActivities {
   [activityId: string]: {
@@ -18,6 +25,100 @@ interface IYurnalistActivities {
     update(payload: IUpdateActivity["payload"]): void
     end(): void
   }
+}
+
+function generatePageTreeToConsole(
+  yurnalist: any,
+  state: IRenderPageArgs
+): void {
+  const root = state.root
+  const componentWithPages = new Map<string, IComponentWithPageModes>()
+  for (const { componentPath, pages } of state.components.values()) {
+    const pagesByMode = {
+      SSG: new Set<string>(),
+      DSG: new Set<string>(),
+      SSR: new Set<string>(),
+      FN: new Set<string>(),
+    }
+    pages.forEach(pagePath => {
+      const gatsbyPage = state.pages.get(pagePath)
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      pagesByMode[gatsbyPage!.mode].add(pagePath)
+    })
+
+    componentWithPages.set(
+      path.posix.relative(root, componentPath),
+      pagesByMode
+    )
+  }
+
+  for (const {
+    originalAbsoluteFilePath,
+    functionRoute,
+  } of state.functions.values()) {
+    componentWithPages.set(
+      path.posix.relative(root, originalAbsoluteFilePath),
+      {
+        SSG: new Set<string>(),
+        DSG: new Set<string>(),
+        SSR: new Set<string>(),
+        FN: new Set<string>([`/api/${functionRoute}`]),
+      }
+    )
+  }
+
+  yurnalist.log(`\n${chalk.underline(`Pages`)}\n`)
+
+  let i = 0
+  for (const [componentPath, pages] of componentWithPages) {
+    const isLast = i === componentWithPages.size - 1
+    let topLevelIcon = `├`
+    if (i === 0) {
+      topLevelIcon = `┌`
+    }
+    if (isLast) {
+      topLevelIcon = `└`
+    }
+    const componentTree = [`${topLevelIcon} ${componentPath}`]
+
+    const sortedPages = generatePageTree(pages)
+    sortedPages.map((page, index) => {
+      componentTree.push(
+        [
+          isLast ? ` ` : `│`,
+          ` ${index === sortedPages.length - 1 ? `└` : `├`} `,
+          `${page.symbol} ${page.text}`,
+        ].join(``)
+      )
+    })
+
+    yurnalist.log(componentTree.join(`\n`))
+
+    i++
+  }
+
+  yurnalist.log(``)
+  yurnalist.log(
+    boxen(
+      [
+        `  (SSG) Generated at build time`,
+        `D (DSG) Defered static generation - page generated at runtime`,
+        `∞ (SSR) Server-side renders at runtime (uses getServerDate)`,
+        `λ (Function) Gatsby function`,
+      ].join(`\n`),
+      {
+        padding: 1,
+        margin: {
+          left: 2,
+          right: 2,
+          top: 0,
+          bottom: 0,
+        },
+        // @ts-ignore - bad type in boxen
+        borderStyle: `round`,
+      }
+    )
+  )
 }
 
 export function initializeYurnalistLogger(): void {
@@ -56,6 +157,7 @@ export function initializeYurnalistLogger(): void {
           }
           yurnalistMethod(message)
         }
+
         break
       }
       case Actions.StartActivity: {
@@ -93,14 +195,26 @@ export function initializeYurnalistLogger(): void {
           activities[action.payload.id] = activity
         } else if (action.payload.type === ActivityTypes.Progress) {
           const bar = new ProgressBar(
-            ` [:bar] :current/:total :elapsed s :percent ${action.payload.text}`,
+            ` [:bar] :current/:total :elapsed s :rate /s :percent ${action.payload.text}`,
             {
-              total: action.payload.total,
-              curr: action.payload.current,
+              total: Math.max(action.payload.total || 1, 1) || 1, // Not zero. Otherwise you get 0/0 errors.
+              // curr: action.payload.current, // see below
               width: 30,
               clear: true,
             }
           )
+
+          // There is a bug in the `progress` package where the timer doesn't
+          // start until the first tick and setting `curr` will cause the
+          // time/eta to remain zero: https://github.com/visionmedia/node-progress/issues/81
+          // This is a workaround although the eta will initially be wrong
+          // until it settles, if starting at non-zero.
+          if (
+            typeof action.payload.current === `number` &&
+            action.payload.current >= 0
+          ) {
+            bar.tick(action.payload.current)
+          }
 
           activities[action.payload.id] = {
             text: undefined,
@@ -133,6 +247,12 @@ export function initializeYurnalistLogger(): void {
           activity.end()
           delete activities[action.payload.id]
         }
+        break
+      }
+
+      case Actions.RenderPageTree: {
+        generatePageTreeToConsole(yurnalist, action.payload)
+        break
       }
     }
   })

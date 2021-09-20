@@ -10,7 +10,7 @@ import telemetry from "gatsby-telemetry"
 import url from "url"
 import { createHash } from "crypto"
 import { findPageByPath } from "./find-page-by-path"
-import socketIO from "socket.io"
+import { Server as SocketIO, Socket } from "socket.io"
 
 export interface IPageQueryResult {
   id: string
@@ -31,7 +31,7 @@ function hashPaths(paths: Array<string>): Array<string> {
 
 interface IClientInfo {
   activePath: string | null
-  socket: socketIO.Socket
+  socket: Socket
 }
 
 export class WebsocketManager {
@@ -40,19 +40,22 @@ export class WebsocketManager {
   errors: Map<string, string> = new Map()
   pageResults: PageResultsMap = new Map()
   staticQueryResults: QueryResultsMap = new Map()
-  websocket: socketIO.Server | undefined
+  websocket: SocketIO | undefined
 
-  init = ({
-    server,
-  }: {
-    server: HTTPSServer | HTTPServer
-  }): socketIO.Server => {
-    this.websocket = socketIO(server, {
+  init = ({ server }: { server: HTTPSServer | HTTPServer }): SocketIO => {
+    // make typescript happy, else it complained about this.websocket being undefined
+    const websocket = new SocketIO(server, {
       // we see ping-pong timeouts on gatsby-cloud when socket.io is running for a while
       // increasing it should help
       // @see https://github.com/socketio/socket.io/issues/3259#issuecomment-448058937
       pingTimeout: 30000,
+      // whitelist all (https://github.com/expressjs/cors#configuration-options)
+      cors: {
+        origin: true,
+      },
+      cookie: true,
     })
+    this.websocket = websocket
 
     const updateServerActivePaths = (): void => {
       const serverActivePaths = new Set<string>()
@@ -64,7 +67,7 @@ export class WebsocketManager {
       this.activePaths = serverActivePaths
     }
 
-    this.websocket.on(`connection`, socket => {
+    websocket.on(`connection`, socket => {
       const clientInfo: IClientInfo = {
         activePath: null,
         socket,
@@ -82,8 +85,15 @@ export class WebsocketManager {
             newActivePath,
             fallbackTo404
           )
+
           if (page) {
-            activePagePath = page.path
+            // when it's SSR we don't want to return the page path but the actualy url used,
+            // this is necessary when matchPaths are used.
+            if (page.mode === `SSR`) {
+              activePagePath = newActivePath
+            } else {
+              activePagePath = page.path
+            }
           }
         }
         clientInfo.activePath = activePagePath
@@ -121,9 +131,8 @@ export class WebsocketManager {
 
     if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
       // page-data marked stale due to dirty query tracking
-      const boundEmitStalePageDataPathsFromDirtyQueryTracking = this.emitStalePageDataPathsFromDirtyQueryTracking.bind(
-        this
-      )
+      const boundEmitStalePageDataPathsFromDirtyQueryTracking =
+        this.emitStalePageDataPathsFromDirtyQueryTracking.bind(this)
       emitter.on(
         `CREATE_PAGE`,
         boundEmitStalePageDataPathsFromDirtyQueryTracking
@@ -148,10 +157,10 @@ export class WebsocketManager {
       this.emitStalePageDataPathsFromStaticQueriesAssignment.bind(this)
     )
 
-    return this.websocket
+    return websocket
   }
 
-  getSocket = (): socketIO.Server | undefined => this.websocket
+  getSocket = (): SocketIO | undefined => this.websocket
 
   emitStaticQueryData = (data: IStaticQueryResult): void => {
     this.staticQueryResults.set(data.id, data)
@@ -211,8 +220,8 @@ export class WebsocketManager {
   }
 
   emitStalePageDataPathsFromDirtyQueryTracking(): void {
-    const dirtyQueries = store.getState().queries
-      .dirtyQueriesListToEmitViaWebsocket
+    const dirtyQueries =
+      store.getState().queries.dirtyQueriesListToEmitViaWebsocket
 
     if (this.emitStalePageDataPaths(dirtyQueries)) {
       store.dispatch(clearDirtyQueriesListToEmitViaWebsocket())

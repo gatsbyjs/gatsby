@@ -71,5 +71,5 @@ From the site `Overview`, you can go to `Domain Settings`. By adding a custom do
 
 - [A Step-by-Step Guide: Gatsby on Netlify](https://www.netlify.com/blog/2016/02/24/a-step-by-step-guide-gatsby-on-netlify/)
 - More [blog posts on Gatsby + Netlify](/blog/tags/netlify)
-- [Gatsby Netlify CMS](/packages/gatsby-plugin-netlify-cms)
+- [Gatsby Netlify CMS](/plugins/gatsby-plugin-netlify-cms)
 - [Gatsby + Netlify CMS Starter](https://github.com/netlify-templates/gatsby-starter-netlify-cms)

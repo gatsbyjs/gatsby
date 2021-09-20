@@ -6,7 +6,7 @@ Popular CSS-in-JS libraries like [styled-components](https://github.com/styled-c
 
 _Snapshot serializers_ like `jest-styled-components` or `@emotion/jest` modify the standard output to a more meaningful and readable snapshot, e.g. by removing unnecessary information or displaying data in another format. Which ultimately leads to more comparable and effective snapshot tests.
 
-By default snapshots of your styled components show the generated class names (which you didn't set) and no styling information. When changing the styles you'll only see the diff of some cryptic class names (hashes). That's why you should use the above mentioned _snapshot serializers_. They remove the hashes and format the CSS in style elements.
+By default snapshots of your styled components show the generated class names (which you didn't set) and no styling information. When changing the styles you'll only see the diff of some cryptic class names (hashes). That's why you should use the above-mentioned _snapshot serializers_. They remove the hashes and format the CSS in style elements.
 
 For this example you'll use emotion. The testing utilities of emotion and glamor are largely based on [jest-styled-components](https://github.com/styled-components/jest-styled-components) so they have a similar usage. Please have a look at the testing section of your library to follow along.
 
@@ -16,7 +16,7 @@ For this example you'll use emotion. The testing utilities of emotion and glamor
 npm install --save-dev @emotion/jest @emotion/babel-plugin
 ```
 
-As [Gatsby's emotion plugin](/packages/gatsby-plugin-emotion/) is using `@emotion/babel-plugin` under the hood you'll also need to install it so that Jest can use it.
+As [Gatsby's emotion plugin](/plugins/gatsby-plugin-emotion/) is using `@emotion/babel-plugin` under the hood you'll also need to install it so that Jest can use it.
 
 If you followed along with the [Unit testing guide](/docs/how-to/testing/unit-testing) you'll have the file `jest-preprocess.js` at the root of your project. Open that file and add the plugin:
 

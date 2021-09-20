@@ -36,7 +36,6 @@ describe(`gatsby new`, () => {
     )
     logs.should.contain(`success Created starter directory layout`)
     logs.should.contain(`info Installing packages...`)
-    logs.should.contain(`success Saved lockfile.`)
     logs.should.contain(
       `Your new Gatsby site has been successfully bootstrapped. Start developing it by running:`
     )
@@ -57,7 +56,6 @@ describe(`gatsby new`, () => {
     )
     logs.should.contain(`success Created starter directory layout`)
     logs.should.contain(`info Installing packages...`)
-    logs.should.contain(`success Saved lockfile.`)
     logs.should.contain(
       `Your new Gatsby site has been successfully bootstrapped. Start developing it by running:`
     )

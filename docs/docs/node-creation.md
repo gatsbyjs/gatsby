@@ -67,9 +67,9 @@ Any nodes that aren't touched by the end of the `source-nodes` phase, are delete
 
 ## Changing a node's fields
 
-From a site developer's point of view, nodes are immutable. In the sense that if you change a node object, those changes will not be seen by other parts of Gatsby. To make a change to a node, it must be persisted to redux via an action.
+From a site developer's point of view, nodes are immutable. In the sense that if you change a node object, those changes will not be seen by other parts of Gatsby. To make a change to a node, it must be persisted to Redux via an action.
 
-So, how do you add a field to an existing node? E.g. perhaps in onCreateNode, you want to add a transformer specific field? You can call [createNodeField](/docs/reference/config-files/actions/#createNodeField) and this will add your field to the node's `node.fields` object and then persists it to redux. This can then be referenced by other parts of your plugin at later stages of the build.
+So, how do you add a field to an existing node? E.g. perhaps in onCreateNode, you want to add a transformer specific field? You can call [createNodeField](/docs/reference/config-files/actions/#createNodeField) and this will add your field to the node's `node.fields` object and then persists it to Redux. This can then be referenced by other parts of your plugin at later stages of the build.
 
 ## Node Tracking
 

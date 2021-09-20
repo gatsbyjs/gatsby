@@ -96,7 +96,7 @@ export default function Home() {
 ### Prerequisites
 
 - A [Gatsby site](/docs/quick-start/) with an index page component
-- [gatsby-plugin-styled-components, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `package.json`
+- [gatsby-plugin-styled-components, styled-components, and babel-plugin-styled-components](/plugins/gatsby-plugin-styled-components/) installed in `package.json`
 
 ### Directions
 
@@ -194,7 +194,7 @@ export default function UsersList() {
 import React from "react"
 
 // highlight-start
-import style from "./index.module.css"
+import * as style from "./index.module.css"
 
 export default function Home() {
   return (
@@ -320,7 +320,7 @@ If fonts are not updating following steps above, make sure to replace the existi
 
 ### Directions
 
-1. Install the [Gatsby Emotion plugin](/packages/gatsby-plugin-emotion/) and Emotion packages.
+1. Install the [Gatsby Emotion plugin](/plugins/gatsby-plugin-emotion/) and Emotion packages.
 
 ```shell
 npm install gatsby-plugin-emotion @emotion/react @emotion/styled
@@ -401,19 +401,19 @@ Hosting your own [Google Fonts](https://fonts.google.com/) locally within a proj
 
 This example shows how to set up the [Open Sans](https://fonts.google.com/specimen/Open+Sans) font. If you have a different Google Font you want to use, you can find the corresponding package in [NPM](https://www.npmjs.com/search?q=fontsource) or the [packages directory in the Fontsource repository](https://github.com/fontsource/fontsource/tree/master/packages).
 
-1. Run `npm install fontsource-open-sans` to download the necessary package files.
+1. Run `npm install @fontsource/open-sans` to download the necessary package files.
 
 2. Then within your app entry file or site component, import the font package. It is recommended you import it via the layout template (`layout.js`). However, importing via page component (`index.js`), or `gatsby-browser.js` are viable alternatives.
 
 ```jsx:title=src/components/layout.js
-import "fontsource-open-sans" // Defaults to weight 400 with all styles included.
+import "@fontsource/open-sans" // Defaults to weight 400.
 ```
 
 If you wish to select a particular weight or style, you may specify it by changing the import path.
 
 ```jsx:title=src/components/layout.js
-import "fontsource-open-sans/500.css" // Weight 500 with all styles included.
-import "fontsource-open-sans/900-normal.css" // Select either normal or italic.
+import "@fontsource/open-sans/500.css" // Weight 500.
+import "@fontsource/open-sans/900-italic.css" // Loads the italic variant.
 ```
 
 **Note**: The range of supported weights and styles a font may support is shown in each package's README file.

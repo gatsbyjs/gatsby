@@ -1,8 +1,12 @@
 import { isValidCollectionPathImplementation } from "../is-valid-collection-path-implementation"
-import reporter from "gatsby-cli/lib/reporter"
+import reporter from "gatsby/reporter"
 import syspath from "path"
 
-jest.mock(`gatsby-cli/lib/reporter`)
+jest.mock(`gatsby/reporter`, () => {
+  return {
+    panicOnBuild: jest.fn(),
+  }
+})
 
 // windows and mac have different seperators, all code is written with unix-like
 // file systems, but the underlying code uses `path.sep`. So when running tests

@@ -8,7 +8,6 @@ export const resolvedNodesCacheReducer = (
     case `DELETE_CACHE`:
     case `CREATE_NODE`:
     case `DELETE_NODE`:
-    case `DELETE_NODES`:
       return new Map()
 
     case `SET_RESOLVED_NODES`: {

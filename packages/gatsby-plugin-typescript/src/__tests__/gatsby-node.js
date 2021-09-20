@@ -95,6 +95,9 @@ describe(`gatsby-plugin-typescript`, () => {
         isTSX: false,
         jsxPragma: `ReactFunction`,
         allExtensions: false,
+        allowNamespaces: false,
+        allowDeclareFields: false,
+        onlyRemoveTypeImports: false,
       })
 
       expect(isValid).toBe(true)

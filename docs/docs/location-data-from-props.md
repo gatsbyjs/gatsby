@@ -101,5 +101,5 @@ const SomePageComponent = ({ location }) => {
 - [@reach/router docs](https://reach.tech/router/api/Location)
 - [react-router location docs](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/api/location.md)
 - [Hash Router](https://reacttraining.com/react-router/web/api/HashRouter)
-- [Gatsby Breadcrumb Plugin](/packages/gatsby-plugin-breadcrumb/#breadcrumb-props)
+- [Gatsby Breadcrumb Plugin](/plugins/gatsby-plugin-breadcrumb/#breadcrumb-props)
 - [Create Modal w/ Navigation State using React Router](https://codedaily.io/tutorials/47/Create-a-Modal-Route-with-Link-and-Nav-State-in-React-Router)

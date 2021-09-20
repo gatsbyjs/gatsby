@@ -1,0 +1,1498 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-plugin-postcss Stage: build-html / Css options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "null-loader",
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "null-loader",
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":false})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":false})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.css\\$/,
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                },
+              ],
+            },
+            Object {
+              "test": /\\\\\\.js/,
+              "use": Array [
+                "babel-loader",
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-postcss Stage: build-html / Css options commonjs 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "css-loader({\\"esModule\\":false,\\"modules\\":{\\"namedExport\\":false},\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "null-loader",
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "css-loader({\\"esModule\\":false,\\"modules\\":{\\"namedExport\\":false},\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "null-loader",
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"esModule\\":false,\\"modules\\":{\\"namedExport\\":false},\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"esModule\\":false,\\"modules\\":false,\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"esModule\\":false,\\"modules\\":{\\"namedExport\\":false},\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"esModule\\":false,\\"modules\\":false,\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.css\\$/,
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                },
+              ],
+            },
+            Object {
+              "test": /\\\\\\.js/,
+              "use": Array [
+                "babel-loader",
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-postcss Stage: build-html / No options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "null-loader",
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-postcss Stage: build-html / PostCss options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "null-loader",
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "null-loader",
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":false})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":false})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.css\\$/,
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                },
+              ],
+            },
+            Object {
+              "test": /\\\\\\.js/,
+              "use": Array [
+                "babel-loader",
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-postcss Stage: build-javascript / Css options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":false})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":false})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.css\\$/,
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                },
+              ],
+            },
+            Object {
+              "test": /\\\\\\.js/,
+              "use": Array [
+                "babel-loader",
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-postcss Stage: build-javascript / Css options commonjs 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"esModule\\":false,\\"modules\\":{\\"namedExport\\":false},\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"esModule\\":false,\\"modules\\":false,\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"esModule\\":false,\\"modules\\":{\\"namedExport\\":false},\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"esModule\\":false,\\"modules\\":false,\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.css\\$/,
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                },
+              ],
+            },
+            Object {
+              "test": /\\\\\\.js/,
+              "use": Array [
+                "babel-loader",
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-postcss Stage: build-javascript / No options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":false})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-postcss Stage: build-javascript / PostCss options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":false})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":false})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.css\\$/,
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                },
+              ],
+            },
+            Object {
+              "test": /\\\\\\.js/,
+              "use": Array [
+                "babel-loader",
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-postcss Stage: develop / Css options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":false})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.css\\$/,
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                },
+              ],
+            },
+            Object {
+              "test": /\\\\\\.js/,
+              "use": Array [
+                "babel-loader",
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-postcss Stage: develop / Css options commonjs 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"esModule\\":false,\\"modules\\":{\\"namedExport\\":false},\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"esModule\\":false,\\"modules\\":false,\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.css\\$/,
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                },
+              ],
+            },
+            Object {
+              "test": /\\\\\\.js/,
+              "use": Array [
+                "babel-loader",
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-postcss Stage: develop / No options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":false})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-postcss Stage: develop / PostCss options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":false})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.css\\$/,
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                },
+              ],
+            },
+            Object {
+              "test": /\\\\\\.js/,
+              "use": Array [
+                "babel-loader",
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-postcss Stage: develop-html / Css options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "null-loader",
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":false})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"camelCase\\":true,\\"importLoaders\\":1,\\"modules\\":false})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.css\\$/,
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                },
+              ],
+            },
+            Object {
+              "test": /\\\\\\.js/,
+              "use": Array [
+                "babel-loader",
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-postcss Stage: develop-html / Css options commonjs 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "css-loader({\\"esModule\\":false,\\"modules\\":{\\"namedExport\\":false},\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "null-loader",
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"esModule\\":false,\\"modules\\":{\\"namedExport\\":false},\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"esModule\\":false,\\"modules\\":false,\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"esModule\\":false,\\"modules\\":{\\"namedExport\\":false},\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"esModule\\":false,\\"modules\\":false,\\"importLoaders\\":1})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.css\\$/,
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                },
+              ],
+            },
+            Object {
+              "test": /\\\\\\.js/,
+              "use": Array [
+                "babel-loader",
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-postcss Stage: develop-html / No options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {},
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "null-loader",
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-postcss Stage: develop-html / PostCss options 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "module": Object {
+          "rules": Array [
+            Object {
+              "oneOf": Array [
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "null-loader",
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":false})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":true})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "test": /\\\\\\.css\\$/,
+                  "use": Array [
+                    "miniCssExtract",
+                    "css-loader({\\"importLoaders\\":1,\\"modules\\":false})",
+                    Object {
+                      "loader": "/resolved/path/postcss-loader",
+                      "options": Object {
+                        "postcssOptions": Object {
+                          "plugins": Array [
+                            "autoprefixer",
+                          ],
+                        },
+                        "sourceMap": false,
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.css\\$/,
+                },
+                Object {
+                  "loaders": Array [
+                    "css-loader",
+                  ],
+                  "test": /\\\\\\.module\\\\\\.css\\$/,
+                },
+              ],
+            },
+            Object {
+              "test": /\\\\\\.js/,
+              "use": Array [
+                "babel-loader",
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;

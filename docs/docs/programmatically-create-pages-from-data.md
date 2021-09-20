@@ -113,7 +113,7 @@ are also available as the `pageContext` prop in the template component itself.
 ## Not just Markdown
 
 The
-[`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/)
+[`gatsby-transformer-remark`](/plugins/gatsby-transformer-remark/)
 plugin is just one of a multitude of Gatsby plugins that can provide data
 through the GraphQL interface. Any of that data can be used to
 programmatically create pages.
