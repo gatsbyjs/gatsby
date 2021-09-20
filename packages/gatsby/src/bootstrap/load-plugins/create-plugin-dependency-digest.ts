@@ -69,34 +69,30 @@ async function getDependencies(
   }
 }
 
-let hasLockfileChangedBool: boolean
-let inflightLockfileCheckPromise: Promise<boolean>
-async function hasLockfileChanged(filePath: string): Promise<boolean> {
-  if (typeof hasLockfileChangedBool !== `undefined`) {
-    return hasLockfileChangedBool
-  } else {
-    if (inflightLockfileCheckPromise) {
-      return inflightLockfileCheckPromise
-    } else {
-      let resolve
-      inflightLockfileCheckPromise = new Promise(resolveVar => {
-        resolve = resolveVar
-      })
-      hasLockfileChangedBool = await hasFileChanged(filePath)
-      return resolve(hasLockfileChangedBool)
-    }
-  }
-}
-
+const inflightPromises = {}
 async function hasFileChanged(filePath: string): Promise<boolean> {
   if (filePath === ``) {
     return false
   }
 
-  const cachedMTime = await cache.get(filePath)
-  const stat = await fs.stat(filePath)
-  await cache.set(filePath, stat.mtimeMs)
-  return cachedMTime === stat.mtimeMs ? false : true
+  if (inflightPromises[filePath]) {
+    return inflightPromises[filePath]
+  } else {
+    let outsideResolve
+    inflightPromises[filePath] = new Promise(resolve => {
+      outsideResolve = resolve
+    })
+
+    const cachedMTime = await cache.get(filePath)
+    const stat = await fs.stat(filePath)
+    await cache.set(filePath, stat.mtimeMs)
+    const hasChanged = cachedMTime === stat.mtimeMs ? false : true
+
+    outsideResolve(hasChanged)
+    delete inflightPromises[filePath]
+
+    return hasChanged
+  }
 }
 
 interface ILockFileInfo {
@@ -187,7 +183,7 @@ async function createPluginDependencyDigest(
   }
 
   // Check if the lock file has changed
-  const lockFileChanged = await hasLockfileChanged(lockFilePath)
+  const lockFileChanged = await hasFileChanged(lockFilePath)
   // const lockFileChanged = false
 
   // Is this plugin a direct dependency of the project?
