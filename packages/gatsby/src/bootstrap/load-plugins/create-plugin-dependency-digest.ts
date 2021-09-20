@@ -139,7 +139,8 @@ type ILocalFiles = Array<string>
 
 async function createPluginDependencyDigest(
   root: string,
-  plugin: any
+  plugin: any,
+  i: number
 ): Promise<IPluginDigest> {
   let dep = plugin.resolve
   if (dep === ``) {
@@ -184,7 +185,6 @@ async function createPluginDependencyDigest(
 
   // Check if the lock file has changed
   const lockFileChanged = await hasFileChanged(lockFilePath)
-  // const lockFileChanged = false
 
   // Is this plugin a direct dependency of the project?
   const isPackage =
@@ -292,7 +292,7 @@ async function createPluginDependencyDigest(
         digest: shasum.digest(`hex`),
         isCached: false,
       }
-      cache.set(root + dep, result)
+      await cache.set(root + dep, result)
       return result
     } else {
       cachedResult.isCached = true

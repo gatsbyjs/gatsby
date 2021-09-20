@@ -1,4 +1,5 @@
 import _ from "lodash"
+import crypto from "crypto"
 
 import { store } from "../../redux"
 import { IGatsbyState } from "../../redux/types"
@@ -102,7 +103,6 @@ export async function loadPlugins(
   rawConfig: IRawSiteConfig = {},
   rootDir: string
 ): Promise<Array<IFlattenedPlugin>> {
-  console.time(`loadPlugins`)
   // Turn all strings in plugins: [`...`] into the { resolve: ``, options: {} } form
   const config = normalizeConfig(rawConfig)
 
@@ -121,13 +121,18 @@ export async function loadPlugins(
   // Create a flattened array of the plugins
   const pluginArray = flattenPlugins(pluginInfos)
 
-  // console.log({ pluginArray })
   console.time(`create dependency digests`)
   // process.exit()
   const digests = await Promise.all(
-    pluginArray.map(p =>
-      createPluginDependencyDigest(rootDir, p).then(digest => {
-        return { ...digest, ...p }
+    pluginArray.map((p, i) =>
+      createPluginDependencyDigest(rootDir, p, i).then(digest => {
+        const shasum = crypto.createHash(`sha1`)
+        shasum.update(digest.digest)
+        shasum.update(JSON.stringify(p.pluginOptions))
+        const pluginDigest = shasum.digest(`hex`)
+        // TODO mark if a plugin has changed or not — which means storing the previous
+        // digest definition.
+        return { digest: pluginDigest, ...p }
       })
     )
   )
@@ -157,6 +162,5 @@ export async function loadPlugins(
     payload: flattenedPlugins as IGatsbyState["flattenedPlugins"],
   })
 
-  console.timeEnd(`loadPlugins`)
   return flattenedPlugins
 }
