@@ -10,6 +10,7 @@ module.exports = {
   },
   plugins: [
     'gatsby-plugin-sharp',
+    /*
     {
       resolve: `gatsby-alias-imports`,
       options: {
@@ -21,6 +22,7 @@ module.exports = {
         },
       },
     },
+    */
     {
       resolve: 'gatsby-source-filesystem',
       options: {

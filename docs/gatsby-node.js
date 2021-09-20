@@ -2,8 +2,8 @@ const path = require('path')
 const { createFilePath } = require('gatsby-source-filesystem')
 const { createPath } = require('gatsby-page-utils')
 
-exports.sourceNodes = ({ actions }) => {
-  actions.createTypes(/* GraphQL */ `
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createTypes(`
     type Mdx implements Node {
       frontmatter: MdxFrontmatter
       fields: MdxFields
@@ -35,7 +35,7 @@ exports.sourceNodes = ({ actions }) => {
       locale: String
       released: Boolean
       # ossDoc: Boolean
-      relPath: String
+      # relPath: String
     }
 
     ## TODO make this work
@@ -46,29 +46,31 @@ exports.sourceNodes = ({ actions }) => {
 
     # Added by gatsby-transformer-gitinfo
     # TODO add these back upstream
-    type FileFields {
-      gitLogLatestDate: Date @dateformat
-      gitLogLatestAuthorName: String
-      gitLogLatestAuthorEmail: String
-    }
-    type DocumentationJSComponentDescription implements Node {
-      childMdx: Mdx
-    }
-    type GatsbyAPICall implements Node @derivedTypes @dontInfer {
-      name: String
-      file: String
-      group: String
-      codeLocation: GatsbyAPICallCodeLocation
-    }
-    type GatsbyAPICallCodeLocation @dontInfer {
-      filename: Boolean
-      end: GatsbyAPICallEndpoint
-      start: GatsbyAPICallEndpoint
-    }
-    type GatsbyAPICallEndpoint @dontInfer {
-      column: Int
-      line: Int
-    }
+    # type FileFields {
+    #   gitLogLatestDate: Date @dateformat
+    #   gitLogLatestAuthorName: String
+    #   gitLogLatestAuthorEmail: String
+    # }
+
+    ## type DocumentationJSComponentDescription implements Node {
+    ##   childMdx: Mdx
+    ## }
+
+    # type GatsbyAPICall implements Node @derivedTypes @dontInfer {
+    #   name: String
+    #   file: String
+    #   group: String
+    #   codeLocation: GatsbyAPICallCodeLocation
+    # }
+    # type GatsbyAPICallCodeLocation @dontInfer {
+    #   filename: Boolean
+    #   end: GatsbyAPICallEndpoint
+    #   start: GatsbyAPICallEndpoint
+    # }
+    # type GatsbyAPICallEndpoint @dontInfer {
+    #   column: Int
+    #   line: Int
+    # }
   `)
 }
 
@@ -119,30 +121,32 @@ exports.onCreateNode = async ({
   if (node.internal.type !== 'Mdx' && node.sourceInstanceName !== 'new-docs') return
   const slug = createFilePath({ node, getNode })
 
-  const parent = getNode(node.parent)
-  if (parent.internal.type !== 'File') return
-  const relPath = getNode(node.parent).relativePath
-  if (!relPath) {
-    console.log('no relpath', getNode(node.parent).internal.type)
-    return
-  }
-
-  createNodeField({
-    node,
-    name: `relPath`,
-    value: relPath,
-  })
-
-  let ossSlug = createPath(relPath)
-
-  createNodeField({
-    node,
-    name: `slug`,
-    value: ossSlug,
-  })
-
   if (!slug) return
   const section = slug.split(`/`)[1]
+
+  // const parent = getNode(node.parent)
+  // if (!parent) return // TODO: figure out why this is needed
+  // if (parent.internal.type !== 'File') return
+  // const relPath = parent.relativePath
+  // if (!relPath) {
+  //   console.log('no relpath', getNode(node.parent).internal.type)
+  //   return
+  // }
+
+  // createNodeField({
+  //   node,
+  //   name: `relPath`,
+  //   value: relPath,
+  // })
+
+  // let ossSlug = createPath(relPath)
+
+  // createNodeField({
+  //   node,
+  //   name: `slug`,
+  //   value: ossSlug,
+  // })
+
 
   createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
   createNodeField({ node, name: `section`, value: section })

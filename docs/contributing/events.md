@@ -3,8 +3,8 @@ title: Gatsby Community Events
 description: Learn about other events happening around the globe to connect with other members of the Gatsby community
 ---
 
-import Events from "@components/events/events"
-import EmailCaptureForm from "@components/email-capture-form"
+import Events from "../src/components/mdx/events/events"
+import EmailCaptureForm from "../src/components/mdx/email-capture-form"
 
 **IMPORTANT NOTE ON COMMUNITY EVENTS: Promotion and support of Gatsby community events is currently suspended due to COVID-19. Stay tuned for updates on when our community events program will resume.**
 

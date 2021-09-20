@@ -2,7 +2,7 @@
 title: Using Gatsby Image to Prevent Image Bloat
 ---
 
-import ImageModel from "@components/layer-model/image-model"
+import ImageModel from "../../../src/components/mdx/layer-model/image-model"
 
 _This doc is for the deprecated `gatsby-image` package. See [Using the Gatsby Image plugin](/docs/how-to/images-and-media/using-gatsby-plugin-image) for the new image plugin._
 

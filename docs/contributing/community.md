@@ -2,7 +2,7 @@
 title: Community
 ---
 
-import EmailCaptureForm from "@components/email-capture-form"
+import EmailCaptureForm from "../src/components/mdx/email-capture-form"
 
 As of June 2020, the Gatsby community is comprised of over 3,300 contributors and tens of thousands of developers building both personal and commercial websites on Gatsby.
 

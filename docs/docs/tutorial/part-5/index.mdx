@@ -3,7 +3,7 @@ title: "Part 5: Transform Data to Use MDX"
 ---
 
 import { Announcement, LinkButton } from 'gatsby-interface'
-import Collapsible from '@components/collapsible'
+import Collapsible from '../../../src/components/mdx/collapsible'
 import { MdArrowForward } from 'react-icons/md'
 
 ## Introduction
@@ -72,7 +72,7 @@ Once you get used to what all the different symbols mean, Markdown can be easier
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-**New to Markdown?** The MDX documentation includes a [table of components](https://mdxjs.com/table-of-components) that shows the different formatting options available. It includes things like headings, blockquotes, lists, and code blocks. 
+**New to Markdown?** The MDX documentation includes a [table of components](https://mdxjs.com/table-of-components) that shows the different formatting options available. It includes things like headings, blockquotes, lists, and code blocks.
 
 </Announcement>
 
@@ -96,7 +96,7 @@ You'll learn more about how to access the frontmatter for your posts later on.
 
 </Collapsible>
 
-Add some Markdown content to each of the `.mdx` files you created in your `/blog` directory in Part 4. 
+Add some Markdown content to each of the `.mdx` files you created in your `/blog` directory in Part 4.
 
 Include frontmatter with fields for the title of each post and the date it was published. (Give each post a different date, to make it easier to add sorting later on.) After the frontmatter, write some post content using some Markdown syntax.
 
@@ -509,7 +509,7 @@ import Layout from '../components/layout'
 
 `MDXRenderer` is a component included in the `gatsby-plugin-mdx` plugin that you can use to render the contents of a `.mdx` file.
 
-The `MDXRenderer` uses the `children` prop, similar to the `Layout` component you created in [Part 2](/docs/tutorial/part-2/). It expects to receive compiled MDX between its opening and closing tags. You can pass in the `body` field from an MDX node. 
+The `MDXRenderer` uses the `children` prop, similar to the `Layout` component you created in [Part 2](/docs/tutorial/part-2/). It expects to receive compiled MDX between its opening and closing tags. You can pass in the `body` field from an MDX node.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 

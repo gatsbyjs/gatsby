@@ -4,7 +4,7 @@ description: Learn about contributing to one of the most welcoming communities h
 disableTableOfContents: true
 ---
 
-import EmailCaptureForm from "@components/email-capture-form"
+import EmailCaptureForm from "../src/components/mdx/email-capture-form"
 
 Thanks for being interested in contributing! We're so glad you want to help!
 

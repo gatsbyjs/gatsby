@@ -3,7 +3,7 @@ title: "Part 6: Create Pages Programmatically"
 ---
 
 import { Announcement, LinkButton } from 'gatsby-interface'
-import Collapsible from '@components/collapsible'
+import Collapsible from '../../../src/components/mdx/collapsible'
 import { MdArrowForward } from 'react-icons/md'
 
 ## Introduction
@@ -50,7 +50,7 @@ To create a collection route:
 1. Decide what type of node you want to create pages from.
 2. Choose which field on that node to use in the route (the URL) for your pages.
 3. Create a new page component in your `src/pages` directory using the following naming convention: `{nodeType.field}.js`.
-    * Don't forget to include the curly braces (`{}`) in your filenames to indicate the dynamic part of the route! 
+    * Don't forget to include the curly braces (`{}`) in your filenames to indicate the dynamic part of the route!
 
 For example, if you wanted to create a separate page for each `Product` node, and you wanted to use the product's `name` field in the URL, you'd create a new file at `src/pages/{Product.name}.js`. Then Gatsby would create those pages at routes like `/water-bottle` or `/sweatshirt` or `/notebook`.
 
@@ -322,7 +322,7 @@ Under the hood, Gatsby makes both of these values available to use as query vari
     ```js
     Object {
       // ...
-      pageContext: Object { 
+      pageContext: Object {
         id: "11b3a825-30c5-551d-a713-dd748e7d554a"
         slug: "my-first-post"
       }
@@ -462,7 +462,7 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering the 
         </Layout>
       )
     }
-    
+
     export const query = graphql`
       query {
         allMdx(sort: {fields: frontmatter___date, order: DESC}) {
@@ -529,7 +529,7 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering the 
     export default BlogPage
     ```
 
-3. In a web browser, go to `localhost:8000/blog`. Your Blog page should now show links to each of your blog post pages. 
+3. In a web browser, go to `localhost:8000/blog`. Your Blog page should now show links to each of your blog post pages.
     ![A screenshot of the Blog page in a web browser. It shows the title and date for each post, and each post title is a link to the page for that post.](./blog-page-with-links.png)
 
 Congratulations, you now have a multi-page blog site! Try adding some new `.mdx` files to your top-level `blog` directory. They should get added to your Blog page automatically when your site rebuilds!

@@ -178,6 +178,7 @@ To help understand how GraphQL works in Gatsby...
 
 ## Importing other components
 
+<!-- TODO
 If you need to use a component that is not globally available, you can do by importing it using the special `@components` alias, which points to `www/src/components`:
 
 ```mdx
@@ -194,6 +195,8 @@ import EmailCaptureForm from "../../www/src/components/email-capture-form"
 ```
 
 Doing so will break localized versions of the page, which are stored in other repos.
+
+-->
 
 ---
 
