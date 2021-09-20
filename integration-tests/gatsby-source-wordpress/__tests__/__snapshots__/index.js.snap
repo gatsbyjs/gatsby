@@ -1,53 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`[gatsby-source-wordpress] Run tests on develop build Gatsby image processing transforms inline-html images properly 1`] = `
-"<p>Wysiwyh Editor Field test content.</p>
-<p>&nbsp;</p>
-<h1>H1</h1>
-<p><span class=\\"alignnone size-medium wp-image-7756 inline-gatsby-image-wrapper gatsby-image-wrapper\\" style=\\"position:relative;overflow:hidden;max-width:100%;width:300px\\" data-reactroot=\\"\\"><span aria-hidden=\\"true\\" style=\\"width:100%;padding-bottom:66.66666666666667%\\"></span><img aria-hidden=\\"true\\" src=\\"data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAANABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAQBAwX/xAAVAQEBAAAAAAAAAAAAAAAAAAABAP/aAAwDAQACEAMQAAAB1akIFoSC/8QAGxABAAEFAQAAAAAAAAAAAAAAAgABAxAREhT/2gAIAQEAAQUC6Ed4E+k4VZuf/8QAFhEAAwAAAAAAAAAAAAAAAAAAAAER/9oACAEDAQE/AYiI/8QAFhEAAwAAAAAAAAAAAAAAAAAAAAER/9oACAECAQE/Aays/8QAGBAAAgMAAAAAAAAAAAAAAAAAAAEgMTL/2gAIAQEABj8CsZlw/8QAGhABAQACAwAAAAAAAAAAAAAAAQARYSExUf/aAAgBAQABPyHTmwcodW0iwB4xwL//2gAMAwEAAgADAAAAEIjv/8QAFREBAQAAAAAAAAAAAAAAAAAAAGH/2gAIAQMBAT8QUn//xAAWEQEBAQAAAAAAAAAAAAAAAAAAEWH/2gAIAQIBAT8Qg0f/xAAcEAEAAgMAAwAAAAAAAAAAAAABABEhQYFRkeH/2gAIAQEAAT8QqPvMgTBCD2VhWIW2GYwdvY4ANh5j7vc//9k=\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition-delay:500ms\\"/><picture><source srcSet=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/ab49a/1001-5616%C3%973744.jpg 75w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/4934c/1001-5616%C3%973744.jpg 150w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg 300w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/12ba2/1001-5616%C3%973744.jpg 450w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/2a8be/1001-5616%C3%973744.jpg 600w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/bb9a8/1001-5616%C3%973744.jpg 2560w\\" sizes=\\"(max-width: 300px) 100vw, 300px\\"/><img sizes=\\"(max-width: 300px) 100vw, 300px\\" srcSet=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/ab49a/1001-5616%C3%973744.jpg 75w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/4934c/1001-5616%C3%973744.jpg 150w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg 300w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/12ba2/1001-5616%C3%973744.jpg 450w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/2a8be/1001-5616%C3%973744.jpg 600w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/bb9a8/1001-5616%C3%973744.jpg 2560w\\" src=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg\\" alt=\\"\\" loading=\\"eager\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;transition:opacity 500ms\\"/></picture><noscript><picture><source srcset=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/ab49a/1001-5616%C3%973744.jpg 75w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/4934c/1001-5616%C3%973744.jpg 150w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg 300w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/12ba2/1001-5616%C3%973744.jpg 450w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/2a8be/1001-5616%C3%973744.jpg 600w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/bb9a8/1001-5616%C3%973744.jpg 2560w\\" sizes=\\"(max-width: 300px) 100vw, 300px\\" /><img loading=\\"eager\\" sizes=\\"(max-width: 300px) 100vw, 300px\\" srcset=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/ab49a/1001-5616%C3%973744.jpg 75w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/4934c/1001-5616%C3%973744.jpg 150w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg 300w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/12ba2/1001-5616%C3%973744.jpg 450w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/2a8be/1001-5616%C3%973744.jpg 600w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/bb9a8/1001-5616%C3%973744.jpg 2560w\\" src=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture></noscript></span> <span class=\\"alignnone size-medium wp-image-7752 inline-gatsby-image-wrapper gatsby-image-wrapper\\" style=\\"position:relative;overflow:hidden;max-width:100%;width:200px\\" data-reactroot=\\"\\"><span aria-hidden=\\"true\\" style=\\"width:100%;padding-bottom:150%\\"></span><img aria-hidden=\\"true\\" src=\\"data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAeABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAEEAwL/xAAXAQEBAQEAAAAAAAAAAAAAAAACAAED/9oADAMBAAIQAxAAAAGmabjkkYDOmzcpCgs//8QAGxAAAgIDAQAAAAAAAAAAAAAAAQIAEQMQEiH/2gAIAQEAAQUCOaZHsWYX9LXoBrdZyZZhbX//xAAWEQADAAAAAAAAAAAAAAAAAAAAEBH/2gAIAQMBAT8BcP/EABURAQEAAAAAAAAAAAAAAAAAABEg/9oACAECAQE/ASP/xAAYEAACAwAAAAAAAAAAAAAAAAAAIQEgMf/aAAgBAQAGPwIUCphKyv8A/8QAHBAAAwEAAgMAAAAAAAAAAAAAAAERITFRQWFx/9oACAEBAAE/IYJIkOHb7HbWGLESQqYkrpP4UcvfI9bETNOT/9oADAMBAAIAAwAAABD43Q3/xAAXEQADAQAAAAAAAAAAAAAAAAAAAREQ/9oACAEDAQE/EMiIP//EABcRAQEBAQAAAAAAAAAAAAAAAAARAUH/2gAIAQIBAT8QzXUVX//EAB8QAQADAAEEAwAAAAAAAAAAAAEAESFBMWFxoVGBkf/aAAgBAQABPxBAroK1PiIW4oHq8Swv8quOpdXF9peDkwGLLfUFQidYrNwov6qJO/lHYvNRmFNb+qm7HtvM/9k=\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition-delay:500ms\\"/><picture><source srcSet=\\"/static/512103aa3c375068e3cb8426fe74d180/76112/1003-1181%C3%971772.jpg 50w,
-/static/512103aa3c375068e3cb8426fe74d180/d634c/1003-1181%C3%971772.jpg 100w,
-/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg 200w,
-/static/512103aa3c375068e3cb8426fe74d180/37e03/1003-1181%C3%971772.jpg 300w,
-/static/512103aa3c375068e3cb8426fe74d180/27ec1/1003-1181%C3%971772.jpg 400w,
-/static/512103aa3c375068e3cb8426fe74d180/345c8/1003-1181%C3%971772.jpg 1181w\\" sizes=\\"(max-width: 200px) 100vw, 200px\\"/><img sizes=\\"(max-width: 200px) 100vw, 200px\\" srcSet=\\"/static/512103aa3c375068e3cb8426fe74d180/76112/1003-1181%C3%971772.jpg 50w,
-/static/512103aa3c375068e3cb8426fe74d180/d634c/1003-1181%C3%971772.jpg 100w,
-/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg 200w,
-/static/512103aa3c375068e3cb8426fe74d180/37e03/1003-1181%C3%971772.jpg 300w,
-/static/512103aa3c375068e3cb8426fe74d180/27ec1/1003-1181%C3%971772.jpg 400w,
-/static/512103aa3c375068e3cb8426fe74d180/345c8/1003-1181%C3%971772.jpg 1181w\\" src=\\"/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg\\" alt=\\"\\" loading=\\"eager\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;transition:opacity 500ms\\"/></picture><noscript><picture><source srcset=\\"/static/512103aa3c375068e3cb8426fe74d180/76112/1003-1181%C3%971772.jpg 50w,
-/static/512103aa3c375068e3cb8426fe74d180/d634c/1003-1181%C3%971772.jpg 100w,
-/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg 200w,
-/static/512103aa3c375068e3cb8426fe74d180/37e03/1003-1181%C3%971772.jpg 300w,
-/static/512103aa3c375068e3cb8426fe74d180/27ec1/1003-1181%C3%971772.jpg 400w,
-/static/512103aa3c375068e3cb8426fe74d180/345c8/1003-1181%C3%971772.jpg 1181w\\" sizes=\\"(max-width: 200px) 100vw, 200px\\" /><img loading=\\"eager\\" sizes=\\"(max-width: 200px) 100vw, 200px\\" srcset=\\"/static/512103aa3c375068e3cb8426fe74d180/76112/1003-1181%C3%971772.jpg 50w,
-/static/512103aa3c375068e3cb8426fe74d180/d634c/1003-1181%C3%971772.jpg 100w,
-/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg 200w,
-/static/512103aa3c375068e3cb8426fe74d180/37e03/1003-1181%C3%971772.jpg 300w,
-/static/512103aa3c375068e3cb8426fe74d180/27ec1/1003-1181%C3%971772.jpg 400w,
-/static/512103aa3c375068e3cb8426fe74d180/345c8/1003-1181%C3%971772.jpg 1181w\\" src=\\"/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture></noscript></span></p>
-"
-`;
-
 exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves correct number of nodes 1`] = `
 Array [
   Object {
