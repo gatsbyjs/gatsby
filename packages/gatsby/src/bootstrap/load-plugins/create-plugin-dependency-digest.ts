@@ -7,7 +7,7 @@ import getDependenciesForLocalFile from "./get-dependencies-for-local-file"
 import resolveFrom from "resolve-from"
 import { store } from "../../redux"
 
-const cache = getCache(`plugin-digest`)
+const cache = getCache(`bootstrap/create-plugin-dependency-digest`)
 
 // function isLocalPlugin(filePath: string): boolean {
 // return filePath.slice(0, 1) === `.`

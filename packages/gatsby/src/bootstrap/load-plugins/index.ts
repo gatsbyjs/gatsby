@@ -1,11 +1,14 @@
 import _ from "lodash"
 import crypto from "crypto"
+import fs from "fs-extra"
+import path from "path"
 
 import { store } from "../../redux"
 import { IGatsbyState } from "../../redux/types"
 import * as nodeAPIs from "../../utils/api-node-docs"
 import * as browserAPIs from "../../utils/api-browser-docs"
 import ssrAPIs from "../../../cache-dir/api-ssr-docs"
+import { getCache } from "../../utils/get-cache"
 import { loadPlugins as loadPluginsInternal } from "./load"
 import createPluginDependencyDigest from "./create-plugin-dependency-digest"
 import {
@@ -23,6 +26,8 @@ import {
   IRawSiteConfig,
 } from "./types"
 import { IPluginRefObject, PluginRef } from "gatsby-plugin-utils/dist/types"
+
+const cache = getCache(`bootstrap/load-plugins`)
 
 const getAPI = (
   api: { [exportType in ExportType]: { [api: string]: boolean } }
@@ -103,6 +108,7 @@ export async function loadPlugins(
   rawConfig: IRawSiteConfig = {},
   rootDir: string
 ): Promise<Array<IFlattenedPlugin>> {
+  console.time(`loadPlugins`)
   // Turn all strings in plugins: [`...`] into the { resolve: ``, options: {} } form
   const config = normalizeConfig(rawConfig)
 
@@ -121,25 +127,6 @@ export async function loadPlugins(
   // Create a flattened array of the plugins
   const pluginArray = flattenPlugins(pluginInfos)
 
-  console.time(`create dependency digests`)
-  // process.exit()
-  const digests = await Promise.all(
-    pluginArray.map((p, i) =>
-      createPluginDependencyDigest(rootDir, p, i).then(digest => {
-        const shasum = crypto.createHash(`sha1`)
-        shasum.update(digest.digest)
-        shasum.update(JSON.stringify(p.pluginOptions))
-        const pluginDigest = shasum.digest(`hex`)
-        // TODO mark if a plugin has changed or not — which means storing the previous
-        // digest definition.
-        return { digest: pluginDigest, ...p }
-      })
-    )
-  )
-  // console.log({ digests })
-  console.timeEnd(`create dependency digests`)
-  process.exit()
-
   // Work out which plugins use which APIs, including those which are not
   // valid Gatsby APIs, aka 'badExports'
   const x = collatePluginAPIs({ currentAPIs, flattenedPlugins: pluginArray })
@@ -156,11 +143,66 @@ export async function loadPlugins(
     flattenedPlugins,
   })
 
+  console.time(`create dependency digests`)
+  // process.exit()
+  const lastPlugins = await cache.get(`site-flattened-plugins`)
+  console.log(`lastPlugins.length`, lastPlugins.length)
+  const flattenedPluginsWithDigests = await Promise.all(
+    flattenedPlugins.map((p, i) =>
+      createPluginDependencyDigest(rootDir, p, i).then(digest => {
+        const shasum = crypto.createHash(`sha1`)
+        shasum.update(digest.digest)
+        // Plugin id is composed of the plugin name + options so is guerenteed
+        // to be unique / plugin instance.
+        shasum.update(p.id)
+        const pluginDigest = shasum.digest(`hex`)
+
+        // Check if the plugin digest has changed since last time.
+        let hasChanged = true
+        const lastPlugin = lastPlugins.find(lp => lp.id === p.id)
+        if (lastPlugin) {
+          hasChanged = lastPlugin.digest !== pluginDigest
+        }
+
+        return { ...p, hasChanged, digest: pluginDigest }
+      })
+    )
+  )
+  console.timeEnd(`create dependency digests`)
+
+  // Filter plugins down to those that have changed & implement node APIs.
+  const changedPlugins = flattenedPluginsWithDigests
+    .filter(p => p.hasChanged)
+    .filter(p => p.nodeAPIs.length > 0)
+
+  console.log(changedPlugins)
+
+  changedPlugins.forEach(async plugin => {
+    // Clear its caches
+    // cache 1: key/value store
+    await fs.emptyDir(path.join(rootDir, `.cache`, `caches`, plugin.name))
+    // TODO probably for next two, need to set as flag so when redux is loaded
+    // it takes care of deleting stuff
+    // cache 2: plugin status
+    // cache 3: nodes
+
+    // TODO this is a flag too but after nodes are loaded and before sourceNodes
+    // it calls onCreateNode for any plugin that's changed but has parent nodes.
+    // I guess when deleting nodes we'd need to track the list of parent nodes
+    // and then replay that list.
+    //
+    // replay any parent nodes.
+  })
+
+  await cache.set(`site-flattened-plugins`, flattenedPluginsWithDigests)
+
   // If we get this far, everything looks good. Update the store
   store.dispatch({
     type: `SET_SITE_FLATTENED_PLUGINS`,
-    payload: flattenedPlugins as IGatsbyState["flattenedPlugins"],
+    payload: flattenedPluginsWithDigests as IGatsbyState["flattenedPlugins"],
   })
 
-  return flattenedPlugins
+  console.timeEnd(`loadPlugins`)
+  process.exit()
+  return flattenedPluginsWithDigests
 }

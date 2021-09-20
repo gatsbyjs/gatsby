@@ -25,7 +25,13 @@ describe(`create plugin dependecies digest`, () => {
   beforeAll(async () => {
     // Delete cache directory
     await fs.emptyDir(
-      path.join(process.cwd(), `.cache`, `caches`, `plugin-digest`)
+      path.join(
+        process.cwd(),
+        `.cache`,
+        `caches`,
+        `bootstrap`,
+        `create-plugin-dependency-digest`
+      )
     )
 
     const fixtureSite = path.join(__dirname, `fixtures`, `simplesite`)
