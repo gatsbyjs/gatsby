@@ -245,12 +245,6 @@ jobs:
   integration_tests_gatsby_source_wordpress:
     executor: node
     steps:
-      - run:
-          name: Install Docker Compose
-          command: |
-            curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
