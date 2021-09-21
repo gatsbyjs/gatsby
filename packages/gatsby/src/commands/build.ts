@@ -85,7 +85,9 @@ async function buildAndReportProductionBundle({ program, buildSpan }) {
   }
 }
 
-async function buildAndReportQueryEngineBundle({ buildSpan }) {
+async function buildAndReportQueryEngineBundle({ buildSpan }): Promise<{
+  engineBundlingPromises: Array<Promise<any>>
+}> {
   const engineBundlingPromises: Array<Promise<any>> = []
 
   if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
