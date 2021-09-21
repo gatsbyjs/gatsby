@@ -12,6 +12,51 @@ const { getOptions } = require(`./plugin-options`)
 const backRefsNamesLookup = new WeakMap()
 const referencedNodesLookup = new WeakMap()
 
+const initRefsLookups = async ({ cache, getNode }) => {
+  const backRefsNamesLookupArray = await cache.get('backRefsNamesLookup')
+  const referencedNodesLookupArray = await cache.get('referencedNodesLookup')
+
+  if (backRefsNamesLookupArray) {
+    for (const [nodeId, value] of backRefsNamesLookupArray) {
+      backRefsNamesLookup.set(getNode(nodeId), value)
+    }
+  }
+
+  if (referencedNodesLookupArray) {
+    for (const [nodeId, value] of referencedNodesLookupArray) {
+      referencedNodesLookup.set(getNode(nodeId), value)
+    }
+  }
+}
+
+exports.initRefsLookups = initRefsLookups
+
+const storeRefsLookups = async ({ cache, getNodes }) => {
+  const backRefsNamesLookupArray = []
+  const referencedNodesLookupArray = []
+
+  const allNodes = getNodes()
+
+  for (const node of allNodes) {
+    const backRefItem = backRefsNamesLookup.get(node)
+    if (backRefItem) {
+      backRefsNamesLookupArray.push([node.id, backRefItem])
+    }
+
+    const referencedNodeItem = referencedNodesLookup.get(node)
+    if (referencedNodeItem) {
+      referencedNodesLookupArray.push([node.id, referencedNodeItem])
+    }
+  }
+
+  await Promise.all([
+    cache.set('backRefsNamesLookup', backRefsNamesLookupArray),
+    cache.set('referencedNodesLookup', referencedNodesLookupArray),
+  ])
+}
+
+exports.storeRefsLookups = storeRefsLookups
+
 const handleReferences = (
   node,
   { getNode, createNodeId, entityReferenceRevisions = [] }
