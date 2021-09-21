@@ -46,25 +46,24 @@ export default function LayerModel({
   const refs = useRef(layers.map(() => React.createRef()))
   const currentIndex = layers.findIndex(layer => layer.title === selected)
 
-  function downHandler({ key }) {
-    if (key === `ArrowLeft` && currentIndex !== 0) {
-      const targetIndex = currentIndex - 1
-      setSelected(layers[targetIndex].title)
-      refs.current[targetIndex].current.focus()
-    }
-    if (key === `ArrowRight` && currentIndex !== layers.length - 1) {
-      const targetIndex = currentIndex + 1
-      setSelected(layers[targetIndex].title)
-      refs.current[targetIndex].current.focus()
-    }
-  }
-
   useEffect(() => {
+    function downHandler({ key }) {
+      if (key === `ArrowLeft` && currentIndex !== 0) {
+        const targetIndex = currentIndex - 1
+        setSelected(layers[targetIndex].title)
+        refs.current[targetIndex].current.focus()
+      }
+      if (key === `ArrowRight` && currentIndex !== layers.length - 1) {
+        const targetIndex = currentIndex + 1
+        setSelected(layers[targetIndex].title)
+        refs.current[targetIndex].current.focus()
+      }
+    }
     window.addEventListener(`keydown`, downHandler)
     return () => {
       window.removeEventListener(`keydown`, downHandler)
     }
-  }, [selected])
+  }, [selected, currentIndex, layers])
 
   const { example, text } = layers[currentIndex]
 

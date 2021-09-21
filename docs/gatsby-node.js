@@ -148,12 +148,12 @@ const slugToAnchor = slug => slug
   .pop() // take last item
 
 // TODO: create new nodes based on source FS name
-exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
+// exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   // createNode({
   //   parent,
   //   plugin: 'gatsby-theme-official-docs',
   // })
-}
+// }
 
 exports.onCreateNode = async ({
   node,
@@ -169,6 +169,7 @@ exports.onCreateNode = async ({
   const parent = getNode(node.parent)
   if (parent.sourceInstanceName !== 'theme-official-docs') return
 
+  const id = createNodeId(`${node.id} >>> MdxDoc`)
   const slug = createFilePath({ node, getNode })
   const anchor = slugToAnchor(slug)
   const section = slug.split(`/`)[1]
@@ -194,7 +195,7 @@ exports.onCreateNode = async ({
     anchor,
     internal: {
       type: 'MdxDoc',
-      contentDigest: createContentDigest(rawbody),
+      contentDigest: createContentDigest(rawBody),
       content: rawBody,
       description: 'Docs-specific MDX implementation',
     },
