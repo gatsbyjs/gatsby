@@ -52,6 +52,7 @@ import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
 import uuidv4 from "uuid/v4"
 import reporter from "gatsby-cli/lib/reporter"
+import { runQueriesWithJobs } from "../services/run-queries-jobs"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   // global gatsby object to use without store
@@ -107,6 +108,20 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     parentSpan: buildSpan,
   })
 
+  const graphqlRunner = new GraphQLRunner(store, {
+    collectStats: true,
+    graphqlTracing: program.graphqlTracing,
+  })
+
+  const { queryIds } = await calculateDirtyQueries({ store })
+
+  // Only run queries with mode SSG
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
+      query => query.mode === `SSG`
+    )
+  }
+
   const engineBundlingPromises: Array<Promise<any>> = []
 
   const buildActivityTimer = report.activityTimer(
@@ -130,6 +145,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   } finally {
     buildActivityTimer.end()
   }
+
+  await runStaticQueries({
+    queryIds,
+    parentSpan: buildSpan,
+    store,
+    graphqlRunner,
+  })
 
   if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
     const buildActivityTimer = report.activityTimer(
@@ -180,42 +202,28 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     }
   }
 
-  const graphqlRunner = new GraphQLRunner(store, {
-    collectStats: true,
-    graphqlTracing: program.graphqlTracing,
-  })
-
-  const { queryIds } = await calculateDirtyQueries({ store })
-
-  // Only run queries with mode SSG
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
-      query => query.mode === `SSG`
-    )
-  }
-
   let waitForWorkerPoolRestart = Promise.resolve()
-  if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    await runQueriesInWorkersQueue(workerPool, queryIds)
-    // Jobs still might be running even though query running finished
+  const isUsingQueryJobs =
+    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1` && process.send
+  if (isUsingQueryJobs) {
+    await runQueriesWithJobs(queryIds)
     await waitUntilAllJobsComplete()
-    // Restart worker pool before merging state to lower memory pressure while merging state
-    waitForWorkerPoolRestart = workerPool.restart()
-    await mergeWorkerState(workerPool)
   } else {
-    await runStaticQueries({
-      queryIds,
-      parentSpan: buildSpan,
-      store,
-      graphqlRunner,
-    })
-
-    await runPageQueries({
-      queryIds,
-      graphqlRunner,
-      parentSpan: buildSpan,
-      store,
-    })
+    if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
+      await runQueriesInWorkersQueue(workerPool, queryIds)
+      // Jobs still might be running even though query running finished
+      await waitUntilAllJobsComplete()
+      // Restart worker pool before merging state to lower memory pressure while merging state
+      waitForWorkerPoolRestart = workerPool.restart()
+      await mergeWorkerState(workerPool)
+    } else {
+      await runPageQueries({
+        queryIds,
+        graphqlRunner,
+        parentSpan: buildSpan,
+        store,
+      })
+    }
   }
 
   await apiRunnerNode(`onPreBuild`, {
@@ -277,20 +285,24 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // we need to save it again to make sure our latest state has been saved
   await db.saveState()
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
-    // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
-    program.keepPageRenderer = true
-  }
+  let toRegenerate: Array<string> = []
+  let toDelete: Array<string> = []
+  if (!isUsingQueryJobs) {
+    if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+      // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
+      program.keepPageRenderer = true
+    }
 
-  await waitForWorkerPoolRestart
+    await waitForWorkerPoolRestart
 
-  const { toRegenerate, toDelete } =
-    await buildHTMLPagesAndDeleteStaleArtifacts({
+    const res = await buildHTMLPagesAndDeleteStaleArtifacts({
       program,
       workerPool,
       buildSpan,
     })
-
+    toRegenerate = res.toRegenerate
+    toDelete = res.toDelete
+  }
   const waitWorkerPoolEnd = Promise.all(workerPool.end())
 
   telemetry.addSiteMeasurement(`BUILD_END`, {
