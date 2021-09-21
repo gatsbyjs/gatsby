@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-official-docs",
-  "version": "0.1.0-alpha.4",
+  "version": "0.1.0-alpha.5",
   "description": "Gatsby theme for rendering the docs section of gatsbyjs.com",
   "main": "index.js",
   "scripts": {
@@ -12,9 +12,12 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@loadable/component": "^5.15.0",
+    "gatsby-plugin-catch-links": "^3.14.0",
     "gatsby-source-filesystem": "^3.13.0",
     "lodash": "^4.17.21",
-    "minimatch": "^3.0.4"
+    "minimatch": "^3.0.4",
+    "prism-react-renderer": "^1.2.1"
   },
   "devDependencies": {
     "@mdx-js/mdx": "^1.6.22",

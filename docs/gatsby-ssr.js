@@ -1,6 +1,4 @@
-// import * as React from 'react'
-// import Provider from './src/components/provider'
+import * as React from 'react'
+import Provider from './src/components/provider'
 
-export const wrapRootElement = ({ element }) => element
-
-//   <Provider children={element} />
+export const wrapRootElement = ({ element }) => <Provider children={element} />

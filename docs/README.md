@@ -13,8 +13,8 @@ This directory includes a spike for creating a theme for our official docs.
 - [x] Get MDX docs rendering
 - [x] Switch to yarn for consistency
 - [x] Remove `@components` alias
-  - [ ] Remove alias plugin
-- [ ] Create custom MdxDoc nodes + schema
+  - [x] Remove alias plugin
+- [x] Create custom MdxDoc nodes + schema
 - [ ] Get custom components
 - [ ] Cleanup unnecessary global scope components
 - [ ] Set up test site for development
@@ -27,3 +27,5 @@ This directory includes a spike for creating a theme for our official docs.
 - [ ] Test in mansion/dotcom
   - [ ] Test without global provider
 - [ ] Fix dependency issues (gatsby-interface)
+- [ ] Pull in docs-specific styles from dotcom
+- [ ] Change root path to `/docs`

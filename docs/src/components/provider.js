@@ -1,17 +1,26 @@
 import * as React from 'react'
 import { MDXProvider } from '@mdx-js/react'
 
-const noop = () => <pre>TODO</pre>
+// import Link from './link'
+import CodeBlock from './code-block'
+import IFrame from './iframe'
+import EggheadEmbed from './egghead-embed'
+
+// TODO: look at these component
+import ComponentModel from './mdx/layer-model/component-model'
+import Pullquote from "./pullquote"
+import GuideList from "./guide-list"
+import CloudCallout from "./cloud-callout"
 
 const components = {
-  IFrame: noop,
-  EggheadEmbed: noop,
-  GuideList: noop,
-  ComponentModel: noop,
-  Pullquote: noop,
-  CloudCallout: noop,
-  // a: CustomLink,
-  // pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
+  IFrame,
+  EggheadEmbed,
+  GuideList,
+  ComponentModel,
+  Pullquote,
+  CloudCallout,
+  pre: CodeBlock,
+  // a: Link, using gatsby-plugin-catch-links instead
 }
 
 export default function Provider (props) {

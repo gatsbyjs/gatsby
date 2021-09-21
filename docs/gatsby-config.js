@@ -15,6 +15,7 @@ const config = (options) => {
         path: path.join(__dirname, 'docs'),
       },
     },
+    'gatsby-plugin-catch-links',
     /* TODO
         'gatsby-transformer-documentationjs',
         {
