@@ -243,11 +243,17 @@ jobs:
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
-    executor: node
+    machine:
+      image: "ubuntu-2004:202107-02"
     steps:
-      - setup_remote_docker:
-          docker_layer_caching: true
-          version: 19.03.13
+      - run:
+          command: |
+            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+      - run: nvm install v14
+      - run: nvm alias default v14
+      - run: nvm use v14
+      - run: npm i -g yarn@1.22.11
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
