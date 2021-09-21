@@ -2,9 +2,15 @@ const path = require('path')
 const { createFilePath } = require('gatsby-source-filesystem')
 const { createPath } = require('gatsby-page-utils')
 
+// TODO see if this is needed
+// const slugify = require('slugify')
+
 exports.createSchemaCustomization = ({ actions }) => {
   actions.createTypes(`
-    type Mdx implements Node {
+    type MdxDoc implements Node {
+      id: ID!
+      body: String!
+      slug: String!
       frontmatter: MdxFrontmatter
       fields: MdxFields
     }
@@ -75,6 +81,24 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 
 exports.createResolvers = async ({ createResolvers, reporter }) => {
+  createResolvers({
+    MdxDoc: {
+      body: {
+        type: 'String!',
+        resolve: async(source, args, context, info) => {
+          const type = info.schema.getType('Mdx')
+          const parent = context.nodeModel.getNodeById({
+            id: source.parent,
+          })
+          const resolver = type.getFields().body.resolve
+          const result = await resolver(parent, args, context, {
+            fieldName: 'body',
+          })
+          return result
+        },
+      }
+    },
+  })
   /* TODO: JSDoc
   createResolvers({
     DocumentationJs: {
@@ -103,10 +127,33 @@ exports.createResolvers = async ({ createResolvers, reporter }) => {
   */
 }
 
+// TODO see if this is needed
+const getSlug = (relativePath) => {
+  const parsed = path.parse(relativePath)
+  let rawSlug
+  if (parsed.name === 'index') {
+    rawSlug = relativePath.replace(parsed.base, '')
+  } else {
+    rawSlug = relativePath.replace(parsed.ext, '')
+  }
+  return slugify(rawSlug, {
+    // set of allowable characters
+    remove: /[^\w\s$*_+~.()'"!\-:@/]/g,
+  })
+}
+
 const slugToAnchor = slug => slug
   .split(`/`) // split on dir separators
   .filter(item => item !== ``) // remove empty values
   .pop() // take last item
+
+// TODO: create new nodes based on source FS name
+exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
+  // createNode({
+  //   parent,
+  //   plugin: 'gatsby-theme-official-docs',
+  // })
+}
 
 exports.onCreateNode = async ({
   node,
@@ -118,13 +165,41 @@ exports.onCreateNode = async ({
 }) => {
   const { createNodeField, createNode, createParentChildLink } = actions
 
-  if (node.internal.type !== 'Mdx' && node.sourceInstanceName !== 'new-docs') return
-  const slug = createFilePath({ node, getNode })
+  if (node.internal.type !== 'Mdx') return
+  const parent = getNode(node.parent)
+  if (parent.sourceInstanceName !== 'theme-official-docs') return
 
-  if (!slug) return
+  const slug = createFilePath({ node, getNode })
+  const anchor = slugToAnchor(slug)
   const section = slug.split(`/`)[1]
 
-  // const parent = getNode(node.parent)
+  const {
+    frontmatter,
+    fileAbsolutePath,
+    excerpt,
+    rawBody,
+  } = node
+
+
+  await actions.createNode({
+    id,
+    slug,
+    parent: node.id,
+    children: [],
+    frontmatter,
+    fileAbsolutePath,
+    excerpt,
+    rawBody,
+    section,
+    anchor,
+    internal: {
+      type: 'MdxDoc',
+      contentDigest: createContentDigest(rawbody),
+      content: rawBody,
+      description: 'Docs-specific MDX implementation',
+    },
+  })
+
   // if (!parent) return // TODO: figure out why this is needed
   // if (parent.internal.type !== 'File') return
   // const relPath = parent.relativePath
@@ -148,7 +223,7 @@ exports.onCreateNode = async ({
   // })
 
 
-  createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
-  createNodeField({ node, name: `section`, value: section })
+  // createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
+  // createNodeField({ node, name: `section`, value: section })
 }
 
