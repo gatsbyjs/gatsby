@@ -51,7 +51,7 @@
     "@types/cache-manager": "^2.10.3",
     "@types/ink": "^2.0.3",
     "@types/semver": "^7.3.8",
-    "gatsby-plugin-image": "^1.14.0-next.0",
+    "gatsby-plugin-image": "^2.0.0-zz-next.1",
     "babel-plugin-import-globals": "^2.0.0",
     "babel-plugin-module-resolver": "4.1.0",
     "babel-preset-gatsby": "^2.0.0-zz-next.1",
@@ -73,9 +73,9 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^4.0.0-next",
-    "gatsby-plugin-sharp": "^4.0.0-next",
-    "gatsby-transformer-sharp": "^4.0.0-next",
+    "gatsby": "^4.0.0-zz-next.1",
+    "gatsby-plugin-sharp": "^4.0.0-zz-next.1",
+    "gatsby-transformer-sharp": "^4.0.0-zz-next.1",
     "gatsby-plugin-image": "^2.0.0-zz-next.1"
   },
   "repository": {
