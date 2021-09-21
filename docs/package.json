@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-official-docs",
-  "version": "0.1.0-alpha.2",
+  "version": "0.1.0-alpha.3",
   "description": "Gatsby theme for rendering the docs section of gatsbyjs.com",
   "main": "index.js",
   "scripts": {
