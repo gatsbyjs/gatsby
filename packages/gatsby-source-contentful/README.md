@@ -487,7 +487,7 @@ const options = {
 function BlogPostTemplate({ data }) {
   const { bodyRichText } = data.contentfulBlogPost
 
-  return <div>{bodyRichText && renderRichText(richTextField, options)}</div>
+  return <div>{bodyRichText && renderRichText(bodyRichText, options)}</div>
 }
 ```
 
