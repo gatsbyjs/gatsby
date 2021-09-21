@@ -19,7 +19,7 @@
     "babel-plugin-dynamic-import-node-sync": "^2.0.1",
     "cpy": "^8.1.2",
     "fs-extra": "^9.0.1",
-    "jest": "^24.0.0",
+    "jest": "^27.2.1",
     "joi": "^17.4.0",
     "lodash": "^4.17.20",
     "node-fetch": "^2.6.1"

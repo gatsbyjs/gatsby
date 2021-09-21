@@ -16,6 +16,6 @@
   },
   "devDependencies": {
     "babel-plugin-dynamic-import-node-sync": "^2.0.1",
-    "jest": "^24.0.0"
+    "jest": "^27.2.1"
   }
 }
