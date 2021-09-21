@@ -196,7 +196,7 @@ Plugins and themes can ship functions! This is powerful as it lets you pair fron
 
 ### Namespacing
 
-Plugin/theme Functions work exactly the same as normal functions except their routes must be created under the plugin's namespace e.g.: `${PLUGIN_ROOT}/src/api/{pluginName}/my-plugin-function.js`.
+Plugin/theme Functions work exactly the same as normal functions except their routes must be created under the plugin's namespace e.g. `${PLUGIN_ROOT}/src/api/{pluginName}/my-plugin-function.js`.
 
 Shadowing with functions works similarly to how it works in general. You can shadow a plugin/theme Function by copying the file from the plugin/theme's `src` tree into your site's `src` tree. For example, to shadow the `/do-something` Function from the `gatsby-plugin-cool` plugin, you'd copy `node_modules/gatsby-plugin-cool/src/api/gatsby-plugin-cool/do-something.js` to `src/api/gatsby-plugin-cool/do-something.js`. From there, you can overwrite the implementation of the `/do-something` function as you normally would.
 
