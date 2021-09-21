@@ -101,7 +101,7 @@ type PageInput = {
   defer?: boolean,
 }
 
-type PageMode = "SSG" | "DSR" | "SSR"
+type PageMode = "SSG" | "DSG" | "SSR"
 
 type Page = {
   path: string,
@@ -413,7 +413,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     let pageMode: PageMode = `SSG`
     if (page.defer) {
-      pageMode = `DSR`
+      pageMode = `DSG`
       internalPage.defer = true
     }
 

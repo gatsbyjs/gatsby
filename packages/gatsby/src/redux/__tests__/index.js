@@ -21,6 +21,7 @@ const {
   actions: { createPage, createNode },
 } = require(`../actions`)
 
+const pageTemplatePath = `/Users/username/dev/site/src/templates/my-sweet-new-page.js`
 const mockWrittenContent = new Map()
 const mockCompatiblePath = path
 jest.mock(`fs-extra`, () => {
@@ -131,7 +132,7 @@ describe(`redux db`, () => {
   const defaultPage = {
     path: `/my-sweet-new-page/`,
     // seems like jest serializer doesn't play nice with Maps on Windows
-    component: `/Users/username/dev/site/src/templates/my-sweet-new-page.js`,
+    component: pageTemplatePath,
     // The context is passed as props to the component as well
     // as into the component's GraphQL query.
     context: {
@@ -146,6 +147,7 @@ describe(`redux db`, () => {
     })
     writeToCache.mockClear()
     mockWrittenContent.clear()
+    mockWrittenContent.set(pageTemplatePath, `foo`)
     reporterWarn.mockClear()
     reporterInfo.mockClear()
   })
@@ -530,8 +532,16 @@ describe(`redux db`, () => {
     it(`saves with correct filename (with defaults)`, () => {
       savePartialStateToDisk([`pages`])
 
-      const savedFile = mockWrittenContent.keys().next().value
-      const basename = path.basename(savedFile)
+      let basename
+      // get first non page template mocked fs write
+      for (const savedFile of mockWrittenContent.keys()) {
+        if (savedFile === pageTemplatePath) {
+          continue
+        }
+
+        basename = path.basename(savedFile)
+        break
+      }
 
       expect(basename.startsWith(`redux.worker.slices__`)).toBe(true)
     })
@@ -549,8 +559,16 @@ describe(`redux db`, () => {
     it(`respects optionalPrefix`, () => {
       savePartialStateToDisk([`pages`], `custom-prefix`)
 
-      const savedFile = mockWrittenContent.keys().next().value
-      const basename = path.basename(savedFile)
+      let basename
+      // get first non page template mocked fs write
+      for (const savedFile of mockWrittenContent.keys()) {
+        if (savedFile === pageTemplatePath) {
+          continue
+        }
+
+        basename = path.basename(savedFile)
+        break
+      }
 
       expect(basename.startsWith(`redux.worker.slices_custom-prefix_`)).toBe(
         true

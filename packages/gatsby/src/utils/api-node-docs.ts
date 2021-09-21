@@ -415,14 +415,13 @@ export const onPreInit = true
  *
  * @example
  * let createJobV2
- * exports.unstable_onPluginInit = ({ actions }) => {
+ * exports.onPluginInit = ({ actions }) => {
  *   // store job creation action to use it later
  *   createJobV2 = actions.createJobV2
  * }
  * @gatsbyVersion 3.9.0
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export const unstable_onPluginInit = true
+export const onPluginInit = true
 
 /**
  * Called once Gatsby has initialized itself and is ready to bootstrap your site.

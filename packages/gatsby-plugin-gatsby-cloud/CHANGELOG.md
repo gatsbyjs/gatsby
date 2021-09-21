@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@3.2.0/packages/gatsby-plugin-gatsby-cloud) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Bug Fixes
+
+- fix hydration flicker on initial render of ssr page fix [#33134](https://github.com/gatsbyjs/gatsby/issues/33134) ([44afaf5](https://github.com/gatsbyjs/gatsby/commit/44afaf58762e1685fcf895b1e87a860c3ae9973a))
+- Emit CREATE_FILE_NODE in onPostBootstrap [#33136](https://github.com/gatsbyjs/gatsby/issues/33136) ([62683f5](https://github.com/gatsbyjs/gatsby/commit/62683f5dc9add09642da235dd822c9a381635dd0))
+- add missing dependencies [#31837](https://github.com/gatsbyjs/gatsby/issues/31837) ([ec453f2](https://github.com/gatsbyjs/gatsby/commit/ec453f26b5e8caaebb002ee53bbd5d48e862aefd))
+- add backpressure for IPC [#32963](https://github.com/gatsbyjs/gatsby/issues/32963) ([eb1f568](https://github.com/gatsbyjs/gatsby/commit/eb1f568338445cf4949b183a8d3def503829ff43))
+- update dependency date-fns to ^2.23.0 for gatsby-plugin-gatsby-cloud [#32627](https://github.com/gatsbyjs/gatsby/issues/32627) ([1be8ab9](https://github.com/gatsbyjs/gatsby/commit/1be8ab99e370936002b4d5537f6bbae62faf13fa))
+
+#### Chores
+
+- fix copy type file fix [#33156](https://github.com/gatsbyjs/gatsby/issues/33156) ([b1168af](https://github.com/gatsbyjs/gatsby/commit/b1168aff8856ff28e3c42d1ee13ef7a9686f7048))
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- update dependency msw to ^0.35.0 for gatsby-plugin-gatsby-cloud [#32994](https://github.com/gatsbyjs/gatsby/issues/32994) ([de3d61a](https://github.com/gatsbyjs/gatsby/commit/de3d61aab1656ffec0becd58d1098883ff3ec57b))
+- update fs-extra (major) [#32654](https://github.com/gatsbyjs/gatsby/issues/32654) ([eea2687](https://github.com/gatsbyjs/gatsby/commit/eea26873f386d02f27c1708291da0c56585663eb))
+
+#### Other Changes
+
+- fix typo: asterix -> asterisk fix [#33135](https://github.com/gatsbyjs/gatsby/issues/33135) ([81f35ff](https://github.com/gatsbyjs/gatsby/commit/81f35ffaa56d4e093bcfb2f46e590a2ea2ca43a8))
+
 ## [3.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@3.1.0/packages/gatsby-plugin-gatsby-cloud) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

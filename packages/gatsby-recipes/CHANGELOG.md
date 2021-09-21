@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.25.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.25.0/packages/gatsby-recipes) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Bug Fixes
+
+- update dependency chokidar to ^3.5.2 [#32985](https://github.com/gatsbyjs/gatsby/issues/32985) ([e710518](https://github.com/gatsbyjs/gatsby/commit/e710518ab85953e194ef6f6e8bc9828aa47d3ad4))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- fix broken recipes test fix [#33013](https://github.com/gatsbyjs/gatsby/issues/33013) ([476a00f](https://github.com/gatsbyjs/gatsby/commit/476a00f2c5821602a547b0670af78e0a29349dcd))
+- update semver [#32979](https://github.com/gatsbyjs/gatsby/issues/32979) ([ecf1fa7](https://github.com/gatsbyjs/gatsby/commit/ecf1fa7ef10a60e7631a8f8fad8a33c1d0acaad6))
+- update fs-extra (major) [#32654](https://github.com/gatsbyjs/gatsby/issues/32654) ([eea2687](https://github.com/gatsbyjs/gatsby/commit/eea26873f386d02f27c1708291da0c56585663eb))
+- add missing `@babel/runtime` dependencies [#32954](https://github.com/gatsbyjs/gatsby/issues/32954) ([401b358](https://github.com/gatsbyjs/gatsby/commit/401b3589771135ec35ab8f68406a64de6b387d9d))
+
 ## [0.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.24.0/packages/gatsby-recipes) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

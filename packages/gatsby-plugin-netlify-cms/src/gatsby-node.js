@@ -1,6 +1,6 @@
 import path from "path"
 import { mapValues, isPlainObject, trim } from "lodash"
-import webpack from "webpack"
+import webpack from "gatsby/webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import { HtmlWebpackSkipAssetsPlugin } from "html-webpack-skip-assets-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"

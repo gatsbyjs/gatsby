@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-admin@0.24.0/packages/gatsby-admin) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- update [dev] minor and patch dependencies for gatsby-admin [#32616](https://github.com/gatsbyjs/gatsby/issues/32616) ([d5738ca](https://github.com/gatsbyjs/gatsby/commit/d5738ca566aa909a879c0e0092717b3dbfc4c3eb))
+- add missing `@babel/runtime` dependencies [#32954](https://github.com/gatsbyjs/gatsby/issues/32954) ([401b358](https://github.com/gatsbyjs/gatsby/commit/401b3589771135ec35ab8f68406a64de6b387d9d))
+
+#### Other Changes
+
+- Revert "chore(release): Publish next" ([a0c4d44](https://github.com/gatsbyjs/gatsby/commit/a0c4d44488ce00c8917b4d364e4369d337fdcfd9))
+
+### [0.23.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-admin@0.23.1/packages/gatsby-admin) (2021-09-16)
+
+**Note:** Version bump only for package gatsby-admin
+
 ## [0.23.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-admin@0.23.0/packages/gatsby-admin) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

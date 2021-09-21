@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@1.14.0/packages/gatsby-plugin-image) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Bug Fixes
+
+- update dependency objectfitpolyfill to ^2.3.5 for gatsby-plugin-image [#32599](https://github.com/gatsbyjs/gatsby/issues/32599) ([530ca0d](https://github.com/gatsbyjs/gatsby/commit/530ca0d4a500e7b97500b2af24fb8748d41ab2ea))
+- update dependency chokidar to ^3.5.2 [#32985](https://github.com/gatsbyjs/gatsby/issues/32985) ([e710518](https://github.com/gatsbyjs/gatsby/commit/e710518ab85953e194ef6f6e8bc9828aa47d3ad4))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- update fs-extra (major) [#32654](https://github.com/gatsbyjs/gatsby/issues/32654) ([eea2687](https://github.com/gatsbyjs/gatsby/commit/eea26873f386d02f27c1708291da0c56585663eb))
+- add missing `@babel/runtime` dependencies [#32954](https://github.com/gatsbyjs/gatsby/issues/32954) ([401b358](https://github.com/gatsbyjs/gatsby/commit/401b3589771135ec35ab8f68406a64de6b387d9d))
+
+#### Other Changes
+
+- Revert "chore(release): Publish next" ([a0c4d44](https://github.com/gatsbyjs/gatsby/commit/a0c4d44488ce00c8917b4d364e4369d337fdcfd9))
+
 ## [1.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@1.13.0/packages/gatsby-plugin-image) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
