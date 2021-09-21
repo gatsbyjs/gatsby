@@ -25,7 +25,7 @@ const config = (options) => {
             name: `jsdoc`,
             remote: `https://github.com/gatsbyjs/gatsby.git`,
             branch: 'master',
-    // branch: docsBranch, // TODO figure out versioning approach
+            // branch: docsBranch, // TODO figure out versioning approach
             patterns: [
               `packages/gatsby/src/redux/actions/**`,
               `packages/gatsby/src/utils/**`,
@@ -35,8 +35,6 @@ const config = (options) => {
           }
         },
      * */
-    /*
-      */
   ]
 
   if (IS_LOCAL) {

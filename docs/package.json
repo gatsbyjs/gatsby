@@ -12,7 +12,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "gatsby-alias-imports": "^1.0.6",
     "gatsby-source-filesystem": "^3.13.0",
     "lodash": "^4.17.21",
     "minimatch": "^3.0.4"

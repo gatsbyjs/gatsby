@@ -1,9 +1,5 @@
 const path = require('path')
 const { createFilePath } = require('gatsby-source-filesystem')
-const { createPath } = require('gatsby-page-utils')
-
-// TODO see if this is needed
-// const slugify = require('slugify')
 
 exports.createSchemaCustomization = ({ actions }) => {
   actions.createTypes(`
@@ -127,33 +123,10 @@ exports.createResolvers = async ({ createResolvers, reporter }) => {
   */
 }
 
-// TODO see if this is needed
-const getSlug = (relativePath) => {
-  const parsed = path.parse(relativePath)
-  let rawSlug
-  if (parsed.name === 'index') {
-    rawSlug = relativePath.replace(parsed.base, '')
-  } else {
-    rawSlug = relativePath.replace(parsed.ext, '')
-  }
-  return slugify(rawSlug, {
-    // set of allowable characters
-    remove: /[^\w\s$*_+~.()'"!\-:@/]/g,
-  })
-}
-
 const slugToAnchor = slug => slug
   .split(`/`) // split on dir separators
   .filter(item => item !== ``) // remove empty values
   .pop() // take last item
-
-// TODO: create new nodes based on source FS name
-// exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
-  // createNode({
-  //   parent,
-  //   plugin: 'gatsby-theme-official-docs',
-  // })
-// }
 
 exports.onCreateNode = async ({
   node,
@@ -200,31 +173,4 @@ exports.onCreateNode = async ({
       description: 'Docs-specific MDX implementation',
     },
   })
-
-  // if (!parent) return // TODO: figure out why this is needed
-  // if (parent.internal.type !== 'File') return
-  // const relPath = parent.relativePath
-  // if (!relPath) {
-  //   console.log('no relpath', getNode(node.parent).internal.type)
-  //   return
-  // }
-
-  // createNodeField({
-  //   node,
-  //   name: `relPath`,
-  //   value: relPath,
-  // })
-
-  // let ossSlug = createPath(relPath)
-
-  // createNodeField({
-  //   node,
-  //   name: `slug`,
-  //   value: ossSlug,
-  // })
-
-
-  // createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
-  // createNodeField({ node, name: `section`, value: section })
 }
-
