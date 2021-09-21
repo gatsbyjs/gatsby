@@ -149,7 +149,7 @@ const install = async (
 
     reporter.success(`Installed plugins`)
   } catch (e) {
-    reporter.panic(e.message)
+    reporter.panic((e as Error).message)
   } finally {
     process.chdir(prevDir)
   }
@@ -178,7 +178,7 @@ const clone = async (
 
     reporter.success(`Created site from template`)
   } catch (err) {
-    reporter.panic(err.message)
+    reporter.panic((err as Error).message)
   }
 
   stop()
