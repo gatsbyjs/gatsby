@@ -53,8 +53,7 @@ import {
 import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpack"
 import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
-
-import { runQueriesWithJobs } from "../services/run-queries-jobs"
+import { runPageGenerationJobs } from "../services/run-page-generation-jobs"
 
 async function buildAndReportProductionBundle({ program, buildSpan }): Promise<{
   stats: webpack.Stats | Error | Array<WebpackError>
@@ -114,6 +113,37 @@ async function buildAndReportQueryEngineBundle({ buildSpan }): Promise<{
   }
 
   return { engineBundlingPromises }
+}
+
+async function buildAndReportHtmlRenderer({
+  buildSpan,
+  program,
+  buildActivityTimer,
+}): Promise<{
+  waitForCompilerCloseBuildHtml: Promise<void>
+}> {
+  const buildSSRBundleActivityProgress = reporter.activityTimer(
+    `Building HTML renderer`,
+    { parentSpan: buildSpan }
+  )
+  buildSSRBundleActivityProgress.start()
+  let waitForCompilerCloseBuildHtml
+  try {
+    const result = await buildRenderer(
+      program,
+      Stage.BuildHTML,
+      buildSSRBundleActivityProgress.span
+    )
+    waitForCompilerCloseBuildHtml = result.waitForCompilerClose
+  } catch (err) {
+    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
+  } finally {
+    buildSSRBundleActivityProgress.end()
+  }
+
+  return {
+    waitForCompilerCloseBuildHtml,
+  }
 }
 
 function trackBuildStats({ queryStats, stats }): void {
@@ -223,24 +253,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildSpan,
   })
 
-  const buildSSRBundleActivityProgress = reporter.activityTimer(
-    `Building HTML renderer`,
-    { parentSpan: buildSpan }
-  )
-  buildSSRBundleActivityProgress.start()
-  let waitForCompilerCloseBuildHtml
-  try {
-    const result = await buildRenderer(
-      program,
-      Stage.BuildHTML,
-      buildSSRBundleActivityProgress.span
-    )
-    waitForCompilerCloseBuildHtml = result.waitForCompilerClose
-  } catch (err) {
-    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
-  } finally {
-    buildSSRBundleActivityProgress.end()
-  }
+  // Build HTML Renderer
+  const { waitForCompilerCloseBuildHtml } = await buildAndReportHtmlRenderer({
+    buildSpan,
+    buildActivityTimer,
+    program,
+  })
 
   if (engineBundlingPromises.length) {
     if (process.send) {
@@ -254,28 +272,33 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     }
   }
 
+  const PQR_ENABLED = process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING
+
+  const externalJobsEnabled =
+    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1` ||
+    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true`
+
+  const pageGenerationJobsEnabled = externalJobsEnabled && process.send
+
   let waitForWorkerPoolRestart = Promise.resolve()
-  const isUsingQueryJobs =
-    process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1` && process.send
-  if (isUsingQueryJobs) {
-    await runQueriesWithJobs(queryIds)
+
+  if (pageGenerationJobsEnabled) {
+    runPageGenerationJobs(queryIds)
     await waitUntilAllJobsComplete()
+  } else if (PQR_ENABLED) {
+    await runQueriesInWorkersQueue(workerPool, queryIds)
+    // Jobs still might be running even though query running finished
+    await waitUntilAllJobsComplete()
+    // Restart worker pool before merging state to lower memory pressure while merging state
+    waitForWorkerPoolRestart = workerPool.restart()
+    await mergeWorkerState(workerPool)
   } else {
-    if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-      await runQueriesInWorkersQueue(workerPool, queryIds)
-      // Jobs still might be running even though query running finished
-      await waitUntilAllJobsComplete()
-      // Restart worker pool before merging state to lower memory pressure while merging state
-      waitForWorkerPoolRestart = workerPool.restart()
-      await mergeWorkerState(workerPool)
-    } else {
-      await runPageQueries({
-        queryIds,
-        graphqlRunner,
-        parentSpan: buildSpan,
-        store,
-      })
-    }
+    await runPageQueries({
+      queryIds,
+      graphqlRunner,
+      parentSpan: buildSpan,
+      store,
+    })
   }
 
   await apiRunnerNode(`onPreBuild`, {
@@ -332,7 +355,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   let toRegenerate: Array<string> = []
   let toDelete: Array<string> = []
-  if (!isUsingQueryJobs) {
+
+  if (!pageGenerationJobsEnabled) {
     if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
       // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
       program.keepPageRenderer = true
