@@ -15,17 +15,18 @@ This directory includes a spike for creating a theme for our official docs.
 - [x] Remove `@components` alias
   - [x] Remove alias plugin
 - [x] Create custom MdxDoc nodes + schema
+- [x] Test in mansion/dotcom
+  - [x] Test without global provider
 - [ ] Get custom components
 - [ ] Cleanup unnecessary global scope components
 - [ ] Set up test site for development
 - [ ] Source JSDoc content
 - [ ] Create pages for JSDoc API references
 - [ ] Add other docs not in `/docs` dir
+- [ ] Reorganize docs directories for theme
 - [ ] Figure out where events-list is used & cleanup
 - [ ] Determine whether MDXProvider is needed in other dotcom pages
 - [ ] Docs-specific layout components
-- [ ] Test in mansion/dotcom
-  - [ ] Test without global provider
 - [ ] Fix dependency issues (gatsby-interface)
 - [ ] Pull in docs-specific styles from dotcom
 - [ ] Change root path to `/docs`

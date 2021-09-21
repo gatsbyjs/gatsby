@@ -1,11 +1,14 @@
 import * as React from 'react'
 import { graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
+import Layout from '../../components/layout'
 // import Provider from '../../components/provider'
 
 export default function Doc (props) {
   return (
-    <MDXRenderer children={props.data.mdx.body} />
+    <Layout>
+      <MDXRenderer children={props.data.mdx.body} />
+    </Layout>
   )
 }
 
