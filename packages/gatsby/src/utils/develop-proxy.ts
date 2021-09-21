@@ -15,8 +15,6 @@ export interface IProxyControls {
 
 const noop = (): void => {}
 
-const adminFolder = path.join(__dirname, `..`, `..`, `gatsby-admin-public`)
-
 export const startDevelopProxy = (input: {
   proxyPort: number
   targetPort: number
