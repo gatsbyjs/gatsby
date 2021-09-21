@@ -1,5 +1,4 @@
 import path from "path"
-import report from "gatsby-cli/lib/reporter"
 import reporter from "gatsby-cli/lib/reporter"
 import { ITimerReporter } from "gatsby-cli/lib/reporter/reporter-timer"
 import signalExit from "signal-exit"
@@ -127,10 +126,10 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (isTruthy(process.env.VERBOSE)) {
     program.verbose = true
   }
-  report.setVerbose(program.verbose)
+  reporter.setVerbose(program.verbose)
 
   if (program.profile) {
-    report.warn(
+    reporter.warn(
       `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/#performance-impact`
     )
   }
@@ -148,7 +147,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   initTracer(
     process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
   )
-  const buildActivity = report.phantomActivity(`build`)
+  const buildActivity = reporter.phantomActivity(`build`)
   buildActivity.start()
 
   telemetry.trackCli(`BUILD_START`)
@@ -207,7 +206,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildSpan,
   })
 
-  const buildSSRBundleActivityProgress = report.activityTimer(
+  const buildSSRBundleActivityProgress = reporter.activityTimer(
     `Building HTML renderer`,
     { parentSpan: buildSpan }
   )
@@ -271,7 +270,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // an equivalent static directory within public.
   copyStaticDirs()
 
-  const webpackCompilationHash = stats.hash
+  const webpackCompilationHash = stats && stats.hash
   if (
     webpackCompilationHash !== store.getState().webpackCompilationHash ||
     !appDataUtil.exists(publicDir)
@@ -281,7 +280,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       payload: webpackCompilationHash,
     })
 
-    const rewriteActivityTimer = report.activityTimer(
+    const rewriteActivityTimer = reporter.activityTimer(
       `Rewriting compilation hashes`,
       {
         parentSpan: buildSpan,
@@ -346,7 +345,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     totalPagesCount: store.getState().pages.size, // total number of pages
   })
 
-  const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {
+  const postBuildActivityTimer = reporter.activityTimer(`onPostBuild`, {
     parentSpan: buildSpan,
   })
   postBuildActivityTimer.start()
@@ -363,7 +362,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   try {
     await waitWorkerPoolEnd
   } catch (e) {
-    report.warn(`Error when closing WorkerPool: ${e.message}`)
+    reporter.warn(`Error when closing WorkerPool: ${e.message}`)
   }
 
   // Make sure we saved the latest state so we have all jobs cached
@@ -379,7 +378,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     root: state.program.directory,
   })
 
-  report.info(`Done building in ${process.uptime()} sec`)
+  reporter.info(`Done building in ${process.uptime()} sec`)
 
   buildSpan.finish()
   await stopTracer()
@@ -387,7 +386,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   if (program.logPages) {
     if (toRegenerate.length) {
-      report.info(
+      reporter.info(
         `Built pages:\n${toRegenerate
           .map(path => `Updated page: ${path}`)
           .join(`\n`)}`
@@ -395,7 +394,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     }
 
     if (toDelete.length) {
-      report.info(
+      reporter.info(
         `Deleted pages:\n${toDelete
           .map(path => `Deleted page: ${path}`)
           .join(`\n`)}`
@@ -421,10 +420,10 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       : ``
 
     await fs.writeFile(createdFilesPath, createdFilesContent, `utf8`)
-    report.info(`.cache/newPages.txt created`)
+    reporter.info(`.cache/newPages.txt created`)
 
     await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
-    report.info(`.cache/deletedPages.txt created`)
+    reporter.info(`.cache/deletedPages.txt created`)
   }
 
   showExperimentNotices()
