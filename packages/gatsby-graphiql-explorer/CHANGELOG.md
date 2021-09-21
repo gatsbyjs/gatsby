@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@1.14.0/packages/gatsby-graphiql-explorer) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Features
+
+- Add a createPages snippet [#32968](https://github.com/gatsbyjs/gatsby/issues/32968) ([58e628a](https://github.com/gatsbyjs/gatsby/commit/58e628ad51734601bddffc788d4fdab9e2eb0283))
+
+#### Bug Fixes
+
+- update dependency core-js to ^3.17.2 [#32980](https://github.com/gatsbyjs/gatsby/issues/32980) ([efdf037](https://github.com/gatsbyjs/gatsby/commit/efdf0378a98dddd898c4a051ec7b4fd0da211a5e))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- update dependency css-loader to v6 for gatsby-graphiql-explorer [#32638](https://github.com/gatsbyjs/gatsby/issues/32638) ([3e7e9e1](https://github.com/gatsbyjs/gatsby/commit/3e7e9e1ec6c941e1a5a397043288cb1ac938a883))
+
 ## [1.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@1.13.0/packages/gatsby-graphiql-explorer) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

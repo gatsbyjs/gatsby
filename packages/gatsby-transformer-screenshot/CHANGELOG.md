@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.14.0/packages/gatsby-transformer-screenshot) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Bug Fixes
+
+- update dependency gatsby-core-utils to ^2.13.0 [#32999](https://github.com/gatsbyjs/gatsby/issues/32999) ([7016128](https://github.com/gatsbyjs/gatsby/commit/7016128f388dfdc4e69a17ae44c43a10a618a776))
+
+#### Refactoring
+
+- replace better-queue with fastq [#32941](https://github.com/gatsbyjs/gatsby/issues/32941) ([b18703e](https://github.com/gatsbyjs/gatsby/commit/b18703eb395fe083bd12c9a5af26206b5317ac55))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- update dependency aws-sdk to ^2.980.0 [#32993](https://github.com/gatsbyjs/gatsby/issues/32993) ([3491a72](https://github.com/gatsbyjs/gatsby/commit/3491a72aad86c9b822b39f7ff4f385dfa0c334e5))
+- add missing `@babel/runtime` dependencies [#32954](https://github.com/gatsbyjs/gatsby/issues/32954) ([401b358](https://github.com/gatsbyjs/gatsby/commit/401b3589771135ec35ab8f68406a64de6b387d9d))
+
 ## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.13.0/packages/gatsby-transformer-screenshot) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

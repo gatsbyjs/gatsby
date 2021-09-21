@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.14.0/packages/create-gatsby) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- update dependency @types/node to ^14.17.14 for create-gatsby [#32973](https://github.com/gatsbyjs/gatsby/issues/32973) ([5d5ad48](https://github.com/gatsbyjs/gatsby/commit/5d5ad482d5c5ca04c883013e29780e6737b478e2))
+- update fs-extra (major) [#32654](https://github.com/gatsbyjs/gatsby/issues/32654) ([eea2687](https://github.com/gatsbyjs/gatsby/commit/eea26873f386d02f27c1708291da0c56585663eb))
+- add missing `@babel/runtime` dependencies [#32954](https://github.com/gatsbyjs/gatsby/issues/32954) ([401b358](https://github.com/gatsbyjs/gatsby/commit/401b3589771135ec35ab8f68406a64de6b387d9d))
+
+#### Other Changes
+
+- Remove cloud plugin from `gatsby new` and tutorial [#32939](https://github.com/gatsbyjs/gatsby/issues/32939) ([b88b9d1](https://github.com/gatsbyjs/gatsby/commit/b88b9d1d530ec28c0aa180256c24017653072d06))
+
 ## [1.13.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.13.0/packages/create-gatsby) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

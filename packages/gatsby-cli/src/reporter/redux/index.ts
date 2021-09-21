@@ -1,16 +1,20 @@
 import { createStore, combineReducers, Store } from "redux"
-import { reducer } from "./reducer"
+import { reducer as logsReducer } from "./reducers/logs"
+import { reducer as pageTreeReducer } from "./reducers/page-tree"
 import { ActionsUnion, ISetLogs, IGatsbyCLIState } from "./types"
 import { isInternalAction } from "./utils"
 import { createStructuredLoggingDiagnosticsMiddleware } from "./diagnostics"
 import { Actions } from "../constants"
+import { IRenderPageArgs } from "../../reporter/types"
 
-let store: Store<{ logs: IGatsbyCLIState }> = createStore(
-  combineReducers({
-    logs: reducer,
-  }),
-  {}
-)
+let store: Store<{ logs: IGatsbyCLIState; pageTree: IRenderPageArgs }> =
+  createStore(
+    combineReducers({
+      logs: logsReducer,
+      pageTree: pageTreeReducer,
+    }),
+    {}
+  )
 
 const diagnosticsMiddleware =
   createStructuredLoggingDiagnosticsMiddleware(store)

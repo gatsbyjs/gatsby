@@ -3,6 +3,7 @@ export enum Actions {
   SetStatus = `SET_STATUS`,
   Log = `LOG`,
   SetLogs = `SET_LOGS`,
+  RenderPageTree = `RENDER_PAGE_TREE`,
 
   StartActivity = `ACTIVITY_START`,
   EndActivity = `ACTIVITY_END`,
