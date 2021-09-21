@@ -2,6 +2,7 @@
 const fs = require(`fs`)
 const path = require(`path`)
 const crypto = require(`crypto`)
+const { URLSearchParams } = require(`url`)
 
 const sortBy = require(`lodash/sortBy`)
 const {
@@ -14,7 +15,6 @@ const {
   GraphQLJSON,
   GraphQLList,
 } = require(`gatsby/graphql`)
-const qs = require(`qs`)
 const { stripIndent } = require(`common-tags`)
 
 const cacheImage = require(`./cache-image`)
@@ -86,7 +86,8 @@ const getBase64Image = (imageProps, reporter) => {
     width: 20,
     height: Math.floor(20 * aspectRatio),
   }
-  const requestUrl = `https:${createUrl(imageProps.baseUrl, imageOptions)}`
+
+  const requestUrl = createUrl(imageProps.baseUrl, imageOptions)
 
   // Prefer to return data sync if we already have it
   const alreadyFetched = resolvedBase64Cache.get(requestUrl)
@@ -197,8 +198,14 @@ const createUrl = (imgUrl, options = {}) => {
     r: cornerRadius || undefined,
   }
 
-  // Note: qs will ignore keys that are `undefined`. `qs.stringify({a: undefined, b: null, c: 1})` => `b=&c=1`
-  return `${imgUrl}?${qs.stringify(urlArgs)}`
+  const searchParams = new URLSearchParams()
+  for (const paramKey in urlArgs) {
+    if (typeof urlArgs[paramKey] !== `undefined`) {
+      searchParams.append(paramKey, urlArgs[paramKey] ?? ``)
+    }
+  }
+
+  return `https:${imgUrl}?${searchParams.toString()}`
 }
 exports.createUrl = createUrl
 

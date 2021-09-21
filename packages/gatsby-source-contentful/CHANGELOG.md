@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@5.14.0/packages/gatsby-source-contentful) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Bug Fixes
+
+- asset download retry [#33024](https://github.com/gatsbyjs/gatsby/issues/33024) ([a77695e](https://github.com/gatsbyjs/gatsby/commit/a77695eaa93ba40e664ac2d215bbfe7266afbc46))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- update dependency nock to ^13.1.3 for gatsby-source-contentful [#32977](https://github.com/gatsbyjs/gatsby/issues/32977) ([4384ac8](https://github.com/gatsbyjs/gatsby/commit/4384ac8547b01dc62295014479af1b59567cac9a))
+- update fs-extra (major) [#32654](https://github.com/gatsbyjs/gatsby/issues/32654) ([eea2687](https://github.com/gatsbyjs/gatsby/commit/eea26873f386d02f27c1708291da0c56585663eb))
+
+#### Other Changes
+
+- fix snapshot fix [#32960](https://github.com/gatsbyjs/gatsby/issues/32960) ([4ef8437](https://github.com/gatsbyjs/gatsby/commit/4ef84376be35cf439af22343c6e9ef57253db405))
+
 ## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@5.13.0/packages/gatsby-source-contentful) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
