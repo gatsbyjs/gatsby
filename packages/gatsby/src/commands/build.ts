@@ -57,8 +57,8 @@ import { shouldGenerateEngines } from "../utils/engines-helpers"
 import { runQueriesWithJobs } from "../services/run-queries-jobs"
 
 async function buildAndReportProductionBundle({ program, buildSpan }): Promise<{
-  stats?: webpack.Stats | Error | Array<WebpackError>
-  waitForCompilerClose?: Promise<void>
+  stats: webpack.Stats | Error | Array<WebpackError>
+  waitForCompilerClose: Promise<void>
   buildActivityTimer: ITimerReporter
 }> {
   const buildActivityTimer = reporter.activityTimer(
@@ -114,6 +114,23 @@ async function buildAndReportQueryEngineBundle({ buildSpan }): Promise<{
   }
 
   return { engineBundlingPromises }
+}
+
+function trackBuildStats({ queryStats, stats }): void {
+  if (telemetry.isTrackingEnabled()) {
+    // transform asset size to kB (from bytes) to fit 64 bit to numbers
+    const bundleSizes = stats
+      .toJson({ assets: true })
+      .assets.filter(asset => asset.name.endsWith(`.js`))
+      .map(asset => asset.size / 1000)
+    const pageDataSizes = [...store.getState().pageDataStats.values()]
+
+    telemetry.addSiteMeasurement(`BUILD_END`, {
+      bundleStats: telemetry.aggregateStats(bundleSizes),
+      pageDataStats: telemetry.aggregateStats(pageDataSizes),
+      queryStats,
+    })
+  }
 }
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
@@ -270,7 +287,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // an equivalent static directory within public.
   copyStaticDirs()
 
-  const webpackCompilationHash = stats && stats.hash
+  const webpackCompilationHash = (stats as webpack.Stats).hash as string
   if (
     webpackCompilationHash !== store.getState().webpackCompilationHash ||
     !appDataUtil.exists(publicDir)
@@ -296,20 +313,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   await flushPendingPageDataWrites(buildSpan)
   markWebpackStatusAsDone()
 
-  if (telemetry.isTrackingEnabled()) {
-    // transform asset size to kB (from bytes) to fit 64 bit to numbers
-    const bundleSizes = stats
-      .toJson({ assets: true })
-      .assets.filter(asset => asset.name.endsWith(`.js`))
-      .map(asset => asset.size / 1000)
-    const pageDataSizes = [...store.getState().pageDataStats.values()]
-
-    telemetry.addSiteMeasurement(`BUILD_END`, {
-      bundleStats: telemetry.aggregateStats(bundleSizes),
-      pageDataStats: telemetry.aggregateStats(pageDataSizes),
-      queryStats: graphqlRunner.getStats(),
-    })
-  }
+  /**
+   * Telemetry tracking for
+   * - bundleStats
+   * - pageDataStats
+   * - queryStats
+   */
+  trackBuildStats({ stats, queryStats: graphqlRunner.getStats() })
 
   store.dispatch(actions.setProgramStatus(`BOOTSTRAP_QUERY_RUNNING_FINISHED`))
 
