@@ -192,7 +192,7 @@ export default function FormPage() {
 
 ## Functions in plugins and themes
 
-Plugins and themes can ship functions! This is powerful as it lets you pair frontend code with backend code. E.g. imagine a plugin for an authorization service that includes a login component with a function to connect to the remote API.
+Plugins and themes can ship functions! This is powerful as it lets you pair frontend code with backend code. For example, if you built a plugin for an authorization service that includes a login component, you could use a serverless function to connect to the remote API.
 
 ### Namespacing
 
