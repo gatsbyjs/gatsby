@@ -1,10 +1,13 @@
 import path from "path"
 import report from "gatsby-cli/lib/reporter"
 import reporter from "gatsby-cli/lib/reporter"
+import { ITimerReporter } from "gatsby-cli/lib/reporter/reporter-timer"
 import signalExit from "signal-exit"
 import fs from "fs-extra"
 import telemetry from "gatsby-telemetry"
 import { updateSiteMetadata, isTruthy } from "gatsby-core-utils"
+import webpack, { WebpackError } from "webpack"
+import uuidv4 from "uuid/v4"
 import {
   buildRenderer,
   buildHTMLPagesAndDeleteStaleArtifacts,
@@ -51,11 +54,14 @@ import {
 import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpack"
 import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
-import uuidv4 from "uuid/v4"
 
 import { runQueriesWithJobs } from "../services/run-queries-jobs"
 
-async function buildAndReportProductionBundle({ program, buildSpan }) {
+async function buildAndReportProductionBundle({ program, buildSpan }): Promise<{
+  stats?: webpack.Stats | Error | Array<WebpackError>
+  waitForCompilerClose?: Promise<void>
+  buildActivityTimer: ITimerReporter
+}> {
   const buildActivityTimer = reporter.activityTimer(
     `Building production JavaScript and CSS bundles`,
     { parentSpan: buildSpan }
