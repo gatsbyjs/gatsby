@@ -1,4 +1,4 @@
-const uuidv4 = require(`uuid/v4`)
+const { uuid } = require(`gatsby-core-utils`)
 const { buildSchema, printSchema } = require(`gatsby/graphql`)
 const {
   wrapSchema,
@@ -142,7 +142,7 @@ exports.sourceNodes = async (
 }
 
 function createSchemaNode({ id, typeName, fieldName, createContentDigest }) {
-  const nodeContent = uuidv4()
+  const nodeContent = uuid.v4()
   const nodeContentDigest = createContentDigest(nodeContent)
   return {
     id,
