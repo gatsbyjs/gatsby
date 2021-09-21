@@ -1,5 +1,6 @@
 import path from "path"
 import report from "gatsby-cli/lib/reporter"
+import reporter from "gatsby-cli/lib/reporter"
 import signalExit from "signal-exit"
 import fs from "fs-extra"
 import telemetry from "gatsby-telemetry"
@@ -51,8 +52,62 @@ import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpa
 import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
 import uuidv4 from "uuid/v4"
-import reporter from "gatsby-cli/lib/reporter"
+
 import { runQueriesWithJobs } from "../services/run-queries-jobs"
+
+async function buildAndReportProductionBundle({ program, buildSpan }) {
+  const buildActivityTimer = reporter.activityTimer(
+    `Building production JavaScript and CSS bundles`,
+    { parentSpan: buildSpan }
+  )
+  buildActivityTimer.start()
+  let stats
+  let waitForCompilerClose
+  try {
+    const result = await buildProductionBundle(program, buildActivityTimer.span)
+    stats = result.stats
+    waitForCompilerClose = result.waitForCompilerClose
+
+    if (stats.hasWarnings()) {
+      const rawMessages = stats.toJson({ moduleTrace: false })
+      reportWebpackWarnings(rawMessages.warnings, reporter)
+    }
+  } catch (err) {
+    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildJavascript, err))
+  } finally {
+    buildActivityTimer.end()
+  }
+
+  return {
+    stats,
+    waitForCompilerClose,
+    buildActivityTimer,
+  }
+}
+
+async function buildAndReportQueryEngineBundle({ buildSpan }) {
+  const engineBundlingPromises: Array<Promise<any>> = []
+
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+    const buildQueryEngineActivityTimer = reporter.activityTimer(
+      `Building Rendering Engines`,
+      { parentSpan: buildSpan }
+    )
+    try {
+      buildQueryEngineActivityTimer.start()
+      // bundle graphql-engine
+      engineBundlingPromises.push(createGraphqlEngineBundle())
+      engineBundlingPromises.push(createPageSSRBundle())
+      await Promise.all(engineBundlingPromises)
+    } catch (err) {
+      reporter.panic(err)
+    } finally {
+      buildQueryEngineActivityTimer.end()
+    }
+  }
+
+  return { engineBundlingPromises }
+}
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   // global gatsby object to use without store
@@ -122,30 +177,16 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     )
   }
 
-  const engineBundlingPromises: Array<Promise<any>> = []
+  /**
+   * Bundling
+   */
 
-  const buildActivityTimer = report.activityTimer(
-    `Building production JavaScript and CSS bundles`,
-    { parentSpan: buildSpan }
-  )
-  buildActivityTimer.start()
-  let stats
-  let waitForCompilerClose
-  try {
-    const result = await buildProductionBundle(program, buildActivityTimer.span)
-    stats = result.stats
-    waitForCompilerClose = result.waitForCompilerClose
+  // Build Production JS and CSS Bundles
+  const { stats, waitForCompilerClose, buildActivityTimer } =
+    await buildAndReportProductionBundle({ program, buildSpan })
 
-    if (stats.hasWarnings()) {
-      const rawMessages = stats.toJson({ moduleTrace: false })
-      reportWebpackWarnings(rawMessages.warnings, report)
-    }
-  } catch (err) {
-    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildJavascript, err))
-  } finally {
-    buildActivityTimer.end()
-  }
-
+  // Run Static Queries prior to building the Query Engine. Static Query Context
+  // is needed for engine creation
   await runStaticQueries({
     queryIds,
     parentSpan: buildSpan,
@@ -153,23 +194,10 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     graphqlRunner,
   })
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
-    const buildActivityTimer = report.activityTimer(
-      `Building Rendering Engines`,
-      { parentSpan: buildSpan }
-    )
-    try {
-      buildActivityTimer.start()
-      // bundle graphql-engine
-      engineBundlingPromises.push(createGraphqlEngineBundle())
-      engineBundlingPromises.push(createPageSSRBundle())
-      await Promise.all(engineBundlingPromises)
-    } catch (err) {
-      reporter.panic(err)
-    } finally {
-      buildActivityTimer.end()
-    }
-  }
+  // Build Query Engine and Utilities
+  const { engineBundlingPromises } = await buildAndReportQueryEngineBundle({
+    buildSpan,
+  })
 
   const buildSSRBundleActivityProgress = report.activityTimer(
     `Building HTML renderer`,
