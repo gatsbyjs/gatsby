@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@4.14.0/packages/gatsby-source-drupal) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Features
+
+- Add tracing for full/delta fetches and http requests [#33142](https://github.com/gatsbyjs/gatsby/issues/33142) ([91187da](https://github.com/gatsbyjs/gatsby/commit/91187dacdab45034c9ce4a1aa9f7018eb3bb1049))
+
+#### Bug Fixes
+
+- check relationships type exists on node before filtering [#33181](https://github.com/gatsbyjs/gatsby/issues/33181) [#33228](https://github.com/gatsbyjs/gatsby/issues/33228) ([c410082](https://github.com/gatsbyjs/gatsby/commit/c410082aecccf2fad0fa94bb105b6975176c13c4))
+- handle edge case with deleting nodes [#33143](https://github.com/gatsbyjs/gatsby/issues/33143) ([2f2880e](https://github.com/gatsbyjs/gatsby/commit/2f2880e332cdef414b50fdfb6579f9abdf2715a0))
+- guard against already deleted nodes [#33099](https://github.com/gatsbyjs/gatsby/issues/33099) ([3d44652](https://github.com/gatsbyjs/gatsby/commit/3d44652ecfc041a6189ce72630625b378b02d43b))
+- validate webhook bodies & updated node data [#33079](https://github.com/gatsbyjs/gatsby/issues/33079) ([dac2b73](https://github.com/gatsbyjs/gatsby/commit/dac2b73ec57077a4a74baa652eff6b3cabf1c1d3))
+- delete relationships to now deleted nodes [#32971](https://github.com/gatsbyjs/gatsby/issues/32971) ([c720767](https://github.com/gatsbyjs/gatsby/commit/c7207674248f5e7fcb96a900fce934e4bc25a203))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+
+#### Other Changes
+
+- Revert "chore(release): Publish next" ([a0c4d44](https://github.com/gatsbyjs/gatsby/commit/a0c4d44488ce00c8917b4d364e4369d337fdcfd9))
+- Document filtering temporary files [#32048](https://github.com/gatsbyjs/gatsby/issues/32048) [#L702](https://github.com/gatsbyjs/gatsby/issues/L702) [#L52](https://github.com/gatsbyjs/gatsby/issues/L52) ([721b2dc](https://github.com/gatsbyjs/gatsby/commit/721b2dc7dbf44d6372cadbb1d2d08284b75f96a6))
+
 ### [4.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@4.13.1/packages/gatsby-source-drupal) (2021-09-04)
 
 #### Bug Fixes

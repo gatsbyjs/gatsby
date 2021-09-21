@@ -15,7 +15,7 @@ import {
   getPagePathFromPageDataPath,
 } from "../page-data-helpers"
 // @ts-ignore render-page import will become valid later on (it's marked as external)
-import htmlComponentRenderer from "./render-page"
+import htmlComponentRenderer, { getPageChunk } from "./routes/render-page"
 import { getServerData, IServerData } from "../get-server-data"
 
 export interface ITemplateDetails {
@@ -36,9 +36,6 @@ const pageTemplateDetailsMap: Record<
   ITemplateDetails
   // @ts-ignore INLINED_TEMPLATE_TO_DETAILS is being "inlined" by bundler
 > = INLINED_TEMPLATE_TO_DETAILS
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-declare const __non_webpack_require__: typeof require
 
 export async function getData({
   pathName,
@@ -88,13 +85,12 @@ export async function getData({
 
   // 4. (if SSR) run getServerData
   if (page.mode === `SSR`) {
-    const mod = __non_webpack_require__(`./routes/${page.componentChunkName}`)
     executionPromises.push(
-      getServerData(req, page, potentialPagePath, mod).then(
-        serverDataResults => {
+      getPageChunk(page)
+        .then(mod => getServerData(req, page, potentialPagePath, mod))
+        .then(serverDataResults => {
           serverData = serverDataResults
-        }
-      )
+        })
     )
   }
 

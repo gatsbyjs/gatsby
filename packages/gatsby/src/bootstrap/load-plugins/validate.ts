@@ -8,6 +8,7 @@ import { validateOptionsSchema, Joi } from "gatsby-plugin-utils"
 import { IPluginRefObject } from "gatsby-plugin-utils/dist/types"
 import { stripIndent } from "common-tags"
 import { trackCli } from "gatsby-telemetry"
+import { isWorker } from "gatsby-worker"
 import { resolveModuleExports } from "../resolve-module-exports"
 import { getLatestAPIs } from "../../utils/get-latest-apis"
 import { GatsbyNode, PackageJson } from "../../../"
@@ -523,6 +524,7 @@ export function warnOnIncompatiblePeerDependency(
   // Note: In the future the peer dependency should be enforced for all plugins.
   const gatsbyPeerDependency = _.get(packageJSON, `peerDependencies.gatsby`)
   if (
+    !isWorker &&
     gatsbyPeerDependency &&
     !semver.satisfies(gatsbyVersion, gatsbyPeerDependency, {
       includePrerelease: true,

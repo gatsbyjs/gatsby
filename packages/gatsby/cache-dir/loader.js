@@ -506,7 +506,7 @@ export class ProdLoader extends BaseLoader {
     super(loadComponent, matchPaths)
 
     if (pageData) {
-      this.pageDataDb.set(pageData.path, {
+      this.pageDataDb.set(findPath(pageData.path), {
         pagePath: pageData.path,
         payload: pageData,
         status: `success`,

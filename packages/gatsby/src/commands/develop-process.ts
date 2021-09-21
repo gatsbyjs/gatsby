@@ -80,6 +80,11 @@ const openDebuggerPort = (debugInfo: IDebugInfo): void => {
 }
 
 module.exports = async (program: IDevelopArgs): Promise<void> => {
+  // provide global Gatsby object
+  global.__GATSBY = process.env.GATSBY_NODE_GLOBALS
+    ? JSON.parse(process.env.GATSBY_NODE_GLOBALS)
+    : {}
+
   if (isTruthy(process.env.VERBOSE)) {
     program.verbose = true
   }

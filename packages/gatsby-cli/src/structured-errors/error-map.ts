@@ -301,6 +301,11 @@ const errors = {
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },
+  "85928": {
+    text: (): string =>
+      `An error occurred during parallel query running.\nGo here for troubleshooting tips: https://gatsby.dev/pqr-feedback`,
+    level: Level.ERROR,
+  },
   // Config errors
   "10122": {
     text: (context): string =>

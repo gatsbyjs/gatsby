@@ -54,7 +54,7 @@ export async function createPageSSRBundle(): Promise<any> {
     },
     // those are required in some runtime paths, but we don't need them
     externals: [
-      `./render-page`,
+      /^\.\/routes/,
       `electron`, // :shrug: `got` seems to have electron specific code path
       mod.builtinModules.reduce((acc, builtinModule) => {
         if (builtinModule === `fs`) {

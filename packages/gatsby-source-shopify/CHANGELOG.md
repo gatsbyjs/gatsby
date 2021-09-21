@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@5.6.0/packages/gatsby-source-shopify) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Features
+
+- v4 compatibility through onPluginInit [#32909](https://github.com/gatsbyjs/gatsby/issues/32909) ([728c63c](https://github.com/gatsbyjs/gatsby/commit/728c63c9eb634cb2d0c1a0f2d6b089b997ad194a))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- update [dev] minor and patch dependencies for gatsby-source-shopify [#33008](https://github.com/gatsbyjs/gatsby/issues/33008) ([f7923f7](https://github.com/gatsbyjs/gatsby/commit/f7923f7c486aab7c807fc4c4a5c7a9dc360454ec))
+- add missing `@babel/runtime` dependencies [#32954](https://github.com/gatsbyjs/gatsby/issues/32954) ([401b358](https://github.com/gatsbyjs/gatsby/commit/401b3589771135ec35ab8f68406a64de6b387d9d))
+
+#### Other Changes
+
+- Revert "chore(release): Publish next" ([a0c4d44](https://github.com/gatsbyjs/gatsby/commit/a0c4d44488ce00c8917b4d364e4369d337fdcfd9))
+
 ## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@5.5.0/packages/gatsby-source-shopify) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

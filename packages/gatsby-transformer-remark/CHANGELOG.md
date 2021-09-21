@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@4.11.0/packages/gatsby-transformer-remark) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Features
+
+- use subplugin annotation to use automatic subplugin module loading [#33039](https://github.com/gatsbyjs/gatsby/issues/33039) ([3260b1a](https://github.com/gatsbyjs/gatsby/commit/3260b1a43ace66349b0a683ab052f0d5c10f33d2))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+
+#### Other Changes
+
+- Revert "chore(release): Publish next" ([a0c4d44](https://github.com/gatsbyjs/gatsby/commit/a0c4d44488ce00c8917b4d364e4369d337fdcfd9))
+
 ## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@4.10.0/packages/gatsby-transformer-remark) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
