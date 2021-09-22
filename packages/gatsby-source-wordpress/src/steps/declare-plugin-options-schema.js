@@ -319,6 +319,18 @@ Default is false because sometimes non-critical errors are returned alongside va
               }
             `),
         }),
+      allow401Images: Joi.boolean()
+        .default(false)
+        .description(
+          `This option allows images url's that return a 401 to not fail production builds.`
+        )
+        .meta({
+          example: wrapOptions(`
+              production: {
+                allow401Images: true
+              }
+            `),
+        }),
     }),
     develop: Joi.object({
       nodeUpdateInterval: Joi.number()
