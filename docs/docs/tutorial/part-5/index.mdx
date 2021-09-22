@@ -313,10 +313,10 @@ query MyQuery {
     }
     ```
 
-4. You might notice that your posts aren't listed in order. Most blog sites list their posts in reverse-chronological order, so that the newest posts are listed first. You can sort the data nodes in your response by using the `sort` argument on the `allMdx` field.
+4. You might notice that your posts aren't listed in order. Most blog sites list their posts in reverse-chronological order so that the newest posts are listed first. You can sort the data nodes in your response by using the `sort` argument on the `allMdx` field.
     * In the Explorer pane, toggle the `sort` dropdown underneath the `allMdx` field.
     * Under `sort`, check the `fields` argument, and use the dropdown to select which field you want to sort your data nodes by. In this case, that would be `frontmatter___date` (with three underscores).
-    * Check the `order` argument, and use the dropdown to select `DESC`. This will sort the nodes in descending order, so that the newest posts come first.
+    * Check the `order` argument, and use the dropdown to select `DESC`. This will sort the nodes in descending order so that the newest posts come first.
     ```graphql
     query MyQuery {
       allMdx(sort: {fields: frontmatter___date, order: DESC}) {
