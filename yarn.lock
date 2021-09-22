@@ -7997,12 +7997,10 @@ codemirror@^5.54.0:
   resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.59.1.tgz#cd6465555a87f8a2243eb41ffb460c777e15212c"
   integrity sha512-d0SSW/PCCD4LoSCBPdnP0BzmZB1v3emomCUtVlIWgZHJ06yVeBOvBtOH7vYz707pfAvEeWbO9aP6akh8vl1V3w==
 
-codepage@~1.14.0:
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/codepage/-/codepage-1.14.0.tgz#8cbe25481323559d7d307571b0fff91e7a1d2f99"
-  dependencies:
-    commander "~2.14.1"
-    exit-on-epipe "~1.0.1"
+codepage@~1.15.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/codepage/-/codepage-1.15.0.tgz#2e00519024b39424ec66eeb3ec07227e692618ab"
+  integrity sha512-3g6NUTPd/YtuuGrhMnOMRjFc+LJw/bnMp3+0r/Wcz3IXUuCosKRJvMphm5+Q+bvTVGcJJuRvVLuYba+WojaFaA==
 
 coffee-loader@^0.9.0:
   version "0.9.0"
@@ -8148,10 +8146,6 @@ commander@^7.0.0, commander@^7.1.0:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-7.2.0.tgz#a36cb57d0b501ce108e4d20559a150a391d97ab7"
   integrity sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==
-
-commander@~2.14.1:
-  version "2.14.1"
-  resolved "http://registry.npmjs.org/commander/-/commander-2.14.1.tgz#2235123e37af8ca3c65df45b026dbd357b01b9aa"
 
 commander@~2.17.1:
   version "2.17.1"
@@ -27726,14 +27720,14 @@ xhr@^2.0.1:
     parse-headers "^2.0.0"
     xtend "^4.0.0"
 
-xlsx@^0.17.0:
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/xlsx/-/xlsx-0.17.0.tgz#028176a0140967dcee1817d221678461e47481c8"
-  integrity sha512-bZ36FSACiAyjoldey1+7it50PMlDp1pcAJrZKcVZHzKd8BC/z6TQ/QAN8onuqcepifqSznR6uKnjPhaGt6ig9A==
+xlsx@^0.17.1:
+  version "0.17.1"
+  resolved "https://registry.yarnpkg.com/xlsx/-/xlsx-0.17.1.tgz#2557400d594998301831ef60b08ddde80f2842ee"
+  integrity sha512-SrvK+kMEjiVIKYyJSjSIJwzm2cZn8nQWVh708g7O+pTsmgjoa+uYNLEUn7jmwQdMI/ffCHcY5yEvwBXssBwpRA==
   dependencies:
     adler-32 "~1.2.0"
     cfb "^1.1.4"
-    codepage "~1.14.0"
+    codepage "~1.15.0"
     commander "~2.17.1"
     crc-32 "~1.2.0"
     exit-on-epipe "~1.0.1"
