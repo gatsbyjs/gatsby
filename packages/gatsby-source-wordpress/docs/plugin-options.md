@@ -44,6 +44,7 @@
   - [searchAndReplace[].replace](#searchandreplacereplace)
 - [html](#html)
   - [html.useGatsbyImage](#htmlusegatsbyimage)
+  - [html.gatsbyImageOptions](#htmlgatsbyimageoptions)
   - [html.imageMaxWidth](#htmlimagemaxwidth)
   - [html.fallbackImageMaxWidth](#htmlfallbackimagemaxwidth)
   - [html.imageQuality](#htmlimagequality)
@@ -897,6 +898,27 @@ Causes the source plugin to find/replace images in html with Gatsby images.
   options: {
     html: {
       useGatsbyImage: true,
+    },
+  },
+}
+
+```
+
+### html.gatsbyImageOptions
+
+Set custom options for your Gatsby Images.
+
+**Field type**: `Object`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    html: {
+      gatsbyImageOptions: {
+        [your - option - key]: "your-option-value",
+        [your - option - key - 2]: "your-option-value-2",
+      },
     },
   },
 }

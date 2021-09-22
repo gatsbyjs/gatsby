@@ -99,6 +99,7 @@ export interface IPluginOptions {
   excludeFieldNames?: []
   html?: {
     useGatsbyImage?: boolean
+    gatsbyImageOptions?: Record<string, unknown>
     imageMaxWidth?: number
     fallbackImageMaxWidth?: number
     imageQuality?: number
@@ -187,6 +188,9 @@ const defaultPluginOptions: IPluginOptions = {
     // Transforms anchor links, video src's, and audio src's (that point to wp-content files) into local file static links
     // Also fetches those files if they don't already exist
     createStaticFiles: true,
+    //
+    // this adds image options to images in HTML fields when html.useGatsbyImage is also set
+    gatsbyImageOptions: {},
   },
   presets: [previewOptimizationPreset],
   type: {

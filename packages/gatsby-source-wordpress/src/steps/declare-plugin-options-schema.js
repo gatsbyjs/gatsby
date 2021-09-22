@@ -601,6 +601,19 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
               },
             `),
         }),
+      gatsbyImageOptions: Joi.object()
+        .allow(null)
+        .description(`Set custom options for your Gatsby Images`)
+        .meta({
+          example: wrapOptions(`
+              html: {
+                gatsbyImageOptions: {
+                  [your-option-key]: "your-option-value",
+                  [your-option-key-2]: "your-option-value-2",
+                },
+              },
+            `),
+        }),
       imageMaxWidth: Joi.number()
         .integer()
         .allow(null)
