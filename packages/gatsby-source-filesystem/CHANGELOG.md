@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@3.14.0/packages/gatsby-source-filesystem) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Bug Fixes
+
+- update dependency file-type to ^16.5.3 for gatsby-source-filesystem [#32988](https://github.com/gatsbyjs/gatsby/issues/32988) ([621ee81](https://github.com/gatsbyjs/gatsby/commit/621ee8135d42a822cd453e6971b9c77834440ce9))
+- update dependency chokidar to ^3.5.2 [#32985](https://github.com/gatsbyjs/gatsby/issues/32985) ([e710518](https://github.com/gatsbyjs/gatsby/commit/e710518ab85953e194ef6f6e8bc9828aa47d3ad4))
+
+#### Refactoring
+
+- replace better-queue with fastq [#32941](https://github.com/gatsbyjs/gatsby/issues/32941) ([b18703e](https://github.com/gatsbyjs/gatsby/commit/b18703eb395fe083bd12c9a5af26206b5317ac55))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- upgrade got package [#32928](https://github.com/gatsbyjs/gatsby/issues/32928) ([2ac366e](https://github.com/gatsbyjs/gatsby/commit/2ac366e3745990d47c01f19875f185d0355c89b5))
+- update fs-extra (major) [#32654](https://github.com/gatsbyjs/gatsby/issues/32654) ([eea2687](https://github.com/gatsbyjs/gatsby/commit/eea26873f386d02f27c1708291da0c56585663eb))
+
 ## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@3.13.0/packages/gatsby-source-filesystem) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

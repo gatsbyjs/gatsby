@@ -1,6 +1,6 @@
 {
   "name": "gatsby-design-tokens",
-  "version": "3.14.0-next.1",
+  "version": "4.0.0-zz-next.1",
   "description": "Gatsby Design Tokens",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-design-tokens#readme",
   "dependencies": {
-    "@babel/runtime": "^7.14.8",
+    "@babel/runtime": "^7.15.4",
     "hex2rgba": "^0.0.1"
   },
   "devDependencies": {
@@ -36,6 +36,6 @@
     "preval.macro": "^5.0.0"
   },
   "engines": {
-    "node": ">=12.13.0"
+    "node": ">=14.15.0"
   }
 }

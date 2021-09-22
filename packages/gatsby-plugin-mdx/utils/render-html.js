@@ -1,4 +1,4 @@
-const webpack = require(`webpack`)
+const webpack = require(`gatsby/webpack`)
 const path = require(`path`)
 const evaluate = require(`eval`)
 const debug = require(`debug`)(`gatsby-plugin-mdx:render-html`)

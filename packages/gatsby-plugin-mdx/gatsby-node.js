@@ -80,16 +80,9 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .unknown(true)
       .default({})
       .description(`Set the layout components for MDX source types`),
-    gatsbyRemarkPlugins: Joi.array()
-      .items(
-        Joi.string(),
-        Joi.object({
-          resolve: Joi.string(),
-          options: Joi.object({}).unknown(true),
-        })
-      )
-      .default([])
-      .description(`Use Gatsby-specific remark plugins`),
+    gatsbyRemarkPlugins: Joi.subPlugins({ entry: `index` }).description(
+      `Use Gatsby-specific remark plugins`
+    ),
     lessBabel: Joi.boolean()
       .default(false)
       .description(

@@ -14,7 +14,8 @@ const joi = require(`joi`)
 // const { inspect } = require(`util`)
 
 // https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
-const ISO8601 = /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i
+const ISO8601 =
+  /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i
 
 jest.setTimeout(100000)
 
@@ -76,7 +77,8 @@ const toMatchSchema = (received, schema) => {
     }
   } else {
     return {
-      message: () => validationResult.error,
+      message: () =>
+        `${validationResult.error}\n\n${JSON.stringify(received, null, 2)}`,
       pass: false,
     }
   }
@@ -121,7 +123,18 @@ const commonAssertions = events => {
           // Should this be here or one level up?
           timestamp: joi.string().required(),
         })
-        .required()
+        .required(),
+
+      joi.object({
+        type: joi.string().required().valid(`ENGINES_READY`),
+        timestamp: joi.string().required(),
+      }),
+
+      joi.object({
+        type: joi.string().required().valid(`RENDER_PAGE_TREE`),
+        payload: joi.object(),
+        timestamp: joi.string().required(),
+      })
     )
 
     const eventSchema = joi.object({
@@ -292,9 +305,8 @@ describe(`develop`, () => {
       let events = []
 
       beforeAll(done => {
-        const { finishedPromise, gatsbyProcess } = collectEventsForDevelop(
-          events
-        )
+        const { finishedPromise, gatsbyProcess } =
+          collectEventsForDevelop(events)
 
         setTimeout(() => {
           gatsbyProcess.kill(`SIGTERM`)

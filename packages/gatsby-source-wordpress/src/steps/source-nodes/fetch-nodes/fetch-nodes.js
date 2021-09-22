@@ -2,6 +2,7 @@ import { createGatsbyNodesFromWPGQLContentNodes } from "../create-nodes/create-n
 import { paginatedWpNodeFetch } from "./fetch-nodes-paginated"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { CREATED_NODE_IDS } from "~/constants"
+import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 
 import store from "~/store"
 import { getGatsbyApi, getPluginOptions } from "~/utils/get-gatsby-api"
@@ -128,10 +129,11 @@ export const runFnForEachNodeQuery = async fn => {
       queries.map(async queryInfo => {
         if (
           // if the type settings call for lazyNodes, don't fetch them upfront here
-          queryInfo.settings.lazyNodes ||
-          // if this is a media item and the nodes aren't lazy, we only want to fetch referenced nodes, so we don't fetch all of them here.
-          (!queryInfo.settings.lazyNodes &&
-            queryInfo.typeInfo.nodesTypeName === `MediaItem`)
+          (queryInfo.settings.lazyNodes &&
+            // but not in Gatsby v4+ since lazyNodes isn't supported in 4+
+            !usingGatsbyV4OrGreater) ||
+          // for media items we only want to fetch referenced nodes so don't fetch them here.
+          queryInfo.typeInfo.nodesTypeName === `MediaItem`
         ) {
           return
         }

@@ -21,6 +21,7 @@ import {
   IActivityErrored,
   IGatsbyCLIState,
   ISetLogs,
+  IRenderPageTree,
 } from "./types"
 import {
   delayedCall,
@@ -30,6 +31,7 @@ import {
 } from "./utils"
 import { IStructuredError } from "../../structured-errors/types"
 import { ErrorCategory } from "../../structured-errors/error-map"
+import { IRenderPageArgs } from "../types"
 
 const ActivityStatusToLogLevel = {
   [ActivityStatuses.Interrupted]: ActivityLogLevels.Interrupted,
@@ -377,5 +379,12 @@ export const setLogs = (logs: IGatsbyCLIState): ISetLogs => {
   return {
     type: Actions.SetLogs,
     payload: logs,
+  }
+}
+
+export const renderPageTree = (payload: IRenderPageArgs): IRenderPageTree => {
+  return {
+    type: Actions.RenderPageTree,
+    payload,
   }
 }

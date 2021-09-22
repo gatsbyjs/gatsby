@@ -6,13 +6,14 @@ const {
   pipeToNodeWritable,
 } = require(`react-dom/server`)
 const { ServerLocation, Router, isRedirect } = require(`@gatsbyjs/reach-router`)
-const { merge, flattenDeep, replace } = require(`lodash`)
+const merge = require(`deepmerge`)
 const { StaticQueryContext } = require(`gatsby`)
 const fs = require(`fs`)
+const { WritableAsPromise } = require(`./server-utils/writable-as-promise`)
 
 const { RouteAnnouncerProps } = require(`./route-announcer-props`)
 const { apiRunner, apiRunnerAsync } = require(`./api-runner-ssr`)
-const syncRequires = require(`$virtual/sync-requires`)
+const asyncRequires = require(`$virtual/async-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const { grabMatchParams } = require(`./find-path`)
 
@@ -65,29 +66,40 @@ const getAppDataUrl = () =>
 const createElement = React.createElement
 
 export const sanitizeComponents = components => {
-  const componentsArray = ensureArray(components)
+  const componentsArray = [].concat(components).flat(Infinity).filter(Boolean)
+
   return componentsArray.map(component => {
     // Ensure manifest is always loaded from content server
     // And not asset server when an assetPrefix is used
     if (__ASSET_PREFIX__ && component.props.rel === `manifest`) {
       return React.cloneElement(component, {
-        href: replace(component.props.href, __ASSET_PREFIX__, ``),
+        href: component.props.href.replace(__ASSET_PREFIX__, ``),
       })
     }
     return component
   })
 }
 
-const ensureArray = components => {
-  if (Array.isArray(components)) {
-    // remove falsy items and flatten
-    return flattenDeep(
-      components.filter(val => (Array.isArray(val) ? val.length > 0 : val))
-    )
-  } else {
-    // we also accept single components, so we need to handle this case as well
-    return components ? [components] : []
+function deepMerge(a, b) {
+  const combineMerge = (target, source, options) => {
+    const destination = target.slice()
+
+    source.forEach((item, index) => {
+      if (typeof destination[index] === `undefined`) {
+        destination[index] = options.cloneUnlessOtherwiseSpecified(
+          item,
+          options
+        )
+      } else if (options.isMergeableObject(item)) {
+        destination[index] = merge(target[index], item, options)
+      } else if (target.indexOf(item) === -1) {
+        destination.push(item)
+      }
+    })
+    return destination
   }
+
+  return merge(a, b, { arrayMerge: combineMerge })
 }
 
 export default async function staticPage({
@@ -98,6 +110,7 @@ export default async function staticPage({
   scripts,
   reversedStyles,
   reversedScripts,
+  inlinePageData = false,
 }) {
   // for this to work we need this function to be sync or at least ensure there is single execution of it at a time
   global.unsafeBuiltinUsage = []
@@ -149,11 +162,13 @@ export default async function staticPage({
     }
 
     const setHtmlAttributes = attributes => {
-      htmlAttributes = merge(htmlAttributes, attributes)
+      // TODO - we should remove deep merges
+      htmlAttributes = deepMerge(htmlAttributes, attributes)
     }
 
     const setBodyAttributes = attributes => {
-      bodyAttributes = merge(bodyAttributes, attributes)
+      // TODO - we should remove deep merges
+      bodyAttributes = deepMerge(bodyAttributes, attributes)
     }
 
     const setPreBodyComponents = components => {
@@ -169,7 +184,8 @@ export default async function staticPage({
     }
 
     const setBodyProps = props => {
-      bodyProps = merge({}, bodyProps, props)
+      // TODO - we should remove deep merges
+      bodyProps = deepMerge({}, bodyProps, props)
     }
 
     const getHeadComponents = () => headComponents
@@ -193,6 +209,7 @@ export default async function staticPage({
     const pageDataUrl = getPageDataUrl(pagePath)
 
     const { componentChunkName, staticQueryHashes = [] } = pageData
+    const pageComponent = await asyncRequires.components[componentChunkName]()
 
     const staticQueryUrls = staticQueryHashes.map(getStaticQueryUrl)
 
@@ -207,10 +224,7 @@ export default async function staticPage({
           },
         }
 
-        const pageElement = createElement(
-          syncRequires.components[componentChunkName],
-          props
-        )
+        const pageElement = createElement(pageComponent.default, props)
 
         const wrappedPage = apiRunner(
           `wrapPageElement`,
@@ -266,9 +280,6 @@ export default async function staticPage({
       try {
         // react 18 enabled
         if (pipeToNodeWritable) {
-          const {
-            WritableAsPromise,
-          } = require(`./server-utils/writable-as-promise`)
           const writableStream = new WritableAsPromise()
           const { startWriting } = pipeToNodeWritable(
             bodyComponent,
@@ -318,7 +329,7 @@ export default async function staticPage({
       )
     })
 
-    if (pageData) {
+    if (pageData && !inlinePageData) {
       headComponents.push(
         <link
           as="fetch"
@@ -381,7 +392,9 @@ export default async function staticPage({
     })
 
     // Add page metadata for the current page
-    const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";/*]]>*/`
+    const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";${
+      inlinePageData ? `window.pageData=${JSON.stringify(pageData)};` : ``
+    }/*]]>*/`
 
     postBodyComponents.push(
       <script
@@ -463,4 +476,8 @@ export default async function staticPage({
     e.unsafeBuiltinsUsage = global.unsafeBuiltinUsage
     throw e
   }
+}
+
+export function getPageChunk({ componentChunkName }) {
+  return asyncRequires.components[componentChunkName]()
 }
