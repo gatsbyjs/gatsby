@@ -25,12 +25,12 @@
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
-    "babel-jest": "^24.9.0",
+    "babel-jest": "^27.2.1",
     "babel-preset-gatsby-package": "^2.0.0-zz-next.1",
     "cross-env": "^7.0.3",
-    "jest": "^24.9.0",
-    "jest-cli": "^24.9.0",
-    "jest-junit": "^6.4.0",
+    "jest": "^27.2.1",
+    "jest-cli": "^27.2.1",
+    "jest-junit": "^12.3.0",
     "rimraf": "^3.0.2",
     "typescript": "^4.4.2"
   },
