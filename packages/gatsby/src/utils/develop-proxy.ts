@@ -1,7 +1,6 @@
 import http from "http"
 import https from "https"
 import httpProxy from "http-proxy"
-import path from "path"
 import fs from "fs-extra"
 import { getServices } from "gatsby-core-utils"
 import restartingScreen from "./restarting-screen"
