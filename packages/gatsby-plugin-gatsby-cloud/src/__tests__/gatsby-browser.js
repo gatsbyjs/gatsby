@@ -84,7 +84,7 @@ describe(`Preview status indicator`, () => {
 
   beforeEach(() => {
     // it will disable setTimeout behaviour - only fetchData once
-    jest.useFakeTimers()
+    jest.useFakeTimers(`modern`)
     // reset all mocks
     jest.resetModules()
     global.fetch = require(`node-fetch`)
@@ -274,7 +274,7 @@ describe(`Preview status indicator`, () => {
         const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/999/sites/111/builds/123/details`
         const returnTo = encodeURIComponent(pathToBuildLogs)
 
-        await await act(() => {
+        await act(async () => {
           render(<Indicator />)
         })
 
@@ -338,7 +338,7 @@ describe(`Preview status indicator`, () => {
         navigator.clipboard = { writeText: jest.fn() }
         let copyLinkTooltip
 
-        await act(() => {
+        await act(async () => {
           render(<Indicator />)
         })
 
