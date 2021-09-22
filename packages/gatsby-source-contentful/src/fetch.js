@@ -79,6 +79,7 @@ module.exports = async function contentfulFetch({
 }) {
   // Fetch articles.
   let syncProgress
+  let syncItemCount = 0
   const pageLimit = pluginConfig.get(`pageLimit`)
   const contentfulClientOptions = {
     space: pluginConfig.get(`spaceId`),
@@ -110,6 +111,8 @@ module.exports = async function contentfulFetch({
         !response.isAxiosError &&
         response?.data.items
       ) {
+        syncItemCount += response.data.items.length
+        syncProgress.total = syncItemCount
         syncProgress.tick(response.data.items.length)
       }
 
@@ -294,9 +297,29 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
 
   const contentTypeItems = contentTypes.items
 
+  // We need to fetch tags with the non-sync API as the sync API doesn't support this.
+  let tagItems = []
+  if (pluginConfig.get(`enableTags`)) {
+    try {
+      const tagsResult = await pagedGet(client, `getTags`, pageLimit)
+      tagItems = tagsResult.items
+      reporter.verbose(`Tags fetched ${tagItems.length}`)
+    } catch (e) {
+      reporter.panic({
+        id: CODES.FetchTags,
+        context: {
+          sourceMessage: `Error fetching tags: ${createContentfulErrorMessage(
+            e
+          )}`,
+        },
+      })
+    }
+  }
+
   const result = {
     currentSyncData,
     contentTypeItems,
+    tagItems,
     defaultLocale,
     locales,
     space,

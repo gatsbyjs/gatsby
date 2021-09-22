@@ -29,10 +29,6 @@ export const pagesReducer = (
         )
       }
 
-      // Link page to its plugin.
-      action.payload.pluginCreator___NODE = action.plugin.id ?? ``
-      action.payload.pluginCreatorId = action.plugin.id ?? ``
-
       // Add page to the state with the path as key
       state.set(action.payload.path, action.payload)
 

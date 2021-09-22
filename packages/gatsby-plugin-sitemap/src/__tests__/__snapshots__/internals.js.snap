@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-plugin-sitemap internals tests pageFilter should filter correctly 1`] = `
+Array [
+  Object {
+    "path": "/to/keep/1",
+  },
+  Object {
+    "path": "/to/keep/2",
+  },
+]
+`;

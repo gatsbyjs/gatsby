@@ -22,6 +22,7 @@ export const SHARP_ATTRIBUTES = new Set([
   `tracedSVGOptions`,
   `sizes`,
   `backgroundColor`,
+  `breakpoints`,
 ])
 
 export function normalizeProps(

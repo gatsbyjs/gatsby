@@ -5,6 +5,7 @@ import imageNodes from "./image-nodes"
 import wpHooks from "./wp-hooks"
 import previewStore from "./preview"
 import develop from "./develop"
+import postBuildWarningCounts from "./post-build-warning-logs"
 
 export default {
   remoteSchema,
@@ -14,4 +15,5 @@ export default {
   wpHooks,
   previewStore,
   develop,
+  postBuildWarningCounts,
 }

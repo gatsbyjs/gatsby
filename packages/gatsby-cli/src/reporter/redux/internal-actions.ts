@@ -21,6 +21,7 @@ import {
   IActivityErrored,
   IGatsbyCLIState,
   ISetLogs,
+  IRenderPageTree,
 } from "./types"
 import {
   delayedCall,
@@ -30,6 +31,7 @@ import {
 } from "./utils"
 import { IStructuredError } from "../../structured-errors/types"
 import { ErrorCategory } from "../../structured-errors/error-map"
+import { IRenderPageArgs } from "../types"
 
 const ActivityStatusToLogLevel = {
   [ActivityStatuses.Interrupted]: ActivityLogLevels.Interrupted,
@@ -51,38 +53,37 @@ let pendingStatus: ActivityStatuses | "" = ``
 // where technically we are "done" (all activities are done).
 // We don't want to emit multiple SET_STATUS events that would toggle between
 // IN_PROGRESS and SUCCESS/FAILED in short succession in those cases.
-export const setStatus = (
-  status: ActivityStatuses | "",
-  force: boolean = false
-) => (dispatch: Dispatch<ISetStatus>): void => {
-  const currentStatus = getStore().getState().logs.status
+export const setStatus =
+  (status: ActivityStatuses | "", force: boolean = false) =>
+  (dispatch: Dispatch<ISetStatus>): void => {
+    const currentStatus = getStore().getState().logs.status
 
-  if (cancelDelayedSetStatus) {
-    cancelDelayedSetStatus()
-    cancelDelayedSetStatus = null
-  }
+    if (cancelDelayedSetStatus) {
+      cancelDelayedSetStatus()
+      cancelDelayedSetStatus = null
+    }
 
-  if (
-    status !== currentStatus &&
-    (status === ActivityStatuses.InProgress || force || weShouldExit)
-  ) {
-    dispatch({
-      type: Actions.SetStatus,
-      payload: status,
-    })
-    pendingStatus = ``
-  } else {
-    // use pending status if truthy, fallback to current status if we don't have pending status
-    const pendingOrCurrentStatus = pendingStatus || currentStatus
+    if (
+      status !== currentStatus &&
+      (status === ActivityStatuses.InProgress || force || weShouldExit)
+    ) {
+      dispatch({
+        type: Actions.SetStatus,
+        payload: status,
+      })
+      pendingStatus = ``
+    } else {
+      // use pending status if truthy, fallback to current status if we don't have pending status
+      const pendingOrCurrentStatus = pendingStatus || currentStatus
 
-    if (status !== pendingOrCurrentStatus) {
-      pendingStatus = status
-      cancelDelayedSetStatus = delayedCall(() => {
-        setStatus(status, true)(dispatch)
-      }, 1000)
+      if (status !== pendingOrCurrentStatus) {
+        pendingStatus = status
+        cancelDelayedSetStatus = delayedCall(() => {
+          setStatus(status, true)(dispatch)
+        }, 1000)
+      }
     }
   }
-}
 
 export const createLog = ({
   level,
@@ -378,5 +379,12 @@ export const setLogs = (logs: IGatsbyCLIState): ISetLogs => {
   return {
     type: Actions.SetLogs,
     payload: logs,
+  }
+}
+
+export const renderPageTree = (payload: IRenderPageArgs): IRenderPageTree => {
+  return {
+    type: Actions.RenderPageTree,
+    payload,
   }
 }

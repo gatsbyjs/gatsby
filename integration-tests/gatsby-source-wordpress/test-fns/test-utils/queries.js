@@ -19,9 +19,6 @@ exports.queries = {
       allWpComment {
         totalCount
       }
-      # allWpProject {
-      #   totalCount
-      # }
       allWpTaxonomy {
         totalCount
       }
@@ -34,16 +31,17 @@ exports.queries = {
       allWpMenuItem {
         totalCount
       }
-      allWpMediaItem(sort: { fields: [id] }) {
+      allWpMediaItem(
+        sort: { fields: [id] }
+        # this node "cG9zdDoxOTU=" only exists on warm builds. So our snapshot is wrong if we don't filter it out.
+        filter: { id: { ne: "cG9zdDoxOTU=" } }
+      ) {
         totalCount
         nodes {
           id
           mediaItemUrl
         }
       }
-      # allWpTeamMember {
-      #   totalCount
-      # }
       allWpPostFormat {
         totalCount
       }
@@ -187,18 +185,21 @@ exports.queries = {
       isDynamic
       order
       originalContent
-      parentNode {
-        id
-        ... on WpPost {
-          title
-        }
-      }
+      # @todo this connection isn't working
+      # parentNode {
+      #   id
+      #   ... on WpPost {
+      #     title
+      #   }
+      # }
       parentNodeDatabaseId
       dynamicContent
       attributes {
-        className
-        verticalAlignment
-        width
+        ... on WpCoreColumnBlockAttributes {
+          className
+          verticalAlignment
+          width
+        }
       }
     }
 
@@ -206,12 +207,13 @@ exports.queries = {
       name
       order
       originalContent
-      parentNode {
-        id
-        ... on WpPost {
-          title
-        }
-      }
+      # @todo this connection isn't working
+      # parentNode {
+      #   id
+      #   ... on WpPost {
+      #     title
+      #   }
+      # }
       parentNodeDatabaseId
       dynamicContent
       attributes {
@@ -223,7 +225,6 @@ exports.queries = {
           verticalAlignment
         }
       }
-      # saveContent
     }
 
     fragment InnerBlocks on WpBlock {
@@ -593,9 +594,9 @@ exports.queries = {
   `,
   pages: /* GraphQL */ `
     {
-      # testPage: wpPage(id: { eq: "cG9zdDoy" }) {
-      #   title
-      # }
+      testPage: wpPage(id: { eq: "cG9zdDoy" }) {
+        title
+      }
       allWpPage(sort: { fields: date }) {
         nodes {
           uri
@@ -655,8 +656,8 @@ exports.queries = {
   `,
   users: /* GraphQL */ `
     {
-      testUser: wpUser(id: { eq: "dXNlcjox" }) {
-        firstName
+      testUser: wpUser(id: { eq: "dXNlcjo0" }) {
+        name
       }
       allWpUser {
         nodes {

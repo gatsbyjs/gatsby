@@ -15,6 +15,7 @@ export {
   IArtDirectedImage,
   IGetImageDataArgs,
   IUrlBuilderArgs,
+  ImageDataLike,
 } from "./components/hooks"
 export {
   generateImageData,

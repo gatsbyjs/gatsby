@@ -17,7 +17,6 @@ import { showAnalyticsNotification } from "./show-analytics-notification"
 import { cleanPaths } from "./error-helpers"
 import { getDependencies } from "./get-dependencies"
 
-import { join, sep } from "path"
 import isDocker from "is-docker"
 import lodash from "lodash"
 
@@ -215,14 +214,10 @@ export class AnalyticsTracker {
   }
 
   getGatsbyVersion(): SemVer {
-    const packageInfo = require(join(
-      process.cwd(),
-      `node_modules`,
-      `gatsby`,
-      `package.json`
-    ))
     try {
-      return packageInfo.version
+      const packageJson = require.resolve(`gatsby/package.json`)
+      const { version } = JSON.parse(fs.readFileSync(packageJson, `utf-8`))
+      return version
     } catch (e) {
       // ignore
     }
@@ -231,15 +226,8 @@ export class AnalyticsTracker {
 
   getGatsbyCliVersion(): SemVer {
     try {
-      const jsonfile = join(
-        require
-          .resolve(`gatsby-cli`) // Resolve where current gatsby-cli would be loaded from.
-          .split(sep)
-          .slice(0, -2) // drop lib/index.js
-          .join(sep),
-        `package.json`
-      )
-      const { version } = require(jsonfile).version
+      const jsonfile = require.resolve(`gatsby-cli/package.json`)
+      const { version } = JSON.parse(fs.readFileSync(jsonfile, `utf-8`))
       return version
     } catch (e) {
       // ignore
@@ -411,8 +399,8 @@ export class AnalyticsTracker {
     let machineId = this.store.getConfig(`telemetry.machineId`)
     if (typeof machineId !== `string`) {
       machineId = typedUUIDv4()
+      this.store.updateConfig(`telemetry.machineId`, machineId)
     }
-    this.store.updateConfig(`telemetry.machineId`, machineId)
     this.machineId = machineId
     return machineId
   }

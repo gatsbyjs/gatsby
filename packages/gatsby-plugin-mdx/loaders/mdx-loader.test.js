@@ -34,16 +34,18 @@ some content`,
       input.namedExports ? code.namedExports : ``,
       code.body,
     ].join(`\n\n`),
+    isDevelopStage: input.isDevelopStage,
+    lessBabel: input.lessBabel,
   }
 }
 
 // generate a table of all possible combinations of genMDXfile input
-const fixtures = new BaseN([true, false], 3)
+const fixtures = new BaseN([true, false], 5)
   .toArray()
-  .map(([frontmatter, layout, namedExports]) =>
-    genMDXFile({ frontmatter, layout, namedExports })
+  .map(([frontmatter, layout, namedExports, isDevelopStage, lessBabel]) =>
+    genMDXFile({ frontmatter, layout, namedExports, isDevelopStage, lessBabel })
   )
-  .map(({ name, content }) => [
+  .map(({ name, content, isDevelopStage, lessBabel }) => [
     name,
     {
       internal: { type: `File` },
@@ -51,6 +53,8 @@ const fixtures = new BaseN([true, false], 3)
       absolutePath: `/fake/${name}`,
     },
     content,
+    isDevelopStage,
+    lessBabel,
   ])
 
 describe(`mdx-loader`, () => {
@@ -64,71 +68,56 @@ describe(`mdx-loader`, () => {
   })
   test.each(fixtures)(
     `snapshot with %s`,
-    async (filename, fakeGatsbyNode, content) => {
-      const loader = mdxLoader.bind({
-        async() {
-          return (err, result) => {
-            expect(err).toBeNull()
-            expect(result).toMatchSnapshot()
-          }
-        },
-        query: {
-          getNodes(_type) {
-            return fixtures.map(([, node]) => node)
-          },
-          getNodesByType(_type) {
-            return fixtures.map(([, node]) => node)
-          },
-          pluginOptions: {
-            lessBabel: false, // default
-          },
-          cache: {
-            get() {
-              return false
-            },
-            set() {
-              return
-            },
-          },
-        },
-        resourcePath: fakeGatsbyNode.absolutePath,
-      })
-      await loader(content)
-    }
-  )
+    async (filename, fakeGatsbyNode, content, isDevelopStage, lessBabel) => {
+      let err
+      let result
 
-  test.each(fixtures)(
-    `snapshot [lessBabel=true] with %s`,
-    async (filename, fakeGatsbyNode, content) => {
-      const loader = mdxLoader.bind({
-        async() {
-          return (err, result) => {
-            expect(err).toBeNull()
-            expect(result).toMatchSnapshot()
-          }
-        },
-        query: {
-          getNodes(_type) {
-            return fixtures.map(([, node]) => node)
+      const createLoader = (opts = {}) =>
+        mdxLoader.bind({
+          async() {
+            return (_err, _result) => {
+              err = _err
+              result = _result
+            }
           },
-          getNodesByType(_type) {
-            return fixtures.map(([, node]) => node)
-          },
-          pluginOptions: {
-            lessBabel: true,
-          },
-          cache: {
-            get() {
-              return false
+          query: {
+            getNodes(_type) {
+              return fixtures.map(([, node]) => node)
             },
-            set() {
-              return
+            getNodesByType(_type) {
+              return fixtures.map(([, node]) => node)
             },
+            pluginOptions: {
+              lessBabel,
+            },
+            cache: {
+              get() {
+                return false
+              },
+              set() {
+                return
+              },
+            },
+            isolateMDXComponent: isDevelopStage,
           },
-        },
-        resourcePath: fakeGatsbyNode.absolutePath,
-      })
-      await loader(content)
+          resourcePath: fakeGatsbyNode.absolutePath,
+          resourceQuery: fakeGatsbyNode.absolutePath,
+          rootContext: `/fake/`,
+          ...opts,
+        })
+
+      await createLoader()(content)
+      expect(err).toBeNull()
+      expect(result).toMatchSnapshot()
+      err = result = undefined
+
+      if (isDevelopStage) {
+        await createLoader({
+          resourceQuery: `${fakeGatsbyNode.absolutePath}?type=component`,
+        })(content)
+        expect(err).toBeNull()
+        expect(result).toMatchSnapshot()
+      }
     }
   )
 })

@@ -61,7 +61,7 @@ const isGatsbyImageDataParent = <T>(
   node: IGatsbyImageDataParent<T> | any
 ): node is IGatsbyImageDataParent<T> => Boolean(node?.gatsbyImageData)
 
-type ImageDataLike = FileNode | IGatsbyImageDataParent | IGatsbyImageData
+export type ImageDataLike = FileNode | IGatsbyImageDataParent | IGatsbyImageData
 export const getImage = (node: ImageDataLike): IGatsbyImageData | undefined => {
   if (isGatsbyImageData(node)) {
     return node
@@ -101,6 +101,7 @@ export function getWrapperProps(
   } else if (layout === `constrained`) {
     if (!gatsbyImageIsInstalled()) {
       wrapperStyle.display = `inline-block`
+      wrapperStyle.verticalAlign = `top`
     }
     className = `gatsby-image-wrapper gatsby-image-wrapper-constrained`
   }
@@ -117,6 +118,7 @@ export async function applyPolyfill(
 ): Promise<void> {
   if (!(`objectFitPolyfill` in window)) {
     await import(
+      // @ts-ignore typescript can't find the module for some reason ¯\_(ツ)_/¯
       /* webpackChunkName: "gatsby-plugin-image-objectfit-polyfill" */ `objectFitPolyfill`
     )
   }
@@ -312,7 +314,9 @@ export function getPlaceholderProps(
   layout: Layout,
   width?: number,
   height?: number,
-  backgroundColor?: string
+  backgroundColor?: string,
+  objectFit?: CSSProperties["objectFit"],
+  objectPosition?: CSSProperties["objectPosition"]
 ): PlaceholderImageAttrs {
   const wrapperStyle: CSSProperties = {}
 
@@ -339,6 +343,13 @@ export function getPlaceholderProps(
     }
   }
 
+  if (objectFit) {
+    wrapperStyle.objectFit = objectFit
+  }
+
+  if (objectPosition) {
+    wrapperStyle.objectPosition = objectPosition
+  }
   const result: PlaceholderImageAttrs = {
     ...placeholder,
     "aria-hidden": true,

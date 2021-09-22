@@ -9,6 +9,7 @@ const mdastToString = require(`mdast-util-to-string`)
 const unified = require(`unified`)
 const parse = require(`remark-parse`)
 const remarkGfm = require(`remark-gfm`)
+const remarkFootnotes = require(`remark-footnotes`)
 const stringify = require(`remark-stringify`)
 const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
@@ -95,24 +96,20 @@ module.exports = function remarkExtendNodeType(
     // Setup Remark.
     const {
       blocks,
-      commonmark = true,
       footnotes = true,
       gfm = true,
-      pedantic = true,
       tableOfContents = {
         heading: null,
         maxDepth: 6,
       },
     } = pluginOptions
     const tocOptions = tableOfContents
-    const remarkOptions = {
-      commonmark,
-      footnotes,
-      pedantic,
-    }
+    const remarkOptions = {}
+
     if (_.isArray(blocks)) {
       remarkOptions.blocks = blocks
     }
+
     let remark = new Remark().data(`settings`, remarkOptions)
 
     if (gfm) {
@@ -120,8 +117,14 @@ module.exports = function remarkExtendNodeType(
       remark = remark.use(remarkGfm)
     }
 
+    if (footnotes) {
+      // TODO: deprecate `footnotes` option in favor of explicit remark-footnotes as a plugin?
+      remark = remark.use(remarkFootnotes, { inlineNotes: true })
+    }
+
     for (const plugin of pluginOptions.plugins) {
-      const requiredPlugin = require(plugin.resolve)
+      const requiredPlugin =
+        _CFLAGS_.GATSBY_MAJOR === `4` ? plugin.module : require(plugin.resolve)
       if (_.isFunction(requiredPlugin.setParserPlugins)) {
         for (const parserPlugin of requiredPlugin.setParserPlugins(
           plugin.pluginOptions
@@ -199,7 +202,10 @@ module.exports = function remarkExtendNodeType(
       }
       // Use a for loop to run remark plugins serially.
       for (const plugin of pluginOptions.plugins) {
-        const requiredPlugin = require(plugin.resolve)
+        const requiredPlugin =
+          _CFLAGS_.GATSBY_MAJOR === `4`
+            ? plugin.module
+            : require(plugin.resolve)
         // Allow both exports = function(), and exports.default = function()
         const defaultFunction = _.isFunction(requiredPlugin)
           ? requiredPlugin
@@ -240,7 +246,10 @@ module.exports = function remarkExtendNodeType(
       //
       // Use for loop to run remark plugins serially.
       for (const plugin of pluginOptions.plugins) {
-        const requiredPlugin = require(plugin.resolve)
+        const requiredPlugin =
+          _CFLAGS_.GATSBY_MAJOR === `4`
+            ? plugin.module
+            : require(plugin.resolve)
         if (typeof requiredPlugin.mutateSource === `function`) {
           await requiredPlugin.mutateSource(
             {

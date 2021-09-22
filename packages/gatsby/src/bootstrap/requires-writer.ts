@@ -108,8 +108,14 @@ const getMatchPaths = (
   const matchPathPages: Array<IMatchPathEntry> = []
 
   pages.forEach((page: IGatsbyPage, index: number): void => {
-    if (page.matchPath) {
-      matchPathPages.push(createMatchPathEntry(page, index))
+    if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+      if (page.matchPath && page.mode === `SSG`) {
+        matchPathPages.push(createMatchPathEntry(page, index))
+      }
+    } else {
+      if (page.matchPath) {
+        matchPathPages.push(createMatchPathEntry(page, index))
+      }
     }
   })
 
@@ -243,10 +249,7 @@ const preferDefault = m => (m && m.default) || m
 }\n\n`
 
   // Create file with async requires of components/json files.
-  let asyncRequires = `// prefer default export if available
-const preferDefault = m => (m && m.default) || m
-\n`
-  asyncRequires += `exports.components = {\n${components
+  const asyncRequires = `exports.components = {\n${components
     .map((c: IGatsbyPageComponent): string => {
       // we need a relative import path to keep contenthash the same if directory changes
       const relativeComponentPath = path.relative(

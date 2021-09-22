@@ -5,7 +5,7 @@ const _ = require(`lodash`)
 
 const { emitter, store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-const { getNode } = require(`../../redux/nodes`)
+const { getNode } = require(`../../datastore`)
 
 function transformPackageJson(json) {
   const transformDeps = deps =>
@@ -41,23 +41,14 @@ function transformPackageJson(json) {
 
 const createPageId = path => `SitePage ${path}`
 
-exports.sourceNodes = ({ createContentDigest, actions, store }) => {
-  const { createNode } = actions
+exports.sourceNodes = ({
+  createContentDigest,
+  getNodesByType,
+  actions,
+  store,
+}) => {
+  const { createNode, deleteNode } = actions
   const { program, flattenedPlugins, config } = store.getState()
-
-  // Add our default development page since we know it's going to
-  // exist and we need a node to exist so its query works :-)
-  const page = { path: `/dev-404-page/` }
-  createNode({
-    ...page,
-    id: createPageId(page.path),
-    parent: null,
-    children: [],
-    internal: {
-      type: `SitePage`,
-      contentDigest: createContentDigest(page),
-    },
-  })
 
   flattenedPlugins.forEach(plugin => {
     plugin.pluginFilepath = plugin.resolve
@@ -126,6 +117,42 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
     `gatsby-config.js`
   )
   watchConfig(pathToGatsbyConfig, createGatsbyConfigNode)
+
+  // Create nodes for functions
+  const { functions } = store.getState()
+  const createFunctionNode = config => {
+    createNode({
+      id: `gatsby-function-${config.absoluteCompiledFilePath}`,
+      ...config,
+      parent: null,
+      children: [],
+      internal: {
+        contentDigest: createContentDigest(config),
+        type: `SiteFunction`,
+      },
+    })
+  }
+  functions.forEach(config => {
+    createFunctionNode(config)
+  })
+
+  // Listen for updates to functions to update the nodes.
+  emitter.on(`SET_SITE_FUNCTIONS`, action => {
+    // Identify any now deleted functions and remove their nodes.
+    const existingNodes = getNodesByType(`SiteFunction`)
+    const newFunctionsSet = new Set()
+    action.payload.forEach(config =>
+      newFunctionsSet.add(`gatsby-function-${config.absoluteCompiledFilePath}`)
+    )
+    const toBeDeleted = existingNodes.filter(
+      node => !newFunctionsSet.has(node.id)
+    )
+    toBeDeleted.forEach(node => deleteNode(node))
+
+    action.payload.forEach(config => {
+      createFunctionNode(config)
+    })
+  })
 }
 
 function watchConfig(pathToGatsbyConfig, createGatsbyConfigNode) {
@@ -168,29 +195,8 @@ exports.createResolvers = ({ createResolvers }) => {
       },
     },
   }
+
   createResolvers(resolvers)
-}
-
-exports.onCreatePage = ({ createContentDigest, page, actions }) => {
-  const { createNode } = actions
-  // eslint-disable-next-line
-  const { updatedAt, ...pageWithoutUpdated } = page
-
-  // Add page.
-  createNode({
-    ...pageWithoutUpdated,
-    id: createPageId(page.path),
-    parent: null,
-    children: [],
-    internal: {
-      type: `SitePage`,
-      contentDigest: createContentDigest(pageWithoutUpdated),
-      description:
-        page.pluginCreatorId === `Plugin default-site-plugin`
-          ? `Your site's "gatsby-node.js"`
-          : page.pluginCreatorId,
-    },
-  })
 }
 
 // Listen for DELETE_PAGE and delete page nodes.

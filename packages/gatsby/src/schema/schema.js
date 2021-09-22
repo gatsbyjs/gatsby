@@ -8,6 +8,7 @@ const {
   GraphQLList,
   GraphQLObjectType,
   GraphQLInterfaceType,
+  GraphQLUnionType,
 } = require(`graphql`)
 const {
   ObjectTypeComposer,
@@ -17,7 +18,7 @@ const {
   ScalarTypeComposer,
   EnumTypeComposer,
 } = require(`graphql-compose`)
-const { getNode, getNodesByType } = require(`../redux/nodes`)
+const { getDataStore, getNode, getNodesByType } = require(`../datastore`)
 
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
@@ -57,10 +58,14 @@ const buildSchema = async ({
   fieldExtensions,
   thirdPartySchemas,
   printConfig,
+  enginePrintConfig,
   typeConflictReporter,
   inferenceMetadata,
+  freeze = false,
   parentSpan,
 }) => {
+  // FIXME: consider removing .ready here - it is needed for various tests to pass (although probably harmless)
+  await getDataStore().ready()
   await updateSchemaComposer({
     schemaComposer,
     types,
@@ -68,12 +73,17 @@ const buildSchema = async ({
     fieldExtensions,
     thirdPartySchemas,
     printConfig,
+    enginePrintConfig,
     typeConflictReporter,
     inferenceMetadata,
     parentSpan,
   })
   // const { printSchema } = require(`graphql`)
   const schema = schemaComposer.buildSchema()
+
+  if (freeze) {
+    freezeTypeComposers(schemaComposer)
+  }
 
   // console.log(printSchema(schema))
   return schema
@@ -151,6 +161,7 @@ const updateSchemaComposer = async ({
   fieldExtensions,
   thirdPartySchemas,
   printConfig,
+  enginePrintConfig,
   typeConflictReporter,
   inferenceMetadata,
   parentSpan,
@@ -182,11 +193,21 @@ const updateSchemaComposer = async ({
     parentSpan: parentSpan,
   })
   activity.start()
-  await printTypeDefinitions({
-    config: printConfig,
-    schemaComposer,
-    parentSpan: activity.span,
-  })
+  if (!process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE) {
+    await printTypeDefinitions({
+      config: printConfig,
+      schemaComposer,
+      parentSpan: activity.span,
+    })
+    if (enginePrintConfig) {
+      // make sure to print schema that will be used when bundling graphql-engine
+      await printTypeDefinitions({
+        config: enginePrintConfig,
+        schemaComposer,
+        parentSpan: activity.span,
+      })
+    }
+  }
   await addSetFieldsOnGraphQLNodeTypeFields({
     schemaComposer,
     parentSpan: activity.span,
@@ -404,6 +425,15 @@ const mergeTypes = ({
   ) {
     mergeFields({ typeComposer, fields: type.getFields() })
     type.getInterfaces().forEach(iface => typeComposer.addInterface(iface))
+  }
+
+  if (
+    type instanceof GraphQLInterfaceType ||
+    type instanceof InterfaceTypeComposer ||
+    type instanceof GraphQLUnionType ||
+    type instanceof UnionTypeComposer
+  ) {
+    mergeResolveType({ typeComposer, type })
   }
 
   if (isNamedTypeComposer(type)) {
@@ -737,7 +767,10 @@ const addSetFieldsOnGraphQLNodeTypeFields = ({ schemaComposer, parentSpan }) =>
         const result = await apiRunner(`setFieldsOnGraphQLNodeType`, {
           type: {
             name: typeName,
-            nodes: getNodesByType(typeName),
+            get nodes() {
+              // TODO STRICT_MODE: return iterator instead of array
+              return getNodesByType(typeName)
+            },
           },
           traceId: `initial-setFieldsOnGraphQLNodeType`,
           parentSpan,
@@ -1149,11 +1182,20 @@ const addInferredChildOfExtension = ({ schemaComposer, typeComposer }) => {
   if (shouldInfer === false) return
 
   const parentTypeName = typeComposer.getTypeName()
-  const nodes = getNodesByType(parentTypeName)
 
-  const childNodesByType = groupChildNodesByType({ nodes })
+  // This is expensive.
+  // TODO: We should probably collect this info during inference metadata pass
+  const childNodeTypes = new Set()
+  for (const node of getDataStore().iterateNodesByType(parentTypeName)) {
+    const children = (node.children || []).map(getNode)
+    for (const childNode of children) {
+      if (childNode?.internal?.type) {
+        childNodeTypes.add(childNode.internal.type)
+      }
+    }
+  }
 
-  Object.keys(childNodesByType).forEach(typeName => {
+  childNodeTypes.forEach(typeName => {
     const childTypeComposer = schemaComposer.getAnyTC(typeName)
     let childOfExtension = childTypeComposer.getExtension(`childOf`)
 
@@ -1213,12 +1255,6 @@ const createChildField = typeName => {
     },
   }
 }
-
-const groupChildNodesByType = ({ nodes }) =>
-  _(nodes)
-    .flatMap(node => (node.children || []).map(getNode).filter(Boolean))
-    .groupBy(node => (node.internal ? node.internal.type : undefined))
-    .value()
 
 const addTypeToRootQuery = ({ schemaComposer, typeComposer }) => {
   const sortInputTC = getSortInput({
@@ -1387,3 +1423,23 @@ const mergeFields = ({ typeComposer, fields }) =>
       typeComposer.setField(fieldName, fieldConfig)
     }
   })
+
+const mergeResolveType = ({ typeComposer, type }) => {
+  if (
+    (type instanceof GraphQLInterfaceType ||
+      type instanceof GraphQLUnionType) &&
+    type.resolveType
+  ) {
+    typeComposer.setResolveType(type.resolveType)
+  }
+  if (
+    (type instanceof InterfaceTypeComposer ||
+      type instanceof UnionTypeComposer) &&
+    type.getResolveType()
+  ) {
+    typeComposer.setResolveType(type.getResolveType())
+  }
+  if (!typeComposer.getResolveType()) {
+    typeComposer.setResolveType(node => node?.internal?.type)
+  }
+}

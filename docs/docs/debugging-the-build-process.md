@@ -182,7 +182,7 @@ This example has problematic code in your local `gatsby-node.js` file, so add th
 
 ### Using DevTools
 
-Go ahead and add a breakpoint just before the place that the error is thrown. To add a breakpoint navigate to `gatsby-node.js` and left click on a line number:
+Go ahead and add a breakpoint just before the place that the error is thrown. To add a breakpoint navigate to `gatsby-node.js` and left-click on a line number:
 
 ![Added breakpoint](./images/chrome-devtools-new-breakpoint.png)
 
@@ -202,7 +202,7 @@ You can now see the problem - `args` doesn't contain `Node` - it contains `node`
 
 You can successfully debug your code using Chrome DevTools but using it isn't really that convenient. There are a lot of steps you need to do manually every time you want to use the debugger. Thankfully there are other methods that make it simpler to start such as the ones outlined above.
 
-- This was an introduction to Node.js debugging. Using information from this section you can setup debugging in your code editor or IDE of choice (if it supports Node.js debugging).
+- This was an introduction to Node.js debugging. Using information from this section you can set up debugging in your code editor or IDE of choice (if it supports Node.js debugging).
 - You don't _need_ a code editor or IDE to debug Node.js applications. Using Chrome DevTools is usually a safe fallback.
 - Debugging isn't the only thing you can do in Chrome DevTools. Once you connect to DevTools you can use CPU or memory profilers. Check the `Profiler` and `Memory` tabs in DevTools.
 

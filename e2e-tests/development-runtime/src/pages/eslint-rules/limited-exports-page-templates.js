@@ -5,14 +5,12 @@ function PageQuery({ data }) {
   return (
     <div>
       <h1 data-testid="title">Limited Exports Page Templates. ESLint Rule</h1>
-      <p data-testid="hot">
-        {data.site.siteMetadata.title}
-      </p>
+      <p data-testid="hot">{data.site.siteMetadata.title}</p>
     </div>
   )
 }
 
-export function notAllowed() {}
+// export function notAllowed() {}
 
 export const query = graphql`
   {

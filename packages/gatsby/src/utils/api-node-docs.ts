@@ -411,6 +411,19 @@ export const onCreateWebpackConfig = true
 export const onPreInit = true
 
 /**
+ * Lifecycle executed in each process (one time per process). Used to store actions etc for later use.
+ *
+ * @example
+ * let createJobV2
+ * exports.onPluginInit = ({ actions }) => {
+ *   // store job creation action to use it later
+ *   createJobV2 = actions.createJobV2
+ * }
+ * @gatsbyVersion 3.9.0
+ */
+export const onPluginInit = true
+
+/**
  * Called once Gatsby has initialized itself and is ready to bootstrap your site.
  */
 export const onPreBootstrap = true

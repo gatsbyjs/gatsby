@@ -10,7 +10,7 @@
     "develop": "gatsby develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "jest --config=jest.config.js --runInBand"
+    "test": "jest --runInBand"
   },
   "dependencies": {
     "gatsby": "^3.0.0-next.0",
@@ -19,8 +19,7 @@
   },
   "devDependencies": {
     "fs-extra": "^9.0.0",
-    "jest": "^24.0.0",
-    "jest-cli": "^24.0.0"
+    "jest": "^24.0.0"
   },
   "repository": {
     "type": "git",

@@ -17,6 +17,16 @@ const cheerio = require(`cheerio`)
 const { slash } = require(`gatsby-core-utils`)
 const chalk = require(`chalk`)
 
+// Should be the same as https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-sharp/src/supported-extensions.js
+const supportedExtensions = {
+  jpeg: true,
+  jpg: true,
+  png: true,
+  webp: true,
+  tif: true,
+  tiff: true,
+}
+
 // If the image is relative (not hosted elsewhere)
 // 1. Find the image file
 // 2. Find the image's size
@@ -191,6 +201,18 @@ module.exports = (
       )
     }
 
+    const decoding = options.decoding
+
+    if (![`async`, `sync`, `auto`].includes(decoding)) {
+      reporter.warn(
+        reporter.stripIndent(`
+        ${chalk.bold(decoding)} is an invalid value for the ${chalk.bold(
+          `decoding`
+        )} option. Please pass one of "async", "sync" or "auto".
+      `)
+      )
+    }
+
     const imageStyle = `
       width: 100%;
       height: 100%;
@@ -211,6 +233,7 @@ module.exports = (
         sizes="${fluidResult.sizes}"
         style="${imageStyle}"
         loading="${loading}"
+        decoding="${decoding}"
       />
     `.trim()
 
@@ -279,6 +302,7 @@ module.exports = (
             alt="${alt}"
             title="${title}"
             loading="${loading}"
+            decoding="${decoding}"
             style="${imageStyle}"
           />
         </picture>
@@ -407,13 +431,8 @@ module.exports = (
           }
           const fileType = getImageInfo(node.url).ext
 
-          // Ignore gifs as we can't process them,
-          // svgs as they are already responsive by definition
-          if (
-            isRelativeUrl(node.url) &&
-            fileType !== `gif` &&
-            fileType !== `svg`
-          ) {
+          // Only attempt to convert supported extensions
+          if (isRelativeUrl(node.url) && supportedExtensions[fileType]) {
             return generateImagesAndUpdateNode(
               node,
               resolve,
@@ -474,12 +493,10 @@ module.exports = (
 
               const fileType = getImageInfo(formattedImgTag.url).ext
 
-              // Ignore gifs as we can't process them,
-              // svgs as they are already responsive by definition
+              // Only attempt to convert supported extensions
               if (
                 isRelativeUrl(formattedImgTag.url) &&
-                fileType !== `gif` &&
-                fileType !== `svg`
+                supportedExtensions[fileType]
               ) {
                 const rawHTML = await generateImagesAndUpdateNode(
                   formattedImgTag,

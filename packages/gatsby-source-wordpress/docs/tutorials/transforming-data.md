@@ -24,7 +24,7 @@ const defaultPluginOptions = {
           actionType === `CREATE` ||
           actionType === `UPDATE`
         ) {
-          const createdMediaItem = await createRemoteMediaItemNode({
+          const createdMediaItem = await createLocalFileNode({
             mediaItemNode: remoteNode,
             parentName: `Node action ${actionType}`,
           })

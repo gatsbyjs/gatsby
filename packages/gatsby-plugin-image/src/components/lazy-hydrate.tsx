@@ -1,5 +1,5 @@
 import React, { MutableRefObject } from "react"
-import { hydrate, render } from "react-dom"
+import ReactDOM from "react-dom"
 import { GatsbyImageProps } from "./gatsby-image.browser"
 import { LayoutWrapper } from "./layout-wrapper"
 import { Placeholder } from "./placeholder"
@@ -60,7 +60,9 @@ export function lazyHydrate(
           layout,
           width,
           height,
-          wrapperBackgroundColor
+          wrapperBackgroundColor,
+          objectFit,
+          objectPosition
         )}
       />
 
@@ -83,14 +85,36 @@ export function lazyHydrate(
     </LayoutWrapper>
   )
 
-  // Force render to mitigate "Expected server HTML to contain a matching" in develop
-  const doRender = hydrated.current || forceHydrate.current ? render : hydrate
-  doRender(component, root.current)
-  hydrated.current = true
+  if (root.current) {
+    // Force render to mitigate "Expected server HTML to contain a matching" in develop
+    // @ts-ignore react 18 typings
+    if (ReactDOM.createRoot) {
+      if (!hydrated.current) {
+        // @ts-ignore react 18 typings
+        hydrated.current = ReactDOM.createRoot(root.current)
+      }
+
+      // @ts-ignore react 18 typings
+      hydrated.current.render(component)
+    } else {
+      const doRender =
+        hydrated.current || forceHydrate.current
+          ? ReactDOM.render
+          : ReactDOM.hydrate
+      doRender(component, root.current)
+      hydrated.current = true
+    }
+  }
 
   return (): void => {
     if (root.current) {
-      render((null as unknown) as ReactElement, root.current)
+      // @ts-ignore react 18 typings
+      if (ReactDOM.createRoot) {
+        // @ts-ignore react 18 typings
+        hydrated.current.render(null)
+      } else {
+        ReactDOM.render(null as unknown as ReactElement, root.current)
+      }
     }
   }
 }

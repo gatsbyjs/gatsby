@@ -61,9 +61,8 @@ export function _getStaticImage(
   }
 }
 
-const StaticImage: React.FC<
-  IStaticImageProps & IPrivateProps
-> = _getStaticImage(GatsbyImageServer)
+const StaticImage: React.FC<IStaticImageProps & IPrivateProps> =
+  _getStaticImage(GatsbyImageServer)
 
 const checkDimensionProps: PropTypes.Validator<number> = (
   props: IStaticImageProps & IPrivateProps,

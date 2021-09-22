@@ -94,8 +94,8 @@ export async function writeImages({
       if (isRemoteURL(src)) {
         let createRemoteFileNode
         try {
-          createRemoteFileNode = require(`gatsby-source-filesystem`)
-            .createRemoteFileNode
+          createRemoteFileNode =
+            require(`gatsby-source-filesystem`).createRemoteFileNode
         } catch (e) {
           reporter.panic(`Please install gatsby-source-filesystem`)
         }
@@ -110,7 +110,7 @@ export async function writeImages({
             reporter,
           })
         } catch (err) {
-          reporter.error(`Error loading image ${src}`)
+          reporter.error(`Error loading image ${src}`, err)
           return
         }
         if (

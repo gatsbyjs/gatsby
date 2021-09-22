@@ -3,13 +3,7 @@ const path = require(`path`)
 
 jest.setTimeout(20000) // 20s
 
-const gatsbyBin = path.join(
-  `node_modules`,
-  `gatsby`,
-  `dist`,
-  `bin`,
-  `gatsby.js`
-)
+const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
 describe(`IPC Send`, () => {
   let gatsbyProcess

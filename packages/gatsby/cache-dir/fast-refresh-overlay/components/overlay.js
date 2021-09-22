@@ -73,7 +73,7 @@ export function Overlay({ children }) {
 
 export function CloseButton({ dismiss }) {
   return (
-    <button data-gatsby-overlay="header__close-button" onClick={dismiss}>
+    <button data-gatsby-overlay="close-button" onClick={dismiss}>
       <VisuallyHidden>Close</VisuallyHidden>
       <svg
         aria-hidden={true}
@@ -108,7 +108,7 @@ export function HeaderOpenClose({ open, dismiss, children, ...rest }) {
       {children}
       <div data-gatsby-overlay="header__open-close">
         {open && (
-          <button onClick={open} data-gatsby-overlay="header__open-in-editor">
+          <button onClick={open} data-gatsby-overlay="primary-button">
             Open in editor
           </button>
         )}

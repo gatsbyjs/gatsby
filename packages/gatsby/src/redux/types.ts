@@ -3,8 +3,10 @@ import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import { DocumentNode, GraphQLSchema, DefinitionNode } from "graphql"
 import { SchemaComposer } from "graphql-compose"
 import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
-import { InternalJob, JobResultInterface } from "../utils/jobs-manager"
+import { ThunkAction } from "redux-thunk"
+import { InternalJob, JobResultInterface } from "../utils/jobs/manager"
 import { ITypeMetadata } from "../schema/infer/inference-metadata"
+import { Span } from "opentracing"
 
 type SystemPath = string
 type Identifier = string
@@ -24,6 +26,8 @@ export enum ProgramStatus {
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
 }
 
+export type PageMode = "SSG" | "DSG" | "SSR"
+
 export interface IGatsbyPage {
   internalComponentName: string
   path: string
@@ -37,6 +41,25 @@ export interface IGatsbyPage {
   pluginCreator___NODE: Identifier
   pluginCreatorId: Identifier
   componentPath: SystemPath
+  ownerNodeId: Identifier
+  mode: PageMode
+}
+
+export interface IGatsbyFunction {
+  /** The route in the browser to access the function **/
+  functionRoute: string
+  /** The absolute path to the original function **/
+  originalAbsoluteFilePath: string
+  /** The relative path to the original function **/
+  originalRelativeFilePath: string
+  /** The relative path to the compiled function (always ends with .js) **/
+  relativeCompiledFilePath: string
+  /** The absolute path to the compiled function (doesn't transfer across machines) **/
+  absoluteCompiledFilePath: string
+  /** The matchPath regex created by path-to-regexp. Only created if the function is dynamic. **/
+  matchPath: string | undefined
+  /** The plugin that owns this function route **/
+  pluginName: string
 }
 
 export interface IGatsbyConfig {
@@ -102,6 +125,7 @@ export interface IGatsbyStaticQueryComponents {
 
 export interface IGatsbyPageComponent {
   componentPath: SystemPath
+  componentChunkName: string
   query: string
   pages: Set<string>
   isInBootstrap: boolean
@@ -124,7 +148,6 @@ type GatsbyNodes = Map<string, IGatsbyNode>
 
 export interface IGatsbyIncompleteJobV2 {
   job: InternalJob
-  plugin: IGatsbyPlugin
 }
 
 export interface IGatsbyIncompleteJob {
@@ -160,6 +183,7 @@ type BabelStageKeys =
 
 export interface IStateProgram extends IProgram {
   extensions: Array<string>
+  browserslist: Array<string>
 }
 
 export interface IQueryState {
@@ -190,6 +214,7 @@ export type GatsbyNodeAPI =
   | "onPostBoostrap"
   | "onCreateWebpackConfig"
   | "onCreatePage"
+  | "onCreateNode"
   | "sourceNodes"
   | "createPagesStatefully"
   | "createPages"
@@ -201,6 +226,7 @@ export interface IGatsbyState {
   nodesByType: Map<string, GatsbyNodes>
   resolvedNodesCache: Map<string, any> // TODO
   nodesTouched: Set<string>
+  nodeManifests: Array<INodeManifest>
   lastAction: ActionsUnion
   flattenedPlugins: Array<{
     resolve: SystemPath
@@ -220,8 +246,11 @@ export interface IGatsbyState {
     >
     ssrAPIs: Array<"onRenderBody" | "onPreRenderHTML">
     pluginFilepath: SystemPath
+    subPluginPaths?: Array<string>
+    modulePath?: string
   }>
   config: IGatsbyConfig
+  functions: Array<IGatsbyFunction>
   pages: Map<string, IGatsbyPage>
   schema: GraphQLSchema
   definitions: Map<string, IDefinitionMeta>
@@ -298,6 +327,8 @@ export interface IGatsbyState {
   }
 }
 
+export type GatsbyStateKeys = keyof IGatsbyState
+
 export interface ICachedReduxState {
   nodes?: IGatsbyState["nodes"]
   status: IGatsbyState["status"]
@@ -306,6 +337,7 @@ export interface ICachedReduxState {
   staticQueryComponents: IGatsbyState["staticQueryComponents"]
   webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
   pageDataStats: IGatsbyState["pageDataStats"]
+  pages?: IGatsbyState["pages"]
   staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
   pendingPageDataWrites: IGatsbyState["pendingPageDataWrites"]
   queries: IGatsbyState["queries"]
@@ -371,12 +403,13 @@ export type ActionsUnion =
   | IDisableTypeInferenceAction
   | ISetProgramAction
   | ISetProgramExtensions
-  | IDeletedStalePageDataFiles
   | IRemovedHtml
   | ITrackedHtmlCleanup
   | IGeneratedHtml
   | IMarkHtmlDirty
   | ISSRUsedUnsafeBuiltin
+  | ISetSiteConfig
+  | IMergeWorkerQueryState
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -416,8 +449,8 @@ export interface ICreateJobV2Action {
   type: `CREATE_JOB_V2`
   payload: {
     job: IGatsbyIncompleteJobV2["job"]
-    plugin: IGatsbyIncompleteJobV2["plugin"]
   }
+  plugin: { name: string }
 }
 
 export interface IEndJobV2Action {
@@ -426,6 +459,7 @@ export interface IEndJobV2Action {
     jobContentDigest: string
     result: JobResultInterface
   }
+  plugin: { name: string }
 }
 
 export interface IRemoveStaleJobV2Action {
@@ -434,6 +468,13 @@ export interface IRemoveStaleJobV2Action {
     contentDigest: string
   }
 }
+
+export type ICreateJobV2FromInternalAction = ThunkAction<
+  Promise<Record<string, unknown>>,
+  IGatsbyState,
+  void,
+  ActionsUnion
+>
 
 interface ICreateJobAction {
   type: `CREATE_JOB`
@@ -741,10 +782,18 @@ export interface ISetSiteConfig {
   payload: IGatsbyState["config"]
 }
 
+export interface ISetSiteFunctions {
+  type: `SET_SITE_FUNCTIONS`
+  payload: IGatsbyState["functions"]
+}
+
 export interface ICreateNodeAction {
   type: `CREATE_NODE`
   payload: IGatsbyNode
   oldNode?: IGatsbyNode
+  traceId: string
+  parentSpan: Span
+  followsSpan: Span
 }
 
 export interface IAddFieldToNodeAction {
@@ -819,13 +868,6 @@ interface ISetProgramExtensions {
   payload: Array<string>
 }
 
-interface IDeletedStalePageDataFiles {
-  type: `DELETED_STALE_PAGE_DATA_FILES`
-  payload: {
-    pagePathsToClear: Set<string>
-  }
-}
-
 interface IRemovedHtml {
   type: `HTML_REMOVED`
   payload: string
@@ -851,4 +893,33 @@ interface IMarkHtmlDirty {
 
 interface ISSRUsedUnsafeBuiltin {
   type: `SSR_USED_UNSAFE_BUILTIN`
+}
+
+export interface ICreateNodeManifest {
+  type: `CREATE_NODE_MANIFEST`
+  payload: {
+    manifestId: string
+    node: IGatsbyNode
+    pluginName: string
+  }
+}
+
+export interface IDeleteNodeManifests {
+  type: `DELETE_NODE_MANIFESTS`
+}
+
+export interface INodeManifest {
+  manifestId: string
+  pluginName: string
+  node: {
+    id: string
+  }
+}
+
+export interface IMergeWorkerQueryState {
+  type: `MERGE_WORKER_QUERY_STATE`
+  payload: {
+    workerId: number
+    queryStateChunk: IGatsbyState["queries"]
+  }
 }

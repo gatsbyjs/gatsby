@@ -72,10 +72,13 @@ const runSteps = async (
   }
 }
 
-const runApiSteps = (steps: Array<Step>, apiName: string) => async (
-  helpers: GatsbyNodeApiHelpers,
-  pluginOptions: IPluginOptions
-): Promise<void> => runSteps(steps, helpers, pluginOptions, apiName)
+const runApiSteps =
+  (steps: Array<Step>, apiName: string) =>
+  async (
+    helpers: GatsbyNodeApiHelpers,
+    pluginOptions: IPluginOptions
+  ): Promise<void> =>
+    runSteps(steps, helpers, pluginOptions, apiName)
 
 const runApisInSteps = (nodeApis: {
   [apiName: string]: Array<Step> | Step

@@ -52,7 +52,7 @@ const transformWebpackError = (
   stage: StageEnum,
   webpackError: WebpackError
 ): ITransformedWebpackError => {
-  const castedWebpackError = (webpackError as unknown) as IWebpackError
+  const castedWebpackError = webpackError as unknown as IWebpackError
 
   let location
   if (castedWebpackError.loc && castedWebpackError.loc.start) {
@@ -109,9 +109,8 @@ const transformWebpackError = (
     // it shows extra information for things that changed with webpack
     const BreakingChangeRegex = /BREAKING CHANGE[\D\n\d]+$/
     if (BreakingChangeRegex.test(castedWebpackError.message)) {
-      const breakingMatch = castedWebpackError.message.match(
-        BreakingChangeRegex
-      )
+      const breakingMatch =
+        castedWebpackError.message.match(BreakingChangeRegex)
 
       context.deprecationReason = breakingMatch?.[0]
     }
@@ -148,7 +147,16 @@ export const reportWebpackWarnings = (
   warnings: StatsCompilation["warnings"] = [],
   reporter: Reporter
 ): void => {
-  const warningMessages = warnings.map(warning => warning.message)
+  let warningMessages: Array<string> = []
+  if (typeof warnings[0] === `string`) {
+    warningMessages = warnings as unknown as Array<string>
+  } else if (warnings[0]?.message && warnings[0]?.moduleName) {
+    warningMessages = warnings.map(
+      warning => `${warning.moduleName}\n\n${warning.message}`
+    )
+  } else if (warnings[0]?.message) {
+    warningMessages = warnings.map(warning => warning.message)
+  }
 
   formatWebpackMessages({
     errors: [],

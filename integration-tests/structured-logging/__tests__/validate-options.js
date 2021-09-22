@@ -3,13 +3,7 @@ const path = require(`path`)
 
 jest.setTimeout(100000)
 
-const gatsbyBin = path.join(
-  `node_modules`,
-  `gatsby`,
-  `dist`,
-  `bin`,
-  `gatsby.js`
-)
+const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
 describe(`Validate Plugin Options`, () => {
   let gatsbyProcess
@@ -63,37 +57,35 @@ describe(`Validate Plugin Options`, () => {
               level: `ERROR`,
               category: `USER`,
               context: expect.objectContaining({
-                pluginName: expect.stringContaining("integration-tests/structured-logging/local-plugin-with-path/index.js"),
+                pluginName: expect.stringContaining(
+                  "integration-tests/structured-logging/local-plugin-with-path/index.js"
+                ),
                 validationErrors: expect.arrayContaining([
                   {
                     context: {
                       key: "required",
-                      label: "required"
+                      label: "required",
                     },
-                    message: "\"required\" is required",
-                    path: [
-                      "required"
-                    ],
-                    type: "any.required"
+                    message: '"required" is required',
+                    path: ["required"],
+                    type: "any.required",
                   },
                   {
                     context: {
                       key: "optionalString",
                       label: "optionalString",
-                      value: 1234
+                      value: 1234,
                     },
-                    message: "\"optionalString\" must be a string",
-                    path: [
-                      "optionalString"
-                    ],
-                    type: "string.base"
-                  }
-                ])
+                    message: '"optionalString" must be a string',
+                    path: ["optionalString"],
+                    type: "string.base",
+                  },
+                ]),
               }),
               code: `11331`,
               type: `PLUGIN`,
-            })
-          })
+            }),
+          }),
         }),
         // Local plugin with name in gatsby-config
         expect.objectContaining({
@@ -109,33 +101,29 @@ describe(`Validate Plugin Options`, () => {
                   {
                     context: {
                       key: "required",
-                      label: "required"
+                      label: "required",
                     },
-                    message: "\"required\" is required",
-                    path: [
-                      "required"
-                    ],
-                    type: "any.required"
+                    message: '"required" is required',
+                    path: ["required"],
+                    type: "any.required",
                   },
                   {
                     context: {
                       key: "optionalString",
                       label: "optionalString",
-                      value: 1234
+                      value: 1234,
                     },
-                    message: "\"optionalString\" must be a string",
-                    path: [
-                      "optionalString"
-                    ],
-                    type: "string.base"
-                  }
-                ])
+                    message: '"optionalString" must be a string',
+                    path: ["optionalString"],
+                    type: "string.base",
+                  },
+                ]),
               }),
               code: `11331`,
               type: `PLUGIN`,
-            })
-          })
-        })
+            }),
+          }),
+        }),
       ])
     )
   })

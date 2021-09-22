@@ -1,7 +1,5 @@
 import Anser from "anser"
 
-const enterRegex = /^\s$/
-
 export function prettifyStack(errorInformation) {
   let txt
   if (Array.isArray(errorInformation)) {
@@ -9,26 +7,32 @@ export function prettifyStack(errorInformation) {
   } else {
     txt = errorInformation
   }
-  const generated = Anser.ansiToJson(txt, {
+  return Anser.ansiToJson(txt, {
     remove_empty: true,
     use_classes: true,
     json: true,
   })
-  // Sometimes the first line/entry is an "Enter", so we need to filter this out
-  const [firstLine, ...rest] = generated
-  if (enterRegex.test(firstLine.content)) {
-    return rest
-  }
-  return generated
 }
 
 export function openInEditor(file, lineNumber = 1) {
-  window.fetch(
+  fetch(
     `/__open-stack-frame-in-editor?fileName=` +
       window.encodeURIComponent(file) +
       `&lineNumber=` +
       window.encodeURIComponent(lineNumber)
   )
+}
+
+export function reloadPage() {
+  window.location.reload()
+}
+
+export function skipSSR() {
+  if (`URLSearchParams` in window) {
+    const searchParams = new URLSearchParams(window.location.search)
+    searchParams.set(`skip-ssr`, `true`)
+    window.location.search = searchParams.toString()
+  }
 }
 
 export function getCodeFrameInformation(stackTrace) {

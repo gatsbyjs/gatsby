@@ -92,6 +92,27 @@ const IndexPage = ({ pageContext }) => (
           Go to client route splat (splat: blah/blah/blah)
         </Link>
       </li>
+      <li>
+        <Link to="/redirect-two#anchor" data-testid="redirect-two-anchor">
+          Go to redirect with hash
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="/redirect-two?query_param=hello"
+          data-testid="redirect-two-search"
+        >
+          Go to redirect with query param
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="/redirect-two?query_param=hello#anchor"
+          data-testid="redirect-two-search-anchor"
+        >
+          Go to redirect with query param and hash
+        </Link>
+      </li>
     </ul>
   </Layout>
 )

@@ -593,21 +593,26 @@ const createFields = ({
           // keep track of in progress copy, we should rely on `existsSync` but
           // a race condition exists between the exists check and the copy
           inProgressCopy.add(publicPath)
-          fs.copy(details.absolutePath, publicPath, err => {
-            // this is no longer in progress
-            inProgressCopy.delete(publicPath)
-            if (err) {
-              reporter.panic(
-                {
-                  id: prefixId(CODES.MissingResource),
-                  context: {
-                    sourceMessage: `error copying file from ${details.absolutePath} to ${publicPath}`,
+          fs.copy(
+            details.absolutePath,
+            publicPath,
+            { dereference: true },
+            err => {
+              // this is no longer in progress
+              inProgressCopy.delete(publicPath)
+              if (err) {
+                reporter.panic(
+                  {
+                    id: prefixId(CODES.MissingResource),
+                    context: {
+                      sourceMessage: `error copying file from ${details.absolutePath} to ${publicPath}`,
+                    },
                   },
-                },
-                err
-              )
+                  err
+                )
+              }
             }
-          })
+          )
         }
 
         return {

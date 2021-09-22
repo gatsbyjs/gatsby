@@ -163,7 +163,7 @@ To do this, we can use a function like the following:
 ```javascript
 const flatListToHierarchical = (
   data = [],
-  { idKey = "key", parentKey = "parentId", childrenKey = "children" } = {}
+  { idKey = "id", parentKey = "parentId", childrenKey = "children" } = {}
 ) => {
   const tree = []
   const childrenOf = {}

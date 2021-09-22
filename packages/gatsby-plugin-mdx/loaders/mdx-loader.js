@@ -1,10 +1,10 @@
 const _ = require(`lodash`)
 const { getOptions } = require(`loader-utils`)
 const grayMatter = require(`gray-matter`)
+const path = require(`path`)
 const unified = require(`unified`)
 const babel = require(`@babel/core`)
 const { createRequireFromPath, slash } = require(`gatsby-core-utils`)
-const { interopDefault } = require(`../utils/interop-default`)
 
 const {
   isImport,
@@ -95,7 +95,9 @@ const hasDefaultExport = (str, options) => {
 
 module.exports = async function mdxLoader(content) {
   const callback = this.async()
+
   const {
+    isolateMDXComponent,
     getNode: rawGetNode,
     getNodes,
     getNodesByType,
@@ -105,6 +107,24 @@ module.exports = async function mdxLoader(content) {
     pluginOptions,
     ...helpers
   } = getOptions(this)
+
+  const resourceQuery = this.resourceQuery || ``
+  if (isolateMDXComponent && !resourceQuery.includes(`type=component`)) {
+    const { data } = grayMatter(content)
+
+    const requestPath = slash(
+      `/${path.relative(this.rootContext, this.resourcePath)}?type=component`
+    )
+
+    return callback(
+      null,
+      `import MDXContent from "${requestPath}";
+export default MDXContent;
+export * from "${requestPath}"
+
+export const _frontmatter = ${JSON.stringify(data)};`
+    )
+  }
 
   const options = withDefaultOptions(pluginOptions)
 
@@ -135,6 +155,7 @@ module.exports = async function mdxLoader(content) {
         content,
         options,
         getNodesByType,
+        getNode: rawGetNode,
       }))
     } else {
       mdxNode = await createMdxNodeExtraBabel({
@@ -184,7 +205,7 @@ ${contentWithoutFrontmatter}`
    */
   for (const plugin of options.gatsbyRemarkPlugins) {
     debug(`requiring`, plugin.resolve)
-    const requiredPlugin = interopDefault(require(plugin.resolve))
+    const requiredPlugin = plugin.module
     debug(`required`, plugin)
     if (_.isFunction(requiredPlugin.setParserPlugins)) {
       for (const parserPlugin of requiredPlugin.setParserPlugins(
@@ -213,6 +234,7 @@ ${contentWithoutFrontmatter}`
     reporter,
     cache,
     pathPrefix,
+    isolateMDXComponent,
   })
 
   try {

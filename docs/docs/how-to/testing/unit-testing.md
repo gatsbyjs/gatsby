@@ -1,5 +1,8 @@
 ---
 title: Unit Testing
+examples:
+  - label: Using Jest
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-jest"
 ---
 
 Unit testing is a great way to protect against errors in your code before you
@@ -62,8 +65,11 @@ const babelOptions = {
   presets: ["babel-preset-gatsby"],
 }
 
-module.exports = require("babel-jest").createTransformer(babelOptions)
+module.exports = require("babel-jest").default.createTransformer(babelOptions)
 ```
+
+> **Note:** If you're using Jest 26.6.3 or below, the last line has to be changed to
+> `module.exports = require("babel-jest").createTransformer(babelOptions)`
 
 - The next option is `moduleNameMapper`. This
   section works a bit like webpack rules and tells Jest how to handle imports.
@@ -267,7 +273,7 @@ const paths = pathsToModuleNameMapper(compilerOptions.paths, {
 ```js:title=jest.config.js
   moduleNameMapper: {
     '.+\\.(css|styl|less|sass|scss)$': `identity-obj-proxy`,
-    '.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': `<rootDir>/tests/file-mock.js`,
+    '.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': `<rootDir>/__mocks__/file-mock.js`,
     ...paths,
   },
 ```

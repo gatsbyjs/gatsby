@@ -14,6 +14,12 @@ export function BuildError({ error }) {
   const decoded = prettifyStack(error)
   const [filePath] = decoded
   const file = filePath.content.split(`\n`)[0]
+  const lineMatch = filePath.content.match(/\((\d+)[^)]+\)/)
+  let line = 1
+
+  if (lineMatch) {
+    line = lineMatch[1]
+  }
 
   return (
     <Overlay>
@@ -22,7 +28,10 @@ export function BuildError({ error }) {
           <h1 id="gatsby-overlay-labelledby">Failed to compile</h1>
           <span>{file}</span>
         </div>
-        <HeaderOpenClose open={() => openInEditor(file, 1)} dismiss={false} />
+        <HeaderOpenClose
+          open={() => openInEditor(file, line)}
+          dismiss={false}
+        />
       </Header>
       <Body>
         <h2>Source</h2>

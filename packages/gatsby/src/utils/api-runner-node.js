@@ -23,17 +23,13 @@ import {
   buildScalarType,
 } from "../schema/types/type-builders"
 const { emitter, store } = require(`../redux`)
-const {
-  getNodes,
-  getNode,
-  getNodesByType,
-  getNodeAndSavePathDependency,
-} = require(`../redux/nodes`)
+const { getNodes, getNode, getNodesByType } = require(`../datastore`)
+const { getNodeAndSavePathDependency, loadNodeContent } = require(`./nodes`)
 const { getPublicPath } = require(`./get-public-path`)
+const { requireGatsbyPlugin } = require(`./require-gatsby-plugin`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 import errorParser from "./api-runner-error-parser"
-const { loadNodeContent } = require(`../db/nodes`)
 
 if (!process.env.BLUEBIRD_DEBUG && !process.env.BLUEBIRD_LONG_STACK_TRACES) {
   // Unless specified - disable longStackTraces
@@ -91,23 +87,25 @@ const initAPICallTracing = parentSpan => {
   }
 }
 
-const deferredAction = type => (...args) => {
-  // Regular createNode returns a Promise, but when deferred we need
-  // to wrap it in another which we resolve when it's actually called
-  if (type === `createNode`) {
-    return new Promise(resolve => {
-      emitter.emit(`ENQUEUE_NODE_MUTATION`, {
-        type,
-        payload: args,
-        resolve,
+const deferredAction =
+  type =>
+  (...args) => {
+    // Regular createNode returns a Promise, but when deferred we need
+    // to wrap it in another which we resolve when it's actually called
+    if (type === `createNode`) {
+      return new Promise(resolve => {
+        emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+          type,
+          payload: args,
+          resolve,
+        })
       })
+    }
+    return emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+      type,
+      payload: args,
     })
   }
-  return emitter.emit(`ENQUEUE_NODE_MUTATION`, {
-    type,
-    payload: args,
-  })
-}
 
 const NODE_MUTATION_ACTIONS = [
   `createNode`,
@@ -245,19 +243,16 @@ const getUninitializedCache = plugin => {
     async set() {
       throw new Error(message)
     },
+    async del() {
+      throw new Error(message)
+    },
   }
 }
-
-const pluginNodeCache = new Map()
 
 const availableActionsCache = new Map()
 let publicPath
 const runAPI = async (plugin, api, args, activity) => {
-  let gatsbyNode = pluginNodeCache.get(plugin.name)
-  if (!gatsbyNode) {
-    gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
-    pluginNodeCache.set(plugin.name, gatsbyNode)
-  }
+  const gatsbyNode = requireGatsbyPlugin(plugin, `gatsby-node`)
 
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
@@ -380,6 +375,7 @@ const runAPI = async (plugin, api, args, activity) => {
     const apiCallArgs = [
       {
         ...args,
+        parentSpan: pluginSpan,
         basePath: pathPrefix,
         pathPrefix: publicPath,
         actions,
@@ -447,8 +443,30 @@ const apisRunningById = new Map()
 const apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
-module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
-  new Promise(resolve => {
+function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
+  const plugins = store.getState().flattenedPlugins
+
+  // Get the list of plugins that implement this API.
+  // Also: Break infinite loops. Sometimes a plugin will implement an API and
+  // call an action which will trigger the same API being called.
+  // `onCreatePage` is the only example right now. In these cases, we should
+  // avoid calling the originating plugin again.
+  let implementingPlugins = plugins.filter(
+    plugin => plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource
+  )
+
+  if (api === `sourceNodes` && args.pluginName) {
+    implementingPlugins = implementingPlugins.filter(
+      plugin => plugin.name === args.pluginName
+    )
+  }
+
+  // If there's no implementing plugins, return early.
+  if (implementingPlugins.length === 0) {
+    return null
+  }
+
+  return new Promise(resolve => {
     const { parentSpan, traceId, traceTags, waitForCascadingActions } = args
     const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
     const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
@@ -457,23 +475,6 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
     _.forEach(traceTags, (value, key) => {
       apiSpan.setTag(key, value)
     })
-
-    const plugins = store.getState().flattenedPlugins
-
-    // Get the list of plugins that implement this API.
-    // Also: Break infinite loops. Sometimes a plugin will implement an API and
-    // call an action which will trigger the same API being called.
-    // `onCreatePage` is the only example right now. In these cases, we should
-    // avoid calling the originating plugin again.
-    let implementingPlugins = plugins.filter(
-      plugin => plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource
-    )
-
-    if (api === `sourceNodes` && args.pluginName) {
-      implementingPlugins = implementingPlugins.filter(
-        plugin => plugin.name === args.pluginName
-      )
-    }
 
     const apiRunInstance = {
       api,
@@ -558,12 +559,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
           return null
         }
 
-        let gatsbyNode = pluginNodeCache.get(plugin.name)
-        if (!gatsbyNode) {
-          gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
-          pluginNodeCache.set(plugin.name, gatsbyNode)
-        }
-
+        const gatsbyNode = requireGatsbyPlugin(plugin, `gatsby-node`)
         const pluginName =
           plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
@@ -680,3 +676,6 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       return
     })
   })
+}
+
+module.exports = apiRunnerNode

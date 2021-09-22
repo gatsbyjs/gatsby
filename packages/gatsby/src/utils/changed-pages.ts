@@ -7,14 +7,16 @@ import { IGatsbyPage } from "../redux/types"
 
 export function deleteUntouchedPages(
   currentPages: Map<string, IGatsbyPage>,
-  timeBeforeApisRan: number
+  timeBeforeApisRan: number,
+  shouldRunCreatePagesStatefully: boolean
 ): Array<string> {
   const deletedPages: Array<string> = []
 
   // Delete pages that weren't updated when running createPages.
   currentPages.forEach(page => {
     if (
-      !page.isCreatedByStatefulCreatePages &&
+      (shouldRunCreatePagesStatefully ||
+        !page.isCreatedByStatefulCreatePages) &&
       page.updatedAt < timeBeforeApisRan &&
       page.path !== `/404.html`
     ) {

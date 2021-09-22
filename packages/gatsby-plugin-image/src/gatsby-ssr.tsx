@@ -42,6 +42,7 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
   }
   .gatsby-image-wrapper-constrained {
     display: inline-block;
+    vertical-align: top;
   }
     `)}
     />,

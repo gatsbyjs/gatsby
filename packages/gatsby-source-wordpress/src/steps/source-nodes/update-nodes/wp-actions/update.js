@@ -5,6 +5,8 @@ import chalk from "chalk"
 import { getQueryInfoBySingleFieldName } from "../../helpers"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { CREATED_NODE_IDS } from "~/constants"
+import fetchReferencedMediaItemsAndCreateNodes from "../../fetch-nodes/fetch-referenced-media-items"
+
 import { dump } from "dumper.js"
 import { atob } from "atob"
 
@@ -20,9 +22,9 @@ export const fetchAndCreateSingleNode = async ({
   id,
   actionType,
   cachedNodeIds,
-  isDraft,
   token = null,
   isPreview = false,
+  isDraft = false,
   userDatabaseId = null,
 }) => {
   function getNodeQuery() {
@@ -79,6 +81,16 @@ export const fetchAndCreateSingleNode = async ({
         `${id} ${singleName} was updated, but no data was returned for this node.`
       )
     )
+
+    reporter.info({
+      singleName,
+      id,
+      actionType,
+      cachedNodeIds,
+      token,
+      isPreview,
+      userDatabaseId,
+    })
 
     return { node: null }
   }
@@ -160,24 +172,31 @@ export const createSingleNode = async ({
     type: typeInfo.nodesTypeName,
   }
 
-  const processedNode = await processNode({
+  const { processedNode, nodeMediaItemIdReferences } = await processNode({
     node: updatedNodeContent,
     pluginOptions,
     wpUrl,
     helpers,
   })
 
+  await fetchReferencedMediaItemsAndCreateNodes({
+    referencedMediaItemNodeIds: nodeMediaItemIdReferences,
+  })
+
   const { actions } = helpers
 
   const { createContentDigest } = helpers
 
+  const builtTypename = buildTypeName(typeInfo.nodesTypeName)
+
   let remoteNode = {
     ...processedNode,
+    __typename: builtTypename,
     id: id,
     parent: null,
     internal: {
       contentDigest: createContentDigest(updatedNodeContent),
-      type: buildTypeName(typeInfo.nodesTypeName),
+      type: builtTypename,
     },
   }
 
@@ -185,7 +204,7 @@ export const createSingleNode = async ({
     name: typeInfo.nodesTypeName,
   })
 
-  let additionalNodeIds
+  let additionalNodeIds = nodeMediaItemIdReferences || []
   let cancelUpdate
 
   if (
@@ -196,20 +215,23 @@ export const createSingleNode = async ({
       additionalNodeIds: receivedAdditionalNodeIds,
       remoteNode: receivedRemoteNode,
       cancelUpdate: receivedCancelUpdate,
-    } =
-      (await typeSettings.beforeChangeNode({
-        actionType: actionType,
-        remoteNode,
-        actions,
-        helpers,
-        fetchGraphql,
-        typeSettings,
-        buildTypeName,
-        type: typeInfo.nodesTypeName,
-        wpStore: store,
-      })) || {}
+    } = (await typeSettings.beforeChangeNode({
+      actionType: actionType,
+      remoteNode,
+      actions,
+      helpers,
+      fetchGraphql,
+      typeSettings,
+      buildTypeName,
+      type: typeInfo.nodesTypeName,
+      wpStore: store,
+    })) || {}
 
-    additionalNodeIds = receivedAdditionalNodeIds
+    additionalNodeIds = [
+      ...additionalNodeIds,
+      ...(receivedAdditionalNodeIds || []),
+    ]
+
     cancelUpdate = receivedCancelUpdate
 
     if (receivedRemoteNode) {

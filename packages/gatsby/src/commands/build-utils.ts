@@ -1,13 +1,13 @@
 import fs from "fs-extra"
 import path from "path"
-
+import { platform } from "os"
 import reporter from "gatsby-cli/lib/reporter"
-
 import {
   remove as removePageHtmlFile,
-  getPageHtmlFilePath,
-} from "../utils/page-html"
-import { removePageData, fixedPagePath } from "../utils/page-data"
+  generateHtmlPath,
+  fixedPagePath,
+} from "gatsby-core-utils"
+import { removePageData } from "../utils/page-data"
 import { store } from "../redux"
 import { IGatsbyState } from "../redux/types"
 
@@ -15,9 +15,7 @@ const checkFolderIsEmpty = (path: string): boolean =>
   fs.existsSync(path) && !fs.readdirSync(path).length
 
 const checkAndRemoveEmptyDir = (publicDir: string, pagePath: string): void => {
-  const pageHtmlDirectory = path.dirname(
-    getPageHtmlFilePath(publicDir, pagePath)
-  )
+  const pageHtmlDirectory = path.dirname(generateHtmlPath(publicDir, pagePath))
   const pageDataDirectory = path.join(
     publicDir,
     `page-data`,
@@ -66,10 +64,18 @@ export const removePageFiles = async (
   })
 }
 
+const FSisCaseInsensitive = platform() === `win32` || platform() === `darwin`
 function normalizePagePath(path: string): string {
   if (path === `/`) {
     return `/`
   }
+
+  if (FSisCaseInsensitive) {
+    // e.g. /TEST/ and /test/ would produce "same" artifacts on case insensitive
+    // file systems
+    path = path.toLowerCase()
+  }
+
   return path.endsWith(`/`) ? path.slice(0, -1) : path
 }
 
@@ -81,9 +87,7 @@ const pageGenerationActionPriority: Record<PageGenerationAction, number> = {
   delete: 0,
 }
 
-export function calcDirtyHtmlFiles(
-  state: IGatsbyState
-): {
+export function calcDirtyHtmlFiles(state: IGatsbyState): {
   toRegenerate: Array<string>
   toDelete: Array<string>
   toCleanupFromTrackedState: Set<string>
@@ -105,7 +109,8 @@ export function calcDirtyHtmlFiles(
    * to regenerate and more importantly - to delete (so we don't delete html and page-data file
    * when path changes slightly but it would still result in same html and page-data filenames
    * for example adding/removing trailing slash between builds or even mid build with plugins
-   * like `gatsby-plugin-remove-trailing-slashes`)
+   * like `gatsby-plugin-remove-trailing-slashes`). Additionally similar consideration need to
+   * be accounted for cases where page paths casing on case-insensitive file systems.
    */
   function markActionForPage(path: string, action: PageGenerationAction): void {
     const normalizedPagePath = normalizePagePath(path)
@@ -148,14 +153,27 @@ export function calcDirtyHtmlFiles(
   }
 
   state.html.trackedHtmlFiles.forEach(function (htmlFile, path) {
-    if (htmlFile.isDeleted || !state.pages.has(path)) {
+    const page = state.pages.get(path)
+    if (htmlFile.isDeleted || !page) {
       // FIXME: checking pages state here because pages are not persisted
       // and because of that `isDeleted` might not be set ...
       markActionForPage(path, `delete`)
-    } else if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
-      markActionForPage(path, `regenerate`)
     } else {
-      markActionForPage(path, `reuse`)
+      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+        if (page.mode === `SSG`) {
+          if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
+            markActionForPage(path, `regenerate`)
+          } else {
+            markActionForPage(path, `reuse`)
+          }
+        }
+      } else {
+        if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
+          markActionForPage(path, `regenerate`)
+        } else {
+          markActionForPage(path, `reuse`)
+        }
+      }
     }
   })
 

@@ -257,7 +257,7 @@ export const markdownFrontmatterFragment = graphql`
 They can then be used in any GraphQL query after that!
 
 ```graphql
-query($path: String!) {
+query ($path: String!) {
   markdownRemark(frontmatter: { path: { eq: $path } }) {
     ...MarkdownFrontmatter
   }
