@@ -310,6 +310,7 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     if (node.fields) {
       delete node.fields
     }
+    await actions.deleteNode(getNode(node.id))
     node.internal.contentDigest = createContentDigest(node)
     createNode(node)
     reporter.log(`Updated node: ${node.id}`)
