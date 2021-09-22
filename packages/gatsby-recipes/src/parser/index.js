@@ -1,6 +1,5 @@
 import unified from "unified"
 import remarkMdx from "remark-mdx"
-import remarkMdxjs from "remark-mdxjs"
 import remarkParse from "remark-parse"
 import remarkStringify from "remark-stringify"
 import visit from "unist-util-visit"
