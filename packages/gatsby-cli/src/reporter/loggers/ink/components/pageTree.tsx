@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { ReactElement, useContext } from "react"
 import { Box, Text, BoxProps, Spacer } from "ink"
 import path from "path"
@@ -114,7 +115,8 @@ const ConnectedPageTree: React.FC = function ConnectedPageTree() {
   const state = useContext(StoreStateContext)
 
   const componentWithPages = new Map<string, IComponentWithPageModes>()
-  for (const { componentPath, pages } of state.components.values()) {
+
+  for (const { componentPath, pages } of state.pageTree!.components.values()) {
     const pagesByMode = {
       SSG: new Set<string>(),
       DSG: new Set<string>(),
@@ -122,8 +124,8 @@ const ConnectedPageTree: React.FC = function ConnectedPageTree() {
       FN: new Set<string>(),
     }
     pages.forEach(pagePath => {
-      const gatsbyPage = state.pages.get(pagePath)
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const gatsbyPage = state.pageTree!.pages.get(pagePath)
+
       pagesByMode[gatsbyPage!.mode].add(pagePath)
     })
 
@@ -133,7 +135,7 @@ const ConnectedPageTree: React.FC = function ConnectedPageTree() {
   for (const {
     originalAbsoluteFilePath,
     functionRoute,
-  } of state.functions.values()) {
+  } of state.pageTree!.functions.values()) {
     componentWithPages.set(originalAbsoluteFilePath, {
       SSG: new Set<string>(),
       DSG: new Set<string>(),
@@ -143,7 +145,7 @@ const ConnectedPageTree: React.FC = function ConnectedPageTree() {
   }
 
   return (
-    <PageTree components={componentWithPages} root={state.program.directory} />
+    <PageTree components={componentWithPages} root={state.pageTree!.root} />
   )
 }
 

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@2.14.0/packages/gatsby-plugin-preload-fonts) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Bug Fixes
+
+- update dependency date-fns to ^2.23.0 for gatsby-plugin-preload-fonts [#32986](https://github.com/gatsbyjs/gatsby/issues/32986) ([9a29e7c](https://github.com/gatsbyjs/gatsby/commit/9a29e7cd98857dd95b2fda15429fdb1ced378069))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- update fs-extra (major) [#32654](https://github.com/gatsbyjs/gatsby/issues/32654) ([eea2687](https://github.com/gatsbyjs/gatsby/commit/eea26873f386d02f27c1708291da0c56585663eb))
+- add missing `@babel/runtime` dependencies [#32954](https://github.com/gatsbyjs/gatsby/issues/32954) ([401b358](https://github.com/gatsbyjs/gatsby/commit/401b3589771135ec35ab8f68406a64de6b387d9d))
+
 ## [2.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@2.13.0/packages/gatsby-plugin-preload-fonts) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

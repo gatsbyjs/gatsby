@@ -1,5 +1,5 @@
-import { ActionsUnion, IGatsbyCLIState, ISetLogs } from "./types"
-import { Actions } from "../constants"
+import { ActionsUnion, IGatsbyCLIState, ISetLogs } from "../types"
+import { Actions } from "../../constants"
 
 export const reducer = (
   state: IGatsbyCLIState = {

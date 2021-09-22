@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@5.14.0/packages/gatsby-plugin-netlify-cms) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Chores
+
+- add webpack file to export same version [#33126](https://github.com/gatsbyjs/gatsby/issues/33126) ([d31645c](https://github.com/gatsbyjs/gatsby/commit/d31645c10352363f1af509a11ad633604be3f40e))
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- add missing `@babel/runtime` dependencies [#32954](https://github.com/gatsbyjs/gatsby/issues/32954) ([401b358](https://github.com/gatsbyjs/gatsby/commit/401b3589771135ec35ab8f68406a64de6b387d9d))
+
 ## [5.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@5.13.0/packages/gatsby-plugin-netlify-cms) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
