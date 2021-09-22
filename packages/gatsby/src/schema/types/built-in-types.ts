@@ -107,6 +107,7 @@ const sitePageType = `
     internalComponentName: String!
     componentChunkName: String!
     matchPath: String
+    pageContext: JSON
   }
 `
 
@@ -119,9 +120,8 @@ const sitePluginType = `
     browserAPIs: [String]
     ssrAPIs: [String]
     pluginFilepath: String
-    # TODO v4:
-    # pluginOptions: JSON
-    # packageJson: JSON
+    pluginOptions: JSON
+    packageJson: JSON
   }
 `
 
