@@ -256,6 +256,15 @@ in [this discussion](https://github.com/gatsbyjs/gatsby/discussions/32860#discus
 
 You can no longer use `gatsby-admin` (activated with environment variable `GATSBY_EXPERIMENTAL_ENABLE_ADMIN`) as we removed this functionality from `gatsby` itself. We didn't see any major usage and don't plan on developing this further in the foreseeable future.
 
+### Gatsby related packages
+
+Breaking Changes in plugins that we own and maintain.
+
+#### `gatsby-plugin-feed`
+
+- The `feeds` option is required now
+- The `serialize` key inside the `feeds` option is required now. Please define your own function if you used the default one until now.
+
 ## Future Breaking Changes
 
 This section explains deprecations that were made for Gatsby 4. These old behaviors will be removed in v5, at which point they will no longer work. For now, you can still use the old behaviors in v4, but we recommend updating to the new signatures to make future updates easier.
