@@ -41,7 +41,7 @@ const reporter = require(`gatsby-cli/lib/reporter`)
 const hasha = require(`hasha`)
 const fs = require(`fs-extra`)
 const pDefer = require(`p-defer`)
-const uuid = require(`gatsby-core-utils`)
+const { uuid } = require(`gatsby-core-utils`)
 
 jest.spyOn(uuid, `v4`)
 
