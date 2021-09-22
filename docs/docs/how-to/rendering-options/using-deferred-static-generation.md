@@ -73,7 +73,7 @@ export.createPages = async ({ graphql, actions, reporter }) => {
 
 For this example, it's important that inside the `gatsby-node.js` the result is sorted by date and in an descending order. Depending on your use case you might need to adjust the query to sort differently or query additional information (e.g. a "category" field from the frontmatter) besides the `slug`.
 
-This way you can use the `index` in the `forEach` to apply `defer` to the latest 100 posts:
+This way you can use the `index` in the `forEach` to apply `defer` to all but the latest 100 posts:
 
 ```js:title=gatsby-node.js
 // Rest of gatsby-node.js
