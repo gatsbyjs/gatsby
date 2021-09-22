@@ -51,8 +51,6 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     children: [],
     internal: {
       type: `MyNodeType`,
-      mediaType: `text/html`,
-      content: nodeContent,
       contentDigest: createContentDigest(myData),
     },
   }

@@ -4,6 +4,8 @@ import isInteger from "lodash/isInteger"
 import { IPluginOptions } from "~/models/gatsby-api"
 import { GatsbyNodeApiHelpers } from "~/utils/gatsby-types"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
+import { cloneDeep } from "lodash"
+
 interface IProcessorOptions {
   userPluginOptions: IPluginOptions
   helpers: GatsbyNodeApiHelpers
@@ -15,7 +17,32 @@ interface IOptionsProcessor {
   processor: (options: IProcessorOptions) => IPluginOptions | void
 }
 
+let warnedAboutMediaItemLazyNodes = false
+
 const optionsProcessors: Array<IOptionsProcessor> = [
+  {
+    name: `MediaItem.lazyNodes doesn't work in Gatsby v4+`,
+    test: ({ userPluginOptions }): boolean =>
+      userPluginOptions?.type?.MediaItem?.lazyNodes,
+    processor: ({ helpers, userPluginOptions }): IPluginOptions => {
+      if (usingGatsbyV4OrGreater) {
+        helpers.reporter.panic(
+          formatLogMessage(
+            `The type.MediaItem.lazyNodes option isn't supported in Gatsby v4+ due to query running using JS workers in PQR (Parallell Query Running). lazyNodes creates nodes in GraphQL resolvers and PQR doesn't support that.\n\nIf you would like to prevent gatsby-source-wordpress from fetching File nodes for each MediaItem node, set the type.MediaItem.createFileNodes option to false.`
+          )
+        )
+      } else if (!warnedAboutMediaItemLazyNodes) {
+        warnedAboutMediaItemLazyNodes = true
+        helpers.reporter.warn(
+          formatLogMessage(
+            `\nThe type.MediaItem.lazyNodes option wont be supported in Gatsby v4+ due to query running using JS workers in PQR (Parallell Query Running). lazyNodes creates nodes in GraphQL resolvers and PQR doesn't support that.\n\nThis option works with your current version of Gatsby but will stop working in Gatsby v4+.\n\nIf you would like to prevent gatsby-source-wordpress from fetching File nodes for each MediaItem node, set the type.MediaItem.createFileNodes option to false instead.\n`
+          )
+        )
+      }
+
+      return userPluginOptions
+    },
+  },
   {
     name: `pluginOptions.type.MediaItem.limit is not allowed`,
     test: ({ userPluginOptions }): boolean =>
@@ -111,9 +138,7 @@ export const processAndValidatePluginOptions = (
   helpers: GatsbyNodeApiHelpers,
   pluginOptions: IPluginOptions
 ): IPluginOptions => {
-  let userPluginOptions = {
-    ...pluginOptions,
-  }
+  let userPluginOptions = cloneDeep(pluginOptions)
 
   optionsProcessors.forEach(({ test, processor, name }) => {
     if (!name) {

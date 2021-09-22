@@ -11,11 +11,40 @@ import {
   VariableDeclarator,
   ObjectPattern,
   AssignmentProperty,
+  ExportNamedDeclaration,
 } from "estree"
 import { store } from "../../redux"
 import { isPageTemplate } from "../eslint-rules-helpers"
 
 const DEFAULT_GRAPHQL_TAG_NAME = `graphql`
+
+function isGetServerData(node: ExportNamedDeclaration): boolean {
+  // check for
+  // export function getServerData() {}
+  // export async function getServerData() {}
+  if (
+    node.declaration?.type === `FunctionDeclaration` &&
+    node.declaration.id?.name === `getServerData`
+  ) {
+    return true
+  }
+
+  // check for
+  // export const getServerData = () => {}
+  if (node.declaration?.type === `VariableDeclaration`) {
+    for (const declaration of node.declaration.declarations) {
+      if (
+        declaration.type === `VariableDeclarator` &&
+        declaration.id.type === `Identifier` &&
+        declaration.id.name === `getServerData`
+      ) {
+        return true
+      }
+    }
+  }
+
+  return false
+}
 
 function hasOneValidNamedDeclaration(
   node: Node,
@@ -193,6 +222,10 @@ const limitedExports: Rule.RuleModule = {
         }
 
         if (isTemplateQuery(node, graphqlTagName, namespaceSpecifierName)) {
+          return undefined
+        }
+
+        if (isGetServerData(node)) {
           return undefined
         }
 

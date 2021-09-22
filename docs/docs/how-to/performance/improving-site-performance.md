@@ -75,11 +75,11 @@ For slightly more effort, you can get additional performance gains; rather than 
 
 There are a number of places to put an inlined script, depending whether you need it to execute immediately upon loading or can defer execution.
 
-- _No deferring_: This is a good default. Put the script in [onPreRenderHTML](https://www.gatsbyjs.org/docs/ssr-apis/#onPreRenderHTML) to have it added to your document tree. You can place it lower in your DOM to have parsed and evaluated later.
-- _Some deferring_: You can place the script in [onClientEntry](https://www.gatsbyjs.org/docs/browser-apis/#onClientEntry) to have it execute after page load, but before the browser renders the page.
-- _More deferring_: You can place the script in [onInitialClientRender](https://www.gatsbyjs.org/docs/browser-apis/#onInitialClientRender) to have it execute after the browser renders the page.
+- _No deferring_: This is a good default. Put the script in [onPreRenderHTML](/docs/ssr-apis/#onPreRenderHTML) to have it added to your document tree. You can place it lower in your DOM to have parsed and evaluated later.
+- _Some deferring_: You can place the script in [onClientEntry](/docs/browser-apis/#onClientEntry) to have it execute after page load, but before the browser renders the page.
+- _More deferring_: You can place the script in [onInitialClientRender](/docs/browser-apis/#onInitialClientRender) to have it execute after the browser renders the page.
 
-Note that if you are using [html.js](https://www.gatsbyjs.org/docs/custom-html/), you should modify that file to include your snippet instead of using `onPreRenderHTML`.
+Note that if you are using [html.js](/docs/custom-html/), you should modify that file to include your snippet instead of using `onPreRenderHTML`.
 
 ### Reduce your JavaScript bundle cost
 
@@ -129,7 +129,7 @@ There's a couple ways to detect this:
 
 - _Watch for unexpectedly large data imports._ If you notice large JSON objects, and you do need the data (or some portion of it), there are a couple options.
 
-  - If you only need a small portion of that data, consider getting it a different way. Split up the JSON file, [query it via GraphQL](https://www.gatsbyjs.com/plugins/gatsby-transformer-json/), or import it in `gatsby-node.js` and pass through only the subset of data you need.
+  - If you only need a small portion of that data, consider getting it a different way. Split up the JSON file, [query it via GraphQL](/plugins/gatsby-transformer-json/), or import it in `gatsby-node.js` and pass through only the subset of data you need.
 
   - If you need the data, but not right away (perhaps it's lower in the page, or being used by an event handler), you might consider switching to asynchronously fetching it.
 
@@ -145,11 +145,11 @@ Gatsby's default behavior is to bundle the entire page together. However, there 
 
 One way you can do this is to lazy-load below-the-fold components using `loadable-components`. `loadable-components` is the recommended lazy-loading solution for all server-side-rendered React applications, including Gatsby websites.
 
-We recommend you use the [gatsby plugin to install `loadable-components`](https://www.gatsbyjs.com/plugins/gatsby-plugin-loadable-components-ssr/). This plugin ensures that all components are still server-rendered for performance benefits.
+We recommend you use the [gatsby plugin to install `loadable-components`](/plugins/gatsby-plugin-loadable-components-ssr/). This plugin ensures that all components are still server-rendered for performance benefits.
 
 #### Step 6: Consider using the Preact plugin
 
-[Preact](https://preactjs.com/) is a UI library that works similarly to React, but is much smaller (~3kb compressed as opposed to ~40kb). [gatsby-plugin-preact](https://www.gatsbyjs.com/plugins/gatsby-plugin-preact/) is a drop-in plugin that will render your site in Preact instead of React, cutting 35-40kb of JavaScript from your bundle.
+[Preact](https://preactjs.com/) is a UI library that works similarly to React, but is much smaller (~3kb compressed as opposed to ~40kb). [gatsby-plugin-preact](/plugins/gatsby-plugin-preact/) is a drop-in plugin that will render your site in Preact instead of React, cutting 35-40kb of JavaScript from your bundle.
 
 This step can make sense if the `framework.js` bundle is a large part of your overall bundle size, and want to further optimize.
 
@@ -174,7 +174,7 @@ You can dig deeper by scroll through the page on the usage drawer to look at the
 
 #### Step 2: If you're using a CSS-in-JS library, use the Gatsby plugin
 
-If you're using a CSS-in-JS library like styled-components or emotion, use the relevant plugin: [gatsby-plugin-styled-components](https://www.gatsbyjs.com/plugins/gatsby-plugin-styled-components/) or [gatsby-plugin-emotion](https://www.gatsbyjs.com/plugins/gatsby-plugin-emotion/).
+If you're using a CSS-in-JS library like styled-components or emotion, use the relevant plugin: [gatsby-plugin-styled-components](/plugins/gatsby-plugin-styled-components/) or [gatsby-plugin-emotion](/plugins/gatsby-plugin-emotion/).
 
 These plugins server-side render the styles; otherwise, the output HTML will intersperse `<style>` tags with HTML elements, which can cause the browser to perform costly layout reflow.
 
@@ -208,7 +208,7 @@ Part of the work in loading a Gatsby site is minimizing the time to transport bi
 
 - _Load critical assets from your main domain where possible_. Some people use another domain for their images. This can have a 300ms delay when it comes to LCP compared to loading it from the main CDN. This is sometimes necessitated by company policies; try to avoid it if possible.
 
-- _Preconnect to subdomains_ using [gatsby-plugin-preconnect](https://www.gatsbyjs.com/plugins/gatsby-plugin-preconnect/). The impact of this is very site-specific, and while it's usually positive, we've seen this actually slow down page loads on occasion, so you'll want to test this.
+- _Preconnect to subdomains_ using [gatsby-plugin-preconnect](/plugins/gatsby-plugin-preconnect/). The impact of this is very site-specific, and while it's usually positive, we've seen this actually slow down page loads on occasion, so you'll want to test this.
 
 - _Utilize Gatsby Link._ Gatsby Link is our approach to optimizing the intra-site navigation experience. We pre-load linked pages on your site so that transitioning between pages is smooth and seamless. [Here's a guide to using Gatsby Link](/docs/linking-between-pages/#the-gatsby-link-component).
 
@@ -220,6 +220,6 @@ Part of the work in loading a Gatsby site is minimizing the time to transport bi
 
 - [Smashing Magazine's Frontend Performance Checklist](https://www.smashingmagazine.com/2021/01/front-end-performance-2021-free-pdf-checklist/#delivery-optimizations) is an in-depth, more generalized guide to performance optimization. It isn't specific to Gatsby, so some of the things it mentions Gatsby will already do for you.
 
-- We've written additional material in the past, for example [Kyle Mathews's deep dive blog](https://www.gatsbyjs.com/guides/why-are-gatsby-sites-fast/), [Dustin Schau's deep dive blog](https://www.gatsbyjs.com/blog/2018-10-03-gatsby-perf), and the [Gatsby Guide](https://www.gatsbyjs.com/guides/why-are-gatsby-sites-fast/).
+- We've written additional material in the past, for example [Kyle Mathews's deep dive blog](/guides/why-are-gatsby-sites-fast/), [Dustin Schau's deep dive blog](/blog/2018-10-03-gatsby-perf), and the [Gatsby Guide](/guides/why-are-gatsby-sites-fast/).
 
-- The Gatsby team is available to engage with teams looking to optimize performance through the [Gatsby Concierge Service](https://www.gatsbyjs.com/concierge/)
+- The Gatsby team is available to engage with teams looking to optimize performance through the [Gatsby Concierge Service](/concierge/)

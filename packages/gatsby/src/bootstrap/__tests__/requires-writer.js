@@ -10,6 +10,7 @@ const generatePagesState = pages => {
     state.set(page.path, {
       component: ``,
       componentChunkName: ``,
+      mode: `SSG`,
       ...page,
     })
   })

@@ -106,6 +106,7 @@ type SitePage implements Node @dontInfer {
   internalComponentName: String!
   componentChunkName: String!
   matchPath: String
+  pageContext: JSON
 }
 
 type SitePlugin implements Node @dontInfer {
@@ -116,6 +117,8 @@ type SitePlugin implements Node @dontInfer {
   browserAPIs: [String]
   ssrAPIs: [String]
   pluginFilepath: String
+  pluginOptions: JSON
+  packageJson: JSON
 }
 
 type SiteBuildMetadata implements Node @dontInfer {
@@ -284,6 +287,7 @@ type SitePage implements Node @dontInfer {
   internalComponentName: String!
   componentChunkName: String!
   matchPath: String
+  pageContext: JSON
 }
 
 type SitePlugin implements Node @dontInfer {
@@ -294,6 +298,8 @@ type SitePlugin implements Node @dontInfer {
   browserAPIs: [String]
   ssrAPIs: [String]
   pluginFilepath: String
+  pluginOptions: JSON
+  packageJson: JSON
 }
 
 type SiteBuildMetadata implements Node @dontInfer {
@@ -473,6 +479,7 @@ type SitePage implements Node @dontInfer {
   internalComponentName: String!
   componentChunkName: String!
   matchPath: String
+  pageContext: JSON
 }
 
 type SitePlugin implements Node @dontInfer {
@@ -483,6 +490,8 @@ type SitePlugin implements Node @dontInfer {
   browserAPIs: [String]
   ssrAPIs: [String]
   pluginFilepath: String
+  pluginOptions: JSON
+  packageJson: JSON
 }
 
 type SiteBuildMetadata implements Node @dontInfer {

@@ -5,7 +5,7 @@ import { store } from "../../redux"
 import { actions } from "../../redux/actions"
 
 jest.mock(`fs-extra`, () => {
-  return { writeFile: jest.fn() }
+  return { writeFile: jest.fn(), readFileSync: jest.fn(() => `foo`) }
 })
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
@@ -108,7 +108,7 @@ describe(`redirect-writer`, () => {
 
     const warningMessage = reporterWarnMock.mock.calls[0][0]
     expect(warningMessage).toMatchInlineSnapshot(`
-      "There are routes that match both page and redirect. It will result in page not being accessible; this is probably not intentional:
+      "There are routes that match both page and redirect. Pages take precendence over redirects so the redirect will not work:
        - page: \\"/server-overlap\\" and redirect: \\"/server-overlap/\\" -> \\"/server-overlap/redirect/\\"
        - page: \\"/client-overlap/\\" and redirect: \\"/client-overlap\\" -> \\"/client-overlap/redirect/\\""
     `)

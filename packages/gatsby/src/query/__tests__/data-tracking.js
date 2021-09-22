@@ -31,6 +31,7 @@ jest.mock(`fs-extra`, () => {
   return {
     outputFile: jest.fn(),
     ensureDir: jest.fn(),
+    readFileSync: jest.fn(() => `foo`), // createPage action reads the page template file trying to find `getServerData`
   }
 })
 

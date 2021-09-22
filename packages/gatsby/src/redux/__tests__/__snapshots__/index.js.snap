@@ -74,6 +74,7 @@ Object {
       "internalComponentName": "Component/my-sweet-new-page/",
       "isCreatedByStatefulCreatePages": false,
       "matchPath": undefined,
+      "mode": "SSG",
       "path": "/my-sweet-new-page/",
       "pluginCreatorId": "",
       "pluginCreator___NODE": "",

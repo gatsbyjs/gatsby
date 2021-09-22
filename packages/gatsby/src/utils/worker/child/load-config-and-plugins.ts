@@ -5,17 +5,21 @@ import apiRunnerNode from "../../api-runner-node"
 export async function loadConfigAndPlugins(
   ...args: Parameters<typeof internalLoadConfigAndPlugins>
 ): Promise<void> {
-  const [{ siteDirectory }] = args
+  const [{ siteDirectory, program }] = args
 
   store.dispatch({
     type: `SET_PROGRAM`,
     payload: {
-      ...store.getState().program,
+      ...program,
       directory: siteDirectory,
     },
   })
   await internalLoadConfigAndPlugins(...args)
 
   // Cache is already initialized
-  await apiRunnerNode(`unstable_onPluginInit`)
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    await apiRunnerNode(`onPluginInit`)
+  } else {
+    await apiRunnerNode(`unstable_onPluginInit`)
+  }
 }

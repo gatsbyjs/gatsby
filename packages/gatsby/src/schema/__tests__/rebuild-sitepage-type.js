@@ -77,6 +77,7 @@ describe(`build and update schema for SitePage`, () => {
       `internalComponentName`,
       `componentChunkName`,
       `matchPath`,
+      `pageContext`,
       `keep`,
       `fields`,
       `id`,
@@ -86,11 +87,11 @@ describe(`build and update schema for SitePage`, () => {
     ]
 
     fields = Object.keys(schema.getType(`SitePage`).getFields())
-    expect(fields.length).toBe(11)
+    expect(fields.length).toBe(12)
     expect(fields).toEqual(initialFields)
 
     inputFields = Object.keys(schema.getType(`SitePageFilterInput`).getFields())
-    expect(fields.length).toBe(11)
+    expect(fields.length).toBe(12)
     expect(inputFields).toEqual(initialFields)
 
     // Rebuild Schema
@@ -99,11 +100,11 @@ describe(`build and update schema for SitePage`, () => {
     schema = store.getState().schema
 
     fields = Object.keys(schema.getType(`SitePage`).getFields())
-    expect(fields.length).toBe(12)
+    expect(fields.length).toBe(13)
     expect(fields.sort()).toEqual(initialFields.concat(`context`).sort())
 
     inputFields = Object.keys(schema.getType(`SitePageFilterInput`).getFields())
-    expect(fields.length).toBe(12)
+    expect(fields.length).toBe(13)
     expect(inputFields.sort()).toEqual(initialFields.concat(`context`).sort())
 
     const fieldsEnum = schema
