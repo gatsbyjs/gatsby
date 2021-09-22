@@ -252,6 +252,10 @@ The recommended approach is to always create nodes in `sourceNodes`. We are goin
 this workaround that will work using `sourceNodes`. It is still being worked on, please post your use-cases and ideas
 in [this discussion](https://github.com/gatsbyjs/gatsby/discussions/32860#discussioncomment-1262874) to help us shape this new APIs.
 
+### Removal of `gatsby-admin`
+
+You can no longer use `gatsby-admin` (activated with environment variable `GATSBY_EXPERIMENTAL_ENABLE_ADMIN`) as we removed this functionality from `gatsby` itself. We didn't see any major usage and don't plan on developing this further in the foreseeable future.
+
 ## Future Breaking Changes
 
 This section explains deprecations that were made for Gatsby 4. These old behaviors will be removed in v5, at which point they will no longer work. For now, you can still use the old behaviors in v4, but we recommend updating to the new signatures to make future updates easier.
