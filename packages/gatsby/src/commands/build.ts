@@ -165,8 +165,10 @@ function trackBuildStats({ queryStats, stats }): void {
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   // global gatsby object to use without store
+  const buildId = uuidv4()
+
   global.__GATSBY = {
-    buildId: uuidv4(),
+    buildId,
     root: program!.directory,
   }
 
@@ -283,7 +285,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   let waitForWorkerPoolRestart = Promise.resolve()
 
   if (pageGenerationJobsEnabled) {
-    runPageGenerationJobs(queryIds)
+    runPageGenerationJobs({ queryIds, buildId })
     await waitUntilAllJobsComplete()
   } else if (PQR_ENABLED) {
     await runQueriesInWorkersQueue(workerPool, queryIds)

@@ -2,13 +2,14 @@ import { store } from "../redux/index"
 import { createInternalJob } from "../utils/jobs/manager"
 import { createJobV2FromInternalJob } from "../redux/actions/internal"
 
-export function runPageGenerationJobs(queryIds): void {
+export function runPageGenerationJobs({ queryIds, buildId }): void {
   queryIds.pageQueryIds.forEach(queryId => {
     const job = createInternalJob(
       {
         name: `GENERATE_PAGE`,
         args: {
           path: queryId.path,
+          buildId,
         },
         inputPaths: [],
         outputDir: __dirname,
