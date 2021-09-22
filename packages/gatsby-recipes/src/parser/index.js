@@ -50,6 +50,7 @@ const u = unified()
   .use(remarkParse)
   .use(remarkStringify)
   .use(remarkMdx)
+  .use(remarkMdxjs)
 
 const partitionSteps = ast => {
   const steps = []
