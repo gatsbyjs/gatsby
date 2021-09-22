@@ -11,6 +11,7 @@ import loadThemes from "../bootstrap/load-themes"
 import { store } from "../redux"
 import handleFlags from "../utils/handle-flags"
 import availableFlags from "../utils/flags"
+import { IProgram } from "../commands/types"
 
 export async function loadConfigAndPlugins({
   siteDirectory,
@@ -18,6 +19,7 @@ export async function loadConfigAndPlugins({
 }: {
   siteDirectory: string
   processFlags?: boolean
+  program?: IProgram
 }): Promise<{
   config: any
   flattenedPlugins: Array<IFlattenedPlugin>

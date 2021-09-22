@@ -42,7 +42,7 @@ module.exports = async args => {
   return {}
 }
 
-async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
+async function sqipSharp({ cache, getNodeAndSavePathDependency, store }) {
   const program = store.getState().program
   const cacheDir = resolve(
     `${program.directory}/node_modules/.cache/gatsby-transformer-sqip/`
@@ -135,7 +135,7 @@ async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
   }
 }
 
-async function sqipContentful({ type, cache, store }) {
+async function sqipContentful({ cache, store, reporter }) {
   const {
     schemes: { ImageResizingBehavior, ImageCropFocusType },
   } = require(`gatsby-source-contentful`)
@@ -190,7 +190,7 @@ async function sqipContentful({ type, cache, store }) {
           defaultValue: null,
         },
       },
-      async resolve(asset, fieldArgs, context) {
+      async resolve(asset, fieldArgs) {
         const {
           file: { contentType },
         } = asset
@@ -223,7 +223,7 @@ async function sqipContentful({ type, cache, store }) {
           background,
         }
 
-        const absolutePath = await cacheImage(store, asset, options)
+        const absolutePath = await cacheImage(store, asset, options, reporter)
 
         const contentDigest = await md5File(absolutePath)
 

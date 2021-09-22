@@ -13,7 +13,12 @@ import { IConstructError, IStructuredError } from "../structured-errors/types"
 import { createTimerReporter, ITimerReporter } from "./reporter-timer"
 import { createPhantomReporter, IPhantomReporter } from "./reporter-phantom"
 import { createProgressReporter, IProgressReporter } from "./reporter-progress"
-import { ErrorMeta, CreateLogAction, ILogIntent } from "./types"
+import {
+  ErrorMeta,
+  CreateLogAction,
+  ILogIntent,
+  IRenderPageArgs,
+} from "./types"
 
 const errorFormatter = getErrorFormatter()
 const tracer = globalTracer()
@@ -341,6 +346,10 @@ class Reporter {
         )
       }
     })
+  }
+
+  _renderPageTree(args: IRenderPageArgs): void {
+    reporterActions.renderPageTree(args)
   }
 }
 export type { Reporter }

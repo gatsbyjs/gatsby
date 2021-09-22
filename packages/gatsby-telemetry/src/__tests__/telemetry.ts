@@ -1,10 +1,11 @@
-jest.mock(`../event-storage`)
 import { EventStorage } from "../event-storage"
 import { AnalyticsTracker } from "../telemetry"
 import * as fs from "fs-extra"
 import * as os from "os"
 import * as path from "path"
 import uuidv4 from "uuid/v4"
+
+jest.mock(`../event-storage`)
 
 let telemetry
 beforeEach(() => {

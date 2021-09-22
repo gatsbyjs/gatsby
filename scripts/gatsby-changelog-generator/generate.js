@@ -104,9 +104,11 @@ async function buildChangelogEntry(context) {
     [`chore`, []],
     [`other`, []],
   ])
+  const ignoredChores = new Set([`release`, `changelogs`])
+
   for await (const commit of stream) {
-    // Skip redundant "release" commits
-    if (commit.type === `chore` && commit.scope === `release`) {
+    // Skip redundant commits (releases, changelog updates)
+    if (commit.type === `chore` && ignoredChores.has(commit.scope)) {
       continue
     }
     const type = commitGroups.has(commit.type) ? commit.type : `other`

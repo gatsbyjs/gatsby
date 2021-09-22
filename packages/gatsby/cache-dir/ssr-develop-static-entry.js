@@ -220,9 +220,6 @@ export default async function staticPage(
           />
         )
       })
-
-    const createElement = React.createElement
-
     class RouteHandler extends React.Component {
       render() {
         const props = {
@@ -239,7 +236,7 @@ export default async function staticPage(
           syncRequires.ssrComponents[componentChunkName] &&
           !isClientOnlyPage
         ) {
-          pageElement = createElement(
+          pageElement = React.createElement(
             syncRequires.ssrComponents[componentChunkName],
             props
           )

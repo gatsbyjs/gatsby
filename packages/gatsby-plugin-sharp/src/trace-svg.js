@@ -1,4 +1,5 @@
 const { promisify } = require(`bluebird`)
+const fs = require(`fs-extra`)
 const _ = require(`lodash`)
 const tmpDir = require(`os`).tmpdir()
 const path = require(`path`)
@@ -17,11 +18,12 @@ exports.notMemoizedPrepareTraceSVGInputFile = async ({
 }) => {
   let pipeline
   try {
-    pipeline = sharp(file.absolutePath)
+    pipeline = sharp()
 
     if (!options.rotate) {
       pipeline.rotate()
     }
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return

@@ -24,6 +24,7 @@ import { getSslCert } from "../utils/get-ssl-cert"
 import { IProxyControls, startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram, IDebugInfo } from "./types"
 import { flush as telemetryFlush } from "gatsby-telemetry"
+import uuidv4 from "uuid/v4"
 
 // Adapted from https://stackoverflow.com/a/16060619
 const requireUncached = (file: string): any => {
@@ -113,7 +114,10 @@ class ControllableScript {
     }
 
     this.process = execa.node(tmpFileName, args, {
-      env: process.env,
+      env: {
+        ...process.env,
+        GATSBY_NODE_GLOBALS: JSON.stringify(global.__GATSBY ?? {}),
+      },
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
   }
@@ -195,6 +199,11 @@ const REGEX_IP =
   /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
 
 module.exports = async (program: IProgram): Promise<void> => {
+  global.__GATSBY = {
+    buildId: uuidv4(),
+    root: program.directory,
+  }
+
   // In some cases, port can actually be a string. But our codebase is expecting it to be a number.
   // So we want to early just force it to a number to ensure we always act on a correct type.
   program.port = parseInt(program.port + ``, 10)
