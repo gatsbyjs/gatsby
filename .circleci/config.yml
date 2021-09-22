@@ -7,7 +7,6 @@ executors:
     parameters:
       image:
         type: string
-        # First 10.x LTS release, but old Yarn
         default: "14.17.0"
     docker:
       - image: cimg/node:<< parameters.image >>
@@ -86,7 +85,7 @@ aliases:
           command: yarn jest --ci --runInBand  $(yarn -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
-            GENERATE_JEST_REPORT: true
+            GENERATE_JEST_REPORT: "true"
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
       - store_test_results:
@@ -145,7 +144,7 @@ commands:
           condition: << parameters.condition >>
           steps:
             - slack/status:
-              channel: eng-react-integration-status
+                channel: eng-react-integration-status
 
   e2e-test:
     parameters:
@@ -244,7 +243,8 @@ jobs:
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
-    machine: true
+    machine:
+      image: "ubuntu-2004:202107-02"
     steps:
       - run:
           command: |
@@ -253,7 +253,7 @@ jobs:
       - run: nvm install v14
       - run: nvm alias default v14
       - run: nvm use v14
-      - run: npm i -g yarn@1.22.10
+      - run: npm i -g yarn@1.22.11
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
@@ -551,7 +551,7 @@ jobs:
           command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split --split-by=timings)
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
-            GENERATE_JEST_REPORT: true
+            GENERATE_JEST_REPORT: "true"
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
       - store_test_results:

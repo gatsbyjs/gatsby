@@ -16,7 +16,7 @@
     "babel-preset-gatsby-package": "^2.0.0-zz-next.1",
     "cross-env": "^7.0.3",
     "rimraf": "^3.0.2",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-worker#readme",
   "keywords": [
