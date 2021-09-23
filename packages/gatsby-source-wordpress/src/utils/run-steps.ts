@@ -75,7 +75,8 @@ const runSteps = async (
 /**
  * Takes in a pipe delimited string of Gatsby Node API names and returns the first supported API name as a string
  *
- * For ex input: "onPluginInit|unstable_onPluginInit" output: "unstable_onPluginInit"
+ * Example input: "onPluginInit|unstable_onPluginInit"
+ * Example output: "unstable_onPluginInit"
  */
 const findApiName = (initialApiNameString: string): string => {
   if (!initialApiNameString.includes(`|`)) {
