@@ -1,34 +1,36 @@
 /**
  * Copied from https://github.com/lukeed/uuid
- * https://github.com/lukeed/uuid/blob/master/src/index.js
+ * https://github.com/lukeed/uuid/blob/master/src/secure.js
  */
-let IDX = 256
+import { randomBytes } from "crypto"
+
+const SIZE = 4096
 const HEX: Array<string> = []
-let BUFFER: Array<number>
-while (IDX--) {
+let IDX = 0
+let BUFFER: Buffer
+
+for (; IDX < 256; IDX++) {
   HEX[IDX] = (IDX + 256).toString(16).substring(1)
 }
 
 export function v4(): string {
-  let i = 0
-  let num
-  let out = ``
-
-  if (!BUFFER || IDX + 16 > 256) {
-    BUFFER = Array((i = 256))
-    while (i--) BUFFER[i] = (256 * Math.random()) | 0
-    i = IDX = 0
+  if (!BUFFER || IDX + 16 > SIZE) {
+    BUFFER = randomBytes(SIZE)
+    IDX = 0
   }
 
+  let i = 0
+  let tmp
+  let out = ``
   for (; i < 16; i++) {
-    num = BUFFER[IDX + i]
-    if (i == 6) out += HEX[(num & 15) | 64]
-    else if (i == 8) out += HEX[(num & 63) | 128]
-    else out += HEX[num]
+    tmp = BUFFER[IDX + i]
+    if (i == 6) out += HEX[(tmp & 15) | 64]
+    else if (i == 8) out += HEX[(tmp & 63) | 128]
+    else out += HEX[tmp]
 
     if (i & 1 && i > 1 && i < 11) out += `-`
   }
 
-  IDX++
+  IDX += 16
   return out
 }
