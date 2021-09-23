@@ -4,11 +4,14 @@ import fs from "fs-extra"
 import path from "path"
 
 import { store } from "../../redux"
+import { actions as reduxActions } from "../../redux/actions"
 import { IGatsbyState } from "../../redux/types"
 import * as nodeAPIs from "../../utils/api-node-docs"
 import * as browserAPIs from "../../utils/api-browser-docs"
+import apiRunnerNode from "../../utils/api-runner-node"
 import ssrAPIs from "../../../cache-dir/api-ssr-docs"
 import { getCache } from "../../utils/get-cache"
+import { getNodes, getNode } from "../../datastore"
 import { loadPlugins as loadPluginsInternal } from "./load"
 import createPluginDependencyDigest from "./create-plugin-dependency-digest"
 import {
@@ -145,8 +148,10 @@ export async function loadPlugins(
 
   console.time(`create dependency digests`)
   // process.exit()
-  const lastPlugins = await cache.get(`site-flattened-plugins`)
+  const lastPlugins = (await cache.get(`site-flattened-plugins`)) || []
+  const changedPlugins = []
   console.log(`lastPlugins.length`, lastPlugins.length)
+  const newTransformerPlugins = []
   const flattenedPluginsWithDigests = await Promise.all(
     flattenedPlugins.map((p, i) =>
       createPluginDependencyDigest(rootDir, p, i).then(digest => {
@@ -157,41 +162,109 @@ export async function loadPlugins(
         shasum.update(p.id)
         const pluginDigest = shasum.digest(`hex`)
 
-        // Check if the plugin digest has changed since last time.
-        let hasChanged = true
-        const lastPlugin = lastPlugins.find(lp => lp.id === p.id)
-        if (lastPlugin) {
-          hasChanged = lastPlugin.digest !== pluginDigest
+        const pluginWithDigest = { ...p, digest: pluginDigest }
+
+        // Check if the plugin digest has changed since last time. If so,
+        // add it to the pluginsChanged array so we can remove its cache.
+        if (lastPlugins.length > 0) {
+          const lastPlugin = lastPlugins.find(lp => lp.id === p.id)
+          if (lastPlugin) {
+            if (
+              lastPlugin.digest !== pluginDigest &&
+              // Ignore plugins without node APIs as they don't create caches.
+              (lastPlugin.nodeAPIs.length > 0 ||
+                pluginWithDigest.nodeAPIs.length > 0)
+            ) {
+              changedPlugins.push(pluginWithDigest)
+
+              console.log(
+                lastPlugin.name,
+                lastPlugin.nodeAPIs,
+                pluginWithDigest.nodeAPIs
+              )
+
+              // Check if the plugin added a onCreateNode api.
+              if (
+                !lastPlugin.nodeAPIs.includes(`onCreateNode`) &&
+                pluginWithDigest.nodeAPIs.includes(`onCreateNode`)
+              ) {
+                newTransformerPlugins.push(pluginWithDigest)
+              }
+            }
+          } else if (pluginWithDigest.nodeAPIs.length > 0) {
+            changedPlugins.push(pluginWithDigest)
+
+            console.log(
+              lastPlugin.name,
+              lastPlugin.nodeAPIs,
+              pluginWithDigest.nodeAPIs
+            )
+
+            // Check if the plugin added a onCreateNode api.
+            if (flattenedPluginsWithDigests.nodeAPIs.includes(`onCreateNode`)) {
+              newTransformerPlugins.push(pluginWithDigest)
+            }
+          }
+        } else {
+          // If we don't find lastPlugins in the cache, this means this is
+          // an initial build or `gatsby clean` was called so we treat every plugin
+          // as changed.
+          if (pluginWithDigest.nodeAPIs.length > 0) {
+            changedPlugins.push(pluginWithDigest)
+          }
         }
 
-        return { ...p, hasChanged, digest: pluginDigest }
+        return pluginWithDigest
       })
     )
   )
   console.timeEnd(`create dependency digests`)
 
-  // Filter plugins down to those that have changed & implement node APIs.
-  const changedPlugins = flattenedPluginsWithDigests
-    .filter(p => p.hasChanged)
-    .filter(p => p.nodeAPIs.length > 0)
+  console.log(_.uniq(changedPlugins.map(p => p.name)))
+  const changedPluginNames = new Set(changedPlugins.map(p => p.name))
+  const actions = []
+  if (changedPlugins.length > 0) {
+    // Loop over all nodes — delete nodes owned by one of these plugins
+    // and mark those with parents to be re-run against the plugin later.
+    getNodes().forEach(node => {
+      if (node.internal.type === `Parent_ChildAdditionForFields`) {
+        console.log(`Parent_ChildAdditionForFields`, node)
+      }
+      if (changedPluginNames.has(node.internal.owner)) {
+        const sideEffect = reduxActions.deleteNode(node)
+        console.log(`deleting node ${node.id} for ${node.internal.owner}`)
+        store.dispatch(sideEffect)
+        if (node.parent) {
+          actions.push({
+            type: `RERUN_ONCREATENODE`,
+            node: getNode(node.parent),
+          })
+        }
+      }
 
-  console.log(changedPlugins)
+      if (
+        node.internal.fieldOwners &&
+        Object.values(node.internal.fieldOwners).some(pluginName =>
+          changedPluginNames.has(pluginName)
+        )
+      ) {
+        console.log(`re-run onCreateNode for`, node.internal.fieldOwners)
+        actions.push({ type: `RERUN_ONCREATENODE`, node })
+      }
+    })
+
+    console.log(actions)
+  }
 
   changedPlugins.forEach(async plugin => {
     // Clear its caches
     // cache 1: key/value store
     await fs.emptyDir(path.join(rootDir, `.cache`, `caches`, plugin.name))
-    // TODO probably for next two, need to set as flag so when redux is loaded
-    // it takes care of deleting stuff
     // cache 2: plugin status
-    // cache 3: nodes
-
-    // TODO this is a flag too but after nodes are loaded and before sourceNodes
-    // it calls onCreateNode for any plugin that's changed but has parent nodes.
-    // I guess when deleting nodes we'd need to track the list of parent nodes
-    // and then replay that list.
-    //
-    // replay any parent nodes.
+    store.dispatch({
+      type: `CLEAR_PLUGIN_STATUS`,
+      payload: plugin.name,
+    })
   })
 
   await cache.set(`site-flattened-plugins`, flattenedPluginsWithDigests)
@@ -202,7 +275,44 @@ export async function loadPlugins(
     payload: flattenedPluginsWithDigests as IGatsbyState["flattenedPlugins"],
   })
 
+  // Replay onCreateNode for nodes touched by changed plugins.
+  await Promise.all(
+    actions.map(a => {
+      if (a.type === `RERUN_ONCREATENODE`) {
+        // This node might be by a parent node so was been deleted above too.
+        // In that case, onCreateNode will be called again when the parent node is
+        // recreated later in sourceNodes.
+        console.log(`running onCreateNode for`, a.node)
+        return apiRunnerNode(`onCreateNode`, {
+          node: a.node,
+          traceTags: {
+            nodeId: a.node.id,
+            nodeType: a.node.internal.type,
+          },
+        })
+      } else {
+        return null
+      }
+    })
+  )
+
+  // For new transformer plugins, replay all nodes.
+  console.log({ newTransformerPlugins })
+  if (newTransformerPlugins.length > 0) {
+    await Promise.all(
+      getNodes().map(node =>
+        apiRunnerNode(`onCreateNode`, {
+          node: node,
+          traceTags: {
+            nodeId: node.id,
+            nodeType: node.internal.type,
+          },
+        })
+      )
+    )
+  }
+
   console.timeEnd(`loadPlugins`)
-  process.exit()
+  // process.exit()
   return flattenedPluginsWithDigests
 }

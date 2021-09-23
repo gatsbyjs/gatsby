@@ -133,6 +133,8 @@ describe(`nothing changed between gatsby runs`, () => {
 
   describe(`Nodes`, () => {
     it(`nodes are persisted between builds when nothing changes`, () => {
+    console.log(`nodes are persisted between builds when nothing changes`)
+
       const {
         nodes: {
           preBootstrapStateFromFirstRun,
@@ -153,7 +155,7 @@ describe(`nothing changed between gatsby runs`, () => {
   })
 })
 
-describe(`Some plugins changed between gatsby runs`, () => {
+describe.only(`Some plugins changed between gatsby runs`, () => {
   let states
 
   beforeAll(() => {

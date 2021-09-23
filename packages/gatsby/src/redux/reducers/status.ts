@@ -46,6 +46,10 @@ export const statusReducer = (
     case `CREATE_NODE`:
       state.LAST_NODE_COUNTER = action.payload.internal.counter
       return state
+    case `CLEAR_PLUGIN_STATUS`:
+      // console.log(`deleting plugin status for`, action.payload)
+      delete state.plugins[action.payload]
+      return state
     default:
       return state
   }

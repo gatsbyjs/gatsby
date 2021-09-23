@@ -13,13 +13,11 @@
     "inspect-state": "node utils/inspect-state"
   },
   "dependencies": {
-    "gatsby": "3.12.0-next.3-dev-1628539290093",
+    "gatsby": "3.14.0-next.7-dev-1632243217889",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
-  },
-  "devDependencies": {
+    "react-dom": "^16.9.0",
     "fs-extra": "^9.0.1",
-    "gatsby-core-utils": "^1.0.21",
+    "gatsby-core-utils": "2.14.0-next.2-dev-1632243217889",
     "glob": "^7.1.6",
     "jest": "^24.0.0",
     "jest-serializer-path": "^0.1.15",

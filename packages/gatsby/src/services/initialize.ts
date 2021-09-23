@@ -290,10 +290,11 @@ export async function initialize({
   // Also if the hash isn't there, then delete things just in case something
   // is weird.
   if (oldPluginsHash && pluginsHash !== oldPluginsHash) {
-    reporter.info(reporter.stripIndent`
-      One or more of your plugins have changed since the last time you ran Gatsby. As
-      a precaution, we're deleting your site's cache to ensure there's no stale data.
-    `)
+    // reporter.info(reporter.stripIndent`
+    // One or more of your plugins have changed since the last time you ran Gatsby. As
+    // a precaution, we're deleting your site's cache to ensure there's no stale data.
+    // `)
+    reporter.info(`nah, we're not doing anything`)
   }
 
   // .cache directory exists in develop at this point
@@ -386,21 +387,21 @@ export async function initialize({
           // Add webpack
           deleteGlobs.push(`!${cacheDirectory}/webpack`)
         }
-        await del(deleteGlobs)
+        // await del(deleteGlobs)
       } else {
         // Attempt to empty dir if remove fails,
         // like when directory is mount point
-        await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
+        // await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
       }
     } catch (e) {
       reporter.error(`Failed to remove .cache files.`, e)
     }
     // Tell reducers to delete their data (the store will already have
     // been loaded from the file system cache).
-    store.dispatch({
-      type: `DELETE_CACHE`,
-      cacheIsCorrupt,
-    })
+    // store.dispatch({
+    // type: `DELETE_CACHE`,
+    // cacheIsCorrupt,
+    // })
 
     // in future this should show which plugin's caches are purged
     // possibly should also have which plugins had caches
