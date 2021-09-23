@@ -89,9 +89,7 @@ describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
       process.exit(1)
     }
 
-    gatsbyDevelopProcess = spawnGatsbyProcess(`develop`, {
-      ENABLE_GATSBY_REFRESH_ENDPOINT: true,
-    })
+    gatsbyDevelopProcess = spawnGatsbyProcess(`develop`)
 
     await urling(`http://localhost:8000`, { retry: 100 })
   })
