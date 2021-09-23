@@ -8,4 +8,7 @@ exports.GENERATE_PAGE = ({ paths }) => {
   //     })
   //     .catch(handleRunQueriesInWorkersQueueError)
   // }
+
+  // For now, fail the worker
+  throw new Error(`Generate Page failed locally. Worker is not implemented.`)
 }
