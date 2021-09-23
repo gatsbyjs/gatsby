@@ -232,6 +232,7 @@ exports.createNodesForContentType = ({
   restrictedNodeFields,
   conflictFieldPrefix,
   entries,
+  unstable_createNodeManifest,
   createNode,
   createNodeId,
   getNode,
@@ -424,6 +425,18 @@ exports.createNodesForContentType = ({
           sys: {
             type: entryItem.sys.type,
           },
+        }
+
+        const isPreview =
+          pluginConfig.get(`environment`) === `preview.contentful.com`
+
+        if (isPreview) {
+          // @todo figure out how to only create manifests for recent previews on cold builds. Probably on cold builds compare the updatedAt time vs the current time to find recently updated draft content
+
+          unstable_createNodeManifest({
+            manifestId: `${space.sys.id}-${entryItem.sys.id}-${entryItem.sys.updatedAt}`,
+            node: entryNode,
+          })
         }
 
         // Revision applies to entries, assets, and content types

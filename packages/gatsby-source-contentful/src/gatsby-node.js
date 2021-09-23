@@ -177,7 +177,13 @@ exports.sourceNodes = async (
   },
   pluginOptions
 ) => {
-  const { createNode, deleteNode, touchNode, createTypes } = actions
+  const {
+    createNode,
+    deleteNode,
+    touchNode,
+    createTypes,
+    unstable_createNodeManifest,
+  } = actions
 
   let currentSyncData
   let contentTypeItems
@@ -664,6 +670,7 @@ exports.sourceNodes = async (
         entries: entryList[i],
         createNode,
         createNodeId,
+        unstable_createNodeManifest,
         getNode,
         resolvable,
         foreignReferenceMap,
