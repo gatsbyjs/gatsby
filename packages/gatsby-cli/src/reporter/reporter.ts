@@ -215,8 +215,22 @@ class Reporter {
     reporterActions.createLog({ level: LogLevels.Success, text })
   info = (text?: string): CreateLogAction =>
     reporterActions.createLog({ level: LogLevels.Info, text })
-  warn = (text?: string): CreateLogAction =>
-    reporterActions.createLog({ level: LogLevels.Warning, text })
+
+  warn = (text?: string): CreateLogAction => {
+    const reporterWarning = reporterActions.createLog({
+      level: LogLevels.Warning,
+      text,
+    })
+    if (
+      process.env.FAIL_ON_WARNING &&
+      process.env.gatsby_executing_command === `build`
+    ) {
+      prematureEnd()
+      process.exit(1)
+    }
+    return reporterWarning
+  }
+
   log = (text?: string): CreateLogAction =>
     reporterActions.createLog({ level: LogLevels.Log, text })
 
