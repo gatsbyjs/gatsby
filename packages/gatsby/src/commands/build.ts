@@ -94,7 +94,7 @@ async function buildAndReportQueryEngineBundle({ buildSpan }): Promise<{
 }> {
   const engineBundlingPromises: Array<Promise<any>> = []
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     const buildQueryEngineActivityTimer = reporter.activityTimer(
       `Building Rendering Engines`,
       { parentSpan: buildSpan }
