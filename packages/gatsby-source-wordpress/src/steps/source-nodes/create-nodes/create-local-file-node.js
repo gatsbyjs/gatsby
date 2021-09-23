@@ -66,10 +66,16 @@ export const errorPanicker = ({
 
   const { pluginOptions } = store.getState().gatsbyApi
   const allow404ImagesInProduction = pluginOptions.production.allow404Images
+  const allow401ImagesInProduction = pluginOptions.production.allow401Images
+  const errorCodeIs404 = errorString.includes(`Response code 404`)
+  const errorCodeIs401 = errorString.includes(`Response code 401`)
+  const errorCode = errorCodeIs404 ? `404` : errorCodeIs401 ? `401` : null
 
   if (
-    (allow404ImagesInProduction || process.env.NODE_ENV !== `production`) &&
-    errorString.includes(`Response code 404`)
+    (allow404ImagesInProduction ||
+      allow401ImagesInProduction ||
+      process.env.NODE_ENV !== `production`) &&
+    (errorCodeIs404 || errorCodeIs401)
   ) {
     fetchState.shouldBail = true
 
@@ -77,7 +83,7 @@ export const errorPanicker = ({
     reporter.warn(
       formatLogMessage(
         `Error ${sharedError}${
-          !allow404ImagesInProduction
+          !allow404ImagesInProduction || !allow401ImagesInProduction
             ? `\n\nThis error will fail production builds.`
             : ``
         }`
@@ -90,16 +96,17 @@ export const errorPanicker = ({
 
   if (errorString.includes(`Response code 4`)) {
     reporter.log(``)
+
     reporter.info(
       formatLogMessage(
         `Unrecoverable error ${sharedError}\n\nFailing the build to prevent deploying a broken site.${
-          errorString.includes(`Response code 404`)
-            ? `\n\nIf you don't want 404's to fail your production builds, you can set the following option:
+          errorCode
+            ? `\n\nIf you don't want ${errorCode}'s to fail your production builds, you can set the following option:
 
 {
   options: {
     production: {
-      allow404Images: true
+      allow${errorCode}Images: true
     }
   }
 }`

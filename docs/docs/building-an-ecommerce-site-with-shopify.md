@@ -42,6 +42,8 @@ plugins: [
 ]
 ```
 
+_Note: You will likely not want to put your `password` and `storeUrl` directly in your `gatsby-config.js` file but rather, use an environment variable. Check out the [Gatsby Shopify starter](https://github.com/gatsbyjs/gatsby-starter-shopify) for an example of how to do that._
+
 4. Run `gatsby develop` and make sure the site compiles successfully.
 
 ## Querying Shopify data and listing products

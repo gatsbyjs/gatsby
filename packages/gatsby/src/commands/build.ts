@@ -57,6 +57,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // global gatsby object to use without store
   global.__GATSBY = {
     buildId: uuidv4(),
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     root: program!.directory,
   }
 
@@ -106,7 +107,9 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
     // bundle graphql-engine
-    engineBundlingPromises.push(createGraphqlEngineBundle())
+    engineBundlingPromises.push(
+      createGraphqlEngineBundle(program.directory, report, program.verbose)
+    )
   }
 
   const graphqlRunner = new GraphQLRunner(store, {
@@ -185,7 +188,16 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
     // client bundle is produced so static query maps should be ready
-    engineBundlingPromises.push(createPageSSRBundle())
+    const state = store.getState()
+    engineBundlingPromises.push(
+      createPageSSRBundle({
+        rootDir: program.directory,
+        components: state.components,
+        staticQueriesByTemplate: state.staticQueriesByTemplate,
+        reporter: report,
+        isVerbose: program.verbose,
+      })
+    )
   }
 
   const webpackCompilationHash = stats.hash

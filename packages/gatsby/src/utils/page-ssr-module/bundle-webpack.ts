@@ -1,8 +1,8 @@
 import * as path from "path"
-import { store } from "../../redux"
 import webpack from "webpack"
 import mod from "module"
-
+import { WebpackLoggingPlugin } from "../../utils/webpack/webpack-logging"
+import reporter from "gatsby-cli/lib/reporter"
 import type { ITemplateDetails } from "./entry"
 
 import {
@@ -10,22 +10,32 @@ import {
   readWebpackStats,
 } from "../client-assets-for-template"
 import { writeStaticQueryContext } from "../static-query-utils"
+import { IGatsbyState } from "../../redux/types"
+
+type Reporter = typeof reporter
 
 const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
 const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
 
-export async function createPageSSRBundle(): Promise<any> {
-  const { program, components } = store.getState()
-  const webpackStats = await readWebpackStats(
-    path.join(program.directory, `public`)
-  )
+export async function createPageSSRBundle({
+  rootDir,
+  components,
+  staticQueriesByTemplate,
+  reporter,
+  isVerbose = false,
+}: {
+  rootDir: string
+  components: IGatsbyState["components"]
+  staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
+  reporter: Reporter
+  isVerbose?: boolean
+}): Promise<webpack.Compilation | undefined> {
+  const webpackStats = await readWebpackStats(path.join(rootDir, `public`))
 
   const toInline: Record<string, ITemplateDetails> = {}
   for (const pageTemplate of components.values()) {
     const staticQueryHashes =
-      store
-        .getState()
-        .staticQueriesByTemplate.get(pageTemplate.componentPath) || []
+      staticQueriesByTemplate.get(pageTemplate.componentPath) || []
     await writeStaticQueryContext(
       staticQueryHashes,
       pageTemplate.componentChunkName
@@ -41,6 +51,7 @@ export async function createPageSSRBundle(): Promise<any> {
     }
   }
   const compiler = webpack({
+    name: `Page Engine`,
     mode: `none`,
     entry: path.join(__dirname, `entry.js`),
     output: {
@@ -100,14 +111,17 @@ export async function createPageSSRBundle(): Promise<any> {
     resolve: {
       extensions,
       alias: {
-        ".cache": `${program.directory}/.cache/`,
+        ".cache": `${rootDir}/.cache/`,
       },
     },
     plugins: [
       new webpack.DefinePlugin({
         INLINED_TEMPLATE_TO_DETAILS: JSON.stringify(toInline),
       }),
-    ],
+      process.env.GATSBY_WEBPACK_LOGGING?.includes(`page-engine`)
+        ? new WebpackLoggingPlugin(rootDir, reporter, isVerbose)
+        : false,
+    ].filter(Boolean) as Array<webpack.WebpackPluginInstance>,
   })
 
   return new Promise((resolve, reject) => {
