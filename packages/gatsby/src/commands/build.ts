@@ -250,6 +250,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     graphqlRunner,
   })
 
+  await flushPendingPageDataWrites(buildSpan)
+
   // Build Query Engine and Utilities
   const { engineBundlingPromises } = await buildAndReportQueryEngineBundle({
     buildSpan,
@@ -335,7 +337,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     rewriteActivityTimer.end()
   }
 
-  await flushPendingPageDataWrites(buildSpan)
   markWebpackStatusAsDone()
 
   /**
