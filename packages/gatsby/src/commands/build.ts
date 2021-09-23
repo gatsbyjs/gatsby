@@ -250,8 +250,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     graphqlRunner,
   })
 
-  await flushPendingPageDataWrites(buildSpan)
-
   // Build Query Engine and Utilities
   const { engineBundlingPromises } = await buildAndReportQueryEngineBundle({
     buildSpan,
@@ -337,8 +335,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     rewriteActivityTimer.end()
   }
 
-  markWebpackStatusAsDone()
-
   /**
    * Telemetry tracking for
    * - bundleStats
@@ -360,6 +356,10 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   let toDelete: Array<string> = []
 
   if (!pageGenerationJobsEnabled) {
+    await flushPendingPageDataWrites(buildSpan)
+
+    markWebpackStatusAsDone()
+
     if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
       // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
       program.keepPageRenderer = true
