@@ -430,7 +430,7 @@ exports.createNodesForContentType = ({
         const isPreview =
           pluginConfig.get(`environment`) === `preview.contentful.com`
 
-        if (isPreview) {
+        if (isPreview && typeof unstable_createNodeManifest === `function`) {
           // @todo figure out how to only create manifests for recent previews on cold builds. Probably on cold builds compare the updatedAt time vs the current time to find recently updated draft content
 
           unstable_createNodeManifest({
