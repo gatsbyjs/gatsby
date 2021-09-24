@@ -201,6 +201,7 @@ export const deleteRenderer = async (rendererPath: string): Promise<void> => {
 
 export interface IRenderHtmlResult {
   unsafeBuiltinsUsageByPagePath: Record<string, Array<string>>
+  previewErrors: Record<string, any>
 }
 
 const renderHTMLQueue = async (
@@ -218,8 +219,7 @@ const renderHTMLQueue = async (
     [`gatsby_log_level`, process.env.gatsby_log_level],
   ]
 
-  const chunkSize = isPreview ? 1 : 50
-  const segments = chunk(pages, chunkSize)
+  const segments = chunk(pages, 50)
 
   const sessionId = Date.now()
 
@@ -238,6 +238,59 @@ const renderHTMLQueue = async (
         paths: pageSegment,
         sessionId,
       })
+
+      if (isPreview) {
+        const seenErrors = new Set()
+        const errorMessages = new Map()
+        await Promise.all(
+          Object.entries(renderHTMLResult.previewErrors).map(
+            async ([pagePath, error]) => {
+              console.log({ pagePath })
+              if (!seenErrors.has(error.stack)) {
+                console.log(`haven't seen`, { pagePath })
+                errorMessages.set(error.stack, {
+                  pagePaths: [pagePath],
+                })
+                seenErrors.add(error.stack)
+                const prettyError = await createErrorFromString(
+                  error.stack,
+                  `${htmlComponentRendererPath}.map`
+                )
+
+                const errorMessageStr = `${prettyError.stack}${
+                  prettyError.codeFrame ? `\n\n${prettyError.codeFrame}\n` : ``
+                }`
+                console.log({ pagePath, errorMessageStr })
+
+                const errorMessage = errorMessages.get(error.stack)
+                errorMessage.errorMessage = errorMessageStr
+                console.log(errorMessage)
+                errorMessages.set(error.stack, errorMessage)
+              } else {
+                const errorMessage = errorMessages.get(error.stack)
+                errorMessage.pagePaths.push(pagePath)
+                console.log(errorMessage.pagePaths)
+                errorMessages.set(error.stack, errorMessage)
+              }
+            }
+          )
+        )
+        console.log(`hi`)
+
+        console.log(`errorMessages`, errorMessages)
+
+        for (const value of errorMessages.values()) {
+          const errorMessage = `Preview build error for page path(s):\n\n${value.pagePaths
+            .map(p => `- ${p}`)
+            .join(`\n`)}\n\n${value.errorMessage}`
+          reporter.error({
+            id: `95314`,
+            context: { errorMessage },
+          })
+        }
+      }
+
+      console.log(`post isPreview`)
 
       if (stage === `build-html`) {
         const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult
