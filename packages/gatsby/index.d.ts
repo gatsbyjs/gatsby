@@ -980,7 +980,7 @@ export interface NodePluginArgs {
    * @example
    * const node = getNode(id)
    */
-  getNode(this: void, id: string): Node
+  getNode(this: void, id: string): Node | undefined
 
   /**
    * Get array of nodes of given type.

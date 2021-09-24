@@ -19,6 +19,7 @@ import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
 import { StaticQueryMapper } from "./webpack/static-query-mapper"
 import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
+import { WebpackLoggingPlugin } from "./webpack/webpack-logging"
 import { hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
 import { shouldGenerateEngines } from "./engines-helpers"
@@ -232,7 +233,9 @@ module.exports = async (
 
       plugins.virtualModules(),
       new BabelConfigItemsCacheInvalidatorPlugin(),
-    ]
+      process.env.GATSBY_WEBPACK_LOGGING?.split(`,`)?.includes(stage) &&
+        new WebpackLoggingPlugin(program.directory, report, program.verbose),
+    ].filter(Boolean)
 
     switch (stage) {
       case `develop`: {
@@ -520,6 +523,7 @@ module.exports = async (
   }
 
   const config = {
+    name: stage,
     // Context is the base directory for resolving the entry option.
     context: directory,
     entry: getEntry(),
