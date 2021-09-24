@@ -189,14 +189,15 @@ export const renderHTMLProd = async ({
         <pre><code>${e.stack}</code></pre>`
 
           await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
-        }
-
-        previewErrors[pagePath] = {
-          e,
-          message: e.message,
-          code: e.code,
-          stack: e.stack,
-          name: e.name,
+          previewErrors[pagePath] = {
+            e,
+            message: e.message,
+            code: e.code,
+            stack: e.stack,
+            name: e.name,
+          }
+        } else {
+          throw e
         }
       }
     },
