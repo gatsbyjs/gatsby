@@ -48,10 +48,7 @@ const errors = {
     docsUrl: `https://gatsby.dev/debug-html`,
   },
   "95314": {
-    text: (context): string =>
-      `Building Preview HTML failed${
-        context.errorPath ? ` for path "${context.errorPath}"` : ``
-      }\n\n${context.pageData}`,
+    text: (context): string => context.errorMessage,
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
   },

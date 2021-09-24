@@ -129,6 +129,7 @@ export const renderHTMLProd = async ({
       : process.env.GATSBY_IS_PREVIEW === `true`
 
   const unsafeBuiltinsUsageByPagePath = {}
+  const previewErrors = {}
 
   // Check if we need to do setup and cache clearing. Within same session we can reuse memoized data,
   // but it's not safe to reuse them in different sessions. Check description of `lastSessionId` for more details
@@ -189,13 +190,19 @@ export const renderHTMLProd = async ({
           await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
         }
 
-        throw e
+        previewErrors[pagePath] = {
+          e,
+          message: e.message,
+          code: e.code,
+          stack: e.stack,
+          name: e.name,
+        }
       }
     },
     { concurrency: 2 }
   )
 
-  return { unsafeBuiltinsUsageByPagePath }
+  return { unsafeBuiltinsUsageByPagePath, previewErrors }
 }
 
 // TODO: remove when DEV_SSR is done
