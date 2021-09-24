@@ -22,6 +22,11 @@ import { processNodeManifests } from "../utils/node-manifest"
 
 type IActivity = any // TODO
 
+const isPreview =
+  typeof process.env.GATSBY_IS_PREVIEW === `boolean`
+    ? process.env.GATSBY_IS_PREVIEW
+    : process.env.GATSBY_IS_PREVIEW === `true`
+
 export interface IBuildArgs extends IProgram {
   directory: string
   sitePackageJson: PackageJson
@@ -213,7 +218,7 @@ const renderHTMLQueue = async (
     [`gatsby_log_level`, process.env.gatsby_log_level],
   ]
 
-  const chunkSize = process.env.GATSBY_IS_PREVIEW ? 1 : 50
+  const chunkSize = isPreview ? 1 : 50
   const segments = chunk(pages, chunkSize)
 
   const sessionId = Date.now()
@@ -350,7 +355,7 @@ export const doBuildPages = async (
 
       // This is our only error during preview so customize it a bit + add the
       // pretty build error.
-      if (process.env.GATSBY_IS_PREVIEW) {
+      if (isPreview) {
         reporter.error({
           id: `95314`,
           context: { pageData: pageDataMessage },
@@ -362,7 +367,7 @@ export const doBuildPages = async (
     }
 
     // Don't crash the builder when we're in preview-mode.
-    if (!process.env.GATSBY_IS_PREVIEW) {
+    if (!isPreview) {
       throw buildError
     }
   }
