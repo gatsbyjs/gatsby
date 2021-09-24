@@ -185,7 +185,6 @@ export const renderHTMLProd = async ({
         if (isPreview) {
           const html = `<p>There was an error when building the preview page for this page ("${pagePath}").</p>
         <h3>Error</h3>
-        <pre><code>${e.name} ${e.message}</code></pre>
         <pre><code>${e.stack}</code></pre>`
 
           await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
