@@ -123,6 +123,10 @@ export const renderHTMLProd = async ({
   sessionId: number
 }): Promise<IRenderHtmlResult> => {
   const publicDir = join(process.cwd(), `public`)
+  const isPreview =
+    typeof process.env.GATSBY_IS_PREVIEW === `boolean`
+      ? process.env.GATSBY_IS_PREVIEW
+      : process.env.GATSBY_IS_PREVIEW === `true`
 
   const unsafeBuiltinsUsageByPagePath = {}
 
@@ -177,8 +181,8 @@ export const renderHTMLProd = async ({
         }
 
         // If we're in Preview-mode, write out a simple error html file.
-        if (process.env.GATSBY_IS_PREVIEW) {
-          const html = `<p>Building ${pagePath} failed.</p>
+        if (isPreview) {
+          const html = `<p>There was an error when building the preview page for this page ("${pagePath}").</p>
         <h3>Error</h3>
         <pre><code>${e.message}</code></pre>`
 
