@@ -130,15 +130,18 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   const { pagePath, location: browserLoc } = window
 
   // Explicitly call navigate if the canonical path (window.pagePath)
-  // is different to the browser path (window.location.pathname). But
-  // only if NONE of the following conditions hold:
+  // is different to the browser path (window.location.pathname). SSR
+  // page paths might include search params, while SSG and DSG won't.
+  // If page path include search params we also compare query params.
+  // But only if NONE of the following conditions hold:
   //
   // - The url matches a client side route (page.matchPath)
   // - it's a 404 page
   // - it's the offline plugin shell (/offline-plugin-app-shell-fallback/)
   if (
     pagePath &&
-    __BASE_PATH__ + pagePath !== browserLoc.pathname + browserLoc.search &&
+    __BASE_PATH__ + pagePath !==
+      browserLoc.pathname + (pagePath.includes(`?`) ? browserLoc.search : ``) &&
     !(
       loader.findMatchPath(stripPrefix(browserLoc.pathname, __BASE_PATH__)) ||
       pagePath === `/404.html` ||
