@@ -223,7 +223,7 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
   reporter.log(
     `[drupal]: handling update to:
     - entity href: ${nodeToUpdate.links?.self?.href}
-    - node id: ${nodeToUpdate.attributes?.drupal_internal_nid}
+    - node id: ${nodeToUpdate.attributes?.drupal_internal__nid}
 `
   )
 
