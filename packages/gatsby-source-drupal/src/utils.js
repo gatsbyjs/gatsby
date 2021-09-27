@@ -220,6 +220,13 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     return
   }
 
+  reporter.log(
+    `[drupal]: handling update to:
+    - entity href: ${nodeToUpdate.links?.self?.href}
+    - node id: ${nodeToUpdate.attributes?.drupal_internal_nid}
+`
+  )
+
   const { createNode } = actions
 
   const newNode = nodeFromData(
@@ -312,7 +319,7 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     }
     node.internal.contentDigest = createContentDigest(node)
     createNode(node)
-    reporter.log(`Updated node: ${node.id}`)
+    reporter.log(`Updated Gatsby node: ${node.id}`)
   }
 }
 
