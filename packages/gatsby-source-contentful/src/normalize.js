@@ -430,13 +430,20 @@ exports.createNodesForContentType = ({
         const isPreview =
           pluginConfig.get(`environment`) === `preview.contentful.com`
 
-        if (isPreview && typeof unstable_createNodeManifest === `function`) {
+        const createNodeManifestIsSupported =
+          typeof unstable_createNodeManifest === `function`
+
+        if (isPreview && createNodeManifestIsSupported) {
           // @todo figure out how to only create manifests for recent previews on cold builds. Probably on cold builds compare the updatedAt time vs the current time to find recently updated draft content
 
           unstable_createNodeManifest({
             manifestId: `${space.sys.id}-${entryItem.sys.id}-${entryItem.sys.updatedAt}`,
             node: entryNode,
           })
+        } else if (isPreview && !createNodeManifestIsSupported) {
+          console.warn(
+            `Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync.`
+          )
         }
 
         // Revision applies to entries, assets, and content types
