@@ -433,6 +433,8 @@ exports.createNodesForContentType = ({
         const createNodeManifestIsSupported =
           typeof unstable_createNodeManifest === `function`
 
+        console.log({ isPreview, createNodeManifestIsSupported })
+
         if (isPreview && createNodeManifestIsSupported) {
           // @todo figure out how to only create manifests for recent previews on cold builds. Probably on cold builds compare the updatedAt time vs the current time to find recently updated draft content
 
