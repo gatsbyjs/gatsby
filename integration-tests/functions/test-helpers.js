@@ -71,12 +71,14 @@ export function runTests(env, host) {
         }
       })
       test(`named wildcard routes`, async () => {
-        const routes = [`${host}/api/named-wildcard/super`]
-        for (const route of routes) {
-          const result = await fetch(route).then(res => res.json())
+        const route = `${host}/api/named-wildcard/super`
+        const result = await fetch(route).then(res => res.json())
 
-          expect(result).toMatchSnapshot()
-        }
+        expect(result).toMatchInlineSnapshot(`
+          Object {
+            "foo": "super",
+          }
+        `)
       })
     })
 

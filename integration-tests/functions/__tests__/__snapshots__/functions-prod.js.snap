@@ -1,11 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`production dynamic routes named wildcard routes 1`] = `
-Object {
-  "foo": "super",
-}
-`;
-
 exports[`production dynamic routes param routes 1`] = `
 Object {
   "super": "additional",
