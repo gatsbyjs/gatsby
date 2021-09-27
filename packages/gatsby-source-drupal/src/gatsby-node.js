@@ -259,6 +259,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
     drupalFetchIncrementalActivity.start()
 
     try {
+      console.time(`drupal: gatsby-fastbuilds/sync`)
       // Hit fastbuilds endpoint with the lastFetched date.
       const res = await requestQueue.push([
         urlJoin(baseUrl, `gatsby-fastbuilds/sync/`, lastFetched.toString()),
@@ -271,6 +272,8 @@ ${JSON.stringify(webhookBody, null, 4)}`
           parentSpan: fastBuildsSpan,
         },
       ])
+
+      console.timeEnd(`drupal: gatsby-fastbuilds/sync`)
 
       // Fastbuilds returns a -1 if:
       // - the timestamp has expired
@@ -289,12 +292,14 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
         // Touch nodes so they are not garbage collected by Gatsby.
         let touchCount = 0
+        console.time(`drupal: touchNode`)
         getNodes().forEach(node => {
           if (node.internal.owner === `gatsby-source-drupal`) {
             touchCount += 1
             touchNode(node)
           }
         })
+        console.timeEnd(`drupal: touchNode`)
         touchNodesSpan.setTag(`sourceNodes.touchNodes.count`, touchCount)
         touchNodesSpan.finish()
 
@@ -309,6 +314,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
         )
 
         // Process sync data from Drupal.
+        console.time(`drupal: process synced data`)
         const nodesToSync = res.body.entities
         for (const nodeSyncData of nodesToSync) {
           if (nodeSyncData.action === `delete`) {
@@ -347,6 +353,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
             }
           }
         }
+        console.timeEnd(`drupal: process synced data`)
 
         createNodesSpan.finish()
         setPluginStatus({ lastFetched: res.body.timestamp })
