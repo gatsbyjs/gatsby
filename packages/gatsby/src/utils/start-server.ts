@@ -13,13 +13,12 @@ import {
   GraphQLFormattedError,
   Kind,
 } from "graphql"
-import { isCI } from "gatsby-core-utils"
+import { isCI, slash, uuid } from "gatsby-core-utils"
 import http from "http"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
 import { codeFrameColumns } from "@babel/code-frame"
-import uuidv4 from "uuid/v4"
 
 import { withBasePath } from "../utils/path"
 import webpackConfig from "../utils/webpack.config"
@@ -269,7 +268,7 @@ module.exports = {
     req: express.Request,
     pluginName?: string
   ): Promise<void> => {
-    global.__GATSBY.buildId = uuidv4()
+    global.__GATSBY.buildId = uuid.v4()
 
     emitter.emit(`WEBHOOK_RECEIVED`, {
       webhookBody: req.body,
@@ -735,7 +734,6 @@ module.exports = {
 
   if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const chokidar = require(`chokidar`)
-    const { slash } = require(`gatsby-core-utils`)
     // Register watcher that rebuilds index.html every time html.js changes.
     const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
       slash(directoryPath(path))
