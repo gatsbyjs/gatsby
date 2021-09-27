@@ -442,7 +442,7 @@ exports.createNodesForContentType = ({
           })
         } else if (isPreview && !createNodeManifestIsSupported) {
           console.warn(
-            `Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync.`
+            `Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
           )
         }
 
