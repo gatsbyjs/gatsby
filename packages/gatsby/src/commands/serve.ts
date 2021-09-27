@@ -161,7 +161,9 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           // We loop until we find the first match.
           functions.some(f => {
             if (f.matchPath) {
+              console.log({ matchPath: f.matchPath, pathFragment })
               const matchResult = reachMatch(f.matchPath, pathFragment)
+              console.log({ matchResult })
               if (matchResult) {
                 req.params = matchResult.params
                 if (req.params[`*`]) {
