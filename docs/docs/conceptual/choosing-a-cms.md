@@ -16,7 +16,7 @@ If you're looking for a primary CMS (general-purpose, flexible content modelling
 
 In terms of popularity, you can see [top integrations listed by monthly downloads here](/plugins?=gatsby-source). There are currently (January 2021) eight CMSs used by over 1% of Gatsby users. These are:
 
-- **five general-purpose headless CMSs:** Contentful, DatoCMS, Prismic, Sanity and Strapi
+- **six general-purpose headless CMSs:** ButterCMS, Contentful, DatoCMS, Prismic, Sanity and Strapi
 
 - **two general-purpose full-stack CMSs** running in "headless" mode: Drupal and WordPress
 
@@ -26,11 +26,11 @@ In terms of popularity, you can see [top integrations listed by monthly download
 
 **Second**, it's important to consider the price point given your budget:
 
-- If you're working on a personal project or prototype, a few of these have a generous free tier (Contentful, DatoCMS, Prismic, Sanity, Strapi).
+- If you're working on a personal project or prototype, a few of these have a generous free tier (ButterCMS, Contentful, DatoCMS, Prismic, Sanity, Strapi).
 
 - If you're looking more at "Team", "Pro", or "Business" price points (e.g. $29, $99, or \$299 per month), the above CMSs are all good options, plus Drupal and WordPress.
 
-- If you're looking more at an "enterprise" project in the four digits per month and up, your main options are Contentful, Contentstack, Sanity, and Strapi.
+- If you're looking more at an "enterprise" project in the four digits per month and up, your main options are ButterCMS, Contentful, Contentstack, Sanity, and Strapi.
 
 ### 3) Meeting specialized requirements
 
@@ -40,6 +40,7 @@ In terms of popularity, you can see [top integrations listed by monthly download
 
 Users choosing other CMSs typically have a specific reason for their choice. Some trends we've noticed include:
 
+- **ButterCMS** if they like the editing UI, out-of-the-box support for blogging, developer- and market-friendliness
 - **Contentstack** if they like the editing UI and have an enterprise budget
 - **DatoCMS** if they will run into Contentful's model limits and want a lower-priced alternative
 - **Drupal** if open-source, configurability, or custom code are important.
