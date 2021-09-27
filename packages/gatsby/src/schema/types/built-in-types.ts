@@ -108,6 +108,7 @@ const sitePageType = `
     componentChunkName: String!
     matchPath: String
     pageContext: JSON
+    pluginCreator: SitePlugin
   }
 `
 
