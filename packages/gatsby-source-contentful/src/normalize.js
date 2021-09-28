@@ -243,7 +243,6 @@ exports.createNodesForContentType = ({
   space,
   useNameForId,
   pluginConfig,
-  webhookBody,
 }) => {
   // Establish identifier for content type
   //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
@@ -435,7 +434,7 @@ exports.createNodesForContentType = ({
 
         console.log({ isPreview, createNodeManifestIsSupported })
 
-        if (isPreview && createNodeManifestIsSupported && webhookBody) {
+        if (isPreview && createNodeManifestIsSupported) {
           // @todo figure out how to only create manifests for recent previews on cold builds. Probably on cold builds compare the updatedAt time vs the current time to find recently updated draft content
           const { manifestId } = webhookBody
 
@@ -444,7 +443,7 @@ exports.createNodesForContentType = ({
           )
 
           unstable_createNodeManifest({
-            manifestId,
+            manifestId: `${space.sys.id}-${entryItem.sys.id}-${entryItem.sys.updatedAt}`,
             node: entryNode,
           })
         } else if (isPreview && !createNodeManifestIsSupported) {
