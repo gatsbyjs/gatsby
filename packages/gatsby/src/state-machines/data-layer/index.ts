@@ -50,6 +50,7 @@ const initialCreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
       src: `createPages`,
       onDone: {
         target: `writingOutRedirects`,
+        actions: `assignChangedPages`,
       },
     },
   },
@@ -80,6 +81,7 @@ const recreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
       src: `createPages`,
       onDone: {
         target: `done`,
+        actions: `assignChangedPages`,
       },
     },
   },
