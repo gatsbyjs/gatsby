@@ -21,7 +21,6 @@ import { StaticQueryMapper } from "./webpack/static-query-mapper"
 import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
 import { hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
-import { shouldGenerateEngines } from "./engines-helpers"
 import { ROUTES_DIRECTORY } from "../constants"
 const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
 
@@ -715,13 +714,11 @@ module.exports = async (
   if (stage === `build-html` || stage === `develop-html`) {
     // externalize react, react-dom when develop-html or build-html(when not generating engines)
     const shouldMarkPackagesAsExternal =
-      stage === `develop-html` ||
-      !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
+      stage === `develop-html` || !(_CFLAGS_.GATSBY_MAJOR === `4`)
 
     // tracking = build-html (when not generating engines)
     const shouldTrackBuiltins =
-      stage === `build-html` &&
-      !(_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines())
+      stage === `build-html` && !(_CFLAGS_.GATSBY_MAJOR === `4`)
 
     // removes node internals from bundle
     // https://webpack.js.org/configuration/externals/#externalspresets
