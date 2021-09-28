@@ -579,7 +579,6 @@ export const publicLoader = {
   isPageNotFound: rawPath => instance.isPageNotFound(rawPath),
   hovering: rawPath => instance.hovering(rawPath),
   loadAppData: () => instance.loadAppData(),
-  instance: () => instance,
 }
 
 export default publicLoader
