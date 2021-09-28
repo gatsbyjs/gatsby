@@ -72,7 +72,7 @@ describe(`Param path ('${paramPath}:param')`, () => {
   })
 })
 
-describe.only(`Wildcard path ('${wildcardPath}*')`, () => {
+describe(`Wildcard path ('${wildcardPath}*')`, () => {
   it(`Direct visit no query params`, () => {
     cy.visit(wildcardPath + `foo/nested/`).waitForRouteChange()
     cy.getTestElement(`query`).contains(`{}`)
