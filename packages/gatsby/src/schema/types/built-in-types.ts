@@ -101,7 +101,7 @@ const siteSiteMetadataType = `
 `
 
 const sitePageType = `
-  type SitePage implements Node @infer {
+  type SitePage implements Node @dontInfer {
     path: String!
     component: String!
     internalComponentName: String!
