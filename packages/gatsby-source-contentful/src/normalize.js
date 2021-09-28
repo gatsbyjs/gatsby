@@ -427,8 +427,7 @@ exports.createNodesForContentType = ({
           },
         }
 
-        const isPreview =
-          pluginConfig.get(`environment`) === `preview.contentful.com`
+        const isPreview = pluginConfig.get(`host`) === `preview.contentful.com`
 
         const createNodeManifestIsSupported =
           typeof unstable_createNodeManifest === `function`
