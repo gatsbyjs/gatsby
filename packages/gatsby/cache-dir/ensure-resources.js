@@ -18,9 +18,12 @@ class EnsureResources extends React.Component {
 
   static getDerivedStateFromProps({ location }, prevState) {
     if (prevState.location.href !== location.href) {
-      const pageResources = loader.loadPageSync(location.pathname, {
-        withErrorDetails: true,
-      })
+      const pageResources = loader.loadPageSync(
+        location.pathname + location.search,
+        {
+          withErrorDetails: true,
+        }
+      )
 
       return {
         pageResources,

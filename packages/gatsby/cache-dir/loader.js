@@ -145,7 +145,7 @@ export class BaseLoader {
           }
 
           const maybeSearch = pagePath.split(`?`)[1]
-          if (maybeSearch) {
+          if (maybeSearch && !jsonPayload.path.includes(maybeSearch)) {
             jsonPayload.path += `?${maybeSearch}`
           }
 
