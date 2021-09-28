@@ -243,6 +243,7 @@ exports.createNodesForContentType = ({
   space,
   useNameForId,
   pluginConfig,
+  webhookBody,
 }) => {
   // Establish identifier for content type
   //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
@@ -434,9 +435,13 @@ exports.createNodesForContentType = ({
 
         console.log({ isPreview, createNodeManifestIsSupported })
 
-        if (isPreview && createNodeManifestIsSupported) {
+        if (
+          isPreview &&
+          createNodeManifestIsSupported &&
+          webhookBody.id === entryNode.contentful_id
+        ) {
           // @todo figure out how to only create manifests for recent previews on cold builds. Probably on cold builds compare the updatedAt time vs the current time to find recently updated draft content
-          const manifestId = `${space.sys.id}-${entryItem.sys.id}-${entryItem.sys.updatedAt}`
+          const { manifestId } = webhookBody
 
           console.log(
             `[gatsby-source-contentful] Creating node manifest for id ${manifestId}`
