@@ -126,7 +126,7 @@ function getPath(data: ISSRData): string {
   return (
     (data.page.mode !== `SSG` && data.page.matchPath
       ? data.potentialPagePath
-      : data.page.path) + data.searchString
+      : data.page.path) + (data.page.mode === `SSR` ? data.searchString : ``)
   )
 }
 
