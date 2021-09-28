@@ -172,9 +172,6 @@ function init() {
   window.___push = to => navigate(to, { replace: false })
   window.___replace = to => navigate(to, { replace: true })
   window.___navigate = (to, options) => navigate(to, options)
-
-  // Check for initial page-load redirect
-  maybeRedirect(window.location.pathname)
 }
 
 class RouteAnnouncer extends React.Component {
