@@ -435,11 +435,7 @@ exports.createNodesForContentType = ({
 
         console.log({ isPreview, createNodeManifestIsSupported })
 
-        if (
-          isPreview &&
-          createNodeManifestIsSupported &&
-          webhookBody?.id === entryNode.contentful_id
-        ) {
+        if (isPreview && createNodeManifestIsSupported && webhookBody) {
           // @todo figure out how to only create manifests for recent previews on cold builds. Probably on cold builds compare the updatedAt time vs the current time to find recently updated draft content
           const { manifestId } = webhookBody
 
