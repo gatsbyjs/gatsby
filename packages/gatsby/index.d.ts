@@ -30,7 +30,15 @@ export const useScrollRestoration: (key: string) => {
   onScroll(): void
 }
 
-export const useStaticQuery: <TData = any>(query: any) => TData
+class StaticQueryDocument {
+  /** Prevents structural type widening. */
+  #kind: "StaticQueryDocument"
+
+  /** Allows type-safe access to the static query hash for debugging purposes. */
+  toString(): string
+}
+
+export const useStaticQuery: <TData = any>(query: StaticQueryDocument) => TData
 
 export const parsePath: (path: string) => WindowLocation
 
@@ -142,7 +150,7 @@ export class PageRenderer extends React.Component<PageRendererProps> {}
 type RenderCallback<T = any> = (data: T) => React.ReactNode
 
 export interface StaticQueryProps<T = any> {
-  query: any
+  query: StaticQueryDocument
   render?: RenderCallback<T>
   children?: RenderCallback<T>
 }
@@ -168,7 +176,7 @@ export class StaticQuery<T = any> extends React.Component<
  *
  * @see https://www.gatsbyjs.org/docs/page-query#how-does-the-graphql-tag-work
  */
-export const graphql: (query: TemplateStringsArray) => void
+export const graphql: (query: TemplateStringsArray) => StaticQueryDocument
 
 /**
  * Gatsby configuration API.
