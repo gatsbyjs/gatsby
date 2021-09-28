@@ -570,6 +570,7 @@ ${JSON.stringify(webhookBody, null, 4)}
   nodes.forEach(node => {
     handleReferences(node, {
       getNode: nodes.get.bind(nodes),
+      mutateNode: true,
       createNodeId,
       entityReferenceRevisions,
     })
