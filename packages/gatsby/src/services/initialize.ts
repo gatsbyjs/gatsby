@@ -278,13 +278,13 @@ export async function initialize({
     md5File(`${program.directory}/gatsby-node.js`).catch(() => {}), // ignore as this file isn't required),
   ])
 
-  console.log({ pluginVersions, hashes })
   const pluginsHash = crypto
     .createHash(`md5`)
     .update(JSON.stringify(pluginVersions.concat(hashes)))
     .digest(`hex`)
   const state = store.getState()
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
+  console.log({ pluginVersions, hashes })
   console.log({ oldPluginsHash, pluginsHash })
 
   // Check if anything has changed. If it has, delete the site's .cache
