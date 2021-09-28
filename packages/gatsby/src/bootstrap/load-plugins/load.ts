@@ -304,15 +304,15 @@ export function loadPlugins(
     )
   })
 
-  if (
-    _CFLAGS_.GATSBY_MAJOR === `4` &&
-    configuredPluginNames.has(GATSBY_CLOUD_PLUGIN_NAME) &&
-    incompatibleGatsbyCloudPlugin(plugins)
-  ) {
-    reporter.panic(
-      `Plugin gatsby-plugin-gatsby-cloud is not compatible with your gatsby version. Please upgrade to gatsby-plugin-gatsby-cloud@alpha-9689ff`
-    )
-  }
+  // if (
+  // _CFLAGS_.GATSBY_MAJOR === `4` &&
+  // configuredPluginNames.has(GATSBY_CLOUD_PLUGIN_NAME) &&
+  // incompatibleGatsbyCloudPlugin(plugins)
+  // ) {
+  // reporter.panic(
+  // `Plugin gatsby-plugin-gatsby-cloud is not compatible with your gatsby version. Please upgrade to gatsby-plugin-gatsby-cloud@alpha-9689ff`
+  // )
+  // }
 
   if (
     !configuredPluginNames.has(GATSBY_CLOUD_PLUGIN_NAME) &&
