@@ -38,6 +38,16 @@ class StaticQueryDocument {
   toString(): string
 }
 
+/**
+ * A React Hooks version of StaticQuery.
+ *
+ * StaticQuery can do most of the things that page query can, including fragments. The main differences are:
+ *
+ * - page queries can accept variables (via `pageContext`) but can only be added to _page_ components
+ * - StaticQuery does not accept variables (hence the name "static"), but can be used in _any_ component, including pages
+ *
+ * @see https://www.gatsbyjs.com/docs/how-to/querying-data/use-static-query/
+ */
 export const useStaticQuery: <TData = any>(query: StaticQueryDocument) => TData
 
 export const parsePath: (path: string) => WindowLocation
