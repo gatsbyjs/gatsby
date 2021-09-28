@@ -436,14 +436,13 @@ exports.createNodesForContentType = ({
 
         if (isPreview && createNodeManifestIsSupported) {
           // @todo figure out how to only create manifests for recent previews on cold builds. Probably on cold builds compare the updatedAt time vs the current time to find recently updated draft content
-          const { manifestId } = webhookBody
-
+          const manifestId = `${space.sys.id}-${entryItem.sys.id}-${entryItem.sys.updatedAt}`
           console.log(
             `[gatsby-source-contentful] Creating node manifest for id ${manifestId}`
           )
 
           unstable_createNodeManifest({
-            manifestId: `${space.sys.id}-${entryItem.sys.id}-${entryItem.sys.updatedAt}`,
+            manifestId,
             node: entryNode,
           })
         } else if (isPreview && !createNodeManifestIsSupported) {
