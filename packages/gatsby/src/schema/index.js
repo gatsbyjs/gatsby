@@ -85,7 +85,7 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
   await getDataStore().ready()
 
   if (fullMetadataBuild) {
-    // Build metadata for type inference and start updating it incrementally.
+    // Build metadata for type inference and start updating it incrementally
     await buildInferenceMetadata({ types: getTypes() })
     store.dispatch({ type: `START_INCREMENTAL_INFERENCE` })
   }
