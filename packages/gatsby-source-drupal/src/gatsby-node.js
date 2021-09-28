@@ -243,134 +243,140 @@ ${JSON.stringify(webhookBody, null, 4)}`
     fastBuildsSpan.setTag(`sourceNodes.fetch.type`, `delta`)
 
     const lastFetched =
-      store.getState().status.plugins?.[`gatsby-source-drupal`]?.lastFetched ??
-      0
+      store.getState().status.plugins?.[`gatsby-source-drupal`]?.lastFetched
 
     reporter.verbose(
       `[gatsby-source-drupal]: value of lastFetched for fastbuilds "${lastFetched}"`
     )
 
-    const drupalFetchIncrementalActivity = reporter.activityTimer(
-      `Fetch incremental changes from Drupal`,
-      { parentSpan: fastBuildsSpan }
-    )
     let requireFullRebuild = false
 
-    drupalFetchIncrementalActivity.start()
+    // lastFetched isn't set so do a full rebuild.
+    if (!lastFetched) {
+      setPluginStatus({ lastFetched: new Date().getTime() })
+      requireFullRebuild = true
+    } else {
+      const drupalFetchIncrementalActivity = reporter.activityTimer(
+        `Fetch incremental changes from Drupal`,
+        { parentSpan: fastBuildsSpan }
+      )
 
-    try {
-      console.time(`drupal: gatsby-fastbuilds/sync`)
-      // Hit fastbuilds endpoint with the lastFetched date.
-      const res = await requestQueue.push([
-        urlJoin(baseUrl, `gatsby-fastbuilds/sync/`, lastFetched.toString()),
-        {
-          username: basicAuth.username,
-          password: basicAuth.password,
-          headers,
-          searchParams: params,
-          responseType: `json`,
-          parentSpan: fastBuildsSpan,
-        },
-      ])
+      drupalFetchIncrementalActivity.start()
 
-      console.timeEnd(`drupal: gatsby-fastbuilds/sync`)
+      try {
+        console.time(`drupal: gatsby-fastbuilds/sync`)
+        // Hit fastbuilds endpoint with the lastFetched date.
+        const res = await requestQueue.push([
+          urlJoin(baseUrl, `gatsby-fastbuilds/sync/`, lastFetched.toString()),
+          {
+            username: basicAuth.username,
+            password: basicAuth.password,
+            headers,
+            searchParams: params,
+            responseType: `json`,
+            parentSpan: fastBuildsSpan,
+          },
+        ])
 
-      // Fastbuilds returns a -1 if:
-      // - the timestamp has expired
-      // - if old fastbuild logs were purged
-      // - it's been a really long time since you synced so you just do a full fetch.
-      if (res.body.status === -1) {
-        // The incremental data is expired or this is the first fetch.
-        reporter.info(`Unable to pull incremental data changes from Drupal`)
-        setPluginStatus({ lastFetched: res.body.timestamp })
-        requireFullRebuild = true
-      } else {
-        const touchNodesSpan = tracer.startSpan(`sourceNodes.touchNodes`, {
-          childOf: fastBuildsSpan,
-        })
-        touchNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
+        console.timeEnd(`drupal: gatsby-fastbuilds/sync`)
 
-        // Touch nodes so they are not garbage collected by Gatsby.
-        let touchCount = 0
-        console.time(`drupal: touchNode`)
-        getNodes().forEach(node => {
-          if (node.internal.owner === `gatsby-source-drupal`) {
-            touchCount += 1
-            touchNode(node)
-          }
-        })
-        console.timeEnd(`drupal: touchNode`)
-        touchNodesSpan.setTag(`sourceNodes.touchNodes.count`, touchCount)
-        touchNodesSpan.finish()
+        // Fastbuilds returns a -1 if:
+        // - the timestamp has expired
+        // - if old fastbuild logs were purged
+        // - it's been a really long time since you synced so you just do a full fetch.
+        if (res.body.status === -1) {
+          // The incremental data is expired or this is the first fetch.
+          reporter.info(`Unable to pull incremental data changes from Drupal`)
+          setPluginStatus({ lastFetched: res.body.timestamp })
+          requireFullRebuild = true
+        } else {
+          const touchNodesSpan = tracer.startSpan(`sourceNodes.touchNodes`, {
+            childOf: fastBuildsSpan,
+          })
+          touchNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
 
-        const createNodesSpan = tracer.startSpan(`sourceNodes.createNodes`, {
-          childOf: parentSpan,
-        })
-        createNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
-        createNodesSpan.setTag(`sourceNodes.fetch.type`, `delta`)
-        createNodesSpan.setTag(
-          `sourceNodes.createNodes.count`,
-          res.body.entities?.length
-        )
-
-        // Process sync data from Drupal.
-        console.time(`drupal: process synced data`)
-        const nodesToSync = res.body.entities
-        for (const nodeSyncData of nodesToSync) {
-          if (nodeSyncData.action === `delete`) {
-            handleDeletedNode({
-              actions,
-              getNode,
-              node: nodeSyncData,
-              createNodeId,
-              createContentDigest,
-              entityReferenceRevisions,
-            })
-          } else {
-            // The data could be a single Drupal entity or an array of Drupal
-            // entities to update.
-            let nodesToUpdate = nodeSyncData.data
-            if (!Array.isArray(nodeSyncData.data)) {
-              nodesToUpdate = [nodeSyncData.data]
+          // Touch nodes so they are not garbage collected by Gatsby.
+          let touchCount = 0
+          console.time(`drupal: touchNode`)
+          getNodes().forEach(node => {
+            if (node.internal.owner === `gatsby-source-drupal`) {
+              touchCount += 1
+              touchNode(node)
             }
+          })
+          console.timeEnd(`drupal: touchNode`)
+          touchNodesSpan.setTag(`sourceNodes.touchNodes.count`, touchCount)
+          touchNodesSpan.finish()
 
-            for (const nodeToUpdate of nodesToUpdate) {
-              await handleWebhookUpdate(
-                {
-                  nodeToUpdate,
-                  actions,
-                  cache,
-                  createNodeId,
-                  createContentDigest,
-                  getCache,
-                  getNode,
-                  reporter,
-                  store,
-                  languageConfig,
-                },
-                pluginOptions
-              )
+          const createNodesSpan = tracer.startSpan(`sourceNodes.createNodes`, {
+            childOf: parentSpan,
+          })
+          createNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
+          createNodesSpan.setTag(`sourceNodes.fetch.type`, `delta`)
+          createNodesSpan.setTag(
+            `sourceNodes.createNodes.count`,
+            res.body.entities?.length
+          )
+
+          // Process sync data from Drupal.
+          console.time(`drupal: process synced data`)
+          const nodesToSync = res.body.entities
+          for (const nodeSyncData of nodesToSync) {
+            if (nodeSyncData.action === `delete`) {
+              handleDeletedNode({
+                actions,
+                getNode,
+                node: nodeSyncData,
+                createNodeId,
+                createContentDigest,
+                entityReferenceRevisions,
+              })
+            } else {
+              // The data could be a single Drupal entity or an array of Drupal
+              // entities to update.
+              let nodesToUpdate = nodeSyncData.data
+              if (!Array.isArray(nodeSyncData.data)) {
+                nodesToUpdate = [nodeSyncData.data]
+              }
+
+              for (const nodeToUpdate of nodesToUpdate) {
+                await handleWebhookUpdate(
+                  {
+                    nodeToUpdate,
+                    actions,
+                    cache,
+                    createNodeId,
+                    createContentDigest,
+                    getCache,
+                    getNode,
+                    reporter,
+                    store,
+                    languageConfig,
+                  },
+                  pluginOptions
+                )
+              }
             }
           }
+          console.timeEnd(`drupal: process synced data`)
+
+          createNodesSpan.finish()
+          setPluginStatus({ lastFetched: res.body.timestamp })
         }
-        console.timeEnd(`drupal: process synced data`)
+      } catch (e) {
+        gracefullyRethrow(drupalFetchIncrementalActivity, e)
 
-        createNodesSpan.finish()
-        setPluginStatus({ lastFetched: res.body.timestamp })
+        drupalFetchIncrementalActivity.end()
+        fastBuildsSpan.finish()
+        return
       }
-    } catch (e) {
-      gracefullyRethrow(drupalFetchIncrementalActivity, e)
 
       drupalFetchIncrementalActivity.end()
       fastBuildsSpan.finish()
-      return
-    }
 
-    drupalFetchIncrementalActivity.end()
-    fastBuildsSpan.finish()
-
-    if (!requireFullRebuild) {
-      return
+      if (!requireFullRebuild) {
+        return
+      }
     }
   }
 
