@@ -1,8 +1,8 @@
 module.exports = {
   plugins: [
-    "gatsby-plugin-react-helmet",
+    `gatsby-plugin-react-helmet`,
     {
-      resolve: "gatsby-plugin-webfonts",
+      resolve: `gatsby-plugin-webfonts`,
       options: {
         fonts: {
           google: [
@@ -15,9 +15,9 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-plugin-create-client-paths",
+      resolve: `gatsby-plugin-create-client-paths`,
       options: {
-        prefixes: ["/plugins/*"],
+        prefixes: [`/plugins/*`],
       },
     },
   ],
