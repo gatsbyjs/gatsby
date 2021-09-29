@@ -107,6 +107,7 @@ type SitePage implements Node @dontInfer {
   componentChunkName: String!
   matchPath: String
   pageContext: JSON
+  pluginCreator: SitePlugin @link(by: \\"id\\", from: \\"pluginCreatorId\\")
 }
 
 type SitePlugin implements Node @dontInfer {
@@ -288,6 +289,7 @@ type SitePage implements Node @dontInfer {
   componentChunkName: String!
   matchPath: String
   pageContext: JSON
+  pluginCreator: SitePlugin @link(by: \\"id\\", from: \\"pluginCreatorId\\")
 }
 
 type SitePlugin implements Node @dontInfer {
@@ -480,6 +482,7 @@ type SitePage implements Node @dontInfer {
   componentChunkName: String!
   matchPath: String
   pageContext: JSON
+  pluginCreator: SitePlugin @link(by: \\"id\\", from: \\"pluginCreatorId\\")
 }
 
 type SitePlugin implements Node @dontInfer {

@@ -3,7 +3,7 @@ import report from "gatsby-cli/lib/reporter"
 import signalExit from "signal-exit"
 import fs from "fs-extra"
 import telemetry from "gatsby-telemetry"
-import { updateSiteMetadata, isTruthy } from "gatsby-core-utils"
+import { updateSiteMetadata, isTruthy, uuid } from "gatsby-core-utils"
 import {
   buildRenderer,
   buildHTMLPagesAndDeleteStaleArtifacts,
@@ -50,14 +50,12 @@ import {
 import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpack"
 import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
-import uuidv4 from "uuid/v4"
 import reporter from "gatsby-cli/lib/reporter"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   // global gatsby object to use without store
   global.__GATSBY = {
-    buildId: uuidv4(),
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    buildId: uuid.v4(),
     root: program!.directory,
   }
 

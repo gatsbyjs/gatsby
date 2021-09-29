@@ -21,8 +21,8 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "fast-glob": "^3.2.7",
-    "node-fetch": "^2.6.1",
-    "uuid": "3.4.0"
+    "gatsby-core-utils": "^3.0.0-zz-next.1",
+    "node-fetch": "^2.6.1"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore \"**/__tests__\"",
