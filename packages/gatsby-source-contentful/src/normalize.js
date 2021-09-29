@@ -242,6 +242,7 @@ exports.createNodesForContentType = ({
   locales,
   space,
   useNameForId,
+  syncToken,
   pluginConfig,
 }) => {
   // Establish identifier for content type
@@ -432,13 +433,28 @@ exports.createNodesForContentType = ({
         const createNodeManifestIsSupported =
           typeof unstable_createNodeManifest === `function`
 
-        console.log({ isPreview, createNodeManifestIsSupported })
+        const cacheExists = !!syncToken
 
-        if (isPreview && createNodeManifestIsSupported) {
-          // @todo figure out how to only create manifests for recent previews on cold builds. Probably on cold builds compare the updatedAt time vs the current time to find recently updated draft content
+        const shouldCreateNodeManifest =
+          isPreview &&
+          createNodeManifestIsSupported &&
+          // and this is a delta update
+          (cacheExists ||
+            // or this entry/node was updated in the last 5 mins
+            // we don't want older nodes because we only want to create
+            // node manifests for recently updated/created content.
+            (entryItem.sys.updatedAt &&
+              Date.now() - new Date(entryItem.sys.updatedAt).getTime() <=
+                60 *
+                  1000 *
+                  (process.env
+                    .CONTENT_SYNC_CONTENTFUL_MINUTES_SINCE_ENTRY_UPDATE || 5)))
+
+        if (shouldCreateNodeManifest) {
           const manifestId = `${space.sys.id}-${entryItem.sys.id}-${entryItem.sys.updatedAt}`
-          console.log(
-            `[gatsby-source-contentful] Creating node manifest for id ${manifestId}`
+
+          console.info(
+            `Contentful: Creating node manifest with id ${manifestId}`
           )
 
           unstable_createNodeManifest({
@@ -447,7 +463,7 @@ exports.createNodesForContentType = ({
           })
         } else if (isPreview && !createNodeManifestIsSupported) {
           console.warn(
-            `Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
+            `Contentful: Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
           )
         }
 

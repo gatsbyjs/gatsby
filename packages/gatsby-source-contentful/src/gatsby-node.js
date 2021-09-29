@@ -679,6 +679,7 @@ exports.sourceNodes = async (
         space,
         useNameForId: pluginConfig.get(`useNameForId`),
         pluginConfig,
+        syncToken,
       })
     )
   }
