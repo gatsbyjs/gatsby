@@ -85,6 +85,7 @@ function deleteStaleNodes(state: IGatsbyState, nodes: Array<Node>): void {
   }
 }
 
+let initialSourcing = true
 export default async ({
   webhookBody,
   pluginName,
@@ -109,7 +110,12 @@ export default async ({
   const state = store.getState()
   const nodes = getNodes()
 
-  warnForPluginsWithoutNodes(state, nodes)
+  if (initialSourcing) {
+    warnForPluginsWithoutNodes(state, nodes)
 
-  deleteStaleNodes(state, nodes)
+    deleteStaleNodes(state, nodes)
+    initialSourcing = false
+  } else {
+    return
+  }
 }

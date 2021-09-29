@@ -290,23 +290,24 @@ ${JSON.stringify(webhookBody, null, 4)}`
           setPluginStatus({ lastFetched: res.body.timestamp })
           requireFullRebuild = true
         } else {
-          const touchNodesSpan = tracer.startSpan(`sourceNodes.touchNodes`, {
-            childOf: fastBuildsSpan,
-          })
-          touchNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
-
           // Touch nodes so they are not garbage collected by Gatsby.
-          let touchCount = 0
-          console.time(`drupal: touchNode`)
-          getNodes().forEach(node => {
-            if (node.internal.owner === `gatsby-source-drupal`) {
-              touchCount += 1
-              touchNode(node)
-            }
-          })
-          console.timeEnd(`drupal: touchNode`)
-          touchNodesSpan.setTag(`sourceNodes.touchNodes.count`, touchCount)
-          touchNodesSpan.finish()
+          if (initialSourcing) {
+            console.time(`drupal: touchNode`)
+            const touchNodesSpan = tracer.startSpan(`sourceNodes.touchNodes`, {
+              childOf: fastBuildsSpan,
+            })
+            touchNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
+            let touchCount = 0
+            getNodes().forEach(node => {
+              if (node.internal.owner === `gatsby-source-drupal`) {
+                touchCount += 1
+                touchNode(node)
+              }
+            })
+            console.timeEnd(`drupal: touchNode`)
+            touchNodesSpan.setTag(`sourceNodes.touchNodes.count`, touchCount)
+            touchNodesSpan.finish()
+          }
 
           const createNodesSpan = tracer.startSpan(`sourceNodes.createNodes`, {
             childOf: parentSpan,
@@ -373,6 +374,9 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
       drupalFetchIncrementalActivity.end()
       fastBuildsSpan.finish()
+
+      // We're now done with the initial (fastbuilds flavored) sourcing.
+      initialSourcing = false
 
       if (!requireFullRebuild) {
         return
