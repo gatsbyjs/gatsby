@@ -1,7 +1,7 @@
 import * as path from "path"
 import webpack from "webpack"
 import mod from "module"
-import { WebpackLoggingPlugin } from "../../utils/webpack/webpack-logging"
+import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
 import reporter from "gatsby-cli/lib/reporter"
 import type { ITemplateDetails } from "./entry"
 
