@@ -127,6 +127,8 @@ function listenForJobMessages(): void {
       }
 
       externalJobsMap.delete(msg.payload.id)
+
+      console.log(`#### EXTERNAL JOBS REMAINNG`, [...externalJobsMap.keys()])
     }
   })
 }
