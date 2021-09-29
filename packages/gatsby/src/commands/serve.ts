@@ -19,6 +19,7 @@ import { IProgram } from "./types"
 import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
 import { IGatsbyFunction } from "../redux/types"
 import { reverseFixedPagePath } from "../utils/page-data"
+import { initTracer } from "../utils/tracer"
 
 interface IMatchPath {
   path: string
@@ -99,6 +100,9 @@ const matchPathRouter =
 module.exports = async (program: IServeProgram): Promise<void> => {
   telemetry.trackCli(`SERVE_START`)
   telemetry.startBackgroundUpdate()
+  initTracer(
+    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
+  )
   let { prefixPaths, port, open, host } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
@@ -254,12 +258,18 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           const page = graphqlEngine.findPageByPath(potentialPagePath)
 
           if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
+            const requestActivity = report.phantomActivity(
+              `request for "${req.path}"`
+            )
+            requestActivity.start()
+            const spanContext = requestActivity.span.context()
             const data = await getData({
               pathName: req.path,
               graphqlEngine,
               req,
+              spanContext,
             })
-            const results = await renderPageData({ data })
+            const results = await renderPageData({ data, spanContext })
             if (page.mode === `SSR` && data.serverDataHeaders) {
               for (const [name, value] of Object.entries(
                 data.serverDataHeaders
@@ -267,6 +277,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
                 res.setHeader(name, value)
               }
             }
+            requestActivity.end()
             return void res.send(results)
           }
 
@@ -280,12 +291,18 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           const page = graphqlEngine.findPageByPath(potentialPagePath)
 
           if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
+            const requestActivity = report.phantomActivity(
+              `request for "${req.path}"`
+            )
+            requestActivity.start()
+            const spanContext = requestActivity.span.context()
             const data = await getData({
               pathName: potentialPagePath,
               graphqlEngine,
               req,
+              spanContext,
             })
-            const results = await renderHTML({ data })
+            const results = await renderHTML({ data, spanContext })
             if (page.mode === `SSR` && data.serverDataHeaders) {
               for (const [name, value] of Object.entries(
                 data.serverDataHeaders
@@ -293,6 +310,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
                 res.setHeader(name, value)
               }
             }
+            requestActivity.end()
             return res.send(results)
           }
 

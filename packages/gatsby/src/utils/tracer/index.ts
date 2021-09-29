@@ -21,6 +21,7 @@ let tracerProvider: ITracerProvider | undefined
 export const initTracer = (tracerFile: string): Tracer => {
   let tracer: Tracer
   if (tracerFile) {
+    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE = tracerFile
     const resolvedPath = slash(path.resolve(tracerFile))
     tracerProvider = require(resolvedPath)
     tracer = tracerProvider!.create()

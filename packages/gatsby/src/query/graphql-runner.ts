@@ -145,10 +145,12 @@ export class GraphQLRunner {
       parentSpan,
       queryName,
       componentPath,
+      forceGraphqlTracing = false,
     }: {
       parentSpan: Span | undefined
       queryName: string
       componentPath?: string | undefined
+      forceGraphqlTracing?: boolean
     }
   ): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
@@ -191,7 +193,7 @@ export class GraphQLRunner {
     }
 
     let tracer
-    if (this.graphqlTracing && parentSpan) {
+    if ((this.graphqlTracing || forceGraphqlTracing) && parentSpan) {
       tracer = new GraphQLSpanTracer(`GraphQL Query`, {
         parentSpan,
         tags: {

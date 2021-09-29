@@ -3,11 +3,7 @@ import { build } from "../index"
 import { setupLmdbStore } from "../../datastore/lmdb/lmdb-datastore"
 import { store } from "../../redux"
 import { actions } from "../../redux/actions"
-import reporter from "gatsby-cli/lib/reporter"
-import {
-  createGraphQLRunner,
-  Runner,
-} from "../../bootstrap/create-graphql-runner"
+import { GraphQLRunner } from "../../query/graphql-runner"
 import { waitUntilAllJobsComplete } from "../../utils/wait-until-jobs-complete"
 
 import { setGatsbyPluginCache } from "../../utils/require-gatsby-plugin"
@@ -21,10 +17,13 @@ import {
   flattenedPlugins,
   // @ts-ignore
 } from ".cache/query-engine-plugins"
+import { initTracer } from "../../utils/tracer"
+
+initTracer(process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``)
 
 export class GraphQLEngine {
   // private schema: GraphQLSchema
-  private runnerPromise?: Promise<Runner>
+  private runnerPromise?: Promise<GraphQLRunner>
 
   constructor({ dbPath }: { dbPath: string }) {
     setupLmdbStore({ dbPath })
@@ -32,7 +31,7 @@ export class GraphQLEngine {
     this.getRunner()
   }
 
-  private async _doGetRunner(): Promise<Runner> {
+  private async _doGetRunner(): Promise<GraphQLRunner> {
     // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
     store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
 
@@ -68,19 +67,31 @@ export class GraphQLEngine {
     // Note: skipping inference metadata because we rely on schema snapshot
     await build({ fullMetadataBuild: false })
 
-    return createGraphQLRunner(store, reporter)
+    return new GraphQLRunner(store) // createGraphQLRunner(store, reporter)
   }
 
-  private async getRunner(): Promise<Runner> {
+  private async getRunner(): Promise<GraphQLRunner> {
     if (!this.runnerPromise) {
       this.runnerPromise = this._doGetRunner()
     }
     return this.runnerPromise
   }
 
-  public async runQuery(...args: Parameters<Runner>): ReturnType<Runner> {
+  public async runQuery(
+    ...args: Parameters<GraphQLRunner["query"]>
+  ): ReturnType<GraphQLRunner["query"]> {
     const graphqlRunner = await this.getRunner()
-    const result = await graphqlRunner(...args)
+    if (args.length < 2) {
+      // context
+      args.push({})
+    }
+    if (args.length < 3) {
+      // options
+      args.push({
+        queryName: `GraphQL Engine query`,
+      })
+    }
+    const result = await graphqlRunner.query(...args)
     // Def not ideal - this is just waiting for all jobs and not jobs for current
     // query, but we don't track jobs per query right now
     // TODO: start tracking jobs per query to be able to await just those

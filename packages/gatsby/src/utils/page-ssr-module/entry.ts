@@ -5,6 +5,7 @@ import type { IGatsbyPage } from "../../redux/types"
 import type { IScriptsAndStyles } from "../client-assets-for-template"
 import type { IPageDataWithQueryResult } from "../page-data"
 import type { Request } from "express"
+import type { Span, SpanContext } from "opentracing"
 
 // actual imports
 import "../engines-fs-provider"
@@ -17,6 +18,8 @@ import {
 // @ts-ignore render-page import will become valid later on (it's marked as external)
 import htmlComponentRenderer, { getPageChunk } from "./routes/render-page"
 import { getServerData, IServerData } from "../get-server-data"
+import reporter from "gatsby-cli/lib/reporter"
+import { initTracer } from "../tracer"
 
 export interface ITemplateDetails {
   query: string
@@ -31,21 +34,47 @@ export interface ISSRData {
   serverDataHeaders?: Record<string, string>
 }
 
+initTracer(process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``)
+
 const pageTemplateDetailsMap: Record<
   string,
   ITemplateDetails
   // @ts-ignore INLINED_TEMPLATE_TO_DETAILS is being "inlined" by bundler
 > = INLINED_TEMPLATE_TO_DETAILS
 
+type MaybePhantomActivity =
+  | ReturnType<typeof reporter.phantomActivity>
+  | undefined
+
 export async function getData({
   pathName,
   graphqlEngine,
   req,
+  spanContext,
 }: {
   graphqlEngine: GraphQLEngine
   pathName: string
   req?: Partial<Pick<Request, "query" | "method" | "url" | "headers">>
+  spanContext?: Span | SpanContext
 }): Promise<ISSRData> {
+  let getDataWrapperActivity: MaybePhantomActivity
+  let findMetaActivity: MaybePhantomActivity
+
+  if (spanContext) {
+    getDataWrapperActivity = reporter.phantomActivity(`Running getData`, {
+      parentSpan: spanContext,
+    })
+    getDataWrapperActivity.start()
+
+    findMetaActivity = reporter.phantomActivity(
+      `Finding details about page and template`,
+      {
+        parentSpan: getDataWrapperActivity.span,
+      }
+    )
+    findMetaActivity.start()
+  }
+
   const potentialPagePath = getPagePathFromPageDataPath(pathName) || pathName
 
   // 1. Find a page for pathname
@@ -64,6 +93,10 @@ export async function getData({
     )
   }
 
+  if (findMetaActivity) {
+    findMetaActivity.end()
+  }
+
   const executionPromises: Array<Promise<any>> = []
 
   // 3. Execute query
@@ -71,25 +104,57 @@ export async function getData({
   let results: IExecutionResult = {}
   let serverData: IServerData | undefined
   if (templateDetails.query) {
+    let runningQueryActivity: MaybePhantomActivity
+    if (getDataWrapperActivity) {
+      runningQueryActivity = reporter.phantomActivity(`Running page query`, {
+        parentSpan: getDataWrapperActivity.span,
+      })
+      runningQueryActivity.start()
+    }
     executionPromises.push(
       graphqlEngine
-        .runQuery(templateDetails.query, {
-          ...page,
-          ...page.context,
-        })
+        .runQuery(
+          templateDetails.query,
+          {
+            ...page,
+            ...page.context,
+          },
+          {
+            queryName: page.path,
+            componentPath: page.componentPath,
+            parentSpan: runningQueryActivity?.span,
+            forceGraphqlTracing: !!runningQueryActivity,
+          }
+        )
         .then(queryResults => {
           results = queryResults
+          if (runningQueryActivity) {
+            runningQueryActivity.end()
+          }
         })
     )
   }
 
   // 4. (if SSR) run getServerData
   if (page.mode === `SSR`) {
+    let runningGetServerDataActivity: MaybePhantomActivity
+    if (getDataWrapperActivity) {
+      runningGetServerDataActivity = reporter.phantomActivity(
+        `Running getServerData`,
+        {
+          parentSpan: getDataWrapperActivity.span,
+        }
+      )
+      runningGetServerDataActivity.start()
+    }
     executionPromises.push(
       getPageChunk(page)
         .then(mod => getServerData(req, page, potentialPagePath, mod))
         .then(serverDataResults => {
           serverData = serverDataResults
+          if (runningGetServerDataActivity) {
+            runningGetServerDataActivity.end()
+          }
         })
     )
   }
@@ -100,6 +165,10 @@ export async function getData({
     results.serverData = serverData.props
   }
   results.pageContext = page.context
+
+  if (getDataWrapperActivity) {
+    getDataWrapperActivity.end()
+  }
 
   return {
     results,
@@ -112,9 +181,19 @@ export async function getData({
 
 export async function renderPageData({
   data,
+  spanContext,
 }: {
   data: ISSRData
+  spanContext?: Span | SpanContext
 }): Promise<IPageDataWithQueryResult> {
+  let activity: MaybePhantomActivity
+  if (spanContext) {
+    activity = reporter.phantomActivity(`Rendering page-data`, {
+      parentSpan: spanContext,
+    })
+    activity.start()
+  }
+
   const results = await constructPageDataString(
     {
       componentChunkName: data.page.componentChunkName,
@@ -127,6 +206,10 @@ export async function renderPageData({
     },
     JSON.stringify(data.results)
   )
+
+  if (activity) {
+    activity.end()
+  }
 
   return JSON.parse(results)
 }
@@ -148,18 +231,51 @@ const readStaticQueryContext = async (
 export async function renderHTML({
   data,
   pageData,
+  spanContext,
 }: {
   data: ISSRData
   pageData?: IPageDataWithQueryResult
+  spanContext?: Span | SpanContext
 }): Promise<string> {
-  if (!pageData) {
-    pageData = await renderPageData({ data })
+  let wrapperActivity: MaybePhantomActivity
+  if (spanContext) {
+    wrapperActivity = reporter.phantomActivity(`Rendering HTML`, {
+      parentSpan: spanContext,
+    })
+    wrapperActivity.start()
   }
 
+  if (!pageData) {
+    pageData = await renderPageData({
+      data,
+      spanContext: wrapperActivity?.span,
+    })
+  }
+
+  let readStaticQueryContextActivity: MaybePhantomActivity
+  if (wrapperActivity) {
+    readStaticQueryContextActivity = reporter.phantomActivity(
+      `Preparing StaticQueries context`,
+      {
+        parentSpan: wrapperActivity.span,
+      }
+    )
+    readStaticQueryContextActivity.start()
+  }
   const staticQueryContext = await readStaticQueryContext(
     data.page.componentChunkName
   )
+  if (readStaticQueryContextActivity) {
+    readStaticQueryContextActivity.end()
+  }
 
+  let renderHTMLActivity: MaybePhantomActivity
+  if (wrapperActivity) {
+    renderHTMLActivity = reporter.phantomActivity(`Actually rendering HTML`, {
+      parentSpan: wrapperActivity.span,
+    })
+    renderHTMLActivity.start()
+  }
   const results = await htmlComponentRenderer({
     pagePath:
       data.page.mode !== `SSG` && data.page.matchPath
@@ -170,6 +286,12 @@ export async function renderHTML({
     ...data.templateDetails.assets,
     inlinePageData: data.page.mode === `SSR` && data.results.serverData,
   })
+  if (renderHTMLActivity) {
+    renderHTMLActivity.end()
+  }
+  if (wrapperActivity) {
+    wrapperActivity.end()
+  }
 
   return results.html
 }
