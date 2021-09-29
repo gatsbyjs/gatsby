@@ -40,6 +40,7 @@ export interface IBuildArgs extends IProgram {
 
 interface IBuildRendererResult {
   rendererPath: string
+  stats: webpack.Stats
   close: ReturnType<typeof watch>["close"]
 }
 
@@ -127,20 +128,10 @@ const doBuildRenderer = async (
     reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
   }
 
-  if (
-    stage === `build-html` &&
-    stats &&
-    store.getState().html.ssrCompilationHash !== stats.hash
-  ) {
-    store.dispatch({
-      type: `SET_SSR_WEBPACK_COMPILATION_HASH`,
-      payload: stats.hash as string,
-    })
-  }
-
   // render-page.js is hard coded in webpack.config
   return {
     rendererPath: `${directory}/${ROUTES_DIRECTORY}render-page.js`,
+    stats,
     close,
   }
 }

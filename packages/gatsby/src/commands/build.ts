@@ -112,17 +112,18 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     parentSpan: buildSpan,
   })
 
-  const engineBundlingPromises: Array<Promise<any>> = []
+  let closeJavascriptBundleCompilation: (() => Promise<void>) | undefined
+  let closeHTMLBundleCompilation: (() => Promise<void>) | undefined
+  let webpackAssets: Array<webpack.StatsAsset> | null = null
+  let webpackCompilationHash: string | null = null
+  let webpackSSRCompilationHash: string | null = null
 
+  const engineBundlingPromises: Array<Promise<any>> = []
   const buildActivityTimer = report.activityTimer(
     `Building production JavaScript and CSS bundles`,
     { parentSpan: buildSpan }
   )
   buildActivityTimer.start()
-  let closeJavascriptBundleCompilation: (() => Promise<void>) | undefined
-  let closeHTMLBundleCompilation: (() => Promise<void>) | undefined
-  let webpackAssets: Array<webpack.StatsAsset> | null = null
-  let webpackCompilationHash: string | null = null
 
   try {
     const { stats, close } = await buildProductionBundle(
@@ -184,13 +185,14 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   )
   buildSSRBundleActivityProgress.start()
   try {
-    const { close } = await buildRenderer(
+    const { close, stats } = await buildRenderer(
       program,
       Stage.BuildHTML,
       buildSSRBundleActivityProgress.span
     )
 
     closeHTMLBundleCompilation = close
+    webpackSSRCompilationHash = stats.hash as string
 
     await close()
   } catch (err) {
@@ -278,26 +280,37 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // an equivalent static directory within public.
   copyStaticDirs()
 
-  if (
-    webpackCompilationHash !== store.getState().webpackCompilationHash ||
-    !appDataUtil.exists(publicDir)
-  ) {
-    store.dispatch({
-      type: `SET_WEBPACK_COMPILATION_HASH`,
-      payload: webpackCompilationHash,
-    })
+  // create scope so we don't leak state object
+  {
+    const state = store.getState()
+    if (
+      webpackCompilationHash !== state.webpackCompilationHash ||
+      !appDataUtil.exists(publicDir)
+    ) {
+      store.dispatch({
+        type: `SET_WEBPACK_COMPILATION_HASH`,
+        payload: webpackCompilationHash,
+      })
 
-    const rewriteActivityTimer = report.activityTimer(
-      `Rewriting compilation hashes`,
-      {
-        parentSpan: buildSpan,
-      }
-    )
-    rewriteActivityTimer.start()
+      const rewriteActivityTimer = report.activityTimer(
+        `Rewriting compilation hashes`,
+        {
+          parentSpan: buildSpan,
+        }
+      )
+      rewriteActivityTimer.start()
 
-    await appDataUtil.write(publicDir, webpackCompilationHash as string)
+      await appDataUtil.write(publicDir, webpackCompilationHash as string)
 
-    rewriteActivityTimer.end()
+      rewriteActivityTimer.end()
+    }
+
+    if (state.html.ssrCompilationHash !== webpackSSRCompilationHash) {
+      store.dispatch({
+        type: `SET_SSR_WEBPACK_COMPILATION_HASH`,
+        payload: webpackSSRCompilationHash,
+      })
+    }
   }
 
   await flushPendingPageDataWrites(buildSpan)
