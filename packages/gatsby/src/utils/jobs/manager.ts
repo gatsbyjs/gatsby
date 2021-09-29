@@ -111,6 +111,8 @@ function listenForJobMessages(): void {
 
       switch (msg.type) {
         case MESSAGE_TYPES.JOB_COMPLETED: {
+          console.log(`Completing Job`, job)
+          console.log(`Received Message`, msg)
           deferred.resolve(msg.payload.result)
           break
         }
