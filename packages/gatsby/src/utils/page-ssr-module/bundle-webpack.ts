@@ -17,6 +17,29 @@ type Reporter = typeof reporter
 const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
 const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
 
+export async function writeQueryContext({
+  staticQueriesByTemplate,
+  components,
+}: {
+  staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
+  components: IGatsbyState["components"]
+}): Promise<void> {
+  const waitingForWrites: Array<Promise<unknown>> = []
+  for (const pageTemplate of components.values()) {
+    const staticQueryHashes =
+      staticQueriesByTemplate.get(pageTemplate.componentPath) || []
+
+    waitingForWrites.push(
+      writeStaticQueryContext(
+        staticQueryHashes,
+        pageTemplate.componentChunkName
+      )
+    )
+  }
+
+  return Promise.all(waitingForWrites).then(() => {})
+}
+
 export async function createPageSSRBundle({
   rootDir,
   components,
@@ -36,10 +59,6 @@ export async function createPageSSRBundle({
   for (const pageTemplate of components.values()) {
     const staticQueryHashes =
       staticQueriesByTemplate.get(pageTemplate.componentPath) || []
-    await writeStaticQueryContext(
-      staticQueryHashes,
-      pageTemplate.componentChunkName
-    )
 
     toInline[pageTemplate.componentChunkName] = {
       query: pageTemplate.query,
@@ -50,6 +69,7 @@ export async function createPageSSRBundle({
       ),
     }
   }
+
   const compiler = webpack({
     name: `Page Engine`,
     mode: `none`,

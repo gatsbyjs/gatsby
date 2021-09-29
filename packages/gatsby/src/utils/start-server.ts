@@ -121,7 +121,7 @@ module.exports = {
   const { buildRenderer, doBuildPages } = require(`../commands/build-html`)
   const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
     try {
-      const { rendererPath } = await buildRenderer(
+      const { rendererPath, close } = await buildRenderer(
         program,
         Stage.DevelopHTML,
         activity.span
@@ -133,6 +133,8 @@ module.exports = {
         workerPool,
         Stage.DevelopHTML
       )
+      // close the compiler
+      await close()
     } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
