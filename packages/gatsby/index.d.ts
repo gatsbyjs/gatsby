@@ -1492,6 +1492,17 @@ export interface NodeInput {
     description?: string
   }
   [key: string]: unknown
+  reference?: {
+    id: string
+    image: {
+      id: string
+      altText: string
+      src: string
+      originalSrc: string
+      width: number
+      height: number
+    }
+  }
 }
 
 export interface Node extends NodeInput {

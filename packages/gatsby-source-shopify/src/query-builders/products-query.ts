@@ -144,6 +144,19 @@ export class ProductsQuery extends BulkQuery {
                     value
                     type
                     valueType: type
+                    reference {
+                      ... on MediaImage {
+                        id
+                        image {
+                          id
+                          altText
+                          src
+                          originalSrc
+                          width
+                          height
+                        }
+                      }
+                    }
                   }
                 }
               }
