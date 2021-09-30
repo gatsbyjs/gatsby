@@ -148,6 +148,17 @@ module.exports = function remarkExtendNodeType(
       }
     }
 
+    let rehype = unified()
+
+    for (const plugin of pluginOptions.rehypePlugins) {
+      if (_.isArray(plugin)) {
+        const [parser, options] = plugin
+        rehype = rehype.use(parser, options)
+      } else {
+        rehype = rehype.use(plugin)
+      }
+    }
+
     async function getAST(markdownNode) {
       const cacheKey = astCacheKey(markdownNode)
 
@@ -368,10 +379,12 @@ module.exports = function remarkExtendNodeType(
     }
 
     function markdownASTToHTMLAst(ast) {
-      return toHAST(ast, {
+      const hast = toHAST(ast, {
         allowDangerousHtml: true,
         handlers: { code: codeHandler },
       })
+      rehype.runSync(hast)
+      return hast
     }
 
     async function getHTMLAst(markdownNode) {

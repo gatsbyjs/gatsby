@@ -43,5 +43,13 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       )
       .default([])
       .description(`Specify remark plugins`),
+    rehypePlugins: Joi.array()
+      .items(
+        Joi.function(),
+        Joi.object({}).unknown(true),
+        Joi.array().items(Joi.object({}).unknown(true), Joi.function())
+      )
+      .default([])
+      .description(`Specify rehype plugins`),
   })
 }
