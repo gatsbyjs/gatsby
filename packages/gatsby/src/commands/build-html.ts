@@ -8,6 +8,7 @@ import * as path from "path"
 
 import { emitter, store } from "../redux"
 import { IWebpackWatchingPauseResume } from "../utils/start-server"
+import webpack from "webpack"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import * as buildUtils from "./build-utils"
@@ -21,7 +22,6 @@ import { IPageDataWithQueryResult } from "../utils/page-data"
 import { processNodeManifests } from "../utils/node-manifest"
 
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
-import type webpack from "webpack"
 type IActivity = any // TODO
 
 export interface IBuildArgs extends IProgram {
@@ -77,9 +77,20 @@ const runWebpack = (
 
   return new Promise((resolve, reject) => {
     if (isDevSSREnabledAndViable) {
-      const { watcher, close } = watch(
-        compilerConfig,
+      const compiler = webpack(compilerConfig)
+
+      // because of this line we can't use our watch helper
+      // These things should use emitter
+      compiler.hooks.invalid.tap(`ssr file invalidation`, () => {
+        needToRecompileSSRBundle = true
+      })
+
+      const watcher = compiler.watch(
+        {
+          ignored: /node_modules/,
+        },
         (err, stats) => {
+          // this runs multiple times
           needToRecompileSSRBundle = false
           emitter.emit(`DEV_SSR_COMPILATION_DONE`)
           watcher.suspend()
@@ -101,12 +112,12 @@ const runWebpack = (
 
             return resolve({
               stats: stats as webpack.Stats,
-              close,
+              close: () =>
+                new Promise((resolve, reject): void =>
+                  watcher.close(err => (err ? reject(err) : resolve()))
+                ),
             })
           }
-        },
-        {
-          ignored: /node_modules/,
         }
       )
       devssrWebpackCompiler = watcher
