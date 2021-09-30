@@ -105,12 +105,13 @@ export default async ({
     webhookBody: webhookBody || {},
     pluginName,
   })
-  await getDataStore().ready()
-
-  const state = store.getState()
-  const nodes = getNodes()
 
   if (initialSourcing) {
+    await getDataStore().ready()
+
+    const state = store.getState()
+    const nodes = getNodes()
+
     warnForPluginsWithoutNodes(state, nodes)
 
     deleteStaleNodes(state, nodes)
