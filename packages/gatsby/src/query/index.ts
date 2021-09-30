@@ -96,7 +96,7 @@ function createQueue<QueryIDType>({
   function worker(queryId: QueryIDType, cb): void {
     const job = createJobFn(state, queryId)
     if (!job) {
-      cb(null, undefined)
+      setImmediate(() => cb(null, undefined))
       return
     }
     queryRunner(graphqlRunner, job, activity?.span)
@@ -104,7 +104,9 @@ function createQueue<QueryIDType>({
         if (activity.tick) {
           activity.tick()
         }
-        cb(null, { job, result })
+        // Note: we need setImmediate to ensure garbage collection has a chance
+        //  to get started during query running
+        setImmediate(() => cb(null, { job, result }))
       })
       .catch(error => {
         cb(error)
