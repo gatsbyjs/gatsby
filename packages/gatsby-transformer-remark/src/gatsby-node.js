@@ -35,5 +35,13 @@ exports.pluginOptionsSchema = function ({ Joi }) {
             .description(
               `A list of remark plugins. See also: https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark for examples`
             ),
+    remarkPlugins: Joi.array()
+      .items(
+        Joi.function(),
+        Joi.object({}).unknown(true),
+        Joi.array().items(Joi.object({}).unknown(true), Joi.function())
+      )
+      .default([])
+      .description(`Specify remark plugins`),
   })
 }

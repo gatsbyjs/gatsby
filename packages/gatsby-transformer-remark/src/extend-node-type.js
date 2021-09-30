@@ -139,6 +139,15 @@ module.exports = function remarkExtendNodeType(
       }
     }
 
+    for (const plugin of pluginOptions.remarkPlugins) {
+      if (_.isArray(plugin)) {
+        const [parser, options] = plugin
+        remark = remark.use(parser, options)
+      } else {
+        remark = remark.use(plugin)
+      }
+    }
+
     async function getAST(markdownNode) {
       const cacheKey = astCacheKey(markdownNode)
 
@@ -233,6 +242,7 @@ module.exports = function remarkExtendNodeType(
         }
       }
 
+      await remark.run(markdownAST)
       return markdownAST
     }
 
