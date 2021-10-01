@@ -219,9 +219,7 @@ const renderHTMLQueue = async (
         await Promise.all(
           Object.entries(renderHTMLResult.previewErrors).map(
             async ([pagePath, error]) => {
-              console.log({ pagePath })
               if (!seenErrors.has(error.stack)) {
-                console.log(`haven't seen`, { pagePath })
                 errorMessages.set(error.stack, {
                   pagePaths: [pagePath],
                 })
@@ -234,23 +232,18 @@ const renderHTMLQueue = async (
                 const errorMessageStr = `${prettyError.stack}${
                   prettyError.codeFrame ? `\n\n${prettyError.codeFrame}\n` : ``
                 }`
-                console.log({ pagePath, errorMessageStr })
 
                 const errorMessage = errorMessages.get(error.stack)
                 errorMessage.errorMessage = errorMessageStr
-                console.log(errorMessage)
                 errorMessages.set(error.stack, errorMessage)
               } else {
                 const errorMessage = errorMessages.get(error.stack)
                 errorMessage.pagePaths.push(pagePath)
-                console.log(errorMessage.pagePaths)
                 errorMessages.set(error.stack, errorMessage)
               }
             }
           )
         )
-
-        console.log(`errorMessages`, errorMessages)
 
         for (const value of errorMessages.values()) {
           const errorMessage = `The following page(s) saw this error when building their HTML:\n\n${value.pagePaths
@@ -262,8 +255,6 @@ const renderHTMLQueue = async (
           })
         }
       }
-
-      console.log(`post isPreview`)
 
       if (stage === `build-html`) {
         const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult
