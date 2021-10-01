@@ -116,7 +116,7 @@ const truncateObjStrings = (obj): IPageDataWithQueryResult => {
   // Recursively truncate strings nested in object
   // These objs can be quite large, but we want to preserve each field
   for (const key in obj) {
-    if (typeof obj[key] === `object`) {
+    if (typeof obj[key] === `object` && obj[key] !== null) {
       truncateObjStrings(obj[key])
     } else if (typeof obj[key] === `string`) {
       obj[key] = truncate(obj[key], { length: 250 })
