@@ -88,7 +88,7 @@ module.exports = async function contentfulFetch({
     environment: pluginConfig.get(`environment`),
     proxy: pluginConfig.get(`proxy`),
     integration: `gatsby-source-contentful`,
-    responseLogger: response => {
+    logHandler: response => {
       function createMetadataLog(response) {
         if (!response.headers) {
           return null
