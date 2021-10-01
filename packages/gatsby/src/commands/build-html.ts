@@ -24,10 +24,7 @@ import { processNodeManifests } from "../utils/node-manifest"
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
 type IActivity = any // TODO
 
-const isPreview =
-  typeof process.env.GATSBY_IS_PREVIEW === `boolean`
-    ? process.env.GATSBY_IS_PREVIEW
-    : process.env.GATSBY_IS_PREVIEW === `true`
+const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
 
 export interface IBuildArgs extends IProgram {
   directory: string
@@ -206,18 +203,19 @@ const renderHTMLQueue = async (
 
   try {
     await Bluebird.map(segments, async pageSegment => {
-      const renderHTMLResult = (await renderHTML({
+      const renderHTMLResult = await renderHTML({
         envVars,
         htmlComponentRendererPath,
         paths: pageSegment,
         sessionId,
-      })) as IRenderHtmlResult
+      })
 
       if (isPreview) {
+        const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult
         const seenErrors = new Set()
         const errorMessages = new Map()
         await Promise.all(
-          Object.entries(renderHTMLResult.previewErrors).map(
+          Object.entries(htmlRenderMeta.previewErrors).map(
             async ([pagePath, error]) => {
               if (!seenErrors.has(error.stack)) {
                 errorMessages.set(error.stack, {

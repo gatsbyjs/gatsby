@@ -138,10 +138,7 @@ export const renderHTMLProd = async ({
   sessionId: number
 }): Promise<IRenderHtmlResult> => {
   const publicDir = join(process.cwd(), `public`)
-  const isPreview =
-    typeof process.env.GATSBY_IS_PREVIEW === `boolean`
-      ? process.env.GATSBY_IS_PREVIEW
-      : process.env.GATSBY_IS_PREVIEW === `true`
+  const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
 
   const unsafeBuiltinsUsageByPagePath = {}
   const previewErrors = {}
