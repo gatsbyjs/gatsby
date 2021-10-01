@@ -106,9 +106,9 @@ export default async ({
     pluginName,
   })
 
-  if (initialSourcing) {
-    await getDataStore().ready()
+  await getDataStore().ready()
 
+  if (initialSourcing) {
     const state = store.getState()
     const nodes = getNodes()
 
