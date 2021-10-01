@@ -25,6 +25,9 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     SOURCE_FILE_CHANGED: {
       actions: `markSourceFilesDirty`,
     },
+    GET_SERVER_DATA_CHANGED: {
+      actions: `markServerDataDirty`,
+    },
     // These are calls to the refresh endpoint. Also used by Gatsby Preview.
     // Saves the webhook body from the event into context, then reloads data
     WEBHOOK_RECEIVED: {
@@ -196,6 +199,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         src: `recompile`,
         onDone: {
           target: `waiting`,
+          actions: [`markServerDataClean`],
         },
         onError: {
           actions: `logError`,
@@ -213,6 +217,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             `assignServers`,
             `spawnWebpackListener`,
             `markSourceFilesClean`,
+            `markServerDataClean`,
           ],
         },
         onError: {
