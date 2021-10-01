@@ -372,7 +372,7 @@ export const fetchMediaItemsBySourceUrl = async ({
             errorContext: `Error occurred while fetching "MediaItem" nodes in inline html.`,
           })
 
-          // since we're getting each media item on it's single node root field
+          // since we're getting each media item on its single node root field
           // we just needs the values of each property in the response
           // anything that returns null is because we tried to get the source url
           // plus the source url minus resize patterns. So there will be nulls

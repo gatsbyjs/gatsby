@@ -34,7 +34,7 @@ Check out this page on [convincing developers why Gatsby is awesome](https://www
 
 Before `gatsby-source-wordpress@v4` was released, there were 2 main ways to work with Gatsby & WordPress: `gatsby-source-wordpress@v3` and `gatsby-source-graphql`.
 
-Both of these worked but each had it's own pitfalls and problems.
+Both of these worked but each had its own pitfalls and problems.
 
 - [Problems with gatsby-source-wordpress@v3](./problems-with-v3.md)
 - [Problems with gatsby-source-graphql](./problems-with-gatsby-source-graphql.md)

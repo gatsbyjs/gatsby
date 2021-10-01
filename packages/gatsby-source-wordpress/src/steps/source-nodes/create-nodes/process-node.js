@@ -676,8 +676,8 @@ const replaceNodeHtmlImages = async ({
         const imgOptions = {
           style: {
             // these styles make it so that the image wont be stretched
-            // beyond it's max width, but it also wont exceed the width
-            // of it's parent element
+            // beyond its max width, but it also wont exceed the width
+            // of its parent element
             maxWidth: `100%`,
             width: `${maxWidth}px`,
           },

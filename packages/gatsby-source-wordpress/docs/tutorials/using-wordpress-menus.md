@@ -93,7 +93,7 @@ If you have different Menu / Menu Location names, adjust your queries accordingl
 
 Let's take a look at some example queries:
 
-### Query a Menu by Location and it's MenuItems
+### Query a Menu by Location and its MenuItems
 
 The following query is a Query against Gatsby's GraphQL API for a specific Menu filtered by location,
 and its connected Menu Items.

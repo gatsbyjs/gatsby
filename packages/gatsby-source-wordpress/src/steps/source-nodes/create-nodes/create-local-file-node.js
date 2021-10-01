@@ -347,7 +347,7 @@ export const createLocalFileNode = async ({
     return null
   }
 
-  // push it's id and url to our store for caching,
+  // push its id and url to our store for caching,
   // so we can touch this node next time
   // and so we can easily access the id by source url later
   store.dispatch.imageNodes.pushNodeMeta({
