@@ -1,7 +1,7 @@
 const reducer = require(`../config`)
 
 describe(`config reducer`, () => {
-  it(`let's you add a config`, () => {
+  it(`lets you add a config`, () => {
     const action = {
       type: `SET_SITE_CONFIG`,
       payload: {

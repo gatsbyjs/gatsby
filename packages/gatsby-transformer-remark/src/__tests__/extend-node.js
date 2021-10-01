@@ -79,7 +79,7 @@ const bootstrapTest = (label, content, query, test, additionalParameters = {}) =
       mediaType: `text/markdown`,
     },
   }
-  // Make some fake functions its expecting.
+  // Make some fake functions it's expecting.
   const loadNodeContent = node => Promise.resolve(node.content)
 
   it(label, async (done) => {

@@ -2,7 +2,7 @@ const Promise = require(`bluebird`)
 
 const { onCreateNode } = require(`../gatsby-node`)
 
-// Make some fake functions its expecting.
+// Make some fake functions it's expecting.
 const loadNodeContent = node => Promise.resolve(node.content)
 
 const bootstrapTest = async (node, pluginOptions = {}) => {

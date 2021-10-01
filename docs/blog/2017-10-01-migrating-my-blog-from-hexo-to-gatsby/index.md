@@ -348,7 +348,7 @@ know what graphql responses look like. In case you didn't know, if you get an
 error in a graphql query the response will contain the `errors` array. We check
 for this array and handle it accordingly.
 
-Now let's looks specifically at where we render a link for each blog post:
+Now let's look specifically at where we render a link for each blog post:
 
 ```jsx
 {
@@ -491,7 +491,7 @@ Enter `setFieldsOnGraphQLNodeType`.
 Hexo which worked well enough for my use case.
 
 In order to extend this particular part of Gatsby you need to create a
-`gatsby-node.js` file. This file let's you work with all of Gatsby's plugin
+`gatsby-node.js` file. This file lets you work with all of Gatsby's plugin
 hooks that are run in node. The GraphQL server is run in node, so this is where
 we add custom fields. Example:
 
@@ -553,7 +553,7 @@ directory and you are good to go. For example, `src/pages/about.js` would
 generate an `about.html` page. Simple.
 
 But almost everyone will want to generate some pages based on data, not on the
-files in the pages directory. Gatsby let's us do this.
+files in the pages directory. Gatsby lets us do this.
 
 ### Generating custom pages
 
@@ -612,7 +612,7 @@ create. The implementation is a bit more verbose, but that's still all it's
 doing.
 
 So in order to make this work we also need to be able to query GraphQL just like
-we do in the page query. Gatsby let's us do exactly that by giving us access to
+we do in the page query. Gatsby lets us do exactly that by giving us access to
 the `graphql` object and letting us return a promise so that we can do async
 work.
 
@@ -669,7 +669,7 @@ straightforward. You need to:
 - Export your template component as the default export
 - Add a `pageQuery` that will fetch the blog post to render
 
-Here it is in all it's glory:
+Here it is in all its glory:
 
 ```jsx
 // src/templates/post.js

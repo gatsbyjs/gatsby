@@ -9,7 +9,7 @@ Object {
 }
 `;
 
-exports[`config reducer let's you add a config 1`] = `
+exports[`config reducer lets you add a config 1`] = `
 Object {
   "pathPrefix": "",
   "polyfill": true,

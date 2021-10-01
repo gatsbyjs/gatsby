@@ -713,7 +713,7 @@ export const pageQuery = graphql`
   unless it never makes sense to use data-uri e.g. favicons.
 - Use api-runner-browser for calling browser extension APIs/replacements. Prep
   for plugin system.
-- Add extension API `clientEntry` that let's site code and plugins to run code
+- Add extension API `clientEntry` that lets site code and plugins to run code
   at the very start of client app.
 
 ### Changed
