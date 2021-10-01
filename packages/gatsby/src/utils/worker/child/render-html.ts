@@ -170,7 +170,7 @@ export const renderHTMLProd = async ({
           unsafeBuiltinsUsageByPagePath[pagePath] = unsafeBuiltinsUsage
         }
 
-        return fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
+        await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
       } catch (e) {
         if (e.unsafeBuiltinsUsage && e.unsafeBuiltinsUsage.length > 0) {
           unsafeBuiltinsUsageByPagePath[pagePath] = e.unsafeBuiltinsUsage
