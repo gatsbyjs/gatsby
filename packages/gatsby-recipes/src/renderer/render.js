@@ -259,7 +259,7 @@ const render = (recipe, cb, context = {}, isApply, isStream, name) => {
   )
 
   // Keep calling render until there's remaining resources to render.
-  // This let's resources that depend on other resources to pause until one finishes.
+  // This lets resources that depend on other resources to pause until one finishes.
   const renderResources = isDrained => {
     result = RecipesReconciler.render(recipeWithWrapper, renderState, name)
 

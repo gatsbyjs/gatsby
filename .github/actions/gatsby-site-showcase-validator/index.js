@@ -82,7 +82,7 @@ async function run() {
         console.log(
           `${chalk.yellow(`[Notice]`)}: ${
             site.title
-          } (${siteUrl}) provided a 'source_url', but it's repository is inaccessible (${sourceUrl})`
+          } (${siteUrl}) provided a 'source_url', but its repository is inaccessible (${sourceUrl})`
         )
         inaccessibleRepoCount++
       }

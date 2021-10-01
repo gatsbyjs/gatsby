@@ -47,7 +47,7 @@ export function initJobsMessagingInMainProcess(
 }
 
 /**
- * This map is ONLY used in worker. It's purpose is to keep track of promises returned to plugins
+ * This map is ONLY used in worker. Its purpose is to keep track of promises returned to plugins
  * when creating jobs (in worker context), so that we can resolve or reject those once main process
  * send back their status.
  */

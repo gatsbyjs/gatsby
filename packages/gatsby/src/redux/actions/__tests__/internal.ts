@@ -12,7 +12,7 @@ beforeEach(() => {
 })
 
 describe(`setSiteConfig`, () => {
-  it(`let's you add a config`, () => {
+  it(`lets you add a config`, () => {
     const action = setSiteConfig({
       siteMetadata: {
         hi: true,

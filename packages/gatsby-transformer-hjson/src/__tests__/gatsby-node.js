@@ -17,7 +17,7 @@ describe(`Process HJSON nodes correctly`, () => {
     },
   }
 
-  // Make some fake functions its expecting.
+  // Make some fake functions it's expecting.
   const loadNodeContent = node => Promise.resolve(node.content)
 
   it(`correctly creates nodes from HJSON which is an array of objects`, async () => {

@@ -583,7 +583,7 @@
               {
                 "commit": {
                   "authoredDate": "2019-02-04T16:05:48Z",
-                  "message": "Deleting page before modifying it's path."
+                  "message": "Deleting page before modifying its path."
                 }
               },
               {
@@ -3709,7 +3709,7 @@
               {
                 "commit": {
                   "authoredDate": "2019-04-07T12:38:09Z",
-                  "message": "rename custom command to make it clear it's assertion"
+                  "message": "rename custom command to make it clear its assertion"
                 }
               },
               {

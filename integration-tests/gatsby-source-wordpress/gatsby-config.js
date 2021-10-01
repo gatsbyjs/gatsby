@@ -15,7 +15,7 @@ const mediaItemTypeSettings = {
   },
 }
 
-// this is it's own conditional object so we can run
+// this is its own conditional object so we can run
 // an int test with all default plugin options
 const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
   ? {

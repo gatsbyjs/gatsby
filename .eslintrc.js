@@ -127,7 +127,7 @@ module.exports = {
         ],
         // This rule is great. It helps us not throw on types for areas that are
         // easily inferrable. However we have a desire to have all function inputs
-        // and outputs declaratively typed. So this let's us ignore the parameters
+        // and outputs declaratively typed. So this lets us ignore the parameters
         // inferrable lint.
         "@typescript-eslint/no-inferrable-types": [
           `error`,

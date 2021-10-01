@@ -14,9 +14,9 @@ In this guide, you will learn:
 
 ## Querying Data in Gatsby
 
-Now that we have a basic understanding of how Gatsby gets data from WordPress using WPGraphQL and
-creates a GraphQL Schema similar to the Schema provided by WPGraphQL, we can move onto using GraphQL
-to fetch data and use that data in our Gatsby sites.
+Now that you have a basic understanding of how Gatsby gets data from WordPress using WPGraphQL and
+creates a GraphQL Schema similar to the Schema provided by WPGraphQL, you can move onto using GraphQL
+to fetch data and use that data in your Gatsby sites.
 
 The two most common ways to query WordPress data for a Gatsby site are:
 
@@ -27,7 +27,7 @@ Let's dive in!
 
 ### Using GraphQL to Build Pages for your WordPress data
 
-In this section, we're going to explore using Gatsby's GraphQL API to query data that came from
+In this section, you're going to explore using Gatsby's GraphQL API to query data that came from
 WordPress, and use that data to create pages.
 
 #### Hook into createPages action
@@ -40,22 +40,22 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 }
 ```
 
-This snippet hooks into Gatsby's `createPages` lifecycle and allows us to tell Gatsby what pages to
+This snippet hooks into Gatsby's `createPages` lifecycle and allows you to tell Gatsby what pages to
 create.
 
-We know we want to create pages for all WordPress posts, so we will need to write a GraphQL Query
+We know we want to create pages for all WordPress posts, so you will need to write a GraphQL Query
 to get the posts.
 
 #### Query WordPress Posts
 
-We already learned about GraphiQL, so we can use that to build a GraphQL Query.
+You already learned about GraphiQL, so you can use that to build a GraphQL Query.
 
-The query we create should include minimal identifying information about the Posts we want to create
-pages for. We don't want to query all the fields we want to display on the page in this query. We
+The query you create should include minimal identifying information about the Posts you want to create
+pages for. You don't want to query all the fields you want to display on the page in this query. You
 will use a [page query](https://www.gatsbyjs.com/docs/how-to/querying-data/page-query/) to do that
 later in this tutorial.
 
-Let's use the following query:
+Use the following query:
 
 ```graphql
 {
@@ -68,7 +68,7 @@ Let's use the following query:
 }
 ```
 
-We can add this to our previous snippet, so it will become the following:
+You can add this to your previous snippet, so it will become the following:
 
 ```js
 exports.createPages = async ({ actions, graphql, reporter }) => {
@@ -85,14 +85,14 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 }
 ```
 
-Here, we're using the GraphQL function that's passed through `createPages` to query data from Gatsby's
+Here, you're using the GraphQL function that's passed through `createPages` to query data from Gatsby's
 GraphQL API.
 
 #### Create Pages from WordPress Posts
 
-Next, we'll want to use the data that's returned to create pages.
+Next, you'll want to use the data that's returned to create pages.
 
-Below the query we just added, add the following:
+Below the query you just added, add the following:
 
 ```js
 if (result.errors) {
@@ -117,13 +117,13 @@ if (allWpPost.nodes.length) {
 }
 ```
 
-This snippet checks if the results of our query returned any errors, and if so it uses Gatsby's
+This snippet checks if the results of your query returned any errors, and if so it uses Gatsby's
 reporter to report an error, which would be output in the command line.
 
 The results of a GraphQL query come back under the "data" key, so the next line
 `const { allWpPost } = result.data;` gets the posts out of the data.
 
-Next, we define a template that our page will use:
+Next, define a template that your page will use:
 
 ```js
 const template = require.resolve(`./src/templates/WpPost.js`)
@@ -133,7 +133,7 @@ You can make this path whatever path you like, just make sure you have a file wi
 
 > NOTE: We'll take a look at building that template in the next section.
 
-Next, we iterate over all the posts that were returned from our GraphQL Query, and use the
+Next, iterate over all the posts that were returned from our GraphQL Query, and use the
 `createPage` function to create pages.
 
 ```js
@@ -156,14 +156,14 @@ The `createPage` function needs the following information:
 - **component:** This is the component that will be used to build the page.
 - **context:** This is contextual data that is passed to the component that's used to build the page.
 
-In our case, we pass the following data to the `createPage` function:
+In your case, you pass the following data to the `createPage` function:
 
 - **path:** `post.uri` | The uri field of the Post is used as the path for Gatsby. This allows
   WordPress internal links to work, even when Gatsby is used as the front-end. It also ensures the
   paths are unique.
-- **component:** `template` | Here we pass the file path to a template (Component) we defined (and
+- **component:** `template` | Here you pass the file path to a template (Component) you defined (and
   will be building later)
-- **context:** `post` | We pass the post node (which includes the id and uri of the post). This
+- **context:** `post` | You pass the post node (which includes the id and uri of the post). This
   context is passed to the component used to build the page and can be used to make page queries and
   populate the page with data.
 
@@ -205,10 +205,10 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
 ## Building the Page Template
 
-Now that we have a page being built at `/templates/WpPost.js`, let's take a look at how we can build
+Now that you have a page being built at `/templates/WpPost.js`, let's take a look at how you can build
 a specific page.
 
-The first thing we need, is a default component to export. Let's add that:
+The first thing you need, is a default component to export. Add that:
 
 ```js
 import React from "react"
@@ -220,29 +220,29 @@ const WpPost = () => {
 export default WpPost
 ```
 
-At this point, if we were to run `gatsby develop` or `gatsby build`, Gatsby would use our query that
-we wrote to fetch all posts, iterate through them, and create pages for each of them using the WpPost
+At this point, if you were to run `gatsby develop` or `gatsby build`, Gatsby would use your query that
+you wrote to fetch all posts, iterate through them, and create pages for each of them using the WpPost
 template.
 
-If we had a post with the WordPress uri of `hello-world`, then we should be able to visit
-`http://localhost:8000/hello-world` and see our new template.
+If you had a post with the WordPress uri of `hello-world`, then you should be able to visit
+`http://localhost:8000/hello-world` and see your new template.
 
 ![Initial template](../../docs/assets/gatsby-source-wordpress-template.png)
 
-Our template right now simply returns an `<h1>` with the words "My Template...".
+Your template right now simply returns an `<h1>` with the words "My Template...".
 
-We would be able to visit any of the uri's of the posts in WordPress and see the template.
+You would be able to visit any of the uri's of the posts in WordPress and see the template.
 
 ### Page Queries
 
-Of course, we don't actually want to have "My Template..." output, we want real data.
+Of course, you don't actually want to have "My Template..." output, you want real data.
 
 This is where Gatsby's Page Queries come in.
 
 When the page is created, the context that is passed (in our case the post node, with the `id` and
 `uri` fields) is made available to the template.
 
-This context can be used as variables within a page query to query a specific node and it's fields.
+This context can be used as variables within a page query to query a specific node and its fields.
 
 Let's take a look.
 
@@ -267,11 +267,11 @@ export const query = graphql`
 ```
 
 This query is asking for the `wpPost` where the id is equal to the ID that was passed through in
-context. And in response we're asking for the `id`, `title` and `content` of the Post.
+context. And in response you're asking for the `id`, `title` and `content` of the Post.
 
 So, for each post that used this template, a query will execute to get the Post matching the ID.
 
-We're asking for the data, but we're not using it yet. Let's adjust our component to use the data:
+You're asking for the data, but you're not using it yet. Adjust your component to use the data:
 
 ```js
 const WpPost = ({
@@ -288,23 +288,23 @@ const WpPost = ({
 }
 ```
 
-The data from the page query is passed to the component as `data.wpPost`. We're destructuring the
-`title`, `content` and `id` from the response, then using it in our markup.
+The data from the page query is passed to the component as `data.wpPost`. You're destructuring the
+`title`, `content` and `id` from the response, then using it in your markup.
 
-At this point, we now should be able to visit the same uri and see the template with data:
+At this point, you now should be able to visit the same uri and see the template with data:
 
 ![Template with Data](../../docs/assets/gatsby-source-wordpress-template-with-data.png)
 
 ### GraphQL Fragments
 
-Now that we're getting WordPress data into our Template, let's look at how we can use GraphQL Fragments
-to break our pages into smaller Components.
+Now that you're getting WordPress data into your Template, let's look at how you can use GraphQL Fragments
+to break your pages into smaller Components.
 
-Let's say we wanted to have an Author bio on each of our posts.
+Let's say you wanted to have an Author bio on each of your posts.
 
-For this, we would want to query for the Post's author, in addition to whatever Post fields we needed.
+For this, you would want to query for the Post's author, in addition to whatever Post fields you needed.
 
-We might end up with a query like so:
+You might end up with a query like so:
 
 ```graphql
 query ($id: String) {
@@ -324,11 +324,11 @@ query ($id: String) {
 }
 ```
 
-What's happening here, though, is that we would have one big component responsible for the Post _and_
-the Author, when we could split these into their own components, one for the Post, and one for the
+What's happening here, though, is that you would have one big component responsible for the Post _and_
+the Author, when you could split these into their own components, one for the Post, and one for the
 Author.
 
-Let's create a new component at `/components/AuthorBio.js` with the following:
+Create a new component at `/components/AuthorBio.js` with the following:
 
 ```javascript
 import React from "react"
@@ -354,15 +354,15 @@ const AuthorBio = ({ author: { id, name, description } }) => {
 export default AuthorBio
 ```
 
-This gives us a component to render the Author Bio, and it declares the data that it needs with a
+This gives you a component to render the Author Bio, and it declares the data that it needs with a
 GraphQL Fragment.
 
 This allows the component that renders the data to be responsible for HTML needed to render the output,
 and declaring the data that it needs from GraphQL, which allows components to have smaller
 responsibilities. This can help greatly with building re-usable components and scaling applications.
 
-This AuthorBio component can now be used anywhere a WpUser is asked for. Here, we'll use it within
-the Post component to show the Post's author. We'll change the WpPost Component like so:
+This AuthorBio component can now be used anywhere a WpUser is asked for. Here, you'll use it within
+the Post component to show the Post's author. You'll change the WpPost Component like so:
 
 ```js
 import React from "react"
@@ -400,25 +400,25 @@ export const query = graphql`
 export default WpPost
 ```
 
-At the top, we import the AuthorBio component. Then, we ask for the `author` in our data
+At the top, import the AuthorBio component. Then, ask for the `author` in your data
 destructuring at the top of the component.
 
-Then, we add the `<AuthorBio author={author.node} />` to our Post Component.
+Then, add the `<AuthorBio author={author.node} />` to our Post Component.
 
-Last, we update our Query to ask for the Author, and reference the Fragment that was defined in our
+Last, update your Query to ask for the Author, and reference the Fragment that was defined in your
 AuthorBio component. Gatsby keeps track of all fragments, so we can reference our AuthorBio fragment
-within our query for the WpPost and it will work!
+within your query for the WpPost and it will work!
 
-So now, we have a Post component that's responsible for asking for the data it needs, and an Author
+So now, you have a Post component that's responsible for asking for the data it needs, and an Author
 Component that is responsible for asking for what it needs.
 
-And now we have a template that looks like the following:
+And now you have a template that looks like the following:
 
 ![Template with Data and Author](../../docs/assets/gatsby-source-wordpress-template-with-author.png)
 
 ## Conditional Templates / Template Hierarchy
 
-At this point, we've used GraphQL to query WordPress Posts from Gatsby's GraphQL API, and used that
+At this point, you've used GraphQL to query WordPress Posts from Gatsby's GraphQL API, and used that
 data to create pages.
 
 This was a simple example showing how to create pages for WordPress posts. But WordPress has
