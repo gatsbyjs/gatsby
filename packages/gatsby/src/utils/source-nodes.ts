@@ -97,6 +97,7 @@ export default async ({
   parentSpan?: Span
   deferNodeMutation?: boolean
 }): Promise<void> => {
+  console.time(`sourceNodes`)
   await apiRunner(`sourceNodes`, {
     traceId: `initial-sourceNodes`,
     waitForCascadingActions: true,
@@ -105,10 +106,15 @@ export default async ({
     webhookBody: webhookBody || {},
     pluginName,
   })
+  console.timeEnd(`sourceNodes`)
 
+  console.time(`sourceNodes: await dataStore`)
   await getDataStore().ready()
+  console.timeEnd(`sourceNodes: await dataStore`)
+  console.log({ initialSourcing })
 
   if (initialSourcing) {
+    console.time(`sourceNodes: delete stale nodes`)
     const state = store.getState()
     const nodes = getNodes()
 
@@ -116,6 +122,7 @@ export default async ({
 
     deleteStaleNodes(state, nodes)
     initialSourcing = false
+    console.timeEnd(`sourceNodes: delete stale nodes`)
   } else {
     return
   }
