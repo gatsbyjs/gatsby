@@ -50,6 +50,4 @@ export enum Stage {
   DevelopHTML = `develop-html`,
   BuildJavascript = `build-javascript`,
   BuildHTML = `build-html`,
-  // TODO move to BuildHTML when queryengine pieces are merged
-  SSR = `build-ssr`,
 }

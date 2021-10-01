@@ -101,12 +101,14 @@ const siteSiteMetadataType = `
 `
 
 const sitePageType = `
-  type SitePage implements Node @infer {
+  type SitePage implements Node @dontInfer {
     path: String!
     component: String!
     internalComponentName: String!
     componentChunkName: String!
     matchPath: String
+    pageContext: JSON
+    pluginCreator: SitePlugin @link(from: "pluginCreatorId")
   }
 `
 
@@ -119,9 +121,8 @@ const sitePluginType = `
     browserAPIs: [String]
     ssrAPIs: [String]
     pluginFilepath: String
-    # TODO v4:
-    # pluginOptions: JSON
-    # packageJson: JSON
+    pluginOptions: JSON
+    packageJson: JSON
   }
 `
 

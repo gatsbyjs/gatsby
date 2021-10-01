@@ -225,7 +225,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     )
   }
 
-  // Handle SSR & DSR Pages
+  // Handle SSR & DSG Pages
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     try {
       const { GraphQLEngine } = require(path.join(
@@ -253,7 +253,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           const potentialPagePath = reverseFixedPagePath(requestedPagePath)
           const page = graphqlEngine.findPageByPath(potentialPagePath)
 
-          if (page && (page.mode === `DSR` || page.mode === `SSR`)) {
+          if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
             const data = await getData({
               pathName: req.path,
               graphqlEngine,
@@ -279,7 +279,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           const potentialPagePath = req.path
           const page = graphqlEngine.findPageByPath(potentialPagePath)
 
-          if (page && (page.mode === `DSR` || page.mode === `SSR`)) {
+          if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
             const data = await getData({
               pathName: potentialPagePath,
               graphqlEngine,

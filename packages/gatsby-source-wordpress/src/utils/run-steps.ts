@@ -72,6 +72,42 @@ const runSteps = async (
   }
 }
 
+/**
+ * Takes in a pipe delimited string of Gatsby Node API names and returns the first supported API name as a string
+ *
+ * Example input: "onPluginInit|unstable_onPluginInit"
+ * Example output: "unstable_onPluginInit"
+ */
+const findApiName = (initialApiNameString: string): string => {
+  if (!initialApiNameString.includes(`|`)) {
+    return initialApiNameString
+  }
+
+  const potentialApiNames = initialApiNameString.split(`|`)
+
+  try {
+    const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
+
+    for (const apiName of potentialApiNames) {
+      if (isGatsbyNodeLifecycleSupported(apiName)) {
+        return apiName
+      }
+    }
+  } catch (e) {
+    console.error(
+      `Could not check if Gatsby supports node API's [${potentialApiNames.join(
+        `, `
+      )}]. Trying to use the first available API name (${potentialApiNames[0]})`
+    )
+
+    return potentialApiNames[0]
+  }
+
+  throw new Error(
+    `Couldn't find any supported Gatsby Node API's in ${initialApiNameString}`
+  )
+}
+
 const runApiSteps =
   (steps: Array<Step>, apiName: string) =>
   async (
@@ -85,12 +121,14 @@ const runApisInSteps = (nodeApis: {
 }): { [apiName: string]: Promise<void> | void } =>
   Object.entries(nodeApis).reduce(
     (gatsbyNodeExportObject, [apiName, apiSteps]) => {
+      const normalizedApiName = findApiName(apiName)
+
       return {
         ...gatsbyNodeExportObject,
-        [apiName]:
+        [normalizedApiName]:
           typeof apiSteps === `function`
             ? apiSteps
-            : runApiSteps(apiSteps, apiName),
+            : runApiSteps(apiSteps, normalizedApiName),
       }
     },
     {}

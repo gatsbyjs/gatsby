@@ -522,6 +522,10 @@ describe(`gatsby-source-drupal`, () => {
         expect(
           nodes[createNodeId(`und.tag-2`)].relationships[`node__article___NODE`]
         ).toContain(createNodeId(`und.article-3`))
+        // Created a new node article-9 with reference to tag-2
+        expect(
+          nodes[createNodeId(`und.tag-2`)].relationships[`node__article___NODE`]
+        ).toContain(createNodeId(`und.article-9`))
       })
     })
   })

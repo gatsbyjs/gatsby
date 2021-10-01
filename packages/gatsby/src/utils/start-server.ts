@@ -13,7 +13,7 @@ import {
   GraphQLFormattedError,
   Kind,
 } from "graphql"
-import { isCI } from "gatsby-core-utils"
+import { slash, uuid } from "gatsby-core-utils"
 import http from "http"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
@@ -29,10 +29,6 @@ import * as WorkerPool from "../utils/worker/pool"
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
 import { websocketManager, WebsocketManager } from "../utils/websocket-manager"
-import {
-  showExperimentNoticeAfterTimeout,
-  CancelExperimentNoticeCallbackOrUndefined,
-} from "../utils/show-experiment-notice"
 import {
   reverseFixedPagePath,
   readPageData,
@@ -52,7 +48,6 @@ import {
   writeVirtualLoadingIndicatorModule,
 } from "./loading-indicator"
 import { renderDevHTML } from "./dev-ssr/render-dev-html"
-import pDefer from "p-defer"
 import { getServerData, IServerData } from "./get-server-data"
 import { ROUTES_DIRECTORY } from "../constants"
 
@@ -62,7 +57,6 @@ interface IServer {
   compiler: webpack.Compiler
   listener: http.Server
   webpackActivity: ActivityTracker
-  cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
   websocketManager: WebsocketManager
   workerPool: WorkerPool.GatsbyWorkerPool
   webpackWatching: IWebpackWatchingPauseResume
@@ -79,6 +73,11 @@ export async function startServer(
   workerPool: WorkerPool.GatsbyWorkerPool = WorkerPool.create()
 ): Promise<IServer> {
   const directory = program.directory
+  const PAGE_RENDERER_PATH = path.join(
+    program.directory,
+    ROUTES_DIRECTORY,
+    `render-page.js`
+  )
 
   const webpackActivity = report.activityTimer(`Building development bundle`, {
     id: `webpack-develop`,
@@ -90,34 +89,12 @@ export async function startServer(
   // query on demand is enabled and loading indicator is not disabled
   writeVirtualLoadingIndicatorModule()
 
-  const THIRTY_SECONDS = 30 * 1000
-  let cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
-  if (
-    process.env.gatsby_executing_command === `develop` &&
-    !process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE &&
-    !isCI()
-  ) {
-    cancelDevJSNotice = showExperimentNoticeAfterTimeout(
-      `Preserve webpack's Cache`,
-      `https://github.com/gatsbyjs/gatsby/discussions/28331`,
-      `which changes Gatsby's cache clearing behavior to not clear webpack's
-cache unless you run "gatsby clean" or delete the .cache folder manually.
-Here's how to try it:
-
-module.exports = {
-  flags: { PRESERVE_WEBPACK_CACHE: true },
-  plugins: [...]
-}`,
-      THIRTY_SECONDS
-    )
-  }
-
   // Remove the following when merging GATSBY_EXPERIMENTAL_DEV_SSR
   const directoryPath = withBasePath(directory)
   const { buildRenderer, doBuildPages } = require(`../commands/build-html`)
   const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
     try {
-      const { rendererPath } = await buildRenderer(
+      const { rendererPath, close } = await buildRenderer(
         program,
         Stage.DevelopHTML,
         activity.span
@@ -129,6 +106,8 @@ module.exports = {
         workerPool,
         Stage.DevelopHTML
       )
+      // close the compiler
+      await close()
     } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
@@ -171,38 +150,6 @@ module.exports = {
   )
 
   const compiler = webpack(devConfig)
-  let waitForServerCompilation = (): Promise<webpack.Stats | undefined> =>
-    Promise.resolve(undefined)
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    const serverDevConfig = await webpackConfig(
-      program,
-      directory,
-      Stage.SSR,
-      program.port,
-      {
-        parentSpan: webpackActivity.span,
-      }
-    )
-    const serverCompiler = webpack(serverDevConfig)
-
-    const waitForServerCompilationDeferred = pDefer<webpack.Stats>()
-    waitForServerCompilation = (): Promise<webpack.Stats | undefined> =>
-      waitForServerCompilationDeferred.promise
-    let compileCounter = 0
-    serverCompiler.watch(
-      {
-        ignored: /node_modules/,
-      },
-      (_, stats) => {
-        if (compileCounter++ > 0) {
-          waitForServerCompilation = (): Promise<webpack.Stats | undefined> =>
-            Promise.resolve(stats as webpack.Stats)
-        } else {
-          waitForServerCompilationDeferred.resolve(stats)
-        }
-      }
-    )
-  }
 
   /**
    * Set up the express app.
@@ -296,6 +243,8 @@ module.exports = {
     req: express.Request,
     pluginName?: string
   ): Promise<void> => {
+    global.__GATSBY.buildId = uuid.v4()
+
     emitter.emit(`WEBHOOK_RECEIVED`, {
       webhookBody: req.body,
       pluginName,
@@ -333,7 +282,14 @@ module.exports = {
     res.end()
   })
 
-  const previousHashes: Map<string, string> = new Map()
+  const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
+    publicPath: devConfig.output.publicPath,
+    stats: `errors-only`,
+    serverSideRender: true,
+  })
+
+  app.use(webpackDevMiddlewareInstance)
+
   app.get(
     `/page-data/:pagePath(*)/page-data.json`,
     async (req, res, next): Promise<void> => {
@@ -351,39 +307,15 @@ module.exports = {
           let serverDataPromise: Promise<IServerData> = Promise.resolve({})
 
           if (page.mode === `SSR`) {
-            // get dynamic serverModule$
-            const stats = await waitForServerCompilation()
+            const renderer = require(PAGE_RENDERER_PATH)
+            const componentInstance = await renderer.getPageChunk(page)
 
-            if (
-              !stats ||
-              !stats.compilation.entrypoints.has(page.componentChunkName)
-            ) {
-              report.error(
-                `Error loading a result for the page query in "${requestedPagePath}" / "${potentialPagePath}". getServerData threw an error.`
-              )
-            }
-
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const componentHash = stats!.compilation.entrypoints
-              .get(page.componentChunkName)!
-              .getEntrypointChunk().hash as string
-            const modulePath = path.resolve(
-              `${program.directory}/${ROUTES_DIRECTORY}/${page.componentChunkName}.js`
+            serverDataPromise = getServerData(
+              req,
+              page,
+              potentialPagePath,
+              componentInstance
             )
-
-            // if webpack compilation is diff we delete old cache
-            if (
-              previousHashes.has(page.componentChunkName) &&
-              previousHashes.get(page.componentChunkName) === componentHash
-            ) {
-              delete require.cache[modulePath]
-            }
-
-            const mod = require(modulePath)
-
-            previousHashes.set(page.componentChunkName, componentHash)
-
-            serverDataPromise = getServerData(req, page, potentialPagePath, mod)
           }
 
           let pageData: IPageDataWithQueryResult
@@ -426,20 +358,6 @@ module.exports = {
       })
     }
   )
-
-  // Disable directory indexing i.e. serving index.html from a directory.
-  // This can lead to serving stale html files during development.
-  //
-  // We serve by default an empty index.html that sets up the dev environment.
-  app.use(developStatic(`public`, { index: false }))
-
-  const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
-    publicPath: devConfig.output.publicPath,
-    stats: `errors-only`,
-    serverSideRender: true,
-  })
-
-  app.use(webpackDevMiddlewareInstance)
 
   app.get(`/__original-stack-frame`, async (req, res) => {
     const compilation = res.locals?.webpack?.devMiddleware?.stats?.compilation
@@ -530,6 +448,12 @@ module.exports = {
     developMiddleware(app, program)
   }
 
+  // Disable directory indexing i.e. serving index.html from a directory.
+  // This can lead to serving stale html files during development.
+  //
+  // We serve by default an empty index.html that sets up the dev environment.
+  app.use(developStatic(`public`, { index: false }))
+
   // Set up API proxy.
   const { proxy } = store.getState().config
   if (proxy) {
@@ -601,7 +525,7 @@ module.exports = {
           page: pathObj,
           skipSsr: req.query[`skip-ssr`] || false,
           store,
-          htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+          htmlComponentRendererPath: PAGE_RENDERER_PATH,
           directory: program.directory,
         })
         res.status(200).send(renderResponse)
@@ -670,7 +594,7 @@ module.exports = {
             skipSsr: true,
             store,
             error: message,
-            htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+            htmlComponentRendererPath: PAGE_RENDERER_PATH,
             directory: program.directory,
           })
 
@@ -755,6 +679,14 @@ module.exports = {
           res.send(e).status(500)
         }
       } else {
+        const potentialPagePath = reverseFixedPagePath(decodeURI(req.path))
+        const page = findPageByPath(store.getState(), potentialPagePath, false)
+
+        // When we can't find a page we send 404
+        if (!page) {
+          res.status(404)
+        }
+
         res.sendFile(directoryPath(`.cache/develop-html/index.html`), err => {
           if (err) {
             res.status(500).end()
@@ -777,7 +709,6 @@ module.exports = {
 
   if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const chokidar = require(`chokidar`)
-    const { slash } = require(`gatsby-core-utils`)
     // Register watcher that rebuilds index.html every time html.js changes.
     const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
       slash(directoryPath(path))
@@ -794,7 +725,6 @@ module.exports = {
     compiler,
     listener,
     webpackActivity,
-    cancelDevJSNotice,
     websocketManager,
     workerPool,
     webpackWatching: webpackDevMiddlewareInstance.context.watching,

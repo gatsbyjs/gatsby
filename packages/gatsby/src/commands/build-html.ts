@@ -3,11 +3,12 @@ import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
 import { chunk, truncate } from "lodash"
-import webpack, { Stats } from "webpack"
+import { build, watch } from "../utils/webpack/bundle"
 import * as path from "path"
 
 import { emitter, store } from "../redux"
 import { IWebpackWatchingPauseResume } from "../utils/start-server"
+import webpack from "webpack"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import * as buildUtils from "./build-utils"
@@ -15,11 +16,12 @@ import { getPageData } from "../utils/get-page-data"
 
 import { Span } from "opentracing"
 import { IProgram, Stage } from "./types"
+import { ROUTES_DIRECTORY } from "../constants"
 import { PackageJson } from "../.."
-import type { GatsbyWorkerPool } from "../utils/worker/pool"
 import { IPageDataWithQueryResult } from "../utils/page-data"
 import { processNodeManifests } from "../utils/node-manifest"
 
+import type { GatsbyWorkerPool } from "../utils/worker/pool"
 type IActivity = any // TODO
 
 const isPreview =
@@ -37,11 +39,17 @@ export interface IBuildArgs extends IProgram {
   profile: boolean
   graphqlTracing: boolean
   openTracingConfigFile: string
+  // TODO remove in v4
   keepPageRenderer: boolean
 }
 
-let devssrWebpackCompiler: webpack.Compiler
-let devssrWebpackWatcher: IWebpackWatchingPauseResume
+interface IBuildRendererResult {
+  rendererPath: string
+  stats: webpack.Stats
+  close: ReturnType<typeof watch>["close"]
+}
+
+let devssrWebpackCompiler: webpack.Watching | undefined
 let needToRecompileSSRBundle = true
 export const getDevSSRWebpack = (): {
   devssrWebpackWatcher: IWebpackWatchingPauseResume
@@ -53,8 +61,8 @@ export const getDevSSRWebpack = (): {
   }
 
   return {
-    devssrWebpackWatcher,
-    devssrWebpackCompiler,
+    devssrWebpackWatcher: devssrWebpackCompiler as webpack.Watching,
+    devssrWebpackCompiler: (devssrWebpackCompiler as webpack.Watching).compiler,
     needToRecompileSSRBundle,
   }
 }
@@ -64,60 +72,33 @@ let newHash = ``
 const runWebpack = (
   compilerConfig,
   stage: Stage,
-  directory,
-  parentSpan?: Span
-): Bluebird<{
-  stats: Stats
-  waitForCompilerClose: Promise<void>
-}> =>
-  new Bluebird((resolve, reject) => {
-    if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR || stage === `build-html`) {
+  directory: string
+): Promise<{
+  stats: webpack.Stats
+  close: ReturnType<typeof watch>["close"]
+}> => {
+  const isDevSSREnabledAndViable =
+    process.env.GATSBY_EXPERIMENTAL_DEV_SSR && stage === `develop-html`
+
+  return new Promise((resolve, reject) => {
+    if (isDevSSREnabledAndViable) {
       const compiler = webpack(compilerConfig)
-      compiler.run((err, stats) => {
-        let activity
-        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
-          activity = reporter.activityTimer(
-            `Caching HTML renderer compilation`,
-            { parentSpan }
-          )
-          activity.start()
-        }
 
-        const waitForCompilerClose = new Promise<void>((resolve, reject) => {
-          compiler.close(error => {
-            if (activity) {
-              activity.end()
-            }
-
-            if (error) {
-              return reject(error)
-            }
-            return resolve()
-          })
-        })
-
-        if (err) {
-          return reject(err)
-        } else {
-          return resolve({ stats: stats as Stats, waitForCompilerClose })
-        }
-      })
-    } else if (
-      process.env.GATSBY_EXPERIMENTAL_DEV_SSR &&
-      stage === `develop-html`
-    ) {
-      devssrWebpackCompiler = webpack(compilerConfig)
-      devssrWebpackCompiler.hooks.invalid.tap(`ssr file invalidation`, () => {
+      // because of this line we can't use our watch helper
+      // These things should use emitter
+      compiler.hooks.invalid.tap(`ssr file invalidation`, () => {
         needToRecompileSSRBundle = true
       })
-      devssrWebpackWatcher = devssrWebpackCompiler.watch(
+
+      const watcher = compiler.watch(
         {
           ignored: /node_modules/,
         },
         (err, stats) => {
+          // this runs multiple times
           needToRecompileSSRBundle = false
           emitter.emit(`DEV_SSR_COMPILATION_DONE`)
-          devssrWebpackWatcher.suspend()
+          watcher.suspend()
 
           if (err) {
             return reject(err)
@@ -129,51 +110,45 @@ const runWebpack = (
             } = require(`../utils/dev-ssr/render-dev-html`)
             // Make sure we use the latest version during development
             if (oldHash !== `` && newHash !== oldHash) {
-              restartWorker(`${directory}/public/render-page.js`)
+              restartWorker(`${directory}/${ROUTES_DIRECTORY}render-page.js`)
             }
 
             oldHash = newHash
 
             return resolve({
-              stats: stats as Stats,
-              waitForCompilerClose: Promise.resolve(),
+              stats: stats as webpack.Stats,
+              close: () =>
+                new Promise((resolve, reject): void =>
+                  watcher.close(err => (err ? reject(err) : resolve()))
+                ),
             })
           }
         }
-      ) as IWebpackWatchingPauseResume
+      )
+      devssrWebpackCompiler = watcher
+    } else {
+      build(compilerConfig).then(({ stats, close }) => {
+        resolve({ stats, close })
+      })
     }
   })
+}
 
 const doBuildRenderer = async (
-  { directory }: IProgram,
+  directory: string,
   webpackConfig: webpack.Configuration,
-  stage: Stage,
-  parentSpan?: Span
-): Promise<{ rendererPath: string; waitForCompilerClose }> => {
-  const { stats, waitForCompilerClose } = await runWebpack(
-    webpackConfig,
-    stage,
-    directory,
-    parentSpan
-  )
-  if (stats.hasErrors()) {
+  stage: Stage
+): Promise<IBuildRendererResult> => {
+  const { stats, close } = await runWebpack(webpackConfig, stage, directory)
+  if (stats?.hasErrors()) {
     reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
-  }
-
-  if (
-    stage === `build-html` &&
-    store.getState().html.ssrCompilationHash !== stats.hash
-  ) {
-    store.dispatch({
-      type: `SET_SSR_WEBPACK_COMPILATION_HASH`,
-      payload: stats.hash as string,
-    })
   }
 
   // render-page.js is hard coded in webpack.config
   return {
-    rendererPath: `${directory}/public/render-page.js`,
-    waitForCompilerClose,
+    rendererPath: `${directory}/${ROUTES_DIRECTORY}render-page.js`,
+    stats,
+    close,
   }
 }
 
@@ -181,15 +156,15 @@ export const buildRenderer = async (
   program: IProgram,
   stage: Stage,
   parentSpan?: IActivity
-): Promise<{ rendererPath: string; waitForCompilerClose }> => {
-  const { directory } = program
-  const config = await webpackConfig(program, directory, stage, null, {
+): Promise<IBuildRendererResult> => {
+  const config = await webpackConfig(program, program.directory, stage, null, {
     parentSpan,
   })
 
-  return doBuildRenderer(program, config, stage, parentSpan)
+  return doBuildRenderer(program.directory, config, stage)
 }
 
+// TODO remove after v4 release and update cloud internals
 export const deleteRenderer = async (rendererPath: string): Promise<void> => {
   try {
     await fs.remove(rendererPath)
@@ -198,7 +173,6 @@ export const deleteRenderer = async (rendererPath: string): Promise<void> => {
     // This function will fail on Windows with no further consequences.
   }
 }
-
 export interface IRenderHtmlResult {
   unsafeBuiltinsUsageByPagePath: Record<string, Array<string>>
   previewErrors: Record<string, any>
@@ -442,16 +416,13 @@ export const buildHTML = async ({
 }): Promise<void> => {
   const { rendererPath } = await buildRenderer(program, stage, activity.span)
   await doBuildPages(rendererPath, pagePaths, activity, workerPool, stage)
-  await deleteRenderer(rendererPath)
 }
 
 export async function buildHTMLPagesAndDeleteStaleArtifacts({
-  pageRenderer,
   workerPool,
   buildSpan,
   program,
 }: {
-  pageRenderer: string
   workerPool: GatsbyWorkerPool
   buildSpan?: Span
   program: IBuildArgs
@@ -459,6 +430,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   toRegenerate: Array<string>
   toDelete: Array<string>
 }> {
+  const pageRenderer = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
   buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged()
 
   const { toRegenerate, toDelete, toCleanupFromTrackedState } =
@@ -513,8 +485,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
     reporter.info(`There are no new or changed html files to build.`)
   }
 
-  // TODO move to per page builds in _routes directory
-  if (!program.keepPageRenderer && _CFLAGS_.GATSBY_MAJOR !== `4`) {
+  if (_CFLAGS_.GATSBY_MAJOR !== `4` && !program.keepPageRenderer) {
     try {
       await deleteRenderer(pageRenderer)
     } catch (err) {

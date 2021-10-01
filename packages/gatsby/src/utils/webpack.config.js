@@ -1,12 +1,13 @@
 require(`v8-compile-cache`)
 
-const { isCI } = require(`gatsby-core-utils`)
 const crypto = require(`crypto`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
-const { CoreJSResolver } = require(`./webpack/corejs-resolver`)
-const { CacheFolderResolver } = require(`./webpack/cache-folder-resolver`)
+const { CoreJSResolver } = require(`./webpack/plugins/corejs-resolver`)
+const {
+  CacheFolderResolver,
+} = require(`./webpack/plugins/cache-folder-resolver`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const { getPublicPath } = require(`./get-public-path`)
@@ -18,8 +19,9 @@ const apiRunnerNode = require(`./api-runner-node`)
 import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
-import { StaticQueryMapper } from "./webpack/static-query-mapper"
-import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
+import { StaticQueryMapper } from "./webpack/plugins/static-query-mapper"
+import { ForceCssHMRForEdgeCases } from "./webpack/plugins/force-css-hmr-for-edge-cases"
+import { WebpackLoggingPlugin } from "./webpack/plugins/webpack-logging"
 import { hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
 import { shouldGenerateEngines } from "./engines-helpers"
@@ -47,16 +49,12 @@ module.exports = async (
 
   // we will converge to build-html later on but for now this was the fastest way to get SSR to work
   // TODO remove in v4 - we deprecated this in v3
-  process.env.GATSBY_BUILD_STAGE =
-    suppliedStage === `build-ssr` ? `build-html` : suppliedStage
+  process.env.GATSBY_BUILD_STAGE = suppliedStage
 
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
   const stage = suppliedStage
-  const { rules, loaders, plugins } = createWebpackUtils(
-    suppliedStage === `build-ssr` ? `build-html` : stage,
-    program
-  )
+  const { rules, loaders, plugins } = createWebpackUtils(stage, program)
 
   const { assetPrefix, pathPrefix } = store.getState().config
 
@@ -98,9 +96,7 @@ module.exports = async (
     // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
     envObject.NODE_ENV = JSON.stringify(nodeEnv)
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
-    envObject.BUILD_STAGE = JSON.stringify(
-      stage === `build-ssr` ? `build-html` : stage
-    )
+    envObject.BUILD_STAGE = JSON.stringify(stage)
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
     envObject.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = JSON.stringify(
       !!process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
@@ -164,9 +160,12 @@ module.exports = async (
         // Generate the file needed to SSR pages.
         // Deleted by build-html.js, since it's not needed for production.
         return {
-          path: directoryPath(`public`),
-          filename: `render-page.js`,
-          libraryTarget: `commonjs`,
+          path: directoryPath(ROUTES_DIRECTORY),
+          filename: `[name].js`,
+          chunkFilename: `[name].js`,
+          library: {
+            type: `commonjs`,
+          },
           publicPath: withTrailingSlash(publicPath),
         }
       case `build-javascript`:
@@ -176,13 +175,6 @@ module.exports = async (
           path: directoryPath(`public`),
           publicPath: withTrailingSlash(publicPath),
         }
-      case `build-ssr`: {
-        return {
-          path: directoryPath(ROUTES_DIRECTORY),
-          filename: `[name].js`,
-          libraryTarget: `commonjs2`,
-        }
-      }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
     }
@@ -201,23 +193,15 @@ module.exports = async (
             }
       case `develop-html`:
         return {
-          main: process.env.GATSBY_EXPERIMENTAL_DEV_SSR
+          "render-page": process.env.GATSBY_EXPERIMENTAL_DEV_SSR
             ? directoryPath(`.cache/ssr-develop-static-entry`)
             : directoryPath(`.cache/develop-static-entry`),
         }
-      case `build-ssr`: {
-        const entries = Object.create(null)
-        for (const [, { componentPath, componentChunkName }] of store.getState()
-          .components) {
-          entries[componentChunkName] = componentPath
-        }
-
-        return entries
-      }
-      case `build-html`:
+      case `build-html`: {
         return {
-          main: directoryPath(`.cache/static-entry`),
+          "render-page": directoryPath(`.cache/static-entry`),
         }
+      }
       case `build-javascript`:
         return hasES6ModuleSupport(directory)
           ? {
@@ -251,7 +235,9 @@ module.exports = async (
 
       plugins.virtualModules(),
       new BabelConfigItemsCacheInvalidatorPlugin(),
-    ]
+      process.env.GATSBY_WEBPACK_LOGGING?.split(`,`)?.includes(stage) &&
+        new WebpackLoggingPlugin(program.directory, report, program.verbose),
+    ].filter(Boolean)
 
     switch (stage) {
       case `develop`: {
@@ -306,6 +292,17 @@ module.exports = async (
         ])
         break
       }
+      case `develop-html`:
+      case `build-html`: {
+        // Add global fetch in node environments
+        configPlugins.push(
+          plugins.provide({
+            fetch: require.resolve(`node-fetch`),
+            "global.fetch": require.resolve(`node-fetch`),
+          })
+        )
+        break
+      }
     }
 
     return configPlugins
@@ -319,7 +316,6 @@ module.exports = async (
       // it gives better line and column numbers
       case `develop-html`:
       case `build-html`:
-      case `build-ssr`:
       case `build-javascript`:
         return `source-map`
       default:
@@ -334,7 +330,6 @@ module.exports = async (
         return `development`
       case `build-javascript`:
       case `build-html`:
-        return `production`
       default:
         return `production`
     }
@@ -414,7 +409,6 @@ module.exports = async (
       }
       case `build-html`:
       case `develop-html`:
-      case `build-ssr`:
         // We don't deal with CSS at all when building the HTML.
         // The 'null' loader is used to prevent 'module not found' errors.
         // On the other hand CSS modules loaders are necessary.
@@ -488,11 +482,7 @@ module.exports = async (
     }
 
     const target =
-      stage === `build-html` ||
-      stage === `develop-html` ||
-      stage === `build-ssr`
-        ? `node`
-        : `web`
+      stage === `build-html` || stage === `develop-html` ? `node` : `web`
     if (target === `web`) {
       resolve.alias[`@reach/router`] = path.join(
         getPackageRoot(`@gatsbyjs/reach-router`),
@@ -535,6 +525,7 @@ module.exports = async (
   }
 
   const config = {
+    name: stage,
     // Context is the base directory for resolving the entry option.
     context: directory,
     entry: getEntry(),
@@ -555,11 +546,7 @@ module.exports = async (
     resolve: getResolve(stage),
   }
 
-  if (
-    stage === `build-html` ||
-    stage === `develop-html` ||
-    stage === `build-ssr`
-  ) {
+  if (stage === `build-html` || stage === `develop-html`) {
     const [major, minor] = process.version.replace(`v`, ``).split(`.`)
     config.target = `node14.15`
   } else {
@@ -605,8 +592,14 @@ module.exports = async (
     }
   }
 
-  if (stage === `build-html`) {
+  if (stage === `build-html` || stage === `develop-html`) {
     config.optimization = {
+      splitChunks: {
+        cacheGroups: {
+          default: false,
+          defaultVendors: false,
+        },
+      },
       minimize: false,
     }
   }
@@ -725,11 +718,7 @@ module.exports = async (
     }
   }
 
-  if (
-    stage === `build-html` ||
-    stage === `develop-html` ||
-    stage === `build-ssr`
-  ) {
+  if (stage === `build-html` || stage === `develop-html`) {
     // externalize react, react-dom when develop-html or build-html(when not generating engines)
     const shouldMarkPackagesAsExternal =
       stage === `develop-html` ||
@@ -849,7 +838,6 @@ module.exports = async (
   if (
     stage === `build-javascript` ||
     stage === `build-html` ||
-    stage === `build-ssr` ||
     (process.env.GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE &&
       (stage === `develop` || stage === `develop-html`))
   ) {
@@ -886,7 +874,7 @@ module.exports = async (
   await apiRunnerNode(`onCreateWebpackConfig`, {
     getConfig,
     // we will converge to build-html later on but for now this was the fastest way to get SSR to work
-    stage: stage === `build-ssr` ? `build-html` : stage,
+    stage,
     rules,
     loaders,
     plugins,
