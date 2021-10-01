@@ -88,7 +88,11 @@ module.exports = async function contentfulFetch({
     environment: pluginConfig.get(`environment`),
     proxy: pluginConfig.get(`proxy`),
     integration: `gatsby-source-contentful`,
-    logHandler: response => {
+    responseLogger: response => {
+      console.log(`RESPONSE`, JSON.stringify(response))
+      console.log(`syncItemCount`, JSON.stringify(syncItemCount))
+      console.log(`syncProgress`, JSON.stringify(syncProgress))
+
       function createMetadataLog(response) {
         if (!response.headers) {
           return null
@@ -220,6 +224,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
   let lastCurrentPageLimit
   let syncSuccess = false
   try {
+    console.log(`PAGE LIMIT`, currentPageLimit, pageLimit)
     syncProgress = reporter.createProgress(
       `Contentful: ${syncToken ? `Sync changed items` : `Sync all items`}`,
       currentPageLimit,
@@ -238,6 +243,8 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
           ? { nextSyncToken: syncToken, ...basicSyncConfig }
           : { initial: true, ...basicSyncConfig }
         currentSyncData = await client.sync(query)
+        console.log(`syncProgress-2`, JSON.stringify(syncProgress))
+
         syncSuccess = true
       } catch (e) {
         // Back off page limit if responses content length exceeds Contentfuls limits.
@@ -275,6 +282,8 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
       },
     })
   } finally {
+    console.log(`syncProgress-3`, JSON.stringify(syncProgress))
+
     syncProgress.done()
   }
 
