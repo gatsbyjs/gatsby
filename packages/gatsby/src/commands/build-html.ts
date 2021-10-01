@@ -249,12 +249,11 @@ const renderHTMLQueue = async (
             }
           )
         )
-        console.log(`hi`)
 
         console.log(`errorMessages`, errorMessages)
 
         for (const value of errorMessages.values()) {
-          const errorMessage = `Preview build error for page path(s):\n\n${value.pagePaths
+          const errorMessage = `The following page(s) saw this error when building their HTML:\n\n${value.pagePaths
             .map(p => `- ${p}`)
             .join(`\n`)}\n\n${value.errorMessage}`
           reporter.error({
