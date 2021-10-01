@@ -206,12 +206,12 @@ const renderHTMLQueue = async (
 
   try {
     await Bluebird.map(segments, async pageSegment => {
-      const renderHTMLResult = await renderHTML({
+      const renderHTMLResult = (await renderHTML({
         envVars,
         htmlComponentRendererPath,
         paths: pageSegment,
         sessionId,
-      })
+      })) as IRenderHtmlResult
 
       if (isPreview) {
         const seenErrors = new Set()
