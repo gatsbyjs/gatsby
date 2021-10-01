@@ -24,6 +24,8 @@ import { processNodeManifests } from "../utils/node-manifest"
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
 type IActivity = any // TODO
 
+const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
+
 export interface IBuildArgs extends IProgram {
   directory: string
   sitePackageJson: PackageJson
@@ -170,6 +172,7 @@ export const deleteRenderer = async (rendererPath: string): Promise<void> => {
 }
 export interface IRenderHtmlResult {
   unsafeBuiltinsUsageByPagePath: Record<string, Array<string>>
+  previewErrors: Record<string, any>
 }
 
 const renderHTMLQueue = async (
@@ -206,6 +209,50 @@ const renderHTMLQueue = async (
         paths: pageSegment,
         sessionId,
       })
+
+      if (isPreview) {
+        const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult
+        const seenErrors = new Set()
+        const errorMessages = new Map()
+        await Promise.all(
+          Object.entries(htmlRenderMeta.previewErrors).map(
+            async ([pagePath, error]) => {
+              if (!seenErrors.has(error.stack)) {
+                errorMessages.set(error.stack, {
+                  pagePaths: [pagePath],
+                })
+                seenErrors.add(error.stack)
+                const prettyError = await createErrorFromString(
+                  error.stack,
+                  `${htmlComponentRendererPath}.map`
+                )
+
+                const errorMessageStr = `${prettyError.stack}${
+                  prettyError.codeFrame ? `\n\n${prettyError.codeFrame}\n` : ``
+                }`
+
+                const errorMessage = errorMessages.get(error.stack)
+                errorMessage.errorMessage = errorMessageStr
+                errorMessages.set(error.stack, errorMessage)
+              } else {
+                const errorMessage = errorMessages.get(error.stack)
+                errorMessage.pagePaths.push(pagePath)
+                errorMessages.set(error.stack, errorMessage)
+              }
+            }
+          )
+        )
+
+        for (const value of errorMessages.values()) {
+          const errorMessage = `The following page(s) saw this error when building their HTML:\n\n${value.pagePaths
+            .map(p => `- ${p}`)
+            .join(`\n`)}\n\n${value.errorMessage}`
+          reporter.error({
+            id: `95314`,
+            context: { errorMessage },
+          })
+        }
+      }
 
       if (stage === `build-html`) {
         const htmlRenderMeta = renderHTMLResult as IRenderHtmlResult
@@ -321,10 +368,23 @@ export const doBuildPages = async (
         error.context.path
       }": ${JSON.stringify(truncatedPageData, null, 2)}`
 
-      reporter.error(pageDataMessage)
+      // This is our only error during preview so customize it a bit + add the
+      // pretty build error.
+      if (isPreview) {
+        reporter.error({
+          id: `95314`,
+          context: { pageData: pageDataMessage },
+          error: buildError,
+        })
+      } else {
+        reporter.error(pageDataMessage)
+      }
     }
 
-    throw buildError
+    // Don't crash the builder when we're in preview-mode.
+    if (!isPreview) {
+      throw buildError
+    }
   }
 }
 
