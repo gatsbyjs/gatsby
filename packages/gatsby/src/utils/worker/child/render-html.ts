@@ -4,6 +4,7 @@ import fs from "fs-extra"
 import Bluebird from "bluebird"
 import * as path from "path"
 import { generateHtmlPath, fixedPagePath } from "gatsby-core-utils"
+import { truncate } from "lodash"
 
 import {
   readWebpackStats,
@@ -111,6 +112,20 @@ async function getResourcesForTemplate(
   return resources
 }
 
+const truncateObjStrings = (obj): IPageDataWithQueryResult => {
+  // Recursively truncate strings nested in object
+  // These objs can be quite large, but we want to preserve each field
+  for (const key in obj) {
+    if (typeof obj[key] === `object`) {
+      truncateObjStrings(obj[key])
+    } else if (typeof obj[key] === `string`) {
+      obj[key] = truncate(obj[key], { length: 250 })
+    }
+  }
+
+  return obj
+}
+
 export const renderHTMLProd = async ({
   htmlComponentRendererPath,
   paths,
@@ -183,9 +198,17 @@ export const renderHTMLProd = async ({
 
         // If we're in Preview-mode, write out a simple error html file.
         if (isPreview) {
-          const html = `<p>There was an error when building the preview page for this page ("${pagePath}").</p>
+          const pageData = await readPageData(publicDir, pagePath)
+          const truncatedPageData = truncateObjStrings(pageData)
+
+          const html = `<h1>Preview build error</h1>
+        <p>There was an error when building the preview page for this page ("${pagePath}").</p>
         <h3>Error</h3>
-        <pre><code>${e.stack}</code></pre>`
+        <pre><code>${e.stack}</code></pre>
+        <h3>Page component id</h3>
+        <p><code>${pageData.componentChunkName}</code></p>
+        <h3>Page data</h3>
+        <pre><code>${JSON.stringify(truncatedPageData, null, 4)}</code></pre>`
 
           await fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
           previewErrors[pagePath] = {
