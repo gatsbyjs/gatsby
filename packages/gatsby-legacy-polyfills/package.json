@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "core-js-compat": "3.9.0"
+    "core-js-compat": "3.18.1"
   },
   "files": [
     "dist/"
