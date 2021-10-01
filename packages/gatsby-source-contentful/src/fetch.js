@@ -89,9 +89,9 @@ module.exports = async function contentfulFetch({
     proxy: pluginConfig.get(`proxy`),
     integration: `gatsby-source-contentful`,
     responseLogger: response => {
-      console.log(`RESPONSE`, JSON.stringify(response))
-      console.log(`syncItemCount`, JSON.stringify(syncItemCount))
-      console.log(`syncProgress`, JSON.stringify(syncProgress))
+      reporter.info(`RESPONSE`, JSON.stringify(response))
+      reporter.info(`syncItemCount`, JSON.stringify(syncItemCount))
+      reporter.info(`syncProgress`, JSON.stringify(syncProgress))
 
       function createMetadataLog(response) {
         if (!response.headers) {
@@ -224,7 +224,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
   let lastCurrentPageLimit
   let syncSuccess = false
   try {
-    console.log(`PAGE LIMIT`, currentPageLimit, pageLimit)
+    reporter.info(`PAGE LIMIT`, currentPageLimit, pageLimit)
     syncProgress = reporter.createProgress(
       `Contentful: ${syncToken ? `Sync changed items` : `Sync all items`}`,
       currentPageLimit,
@@ -243,7 +243,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
           ? { nextSyncToken: syncToken, ...basicSyncConfig }
           : { initial: true, ...basicSyncConfig }
         currentSyncData = await client.sync(query)
-        console.log(`syncProgress-2`, JSON.stringify(syncProgress))
+        reporter.info(`syncProgress-2`, JSON.stringify(syncProgress))
 
         syncSuccess = true
       } catch (e) {
@@ -282,7 +282,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
       },
     })
   } finally {
-    console.log(`syncProgress-3`, JSON.stringify(syncProgress))
+    reporter.info(`syncProgress-3`, JSON.stringify(syncProgress))
 
     syncProgress.done()
   }
