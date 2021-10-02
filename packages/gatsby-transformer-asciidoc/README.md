@@ -85,6 +85,22 @@ In the asciidoc file you can insert your image just by using:
 - In case a `pathPrefix` is set it will altered the images location.
 - In case you want to be able to override the defined imagesdir inside of your asciidoc file you have to end the path with a `@` (e.g. `/images@`).
 
+## Support front/graymatter
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-asciidoc`,
+    options: {
+      attributes: {
+        "skip-front-matter": true,
+      },
+    },
+  },
+]
+```
+
 ## How to query
 
 A sample GraphQL query to get AsciiDoc nodes:

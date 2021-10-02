@@ -1,4 +1,5 @@
 const asciidoc = require(`asciidoctor`)()
+const grayMatter = require(`gray-matter`)
 const _ = require(`lodash`)
 
 function unstable_shouldOnCreateNode({ node }, pluginOptions = {}) {
@@ -95,6 +96,12 @@ async function onCreateNode(
       revision,
       author,
       pageAttributes,
+    }
+
+    if (doc.getAttribute(`front-matter`)) {
+      asciiNode.frontmatter = grayMatter(
+        `---\n` + doc.getAttribute(`front-matter`)
+      ).data
     }
 
     asciiNode.internal.contentDigest = createContentDigest(asciiNode)
