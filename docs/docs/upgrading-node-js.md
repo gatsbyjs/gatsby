@@ -104,6 +104,22 @@ in a terminal to see if n is installed on your system. If it's installed, you ca
 
 [Check n's documentation for further instructions](https://github.com/tj/n).
 
+#### Volta
+
+Run:
+
+```shell
+volta
+```
+
+in a terminal to see if Volta is installed on your system. If it's installed, you can run:
+
+```shell
+volta install node@12
+```
+to install and use Node.js version 12.
+
+[Check Volta's documentation for further instructions](https://docs.volta.sh/guide/getting-started).
 ### Installing from nodejs.org
 
 If you aren't using any of the previously listed installation methods, you can [download a Node.js installer directly from nodejs.org](https://nodejs.org/en/).
