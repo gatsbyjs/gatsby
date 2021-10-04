@@ -75,7 +75,7 @@ describe(`Redirects`, () => {
       failOnStatusCode: false,
     }).waitForRouteChange()
 
-    cy.location(`pathname`).should(`equal`, `/redirect-search-hash/`)
+    cy.location(`pathname`).should(`equal`, `/redirect-search-hash`)
     cy.location(`hash`).should(`equal`, `#anchor`)
     cy.location(`search`).should(`equal`, ``)
   })
@@ -96,7 +96,7 @@ describe(`Redirects`, () => {
       failOnStatusCode: false,
     }).waitForRouteChange()
 
-    cy.location(`pathname`).should(`equal`, `/redirect-search-hash/`)
+    cy.location(`pathname`).should(`equal`, `/redirect-search-hash`)
     cy.location(`hash`).should(`equal`, ``)
     cy.location(`search`).should(`equal`, `?query_param=hello`)
   })
@@ -117,7 +117,7 @@ describe(`Redirects`, () => {
       failOnStatusCode: false,
     }).waitForRouteChange()
 
-    cy.location(`pathname`).should(`equal`, `/redirect-search-hash/`)
+    cy.location(`pathname`).should(`equal`, `/redirect-search-hash`)
     cy.location(`hash`).should(`equal`, `#anchor`)
     cy.location(`search`).should(`equal`, `?query_param=hello`)
   })
