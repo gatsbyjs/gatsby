@@ -6,7 +6,7 @@ jest.mock(`got`, () =>
     }
     last += path.split(`/`).pop()
     try {
-      return { body: require(`./fixtures/${last}.json`) }
+      return { body: require(`./fixtures/${last}.json`.replace(`?`, `___`)) }
     } catch (e) {
       console.log(`Error`, e)
       return null
