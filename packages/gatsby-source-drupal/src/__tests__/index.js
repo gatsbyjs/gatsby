@@ -430,6 +430,17 @@ describe(`gatsby-source-drupal`, () => {
     )
   })
 
+  it.only(`supports JSON:API extras meta.count to parallelize fetches`, async () => {
+    // Reset nodes and test includes relationships.
+    Object.keys(nodes).forEach(key => delete nodes[key])
+    const apiBase = `jsonapi-meta.count`
+    await sourceNodes(args, {
+      baseUrl,
+      apiBase,
+    })
+    expect(Object.keys(nodes).length).toEqual(4)
+  })
+
   describe(`Fastbuilds sync`, () => {
     describe(`Before sync with expired timestamp`, () => {
       beforeAll(async () => {
