@@ -17,7 +17,7 @@
     "got": "^11.8.2",
     "http2-wrapper": "^2.0.5",
     "lodash": "^4.17.21",
-    "opentracing": "^0.14.4",
+    "opentracing": "^0.14.5",
     "tiny-async-pool": "^1.2.0",
     "url-join": "^4.0.1"
   },

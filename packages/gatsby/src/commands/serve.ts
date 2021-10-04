@@ -295,8 +295,6 @@ module.exports = async (program: IServeProgram): Promise<void> => {
             }
             return res.send(results)
           }
-
-          return res.status(404).sendFile(`404.html`, { root })
         }
         return next()
       })

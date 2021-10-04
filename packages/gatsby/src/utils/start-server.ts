@@ -13,7 +13,7 @@ import {
   GraphQLFormattedError,
   Kind,
 } from "graphql"
-import { isCI, slash, uuid } from "gatsby-core-utils"
+import { slash, uuid } from "gatsby-core-utils"
 import http from "http"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
@@ -29,10 +29,6 @@ import * as WorkerPool from "../utils/worker/pool"
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
 import { websocketManager, WebsocketManager } from "../utils/websocket-manager"
-import {
-  showExperimentNoticeAfterTimeout,
-  CancelExperimentNoticeCallbackOrUndefined,
-} from "../utils/show-experiment-notice"
 import {
   reverseFixedPagePath,
   readPageData,
@@ -61,7 +57,6 @@ interface IServer {
   compiler: webpack.Compiler
   listener: http.Server
   webpackActivity: ActivityTracker
-  cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
   websocketManager: WebsocketManager
   workerPool: WorkerPool.GatsbyWorkerPool
   webpackWatching: IWebpackWatchingPauseResume
@@ -94,34 +89,12 @@ export async function startServer(
   // query on demand is enabled and loading indicator is not disabled
   writeVirtualLoadingIndicatorModule()
 
-  const THIRTY_SECONDS = 30 * 1000
-  let cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
-  if (
-    process.env.gatsby_executing_command === `develop` &&
-    !process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE &&
-    !isCI()
-  ) {
-    cancelDevJSNotice = showExperimentNoticeAfterTimeout(
-      `Preserve webpack's Cache`,
-      `https://github.com/gatsbyjs/gatsby/discussions/28331`,
-      `which changes Gatsby's cache clearing behavior to not clear webpack's
-cache unless you run "gatsby clean" or delete the .cache folder manually.
-Here's how to try it:
-
-module.exports = {
-  flags: { PRESERVE_WEBPACK_CACHE: true },
-  plugins: [...]
-}`,
-      THIRTY_SECONDS
-    )
-  }
-
   // Remove the following when merging GATSBY_EXPERIMENTAL_DEV_SSR
   const directoryPath = withBasePath(directory)
   const { buildRenderer, doBuildPages } = require(`../commands/build-html`)
   const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
     try {
-      const { rendererPath } = await buildRenderer(
+      const { rendererPath, close } = await buildRenderer(
         program,
         Stage.DevelopHTML,
         activity.span
@@ -133,6 +106,8 @@ module.exports = {
         workerPool,
         Stage.DevelopHTML
       )
+      // close the compiler
+      await close()
     } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
@@ -750,7 +725,6 @@ module.exports = {
     compiler,
     listener,
     webpackActivity,
-    cancelDevJSNotice,
     websocketManager,
     workerPool,
     webpackWatching: webpackDevMiddlewareInstance.context.watching,

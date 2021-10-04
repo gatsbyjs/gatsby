@@ -87,7 +87,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Enable all experiments aimed at improving develop server start time.`,
     includedFlags: [
-      `DEV_SSR`,
+      // `DEV_SSR`, - not working with serverdata atm
       `PRESERVE_FILE_DOWNLOAD_CACHE`,
       `DEV_WEBPACK_CACHE`,
     ],
