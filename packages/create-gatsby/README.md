@@ -27,3 +27,12 @@ If you'd like to set up a minimal site without answering any prompts you can run
 ```
 npm init gatsby -y <site-directory>
 ```
+
+## Working on create-gatsby locally?
+
+If you're making changes to the create-gatsby package, you can follow the steps below to test out your changes locally:
+
+```sh
+cd packages/create-gatsby
+node cli.js
+```
