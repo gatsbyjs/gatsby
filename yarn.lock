@@ -15669,10 +15669,10 @@ katex@^0.12.0:
   dependencies:
     commander "^2.19.0"
 
-katex@^0.13.17:
-  version "0.13.17"
-  resolved "https://registry.yarnpkg.com/katex/-/katex-0.13.17.tgz#1f1e3d6e0f29e6bc685829d86452ea31b0c68255"
-  integrity sha512-Mkxj7uXs9xBRBIWGhcvf0K2c1DAbPqETjEebjur04fqJ4UXfj1ky9vrgkNJIwJJ4J4owS69vAqgBkKyr4Lh0eQ==
+katex@^0.13.18:
+  version "0.13.18"
+  resolved "https://registry.yarnpkg.com/katex/-/katex-0.13.18.tgz#ba89e8e4b70cc2325e25e019a62b9fe71e5c2931"
+  integrity sha512-a3dC4NSVSDU3O1WZbTnOiA8rVNJ2lSiomOl0kmckCIGObccIHXof7gAseIY0o1gjEspe+34ZeSEX2D1ChFKIvA==
   dependencies:
     commander "^6.0.0"
 
