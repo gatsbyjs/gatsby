@@ -1,4 +1,4 @@
-function clearRequireCacheRecursively(
+export function clearRequireCacheRecursively(
   module: string,
   ignoreNodeModules: boolean = true
 ): void {
