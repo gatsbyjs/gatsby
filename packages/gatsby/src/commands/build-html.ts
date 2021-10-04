@@ -122,9 +122,12 @@ const runWebpack = (
       )
       devssrWebpackCompiler = watcher
     } else {
-      build(compilerConfig).then(({ stats, close }) => {
-        resolve({ stats, close })
-      })
+      build(compilerConfig).then(
+        ({ stats, close }) => {
+          resolve({ stats, close })
+        },
+        err => reject(err)
+      )
     }
   })
 }

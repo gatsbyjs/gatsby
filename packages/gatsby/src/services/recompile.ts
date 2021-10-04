@@ -45,5 +45,5 @@ async function updateSSRBundle({
     websocketManager.emitStaleServerData()
   }
 
-  await close
+  await close()
 }
