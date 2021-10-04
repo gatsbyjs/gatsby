@@ -29,7 +29,7 @@
     "del-cli": "^3.0.1",
     "jest": "^26.6.3",
     "msw": "^0.35.0",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.5"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-gatsby-cloud#readme",
   "keywords": [

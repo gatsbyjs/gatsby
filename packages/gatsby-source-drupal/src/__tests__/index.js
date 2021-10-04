@@ -48,6 +48,7 @@ describe(`gatsby-source-drupal`, () => {
   }
   const reporter = {
     info: jest.fn(),
+    warn: jest.fn(),
     verbose: jest.fn(),
     activityTimer: jest.fn(() => activity),
     log: jest.fn(),
@@ -125,6 +126,10 @@ describe(`gatsby-source-drupal`, () => {
     expect(
       nodes[createNodeId(`und.article-3`)].relationships.field_main_image___NODE
     ).toEqual(createNodeId(`und.file-1`))
+
+    expect(nodes[createNodeId(`und.paragraph-image-1`)].relationships).toEqual({
+      field_gallery___NODE: createNodeId(`und.article-2`),
+    })
   })
 
   it(`Handles 1:N relationship`, () => {
@@ -494,6 +499,11 @@ describe(`gatsby-source-drupal`, () => {
           field_tags___NODE: [createNodeId(`und.tag-2`)],
         })
         expect(
+          nodes[createNodeId(`und.paragraph-image-1`)].relationships
+        ).toEqual({
+          field_gallery___NODE: createNodeId(`und.article-1`),
+        })
+        expect(
           nodes[createNodeId(`und.article-2`)].relationships
             .field_secondary_image___NODE
         ).toBe(undefined)
@@ -597,20 +607,17 @@ describe(`gatsby-source-drupal`, () => {
       it(`during refresh webhook handling`, async () => {
         expect.assertions(5)
 
-        try {
-          await sourceNodes(
-            {
-              ...args,
-              webhookBody: {
-                malformattedPayload: true,
-              },
+        await sourceNodes(
+          {
+            ...args,
+            webhookBody: {
+              malformattedPayload: true,
             },
-            { baseUrl }
-          )
-        } catch (e) {
-          expect(e).toBeTruthy()
-        }
+          },
+          { baseUrl }
+        )
 
+        expect(reporter.warn).toHaveBeenCalledTimes(1)
         expect(reporter.activityTimer).toHaveBeenCalledTimes(1)
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           1,

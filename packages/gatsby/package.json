@@ -130,7 +130,7 @@
     "raw-loader": "^4.0.2",
     "react-dev-utils": "^11.0.3",
     "react-refresh": "^0.9.0",
-    "redux": "^4.0.5",
+    "redux": "4.0.5",
     "redux-thunk": "^2.3.0",
     "resolve-from": "^5.0.0",
     "semver": "^7.3.5",
