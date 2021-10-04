@@ -57,20 +57,19 @@ export const markQueryFilesDirty = assign<IBuildContext>({
   queryFilesDirty: true,
 })
 
-export const markSourceFilesDirty = assign<IBuildContext>({
-  sourceFilesDirty: true,
-})
+export const markSourceFilesDirty = assign<IBuildContext, AnyEventObject>(
+  (context, event) => {
+    const prev = context.changedSourceFiles ?? new Set()
+    return {
+      sourceFilesDirty: true,
+      changedSourceFiles: prev.add(event.payload ?? event.file),
+    }
+  }
+)
 
 export const markSourceFilesClean = assign<IBuildContext>({
   sourceFilesDirty: false,
-})
-
-export const markServerDataDirty = assign<IBuildContext>({
-  serverDataDirty: true,
-})
-
-export const markServerDataClean = assign<IBuildContext>({
-  serverDataDirty: false,
+  changedSourceFiles: new Set(),
 })
 
 export const markNodesDirty = assign<IBuildContext>({
@@ -199,8 +198,6 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   spawnWebpackListener,
   markSourceFilesDirty,
   markSourceFilesClean,
-  markServerDataClean,
-  markServerDataDirty,
   markNodesClean,
   incrementRecompileCount,
   resetRecompileCount,

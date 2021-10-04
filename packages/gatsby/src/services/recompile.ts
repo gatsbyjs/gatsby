@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { IBuildContext } from "./types"
+import * as fs from "fs-extra"
 import { Stats } from "webpack"
 import reporter from "gatsby-cli/lib/reporter"
 import { emitter } from "../redux"
@@ -8,14 +9,20 @@ import { Stage } from "../commands/types"
 import { clearRequireCacheRecursively } from "../utils/clear-require-cache"
 
 export async function recompile(context: IBuildContext): Promise<Stats> {
-  const { webpackWatching, serverDataDirty } = context
+  const [stats] = await Promise.all([
+    recompileDevBundle(context),
+    recompileSSRBundle(context),
+  ])
+  return stats
+}
+
+async function recompileDevBundle({
+  webpackWatching,
+}: IBuildContext): Promise<Stats> {
   if (!webpackWatching) {
     reporter.panic(`Missing compiler`)
   }
-  // Promisify the event-based API. We do this using emitter
-  // because you can't "untap" a webpack watcher, and we just want
-  // one compilation.
-  const devBundlePromise = new Promise<Stats>(resolve => {
+  return new Promise<Stats>(resolve => {
     function finish(stats: Stats): void {
       emitter.off(`COMPILATION_DONE`, finish)
       resolve(stats)
@@ -25,19 +32,16 @@ export async function recompile(context: IBuildContext): Promise<Stats> {
     // Suspending is just a flag, so it's safe to re-suspend right away
     webpackWatching.suspend()
   })
-
-  const ssrBundlePromise = serverDataDirty
-    ? updateSSRBundle(context)
-    : Promise.resolve()
-
-  const [stats] = await Promise.all([devBundlePromise, ssrBundlePromise])
-  return stats
 }
 
-async function updateSSRBundle({
+async function recompileSSRBundle({
   program,
   websocketManager,
+  changedSourceFiles = new Set(),
 }: IBuildContext): Promise<void> {
+  if (!(await includesSSRComponent(changedSourceFiles))) {
+    return
+  }
   reporter.verbose(`Recompiling SSR bundle`)
 
   const { close, rendererPath } = await buildRenderer(
@@ -52,4 +56,24 @@ async function updateSSRBundle({
   }
 
   await close()
+}
+
+async function includesSSRComponent(
+  changedSourceFiles: Set<string>
+): Promise<boolean> {
+  const result = await Promise.all(
+    Array.from(changedSourceFiles).map(path => isSSRPageComponent(path))
+  )
+  return result.some(isSSR => isSSR === true)
+}
+
+async function isSSRPageComponent(filename: string): Promise<boolean> {
+  if (
+    !(await fs.pathExists(filename)) ||
+    !(await fs.lstat(filename)).isFile()
+  ) {
+    return false
+  }
+  const text = await fs.readFile(filename, `utf8`)
+  return text.includes(`getServerData`)
 }
