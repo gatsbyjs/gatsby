@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.13.0-next.0...gatsby-core-utils@2.13.0-next.1) (2021-08-25)
+
+### Features
+
+- **gatsby-core-utils:** Move page-data & HTML utils to package ([#32861](https://github.com/gatsbyjs/gatsby/issues/32861)) ([114e3d3](https://github.com/gatsbyjs/gatsby/commit/114e3d39695bd96b8c477a413f5927317a19b4cb))
+- **gatsby-plugin-gatsby-cloud:** IPC events for routes, redirects, rewrites, and headers ([#32847](https://github.com/gatsbyjs/gatsby/issues/32847)) ([ba4b08c](https://github.com/gatsbyjs/gatsby/commit/ba4b08caac00dd286f962849183e99ab7dc84a0a))
+
 # [2.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.12.0-next.3...gatsby-core-utils@2.13.0-next.0) (2021-08-12)
 
 **Note:** Version bump only for package gatsby-core-utils

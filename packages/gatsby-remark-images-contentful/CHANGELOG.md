@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.10.0-next.0...gatsby-remark-images-contentful@4.10.0-next.1) (2021-08-20)
+
+### Features
+
+- **gatsby-plugin-sharp:** reduce encoding time and install size ([#32851](https://github.com/gatsbyjs/gatsby/issues/32851)) ([ddcfbd8](https://github.com/gatsbyjs/gatsby/commit/ddcfbd8e7b4b68fe31fa77815599b479e0cef6a1)), closes [#1](https://github.com/gatsbyjs/gatsby/issues/1)
+
 # [4.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images-contentful@4.9.0-next.3...gatsby-remark-images-contentful@4.10.0-next.0) (2021-08-12)
 
 **Note:** Version bump only for package gatsby-remark-images-contentful

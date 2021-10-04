@@ -12,12 +12,7 @@ jest.mock(`fs-extra`, () => {
 })
 
 describe(`create-redirects`, () => {
-  let reporter
-
   beforeEach(() => {
-    reporter = {
-      warn: jest.fn(),
-    }
     fs.existsSync.mockClear()
     fs.existsSync.mockReturnValue(true)
   })
@@ -165,6 +160,17 @@ describe(`create-redirects`, () => {
     }
   }
 
+  it(`should assemble a redirects file even if there are no redirects`, async () => {
+    const pluginData = await createPluginData()
+    await createRedirects(pluginData, [], [])
+
+    const output = await fs.readFile(
+      pluginData.publicFolder(REDIRECTS_FILENAME),
+      `utf8`
+    )
+    expect(output).toMatchSnapshot()
+  })
+
   it(`should assemble a redirects file`, async () => {
     const pluginData = await createPluginData()
 
@@ -239,5 +245,51 @@ describe(`create-redirects`, () => {
       `utf8`
     )
     expect(output).toMatchSnapshot()
+  })
+
+  it(`should emit IPC for each redirect/rewrite`, async () => {
+    const pluginData = await createPluginData()
+
+    process.send = jest.fn()
+
+    await createRedirects(
+      pluginData,
+      [
+        {
+          fromPath: `/old-url`,
+          toPath: `/new-url`,
+          isPermanent: true,
+        },
+      ],
+      [
+        {
+          fromPath: `/url_that_is/ugly`,
+          toPath: `/not_ugly/url`,
+        },
+      ]
+    )
+
+    expect(process.send).toHaveBeenCalledWith({
+      type: `LOG_ACTION`,
+      action: {
+        type: `CREATE_REDIRECT_ENTRY`,
+        payload: {
+          fromPath: `/old-url`,
+          toPath: `/new-url`,
+          isPermanent: true,
+        },
+      },
+    })
+
+    expect(process.send).toHaveBeenCalledWith({
+      type: `LOG_ACTION`,
+      action: {
+        type: `CREATE_REWRITE_ENTRY`,
+        payload: {
+          fromPath: `/url_that_is/ugly`,
+          toPath: `/not_ugly/url`,
+        },
+      },
+    })
   })
 })

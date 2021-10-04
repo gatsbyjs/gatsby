@@ -3,8 +3,8 @@
 import fs from "fs-extra"
 import Bluebird from "bluebird"
 import * as path from "path"
+import { generateHtmlPath, fixedPagePath } from "gatsby-core-utils"
 
-import { getPageHtmlFilePath } from "../../page-html"
 import { IPageDataWithQueryResult } from "../../page-data"
 import { IRenderHtmlResult } from "../../../commands/build-html"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
@@ -64,8 +64,12 @@ async function readPageData(
   publicDir: string,
   pagePath: string
 ): Promise<IPageDataWithQueryResult> {
-  const fixedPagePath = pagePath === `/` ? `index` : pagePath
-  const filePath = join(publicDir, `page-data`, fixedPagePath, `page-data.json`)
+  const filePath = join(
+    publicDir,
+    `page-data`,
+    fixedPagePath(pagePath),
+    `page-data.json`
+  )
   const rawPageData = await fs.readFile(filePath, `utf-8`)
 
   return JSON.parse(rawPageData)
@@ -336,7 +340,7 @@ export const renderHTMLProd = async ({
           unsafeBuiltinsUsageByPagePath[pagePath] = unsafeBuiltinsUsage
         }
 
-        return fs.outputFile(getPageHtmlFilePath(publicDir, pagePath), html)
+        return fs.outputFile(generateHtmlPath(publicDir, pagePath), html)
       } catch (e) {
         if (e.unsafeBuiltinsUsage && e.unsafeBuiltinsUsage.length > 0) {
           unsafeBuiltinsUsageByPagePath[pagePath] = e.unsafeBuiltinsUsage
@@ -390,10 +394,7 @@ export const renderHTMLDev = async ({
         const htmlString = await htmlComponentRenderer.default({
           pagePath,
         })
-        return fs.outputFile(
-          getPageHtmlFilePath(outputDir, pagePath),
-          htmlString
-        )
+        return fs.outputFile(generateHtmlPath(outputDir, pagePath), htmlString)
       } catch (e) {
         // add some context to error so we can display more helpful message
         e.context = {
