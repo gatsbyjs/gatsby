@@ -37,9 +37,9 @@ async function recompileDevBundle({
 async function recompileSSRBundle({
   program,
   websocketManager,
-  changedSourceFiles = new Set(),
+  recompiledFiles = new Set(),
 }: IBuildContext): Promise<void> {
-  if (!(await includesSSRComponent(changedSourceFiles))) {
+  if (!(await includesSSRComponent(recompiledFiles))) {
     return
   }
   reporter.verbose(`Recompiling SSR bundle`)
@@ -59,10 +59,10 @@ async function recompileSSRBundle({
 }
 
 async function includesSSRComponent(
-  changedSourceFiles: Set<string>
+  recompiledFiles: Set<string>
 ): Promise<boolean> {
   const result = await Promise.all(
-    Array.from(changedSourceFiles).map(path => isSSRPageComponent(path))
+    Array.from(recompiledFiles).map(path => isSSRPageComponent(path))
   )
   return result.some(isSSR => isSSR === true)
 }
