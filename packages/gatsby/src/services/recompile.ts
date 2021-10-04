@@ -5,6 +5,7 @@ import reporter from "gatsby-cli/lib/reporter"
 import { emitter } from "../redux"
 import { buildRenderer } from "../commands/build-html"
 import { Stage } from "../commands/types"
+import { clearRequireCacheRecursively } from "../utils/clear-require-cache"
 
 export async function recompile(context: IBuildContext): Promise<Stats> {
   const { webpackWatching, serverDataDirty } = context
@@ -39,7 +40,12 @@ async function updateSSRBundle({
 }: IBuildContext): Promise<void> {
   reporter.verbose(`Recompiling SSR bundle`)
 
-  const { close } = await buildRenderer(program, Stage.DevelopHTML)
+  const { close, rendererPath } = await buildRenderer(
+    program,
+    Stage.DevelopHTML
+  )
+
+  clearRequireCacheRecursively(rendererPath)
 
   if (websocketManager) {
     websocketManager.emitStaleServerData()

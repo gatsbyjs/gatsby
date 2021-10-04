@@ -50,7 +50,6 @@ import {
 import { renderDevHTML } from "./dev-ssr/render-dev-html"
 import { getServerData, IServerData } from "./get-server-data"
 import { ROUTES_DIRECTORY } from "../constants"
-import { clearRequireCacheRecursively } from "./clear-require-cache"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -308,8 +307,6 @@ export async function startServer(
           let serverDataPromise: Promise<IServerData> = Promise.resolve({})
 
           if (page.mode === `SSR`) {
-            clearRequireCacheRecursively(PAGE_RENDERER_PATH)
-
             const renderer = require(PAGE_RENDERER_PATH)
             const componentInstance = await renderer.getPageChunk(page)
 
