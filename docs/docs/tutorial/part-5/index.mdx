@@ -459,10 +459,12 @@ Now that your GraphQL query is all set up, it's time to replace the page query i
           {/* highlight-start */}
           {
             data.allMdx.nodes.map((node) => (
-              <article key={node.id}>
-                <h2>{node.frontmatter.title}</h2>
-                <p>Posted: {node.frontmatter.date}</p>
-              </article>
+              return (
+                <article key={node.id}>
+                  <h2>{node.frontmatter.title}</h2>
+                  <p>Posted: {node.frontmatter.date}</p>
+                </article>
+              )
             ))
           }
           {/* highlight-end */}
@@ -543,15 +545,17 @@ const BlogPage = ({ data }) => {
     <Layout pageTitle="My Blog Posts">
       {
         data.allMdx.nodes.map((node) => (
-          <article key={node.id}>
-            <h2>{node.frontmatter.title}</h2>
-            <p>Posted: {node.frontmatter.date}</p>
-            {/* highlight-start */}
-            <MDXRenderer>
-              {node.body}
-            </MDXRenderer>
-            {/* highlight-end */}
-          </article>
+          return (
+            <article key={node.id}>
+              <h2>{node.frontmatter.title}</h2>
+              <p>Posted: {node.frontmatter.date}</p>
+              {/* highlight-start */}
+              <MDXRenderer>
+                {node.body}
+              </MDXRenderer>
+              {/* highlight-end */}
+            </article>
+          )
         ))
       }
     </Layout>
