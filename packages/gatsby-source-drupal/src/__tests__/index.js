@@ -1,6 +1,10 @@
 jest.mock(`got`, () =>
   jest.fn(path => {
-    const last = path.split(`/`).pop()
+    let last = ``
+    if (path.includes(`i18n-test`)) {
+      last = `i18n-test-`
+    }
+    last += path.split(`/`).pop()
     try {
       return { body: require(`./fixtures/${last}.json`) }
     } catch (e) {
@@ -21,7 +25,7 @@ const downloadFileSpy = jest.spyOn(normalize, `downloadFile`)
 
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
-const { sourceNodes } = require(`../gatsby-node`)
+const { sourceNodes, onPreBootstrap } = require(`../gatsby-node`)
 const { handleWebhookUpdate } = require(`../utils`)
 
 describe(`gatsby-source-drupal`, () => {
@@ -430,15 +434,40 @@ describe(`gatsby-source-drupal`, () => {
     )
   })
 
-  it.only(`supports JSON:API extras meta.count to parallelize fetches`, async () => {
-    // Reset nodes and test includes relationships.
-    Object.keys(nodes).forEach(key => delete nodes[key])
-    const apiBase = `jsonapi-meta.count`
-    await sourceNodes(args, {
-      baseUrl,
-      apiBase,
+  describe(`supports JSON:API extras meta.count to parallelize fetches`, () => {
+    it(`for non-translated content`, async () => {
+      // Reset nodes and test includes relationships.
+      Object.keys(nodes).forEach(key => delete nodes[key])
+      const apiBase = `jsonapi-meta.count`
+      await sourceNodes(args, {
+        baseUrl,
+        apiBase,
+      })
+      expect(Object.keys(nodes).length).toEqual(3)
     })
-    expect(Object.keys(nodes).length).toEqual(4)
+
+    it(`for translated content`, async () => {
+      // Reset nodes and test includes relationships.
+      Object.keys(nodes).forEach(key => delete nodes[key])
+      const apiBase = `jsonapi-meta.count-i18n`
+      const options = {
+        baseUrl,
+        apiBase,
+        languageConfig: {
+          defaultLanguage: `en_US`,
+          enabledLanguages: [`en_US`, `i18n-test`],
+          translatableEntities: [`node--article`],
+          nonTranslatableEntities: [],
+        },
+      }
+      // Call onPreBootstrap to set options
+      await onPreBootstrap(args, options)
+      await sourceNodes(args, options)
+      expect(Object.keys(nodes).length).toEqual(4)
+      expect(
+        Object.values(nodes).filter(n => n.langcode === `i18n-test`).length
+      ).toEqual(2)
+    })
   })
 
   describe(`Fastbuilds sync`, () => {
@@ -448,7 +477,9 @@ describe(`gatsby-source-drupal`, () => {
         Object.keys(nodes).forEach(key => delete nodes[key])
 
         const fastBuilds = true
-        await sourceNodes(args, { baseUrl, fastBuilds })
+        const options = { baseUrl, fastBuilds }
+        await onPreBootstrap(args, options)
+        await sourceNodes(args, options)
       })
 
       it(`Attributes`, () => {
