@@ -55,6 +55,7 @@ import {
 import { shouldGenerateEngines } from "../utils/engines-helpers"
 import reporter from "gatsby-cli/lib/reporter"
 import type webpack from "webpack"
+import { validateEngines } from "../utils/validate-engines"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   // global gatsby object to use without store
@@ -199,6 +200,20 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
   } finally {
     buildSSRBundleActivityProgress.end()
+  }
+
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+    const validateEnginesActivity = report.activityTimer(`Validating engines`, {
+      parentSpan: buildSpan,
+    })
+    validateEnginesActivity.start()
+    try {
+      await validateEngines(store.getState().program.directory)
+    } catch (err) {
+      validateEnginesActivity.panic(err)
+    } finally {
+      validateEnginesActivity.end()
+    }
   }
 
   const cacheActivity = report.activityTimer(`Caching Webpack compilations`, {

@@ -78,6 +78,12 @@ export class GraphQLEngine {
     return this.runnerPromise
   }
 
+  public async ready(): Promise<void> {
+    // we don't want to expose internal runner freely
+    // just await it being ready
+    await this.getRunner()
+  }
+
   public async runQuery(...args: Parameters<Runner>): ReturnType<Runner> {
     const graphqlRunner = await this.getRunner()
     const result = await graphqlRunner(...args)
