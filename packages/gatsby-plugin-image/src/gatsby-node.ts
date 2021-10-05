@@ -8,16 +8,14 @@ import {
 
 export * from "./node-apis/preprocess-source"
 
-export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({
-  actions,
-  schema,
-}) => {
-  actions.createTypes([
-    schema.buildEnumType(ImageFormatType),
-    schema.buildEnumType(ImageLayoutType),
-    schema.buildEnumType(ImagePlaceholderType),
-  ])
-}
+export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
+  ({ actions, schema }) => {
+    actions.createTypes([
+      schema.buildEnumType(ImageFormatType),
+      schema.buildEnumType(ImageLayoutType),
+      schema.buildEnumType(ImagePlaceholderType),
+    ])
+  }
 
 export const onCreateBabelConfig: GatsbyNode["onCreateBabelConfig"] = ({
   actions,
