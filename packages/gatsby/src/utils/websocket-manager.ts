@@ -85,8 +85,15 @@ export class WebsocketManager {
             newActivePath,
             fallbackTo404
           )
+
           if (page) {
-            activePagePath = page.path
+            // when it's SSR we don't want to return the page path but the actualy url used,
+            // this is necessary when matchPaths are used.
+            if (page.mode === `SSR`) {
+              activePagePath = newActivePath
+            } else {
+              activePagePath = page.path
+            }
           }
         }
         clientInfo.activePath = activePagePath

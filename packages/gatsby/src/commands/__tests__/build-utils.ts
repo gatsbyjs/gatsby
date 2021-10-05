@@ -56,6 +56,7 @@ describe(`calcDirtyHtmlFiles`, () => {
           // eslint-disable-next-line @typescript-eslint/naming-convention
           pluginCreator___NODE: `foo`,
           updatedAt: 1,
+          mode: `SSG`,
         })
       }
 

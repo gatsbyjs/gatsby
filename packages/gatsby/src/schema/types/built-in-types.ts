@@ -1,5 +1,7 @@
 import { parse, DocumentNode } from "graphql"
 
+// TODO v5: mark File type as @dontInfer (requires @childOf directive to all children types like ImageSharp)
+
 const fileType = `
   type File implements Node @infer {
     sourceInstanceName: String!
@@ -37,7 +39,7 @@ const fileType = `
 `
 
 const siteFunctionType = `
-  type SiteFunction implements Node @infer {
+  type SiteFunction implements Node @dontInfer {
     functionRoute: String!
     pluginName: String!
     originalAbsoluteFilePath: String!
@@ -49,7 +51,7 @@ const siteFunctionType = `
 `
 
 const directoryType = `
-  type Directory implements Node @infer {
+  type Directory implements Node @dontInfer {
     sourceInstanceName: String!
     absolutePath: String!
     relativePath: String!
@@ -84,14 +86,14 @@ const directoryType = `
   }
 `
 
-const site = `
+const siteType = `
   type Site implements Node @infer {
     buildTime: Date @dateformat
     siteMetadata: SiteSiteMetadata
   }
 `
 
-const siteSiteMetadata = `
+const siteSiteMetadataType = `
   type SiteSiteMetadata {
     title: String
     description: String
@@ -99,22 +101,46 @@ const siteSiteMetadata = `
 `
 
 const sitePageType = `
-  type SitePage implements Node @infer {
+  type SitePage implements Node @dontInfer {
     path: String!
     component: String!
     internalComponentName: String!
     componentChunkName: String!
     matchPath: String
+    pageContext: JSON
+    pluginCreator: SitePlugin @link(from: "pluginCreatorId")
+  }
+`
+
+const sitePluginType = `
+  type SitePlugin implements Node @dontInfer {
+    resolve: String
+    name: String
+    version: String
+    nodeAPIs: [String]
+    browserAPIs: [String]
+    ssrAPIs: [String]
+    pluginFilepath: String
+    pluginOptions: JSON
+    packageJson: JSON
+  }
+`
+
+const siteBuildMetadataType = `
+  type SiteBuildMetadata implements Node @dontInfer {
+    buildTime: Date @dateformat
   }
 `
 
 const allSdlTypes = [
   fileType,
   directoryType,
-  site,
-  siteSiteMetadata,
+  siteType,
+  siteSiteMetadataType,
   siteFunctionType,
   sitePageType,
+  sitePluginType,
+  siteBuildMetadataType,
 ]
 
 export const overridableBuiltInTypeNames = new Set([`SiteSiteMetadata`])

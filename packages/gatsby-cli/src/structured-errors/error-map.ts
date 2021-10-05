@@ -47,6 +47,11 @@ const errors = {
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
   },
+  "95314": {
+    text: (context): string => context.errorMessage,
+    level: Level.ERROR,
+    docsUrl: `https://gatsby.dev/debug-html`,
+  },
   "98123": {
     text: (context): string =>
       `${context.stageLabel} failed\n\n${
@@ -300,6 +305,11 @@ const errors = {
     type: Type.GRAPHQL,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+  },
+  "85928": {
+    text: (): string =>
+      `An error occurred during parallel query running.\nGo here for troubleshooting tips: https://gatsby.dev/pqr-feedback`,
+    level: Level.ERROR,
   },
   // Config errors
   "10122": {

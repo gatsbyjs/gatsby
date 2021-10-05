@@ -34,11 +34,14 @@ jest.mock(
 )
 
 jest.mock(
-  `$virtual/sync-requires`,
+  `$virtual/async-requires`,
   () => {
     return {
       components: {
-        "page-component---src-pages-test-js": () => null,
+        "page-component---src-pages-test-js": () =>
+          Promise.resolve({
+            default: () => null,
+          }),
       },
     }
   },

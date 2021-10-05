@@ -12,12 +12,7 @@ jest.mock(`fs-extra`, () => {
 })
 
 describe(`build-headers-program`, () => {
-  let reporter
-
   beforeEach(() => {
-    reporter = {
-      warn: jest.fn(),
-    }
     fs.existsSync.mockClear()
     fs.existsSync.mockReturnValue(true)
   })
@@ -131,6 +126,22 @@ describe(`build-headers-program`, () => {
           },
         ],
         [
+          `/test/`,
+          {
+            jsonName: `test`,
+            internalComponentName: `ComponentTest`,
+            path: `/test/`,
+            matchPath: undefined,
+            componentChunkName: `component---src-pages-test-js`,
+            isCreatedByStatefulCreatePages: true,
+            context: {},
+            updatedAt: 1557740602361,
+            pluginCreator___NODE: `049c1cfd-95f7-5555-a4ac-9b396d098b26`,
+            pluginCreatorId: `049c1cfd-95f7-5555-a4ac-9b396d098b26`,
+            mode: `SSR`,
+          },
+        ],
+        [
           `/`,
           {
             jsonName: `index`,
@@ -199,9 +210,8 @@ describe(`build-headers-program`, () => {
       mergeCachingHeaders: true,
     }
 
-    await buildHeadersProgram(pluginData, pluginOptions, reporter)
+    await buildHeadersProgram(pluginData, pluginOptions)
 
-    expect(reporter.warn).not.toHaveBeenCalled()
     const output = await fs.readFile(
       pluginData.publicFolder(HEADERS_FILENAME),
       `utf8`
@@ -209,8 +219,8 @@ describe(`build-headers-program`, () => {
     expect(output).toMatchSnapshot()
     expect(output).toMatch(/app-data\.json/)
     expect(output).toMatch(/page-data\.json/)
-    // we should only check page-data & app-data once which leads to 2 times
-    expect(fs.existsSync).toBeCalledTimes(2)
+    // we should only check app-data once which leads to 1 time
+    expect(fs.existsSync).toBeCalledTimes(1)
   })
 
   it(`with manifest['pages-manifest']`, async () => {
@@ -234,9 +244,8 @@ describe(`build-headers-program`, () => {
       mergeCachingHeaders: true,
     }
 
-    await buildHeadersProgram(pluginData, pluginOptions, reporter)
+    await buildHeadersProgram(pluginData, pluginOptions)
 
-    expect(reporter.warn).not.toHaveBeenCalled()
     const output = await fs.readFile(
       pluginData.publicFolder(HEADERS_FILENAME),
       `utf8`
@@ -244,7 +253,7 @@ describe(`build-headers-program`, () => {
     expect(output).toMatchSnapshot()
     expect(output).toMatch(/\/pages-manifest-ab11f09e0ca7ecd3b43e\.js/g)
     expect(output).not.toMatch(/\/app-data\.json/g)
-    expect(output).not.toMatch(/\/page-data\.json/g)
+    expect(output).toMatch(/\/page-data\.json/g)
     expect(output).not.toMatch(/\/undefined/g)
   })
 
@@ -266,9 +275,8 @@ describe(`build-headers-program`, () => {
       return true
     })
 
-    await buildHeadersProgram(pluginData, pluginOptions, reporter)
+    await buildHeadersProgram(pluginData, pluginOptions)
 
-    expect(reporter.warn).not.toHaveBeenCalled()
     const output = await fs.readFile(
       pluginData.publicFolder(HEADERS_FILENAME),
       `utf8`
@@ -285,9 +293,8 @@ describe(`build-headers-program`, () => {
       mergeCachingHeaders: false,
     }
 
-    await buildHeadersProgram(pluginData, pluginOptions, reporter)
+    await buildHeadersProgram(pluginData, pluginOptions)
 
-    expect(reporter.warn).not.toHaveBeenCalled()
     expect(
       await fs.readFile(pluginData.publicFolder(HEADERS_FILENAME), `utf8`)
     ).toMatchSnapshot()
@@ -308,11 +315,38 @@ describe(`build-headers-program`, () => {
       },
     }
 
-    await buildHeadersProgram(pluginData, pluginOptions, reporter)
+    await buildHeadersProgram(pluginData, pluginOptions)
 
-    expect(reporter.warn).not.toHaveBeenCalled()
     expect(
       await fs.readFile(pluginData.publicFolder(HEADERS_FILENAME), `utf8`)
     ).toMatchSnapshot()
+  })
+
+  it(`should emit headers via ipc`, async () => {
+    const pluginData = await createPluginData()
+    const pluginOptions = {
+      ...DEFAULT_OPTIONS,
+      mergeSecurityHeaders: true,
+      headers: {
+        "/hello": [`X-Frame-Options: SAMEORIGIN`],
+      },
+    }
+
+    process.send = jest.fn()
+    await buildHeadersProgram(pluginData, pluginOptions)
+
+    expect(process.send).toHaveBeenCalledWith(
+      {
+        type: `LOG_ACTION`,
+        action: {
+          type: `CREATE_HEADER_ENTRY`,
+          payload: {
+            url: `/hello`,
+            headers: [`X-Frame-Options: SAMEORIGIN`],
+          },
+        },
+      },
+      expect.any(Function)
+    )
   })
 })

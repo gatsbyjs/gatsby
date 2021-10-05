@@ -3,6 +3,7 @@ import fetchReferencedMediaItemsAndCreateNodes from "../fetch-nodes/fetch-refere
 import urlToPath from "~/utils/url-to-path"
 import store from "~/store"
 import fetchGraphql from "~/utils/fetch-graphql"
+import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 
 import {
   buildTypeName,
@@ -158,11 +159,10 @@ export const createGatsbyNodesFromWPGQLContentNodes = async ({
   const referencedMediaItemNodeIdsArray = [...referencedMediaItemNodeIds]
 
   /**
-   * if we're not lazy fetching media items, we need to fetch them
-   * upfront here
+   * if we're not lazy fetching media items (or we're on Gatsby v4+), we need to fetch media item nodes upfront here
    */
   if (
-    !pluginOptions.type.MediaItem.lazyNodes &&
+    (!pluginOptions.type.MediaItem.lazyNodes || usingGatsbyV4OrGreater) &&
     referencedMediaItemNodeIdsArray.length
   ) {
     await fetchReferencedMediaItemsAndCreateNodes({

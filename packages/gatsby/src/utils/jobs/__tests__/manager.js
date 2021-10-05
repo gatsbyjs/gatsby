@@ -17,7 +17,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 })
 
 jest.mock(
-  `/node_modules/gatsby-plugin-test/gatsby-worker.js`,
+  `/node_modules/gatsby-plugin-test/gatsby-worker`,
   () => {
     return {
       TEST_JOB: jest.fn(),
@@ -27,7 +27,7 @@ jest.mock(
 )
 
 jest.mock(
-  `/gatsby-plugin-local/gatsby-worker.js`,
+  `/gatsby-plugin-local/gatsby-worker`,
   () => {
     return {
       TEST_JOB: jest.fn(),
@@ -36,16 +36,14 @@ jest.mock(
   { virtual: true }
 )
 
-jest.mock(`uuid/v4`, () =>
-  jest.fn().mockImplementation(jest.requireActual(`uuid/v4`))
-)
-
-const worker = require(`/node_modules/gatsby-plugin-test/gatsby-worker.js`)
+const worker = require(`/node_modules/gatsby-plugin-test/gatsby-worker`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const hasha = require(`hasha`)
 const fs = require(`fs-extra`)
 const pDefer = require(`p-defer`)
-const uuidv4 = require(`uuid/v4`)
+const { uuid } = require(`gatsby-core-utils`)
+
+jest.spyOn(uuid, `v4`)
 
 fs.ensureDir = jest.fn().mockResolvedValue(true)
 
@@ -84,7 +82,7 @@ describe(`Jobs manager`, () => {
     worker.TEST_JOB.mockReset()
     endActivity.mockClear()
     pDefer.mockClear()
-    uuidv4.mockClear()
+    uuid.v4.mockClear()
     reporter.phantomActivity.mockImplementation(() => {
       return {
         start: jest.fn(),
@@ -153,7 +151,7 @@ describe(`Jobs manager`, () => {
       const internalJob = createInternalJob(createMockJob(), plugin)
       createInternalJob(internalJob, plugin)
 
-      expect(uuidv4).toHaveBeenCalledTimes(1)
+      expect(uuid.v4).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -489,7 +487,7 @@ describe(`Jobs manager`, () => {
 
     it(`should run the worker locally when it's a local plugin`, async () => {
       jest.useRealTimers()
-      const worker = require(`/gatsby-plugin-local/gatsby-worker.js`)
+      const worker = require(`/gatsby-plugin-local/gatsby-worker`)
       const { enqueueJob, createInternalJob } = jobManager
       const jobArgs = createInternalJob(createMockJob(), {
         name: `gatsby-plugin-local`,

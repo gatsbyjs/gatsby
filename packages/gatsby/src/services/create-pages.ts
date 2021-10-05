@@ -107,7 +107,9 @@ export async function createPages({
     `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
   )
 
-  const tim = reporter.activityTimer(`Checking for changed pages`)
+  const tim = reporter.activityTimer(`Checking for changed pages`, {
+    parentSpan,
+  })
   tim.start()
 
   const { changedPages } = findChangedPages(

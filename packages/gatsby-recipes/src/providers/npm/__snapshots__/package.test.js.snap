@@ -48,11 +48,11 @@ Object {
 
 exports[`npm package resource installs 2 resources, one prod & one dev 1`] = `
 Object {
-  "_message": "Installed NPM package div@2.0.0",
+  "_message": "Installed NPM package div@2.0.1",
   "description": "&lt;Div row&gt; Use flexbox with ease in React! &lt;/Div&gt;",
   "id": "div",
   "name": "div",
-  "version": "2.0.0",
+  "version": "2.0.1",
 }
 `;
 

@@ -1,4 +1,5 @@
 import { actions } from "../actions"
+import { store } from "../index"
 import { nodesReducer } from "../reducers/nodes"
 import { IGatsbyNode } from "../types"
 import { nodesTouchedReducer } from "../reducers/nodes-touched"
@@ -18,6 +19,7 @@ const fromMapToObject = (map: Map<string, any>): MapObject => {
 describe(`Create and update nodes`, (): void => {
   beforeEach((): void => {
     dispatch.mockClear()
+    store.dispatch({ type: `DELETE_CACHE` })
   })
 
   it(`allows creating nodes`, (): void => {
