@@ -4,6 +4,8 @@ import isInteger from "lodash/isInteger"
 import { IPluginOptions } from "~/models/gatsby-api"
 import { GatsbyNodeApiHelpers } from "~/utils/gatsby-types"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
+import { cloneDeep } from "lodash"
+
 interface IProcessorOptions {
   userPluginOptions: IPluginOptions
   helpers: GatsbyNodeApiHelpers
@@ -136,9 +138,7 @@ export const processAndValidatePluginOptions = (
   helpers: GatsbyNodeApiHelpers,
   pluginOptions: IPluginOptions
 ): IPluginOptions => {
-  let userPluginOptions = {
-    ...pluginOptions,
-  }
+  let userPluginOptions = cloneDeep(pluginOptions)
 
   optionsProcessors.forEach(({ test, processor, name }) => {
     if (!name) {

@@ -83,10 +83,10 @@ aliases:
             yarn why lmdb-store
       - run:
           name: Run tests
-          command: yarn jest --ci --runInBand $(yarn jest --listTests | sed 's/\/root\/project//g' | circleci tests split --split-by=timings)
+          command: yarn jest --ci --runInBand  $(yarn -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
-            GENERATE_JEST_REPORT: true
+            GENERATE_JEST_REPORT: "true"
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
       - store_test_results:
@@ -145,7 +145,7 @@ commands:
           condition: << parameters.condition >>
           steps:
             - slack/status:
-              channel: eng-react-integration-status
+                channel: eng-react-integration-status
 
   e2e-test:
     parameters:
@@ -249,7 +249,8 @@ jobs:
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
-    machine: true
+    machine:
+      image: "ubuntu-2004:202107-02"
     steps:
       - run:
           command: |
@@ -477,7 +478,7 @@ jobs:
     steps:
       - checkout
       # jq is helpful for parsing json & python required for node-gyp to build lmdb
-      - run: apt-get update && apt-get install jq python -y
+      - run: sudo apt-get update && sudo apt-get install jq python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - run: yarn markdown
@@ -489,7 +490,7 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: apt-get update && apt-get install jq python -y
+      - run: sudo apt-get update && sudo apt-get install jq python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - run: git config --global user.name "GatsbyJS Bot"
@@ -556,7 +557,7 @@ jobs:
           command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split --split-by=timings)
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
-            GENERATE_JEST_REPORT: true
+            GENERATE_JEST_REPORT: "true"
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
       - store_test_results:
@@ -571,7 +572,7 @@ jobs:
     steps:
       - checkout
       # python 2 is not built in and node-gyp needs it to build lmdb
-      - run: apt-get update && apt-get install python -y
+      - run: sudo apt-get update && sudo apt-get install python -y
       - run:
           name: "Update React to prerelease"
           command: "REACT_CHANNEL=<< parameters.version >> node ./scripts/upgrade-react"
