@@ -1,10 +1,9 @@
-import uuidv4 from "uuid/v4"
 import path from "path"
 import hasha from "hasha"
 import fs from "fs-extra"
 import pDefer from "p-defer"
 import _ from "lodash"
-import { createContentDigest, slash } from "gatsby-core-utils"
+import { createContentDigest, slash, uuid } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { IPhantomReporter } from "gatsby-cli"
 import {
@@ -221,7 +220,7 @@ export function createInternalJob(
   })
 
   const internalJob: InternalJob = {
-    id: uuidv4(),
+    id: uuid.v4(),
     name,
     contentDigest: ``,
     inputPaths: inputPathsWithContentDigest,

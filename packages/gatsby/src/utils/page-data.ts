@@ -198,7 +198,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
 
         if (hasFlag(query.dirty, FLAG_DIRTY_NEW_PAGE)) {
           // query results are not written yet
-          process.nextTick(() => cb(null, true))
+          setImmediate(() => cb(null, true))
           return
         }
       }
@@ -239,9 +239,9 @@ export async function flush(parentSpan?: Span): Promise<void> {
       },
     })
 
-    // `process.nextTick` below is a workaround against stack overflow
+    // `setImmediate` below is a workaround against stack overflow
     // occurring when there are many non-SSG pages
-    process.nextTick(() => cb(null, true))
+    setImmediate(() => cb(null, true))
     return
   }, 25)
 

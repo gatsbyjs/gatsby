@@ -10,7 +10,7 @@ const {
 } = require(`graphql`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-const { build, rebuild, rebuildWithSitePage } = require(`..`)
+const { build, rebuild } = require(`..`)
 import { buildObjectType } from "../types/type-builders"
 
 jest.mock(`../../utils/api-runner-node`)
@@ -60,7 +60,6 @@ const addNodeField = ({ node, name, value }) => {
 
 const rebuildTestSchema = async () => {
   await rebuild({})
-  await rebuildWithSitePage({})
   return store.getState().schema
 }
 
@@ -1178,7 +1177,6 @@ describe(`Compatibility with addThirdPartySchema`, () => {
     })
     createNodes().forEach(addNode)
     await build({})
-    await rebuildWithSitePage({})
     const schema = store.getState().schema
     assertValidSchema(schema)
   })
