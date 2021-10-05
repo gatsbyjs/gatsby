@@ -173,7 +173,7 @@ export function makeSourceFromOperation(
         context: {
           sourceMessage: `Could not source from bulk operation`,
         },
-        error: e,
+        error: e as Error,
       })
     }
   }

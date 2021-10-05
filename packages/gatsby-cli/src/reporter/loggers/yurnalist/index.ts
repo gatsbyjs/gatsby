@@ -103,8 +103,8 @@ function generatePageTreeToConsole(
     boxen(
       [
         `  (SSG) Generated at build time`,
-        `D (DSG) Defered static generation - page generated at runtime`,
-        `∞ (SSR) Server-side renders at runtime (uses getServerDate)`,
+        `D (DSG) Deferred static generation - page generated at runtime`,
+        `∞ (SSR) Server-side renders at runtime (uses getServerData)`,
         `λ (Function) Gatsby function`,
       ].join(`\n`),
       {

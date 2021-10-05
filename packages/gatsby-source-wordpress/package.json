@@ -29,7 +29,6 @@
     "filesize": "^6.4.0",
     "fs-extra": "^10.0.0",
     "gatsby-core-utils": "^3.0.0-zz-next.1",
-    "gatsby-image": "^3.11.0",
     "gatsby-plugin-catch-links": "^4.0.0-zz-next.1",
     "gatsby-source-filesystem": "^4.0.0-zz-next.1",
     "glob": "^7.1.7",
@@ -41,6 +40,7 @@
     "read-chunk": "^3.2.0",
     "replaceall": "^0.1.6",
     "semver": "^7.3.5",
+    "sharp": "^0.29.0",
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
@@ -51,6 +51,7 @@
     "@types/cache-manager": "^2.10.3",
     "@types/ink": "^2.0.3",
     "@types/semver": "^7.3.8",
+    "gatsby-plugin-image": "^2.0.0-zz-next.1",
     "babel-plugin-import-globals": "^2.0.0",
     "babel-plugin-module-resolver": "4.1.0",
     "babel-preset-gatsby": "^2.0.0-zz-next.1",
@@ -72,9 +73,10 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^4.0.0-next",
-    "gatsby-plugin-sharp": "^4.0.0-next",
-    "gatsby-transformer-sharp": "^4.0.0-next"
+    "gatsby": "^4.0.0-zz-next.1",
+    "gatsby-plugin-sharp": "^4.0.0-zz-next.1",
+    "gatsby-transformer-sharp": "^4.0.0-zz-next.1",
+    "gatsby-plugin-image": "^2.0.0-zz-next.1"
   },
   "repository": {
     "type": "git",
@@ -84,7 +86,7 @@
   "scripts": {
     "prepare": "npm run build",
     "build": "rimraf dist && babel src --out-dir dist --ignore **/__tests__ --extensions \".ts,.js\" --source-maps && npm run generate-plugin-options-docs",
-    "watch": "npm run build && babel -w src --out-dir dist --ignore **/__tests__ --verbose --extensions \".ts,.js\" --source-maps",
+    "watch": "npm run build && babel -w src --out-dir dist --ignore **/__tests__ --extensions \".ts,.js\" --source-maps",
     "generate-plugin-options-docs": "node ./generate-plugin-options-docs.js"
   },
   "engines": {

@@ -231,22 +231,11 @@ describe(`data resolution`, () => {
               beforeChangeNodeTest
             }
           }
-          # inline fn in gatsby-config.js
-          # support for this will be removed in future versions
-          allWpPost {
-            nodes {
-              id
-              beforeChangeNodeTest
-            }
-          }
         }
       `,
     })
 
     result.data.allWpPage.nodes.forEach(node => {
-      expect(node.beforeChangeNodeTest).toBe(`TEST-${node.id}`)
-    })
-    result.data.allWpPost.nodes.forEach(node => {
       expect(node.beforeChangeNodeTest).toBe(`TEST-${node.id}`)
     })
   })

@@ -72,7 +72,9 @@ const addPluginsToProject = async (
     await addPlugins(plugins, pluginOptions, rootPath, packages)
   } catch (e) {
     throw new Error(
-      `Something went wrong when trying to add the plugins to the project: ${e.message}`
+      `Something went wrong when trying to add the plugins to the project: ${
+        (e as Error).message
+      }`
     )
   }
 }
@@ -95,7 +97,7 @@ export async function installPlugins(
       packages
     )
   } catch (e) {
-    reporter.error(e.message)
+    reporter.error((e as Error).message)
     return
   }
 }

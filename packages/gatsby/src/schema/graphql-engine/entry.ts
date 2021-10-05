@@ -66,7 +66,7 @@ export class GraphQLEngine {
 
     // Build runs
     // Note: skipping inference metadata because we rely on schema snapshot
-    await build({ fullMetadataBuild: false, freeze: true })
+    await build({ fullMetadataBuild: false })
 
     return createGraphQLRunner(store, reporter)
   }

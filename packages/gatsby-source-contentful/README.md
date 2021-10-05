@@ -435,6 +435,7 @@ query pageQuery($id: String!) {
       raw
       references {
         ... on ContentfulAsset {
+          # You'll need to query contentful_id in each reference
           contentful_id
           __typename
           fixed(width: 1600) {
@@ -487,9 +488,11 @@ const options = {
 function BlogPostTemplate({ data }) {
   const { bodyRichText } = data.contentfulBlogPost
 
-  return <div>{bodyRichText && renderRichText(richTextField, options)}</div>
+  return <div>{bodyRichText && renderRichText(bodyRichText, options)}</div>
 }
 ```
+
+**Note:** The `contentful_id` field must be queried on rich-text references in order for the `renderNode` to receive the correct data.
 
 ### Embedding an image in a Rich Text field
 

@@ -117,7 +117,7 @@ const addNodes = nodes => {
 
 const deleteNodes = nodes => {
   nodes.forEach(node => {
-    store.dispatch(actions.deleteNode({ node }, { name: `test` }))
+    store.dispatch(actions.deleteNode(node, { name: `test` }))
   })
 }
 
