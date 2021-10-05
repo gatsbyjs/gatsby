@@ -457,18 +457,14 @@ exports.createNodesForContentType = ({
 
         if (process.env.CONTENTFUL_DEBUG_NODE_MANIFEST === `true`) {
           console.info(
-            JSON.stringify(
-              {
-                cacheExists,
-                isPreview,
-                createNodeManifestIsSupported,
-                shouldCreateNodeManifest,
-                manifestId,
-                entryItemSysUpdatedAt: entryItem.sys.updatedAt,
-              },
-              null,
-              2
-            )
+            JSON.stringify({
+              cacheExists,
+              isPreview,
+              createNodeManifestIsSupported,
+              shouldCreateNodeManifest,
+              manifestId,
+              entryItemSysUpdatedAt: entryItem.sys.updatedAt,
+            })
           )
         }
 
