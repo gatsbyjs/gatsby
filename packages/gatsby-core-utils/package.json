@@ -1,6 +1,6 @@
 {
   "name": "gatsby-core-utils",
-  "version": "3.0.0-zz-next.1",
+  "version": "3.0.0-zz-next.2",
   "description": "A collection of gatsby utils used in different gatsby packages",
   "keywords": [
     "gatsby",
@@ -46,8 +46,8 @@
     "@types/ci-info": "2.0.0",
     "babel-preset-gatsby-package": "^2.0.0-zz-next.1",
     "cross-env": "^7.0.3",
-    "msw": "^0.35.0",
     "is-uuid": "^1.0.2",
+    "msw": "^0.35.0",
     "typescript": "^4.4.3"
   },
   "engines": {

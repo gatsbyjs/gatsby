@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-benchmark-reporting",
   "description": "Gatsby Benchmark Reporting",
-  "version": "2.0.0-zz-next.1",
+  "version": "2.0.0-zz-next.2",
   "author": "Peter van der Zee <pvdz@github>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -21,7 +21,7 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "fast-glob": "^3.2.7",
-    "gatsby-core-utils": "^3.0.0-zz-next.1",
+    "gatsby-core-utils": "^3.0.0-zz-next.2",
     "node-fetch": "^2.6.5"
   },
   "scripts": {
