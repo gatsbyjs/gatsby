@@ -1,0 +1,30 @@
+{
+  "jsonapi": {
+    "version": "1.0",
+    "meta": {
+      "links": {
+        "self": {
+          "href": "http:\/\/jsonapi.org\/format\/1.0\/"
+        }
+      }
+    }
+  },
+  "data": [
+  {
+      "type": "paragraph--image_gallery_reusable",
+      "id": "paragraph-image-1",
+      "links": {
+          "self": {
+              "href": "https://sc-cms-dev.psu.edu/jsonapi/paragraph/image_gallery_reusable/6cf00353-86f9-4a9d-b85a-35f3b00d6937"
+          }
+      },
+      "relationships": {
+          "field_gallery": {
+              "data": {
+                  "type": "node--article",
+                  "id": "article-2"
+              }
+          }
+    }
+  }
+  ]}
