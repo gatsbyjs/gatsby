@@ -697,7 +697,6 @@ export const createWebpackUtils = (
                 `moveElemsAttrsToGroup`,
                 `moveGroupAttrsToElems`,
                 `prefixIds`, // Default: disabled
-                `removeAttrs`, // Default: disabled
                 `removeComments`,
                 `removeDesc`,
                 `removeDoctype`,
