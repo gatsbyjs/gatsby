@@ -66,6 +66,21 @@ class Article extends React.Component {
             </tbody>
           </table>
         )}
+        {this.props.data.asciidoc.frontmatter && (
+          <table>
+            <thead>
+              <tr>
+                <td colSpan="2">Frontmatter</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>frontmatter.source</th>
+                <td>{this.props.data.asciidoc.frontmatter.source}</td>
+              </tr>
+            </tbody>
+          </table>
+        )}
         <div
           dangerouslySetInnerHTML={{ __html: this.props.data.asciidoc.html }}
         />
@@ -97,6 +112,9 @@ export const pageQuery = graphql`
         middleName
         authorInitials
         email
+      }
+      frontmatter {
+        source
       }
     }
   }

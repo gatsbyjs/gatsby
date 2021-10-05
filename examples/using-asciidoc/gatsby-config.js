@@ -10,7 +10,14 @@ module.exports = {
         path: `${__dirname}/src`,
       },
     },
-    `gatsby-transformer-asciidoc`,
+    {
+      resolve: `gatsby-transformer-asciidoc`,
+      options: {
+        attributes: {
+          'skip-front-matter': true
+        }
+      }
+    },
     {
       resolve: `gatsby-plugin-typography`,
       options: {
