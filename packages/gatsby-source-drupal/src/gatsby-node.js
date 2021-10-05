@@ -377,273 +377,280 @@ ${JSON.stringify(webhookBody, null, 4)}`
       // We're now done with the initial (fastbuilds flavored) sourcing.
       initialSourcing = false
 
-    if (!requireFullRebuild) {
-      await storeRefsLookups({ cache, getNodes })
-      return
-    }
-  }
-
-
-  const drupalFetchActivity = reporter.activityTimer(
-    `Fetch all data from Drupal`,
-    { parentSpan }
-  )
-  const fullFetchSpan = tracer.startSpan(`sourceNodes.fetch`, {
-    childOf: parentSpan,
-  })
-  fullFetchSpan.setTag(`plugin`, `gatsby-source-drupal`)
-  fullFetchSpan.setTag(`sourceNodes.fetch.type`, `full`)
-
-  // Fetch articles.
-  reporter.info(`Starting to fetch all data from Drupal`)
-
-  drupalFetchActivity.start()
-
-  let allData
-  const typeRequestsQueued = new Set()
-  try {
-    const res = await requestQueue.push([
-      urlJoin(baseUrl, apiBase),
-      {
-        username: basicAuth.username,
-        password: basicAuth.password,
-        headers,
-        searchParams: params,
-        responseType: `json`,
-        parentSpan: fullFetchSpan,
-      },
-    ])
-    allData = await Promise.all(
-      _.map(res.body.links, async (url, type) => {
-        const dataArray = []
-        if (disallowedLinkTypes.includes(type)) return
-        if (!url) return
-        if (!type) return
-
-        // Lookup this type in our list of language alterable entities.
-        const isTranslatable = languageConfig.translatableEntities.some(
-          entityType => entityType === type
-        )
-
-        const getNext = async (url, currentLanguage) => {
-          if (typeof url === `object`) {
-            // url can be string or object containing href field
-            url = url.href
-
-            // Apply any filters configured in gatsby-config.js. Filters
-            // can be any valid JSON API filter query string.
-            // See https://www.drupal.org/docs/8/modules/jsonapi/filtering
-            if (typeof filters === `object`) {
-              if (filters.hasOwnProperty(type)) {
-                url = new URL(url)
-                const filterParams = new URLSearchParams(filters[type])
-                const filterKeys = Array.from(filterParams.keys())
-                filterKeys.forEach(filterKey => {
-                  // Only add filter params to url if it has not already been
-                  // added.
-                  if (!url.searchParams.has(filterKey)) {
-                    url.searchParams.set(filterKey, filterParams.get(filterKey))
-                  }
-                })
-                url = url.toString()
-              }
-            }
-          }
-
-          let d
-          try {
-            d = await requestQueue.push([
-              url,
-              {
-                username: basicAuth.username,
-                password: basicAuth.password,
-                headers,
-                responseType: `json`,
-                parentSpan: fullFetchSpan,
-              },
-            ])
-          } catch (error) {
-            if (error.response && error.response.statusCode == 405) {
-              // The endpoint doesn't support the GET method, so just skip it.
-              return
-            } else {
-              console.error(`Failed to fetch ${url}`, error.message)
-              console.log(error)
-              throw error
-            }
-          }
-          dataArray.push(...d.body.data)
-          // Add support for includes. Includes allow entity data to be expanded
-          // based on relationships. The expanded data is exposed as `included`
-          // in the JSON API response.
-          // See https://www.drupal.org/docs/8/modules/jsonapi/includes
-          if (d.body.included) {
-            dataArray.push(...d.body.included)
-          }
-
-          // If JSON:API extras is configured to add the resource count, we can queue
-          // all API requests immediately instead of waiting for each request to return
-          // the next URL. This lets us request resources in parallel vs. sequentially
-          // which is much faster.
-          if (d.body.meta?.count) {
-            const typeLangKey = type + currentLanguage
-            // If we hadn't added urls yet
-            if (
-              d.body.links.next?.href &&
-              !typeRequestsQueued.has(typeLangKey)
-            ) {
-              typeRequestsQueued.add(typeLangKey)
-
-              // Get count of API requests
-              // We round down as we've already gotten the first page at this point.
-              const pageSize = new URL(d.body.links.next.href).searchParams.get(
-                `page[limit]`
-              )
-              const requestsCount = Math.floor(d.body.meta.count / pageSize)
-
-              reporter.verbose(
-                `queueing ${requestsCount} API requests for type ${type} which has ${d.body.meta.count} entities.`
-              )
-
-              const newUrl = new URL(d.body.links.next.href)
-              await Promise.all(
-                _.range(requestsCount).map(pageOffset => {
-                  // We're starting 1 ahead.
-                  pageOffset += 1
-                  // Construct URL with new pageOffset.
-                  newUrl.searchParams.set(`page[offset]`, pageOffset * pageSize)
-                  return getNext(newUrl.toString(), currentLanguage)
-                })
-              )
-            }
-          } else if (d.body.links?.next) {
-            await getNext(d.body.links.next, currentLanguage)
-          }
-        }
-
-        if (isTranslatable === false) {
-          await getNext(url, ``)
-        } else {
-          for (let i = 0; i < languageConfig.enabledLanguages.length; i++) {
-            let currentLanguage = languageConfig.enabledLanguages[i]
-            const urlPath = url.href.split(`${apiBase}/`).pop()
-            const baseUrlWithoutTrailingSlash = baseUrl.replace(/\/$/, ``)
-            // The default language's JSON API is at the root.
-            if (
-              currentLanguage === getOptions().languageConfig.defaultLanguage ||
-              baseUrlWithoutTrailingSlash.slice(-currentLanguage.length) ==
-                currentLanguage
-            ) {
-              currentLanguage = ``
-            }
-
-            const joinedUrl = urlJoin(
-              baseUrlWithoutTrailingSlash,
-              currentLanguage,
-              apiBase,
-              urlPath
-            )
-
-            await getNext(joinedUrl, currentLanguage)
-          }
-        }
-
-        const result = {
-          type,
-          data: dataArray,
-        }
-
-        // eslint-disable-next-line consistent-return
-        return result
-      })
-    )
-  } catch (e) {
-    gracefullyRethrow(drupalFetchActivity, e)
-    return
-  }
-
-  drupalFetchActivity.end()
-  fullFetchSpan.finish()
-
-  const createNodesSpan = tracer.startSpan(`sourceNodes.createNodes`, {
-    childOf: parentSpan,
-  })
-  createNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
-  createNodesSpan.setTag(`sourceNodes.fetch.type`, `full`)
-
-  const nodes = new Map()
-
-  // first pass - create basic nodes
-  _.each(allData, contentType => {
-    if (!contentType) return
-    _.each(contentType.data, datum => {
-      if (!datum) return
-      const node = nodeFromData(datum, createNodeId, entityReferenceRevisions)
-      nodes.set(node.id, node)
-    })
-  })
-
-  createNodesSpan.setTag(`sourceNodes.createNodes.count`, nodes.size)
-
-  // second pass - handle relationships and back references
-  nodes.forEach(node => {
-    handleReferences(node, {
-      getNode: nodes.get.bind(nodes),
-      mutateNode: true,
-      createNodeId,
-      entityReferenceRevisions,
-    })
-  })
-
-  if (skipFileDownloads) {
-    reporter.info(`Skipping remote file download from Drupal`)
-  } else {
-    reporter.info(`Downloading remote files from Drupal`)
-
-    // Download all files (await for each pool to complete to fix concurrency issues)
-    const fileNodes = [...nodes.values()].filter(isFileNode)
-
-    if (fileNodes.length) {
-      const downloadingFilesActivity = reporter.activityTimer(
-        `Remote file download`,
-        { parentSpan }
-      )
-      downloadingFilesActivity.start()
-      try {
-        await asyncPool(concurrentFileRequests, fileNodes, async node => {
-          await downloadFile(
-            {
-              node,
-              store,
-              cache,
-              createNode,
-              createNodeId,
-              getCache,
-              reporter,
-            },
-            pluginOptions
-          )
-        })
-      } catch (e) {
-        gracefullyRethrow(downloadingFilesActivity, e)
+      if (!requireFullRebuild) {
+        await storeRefsLookups({ cache, getNodes })
         return
       }
-      downloadingFilesActivity.end()
     }
+
+    const drupalFetchActivity = reporter.activityTimer(
+      `Fetch all data from Drupal`,
+      { parentSpan }
+    )
+    const fullFetchSpan = tracer.startSpan(`sourceNodes.fetch`, {
+      childOf: parentSpan,
+    })
+    fullFetchSpan.setTag(`plugin`, `gatsby-source-drupal`)
+    fullFetchSpan.setTag(`sourceNodes.fetch.type`, `full`)
+
+    // Fetch articles.
+    reporter.info(`Starting to fetch all data from Drupal`)
+
+    drupalFetchActivity.start()
+
+    let allData
+    const typeRequestsQueued = new Set()
+    try {
+      const res = await requestQueue.push([
+        urlJoin(baseUrl, apiBase),
+        {
+          username: basicAuth.username,
+          password: basicAuth.password,
+          headers,
+          searchParams: params,
+          responseType: `json`,
+          parentSpan: fullFetchSpan,
+        },
+      ])
+      allData = await Promise.all(
+        _.map(res.body.links, async (url, type) => {
+          const dataArray = []
+          if (disallowedLinkTypes.includes(type)) return
+          if (!url) return
+          if (!type) return
+
+          // Lookup this type in our list of language alterable entities.
+          const isTranslatable = languageConfig.translatableEntities.some(
+            entityType => entityType === type
+          )
+
+          const getNext = async (url, currentLanguage) => {
+            if (typeof url === `object`) {
+              // url can be string or object containing href field
+              url = url.href
+
+              // Apply any filters configured in gatsby-config.js. Filters
+              // can be any valid JSON API filter query string.
+              // See https://www.drupal.org/docs/8/modules/jsonapi/filtering
+              if (typeof filters === `object`) {
+                if (filters.hasOwnProperty(type)) {
+                  url = new URL(url)
+                  const filterParams = new URLSearchParams(filters[type])
+                  const filterKeys = Array.from(filterParams.keys())
+                  filterKeys.forEach(filterKey => {
+                    // Only add filter params to url if it has not already been
+                    // added.
+                    if (!url.searchParams.has(filterKey)) {
+                      url.searchParams.set(
+                        filterKey,
+                        filterParams.get(filterKey)
+                      )
+                    }
+                  })
+                  url = url.toString()
+                }
+              }
+            }
+
+            let d
+            try {
+              d = await requestQueue.push([
+                url,
+                {
+                  username: basicAuth.username,
+                  password: basicAuth.password,
+                  headers,
+                  responseType: `json`,
+                  parentSpan: fullFetchSpan,
+                },
+              ])
+            } catch (error) {
+              if (error.response && error.response.statusCode == 405) {
+                // The endpoint doesn't support the GET method, so just skip it.
+                return
+              } else {
+                console.error(`Failed to fetch ${url}`, error.message)
+                console.log(error)
+                throw error
+              }
+            }
+            dataArray.push(...d.body.data)
+            // Add support for includes. Includes allow entity data to be expanded
+            // based on relationships. The expanded data is exposed as `included`
+            // in the JSON API response.
+            // See https://www.drupal.org/docs/8/modules/jsonapi/includes
+            if (d.body.included) {
+              dataArray.push(...d.body.included)
+            }
+
+            // If JSON:API extras is configured to add the resource count, we can queue
+            // all API requests immediately instead of waiting for each request to return
+            // the next URL. This lets us request resources in parallel vs. sequentially
+            // which is much faster.
+            if (d.body.meta?.count) {
+              const typeLangKey = type + currentLanguage
+              // If we hadn't added urls yet
+              if (
+                d.body.links.next?.href &&
+                !typeRequestsQueued.has(typeLangKey)
+              ) {
+                typeRequestsQueued.add(typeLangKey)
+
+                // Get count of API requests
+                // We round down as we've already gotten the first page at this point.
+                const pageSize = new URL(
+                  d.body.links.next.href
+                ).searchParams.get(`page[limit]`)
+                const requestsCount = Math.floor(d.body.meta.count / pageSize)
+
+                reporter.verbose(
+                  `queueing ${requestsCount} API requests for type ${type} which has ${d.body.meta.count} entities.`
+                )
+
+                const newUrl = new URL(d.body.links.next.href)
+                await Promise.all(
+                  _.range(requestsCount).map(pageOffset => {
+                    // We're starting 1 ahead.
+                    pageOffset += 1
+                    // Construct URL with new pageOffset.
+                    newUrl.searchParams.set(
+                      `page[offset]`,
+                      pageOffset * pageSize
+                    )
+                    return getNext(newUrl.toString(), currentLanguage)
+                  })
+                )
+              }
+            } else if (d.body.links?.next) {
+              await getNext(d.body.links.next, currentLanguage)
+            }
+          }
+
+          if (isTranslatable === false) {
+            await getNext(url, ``)
+          } else {
+            for (let i = 0; i < languageConfig.enabledLanguages.length; i++) {
+              let currentLanguage = languageConfig.enabledLanguages[i]
+              const urlPath = url.href.split(`${apiBase}/`).pop()
+              const baseUrlWithoutTrailingSlash = baseUrl.replace(/\/$/, ``)
+              // The default language's JSON API is at the root.
+              if (
+                currentLanguage ===
+                  getOptions().languageConfig.defaultLanguage ||
+                baseUrlWithoutTrailingSlash.slice(-currentLanguage.length) ==
+                  currentLanguage
+              ) {
+                currentLanguage = ``
+              }
+
+              const joinedUrl = urlJoin(
+                baseUrlWithoutTrailingSlash,
+                currentLanguage,
+                apiBase,
+                urlPath
+              )
+
+              await getNext(joinedUrl, currentLanguage)
+            }
+          }
+
+          const result = {
+            type,
+            data: dataArray,
+          }
+
+          // eslint-disable-next-line consistent-return
+          return result
+        })
+      )
+    } catch (e) {
+      gracefullyRethrow(drupalFetchActivity, e)
+      return
+    }
+
+    drupalFetchActivity.end()
+    fullFetchSpan.finish()
+
+    const createNodesSpan = tracer.startSpan(`sourceNodes.createNodes`, {
+      childOf: parentSpan,
+    })
+    createNodesSpan.setTag(`plugin`, `gatsby-source-drupal`)
+    createNodesSpan.setTag(`sourceNodes.fetch.type`, `full`)
+
+    const nodes = new Map()
+
+    // first pass - create basic nodes
+    _.each(allData, contentType => {
+      if (!contentType) return
+      _.each(contentType.data, datum => {
+        if (!datum) return
+        const node = nodeFromData(datum, createNodeId, entityReferenceRevisions)
+        nodes.set(node.id, node)
+      })
+    })
+
+    createNodesSpan.setTag(`sourceNodes.createNodes.count`, nodes.size)
+
+    // second pass - handle relationships and back references
+    nodes.forEach(node => {
+      handleReferences(node, {
+        getNode: nodes.get.bind(nodes),
+        mutateNode: true,
+        createNodeId,
+        entityReferenceRevisions,
+      })
+    })
+
+    if (skipFileDownloads) {
+      reporter.info(`Skipping remote file download from Drupal`)
+    } else {
+      reporter.info(`Downloading remote files from Drupal`)
+
+      // Download all files (await for each pool to complete to fix concurrency issues)
+      const fileNodes = [...nodes.values()].filter(isFileNode)
+
+      if (fileNodes.length) {
+        const downloadingFilesActivity = reporter.activityTimer(
+          `Remote file download`,
+          { parentSpan }
+        )
+        downloadingFilesActivity.start()
+        try {
+          await asyncPool(concurrentFileRequests, fileNodes, async node => {
+            await downloadFile(
+              {
+                node,
+                store,
+                cache,
+                createNode,
+                createNodeId,
+                getCache,
+                reporter,
+              },
+              pluginOptions
+            )
+          })
+        } catch (e) {
+          gracefullyRethrow(downloadingFilesActivity, e)
+          return
+        }
+        downloadingFilesActivity.end()
+      }
+    }
+
+    // Create each node
+    for (const node of nodes.values()) {
+      node.internal.contentDigest = createContentDigest(node)
+      createNode(node)
+    }
+
+    // We're now done with the initial sourcing.
+    initialSourcing = false
+
+    createNodesSpan.finish()
+    await storeRefsLookups({ cache, getNodes })
+    return
   }
-
-  // Create each node
-  for (const node of nodes.values()) {
-    node.internal.contentDigest = createContentDigest(node)
-    createNode(node)
-  }
-
-  // We're now done with the initial sourcing.
-  initialSourcing = false
-
-  createNodesSpan.finish()
-  await storeRefsLookups({ cache, getNodes })
-  return
 }
 
 // This is maintained for legacy reasons and will eventually be removed.
