@@ -1,4 +1,5 @@
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { createUrl } = require(`./extend-node-type`)
 
 /**
  * @name distributeWorkload
@@ -64,7 +65,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
         )
         return Promise.resolve()
       }
-      const url = `https://${node.file.url.slice(2)}`
+      const url = createUrl(node.file.url)
 
       // Avoid downloading the asset again if it's been cached
       // Note: Contentful Assets do not provide useful metadata

@@ -113,8 +113,9 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
   const transpiled = await apiRunnerNode(`preprocessSource`, {
     filename: filePath,
     contents: fileStr,
-    parentSpan: parentSpan,
+    parentSpan,
   })
+
   if (transpiled && transpiled.length) {
     for (const item of transpiled) {
       try {

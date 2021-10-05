@@ -32,6 +32,7 @@ describe(`gatsby-source-drupal`, () => {
   const { objectContaining } = expect
   const actions = {
     createNode: jest.fn(node => (nodes[node.id] = node)),
+    deleteNode: jest.fn(node => delete nodes[node.id]),
     setPluginStatus: jest.fn(),
     touchNode: jest.fn(),
   }
@@ -47,6 +48,7 @@ describe(`gatsby-source-drupal`, () => {
   }
   const reporter = {
     info: jest.fn(),
+    warn: jest.fn(),
     verbose: jest.fn(),
     activityTimer: jest.fn(() => activity),
     log: jest.fn(),
@@ -124,6 +126,10 @@ describe(`gatsby-source-drupal`, () => {
     expect(
       nodes[createNodeId(`und.article-3`)].relationships.field_main_image___NODE
     ).toEqual(createNodeId(`und.file-1`))
+
+    expect(nodes[createNodeId(`und.paragraph-image-1`)].relationships).toEqual({
+      field_gallery___NODE: createNodeId(`und.article-2`),
+    })
   })
 
   it(`Handles 1:N relationship`, () => {
@@ -433,15 +439,22 @@ describe(`gatsby-source-drupal`, () => {
         const fastBuilds = true
         await sourceNodes(args, { baseUrl, fastBuilds })
       })
+
       it(`Attributes`, () => {
         expect(nodes[createNodeId(`und.article-3`)].title).toBe(`Article #3`)
       })
+
       it(`Relationships`, () => {
         expect(nodes[createNodeId(`und.article-3`)].relationships).toEqual({
           field_main_image___NODE: createNodeId(`und.file-1`),
           field_tags___NODE: [createNodeId(`und.tag-1`)],
         })
+        expect(
+          nodes[createNodeId(`und.article-2`)].relationships
+            .field_secondary_image___NODE
+        ).toEqual([createNodeId(`und.file-4`)])
       })
+
       it(`Back references`, () => {
         expect(
           nodes[createNodeId(`und.file-1`)].relationships[
@@ -473,17 +486,37 @@ describe(`gatsby-source-drupal`, () => {
         })
         await sourceNodes(args, { baseUrl, fastBuilds })
       })
+
       it(`Attributes`, () => {
         expect(nodes[createNodeId(`und.article-3`)].title).toBe(
           `Article #3 - Synced`
         )
       })
+
       it(`Relationships`, () => {
         // removed `field_main_image`, changed `field_tags`
         expect(nodes[createNodeId(`und.article-3`)].relationships).toEqual({
           field_tags___NODE: [createNodeId(`und.tag-2`)],
         })
+        expect(
+          nodes[createNodeId(`und.paragraph-image-1`)].relationships
+        ).toEqual({
+          field_gallery___NODE: createNodeId(`und.article-1`),
+        })
+        expect(
+          nodes[createNodeId(`und.article-2`)].relationships
+            .field_secondary_image___NODE
+        ).toBe(undefined)
+        expect(
+          nodes[createNodeId(`und.article-2`)].relationships
+            .field_secondary_multiple_image___NODE.length
+        ).toBe(1)
+        expect(
+          nodes[createNodeId(`und.article-2`)].relationships
+            .field_tertiary_image___NODE_image___NODE
+        ).toBe(undefined)
       })
+
       it(`Back references`, () => {
         // removed `field_main_image`, `file-1` no longer has back reference to `article-3`
         expect(
@@ -499,6 +532,10 @@ describe(`gatsby-source-drupal`, () => {
         expect(
           nodes[createNodeId(`und.tag-2`)].relationships[`node__article___NODE`]
         ).toContain(createNodeId(`und.article-3`))
+        // Created a new node article-9 with reference to tag-2
+        expect(
+          nodes[createNodeId(`und.tag-2`)].relationships[`node__article___NODE`]
+        ).toContain(createNodeId(`und.article-9`))
       })
     })
   })
@@ -530,7 +567,8 @@ describe(`gatsby-source-drupal`, () => {
         expect(reporter.activityTimer).toHaveBeenCalledTimes(1)
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           1,
-          `Fetch all data from Drupal`
+          `Fetch all data from Drupal`,
+          { parentSpan: undefined }
         )
 
         expect(activity.start).toHaveBeenCalledTimes(1)
@@ -553,11 +591,13 @@ describe(`gatsby-source-drupal`, () => {
         expect(reporter.activityTimer).toHaveBeenCalledTimes(2)
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           1,
-          `Fetch all data from Drupal`
+          `Fetch all data from Drupal`,
+          { parentSpan: undefined }
         )
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           2,
-          `Remote file download`
+          `Remote file download`,
+          { parentSpan: undefined }
         )
 
         expect(activity.start).toHaveBeenCalledTimes(2)
@@ -567,20 +607,17 @@ describe(`gatsby-source-drupal`, () => {
       it(`during refresh webhook handling`, async () => {
         expect.assertions(5)
 
-        try {
-          await sourceNodes(
-            {
-              ...args,
-              webhookBody: {
-                malformattedPayload: true,
-              },
+        await sourceNodes(
+          {
+            ...args,
+            webhookBody: {
+              malformattedPayload: true,
             },
-            { baseUrl }
-          )
-        } catch (e) {
-          expect(e).toBeTruthy()
-        }
+          },
+          { baseUrl }
+        )
 
+        expect(reporter.warn).toHaveBeenCalledTimes(1)
         expect(reporter.activityTimer).toHaveBeenCalledTimes(1)
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           1,
@@ -616,7 +653,8 @@ describe(`gatsby-source-drupal`, () => {
         expect(reporter.activityTimer).toHaveBeenCalledTimes(1)
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           1,
-          `Fetch incremental changes from Drupal`
+          `Fetch incremental changes from Drupal`,
+          { parentSpan: {} }
         )
 
         expect(activity.start).toHaveBeenCalledTimes(1)

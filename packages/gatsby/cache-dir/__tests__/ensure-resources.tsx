@@ -22,6 +22,7 @@ describe(`EnsureResources`, () => {
   it(`loads pages synchronously`, () => {
     const location = {
       pathname: `/`,
+      search: ``,
     }
     const { container } = render(
       <EnsureResources location={location}>

@@ -106,6 +106,24 @@ type SitePage implements Node @dontInfer {
   internalComponentName: String!
   componentChunkName: String!
   matchPath: String
+  pageContext: JSON
+  pluginCreator: SitePlugin @link(by: \\"id\\", from: \\"pluginCreatorId\\")
+}
+
+type SitePlugin implements Node @dontInfer {
+  resolve: String
+  name: String
+  version: String
+  nodeAPIs: [String]
+  browserAPIs: [String]
+  ssrAPIs: [String]
+  pluginFilepath: String
+  pluginOptions: JSON
+  packageJson: JSON
+}
+
+type SiteBuildMetadata implements Node @dontInfer {
+  buildTime: Date @dateformat
 }
 
 type Inline {
@@ -270,6 +288,24 @@ type SitePage implements Node @dontInfer {
   internalComponentName: String!
   componentChunkName: String!
   matchPath: String
+  pageContext: JSON
+  pluginCreator: SitePlugin @link(by: \\"id\\", from: \\"pluginCreatorId\\")
+}
+
+type SitePlugin implements Node @dontInfer {
+  resolve: String
+  name: String
+  version: String
+  nodeAPIs: [String]
+  browserAPIs: [String]
+  ssrAPIs: [String]
+  pluginFilepath: String
+  pluginOptions: JSON
+  packageJson: JSON
+}
+
+type SiteBuildMetadata implements Node @dontInfer {
+  buildTime: Date @dateformat
 }
 
 type AnotherTest implements Node & ITest @dontInfer {
@@ -445,6 +481,24 @@ type SitePage implements Node @dontInfer {
   internalComponentName: String!
   componentChunkName: String!
   matchPath: String
+  pageContext: JSON
+  pluginCreator: SitePlugin @link(by: \\"id\\", from: \\"pluginCreatorId\\")
+}
+
+type SitePlugin implements Node @dontInfer {
+  resolve: String
+  name: String
+  version: String
+  nodeAPIs: [String]
+  browserAPIs: [String]
+  ssrAPIs: [String]
+  pluginFilepath: String
+  pluginOptions: JSON
+  packageJson: JSON
+}
+
+type SiteBuildMetadata implements Node @dontInfer {
+  buildTime: Date @dateformat
 }
 
 type AnotherTest implements Node & ITest @dontInfer {

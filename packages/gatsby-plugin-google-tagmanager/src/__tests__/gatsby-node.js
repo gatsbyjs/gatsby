@@ -12,6 +12,7 @@ describe(`pluginOptionsSchema`, () => {
       dataLayerName: `YOUR_DATA_LAYER_NAME`,
       routeChangeEventName: `YOUR_ROUTE_CHANGE_EVENT_NAME`,
       enableWebVitalsTracking: true,
+      selfHostedOrigin: `YOUR_SELF_HOSTED_ORIGIN`,
     })
 
     expect(isValid).toEqual(true)

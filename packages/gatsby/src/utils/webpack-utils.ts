@@ -697,7 +697,6 @@ export const createWebpackUtils = (
                 `moveElemsAttrsToGroup`,
                 `moveGroupAttrsToElems`,
                 `prefixIds`, // Default: disabled
-                `removeAttrs`, // Default: disabled
                 `removeComments`,
                 `removeDesc`,
                 `removeDoctype`,
@@ -765,7 +764,7 @@ export const createWebpackUtils = (
     })
 
   plugins.moment = (): WebpackPluginInstance =>
-    plugins.ignore(/^\.\/locale$/, /moment$/)
+    plugins.ignore({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ })
 
   plugins.extractStats = (): GatsbyWebpackStatsExtractor =>
     new GatsbyWebpackStatsExtractor()

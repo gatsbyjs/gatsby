@@ -35,7 +35,10 @@ interface IPluginResolutionSSR extends IPluginResolution {
 if (
   process.env.gatsby_executing_command === `develop` &&
   process.env.GATSBY_EXPERIMENTAL_FAST_DEV &&
-  !isCI()
+  !isCI() &&
+  // skip FAST_DEV handling in workers, all env vars will be handle
+  // by main process already and passed to worker
+  !process.env.GATSBY_WORKER_POOL_WORKER
 ) {
   process.env.GATSBY_EXPERIMENTAL_DEV_SSR = `true`
   process.env.PRESERVE_FILE_DOWNLOAD_CACHE = `true`
@@ -423,7 +426,15 @@ export async function initialize({
   await fs.ensureDir(`${publicDirectory}/static`)
 
   // Init plugins once cache is initialized
-  await apiRunnerNode(`unstable_onPluginInit`)
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    await apiRunnerNode(`onPluginInit`, {
+      parentSpan: activity.span,
+    })
+  } else {
+    await apiRunnerNode(`unstable_onPluginInit`, {
+      parentSpan: activity.span,
+    })
+  }
 
   activity.end()
 

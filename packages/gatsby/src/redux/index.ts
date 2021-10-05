@@ -41,25 +41,19 @@ export const readState = (): IGatsbyState => {
     // changes. Explicitly delete it here to cover case where user
     // runs gatsby the first time after upgrading.
     delete state[`jsonDataPaths`]
-    telemetry.decorateEvent(`BUILD_END`, {
+
+    telemetry.trackCli(`CACHE_STATUS`, {
       cacheStatus: `WARM`,
     })
-    telemetry.decorateEvent(`DEVELOP_STOP`, {
-      cacheStatus: `WARM`,
-    })
+
     return state
   } catch (e) {
-    // ignore errors.
+    telemetry.trackCli(`CACHE_STATUS`, {
+      cacheStatus: `COLD`,
+    })
+
+    return {} as IGatsbyState
   }
-  // BUG: Would this not cause downstream bugs? seems likely. Why wouldn't we just
-  // throw and kill the program?
-  telemetry.decorateEvent(`BUILD_END`, {
-    cacheStatus: `COLD`,
-  })
-  telemetry.decorateEvent(`DEVELOP_STOP`, {
-    cacheStatus: `COLD`,
-  })
-  return {} as IGatsbyState
 }
 
 export interface IMultiDispatch {

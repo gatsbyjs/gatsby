@@ -388,7 +388,7 @@
       "groupName": "core-js",
       "matchPaths": [
         "+(package.json)",
-        "packages/**/package.json"
+        "packages/!(gatsby-legacy-polyfills)/**/package.json"
       ],
       "matchPackageNames": [
         "core-js",
@@ -27339,7 +27339,6 @@
         "express-graphql",
         "json-loader",
         "memoizee",
-        "mkdirp",
         "opentracing",
         "react-refresh",
         "source-map",
@@ -27395,7 +27394,6 @@
         "express-graphql",
         "json-loader",
         "memoizee",
-        "mkdirp",
         "opentracing",
         "react-refresh",
         "source-map",

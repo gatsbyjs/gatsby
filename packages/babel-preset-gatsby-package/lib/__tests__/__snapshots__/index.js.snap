@@ -90,7 +90,9 @@ Array [
       "availableFlags": Array [
         "GATSBY_MAJOR",
       ],
-      "flags": Object {},
+      "flags": Object {
+        "GATSBY_MAJOR": "4",
+      },
     },
   ],
 ]
@@ -109,7 +111,9 @@ Array [
       "availableFlags": Array [
         "MAJOR",
       ],
-      "flags": Object {},
+      "flags": Object {
+        "GATSBY_MAJOR": "4",
+      },
     },
   ],
 ]
@@ -127,7 +131,7 @@ Array [
       "modules": "commonjs",
       "shippedProposals": true,
       "targets": Object {
-        "node": "12.13.0",
+        "node": "14.15.0",
       },
       "useBuiltIns": "entry",
     },
@@ -151,7 +155,7 @@ Array [
       "modules": "commonjs",
       "shippedProposals": true,
       "targets": Object {
-        "node": "12.13.0",
+        "node": "14.15.0",
       },
       "useBuiltIns": "entry",
     },
@@ -176,7 +180,9 @@ Array [
       "availableFlags": Array [
         "GATSBY_MAJOR",
       ],
-      "flags": Object {},
+      "flags": Object {
+        "GATSBY_MAJOR": "4",
+      },
     },
   ],
 ]

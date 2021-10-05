@@ -24,7 +24,7 @@ const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { addNodeInterfaceFields } = require(`./types/node-interface`)
 const { overridableBuiltInTypeNames } = require(`./types/built-in-types`)
-const { addInferredType, addInferredTypes } = require(`./infer`)
+const { addInferredTypes } = require(`./infer`)
 const {
   findOne,
   findManyPaginated,
@@ -45,10 +45,6 @@ const {
   parseTypeDef,
   reportParsingError,
 } = require(`./types/type-defs`)
-import {
-  clearDerivedTypes,
-  deleteFieldsOfDerivedTypes,
-} from "./types/derived-types"
 const { printTypeDefinitions } = require(`./print`)
 
 const buildSchema = async ({
@@ -58,9 +54,9 @@ const buildSchema = async ({
   fieldExtensions,
   thirdPartySchemas,
   printConfig,
+  enginePrintConfig,
   typeConflictReporter,
   inferenceMetadata,
-  freeze = false,
   parentSpan,
 }) => {
   // FIXME: consider removing .ready here - it is needed for various tests to pass (although probably harmless)
@@ -72,65 +68,21 @@ const buildSchema = async ({
     fieldExtensions,
     thirdPartySchemas,
     printConfig,
+    enginePrintConfig,
     typeConflictReporter,
     inferenceMetadata,
     parentSpan,
   })
   // const { printSchema } = require(`graphql`)
   const schema = schemaComposer.buildSchema()
-
-  if (freeze) {
-    freezeTypeComposers(schemaComposer)
-  }
+  freezeTypeComposers(schemaComposer)
 
   // console.log(printSchema(schema))
   return schema
 }
 
-const rebuildSchemaWithSitePage = async ({
-  schemaComposer,
-  typeMapping,
-  fieldExtensions,
-  typeConflictReporter,
-  inferenceMetadata,
-  parentSpan,
-}) => {
-  const typeComposer = schemaComposer.getOTC(`SitePage`)
-
-  // Clear derived types and fields
-  // they will be re-created in processTypeComposer later
-  deleteFieldsOfDerivedTypes({ typeComposer })
-  clearDerivedTypes({ schemaComposer, typeComposer })
-
-  const shouldInfer =
-    !typeComposer.hasExtension(`infer`) ||
-    typeComposer.getExtension(`infer`) !== false
-  if (shouldInfer) {
-    addInferredType({
-      schemaComposer,
-      typeComposer,
-      typeConflictReporter,
-      typeMapping,
-      inferenceMetadata,
-      parentSpan,
-    })
-  }
-  await processTypeComposer({
-    schemaComposer,
-    typeComposer,
-    fieldExtensions,
-    parentSpan,
-  })
-  const schema = schemaComposer.buildSchema()
-
-  freezeTypeComposers(schemaComposer)
-
-  return schema
-}
-
 module.exports = {
   buildSchema,
-  rebuildSchemaWithSitePage,
 }
 
 // Workaround for https://github.com/graphql-compose/graphql-compose/issues/319
@@ -159,6 +111,7 @@ const updateSchemaComposer = async ({
   fieldExtensions,
   thirdPartySchemas,
   printConfig,
+  enginePrintConfig,
   typeConflictReporter,
   inferenceMetadata,
   parentSpan,
@@ -190,11 +143,21 @@ const updateSchemaComposer = async ({
     parentSpan: parentSpan,
   })
   activity.start()
-  await printTypeDefinitions({
-    config: printConfig,
-    schemaComposer,
-    parentSpan: activity.span,
-  })
+  if (!process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE) {
+    await printTypeDefinitions({
+      config: printConfig,
+      schemaComposer,
+      parentSpan: activity.span,
+    })
+    if (enginePrintConfig) {
+      // make sure to print schema that will be used when bundling graphql-engine
+      await printTypeDefinitions({
+        config: enginePrintConfig,
+        schemaComposer,
+        parentSpan: activity.span,
+      })
+    }
+  }
   await addSetFieldsOnGraphQLNodeTypeFields({
     schemaComposer,
     parentSpan: activity.span,
