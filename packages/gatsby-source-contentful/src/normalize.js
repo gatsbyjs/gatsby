@@ -454,8 +454,8 @@ exports.createNodesForContentType = ({
 
         if (process.env.CONTENTFUL_DEBUG_NODE_MANIFEST === `true`) {
           console.info({
-            isPreview,
             cacheExists,
+            isPreview,
             createNodeManifestIsSupported,
             shouldCreateNodeManifest,
             manifestId,
