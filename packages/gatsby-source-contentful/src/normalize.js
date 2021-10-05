@@ -440,27 +440,36 @@ exports.createNodesForContentType = ({
           createNodeManifestIsSupported &&
           // and this is a delta update
           (cacheExists ||
-            // or this entry/node was updated in the last 5 mins
+            // or this entry/node was updated in the last 60 mins
             // we don't want older nodes because we only want to create
             // node manifests for recently updated/created content.
             (entryItem.sys.updatedAt &&
               Date.now() - new Date(entryItem.sys.updatedAt).getTime() <=
+                // seconds
                 60 *
+                  // milliseconds
                   1000 *
+                  // minutes
                   (process.env
-                    .CONTENT_SYNC_CONTENTFUL_MINUTES_SINCE_ENTRY_UPDATE || 5)))
+                    .CONTENT_SYNC_CONTENTFUL_MINUTES_SINCE_ENTRY_UPDATE || 60)))
 
         const manifestId = `${space.sys.id}-${entryItem.sys.id}-${entryItem.sys.updatedAt}`
 
         if (process.env.CONTENTFUL_DEBUG_NODE_MANIFEST === `true`) {
-          console.info({
-            cacheExists,
-            isPreview,
-            createNodeManifestIsSupported,
-            shouldCreateNodeManifest,
-            manifestId,
-            entryItemSysUpdatedAt: entryItem.sys.updatedAt,
-          })
+          console.info(
+            JSON.stringify(
+              {
+                cacheExists,
+                isPreview,
+                createNodeManifestIsSupported,
+                shouldCreateNodeManifest,
+                manifestId,
+                entryItemSysUpdatedAt: entryItem.sys.updatedAt,
+              },
+              null,
+              2
+            )
+          )
         }
 
         if (shouldCreateNodeManifest) {
