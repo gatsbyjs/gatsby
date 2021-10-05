@@ -450,9 +450,20 @@ exports.createNodesForContentType = ({
                   (process.env
                     .CONTENT_SYNC_CONTENTFUL_MINUTES_SINCE_ENTRY_UPDATE || 5)))
 
-        if (shouldCreateNodeManifest) {
-          const manifestId = `${space.sys.id}-${entryItem.sys.id}-${entryItem.sys.updatedAt}`
+        const manifestId = `${space.sys.id}-${entryItem.sys.id}-${entryItem.sys.updatedAt}`
 
+        if (process.env.CONTENTFUL_DEBUG_NODE_MANIFEST === `true`) {
+          console.info({
+            isPreview,
+            cacheExists,
+            createNodeManifestIsSupported,
+            shouldCreateNodeManifest,
+            manifestId,
+            entryItemSysUpdatedAt: entryItem.sys.updatedAt,
+          })
+        }
+
+        if (shouldCreateNodeManifest) {
           console.info(
             `Contentful: Creating node manifest with id ${manifestId}`
           )
