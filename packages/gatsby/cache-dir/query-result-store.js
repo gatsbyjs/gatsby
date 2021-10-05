@@ -46,12 +46,14 @@ export class PageQueryStore extends React.Component {
   componentDidMount() {
     socketRegisterPath(getPathFromProps(this.props))
     ___emitter.on(`pageQueryResult`, this.handleMittEvent)
+    ___emitter.on(`serverDataResult`, this.handleMittEvent)
     ___emitter.on(`onPostLoadPageResources`, this.handleMittEvent)
   }
 
   componentWillUnmount() {
     socketUnregisterPath(this.state.path)
     ___emitter.off(`pageQueryResult`, this.handleMittEvent)
+    ___emitter.off(`serverDataResult`, this.handleMittEvent)
     ___emitter.off(`onPostLoadPageResources`, this.handleMittEvent)
   }
 
