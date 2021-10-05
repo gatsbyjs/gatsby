@@ -6,6 +6,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "gatsby": "^4.0.0-zz-next.1",
+    "gatsby-plugin-gatsby-cloud": "^4.0.0-zz-next.1",
     "gatsby-plugin-image": "^2.0.0-zz-next.1",
     "gatsby-plugin-manifest": "^4.0.0-zz-next.1",
     "gatsby-plugin-offline": "^5.0.0-zz-next.1",
@@ -19,7 +20,7 @@
     "react-helmet": "^6.1.0"
   },
   "devDependencies": {
-    "prettier": "2.4.1"
+    "prettier": "2.3.2"
   },
   "keywords": [
     "gatsby"
@@ -29,7 +30,7 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "start": "gatsby develop",
+    "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
