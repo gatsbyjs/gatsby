@@ -418,7 +418,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
           entityType => entityType === type
         )
 
-        const getNext = async url => {
+        const getNext = async (url, currentLanguage) => {
           if (typeof url === `object`) {
             // url can be string or object containing href field
             url = url.href
@@ -479,9 +479,13 @@ ${JSON.stringify(webhookBody, null, 4)}`
           // the next URL. This lets us request resources in parallel vs. sequentially
           // which is much faster.
           if (d.body.meta?.count) {
+            const typeLangKey = type + currentLanguage
             // If we hadn't added urls yet
-            if (d.body.links.next?.href && !typeRequestsQueued.has(type)) {
-              typeRequestsQueued.add(type)
+            if (
+              d.body.links.next?.href &&
+              !typeRequestsQueued.has(typeLangKey)
+            ) {
+              typeRequestsQueued.add(typeLangKey)
 
               // Get count of API requests
               // We round down as we've already gotten the first page at this point.
@@ -501,17 +505,17 @@ ${JSON.stringify(webhookBody, null, 4)}`
                   pageOffset += 1
                   // Construct URL with new pageOffset.
                   newUrl.searchParams.set(`page[offset]`, pageOffset * pageSize)
-                  return getNext(newUrl.toString())
+                  return getNext(newUrl.toString(), currentLanguage)
                 })
               )
             }
           } else if (d.body.links?.next) {
-            await getNext(d.body.links.next)
+            await getNext(d.body.links.next, currentLanguage)
           }
         }
 
         if (isTranslatable === false) {
-          await getNext(url)
+          await getNext(url, ``)
         } else {
           for (let i = 0; i < languageConfig.enabledLanguages.length; i++) {
             let currentLanguage = languageConfig.enabledLanguages[i]
@@ -533,7 +537,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
               urlPath
             )
 
-            await getNext(joinedUrl)
+            await getNext(joinedUrl, currentLanguage)
           }
         }
 
