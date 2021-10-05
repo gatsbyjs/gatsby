@@ -383,6 +383,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
     }
   }
 
+
   const drupalFetchActivity = reporter.activityTimer(
     `Fetch all data from Drupal`,
     { parentSpan }
