@@ -132,7 +132,7 @@ const handleDeletedNode = async ({
       createNodeIdWithVersion(
         node.id,
         node.type,
-        getOptions().languageConfig ? node.attributes.langcode : `und`,
+        getOptions().languageConfig ? node.attributes?.langcode : `und`,
         node.attributes?.drupal_internal__revision_id,
         entityReferenceRevisions
       )
@@ -224,9 +224,9 @@ const handleWebhookUpdate = async (
   },
   pluginOptions = {}
 ) => {
-  if (!nodeToUpdate || !nodeToUpdate.attributes) {
+  if (!nodeToUpdate) {
     reporter.warn(
-      `The updated node was empty or is missing the required attributes field. The fact you're seeing this warning means there's probably a bug in how we're creating and processing updates from Drupal.
+      `The updated node was empty. The fact you're seeing this warning means there's probably a bug in how we're creating and processing updates from Drupal.
 
 ${JSON.stringify(nodeToUpdate, null, 4)}
       `
@@ -234,6 +234,13 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
 
     return
   }
+
+  reporter.log(
+    `[drupal]: handling update to:
+    - entity href: ${nodeToUpdate.links?.self?.href}
+    - node id: ${nodeToUpdate.attributes?.drupal_internal__nid}
+`
+  )
 
   const { createNode } = actions
 
@@ -326,7 +333,7 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     }
     node.internal.contentDigest = createContentDigest(node)
     createNode(node)
-    reporter.log(`Updated node: ${node.id}`)
+    reporter.log(`Updated Gatsby node: ${node.id}`)
   }
 }
 
