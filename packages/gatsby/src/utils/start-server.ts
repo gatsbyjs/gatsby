@@ -304,7 +304,8 @@ export async function startServer(
 
       if (page) {
         try {
-          let serverDataPromise: Promise<IServerData> = Promise.resolve({})
+          let serverDataPromise: Promise<IServerData> | Promise<Error> =
+            Promise.resolve({})
 
           if (page.mode === `SSR`) {
             const renderer = require(PAGE_RENDERER_PATH)
@@ -315,7 +316,7 @@ export async function startServer(
               page,
               potentialPagePath,
               componentInstance
-            )
+            ).catch(error => error)
           }
 
           let pageData: IPageDataWithQueryResult
@@ -337,9 +338,20 @@ export async function startServer(
           }
 
           if (page.mode === `SSR`) {
-            const { props } = await serverDataPromise
+            try {
+              const result = await serverDataPromise
 
-            pageData.result.serverData = props
+              if (result instanceof Error) {
+                throw result
+              }
+
+              pageData.result.serverData = result.props
+            } catch (error) {
+              report.error(
+                `Error in getServerData in ${requestedPagePath} / "${potentialPagePath}".`,
+                error
+              )
+            }
             pageData.path = `/${requestedPagePath}`
           }
 
