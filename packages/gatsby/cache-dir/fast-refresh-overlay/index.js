@@ -98,9 +98,11 @@ function DevOverlay({ children }) {
     if (hasBuildError) {
       return <BuildError error={state.buildError} />
     }
+    /*
     if (hasRuntimeErrors) {
       return <RuntimeErrors errors={state.errors} dismiss={dismiss} />
     }
+    */
     if (hasGraphqlErrors) {
       return <GraphqlErrors errors={state.graphqlErrors} dismiss={dismiss} />
     }

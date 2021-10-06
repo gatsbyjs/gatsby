@@ -7,6 +7,8 @@ const handleErrorOverlay = () => {
     errorsToDisplay = errors.flatMap(e => e).filter(Boolean)
   }
 
+  console.log(errorsToDisplay)
+
   if (errorsToDisplay.length > 0) {
     window._gatsbyEvents.push([
       `FAST_REFRESH`,

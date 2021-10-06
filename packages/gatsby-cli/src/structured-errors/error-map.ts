@@ -52,6 +52,11 @@ const errors = {
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
   },
+  "95315": {
+    text: (context): string => context.sourceMessage,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
   "98123": {
     text: (context): string =>
       `${context.stageLabel} failed\n\n${

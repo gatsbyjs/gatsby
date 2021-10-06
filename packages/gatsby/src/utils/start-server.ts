@@ -351,6 +351,12 @@ export async function startServer(
                 `Error in getServerData in ${requestedPagePath} / "${potentialPagePath}".`,
                 error
               )
+              // @ts-ignore - it actually accepts an object :trollface:
+              websocketManager.emitError(`getServerData`, {
+                error: {
+                  message: `Error in getServerData in ${requestedPagePath} / "${potentialPagePath}".`,
+                },
+              })
             }
             pageData.path = `/${requestedPagePath}`
           }
