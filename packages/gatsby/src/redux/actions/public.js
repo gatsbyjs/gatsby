@@ -417,16 +417,6 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       internalPage.defer = true
     }
 
-    // TODO move to AST Check
-    const fileContent = fs.readFileSync(page.component).toString()
-    const isSSR =
-      fileContent.includes(`exports.getServerData`) ||
-      fileContent.includes(`export const getServerData`) ||
-      fileContent.includes(`export function getServerData`) ||
-      fileContent.includes(`export async function getServerData`)
-    if (isSSR) {
-      pageMode = `SSR`
-    }
     internalPage.mode = pageMode
   }
 
