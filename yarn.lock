@@ -10645,10 +10645,10 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
 
-eval@^0.1.0, eval@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.npmjs.org/eval/-/eval-0.1.4.tgz#e05dbe0dab4b9330215cbb7bf4886eb24bd58700"
-  integrity sha512-npGsebJejyjMRnLdFu+T/97dnigqIU0Ov3IGrZ8ygd1v7RL1vGkEKtvyWZobqUH1AQgKlg0Yqqe2BtMA9/QZLw==
+eval@^0.1.0, eval@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/eval/-/eval-0.1.6.tgz#9620d7d8c85515e97e6b47c5814f46ae381cb3cc"
+  integrity sha512-o0XUw+5OGkXw4pJZzQoXUk+H87DHuC+7ZE//oSrRGtatTmr12oTnLfg6QOq9DyTt0c/p4TwzgmkKrBzWTSizyQ==
   dependencies:
     require-like ">= 0.1.1"
 
@@ -12463,12 +12463,12 @@ gray-matter@^2.1.0:
     js-yaml "^3.8.1"
     toml "^2.3.2"
 
-gray-matter@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/gray-matter/-/gray-matter-4.0.2.tgz#9aa379e3acaf421193fce7d2a28cebd4518ac454"
-  integrity sha512-7hB/+LxrOjq/dd8APlK0r24uL/67w7SkYnfwhNFwg/VDIGWGmduTDYf3WNstLW2fbbmRwrDGCVSJ2isuf2+4Hw==
+gray-matter@^4.0.2, gray-matter@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/gray-matter/-/gray-matter-4.0.3.tgz#e893c064825de73ea1f5f7d88c7a9f7274288798"
+  integrity sha512-5v6yZd4JK3eMI3FqqCouswVqwugaA9r4dNZB1wwcmrD02QkV5H0y7XBQW8QwQqEaZY1pM9aqORSORhJRdNK44Q==
   dependencies:
-    js-yaml "^3.11.0"
+    js-yaml "^3.13.1"
     kind-of "^6.0.2"
     section-matter "^1.0.0"
     strip-bom-string "^1.0.0"
@@ -15360,7 +15360,7 @@ js-tokens@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
 
-js-yaml@3.14.1, js-yaml@^3.10.0, js-yaml@^3.11.0, js-yaml@^3.13.1, js-yaml@^3.14.1, js-yaml@^3.6.1, js-yaml@^3.8.1:
+js-yaml@3.14.1, js-yaml@^3.10.0, js-yaml@^3.13.1, js-yaml@^3.14.1, js-yaml@^3.6.1, js-yaml@^3.8.1:
   version "3.14.1"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.14.1.tgz#dae812fdb3825fa306609a8717383c50c36a0537"
   integrity sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==
@@ -15611,10 +15611,10 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
-json5@^2.0.0, json5@^2.1.0, json5@^2.1.2, json5@^2.1.3:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/json5/-/json5-2.1.3.tgz#c9b0f7fa9233bfe5807fe66fcf3a5617ed597d43"
-  integrity sha512-KXPvOm8K9IJKFM0bmdn8QXh7udDh1g/giieX0NLCaMnb4hEiVFqnop2ImTXCc5e0/oHz3LTqmHGtExn5hfMkOA==
+json5@^2.0.0, json5@^2.1.0, json5@^2.1.2, json5@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.0.tgz#2dfefe720c6ba525d9ebd909950f0515316c89a3"
+  integrity sha512-f+8cldu7X/y7RAJurMEJmdoKXGB/X550w2Nr3tTbezL6RwEE/iMcm+tZnXeoZtKuOq6ft8+CqzEkrIgx1fPoQA==
   dependencies:
     minimist "^1.2.5"
 
@@ -20210,10 +20210,10 @@ pretty-bytes@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-4.0.2.tgz#b2bf82e7350d65c6c33aa95aaa5a4f6327f61cd9"
 
-pretty-bytes@^5.1.0, pretty-bytes@^5.3.0, pretty-bytes@^5.4.1:
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.4.1.tgz#cd89f79bbcef21e3d21eb0da68ffe93f803e884b"
-  integrity sha512-s1Iam6Gwz3JI5Hweaz4GoCD1WUNUIyzePFy5+Js2hjwGVt2Z79wNN+ZKOZ2vB6C+Xs6njyB84Z1IthQg8d9LxA==
+pretty-bytes@^5.1.0, pretty-bytes@^5.4.1, pretty-bytes@^5.6.0:
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.6.0.tgz#356256f643804773c82f64723fe78c92c62beaeb"
+  integrity sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==
 
 pretty-error@^2.1.2:
   version "2.1.2"
@@ -23344,10 +23344,10 @@ slide@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/slide/-/slide-1.1.6.tgz#56eb027d65b4d2dce6cb2e2d32c4d4afc9e1d707"
 
-slugify@^1.4.4:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.4.4.tgz#2f032ffa52b1e1ca2a27737c1ce47baae3d0883a"
-  integrity sha512-N2+9NJ8JzfRMh6PQLrBeDEnVDQZSytE/W4BTC4fNNPmO90Uu58uNwSlIJSs+lmPgWsaAF79WLhVPe5tuy7spjw==
+slugify@^1.4.4, slugify@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.6.1.tgz#a5fcaef29f4e57c6e932ce7044b6ffd9cf81b641"
+  integrity sha512-5ofqMTbetNhxlzjYYLBaZFQd6oiTuSkQlyfPEFIMwgUABlZQ0hbk5xIV9Ydd5jghWeRoO7GkiJliUvTpLOjNRA==
 
 smart-buffer@^4.1.0:
   version "4.1.0"
