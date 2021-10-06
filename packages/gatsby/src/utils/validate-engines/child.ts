@@ -6,10 +6,33 @@ const allowedPrefixes = [`.cache/query-engine`, `.cache/page-ssr`]
 // @ts-ignore TS doesn't like accessing `_load`
 const originalModuleLoad = mod._load
 
+class EngineValidationError extends Error {
+  request: string
+  relativeToRoot: string
+  parentPath: string
+
+  constructor({
+    request,
+    relativeToRoot,
+    parent,
+  }: {
+    request: string
+    relativeToRoot: string
+    parent: mod
+  }) {
+    super(
+      `Generated engines use disallowed import "${request}". Only allowed imports are to Node.js builtin modules or engines internals.`
+    )
+    this.request = request
+    this.relativeToRoot = relativeToRoot
+    this.parentPath = parent.filename
+  }
+}
+
 export async function validate(directory: string): Promise<void> {
   // intercept module loading and validate no unexpected imports are happening
   // @ts-ignore TS doesn't like accessing `_load`
-  mod._load = (request, parent, isMain): any => {
+  mod._load = (request: string, parent: mod, isMain: boolean): any => {
     // allow all node builtins
     if (mod.builtinModules.includes(request)) {
       return originalModuleLoad(request, parent, isMain)
@@ -31,9 +54,7 @@ export async function validate(directory: string): Promise<void> {
     // (for example`msgpackr` have fallback if native `msgpack-extract` can't be loaded)
     // and we don't fail validation in those cases because error we throw will be handled.
     // We do want to fail validation if there is no fallback
-    throw new Error(
-      `Not allowed import "${request}" ("${relativeToRoot}") from "${parent.id}"`
-    )
+    throw new EngineValidationError({ request, relativeToRoot, parent })
   }
 
   // workaround for gatsby-worker issue:

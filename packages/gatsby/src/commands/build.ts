@@ -209,8 +209,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     validateEnginesActivity.start()
     try {
       await validateEngines(store.getState().program.directory)
-    } catch (err) {
-      validateEnginesActivity.panic(err)
+    } catch (error) {
+      validateEnginesActivity.panic({ id: `98001`, context: {}, error })
     } finally {
       validateEnginesActivity.end()
     }
