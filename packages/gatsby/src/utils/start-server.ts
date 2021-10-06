@@ -405,9 +405,15 @@ module.exports = {
           }
 
           if (page.mode === `SSR`) {
-            const { props } = await serverDataPromise
-
-            pageData.result.serverData = props
+            try {
+              const { props } = await serverDataPromise
+              pageData.result.serverData = props
+            } catch (error) {
+              report.error(
+                `Error in getServerData in ${requestedPagePath} / "${potentialPagePath}".`,
+                error
+              )
+            }
             pageData.path = `/${requestedPagePath}`
           }
 
