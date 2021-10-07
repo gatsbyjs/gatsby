@@ -19,6 +19,7 @@ import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
 import { codeFrameColumns } from "@babel/code-frame"
+import * as fs from "fs-extra"
 
 import { withBasePath } from "../utils/path"
 import webpackConfig from "../utils/webpack.config"
@@ -346,17 +347,25 @@ export async function startServer(
               }
 
               pageData.result.serverData = result.props
-            } catch (error) {
-              report.error(
-                `Error in getServerData in ${requestedPagePath} / "${potentialPagePath}".`,
-                error
+              websocketManager.emitError(
+                `getServerData-${requestedPagePath}`,
+                undefined
               )
-              // @ts-ignore - it actually accepts an object :trollface:
-              websocketManager.emitError(`getServerData`, {
-                error: {
-                  message: `Error in getServerData in ${requestedPagePath} / "${potentialPagePath}".`,
+            } catch (error) {
+              const structuredError = report.panicOnBuild({
+                id: `95315`,
+                context: {
+                  sourceMessage: error.message,
+                  pagePath: requestedPagePath,
+                  potentialPagePath,
                 },
+                error,
               })
+              websocketManager.emitError(
+                `getServerData-${requestedPagePath}`,
+                // @ts-ignore - FIXME
+                structuredError
+              )
             }
             pageData.path = `/${requestedPagePath}`
           }
@@ -456,6 +465,41 @@ export async function startServer(
       codeFrame,
       sourcePosition,
       sourceContent,
+    })
+  })
+
+  app.get(`/__file-code-frame`, async (req, res) => {
+    const emptyResponse = {
+      codeFrame: `No codeFrame could be generated`,
+      sourcePosition: null,
+      sourceContent: null,
+    }
+
+    const filePath = req?.query?.filePath
+    const lineNumber = parseInt(req.query.lineNumber, 10)
+    const columnNumber = parseInt(req.query.columnNumber, 10)
+
+    if (!filePath) {
+      res.json(emptyResponse)
+      return
+    }
+
+    const sourceContent = await fs.readFile(filePath, `utf-8`)
+
+    const codeFrame = codeFrameColumns(
+      sourceContent,
+      {
+        start: {
+          line: lineNumber,
+          column: columnNumber ?? 0,
+        },
+      },
+      {
+        highlightCode: true,
+      }
+    )
+    res.json({
+      codeFrame,
     })
   })
 

@@ -52,8 +52,10 @@ const errors = {
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
   },
+  // TODO: More details?
   "95315": {
-    text: (context): string => context.sourceMessage,
+    text: (context): string =>
+      `Error in getServerData in ${context.pagePath} / "${context.potentialPagePath}".`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
   },

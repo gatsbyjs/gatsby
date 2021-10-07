@@ -11,6 +11,7 @@ import url from "url"
 import { createHash } from "crypto"
 import { findPageByPath } from "./find-page-by-path"
 import { Server as SocketIO, Socket } from "socket.io"
+import { IStructuredError } from "gatsby-cli/lib/structured-errors/types"
 
 export interface IPageQueryResult {
   id: string
@@ -38,6 +39,8 @@ export class WebsocketManager {
   activePaths: Set<string> = new Set()
   clients: Set<IClientInfo> = new Set()
   errors: Map<string, string> = new Map()
+  getServerDataErrors: Map<string, IStructuredError | Array<IStructuredError>> =
+    new Map()
   pageResults: PageResultsMap = new Map()
   staticQueryResults: QueryResultsMap = new Map()
   websocket: SocketIO | undefined

@@ -1,26 +1,51 @@
 const errorMap = {}
 
 const handleErrorOverlay = () => {
-  const errors = Object.values(errorMap)
-  let errorsToDisplay = []
+  const errors = Object.entries(errorMap)
+  const runtimeErrorsToDisplay = []
+  const graphqlErrorsToDisplay = []
   if (errors.length > 0) {
-    errorsToDisplay = errors.flatMap(e => e).filter(Boolean)
+    errors.forEach(([id, errorValue]) => {
+      if (Array.isArray(errorValue)) {
+        errorValue = errorValue.filter(Boolean)
+      } else {
+        errorValue = [errorValue]
+      }
+      if (id.startsWith(`getServerData`)) {
+        runtimeErrorsToDisplay.push(...errorValue)
+      } else {
+        graphqlErrorsToDisplay.push(...errorValue)
+      }
+    })
   }
 
-  console.log(errorsToDisplay)
-
-  if (errorsToDisplay.length > 0) {
+  if (graphqlErrorsToDisplay.length > 0) {
     window._gatsbyEvents.push([
       `FAST_REFRESH`,
       {
         action: `SHOW_GRAPHQL_ERRORS`,
-        payload: errorsToDisplay,
+        payload: graphqlErrorsToDisplay,
       },
     ])
   } else {
     window._gatsbyEvents.push([
       `FAST_REFRESH`,
       { action: `CLEAR_GRAPHQL_ERRORS` },
+    ])
+  }
+
+  if (runtimeErrorsToDisplay.length > 0) {
+    window._gatsbyEvents.push([
+      `FAST_REFRESH`,
+      {
+        action: `SHOW_GETSERVERDATA_ERRORS`,
+        payload: runtimeErrorsToDisplay,
+      },
+    ])
+  } else {
+    window._gatsbyEvents.push([
+      `FAST_REFRESH`,
+      { action: `CLEAR_GETSERVERDATA_ERRORS` },
     ])
   }
 }
