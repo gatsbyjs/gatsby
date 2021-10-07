@@ -124,6 +124,7 @@ describe(`worker (share-state)`, () => {
               "/foo/",
             },
             "query": "",
+            "serverData": false,
           },
         },
         "staticQueryComponents": Map {
