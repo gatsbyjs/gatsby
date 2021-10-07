@@ -440,7 +440,7 @@ exports.createNodesForContentType = ({
           createNodeManifestIsSupported &&
           // and this is a delta update
           (cacheExists ||
-            // or this entry/node was updated in the last 60 mins
+            // or this entry/node was updated in the last 60 mins.
             // we don't want older nodes because we only want to create
             // node manifests for recently updated/created content.
             (entryItem.sys.updatedAt &&
