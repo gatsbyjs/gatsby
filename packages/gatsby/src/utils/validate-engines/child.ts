@@ -1,8 +1,6 @@
 import mod from "module"
 import * as path from "path"
 
-const allowedPrefixes = [`.cache/query-engine`, `.cache/page-ssr`]
-
 // @ts-ignore TS doesn't like accessing `_load`
 const originalModuleLoad = mod._load
 
@@ -33,15 +31,17 @@ export async function validate(directory: string): Promise<void> {
   // intercept module loading and validate no unexpected imports are happening
   // @ts-ignore TS doesn't like accessing `_load`
   mod._load = (request: string, parent: mod, isMain: boolean): any => {
-    // allow all node builtins
+    // Allow all node builtins
     if (mod.builtinModules.includes(request)) {
       return originalModuleLoad(request, parent, isMain)
     }
 
-    // if it's not node builtin, check if import is for engine or engine internals
+    // Allow imports to modules in engines directory.
+    // For example: importing ".cache/page-ssr/routes/render-page" from
+    // page-ssr engine should be allowed as it is part of engine.
+    const allowedPrefixes = [`.cache/query-engine`, `.cache/page-ssr`]
     const localRequire = mod.createRequire(parent.filename)
     const absPath = localRequire.resolve(request)
-
     const relativeToRoot = path.relative(directory, absPath)
     for (const allowedPrefix of allowedPrefixes) {
       if (relativeToRoot.startsWith(allowedPrefix)) {
