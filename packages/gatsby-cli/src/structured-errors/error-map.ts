@@ -603,6 +603,7 @@ const errors = {
         context.stuckStatusDiagnosticMessage
       }`,
     level: Level.ERROR,
+    docsUrl: `https://support.gatsbyjs.com/hc/en-us/articles/360056811354`,
   },
 
   /** Node Manifest warnings */
