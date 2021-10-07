@@ -1,4 +1,4 @@
-import got, { Headers, Options } from "got"
+import got, { Headers, Options, RequestError } from "got"
 import fileType from "file-type"
 import path from "path"
 import fs from "fs-extra"
@@ -8,13 +8,14 @@ import {
   getRemoteFileExtension,
   createFilePath,
 } from "./filename-utils"
-
+import { range } from "lodash"
 import type { IncomingMessage } from "http"
-import type { GatsbyCache } from "gatsby"
+import type { GatsbyCache, Reporter } from "gatsby"
 
 export interface IFetchRemoteFileOptions {
   url: string
   cache: GatsbyCache
+  reporter: Reporter
   auth?: {
     htaccess_pass?: string
     htaccess_user?: string
@@ -22,6 +23,7 @@ export interface IFetchRemoteFileOptions {
   httpHeaders?: Headers
   ext?: string
   name?: string
+  maxAttempts?: number
 }
 
 // copied from gatsby-worker
@@ -48,6 +50,27 @@ const INCOMPLETE_RETRY_LIMIT = process.env.GATSBY_INCOMPLETE_RETRY_LIMIT
   ? parseInt(process.env.GATSBY_INCOMPLETE_RETRY_LIMIT, 10)
   : 3
 
+// Based on the defaults of https://github.com/JustinBeckwith/retry-axios
+const STATUS_CODES_TO_RETRY = [...range(100, 200), 429, ...range(500, 600)]
+const ERROR_CODES_TO_RETRY = [
+  `ETIMEDOUT`,
+  `ECONNRESET`,
+  `EADDRINUSE`,
+  `ECONNREFUSED`,
+  `EPIPE`,
+  `ENOTFOUND`,
+  `ENETUNREACH`,
+  `EAI_AGAIN`,
+]
+
+class MaximumRetryError extends Error {
+  requestError: RequestError
+  constructor(message, requestError) {
+    super(message)
+    this.requestError = requestError
+  }
+}
+
 let fetchCache = new Map()
 let latestBuildId = ``
 
@@ -67,7 +90,7 @@ export async function fetchRemoteFile(
   }
 
   // Create file fetch promise and store it into cache
-  const fetchPromise = fetchFile(args)
+  const fetchPromise = fetchWithRetry(args)
   fetchCache.set(args.url, fetchPromise)
 
   return fetchPromise.catch(err => {
@@ -75,6 +98,109 @@ export async function fetchRemoteFile(
 
     throw err
   })
+}
+
+// This is a replacement for the stream retry logic of got till we can update all got instances to v12
+// https://github.com/sindresorhus/got/blob/main/documentation/7-retry.md
+// https://github.com/sindresorhus/got/blob/main/documentation/3-streams.md#retry
+async function fetchWithRetry(args: IFetchRemoteFileOptions): Promise<string> {
+  let attempts = 0
+  let delay = 1000
+  let lastRetriedError
+
+  const { url, reporter, maxAttempts = 3 } = args
+
+  try {
+    while (attempts < maxAttempts) {
+      attempts++
+      try {
+        // Wait a few seconds before trying again
+        if (attempts > 1) {
+          delay = delay * 2
+          await new Promise(resolve => setTimeout(resolve, delay))
+        }
+
+        // Fetch url
+        const filename = await fetchFile(args)
+        return filename
+      } catch (err) {
+        // Retry on given status or error codes
+        if (
+          (err instanceof RequestError &&
+            err.response?.statusCode &&
+            STATUS_CODES_TO_RETRY.includes(err.response.statusCode)) ||
+          (err.code && ERROR_CODES_TO_RETRY.includes(err.code))
+        ) {
+          let logMessage = `Failed to fetch ${url} due to ${
+            err.response?.statusCode || err.code
+          } error. Attempt #${attempts}.`
+          if (attempts === maxAttempts) {
+            logMessage = `${logMessage} Retry limit reached. Aborting.`
+          }
+          reporter.verbose(logMessage)
+          lastRetriedError = err
+        } else {
+          // Throw errors that are not within our retry range or list of error codes to retry
+          throw err
+        }
+      }
+    }
+
+    throw new MaximumRetryError(
+      `Exceeded maximum retry attempts (${maxAttempts})`,
+      lastRetriedError
+    )
+  } catch (originalError) {
+    if (
+      !(originalError instanceof RequestError) &&
+      !(originalError instanceof MaximumRetryError)
+    ) {
+      throw originalError
+    }
+
+    let err: RequestError | MaximumRetryError = originalError
+
+    // In case of a MaximumRetryError, we want to display the original error
+    // plus the maximum retry info
+    if (err instanceof MaximumRetryError) {
+      const retryMessage = err.message
+      err = err.requestError
+      err.message = `${retryMessage} (${err.message})`
+    }
+
+    // Throw user friendly error
+    err.message = [
+      `Unable to fetch:`,
+      url,
+      `---`,
+      `Reason: ${err.message}`,
+      `---`,
+    ].join(`\n`)
+
+    // Gather details about what went wrong from the error object and the request
+    const details = Object.entries({
+      attempts,
+      method: err.options?.method,
+      errorCode: err.code,
+      responseStatusCode: err.response?.statusCode,
+      responseStatusMessage: err.response?.statusMessage,
+      requestHeaders: err.options?.headers,
+      responseHeaders: err.response?.headers,
+    })
+      // Remove undefined values from the details to keep it clean
+      .reduce((a, [k, v]) => (v === undefined ? a : ((a[k] = v), a)), {})
+
+    if (Object.keys(details).length) {
+      err.message = [
+        err.message,
+        `Fetch details:`,
+        JSON.stringify(details, null, 2),
+        `---`,
+      ].join(`\n`)
+    }
+
+    throw err
+  }
 }
 
 function pollUntilComplete(

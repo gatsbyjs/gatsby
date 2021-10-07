@@ -12,6 +12,10 @@ const gotStream = jest.spyOn(got, `stream`)
 const fsMove = jest.spyOn(fs, `move`)
 const urlCount = new Map()
 
+const reporter = {
+  verbose: jest.fn(console.log),
+}
+
 async function getFileSize(file) {
   const stat = await fs.stat(file)
 
@@ -77,6 +81,8 @@ async function getFileContent(file, req, options = {}) {
   }
 }
 
+let attempts503 = 0
+
 const server = setupServer(
   rest.get(`http://external.com/logo.svg`, async (req, res, ctx) => {
     const { content, contentLength } = await getFileContent(
@@ -140,7 +146,44 @@ const server = setupServer(
       ctx.status(500),
       ctx.body(content)
     )
-  })
+  }),
+  rest.get(`http://external.com/503-twice.svg`, async (req, res, ctx) => {
+    const errorContent = `Server error`
+    attempts503++
+
+    if (attempts503 < 3) {
+      return res(
+        ctx.set(`Content-Type`, `text/html`),
+        ctx.set(`Content-Length`, String(errorContent.length)),
+        ctx.status(503),
+        ctx.body(errorContent)
+      )
+    }
+
+    const { content, contentLength } = await getFileContent(
+      path.join(__dirname, `./fixtures/gatsby-logo.svg`),
+      req
+    )
+
+    return res(
+      ctx.set(`Content-Type`, `image/svg+xml`),
+      ctx.set(`Content-Length`, contentLength),
+      ctx.status(200),
+      ctx.body(content)
+    )
+  }),
+  rest.get(`http://external.com/503-forever.svg`, async (req, res, ctx) => {
+    const errorContent = `Server error`
+    return res(
+      ctx.set(`Content-Type`, `text/html`),
+      ctx.set(`Content-Length`, String(errorContent.length)),
+      ctx.status(503),
+      ctx.body(errorContent)
+    )
+  }),
+  rest.get(`http://external.com/network-error.svg`, (req, res) =>
+    res.networkError(`ECONNREFUSED`)
+  )
 )
 
 function getFetchInWorkerContext(workerId) {
@@ -209,6 +252,7 @@ describe(`fetch-remote-file`, () => {
     const filePath = await fetchRemoteFile({
       url: `http://external.com/logo.svg`,
       cache,
+      reporter,
     })
 
     expect(path.basename(filePath)).toBe(`logo.svg`)
@@ -219,6 +263,7 @@ describe(`fetch-remote-file`, () => {
     const filePath = await fetchRemoteFile({
       url: `http://external.com/logo-gzip.svg`,
       cache,
+      reporter,
     })
 
     expect(path.basename(filePath)).toBe(`logo-gzip.svg`)
@@ -232,6 +277,7 @@ describe(`fetch-remote-file`, () => {
     const filePath = await fetchRemoteFile({
       url: `http://external.com/dog.jpg`,
       cache,
+      reporter,
     })
 
     expect(path.basename(filePath)).toBe(`dog.jpg`)
@@ -245,6 +291,7 @@ describe(`fetch-remote-file`, () => {
     const filePath = await fetchRemoteFile({
       url: `http://external.com/logo-gzip.svg?attempts=1&maxBytes=300&contentLength=false`,
       cache,
+      reporter,
     })
 
     expect(path.basename(filePath)).toBe(`logo-gzip.svg`)
@@ -258,10 +305,12 @@ describe(`fetch-remote-file`, () => {
     const filePath = await fetchRemoteFile({
       url: `http://external.com/logo.svg`,
       cache,
+      reporter,
     })
     const cachedFilePath = await fetchRemoteFile({
       url: `http://external.com/logo.svg`,
       cache,
+      reporter,
     })
 
     expect(filePath).toBe(cachedFilePath)
@@ -292,10 +341,12 @@ describe(`fetch-remote-file`, () => {
       fetchRemoteFileInstanceOne({
         url: `http://external.com/logo.svg`,
         cache: workerCache,
+        reporter,
       }),
       fetchRemoteFileInstanceTwo({
         url: `http://external.com/logo.svg`,
         cache: workerCache,
+        reporter,
       }),
     ]
 
@@ -335,10 +386,12 @@ describe(`fetch-remote-file`, () => {
       fetchRemoteFileInstanceOne({
         url: `http://external.com/logo.svg`,
         cache: workerCache,
+        reporter,
       }),
       fetchRemoteFileInstanceTwo({
         url: `http://external.com/logo.svg`,
         cache: workerCache,
+        reporter,
       }),
     ]
 
@@ -353,10 +406,12 @@ describe(`fetch-remote-file`, () => {
       fetchRemoteFileInstanceOne({
         url: `http://external.com/logo.svg`,
         cache: workerCache,
+        reporter,
       }),
       fetchRemoteFileInstanceTwo({
         url: `http://external.com/logo.svg`,
         cache: workerCache,
+        reporter,
       }),
     ]
 
@@ -373,6 +428,8 @@ describe(`fetch-remote-file`, () => {
   })
 
   it(`doesn't keep lock when file download failed`, async () => {
+    jest.setTimeout(12000)
+
     // we don't want to wait for polling to finish
     jest.useFakeTimers()
     jest.runAllTimers()
@@ -395,6 +452,7 @@ describe(`fetch-remote-file`, () => {
       fetchRemoteFileInstanceOne({
         url: `http://external.com/500.jpg`,
         cache: workerCache,
+        reporter,
       })
     ).rejects.toThrow()
 
@@ -404,6 +462,7 @@ describe(`fetch-remote-file`, () => {
       fetchRemoteFileInstanceTwo({
         url: `http://external.com/500.jpg`,
         cache: workerCache,
+        reporter,
       })
     ).rejects.toThrow()
 
@@ -418,17 +477,22 @@ describe(`fetch-remote-file`, () => {
       fetchRemoteFile({
         url: `http://external.com/404.jpg`,
         cache,
+        reporter,
       })
     ).rejects.toThrow(`Response code 404 (Not Found)`)
   })
 
   it(`fails when 500 is triggered`, async () => {
+    jest.setTimeout(12000)
     await expect(
       fetchRemoteFile({
         url: `http://external.com/500.jpg`,
         cache,
+        reporter,
       })
-    ).rejects.toThrow(`Response code 500 (Internal Server Error)`)
+    ).rejects.toThrow(
+      `Exceeded maximum retry attempts (3) (Response code 500 (Internal Server Error))`
+    )
   })
 
   describe(`retries the download`, () => {
@@ -436,6 +500,7 @@ describe(`fetch-remote-file`, () => {
       const filePath = await fetchRemoteFile({
         url: `http://external.com/logo-gzip.svg?attempts=1&maxBytes=300`,
         cache,
+        reporter,
       })
 
       expect(path.basename(filePath)).toBe(`logo-gzip.svg`)
@@ -449,6 +514,7 @@ describe(`fetch-remote-file`, () => {
       const filePath = await fetchRemoteFile({
         url: `http://external.com/dog.jpg?attempts=1&maxBytes=300`,
         cache,
+        reporter,
       })
 
       expect(path.basename(filePath)).toBe(`dog.jpg`)
@@ -456,6 +522,126 @@ describe(`fetch-remote-file`, () => {
         await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
       )
       expect(gotStream).toBeCalledTimes(2)
+    })
+
+    it(`Retries when server returns 503 error till server returns 200`, async () => {
+      jest.setTimeout(12000)
+
+      const filePath = await fetchRemoteFile({
+        url: `http://external.com/503-twice.svg`,
+        cache,
+        reporter,
+      })
+
+      expect(path.basename(filePath)).toBe(`503-twice.svg`)
+      expect(getFileSize(filePath)).resolves.toBe(
+        await getFileSize(path.join(__dirname, `./fixtures/gatsby-logo.svg`))
+      )
+      expect(gotStream).toBeCalledTimes(3)
+      expect(reporter.verbose.mock.calls).toEqual([
+        [
+          `Failed to fetch http://external.com/503-twice.svg due to 503 error. Attempt #1.`,
+        ],
+        [
+          `Failed to fetch http://external.com/503-twice.svg due to 503 error. Attempt #2.`,
+        ],
+      ])
+    })
+
+    it(`Stops retry when maximum attempts is reached`, async () => {
+      jest.setTimeout(12000)
+
+      await expect(
+        fetchRemoteFile({
+          url: `http://external.com/503-forever.svg`,
+          cache,
+          reporter,
+        })
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`
+"Unable to fetch:
+http://external.com/503-forever.svg
+---
+Reason: Exceeded maximum retry attempts (3) (Response code 503 (Service Unavailable))
+---
+Fetch details:
+{
+  \\"attempts\\": 3,
+  \\"method\\": \\"GET\\",
+  \\"responseStatusCode\\": 503,
+  \\"responseStatusMessage\\": \\"Service Unavailable\\",
+  \\"requestHeaders\\": {
+    \\"user-agent\\": \\"got (https://github.com/sindresorhus/got)\\",
+    \\"accept-encoding\\": \\"gzip, deflate, br\\"
+  },
+  \\"responseHeaders\\": {
+    \\"x-powered-by\\": \\"msw\\",
+    \\"content-length\\": \\"12\\",
+    \\"content-type\\": \\"text/html\\"
+  }
+}
+---"
+`)
+
+      expect(gotStream).toBeCalledTimes(3)
+      expect(reporter.verbose.mock.calls).toEqual([
+        [
+          `Failed to fetch http://external.com/503-forever.svg due to 503 error. Attempt #1.`,
+        ],
+        [
+          `Failed to fetch http://external.com/503-forever.svg due to 503 error. Attempt #2.`,
+        ],
+        [
+          `Failed to fetch http://external.com/503-forever.svg due to 503 error. Attempt #3. Retry limit reached. Aborting.`,
+        ],
+      ])
+    })
+
+    it(`Retries on network errors`, async () => {
+      jest.setTimeout(12000)
+
+      await expect(
+        fetchRemoteFile({
+          url: `http://external.com/network-error.svg`,
+          cache,
+          reporter,
+        })
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`
+"Unable to fetch:
+http://external.com/network-error.svg
+---
+Reason: Exceeded maximum retry attempts (3) (Response code 503 (Service Unavailable))
+---
+Fetch details:
+{
+  \\"attempts\\": 3,
+  \\"method\\": \\"GET\\",
+  \\"responseStatusCode\\": 503,
+  \\"responseStatusMessage\\": \\"Service Unavailable\\",
+  \\"requestHeaders\\": {
+    \\"user-agent\\": \\"got (https://github.com/sindresorhus/got)\\",
+    \\"accept-encoding\\": \\"gzip, deflate, br\\"
+  },
+  \\"responseHeaders\\": {
+    \\"x-powered-by\\": \\"msw\\",
+    \\"content-length\\": \\"12\\",
+    \\"content-type\\": \\"text/html\\"
+  }
+}
+---"
+`)
+
+      expect(gotStream).toBeCalledTimes(3)
+      expect(reporter.verbose.mock.calls).toEqual([
+        [
+          `Failed to fetch http://external.com/503-forever.svg due to 503 error. Attempt #1.`,
+        ],
+        [
+          `Failed to fetch http://external.com/503-forever.svg due to 503 error. Attempt #2.`,
+        ],
+        [
+          `Failed to fetch http://external.com/503-forever.svg due to 503 error. Attempt #3. Retry limit reached. Aborting.`,
+        ],
+      ])
     })
   })
 })
