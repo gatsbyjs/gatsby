@@ -361,6 +361,9 @@ export async function startServer(
                 },
                 error,
               })
+              // TODO: Don't persist to rerun runtime errors everytime
+              // Weird idea: Don't use websocket, use page-data.json
+              // Trying to coordinate websocket is maybe even worse
               websocketManager.emitError(
                 `getServerData-${requestedPagePath}`,
                 // @ts-ignore - FIXME
