@@ -369,7 +369,7 @@ type AnotherTest implements Node & ITest @dontInfer {
   hello(planet: String = \\"world\\", language: [Language!]!): String!
 }
 
-interface ITest @nodeInterface {
+interface ITest implements Node {
   id: ID!
   date: Date @dateformat(formatString: \\"YYYY\\")
 }
