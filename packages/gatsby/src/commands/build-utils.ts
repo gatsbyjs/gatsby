@@ -161,7 +161,7 @@ export function calcDirtyHtmlFiles(state: IGatsbyState): {
       markActionForPage(path, `delete`)
     } else {
       if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        if (getPageMode(page) === `SSG`) {
+        if (getPageMode(page, state) === `SSG`) {
           if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
             markActionForPage(path, `regenerate`)
           } else {

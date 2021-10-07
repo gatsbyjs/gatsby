@@ -2,6 +2,7 @@ import { store } from "../redux"
 import {
   IGatsbyPage,
   IGatsbyPageComponent,
+  IGatsbyState,
   IMaterializePageMode,
   PageMode,
 } from "../redux/types"
@@ -12,8 +13,8 @@ import {
  *
  * IGatsbyPage["mode"] is only reliable in engines and in `onPostBuild` hook.
  */
-export function getPageMode(page: IGatsbyPage): PageMode {
-  const { components } = store.getState()
+export function getPageMode(page: IGatsbyPage, state?: IGatsbyState): PageMode {
+  const { components } = state ?? store.getState()
   const component = components.get(page.componentPath)
 
   if (!component) {
