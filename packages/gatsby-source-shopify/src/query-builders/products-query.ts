@@ -150,11 +150,36 @@ export class ProductsQuery extends BulkQuery {
                         image {
                           id
                           altText
-                          src
-                          originalSrc
-                          width
                           height
+                          width
+                          originalSrc
+                          transformedSrc
                         }
+                      }
+                      ...on Product {
+                        title
+                        id
+                        handle
+                        featuredImage {
+                          id
+                          altText
+                          height
+                          width
+                          originalSrc
+                          transformedSrc
+                        }
+                        priceRangeV2 {
+                          maxVariantPrice {
+                            amount
+                            currencyCode
+                          }
+                          minVariantPrice {
+                            amount
+                            currencyCode
+                          }
+                        }
+                        tags
+
                       }
                     }
                   }

@@ -126,22 +126,6 @@ export const processorMap: IProcessorMap = {
       gatsbyApi,
       options
     )
-    await processChildImage(
-      node,
-      node => {
-        const media = node.featuredMedia as
-          | {
-              preview?: {
-                image?: IImageData
-              }
-            }
-          | undefined
-
-        return media?.preview?.image
-      },
-      gatsbyApi,
-      options
-    )
   },
   ProductVariant: async (node, gatsbyApi, options) =>
     processChildImage(
@@ -154,6 +138,20 @@ export const processorMap: IProcessorMap = {
     const [, parentType] = (node.__parentId as string).match(pattern) || []
     const internalType = `${typePrefix}Shopify${parentType}Metafield`
     node.internal.type = internalType
+  },
+  MediaImage: async (node, gatsbyApi, options) => {
+    if (options.downloadImages) {
+      const url = (node as any).image.originalSrc as string
+      const fileNodeId = await downloadImageAndCreateFileNode(
+        {
+          url,
+          nodeId: node.id,
+        },
+        gatsbyApi
+      )
+
+      node.localFile = fileNodeId
+    }
   },
 }
 
