@@ -33,7 +33,6 @@
     "gatsby-source-filesystem": "^4.0.0-zz-next.2",
     "glob": "^7.1.7",
     "got": "^11.8.2",
-    "graphql-query-compress": "^1.2.4",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.1",
     "p-queue": "^6.6.2",
