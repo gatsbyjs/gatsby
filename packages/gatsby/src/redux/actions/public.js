@@ -417,16 +417,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
       internalPage.defer = true
     }
 
-    // TODO move to AST Check
-    const fileContent = fs.readFileSync(page.component).toString()
-    const isSSR =
-      fileContent.includes(`exports.getServerData`) ||
-      fileContent.includes(`export const getServerData`) ||
-      fileContent.includes(`export function getServerData`) ||
-      fileContent.includes(`export async function getServerData`)
-    if (isSSR) {
-      pageMode = `SSR`
-    }
+    // Note: SSR mode is detected in query extraction per component.
+    // In develop the actual mode is resolved via getPageMode in utils/page-mode.ts
     internalPage.mode = pageMode
   }
 

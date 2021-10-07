@@ -55,6 +55,7 @@ import {
 import { shouldGenerateEngines } from "../utils/engines-helpers"
 import reporter from "gatsby-cli/lib/reporter"
 import type webpack from "webpack"
+import { materializePageMode } from "../utils/page-mode"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   // global gatsby object to use without store
@@ -346,6 +347,9 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   await waitForWorkerPoolRestart
 
+  // Start saving page.mode in the main process (while HTML is generated in workers in parallel)
+  const waitMaterializePageMode = materializePageMode()
+
   const { toRegenerate, toDelete } =
     await buildHTMLPagesAndDeleteStaleArtifacts({
       program,
@@ -353,6 +357,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       buildSpan,
     })
 
+  await waitMaterializePageMode
   const waitWorkerPoolEnd = Promise.all(workerPool.end())
 
   telemetry.addSiteMeasurement(`BUILD_END`, {

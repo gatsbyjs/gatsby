@@ -7,6 +7,7 @@ const slugify = require(`slugify`)
 
 // Traverse is a es6 module...
 import traverse from "@babel/traverse"
+import * as t from "@babel/types"
 const {
   getGraphQLTag,
   StringInterpolationNotAllowedError,
@@ -185,158 +186,139 @@ type GraphQLDocumentInFile = {
   isStaticQuery: boolean,
 }
 
+// Adapted from gatsby/src/utils/babel/babel-plugin-remove-api
+function findApiExport(ast, api) {
+  let hasExport = false
+  const apiToFind = api ?? ``
+
+  traverse(ast, {
+    ExportNamedDeclaration(path) {
+      const declaration = path.node.declaration
+
+      if (t.isExportNamedDeclaration(path.node) && !hasExport) {
+        hasExport = path.node.specifiers.some(
+          specifier =>
+            t.isExportSpecifier(specifier) &&
+            t.isIdentifier(specifier.exported) &&
+            specifier.exported.name === apiToFind
+        )
+      }
+
+      let apiToCheck
+      if (t.isFunctionDeclaration(declaration) && declaration.id) {
+        apiToCheck = declaration.id.name
+      }
+
+      if (
+        t.isVariableDeclaration(declaration) &&
+        t.isIdentifier(declaration.declarations[0].id)
+      ) {
+        apiToCheck = declaration.declarations[0].id.name
+      }
+
+      if (apiToCheck && apiToCheck === apiToFind) {
+        hasExport = true
+      }
+    },
+  })
+
+  return hasExport
+}
+
 async function findGraphQLTags(
   file,
-  text,
+  ast,
   { parentSpan, addError } = {}
 ): Promise<Array<GraphQLDocumentInFile>> {
-  return new Promise((resolve, reject) => {
-    parseToAst(file, text, { parentSpan, addError })
-      .then(ast => {
-        const documents = []
-        if (!ast) {
-          resolve(documents)
-          return
-        }
+  const documents = []
+  if (!ast) {
+    return documents
+  }
 
-        /**
-         * A map of graphql documents to unique locations.
-         *
-         * A graphql document's unique location is made of:
-         *
-         *  - the location of the graphql template literal that contains the document, and
-         *  - the document's location within the graphql template literal
-         *
-         * This is used to prevent returning duplicated documents.
-         */
-        const documentLocations = new WeakMap()
+  /**
+   * A map of graphql documents to unique locations.
+   *
+   * A graphql document's unique location is made of:
+   *
+   *  - the location of the graphql template literal that contains the document, and
+   *  - the document's location within the graphql template literal
+   *
+   * This is used to prevent returning duplicated documents.
+   */
+  const documentLocations = new WeakMap()
 
-        const extractStaticQuery = (
-          taggedTemplateExpressPath,
-          isHook = false
-        ) => {
-          const {
-            ast: gqlAst,
-            text,
-            hash,
-            isGlobal,
-          } = getGraphQLTag(taggedTemplateExpressPath)
-          if (!gqlAst) return
+  const extractStaticQuery = (taggedTemplateExpressPath, isHook = false) => {
+    const {
+      ast: gqlAst,
+      text,
+      hash,
+      isGlobal,
+    } = getGraphQLTag(taggedTemplateExpressPath)
+    if (!gqlAst) return
 
-          if (isGlobal) {
-            panicOnGlobalTag(file)
+    if (isGlobal) {
+      panicOnGlobalTag(file)
+      return
+    }
+
+    gqlAst.definitions.forEach(def => {
+      generateQueryName({
+        def,
+        hash,
+        file,
+      })
+    })
+
+    let templateLoc
+
+    taggedTemplateExpressPath.traverse({
+      TemplateElement(templateElementPath) {
+        templateLoc = templateElementPath.node.loc
+      },
+    })
+
+    const docInFile = {
+      filePath: file,
+      doc: gqlAst,
+      text: text,
+      hash: hash,
+      isStaticQuery: true,
+      isHook,
+      templateLoc,
+    }
+
+    documentLocations.set(
+      docInFile,
+      `${taggedTemplateExpressPath.node.start}-${gqlAst.loc.start}`
+    )
+
+    documents.push(docInFile)
+  }
+
+  // Look for queries in <StaticQuery /> elements.
+  traverse(ast, {
+    JSXElement(path) {
+      if (path.node.openingElement.name.name !== `StaticQuery`) {
+        return
+      }
+
+      // astexplorer.com link I (@kyleamathews) used when prototyping this algorithm
+      // https://astexplorer.net/#/gist/ab5d71c0f08f287fbb840bf1dd8b85ff/2f188345d8e5a4152fe7c96f0d52dbcc6e9da466
+      path.traverse({
+        JSXAttribute(jsxPath) {
+          if (jsxPath.node.name.name !== `query`) {
             return
           }
-
-          gqlAst.definitions.forEach(def => {
-            generateQueryName({
-              def,
-              hash,
-              file,
-            })
-          })
-
-          let templateLoc
-
-          taggedTemplateExpressPath.traverse({
-            TemplateElement(templateElementPath) {
-              templateLoc = templateElementPath.node.loc
-            },
-          })
-
-          const docInFile = {
-            filePath: file,
-            doc: gqlAst,
-            text: text,
-            hash: hash,
-            isStaticQuery: true,
-            isHook,
-            templateLoc,
-          }
-
-          documentLocations.set(
-            docInFile,
-            `${taggedTemplateExpressPath.node.start}-${gqlAst.loc.start}`
-          )
-
-          documents.push(docInFile)
-        }
-
-        // Look for queries in <StaticQuery /> elements.
-        traverse(ast, {
-          JSXElement(path) {
-            if (path.node.openingElement.name.name !== `StaticQuery`) {
-              return
-            }
-
-            // astexplorer.com link I (@kyleamathews) used when prototyping this algorithm
-            // https://astexplorer.net/#/gist/ab5d71c0f08f287fbb840bf1dd8b85ff/2f188345d8e5a4152fe7c96f0d52dbcc6e9da466
-            path.traverse({
-              JSXAttribute(jsxPath) {
-                if (jsxPath.node.name.name !== `query`) {
-                  return
-                }
-                jsxPath.traverse({
-                  // Assume the query is inline in the component and extract that.
-                  TaggedTemplateExpression(templatePath) {
-                    extractStaticQuery(templatePath)
-                  },
-                  // Also see if it's a variable that's passed in as a prop
-                  // and if it is, go find it.
-                  Identifier(identifierPath) {
-                    if (identifierPath.node.name !== `graphql`) {
-                      const varName = identifierPath.node.name
-                      let found = false
-                      traverse(ast, {
-                        VariableDeclarator(varPath) {
-                          if (
-                            varPath.node.id.name === varName &&
-                            varPath.node.init.type ===
-                              `TaggedTemplateExpression`
-                          ) {
-                            varPath.traverse({
-                              TaggedTemplateExpression(templatePath) {
-                                found = true
-                                extractStaticQuery(templatePath)
-                              },
-                            })
-                          }
-                        },
-                      })
-                      if (!found) {
-                        warnForUnknownQueryVariable(
-                          varName,
-                          file,
-                          `<StaticQuery>`
-                        )
-                      }
-                    }
-                  },
-                })
-              },
-            })
-            return
-          },
-        })
-
-        // Look for queries in useStaticQuery hooks.
-        traverse(ast, {
-          CallExpression(hookPath) {
-            if (!isUseStaticQuery(hookPath)) return
-
-            const firstArg = hookPath.get(`arguments`)[0]
-
+          jsxPath.traverse({
             // Assume the query is inline in the component and extract that.
-            if (firstArg.isTaggedTemplateExpression()) {
-              extractStaticQuery(firstArg, true)
-              // Also see if it's a variable that's passed in as a prop
-              // and if it is, go find it.
-            } else if (firstArg.isIdentifier()) {
-              if (
-                firstArg.node.name !== `graphql` &&
-                firstArg.node.name !== `useStaticQuery`
-              ) {
-                const varName = firstArg.node.name
+            TaggedTemplateExpression(templatePath) {
+              extractStaticQuery(templatePath)
+            },
+            // Also see if it's a variable that's passed in as a prop
+            // and if it is, go find it.
+            Identifier(identifierPath) {
+              if (identifierPath.node.name !== `graphql`) {
+                const varName = identifierPath.node.name
                 let found = false
                 traverse(ast, {
                   VariableDeclarator(varPath) {
@@ -347,90 +329,133 @@ async function findGraphQLTags(
                       varPath.traverse({
                         TaggedTemplateExpression(templatePath) {
                           found = true
-                          extractStaticQuery(templatePath, true)
+                          extractStaticQuery(templatePath)
                         },
                       })
                     }
                   },
                 })
                 if (!found) {
-                  warnForUnknownQueryVariable(varName, file, `useStaticQuery`)
+                  warnForUnknownQueryVariable(varName, file, `<StaticQuery>`)
                 }
               }
-            }
-          },
-        })
-
-        function TaggedTemplateExpression(innerPath) {
-          const { ast: gqlAst, isGlobal, hash, text } = getGraphQLTag(innerPath)
-          if (!gqlAst) return
-
-          if (isGlobal) {
-            panicOnGlobalTag(file)
-            return
-          }
-
-          gqlAst.definitions.forEach(def => {
-            generateQueryName({
-              def,
-              hash,
-              file,
-            })
-          })
-
-          let templateLoc
-          innerPath.traverse({
-            TemplateElement(templateElementPath) {
-              templateLoc = templateElementPath.node.loc
             },
           })
-
-          const docInFile = {
-            filePath: file,
-            doc: gqlAst,
-            text: text,
-            hash: hash,
-            isStaticQuery: false,
-            isHook: false,
-            templateLoc,
-          }
-
-          documentLocations.set(
-            docInFile,
-            `${innerPath.node.start}-${gqlAst.loc.start}`
-          )
-
-          documents.push(docInFile)
-        }
-
-        // When a component has a StaticQuery we scan all of its exports and follow those exported variables
-        // to determine if they lead to this static query (via tagged template literal)
-        traverse(ast, {
-          ExportNamedDeclaration(path, state) {
-            // Skipping the edge case of re-exporting (i.e. "export { bar } from 'Bar'")
-            // (it is handled elsewhere for queries, see usages of warnForUnknownQueryVariable)
-            if (path.node.source) {
-              return
-            }
-            path.traverse({
-              TaggedTemplateExpression,
-              ExportSpecifier(path) {
-                const binding = followVariableDeclarations(
-                  path.scope.getBinding(path.node.local.name)
-                )
-                binding?.path?.traverse({ TaggedTemplateExpression })
-              },
-            })
-          },
-        })
-
-        // Remove duplicate queries
-        const uniqueQueries = _.uniqBy(documents, q => documentLocations.get(q))
-
-        resolve(uniqueQueries)
+        },
       })
-      .catch(reject)
+      return
+    },
   })
+
+  // Look for queries in useStaticQuery hooks.
+  traverse(ast, {
+    CallExpression(hookPath) {
+      if (!isUseStaticQuery(hookPath)) return
+
+      const firstArg = hookPath.get(`arguments`)[0]
+
+      // Assume the query is inline in the component and extract that.
+      if (firstArg.isTaggedTemplateExpression()) {
+        extractStaticQuery(firstArg, true)
+        // Also see if it's a variable that's passed in as a prop
+        // and if it is, go find it.
+      } else if (firstArg.isIdentifier()) {
+        if (
+          firstArg.node.name !== `graphql` &&
+          firstArg.node.name !== `useStaticQuery`
+        ) {
+          const varName = firstArg.node.name
+          let found = false
+          traverse(ast, {
+            VariableDeclarator(varPath) {
+              if (
+                varPath.node.id.name === varName &&
+                varPath.node.init.type === `TaggedTemplateExpression`
+              ) {
+                varPath.traverse({
+                  TaggedTemplateExpression(templatePath) {
+                    found = true
+                    extractStaticQuery(templatePath, true)
+                  },
+                })
+              }
+            },
+          })
+          if (!found) {
+            warnForUnknownQueryVariable(varName, file, `useStaticQuery`)
+          }
+        }
+      }
+    },
+  })
+
+  function TaggedTemplateExpression(innerPath) {
+    const { ast: gqlAst, isGlobal, hash, text } = getGraphQLTag(innerPath)
+    if (!gqlAst) return
+
+    if (isGlobal) {
+      panicOnGlobalTag(file)
+      return
+    }
+
+    gqlAst.definitions.forEach(def => {
+      generateQueryName({
+        def,
+        hash,
+        file,
+      })
+    })
+
+    let templateLoc
+    innerPath.traverse({
+      TemplateElement(templateElementPath) {
+        templateLoc = templateElementPath.node.loc
+      },
+    })
+
+    const docInFile = {
+      filePath: file,
+      doc: gqlAst,
+      text: text,
+      hash: hash,
+      isStaticQuery: false,
+      isHook: false,
+      templateLoc,
+    }
+
+    documentLocations.set(
+      docInFile,
+      `${innerPath.node.start}-${gqlAst.loc.start}`
+    )
+
+    documents.push(docInFile)
+  }
+
+  // When a component has a StaticQuery we scan all of its exports and follow those exported variables
+  // to determine if they lead to this static query (via tagged template literal)
+  traverse(ast, {
+    ExportNamedDeclaration(path, state) {
+      // Skipping the edge case of re-exporting (i.e. "export { bar } from 'Bar'")
+      // (it is handled elsewhere for queries, see usages of warnForUnknownQueryVariable)
+      if (path.node.source) {
+        return
+      }
+      path.traverse({
+        TaggedTemplateExpression,
+        ExportSpecifier(path) {
+          const binding = followVariableDeclarations(
+            path.scope.getBinding(path.node.local.name)
+          )
+          binding?.path?.traverse({ TaggedTemplateExpression })
+        },
+      })
+    },
+  })
+
+  // Remove duplicate queries
+  const uniqueQueries = _.uniqBy(documents, q => documentLocations.get(q))
+
+  return uniqueQueries
 }
 
 const cache = {}
@@ -464,8 +489,14 @@ export default class FileParser {
 
     // We do a quick check so we can exit early if this is a file we're not interested in.
     // We only process files that either include graphql, or static images
-    if (!text.includes(`graphql`) && !text.includes(`gatsby-plugin-image`))
+    if (
+      !text.includes(`graphql`) &&
+      !text.includes(`gatsby-plugin-image`) &&
+      !text.includes(`getServerData`)
+    ) {
       return null
+    }
+
     const hash = crypto
       .createHash(`md5`)
       .update(file)
@@ -473,12 +504,32 @@ export default class FileParser {
       .digest(`hex`)
 
     try {
-      const astDefinitions =
-        cache[hash] ||
-        (cache[hash] = await findGraphQLTags(file, text, {
+      if (!cache[hash]) {
+        const ast = await parseToAst(file, text, {
           parentSpan: this.parentSpan,
           addError,
-        }))
+        })
+        cache[hash] = {
+          astDefinitions: await findGraphQLTags(file, ast, {
+            parentSpan: this.parentSpan,
+            addError,
+          }),
+          serverData: findApiExport(ast, `getServerData`),
+          // TODO: config: findApiExport(ast, `config`),
+        }
+      }
+      const { astDefinitions, serverData } = cache[hash]
+
+      // Note: we should dispatch this action even when getServerData is not found
+      // (maybe it was set before, so now we need to reset renderMode from SSR to the default one)
+      store.dispatch({
+        type: `SET_COMPONENT_FEATURES`,
+        payload: {
+          componentPath: file,
+          serverData,
+          // TODO: config
+        },
+      })
 
       // If any AST definitions were extracted, report success.
       // This can mean there is none or there was a babel error when

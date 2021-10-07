@@ -50,6 +50,7 @@ import {
 import { renderDevHTML } from "./dev-ssr/render-dev-html"
 import { getServerData, IServerData } from "./get-server-data"
 import { ROUTES_DIRECTORY } from "../constants"
+import { getPageMode } from "./page-mode"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -305,8 +306,9 @@ export async function startServer(
       if (page) {
         try {
           let serverDataPromise: Promise<IServerData> = Promise.resolve({})
+          const pageMode = getPageMode(page)
 
-          if (page.mode === `SSR`) {
+          if (pageMode === `SSR`) {
             const renderer = require(PAGE_RENDERER_PATH)
             const componentInstance = await renderer.getPageChunk(page)
 
@@ -336,7 +338,7 @@ export async function startServer(
             )
           }
 
-          if (page.mode === `SSR`) {
+          if (getPageMode(page) === `SSR`) {
             const { props } = await serverDataPromise
 
             pageData.result.serverData = props

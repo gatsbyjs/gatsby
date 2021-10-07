@@ -26,6 +26,7 @@ export const componentsReducer = (
           query: ``,
           pages: new Set(),
           isInBootstrap: true,
+          serverData: false,
         }
       }
       component.pages.add(action.payload.path)
@@ -43,6 +44,15 @@ export const componentsReducer = (
     case `REMOVE_STATIC_QUERIES_BY_TEMPLATE`: {
       action.payload.componentPath = normalize(action.payload.componentPath)
       state.delete(action.payload.componentPath)
+      return state
+    }
+    case `SET_COMPONENT_FEATURES`: {
+      const path = normalize(action.payload.componentPath)
+      const component = state.get(path)
+      if (component) {
+        component.serverData = action.payload.serverData
+        // TODO: component.config = action.payload.config
+      }
       return state
     }
     case `DELETE_PAGE`: {
