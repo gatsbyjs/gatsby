@@ -79,7 +79,11 @@ export async function getData({
           ...page.context,
         })
         .then(queryResults => {
-          results = queryResults
+          if (queryResults.errors && queryResults.errors.length > 0) {
+            throw queryResults.errors[0]
+          } else {
+            results = queryResults
+          }
         })
     )
   }
