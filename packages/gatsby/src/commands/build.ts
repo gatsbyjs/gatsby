@@ -203,9 +203,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   }
 
   if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
-    const validateEnginesActivity = report.activityTimer(`Validating engines`, {
-      parentSpan: buildSpan,
-    })
+    const validateEnginesActivity = report.activityTimer(
+      `Validating Rendering Engines`,
+      {
+        parentSpan: buildSpan,
+      }
+    )
     validateEnginesActivity.start()
     try {
       await validateEngines(store.getState().program.directory)

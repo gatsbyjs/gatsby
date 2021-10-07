@@ -54,7 +54,7 @@ const errors = {
   },
   "98001": {
     text: (): string =>
-      `Generated engines failed validation.\n\nPlease open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help`,
+      `Built Rendering Engines failed validation failed validation.\n\nPlease open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help`,
     type: Type.WEBPACK,
     level: Level.ERROR,
   },
