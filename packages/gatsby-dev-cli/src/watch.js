@@ -256,10 +256,8 @@ async function watch(
           waitFor.add(didDepsChangedPromise)
         }
 
-        const {
-          didDepsChanged,
-          packageNotInstalled,
-        } = await didDepsChangedPromise
+        const { didDepsChanged, packageNotInstalled } =
+          await didDepsChangedPromise
 
         if (packageNotInstalled) {
           anyPackageNotInstalled = true

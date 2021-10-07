@@ -24,9 +24,12 @@ const stripSurroundingSlashes = s => {
   return s
 }
 
-const createPageDataUrl = path => {
+const createPageDataUrl = rawPath => {
+  const [path, maybeSearch] = rawPath.split(`?`)
   const fixedPath = path === `/` ? `index` : stripSurroundingSlashes(path)
-  return `${__PATH_PREFIX__}/page-data/${fixedPath}/page-data.json`
+  return `${__PATH_PREFIX__}/page-data/${fixedPath}/page-data.json${
+    maybeSearch ? `?${maybeSearch}` : ``
+  }`
 }
 
 function doFetch(url, method = `GET`) {
@@ -139,6 +142,11 @@ export class BaseLoader {
           const jsonPayload = JSON.parse(responseText)
           if (jsonPayload.path === undefined) {
             throw new Error(`not a valid pageData response`)
+          }
+
+          const maybeSearch = pagePath.split(`?`)[1]
+          if (maybeSearch && !jsonPayload.path.includes(maybeSearch)) {
+            jsonPayload.path += `?${maybeSearch}`
           }
 
           return Object.assign(loadObj, {
@@ -487,7 +495,7 @@ const createComponentUrls = componentChunkName =>
   )
 
 export class ProdLoader extends BaseLoader {
-  constructor(asyncRequires, matchPaths) {
+  constructor(asyncRequires, matchPaths, pageData) {
     const loadComponent = chunkName => {
       if (!asyncRequires.components[chunkName]) {
         throw new Error(
@@ -504,6 +512,14 @@ export class ProdLoader extends BaseLoader {
     }
 
     super(loadComponent, matchPaths)
+
+    if (pageData) {
+      this.pageDataDb.set(findPath(pageData.path), {
+        pagePath: pageData.path,
+        payload: pageData,
+        status: `success`,
+      })
+    }
   }
 
   doPrefetch(pagePath) {

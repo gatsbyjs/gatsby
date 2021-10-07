@@ -26,8 +26,9 @@ describe(`gatsby develop`, () => {
 
     // 3. Make sure logs for the user contain expected results
     const logs = getLogs()
-    logs.should.contain(`success open and validate gatsby-configs`)
-    logs.should.contain(`success load plugins`)
+    logs.should.contain(
+      `success open and validate gatsby-configs, load plugins`
+    )
     logs.should.contain(`success onPreInit`)
     logs.should.contain(`success initialize cache`)
     logs.should.contain(`success copy gatsby files`)
@@ -38,7 +39,6 @@ describe(`gatsby develop`, () => {
     logs.should.contain(`success createPages`)
     logs.should.contain(`success createPagesStatefully`)
     logs.should.contain(`success onPreExtractQueries`)
-    logs.should.contain(`success update schema`)
     logs.should.contain(`success extract queries from components`)
     logs.should.contain(`success write out requires`)
     logs.should.contain(`success write out redirect data`)

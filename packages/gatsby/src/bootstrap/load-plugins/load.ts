@@ -1,14 +1,16 @@
 import _ from "lodash"
-import { slash } from "gatsby-core-utils"
+import { slash, createRequireFromPath } from "gatsby-core-utils"
 import fs from "fs"
 import path from "path"
 import crypto from "crypto"
 import glob from "glob"
+import { sync as existsSync } from "fs-exists-cached"
+import reporter from "gatsby-cli/lib/reporter"
+import { silent as resolveFromSilent } from "resolve-from"
+import * as semver from "semver"
 import { warnOnIncompatiblePeerDependency } from "./validate"
 import { store } from "../../redux"
-import { sync as existsSync } from "fs-exists-cached"
 import { createNodeId } from "../../utils/create-node-id"
-import { createRequireFromPath } from "gatsby-core-utils"
 import {
   IPluginInfo,
   PluginRef,
@@ -17,8 +19,6 @@ import {
   ISiteConfig,
 } from "./types"
 import { PackageJson } from "../../.."
-import reporter from "gatsby-cli/lib/reporter"
-import { silent as resolveFromSilent } from "resolve-from"
 
 const GATSBY_CLOUD_PLUGIN_NAME = `gatsby-plugin-gatsby-cloud`
 const TYPESCRIPT_PLUGIN_NAME = `gatsby-plugin-typescript`
@@ -40,6 +40,7 @@ function createFileContentHash(root: string, globPattern: string): string {
  * (docs, blogs).
  *
  * @param name Name of the plugin
+ * @param pluginObject Object of the plugin
  */
 const createPluginId = (
   name: string,
@@ -71,9 +72,9 @@ export function resolvePlugin(
   rootDir = (!_.isString(plugin) && plugin.parentDir) || rootDir
 
   // Only find plugins when we're not given an absolute path
-  if (!existsSync(pluginName)) {
+  if (!existsSync(pluginName) && rootDir) {
     // Find the plugin in the local plugins folder
-    const resolvedPath = slash(path.resolve(`./plugins/${pluginName}`))
+    const resolvedPath = slash(path.join(rootDir, `plugins/${pluginName}`))
 
     if (existsSync(resolvedPath)) {
       if (existsSync(`${resolvedPath}/package.json`)) {
@@ -165,6 +166,16 @@ function addGatsbyPluginCloudPluginWhenInstalled(
   }
 }
 
+function incompatibleGatsbyCloudPlugin(plugins: Array<IPluginInfo>): boolean {
+  const plugin = plugins.find(
+    plugin => plugin.name === GATSBY_CLOUD_PLUGIN_NAME
+  )
+
+  return !semver.satisfies(plugin!.version, `>=4.0.0-alpha`, {
+    includePrerelease: true,
+  })
+}
+
 export function loadPlugins(
   config: ISiteConfig = {},
   rootDir: string
@@ -200,13 +211,25 @@ export function loadPlugins(
       }
 
       // Plugins can have plugins.
-      const subplugins: Array<IPluginInfo> = []
-      if (plugin.options.plugins) {
-        plugin.options.plugins.forEach(p => {
-          subplugins.push(processPlugin(p))
-        })
+      if (plugin.subPluginPaths) {
+        for (const subPluginPath of plugin.subPluginPaths) {
+          const segments = subPluginPath.split(`.`)
+          let roots: Array<any> = [plugin.options]
 
-        plugin.options.plugins = subplugins
+          let pathToSwap = segments
+
+          for (const segment of segments) {
+            if (segment === `[]`) {
+              pathToSwap = pathToSwap.slice(0, pathToSwap.length - 1)
+              roots = roots.flat()
+            } else {
+              roots = roots.map(root => root[segment])
+            }
+          }
+
+          const processed = roots.map(processPlugin)
+          _.set(plugin.options, pathToSwap, processed)
+        }
       }
 
       // Add some default values for tests as we don't actually
@@ -229,6 +252,11 @@ export function loadPlugins(
 
       return {
         ...info,
+        modulePath: plugin.modulePath,
+        module: plugin.module,
+        subPluginPaths: plugin.subPluginPaths
+          ? Array.from(plugin.subPluginPaths)
+          : undefined,
         id: createPluginId(info.name, plugin),
         pluginOptions: _.merge({ plugins: [] }, plugin.options),
       }
@@ -243,8 +271,7 @@ export function loadPlugins(
     `../../internal-plugins/prod-404`,
     `../../internal-plugins/webpack-theme-component-shadowing`,
     `../../internal-plugins/bundle-optimisations`,
-    process.env.GATSBY_EXPERIMENTAL_FUNCTIONS &&
-      `../../internal-plugins/functions`,
+    `../../internal-plugins/functions`,
   ].filter(Boolean) as Array<string>
   internalPlugins.forEach(relPath => {
     const absPath = path.join(__dirname, relPath)
@@ -276,6 +303,16 @@ export function loadPlugins(
       })
     )
   })
+
+  if (
+    _CFLAGS_.GATSBY_MAJOR === `4` &&
+    configuredPluginNames.has(GATSBY_CLOUD_PLUGIN_NAME) &&
+    incompatibleGatsbyCloudPlugin(plugins)
+  ) {
+    reporter.panic(
+      `Plugin gatsby-plugin-gatsby-cloud is not compatible with your gatsby version. Please upgrade to gatsby-plugin-gatsby-cloud@next`
+    )
+  }
 
   if (
     !configuredPluginNames.has(GATSBY_CLOUD_PLUGIN_NAME) &&

@@ -405,6 +405,7 @@ module.exports = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         rehypePlugins: [
+          // Generate heading ids for rehype-autolink-headings
           require("rehype-slug"),
           // To pass options, use a 2-element array with the
           // configuration in an object in the second element

@@ -35,7 +35,7 @@ describe(`Query schema`, () => {
   let schema
   let schemaComposer
 
-  const runQuery = query =>
+  const runQuery = (query, variables) =>
     graphql(
       schema,
       query,
@@ -43,7 +43,8 @@ describe(`Query schema`, () => {
       withResolverContext({
         schema,
         schemaComposer,
-      })
+      }),
+      variables
     )
 
   beforeAll(async () => {
@@ -860,6 +861,87 @@ describe(`Query schema`, () => {
         expect(results.data).toEqual(expected)
       })
 
+      it(`recursively groups query results`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              group(field: frontmatter___title) {
+                fieldValue
+                group(field: frontmatter___authors___name) {
+                  fieldValue
+                  edges {
+                    node {
+                      frontmatter {
+                        title
+                        date(formatString: "YYYY-MM-DD")
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `
+        const results = await runQuery(query)
+        const expected = {
+          allMarkdown: {
+            group: [
+              {
+                fieldValue: `Markdown File 1`,
+                group: [
+                  {
+                    fieldValue: `Author 1`,
+                    edges: [
+                      {
+                        node: {
+                          frontmatter: {
+                            title: `Markdown File 1`,
+                            date: `2019-01-01`,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    fieldValue: `Author 2`,
+                    edges: [
+                      {
+                        node: {
+                          frontmatter: {
+                            title: `Markdown File 1`,
+                            date: `2019-01-01`,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                fieldValue: `Markdown File 2`,
+                group: [
+                  {
+                    fieldValue: `Author 1`,
+                    edges: [
+                      {
+                        node: {
+                          frontmatter: {
+                            title: `Markdown File 2`,
+                            date: null,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        }
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toEqual(expected)
+      })
+
       it(`handles groups added in fragment`, async () => {
         const query = `
           fragment GroupTest on MarkdownConnection {
@@ -1320,6 +1402,53 @@ describe(`Query schema`, () => {
       const results = await runQuery(query)
       expect(results.errors).toBeUndefined()
       expect(results.data.allMarkdown.sum).toBeNull()
+    })
+
+    it(`calculates aggregation in recursively grouped query results`, async () => {
+      const query = `
+        {
+          allMarkdown {
+            group(field: frontmatter___authors___name) {
+              fieldValue
+              group(field: frontmatter___title) {
+                fieldValue
+                max(field: frontmatter___price)
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        allMarkdown: {
+          group: [
+            {
+              fieldValue: `Author 1`,
+              group: [
+                {
+                  fieldValue: `Markdown File 1`,
+                  max: 1.99,
+                },
+                {
+                  fieldValue: `Markdown File 2`,
+                  max: 3.99,
+                },
+              ],
+            },
+            {
+              fieldValue: `Author 2`,
+              group: [
+                {
+                  fieldValue: `Markdown File 1`,
+                  max: 1.99,
+                },
+              ],
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
     })
   })
 
@@ -1805,6 +1934,90 @@ describe(`Query schema`, () => {
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)
+    })
+  })
+
+  describe(`with skip/limit`, () => {
+    const query = `
+        query ($limit: Int!, $skip: Int!) {
+          allFile(limit: $limit, skip: $skip) {
+            totalCount
+            pageInfo {
+              currentPage
+              hasNextPage
+              hasPreviousPage
+              itemCount
+              pageCount
+              perPage
+              totalCount
+            }
+          }
+        }
+      `
+    it(`return correct pagination info for the first page`, async () => {
+      const results = await runQuery(query, { limit: 1, skip: 0 })
+      expect(results).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "allFile": Object {
+              "pageInfo": Object {
+                "currentPage": 1,
+                "hasNextPage": true,
+                "hasPreviousPage": false,
+                "itemCount": 1,
+                "pageCount": 3,
+                "perPage": 1,
+                "totalCount": 3,
+              },
+              "totalCount": 3,
+            },
+          },
+        }
+      `)
+    })
+
+    it(`return correct pagination info for the page in the middle`, async () => {
+      const results = await runQuery(query, { limit: 1, skip: 1 })
+      expect(results).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "allFile": Object {
+              "pageInfo": Object {
+                "currentPage": 2,
+                "hasNextPage": true,
+                "hasPreviousPage": true,
+                "itemCount": 1,
+                "pageCount": 3,
+                "perPage": 1,
+                "totalCount": 3,
+              },
+              "totalCount": 3,
+            },
+          },
+        }
+      `)
+    })
+
+    it(`return correct pagination info for the last page`, async () => {
+      const results = await runQuery(query, { limit: 1, skip: 2 })
+      expect(results).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "allFile": Object {
+              "pageInfo": Object {
+                "currentPage": 3,
+                "hasNextPage": false,
+                "hasPreviousPage": true,
+                "itemCount": 1,
+                "pageCount": 3,
+                "perPage": 1,
+                "totalCount": 3,
+              },
+              "totalCount": 3,
+            },
+          },
+        }
+      `)
     })
   })
 })

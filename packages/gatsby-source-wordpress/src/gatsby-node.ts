@@ -2,7 +2,12 @@ import { runApisInSteps } from "./utils/run-steps"
 import * as steps from "./steps"
 
 module.exports = runApisInSteps({
-  onPreInit: [steps.setErrorMap, steps.tempPreventMultipleInstances],
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  "onPluginInit|unstable_onPluginInit": [
+    steps.setGatsbyApiToState,
+    steps.setErrorMap,
+    steps.tempPreventMultipleInstances,
+  ],
 
   pluginOptionsSchema: steps.pluginOptionsSchema,
 

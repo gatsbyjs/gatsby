@@ -1143,6 +1143,7 @@ It's easier than you may imagine`,
               showLineNumbers: false,
               noInlineHighlight: false,
             },
+            module: require(`gatsby-remark-prismjs`),
           },
         ],
       },
@@ -1233,9 +1234,9 @@ console.log('hello world')
     `htmlAst`,
     node => {
       expect(node).toMatchSnapshot()
-      expect(
-        node.htmlAst.children[0].children[0].properties.className
-      ).toEqual([`language-js`])
+      expect(node.htmlAst.children[0].children[0].properties.className).toEqual(
+        [`language-js`]
+      )
       expect(node.htmlAst.children[0].children[0].properties.dataMeta).toEqual(
         `foo bar`
       )
@@ -1335,6 +1336,7 @@ describe(`Headings are generated correctly from schema`, () => {
           {
             resolve: require.resolve(`gatsby-remark-autolink-headers/src`),
             pluginOptions: {},
+            module: require(`gatsby-remark-autolink-headers/src`),
           },
         ],
       },

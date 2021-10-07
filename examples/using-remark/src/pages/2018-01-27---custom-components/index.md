@@ -108,7 +108,7 @@ In order to display this component within a Markdown file, you'll need to add a 
     })
 
     export const renderAst = (ast: any): JSX.Element => {
-      return (processor.stringify(ast) as unknown) as JSX.Element
+      return processor.stringify(ast) as unknown as JSX.Element
     }
     ```
 

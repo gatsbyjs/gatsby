@@ -72,14 +72,14 @@ export default async function compile({ parentSpan } = {}): Promise<
       })
     ),
     addError,
-    parentSpan,
+    parentSpan: activity.span,
   })
 
   const queries = processQueries({
     schema,
     parsedQueries,
     addError,
-    parentSpan,
+    parentSpan: activity.span,
   })
 
   if (errors.length !== 0) {
@@ -323,14 +323,12 @@ const processDefinitions = ({
       continue
     }
 
-    const {
-      usedFragments,
-      missingFragments,
-    } = determineUsedFragmentsForDefinition(
-      originalDefinition,
-      definitionsByName,
-      fragmentsUsedByFragment
-    )
+    const { usedFragments, missingFragments } =
+      determineUsedFragmentsForDefinition(
+        originalDefinition,
+        definitionsByName,
+        fragmentsUsedByFragment
+      )
 
     if (missingFragments.length > 0) {
       for (const { filePath, definition, node } of missingFragments) {

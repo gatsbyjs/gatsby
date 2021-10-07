@@ -204,7 +204,7 @@ describe(`Kitchen sink schema test`, () => {
         }
       `)
     ).toMatchSnapshot()
-  })
+  }, 30000)
 
   it(`correctly resolves nested Query types from third-party types`, () => {
     const queryFields = schema.getQueryType().getFields()

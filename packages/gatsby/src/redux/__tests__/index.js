@@ -1,25 +1,35 @@
 const _ = require(`lodash`)
 const path = require(`path`)
 const v8 = require(`v8`)
+const telemetry = require(`gatsby-telemetry`)
 const reporter = require(`gatsby-cli/lib/reporter`)
-
 const writeToCache = jest.spyOn(require(`../persist`), `writeToCache`)
 const v8Serialize = jest.spyOn(v8, `serialize`)
 const v8Deserialize = jest.spyOn(v8, `deserialize`)
 const reporterInfo = jest.spyOn(reporter, `info`).mockImplementation(jest.fn)
 const reporterWarn = jest.spyOn(reporter, `warn`).mockImplementation(jest.fn)
 
-const { saveState, store, readState } = require(`../index`)
+const { isLmdbStore } = require(`../../datastore`)
+const {
+  saveState,
+  store,
+  readState,
+  savePartialStateToDisk,
+} = require(`../index`)
 
 const {
   actions: { createPage, createNode },
 } = require(`../actions`)
 
+const pageTemplatePath = `/Users/username/dev/site/src/templates/my-sweet-new-page.js`
 const mockWrittenContent = new Map()
 const mockCompatiblePath = path
 jest.mock(`fs-extra`, () => {
   return {
     writeFileSync: jest.fn((file, content) =>
+      mockWrittenContent.set(file, content)
+    ),
+    outputFileSync: jest.fn((file, content) =>
       mockWrittenContent.set(file, content)
     ),
     readFileSync: jest.fn(file => mockWrittenContent.get(file)),
@@ -122,7 +132,7 @@ describe(`redux db`, () => {
   const defaultPage = {
     path: `/my-sweet-new-page/`,
     // seems like jest serializer doesn't play nice with Maps on Windows
-    component: `/Users/username/dev/site/src/templates/my-sweet-new-page.js`,
+    component: pageTemplatePath,
     // The context is passed as props to the component as well
     // as into the component's GraphQL query.
     context: {
@@ -131,13 +141,35 @@ describe(`redux db`, () => {
   }
 
   beforeEach(() => {
+    store.getState().nodes = new Map()
     store.dispatch({
       type: `DELETE_CACHE`,
     })
     writeToCache.mockClear()
     mockWrittenContent.clear()
+    mockWrittenContent.set(pageTemplatePath, `foo`)
     reporterWarn.mockClear()
     reporterInfo.mockClear()
+  })
+
+  it(`should have cache status telemetry event`, async () => {
+    jest.spyOn(telemetry, `trackCli`)
+
+    readState()
+
+    expect(telemetry.trackCli).toHaveBeenCalledWith(`CACHE_STATUS`, {
+      cacheStatus: `COLD`,
+    })
+
+    store.getState().nodes = getFakeNodes()
+
+    await saveState()
+
+    readState()
+
+    expect(telemetry.trackCli).toHaveBeenCalledWith(`CACHE_STATUS`, {
+      cacheStatus: `WARM`,
+    })
   })
 
   it(`should write redux cache to disk`, async () => {
@@ -191,6 +223,10 @@ describe(`redux db`, () => {
       v8Serialize.mockRestore()
       v8Deserialize.mockRestore()
     })
+    if (isLmdbStore()) {
+      // Nodes are stored in LMDB, those tests are irrelevant
+      return
+    }
 
     // we set limit to 1.5 * 1024 * 1024 * 1024 per shard
     // simulating size for page and nodes will allow us to see if we create expected amount of shards
@@ -407,7 +443,8 @@ describe(`redux db`, () => {
       )
     )
 
-    expect(store.getState().nodes.size).toEqual(1)
+    // In strict mode nodes are stored in LMDB not redux state
+    expect(store.getState().nodes.size).toEqual(isLmdbStore() ? 0 : 1)
     expect(store.getState().pages.size).toEqual(0)
 
     let persistedState = readState()
@@ -427,7 +464,16 @@ describe(`redux db`, () => {
 
     persistedState = readState()
 
-    expect(persistedState.nodes?.size ?? 0).toEqual(1)
+    // With lmdb store we always persist a single dummy node to bypass
+    //  "Cache exists but contains no nodes..." warning
+    if (isLmdbStore()) {
+      expect(persistedState.nodes?.size).toEqual(1)
+      const nodes = Array.from(persistedState.nodes.values())
+      expect(nodes[0]).toMatchObject({ id: `dummy-node-id` })
+    } else {
+      expect(persistedState.nodes?.size).toEqual(1)
+    }
+
     expect(persistedState.pages?.size ?? 0).toEqual(0)
   })
 
@@ -457,14 +503,93 @@ describe(`redux db`, () => {
 
     persistedState = readState()
 
-    expect(persistedState.nodes?.size ?? 0).toEqual(0)
-    // we expect state to be discarded because gatsby creates it least few nodes of it's own
-    // (particularly `Site` node). If there was nodes read this likely means something went wrong
-    // and state is not consistent
-    expect(persistedState.pages?.size ?? 0).toEqual(0)
+    if (isLmdbStore()) {
+      // With lmdb store we always persist a single dummy node to bypass
+      //  "Cache exists but contains no nodes..." warning
+      expect(persistedState.nodes?.size ?? 0).toEqual(1)
+      expect(persistedState.pages?.size ?? 0).toEqual(1)
+      expect(reporterInfo).not.toBeCalled()
+      const nodes = Array.from(persistedState.nodes.values())
+      expect(nodes[0]).toMatchObject({ id: `dummy-node-id` })
+    } else {
+      // we expect state to be discarded because gatsby creates it least few nodes of it's own
+      // (particularly `Site` node). If there was nodes read this likely means something went wrong
+      // and state is not consistent
+      expect(persistedState.nodes?.size ?? 0).toEqual(0)
+      expect(persistedState.pages?.size ?? 0).toEqual(0)
 
-    expect(reporterInfo).toBeCalledWith(
-      `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
-    )
+      expect(reporterInfo).toBeCalledWith(
+        `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
+      )
+    }
+  })
+
+  describe(`savePartialStateToDisk`, () => {
+    beforeEach(() => {
+      createPages(defaultPage)
+    })
+
+    it(`saves with correct filename (with defaults)`, () => {
+      savePartialStateToDisk([`pages`])
+
+      let basename
+      // get first non page template mocked fs write
+      for (const savedFile of mockWrittenContent.keys()) {
+        if (savedFile === pageTemplatePath) {
+          continue
+        }
+
+        basename = path.basename(savedFile)
+        break
+      }
+
+      expect(basename.startsWith(`redux.worker.slices__`)).toBe(true)
+    })
+
+    it(`saves correct slice of state`, () => {
+      savePartialStateToDisk([`pages`])
+
+      expect(writeToCache).toBeCalledWith(
+        { pages: expect.anything() },
+        [`pages`],
+        undefined
+      )
+    })
+
+    it(`respects optionalPrefix`, () => {
+      savePartialStateToDisk([`pages`], `custom-prefix`)
+
+      let basename
+      // get first non page template mocked fs write
+      for (const savedFile of mockWrittenContent.keys()) {
+        if (savedFile === pageTemplatePath) {
+          continue
+        }
+
+        basename = path.basename(savedFile)
+        break
+      }
+
+      expect(basename.startsWith(`redux.worker.slices_custom-prefix_`)).toBe(
+        true
+      )
+    })
+
+    it(`respects transformState`, () => {
+      const customTransform = state => {
+        return {
+          ...state,
+          hello: `world`,
+        }
+      }
+
+      savePartialStateToDisk([`pages`], undefined, customTransform)
+
+      expect(writeToCache).toBeCalledWith(
+        { pages: expect.anything(), hello: `world` },
+        [`pages`],
+        undefined
+      )
+    })
   })
 })

@@ -66,6 +66,13 @@ export interface IFlag {
    * (avoids showing unknown flag message and shows "no longer needed" message).
    */
   testFitness: (flag: IFlag) => fitnessEnum
+  /**
+   * Human-readable text explaining requirements for this feature to be available
+   * (e.g. requires Node 14+)
+   *
+   * It is shown to users when testFitness() returns `false` but flag is set in gatsby-config.js
+   */
+  requires?: string
   includedFlags?: Array<string>
   umbrellaIssue?: string
   noCI?: boolean
@@ -78,11 +85,11 @@ const activeFlags: Array<IFlag> = [
     command: `develop`,
     telemetryId: `FastDev`,
     experimental: false,
-    description: `Enable all experiments aimed at improving develop server start time`,
+    description: `Enable all experiments aimed at improving develop server start time.`,
     includedFlags: [
-      `DEV_SSR`,
+      // `DEV_SSR`, - not working with serverdata atm
       `PRESERVE_FILE_DOWNLOAD_CACHE`,
-      `PRESERVE_WEBPACK_CACHE`,
+      `DEV_WEBPACK_CACHE`,
     ],
     testFitness: (): fitnessEnum => true,
   },
@@ -95,6 +102,11 @@ const activeFlags: Array<IFlag> = [
     description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds. See umbrella issue for how to update custom webpack config.`,
     umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
     testFitness: (): fitnessEnum => {
+      // TODO Re-enable after gatsybcamp
+      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+        return false
+      }
+
       if (sampleSiteForExperiment(`DEV_SSR`, 20)) {
         return `OPT_IN`
       } else {
@@ -135,6 +147,7 @@ const activeFlags: Array<IFlag> = [
         return false
       }
     },
+    requires: `Requires gatsby-plugin-sharp@2.10.0 or above.`,
   },
   {
     name: `PRESERVE_WEBPACK_CACHE`,
@@ -144,7 +157,17 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Use webpack's persistent caching and don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
     umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => true,
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
+  },
+  {
+    name: `DEV_WEBPACK_CACHE`,
+    env: `GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE`,
+    command: `develop`,
+    telemetryId: `DevWebackCache`,
+    experimental: false,
+    description: `Enable webpack's persistent caching during development. Speeds up the start of the development server.`,
+    umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
   },
   {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
@@ -174,31 +197,44 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Compile Serverless functions in your Gatsby project and write them to disk, ready to deploy to Gatsby Cloud`,
     umbrellaIssue: `https://gatsby.dev/functions-feedback`,
-    testFitness: (): fitnessEnum => true,
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
   },
   {
-    name: `CONCURRENT_FEATURES`,
-    env: `GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES`,
+    name: `LMDB_STORE`,
+    env: `GATSBY_EXPERIMENTAL_LMDB_STORE`,
     command: `all`,
-    telemetryId: `ConcurrentFeatures`,
+    telemetryId: `LmdbStore`,
     experimental: true,
-    description: `Enable React's concurrent features`,
-    // umbrellaIssue: `https://gatsby.dev/concurrent-features`,
+    umbrellaIssue: `https://gatsby.dev/lmdb-feedback`,
+    description: `Store nodes in a persistent embedded database (vs in-memory). Lowers peak memory usage. Requires Node v14.10 or above.`,
     testFitness: (): fitnessEnum => {
-      // Because of this, this flag will never show up
-      const semverConstraints = {
-        react: `^0.0.0-experimental-57768ef90`,
-        "react-dom": `^0.0.0-experimental-57768ef90`,
+      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+        return `LOCKED_IN`
       }
 
-      if (satisfiesSemvers(semverConstraints)) {
-        return true
-      } else {
-        // react & react-dom is either not installed or not new enough so
-        // just disable — it won't work anyways.
-        return false
-      }
+      const [major, minor] = process.versions.node.split(`.`)
+      return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
     },
+    requires: `Requires Node v14.10 or above.`,
+  },
+  {
+    name: `PARALLEL_QUERY_RUNNING`,
+    env: `GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING`,
+    command: `build`,
+    telemetryId: `PQR`,
+    experimental: true,
+    umbrellaIssue: `https://gatsby.dev/pqr-feedback`,
+    description: `Parallelize running page queries in order to better saturate all available cores. Improves time it takes to run queries during gatsby build. Requires Node v14.10 or above.`,
+    includedFlags: [`LMDB_STORE`],
+    testFitness: (): fitnessEnum => {
+      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+        return `LOCKED_IN`
+      }
+
+      const [major, minor] = process.versions.node.split(`.`)
+      return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
+    },
+    requires: `Requires Node v14.10 or above.`,
   },
 ]
 

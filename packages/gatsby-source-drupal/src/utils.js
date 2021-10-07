@@ -1,26 +1,25 @@
 const _ = require(`lodash`)
-const axios = require(`axios`)
 
 const {
   nodeFromData,
   downloadFile,
   isFileNode,
-  getHref,
   createNodeIdWithVersion,
 } = require(`./normalize`)
 
 const { getOptions } = require(`./plugin-options`)
 
-const backRefsNamesLookup = new WeakMap()
-const referencedNodesLookup = new WeakMap()
+const backRefsNamesLookup = new Map()
+const referencedNodesLookup = new Map()
 
 const handleReferences = (
   node,
-  { getNode, createNodeId, entityReferenceRevisions = [] }
+  { getNode, mutateNode = false, createNodeId, entityReferenceRevisions = [] }
 ) => {
   const relationships = node.relationships
   const rootNodeLanguage = getOptions().languageConfig ? node.langcode : `und`
 
+  const backReferencedNodes = []
   if (node.drupal_relationships) {
     const referencedNodes = []
     _.each(node.drupal_relationships, (v, k) => {
@@ -70,6 +69,7 @@ const handleReferences = (
           relationships[nodeFieldName] = referencedNodeId
           referencedNodes.push(referencedNodeId)
         }
+
         // If there's meta on the field and it's not an existing/internal one
         // create a new node's field with that meta. It can't exist on both
         // @see https://jsonapi.org/format/#document-resource-object-fields
@@ -80,11 +80,16 @@ const handleReferences = (
     })
 
     delete node.drupal_relationships
-    referencedNodesLookup.set(node, referencedNodes)
+    referencedNodesLookup.set(node.id, referencedNodes)
     if (referencedNodes.length) {
       const nodeFieldName = `${node.internal.type}___NODE`
       referencedNodes.forEach(nodeID => {
-        const referencedNode = getNode(nodeID)
+        let referencedNode
+        if (mutateNode) {
+          referencedNode = getNode(nodeID)
+        } else {
+          referencedNode = _.cloneDeep(getNode(nodeID))
+        }
         if (!referencedNode.relationships[nodeFieldName]) {
           referencedNode.relationships[nodeFieldName] = []
         }
@@ -93,23 +98,117 @@ const handleReferences = (
           referencedNode.relationships[nodeFieldName].push(node.id)
         }
 
-        let backRefsNames = backRefsNamesLookup.get(referencedNode)
+        let backRefsNames = backRefsNamesLookup.get(referencedNode.id)
         if (!backRefsNames) {
           backRefsNames = []
-          backRefsNamesLookup.set(referencedNode, backRefsNames)
+          backRefsNamesLookup.set(referencedNode.id, backRefsNames)
         }
 
         if (!backRefsNames.includes(nodeFieldName)) {
           backRefsNames.push(nodeFieldName)
         }
+        backReferencedNodes.push(referencedNode)
       })
     }
   }
 
   node.relationships = relationships
+
+  return backReferencedNodes
 }
 
 exports.handleReferences = handleReferences
+
+const handleDeletedNode = async ({
+  actions,
+  node,
+  getNode,
+  createNodeId,
+  createContentDigest,
+  entityReferenceRevisions,
+}) => {
+  let deletedNode = getNode(
+    createNodeId(
+      createNodeIdWithVersion(
+        node.id,
+        node.type,
+        getOptions().languageConfig ? node.attributes?.langcode : `und`,
+        node.attributes?.drupal_internal__revision_id,
+        entityReferenceRevisions
+      )
+    )
+  )
+
+  // Perhaps the node was already deleted and Drupal is sending us references
+  // to old nodes.
+  if (!deletedNode) {
+    return deletedNode
+  }
+
+  // Clone node so we're not mutating the original node.
+  deletedNode = _.cloneDeep(deletedNode)
+
+  // Remove the deleted node from backRefsNamesLookup and referencedNodesLookup
+  backRefsNamesLookup.delete(deletedNode.id)
+  referencedNodesLookup.delete(deletedNode.id)
+
+  // Remove relationships from other nodes and re-create them.
+  Object.keys(deletedNode.relationships).forEach(key => {
+    let ids = deletedNode.relationships[key]
+    ids = [].concat(ids)
+    ids.forEach(id => {
+      let node = getNode(id)
+
+      // The referenced node might have already been deleted.
+      if (node) {
+        // Clone node so we're not mutating the original node.
+        node = _.cloneDeep(node)
+        let referencedNodes = referencedNodesLookup.get(node.id)
+        if (referencedNodes?.includes(deletedNode.id)) {
+          // Loop over relationships and cleanup references.
+          Object.entries(node.relationships).forEach(([key, value]) => {
+            // If a string ref matches, delete it.
+            if (_.isString(value) && value === deletedNode.id) {
+              delete node.relationships[key]
+            }
+
+            // If it's an array, filter, then check if the array is empty and then delete
+            // if so
+            if (_.isArray(value)) {
+              value = value.filter(v => v !== deletedNode.id)
+
+              if (value.length === 0) {
+                delete node.relationships[key]
+              } else {
+                node.relationships[key] = value
+              }
+            }
+          })
+
+          // Remove deleted node from array of referencedNodes
+          referencedNodes = referencedNodes.filter(
+            nId => nId !== deletedNode.id
+          )
+          referencedNodesLookup.set(node.id, referencedNodes)
+        }
+
+        // Recreate the referenced node with its now cleaned-up relationships.
+        if (node.internal.owner) {
+          delete node.internal.owner
+        }
+        if (node.fields) {
+          delete node.fields
+        }
+        node.internal.contentDigest = createContentDigest(node)
+        actions.createNode(node)
+      }
+    })
+  })
+
+  actions.deleteNode(deletedNode)
+
+  return deletedNode
+}
 
 const handleWebhookUpdate = async (
   {
@@ -125,6 +224,24 @@ const handleWebhookUpdate = async (
   },
   pluginOptions = {}
 ) => {
+  if (!nodeToUpdate) {
+    reporter.warn(
+      `The updated node was empty. The fact you're seeing this warning means there's probably a bug in how we're creating and processing updates from Drupal.
+
+${JSON.stringify(nodeToUpdate, null, 4)}
+      `
+    )
+
+    return
+  }
+
+  reporter.log(
+    `[drupal]: handling update to:
+    - entity href: ${nodeToUpdate.links?.self?.href}
+    - node id: ${nodeToUpdate.attributes?.drupal_internal__nid}
+`
+  )
+
   const { createNode } = actions
 
   const newNode = nodeFromData(
@@ -135,60 +252,63 @@ const handleWebhookUpdate = async (
 
   const nodesToUpdate = [newNode]
 
-  handleReferences(newNode, {
+  const oldNodeReferencedNodes = referencedNodesLookup.get(newNode.id)
+  const backReferencedNodes = handleReferences(newNode, {
     getNode,
+    mutateNode: false,
     createNodeId,
     entityReferenceRevisions: pluginOptions.entityReferenceRevisions,
   })
 
-  const oldNode = getNode(newNode.id)
+  nodesToUpdate.push(...backReferencedNodes)
+
+  let oldNode = getNode(newNode.id)
   if (oldNode) {
+    // Clone node so we're not mutating the original node.
+    oldNode = _.cloneDeep(oldNode)
     // copy over back references from old node
-    const backRefsNames = backRefsNamesLookup.get(oldNode)
+    const backRefsNames = backRefsNamesLookup.get(oldNode.id)
     if (backRefsNames) {
-      backRefsNamesLookup.set(newNode, backRefsNames)
+      backRefsNamesLookup.set(newNode.id, backRefsNames)
       backRefsNames.forEach(backRefFieldName => {
         newNode.relationships[backRefFieldName] =
           oldNode.relationships[backRefFieldName]
       })
     }
 
-    const oldNodeReferencedNodes = referencedNodesLookup.get(oldNode)
-    const newNodeReferencedNodes = referencedNodesLookup.get(newNode)
+    const newNodeReferencedNodes = referencedNodesLookup.get(newNode.id)
 
     // see what nodes are no longer referenced and remove backRefs from them
-    const removedReferencedNodes = _.difference(
+    let removedReferencedNodes = _.difference(
       oldNodeReferencedNodes,
       newNodeReferencedNodes
     ).map(id => getNode(id))
+
+    removedReferencedNodes = removedReferencedNodes.map(node => {
+      if (node) {
+        return _.cloneDeep(node)
+      } else {
+        return node
+      }
+    })
 
     nodesToUpdate.push(...removedReferencedNodes)
 
     const nodeFieldName = `${newNode.internal.type}___NODE`
     removedReferencedNodes.forEach(referencedNode => {
-      referencedNode.relationships[
-        nodeFieldName
-      ] = referencedNode.relationships[nodeFieldName].filter(
-        id => id !== newNode.id
-      )
+      if (
+        referencedNode.relationships &&
+        referencedNode.relationships[nodeFieldName]
+      ) {
+        referencedNode.relationships[nodeFieldName] =
+          referencedNode.relationships[nodeFieldName].filter(
+            id => id !== newNode.id
+          )
+      }
     })
-
-    // see what nodes are newly referenced, and make sure to call `createNode` on them
-    const addedReferencedNodes = _.difference(
-      newNodeReferencedNodes,
-      oldNodeReferencedNodes
-    ).map(id => getNode(id))
-
-    nodesToUpdate.push(...addedReferencedNodes)
-  } else {
-    // if we are inserting new node, we need to update all referenced nodes
-    const newNodes = referencedNodesLookup.get(newNode)
-    if (typeof newNodes !== `undefined`) {
-      newNodes.forEach(id => nodesToUpdate.push(getNode(id)))
-    }
   }
 
-  // download file
+  // Download file.
   const { skipFileDownloads } = pluginOptions
   if (isFileNode(newNode) && !skipFileDownloads) {
     await downloadFile(
@@ -213,8 +333,9 @@ const handleWebhookUpdate = async (
     }
     node.internal.contentDigest = createContentDigest(node)
     createNode(node)
-    reporter.log(`Updated node: ${node.id}`)
+    reporter.log(`Updated Gatsby node: ${node.id}`)
   }
 }
 
 exports.handleWebhookUpdate = handleWebhookUpdate
+exports.handleDeletedNode = handleDeletedNode

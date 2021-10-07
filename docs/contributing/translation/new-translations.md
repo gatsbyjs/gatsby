@@ -2,6 +2,8 @@
 title: Starting a New Translation
 ---
 
+> ⚠️ Note: At the moment our localization efforts are on pause, as we shifted towards a [redesign of the docs](https://www.gatsbyjs.com/blog/announcing-new-gatsby-docs-site/). Right now, we're prioritizing a new version of the tutorial. As with all prioritization efforts, we will weigh this, amongst other potential features, fixes, and improvements, and may consider picking up on the internationalization efforts of 2020. The repositories inside the GitHub org will remain. For now we archived the respective language channels on our Discord and the role for language maintainers.
+
 This page lists the steps to take to create a new Gatsby docs translation.
 
 ## Creating a translation
@@ -32,6 +34,6 @@ The Gatsby team will choose to approve a translation request based on the follow
 
 ## After approval
 
-Once the translation request is approved, a member of the gatsby team will run the an automated script to create your repository and set everything up.
+Once the translation request is approved, a member of the gatsby team will run an automated script to create your repository and set everything up.
 
 At this point, you and your co-maintainers should read the rest of the [maintainer guide](/contributing/translation/maintainers/) for more information on how to manage your translation repository. You can also check out the [translation contributor guide](/contributing/translation/translators/) for information on contributing translations to your own repo, and start working on your translation [style guide](/contributing/translation/style-guide/).

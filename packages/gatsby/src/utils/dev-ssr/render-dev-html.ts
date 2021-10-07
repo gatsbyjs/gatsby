@@ -1,9 +1,10 @@
-import JestWorker from "jest-worker"
+import { WorkerPool } from "gatsby-worker"
 import fs from "fs-extra"
 import nodePath from "path"
 import report from "gatsby-cli/lib/reporter"
 import { isCI } from "gatsby-core-utils"
 import { Stats } from "webpack"
+import { ROUTES_DIRECTORY } from "../../constants"
 import { startListener } from "../../bootstrap/requires-writer"
 import { findPageByPath } from "../find-page-by-path"
 import { getPageData as getPageDataExperimental } from "../get-page-data"
@@ -11,30 +12,47 @@ import { getDevSSRWebpack } from "../../commands/build-html"
 import { emitter, GatsbyReduxStore } from "../../redux"
 import { IGatsbyPage } from "../../redux/types"
 
-const startWorker = (): JestWorker => {
-  const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
-    exposedMethods: [`renderHTML`, `deleteModuleCache`, `warmup`],
-    numWorkers: 1,
-    forkOptions: {
-      silent: false,
+interface IErrorRenderMeta {
+  codeFrame: string
+  source: string
+  line: number
+  column: number
+  sourceMessage?: string
+  stack?: string
+}
+
+// TODO: convert `render-dev-html-child.js` to TS and use `typeof import("./render-dev-html-child")`
+// instead of defining interface here
+interface IRenderDevHtmlChild {
+  renderHTML: (arg: {
+    path: string
+    componentPath: string
+    htmlComponentRendererPath: string
+    publicDir: string
+    isClientOnlyPage?: boolean
+    error?: IErrorRenderMeta
+    directory?: string
+  }) => Promise<string>
+  deleteModuleCache: (htmlComponentRendererPath: string) => void
+}
+
+const startWorker = (): WorkerPool<IRenderDevHtmlChild> => {
+  const newWorker = new WorkerPool<IRenderDevHtmlChild>(
+    require.resolve(`./render-dev-html-child`),
+    {
+      numWorkers: 1,
       env: {
-        ...process.env,
         NODE_ENV: isCI() ? `production` : `development`,
         forceColors: `true`,
         GATSBY_EXPERIMENTAL_DEV_SSR: `true`,
       },
-    },
-  })
-
-  // jest-worker is lazy with forking but we want to fork immediately so the user
-  // doesn't have to wait.
-  // @ts-ignore
-  newWorker.warmup()
+    }
+  )
 
   return newWorker
 }
 
-let worker
+let worker: WorkerPool<IRenderDevHtmlChild>
 export const initDevWorkerPool = (): void => {
   worker = startWorker()
 }
@@ -53,7 +71,7 @@ export const restartWorker = (htmlComponentRendererPath: string): void => {
     oldWorker.end()
     changeCount = 0
   } else {
-    worker.deleteModuleCache(htmlComponentRendererPath)
+    worker.all.deleteModuleCache(htmlComponentRendererPath)
   }
 }
 
@@ -95,10 +113,11 @@ const ensurePathComponentInSSRBundle = async (
     report.panic(`page not found`, page)
   }
 
-  // Now check if it's written to public/render-page.js
+  // Now check if it's written to the correct path
   const htmlComponentRendererPath = nodePath.join(
     directory,
-    `public/render-page.js`
+    ROUTES_DIRECTORY,
+    `render-page.js`
   )
 
   // This search takes 1-10ms
@@ -136,14 +155,7 @@ interface IRenderDevHtmlProps {
   page: IGatsbyPage
   skipSsr?: boolean
   store: GatsbyReduxStore
-  error?: {
-    codeFrame: string
-    source: string
-    line: number
-    column: number
-    sourceMessage?: string
-    stack?: string
-  }
+  error?: IErrorRenderMeta
   htmlComponentRendererPath: string
   directory: string
 }
@@ -222,7 +234,7 @@ export const renderDevHTML = ({
       })
     }
 
-    // Wait for public/render-page.js to update w/ the page component.
+    // Wait for html-renderer to update w/ the page component.
     const found = await ensurePathComponentInSSRBundle(pageObj, directory)
 
     // If we can't find the page, just force set isClientOnlyPage
@@ -243,7 +255,7 @@ export const renderDevHTML = ({
     const publicDir = nodePath.join(directory, `public`)
 
     try {
-      const htmlString = await worker.renderHTML({
+      const htmlString = await worker.single.renderHTML({
         path,
         componentPath: pageObj.component,
         htmlComponentRendererPath,

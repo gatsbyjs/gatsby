@@ -76,7 +76,7 @@ https://styled-components.com/
 
 You can also write and run your own recipes, or run recipes that were created by and shared with the community. Pass the path or URL of the recipe as an argument. For example, to run a local Gatsby recipe, use `gatsby recipes ./name-of-your-recipe.mdx`. To run a remote recipe, use `gatsby recipes https://example.com/community-made-recipe.mdx`.
 
-Gatsby Recipes help you save time and reduce configuration errors by automating the set up process.
+Gatsby Recipes help you save time and reduce configuration errors by automating the set-up process.
 
 ## Learn more
 

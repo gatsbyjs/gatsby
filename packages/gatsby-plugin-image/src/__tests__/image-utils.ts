@@ -59,10 +59,10 @@ describe(`the image data helper`, () => {
     const generateImageSource = `this should be a function`
 
     expect(() =>
-      generateImageData(({
+      generateImageData({
         ...args,
         generateImageSource,
-      } as any) as IGatsbyImageHelperArgs)
+      } as any as IGatsbyImageHelperArgs)
     ).toThrow()
   })
 
@@ -132,10 +132,10 @@ describe(`the image data helper`, () => {
   })
 
   it(`warns if there's no plugin name`, () => {
-    generateImageData(({
+    generateImageData({
       ...args,
       pluginName: undefined,
-    } as any) as IGatsbyImageHelperArgs)
+    } as any as IGatsbyImageHelperArgs)
     expect(args.reporter?.warn).toHaveBeenCalledWith(
       `[gatsby-plugin-image] "generateImageData" was not passed a plugin name`
     )

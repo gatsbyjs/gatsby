@@ -5,7 +5,12 @@ import { IGatsbyImageData } from "../gatsby-image.browser"
 import { SourceProps } from "../picture"
 
 // Prevents terser for bailing because we're not in a babel plugin
-jest.mock(`../../../macros/terser.macro`, () => (strs): string => strs.join(``))
+jest.mock(
+  `../../../macros/terser.macro`,
+  () =>
+    (strs): string =>
+      strs.join(``)
+)
 
 describe(`GatsbyImage server`, () => {
   beforeEach(() => {

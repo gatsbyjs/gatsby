@@ -88,7 +88,7 @@ export const createGraphQLRunner = (
 
               return null
             })
-            .filter((Boolean as unknown) as (match) => match is IMatch)
+            .filter(Boolean as unknown as (match) => match is IMatch)
 
           if (structuredErrors.length) {
             // panic on build exits the process

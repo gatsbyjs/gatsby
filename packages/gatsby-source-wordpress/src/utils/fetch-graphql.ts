@@ -255,11 +255,8 @@ const genericError = ({ url }: { url: string }): string =>
 const slackChannelSupportMessage = `If you're still having issues, please visit https://www.wpgraphql.com/community-and-support/\nand follow the link to join the WPGraphQL Slack.\nThere are a lot of folks there in the #gatsby channel who are happy to help with debugging.`
 
 const getLowerRequestConcurrencyOptionMessage = (): string => {
-  const {
-    requestConcurrency,
-    previewRequestConcurrency,
-    perPage,
-  } = store.getState().gatsbyApi.pluginOptions.schema
+  const { requestConcurrency, previewRequestConcurrency, perPage } =
+    store.getState().gatsbyApi.pluginOptions.schema
 
   return `Try reducing the ${bold(
     `requestConcurrency`
@@ -470,9 +467,8 @@ ${slackChannelSupportMessage}`
     return
   }
 
-  const responseReturnedHtml = !!response?.headers[`content-type`].includes(
-    `text/html;`
-  )
+  const responseReturnedHtml =
+    !!response?.headers[`content-type`].includes(`text/html;`)
   const limit = pluginOptions?.schema?.requestConcurrency
 
   if (responseReturnedHtml && isFirstRequest) {

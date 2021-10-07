@@ -84,8 +84,10 @@ const paginatedWpNodeFetch = async ({
   }
 
   let {
-    [contentTypePlural]: { nodes, pageInfo: { hasNextPage, endCursor } = {} },
+    [contentTypePlural]: { nodes, pageInfo },
   } = data
+
+  const { hasNextPage, endCursor } = pageInfo || {}
 
   // Sometimes private posts return as null.
   // That causes problems for us so let's strip them out

@@ -2,8 +2,8 @@
 // - build the site first
 // - start the develop server
 // - run this script
-;(async function () {
-  const { getPageHtmlFilePath } = require(`gatsby/dist/utils/page-html`)
+async function run() {
+  const { generateHtmlPath } = require(`gatsby-core-utils`)
   const { join } = require(`path`)
   const fs = require(`fs-extra`)
   const fetch = require(`node-fetch`)
@@ -22,7 +22,7 @@
       // There are many script tag differences
       $(`script`).remove()
       // Only added in production
-      $(`#gatsby-global-css`).remove()
+      $(`style[data-identity="gatsby-global-css"]`).remove()
       // Only added in development
       $(`link[data-identity='gatsby-dev-css']`).remove()
       // Only in prod
@@ -38,7 +38,7 @@
     const builtHtml = format(
       filterHtml(
         fs.readFileSync(
-          getPageHtmlFilePath(join(process.cwd(), `public`), path),
+          generateHtmlPath(join(process.cwd(), `public`), path),
           `utf-8`
         )
       )
@@ -110,4 +110,9 @@
   } else {
     process.exit(1)
   }
-})()
+}
+
+run().catch(e => {
+  console.error(e)
+  process.exit(1)
+})

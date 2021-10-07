@@ -4,8 +4,6 @@ version: "3.2.0"
 title: "v3.2 Release Notes"
 ---
 
-# [v3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.2.0-next.0...gatsby@3.2.0) (March 2021 #3)
-
 Welcome to `gatsby@3.2.0` release (March 2021 #3)
 
 Key highlights of this release:
@@ -51,7 +49,7 @@ Features:
 
 - The default limit when fetching data from Contentful was increased by 10 times. This will speed up build times.
 - The [`using-contentful`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful) example got updated to Gatsby v3 and demonstrates how to use [`gatsby-plugin-image`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image) with Contenful.
-- New e2e-contentful test suite to improve plugin reliabliity.
+- New e2e-contentful test suite to improve plugin reliability.
 
 Fixes:
 
