@@ -94,7 +94,7 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
     )
   })
 
-  it(`adds root query fields for interface with @nodeInterface extension`, async () => {
+  it(`adds root query fields for interface with Node interface`, async () => {
     const { schema } = await buildSchema()
     const rootQueryFields = schema.getType(`Query`).getFields()
     expect(rootQueryFields.testInterface).toBeDefined()
@@ -435,7 +435,7 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
         type ThatPost implements Node & Post {
           author: Author @link
         }
-        interface Author @nodeInterface {
+        interface Author implements Node {
           id: ID!
           name: String
           echo: String @echo(value: "Interface")
