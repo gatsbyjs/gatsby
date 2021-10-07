@@ -202,5 +202,4 @@ Shadowing with functions works similar to how shadowing works in general. You ca
 
 ## Limitations
 
-- Gatsby Functions do not support dynamic routes in Gatsby Cloud at the moment
 - Bundling in native dependencies is not supported at the moment
