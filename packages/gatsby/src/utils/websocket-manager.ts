@@ -249,6 +249,14 @@ export class WebsocketManager {
     }
     return false
   }
+
+  emitStaleServerData(): boolean {
+    if (this.websocket) {
+      this.websocket.send({ type: `staleServerData` })
+      return true
+    }
+    return false
+  }
 }
 
 export const websocketManager: WebsocketManager = new WebsocketManager()

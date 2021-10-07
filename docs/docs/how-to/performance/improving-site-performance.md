@@ -194,7 +194,7 @@ Media files are often the largest files on a site, and so can delay page load si
 
 [Gatsby Plugin Image](/docs/how-to/images-and-media/using-gatsby-image/) is our approach to optimizing image loading performance. It does three basic things:
 
-1. It delays non-essential work for images not above the fold to avoid esource congestion.
+1. It delays non-essential work for images not above the fold to avoid resource congestion.
 2. It provides a placeholder during image fetch.
 3. It minimizes image file size to reduce request roundtrip time.
 

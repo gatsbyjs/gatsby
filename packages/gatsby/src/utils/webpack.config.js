@@ -4,8 +4,10 @@ const crypto = require(`crypto`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
-const { CoreJSResolver } = require(`./webpack/corejs-resolver`)
-const { CacheFolderResolver } = require(`./webpack/cache-folder-resolver`)
+const { CoreJSResolver } = require(`./webpack/plugins/corejs-resolver`)
+const {
+  CacheFolderResolver,
+} = require(`./webpack/plugins/cache-folder-resolver`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const { getPublicPath } = require(`./get-public-path`)
@@ -17,9 +19,9 @@ const apiRunnerNode = require(`./api-runner-node`)
 import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
-import { StaticQueryMapper } from "./webpack/static-query-mapper"
-import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
-import { WebpackLoggingPlugin } from "./webpack/webpack-logging"
+import { StaticQueryMapper } from "./webpack/plugins/static-query-mapper"
+import { ForceCssHMRForEdgeCases } from "./webpack/plugins/force-css-hmr-for-edge-cases"
+import { WebpackLoggingPlugin } from "./webpack/plugins/webpack-logging"
 import { hasES6ModuleSupport } from "./browserslist"
 import { builtinModules } from "module"
 import { shouldGenerateEngines } from "./engines-helpers"

@@ -29,6 +29,7 @@ export interface ISSRData {
   templateDetails: ITemplateDetails
   potentialPagePath: string
   serverDataHeaders?: Record<string, string>
+  searchString: string
 }
 
 const pageTemplateDetailsMap: Record<
@@ -101,13 +102,32 @@ export async function getData({
   }
   results.pageContext = page.context
 
+  let searchString = ``
+  if (req?.query) {
+    const maybeQueryString = Object.entries(req.query)
+      .map(([k, v]) => `${k}=${v}`)
+      .join(`&`)
+    if (maybeQueryString) {
+      searchString = `?${maybeQueryString}`
+    }
+  }
+
   return {
     results,
     page,
     templateDetails,
     potentialPagePath,
     serverDataHeaders: serverData?.headers,
+    searchString,
   }
+}
+
+function getPath(data: ISSRData): string {
+  return (
+    (data.page.mode !== `SSG` && data.page.matchPath
+      ? data.potentialPagePath
+      : data.page.path) + (data.page.mode === `SSR` ? data.searchString : ``)
+  )
 }
 
 export async function renderPageData({
@@ -118,10 +138,7 @@ export async function renderPageData({
   const results = await constructPageDataString(
     {
       componentChunkName: data.page.componentChunkName,
-      path:
-        data.page.mode !== `SSG` && data.page.matchPath
-          ? data.potentialPagePath
-          : data.page.path,
+      path: getPath(data),
       matchPath: data.page.matchPath,
       staticQueryHashes: data.templateDetails.staticQueryHashes,
     },
@@ -161,10 +178,7 @@ export async function renderHTML({
   )
 
   const results = await htmlComponentRenderer({
-    pagePath:
-      data.page.mode !== `SSG` && data.page.matchPath
-        ? data.potentialPagePath
-        : data.page.path,
+    pagePath: getPath(data),
     pageData,
     staticQueryContext,
     ...data.templateDetails.assets,

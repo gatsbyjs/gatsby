@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.14.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@3.14.2/packages/gatsby) (2021-10-06)
+
+#### Features
+
+- Don't crash the build process when in preview mode [#33184](https://github.com/gatsbyjs/gatsby/issues/33184) [#33433](https://github.com/gatsbyjs/gatsby/issues/33433) ([1604efb](https://github.com/gatsbyjs/gatsby/commit/1604efbdde97c138b11626923875ae118f7b5e67))
+
+#### Bug Fixes
+
+- postcss-svgo - remove plugin removeAttrs [#33266](https://github.com/gatsbyjs/gatsby/issues/33266) [#33434](https://github.com/gatsbyjs/gatsby/issues/33434) ([07f1990](https://github.com/gatsbyjs/gatsby/commit/07f1990f2d01b1c6b5def457d418294fafe3a5ea))
+
+### [3.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@3.14.1/packages/gatsby) (2021-09-30)
+
+#### Bug Fixes
+
+- unblock event loop when running queries [#33338](https://github.com/gatsbyjs/gatsby/issues/33338) [#33342](https://github.com/gatsbyjs/gatsby/issues/33342) ([6840b5f](https://github.com/gatsbyjs/gatsby/commit/6840b5f3fbabbc4dd4e23e897759c9f92a204abd))
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@3.14.0/packages/gatsby) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

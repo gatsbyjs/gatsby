@@ -322,7 +322,7 @@ Default is false because sometimes non-critical errors are returned alongside va
       allow401Images: Joi.boolean()
         .default(false)
         .description(
-          `This option allows images url's that return a 401 to not fail production builds.`
+          `This option allows images url's that return a 401 to not fail production builds. 401s are sometimes returned in place of 404's for protected content to hide whether the content exists.`
         )
         .meta({
           example: wrapOptions(`
