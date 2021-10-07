@@ -42,7 +42,7 @@ export interface IGatsbyPage {
   pluginCreatorId: Identifier
   componentPath: SystemPath
   ownerNodeId: Identifier
-  defer: boolean
+  defer?: boolean
   /**
    * INTERNAL. Do not use `page.mode`, it can be removed at any time
    * `page.mode` is currently reliable only in engines and `onPostBuild` hook

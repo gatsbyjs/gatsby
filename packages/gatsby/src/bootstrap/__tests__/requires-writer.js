@@ -18,6 +18,12 @@ const generatePagesState = pages => {
   return state
 }
 
+jest.mock(`../../utils/page-mode`, () => {
+  return {
+    getPageMode: jest.fn(page => page.mode),
+  }
+})
+
 jest.mock(`fs-extra`, () => {
   return {
     writeFile: () => Promise.resolve(),

@@ -11,6 +11,7 @@ Object {
         "/my-sweet-new-page/",
       },
       "query": "",
+      "serverData": false,
     },
   },
   "html": Object {

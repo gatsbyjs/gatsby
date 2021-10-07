@@ -103,6 +103,7 @@ describe(`worker (share-state)`, () => {
               "/foo/",
             },
             "query": "",
+            "serverData": false,
           },
         },
       }
@@ -231,6 +232,7 @@ describe(`worker (share-state)`, () => {
         "isInBootstrap": true,
         "pages": Object {},
         "query": "I'm a page query",
+        "serverData": false,
       }
     `)
 

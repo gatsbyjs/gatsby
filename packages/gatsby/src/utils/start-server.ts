@@ -338,7 +338,7 @@ export async function startServer(
             )
           }
 
-          if (getPageMode(page) === `SSR`) {
+          if (pageMode === `SSR`) {
             const { props } = await serverDataPromise
 
             pageData.result.serverData = props
