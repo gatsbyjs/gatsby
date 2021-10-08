@@ -6,7 +6,7 @@ import { BuildError } from "./components/build-error"
 import { RuntimeErrors } from "./components/runtime-errors"
 import { GraphqlErrors } from "./components/graphql-errors"
 import { DevSsrError } from "./components/dev-ssr-error"
-import { GetServerDataErrors } from "./components/getserverdata-errors"
+import { GetServerDataError } from "./components/getserverdata-error"
 
 const reducer = (state, event) => {
   switch (event.action) {
@@ -19,9 +19,6 @@ const reducer = (state, event) => {
     case `CLEAR_DEV_SSR_ERROR`: {
       return { ...state, devSsrError: null }
     }
-    case `CLEAR_GETSERVERDATA_ERRORS`: {
-      return { ...state, getServerDataErrors: null }
-    }
     case `SHOW_COMPILE_ERROR`: {
       return { ...state, buildError: event.payload }
     }
@@ -32,12 +29,10 @@ const reducer = (state, event) => {
     case `SHOW_RUNTIME_ERRORS`: {
       return { ...state, errors: state.errors.concat(event.payload) }
     }
-    case `HANDLE_GETSERVERDATA_ERROR`:
-    case `SHOW_GETSERVERDATA_ERRORS`: {
-      console.log({ event })
+    case `SHOW_GETSERVERDATA_ERROR`: {
       return {
         ...state,
-        getServerDataErrors: event.payload,
+        getServerDataError: event.payload,
       }
     }
     case `SHOW_GRAPHQL_ERRORS`: {
@@ -55,7 +50,7 @@ const reducer = (state, event) => {
         buildError: null,
         errors: [],
         graphqlErrors: [],
-        getServerDataErrors: null,
+        getServerDataError: null,
       }
     }
     default: {
@@ -68,7 +63,7 @@ const initialState = {
   errors: [],
   buildError: null,
   devSsrError: null,
-  getServerDataErrors: null,
+  getServerDataError: null,
   graphqlErrors: [],
 }
 
@@ -102,7 +97,7 @@ function DevOverlay({ children }) {
 
   const hasBuildError = state.buildError !== null
   const hasRuntimeErrors = Boolean(state.errors.length)
-  const hasGetServerDataErrors = Boolean(state.getServerDataErrors)
+  const hasGetServerDataErrors = Boolean(state.getServerDataError)
   const hasGraphqlErrors = Boolean(state.graphqlErrors.length)
   const hasDevSsrError = state.devSsrError !== null
   const hasErrors =
@@ -114,12 +109,11 @@ function DevOverlay({ children }) {
 
   // This component has a deliberate order (priority)
   const ErrorComponent = () => {
-    console.log({ state })
     if (hasBuildError) {
       return <BuildError error={state.buildError} />
     }
     if (hasGetServerDataErrors) {
-      return <GetServerDataErrors error={state.getServerDataErrors} />
+      return <GetServerDataError error={state.getServerDataError} />
     }
     if (hasRuntimeErrors) {
       return <RuntimeErrors errors={state.errors} dismiss={dismiss} />

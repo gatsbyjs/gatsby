@@ -54,7 +54,7 @@ function WrappedAccordionItem({ error, open }) {
   )
 }
 
-export function GetServerDataErrors({ error }) {
+export function GetServerDataError({ error }) {
   return (
     <Overlay>
       <Header data-gatsby-error-type="runtime-error">

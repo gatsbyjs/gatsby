@@ -52,7 +52,7 @@ export class PageQueryStore extends React.Component {
     window._gatsbyEvents.push([
       `FAST_REFRESH`,
       {
-        action: `SHOW_GETSERVERDATA_ERRORS`,
+        action: `SHOW_GETSERVERDATA_ERROR`,
         payload: this.state?.page?.page?.getServerDataError,
       },
     ])
@@ -62,7 +62,7 @@ export class PageQueryStore extends React.Component {
     window._gatsbyEvents.push([
       `FAST_REFRESH`,
       {
-        action: `SHOW_GETSERVERDATA_ERRORS`,
+        action: `SHOW_GETSERVERDATA_ERROR`,
         payload: this.state?.page?.page?.getServerDataError,
       },
     ])
