@@ -333,7 +333,9 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     }
     node.internal.contentDigest = createContentDigest(node)
     createNode(node)
-    reporter.log(`Updated Gatsby node: ${node.id}`)
+    reporter.log(
+      `Updated Gatsby node — id: ${node.id} type: ${node.internal.type}`
+    )
   }
 }
 
