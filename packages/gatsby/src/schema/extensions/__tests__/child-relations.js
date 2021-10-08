@@ -675,6 +675,144 @@ describe(`Define parent-child relationships with field extensions`, () => {
     expect(results).toEqual(expected)
   })
 
+  it(`adds children fields to interfaces with Node interface`, async () => {
+    dispatch(
+      createTypes(`
+        interface Ancestors implements Node {
+          id: ID!
+        }
+        type Parent implements Node & Ancestors {
+          id: ID!
+        }
+        type AnotherChild implements Node @childOf(types: ["Ancestors"]) {
+          name: String
+        }
+      `)
+    )
+    const query = `
+      {
+        allAncestors {
+          nodes {
+            childrenAnotherChild {
+              id
+            }
+          }
+        }
+        allParent {
+          nodes {
+            childrenAnotherChild {
+              id
+            }
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      allAncestors: {
+        nodes: [
+          {
+            childrenAnotherChild: [
+              {
+                id: `anotherchild1`,
+              },
+              {
+                id: `anotherchild2`,
+              },
+            ],
+          },
+          {
+            childrenAnotherChild: [],
+          },
+        ],
+      },
+      allParent: {
+        nodes: [
+          {
+            childrenAnotherChild: [
+              {
+                id: `anotherchild1`,
+              },
+              {
+                id: `anotherchild2`,
+              },
+            ],
+          },
+          {
+            childrenAnotherChild: [],
+          },
+        ],
+      },
+    }
+    expect(results).toEqual(expected)
+  })
+
+  it(`adds children fields to interfaces with Node interface (mime-type relation)`, async () => {
+    dispatch(
+      createTypes(`
+        interface Ancestors implements Node @mimeTypes(types: ["application/listenup"]) {
+          id: ID!
+        }
+        type Parent implements Node & Ancestors @mimeTypes(types: ["application/listenup"]) {
+          id: ID!
+        }
+        type Child implements Node @childOf(mimeTypes: ["application/listenup"]) {
+          name: String
+        }
+      `)
+    )
+    const query = `
+      {
+        allAncestors {
+          nodes {
+            childChild {
+              id
+            }
+          }
+        }
+        allParent {
+          nodes {
+            childChild {
+              id
+            }
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      allAncestors: {
+        nodes: [
+          {
+            childChild: {
+              id: `child1`,
+            },
+          },
+          {
+            childChild: {
+              id: `child2`,
+            },
+          },
+        ],
+      },
+      allParent: {
+        nodes: [
+          {
+            childChild: {
+              id: `child1`,
+            },
+          },
+          {
+            childChild: {
+              id: `child2`,
+            },
+          },
+        ],
+      },
+    }
+    expect(results).toEqual(expected)
+  })
+
   it(`does not add children fields to interfaces without Node interface`, async () => {
     dispatch(
       createTypes(`
