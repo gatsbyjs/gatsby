@@ -457,21 +457,6 @@ const addExtensions = ({
     typeComposer instanceof InterfaceTypeComposer &&
     isNodeInterface(typeComposer)
   ) {
-    // TODO: remove nodeInterface in Gatsby v4
-    if (typeComposer.hasExtension(`nodeInterface`)) {
-      report.warn(
-        `Deprecation warning: ` +
-          `\`@nodeInterface\` extension is deprecated and will be removed in Gatsby v4. ` +
-          `Use interface inheritance instead.\n` +
-          `To upgrade replace the old format:\n` +
-          `  interface \`${typeComposer.getTypeName()}\` @nodeInterface\n` +
-          `with the new one (in \`createTypes\` action of schema customization API):\n` +
-          `  interface \`${typeComposer.getTypeName()}\` implements Node\n` +
-          `Read more about schema customization here:\n` +
-          `https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/`
-      )
-    }
-
     const hasCorrectIdField =
       typeComposer.hasField(`id`) &&
       typeComposer.getFieldType(`id`).toString() === `ID!`
@@ -1027,8 +1012,7 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
       }
       if (type instanceof InterfaceTypeComposer && !isNodeInterface(type)) {
         report.error(
-          `The \`childOf\` extension can only be used on interface types that ` +
-            `have the \`@nodeInterface\` extension.\n` +
+          `The \`childOf\` extension can only be used on types that implement the \`Node\` interface.\n` +
             `Check the type definition of \`${type.getTypeName()}\`.`
         )
         return
@@ -1328,9 +1312,7 @@ const validate = (type, value) => {
   }
 }
 
-// TODO: remove nodeInterface in Gatsby v4
 const isNodeInterface = interfaceTypeComposer =>
-  interfaceTypeComposer.hasExtension(`nodeInterface`) ||
   interfaceTypeComposer.hasInterface(`Node`)
 
 const checkQueryableInterfaces = ({ schemaComposer }) => {
