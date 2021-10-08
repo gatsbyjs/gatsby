@@ -124,9 +124,12 @@ const runWebpack = (
       )
       devssrWebpackCompiler = watcher
     } else {
-      build(compilerConfig).then(({ stats, close }) => {
-        resolve({ stats, close })
-      })
+      build(compilerConfig).then(
+        ({ stats, close }) => {
+          resolve({ stats, close })
+        },
+        err => reject(err)
+      )
     }
   })
 }
@@ -138,7 +141,9 @@ const doBuildRenderer = async (
 ): Promise<IBuildRendererResult> => {
   const { stats, close } = await runWebpack(webpackConfig, stage, directory)
   if (stats?.hasErrors()) {
-    reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
+    reporter.panicOnBuild(
+      structureWebpackErrors(stage, stats.compilation.errors)
+    )
   }
 
   // render-page.js is hard coded in webpack.config

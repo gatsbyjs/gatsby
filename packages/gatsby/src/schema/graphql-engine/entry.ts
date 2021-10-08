@@ -1,3 +1,4 @@
+import { ExecutionResult, Source } from "graphql"
 import "../../utils/engines-fs-provider"
 import { build } from "../index"
 import { setupLmdbStore } from "../../datastore/lmdb/lmdb-datastore"
@@ -78,9 +79,19 @@ export class GraphQLEngine {
     return this.runnerPromise
   }
 
-  public async runQuery(...args: Parameters<Runner>): ReturnType<Runner> {
+  public async ready(): Promise<void> {
+    // We don't want to expose internal runner freely. We do expose `runQuery` function already.
+    // The way internal runner works can change, so we should not make it a public API.
+    // Here we just want to expose way to await it being ready
+    await this.getRunner()
+  }
+
+  public async runQuery(
+    query: string | Source,
+    context: Record<string, any>
+  ): Promise<ExecutionResult> {
     const graphqlRunner = await this.getRunner()
-    const result = await graphqlRunner(...args)
+    const result = await graphqlRunner(query, context)
     // Def not ideal - this is just waiting for all jobs and not jobs for current
     // query, but we don't track jobs per query right now
     // TODO: start tracking jobs per query to be able to await just those

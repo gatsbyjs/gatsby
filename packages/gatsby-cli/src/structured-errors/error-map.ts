@@ -52,6 +52,12 @@ const errors = {
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
   },
+  "98001": {
+    text: (): string =>
+      `Built Rendering Engines failed validation failed validation.\n\nPlease open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help`,
+    type: Type.WEBPACK,
+    level: Level.ERROR,
+  },
   "98123": {
     text: (context): string =>
       `${context.stageLabel} failed\n\n${
@@ -603,6 +609,7 @@ const errors = {
         context.stuckStatusDiagnosticMessage
       }`,
     level: Level.ERROR,
+    docsUrl: `https://support.gatsbyjs.com/hc/en-us/articles/360056811354`,
   },
 
   /** Node Manifest warnings */
