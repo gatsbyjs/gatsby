@@ -111,6 +111,7 @@ module.exports = function remarkExtendNodeType(
     }
 
     let remark = new Remark().data(`settings`, remarkOptions)
+    let pluginRemark = unified()
 
     if (gfm) {
       // TODO: deprecate `gfm` option in favor of explicit remark-gfm as a plugin?
@@ -139,18 +140,22 @@ module.exports = function remarkExtendNodeType(
       }
     }
 
-    for (const plugin of pluginOptions.remarkPlugins) {
+    const remarkPlugins = pluginOptions.remarkPlugins || []
+    const rehypePlugins = pluginOptions.rehypePlugins || []
+
+    for (const plugin of remarkPlugins) {
       if (_.isArray(plugin)) {
         const [parser, options] = plugin
         remark = remark.use(parser, options)
+        pluginRemark = pluginRemark.use(parser, options)
       } else {
         remark = remark.use(plugin)
+        pluginRemark = pluginRemark.use(plugin)
       }
     }
 
     let rehype = unified()
-
-    for (const plugin of pluginOptions.rehypePlugins) {
+    for (const plugin of rehypePlugins) {
       if (_.isArray(plugin)) {
         const [parser, options] = plugin
         rehype = rehype.use(parser, options)
@@ -253,7 +258,7 @@ module.exports = function remarkExtendNodeType(
         }
       }
 
-      await remark.run(markdownAST)
+      await pluginRemark.run(markdownAST)
       return markdownAST
     }
 
