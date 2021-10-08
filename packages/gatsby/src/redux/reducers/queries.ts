@@ -334,9 +334,7 @@ function trackDirtyQuery(
   state: IGatsbyState["queries"],
   queryId: QueryId
 ): IGatsbyState["queries"] {
-  if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
-    state.dirtyQueriesListToEmitViaWebsocket.push(queryId)
-  }
+  state.dirtyQueriesListToEmitViaWebsocket.push(queryId)
 
   return state
 }

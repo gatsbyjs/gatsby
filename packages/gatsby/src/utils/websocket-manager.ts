@@ -129,27 +129,16 @@ export class WebsocketManager {
       })
     })
 
-    if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
-      // page-data marked stale due to dirty query tracking
-      const boundEmitStalePageDataPathsFromDirtyQueryTracking =
-        this.emitStalePageDataPathsFromDirtyQueryTracking.bind(this)
-      emitter.on(
-        `CREATE_PAGE`,
-        boundEmitStalePageDataPathsFromDirtyQueryTracking
-      )
-      emitter.on(
-        `CREATE_NODE`,
-        boundEmitStalePageDataPathsFromDirtyQueryTracking
-      )
-      emitter.on(
-        `DELETE_NODE`,
-        boundEmitStalePageDataPathsFromDirtyQueryTracking
-      )
-      emitter.on(
-        `QUERY_EXTRACTED`,
-        boundEmitStalePageDataPathsFromDirtyQueryTracking
-      )
-    }
+    // page-data marked stale due to dirty query tracking
+    const boundEmitStalePageDataPathsFromDirtyQueryTracking =
+      this.emitStalePageDataPathsFromDirtyQueryTracking.bind(this)
+    emitter.on(`CREATE_PAGE`, boundEmitStalePageDataPathsFromDirtyQueryTracking)
+    emitter.on(`CREATE_NODE`, boundEmitStalePageDataPathsFromDirtyQueryTracking)
+    emitter.on(`DELETE_NODE`, boundEmitStalePageDataPathsFromDirtyQueryTracking)
+    emitter.on(
+      `QUERY_EXTRACTED`,
+      boundEmitStalePageDataPathsFromDirtyQueryTracking
+    )
 
     // page-data marked stale due to static query hashes change
     emitter.on(

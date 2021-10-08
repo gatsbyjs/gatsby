@@ -89,7 +89,6 @@ const activeFlags: Array<IFlag> = [
     includedFlags: [
       // `DEV_SSR`, - not working with serverdata atm
       `PRESERVE_FILE_DOWNLOAD_CACHE`,
-      `DEV_WEBPACK_CACHE`,
     ],
     testFitness: (): fitnessEnum => true,
   },
@@ -113,61 +112,6 @@ const activeFlags: Array<IFlag> = [
         return true
       }
     },
-  },
-  {
-    name: `QUERY_ON_DEMAND`,
-    env: `GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND`,
-    command: `develop`,
-    telemetryId: false,
-    experimental: false,
-    description: `Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.`,
-    umbrellaIssue: `https://gatsby.dev/query-on-demand-feedback`,
-    noCI: true,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-  },
-  {
-    name: `LAZY_IMAGES`,
-    env: `GATSBY_EXPERIMENTAL_LAZY_IMAGES`,
-    command: `develop`,
-    telemetryId: false,
-    experimental: false,
-    description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server. Requires gatsby-plugin-sharp@2.10.0 or above.`,
-    umbrellaIssue: `https://gatsby.dev/lazy-images-feedback`,
-    noCI: true,
-    testFitness: (): fitnessEnum => {
-      const semverConstraints = {
-        // Because of this, this flag will never show up
-        "gatsby-plugin-sharp": `>=2.10.0`,
-      }
-      if (satisfiesSemvers(semverConstraints)) {
-        return `LOCKED_IN`
-      } else {
-        // gatsby-plugin-sharp is either not installed or not new enough so
-        // just disable — it won't work anyways.
-        return false
-      }
-    },
-    requires: `Requires gatsby-plugin-sharp@2.10.0 or above.`,
-  },
-  {
-    name: `PRESERVE_WEBPACK_CACHE`,
-    env: `GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE`,
-    command: `all`,
-    telemetryId: `PreserveWebpackCache`,
-    experimental: false,
-    description: `Use webpack's persistent caching and don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
-    umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-  },
-  {
-    name: `DEV_WEBPACK_CACHE`,
-    env: `GATSBY_EXPERIMENTAL_DEV_WEBPACK_CACHE`,
-    command: `develop`,
-    telemetryId: `DevWebackCache`,
-    experimental: false,
-    description: `Enable webpack's persistent caching during development. Speeds up the start of the development server.`,
-    umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
   },
   {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
@@ -204,7 +148,7 @@ const activeFlags: Array<IFlag> = [
     env: `GATSBY_EXPERIMENTAL_LMDB_STORE`,
     command: `all`,
     telemetryId: `LmdbStore`,
-    experimental: true,
+    experimental: false,
     umbrellaIssue: `https://gatsby.dev/lmdb-feedback`,
     description: `Store nodes in a persistent embedded database (vs in-memory). Lowers peak memory usage. Requires Node v14.10 or above.`,
     testFitness: (): fitnessEnum => {
@@ -222,7 +166,7 @@ const activeFlags: Array<IFlag> = [
     env: `GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING`,
     command: `build`,
     telemetryId: `PQR`,
-    experimental: true,
+    experimental: false,
     umbrellaIssue: `https://gatsby.dev/pqr-feedback`,
     description: `Parallelize running page queries in order to better saturate all available cores. Improves time it takes to run queries during gatsby build. Requires Node v14.10 or above.`,
     includedFlags: [`LMDB_STORE`],

@@ -183,7 +183,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
     // them, a page might not exist anymore щ（ﾟДﾟщ）
     // This is why we need this check
     if (page) {
-      if (!isBuild && process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+      if (!isBuild) {
         // check if already did run query for this page
         // with query-on-demand we might have pending page-data write due to
         // changes in static queries assigned to page template, but we might not

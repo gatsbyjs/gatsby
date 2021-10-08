@@ -42,10 +42,9 @@ if (
 ) {
   process.env.GATSBY_EXPERIMENTAL_DEV_SSR = `true`
   process.env.PRESERVE_FILE_DOWNLOAD_CACHE = `true`
-  process.env.PRESERVE_WEBPACK_CACHE = `true`
 
   reporter.info(`
-Three fast dev experiments are enabled: Development SSR, preserving file download cache and preserving webpack cache.
+Two fast dev experiments are enabled: Development SSR and preserving file download cache.
 
 Please give feedback on their respective umbrella issues!
 
@@ -151,10 +150,7 @@ export async function initialize({
   // TODO: figure out proper way of disabling loading indicator
   // for now GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
   // will work, but we don't want to force users into using env vars
-  if (
-    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
-    !process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR
-  ) {
+  if (!process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR) {
     // if query on demand is enabled and GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR was not set at all
     // enable loading indicator
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `true`
@@ -168,19 +164,6 @@ export async function initialize({
   }
 
   activity.end()
-
-  if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
-    if (process.env.gatsby_executing_command !== `develop`) {
-      // we don't want to ever have this flag enabled for anything than develop
-      // in case someone have this env var globally set
-      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
-    } else if (isCI() && !process.env.CYPRESS_SUPPORT) {
-      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
-      reporter.verbose(
-        `Experimental Query on Demand feature is not available in CI environment. Continuing with eager query running.`
-      )
-    }
-  }
 
   // run stale jobs
   // @ts-ignore we'll need to fix redux typings https://redux.js.org/usage/usage-with-typescript
@@ -372,34 +355,22 @@ export async function initialize({
       // }
       // }
 
-      if (
-        process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE ||
-        process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE
-      ) {
-        const deleteGlobs = [
-          // By default delete all files & subdirectories
-          `${cacheDirectory}/**`,
-          `${cacheDirectory}/*/`,
-        ]
+      const deleteGlobs = [
+        // By default delete all files & subdirectories
+        `${cacheDirectory}/**`,
+        `${cacheDirectory}/*/`,
+        `!${cacheDirectory}/webpack`,
+      ]
 
-        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
-          // Stop the caches directory from being deleted, add all sub directories,
-          // but remove gatsby-source-filesystem
-          deleteGlobs.push(`!${cacheDirectory}/caches`)
-          deleteGlobs.push(`${cacheDirectory}/caches/*`)
-          deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
-        }
-
-        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
-          // Add webpack
-          deleteGlobs.push(`!${cacheDirectory}/webpack`)
-        }
-        await del(deleteGlobs)
-      } else {
-        // Attempt to empty dir if remove fails,
-        // like when directory is mount point
-        await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
+      if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
+        // Stop the caches directory from being deleted, add all sub directories,
+        // but remove gatsby-source-filesystem
+        deleteGlobs.push(`!${cacheDirectory}/caches`)
+        deleteGlobs.push(`${cacheDirectory}/caches/*`)
+        deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
       }
+
+      await del(deleteGlobs)
     } catch (e) {
       reporter.error(`Failed to remove .cache files.`, e)
     }

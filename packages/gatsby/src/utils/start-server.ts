@@ -317,24 +317,15 @@ export async function startServer(
               componentInstance
             )
           }
-
-          let pageData: IPageDataWithQueryResult
           // TODO move to query-engine
-          if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
-            const start = Date.now()
+          const start = Date.now()
 
-            pageData = await getPageDataExperimental(page.path)
+          const pageData = await getPageDataExperimental(page.path)
 
-            telemetry.trackCli(`RUN_QUERY_ON_DEMAND`, {
-              name: `getPageData`,
-              duration: Date.now() - start,
-            })
-          } else {
-            pageData = await readPageData(
-              path.join(store.getState().program.directory, `public`),
-              page.path
-            )
-          }
+          telemetry.trackCli(`RUN_QUERY_ON_DEMAND`, {
+            name: `getPageData`,
+            duration: Date.now() - start,
+          })
 
           if (page.mode === `SSR`) {
             const { props } = await serverDataPromise
@@ -626,10 +617,7 @@ export async function startServer(
     })
   }
 
-  if (
-    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
-    process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
-  ) {
+  if (process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`) {
     routeLoadingIndicatorRequests(app)
   }
 

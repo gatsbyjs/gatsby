@@ -148,10 +148,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   )[0]
 
   let dismissLoadingIndicator
-  if (
-    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
-    process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
-  ) {
+  if (process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`) {
     let indicatorMountElement
 
     const showIndicatorTimeout = setTimeout(() => {
