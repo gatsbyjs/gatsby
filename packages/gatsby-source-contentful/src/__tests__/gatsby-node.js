@@ -33,7 +33,7 @@ const createMockCache = () => {
 }
 
 describe(`gatsby-node`, () => {
-  const actions = { createTypes: jest.fn() }
+  const actions = { createTypes: jest.fn(), setPluginStatus: jest.fn() }
   const schema = { buildObjectType: jest.fn() }
   const store = {
     getState: jest.fn(() => {
@@ -327,19 +327,15 @@ describe(`gatsby-node`, () => {
       locales
     )
 
+    expect(store.getState).toHaveBeenCalled()
+
     // Tries to load data from cache
-    expect(cache.get).toHaveBeenCalledWith(
-      `contentful-sync-token-testSpaceId-master`
-    )
     expect(cache.get).toHaveBeenCalledWith(
       `contentful-sync-data-testSpaceId-master`
     )
 
     expect(cache.get.mock.calls).toMatchInlineSnapshot(`
       Array [
-        Array [
-          "contentful-sync-token-testSpaceId-master",
-        ],
         Array [
           "contentful-content-types-testSpaceId-master",
         ],
@@ -350,10 +346,10 @@ describe(`gatsby-node`, () => {
     `)
 
     // Stores sync token and raw/unparsed data to the cache
-    expect(cache.set).toHaveBeenCalledWith(
-      `contentful-sync-token-testSpaceId-master`,
-      startersBlogFixture.initialSync().currentSyncData.nextSyncToken
-    )
+    expect(actions.setPluginStatus).toHaveBeenCalledWith({
+      [`contentful-sync-token-testSpaceId-master`]:
+        startersBlogFixture.initialSync().currentSyncData.nextSyncToken,
+    })
 
     // Check for valid cache data
     const cacheCall = cache.set.mock.calls.filter(
@@ -372,7 +368,6 @@ describe(`gatsby-node`, () => {
       Array [
         "contentful-content-types-testSpaceId-master",
         "contentful-sync-data-testSpaceId-master",
-        "contentful-sync-token-testSpaceId-master",
       ]
     `)
   })
