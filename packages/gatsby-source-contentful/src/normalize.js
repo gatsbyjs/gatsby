@@ -445,12 +445,13 @@ exports.createNodesForContentType = ({
             // node manifests for recently updated/created content.
             (entryItem.sys.updatedAt &&
               Date.now() - new Date(entryItem.sys.updatedAt).getTime() <=
-                // seconds
-                60 *
-                  // milliseconds
-                  1000 *
+                // milliseconds
+                1000 *
+                  // seconds
+                  60 *
                   // minutes
                   60 *
+                  // hours
                   (process.env
                     .CONTENT_SYNC_CONTENTFUL_HOURS_SINCE_ENTRY_UPDATE || 48)))
 
