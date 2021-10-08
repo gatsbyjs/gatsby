@@ -117,7 +117,7 @@ export async function sourceNodes(
    * with all data from subsequent syncs. Afterwards the references get
    * resolved via the Contentful JS SDK.
    */
-  const syncToken = await cache.get(CACHE_SYNC_TOKEN)
+  const syncToken = store.getState().status.plugins?.[`gatsby-source-contentful`]?.[CACHE_SYNC_TOKEN]
 
   // Actual fetch of data from Contentful
   const {
@@ -205,10 +205,10 @@ export async function sourceNodes(
   // Update syncToken
   const nextSyncToken = currentSyncData.nextSyncToken
 
-  await Promise.all([
-    cache.set(CACHE_SYNC_DATA, mergedSyncData),
-    cache.set(CACHE_SYNC_TOKEN, nextSyncToken),
-  ])
+  await cache.set(CACHE_SYNC_DATA, mergedSyncData)
+  actions.setPluginStatus({
+    [CACHE_SYNC_TOKEN]: nextSyncToken
+  })
 
   fetchActivity.end()
 
