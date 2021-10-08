@@ -21,27 +21,57 @@ export default declare(function removeApiCalls(
     visitor: {
       Program: {
         exit(path): void {
-          // make sure all references are up to date
-          path.scope.crawl()
+          // babel doesn't remove references very well so we loop until nothing gets removed
+          let removed = false
 
           // remove all unreferenced bindings
-          Object.keys(path.scope.bindings).forEach(refName => {
-            const ref = path.scope.bindings[refName]
-            if (!ref.referenced) {
-              ref.path.remove()
+          do {
+            removed = false
+            // make sure all references are up to date
+            path.scope.crawl()
 
-              // if it's a module and all specifiers are removed, remove the full binding
-              if (
-                ref.kind === `module` &&
-                !(ref.path.parent as t.ImportDeclaration).specifiers.length
-              ) {
-                ref.path.parentPath.remove()
+            Object.keys(path.scope.bindings).forEach(refName => {
+              const ref = path.scope.bindings[refName]
+
+              if (!ref.referenced) {
+                // if const {x,y} is used, we remove the property
+                if (
+                  t.isVariableDeclarator(ref.path) &&
+                  t.isObjectPattern(
+                    (ref.path.parent as t.VariableDeclaration).declarations[0]
+                      .id
+                  )
+                ) {
+                  const objectPattern = (
+                    ref.path.parent as t.VariableDeclaration
+                  ).declarations[0].id as t.ObjectPattern
+                  objectPattern.properties = objectPattern.properties.filter(
+                    prop =>
+                      t.isObjectProperty(prop)
+                        ? (prop.value as t.Identifier).name !== refName
+                        : ((prop as t.RestElement).argument as t.Identifier)
+                            .name !== refName
+                  )
+                } else {
+                  ref.path.remove()
+                }
+
+                // if it's a module and all specifiers are removed, remove the full binding
+                if (
+                  ref.kind === `module` &&
+                  !(ref.path.parent as t.ImportDeclaration).specifiers.length
+                ) {
+                  ref.path.parentPath.remove()
+                }
+
+                removed = true
               }
-            }
-          })
+            })
+          } while (removed)
         },
       },
 
+      // Remove export statements
       ExportNamedDeclaration(path): void {
         const declaration = path.node.declaration
 
@@ -77,6 +107,24 @@ export default declare(function removeApiCalls(
           apiToCheck = declaration.declarations[0].id.name
         }
 
+        if (apiToCheck && apisToRemove.includes(apiToCheck)) {
+          path.remove()
+        }
+      },
+
+      // remove exports
+      ExpressionStatement(path): void {
+        if (
+          !t.isProgram(path.parentPath) ||
+          !t.isAssignmentExpression(path.node.expression) ||
+          !t.isMemberExpression(path.node.expression.left) ||
+          (path.node.expression.left.object as t.Identifier).name !== `exports`
+        ) {
+          return
+        }
+
+        const apiToCheck = (path.node.expression.left.property as t.Identifier)
+          .name
         if (apiToCheck && apisToRemove.includes(apiToCheck)) {
           path.remove()
         }
