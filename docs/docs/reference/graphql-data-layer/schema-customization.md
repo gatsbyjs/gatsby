@@ -399,11 +399,9 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
             //   type: "AuthorJson",
             // })
             // But since the example is using the author email as foreign key,
-            // you can use `runQuery`, or get all author nodes
-            // with `getAllNodes` and manually find the linked author
-            // node:
+            // you can use `nodeModel.findAll` and manually find the linked author node:
             return context.nodeModel
-              .getAllNodes({ type: "AuthorJson" })
+              .findAll({ type: "AuthorJson" }, query: {})
               .find(author => author.email === source.author)
           },
         },
