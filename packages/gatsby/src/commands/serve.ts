@@ -271,9 +271,8 @@ module.exports = async (program: IServeProgram): Promise<void> => {
               return void res.send(results)
             } catch (e) {
               report.error(
-                `Generating page-data for "${requestedPagePath}" / "${potentialPagePath}" failed.\n\n${e.toString()}${
-                  e.stack ? `\n\n${e.stack}` : ``
-                }`
+                `Generating page-data for "${requestedPagePath}" / "${potentialPagePath}" failed.`,
+                e
               )
               return res
                 .status(500)
@@ -308,9 +307,8 @@ module.exports = async (program: IServeProgram): Promise<void> => {
               return res.send(results)
             } catch (e) {
               report.error(
-                `Rendering html for "${potentialPagePath}" failed.\n\n${e.toString()}${
-                  e.stack ? `\n\n${e.stack}` : ``
-                }`
+                `Rendering html for "${potentialPagePath}" failed.`,
+                e
               )
               return res
                 .status(500)

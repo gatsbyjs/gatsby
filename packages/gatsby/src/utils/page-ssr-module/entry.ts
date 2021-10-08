@@ -17,6 +17,7 @@ import {
 // @ts-ignore render-page import will become valid later on (it's marked as external)
 import htmlComponentRenderer, { getPageChunk } from "./routes/render-page"
 import { getServerData, IServerData } from "../get-server-data"
+import { getCodeFrame } from "../../query/graphql-errors-codeframe"
 
 export interface ITemplateDetails {
   query: string
@@ -80,7 +81,16 @@ export async function getData({
         })
         .then(queryResults => {
           if (queryResults.errors && queryResults.errors.length > 0) {
-            throw queryResults.errors[0]
+            const e = queryResults.errors[0]
+            const codeFrame = getCodeFrame(
+              templateDetails.query,
+              e.locations && e.locations[0].line,
+              e.locations && e.locations[0].column
+            )
+
+            const queryRunningError = new Error(e.message + `\n\n` + codeFrame)
+            queryRunningError.stack = e.stack
+            throw queryRunningError
           } else {
             results = queryResults
           }
