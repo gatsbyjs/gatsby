@@ -619,6 +619,30 @@ Object {
 }
 `;
 
+exports[`Remark and rehype plugins are working returns a mutated h1 by remark and rehype plugins 1`] = `
+Object {
+  "htmlAst": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "abc",
+          },
+        ],
+        "properties": Object {},
+        "tagName": "h1",
+        "type": "element",
+      },
+    ],
+    "data": Object {
+      "quirksMode": false,
+    },
+    "type": "root",
+  },
+}
+`;
+
 exports[`Table of contents is generated correctly from schema correctly generates table of contents 1`] = `
 Object {
   "frontmatter": Object {

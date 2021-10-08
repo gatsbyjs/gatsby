@@ -1389,3 +1389,44 @@ describe(`Headings are generated correctly from schema`, () => {
     }
   )
 })
+
+describe(`Remark and rehype plugins are working`, () => {
+  const visit = require(`unist-util-visit`)
+  bootstrapTest(
+    `returns a mutated h1 by remark and rehype plugins`,
+    `# a`,
+    `htmlAst`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.htmlAst.children[0].children[0].value).toEqual(`abc`)
+    },
+    {
+      pluginOptions: {
+        remarkPlugins: [
+          [
+            function ({ name }) {
+              return function (node) {
+                visit(node, `heading`, node => (node.children[0].value += name))
+              }
+            },
+            { name: `b` },
+          ],
+        ],
+        rehypePlugins: [
+          [
+            function ({ name }) {
+              return function (node) {
+                visit(
+                  node,
+                  e => e.tagName === `h1`,
+                  node => (node.children[0].value += name)
+                )
+              }
+            },
+            { name: `c` },
+          ],
+        ],
+      },
+    }
+  )
+})
