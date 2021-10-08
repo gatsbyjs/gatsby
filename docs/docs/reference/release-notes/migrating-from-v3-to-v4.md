@@ -265,6 +265,18 @@ Breaking Changes in plugins that we own and maintain.
 - The `feeds` option is required now
 - The `serialize` key inside the `feeds` option is required now. Please define your own function if you used the default one until now.
 
+#### `gatsby-plugin-sharp`
+
+- The `sizeByPixelDensity` option was removed
+
+#### `gatsby-remark-images`
+
+- The `sizeByPixelDensity` option was removed
+
+#### `gatsby-remark-images-contentful`
+
+- The `sizeByPixelDensity` option was removed
+
 ## Future Breaking Changes
 
 This section explains deprecations that were made for Gatsby 4. These old behaviors will be removed in v5, at which point they will no longer work. For now, you can still use the old behaviors in v4, but we recommend updating to the new signatures to make future updates easier.
