@@ -20,7 +20,7 @@ const reducer = (state, event) => {
       return { ...state, devSsrError: null }
     }
     case `CLEAR_GETSERVERDATA_ERRORS`: {
-      return { ...state, getServerDataErrors: [] }
+      return { ...state, getServerDataErrors: null }
     }
     case `SHOW_COMPILE_ERROR`: {
       return { ...state, buildError: event.payload }
@@ -34,9 +34,10 @@ const reducer = (state, event) => {
     }
     case `HANDLE_GETSERVERDATA_ERROR`:
     case `SHOW_GETSERVERDATA_ERRORS`: {
+      console.log({ event })
       return {
         ...state,
-        getServerDataErrors: state.getServerDataErrors.concat(event.payload),
+        getServerDataErrors: event.payload,
       }
     }
     case `SHOW_GRAPHQL_ERRORS`: {
@@ -54,7 +55,7 @@ const reducer = (state, event) => {
         buildError: null,
         errors: [],
         graphqlErrors: [],
-        getServerDataErrors: [],
+        getServerDataErrors: null,
       }
     }
     default: {
@@ -67,7 +68,7 @@ const initialState = {
   errors: [],
   buildError: null,
   devSsrError: null,
-  getServerDataErrors: [],
+  getServerDataErrors: null,
   graphqlErrors: [],
 }
 
@@ -101,7 +102,7 @@ function DevOverlay({ children }) {
 
   const hasBuildError = state.buildError !== null
   const hasRuntimeErrors = Boolean(state.errors.length)
-  const hasGetServerDataErrors = Boolean(state.getServerDataErrors.length)
+  const hasGetServerDataErrors = Boolean(state.getServerDataErrors)
   const hasGraphqlErrors = Boolean(state.graphqlErrors.length)
   const hasDevSsrError = state.devSsrError !== null
   const hasErrors =
@@ -118,12 +119,7 @@ function DevOverlay({ children }) {
       return <BuildError error={state.buildError} />
     }
     if (hasGetServerDataErrors) {
-      return (
-        <GetServerDataErrors
-          errors={state.getServerDataErrors}
-          dismiss={dismiss}
-        />
-      )
+      return <GetServerDataErrors error={state.getServerDataErrors} />
     }
     if (hasRuntimeErrors) {
       return <RuntimeErrors errors={state.errors} dismiss={dismiss} />

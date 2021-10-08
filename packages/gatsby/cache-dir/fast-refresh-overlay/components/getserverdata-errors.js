@@ -8,7 +8,6 @@ import { Accordion, AccordionItem } from "./accordion"
 const filePathRegex = /webpack:\/[^/]+\/(.*)$/
 
 function WrappedAccordionItem({ error, open }) {
-  console.log({ error })
   const stacktrace = error.stack
   const codeFrameInformation = stacktrace.find(CallSite => CallSite.fileName)
   const filePath = `./${filePathRegex.exec(codeFrameInformation?.fileName)[1]}`
@@ -55,42 +54,29 @@ function WrappedAccordionItem({ error, open }) {
   )
 }
 
-export function GetServerDataErrors({ errors, dismiss }) {
-  const deduplicatedErrors = React.useMemo(
-    () => Array.from(new Set(errors)),
-    [errors]
-  )
-  const hasMultipleErrors = deduplicatedErrors.length > 1
-
+export function GetServerDataErrors({ error }) {
   return (
     <Overlay>
       <Header data-gatsby-error-type="runtime-error">
         <div data-gatsby-overlay="header__cause-file">
-          <h1 id="gatsby-overlay-labelledby">
-            {hasMultipleErrors
-              ? `${errors.length} Unhandled getServerData Errors`
-              : `Unhandled getServerData Error`}
-          </h1>
+          <h1 id="gatsby-overlay-labelledby">Unhandled getServerData Error</h1>
         </div>
-        <HeaderOpenClose dismiss={dismiss} />
+        <HeaderOpenClose dismiss={false} />
       </Header>
       <Body>
         <p
           data-gatsby-overlay="body__describedby"
           id="gatsby-overlay-describedby"
         >
-          {hasMultipleErrors ? `Multiple` : `One`} unhandled getServerData{` `}
-          {hasMultipleErrors ? `errors` : `error`} found in your files. See the
-          list below to fix {hasMultipleErrors ? `them` : `it`}:
+          One unhandled getServerData error found in your files. See the list
+          below to fix it:
         </p>
         <Accordion>
-          {deduplicatedErrors.map((error, index) => (
-            <WrappedAccordionItem
-              open={index === 0}
-              key={`${error.message}-${index}`}
-              error={error}
-            />
-          ))}
+          <WrappedAccordionItem
+            open={true}
+            key={`${error.message}`}
+            error={error}
+          />
         </Accordion>
       </Body>
     </Overlay>
