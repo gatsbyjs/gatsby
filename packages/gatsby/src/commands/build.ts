@@ -117,13 +117,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     )
   }
 
-  let waitForWorkerPoolRestart = Promise.resolve()
+  const waitForWorkerPoolRestart = Promise.resolve()
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     await runQueriesInWorkersQueue(workerPool, queryIds)
     // Jobs still might be running even though query running finished
     await waitUntilAllJobsComplete()
     // Restart worker pool before merging state to lower memory pressure while merging state
-    waitForWorkerPoolRestart = workerPool.restart()
+    // waitForWorkerPoolRestart = workerPool.restart()
     await mergeWorkerState(workerPool)
   } else {
     await runStaticQueries({
@@ -324,7 +324,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       buildSpan,
     })
 
-  const waitWorkerPoolEnd = Promise.all(workerPool.end())
+  // const waitWorkerPoolEnd = Promise.all(workerPool.end())
 
   telemetry.addSiteMeasurement(`BUILD_END`, {
     pagesCount: toRegenerate.length, // number of html files that will be written
@@ -344,12 +344,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // Wait for any jobs that were started in onPostBuild
   // This could occur due to queries being run which invoke sharp for instance
   await waitUntilAllJobsComplete()
+  console.log(`not deleting workerPool`)
 
-  try {
-    await waitWorkerPoolEnd
-  } catch (e) {
-    report.warn(`Error when closing WorkerPool: ${e.message}`)
-  }
+  // try {
+  // await waitWorkerPoolEnd
+  // } catch (e) {
+  // report.warn(`Error when closing WorkerPool: ${e.message}`)
+  // }
 
   // Make sure we saved the latest state so we have all jobs cached
   await db.saveState()

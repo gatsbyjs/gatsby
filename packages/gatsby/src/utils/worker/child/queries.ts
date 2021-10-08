@@ -63,6 +63,7 @@ type ActionsToReplay = Array<
 export async function runQueries(
   queryIds: IGroupedQueryIds
 ): Promise<ActionsToReplay> {
+  console.log(`runQueries`)
   const actionsToReplay: ActionsToReplay = []
 
   const unsubscribe = store.subscribe(() => {

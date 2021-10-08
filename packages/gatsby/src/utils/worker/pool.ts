@@ -13,22 +13,29 @@ import { ActionsUnion, IGatsbyState } from "../../redux/types"
 
 export type { GatsbyWorkerPool }
 
+let workerPool: GatsbyWorkerPool
 export const create = (): GatsbyWorkerPool => {
-  const numWorkers = Math.max(1, cpuCoreCount() - 1)
-  reporter.verbose(`Creating ${numWorkers} worker`)
+  if (workerPool) {
+    return workerPool
+  } else {
+    // const numWorkers = Math.max(1, cpuCoreCount() - 1)
+    const numWorkers = 2
+    reporter.verbose(`Creating ${numWorkers} worker`)
 
-  const worker: GatsbyWorkerPool = new WorkerPool(require.resolve(`./child`), {
-    numWorkers,
-    env: {
-      GATSBY_WORKER_POOL_WORKER: `true`,
-      GATSBY_SKIP_WRITING_SCHEMA_TO_FILE: `true`,
-    },
-  })
+    workerPool = new WorkerPool(require.resolve(`./child`), {
+      numWorkers,
+      env: {
+        GATSBY_WORKER_POOL_WORKER: `true`,
+        GATSBY_SKIP_WRITING_SCHEMA_TO_FILE: `true`,
+        GATSBY_EXPERIMENTAL_LMDB_STORE: `true`,
+      },
+    })
 
-  initJobsMessagingInMainProcess(worker)
-  initReporterMessagingInMainProcess(worker)
+    initJobsMessagingInMainProcess(workerPool)
+    initReporterMessagingInMainProcess(workerPool)
 
-  return worker
+    return workerPool
+  }
 }
 
 const queriesChunkSize =
@@ -41,6 +48,10 @@ export async function runQueriesInWorkersQueue(
 ): Promise<void> {
   const staticQuerySegments = chunk(queryIds.staticQueryIds, chunkSize)
   const pageQuerySegments = chunk(queryIds.pageQueryIds, chunkSize)
+  console.log(`runQueriesInWorkersQueue`, {
+    staticQuerySegments,
+    pageQuerySegments,
+  })
 
   const activity = reporter.createProgress(
     `run queries in workers`,

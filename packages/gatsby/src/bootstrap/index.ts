@@ -72,6 +72,7 @@ export async function bootstrap(
 
   await rebuildSchemaWithSitePage(context)
 
+  console.log({ pqr: process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING })
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     savePartialStateToDisk([`inferenceMetadata`])
 

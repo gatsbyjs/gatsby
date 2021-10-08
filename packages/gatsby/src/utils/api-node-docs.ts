@@ -423,6 +423,7 @@ export const onPreInit = true
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const unstable_onPluginInit = true
+export const onPluginInit = true
 
 /**
  * Called once Gatsby has initialized itself and is ready to bootstrap your site.
