@@ -41,16 +41,11 @@ export async function saveQueriesDependencies(): Promise<void> {
   await waitUntilPageQueryResultsAreStored()
 }
 
-let gqlRunner
-
 function getGraphqlRunner(): GraphQLRunner {
-  if (!gqlRunner) {
-    gqlRunner = new GraphQLRunner(store, {
-      collectStats: true,
-      graphqlTracing: store.getState().program.graphqlTracing,
-    })
-  }
-  return gqlRunner
+  return new GraphQLRunner(store, {
+    collectStats: true,
+    graphqlTracing: store.getState().program.graphqlTracing,
+  })
 }
 
 type ActionsToReplay = Array<
