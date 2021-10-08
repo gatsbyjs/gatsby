@@ -440,7 +440,7 @@ exports.createNodesForContentType = ({
           createNodeManifestIsSupported &&
           // and this is a delta update
           (cacheExists ||
-            // or this entry/node was updated in the last 60 mins.
+            // or this entry/node was updated in the last 2 days.
             // we don't want older nodes because we only want to create
             // node manifests for recently updated/created content.
             (entryItem.sys.updatedAt &&
@@ -450,8 +450,9 @@ exports.createNodesForContentType = ({
                   // milliseconds
                   1000 *
                   // minutes
+                  60 *
                   (process.env
-                    .CONTENT_SYNC_CONTENTFUL_MINUTES_SINCE_ENTRY_UPDATE || 60)))
+                    .CONTENT_SYNC_CONTENTFUL_HOURS_SINCE_ENTRY_UPDATE || 48)))
 
         const manifestId = `${space.sys.id}-${entryItem.sys.id}-${entryItem.sys.updatedAt}`
 
