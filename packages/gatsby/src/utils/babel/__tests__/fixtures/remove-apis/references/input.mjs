@@ -1,20 +1,29 @@
+import { fetch, Response } from 'node-fetch';
+import something from 'my-import'
+
 const usedReference = 'my cool ref';
-const unsuedReference = 'I hope to be removed';
+const unusedReference = 'I hope to be removed';
 
 export default function () {
+  const x = new Response({})
+
   return usedReference
 }
 
-export function getServerData() {
+export async function getServerData() {
+  const data = await fetch('https://example.com');
+
   return {
     props: {
-      unusedReference
+      data: await data.json(),
+      unusedReference,
+      test: something(),
     }
 
   }
 }
 
-export async function config() {
+export function config() {
   return {
     pageContext: {
       env: 'test',

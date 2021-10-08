@@ -26,8 +26,17 @@ export default declare(function removeApiCalls(
 
           // remove all unreferenced bindings
           Object.keys(path.scope.bindings).forEach(refName => {
-            if (!path.scope.bindings[refName].referenced) {
-              path.scope.bindings[refName].path.remove()
+            const ref = path.scope.bindings[refName]
+            if (!ref.referenced) {
+              ref.path.remove()
+
+              // if it's a module and all specifiers are removed, remove the full binding
+              if (
+                ref.kind === `module` &&
+                !(ref.path.parent as t.ImportDeclaration).specifiers.length
+              ) {
+                ref.path.parentPath.remove()
+              }
             }
           })
         },
