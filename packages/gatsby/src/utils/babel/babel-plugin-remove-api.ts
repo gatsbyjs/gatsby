@@ -19,6 +19,20 @@ export default declare(function removeApiCalls(
   return {
     name: `remove-api`,
     visitor: {
+      Program: {
+        exit(path): void {
+          // make sure all references are up to date
+          path.scope.crawl()
+
+          // remove all unreferenced bindings
+          Object.keys(path.scope.bindings).forEach(refName => {
+            if (!path.scope.bindings[refName].referenced) {
+              path.scope.bindings[refName].path.remove()
+            }
+          })
+        },
+      },
+
       ExportNamedDeclaration(path): void {
         const declaration = path.node.declaration
 
