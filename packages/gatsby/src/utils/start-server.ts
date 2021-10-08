@@ -29,11 +29,7 @@ import * as WorkerPool from "../utils/worker/pool"
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
 import { websocketManager, WebsocketManager } from "../utils/websocket-manager"
-import {
-  reverseFixedPagePath,
-  readPageData,
-  IPageDataWithQueryResult,
-} from "./page-data"
+import { reverseFixedPagePath } from "./page-data"
 import { getPageData as getPageDataExperimental } from "./get-page-data"
 import { findPageByPath } from "./find-page-by-path"
 import apiRunnerNode from "../utils/api-runner-node"
