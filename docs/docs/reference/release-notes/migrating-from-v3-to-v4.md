@@ -237,7 +237,7 @@ const getDataFromAPI = async ({ reporter }) => {
 
 ### Remove obsolete flags
 
-Remove the flags for `QUERY_ON_DEMAND` and `PRESERVE_WEBPACK_CACHE` from `gatsby-config`. Those features are a part of gatsby core now and don't need to be enabled nor can't be disabled using those flags.
+Remove the flags for `QUERY_ON_DEMAND`, `LAZY_IMAGES`, `FUNCTIONS`, `DEV_WEBPACK_CACHE` and `PRESERVE_WEBPACK_CACHE` from `gatsby-config`. Those features are a part of Gatsby core now and don't need to be enabled nor can't be disabled using those flags.
 
 ### Do not create nodes in custom resolvers
 
