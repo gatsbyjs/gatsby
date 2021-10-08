@@ -23,20 +23,29 @@ export async function createSchemaCustomization(
     reporter,
   })
 
-  createTypes(`
-    interface ContentfulEntry implements Node {
-      contentful_id: String!
-      id: ID!
-      node_locale: String!
-    }
-  `)
+  createTypes(
+    schema.buildObjectType({
+      name: `ContentfulEntry`,
+      fields: {
+        contentful_id: { type: `String!` },
+        id: { type: `ID!` },
+        node_locale: { type: `String!` },
+      },
+      extensions: { dontInfer: {} },
+      interfaces: [`Node`],
+    })
+  )
 
-  createTypes(`
-    interface ContentfulReference {
-      contentful_id: String!
-      id: ID!
-    }
-  `)
+  createTypes(
+    schema.buildObjectType({
+      name: `ContentfulReference`,
+      fields: {
+        contentful_id: { type: `String!` },
+        id: { type: `ID!` },
+      },
+      extensions: { dontInfer: {} },
+    })
+  )
 
   createTypes(
     schema.buildObjectType({
