@@ -47,11 +47,6 @@ export async function prepareStackTrace(
 
   const stack = stackTrace
     .parse(newError)
-    .filter(
-      frame =>
-        !frame.getFileName().startsWith(`internal/`) &&
-        !frame.getFileName().includes(`utils/validate-engines`)
-    )
     .map(frame => wrapCallSite(maps, frame))
     .filter(
       frame =>
