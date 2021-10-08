@@ -1,4 +1,5 @@
 import React from "react"
+import * as fs from "fs"
 
 export default function StaticPath({ serverData }) {
   return (
@@ -14,8 +15,11 @@ export default function StaticPath({ serverData }) {
 }
 
 export function getServerData(arg) {
+  const pkgJSON = JSON.parse(fs.readFileSync("../../package.json", "utf8"))
+
   return {
     props: {
+      version: pkgJSON.version,
       arg,
     },
   }
