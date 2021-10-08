@@ -20,6 +20,10 @@ plugins: [
       gfm: true,
       // Plugins configs
       plugins: [],
+      // Remark plugins configs
+      remarkPlugins: [],
+      // Rehype plugins configs
+      rehypePlugins: [],
     },
   },
 ],
