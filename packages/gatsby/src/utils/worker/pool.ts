@@ -49,8 +49,8 @@ export async function runQueriesInWorkersQueue(
   const staticQuerySegments = chunk(queryIds.staticQueryIds, chunkSize)
   const pageQuerySegments = chunk(queryIds.pageQueryIds, chunkSize)
   console.log(`runQueriesInWorkersQueue`, {
-    staticQuerySegments: staticQuerySegments.length,
-    pageQuerySegments: pageQuerySegments.length,
+    staticQueriesCount: staticQuerySegments.length,
+    pageQueriesCount: pageQuerySegments.length,
   })
 
   const activity = reporter.createProgress(
