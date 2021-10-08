@@ -4,7 +4,7 @@ const { createClient } = require(`contentful`)
 
 import normalize from "./normalize"
 const { createPluginConfig } = require(`./plugin-options`)
-const { fetchContent, fetchContentTypes } = require(`./fetch`)
+const { fetchContent } = require(`./fetch`)
 const { CODES } = require(`./report`)
 import { downloadContentfulAssets } from "./download-contentful-assets"
 
@@ -105,6 +105,7 @@ export async function sourceNodes(
 
   const CACHE_SYNC_TOKEN = `contentful-sync-token-${sourceId}`
   const CACHE_SYNC_DATA = `contentful-sync-data-${sourceId}`
+  const CACHE_CONTENT_TYPES = `contentful-content-types-${sourceId}`
 
   /*
    * Subsequent calls of Contentfuls sync API return only changed data.
@@ -127,15 +128,7 @@ export async function sourceNodes(
     space,
   } = await fetchContent({ syncToken, pluginConfig, reporter })
 
-  // Get content type items from Contentful
-  const contentTypeItems = await fetchContentTypes({ pluginConfig, reporter })
-
-  // Prepare content types
-  normalize.normalizeContentTypeItems({
-    contentTypeItems,
-    pluginConfig,
-    reporter,
-  })
+  const contentTypeItems = await cache.get(CACHE_CONTENT_TYPES)
 
   const locales = allLocales.filter(pluginConfig.get(`localeFilter`))
   reporter.verbose(
