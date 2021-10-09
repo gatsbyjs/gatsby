@@ -18,10 +18,14 @@ In this guide you'll create a Gatsby site capable of querying data from Prepr.
 
 This guide assumes the following:
 
-- You have an active Prepr environment
-- You've created a new Prerp project (preferably using the `Example` template)
+- You have an active Prepr account
+- You've created a new Prerp account (preferably using the `Example` template)
 
 All schema and data references in this guide are from the Prepr CMS `Example` template.
+
+### Prepr
+
+The first thing to do, if you haven't already done so, is [sign up for a Prepr account](https://prepr.io?utm_medium=gatsbyjsorg&utm_source=guide).
 
 ### Create a new Gatsby site
 
@@ -76,7 +80,7 @@ From here, you will be able to browse the generated GraphQL schema of your Gatsb
 
 ![Prepr Schema](./images/preprcms-schema.png)
 
-If everything works correctly, you should now have your Prepr environment added to the Gatsby source API!
+If everything works correctly, you should now have your Prepr account added to the Gatsby source API!
 You can read more about how to use the GraphQL API in the [Prepr CMS docs](https://docs.prepr.io/reference/graphql/v1/introduction).
 
 ### Querying for content
