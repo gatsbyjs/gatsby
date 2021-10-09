@@ -136,13 +136,13 @@ return a full list of all available `Post` items.
             "_publish_on": "2021-03-04T12:08:00+00:00",
             "title": "Unlock the countryside of Sweden",
             "summary": "There's great beauty in tiny details, so keep your eyes peeled as you wander the city to discover some of Amsterdam’s secret charms."
-          },
+          }
 
           // ...more results
         ]
       }
     }
-  },
+  }
 }
 ```
 
@@ -160,7 +160,11 @@ The resulting data is available via the page props `data` key.
 import React from "react"
 import { graphql } from "gatsby"
 
-function IndexPage({ data: { prepr:{posts} } }) {
+function IndexPage({
+  data: {
+    prepr: { posts },
+  },
+}) {
   return (
     <ul>
       {posts.items.map(post => (
@@ -203,19 +207,21 @@ import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
 
 function IndexPage() {
-  const { prepr:{posts} } = useStaticQuery(graphql`
+  const {
+    prepr: { posts },
+  } = useStaticQuery(graphql`
     {
       prepr {
         posts: Posts {
           items {
-          _id
-          _slug
-          cover {
-            url
-          }
-          _publish_on
-          title
-          summary
+            _id
+            _slug
+            cover {
+              url
+            }
+            _publish_on
+            title
+            summary
           }
         }
       }
