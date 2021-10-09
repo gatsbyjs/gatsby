@@ -156,7 +156,7 @@ The resulting data is available via the page props `data` key.
 import React from "react"
 import { graphql } from "gatsby"
 
-function IndexPage({ data: { posts } }) {
+function IndexPage({ data: { prepr:{posts} } }) {
   return (
     <ul>
       {posts.items.map(post => (
@@ -170,16 +170,18 @@ function IndexPage({ data: { posts } }) {
 
 export const pageQuery = graphql`
   query IndexPageQuery {
-    posts: Posts {
-      items {
-        _id
-        _slug
-        cover {
-          url
+    prepr {
+      posts: Posts {
+        items {
+          _id
+          _slug
+          cover {
+            url
+          }
+          _publish_on
+          title
+          summary
         }
-        _publish_on
-        title
-        summary
       }
     }
   }
@@ -197,18 +199,20 @@ import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
 
 function IndexPage() {
-  const { posts } = useStaticQuery(graphql`
+  const { prepr:{posts} } = useStaticQuery(graphql`
     {
-      posts: Posts {
-        items {
-        _id
-        _slug
-        cover {
-          url
-        }
-        _publish_on
-        title
-        summary
+      prepr {
+        posts: Posts {
+          items {
+          _id
+          _slug
+          cover {
+            url
+          }
+          _publish_on
+          title
+          summary
+          }
         }
       }
     }
