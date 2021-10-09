@@ -2,6 +2,8 @@
 title: Sourcing from Prepr CMS
 ---
 
+In this guide, you’ll go through how to quickly source content for your Gatsby site from Prepr CMS.
+
 ## Data-driven Headless CMS
 
 [Prepr](https://prepr.io?referrer=gatsby-headless-docs-top) is a data-driven Headless Content Management System (Headless CMS)
@@ -72,14 +74,12 @@ Start the Gatsby development environment with `npx gatsby develop`. Once running
 
 From here, you will be able to browse the generated GraphQL schema of your Gatsby project.
 
-![Prepr Schema](./images/graphcms-schema.png)
+![Prepr Schema](./images/preprcms-schema.png)
 
 If everything works correctly, you should now have your Prepr environment added to the Gatsby source API!
 You can read more about how to use the GraphQL API in the [Prepr CMS docs](https://docs.prepr.io/reference/graphql/v1/introduction).
 
 ### Querying for content
-
-![Prepr Query](./images/prepcms-query.png)
 
 Using the generated schema, we can begin to write GraphQL queries for Gatsby data. Consider the query below, which will
 return a full list of all available `Post` items.
@@ -237,5 +237,4 @@ export default IndexPage
 For additional examples of how to query and use data in the context of Gatsby & Prepr, check out the following references:
 
 - [`gatsby-source-graphql`](/plugins/gatsby-source-graphql/)
-- [`gatsby-starter-preprio-blog`](https://github.com/preprio/gatsby-starter-prepr-blog)
 - [`Prepr CMS docs`](https://docs.prepr.io/reference/graphql/v1/introduction)
