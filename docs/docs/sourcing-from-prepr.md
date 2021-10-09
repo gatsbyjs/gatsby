@@ -2,7 +2,7 @@
 title: Sourcing from Prepr CMS
 ---
 
-## Data-driven headless
+## Data-driven Headless CMS
 
 [Prepr](https://prepr.io?referrer=gatsby-headless-docs-top) is a data-driven Headless Content Management System (Headless CMS)
 that lets you deliver content across platforms at scale. With features like an intuitive schema builder, GraphQL mutations API,
