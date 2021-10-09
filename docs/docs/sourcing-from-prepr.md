@@ -7,8 +7,8 @@ In this guide, you’ll go through how to quickly source content for your Gatsby
 ## Data-driven Headless CMS
 
 [Prepr](https://prepr.io?referrer=gatsby-headless-docs-top) is a data-driven Headless Content Management System (Headless CMS)
-that lets you deliver content across platforms at scale. With features like an intuitive schema builder, GraphQL mutations API,
-and out of the box localization, Prepr enables you to rapidly build digital projects with your preferred frameworks and languages.
+that lets you deliver content across platforms at scale. Prepr is not your average headless CMS. We’re powered by graph database
+technology.
 
 ## Getting started
 
