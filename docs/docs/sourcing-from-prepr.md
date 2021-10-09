@@ -82,22 +82,22 @@ You can read more about how to use the GraphQL API in the [Prepr CMS docs](https
 ![Prepr Query](./images/prepcms-query.png)
 
 Using the generated schema, we can begin to write GraphQL queries for Gatsby data. Consider the query below, which will
-return a full list of all available `Product` items.
+return a full list of all available `Post` items.
 
 ```graphql
 {
-  allGraphCmsPost {
-    nodes {
-      id
-      content {
-        markdown
+  prepr {
+    Posts {
+      items {
+        _id
+        _slug
+        cover {
+          url
+        }
+        _publish_on
+        title
+        summary
       }
-      coverImage {
-        url
-      }
-      date
-      slug
-      title
     }
   }
 }
@@ -106,40 +106,41 @@ return a full list of all available `Product` items.
 ```json
 {
   "data": {
-    "allGraphCmsPost": {
-      "nodes": [
-        {
-          "id": "Post:ckadrcx4g00pw01525c5d2e56",
-          "content": {
-            "markdown": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quid ergo? Huius ego nunc auctoritatem sequens idem faciam. Duo Reges: constructio interrete. Sed in rebus apertissimis nimium longi sumus. Itaque his sapiens semper vacabit. Non semper, inquam;\n\n\n\nVerum hoc idem saepe faciamus. Quamquam haec quidem praeposita recte et reiecta dicere licebit.\n\n\n\nAt coluit ipse amicitias. Certe non potest. Bonum incolumis acies: misera caecitas. Quo studio Aristophanem putamus aetatem in litteris duxisse? Idem iste, inquam, de voluptate quid sentit? Facillimum id quidem est, inquam.\n"
+    "prepr": {
+      "Posts": {
+        "items": [
+          {
+            "_id": "6924c359-355d-4622-a4f8-9df843d006c2",
+            "_slug": "exploring-remote-guatemalas-jungles",
+            "cover": [
+              {
+                "url": "https://3s0nk0fsnz73.b-cdn.net/w_1920/s3-preprforblog/a0c18da6-b566-45d7-a0eb-117dbec046f4.jpg"
+              }
+            ],
+            "_publish_on": "2021-03-04T12:18:00+00:00",
+            "title": "Exploring Remote Ruins in Guatemala's Jungles",
+            "summary": "When it comes to tracking treasures of antiquity, your average American traveler will usually set his or her sights across the Atlantic on the ruins of the Roman Empire in Italy, the temples of ancient Greece, the Moorish palaces in Spain, or the desert pyramids of Egypt."
           },
-          "coverImage": {
-            "url": "https://media.graphcms.com/QEg7oQCTEeEjLSEPQJtg"
+          {
+            "_id": "76a921c5-12af-4c7a-bc60-e3be6ba118f5",
+            "_slug": "unlock-countryside-norway",
+            "cover": [
+              {
+                "url": "https://3s0nk0fsnz73.b-cdn.net/w_1920/s3-preprforblog/c130f6f8-2903-44b2-86b4-41120bf6602a.jpg"
+              }
+            ],
+            "_publish_on": "2021-03-04T12:08:00+00:00",
+            "title": "Unlock the countryside of Sweden",
+            "summary": "There's great beauty in tiny details, so keep your eyes peeled as you wander the city to discover some of Amsterdam’s secret charms."
           },
-          "date": "2020-05-05",
-          "slug": "technical-seo-with-graphcms",
-          "title": "Technical SEO with GraphCMS"
-        },
-        {
-          "id": "Post:ckadrfuu000pe0148kels2b5e",
-          "content": {
-            "markdown": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id enim natura desiderat. Falli igitur possumus. Negat enim summo bono afferre incrementum diem. Indicant pueri, in quibus ut in speculis natura cernitur.\n\n\n\n# Lorem Ipsum\n\n\n\nNe amores quidem sanctos a sapiente alienos esse arbitrantur. Summus dolor plures dies manere non potest? Expectoque quid ad id, quod quaerebam, respondeas. Non est ista, inquam, Piso, magna dissensio. Respondeat totidem verbis. Non est igitur summum malum dolor.\n\n\n\nHic ambiguo ludimur. Nam Pyrrho, Aristo, Erillus iam diu abiecti. Si longus, levis dictata sunt. Duo Reges: constructio interrete. Deinde dolorem quem maximum?\n"
-          },
-          "coverImage": {
-            "url": "https://media.graphcms.com/gzYJIkMRRHCq0JLDOqgU"
-          },
-          "date": "2020-05-01",
-          "slug": "union-types-and-sortable-relations",
-          "title": "Union Types and Sortable Relations with GraphCMS"
-        }
 
-        // ...more results
-      ]
+          // ...more results
+        ]
+      }
     }
-  }
+  },
 }
 ```
-
 
 ### Query implementation
 
