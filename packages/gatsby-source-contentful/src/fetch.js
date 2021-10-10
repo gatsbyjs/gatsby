@@ -310,10 +310,10 @@ async function fetchContent({ syncToken, pluginConfig, reporter }) {
   } finally {
     // Fix output when there was no new data in Contentful
     if (
-      currentSyncData.entries.length +
-        currentSyncData.assets.length +
-        currentSyncData.deletedEntries.length +
-        currentSyncData.deletedAssets.length ===
+      currentSyncData?.entries.length +
+        currentSyncData?.assets.length +
+        currentSyncData?.deletedEntries.length +
+        currentSyncData?.deletedAssets.length ===
       0
     ) {
       syncProgress.tick()

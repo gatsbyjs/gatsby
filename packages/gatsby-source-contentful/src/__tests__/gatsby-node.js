@@ -34,7 +34,7 @@ const createMockCache = () => {
 
 describe(`gatsby-node`, () => {
   const actions = { createTypes: jest.fn(), setPluginStatus: jest.fn() }
-  const schema = { buildObjectType: jest.fn() }
+  const schema = { buildObjectType: jest.fn(), buildInterfaceType: jest.fn() }
   const store = {
     getState: jest.fn(() => {
       return { program: { directory: process.cwd() }, status: {} }

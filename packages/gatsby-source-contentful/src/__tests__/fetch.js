@@ -90,11 +90,13 @@ beforeAll(() => {
 })
 
 const start = jest.fn()
+const tick = jest.fn()
 const end = jest.fn()
 
 const mockActivity = {
   start,
   end,
+  tick,
   done: end,
 }
 
