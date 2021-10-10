@@ -241,22 +241,26 @@ async function fetchContent({ syncToken, pluginConfig, reporter }) {
   }
 
   // Fetch entries and assets via Contentful CDA sync API
-  let syncProgress
   const pageLimit = pluginConfig.get(`pageLimit`)
+  reporter.verbose(`Contentful: Sync ${pageLimit} items per page.`)
+  const syncProgress = reporter.createProgress(
+    `Contentful: ${syncToken ? `Sync changed items` : `Sync all items`}`,
+    pageLimit,
+    0
+  )
+  syncProgress.start()
+  const contentfulSyncClientOptions = createContentfulClientOptions({
+    pluginConfig,
+    reporter,
+    syncProgress,
+  })
+  const syncClient = contentful.createClient(contentfulSyncClientOptions)
 
   let currentSyncData
   let currentPageLimit = pageLimit
   let lastCurrentPageLimit
   let syncSuccess = false
   try {
-    syncProgress = reporter.createProgress(
-      `Contentful: ${syncToken ? `Sync changed items` : `Sync all items`}`,
-      currentPageLimit,
-      0
-    )
-    syncProgress.start()
-    reporter.verbose(`Contentful: Sync ${currentPageLimit} items per page.`)
-
     while (!syncSuccess) {
       try {
         const basicSyncConfig = {
@@ -266,7 +270,7 @@ async function fetchContent({ syncToken, pluginConfig, reporter }) {
         const query = syncToken
           ? { nextSyncToken: syncToken, ...basicSyncConfig }
           : { initial: true, ...basicSyncConfig }
-        currentSyncData = await client.sync(query)
+        currentSyncData = await syncClient.sync(query)
         syncSuccess = true
       } catch (e) {
         // Back off page limit if responses content length exceeds Contentfuls limits.
