@@ -52,7 +52,7 @@ export async function createSchemaCustomization(
   const CACHE_CONTENT_TYPES = `contentful-content-types-${sourceId}`
   await cache.set(CACHE_CONTENT_TYPES, contentTypeItems)
 
-  createTypes(
+  const contentfulTypes = [
     schema.buildInterfaceType({
       name: `ContentfulEntry`,
       fields: {
@@ -62,10 +62,7 @@ export async function createSchemaCustomization(
       },
       extensions: { dontInfer: {} },
       interfaces: [`Node`],
-    })
-  )
-
-  createTypes(
+    }),
     schema.buildInterfaceType({
       name: `ContentfulReference`,
       fields: {
@@ -73,10 +70,7 @@ export async function createSchemaCustomization(
         id: { type: `ID!` },
       },
       extensions: { dontInfer: {} },
-    })
-  )
-
-  createTypes(
+    }),
     schema.buildObjectType({
       name: `ContentfulAsset`,
       fields: {
@@ -84,34 +78,34 @@ export async function createSchemaCustomization(
         id: { type: `ID!` },
       },
       interfaces: [`ContentfulReference`, `Node`],
-    })
-  )
+    }),
+  ]
 
   // Create types for each content type
-  const gqlTypes = contentTypeItems.map(contentTypeItem =>
-    schema.buildObjectType({
-      name: _.upperFirst(
-        _.camelCase(
-          `Contentful ${
-            pluginConfig.get(`useNameForId`)
-              ? contentTypeItem.name
-              : contentTypeItem.sys.id
-          }`
-        )
-      ),
-      fields: {
-        contentful_id: { type: `String!` },
-        id: { type: `ID!` },
-        node_locale: { type: `String!` },
-      },
-      interfaces: [`ContentfulReference`, `ContentfulEntry`, `Node`],
-    })
+  contentTypeItems.forEach(contentTypeItem =>
+    contentfulTypes.push(
+      schema.buildObjectType({
+        name: _.upperFirst(
+          _.camelCase(
+            `Contentful ${
+              pluginConfig.get(`useNameForId`)
+                ? contentTypeItem.name
+                : contentTypeItem.sys.id
+            }`
+          )
+        ),
+        fields: {
+          contentful_id: { type: `String!` },
+          id: { type: `ID!` },
+          node_locale: { type: `String!` },
+        },
+        interfaces: [`ContentfulReference`, `ContentfulEntry`, `Node`],
+      })
+    )
   )
 
-  createTypes(gqlTypes)
-
   if (pluginConfig.get(`enableTags`)) {
-    createTypes(
+    contentfulTypes.push(
       schema.buildObjectType({
         name: `ContentfulTag`,
         fields: {
@@ -124,4 +118,6 @@ export async function createSchemaCustomization(
       })
     )
   }
+
+  createTypes(contentfulTypes)
 }
