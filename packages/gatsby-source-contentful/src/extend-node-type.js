@@ -17,8 +17,8 @@ const {
 } = require(`gatsby/graphql`)
 const { stripIndent } = require(`common-tags`)
 
-const cacheImage = require(`./cache-image`)
-const downloadWithRetry = require(`./download-with-retry`).default
+const { fetchRemoteFile } = require(`gatsby-core-utils`)
+
 const {
   ImageFormatType,
   ImageResizingBehavior,
@@ -34,6 +34,18 @@ const {
 
 // Supported Image Formats from https://www.contentful.com/developers/docs/references/images-api/#/reference/changing-formats/image-format
 const validImageFormats = new Set([`jpg`, `png`, `webp`, `gif`])
+
+const mimeTypeExtensions = new Map([
+  [`image/jpeg`, `.jpg`],
+  [`image/jpg`, `.jpg`],
+  [`image/gif`, `.gif`],
+  [`image/png`, `.png`],
+  [`image/webp`, `.webp`],
+])
+
+exports.mimeTypeExtensions = mimeTypeExtensions
+
+const isImage = image => mimeTypeExtensions.has(image?.file?.contentType)
 
 if (process.env.GATSBY_REMOTE_CACHE) {
   console.warn(
@@ -60,13 +72,8 @@ const resolvedBase64Cache = new Map()
 // @see https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-width-&-height
 const CONTENTFUL_IMAGE_MAX_SIZE = 4000
 
-const isImage = image =>
-  [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`].includes(
-    image?.file?.contentType
-  )
-
 // Note: this may return a Promise<body>, body (sync), or null
-const getBase64Image = (imageProps, reporter) => {
+const getBase64Image = (imageProps, cache) => {
   if (!imageProps) {
     return null
   }
@@ -123,15 +130,23 @@ const getBase64Image = (imageProps, reporter) => {
   }
 
   const loadImage = async () => {
-    const imageResponse = await downloadWithRetry(
-      {
-        url: requestUrl,
-        responseType: `arraybuffer`,
-      },
-      reporter
-    )
+    const {
+      file: { contentType, fileName },
+    } = imageProps.image
 
-    const base64 = Buffer.from(imageResponse.data, `binary`).toString(`base64`)
+    const extension = mimeTypeExtensions.get(contentType)
+    const name = path.basename(fileName, extension)
+
+    const absolutePath = await fetchRemoteFile({
+      url: requestUrl,
+      name,
+      cache,
+      ext: extension,
+    })
+
+    const imageBuffer = fs.readFileSync(absolutePath)
+
+    const base64 = imageBuffer.toString(`base64`)
 
     const body = `data:image/${toFormat || originalFormat};base64,${base64}`
 
@@ -505,14 +520,14 @@ const resolveResize = (image, options) => {
 
 exports.resolveResize = resolveResize
 
-const fixedNodeType = ({ name, getTracedSVG, reporter }) => {
+const fixedNodeType = ({ name, getTracedSVG, cache }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
       fields: {
         base64: {
           type: GraphQLString,
-          resolve: imageProps => getBase64Image(imageProps, reporter),
+          resolve: imageProps => getBase64Image(imageProps, cache),
         },
         tracedSVG: {
           type: GraphQLString,
@@ -607,14 +622,14 @@ const fixedNodeType = ({ name, getTracedSVG, reporter }) => {
   }
 }
 
-const fluidNodeType = ({ name, getTracedSVG, reporter }) => {
+const fluidNodeType = ({ name, getTracedSVG, cache }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
       fields: {
         base64: {
           type: GraphQLString,
-          resolve: imageProps => getBase64Image(imageProps, reporter),
+          resolve: imageProps => getBase64Image(imageProps, cache),
         },
         tracedSVG: {
           type: GraphQLString,
@@ -711,7 +726,7 @@ const fluidNodeType = ({ name, getTracedSVG, reporter }) => {
   }
 }
 
-exports.extendNodeType = ({ type, store, reporter }) => {
+exports.extendNodeType = ({ type, cache }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
@@ -721,15 +736,23 @@ exports.extendNodeType = ({ type, store, reporter }) => {
 
     const { image, options } = args
     const {
-      file: { contentType },
+      file: { contentType, url: imgUrl, fileName },
     } = image
 
     if (contentType.indexOf(`image/`) !== 0) {
       return null
     }
 
-    const absolutePath = await cacheImage(store, image, options, reporter)
-    const extension = path.extname(absolutePath)
+    const extension = mimeTypeExtensions.get(contentType)
+    const url = `https:` + createUrl(imgUrl, options)
+    const name = path.basename(fileName, extension)
+
+    const absolutePath = await fetchRemoteFile({
+      url,
+      name,
+      cache,
+      ext: extension,
+    })
 
     return traceSVG({
       file: {
@@ -743,7 +766,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
     })
   }
 
-  const getDominantColor = async ({ image, options, reporter }) => {
+  const getDominantColor = async ({ image, options }) => {
     let pluginSharp
 
     try {
@@ -757,7 +780,29 @@ exports.extendNodeType = ({ type, store, reporter }) => {
     }
 
     try {
-      const absolutePath = await cacheImage(store, image, options, reporter)
+      const {
+        file: { contentType, url: imgUrl, fileName },
+      } = image
+
+      if (contentType.indexOf(`image/`) !== 0) {
+        return null
+      }
+
+      // 256px should be enough to properly detect the dominant color
+      if (!options.width) {
+        options.width = 256
+      }
+
+      const extension = mimeTypeExtensions.get(contentType)
+      const url = `https:` + createUrl(imgUrl, options)
+      const name = path.basename(fileName, extension)
+
+      const absolutePath = await fetchRemoteFile({
+        url,
+        name,
+        cache,
+        ext: extension,
+      })
 
       if (!(`getDominantColor` in pluginSharp)) {
         console.error(
@@ -805,7 +850,6 @@ exports.extendNodeType = ({ type, store, reporter }) => {
       imageProps.backgroundColor = await getDominantColor({
         image,
         options,
-        reporter,
       })
     }
 
@@ -816,7 +860,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
           image,
           options,
         },
-        reporter
+        cache
       )
     }
 
@@ -837,13 +881,13 @@ exports.extendNodeType = ({ type, store, reporter }) => {
   const fixedNode = fixedNodeType({
     name: `ContentfulFixed`,
     getTracedSVG,
-    reporter,
+    cache,
   })
 
   const fluidNode = fluidNodeType({
     name: `ContentfulFluid`,
     getTracedSVG,
-    reporter,
+    cache,
   })
 
   // gatsby-plugin-image
@@ -923,7 +967,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
         fields: {
           base64: {
             type: GraphQLString,
-            resolve: imageProps => getBase64Image(imageProps, reporter),
+            resolve: imageProps => getBase64Image(imageProps, cache),
           },
           tracedSVG: {
             type: GraphQLString,
