@@ -1,6 +1,16 @@
 import { store } from "../"
 
 import { createPageDependency as internalCreatePageDependency } from "./internal"
+import Bottleneck from "bottleneck"
+
+const batcher = new Bottleneck.Batcher({
+  maxTime: 10,
+  maxSize: 10000,
+})
+
+batcher.on(`batch`, batch => {
+  store.dispatch(internalCreatePageDependency(batch))
+})
 
 export const createPageDependency = ({
   path,
@@ -42,5 +52,5 @@ export const createPageDependency = ({
   }
 
   // It's new, let's dispatch it
-  store.dispatch(internalCreatePageDependency({ path, nodeId, connection }))
+  batcher.add({ path, nodeId, connection })
 }

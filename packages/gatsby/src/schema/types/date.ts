@@ -209,6 +209,7 @@ export function isDate(value: MomentInput): boolean {
   return typeof value !== `number` && momentDate.isValid()
 }
 
+const formatStringCache = new Map()
 const formatDate = ({
   date,
   fromNow,
@@ -218,10 +219,17 @@ const formatDate = ({
 }: IFormatDateArgs): string | number => {
   const normalizedDate = JSON.parse(JSON.stringify(date))
   if (formatString) {
-    return moment
-      .utc(normalizedDate, ISO_8601_FORMAT, true)
-      .locale(locale)
-      .format(formatString)
+    if (formatStringCache.has(normalizedDate)) {
+      return formatStringCache.get(normalizedDate)
+    } else {
+      const result = moment
+        .utc(normalizedDate, ISO_8601_FORMAT, true)
+        .locale(locale)
+        .format(formatString)
+
+      formatStringCache.set(normalizedDate, result)
+      return result
+    }
   } else if (fromNow) {
     return moment
       .utc(normalizedDate, ISO_8601_FORMAT, true)

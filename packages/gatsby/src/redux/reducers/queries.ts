@@ -152,13 +152,14 @@ export function queriesReducer(
       return state
     }
     case `CREATE_COMPONENT_DEPENDENCY`: {
-      const { path: queryId, nodeId, connection } = action.payload
-      if (nodeId) {
-        state = addNodeDependency(state, queryId, nodeId)
-      }
-      if (connection) {
-        state = addConnectionDependency(state, queryId, connection)
-      }
+      action.payload.forEach(({ path: queryId, nodeId, connection }) => {
+        if (nodeId) {
+          state = addNodeDependency(state, queryId, nodeId)
+        }
+        if (connection) {
+          state = addConnectionDependency(state, queryId, connection)
+        }
+      })
       return state
     }
     case `QUERY_START`: {

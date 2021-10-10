@@ -29,6 +29,7 @@ export default function withResolverContext<TSource, TArgs>({
       schema,
       schemaComposer,
       createPageDependency,
+      _trackedRootNodes: new WeakSet(),
     })
   }
 

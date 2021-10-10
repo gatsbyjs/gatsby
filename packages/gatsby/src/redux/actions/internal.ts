@@ -42,21 +42,13 @@ import {
  * @private
  */
 export const createPageDependency = (
-  {
-    path,
-    nodeId,
-    connection,
-  }: { path: string; nodeId?: string; connection?: string },
+  batch,
   plugin = ``
 ): ICreatePageDependencyAction => {
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,
     plugin,
-    payload: {
-      path,
-      nodeId,
-      connection,
-    },
+    payload: batch,
   }
 }
 
