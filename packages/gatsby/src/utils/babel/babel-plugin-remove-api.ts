@@ -33,7 +33,22 @@ export default declare(function removeApiCalls(
             Object.keys(path.scope.bindings).forEach(refName => {
               const ref = path.scope.bindings[refName]
 
-              if (!ref.referenced) {
+              if (ref.referenced) {
+                // Functions can reference themselves, so we need to check if there's a
+                // binding outside the function scope or not.
+                if (ref.path.type === `FunctionDeclaration`) {
+                  if (ref.path.type === `FunctionDeclaration`) {
+                    const isSelfReferenced = ref.referencePaths.every(
+                      refPath => !!refPath.findParent(p => p === ref.path)
+                    )
+
+                    if (isSelfReferenced) {
+                      ref.path.remove()
+                      removed = true
+                    }
+                  }
+                }
+              } else {
                 // if const {x,y} is used, we remove the property
                 if (
                   t.isVariableDeclarator(ref.path) &&
@@ -52,6 +67,11 @@ export default declare(function removeApiCalls(
                         : ((prop as t.RestElement).argument as t.Identifier)
                             .name !== refName
                   )
+
+                  // if all properties got removed thus the object pattern is empty, we remove the whole declaration
+                  if (!objectPattern.properties.length) {
+                    ref.path.remove()
+                  }
                 } else {
                   ref.path.remove()
                 }
@@ -115,7 +135,6 @@ export default declare(function removeApiCalls(
       // remove exports
       ExpressionStatement(path): void {
         if (
-          !t.isProgram(path.parentPath) ||
           !t.isAssignmentExpression(path.node.expression) ||
           !t.isMemberExpression(path.node.expression.left) ||
           (path.node.expression.left.object as t.Identifier).name !== `exports`
