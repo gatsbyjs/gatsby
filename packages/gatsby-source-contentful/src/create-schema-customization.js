@@ -53,7 +53,7 @@ export async function createSchemaCustomization(
   await cache.set(CACHE_CONTENT_TYPES, contentTypeItems)
 
   createTypes(
-    schema.buildObjectType({
+    schema.buildInterfaceType({
       name: `ContentfulEntry`,
       fields: {
         contentful_id: { type: `String!` },
@@ -66,7 +66,7 @@ export async function createSchemaCustomization(
   )
 
   createTypes(
-    schema.buildObjectType({
+    schema.buildInterfaceType({
       name: `ContentfulReference`,
       fields: {
         contentful_id: { type: `String!` },
