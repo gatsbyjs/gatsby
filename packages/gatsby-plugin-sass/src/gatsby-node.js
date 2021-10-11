@@ -34,8 +34,8 @@ exports.onCreateWebpackConfig = (
           loaders.miniCssExtract(),
           loaders.css({
             importLoaders: 2,
-            ...cssLoaderOptions,
             modules: false,
+            ...cssLoaderOptions,
           }),
           loaders.postcss({ plugins: postCssPlugins }),
         ],
