@@ -1,7 +1,6 @@
 import { store } from "../redux"
 import {
   IGatsbyPage,
-  IGatsbyPageComponent,
   IGatsbyState,
   IMaterializePageMode,
   PageMode,
@@ -15,7 +14,12 @@ import {
  */
 export function getPageMode(page: IGatsbyPage, state?: IGatsbyState): PageMode {
   const { components } = state ?? store.getState()
-  const component = components.get(page.componentPath)
+
+  // assume SSG until components are actually extracted
+  const component =
+    components.size === 0
+      ? { serverData: false }
+      : components.get(page.componentPath)
 
   if (!component) {
     throw new Error(`Could not find matching component for page ${page.path}`)
@@ -31,7 +35,7 @@ export function getPageMode(page: IGatsbyPage, state?: IGatsbyState): PageMode {
 
 function resolvePageMode(
   page: IGatsbyPage,
-  component: IGatsbyPageComponent
+  component: { serverData: boolean }
   // TODO:
   //  componentInstance?: NodeModule
 ): PageMode {

@@ -1,4 +1,4 @@
-import normalize from "./normalize-path"
+import normalize from "../../utils/normalize-path"
 import { IGatsbyState, ActionsUnion } from "../types"
 
 let programStatus = `BOOTSTRAPPING`
@@ -16,7 +16,6 @@ export const componentsReducer = (
       programStatus = action.payload
       return state
     case `CREATE_PAGE`: {
-      action.payload.componentPath = normalize(action.payload.component)
       // Create XState service.
       let component = state.get(action.payload.componentPath)
       if (!component) {
