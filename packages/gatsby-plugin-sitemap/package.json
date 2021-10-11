@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-sitemap",
   "description": "Gatsby plugin that automatically creates a sitemap for your site",
-  "version": "5.0.0-zz-next.2",
+  "version": "5.0.0-zz-next.3",
   "contributors": [
     "Alex Moon <alex.jared.moon@gmail.com>",
     "Nicholas Young <nicholas@nicholaswyoung.com>"

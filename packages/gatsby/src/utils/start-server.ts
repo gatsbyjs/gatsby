@@ -343,7 +343,7 @@ export async function startServer(
             const { props } = await serverDataPromise
 
             pageData.result.serverData = props
-            pageData.path = `/${requestedPagePath}`
+            pageData.path = page.matchPath ? `/${potentialPagePath}` : page.path
             ssrPages.add(page.path)
           } else if (ssrPages.has(page.path)) {
             // When user removes getServerData function, Gatsby browser runtime still has cached version of page-data.
