@@ -193,6 +193,7 @@ class LocalNodeModel {
    * @returns {Node[]}
    */
   getAllNodes(args, pageDependencies = {}) {
+    // TODO(v5): Remove API
     reporter.warn(
       `nodeModel.getAllNodes() is deprecated. Use nodeModel.findAll() with an empty query instead.`
     )
@@ -234,6 +235,7 @@ class LocalNodeModel {
    * @returns {Promise<Node[]>}
    */
   async runQuery(args, pageDependencies = {}) {
+    // TODO(v5): Remove API
     reporter.warn(
       `nodeModel.runQuery() is deprecated. Use nodeModel.findAll() or nodeModel.findOne() instead.`
     )
