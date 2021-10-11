@@ -363,7 +363,7 @@ export async function startServer(
               // The query-result-store reacts to this
               pageData.getServerDataError = structuredError
             }
-            pageData.path = `/${requestedPagePath}`
+            pageData.path = page.matchPath ? `/${potentialPagePath}` : page.path
           }
 
           res.status(200).send(pageData)
