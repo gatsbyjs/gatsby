@@ -328,13 +328,6 @@ class LocalNodeModel {
   }
 
   /**
-   * Object containing results for findAll (entries and totalCount)
-   * @typedef {Object} findAllResult
-   * @property {GatsbyIterable<IGatsbyNode>} entries - Iterable with all nodes you requested (takes into account query.limit and query.skip)
-   * @property {() => Promise<number>} totalCount - The total number of nodes
-   */
-
-  /**
    * Get all nodes in the store, or all nodes of a specified type (optionally with limit/skip).
    * Returns slice of result as iterable.
    *
@@ -342,7 +335,7 @@ class LocalNodeModel {
    * @param {Object} args.query Query arguments (e.g. `limit` and `skip`)
    * @param {(string|GraphQLOutputType)} args.type Type
    * @param {PageDependencies} [pageDependencies]
-   * @return {findAllResult} findAllResult
+   * @return {Object} Object containing `{ entries: GatsbyIterable, totalCount: () => Promise<number> }`
    */
   async findAll(args, pageDependencies = {}) {
     const { gqlType, ...result } = await this._query(args, pageDependencies)
