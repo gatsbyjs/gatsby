@@ -391,7 +391,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       fields: {
         author: {
           type: "AuthorJson",
-          resolve: (source, args, context, info) => {
+          resolve: async (source, args, context, info) => {
             // If you were linking by ID, you could use `getNodeById` to
             // find the correct author:
             // return context.nodeModel.getNodeById({
@@ -400,7 +400,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
             // })
             // But since the example is using the author email as foreign key,
             // you can use `nodeModel.findAll` and manually find the linked author node:
-            const { entries } = context.nodeModel.findAll({ type: "AuthorJson" }, query: {})
+            const { entries } = await context.nodeModel.findAll({ type: "AuthorJson" }, query: {})
             const authors = Array.from(entries)
 
             return authors.find(author => author.email === source.author)
@@ -765,10 +765,9 @@ available to custom field resolvers on the `context.nodeModel` argument passed
 to every resolver. Accessing node(s) by `id` (and optional `type`) is possible
 with [`getNodeById`](/docs/reference/graphql-data-layer/node-model/#getNodeById) and
 [`getNodesByIds`](/docs/reference/graphql-data-layer/node-model/#getNodesByIds). To get all nodes, or all
-nodes of a certain type, use [`getAllNodes`](/docs/reference/graphql-data-layer/node-model/#getAllNodes).
+nodes of a certain type, use [`findAll`](/docs/reference/graphql-data-layer/node-model/#findAll).
 And running a query from inside your resolver functions can be accomplished
-with [`runQuery`](/docs/reference/graphql-data-layer/node-model/#runQuery), which accepts `filter` and `sort`
-query arguments.
+with `findAll` as well, which accepts `filter` and `sort` query arguments.
 
 You could for example add a field to the `AuthorJson` type that lists all recent
 posts by an author:
@@ -779,8 +778,8 @@ exports.createResolvers = ({ createResolvers }) => {
     AuthorJson: {
       recentPosts: {
         type: ["MarkdownRemark"],
-        resolve(source, args, context, info) {
-          return context.nodeModel.runQuery({
+        resolve: async (source, args, context, info) => {
+          const { entries } = await context.nodeModel.findAll({
             query: {
               filter: {
                 frontmatter: {
@@ -790,8 +789,9 @@ exports.createResolvers = ({ createResolvers }) => {
               },
             },
             type: "MarkdownRemark",
-            firstOnly: false,
           })
+          // entries is an Iterable so it needs to be converted to an array
+          return Array.from(entries)
         },
       },
     },
@@ -800,13 +800,13 @@ exports.createResolvers = ({ createResolvers }) => {
 }
 ```
 
-When using `runQuery` to sort query results, be aware that both `sort.fields`
+When using `findAll` to sort query results, be aware that both `sort.fields`
 and `sort.order` are `GraphQLList` fields. Also, nested fields on `sort.fields`
 have to be provided in dot-notation (not separated by triple underscores).
 For example:
 
 ```js
-context.nodeModel.runQuery({
+context.nodeModel.findAll({
   query: {
     sort: {
       fields: ["frontmatter.publishedAt"],
@@ -832,16 +832,17 @@ exports.createResolvers = ({ createResolvers }) => {
     Query: {
       contributorsWithSwag: {
         type: ["ContributorJson"],
-        resolve(source, args, context, info) {
-          return context.nodeModel.runQuery({
+        resolve: async (source, args, context, info) => {
+          const { entries } = await context.nodeModel.findAll({
             query: {
               filter: {
                 receivedSwag: { eq: true },
               },
             },
             type: "ContributorJson",
-            firstOnly: false,
           })
+
+          return Array.from(entries)
         },
       },
     },
@@ -862,16 +863,17 @@ exports.createResolvers = ({ createResolvers }) => {
         args: {
           receivedSwag: "Boolean!",
         },
-        resolve(source, args, context, info) {
-          return context.nodeModel.runQuery({
+        resolve: async (source, args, context, info) => {
+          const { entries } = await context.nodeModel.findAll({
             query: {
               filter: {
                 receivedSwag: { eq: args.receivedSwag },
               },
             },
             type: "ContributorJson",
-            firstOnly: false,
           })
+
+          return Array.from(entries)
         },
       },
     },
@@ -895,28 +897,30 @@ exports.createResolvers = ({ createResolvers }) => {
         args: {
           postsCount: "input PostsCountInput { min: Int, max: Int }",
         },
-        resolve(source, args, context, info) {
+        resolve: async (source, args, context, info) => {
           const { max, min = 0 } = args.postsCount || {}
           const operator = max != null ? { lte: max } : { gte: min }
-          return context.nodeModel.runQuery({
+
+          const { entries } = await context.nodeModel.findAll({
             query: {
               filter: {
                 posts: operator,
               },
             },
             type: "ContributorJson",
-            firstOnly: false,
           })
+
+          return Array.from(entries)
         },
       },
     },
     ContributorJson: {
       posts: {
         type: `Int`,
-        resolve: (source, args, context, info) => {
-          return context.nodeModel
-            .getAllNodes({ type: "MarkdownRemark" })
-            .filter(post => post.frontmatter.author === source.email).length
+        resolve: async (source, args, context, info) => {
+          const { entries } = await context.nodeModel.findAll({ type: "MarkdownRemark", query: {} })
+          const posts = Array.from(entries)
+          return posts.filter(post => post.frontmatter.author === source.email).length
         },
       },
     },
@@ -931,15 +935,12 @@ When creating custom field resolvers, it is important to ensure that Gatsby
 knows about the data a page depends on for hot reloading to work properly. When
 you retrieve nodes from the store with [`context.nodeModel`](/docs/reference/graphql-data-layer/node-model/) methods,
 it is usually not necessary to do anything manually, because Gatsby will register
-dependencies for the query results automatically. The exception is `getAllNodes`
-which will _not_ register data dependencies by default. This is because
-requesting re-running of queries when any node of a certain type changes is
-potentially a very expensive operation. If you are sure you really need this,
+dependencies for the query results automatically. If you want to customize this,
 you can add a page data dependency either programmatically with
 [`context.nodeModel.trackPageDependencies`](/docs/reference/graphql-data-layer/node-model/#trackPageDependencies), or with:
 
 ```js
-context.nodeModel.getAllNodes(
+context.nodeModel.findAll(
   { type: "MarkdownRemark" },
   { connectionType: "MarkdownRemark" }
 )
@@ -994,8 +995,10 @@ exports.createResolvers = ({ createResolvers }) => {
     Query: {
       allTeamMembers: {
         type: ["TeamMember"],
-        resolve(source, args, context, info) {
-          return context.nodeModel.getAllNodes({ type: "TeamMember" })
+        resolve: async (source, args, context, info) => {
+          const { entries } = await context.nodeModel.findAll({ type: "TeamMember", query: {} })
+
+          return Array.from(entries)
         },
       },
     },
