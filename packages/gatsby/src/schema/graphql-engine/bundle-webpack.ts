@@ -27,6 +27,7 @@ export async function createGraphqlEngineBundle(
 
   const compiler = webpack({
     name: `Query Engine`,
+    // mode: `production`,
     mode: `none`,
     entry: path.join(__dirname, `entry.js`),
     output: {
@@ -100,9 +101,6 @@ export async function createGraphqlEngineBundle(
       process.env.GATSBY_WEBPACK_LOGGING?.includes(`query-engine`) &&
         new WebpackLoggingPlugin(rootDir, reporter, isVerbose),
     ].filter(Boolean) as Array<webpack.WebpackPluginInstance>,
-    optimization: {
-      minimize: false,
-    },
   })
 
   return new Promise((resolve, reject) => {
