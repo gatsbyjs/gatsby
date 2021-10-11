@@ -1,4 +1,3 @@
-import normalize from "./normalize-path"
 import {
   IGatsbyState,
   IGatsbyPage,
@@ -21,8 +20,6 @@ export const pagesReducer = (
       return new Map()
 
     case `CREATE_PAGE`: {
-      action.payload.component = normalize(action.payload.component)
-
       // throws an error if the page is not created by a plugin
       if (!action.plugin?.name) {
         console.log(``)
