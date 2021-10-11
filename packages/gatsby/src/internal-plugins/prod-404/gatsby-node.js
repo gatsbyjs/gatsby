@@ -29,7 +29,7 @@ emitter.on(`CREATE_PAGE`, action => {
         actions.createPage(
           {
             ...storedPage,
-            path: `${status}.html`,
+            path: `/${status}.html`,
           },
           action.plugin
         )
@@ -44,7 +44,7 @@ emitter.on(`DELETE_PAGE`, action => {
     store.dispatch(
       actions.deletePage({
         ...storedPage,
-        path: `${storedPage.status}.html`,
+        path: `/${storedPage.status}.html`,
       })
     )
     originalStatusPageByPath[action.payload.path] = null
