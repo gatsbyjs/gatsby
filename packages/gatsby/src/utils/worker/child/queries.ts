@@ -41,11 +41,18 @@ export async function saveQueriesDependencies(): Promise<void> {
   await waitUntilPageQueryResultsAreStored()
 }
 
+let gqlRunner
 function getGraphqlRunner(): GraphQLRunner {
-  return new GraphQLRunner(store, {
-    collectStats: true,
-    graphqlTracing: store.getState().program.graphqlTracing,
-  })
+  if (gqlRunner) {
+    return gqlRunner
+  } else {
+    gqlRunner = new GraphQLRunner(store, {
+      collectStats: true,
+      graphqlTracing: store.getState().program.graphqlTracing,
+    })
+
+    return gqlRunner
+  }
 }
 
 type ActionsToReplay = Array<
@@ -58,7 +65,6 @@ type ActionsToReplay = Array<
 export async function runQueries(
   queryIds: IGroupedQueryIds
 ): Promise<ActionsToReplay> {
-  console.log(`runQueries`)
   const actionsToReplay: ActionsToReplay = []
 
   const unsubscribe = store.subscribe(() => {
@@ -90,7 +96,9 @@ async function doRunQueries(queryIds: IGroupedQueryIds): Promise<void> {
     await buildSchema()
   }
 
+  console.time(`getGraphqlRunner`)
   const graphqlRunner = getGraphqlRunner()
+  console.timeEnd(`getGraphqlRunner`)
 
   await runStaticQueries({
     queryIds,

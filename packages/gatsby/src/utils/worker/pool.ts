@@ -28,6 +28,7 @@ export const create = (): GatsbyWorkerPool => {
         GATSBY_WORKER_POOL_WORKER: `true`,
         GATSBY_SKIP_WRITING_SCHEMA_TO_FILE: `true`,
         GATSBY_EXPERIMENTAL_LMDB_STORE: `true`,
+        GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING: `true`,
       },
     })
 
@@ -70,13 +71,15 @@ export async function runQueriesInWorkersQueue(
       })
   }
 
-  for (const segment of pageQuerySegments) {
+  for (const [index, segment] of pageQuerySegments.entries()) {
+    // console.time(`runQueries ${index}`)
     pool.single
       .runQueries({ pageQueryIds: segment, staticQueryIds: [] })
       .then(replayWorkerActions)
       .then(() => {
         activity.tick(segment.length)
       })
+    // console.timeEnd(`runQueries ${index}`)
   }
 
   // note that we only await on this and not on anything before (`.setComponents()` or `.runQueries()`)
