@@ -39,6 +39,7 @@
     "better-opn": "^2.0.0",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
+    "bottleneck": "^2.19.5",
     "browserslist": "^4.12.2",
     "cache-manager": "^2.11.1",
     "chalk": "^4.1.2",
