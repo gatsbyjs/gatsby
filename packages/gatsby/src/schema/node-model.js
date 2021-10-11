@@ -335,7 +335,7 @@ class LocalNodeModel {
    * @param {Object} args.query Query arguments (e.g. `limit` and `skip`)
    * @param {(string|GraphQLOutputType)} args.type Type
    * @param {PageDependencies} [pageDependencies]
-   * @returns {Object} result - Returns an object with entries and totalCount
+   * @returns {*} result - Returns an object with entries and totalCount
    * @returns {GatsbyIterable<IGatsbyNode>} result.entries - Iterable with all nodes you requested
    * @returns {() => Promise<number>} result.totalCount - The total number of nodes
    */
