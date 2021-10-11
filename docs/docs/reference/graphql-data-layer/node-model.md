@@ -16,7 +16,8 @@ createResolvers({
     mood: {
       type: `String`,
       resolve(source, args, context, info) {
-        const coffee = context.nodeModel.findAll({ type: `Coffee`, query: {} })
+        const { entries } = context.nodeModel.findAll({ type: `Coffee`, query: {} })
+        const coffee = Array.from(entries)
         if (!coffee.length) {
           return 😞
         }

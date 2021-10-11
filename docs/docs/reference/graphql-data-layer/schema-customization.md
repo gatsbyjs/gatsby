@@ -400,9 +400,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
             // })
             // But since the example is using the author email as foreign key,
             // you can use `nodeModel.findAll` and manually find the linked author node:
-            return context.nodeModel
-              .findAll({ type: "AuthorJson" }, query: {})
-              .find(author => author.email === source.author)
+            const { entries } = context.nodeModel.findAll({ type: "AuthorJson" }, query: {})
+            const authors = Array.from(entries)
+
+            return authors.find(author => author.email === source.author)
           },
         },
       },

@@ -330,9 +330,7 @@ class LocalNodeModel {
    * Returns slice of result as iterable.
    *
    * @param {*} args
-   * @param {Object} args.query Query arguments (`limit` and `skip`)
-   * @param {number} args.query.limit Limit the amount of nodes
-   * @param {number} args.query.skip Skip a number of nodes
+   * @param {Object} args.query Query arguments (e.g. `limit` and `skip`)
    * @param {(string|GraphQLOutputType)} args.type Type
    * @param {PageDependencies} [pageDependencies]
    * @returns {Object} result - Returns an object with entries and totalCount
@@ -351,11 +349,13 @@ class LocalNodeModel {
   }
 
   /**
-   * FindOne description
+   * Get one node in the store. Only returns the first result.
    *
    * @param {*} args
-   * @param {*} pageDependencies
-   * @returns
+   * @param {Object} args.query Query arguments (e.g. `limit` and `skip`). Doesn't support sorting.
+   * @param {(string|GraphQLOutputType)} args.type Type
+   * @param {PageDependencies} [pageDependencies]
+   * @returns {Promise<Node>}
    */
   async findOne(args, pageDependencies = {}) {
     const { query } = args
