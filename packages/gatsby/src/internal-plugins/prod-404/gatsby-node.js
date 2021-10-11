@@ -1,39 +1,53 @@
 const { emitter, store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 
-const PROD_404_PAGE_PATH = `/404.html`
+const originalStatusPageByStatus = {}
+const originalStatusPageByPath = {}
 
-let page404 = null
 emitter.on(`CREATE_PAGE`, action => {
   // Copy /404/ to /404.html as many static site hosts expect
   // site 404 pages to be named this.
   // https://www.gatsbyjs.org/docs/how-to/adding-common-features/add-404-page/
-  if (!page404 && /^\/?404\/?$/.test(action.payload.path)) {
-    page404 = {
-      path: action.payload.path,
-      component: action.payload.component,
-      context: action.payload.context,
-    }
-    store.dispatch(
-      actions.createPage(
-        {
-          ...page404,
-          path: PROD_404_PAGE_PATH,
-        },
-        action.plugin
+  const result = /^\/?(404|500)\/?$/.exec(action.payload.path)
+  if (result && result.length > 1) {
+    const status = result[1]
+
+    const originalPage = originalStatusPageByStatus[status]
+
+    if (!originalPage) {
+      const storedPage = {
+        path: action.payload.path,
+        component: action.payload.component,
+        context: action.payload.context,
+        status,
+      }
+
+      originalStatusPageByStatus[status] = storedPage
+      originalStatusPageByPath[action.payload.path] = storedPage
+
+      store.dispatch(
+        actions.createPage(
+          {
+            ...storedPage,
+            path: `${status}.html`,
+          },
+          action.plugin
+        )
       )
-    )
+    }
   }
 })
 
 emitter.on(`DELETE_PAGE`, action => {
-  if (page404 && action.payload.path === page404.path) {
+  const storedPage = originalStatusPageByPath[action.payload.path]
+  if (storedPage) {
     store.dispatch(
       actions.deletePage({
-        ...page404,
-        path: PROD_404_PAGE_PATH,
+        ...storedPage,
+        path: `${storedPage.status}.html`,
       })
     )
-    page404 = null
+    originalStatusPageByPath[action.payload.path] = null
+    originalStatusPageByStatus[storedPage.status] = null
   }
 })

@@ -427,6 +427,15 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     if (isSSR) {
       pageMode = `SSR`
     }
+
+    // if page is for one of status pages (404 or 500), force set mode to SSG
+    if (pageMode !== `SSG` && /^\/?(404|500).html$/.test(internalPage.path)) {
+      warnOnce(
+        `Status page "${internalPage.path}" ignores page mode ("${pageMode}") and force sets it to SSG (this page can't be lazily rendered).`
+      )
+      pageMode = `SSG`
+      internalPage.defer = false
+    }
     internalPage.mode = pageMode
   }
 
