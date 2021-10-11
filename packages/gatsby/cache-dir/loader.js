@@ -161,7 +161,7 @@ export class BaseLoader {
       // Handle 404
       if (status === 404 || status === 200) {
         // If the request was for a 404 page and it doesn't exist, we're done
-        if (pagePath === `/404.html`) {
+        if (pagePath === `/404.html` || pagePath === `/500.html`) {
           return Object.assign(loadObj, {
             status: PageResourceStatus.Error,
           })
