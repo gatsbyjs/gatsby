@@ -92,12 +92,15 @@ function DevOverlay({ children }) {
 
   const dismiss = () => {
     dispatch({ action: `DISMISS` })
+    // Setting gatsbyEvents = [] is necessary for the runtime errors to correctly clear
+    // However, using this for serverData errors doesn't work and results in the overlay not showing up
+    // again since the component isn't remounted and thus the .push method is not reinitalized
     window._gatsbyEvents = []
   }
 
   const hasBuildError = state.buildError !== null
   const hasRuntimeErrors = Boolean(state.errors.length)
-  const hasGetServerDataErrors = Boolean(state.getServerDataError)
+  const hasGetServerDataError = Boolean(state.getServerDataError)
   const hasGraphqlErrors = Boolean(state.graphqlErrors.length)
   const hasDevSsrError = state.devSsrError !== null
   const hasErrors =
@@ -105,14 +108,14 @@ function DevOverlay({ children }) {
     hasRuntimeErrors ||
     hasGraphqlErrors ||
     hasDevSsrError ||
-    hasGetServerDataErrors
+    hasGetServerDataError
 
   // This component has a deliberate order (priority)
   const ErrorComponent = () => {
     if (hasBuildError) {
       return <BuildError error={state.buildError} />
     }
-    if (hasGetServerDataErrors) {
+    if (hasGetServerDataError) {
       return <GetServerDataError error={state.getServerDataError} />
     }
     if (hasRuntimeErrors) {

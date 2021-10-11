@@ -6,7 +6,7 @@ export interface IPageData {
   matchPath?: IGatsbyPage["matchPath"]
   path: IGatsbyPage["path"]
   staticQueryHashes: Array<string>
-  getServerDataError?: IStructuredError | Array<IStructuredError>
+  getServerDataError?: IStructuredError | Array<IStructuredError> | null
 }
 
 export function constructPageDataString(

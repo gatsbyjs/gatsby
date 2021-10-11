@@ -358,6 +358,9 @@ export async function startServer(
                 },
                 error,
               })
+              // Use page-data.json file instead of emitting via websockets as this makes it easier
+              // to only display the relevant error + clearing of the error
+              // The query-result-store reacts to this
               pageData.getServerDataError = structuredError
             }
             pageData.path = `/${requestedPagePath}`

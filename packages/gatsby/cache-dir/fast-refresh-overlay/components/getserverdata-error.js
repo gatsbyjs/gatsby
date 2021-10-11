@@ -1,83 +1,52 @@
 import * as React from "react"
-import { Overlay, Header, HeaderOpenClose, Body } from "./overlay"
+import { Overlay, Header, HeaderOpenClose, Body, Footer } from "./overlay"
 import { useFileCodeFrame } from "./hooks"
 import { CodeFrame } from "./code-frame"
 import { openInEditor } from "../utils"
-import { Accordion, AccordionItem } from "./accordion"
 
 const filePathRegex = /webpack:\/[^/]+\/(.*)$/
 
-function WrappedAccordionItem({ error, open }) {
+export function GetServerDataError({ error }) {
   const stacktrace = error.stack
-  const codeFrameInformation = stacktrace.find(CallSite => CallSite.fileName)
-  const filePath = `./${filePathRegex.exec(codeFrameInformation?.fileName)[1]}`
-  const lineNumber = codeFrameInformation?.lineNumber
-  const columnNumber = codeFrameInformation?.columnNumber
-  const name = codeFrameInformation?.functionName
+  const info = stacktrace.find(CallSite => CallSite.fileName)
+  const filePath = `./${filePathRegex.exec(info?.fileName)[1]}`
+  const lineNumber = info?.lineNumber
+  const columnNumber = info?.columnNumber
+  const name =
+    info?.functionName === `Module.getServerData`
+      ? `getServerData`
+      : info?.functionName
 
   const res = useFileCodeFrame({ filePath, lineNumber, columnNumber })
 
-  const Title = () => {
-    if (!name) {
-      return <>Unknown getServerData Error</>
-    }
-
-    return (
-      <>
-        Error in function{` `}
-        <span data-font-weight="bold">{name}</span> in{` `}
-        <span data-font-weight="bold">
-          {filePath}:{lineNumber}
-        </span>
-      </>
-    )
-  }
-
-  return (
-    <AccordionItem open={open} title={<Title />}>
-      <p data-gatsby-overlay="body__error-message">
-        {error?.context?.sourceMessage}
-      </p>
-      <div data-gatsby-overlay="codeframe__top">
-        <div>
-          {filePath}:{lineNumber}
-        </div>
-        <button
-          data-gatsby-overlay="body__open-in-editor"
-          onClick={() => openInEditor(filePath, lineNumber)}
-        >
-          Open in Editor
-        </button>
-      </div>
-      <CodeFrame decoded={res.decoded} />
-    </AccordionItem>
-  )
-}
-
-export function GetServerDataError({ error }) {
   return (
     <Overlay>
-      <Header data-gatsby-error-type="runtime-error">
+      <Header data-gatsby-error-type="build-error">
         <div data-gatsby-overlay="header__cause-file">
           <h1 id="gatsby-overlay-labelledby">Unhandled getServerData Error</h1>
+          <span>{filePath}</span>
         </div>
-        <HeaderOpenClose dismiss={false} />
+        <HeaderOpenClose
+          dismiss={false}
+          open={() => openInEditor(filePath, lineNumber)}
+        />
       </Header>
       <Body>
-        <p
-          data-gatsby-overlay="body__describedby"
-          id="gatsby-overlay-describedby"
-        >
-          One unhandled getServerData error found in your files. See the list
-          below to fix it:
+        <h2>Error Message</h2>
+        <p data-gatsby-overlay="body__error-message">
+          {error?.context?.sourceMessage}
         </p>
-        <Accordion>
-          <WrappedAccordionItem
-            open={true}
-            key={`${error.message}`}
-            error={error}
-          />
-        </Accordion>
+        <h2>Source</h2>
+        {filePath && (
+          <div data-gatsby-overlay="codeframe__top">
+            Function {name} in {filePath}:{lineNumber}
+          </div>
+        )}
+        <CodeFrame decoded={res.decoded} />
+        <Footer id="gatsby-overlay-describedby">
+          This error occured in the getServerData function and can only be
+          dismissed by fixing the error or adding error handling.
+        </Footer>
       </Body>
     </Overlay>
   )

@@ -57,6 +57,7 @@ const errors = {
       `Error in getServerData in ${context.pagePath} / "${context.potentialPagePath}".`,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+  },
   "98001": {
     text: (): string =>
       `Built Rendering Engines failed validation failed validation.\n\nPlease open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help`,
