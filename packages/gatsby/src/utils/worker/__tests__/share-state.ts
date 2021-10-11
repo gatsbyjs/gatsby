@@ -20,6 +20,7 @@ let worker: GatsbyTestWorkerPool | undefined
 const dummyPagePayload = {
   path: `/foo/`,
   component: `/foo`,
+  componentPath: `/foo`,
 }
 
 describe(`worker (share-state)`, () => {
