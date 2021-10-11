@@ -394,12 +394,16 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
           resolve: async (source, args, context, info) => {
             // If you were linking by ID, you could use `getNodeById` to
             // find the correct author:
+            //
             // return context.nodeModel.getNodeById({
             //   id: source.author,
             //   type: "AuthorJson",
             // })
+            //
             // But since the example is using the author email as foreign key,
-            // you can use `nodeModel.findOne` to find the linked author node:
+            // you can use `nodeModel.findOne` to find the linked author node.
+            // Note: Instead of getting all nodes and then using Array.prototype.find()
+            // Use nodeModel.findOne instead where possible!
             return await context.nodeModel.findOne({
               type: "AuthorJson",
               query: {
@@ -997,6 +1001,7 @@ exports.createResolvers = ({ createResolvers }) => {
       allTeamMembers: {
         type: ["TeamMember"],
         resolve: async (source, args, context, info) => {
+          // Whenever possible, use `limit` and `skip` on findAll calls to increase performance
           const { entries } = await context.nodeModel.findAll({ type: "TeamMember", query: { limit: args.limit, skip: args.skip } })
 
           return entries
