@@ -399,11 +399,13 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
             //   type: "AuthorJson",
             // })
             // But since the example is using the author email as foreign key,
-            // you can use `nodeModel.findAll` and manually find the linked author node:
-            const { entries } = await context.nodeModel.findAll({ type: "AuthorJson" }, query: {})
-            const authors = Array.from(entries)
-
-            return authors.find(author => author.email === source.author)
+            // you can use `nodeModel.findOne` to find the linked author node:
+            return await context.nodeModel.findOne({
+              type: "AuthorJson",
+              query: {
+                filter: { email: { eq: source.author } }
+              }
+            })
           },
         },
       },
@@ -790,8 +792,7 @@ exports.createResolvers = ({ createResolvers }) => {
             },
             type: "MarkdownRemark",
           })
-          // entries is an Iterable so it needs to be converted to an array
-          return Array.from(entries)
+          return entries
         },
       },
     },
@@ -842,7 +843,7 @@ exports.createResolvers = ({ createResolvers }) => {
             type: "ContributorJson",
           })
 
-          return Array.from(entries)
+          return entries
         },
       },
     },
@@ -873,7 +874,7 @@ exports.createResolvers = ({ createResolvers }) => {
             type: "ContributorJson",
           })
 
-          return Array.from(entries)
+          return entries
         },
       },
     },
@@ -910,7 +911,7 @@ exports.createResolvers = ({ createResolvers }) => {
             type: "ContributorJson",
           })
 
-          return Array.from(entries)
+          return entries
         },
       },
     },
@@ -996,9 +997,9 @@ exports.createResolvers = ({ createResolvers }) => {
       allTeamMembers: {
         type: ["TeamMember"],
         resolve: async (source, args, context, info) => {
-          const { entries } = await context.nodeModel.findAll({ type: "TeamMember", query: {} })
+          const { entries } = await context.nodeModel.findAll({ type: "TeamMember", query: { limit: args.limit, skip: args.skip } })
 
-          return Array.from(entries)
+          return entries
         },
       },
     },

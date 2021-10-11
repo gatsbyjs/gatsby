@@ -336,7 +336,7 @@ class LocalNodeModel {
    * @param {(string|GraphQLOutputType)} args.type Type
    * @param {PageDependencies} [pageDependencies]
    * @returns {*} result - Returns an object with entries and totalCount
-   * @returns {GatsbyIterable<IGatsbyNode>} result.entries - Iterable with all nodes you requested
+   * @returns {GatsbyIterable<IGatsbyNode>} result.entries - Iterable with all nodes you requested (takes into account query.limit and query.skip)
    * @returns {() => Promise<number>} result.totalCount - The total number of nodes
    */
   async findAll(args, pageDependencies = {}) {
@@ -354,7 +354,7 @@ class LocalNodeModel {
    * Get one node in the store. Only returns the first result.
    *
    * @param {*} args
-   * @param {Object} args.query Query arguments (e.g. `limit` and `skip`). Doesn't support sorting.
+   * @param {Object} args.query Query arguments (e.g. `filter`). Doesn't support `sort`, `limit`, `skip`.
    * @param {(string|GraphQLOutputType)} args.type Type
    * @param {PageDependencies} [pageDependencies]
    * @returns {Promise<Node>}
