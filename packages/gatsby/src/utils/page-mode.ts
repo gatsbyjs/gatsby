@@ -16,14 +16,8 @@ export function getPageMode(page: IGatsbyPage, state?: IGatsbyState): PageMode {
   const { components } = state ?? store.getState()
 
   // assume SSG until components are actually extracted
-  const component =
-    components.size === 0
-      ? { serverData: false }
-      : components.get(page.componentPath)
+  const component = components.get(page.componentPath) ?? { serverData: false }
 
-  if (!component) {
-    throw new Error(`Could not find matching component for page ${page.path}`)
-  }
   // TODO: fs routes support:
   //   if (component.config) {
   //     const renderer = require(PAGE_RENDERER_PATH)
