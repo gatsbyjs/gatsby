@@ -391,7 +391,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       fields: {
         author: {
           type: "AuthorJson",
-          resolve: async (source, args, context, info) => {
+          resolve: (source, args, context, info) => {
             // If you were linking by ID, you could use `getNodeById` to
             // find the correct author:
             //
@@ -404,7 +404,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
             // you can use `nodeModel.findOne` to find the linked author node.
             // Note: Instead of getting all nodes and then using Array.prototype.find()
             // Use nodeModel.findOne instead where possible!
-            return await context.nodeModel.findOne({
+            return context.nodeModel.findOne({
               type: "AuthorJson",
               query: {
                 filter: { email: { eq: source.author } }
