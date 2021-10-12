@@ -51,6 +51,7 @@ import {
 import { renderDevHTML } from "./dev-ssr/render-dev-html"
 import { getServerData, IServerData } from "./get-server-data"
 import { ROUTES_DIRECTORY } from "../constants"
+import { getPageMode } from "./page-mode"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -307,8 +308,9 @@ export async function startServer(
         try {
           let serverDataPromise: Promise<IServerData> | Promise<Error> =
             Promise.resolve({})
+          const pageMode = getPageMode(page)
 
-          if (page.mode === `SSR`) {
+          if (pageMode === `SSR`) {
             const renderer = require(PAGE_RENDERER_PATH)
             const componentInstance = await renderer.getPageChunk(page)
 
@@ -338,7 +340,7 @@ export async function startServer(
             )
           }
 
-          if (page.mode === `SSR`) {
+          if (pageMode === `SSR`) {
             try {
               const result = await serverDataPromise
 
@@ -364,6 +366,10 @@ export async function startServer(
               pageData.getServerDataError = structuredError
             }
             pageData.path = page.matchPath ? `/${potentialPagePath}` : page.path
+          } else {
+            // When user removes getServerData function, Gatsby browser runtime still has cached version of page-data.
+            // Send `null` to always reset cached serverData:
+            pageData.result.serverData = null
           }
 
           res.status(200).send(pageData)
