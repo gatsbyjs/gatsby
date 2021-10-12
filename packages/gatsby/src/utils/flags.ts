@@ -190,16 +190,6 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => true,
   },
   {
-    name: `FUNCTIONS`,
-    env: `GATSBY_EXPERIMENTAL_FUNCTIONS`,
-    command: `all`,
-    telemetryId: `Functions`,
-    experimental: false,
-    description: `Compile Serverless functions in your Gatsby project and write them to disk, ready to deploy to Gatsby Cloud`,
-    umbrellaIssue: `https://gatsby.dev/functions-feedback`,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-  },
-  {
     name: `LMDB_STORE`,
     env: `GATSBY_EXPERIMENTAL_LMDB_STORE`,
     command: `all`,

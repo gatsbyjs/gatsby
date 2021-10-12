@@ -39,7 +39,10 @@ export async function validate(directory: string): Promise<void> {
     // Allow imports to modules in engines directory.
     // For example: importing ".cache/page-ssr/routes/render-page" from
     // page-ssr engine should be allowed as it is part of engine.
-    const allowedPrefixes = [`.cache/query-engine`, `.cache/page-ssr`]
+    const allowedPrefixes = [
+      path.join(`.cache`, `query-engine`),
+      path.join(`.cache`, `page-ssr`),
+    ]
     const localRequire = mod.createRequire(parent.filename)
     const absPath = localRequire.resolve(request)
     const relativeToRoot = path.relative(directory, absPath)
