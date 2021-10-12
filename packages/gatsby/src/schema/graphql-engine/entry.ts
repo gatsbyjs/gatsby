@@ -15,7 +15,6 @@ import { setGatsbyPluginCache } from "../../utils/require-gatsby-plugin"
 import apiRunnerNode from "../../utils/api-runner-node"
 import type { IGatsbyPage, IGatsbyState } from "../../redux/types"
 import { findPageByPath } from "../../utils/find-page-by-path"
-import { runWithEngineContext } from "../../utils/engine-context"
 import { getDataStore } from "../../datastore"
 import {
   gatsbyNodes,
@@ -94,15 +93,15 @@ export class GraphQLEngine {
     context: Record<string, any>
   ): Promise<ExecutionResult> {
     const engineContext = {
-      requestId: requestId++,
+      requestId: String(requestId++),
     }
-    const doRunQuery = async (): Promise<ExecutionResult> => {
-      const graphqlRunner = await this.getRunner()
-      const result = await graphqlRunner(query, context)
-      await waitJobsByRequest(engineContext.requestId)
-      return result
-    }
-    return await runWithEngineContext(engineContext, doRunQuery)
+    const graphqlRunner = await this.getRunner()
+    const result = await graphqlRunner(query, {
+      ...context,
+      requestId: engineContext.requestId,
+    })
+    await waitJobsByRequest(engineContext.requestId)
+    return result
   }
 
   public findPageByPath(pathName: string): IGatsbyPage | undefined {

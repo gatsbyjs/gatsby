@@ -35,7 +35,6 @@ import {
   removeInProgressJob,
   getInProcessJobPromise,
 } from "../../utils/jobs/manager"
-import { getEngineContext } from "../../utils/engine-context"
 
 /**
  * Create a dependency between a page and data. Probably for
@@ -366,21 +365,6 @@ export const createJobV2FromInternalJob =
     const jobContentDigest = internalJob.contentDigest
     const currentState = getState()
 
-    const engineContext = getEngineContext()
-
-    // Always set context, even if engine context is not set
-    // Doing this just in case. AsyncLocalStorage is experimental in Node 14,
-    // so if it fails to deliver context here we can still get jobs by requestId -1
-    dispatch({
-      type: `SET_JOB_V2_CONTEXT`,
-      payload: {
-        job: internalJob,
-        requestId: engineContext?.requestId ?? -1,
-      },
-    })
-
-    console.log(`Engine context:`, engineContext)
-
     // Check if we already ran this job before, if yes we return the result
     // We have an inflight (in progress) queue inside the jobs manager to make sure
     // we don't waste resources twice during the process
@@ -392,6 +376,14 @@ export const createJobV2FromInternalJob =
         currentState.jobsV2.complete.get(jobContentDigest)!.result
       )
     }
+
+    dispatch({
+      type: `SET_JOB_V2_CONTEXT`,
+      payload: {
+        job: internalJob,
+        requestId: internalJob?.requestId ?? ``,
+      },
+    })
 
     const inProgressJobPromise = getInProcessJobPromise(jobContentDigest)
     if (inProgressJobPromise) {

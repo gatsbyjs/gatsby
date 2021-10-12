@@ -80,6 +80,7 @@ export interface IImageDataArgs {
   pathPrefix: string
   cache: GatsbyCache
   reporter: Reporter
+  requestId?: string
 }
 
 function normalizeFormat(format: string): ImageFormat {
@@ -95,6 +96,7 @@ export async function generateImageData({
   pathPrefix,
   reporter,
   cache,
+  requestId,
 }: IImageDataArgs): Promise<IGatsbyImageData | undefined> {
   args = mergeDefaults(args)
 
@@ -230,6 +232,7 @@ export async function generateImageData({
     file,
     transforms,
     reporter,
+    requestId,
   })
 
   const srcSet = getSrcSet(images)
@@ -289,6 +292,7 @@ export async function generateImageData({
       file,
       transforms,
       reporter,
+      requestId,
     })
 
     imageProps.images.sources?.push({
@@ -318,6 +322,7 @@ export async function generateImageData({
       file,
       transforms,
       reporter,
+      requestId,
     })
 
     imageProps.images.sources?.push({

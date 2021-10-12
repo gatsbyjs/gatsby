@@ -163,7 +163,7 @@ function lazyJobsEnabled() {
   )
 }
 
-function queueImageResizing({ file, args = {}, reporter }) {
+function queueImageResizing({ file, args = {}, reporter, requestId }) {
   const fullOptions = healOptions(getPluginOptions(), args, file.extension)
   const { src, width, height, aspectRatio, relativePath, outputDir, options } =
     prepareQueue({ file, args: createTransformObject(fullOptions) })
@@ -184,6 +184,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
         ],
         pluginOptions: getPluginOptions(),
       },
+      requestId,
     },
     { reporter }
   )
@@ -199,7 +200,12 @@ function queueImageResizing({ file, args = {}, reporter }) {
   }
 }
 
-function batchQueueImageResizing({ file, transforms = [], reporter }) {
+function batchQueueImageResizing({
+  file,
+  transforms = [],
+  reporter,
+  requestId,
+}) {
   const operations = []
   const images = []
 
@@ -247,6 +253,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
         operations,
         pluginOptions: getPluginOptions(),
       },
+      requestId,
     },
     { reporter }
   )
@@ -430,7 +437,7 @@ async function stats({ file, reporter }) {
   }
 }
 
-async function fluid({ file, args = {}, reporter, cache }) {
+async function fluid({ file, args = {}, reporter, cache, requestId }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
 
   let metadata
@@ -545,6 +552,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
     file,
     transforms,
     reporter,
+    requestId,
   })
 
   let base64Image
@@ -634,7 +642,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   }
 }
 
-async function fixed({ file, args = {}, reporter, cache }) {
+async function fixed({ file, args = {}, reporter, cache, requestId }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
 
   // if no width is passed, we need to resize the image based on the passed height
@@ -684,6 +692,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
     file,
     transforms,
     reporter,
+    requestId,
   })
 
   let base64Image
