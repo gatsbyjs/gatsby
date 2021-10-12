@@ -353,7 +353,7 @@ async function fetchContent({ syncToken, pluginConfig, reporter }) {
   return result
 }
 
-module.exports.fetchContent = fetchContent
+exports.fetchContent = fetchContent
 
 /**
  * Fetches:
@@ -399,7 +399,7 @@ async function fetchContentTypes({ pluginConfig, reporter }) {
   return contentTypes
 }
 
-module.exports.fetchContentTypes = fetchContentTypes
+exports.fetchContentTypes = fetchContentTypes
 
 /**
  * Gets all the existing entities based on pagination parameters.
