@@ -291,7 +291,6 @@ export async function startServer(
 
   app.use(webpackDevMiddlewareInstance)
 
-  const ssrPages = new Set<string>()
   app.get(
     `/page-data/:pagePath(*)/page-data.json`,
     async (req, res, next): Promise<void> => {
@@ -344,12 +343,10 @@ export async function startServer(
 
             pageData.result.serverData = props
             pageData.path = page.matchPath ? `/${potentialPagePath}` : page.path
-            ssrPages.add(page.path)
-          } else if (ssrPages.has(page.path)) {
+          } else {
             // When user removes getServerData function, Gatsby browser runtime still has cached version of page-data.
             // Send `null` to always reset cached serverData:
             pageData.result.serverData = null
-            ssrPages.delete(page.path)
           }
 
           res.status(200).send(pageData)
