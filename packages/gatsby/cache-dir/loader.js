@@ -67,6 +67,7 @@ const toPageResources = (pageData, component = null) => {
     webpackCompilationHash: pageData.webpackCompilationHash,
     matchPath: pageData.matchPath,
     staticQueryHashes: pageData.staticQueryHashes,
+    getServerDataError: pageData.getServerDataError,
   }
 
   return {

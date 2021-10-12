@@ -1,5 +1,5 @@
 import { emitter } from "../redux"
-import { ICreatePageAction } from "../redux/types"
+import { ICreatePageAction, ISetComponentFeatures } from "../redux/types"
 
 export function shouldPrintEngineSnapshot(): boolean {
   return process.env.gatsby_executing_command === `build`
@@ -11,5 +11,9 @@ export function shouldGenerateEngines(): boolean {
 }
 
 emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {
-  if (action.payload.mode !== `SSG`) generate = true
+  if (action.payload.mode && action.payload.mode !== `SSG`) generate = true
+})
+emitter.on(`SET_COMPONENT_FEATURES`, (action: ISetComponentFeatures) => {
+  if (action.payload.serverData) generate = true
+  // TODO: if (action.payload.config) generate = true
 })

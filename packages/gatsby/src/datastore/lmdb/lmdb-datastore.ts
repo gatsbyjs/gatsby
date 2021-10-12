@@ -194,7 +194,8 @@ function updateDataStore(action: ActionsUnion): void {
     case `CREATE_NODE`:
     case `ADD_FIELD_TO_NODE`:
     case `ADD_CHILD_NODE_TO_PARENT_NODE`:
-    case `DELETE_NODE`: {
+    case `DELETE_NODE`:
+    case `MATERIALIZE_PAGE_MODE`: {
       const dbs = getDatabases()
       lastOperationPromise = Promise.all([
         updateNodes(dbs.nodes, action),

@@ -343,6 +343,7 @@ const renovateConfig = {
   postUpdateOptions: [`yarnDedupeHighest`],
   timezone: `GMT`,
   schedule: [`before 7am on the first day of the month`],
+  updateNotScheduled: false,
   packageRules: defaultPackageRules.concat(
     Array.from(packageRules.values()).flat()
   ),

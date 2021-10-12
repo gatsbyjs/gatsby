@@ -186,13 +186,17 @@ class LocalNodeModel {
    * Get all nodes in the store, or all nodes of a specified type. Note that
    * this adds connectionType tracking by default if type is passed.
    *
+   * @deprecated Since version 4.0 - Use nodeModel.findAll() instead
    * @param {Object} args
    * @param {(string|GraphQLOutputType)} [args.type] Optional type of the nodes
    * @param {PageDependencies} [pageDependencies]
    * @returns {Node[]}
    */
   getAllNodes(args, pageDependencies = {}) {
-    // TODO: deprecate this method in favor of runQuery
+    // TODO(v5): Remove API
+    reporter.warn(
+      `nodeModel.getAllNodes() is deprecated. Use nodeModel.findAll() with an empty query instead.`
+    )
     const { type = `Node` } = args || {}
 
     let result
@@ -222,6 +226,7 @@ class LocalNodeModel {
   /**
    * Get nodes of a type matching the specified query.
    *
+   * @deprecated Since version 4.0 - Use nodeModel.findAll() or nodeModel.findOne() instead
    * @param {Object} args
    * @param {Object} args.query Query arguments (`filter` and `sort`)
    * @param {(string|GraphQLOutputType)} args.type Type
@@ -230,10 +235,10 @@ class LocalNodeModel {
    * @returns {Promise<Node[]>}
    */
   async runQuery(args, pageDependencies = {}) {
-    // TODO: show deprecation warning in v4
-    // reporter.warn(
-    //   `nodeModel.runQuery() is deprecated. Use nodeModel.findAll() or nodeModel.findOne() instead`
-    // )
+    // TODO(v5): Remove API
+    reporter.warn(
+      `nodeModel.runQuery() is deprecated. Use nodeModel.findAll() or nodeModel.findOne() instead.`
+    )
     if (args.firstOnly) {
       return this.findOne(args, pageDependencies)
     }
@@ -243,7 +248,7 @@ class LocalNodeModel {
   }
 
   async _query(args) {
-    const { query, type, stats, tracer } = args || {}
+    const { query = {}, type, stats, tracer } = args || {}
 
     // We don't support querying union types (yet?), because the combined types
     // need not have any fields in common.
@@ -322,8 +327,17 @@ class LocalNodeModel {
     }
   }
 
+  /**
+   * Get all nodes in the store, or all nodes of a specified type (optionally with limit/skip).
+   * Returns slice of result as iterable.
+   *
+   * @param {*} args
+   * @param {Object} args.query Query arguments (e.g. `limit` and `skip`)
+   * @param {(string|GraphQLOutputType)} args.type Type
+   * @param {PageDependencies} [pageDependencies]
+   * @return {Object} Object containing `{ entries: GatsbyIterable, totalCount: () => Promise<number> }`
+   */
   async findAll(args, pageDependencies = {}) {
-    // TODO: add this as a public API in v4 (together with deprecating runQuery)
     const { gqlType, ...result } = await this._query(args, pageDependencies)
 
     // Tracking connections by default:
@@ -334,19 +348,23 @@ class LocalNodeModel {
     return result
   }
 
+  /**
+   * Get one node in the store. Only returns the first result.
+   *
+   * @param {*} args
+   * @param {Object} args.query Query arguments (e.g. `filter`). Doesn't support `sort`, `limit`, `skip`.
+   * @param {(string|GraphQLOutputType)} args.type Type
+   * @param {PageDependencies} [pageDependencies]
+   * @returns {Promise<Node>}
+   */
   async findOne(args, pageDependencies = {}) {
-    // TODO: add this as a public API in v4 (together with deprecating runQuery)
-    const { query } = args
+    const { query = {} } = args
     if (query.sort?.fields?.length > 0) {
       // If we support sorting and return the first node based on sorting
       // we'll have to always track connection not an individual node
-      reporter.warn(
-        `nodeModel.findOne() does not support sorting. Use nodeModel.findAll({ query: { limit: 1 } }) instead`
+      throw new Error(
+        `nodeModel.findOne() does not support sorting. Use nodeModel.findAll({ query: { limit: 1 } }) instead.`
       )
-      // TODO: throw in v4
-      // throw new Error(
-      //   `nodeModel.findOne() does not support sorting. Use nodeModel.findAll({ query: { limit: 1 } }) instead`
-      // )
     }
     const { gqlType, entries } = await this._query({
       ...args,
