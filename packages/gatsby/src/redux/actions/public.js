@@ -27,6 +27,7 @@ const { getPageMode } = require(`../../utils/page-mode`)
 const normalizePath = require(`../../utils/normalize-path`).default
 import { createJobV2FromInternalJob } from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
+import { warnOnce } from "../../utils/warn-once"
 import fs from "fs-extra"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
@@ -71,15 +72,6 @@ const findChildren = initialChildren => {
     }
   }
   return children
-}
-
-const displayedWarnings = new Set()
-const warnOnce = (message, key) => {
-  const messageId = key ?? message
-  if (!displayedWarnings.has(messageId)) {
-    displayedWarnings.add(messageId)
-    report.warn(message)
-  }
 }
 
 import type { Plugin } from "./types"
