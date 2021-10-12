@@ -37,6 +37,7 @@ module.exports = {
     __BASE_PATH__: true,
     __ASSET_PREFIX__: true,
     _CFLAGS_: true,
+    __GATSBY: true,
   },
   rules: {
     "@babel/no-unused-expressions": [

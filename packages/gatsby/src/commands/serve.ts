@@ -225,7 +225,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     )
   }
 
-  // Handle SSR & DSR Pages
+  // Handle SSR & DSG Pages
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     try {
       const { GraphQLEngine } = require(path.join(
@@ -253,21 +253,32 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           const potentialPagePath = reverseFixedPagePath(requestedPagePath)
           const page = graphqlEngine.findPageByPath(potentialPagePath)
 
-          if (page && (page.mode === `DSR` || page.mode === `SSR`)) {
-            const data = await getData({
-              pathName: req.path,
-              graphqlEngine,
-              req,
-            })
-            const results = await renderPageData({ data })
-            if (page.mode === `SSR` && data.serverDataHeaders) {
-              for (const [name, value] of Object.entries(
-                data.serverDataHeaders
-              )) {
-                res.setHeader(name, value)
+          if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
+            try {
+              const data = await getData({
+                pathName: req.path,
+                graphqlEngine,
+                req,
+              })
+              const results = await renderPageData({ data })
+              if (page.mode === `SSR` && data.serverDataHeaders) {
+                for (const [name, value] of Object.entries(
+                  data.serverDataHeaders
+                )) {
+                  res.setHeader(name, value)
+                }
               }
+              return void res.send(results)
+            } catch (e) {
+              report.error(
+                `Generating page-data for "${requestedPagePath}" / "${potentialPagePath}" failed.`,
+                e
+              )
+              return res
+                .status(500)
+                .contentType(`text/plain`)
+                .send(`Internal server error.`)
             }
-            return void res.send(results)
           }
 
           return void next()
@@ -278,25 +289,33 @@ module.exports = async (program: IServeProgram): Promise<void> => {
         if (req.accepts(`html`)) {
           const potentialPagePath = req.path
           const page = graphqlEngine.findPageByPath(potentialPagePath)
-
-          if (page && (page.mode === `DSR` || page.mode === `SSR`)) {
-            const data = await getData({
-              pathName: potentialPagePath,
-              graphqlEngine,
-              req,
-            })
-            const results = await renderHTML({ data })
-            if (page.mode === `SSR` && data.serverDataHeaders) {
-              for (const [name, value] of Object.entries(
-                data.serverDataHeaders
-              )) {
-                res.setHeader(name, value)
+          if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
+            try {
+              const data = await getData({
+                pathName: potentialPagePath,
+                graphqlEngine,
+                req,
+              })
+              const results = await renderHTML({ data })
+              if (page.mode === `SSR` && data.serverDataHeaders) {
+                for (const [name, value] of Object.entries(
+                  data.serverDataHeaders
+                )) {
+                  res.setHeader(name, value)
+                }
               }
+              return res.send(results)
+            } catch (e) {
+              report.error(
+                `Rendering html for "${potentialPagePath}" failed.`,
+                e
+              )
+              return res
+                .status(500)
+                .contentType(`text/plain`)
+                .send(`Internal server error.`)
             }
-            return res.send(results)
           }
-
-          return res.status(404).sendFile(`404.html`, { root })
         }
         return next()
       })

@@ -2,7 +2,7 @@
   "name": "gatsby-source-wordpress",
   "description": "Source data from WordPress in an efficient and scalable way.",
   "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
-  "version": "6.0.0-next.1",
+  "version": "6.0.0-zz-next.4",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
@@ -28,19 +28,18 @@
     "file-type": "^15.0.1",
     "filesize": "^6.4.0",
     "fs-extra": "^10.0.0",
-    "gatsby-core-utils": "^3.0.0-next.1",
-    "gatsby-image": "^3.11.0",
-    "gatsby-plugin-catch-links": "^4.0.0-next.1",
-    "gatsby-source-filesystem": "^4.0.0-next.1",
+    "gatsby-core-utils": "^3.0.0-zz-next.3",
+    "gatsby-plugin-catch-links": "^4.0.0-zz-next.2",
+    "gatsby-source-filesystem": "^4.0.0-zz-next.3",
     "glob": "^7.1.7",
     "got": "^11.8.2",
-    "graphql-query-compress": "^1.2.4",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.1",
     "p-queue": "^6.6.2",
     "read-chunk": "^3.2.0",
     "replaceall": "^0.1.6",
     "semver": "^7.3.5",
+    "sharp": "^0.29.0",
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
@@ -53,9 +52,10 @@
     "@types/semver": "^7.3.8",
     "babel-plugin-import-globals": "^2.0.0",
     "babel-plugin-module-resolver": "4.1.0",
-    "babel-preset-gatsby": "^2.0.0-next.1",
-    "babel-preset-gatsby-package": "^2.0.0-next.1",
+    "babel-preset-gatsby": "^2.0.0-zz-next.3",
+    "babel-preset-gatsby-package": "^2.0.0-zz-next.2",
     "cross-env": "^7.0.3",
+    "gatsby-plugin-image": "^2.0.0-zz-next.3",
     "identity-obj-proxy": "^3.0.0",
     "react-test-renderer": "^16.14.0",
     "rimraf": "^3.0.2",
@@ -72,9 +72,10 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^4.0.0-next",
-    "gatsby-plugin-sharp": "^4.0.0-next",
-    "gatsby-transformer-sharp": "^4.0.0-next"
+    "gatsby": "^4.0.0-zz-next.1",
+    "gatsby-plugin-image": "^2.0.0-zz-next.1",
+    "gatsby-plugin-sharp": "^4.0.0-zz-next.1",
+    "gatsby-transformer-sharp": "^4.0.0-zz-next.1"
   },
   "repository": {
     "type": "git",
@@ -84,7 +85,7 @@
   "scripts": {
     "prepare": "npm run build",
     "build": "rimraf dist && babel src --out-dir dist --ignore **/__tests__ --extensions \".ts,.js\" --source-maps && npm run generate-plugin-options-docs",
-    "watch": "npm run build && babel -w src --out-dir dist --ignore **/__tests__ --verbose --extensions \".ts,.js\" --source-maps",
+    "watch": "npm run build && babel -w src --out-dir dist --ignore **/__tests__ --extensions \".ts,.js\" --source-maps",
     "generate-plugin-options-docs": "node ./generate-plugin-options-docs.js"
   },
   "engines": {

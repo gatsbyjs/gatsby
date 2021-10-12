@@ -87,7 +87,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Enable all experiments aimed at improving develop server start time.`,
     includedFlags: [
-      `DEV_SSR`,
+      // `DEV_SSR`, - not working with serverdata atm
       `PRESERVE_FILE_DOWNLOAD_CACHE`,
       `DEV_WEBPACK_CACHE`,
     ],
@@ -102,6 +102,11 @@ const activeFlags: Array<IFlag> = [
     description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds. See umbrella issue for how to update custom webpack config.`,
     umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
     testFitness: (): fitnessEnum => {
+      // TODO Re-enable after gatsybcamp
+      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+        return false
+      }
+
       if (sampleSiteForExperiment(`DEV_SSR`, 20)) {
         return `OPT_IN`
       } else {
@@ -183,16 +188,6 @@ const activeFlags: Array<IFlag> = [
     description: `Run all source plugins at the same time instead of serially. For sites with multiple source plugins, this can speedup sourcing and transforming considerably.`,
     umbrellaIssue: `https://gatsby.dev/parallel-sourcing-feedback`,
     testFitness: (): fitnessEnum => true,
-  },
-  {
-    name: `FUNCTIONS`,
-    env: `GATSBY_EXPERIMENTAL_FUNCTIONS`,
-    command: `all`,
-    telemetryId: `Functions`,
-    experimental: false,
-    description: `Compile Serverless functions in your Gatsby project and write them to disk, ready to deploy to Gatsby Cloud`,
-    umbrellaIssue: `https://gatsby.dev/functions-feedback`,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
   },
   {
     name: `LMDB_STORE`,

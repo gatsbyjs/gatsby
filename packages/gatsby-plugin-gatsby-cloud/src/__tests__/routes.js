@@ -20,8 +20,8 @@ describe(`Routes IPC`, () => {
 
     const pages = new Map()
 
-    pages.set(`/`, { mode: `DSR`, path: `/` })
-    pages.set(`/path/1/`, { mode: `DSR`, path: `/path/1` })
+    pages.set(`/`, { mode: `DSG`, path: `/` })
+    pages.set(`/path/1/`, { mode: `DSG`, path: `/path/1` })
     pages.set(`/path/2/`, { mode: `SSR`, path: `/path/2` })
     pages.set(`/path/3/`, { mode: `SSG`, path: `/path/3` })
 
@@ -71,10 +71,10 @@ describe(`Routes IPC`, () => {
             type: `CREATE_ROUTE`,
             payload: {
               routes: {
-                "index.html": `DSR`,
-                "page-data/index/page-data.json": `DSR`,
-                "path/1/index.html": `DSR`,
-                "page-data/path/1/page-data.json": `DSR`,
+                "index.html": `DSG`,
+                "page-data/index/page-data.json": `DSG`,
+                "path/1/index.html": `DSG`,
+                "page-data/path/1/page-data.json": `DSG`,
                 "path/2/index.html": `SSR`,
                 "page-data/path/2/page-data.json": `SSR`,
               },
@@ -109,10 +109,10 @@ describe(`Routes IPC`, () => {
             type: `CREATE_ROUTE`,
             payload: {
               routes: {
-                "index.html": `DSR`,
-                "page-data\\index\\page-data.json": `DSR`,
-                "path\\1\\index.html": `DSR`,
-                "page-data\\path\\1\\page-data.json": `DSR`,
+                "index.html": `DSG`,
+                "page-data\\index\\page-data.json": `DSG`,
+                "path\\1\\index.html": `DSG`,
+                "page-data\\path\\1\\page-data.json": `DSG`,
                 "path\\2\\index.html": `SSR`,
                 "page-data\\path\\2\\page-data.json": `SSR`,
               },

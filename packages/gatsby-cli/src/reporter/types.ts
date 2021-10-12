@@ -58,6 +58,27 @@ export interface ILogIntent {
       }
 }
 
+type PageMode = "SSG" | "DSG" | "SSR"
+
+interface IGatsbyPageComponent {
+  componentPath: string
+  pages: Set<string>
+}
+interface IGatsbyPage {
+  mode: PageMode
+}
+interface IGatsbyFunction {
+  functionRoute: string
+  originalAbsoluteFilePath: string
+}
+
+export interface IRenderPageArgs {
+  pages: Map<string, IGatsbyPage>
+  components: Map<string, IGatsbyPageComponent>
+  functions: Array<IGatsbyFunction>
+  root: string
+}
+
 export type ReporterMessagesFromChild = ILogIntent
 
 export { ActionCreators }

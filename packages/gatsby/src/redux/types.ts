@@ -26,7 +26,7 @@ export enum ProgramStatus {
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
 }
 
-export type PageMode = "SSG" | "DSR" | "SSR"
+export type PageMode = "SSG" | "DSG" | "SSR"
 
 export interface IGatsbyPage {
   internalComponentName: string

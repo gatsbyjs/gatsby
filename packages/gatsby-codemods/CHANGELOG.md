@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-codemods@2.14.0/packages/gatsby-codemods) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Bug Fixes
+
+- update dependency graphql to ^15.5.2 for gatsby-codemods [#32989](https://github.com/gatsbyjs/gatsby/issues/32989) ([3afef0a](https://github.com/gatsbyjs/gatsby/commit/3afef0ac2be0da8a875dc53b5e9bb8ca288e1239))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+
 ## [2.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-codemods@2.13.0/packages/gatsby-codemods) (2021-09-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)

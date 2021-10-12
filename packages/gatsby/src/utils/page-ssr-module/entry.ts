@@ -15,8 +15,9 @@ import {
   getPagePathFromPageDataPath,
 } from "../page-data-helpers"
 // @ts-ignore render-page import will become valid later on (it's marked as external)
-import htmlComponentRenderer from "./render-page"
+import htmlComponentRenderer, { getPageChunk } from "./routes/render-page"
 import { getServerData, IServerData } from "../get-server-data"
+import { getCodeFrame } from "../../query/graphql-errors-codeframe"
 
 export interface ITemplateDetails {
   query: string
@@ -29,6 +30,7 @@ export interface ISSRData {
   templateDetails: ITemplateDetails
   potentialPagePath: string
   serverDataHeaders?: Record<string, string>
+  searchString: string
 }
 
 const pageTemplateDetailsMap: Record<
@@ -36,9 +38,6 @@ const pageTemplateDetailsMap: Record<
   ITemplateDetails
   // @ts-ignore INLINED_TEMPLATE_TO_DETAILS is being "inlined" by bundler
 > = INLINED_TEMPLATE_TO_DETAILS
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-declare const __non_webpack_require__: typeof require
 
 export async function getData({
   pathName,
@@ -81,20 +80,32 @@ export async function getData({
           ...page.context,
         })
         .then(queryResults => {
-          results = queryResults
+          if (queryResults.errors && queryResults.errors.length > 0) {
+            const e = queryResults.errors[0]
+            const codeFrame = getCodeFrame(
+              templateDetails.query,
+              e.locations && e.locations[0].line,
+              e.locations && e.locations[0].column
+            )
+
+            const queryRunningError = new Error(e.message + `\n\n` + codeFrame)
+            queryRunningError.stack = e.stack
+            throw queryRunningError
+          } else {
+            results = queryResults
+          }
         })
     )
   }
 
   // 4. (if SSR) run getServerData
   if (page.mode === `SSR`) {
-    const mod = __non_webpack_require__(`./routes/${page.componentChunkName}`)
     executionPromises.push(
-      getServerData(req, page, potentialPagePath, mod).then(
-        serverDataResults => {
+      getPageChunk(page)
+        .then(mod => getServerData(req, page, potentialPagePath, mod))
+        .then(serverDataResults => {
           serverData = serverDataResults
-        }
-      )
+        })
     )
   }
 
@@ -105,13 +116,32 @@ export async function getData({
   }
   results.pageContext = page.context
 
+  let searchString = ``
+  if (req?.query) {
+    const maybeQueryString = Object.entries(req.query)
+      .map(([k, v]) => `${k}=${v}`)
+      .join(`&`)
+    if (maybeQueryString) {
+      searchString = `?${maybeQueryString}`
+    }
+  }
+
   return {
     results,
     page,
     templateDetails,
     potentialPagePath,
     serverDataHeaders: serverData?.headers,
+    searchString,
   }
+}
+
+function getPath(data: ISSRData): string {
+  return (
+    (data.page.mode !== `SSG` && data.page.matchPath
+      ? data.potentialPagePath
+      : data.page.path) + (data.page.mode === `SSR` ? data.searchString : ``)
+  )
 }
 
 export async function renderPageData({
@@ -122,10 +152,7 @@ export async function renderPageData({
   const results = await constructPageDataString(
     {
       componentChunkName: data.page.componentChunkName,
-      path:
-        data.page.mode !== `SSG` && data.page.matchPath
-          ? data.potentialPagePath
-          : data.page.path,
+      path: getPath(data),
       matchPath: data.page.matchPath,
       staticQueryHashes: data.templateDetails.staticQueryHashes,
     },
@@ -165,10 +192,7 @@ export async function renderHTML({
   )
 
   const results = await htmlComponentRenderer({
-    pagePath:
-      data.page.mode !== `SSG` && data.page.matchPath
-        ? data.potentialPagePath
-        : data.page.path,
+    pagePath: getPath(data),
     pageData,
     staticQueryContext,
     ...data.templateDetails.assets,
