@@ -9,12 +9,13 @@ import {
   createGraphQLRunner,
   Runner,
 } from "../../bootstrap/create-graphql-runner"
-import { waitUntilAllJobsComplete } from "../../utils/wait-until-jobs-complete"
+import { waitJobsByRequest } from "../../utils/wait-until-jobs-complete"
 
 import { setGatsbyPluginCache } from "../../utils/require-gatsby-plugin"
 import apiRunnerNode from "../../utils/api-runner-node"
 import type { IGatsbyPage, IGatsbyState } from "../../redux/types"
 import { findPageByPath } from "../../utils/find-page-by-path"
+import { runWithEngineContext } from "../../utils/engine-context"
 import { getDataStore } from "../../datastore"
 import {
   gatsbyNodes,
@@ -22,6 +23,8 @@ import {
   flattenedPlugins,
   // @ts-ignore
 } from ".cache/query-engine-plugins"
+
+let requestId = 0
 
 export class GraphQLEngine {
   // private schema: GraphQLSchema
@@ -90,13 +93,16 @@ export class GraphQLEngine {
     query: string | Source,
     context: Record<string, any>
   ): Promise<ExecutionResult> {
-    const graphqlRunner = await this.getRunner()
-    const result = await graphqlRunner(query, context)
-    // Def not ideal - this is just waiting for all jobs and not jobs for current
-    // query, but we don't track jobs per query right now
-    // TODO: start tracking jobs per query to be able to await just those
-    await waitUntilAllJobsComplete()
-    return result
+    const engineContext = {
+      requestId: requestId++,
+    }
+    const doRunQuery = async (): Promise<ExecutionResult> => {
+      const graphqlRunner = await this.getRunner()
+      const result = await graphqlRunner(query, context)
+      await waitJobsByRequest(engineContext.requestId)
+      return result
+    }
+    return await runWithEngineContext(engineContext, doRunQuery)
   }
 
   public findPageByPath(pathName: string): IGatsbyPage | undefined {
