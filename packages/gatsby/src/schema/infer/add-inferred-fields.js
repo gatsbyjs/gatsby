@@ -214,8 +214,13 @@ const getFieldConfigFromFieldNameConvention = ({
   const linkedTypesSet = new Set()
 
   if (foreignKey) {
-    // TODO: deprecate foreign keys like this (e.g. author___NODE___contact___email)
-    //  and recommend using schema customization instead
+    // TODO(v5): Remove ability to use foreign keys like this (e.g. author___NODE___contact___email)
+    // and recommend using schema customization instead
+
+    report.warn(
+      `The ___NODE convention is deprecated. Please use the @link directive instead. Migration: https://gatsby.dev/node-convention-deprecation`
+    )
+
     const linkedValues = new Set(value.linkedNodes)
     getDataStore()
       .iterateNodes()
