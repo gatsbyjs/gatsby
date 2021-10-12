@@ -22,6 +22,7 @@ function mergePageEntry(cachedPage, newPageData) {
       },
       page: {
         ...cachedPage.payload.page,
+        getServerDataError: newPageData.getServerDataError,
         staticQueryResults: newPageData.staticQueryResults,
       },
     },

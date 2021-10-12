@@ -19,6 +19,7 @@ import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
 import { codeFrameColumns } from "@babel/code-frame"
+import * as fs from "fs-extra"
 
 import { withBasePath } from "../utils/path"
 import webpackConfig from "../utils/webpack.config"
@@ -304,7 +305,8 @@ export async function startServer(
 
       if (page) {
         try {
-          let serverDataPromise: Promise<IServerData> = Promise.resolve({})
+          let serverDataPromise: Promise<IServerData> | Promise<Error> =
+            Promise.resolve({})
 
           if (page.mode === `SSR`) {
             const renderer = require(PAGE_RENDERER_PATH)
@@ -315,7 +317,7 @@ export async function startServer(
               page,
               potentialPagePath,
               componentInstance
-            )
+            ).catch(error => error)
           }
 
           let pageData: IPageDataWithQueryResult
@@ -337,9 +339,30 @@ export async function startServer(
           }
 
           if (page.mode === `SSR`) {
-            const { props } = await serverDataPromise
+            try {
+              const result = await serverDataPromise
 
-            pageData.result.serverData = props
+              if (result instanceof Error) {
+                throw result
+              }
+
+              pageData.result.serverData = result.props
+              pageData.getServerDataError = null
+            } catch (error) {
+              const structuredError = report.panicOnBuild({
+                id: `95315`,
+                context: {
+                  sourceMessage: error.message,
+                  pagePath: requestedPagePath,
+                  potentialPagePath,
+                },
+                error,
+              })
+              // Use page-data.json file instead of emitting via websockets as this makes it easier
+              // to only display the relevant error + clearing of the error
+              // The query-result-store reacts to this
+              pageData.getServerDataError = structuredError
+            }
             pageData.path = page.matchPath ? `/${potentialPagePath}` : page.path
           }
 
@@ -438,6 +461,41 @@ export async function startServer(
       codeFrame,
       sourcePosition,
       sourceContent,
+    })
+  })
+
+  app.get(`/__file-code-frame`, async (req, res) => {
+    const emptyResponse = {
+      codeFrame: `No codeFrame could be generated`,
+      sourcePosition: null,
+      sourceContent: null,
+    }
+
+    const filePath = req?.query?.filePath
+    const lineNumber = parseInt(req.query.lineNumber, 10)
+    const columnNumber = parseInt(req.query.columnNumber, 10)
+
+    if (!filePath) {
+      res.json(emptyResponse)
+      return
+    }
+
+    const sourceContent = await fs.readFile(filePath, `utf-8`)
+
+    const codeFrame = codeFrameColumns(
+      sourceContent,
+      {
+        start: {
+          line: lineNumber,
+          column: columnNumber ?? 0,
+        },
+      },
+      {
+        highlightCode: true,
+      }
+    )
+    res.json({
+      codeFrame,
     })
   })
 
