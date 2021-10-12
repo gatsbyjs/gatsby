@@ -40,7 +40,7 @@ export function findOne<TSource, TArgs>(
     if (context.stats) {
       context.stats.totalRunQuery++
     }
-    return context.nodeModel.runQuery(
+    return context.nodeModel.findOne(
       {
         query: { filter: args },
         firstOnly: true,
