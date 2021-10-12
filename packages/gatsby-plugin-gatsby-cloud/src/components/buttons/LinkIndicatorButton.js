@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useCallback, useState } from "react"
 import trackEvent from "../../utils/trackEvent"
 import IndicatorButton from "./IndicatorButton"
 import { linkIcon, successIcon } from "../icons"
@@ -32,7 +32,7 @@ export default function LinkIndicatorButton(props) {
 
   const buttonProps = getButtonProps(props)
 
-  const copyLinkClick = () => {
+  const copyLinkClick = useCallback(() => {
     trackEvent({
       eventType: `PREVIEW_INDICATOR_CLICK`,
       orgId,
@@ -63,7 +63,7 @@ export default function LinkIndicatorButton(props) {
     if (window) {
       navigator.clipboard.writeText(window.location.href)
     }
-  }
+  }, [])
 
   const trackHover = () => {
     trackEvent({

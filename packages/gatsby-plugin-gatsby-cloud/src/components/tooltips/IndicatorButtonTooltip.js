@@ -13,7 +13,7 @@ export default function IndicatorButtonTooltip({
       // This will align the tooltip with its correct button
       // The first button is (40 * 0) + 12
       // The second button is (40 * 1) + 12 ...
-      style={{ top: `${(buttonIndex || 0) * 40 + 12}px` }}
+      style={{ top: `50%`, transform: `translateX(-50%)` }}
       data-gatsby-preview-indicator="tooltip"
       data-gatsby-preview-indicator-visible={`${
         overrideShowTooltip || showTooltip
