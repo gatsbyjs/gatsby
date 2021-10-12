@@ -5,8 +5,9 @@ const originalStatusPageByStatus = {}
 const originalStatusPageByPath = {}
 
 emitter.on(`CREATE_PAGE`, action => {
-  // Copy /404/ to /404.html as many static site hosts expect
-  // site 404 pages to be named this.
+  // Copy /404/ to /404.html and /500/ to /500.html. Many static site hosts expect
+  // site 404 pages to be named this. In addition, with Rendering Engines there might
+  // be runtime errors which would fallback to "/500.html" page.
   // https://www.gatsbyjs.org/docs/how-to/adding-common-features/add-404-page/
   const result = /^\/?(404|500)\/?$/.exec(action.payload.path)
   if (result && result.length > 1) {
