@@ -349,14 +349,14 @@ for usage.
 Gatsby v4 uses persisted data store for nodes (using [lmdb-store](https://github.com/DoctorEvidence/lmdb-store))
 and fetching an unbounded number of nodes won't play well with it in the long run.
 
-We recommend using `nodeModel.findAll` instead with empty query as it at least returns an iterable and not an array.
+We recommend using `nodeModel.findAll` instead as it at least returns an iterable and not an array.
 
 ```js
 // replace:
 const entries = nodeModel.getAllNodes(`MyType`)
 
 // with
-const { entries } = await nodeModel.findAll({ type: `MyType`, query: {} })
+const { entries } = await nodeModel.findAll({ type: `MyType` })
 ```
 
 However, we highly recommend restricting the number of fetched nodes at once. So this is even better:
@@ -371,7 +371,7 @@ const { entries } = await nodeModel.findAll({
 ### `___NODE` convention is deprecated
 
 Gatsby was using `___NODE` suffix of node fields to magically detect relations between nodes. But starting
-with [gatsby 2.5](/blog/2019-05-17-improvements-to-schema-customization/) `@link` directive is a preferred method:
+with [Gatsby v2.5](/blog/2019-05-17-improvements-to-schema-customization/) `@link` directive is a preferred method:
 
 Before:
 
