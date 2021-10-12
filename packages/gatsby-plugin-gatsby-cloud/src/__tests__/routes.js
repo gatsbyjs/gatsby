@@ -24,6 +24,16 @@ describe(`Routes IPC`, () => {
     pages.set(`/path/1/`, { mode: `DSG`, path: `/path/1` })
     pages.set(`/path/2/`, { mode: `SSR`, path: `/path/2` })
     pages.set(`/path/3/`, { mode: `SSG`, path: `/path/3` })
+    pages.set(`/path/4/`, {
+      mode: `SSR`,
+      path: `/path/[id].js`,
+      matchPath: `/path/:id`,
+    })
+    pages.set(`/path/5/`, {
+      mode: `SSR`,
+      path: `/path/[...].js`,
+      matchPath: `/path/*`,
+    })
 
     onPostBuild(
       {
