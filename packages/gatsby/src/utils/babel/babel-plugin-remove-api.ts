@@ -37,15 +37,13 @@ export default declare(function removeApiCalls(
                 // Functions can reference themselves, so we need to check if there's a
                 // binding outside the function scope or not.
                 if (ref.path.type === `FunctionDeclaration`) {
-                  if (ref.path.type === `FunctionDeclaration`) {
-                    const isSelfReferenced = ref.referencePaths.every(
-                      refPath => !!refPath.findParent(p => p === ref.path)
-                    )
+                  const isSelfReferenced = ref.referencePaths.every(
+                    refPath => !!refPath.findParent(p => p === ref.path)
+                  )
 
-                    if (isSelfReferenced) {
-                      ref.path.remove()
-                      removed = true
-                    }
+                  if (isSelfReferenced) {
+                    ref.path.remove()
+                    removed = true
                   }
                 }
               } else {
