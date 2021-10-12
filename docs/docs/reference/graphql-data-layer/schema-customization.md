@@ -924,8 +924,8 @@ exports.createResolvers = ({ createResolvers }) => {
         type: `Int`,
         resolve: async (source, args, context, info) => {
           const { entries } = await context.nodeModel.findAll({ type: "MarkdownRemark", query: {} })
-          const posts = Array.from(entries)
-          return posts.filter(post => post.frontmatter.author === source.email).length
+          const posts = entries.filter(post => post.frontmatter.author === source.email)
+          return Array.from(posts).length
         },
       },
     },
