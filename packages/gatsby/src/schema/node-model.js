@@ -248,7 +248,7 @@ class LocalNodeModel {
   }
 
   async _query(args) {
-    const { query, type, stats, tracer } = args || {}
+    const { query = {}, type, stats, tracer } = args || {}
 
     // We don't support querying union types (yet?), because the combined types
     // need not have any fields in common.
@@ -358,7 +358,7 @@ class LocalNodeModel {
    * @returns {Promise<Node>}
    */
   async findOne(args, pageDependencies = {}) {
-    const { query } = args
+    const { query = {} } = args
     if (query.sort?.fields?.length > 0) {
       // If we support sorting and return the first node based on sorting
       // we'll have to always track connection not an individual node

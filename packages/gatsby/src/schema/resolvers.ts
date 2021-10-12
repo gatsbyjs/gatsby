@@ -43,7 +43,6 @@ export function findOne<TSource, TArgs>(
     return context.nodeModel.findOne(
       {
         query: { filter: args },
-        firstOnly: true,
         type: info.schema.getType(typeName),
         stats: context.stats,
         tracer: context.tracer,

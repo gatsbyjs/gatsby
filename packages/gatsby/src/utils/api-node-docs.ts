@@ -332,7 +332,7 @@ export const createSchemaCustomization = true
  *       allRecentPosts: {
  *         type: [`BlogPost`],
  *         resolve: async (source, args, context, info) => {
- *           const { entries } = await context.nodeModel.findAll({ type: `BlogPost`, query: {} })
+ *           const { entries } = await context.nodeModel.findAll({ type: `BlogPost` })
  *           return entries.filter(
  *             post => post.publishedAt > Date.UTC(2018, 0, 1)
  *           )
