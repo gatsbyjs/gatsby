@@ -5,14 +5,11 @@ const { createPluginConfig } = require(`./plugin-options`)
 const { fetchContentTypes } = require(`./fetch`)
 const { CODES } = require(`./report`)
 
-export async function createSchemaCustomization(
-  { schema, actions, reporter, cache },
-  pluginOptions
-) {
-  const { createTypes } = actions
-
-  const pluginConfig = createPluginConfig(pluginOptions)
-
+async function getContentTypesFromContentFul({
+  cache,
+  reporter,
+  pluginConfig,
+}) {
   // Get content type items from Contentful
   const contentTypeItems = await fetchContentTypes({ pluginConfig, reporter })
 
@@ -52,6 +49,31 @@ export async function createSchemaCustomization(
   const CACHE_CONTENT_TYPES = `contentful-content-types-${sourceId}`
   await cache.set(CACHE_CONTENT_TYPES, contentTypeItems)
 
+  return contentTypeItems
+}
+
+export async function createSchemaCustomization(
+  { schema, actions, reporter, cache },
+  pluginOptions
+) {
+  const { createTypes } = actions
+
+  const pluginConfig = createPluginConfig(pluginOptions)
+
+  let contentTypeItems
+  if (process.env.GATSBY_WORKER_ID) {
+    const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
+      `environment`
+    )}`
+    contentTypeItems = await cache.get(`contentful-content-types-${sourceId}`)
+  } else {
+    contentTypeItems = await getContentTypesFromContentFul({
+      cache,
+      reporter,
+      pluginConfig,
+    })
+  }
+
   const contentfulTypes = [
     schema.buildInterfaceType({
       name: `ContentfulEntry`,
@@ -60,7 +82,7 @@ export async function createSchemaCustomization(
         id: { type: `ID!` },
         node_locale: { type: `String!` },
       },
-      extensions: { dontInfer: {} },
+      extensions: { infer: false },
       interfaces: [`Node`],
     }),
     schema.buildInterfaceType({
@@ -69,7 +91,7 @@ export async function createSchemaCustomization(
         contentful_id: { type: `String!` },
         id: { type: `ID!` },
       },
-      extensions: { dontInfer: {} },
+      extensions: { infer: false },
     }),
     schema.buildObjectType({
       name: `ContentfulAsset`,
