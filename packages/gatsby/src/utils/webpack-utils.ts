@@ -655,7 +655,7 @@ export const createWebpackUtils = (
           safari10: true,
         },
         parse: {
-          ecma: 2018,
+          ecma: 5,
         },
         compress: {
           ecma: 5,
