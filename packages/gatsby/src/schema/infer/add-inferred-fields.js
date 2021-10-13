@@ -11,17 +11,6 @@ import { warnOnce } from "../../utils/warn-once"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
 const { getDataStore } = require(`../../datastore`)
 
-function SetToString(set, delim) {
-  let str = ``
-  let i = 0
-  const size = set.size
-  set.forEach(function (elem) {
-    str += elem
-    if (i++ < size - 1) str += delim
-  })
-  return str
-}
-
 const addInferredFields = ({
   schemaComposer,
   typeComposer,
@@ -47,10 +36,9 @@ const addInferredFields = ({
 
   if (deprecatedNodeKeys.size > 0) {
     warnOnce(
-      `The ___NODE convention is deprecated. Please use the @link directive instead.\nKeys: ${SetToString(
-        deprecatedNodeKeys,
-        `, `
-      )}\nMigration: https://gatsby.dev/node-convention-deprecation`
+      `The ___NODE convention is deprecated. Please use the @link directive instead.\nType: ${typeComposer.getTypeName()}, Keys: ${Array.from(
+        deprecatedNodeKeys
+      ).join(`, `)}\nMigration: https://gatsby.dev/node-convention-deprecation`
     )
   }
 }
