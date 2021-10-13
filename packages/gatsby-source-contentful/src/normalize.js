@@ -259,8 +259,9 @@ function contentfulCreateNodeManifest({
             // minutes
             60 *
             // hours
-            (process.env.CONTENT_SYNC_CONTENTFUL_HOURS_SINCE_ENTRY_UPDATE ||
-              48)))
+            (Number(
+              process.env.CONTENT_SYNC_CONTENTFUL_HOURS_SINCE_ENTRY_UPDATE
+            ) || 48)))
 
   const manifestId = `${space.sys.id}-${entryItem.sys.id}-${entryItem.sys.updatedAt}`
 
