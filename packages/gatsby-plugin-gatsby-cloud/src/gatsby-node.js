@@ -54,7 +54,7 @@ exports.onPostBuild = async (
     if (page.mode && page.mode !== `SSG`) {
       index++
 
-      const fullPathName = path.matchPath ? path.matchPath : pathname
+      const fullPathName = page.matchPath ? page.matchPath : pathname
       batch[generateHtmlPath(``, fullPathName)] = page.mode
       batch[generatePageDataPath(``, fullPathName)] = page.mode
 
