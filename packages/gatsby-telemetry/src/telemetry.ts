@@ -1,4 +1,3 @@
-import uuidv4 from "uuid/v4"
 import * as fs from "fs-extra"
 import os from "os"
 import {
@@ -6,6 +5,7 @@ import {
   getCIName,
   createContentDigest,
   getTermProgram,
+  uuid,
 } from "gatsby-core-utils"
 import {
   getRepositoryId as _getRepositoryId,
@@ -20,7 +20,7 @@ import { getDependencies } from "./get-dependencies"
 import isDocker from "is-docker"
 import lodash from "lodash"
 
-const typedUUIDv4 = uuidv4 as () => string
+const typedUUIDv4 = uuid.v4 as () => string
 
 const finalEventRegex = /(END|STOP)$/
 const dbEngine = `redux`
@@ -181,7 +181,7 @@ export class AnalyticsTracker {
       if (inherited) {
         p.gatsbyTelemetrySessionId = inherited
       } else {
-        p.gatsbyTelemetrySessionId = uuidv4()
+        p.gatsbyTelemetrySessionId = uuid.v4()
         process.env.INTERNAL_GATSBY_TELEMETRY_SESSION_ID =
           p.gatsbyTelemetrySessionId
       }

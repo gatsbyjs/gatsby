@@ -107,6 +107,7 @@ type SitePage implements Node @dontInfer {
   componentChunkName: String!
   matchPath: String
   pageContext: JSON
+  pluginCreator: SitePlugin @link(by: \\"id\\", from: \\"pluginCreatorId\\")
 }
 
 type SitePlugin implements Node @dontInfer {
@@ -142,7 +143,7 @@ type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @do
   second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
 }
 
-interface ITest @nodeInterface {
+interface ITest implements Node {
   id: ID!
   date: Date @dateformat(formatString: \\"YYYY\\")
 }
@@ -168,7 +169,7 @@ type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @do
   second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
 }
 
-interface ITest @nodeInterface {
+interface ITest implements Node {
   id: ID!
   date: Date @dateformat(formatString: \\"YYYY\\")
 }
@@ -288,6 +289,7 @@ type SitePage implements Node @dontInfer {
   componentChunkName: String!
   matchPath: String
   pageContext: JSON
+  pluginCreator: SitePlugin @link(by: \\"id\\", from: \\"pluginCreatorId\\")
 }
 
 type SitePlugin implements Node @dontInfer {
@@ -312,7 +314,7 @@ type AnotherTest implements Node & ITest @dontInfer {
   hello(planet: String = \\"world\\", language: [Language!]!): String!
 }
 
-interface ITest @nodeInterface {
+interface ITest implements Node {
   id: ID!
   date: Date @dateformat(formatString: \\"YYYY\\")
 }
@@ -367,7 +369,7 @@ type AnotherTest implements Node & ITest @dontInfer {
   hello(planet: String = \\"world\\", language: [Language!]!): String!
 }
 
-interface ITest @nodeInterface {
+interface ITest implements Node {
   id: ID!
   date: Date @dateformat(formatString: \\"YYYY\\")
 }
@@ -480,6 +482,7 @@ type SitePage implements Node @dontInfer {
   componentChunkName: String!
   matchPath: String
   pageContext: JSON
+  pluginCreator: SitePlugin @link(by: \\"id\\", from: \\"pluginCreatorId\\")
 }
 
 type SitePlugin implements Node @dontInfer {
@@ -504,7 +507,7 @@ type AnotherTest implements Node & ITest @dontInfer {
   hello(planet: String = \\"world\\", language: [Language!]!): String!
 }
 
-interface ITest @nodeInterface {
+interface ITest implements Node {
   id: ID!
   date: Date @dateformat(formatString: \\"YYYY\\")
 }

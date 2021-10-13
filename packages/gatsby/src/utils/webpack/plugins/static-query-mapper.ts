@@ -3,13 +3,13 @@ import { Store } from "redux"
 import { Compiler, Module, NormalModule, Compilation } from "webpack"
 import ConcatenatedModule from "webpack/lib/optimize/ConcatenatedModule"
 import { isEqual } from "lodash"
-import {
+import { generateComponentChunkName } from "../../js-chunk-names"
+import { enqueueFlush } from "../../page-data"
+import type {
   IGatsbyState,
   IGatsbyPageComponent,
   IGatsbyStaticQueryComponents,
-} from "../../redux/types"
-import { generateComponentChunkName } from "../js-chunk-names"
-import { enqueueFlush } from "../page-data"
+} from "../../../redux/types"
 
 type ChunkGroup = Compilation["chunkGroups"][0]
 type EntryPoint = Compilation["asyncEntrypoints"][0]

@@ -125,7 +125,7 @@ For example, let's say you have a header that imports a JSON object in order to 
 
 There's a couple ways to detect this:
 
-- _Notice components and data that don't seem to be needed on every page._ If you're using v2 of Gatsby, certain methods of importing can cause code to get bundled on pages it doesn't belong on. Try replacing indirect import statements like `import { myIcon } from './icons/index.js'` with direct imports like `import { myIcon} from './icons/my-icon.js`.
+- _Notice components and data that don't seem to be needed on every page._ If you're using v2 of Gatsby, certain methods of importing can cause code to get bundled on pages it doesn't belong on. Try replacing indirect import statements like `import { myIcon } from './icons/index.js'` with direct imports like `import { myIcon } from './icons/my-icon.js'`.
 
 - _Watch for unexpectedly large data imports._ If you notice large JSON objects, and you do need the data (or some portion of it), there are a couple options.
 
@@ -194,7 +194,7 @@ Media files are often the largest files on a site, and so can delay page load si
 
 [Gatsby Plugin Image](/docs/how-to/images-and-media/using-gatsby-image/) is our approach to optimizing image loading performance. It does three basic things:
 
-1. It delays non-essential work for images not above the fold to avoid esource congestion.
+1. It delays non-essential work for images not above the fold to avoid resource congestion.
 2. It provides a placeholder during image fetch.
 3. It minimizes image file size to reduce request roundtrip time.
 
