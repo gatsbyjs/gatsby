@@ -27,7 +27,7 @@ async function distributeWorkload(workers, count = 50) {
  * @param gatsbyFunctions - Gatsby's internal helper functions
  */
 
-export const downloadContentfulAssets = async gatsbyFunctions => {
+export async function downloadContentfulAssets(gatsbyFunctions) {
   const {
     actions: { createNode, touchNode },
     createNodeId,
