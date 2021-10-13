@@ -326,11 +326,8 @@ export function waitUntilAllJobsComplete(): Promise<void> {
 
 export async function waitJobs(jobDigests: Set<string>): Promise<void> {
   const promises: Array<Promise<any>> = []
-
-  const waiting: Array<string> = []
   for (const [digest, job] of jobsInProcess) {
     if (jobDigests.has(digest)) {
-      waiting.push(digest.substr(0, 8))
       promises.push(job.deferred.promise)
     }
   }
