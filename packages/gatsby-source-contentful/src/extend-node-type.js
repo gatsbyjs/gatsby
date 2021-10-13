@@ -744,7 +744,7 @@ exports.extendNodeType = ({ type, cache }) => {
     }
 
     const extension = mimeTypeExtensions.get(contentType)
-    const url = `https:` + createUrl(imgUrl, options)
+    const url = createUrl(imgUrl, options)
     const name = path.basename(fileName, extension)
 
     const absolutePath = await fetchRemoteFile({
@@ -794,7 +794,7 @@ exports.extendNodeType = ({ type, cache }) => {
       }
 
       const extension = mimeTypeExtensions.get(contentType)
-      const url = `https:` + createUrl(imgUrl, options)
+      const url = createUrl(imgUrl, options)
       const name = path.basename(fileName, extension)
 
       const absolutePath = await fetchRemoteFile({
