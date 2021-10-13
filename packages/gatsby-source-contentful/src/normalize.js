@@ -1,10 +1,11 @@
-const _ = require(`lodash`)
-const stringify = require(`json-stringify-safe`)
+// @ts-check
+import stringify from "json-stringify-safe"
+import _ from "lodash"
 
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
-const getLocalizedField = ({ field, locale, localesFallback }) => {
+export const getLocalizedField = ({ field, locale, localesFallback }) => {
   if (!_.isUndefined(field[locale.code])) {
     return field[locale.code]
   } else if (
@@ -20,7 +21,7 @@ const getLocalizedField = ({ field, locale, localesFallback }) => {
     return null
   }
 }
-const buildFallbackChain = locales => {
+export const buildFallbackChain = locales => {
   const localesFallback = {}
   _.each(
     locales,
@@ -33,10 +34,7 @@ const makeGetLocalizedField =
   field =>
     getLocalizedField({ field, locale, localesFallback })
 
-exports.getLocalizedField = getLocalizedField
-exports.buildFallbackChain = buildFallbackChain
-
-const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
+export const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
   const normalizedType = type.startsWith(`Deleted`)
     ? type.substring(`Deleted`.length)
     : type
@@ -45,14 +43,12 @@ const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
     : `${spaceId}___${id}___${normalizedType}___${currentLocale}`
 }
 
-exports.makeId = makeId
-
 const makeMakeId =
   ({ currentLocale, defaultLocale, createNodeId }) =>
   (spaceId, id, type) =>
     createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
-exports.buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
+export const buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
   const map = new Map(
     contentTypeItems.map(contentType => [contentType.sys.id, []])
@@ -68,12 +64,10 @@ exports.buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
   return contentTypeItems.map(contentType => map.get(contentType.sys.id))
 }
 
-exports.buildResolvableSet = ({
+export const buildResolvableSet = ({
   entryList,
   existingNodes = [],
   assets = [],
-  locales,
-  defaultLocale,
 }) => {
   const resolvable = new Set()
   existingNodes.forEach(node => {
@@ -95,12 +89,11 @@ exports.buildResolvableSet = ({
   return resolvable
 }
 
-exports.buildForeignReferenceMap = ({
+export const buildForeignReferenceMap = ({
   contentTypeItems,
   entryList,
   resolvable,
   defaultLocale,
-  locales,
   space,
   useNameForId,
 }) => {
@@ -227,7 +220,7 @@ function prepareJSONNode(id, node, key, content) {
   return JSONNode
 }
 
-exports.createNodesForContentType = ({
+export const createNodesForContentType = ({
   contentTypeItem,
   restrictedNodeFields,
   conflictFieldPrefix,
@@ -467,8 +460,7 @@ exports.createNodesForContentType = ({
                 textNodeId,
                 entryNode,
                 entryItemFieldKey,
-                entryItemFields[entryItemFieldKey],
-                createNodeId
+                entryItemFields[entryItemFieldKey]
               )
 
               childrenNodes.push(textNode)
@@ -486,6 +478,7 @@ exports.createNodesForContentType = ({
 
             // Locate all Contentful Links within the rich text data
             const traverse = obj => {
+              // eslint-disable-next-line guard-for-in
               for (const k in obj) {
                 const v = obj[k]
                 if (v && v.sys && v.sys.type === `Link`) {
@@ -535,8 +528,7 @@ exports.createNodesForContentType = ({
                 jsonNodeId,
                 entryNode,
                 entryItemFieldKey,
-                entryItemFields[entryItemFieldKey],
-                createNodeId
+                entryItemFields[entryItemFieldKey]
               )
               childrenNodes.push(jsonNode)
             }
@@ -566,9 +558,7 @@ exports.createNodesForContentType = ({
                   jsonNodeId,
                   entryNode,
                   entryItemFieldKey,
-                  obj,
-                  createNodeId,
-                  i
+                  obj
                 )
                 childrenNodes.push(jsonNode)
               }
@@ -633,7 +623,7 @@ exports.createNodesForContentType = ({
   return createNodePromises
 }
 
-exports.createAssetNodes = ({
+export const createAssetNodes = ({
   assetItem,
   createNode,
   createNodeId,
