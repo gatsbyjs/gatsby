@@ -54,7 +54,8 @@ export async function sourceNodes(
   },
   pluginOptions
 ) {
-  const { createNode, touchNode, deleteNode } = actions
+  const { createNode, touchNode, deleteNode, unstable_createNodeManifest } =
+    actions
   const online = await isOnline()
 
   if (
@@ -427,6 +428,8 @@ export async function sourceNodes(
         space,
         useNameForId: pluginConfig.get(`useNameForId`),
         pluginConfig,
+        syncToken,
+        unstable_createNodeManifest,
       })
     )
   }
