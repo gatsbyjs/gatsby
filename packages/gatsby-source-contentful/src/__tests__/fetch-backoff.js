@@ -3,7 +3,7 @@
  */
 
 import nock from "nock"
-import fetchData from "../fetch"
+import { fetchContent } from "../fetch"
 import { createPluginConfig } from "../plugin-options"
 
 const host = `localhost`
@@ -82,13 +82,7 @@ describe(`fetch-backoff`, () => {
         `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=444`
       )
       .reply(200, { items: [] })
-      // Content types
-      .get(
-        `/spaces/${options.spaceId}/environments/master/content_types?skip=0&limit=1000&order=sys.createdAt`
-      )
-      .reply(200, { items: [] })
-
-    await fetchData({ pluginConfig, reporter })
+    await fetchContent({ pluginConfig, reporter })
 
     expect(reporter.panic).not.toBeCalled()
     expect(reporter.warn.mock.calls).toMatchInlineSnapshot(`
@@ -125,13 +119,8 @@ describe(`fetch-backoff`, () => {
         `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=1000`
       )
       .reply(200, { items: [] })
-      // Content types
-      .get(
-        `/spaces/${options.spaceId}/environments/master/content_types?skip=0&limit=1000&order=sys.createdAt`
-      )
-      .reply(200, { items: [] })
 
-    await fetchData({ pluginConfig, reporter })
+    await fetchContent({ pluginConfig, reporter })
 
     expect(reporter.panic).not.toBeCalled()
     expect(reporter.warn).not.toBeCalled()

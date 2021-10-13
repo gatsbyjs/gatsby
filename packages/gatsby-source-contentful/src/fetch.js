@@ -72,15 +72,13 @@ const createContentfulErrorMessage = e => {
   return errorMessage
 }
 
-module.exports = async function contentfulFetch({
-  syncToken,
+function createContentfulClientOptions({
   pluginConfig,
   reporter,
+  syncProgress = { total: 0, tick: a => a },
 }) {
-  // Fetch articles.
-  let syncProgress
   let syncItemCount = 0
-  const pageLimit = pluginConfig.get(`pageLimit`)
+
   const contentfulClientOptions = {
     space: pluginConfig.get(`spaceId`),
     accessToken: pluginConfig.get(`accessToken`),
@@ -133,12 +131,95 @@ module.exports = async function contentfulFetch({
     ...(pluginConfig.get(`contentfulClientConfig`) || {}),
   }
 
+  return contentfulClientOptions
+}
+
+function handleContentfulError({
+  e,
+  reporter,
+  contentfulClientOptions,
+  pluginConfig,
+}) {
+  let details
+  let errors
+  if (e.code === `ENOTFOUND`) {
+    details = `You seem to be offline`
+  } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
+    reporter.panic({
+      id: CODES.SelfSignedCertificate,
+      context: {
+        sourceMessage: `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
+      },
+    })
+  } else if (e.responseData) {
+    if (
+      e.responseData.status === 404 &&
+      contentfulClientOptions.environment &&
+      contentfulClientOptions.environment !== `master`
+    ) {
+      // environments need to have access to master
+      details = `Unable to access your space. Check if ${chalk.yellow(
+        `environment`
+      )} is correct and your ${chalk.yellow(
+        `accessToken`
+      )} has access to the ${chalk.yellow(
+        contentfulClientOptions.environment
+      )} and the ${chalk.yellow(`master`)} environments.`
+      errors = {
+        accessToken: `Check if setting is correct`,
+        environment: `Check if setting is correct`,
+      }
+    } else if (e.responseData.status === 404) {
+      // host and space used to generate url
+      details = `Endpoint not found. Check if ${chalk.yellow(
+        `host`
+      )} and ${chalk.yellow(`spaceId`)} settings are correct`
+      errors = {
+        host: `Check if setting is correct`,
+        spaceId: `Check if setting is correct`,
+      }
+    } else if (e.responseData.status === 401) {
+      // authorization error
+      details = `Authorization error. Check if ${chalk.yellow(
+        `accessToken`
+      )} and ${chalk.yellow(`environment`)} are correct`
+      errors = {
+        accessToken: `Check if setting is correct`,
+        environment: `Check if setting is correct`,
+      }
+    }
+  }
+
+  reporter.panic({
+    context: {
+      sourceMessage: `Accessing your Contentful space failed: ${createContentfulErrorMessage(
+        e
+      )}
+
+Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
+${details ? `\n${details}\n` : ``}
+Used options:
+${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
+    },
+  })
+}
+
+/**
+ * Fetches:
+ * * Locales with default locale
+ * * Entries and assets
+ * * Tags
+ */
+async function fetchContent({ syncToken, pluginConfig, reporter }) {
+  // Fetch locales and check connectivity
+  const contentfulClientOptions = createContentfulClientOptions({
+    pluginConfig,
+    reporter,
+  })
   const client = contentful.createClient(contentfulClientOptions)
 
   // The sync API puts the locale in all fields in this format { fieldName:
   // {'locale': value} } so we need to get the space and its default local.
-  //
-  // We'll extend this soon to support multiple locales.
   let space
   let locales
   let defaultLocale = `en-US`
@@ -151,83 +232,35 @@ module.exports = async function contentfulFetch({
       `Default locale is: ${defaultLocale}. There are ${locales.length} locales in total.`
     )
   } catch (e) {
-    let details
-    let errors
-    if (e.code === `ENOTFOUND`) {
-      details = `You seem to be offline`
-    } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
-      reporter.panic({
-        id: CODES.SelfSignedCertificate,
-        context: {
-          sourceMessage: `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
-        },
-      })
-    } else if (e.responseData) {
-      if (
-        e.responseData.status === 404 &&
-        contentfulClientOptions.environment &&
-        contentfulClientOptions.environment !== `master`
-      ) {
-        // environments need to have access to master
-        details = `Unable to access your space. Check if ${chalk.yellow(
-          `environment`
-        )} is correct and your ${chalk.yellow(
-          `accessToken`
-        )} has access to the ${chalk.yellow(
-          contentfulClientOptions.environment
-        )} and the ${chalk.yellow(`master`)} environments.`
-        errors = {
-          accessToken: `Check if setting is correct`,
-          environment: `Check if setting is correct`,
-        }
-      } else if (e.responseData.status === 404) {
-        // host and space used to generate url
-        details = `Endpoint not found. Check if ${chalk.yellow(
-          `host`
-        )} and ${chalk.yellow(`spaceId`)} settings are correct`
-        errors = {
-          host: `Check if setting is correct`,
-          spaceId: `Check if setting is correct`,
-        }
-      } else if (e.responseData.status === 401) {
-        // authorization error
-        details = `Authorization error. Check if ${chalk.yellow(
-          `accessToken`
-        )} and ${chalk.yellow(`environment`)} are correct`
-        errors = {
-          accessToken: `Check if setting is correct`,
-          environment: `Check if setting is correct`,
-        }
-      }
-    }
-
-    reporter.panic({
-      context: {
-        sourceMessage: `Accessing your Contentful space failed: ${createContentfulErrorMessage(
-          e
-        )}
-
-Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
-${details ? `\n${details}\n` : ``}
-Used options:
-${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
-      },
+    handleContentfulError({
+      e,
+      reporter,
+      contentfulClientOptions,
+      pluginConfig,
     })
   }
+
+  // Fetch entries and assets via Contentful CDA sync API
+  const pageLimit = pluginConfig.get(`pageLimit`)
+  reporter.verbose(`Contentful: Sync ${pageLimit} items per page.`)
+  const syncProgress = reporter.createProgress(
+    `Contentful: ${syncToken ? `Sync changed items` : `Sync all items`}`,
+    pageLimit,
+    0
+  )
+  syncProgress.start()
+  const contentfulSyncClientOptions = createContentfulClientOptions({
+    pluginConfig,
+    reporter,
+    syncProgress,
+  })
+  const syncClient = contentful.createClient(contentfulSyncClientOptions)
 
   let currentSyncData
   let currentPageLimit = pageLimit
   let lastCurrentPageLimit
   let syncSuccess = false
   try {
-    syncProgress = reporter.createProgress(
-      `Contentful: ${syncToken ? `Sync changed items` : `Sync all items`}`,
-      currentPageLimit,
-      0
-    )
-    syncProgress.start()
-    reporter.verbose(`Contentful: Sync ${currentPageLimit} items per page.`)
-
     while (!syncSuccess) {
       try {
         const basicSyncConfig = {
@@ -237,7 +270,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
         const query = syncToken
           ? { nextSyncToken: syncToken, ...basicSyncConfig }
           : { initial: true, ...basicSyncConfig }
-        currentSyncData = await client.sync(query)
+        currentSyncData = await syncClient.sync(query)
         syncSuccess = true
       } catch (e) {
         // Back off page limit if responses content length exceeds Contentfuls limits.
@@ -275,27 +308,20 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
       },
     })
   } finally {
+    // Fix output when there was no new data in Contentful
+    if (
+      currentSyncData?.entries.length +
+        currentSyncData?.assets.length +
+        currentSyncData?.deletedEntries.length +
+        currentSyncData?.deletedAssets.length ===
+      0
+    ) {
+      syncProgress.tick()
+      syncProgress.total = 1
+    }
+
     syncProgress.done()
   }
-
-  // We need to fetch content types with the non-sync API as the sync API
-  // doesn't support this.
-  let contentTypes
-  try {
-    contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
-  } catch (e) {
-    reporter.panic({
-      id: CODES.FetchContentTypes,
-      context: {
-        sourceMessage: `Error fetching content types: ${createContentfulErrorMessage(
-          e
-        )}`,
-      },
-    })
-  }
-  reporter.verbose(`Content types fetched ${contentTypes.items.length}`)
-
-  const contentTypeItems = contentTypes.items
 
   // We need to fetch tags with the non-sync API as the sync API doesn't support this.
   let tagItems = []
@@ -318,7 +344,6 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
 
   const result = {
     currentSyncData,
-    contentTypeItems,
     tagItems,
     defaultLocale,
     locales,
@@ -327,6 +352,54 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
 
   return result
 }
+
+exports.fetchContent = fetchContent
+
+/**
+ * Fetches:
+ * * Content types
+ */
+async function fetchContentTypes({ pluginConfig, reporter }) {
+  const contentfulClientOptions = createContentfulClientOptions({
+    pluginConfig,
+    reporter,
+  })
+  const client = contentful.createClient(contentfulClientOptions)
+  const pageLimit = pluginConfig.get(`pageLimit`)
+  const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
+    `environment`
+  )}`
+  let contentTypes = null
+
+  try {
+    reporter.verbose(`Fetching content types (${sourceId})`)
+
+    // Fetch content types from CDA API
+    try {
+      contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
+    } catch (e) {
+      reporter.panic({
+        id: CODES.FetchContentTypes,
+        context: {
+          sourceMessage: `Error fetching content types: ${createContentfulErrorMessage(
+            e
+          )}`,
+        },
+      })
+    }
+    reporter.verbose(
+      `Content types fetched ${contentTypes.items.length} (${sourceId})`
+    )
+
+    contentTypes = contentTypes.items
+  } catch (e) {
+    handleContentfulError(e)
+  }
+
+  return contentTypes
+}
+
+exports.fetchContentTypes = fetchContentTypes
 
 /**
  * Gets all the existing entities based on pagination parameters.
