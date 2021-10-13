@@ -93,15 +93,13 @@ const getBase64Image = (imageProps, cache) => {
 
   const loadImage = async () => {
     const {
-      file: { contentType, fileName },
+      file: { contentType },
     } = imageProps.image
 
     const extension = mimeTypeExtensions.get(contentType)
-    const name = path.basename(fileName, extension)
 
     const absolutePath = await fetchRemoteFile({
       url: requestUrl,
-      name,
       cache,
       ext: extension,
     })
