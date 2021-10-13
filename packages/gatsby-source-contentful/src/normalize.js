@@ -498,7 +498,6 @@ export const createNodesForContentType = ({
           },
         }
 
-        //
         contentfulCreateNodeManifest({
           pluginConfig,
           syncToken,
