@@ -187,20 +187,50 @@ describe(`Production loader`, () => {
       expect(xhrCount).toBe(2)
     })
 
-    it(`should return an error when status is 500`, async () => {
+    it(`should return an error when status is 500 and 500.html is not available`, async () => {
       const prodLoader = new ProdLoader(null, [])
 
       mockPageData(`/error-page`, 500)
 
       const expectation = {
         status: `error`,
-        pagePath: `/error-page`,
+        pagePath: `/500.html`,
+        internalServerError: true,
+        retries: 3,
       }
       expect(await prodLoader.loadPageDataJson(`/error-page/`)).toEqual(
         expectation
       )
       expect(prodLoader.pageDataDb.get(`/error-page`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
+    })
+
+    it(`should return an error when status is 500 and 500.html is available`, async () => {
+      const prodLoader = new ProdLoader(null, [])
+
+      mockPageData(`/error-page`, 500)
+      mockPageData(
+        `/500.html`,
+        200,
+        {
+          path: `/500.html`,
+        },
+        true
+      )
+
+      const expectation = {
+        status: `success`,
+        pagePath: `/500.html`,
+        internalServerError: true,
+        payload: {
+          path: `/500.html`,
+        },
+      }
+      expect(await prodLoader.loadPageDataJson(`/error-page/`)).toEqual(
+        expectation
+      )
+      expect(prodLoader.pageDataDb.get(`/error-page`)).toEqual(expectation)
+      expect(xhrCount).toBe(2)
     })
 
     it(`should retry 3 times before returning an error`, async () => {

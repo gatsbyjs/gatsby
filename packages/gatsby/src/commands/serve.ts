@@ -298,10 +298,11 @@ module.exports = async (program: IServeProgram): Promise<void> => {
                 `Rendering html for "${potentialPagePath}" failed.`,
                 e
               )
-              return res
-                .status(500)
-                .contentType(`text/plain`)
-                .send(`Internal server error.`)
+              return res.status(500).sendFile(`500.html`, { root }, err => {
+                if (err) {
+                  res.contentType(`text/plain`).send(`Internal server error.`)
+                }
+              })
             }
           }
         }

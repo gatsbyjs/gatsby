@@ -161,8 +161,8 @@ export class BaseLoader {
 
       // Handle 404
       if (status === 404 || status === 200) {
-        // If the request was for a 404 page and it doesn't exist, we're done
-        if (pagePath === `/404.html`) {
+        // If the request was for a 404/500 page and it doesn't exist, we're done
+        if (pagePath === `/404.html` || pagePath === `/500.html`) {
           return Object.assign(loadObj, {
             status: PageResourceStatus.Error,
           })
@@ -177,9 +177,12 @@ export class BaseLoader {
 
       // handle 500 response (Unrecoverable)
       if (status === 500) {
-        return Object.assign(loadObj, {
-          status: PageResourceStatus.Error,
-        })
+        return this.fetchPageDataJson(
+          Object.assign(loadObj, {
+            pagePath: `/500.html`,
+            internalServerError: true,
+          })
+        )
       }
 
       // Handle everything else, including status === 0, and 503s. Should retry

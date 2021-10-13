@@ -5,6 +5,7 @@ import {
   IMaterializePageMode,
   PageMode,
 } from "../redux/types"
+import { warnOnce } from "./warn-once"
 
 /**
  * In develop IGatsbyPage["mode"] can change at any time, so as a general rule we need to resolve it
@@ -33,14 +34,27 @@ function resolvePageMode(
   // TODO:
   //  componentInstance?: NodeModule
 ): PageMode {
+  let pageMode: PageMode
   if (component.serverData) {
-    return `SSR`
+    pageMode = `SSR`
+  } else {
+    pageMode = page.defer ? `DSG` : `SSG`
   }
   // TODO: fs routes support, e.g.:
   //   if (componentInstance) {
   //     return componentInstance.config.defer(page) ? `DSG` : `SSG`
   //   }
-  return page.defer ? `DSG` : `SSG`
+  if (
+    pageMode !== `SSG` &&
+    (page.path === `/404.html` || page.path === `/500.html`)
+  ) {
+    warnOnce(
+      `Status page "${page.path}" ignores page mode ("${pageMode}") and force sets it to SSG (this page can't be lazily rendered).`
+    )
+    pageMode = `SSG`
+  }
+
+  return pageMode
 }
 
 /**
