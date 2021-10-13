@@ -4,11 +4,12 @@ import { createPageDependency as internalCreatePageDependency } from "./internal
 import Bottleneck from "bottleneck"
 
 const batcher = new Bottleneck.Batcher({
-  maxTime: 10,
+  maxTime: 0,
   maxSize: 10000,
 })
 
 batcher.on(`batch`, batch => {
+  console.log(`batch size`, batch.length)
   store.dispatch(internalCreatePageDependency(batch))
 })
 

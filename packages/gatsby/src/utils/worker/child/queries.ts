@@ -24,7 +24,6 @@ export function setComponents(): void {
 
 export async function resetCache(nodeIds): void {
   const dataStore = getDataStore()
-  console.log(`dataStore`, dataStore)
   await dataStore.clearNodeCache(nodeIds)
   // Reset the GraphQL Runner cache as this is a new run.
   getGraphqlRunner(true)

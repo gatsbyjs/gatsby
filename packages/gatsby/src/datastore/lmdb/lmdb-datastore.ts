@@ -163,8 +163,7 @@ function countNodes(typeName?: string): number {
 
 async function clearNodeCache(nodeIds) {
   const nodesDb = getDatabases().nodes
-  console.log(`nodesDb`, Object.keys(nodesDb))
-  console.log(`nodesDb cache`, Object.keys(nodesDb.cache))
+  console.log({ nodeIds })
   nodeIds.forEach(id => nodesDb.cache.delete(id))
 }
 
