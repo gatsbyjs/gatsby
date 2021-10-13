@@ -366,19 +366,6 @@ export const createJobV2FromInternalJob =
     const jobContentDigest = internalJob.contentDigest
     const currentState = getState()
 
-    const engineContext = getEngineContext()
-
-    // Always set context, even if engine context is not set
-    // Doing this just in case. AsyncLocalStorage is experimental in Node 14,
-    // so if it fails to deliver context here we can still get jobs by requestId -1
-    dispatch({
-      type: `SET_JOB_V2_CONTEXT`,
-      payload: {
-        job: internalJob,
-        requestId: engineContext?.requestId ?? ``,
-      },
-    })
-
     // Check if we already ran this job before, if yes we return the result
     // We have an inflight (in progress) queue inside the jobs manager to make sure
     // we don't waste resources twice during the process
@@ -390,6 +377,22 @@ export const createJobV2FromInternalJob =
         currentState.jobsV2.complete.get(jobContentDigest)!.result
       )
     }
+    const engineContext = getEngineContext()
+
+    // Always set context, even if engineContext is undefined.
+    // We do this because the final list of jobs for a given engine request includes both:
+    //  - jobs with the same requestId
+    //  - jobs without requestId (technically with requestId === "")
+    //
+    // See https://nodejs.org/dist/latest-v16.x/docs/api/async_context.html#async_context_troubleshooting_context_loss
+    // on cases when async context could be lost.
+    dispatch({
+      type: `SET_JOB_V2_CONTEXT`,
+      payload: {
+        job: internalJob,
+        requestId: engineContext?.requestId ?? ``,
+      },
+    })
 
     const inProgressJobPromise = getInProcessJobPromise(jobContentDigest)
     if (inProgressJobPromise) {
