@@ -11,7 +11,7 @@ import { writeQueriesToDisk } from "./write-queries-to-disk"
 
 const ingestRemoteSchema = async (helpers, pluginOptions) => {
   // don't ingest schema while in worker - use cache instead
-  if (process.env.WORKER_ID) {
+  if (process.env.GATSBY_WORKER_POOL_WORKER) {
     return
   }
 
