@@ -2,7 +2,6 @@ interface IBaseJob {
   name: string
   outputDir: string
   args: Record<string, any>
-  requestId?: string
 }
 
 interface IJobInput {

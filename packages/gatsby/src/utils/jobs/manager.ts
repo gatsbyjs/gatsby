@@ -207,7 +207,7 @@ export function createInternalJob(
     return job
   }
 
-  const { name, inputPaths, outputDir, args, requestId } = job
+  const { name, inputPaths, outputDir, args } = job
 
   // TODO see if we can make this async, filehashing might be expensive to wait for
   // currently this needs to be sync as we could miss jobs to have been scheduled and
@@ -232,7 +232,6 @@ export function createInternalJob(
       resolve: plugin.resolve,
       isLocal: !plugin.resolve.includes(`/node_modules/`),
     },
-    requestId,
   }
 
   // generate a contentDigest based on all parameters including file content

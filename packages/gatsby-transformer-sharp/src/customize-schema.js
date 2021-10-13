@@ -103,7 +103,7 @@ const fixedNodeType = ({
         srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
-          resolve: ({ file, image, fieldArgs }, _args, context) => {
+          resolve: ({ file, image, fieldArgs }) => {
             // If the file is already in webp format or should explicitly
             // be converted to webp, we do not create additional webp files
             if (file.extension === `webp` || fieldArgs.toFormat === `webp`) {
@@ -116,14 +116,13 @@ const fixedNodeType = ({
                 args,
                 reporter,
                 cache,
-                requestId: context.requestId,
               })
             ).then(({ src }) => src)
           },
         },
         srcSetWebp: {
           type: GraphQLString,
-          resolve: ({ file, image, fieldArgs }, _args, context) => {
+          resolve: ({ file, image, fieldArgs }) => {
             if (file.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
@@ -134,7 +133,6 @@ const fixedNodeType = ({
                 args,
                 reporter,
                 cache,
-                requestId: context.requestId,
               })
             ).then(({ srcSet }) => srcSet)
           },
@@ -223,7 +221,6 @@ const fixedNodeType = ({
           args,
           reporter,
           cache,
-          requestId: context.requestId,
         })
       ).then(o =>
         Object.assign({}, o, {
@@ -262,7 +259,7 @@ const fluidNodeType = ({
         srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
-          resolve: ({ file, image, fieldArgs }, _args, context) => {
+          resolve: ({ file, image, fieldArgs }) => {
             if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
@@ -273,14 +270,13 @@ const fluidNodeType = ({
                 args,
                 reporter,
                 cache,
-                requestId: context.requestId,
               })
             ).then(({ src }) => src)
           },
         },
         srcSetWebp: {
           type: GraphQLString,
-          resolve: ({ file, image, fieldArgs }, _args, context) => {
+          resolve: ({ file, image, fieldArgs }) => {
             if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
@@ -291,7 +287,6 @@ const fluidNodeType = ({
                 args,
                 reporter,
                 cache,
-                requestId: context.requestId,
               })
             ).then(({ srcSet }) => srcSet)
           },
@@ -393,7 +388,6 @@ const fluidNodeType = ({
           args,
           reporter,
           cache,
-          requestId: context.requestId,
         })
       ).then(o =>
         Object.assign({}, o, {
@@ -538,7 +532,6 @@ const imageNodeType = ({
         pathPrefix,
         reporter,
         cache,
-        requestId: context.requestId,
       })
 
       return imageData
@@ -736,7 +729,6 @@ const createFields = ({
             const o = queueImageResizing({
               file,
               args,
-              requestId: context.requestId,
             })
             resolve(
               Object.assign({}, o, {

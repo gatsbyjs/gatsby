@@ -112,11 +112,7 @@ async function sqipSharp({ cache, getNodeAndSavePathDependency, store }) {
         const file = getNodeAndSavePathDependency(image.parent, context.path)
         const { contentDigest } = image.internal
 
-        const job = await queueImageResizing({
-          file,
-          args: sharpArgs,
-          requestId: context.requestId,
-        })
+        const job = await queueImageResizing({ file, args: sharpArgs })
 
         if (!(await fs.exists(job.absolutePath))) {
           debug(`Preparing ${file.name}`)
