@@ -48,7 +48,7 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "prod-404",
+    "name": "prod-404-500",
     "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -176,7 +176,7 @@ Array [
       "onPluginInit",
     ],
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404/src/pages",
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404-500/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -355,7 +355,7 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "prod-404",
+    "name": "prod-404-500",
     "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -495,7 +495,7 @@ Array [
       "onPluginInit",
     ],
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404/src/pages",
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404-500/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },
@@ -695,7 +695,7 @@ Array [
   Object {
     "browserAPIs": Array [],
     "id": "",
-    "name": "prod-404",
+    "name": "prod-404-500",
     "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -846,7 +846,7 @@ Array [
       "onPluginInit",
     ],
     "pluginOptions": Object {
-      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404/src/pages",
+      "path": "<PROJECT_ROOT>/packages/gatsby/src/internal-plugins/prod-404-500/src/pages",
       "pathCheck": false,
       "plugins": Array [],
     },

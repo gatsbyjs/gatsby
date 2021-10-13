@@ -205,12 +205,16 @@ describe(`Dev loader`, () => {
 
       const expectation = {
         status: `error`,
-        pagePath: `/error-page`,
+        pagePath: `/500.html`,
+        internalServerError: true,
+        retries: 3,
       }
+
       expect(await devLoader.loadPageDataJson(`/error-page/`)).toEqual({
         status: `error`,
         pagePath: `/dev-404-page`,
         retries: 3,
+        internalServerError: true,
       })
       expect(devLoader.pageDataDb.get(`/error-page`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
