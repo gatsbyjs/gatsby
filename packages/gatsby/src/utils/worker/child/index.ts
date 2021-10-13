@@ -7,5 +7,10 @@ initReporterMessagingInWorker()
 // Note: this doesn't check for conflicts between module exports
 export { renderHTMLProd, renderHTMLDev } from "./render-html"
 export { setInferenceMetadata, buildSchema } from "./schema"
-export { setComponents, runQueries, saveQueriesDependencies } from "./queries"
+export {
+  resetCache,
+  setComponents,
+  runQueries,
+  saveQueriesDependencies,
+} from "./queries"
 export { loadConfigAndPlugins } from "./load-config-and-plugins"

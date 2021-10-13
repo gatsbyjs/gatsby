@@ -284,7 +284,6 @@ export async function initialize({
     .digest(`hex`)
   const state = store.getState()
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
-  console.log({ pluginVersions, hashes })
   console.log({ oldPluginsHash, pluginsHash })
 
   // Check if anything has changed. If it has, delete the site's .cache

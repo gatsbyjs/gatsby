@@ -145,6 +145,8 @@ async function processQueries<QueryIDType>({
       graphqlTracing,
     })
 
+    console.log(`queryIds`, queryIds.length)
+
     queryIds.forEach((queryId: QueryIDType) => {
       fastQueue.push(queryId, (err, res) => {
         if (err) {

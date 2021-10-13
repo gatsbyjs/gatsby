@@ -22,6 +22,14 @@ export function setComponents(): void {
   setState([`components`, `staticQueryComponents`])
 }
 
+export async function resetCache(nodeIds): void {
+  const dataStore = getDataStore()
+  console.log(`dataStore`, dataStore)
+  await dataStore.clearNodeCache(nodeIds)
+  // Reset the GraphQL Runner cache as this is a new run.
+  getGraphqlRunner(true)
+}
+
 export async function saveQueriesDependencies(): Promise<void> {
   // Drop `queryNodes` from query state - it can be restored from other pieces of state
   // and is there only as a perf optimization
@@ -42,8 +50,8 @@ export async function saveQueriesDependencies(): Promise<void> {
 }
 
 let gqlRunner
-function getGraphqlRunner(): GraphQLRunner {
-  if (gqlRunner) {
+function getGraphqlRunner(clearCache = false): GraphQLRunner {
+  if (!clearCache && gqlRunner) {
     return gqlRunner
   } else {
     gqlRunner = new GraphQLRunner(store, {
@@ -96,9 +104,7 @@ async function doRunQueries(queryIds: IGroupedQueryIds): Promise<void> {
     await buildSchema()
   }
 
-  console.time(`getGraphqlRunner`)
   const graphqlRunner = getGraphqlRunner()
-  console.timeEnd(`getGraphqlRunner`)
 
   await runStaticQueries({
     queryIds,
@@ -106,11 +112,24 @@ async function doRunQueries(queryIds: IGroupedQueryIds): Promise<void> {
     graphqlRunner,
   })
 
+  console.time(`child: runPageQueries`)
+
+  // const Inspector = require(`inspector-api`)
+  // const inspector = new Inspector({ storage: { type: `fs` } })
+
+  // await inspector.profiler.enable()
+  // await inspector.profiler.start()
+  // await inspector.heap.enable()
+  // await inspector.heap.startSampling()
   await runPageQueries({
     queryIds,
     store,
     graphqlRunner,
   })
+
+  // await inspector.profiler.stop()
+  // await inspector.heap.stopSampling()
+  console.timeEnd(`child: runPageQueries`)
 
   await getDataStore().ready()
 }

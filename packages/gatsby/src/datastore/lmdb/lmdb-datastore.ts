@@ -21,6 +21,7 @@ const lmdbDatastore = {
   updateDataStore,
   ready,
   runQuery,
+  clearNodeCache,
 
   // deprecated:
   getNodes,
@@ -68,7 +69,7 @@ function getDatabases(): ILmdbDatabases {
         // FIXME: sharedStructuresKey breaks tests - probably need some cleanup for it on DELETE_CACHE
         // sharedStructuresKey: Symbol.for(`structures`),
         // @ts-ignore
-        cache: process.env.GATSBY_WORKER_POOL_WORKER ? false : true,
+        cache: true,
       }),
       nodesByType: rootDb.openDB({
         name: `nodesByType`,
@@ -158,6 +159,13 @@ function countNodes(typeName?: string): number {
 
   const { nodesByType } = getDatabases()
   return nodesByType.getValuesCount(typeName)
+}
+
+async function clearNodeCache(nodeIds) {
+  const nodesDb = getDatabases().nodes
+  console.log(`nodesDb`, Object.keys(nodesDb))
+  console.log(`nodesDb cache`, Object.keys(nodesDb.cache))
+  nodeIds.forEach(id => nodesDb.cache.delete(id))
 }
 
 async function runQuery(args: IRunFilterArg): Promise<IQueryResult> {

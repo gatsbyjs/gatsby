@@ -8,7 +8,7 @@ import { initJobsMessagingInMainProcess } from "../jobs/worker-messaging"
 import { initReporterMessagingInMainProcess } from "./reporter"
 
 import { GatsbyWorkerPool } from "./types"
-import { loadPartialStateFromDisk, store } from "../../redux"
+import { emitter, loadPartialStateFromDisk, store } from "../../redux"
 import { ActionsUnion, IGatsbyState } from "../../redux/types"
 
 export type { GatsbyWorkerPool }
@@ -18,8 +18,8 @@ export const create = (): GatsbyWorkerPool => {
   if (workerPool) {
     return workerPool
   } else {
-    // const numWorkers = Math.max(1, cpuCoreCount() - 1)
-    const numWorkers = 2
+    const numWorkers = Math.max(1, cpuCoreCount() - 1)
+    // const numWorkers = 4
     reporter.verbose(`Creating ${numWorkers} worker`)
 
     workerPool = new WorkerPool(require.resolve(`./child`), {
@@ -42,6 +42,13 @@ export const create = (): GatsbyWorkerPool => {
 const queriesChunkSize =
   Number(process.env.GATSBY_PARALLEL_QUERY_CHUNK_SIZE) || 50
 
+let nodesChanged = []
+
+emitter.on(`CREATE_NODE`, action => {
+  nodesChanged.push(action.payload.id)
+})
+
+let initialRun = true
 export async function runQueriesInWorkersQueue(
   pool: GatsbyWorkerPool,
   queryIds: IGroupedQueryIds,
@@ -61,6 +68,12 @@ export async function runQueriesInWorkersQueue(
   activity.start()
 
   pool.all.setComponents()
+  if (!initialRun) {
+    console.log({ initialRun, nodesChanged })
+    pool.all.resetCache(nodesChanged)
+  }
+  initialRun = false
+  nodesChanged = []
 
   for (const segment of staticQuerySegments) {
     pool.single
