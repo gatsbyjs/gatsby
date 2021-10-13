@@ -268,7 +268,7 @@ export function loadPlugins(
     `../../internal-plugins/dev-404-page`,
     `../../internal-plugins/load-babel-config`,
     `../../internal-plugins/internal-data-bridge`,
-    `../../internal-plugins/prod-404`,
+    `../../internal-plugins/prod-404-500`,
     `../../internal-plugins/webpack-theme-component-shadowing`,
     `../../internal-plugins/bundle-optimisations`,
     `../../internal-plugins/functions`,

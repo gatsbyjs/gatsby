@@ -44,5 +44,7 @@ export interface IBuildContext {
   webpackListener?: Actor<unknown, AnyEventObject>
   queryFilesDirty?: boolean
   sourceFilesDirty?: boolean
+  changedSourceFiles?: Set<string> // not available in "recompile" service
+  recompiledFiles?: Set<string> // available in "recompile" service
   pendingQueryRuns?: Set<string>
 }

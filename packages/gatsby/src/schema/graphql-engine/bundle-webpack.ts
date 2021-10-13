@@ -5,7 +5,7 @@ import * as fs from "fs-extra"
 import webpack from "webpack"
 import { printQueryEnginePlugins } from "./print-plugins"
 import mod from "module"
-import { WebpackLoggingPlugin } from "../../utils/webpack/webpack-logging"
+import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
 import reporter from "gatsby-cli/lib/reporter"
 
 type Reporter = typeof reporter

@@ -3,7 +3,7 @@
  */
 
 import nock from "nock"
-import fetchData from "../fetch"
+import { fetchContent } from "../fetch"
 import { createPluginConfig } from "../plugin-options"
 
 nock.disableNetConnect()
@@ -65,13 +65,8 @@ describe(`fetch-retry`, () => {
         `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=1000`
       )
       .reply(200, { items: [] })
-      // Content types
-      .get(
-        `/spaces/${options.spaceId}/environments/master/content_types?skip=0&limit=1000&order=sys.createdAt`
-      )
-      .reply(200, { items: [] })
 
-    await fetchData({ pluginConfig, reporter })
+    await fetchContent({ pluginConfig, reporter })
 
     expect(reporter.panic).not.toBeCalled()
     expect(scope.isDone()).toBeTruthy()
@@ -106,7 +101,7 @@ describe(`fetch-retry`, () => {
       )
 
     try {
-      await fetchData({ pluginConfig, reporter })
+      await fetchContent({ pluginConfig, reporter })
       jest.fail()
     } catch (e) {
       const msg = expect(e.context.sourceMessage)
@@ -132,7 +127,7 @@ describe(`fetch-network-errors`, () => {
       .get(`/spaces/${options.spaceId}/`)
       .replyWithError({ code: `ECONNRESET` })
     try {
-      await fetchData({
+      await fetchContent({
         pluginConfig: createPluginConfig({
           ...options,
           contentfulClientConfig: { retryOnError: false },
@@ -159,7 +154,7 @@ describe(`fetch-network-errors`, () => {
       .reply(502, `Bad Gateway`)
 
     try {
-      await fetchData({
+      await fetchContent({
         pluginConfig: createPluginConfig({
           ...options,
           contentfulClientConfig: { retryOnError: false },
@@ -193,7 +188,7 @@ describe(`fetch-network-errors`, () => {
       })
 
     try {
-      await fetchData({
+      await fetchContent({
         pluginConfig: createPluginConfig({
           ...options,
           contentfulClientConfig: { retryOnError: false },

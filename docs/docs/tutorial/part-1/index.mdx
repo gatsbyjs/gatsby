@@ -227,7 +227,7 @@ GitHub is a website that many developers use to back up and share their code onl
 3. To push your existing code from your computer to your new GitHub repository, enter the commands below in the command line. Be sure to swap out `YOUR_GITHUB_USERNAME` for your actual username and `YOUR_GITHUB_REPO_NAME` with the name you gave your GitHub repo (like `my-first-gatsby-site`).
 
    ```
-   git remote add origin https://github.com/YOUR_GITHUB_USERNAME/YOUR_GITHUB_REPO_NAME.git
+   git remote add origin git@github.com:YOUR_GITHUB_USERNAME/YOUR_GITHUB_REPO_NAME.git
    git branch -M main
    git push -u origin main
    ```
@@ -263,6 +263,12 @@ To connect your code on GitHub to your Gatsby Cloud account, do the following:
    ![The "Git provider" tab of the "Add a site" screen. It lists two options: GitHub or GitLab.](./03-select-a-git-provider.png)
 
 1. If this is your first time connecting GitHub to Gatsby Cloud, you'll need to give Gatsby Cloud permission to access your GitHub account. When asked, **"Where should we host this new project?"** click the **"Select destination"** button.
+
+  <Announcement style={{marginBottom: "1.5rem"}}>
+
+  **Note:** If you are part of more than one GitHub organization, you will need to first select the organization with which the repository resides at this step before selecting the repository itself.
+
+  </Announcement>
 
     ![The "Repository" tab of the "Add a site" screen.](./04-select-destination.png)
 

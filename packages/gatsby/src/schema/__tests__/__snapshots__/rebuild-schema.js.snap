@@ -422,6 +422,7 @@ type SitePage implements Node {
   componentChunkName: String!
   matchPath: String
   pageContext: JSON
+  pluginCreator: SitePlugin
   id: ID!
   parent: Node
   children: [Node!]!
@@ -482,7 +483,7 @@ type Query {
   allSite(filter: SiteFilterInput, sort: SiteSortInput, skip: Int, limit: Int): SiteConnection!
   siteFunction(functionRoute: StringQueryOperatorInput, pluginName: StringQueryOperatorInput, originalAbsoluteFilePath: StringQueryOperatorInput, originalRelativeFilePath: StringQueryOperatorInput, relativeCompiledFilePath: StringQueryOperatorInput, absoluteCompiledFilePath: StringQueryOperatorInput, matchPath: StringQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SiteFunction
   allSiteFunction(filter: SiteFunctionFilterInput, sort: SiteFunctionSortInput, skip: Int, limit: Int): SiteFunctionConnection!
-  sitePage(path: StringQueryOperatorInput, component: StringQueryOperatorInput, internalComponentName: StringQueryOperatorInput, componentChunkName: StringQueryOperatorInput, matchPath: StringQueryOperatorInput, pageContext: JSONQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SitePage
+  sitePage(path: StringQueryOperatorInput, component: StringQueryOperatorInput, internalComponentName: StringQueryOperatorInput, componentChunkName: StringQueryOperatorInput, matchPath: StringQueryOperatorInput, pageContext: JSONQueryOperatorInput, pluginCreator: SitePluginFilterInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SitePage
   allSitePage(filter: SitePageFilterInput, sort: SitePageSortInput, skip: Int, limit: Int): SitePageConnection!
   sitePlugin(resolve: StringQueryOperatorInput, name: StringQueryOperatorInput, version: StringQueryOperatorInput, nodeAPIs: StringQueryOperatorInput, browserAPIs: StringQueryOperatorInput, ssrAPIs: StringQueryOperatorInput, pluginFilepath: StringQueryOperatorInput, pluginOptions: JSONQueryOperatorInput, packageJson: JSONQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SitePlugin
   allSitePlugin(filter: SitePluginFilterInput, sort: SitePluginSortInput, skip: Int, limit: Int): SitePluginConnection!
@@ -1265,6 +1266,22 @@ input JSONQueryOperatorInput {
   glob: JSON
 }
 
+input SitePluginFilterInput {
+  resolve: StringQueryOperatorInput
+  name: StringQueryOperatorInput
+  version: StringQueryOperatorInput
+  nodeAPIs: StringQueryOperatorInput
+  browserAPIs: StringQueryOperatorInput
+  ssrAPIs: StringQueryOperatorInput
+  pluginFilepath: StringQueryOperatorInput
+  pluginOptions: JSONQueryOperatorInput
+  packageJson: JSONQueryOperatorInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
 type SitePageConnection {
   totalCount: Int!
   edges: [SitePageEdge!]!
@@ -1290,6 +1307,53 @@ enum SitePageFieldsEnum {
   componentChunkName
   matchPath
   pageContext
+  pluginCreator___resolve
+  pluginCreator___name
+  pluginCreator___version
+  pluginCreator___nodeAPIs
+  pluginCreator___browserAPIs
+  pluginCreator___ssrAPIs
+  pluginCreator___pluginFilepath
+  pluginCreator___pluginOptions
+  pluginCreator___packageJson
+  pluginCreator___id
+  pluginCreator___parent___id
+  pluginCreator___parent___parent___id
+  pluginCreator___parent___parent___children
+  pluginCreator___parent___children
+  pluginCreator___parent___children___id
+  pluginCreator___parent___children___children
+  pluginCreator___parent___internal___content
+  pluginCreator___parent___internal___contentDigest
+  pluginCreator___parent___internal___description
+  pluginCreator___parent___internal___fieldOwners
+  pluginCreator___parent___internal___ignoreType
+  pluginCreator___parent___internal___mediaType
+  pluginCreator___parent___internal___owner
+  pluginCreator___parent___internal___type
+  pluginCreator___children
+  pluginCreator___children___id
+  pluginCreator___children___parent___id
+  pluginCreator___children___parent___children
+  pluginCreator___children___children
+  pluginCreator___children___children___id
+  pluginCreator___children___children___children
+  pluginCreator___children___internal___content
+  pluginCreator___children___internal___contentDigest
+  pluginCreator___children___internal___description
+  pluginCreator___children___internal___fieldOwners
+  pluginCreator___children___internal___ignoreType
+  pluginCreator___children___internal___mediaType
+  pluginCreator___children___internal___owner
+  pluginCreator___children___internal___type
+  pluginCreator___internal___content
+  pluginCreator___internal___contentDigest
+  pluginCreator___internal___description
+  pluginCreator___internal___fieldOwners
+  pluginCreator___internal___ignoreType
+  pluginCreator___internal___mediaType
+  pluginCreator___internal___owner
+  pluginCreator___internal___type
   id
   parent___id
   parent___parent___id
@@ -1399,6 +1463,7 @@ input SitePageFilterInput {
   componentChunkName: StringQueryOperatorInput
   matchPath: StringQueryOperatorInput
   pageContext: JSONQueryOperatorInput
+  pluginCreator: SitePluginFilterInput
   id: StringQueryOperatorInput
   parent: NodeFilterInput
   children: NodeFilterListInput
@@ -1538,22 +1603,6 @@ type SitePluginGroupConnection {
   group(skip: Int, limit: Int, field: SitePluginFieldsEnum!): [SitePluginGroupConnection!]!
   field: String!
   fieldValue: String
-}
-
-input SitePluginFilterInput {
-  resolve: StringQueryOperatorInput
-  name: StringQueryOperatorInput
-  version: StringQueryOperatorInput
-  nodeAPIs: StringQueryOperatorInput
-  browserAPIs: StringQueryOperatorInput
-  ssrAPIs: StringQueryOperatorInput
-  pluginFilepath: StringQueryOperatorInput
-  pluginOptions: JSONQueryOperatorInput
-  packageJson: JSONQueryOperatorInput
-  id: StringQueryOperatorInput
-  parent: NodeFilterInput
-  children: NodeFilterListInput
-  internal: InternalFilterInput
 }
 
 input SitePluginSortInput {

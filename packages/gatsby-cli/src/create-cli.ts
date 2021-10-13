@@ -204,11 +204,6 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         (args: yargs.Arguments, cmd: (args: yargs.Arguments) => unknown) => {
           process.env.NODE_ENV = process.env.NODE_ENV || `development`
 
-          if (process.env.GATSBY_EXPERIMENTAL_ENABLE_ADMIN) {
-            const { startGraphQLServer } = require(`gatsby-recipes`)
-            startGraphQLServer(siteInfo.directory, true)
-          }
-
           if (args.hasOwnProperty(`inspect`)) {
             args.inspect = args.inspect || 9229
           }

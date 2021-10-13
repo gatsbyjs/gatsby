@@ -65,7 +65,7 @@ The options are as follows:
 - [`resolveSiteUrl`](#resolveSiteUrl) (function) Takes the output of the data query and lets you return the site URL. Sync or async functions allowed.
 - [`resolvePagePath`](#resolvePagePath) (function) Takes a page object and returns the uri of the page (no domain or protocol).
 - [`resolvePages`](#resolvePagePath) (function) Takes the output of the data query and expects an array of page objects to be returned. Sync or async functions allowed.
-- [`filterPages`](#filterPages) (function) Takes the current page a string (or other object) from the `exclude` array and expects a boolean to be returned. `true` excludes the path, `false` keeps it.
+- [`filterPages`](#filterPages) (function) Takes the current page and a string (or other object) from the `exclude` array and expects a boolean to be returned. `true` excludes the path, `false` keeps it.
 - [`serialize`](#serialize) (function) Takes the output of `filterPages` and lets you return a sitemap entry. Sync or async functions allowed.
 
 The following pages are **always** excluded: `/dev-404-page`,`/404` &`/offline-plugin-app-shell-fallback`, this cannot be changed even by customizing the [`filterPages`](#filterPages) function.

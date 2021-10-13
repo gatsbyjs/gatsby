@@ -1,22 +1,22 @@
-const { resolve } = require(`path`)
-const md5File = require(`md5-file`)
-
-const {
-  DuotoneGradientType,
-  ImageCropFocusType,
-} = require(`gatsby-transformer-sharp/types`)
-const { queueImageResizing } = require(`gatsby-plugin-sharp`)
+const path = require(`path`)
 
 const Debug = require(`debug`)
 const fs = require(`fs-extra`)
+const sharp = require(`sharp`)
+const md5File = require(`md5-file`)
+
 const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
   GraphQLBoolean,
 } = require(`gatsby/graphql`)
-const sharp = require(`sharp`)
-const { ensureDir } = require(`fs-extra`)
+const { queueImageResizing } = require(`gatsby-plugin-sharp`)
+const { fetchRemoteFile } = require(`gatsby-core-utils`)
+const {
+  DuotoneGradientType,
+  ImageCropFocusType,
+} = require(`gatsby-transformer-sharp/types`)
 
 const generateSqip = require(`./generate-sqip`)
 
@@ -42,13 +42,13 @@ module.exports = async args => {
   return {}
 }
 
-async function sqipSharp({ cache, getNodeAndSavePathDependency, store }) {
+async function sqipSharp({ type, cache, getNodeAndSavePathDependency, store }) {
   const program = store.getState().program
-  const cacheDir = resolve(
+  const cacheDir = path.resolve(
     `${program.directory}/node_modules/.cache/gatsby-transformer-sqip/`
   )
 
-  await ensureDir(cacheDir)
+  await fs.ensureDir(cacheDir)
 
   return {
     sqip: {
@@ -135,19 +135,17 @@ async function sqipSharp({ cache, getNodeAndSavePathDependency, store }) {
   }
 }
 
-async function sqipContentful({ cache, store, reporter }) {
+async function sqipContentful({ type, cache, store }) {
   const {
     schemes: { ImageResizingBehavior, ImageCropFocusType },
   } = require(`gatsby-source-contentful`)
 
-  const cacheImage = require(`gatsby-source-contentful/cache-image`)
-
   const program = store.getState().program
-  const cacheDir = resolve(
+  const cacheDir = path.resolve(
     `${program.directory}/node_modules/.cache/gatsby-transformer-sqip/`
   )
 
-  await ensureDir(cacheDir)
+  await fs.ensureDir(cacheDir)
 
   return {
     sqip: {
@@ -192,7 +190,12 @@ async function sqipContentful({ cache, store, reporter }) {
       },
       async resolve(asset, fieldArgs) {
         const {
-          file: { contentType },
+          createUrl,
+          mimeTypeExtensions,
+        } = require(`gatsby-source-contentful/extend-node-type`)
+
+        const {
+          file: { contentType, url: imgUrl, fileName },
         } = asset
 
         if (!contentType.includes(`image/`)) {
@@ -223,7 +226,16 @@ async function sqipContentful({ cache, store, reporter }) {
           background,
         }
 
-        const absolutePath = await cacheImage(store, asset, options, reporter)
+        const extension = mimeTypeExtensions.get(contentType)
+        const url = createUrl(imgUrl, options)
+        const name = path.basename(fileName, extension)
+
+        const absolutePath = await fetchRemoteFile({
+          url,
+          name,
+          cache,
+          ext: extension,
+        })
 
         const contentDigest = await md5File(absolutePath)
 

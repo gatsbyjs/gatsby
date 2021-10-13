@@ -12,6 +12,7 @@ import {
   writeModule,
   getAbsolutePathForVirtualModule,
 } from "../utils/gatsby-webpack-virtual-modules"
+import { getPageMode } from "../utils/page-mode"
 
 interface IGatsbyPageComponent {
   component: string
@@ -109,7 +110,7 @@ const getMatchPaths = (
 
   pages.forEach((page: IGatsbyPage, index: number): void => {
     if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-      if (page.matchPath && page.mode === `SSG`) {
+      if (page.matchPath && getPageMode(page) === `SSG`) {
         matchPathPages.push(createMatchPathEntry(page, index))
       }
     } else {

@@ -23,7 +23,9 @@ import {
 import { IPluginRefObject, PluginRef } from "gatsby-plugin-utils/dist/types"
 
 const getAPI = (
-  api: { [exportType in ExportType]: { [api: string]: boolean } }
+  api: {
+    [exportType in ExportType]: { [api: string]: boolean }
+  }
 ): ICurrentAPIs =>
   _.keys(api).reduce<Partial<ICurrentAPIs>>((merged, key) => {
     merged[key] = _.keys(api[key])
