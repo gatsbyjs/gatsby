@@ -7,6 +7,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 import { isFile } from "./is-file"
 import { isDate } from "../types/date"
 import { addDerivedType } from "../types/derived-types"
+import { warnOnce } from "../../utils/warn-once"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
 const { getDataStore } = require(`../../datastore`)
 
@@ -32,6 +33,14 @@ const addInferredFields = ({
     typeMapping,
     config,
   })
+
+  if (deprecatedNodeKeys.size > 0) {
+    warnOnce(
+      `The ___NODE convention is deprecated. Please use the @link directive instead.\nType: ${typeComposer.getTypeName()}, Keys: ${Array.from(
+        deprecatedNodeKeys
+      ).join(`, `)}\nMigration: https://gatsby.dev/node-convention-deprecation`
+    )
+  }
 }
 
 module.exports = {
@@ -98,6 +107,8 @@ const addInferredFieldsImpl = ({
   return typeComposer
 }
 
+const deprecatedNodeKeys = new Set()
+
 const getFieldConfig = ({
   schemaComposer,
   typeComposer,
@@ -125,12 +136,17 @@ const getFieldConfig = ({
     // i.e. does the config contain sanitized field names?
     fieldConfig = getFieldConfigFromMapping({ typeMapping, selector })
   } else if (unsanitizedKey.includes(`___NODE`)) {
+    // TODO(v5): Remove ability to use foreign keys like this (e.g. author___NODE___contact___email)
+    // and recommend using schema customization instead
+
     fieldConfig = getFieldConfigFromFieldNameConvention({
       schemaComposer,
       value: exampleValue,
       key: unsanitizedKey,
     })
     arrays = arrays + (value.multiple ? 1 : 0)
+
+    deprecatedNodeKeys.add(unsanitizedKey)
   } else {
     fieldConfig = getSimpleFieldConfig({
       schemaComposer,
@@ -214,8 +230,6 @@ const getFieldConfigFromFieldNameConvention = ({
   const linkedTypesSet = new Set()
 
   if (foreignKey) {
-    // TODO: deprecate foreign keys like this (e.g. author___NODE___contact___email)
-    //  and recommend using schema customization instead
     const linkedValues = new Set(value.linkedNodes)
     getDataStore()
       .iterateNodes()
