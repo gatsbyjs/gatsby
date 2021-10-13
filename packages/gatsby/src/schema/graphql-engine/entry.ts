@@ -101,7 +101,15 @@ export class GraphQLEngine {
       await waitJobsByRequest(engineContext.requestId)
       return result
     }
-    return await runWithEngineContext(engineContext, doRunQuery)
+    try {
+      return await runWithEngineContext(engineContext, doRunQuery)
+    } finally {
+      // Reset job-to-request mapping
+      store.dispatch({
+        type: `CLEAR_JOB_V2_CONTEXT`,
+        payload: engineContext,
+      })
+    }
   }
 
   public findPageByPath(pathName: string): IGatsbyPage | undefined {
