@@ -30,6 +30,7 @@ Object {
   "jobsV2": Object {
     "complete": Map {},
     "incomplete": Map {},
+    "jobsByRequest": Map {},
   },
   "nodes": Map {
     "pageA" => Object {
