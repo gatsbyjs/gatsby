@@ -46,12 +46,32 @@ export class PageQueryStore extends React.Component {
   componentDidMount() {
     socketRegisterPath(getPathFromProps(this.props))
     ___emitter.on(`pageQueryResult`, this.handleMittEvent)
+    ___emitter.on(`serverDataResult`, this.handleMittEvent)
     ___emitter.on(`onPostLoadPageResources`, this.handleMittEvent)
+
+    window._gatsbyEvents.push([
+      `FAST_REFRESH`,
+      {
+        action: `SHOW_GETSERVERDATA_ERROR`,
+        payload: this.state?.page?.page?.getServerDataError,
+      },
+    ])
+  }
+
+  componentDidUpdate() {
+    window._gatsbyEvents.push([
+      `FAST_REFRESH`,
+      {
+        action: `SHOW_GETSERVERDATA_ERROR`,
+        payload: this.state?.page?.page?.getServerDataError,
+      },
+    ])
   }
 
   componentWillUnmount() {
     socketUnregisterPath(this.state.path)
     ___emitter.off(`pageQueryResult`, this.handleMittEvent)
+    ___emitter.off(`serverDataResult`, this.handleMittEvent)
     ___emitter.off(`onPostLoadPageResources`, this.handleMittEvent)
   }
 
@@ -84,6 +104,10 @@ export class PageQueryStore extends React.Component {
   render() {
     // eslint-disable-next-line
     if (!this.state.page) {
+      return <div />
+    }
+
+    if (this.state.page.page.getServerDataError) {
       return <div />
     }
 

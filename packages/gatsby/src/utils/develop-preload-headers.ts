@@ -4,6 +4,7 @@ import { fixedPagePath } from "gatsby-core-utils"
 import { findPageByPath } from "./find-page-by-path"
 import { readPageData } from "./page-data"
 import { store } from "../redux"
+import { getPageMode } from "./page-mode"
 
 /**
  * Add preload link headers to responses for .html files. This allows browser to schedule fetching critical resources
@@ -32,7 +33,10 @@ export async function appendPreloadHeaders(
     // add page-data.json preload
     // our runtime also demands 404 and dev-404 page-data to be fetched to even render (see cache-dir/app.js)
     const pagePathsToPreload = [`/404.html`, `/dev-404-page/`]
-    if (page.mode !== `SSR` && !pagePathsToPreload.includes(page.path)) {
+    if (
+      getPageMode(page) !== `SSR` &&
+      !pagePathsToPreload.includes(page.path)
+    ) {
       // let's make sure page path is first one (order shouldn't matter, just for reasonable order)
       pagePathsToPreload.unshift(page.path)
     }

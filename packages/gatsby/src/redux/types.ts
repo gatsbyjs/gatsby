@@ -42,6 +42,15 @@ export interface IGatsbyPage {
   pluginCreatorId: Identifier
   componentPath: SystemPath
   ownerNodeId: Identifier
+  defer?: boolean
+  /**
+   * INTERNAL. Do not use `page.mode`, it can be removed at any time
+   * `page.mode` is currently reliable only in engines and `onPostBuild` hook
+   * (in develop it is dynamic and can change at any time)
+   * TODO: remove, see comments in utils/page-mode:materializePageMode
+   *
+   * @internal
+   */
   mode: PageMode
 }
 
@@ -129,6 +138,8 @@ export interface IGatsbyPageComponent {
   query: string
   pages: Set<string>
   isInBootstrap: boolean
+  serverData: boolean
+  // TODO: config: boolean
 }
 
 export interface IDefinitionMeta {
@@ -410,6 +421,17 @@ export type ActionsUnion =
   | ISSRUsedUnsafeBuiltin
   | ISetSiteConfig
   | IMergeWorkerQueryState
+  | ISetComponentFeatures
+  | IMaterializePageMode
+
+export interface ISetComponentFeatures {
+  type: `SET_COMPONENT_FEATURES`
+  payload: {
+    componentPath: string
+    serverData: boolean
+    // TODO: config: boolean
+  }
+}
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -921,5 +943,13 @@ export interface IMergeWorkerQueryState {
   payload: {
     workerId: number
     queryStateChunk: IGatsbyState["queries"]
+  }
+}
+
+export interface IMaterializePageMode {
+  type: `MATERIALIZE_PAGE_MODE`
+  payload: {
+    path: string
+    pageMode: PageMode
   }
 }

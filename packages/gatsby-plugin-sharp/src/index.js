@@ -432,24 +432,7 @@ async function stats({ file, reporter }) {
 
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
-  if (options.sizeByPixelDensity) {
-    /*
-     * We learned that `sizeByPixelDensity` is only valid for vector images,
-     * and Gatsby’s implementation of Sharp doesn’t support vector images.
-     * This means we should remove this option in the next major version of
-     * Gatsby, but for now we can no-op and warn.
-     *
-     * See https://github.com/gatsbyjs/gatsby/issues/12743
-     *
-     * TODO: remove the sizeByPixelDensity option in the next breaking release
-     */
-    reporter.warn(
-      `the option sizeByPixelDensity is deprecated and should not be used. It will be removed in the next major release of Gatsby.`
-    )
-  }
 
-  // Account for images with a high pixel density. We assume that these types of
-  // images are intended to be displayed at their native resolution.
   let metadata
   try {
     const pipeline = sharp()
