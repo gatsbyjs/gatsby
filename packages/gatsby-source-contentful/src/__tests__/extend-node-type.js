@@ -1,3 +1,5 @@
+jest.mock(`gatsby-core-utils`)
+jest.mock(`fs-extra`)
 const {
   createUrl,
   resolveFixed,
@@ -6,6 +8,9 @@ const {
   generateImageSource,
   getBase64Image,
 } = require(`../extend-node-type`)
+
+const { fetchRemoteFile } = require(`gatsby-core-utils`)
+const fs = require(`fs-extra`)
 
 describe(`contentful extend node type`, () => {
   describe(`createUrl`, () => {
@@ -102,6 +107,11 @@ describe(`contentful extend node type`, () => {
   })
 
   describe(`getBase64Image`, () => {
+    beforeEach(() => {
+      fetchRemoteFile.mockClear()
+      fs.readFile.mockResolvedValue(Buffer.from(`test`))
+    })
+
     const imageProps = {
       aspectRatio: 4.8698224852071,
       baseUrl: `//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png`,
@@ -128,16 +138,18 @@ describe(`contentful extend node type`, () => {
     }
     test(`keeps image format`, async () => {
       const result = await getBase64Image(imageProps)
-      const regex = /data:image\/png;base64,[a-zA-Z0-9/+]+=*/g
-      expect(result.match(regex)).not.toBe(null)
+
+      expect(fetchRemoteFile).toHaveBeenCalled()
+      expect(result).toMatchInlineSnapshot(`"data:image/png;base64,dGVzdA=="`)
     })
     test(`uses given image format`, async () => {
       const result = await getBase64Image({
         ...imageProps,
         options: { ...imageProps.options, toFormat: `jpg` },
       })
-      const regex = /data:image\/jpg;base64,[a-zA-Z0-9/+]+=*/g
-      expect(result.match(regex)).not.toBe(null)
+
+      expect(fetchRemoteFile).toHaveBeenCalled()
+      expect(result).toMatchInlineSnapshot(`"data:image/jpg;base64,dGVzdA=="`)
     })
   })
 
