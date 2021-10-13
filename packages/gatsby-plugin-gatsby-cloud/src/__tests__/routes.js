@@ -24,6 +24,16 @@ describe(`Routes IPC`, () => {
     pages.set(`/path/1/`, { mode: `DSG`, path: `/path/1` })
     pages.set(`/path/2/`, { mode: `SSR`, path: `/path/2` })
     pages.set(`/path/3/`, { mode: `SSG`, path: `/path/3` })
+    pages.set(`/path/4/`, {
+      mode: `SSR`,
+      path: `/path/[id].js`,
+      matchPath: `/path/:id`,
+    })
+    pages.set(`/path/5/`, {
+      mode: `SSR`,
+      path: `/path/[...].js`,
+      matchPath: `/path/*`,
+    })
 
     onPostBuild(
       {
@@ -77,6 +87,10 @@ describe(`Routes IPC`, () => {
                 "page-data/path/1/page-data.json": `DSG`,
                 "path/2/index.html": `SSR`,
                 "page-data/path/2/page-data.json": `SSR`,
+                "page-data/path/*/page-data.json": `SSR`,
+                "page-data/path/:id/page-data.json": `SSR`,
+                "path/*/index.html": `SSR`,
+                "path/:id/index.html": `SSR`,
               },
             },
           },
@@ -115,6 +129,10 @@ describe(`Routes IPC`, () => {
                 "page-data\\path\\1\\page-data.json": `DSG`,
                 "path\\2\\index.html": `SSR`,
                 "page-data\\path\\2\\page-data.json": `SSR`,
+                "path\\:id\\index.html": `SSR`,
+                "page-data\\path\\:id\\page-data.json": `SSR`,
+                "path\\*\\index.html": `SSR`,
+                "page-data\\path\\*\\page-data.json": `SSR`,
               },
             },
           },
