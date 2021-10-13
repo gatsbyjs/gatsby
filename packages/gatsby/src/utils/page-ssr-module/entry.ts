@@ -1,3 +1,7 @@
+// "engines-fs-provider" must be first import, as it sets up global
+// fs and this need to happen before anything else tries to import fs
+import "../engines-fs-provider"
+
 // just types - those should not be bundled
 import type { GraphQLEngine } from "../../schema/graphql-engine/entry"
 import type { IExecutionResult } from "../../query/types"
@@ -7,7 +11,6 @@ import type { IPageDataWithQueryResult } from "../page-data"
 import type { Request } from "express"
 
 // actual imports
-import "../engines-fs-provider"
 import * as path from "path"
 import * as fs from "fs-extra"
 import {
