@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-shopify",
-  "version": "6.0.0-zz-next.3",
+  "version": "6.0.0-zz-next.4",
   "description": "Gatsby source plugin for building websites using Shopify as a data source.",
   "scripts": {
     "watch": "tsc-watch --outDir .",
