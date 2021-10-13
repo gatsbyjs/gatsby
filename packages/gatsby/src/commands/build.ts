@@ -55,6 +55,7 @@ import {
 import { shouldGenerateEngines } from "../utils/engines-helpers"
 import reporter from "gatsby-cli/lib/reporter"
 import type webpack from "webpack"
+import { materializePageMode, getPageMode } from "../utils/page-mode"
 import { validateEngines } from "../utils/validate-engines"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
@@ -242,7 +243,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // Only run queries with mode SSG
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
-      query => query.mode === `SSG`
+      query => getPageMode(query) === `SSG`
     )
   }
 
@@ -364,6 +365,9 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   await waitForWorkerPoolRestart
 
+  // Start saving page.mode in the main process (while HTML is generated in workers in parallel)
+  const waitMaterializePageMode = materializePageMode()
+
   const { toRegenerate, toDelete } =
     await buildHTMLPagesAndDeleteStaleArtifacts({
       program,
@@ -371,6 +375,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       buildSpan,
     })
 
+  await waitMaterializePageMode
   const waitWorkerPoolEnd = Promise.all(workerPool.end())
 
   telemetry.addSiteMeasurement(`BUILD_END`, {

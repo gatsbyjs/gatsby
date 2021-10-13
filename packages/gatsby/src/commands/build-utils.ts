@@ -10,6 +10,7 @@ import {
 import { removePageData } from "../utils/page-data"
 import { store } from "../redux"
 import { IGatsbyState } from "../redux/types"
+import { getPageMode } from "../utils/page-mode"
 
 const checkFolderIsEmpty = (path: string): boolean =>
   fs.existsSync(path) && !fs.readdirSync(path).length
@@ -160,7 +161,7 @@ export function calcDirtyHtmlFiles(state: IGatsbyState): {
       markActionForPage(path, `delete`)
     } else {
       if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        if (page.mode === `SSG`) {
+        if (getPageMode(page, state) === `SSG`) {
           if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
             markActionForPage(path, `regenerate`)
           } else {

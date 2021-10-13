@@ -23,8 +23,11 @@ const {
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+const { getPageMode } = require(`../../utils/page-mode`)
+const normalizePath = require(`../../utils/normalize-path`).default
 import { createJobV2FromInternalJob } from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
+import { warnOnce } from "../../utils/warn-once"
 import fs from "fs-extra"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
@@ -69,15 +72,6 @@ const findChildren = initialChildren => {
     }
   }
   return children
-}
-
-const displayedWarnings = new Set()
-const warnOnce = (message, key) => {
-  const messageId = key ?? message
-  if (!displayedWarnings.has(messageId)) {
-    displayedWarnings.add(messageId)
-    report.warn(message)
-  }
 }
 
 import type { Plugin } from "./types"
@@ -398,7 +392,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
-    component: page.component,
+    component: normalizePath(page.component),
+    componentPath: normalizePath(page.component),
     componentChunkName: generateComponentChunkName(page.component),
     isCreatedByStatefulCreatePages:
       actionOptions?.traceId === `initial-createPagesStatefully`,
@@ -412,23 +407,12 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    let pageMode: PageMode = `SSG`
     if (page.defer) {
-      pageMode = `DSG`
       internalPage.defer = true
     }
-
-    // TODO move to AST Check
-    const fileContent = fs.readFileSync(page.component).toString()
-    const isSSR =
-      fileContent.includes(`exports.getServerData`) ||
-      fileContent.includes(`export const getServerData`) ||
-      fileContent.includes(`export function getServerData`) ||
-      fileContent.includes(`export async function getServerData`)
-    if (isSSR) {
-      pageMode = `SSR`
-    }
-    internalPage.mode = pageMode
+    // Note: mode is updated in the end of the build after we get access to all page components,
+    // see materializePageMode in utils/page-mode.ts
+    internalPage.mode = getPageMode(internalPage)
   }
 
   if (page.ownerNodeId) {
