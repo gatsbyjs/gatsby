@@ -253,7 +253,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
     // lastFetched isn't set so do a full rebuild.
     if (!lastFetched) {
-      setPluginStatus({ lastFetched: new Date().getTime() / 1000 })
+      setPluginStatus({ lastFetched: Math.floor(new Date().getTime() / 1000) })
       requireFullRebuild = true
     } else {
       const drupalFetchIncrementalActivity = reporter.activityTimer(
@@ -267,7 +267,11 @@ ${JSON.stringify(webhookBody, null, 4)}`
         console.time(`drupal: gatsby-fastbuilds/sync`)
         // Hit fastbuilds endpoint with the lastFetched date.
         const res = await requestQueue.push([
-          urlJoin(baseUrl, `gatsby-fastbuilds/sync/`, lastFetched.toString()),
+          urlJoin(
+            baseUrl,
+            `gatsby-fastbuilds/sync/`,
+            Math.floor(lastFetched).toString()
+          ),
           {
             username: basicAuth.username,
             password: basicAuth.password,
