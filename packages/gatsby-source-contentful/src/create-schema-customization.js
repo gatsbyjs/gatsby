@@ -1,9 +1,8 @@
 // @ts-check
-const _ = require(`lodash`)
-
-const { createPluginConfig } = require(`./plugin-options`)
-const { fetchContentTypes } = require(`./fetch`)
-const { CODES } = require(`./report`)
+import _ from "lodash"
+import { fetchContentTypes } from "./fetch"
+import { createPluginConfig } from "./plugin-options"
+import { CODES } from "./report"
 
 async function getContentTypesFromContentFul({
   cache,

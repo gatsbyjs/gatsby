@@ -1,16 +1,17 @@
-jest.mock(`gatsby-core-utils`)
-jest.mock(`fs-extra`)
-const {
+// @ts-check
+import fs from "fs-extra"
+import { fetchRemoteFile } from "gatsby-core-utils"
+import {
   createUrl,
+  generateImageSource,
+  getBase64Image,
   resolveFixed,
   resolveFluid,
   resolveResize,
-  generateImageSource,
-  getBase64Image,
-} = require(`../extend-node-type`)
+} from "../extend-node-type"
 
-const { fetchRemoteFile } = require(`gatsby-core-utils`)
-const fs = require(`fs-extra`)
+jest.mock(`gatsby-core-utils`)
+jest.mock(`fs-extra`)
 
 describe(`contentful extend node type`, () => {
   describe(`createUrl`, () => {
@@ -108,7 +109,9 @@ describe(`contentful extend node type`, () => {
 
   describe(`getBase64Image`, () => {
     beforeEach(() => {
+      // @ts-ignore
       fetchRemoteFile.mockClear()
+      // @ts-ignore
       fs.readFile.mockResolvedValue(Buffer.from(`test`))
     })
 

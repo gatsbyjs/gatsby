@@ -1,6 +1,6 @@
-const chalk = require(`chalk`)
-
-const _ = require(`lodash`)
+// @ts-check
+import chalk from "chalk"
+import _ from "lodash"
 
 const DEFAULT_PAGE_LIMIT = 1000
 
