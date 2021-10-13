@@ -4,10 +4,6 @@ version: "2.26.0"
 title: "v2.26 Release Notes"
 ---
 
-# [v2.26](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.26.0-next.0...gatsby@2.26.0) (November 2020)
-
----
-
 Welcome to `gatsby@2.26.0` release (November 2020).
 Key highlights of this release:
 

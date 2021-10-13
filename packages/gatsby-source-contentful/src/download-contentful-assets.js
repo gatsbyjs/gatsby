@@ -1,4 +1,6 @@
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+// @ts-check
+import { createRemoteFileNode } from "gatsby-source-filesystem"
+import { createUrl } from "./extend-node-type"
 
 /**
  * @name distributeWorkload
@@ -25,13 +27,12 @@ async function distributeWorkload(workers, count = 50) {
  * @param gatsbyFunctions - Gatsby's internal helper functions
  */
 
-const downloadContentfulAssets = async gatsbyFunctions => {
+export async function downloadContentfulAssets(gatsbyFunctions) {
   const {
     actions: { createNode, touchNode },
     createNodeId,
     store,
     cache,
-    getCache,
     getNodesByType,
     reporter,
     assetDownloadWorkers,
@@ -64,7 +65,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
         )
         return Promise.resolve()
       }
-      const url = `https://${node.file.url.slice(2)}`
+      const url = createUrl(node.file.url)
 
       // Avoid downloading the asset again if it's been cached
       // Note: Contentful Assets do not provide useful metadata
@@ -76,25 +77,20 @@ const downloadContentfulAssets = async gatsbyFunctions => {
 
       // If we don't have cached data, download the file
       if (!fileNodeID) {
-        try {
-          const fileNode = await createRemoteFileNode({
-            url,
-            store,
-            cache,
-            createNode,
-            createNodeId,
-            getCache,
-            reporter,
-          })
+        const fileNode = await createRemoteFileNode({
+          url,
+          store,
+          cache,
+          createNode,
+          createNodeId,
+          reporter,
+        })
 
-          if (fileNode) {
-            bar.tick()
-            fileNodeID = fileNode.id
+        if (fileNode) {
+          bar.tick()
+          fileNodeID = fileNode.id
 
-            await cache.set(remoteDataCacheKey, { fileNodeID })
-          }
-        } catch (err) {
-          // Ignore
+          await cache.set(remoteDataCacheKey, { fileNodeID })
         }
       }
 
@@ -107,4 +103,3 @@ const downloadContentfulAssets = async gatsbyFunctions => {
     assetDownloadWorkers
   )
 }
-exports.downloadContentfulAssets = downloadContentfulAssets

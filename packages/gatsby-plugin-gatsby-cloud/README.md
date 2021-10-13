@@ -123,13 +123,13 @@ Redirect rules are automatically added for [client only paths](https://www.gatsb
 
 If those rules are conflicting with custom rules or if you want to have more control over them you can disable them in [configuration](#configuration) by setting `generateMatchPathRewrites` to `false`.
 
-An asterix, `*`, will match anything that follows. i.e. `/packages/gatsby-plugin-gatsby-cloud/` will be redirected to `/plugins/gatsby-plugin-gatsby-cloud/`.
+An asterisk, `*`, will match anything that follows. i.e. `/packages/gatsby-plugin-gatsby-cloud/` will be redirected to `/plugins/gatsby-plugin-gatsby-cloud/`.
 
 ### HTTP Strict Transport Security
 
 [HSTS Cheatsheet](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html)
 
-Since this header is an opt-in security enhancement with permanent consequences we don't include it as a default feature but use can use the `allPagesHeaders` to include it.
+Since this header is an opt-in security enhancement with permanent consequences we don't include it as a default feature but use the `allPagesHeaders` to include it.
 
 ```javascript
 {

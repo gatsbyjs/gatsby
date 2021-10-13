@@ -52,6 +52,18 @@ describe(`no-anonymous-exports-page-templates`, () => {
       test({
         code: `import { graphql } from "gatsby"\nconst Template = () => {}\nconst query = graphql\`test\`\nexport { query }\nexport default Template`,
       }),
+      test({
+        code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport function getServerData() { return { props: { foo: "bar" }}}`,
+      }),
+      test({
+        code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport async function getServerData() { return { props: { foo: "bar" }}}`,
+      }),
+      test({
+        code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport const getServerData = () => { return { props: { foo: "bar" }}}`,
+      }),
+      test({
+        code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexports.getServerData = () => { return { props: { foo: "bar" }}}`,
+      }),
     ],
     invalid: [
       test({

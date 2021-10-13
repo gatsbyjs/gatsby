@@ -35,7 +35,7 @@ to use this same password.
 Please enter the CA password:
 ```
 
-The password is _only_ required the first time you are using Gatsby's HTTPS feature on your machine, or when you are creating a brand new certificate.
+The password is _only_ required the first time you are using Gatsby's HTTPS feature on your machine, or when you are creating a brand-new certificate.
 
 ## Using `Certutil`
 

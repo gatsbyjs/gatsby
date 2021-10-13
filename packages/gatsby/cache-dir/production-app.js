@@ -3,7 +3,6 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import domReady from "@mikaelkristiansson/domready"
 import { StaticQueryContext } from "gatsby"
 import {
   shouldUpdateScroll,
@@ -26,7 +25,7 @@ import stripPrefix from "./strip-prefix"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
 
-const loader = new ProdLoader(asyncRequires, matchPaths)
+const loader = new ProdLoader(asyncRequires, matchPaths, window.pageData)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
 
@@ -105,11 +104,14 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                 >
                   <RouteHandler
                     path={
-                      pageResources.page.path === `/404.html`
+                      pageResources.page.path === `/404.html` ||
+                      pageResources.page.path === `/500.html`
                         ? stripPrefix(location.pathname, __BASE_PATH__)
                         : encodeURI(
-                            pageResources.page.matchPath ||
+                            (
+                              pageResources.page.matchPath ||
                               pageResources.page.path
+                            ).split(`?`)[0]
                           )
                     }
                     {...this.props}
@@ -129,28 +131,30 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   const { pagePath, location: browserLoc } = window
 
   // Explicitly call navigate if the canonical path (window.pagePath)
-  // is different to the browser path (window.location.pathname). But
-  // only if NONE of the following conditions hold:
+  // is different to the browser path (window.location.pathname). SSR
+  // page paths might include search params, while SSG and DSG won't.
+  // If page path include search params we also compare query params.
+  // But only if NONE of the following conditions hold:
   //
   // - The url matches a client side route (page.matchPath)
   // - it's a 404 page
   // - it's the offline plugin shell (/offline-plugin-app-shell-fallback/)
   if (
     pagePath &&
-    __BASE_PATH__ + pagePath !== browserLoc.pathname &&
+    __BASE_PATH__ + pagePath !==
+      browserLoc.pathname + (pagePath.includes(`?`) ? browserLoc.search : ``) &&
     !(
       loader.findMatchPath(stripPrefix(browserLoc.pathname, __BASE_PATH__)) ||
-      pagePath === `/404.html` ||
-      pagePath.match(/^\/404\/?$/) ||
+      pagePath.match(/^\/(404|500)(\/?|.html)$/) ||
       pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
     )
   ) {
-    navigate(__BASE_PATH__ + pagePath + browserLoc.search + browserLoc.hash, {
+    navigate(__BASE_PATH__ + pagePath + browserLoc.hash, {
       replace: true,
     })
   }
 
-  publicLoader.loadPage(browserLoc.pathname).then(page => {
+  publicLoader.loadPage(browserLoc.pathname + browserLoc.search).then(page => {
     if (!page || page.status === PageResourceStatus.Error) {
       const message = `page resources for ${browserLoc.pathname} not found. Not rendering React`
 
@@ -181,7 +185,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       React.useEffect(() => {
         if (!onClientEntryRanRef.current) {
           onClientEntryRanRef.current = true
-          performance.mark(`onInitialClientRender`)
+          if (performance.mark) {
+            performance.mark(`onInitialClientRender`)
+          }
 
           apiRunner(`onInitialClientRender`)
         }
@@ -193,24 +199,42 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     const renderer = apiRunner(
       `replaceHydrateFunction`,
       undefined,
-      process.env.GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES
-        ? ReactDOM.unstable_createRoot
-        : ReactDOM.hydrate
+      ReactDOM.hydrateRoot ? ReactDOM.hydrateRoot : ReactDOM.hydrate
     )[0]
 
-    domReady(() => {
-      const container =
+    function runRender() {
+      const rootElement =
         typeof window !== `undefined`
           ? document.getElementById(`___gatsby`)
           : null
 
-      if (renderer === ReactDOM.unstable_createRoot) {
-        renderer(container, {
-          hydrate: true,
-        }).render(<App />)
+      if (renderer === ReactDOM.hydrateRoot) {
+        renderer(rootElement, <App />)
       } else {
-        renderer(<App />, container)
+        renderer(<App />, rootElement)
       }
-    })
+    }
+
+    // https://github.com/madrobby/zepto/blob/b5ed8d607f67724788ec9ff492be297f64d47dfc/src/zepto.js#L439-L450
+    // TODO remove IE 10 support
+    const doc = document
+    if (
+      doc.readyState === `complete` ||
+      (doc.readyState !== `loading` && !doc.documentElement.doScroll)
+    ) {
+      setTimeout(function () {
+        runRender()
+      }, 0)
+    } else {
+      const handler = function () {
+        doc.removeEventListener(`DOMContentLoaded`, handler, false)
+        window.removeEventListener(`load`, handler, false)
+
+        runRender()
+      }
+
+      doc.addEventListener(`DOMContentLoaded`, handler, false)
+      window.addEventListener(`load`, handler, false)
+    }
   })
 })

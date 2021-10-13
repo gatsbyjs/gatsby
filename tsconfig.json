@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -15,6 +16,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "jsx": "preserve",
+    "typeRoots": ["./types", "**/node_modules/@types", "node_modules/@types"],
     "paths": {
       "@reach/router/*": ["./node_modules/@gatsbyjs/reach-router/*"]
     }

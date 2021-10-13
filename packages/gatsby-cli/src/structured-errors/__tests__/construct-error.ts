@@ -6,10 +6,9 @@ let log
 let processExit
 beforeEach(() => {
   log = jest.spyOn(console, `log`).mockImplementation(() => {})
-  processExit = ((jest.spyOn(
-    process,
-    `exit`
-  ) as unknown) as jest.Mock).mockImplementation(() => {})
+  processExit = (
+    jest.spyOn(process, `exit`) as unknown as jest.Mock
+  ).mockImplementation(() => {})
 
   log.mockReset()
   processExit.mockReset()
@@ -17,7 +16,7 @@ beforeEach(() => {
 
 afterAll(() => {
   ;(console.log as jest.Mock).mockClear()
-  ;((process.exit as unknown) as jest.Mock).mockClear()
+  ;(process.exit as unknown as jest.Mock).mockClear()
 })
 
 test(`it exits on invalid error schema`, () => {

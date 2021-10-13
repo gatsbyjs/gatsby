@@ -4,6 +4,8 @@ const { join } = require(`path`)
 
 import developStaticEntry from "../develop-static-entry"
 
+// TODO Move to @testing-library/dom
+
 jest.mock(`fs`, () => {
   const fs = jest.requireActual(`fs`)
   return {
@@ -32,11 +34,14 @@ jest.mock(
 )
 
 jest.mock(
-  `$virtual/sync-requires`,
+  `$virtual/async-requires`,
   () => {
     return {
       components: {
-        "page-component---src-pages-test-js": () => null,
+        "page-component---src-pages-test-js": () =>
+          Promise.resolve({
+            default: () => null,
+          }),
       },
     }
   },
@@ -65,10 +70,8 @@ const pageDataMock = {
 const MOCK_FILE_INFO = {
   [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
   [`${process.cwd()}/public/chunk-map.json`]: `{}`,
-  [join(
-    process.cwd(),
-    `/public/page-data/about/page-data.json`
-  )]: JSON.stringify(pageDataMock),
+  [join(process.cwd(), `/public/page-data/about/page-data.json`)]:
+    JSON.stringify(pageDataMock),
   [join(process.cwd(), `/public/page-data/app-data.json`)]: JSON.stringify({
     webpackCompilationHash: `1234567890abcdef1234`,
   }),
@@ -190,6 +193,7 @@ describe(`develop-static-entry`, () => {
     global.__PATH_PREFIX__ = ``
     global.__BASE_PATH__ = ``
     global.__ASSET_PREFIX__ = ``
+    global.BROWSER_ESM_ONLY = false
   })
 
   test(`SSR: onPreRenderHTML can be used to replace headComponents`, done => {
@@ -243,6 +247,48 @@ describe(`develop-static-entry`, () => {
       )
       done()
     })
+  })
+
+  test(`SSR: replaceRenderer can be sync`, done => {
+    global.plugins = [
+      {
+        plugin: {
+          replaceRenderer: ({ replaceBodyHTMLString }) =>
+            replaceBodyHTMLString(`i'm sync`),
+        },
+      },
+    ]
+
+    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
+      expect(html).toContain(`i'm sync`)
+
+      done()
+    })
+  })
+
+  test(`SSR: replaceRenderer can be async`, done => {
+    jest.useFakeTimers()
+    global.plugins = [
+      {
+        plugin: {
+          replaceRenderer: ({ replaceBodyHTMLString }) =>
+            new Promise(resolve => {
+              setTimeout(() => {
+                replaceBodyHTMLString(`i'm async`)
+                resolve()
+              }, 1000)
+            }),
+        },
+      },
+    ]
+
+    ssrDevelopStaticEntry(`/about/`, false, publicDir, undefined, (_, html) => {
+      expect(html).toContain(`i'm async`)
+
+      done()
+    })
+    jest.runAllTimers()
+    jest.useRealTimers()
   })
 
   test(`onPreRenderHTML can be used to replace headComponents`, () => {
@@ -373,38 +419,71 @@ describe(`static-entry`, () => {
     fs.readFileSync.mockImplementation(file => MOCK_FILE_INFO[file])
   })
 
-  test(`onPreRenderHTML can be used to replace headComponents`, () => {
+  test(`onPreRenderHTML can be used to replace headComponents`, async () => {
     global.plugins = [fakeStylesPlugin, reverseHeadersPlugin]
 
-    const html = staticEntry(staticEntryFnArgs)
+    const html = await staticEntry(staticEntryFnArgs)
     expect(html).toMatchSnapshot()
   })
 
-  test(`onPreRenderHTML can be used to replace postBodyComponents`, () => {
+  test(`onPreRenderHTML can be used to replace postBodyComponents`, async () => {
     global.plugins = [
       fakeComponentsPluginFactory(`Post`),
       reverseBodyComponentsPluginFactory(`Post`),
     ]
 
-    const html = staticEntry(staticEntryFnArgs)
+    const html = await staticEntry(staticEntryFnArgs)
     expect(html).toMatchSnapshot()
   })
 
-  test(`onPreRenderHTML can be used to replace preBodyComponents`, () => {
+  test(`onPreRenderHTML can be used to replace preBodyComponents`, async () => {
     global.plugins = [
       fakeComponentsPluginFactory(`Pre`),
       reverseBodyComponentsPluginFactory(`Pre`),
     ]
 
-    const html = staticEntry(staticEntryFnArgs)
+    const html = await staticEntry(staticEntryFnArgs)
     expect(html).toMatchSnapshot()
   })
 
-  test(`onPreRenderHTML does not add metatag note for development environment`, () => {
-    const html = staticEntry(staticEntryFnArgs)
+  test(`onPreRenderHTML does not add metatag note for development environment`, async () => {
+    const { html } = await staticEntry(staticEntryFnArgs)
     expect(html).not.toContain(
       `<meta name="note" content="environment=development"/>`
     )
+  })
+
+  test(`replaceRenderer does allow sync rendering`, async () => {
+    global.plugins = [
+      {
+        plugin: {
+          replaceRenderer: ({ replaceBodyHTMLString }) =>
+            replaceBodyHTMLString(`i'm sync`),
+        },
+      },
+    ]
+
+    const { html } = await staticEntry(staticEntryFnArgs)
+    expect(html).toContain(`i'm sync`)
+  })
+
+  test(`replaceRenderer does allow async rendering`, async () => {
+    global.plugins = [
+      {
+        plugin: {
+          replaceRenderer: ({ replaceBodyHTMLString }) =>
+            new Promise(resolve => {
+              setTimeout(() => {
+                replaceBodyHTMLString(`i'm async`)
+                resolve()
+              }, 1000)
+            }),
+        },
+      },
+    ]
+
+    const { html } = await staticEntry(staticEntryFnArgs)
+    expect(html).toContain(`async`)
   })
 })
 

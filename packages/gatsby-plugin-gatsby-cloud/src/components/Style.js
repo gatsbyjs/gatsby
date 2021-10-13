@@ -36,6 +36,7 @@ const Style = () => (
             Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
             "Segoe UI Symbol" !important;
           background: white;
+          box-sizing: border-box;
           position: fixed;
           top: 50%;
           -ms-transform: translateY(-50%);
@@ -56,6 +57,9 @@ const Style = () => (
           height: 32px;
           padding: 4px;
           border-radius: 4px;
+          box-sizing: border-box;
+          border: none;
+          background: none;
         }
 
         [data-gatsby-preview-indicator-hoverable="true"]:hover {
@@ -110,8 +114,15 @@ const Style = () => (
         }
 
         [data-gatsby-preview-indicator="tooltip-link"] {
+          background: none;
+          border: none;
+          padding: 0;
+        }
+
+        [data-gatsby-preview-indicator="tooltip-link-text"] {
           color: #a97ec7;
           font-weight: bold;
+          margin-bottom: 0;
           margin-left: 5px;
           line-height: 12px;
           font-size: 0.8rem;
@@ -157,7 +168,7 @@ const Style = () => (
         }
       `,
     }}
-  />
+  ></style>
 )
 
 export default Style

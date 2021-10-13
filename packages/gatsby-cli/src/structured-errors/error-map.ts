@@ -8,6 +8,13 @@ const optionalGraphQLInfo = (context: IOptionalGraphQLInfoContext): string =>
     context.plugin ? `\nPlugin: ${context.plugin}` : ``
   }`
 
+const getSharedNodeManifestWarning = (inputManifest: {
+  manifestId: string
+  node: { id: string }
+  pluginName: string
+}): string =>
+  `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest() for node id "${inputManifest.node.id}" with a manifest id of "${inputManifest.manifestId}"`
+
 export enum ErrorCategory {
   USER = `USER`,
   SYSTEM = `SYSTEM`,
@@ -39,6 +46,23 @@ const errors = {
       }`,
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
+  },
+  "95314": {
+    text: (context): string => context.errorMessage,
+    level: Level.ERROR,
+    docsUrl: `https://gatsby.dev/debug-html`,
+  },
+  "95315": {
+    text: (context): string =>
+      `Error in getServerData in ${context.pagePath} / "${context.potentialPagePath}".`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
+  "98001": {
+    text: (): string =>
+      `Built Rendering Engines failed validation failed validation.\n\nPlease open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help`,
+    type: Type.WEBPACK,
+    level: Level.ERROR,
   },
   "98123": {
     text: (context): string =>
@@ -293,6 +317,11 @@ const errors = {
     type: Type.GRAPHQL,
     level: Level.ERROR,
     category: ErrorCategory.USER,
+  },
+  "85928": {
+    text: (): string =>
+      `An error occurred during parallel query running.\nGo here for troubleshooting tips: https://gatsby.dev/pqr-feedback`,
+    level: Level.ERROR,
   },
   // Config errors
   "10122": {
@@ -586,7 +615,40 @@ const errors = {
         context.stuckStatusDiagnosticMessage
       }`,
     level: Level.ERROR,
+    docsUrl: `https://support.gatsbyjs.com/hc/en-us/articles/360056811354`,
   },
+
+  /** Node Manifest warnings */
+  "11801": {
+    // @todo add docs link to "using Preview" once it's updated with an explanation of ownerNodeId
+    text: ({ inputManifest }): string => `${getSharedNodeManifestWarning(
+      inputManifest
+    )} but Gatsby couldn't find a page for this node.
+      If you want a manifest to be created for this node (for previews or other purposes), ensure that a page was created (and that a ownerNodeId is added to createPage() if you're not using the Filesystem Route API).\n`,
+    level: Level.WARNING,
+    category: ErrorCategory.USER,
+  },
+
+  "11802": {
+    // @todo add docs link to "using Preview" once it's updated with an explanation of ownerNodeId
+    text: ({ inputManifest, pagePath }): string =>
+      `${getSharedNodeManifestWarning(
+        inputManifest
+      )} but Gatsby didn't find a ownerNodeId for the page at ${pagePath}\nUsing the first page that was found with the node manifest id set in pageContext.id in createPage().\nThis may result in an inaccurate node manifest (for previews or other purposes).`,
+    level: Level.WARNING,
+    category: ErrorCategory.USER,
+  },
+
+  "11803": {
+    // @todo add docs link to "using Preview" once it's updated with an explanation of ownerNodeId
+    text: ({ inputManifest, pagePath }): string =>
+      `${getSharedNodeManifestWarning(
+        inputManifest
+      )} but Gatsby didn't find a ownerNodeId for the page at ${pagePath}\nUsing the first page where this node is queried.\nThis may result in an inaccurate node manifest (for previews or other purposes).`,
+    level: Level.WARNING,
+    category: ErrorCategory.USER,
+  },
+  /** End Node Manifest warnings */
 }
 
 export type ErrorId = string | keyof typeof errors

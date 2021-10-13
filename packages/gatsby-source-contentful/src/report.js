@@ -1,6 +1,7 @@
+// @ts-check
+
 export const CODES = {
   /* Fetch errors */
-
   LocalesMissing: `111001`,
   SelfSignedCertificate: `111002`,
   SyncError: `111003`,
@@ -24,6 +25,11 @@ export const ERROR_MAP = {
     category: `THIRD_PARTY`,
   },
   [CODES.FetchContentTypes]: {
+    text: context => context.sourceMessage,
+    level: `ERROR`,
+    category: `THIRD_PARTY`,
+  },
+  [CODES.FetchTags]: {
     text: context => context.sourceMessage,
     level: `ERROR`,
     category: `THIRD_PARTY`,

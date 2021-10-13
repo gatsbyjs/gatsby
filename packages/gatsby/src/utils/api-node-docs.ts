@@ -299,11 +299,8 @@ export const createSchemaCustomization = true
  *   built schema from `info.schema`.
  * * Gatsby's data layer, including all internal query capabilities, is
  *   exposed on [`context.nodeModel`](/docs/node-model/). The node store can be
- *   queried directly with `getAllNodes`, `getNodeById` and `getNodesByIds`,
- *   while more advanced queries can be composed with `runQuery`. Note that
- *   `runQuery` will call field resolvers before querying, so e.g. foreign-key
- *   fields will be expanded to full nodes. The other methods on `nodeModel`
- *   don't do this.
+ *   queried directly with `findOne`, `getNodeById` and `getNodesByIds`,
+ *   while more advanced queries can be composed with `findAll`.
  * * It is possible to add fields to the root `Query` type.
  * * When using the first resolver argument (`source` in the example below,
  *   often also called `parent` or `root`), take care of the fact that field
@@ -334,12 +331,11 @@ export const createSchemaCustomization = true
  *     Query: {
  *       allRecentPosts: {
  *         type: [`BlogPost`],
- *         resolve: (source, args, context, info) => {
- *           const posts = context.nodeModel.getAllNodes({ type: `BlogPost` })
- *           const recentPosts = posts.filter(
+ *         resolve: async (source, args, context, info) => {
+ *           const { entries } = await context.nodeModel.findAll({ type: `BlogPost` })
+ *           return entries.filter(
  *             post => post.publishedAt > Date.UTC(2018, 0, 1)
  *           )
- *           return recentPosts
  *         }
  *       }
  *     }
@@ -409,6 +405,19 @@ export const onCreateWebpackConfig = true
  * The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation.
  */
 export const onPreInit = true
+
+/**
+ * Lifecycle executed in each process (one time per process). Used to store actions etc for later use.
+ *
+ * @example
+ * let createJobV2
+ * exports.onPluginInit = ({ actions }) => {
+ *   // store job creation action to use it later
+ *   createJobV2 = actions.createJobV2
+ * }
+ * @gatsbyVersion 3.9.0
+ */
+export const onPluginInit = true
 
 /**
  * Called once Gatsby has initialized itself and is ready to bootstrap your site.

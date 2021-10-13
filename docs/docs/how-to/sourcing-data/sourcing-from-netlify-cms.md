@@ -20,8 +20,7 @@ static site.
 
 _Note: this guide uses the Gatsby Hello World starter to provide a very basic understanding of how
 Netlify CMS can work with your Gatsby site. If you get stuck, compare your code to the [example
-project](https://github.com/erquhart/gatsby-netlify-cms-example). If you'd like to start with a full
-blown template, check out
+project](https://github.com/erquhart/gatsby-netlify-cms-example). If you'd like to start with a full-blown template, check out
 [gatsby-starter-netlify-cms][1]._
 
 ## Setup
@@ -166,7 +165,7 @@ If you use the [Client-Side Implicit Grant](https://www.netlifycms.org/docs/auth
 
 Alright - you're all set to make changes in Netlify CMS and see them as commits in your GitHub repo!
 Open Netlify CMS on your deployed site at `/admin/`, allow access to GitHub when the permissions
-window pops up (check for blocked pop ups if you don't see it), and try creating and publishing a
+window pops up (check for blocked pop-ups if you don't see it), and try creating and publishing a
 new blog post. Once you've done that, you'll find a new "blog" directory in your GitHub repo
 containing a Markdown file with your blog post content!
 

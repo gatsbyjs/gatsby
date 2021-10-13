@@ -34,8 +34,8 @@ export function resolveSiteUrl(data) {
   if (!data?.site?.siteMetadata?.siteUrl) {
     throw Error(
       `\`siteUrl\` does not exist on \`siteMetadata\` in the data returned from the query.
-      Add this to your custom query or provide a custom \`resolveSiteUrl\` function.
-      https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
+Add this to your \`siteMetadata\` object inside gatsby-config.js or add this to your custom query or provide a custom \`resolveSiteUrl\` function.
+https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
       `
     )
   }
@@ -56,8 +56,8 @@ export function resolvePagePath(page) {
   if (!page?.path) {
     throw Error(
       `\`path\` does not exist on your page object.
-      Make the page URI available at \`path\` or provide a custom \`resolvePagePath\` function.
-      https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
+Make the page URI available at \`path\` or provide a custom \`resolvePagePath\` function.
+https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
       `
     )
   }
@@ -78,8 +78,8 @@ export function resolvePages(data) {
   if (!data?.allSitePage?.nodes) {
     throw Error(
       `Page array from \`query\` wasn't found at \`data.allSitePage.nodes\`.
-      Fix the custom query or provide a custom \`resolvePages\` function.
-      https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
+Fix the custom query or provide a custom \`resolvePages\` function.
+https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
       `
     )
   }
@@ -109,8 +109,8 @@ export function defaultFilterPages(
   if (typeof excludedRoute !== `string`) {
     throw new Error(
       `You've passed something other than string to the exclude array. This is supported, but you'll have to write a custom filter function.
-      Ignoring the input for now: ${JSON.stringify(excludedRoute, null, 2)}
-      https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
+Ignoring the input for now: ${JSON.stringify(excludedRoute, null, 2)}
+https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
       `
     )
   }
@@ -203,9 +203,9 @@ export function pageFilter({ allPages, filterPages, excludes }) {
       } catch {
         throw new Error(
           `${REPORTER_PREFIX} Error in custom page filter.
-            If you've customized your excludes you may need to provide a custom "filterPages" function in your config.
-            https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
-            `
+If you've customized your excludes you may need to provide a custom "filterPages" function in your config.
+https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
+`
         )
       }
     })

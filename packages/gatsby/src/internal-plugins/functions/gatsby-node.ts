@@ -10,9 +10,7 @@ import { CreateDevServerArgs, ParentSpanPluginArgs } from "gatsby"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
 import chokidar from "chokidar"
-// We use an ancient version of path-to-regexp as it has breaking changes to express v4
-// see: https://github.com/pillarjs/path-to-regexp/tree/77df63869075cfa5feda1988642080162c584427#compatibility-with-express--4x
-import pathToRegexp from "path-to-regexp"
+import { match } from "@gatsbyjs/reach-router/lib/utils"
 import cookie from "cookie"
 import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
 import { internalActions } from "../../redux/actions"
@@ -27,14 +25,6 @@ interface IGlobPattern {
   rootPath: string
   /** The glob pattern **/
   globPattern: string
-}
-
-interface IPathToRegexpKey {
-  name: string | number
-  prefix: string
-  suffix: string
-  pattern: string
-  modifier: string
 }
 
 // During development, we lazily compile functions only when they're requested.
@@ -153,37 +143,35 @@ const createWebpackConfig = async ({
   // Glob and return object with relative/absolute paths + which plugin
   // they belong to.
   const allFunctions = await Promise.all(
-    globs.map(
-      async (glob): Promise<Array<IGatsbyFunction>> => {
-        const knownFunctions: Array<IGatsbyFunction> = []
-        const files = await globAsync(glob.globPattern)
-        files.map(file => {
-          const originalAbsoluteFilePath = file
-          const originalRelativeFilePath = path.relative(glob.rootPath, file)
+    globs.map(async (glob): Promise<Array<IGatsbyFunction>> => {
+      const knownFunctions: Array<IGatsbyFunction> = []
+      const files = await globAsync(glob.globPattern)
+      files.map(file => {
+        const originalAbsoluteFilePath = file
+        const originalRelativeFilePath = path.relative(glob.rootPath, file)
 
-          const { dir, name } = path.parse(originalRelativeFilePath)
-          // Ignore the original extension as all compiled functions now end with js.
-          const compiledFunctionName = path.join(dir, name + `.js`)
-          const compiledPath = path.join(
-            compiledFunctionsDir,
-            compiledFunctionName
-          )
-          const finalName = urlResolve(dir, name === `index` ? `` : name)
+        const { dir, name } = path.parse(originalRelativeFilePath)
+        // Ignore the original extension as all compiled functions now end with js.
+        const compiledFunctionName = path.join(dir, name + `.js`)
+        const compiledPath = path.join(
+          compiledFunctionsDir,
+          compiledFunctionName
+        )
+        const finalName = urlResolve(dir, name === `index` ? `` : name)
 
-          knownFunctions.push({
-            functionRoute: finalName,
-            pluginName: glob.pluginName,
-            originalAbsoluteFilePath,
-            originalRelativeFilePath,
-            relativeCompiledFilePath: compiledFunctionName,
-            absoluteCompiledFilePath: compiledPath,
-            matchPath: getMatchPath(finalName),
-          })
+        knownFunctions.push({
+          functionRoute: finalName,
+          pluginName: glob.pluginName,
+          originalAbsoluteFilePath,
+          originalRelativeFilePath,
+          relativeCompiledFilePath: compiledFunctionName,
+          absoluteCompiledFilePath: compiledPath,
+          matchPath: getMatchPath(finalName),
         })
+      })
 
-        return knownFunctions
-      }
-    )
+      return knownFunctions
+    })
   )
 
   // Combine functions by the route name so that functions in the default
@@ -247,9 +235,16 @@ const createWebpackConfig = async ({
   )
 
   const entries = {}
-  const functionsList = isProductionEnv
+
+  const precompileDevFunctions =
+    isProductionEnv ||
+    process.env.GATSBY_PRECOMPILE_DEVELOP_FUNCTIONS === `true` ||
+    process.env.GATSBY_PRECOMPILE_DEVELOP_FUNCTIONS === `1`
+
+  const functionsList = precompileDevFunctions
     ? knownFunctions
     : activeDevelopmentFunctions
+
   functionsList.forEach(functionObj => {
     // Get path without the extension (as it could be ts or js)
     const parsedFile = path.parse(functionObj.originalRelativeFilePath)
@@ -322,8 +317,11 @@ let isFirstBuild = true
 export async function onPreBootstrap({
   reporter,
   store,
+  parentSpan,
 }: ParentSpanPluginArgs): Promise<void> {
-  const activity = reporter.activityTimer(`Compiling Gatsby Functions`)
+  const activity = reporter.activityTimer(`Compiling Gatsby Functions`, {
+    parentSpan,
+  })
   activity.start()
 
   const {
@@ -476,9 +474,8 @@ export async function onCreateDevServer({
     async (req, res, next) => {
       const { "0": pathFragment } = req.params
 
-      const {
-        functions,
-      }: { functions: Array<IGatsbyFunction> } = store.getState()
+      const { functions }: { functions: Array<IGatsbyFunction> } =
+        store.getState()
 
       // Check first for exact matches.
       let functionObj = functions.find(
@@ -489,24 +486,22 @@ export async function onCreateDevServer({
         // Check if there's any matchPaths that match.
         // We loop until we find the first match.
         functions.some(f => {
-          let exp
-          const keys: Array<IPathToRegexpKey> = []
           if (f.matchPath) {
-            exp = pathToRegexp(f.matchPath, keys)
-          }
-          if (exp && exp.exec(pathFragment) !== null) {
-            functionObj = f
-            const matches = [...pathFragment.match(exp)].slice(1)
-            const newParams = {}
-            matches.forEach(
-              (match, index) => (newParams[keys[index].name] = match)
-            )
-            req.params = newParams
+            const matchResult = match(f.matchPath, pathFragment)
+            if (matchResult) {
+              req.params = matchResult.params
+              if (req.params[`*`]) {
+                // Backwards compatability for v3
+                // TODO remove in v5
+                req.params[`0`] = req.params[`*`]
+              }
+              functionObj = f
 
-            return true
-          } else {
-            return false
+              return true
+            }
           }
+
+          return false
         })
       }
 

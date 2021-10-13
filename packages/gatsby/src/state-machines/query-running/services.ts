@@ -7,7 +7,6 @@ import {
   runPageQueries,
   waitUntilAllJobsComplete,
   writeOutRedirects,
-  rebuildSchemaWithSitePage,
 } from "../../services"
 import { IQueryRunningContext } from "./types"
 
@@ -22,5 +21,4 @@ export const queryRunningServices: Record<
   runPageQueries,
   waitUntilAllJobsComplete,
   writeOutRedirects,
-  rebuildSchemaWithSitePage,
 }

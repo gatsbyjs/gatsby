@@ -1,10 +1,11 @@
-const _ = require(`lodash`)
-const stringify = require(`json-stringify-safe`)
+// @ts-check
+import stringify from "json-stringify-safe"
+import _ from "lodash"
 
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
-const getLocalizedField = ({ field, locale, localesFallback }) => {
+export const getLocalizedField = ({ field, locale, localesFallback }) => {
   if (!_.isUndefined(field[locale.code])) {
     return field[locale.code]
   } else if (
@@ -20,7 +21,7 @@ const getLocalizedField = ({ field, locale, localesFallback }) => {
     return null
   }
 }
-const buildFallbackChain = locales => {
+export const buildFallbackChain = locales => {
   const localesFallback = {}
   _.each(
     locales,
@@ -28,13 +29,12 @@ const buildFallbackChain = locales => {
   )
   return localesFallback
 }
-const makeGetLocalizedField = ({ locale, localesFallback }) => field =>
-  getLocalizedField({ field, locale, localesFallback })
+const makeGetLocalizedField =
+  ({ locale, localesFallback }) =>
+  field =>
+    getLocalizedField({ field, locale, localesFallback })
 
-exports.getLocalizedField = getLocalizedField
-exports.buildFallbackChain = buildFallbackChain
-
-const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
+export const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
   const normalizedType = type.startsWith(`Deleted`)
     ? type.substring(`Deleted`.length)
     : type
@@ -43,15 +43,12 @@ const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
     : `${spaceId}___${id}___${normalizedType}___${currentLocale}`
 }
 
-exports.makeId = makeId
+const makeMakeId =
+  ({ currentLocale, defaultLocale, createNodeId }) =>
+  (spaceId, id, type) =>
+    createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
-const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => (
-  spaceId,
-  id,
-  type
-) => createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
-
-exports.buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
+export const buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
   const map = new Map(
     contentTypeItems.map(contentType => [contentType.sys.id, []])
@@ -67,20 +64,16 @@ exports.buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
   return contentTypeItems.map(contentType => map.get(contentType.sys.id))
 }
 
-exports.buildResolvableSet = ({
+export const buildResolvableSet = ({
   entryList,
   existingNodes = [],
   assets = [],
-  locales,
-  defaultLocale,
 }) => {
   const resolvable = new Set()
   existingNodes.forEach(node => {
-    if (node.internal.owner === `gatsby-source-contentful`) {
-      // We need to add only root level resolvable (assets and entries)
-      // Derived nodes (markdown or JSON) will be recreated if needed.
-      resolvable.add(`${node.contentful_id}___${node.sys.type}`)
-    }
+    // We need to add only root level resolvable (assets and entries)
+    // Derived nodes (markdown or JSON) will be recreated if needed.
+    resolvable.add(`${node.contentful_id}___${node.sys.type}`)
   })
 
   entryList.forEach(entries => {
@@ -96,12 +89,11 @@ exports.buildResolvableSet = ({
   return resolvable
 }
 
-exports.buildForeignReferenceMap = ({
+export const buildForeignReferenceMap = ({
   contentTypeItems,
   entryList,
   resolvable,
   defaultLocale,
-  locales,
   space,
   useNameForId,
 }) => {
@@ -228,12 +220,89 @@ function prepareJSONNode(id, node, key, content) {
   return JSONNode
 }
 
-exports.createNodesForContentType = ({
+let numberOfContentSyncDebugLogs = 0
+const maxContentSyncDebugLogTimes = 50
+
+/**
+ * This fn creates node manifests which are used for Gatsby Cloud Previews via the Content Sync API/feature.
+ * Content Sync routes a user from Contentful to a page created from the entry data they're interested in previewing.
+ */
+function contentfulCreateNodeManifest({
+  pluginConfig,
+  syncToken,
+  entryItem,
+  entryNode,
+  space,
+  unstable_createNodeManifest,
+}) {
+  const isPreview = pluginConfig.get(`host`) === `preview.contentful.com`
+
+  const createNodeManifestIsSupported =
+    typeof unstable_createNodeManifest === `function`
+
+  const cacheExists = !!syncToken
+
+  const shouldCreateNodeManifest =
+    isPreview &&
+    createNodeManifestIsSupported &&
+    // and this is a delta update
+    (cacheExists ||
+      // or this entry/node was updated in the last 2 days.
+      // we don't want older nodes because we only want to create
+      // node manifests for recently updated/created content.
+      (entryItem.sys.updatedAt &&
+        Date.now() - new Date(entryItem.sys.updatedAt).getTime() <=
+          // milliseconds
+          1000 *
+            // seconds
+            60 *
+            // minutes
+            60 *
+            // hours
+            (Number(
+              process.env.CONTENT_SYNC_CONTENTFUL_HOURS_SINCE_ENTRY_UPDATE
+            ) || 48)))
+
+  const manifestId = `${space.sys.id}-${entryItem.sys.id}-${entryItem.sys.updatedAt}`
+
+  if (
+    process.env.CONTENTFUL_DEBUG_NODE_MANIFEST === `true` &&
+    numberOfContentSyncDebugLogs <= maxContentSyncDebugLogTimes
+  ) {
+    numberOfContentSyncDebugLogs++
+
+    console.info(
+      JSON.stringify({
+        cacheExists,
+        isPreview,
+        createNodeManifestIsSupported,
+        shouldCreateNodeManifest,
+        manifestId,
+        entryItemSysUpdatedAt: entryItem.sys.updatedAt,
+      })
+    )
+  }
+
+  if (shouldCreateNodeManifest) {
+    console.info(`Contentful: Creating node manifest with id ${manifestId}`)
+
+    unstable_createNodeManifest({
+      manifestId,
+      node: entryNode,
+    })
+  } else if (isPreview && !createNodeManifestIsSupported) {
+    console.warn(
+      `Contentful: Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
+    )
+  }
+}
+
+export const createNodesForContentType = ({
   contentTypeItem,
-  contentTypeItems,
   restrictedNodeFields,
   conflictFieldPrefix,
   entries,
+  unstable_createNodeManifest,
   createNode,
   createNodeId,
   getNode,
@@ -243,6 +312,8 @@ exports.createNodesForContentType = ({
   locales,
   space,
   useNameForId,
+  syncToken,
+  pluginConfig,
 }) => {
   // Establish identifier for content type
   //  Use `name` if specified, otherwise, use internal id (usually a natural-language constant,
@@ -346,9 +417,8 @@ exports.createNodesForContentType = ({
                     )
                   })
                 if (resolvableEntryItemFieldValue.length !== 0) {
-                  entryItemFields[
-                    `${entryItemFieldKey}___NODE`
-                  ] = resolvableEntryItemFieldValue
+                  entryItemFields[`${entryItemFieldKey}___NODE`] =
+                    resolvableEntryItemFieldValue
                 }
 
                 delete entryItemFields[entryItemFieldKey]
@@ -428,6 +498,15 @@ exports.createNodesForContentType = ({
           },
         }
 
+        contentfulCreateNodeManifest({
+          pluginConfig,
+          syncToken,
+          entryItem,
+          entryNode,
+          space,
+          unstable_createNodeManifest,
+        })
+
         // Revision applies to entries, assets, and content types
         if (entryItem.sys.revision) {
           entryNode.sys.revision = entryItem.sys.revision
@@ -469,8 +548,7 @@ exports.createNodesForContentType = ({
                 textNodeId,
                 entryNode,
                 entryItemFieldKey,
-                entryItemFields[entryItemFieldKey],
-                createNodeId
+                entryItemFields[entryItemFieldKey]
               )
 
               childrenNodes.push(textNode)
@@ -488,6 +566,7 @@ exports.createNodesForContentType = ({
 
             // Locate all Contentful Links within the rich text data
             const traverse = obj => {
+              // eslint-disable-next-line guard-for-in
               for (const k in obj) {
                 const v = obj[k]
                 if (v && v.sys && v.sys.type === `Link`) {
@@ -537,8 +616,7 @@ exports.createNodesForContentType = ({
                 jsonNodeId,
                 entryNode,
                 entryItemFieldKey,
-                entryItemFields[entryItemFieldKey],
-                createNodeId
+                entryItemFields[entryItemFieldKey]
               )
               childrenNodes.push(jsonNode)
             }
@@ -568,9 +646,7 @@ exports.createNodesForContentType = ({
                   jsonNodeId,
                   entryNode,
                   entryItemFieldKey,
-                  obj,
-                  createNodeId,
-                  i
+                  obj
                 )
                 childrenNodes.push(jsonNode)
               }
@@ -590,6 +666,15 @@ exports.createNodesForContentType = ({
 
         // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
         entryNode.internal.contentDigest = entryItem.sys.updatedAt
+
+        // Link tags
+        if (pluginConfig.get(`enableTags`)) {
+          entryNode.metadata = {
+            tags___NODE: entryItem.metadata.tags.map(tag =>
+              createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
+            ),
+          }
+        }
 
         return entryNode
       })
@@ -626,7 +711,7 @@ exports.createNodesForContentType = ({
   return createNodePromises
 }
 
-exports.createAssetNodes = ({
+export const createAssetNodes = ({
   assetItem,
   createNode,
   createNodeId,

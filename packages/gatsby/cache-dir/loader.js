@@ -24,9 +24,12 @@ const stripSurroundingSlashes = s => {
   return s
 }
 
-const createPageDataUrl = path => {
+const createPageDataUrl = rawPath => {
+  const [path, maybeSearch] = rawPath.split(`?`)
   const fixedPath = path === `/` ? `index` : stripSurroundingSlashes(path)
-  return `${__PATH_PREFIX__}/page-data/${fixedPath}/page-data.json`
+  return `${__PATH_PREFIX__}/page-data/${fixedPath}/page-data.json${
+    maybeSearch ? `?${maybeSearch}` : ``
+  }`
 }
 
 function doFetch(url, method = `GET`) {
@@ -64,6 +67,7 @@ const toPageResources = (pageData, component = null) => {
     webpackCompilationHash: pageData.webpackCompilationHash,
     matchPath: pageData.matchPath,
     staticQueryHashes: pageData.staticQueryHashes,
+    getServerDataError: pageData.getServerDataError,
   }
 
   return {
@@ -141,6 +145,11 @@ export class BaseLoader {
             throw new Error(`not a valid pageData response`)
           }
 
+          const maybeSearch = pagePath.split(`?`)[1]
+          if (maybeSearch && !jsonPayload.path.includes(maybeSearch)) {
+            jsonPayload.path += `?${maybeSearch}`
+          }
+
           return Object.assign(loadObj, {
             status: PageResourceStatus.Success,
             payload: jsonPayload,
@@ -152,8 +161,8 @@ export class BaseLoader {
 
       // Handle 404
       if (status === 404 || status === 200) {
-        // If the request was for a 404 page and it doesn't exist, we're done
-        if (pagePath === `/404.html`) {
+        // If the request was for a 404/500 page and it doesn't exist, we're done
+        if (pagePath === `/404.html` || pagePath === `/500.html`) {
           return Object.assign(loadObj, {
             status: PageResourceStatus.Error,
           })
@@ -168,9 +177,12 @@ export class BaseLoader {
 
       // handle 500 response (Unrecoverable)
       if (status === 500) {
-        return Object.assign(loadObj, {
-          status: PageResourceStatus.Error,
-        })
+        return this.fetchPageDataJson(
+          Object.assign(loadObj, {
+            pagePath: `/500.html`,
+            internalServerError: true,
+          })
+        )
       }
 
       // Handle everything else, including status === 0, and 503s. Should retry
@@ -487,7 +499,7 @@ const createComponentUrls = componentChunkName =>
   )
 
 export class ProdLoader extends BaseLoader {
-  constructor(asyncRequires, matchPaths) {
+  constructor(asyncRequires, matchPaths, pageData) {
     const loadComponent = chunkName => {
       if (!asyncRequires.components[chunkName]) {
         throw new Error(
@@ -504,6 +516,14 @@ export class ProdLoader extends BaseLoader {
     }
 
     super(loadComponent, matchPaths)
+
+    if (pageData) {
+      this.pageDataDb.set(findPath(pageData.path), {
+        pagePath: pageData.path,
+        payload: pageData,
+        status: `success`,
+      })
+    }
   }
 
   doPrefetch(pagePath) {

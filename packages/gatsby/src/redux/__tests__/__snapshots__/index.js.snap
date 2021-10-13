@@ -11,6 +11,7 @@ Object {
         "/my-sweet-new-page/",
       },
       "query": "",
+      "serverData": false,
     },
   },
   "html": Object {
@@ -29,6 +30,7 @@ Object {
   "jobsV2": Object {
     "complete": Map {},
     "incomplete": Map {},
+    "jobsByRequest": Map {},
   },
   "nodes": Map {
     "pageA" => Object {
@@ -74,6 +76,7 @@ Object {
       "internalComponentName": "Component/my-sweet-new-page/",
       "isCreatedByStatefulCreatePages": false,
       "matchPath": undefined,
+      "mode": "SSG",
       "path": "/my-sweet-new-page/",
       "pluginCreatorId": "",
       "pluginCreator___NODE": "",
