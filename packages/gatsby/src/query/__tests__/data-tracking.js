@@ -1125,7 +1125,7 @@ describe(`query caching between builds`, () => {
         },
         createSchemaCustomization: ({ actions: { createTypes } }) => {
           createTypes(`
-            interface NodeInterface @nodeInterface {
+            interface NodeInterface implements Node {
               id: ID!
               test: String
             }

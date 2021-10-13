@@ -29,11 +29,6 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(
         `Parse the caption as markdown instead of raw text. Ignored if showCaptions is false.`
       ),
-    sizeByPixelDensity: Joi.boolean()
-      .default(false)
-      .description(
-        `[deprecated] Pixel density is only used in vector images, which Gatsby’s implementation of Sharp doesn’t support. This option is currently a no-op and will be removed in the next major version of Gatsby.`
-      ),
     wrapperStyle: Joi.alternatives().try(
       Joi.object({}).unknown(true),
       Joi.function().maxArity(1),

@@ -89,7 +89,7 @@ const ProductsPage = ({ data }) => (
         <li key={node.shopifyId}>
           <h3>
             <Link to={`/products/${node.handle}`}>{node.title}</Link>
-            {" - "}${node.priceRange.minVariantPrice.amount}
+            {" - "}${node.priceRangeV2.minVariantPrice.amount}
           </h3>
           <p>{node.description}</p>
         </li>

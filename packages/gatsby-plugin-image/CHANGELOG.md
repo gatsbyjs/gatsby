@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [1.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@1.14.1/packages/gatsby-plugin-image) (2021-10-06)
+
+#### Features
+
+- support multiple sources using gatsby-plugin-image [#32544](https://github.com/gatsbyjs/gatsby/issues/32544) [#33436](https://github.com/gatsbyjs/gatsby/issues/33436) ([11231fc](https://github.com/gatsbyjs/gatsby/commit/11231fcaa1093bf5250a2cb621f2bba90e84ee85))
+
 ## [1.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@1.14.0/packages/gatsby-plugin-image) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
