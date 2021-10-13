@@ -1,7 +1,6 @@
 // @ts-check
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const path = require(`path`)
-const crypto = require(`crypto`)
 const { URLSearchParams } = require(`url`)
 
 const sortBy = require(`lodash/sortBy`)
@@ -46,22 +45,6 @@ const mimeTypeExtensions = new Map([
 exports.mimeTypeExtensions = mimeTypeExtensions
 
 const isImage = image => mimeTypeExtensions.has(image?.file?.contentType)
-
-if (process.env.GATSBY_REMOTE_CACHE) {
-  console.warn(
-    `Note: \`GATSBY_REMOTE_CACHE\` will be removed soon because it has been renamed to \`GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE\``
-  )
-}
-if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE) {
-  console.warn(
-    `Please be aware that the \`GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE\` env flag is not officially supported and could be removed at any time`
-  )
-}
-const REMOTE_CACHE_FOLDER =
-  process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE ??
-  process.env.GATSBY_REMOTE_CACHE ??
-  path.join(process.cwd(), `.cache/remote_cache`)
-const CACHE_IMG_FOLDER = path.join(REMOTE_CACHE_FOLDER, `images`)
 
 // Promises that rejected should stay in this map. Otherwise remove promise and put their data in resolvedBase64Cache
 const inFlightBase64Cache = new Map()
@@ -108,27 +91,6 @@ const getBase64Image = (imageProps, cache) => {
     return inFlight
   }
 
-  // Note: sha1 is unsafe for crypto but okay for this particular case
-  const shasum = crypto.createHash(`sha1`)
-  shasum.update(requestUrl)
-  const urlSha = shasum.digest(`hex`)
-
-  // TODO: Find the best place for this step. This is definitely not it.
-  fs.mkdirSync(CACHE_IMG_FOLDER, { recursive: true })
-
-  const cacheFile = path.join(CACHE_IMG_FOLDER, urlSha + `.base64`)
-
-  if (fs.existsSync(cacheFile)) {
-    // TODO: against dogma, confirm whether readFileSync is indeed slower
-    const promise = fs.promises.readFile(cacheFile, `utf8`)
-    inFlightBase64Cache.set(requestUrl, promise)
-    return promise.then(body => {
-      inFlightBase64Cache.delete(requestUrl)
-      resolvedBase64Cache.set(requestUrl, body)
-      return body
-    })
-  }
-
   const loadImage = async () => {
     const {
       file: { contentType, fileName },
@@ -144,26 +106,11 @@ const getBase64Image = (imageProps, cache) => {
       ext: extension,
     })
 
-    const imageBuffer = fs.readFileSync(absolutePath)
-
-    const base64 = imageBuffer.toString(`base64`)
-
-    const body = `data:image/${toFormat || originalFormat};base64,${base64}`
-
-    try {
-      // TODO: against dogma, confirm whether writeFileSync is indeed slower
-      await fs.promises.writeFile(cacheFile, body)
-      return body
-    } catch (e) {
-      console.error(
-        `Contentful:getBase64Image: failed to write ${body.length} bytes remotely fetched from \`${requestUrl}\` to: \`${cacheFile}\`\nError: ${e}`
-      )
-      throw e
-    }
+    const base64 = (await fs.readFile(absolutePath)).toString(`base64`)
+    return `data:image/${toFormat || originalFormat};base64,${base64}`
   }
 
   const promise = loadImage()
-
   inFlightBase64Cache.set(requestUrl, promise)
 
   return promise.then(body => {
