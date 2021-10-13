@@ -1,6 +1,6 @@
 import { ExecutionResult, Source } from "graphql"
-import { v4 as uuidv4 } from "uuid"
 import "../../utils/engines-fs-provider"
+import { uuid } from "gatsby-core-utils"
 import { build } from "../index"
 import { setupLmdbStore } from "../../datastore/lmdb/lmdb-datastore"
 import { store } from "../../redux"
@@ -93,7 +93,7 @@ export class GraphQLEngine {
     context: Record<string, any>
   ): Promise<ExecutionResult> {
     const engineContext = {
-      requestId: uuidv4(),
+      requestId: uuid.v4(),
     }
     const doRunQuery = async (): Promise<ExecutionResult> => {
       const graphqlRunner = await this.getRunner()
