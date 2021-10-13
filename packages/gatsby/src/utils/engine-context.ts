@@ -1,7 +1,7 @@
 import { AsyncLocalStorage } from "async_hooks"
 
-interface IEngineContext {
-  requestId: number
+export interface IEngineContext {
+  requestId: string
 }
 
 let asyncLocalStorage

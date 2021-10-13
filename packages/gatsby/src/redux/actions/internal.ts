@@ -375,11 +375,9 @@ export const createJobV2FromInternalJob =
       type: `SET_JOB_V2_CONTEXT`,
       payload: {
         job: internalJob,
-        requestId: engineContext?.requestId ?? -1,
+        requestId: engineContext?.requestId ?? ``,
       },
     })
-
-    console.log(`Engine context:`, engineContext)
 
     // Check if we already ran this job before, if yes we return the result
     // We have an inflight (in progress) queue inside the jobs manager to make sure

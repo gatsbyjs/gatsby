@@ -334,7 +334,6 @@ export async function waitJobs(jobDigests: Set<string>): Promise<void> {
       promises.push(job.deferred.promise)
     }
   }
-  // console.log(`waiting`, waiting)
   await Promise.all(promises)
 }
 

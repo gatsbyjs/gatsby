@@ -1,4 +1,5 @@
 import { ExecutionResult, Source } from "graphql"
+import { v5 as uuidv5 } from "uuid"
 import "../../utils/engines-fs-provider"
 import { build } from "../index"
 import { setupLmdbStore } from "../../datastore/lmdb/lmdb-datastore"
@@ -23,8 +24,6 @@ import {
   flattenedPlugins,
   // @ts-ignore
 } from ".cache/query-engine-plugins"
-
-let requestId = 0
 
 export class GraphQLEngine {
   // private schema: GraphQLSchema
@@ -94,7 +93,7 @@ export class GraphQLEngine {
     context: Record<string, any>
   ): Promise<ExecutionResult> {
     const engineContext = {
-      requestId: requestId++,
+      requestId: uuidv5(),
     }
     const doRunQuery = async (): Promise<ExecutionResult> => {
       const graphqlRunner = await this.getRunner()

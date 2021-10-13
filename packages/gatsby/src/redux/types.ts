@@ -296,7 +296,7 @@ export interface IGatsbyState {
   jobsV2: {
     incomplete: Map<Identifier, IGatsbyIncompleteJobV2>
     complete: Map<Identifier, IGatsbyCompleteJobV2>
-    jobsByRequest: Map<number, Set<Identifier>>
+    jobsByRequest: Map<string, Set<Identifier>>
   }
   webpack: any // TODO This should be the output from ./utils/webpack.config.js
   webpackCompilationHash: string
@@ -961,13 +961,13 @@ export interface ISetJobV2Context {
   type: `SET_JOB_V2_CONTEXT`
   payload: {
     job: IGatsbyIncompleteJobV2["job"]
-    requestId: number
+    requestId: string
   }
 }
 
 export interface IClearJobV2Context {
   type: `CLEAR_JOB_V2_CONTEXT`
   payload: {
-    requestId: number
+    requestId: string
   }
 }
