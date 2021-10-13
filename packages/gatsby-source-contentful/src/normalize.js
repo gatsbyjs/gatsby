@@ -220,11 +220,89 @@ function prepareJSONNode(id, node, key, content) {
   return JSONNode
 }
 
+let numberOfContentSyncDebugLogs = 0
+const maxContentSyncDebugLogTimes = 50
+
+/**
+ * This fn creates node manifests which are used for Gatsby Cloud Previews via the Content Sync API/feature.
+ * Content Sync routes a user from Contentful to a page created from the entry data they're interested in previewing.
+ */
+function contentfulCreateNodeManifest({
+  pluginConfig,
+  syncToken,
+  entryItem,
+  entryNode,
+  space,
+  unstable_createNodeManifest,
+}) {
+  const isPreview = pluginConfig.get(`host`) === `preview.contentful.com`
+
+  const createNodeManifestIsSupported =
+    typeof unstable_createNodeManifest === `function`
+
+  const cacheExists = !!syncToken
+
+  const shouldCreateNodeManifest =
+    isPreview &&
+    createNodeManifestIsSupported &&
+    // and this is a delta update
+    (cacheExists ||
+      // or this entry/node was updated in the last 2 days.
+      // we don't want older nodes because we only want to create
+      // node manifests for recently updated/created content.
+      (entryItem.sys.updatedAt &&
+        Date.now() - new Date(entryItem.sys.updatedAt).getTime() <=
+          // milliseconds
+          1000 *
+            // seconds
+            60 *
+            // minutes
+            60 *
+            // hours
+            (Number(
+              process.env.CONTENT_SYNC_CONTENTFUL_HOURS_SINCE_ENTRY_UPDATE
+            ) || 48)))
+
+  const manifestId = `${space.sys.id}-${entryItem.sys.id}-${entryItem.sys.updatedAt}`
+
+  if (
+    process.env.CONTENTFUL_DEBUG_NODE_MANIFEST === `true` &&
+    numberOfContentSyncDebugLogs <= maxContentSyncDebugLogTimes
+  ) {
+    numberOfContentSyncDebugLogs++
+
+    console.info(
+      JSON.stringify({
+        cacheExists,
+        isPreview,
+        createNodeManifestIsSupported,
+        shouldCreateNodeManifest,
+        manifestId,
+        entryItemSysUpdatedAt: entryItem.sys.updatedAt,
+      })
+    )
+  }
+
+  if (shouldCreateNodeManifest) {
+    console.info(`Contentful: Creating node manifest with id ${manifestId}`)
+
+    unstable_createNodeManifest({
+      manifestId,
+      node: entryNode,
+    })
+  } else if (isPreview && !createNodeManifestIsSupported) {
+    console.warn(
+      `Contentful: Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
+    )
+  }
+}
+
 export const createNodesForContentType = ({
   contentTypeItem,
   restrictedNodeFields,
   conflictFieldPrefix,
   entries,
+  unstable_createNodeManifest,
   createNode,
   createNodeId,
   getNode,
@@ -234,6 +312,7 @@ export const createNodesForContentType = ({
   locales,
   space,
   useNameForId,
+  syncToken,
   pluginConfig,
 }) => {
   // Establish identifier for content type
@@ -418,6 +497,15 @@ export const createNodesForContentType = ({
             type: entryItem.sys.type,
           },
         }
+
+        contentfulCreateNodeManifest({
+          pluginConfig,
+          syncToken,
+          entryItem,
+          entryNode,
+          space,
+          unstable_createNodeManifest,
+        })
 
         // Revision applies to entries, assets, and content types
         if (entryItem.sys.revision) {
