@@ -33,7 +33,7 @@ const q = queue(
       )
     ),
   // When inside query workers, we only want to use the current core
-  process.env.GATSBY_WORKER ? 1 : Math.max(1, cpuCoreCount() - 1)
+  process.env.GATSBY_WORKER_POOL_WORKER ? 1 : Math.max(1, cpuCoreCount() - 1)
 )
 
 /**
