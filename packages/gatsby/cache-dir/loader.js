@@ -398,19 +398,31 @@ export class BaseLoader {
 
   prefetch(pagePath) {
     if (!this.shouldPrefetch(pagePath)) {
-      return false
+      return {
+        then: resolve => resolve(false),
+        abort: () => {},
+      }
     }
-
     if (this.prefetchTriggered.has(pagePath)) {
       return {
+        then: resolve => resolve(true),
         abort: () => {},
       }
     }
 
-    this.prefetchQueued.push(pagePath)
+    const defer = {
+      resolve: null,
+      reject: null,
+      promise: null,
+    }
+    defer.promise = new Promise((resolve, reject) => {
+      defer.resolve = resolve
+      defer.reject = reject
+    })
+    this.prefetchQueued.push([pagePath, defer])
     const abortC = new AbortController()
     abortC.signal.addEventListener(`abort`, () => {
-      const index = this.prefetchQueued.findIndex(p => p === pagePath)
+      const index = this.prefetchQueued.findIndex(([p]) => p === pagePath)
       // remove from the queue
       if (index !== -1) {
         this.prefetchQueued.splice(index, 1)
@@ -425,6 +437,7 @@ export class BaseLoader {
     }
 
     return {
+      then: (resolve, reject) => defer.promise.then(resolve, reject),
       abort: abortC.abort.bind(abortC),
     }
   }
@@ -435,7 +448,7 @@ export class BaseLoader {
     idleCallback(() => {
       const toPrefetch = this.prefetchQueued.splice(0, 4)
       const prefetches = Promise.all(
-        toPrefetch.map(pagePath => {
+        toPrefetch.map(([pagePath, dPromise]) => {
           // Tell plugins with custom prefetching logic that they should start
           // prefetching this path.
           if (!this.prefetchTriggered.has(pagePath)) {
@@ -445,7 +458,7 @@ export class BaseLoader {
 
           // If a plugin has disabled core prefetching, stop now.
           if (this.prefetchDisabled) {
-            return false
+            return dPromise.resolve(false)
           }
 
           return this.doPrefetch(findPath(pagePath)).then(() => {
@@ -453,6 +466,8 @@ export class BaseLoader {
               this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
               this.prefetchCompleted.add(pagePath)
             }
+
+            dPromise.resolve(true)
           })
         })
       )
