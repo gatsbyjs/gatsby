@@ -256,6 +256,10 @@ in [this discussion](https://github.com/gatsbyjs/gatsby/discussions/32860#discus
 
 You can no longer use `gatsby-admin` (activated with environment variable `GATSBY_EXPERIMENTAL_ENABLE_ADMIN`) as we removed this functionality from `gatsby` itself. We didn't see any major usage and don't plan on developing this further in the foreseeable future.
 
+### Removal of `process.env.GATSBY_BUILD_STAGE`
+
+This environment variable was internally used by `gatsby-preset-gatsby`. If you're using it you now must pass the `stage` as an option to the preset.
+
 ### Gatsby related packages
 
 Breaking Changes in plugins that we own and maintain.
@@ -276,6 +280,22 @@ Breaking Changes in plugins that we own and maintain.
 #### `gatsby-remark-images-contentful`
 
 - The `sizeByPixelDensity` option was removed
+
+#### `gatsby-transformer-json`
+
+While technically the change that was made is a bugfix, it can be a breaking change in your setup. Previously, if an item contained an `id` key it was used internally to create the node and track it. This led to cases where different files (with partially the same `id`) had missing items.
+
+The new behavior now is that `gatsby-transformer-json` automatically transforms the `id` key to `jsonId` and uses an UUID internally for the actual `id` field on the node. This way the bug with missing items is fixed.
+
+If you use `id` in your GraphQL queries, swap it out with `jsonId`.
+
+#### `gatsby-transformer-yaml`
+
+While technically the change that was made is a bugfix, it can be a breaking change in your setup. Previously, if an item contained an `id` key it was used internally to create the node and track it. This led to cases where different files (with partially the same `id`) had missing items.
+
+The new behavior now is that `gatsby-transformer-yaml` automatically transforms the `id` key to `yamlId` and uses an UUID internally for the actual `id` field on the node. This way the bug with missing items is fixed.
+
+If you use `id` in your GraphQL queries, swap it out with `yamlId`.
 
 ## Future Breaking Changes
 
