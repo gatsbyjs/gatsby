@@ -8,6 +8,7 @@ import { build } from "../index"
 import { setupLmdbStore } from "../../datastore/lmdb/lmdb-datastore"
 import { store } from "../../redux"
 import { actions } from "../../redux/actions"
+import reporter from "gatsby-cli/lib/reporter"
 import { GraphQLRunner, IQueryOptions } from "../../query/graphql-runner"
 import { waitJobsByRequest } from "../../utils/wait-until-jobs-complete"
 import { setGatsbyPluginCache } from "../../utils/require-gatsby-plugin"
@@ -97,6 +98,7 @@ export class GraphQLEngine {
     const engineContext = {
       requestId: uuid.v4(),
     }
+    let waitingForJobsCreatedByCurrentRequestActivity
     const doRunQuery = async (): Promise<ExecutionResult> => {
       const graphqlRunner = await this.getRunner()
       if (!opts) {
@@ -106,12 +108,28 @@ export class GraphQLEngine {
         }
       }
       const result = await graphqlRunner.query(query, context, opts)
+
+      if (opts.parentSpan) {
+        waitingForJobsCreatedByCurrentRequestActivity =
+          reporter.phantomActivity(`Waiting for jobs to finish`, {
+            parentSpan: opts.parentSpan,
+          })
+        waitingForJobsCreatedByCurrentRequestActivity.start()
+      }
       await waitJobsByRequest(engineContext.requestId)
+      if (waitingForJobsCreatedByCurrentRequestActivity) {
+        waitingForJobsCreatedByCurrentRequestActivity.end()
+        waitingForJobsCreatedByCurrentRequestActivity = null
+      }
       return result
     }
     try {
       return await runWithEngineContext(engineContext, doRunQuery)
     } finally {
+      if (waitingForJobsCreatedByCurrentRequestActivity) {
+        waitingForJobsCreatedByCurrentRequestActivity.end()
+        waitingForJobsCreatedByCurrentRequestActivity = null
+      }
       // Reset job-to-request mapping
       store.dispatch({
         type: `CLEAR_JOB_V2_CONTEXT`,
