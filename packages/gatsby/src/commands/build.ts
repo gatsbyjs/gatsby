@@ -344,7 +344,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // Wait for any jobs that were started in onPostBuild
   // This could occur due to queries being run which invoke sharp for instance
   await waitUntilAllJobsComplete()
-  console.log(`not deleting workerPool`)
 
   // try {
   // await waitWorkerPoolEnd

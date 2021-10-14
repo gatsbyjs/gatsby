@@ -9,7 +9,6 @@ const batcher = new Bottleneck.Batcher({
 })
 
 batcher.on(`batch`, batch => {
-  console.log(`batch size`, batch.length)
   store.dispatch(internalCreatePageDependency(batch))
 })
 
