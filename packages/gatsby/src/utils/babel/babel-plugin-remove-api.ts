@@ -20,7 +20,11 @@ export default declare(function removeApiCalls(
     name: `remove-api`,
     visitor: {
       Program: {
-        exit(path): void {
+        exit(path, state): void {
+          if (!state.apiRemoved) {
+            return
+          }
+
           // babel doesn't remove references very well so we loop until nothing gets removed
           let removed = false
 
@@ -90,7 +94,7 @@ export default declare(function removeApiCalls(
       },
 
       // Remove export statements
-      ExportNamedDeclaration(path): void {
+      ExportNamedDeclaration(path, state): void {
         const declaration = path.node.declaration
 
         if (t.isExportNamedDeclaration(path.node)) {
@@ -126,12 +130,13 @@ export default declare(function removeApiCalls(
         }
 
         if (apiToCheck && apisToRemove.includes(apiToCheck)) {
+          state.apiRemoved = true
           path.remove()
         }
       },
 
       // remove exports
-      ExpressionStatement(path): void {
+      ExpressionStatement(path, state): void {
         if (
           !t.isAssignmentExpression(path.node.expression) ||
           !t.isMemberExpression(path.node.expression.left) ||
@@ -143,6 +148,7 @@ export default declare(function removeApiCalls(
         const apiToCheck = (path.node.expression.left.property as t.Identifier)
           .name
         if (apiToCheck && apisToRemove.includes(apiToCheck)) {
+          state.apiRemoved = true
           path.remove()
         }
       },
