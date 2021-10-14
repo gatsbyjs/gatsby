@@ -1,6 +1,6 @@
 // @ts-check
 import { createRemoteFileNode } from "gatsby-source-filesystem"
-import { createUrl } from "./extend-node-type"
+import { createUrl } from "./image-helpers"
 
 /**
  * @name distributeWorkload

@@ -1,31 +1,12 @@
 // @ts-check
 import fs from "fs-extra"
 import { fetchRemoteFile } from "gatsby-core-utils"
-import {
-  createUrl,
-  generateImageSource,
-  getBase64Image,
-} from "../extend-node-type"
+import { generateImageSource, getBase64Image } from "../gatsby-plugin-image"
 
 jest.mock(`gatsby-core-utils`)
 jest.mock(`fs-extra`)
 
 describe(`contentful extend node type`, () => {
-  describe(`createUrl`, () => {
-    it(`allows you to create URls`, () => {
-      expect(
-        createUrl(`//images.contentful.com/dsf/bl.jpg`, { width: 100 })
-      ).toMatchInlineSnapshot(
-        `"https://images.contentful.com/dsf/bl.jpg?w=100"`
-      )
-    })
-    it(`ignores options it doesn't understand`, () => {
-      expect(
-        createUrl(`//images.contentful.com/dsf/bl.jpg`, { happiness: 100 })
-      ).toMatchInlineSnapshot(`"https://images.contentful.com/dsf/bl.jpg?"`)
-    })
-  })
-
   describe(`generateImageSource`, () => {
     it(`default`, () => {
       const resp = generateImageSource(`//test.png`, 420, 210, `webp`, null, {})
