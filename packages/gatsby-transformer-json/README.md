@@ -7,7 +7,7 @@ arrays of objects and single objects.
 
 `npm install gatsby-transformer-json`
 
-If you want to transform json files, you also need to have `gatsby-source-filesystem` installed and configured so it
+If you want to transform JSON files, you also need to have `gatsby-source-filesystem` installed and configured so it
 points to your files.
 
 ## How to use
@@ -255,3 +255,7 @@ If you can rewrite your data with objects, you should be good to go:
 ```
 
 Else, if your data doesn't have a consistent schema, like [TopoJSON files](https://en.wikipedia.org/wiki/GeoJSON#TopoJSON), or you can't rewrite it, consider placing the JSON file inside the [`static` folder](/docs/static-folder/#when-to-use-the-static-folder) and use the dynamic import syntax (`import('/static/myjson.json')`) within the `componentDidMount` lifecycle or the `useEffect` hook.
+
+### `id` and `jsonId` key
+
+If your data contains an `id` key the transformer will automatically convert this key to `jsonId` as `id` is a reserved internal keyword for Gatsby.

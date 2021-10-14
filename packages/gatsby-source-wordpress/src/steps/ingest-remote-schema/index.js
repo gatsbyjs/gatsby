@@ -10,6 +10,11 @@ import { cacheFetchedTypes } from "./cache-fetched-types"
 import { writeQueriesToDisk } from "./write-queries-to-disk"
 
 const ingestRemoteSchema = async (helpers, pluginOptions) => {
+  // don't ingest schema while in worker - use cache instead
+  if (process.env.GATSBY_WORKER_POOL_WORKER) {
+    return
+  }
+
   if (process.env.NODE_ENV === `development`) {
     // running this code block in production is problematic for PQR
     // since this fn will run once for each worker and we need the result in each
@@ -50,10 +55,10 @@ const ingestRemoteSchema = async (helpers, pluginOptions) => {
       pluginOptions
     )
   } catch (e) {
-    helpers.reporter.panic(e)
+    activity.panic(e)
+  } finally {
+    activity.end()
   }
-
-  activity.end()
 }
 
 export { ingestRemoteSchema }
