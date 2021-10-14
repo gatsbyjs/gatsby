@@ -1,4 +1,4 @@
-const base64ImageExp = /data:image\/(jpeg|png|gif);base64,[a-zA-Z0-9/+]+=*/g
+const base64ImageExp = /data-placeholder-image/g
 
 // The base64 data of image previews might change over time
 // when Contentful adjusts their Image API
