@@ -93,22 +93,7 @@ describe(`Process JSON nodes correctly`, () => {
     })
   })
 
-  it(`coerces an id field to always be a String`, async () => {
-    const data = { id: 12345, blue: true, funny: `yup` }
-    const node = {
-      ...baseFileNode,
-      content: JSON.stringify(data),
-    }
-
-    return bootstrapTest(node).then(({ createNode, createParentChildLink }) => {
-      expect(createNode.mock.calls).toMatchSnapshot()
-      expect(createParentChildLink.mock.calls).toMatchSnapshot()
-      expect(createNode).toHaveBeenCalledTimes(1)
-      expect(createParentChildLink).toHaveBeenCalledTimes(1)
-    })
-  })
-
-  it(`creates a publicId if id was given`, async () => {
+  it(`creates a jsonId key if id was given`, async () => {
     const data = { id: `123`, blue: true, funny: `yup` }
     const node = {
       ...baseFileNode,

@@ -6,17 +6,6 @@ function unstable_shouldOnCreateNode({ node }) {
   return node.internal.mediaType === `application/json`
 }
 
-const conflictFieldPrefix = `json_`
-// restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
-const restrictedNodeFields = [
-  `children`,
-  `contentful_id`,
-  `fields`,
-  `id`,
-  `internal`,
-  `parent`,
-]
-
 async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
   pluginOptions
@@ -50,6 +39,9 @@ async function onCreateNode(
         type,
       },
     }
+    if (obj.id) {
+      jsonNode[`jsonId`] = obj.id
+    }
     createNode(jsonNode)
     createParentChildLink({ parent: node, child: jsonNode })
   }
@@ -65,31 +57,6 @@ async function onCreateNode(
       ? `file ${node.absolutePath}`
       : `in node ${node.id}`
     throw new Error(`Unable to parse JSON: ${hint}`)
-  }
-
-  function normalizeRestrictedFields(obj) {
-    restrictedNodeFields.forEach(restrictedNodeField => {
-      if (Object.keys(obj).includes(restrictedNodeField)) {
-        obj[`${conflictFieldPrefix}${restrictedNodeField}`] =
-          obj[restrictedNodeField]
-        delete obj[restrictedNodeField]
-
-        console.log(
-          `Restricted field found for when parsing json object. Field ${restrictedNodeField} value is now found on field ${conflictFieldPrefix}${restrictedNodeField}.`
-        )
-      }
-    })
-  }
-
-  if (_.isArray(parsedContent)) {
-    parsedContent.forEach(obj => {
-      if (_.isPlainObject(obj)) {
-        normalizeRestrictedFields(obj)
-      }
-    })
-  }
-  if (_.isPlainObject(parsedContent)) {
-    normalizeRestrictedFields(parsedContent)
   }
 
   if (_.isArray(parsedContent)) {
