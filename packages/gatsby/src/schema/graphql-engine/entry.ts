@@ -9,7 +9,6 @@ import { setupLmdbStore } from "../../datastore/lmdb/lmdb-datastore"
 import { store } from "../../redux"
 import { actions } from "../../redux/actions"
 import { GraphQLRunner, IQueryOptions } from "../../query/graphql-runner"
-import reporter from "gatsby-cli/lib/reporter"
 import { waitJobsByRequest } from "../../utils/wait-until-jobs-complete"
 import { setGatsbyPluginCache } from "../../utils/require-gatsby-plugin"
 import apiRunnerNode from "../../utils/api-runner-node"
@@ -73,7 +72,7 @@ export class GraphQLEngine {
     // Note: skipping inference metadata because we rely on schema snapshot
     await build({ fullMetadataBuild: false })
 
-    return new GraphQLRunner(store) // createGraphQLRunner(store, reporter)
+    return new GraphQLRunner(store)
   }
 
   private async getRunner(): Promise<GraphQLRunner> {
