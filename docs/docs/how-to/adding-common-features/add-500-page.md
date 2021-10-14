@@ -6,6 +6,6 @@ To add a 500 page create a page whose path matches the regex `^\/?500\/?$` (`/50
 
 Users will see the 500 error page when runtime errors happen in the [`getServerData` function](/docs/reference/rendering-options/server-side-rendering/) of your page.
 
-Gatsby ensures that your 500 page is built as `500.html` as many static hosting platforms default to using this as your 500 error page. If you're hosting your site another way you'll need to set up a custom rule to serve this file for 500 errors.
+Gatsby ensures that your 500 page is built as `500.html`. [Gatsby Cloud](/products/cloud/) supports displaying this custom 500 page. If you're hosting your site another way you'll need to set up a custom rule to serve this file for 500 errors.
 
 When developing using `gatsby develop`, you can still preview your 500 page by going to `localhost:8000/500`.
