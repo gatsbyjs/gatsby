@@ -1,16 +1,17 @@
 import * as path from "path"
-import { Loader, RuleSetRule, Plugin } from "webpack"
+import { RuleSetRule, WebpackPluginInstance } from "webpack"
 import { GraphQLSchema } from "graphql"
-import postcss from "postcss"
+import { Plugin as PostCSSPlugin } from "postcss"
 import autoprefixer from "autoprefixer"
 import flexbugs from "postcss-flexbugs-fixes"
 import TerserPlugin from "terser-webpack-plugin"
+import type { MinifyOptions as TerserOptions } from "terser"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
-import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin"
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import { getBrowsersList } from "./browserslist"
-import semver from "semver"
-
+import ESLintPlugin from "eslint-webpack-plugin"
+import { cpuCoreCount } from "gatsby-core-utils"
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
 import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
 import {
@@ -20,51 +21,88 @@ import {
 
 import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
-import { eslintConfig } from "./eslint-config"
+import { eslintConfig, eslintRequiredConfig } from "./eslint-config"
 
-type LoaderResolver<T = {}> = (options?: T) => Loader
+type Loader = string | { loader: string; options?: { [name: string]: any } }
+type LoaderResolver<T = Record<string, unknown>> = (options?: T) => Loader
 
 type LoaderOptions = Record<string, any>
-type RuleFactory<T = {}> = (options?: T & LoaderOptions) => RuleSetRule
+type RuleFactory<T = Record<string, unknown>> = (
+  options?: T & LoaderOptions
+) => RuleSetRule
 
-type ContextualRuleFactory<T = {}> = RuleFactory<T> & {
+type ContextualRuleFactory<T = Record<string, unknown>> = RuleFactory<T> & {
   internal?: RuleFactory<T>
   external?: RuleFactory<T>
 }
 
-type PluginFactory = (...args: any) => Plugin
+type PluginFactory = (...args: any) => WebpackPluginInstance
 
 type BuiltinPlugins = typeof builtinPlugins
 
+type CSSModulesOptions =
+  | boolean
+  | string
+  | {
+      mode?:
+        | "local"
+        | "global"
+        | "pure"
+        | ((resourcePath: string) => "local" | "global" | "pure")
+      auto?: boolean
+      exportGlobals?: boolean
+      localIdentName?: string
+      localIdentContext?: string
+      localIdentHashPrefix?: string
+      namedExport?: boolean
+      exportLocalsConvention?:
+        | "asIs"
+        | "camelCaseOnly"
+        | "camelCase"
+        | "dashes"
+        | "dashesOnly"
+      exportOnlyLocals?: boolean
+    }
+
+type MiniCSSExtractLoaderModuleOptions =
+  | undefined
+  | boolean
+  | {
+      namedExport?: boolean
+    }
 /**
  * Utils that produce webpack `loader` objects
  */
 interface ILoaderUtils {
-  json: LoaderResolver
   yaml: LoaderResolver
-  null: LoaderResolver
-  raw: LoaderResolver
-
   style: LoaderResolver
-  css: LoaderResolver
+  css: LoaderResolver<{
+    url?: boolean | ((url: string, resourcePath: string) => boolean)
+    import?:
+      | boolean
+      | ((url: string, media: string, resourcePath: string) => boolean)
+    modules?: CSSModulesOptions
+    sourceMap?: boolean
+    importLoaders?: number
+    esModule?: boolean
+  }>
   postcss: LoaderResolver<{
     browsers?: Array<string>
     overrideBrowserslist?: Array<string>
-    plugins?:
-      | Array<postcss.Plugin<any>>
-      | ((loader: Loader) => Array<postcss.Plugin<any>>)
+    plugins?: Array<PostCSSPlugin> | ((loader: Loader) => Array<PostCSSPlugin>)
   }>
 
   file: LoaderResolver
   url: LoaderResolver
   js: LoaderResolver
+  json: LoaderResolver
+  null: LoaderResolver
+  raw: LoaderResolver
   dependencies: LoaderResolver
 
   miniCssExtract: LoaderResolver
-  imports: LoaderResolver
-  exports: LoaderResolver
-
-  eslint(schema: GraphQLSchema): Loader
+  imports?: LoaderResolver
+  exports?: LoaderResolver
 }
 
 interface IModuleThatUseGatsby {
@@ -99,6 +137,7 @@ interface IRuleUtils {
   postcss: ContextualRuleFactory<{ overrideBrowserOptions: Array<string> }>
 
   eslint: (schema: GraphQLSchema) => RuleSetRule
+  eslintRequired: () => RuleSetRule
 }
 
 type PluginUtils = BuiltinPlugins & {
@@ -111,6 +150,8 @@ type PluginUtils = BuiltinPlugins & {
   fastRefresh: PluginFactory
   eslintGraphqlSchemaReload: PluginFactory
   virtualModules: PluginFactory
+  eslint: PluginFactory
+  eslintRequired: PluginFactory
 }
 
 /**
@@ -124,6 +165,8 @@ interface IWebpackUtils {
   plugins: PluginUtils
 }
 
+const vendorRegex = /(node_modules|bower_components)/
+
 /**
  * A factory method that produces an atoms namespace
  */
@@ -132,7 +175,6 @@ export const createWebpackUtils = (
   program: IProgram
 ): IWebpackUtils => {
   const assetRelativeRoot = `static/`
-  const vendorRegex = /(node_modules|bower_components)/
   const supportedBrowsers = getBrowsersList(program.directory)
 
   const PRODUCTION = !stage.includes(`develop`)
@@ -140,23 +182,21 @@ export const createWebpackUtils = (
   const isSSR = stage.includes(`html`)
 
   const jsxRuntimeExists = reactHasJsxRuntime()
-  const makeExternalOnly = (original: RuleFactory) => (
-    options = {}
-  ): RuleSetRule => {
-    const rule = original(options)
-    rule.include = vendorRegex
-    return rule
-  }
+  const makeExternalOnly =
+    (original: RuleFactory) =>
+    (options = {}): RuleSetRule => {
+      const rule = original(options)
+      rule.include = vendorRegex
+      return rule
+    }
 
-  const makeInternalOnly = (original: RuleFactory) => (
-    options = {}
-  ): RuleSetRule => {
-    const rule = original(options)
-    rule.exclude = vendorRegex
-    return rule
-  }
-
-  let ident = 0
+  const makeInternalOnly =
+    (original: RuleFactory) =>
+    (options = {}): RuleSetRule => {
+      const rule = original(options)
+      rule.exclude = vendorRegex
+      return rule
+    }
 
   const loaders: ILoaderUtils = {
     json: (options = {}) => {
@@ -165,7 +205,6 @@ export const createWebpackUtils = (
         loader: require.resolve(`json-loader`),
       }
     },
-
     yaml: (options = {}) => {
       return {
         options,
@@ -194,49 +233,71 @@ export const createWebpackUtils = (
       }
     },
 
-    miniCssExtract: (options = {}) => {
-      if (PRODUCTION) {
-        // production always uses MiniCssExtractPlugin
-        return {
-          loader: MiniCssExtractPlugin.loader,
-          options,
-        }
-      } else if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
-        // develop with ssr also uses MiniCssExtractPlugin
-        return {
-          loader: MiniCssExtractPlugin.loader,
-          options: {
-            ...options,
-            // enable hmr for browser bundle, ssr bundle doesn't need it
-            hmr: stage === `develop`,
-          },
+    miniCssExtract: (
+      options: {
+        modules?: MiniCSSExtractLoaderModuleOptions
+      } = {}
+    ) => {
+      let moduleOptions: MiniCSSExtractLoaderModuleOptions = undefined
+
+      const { modules, ...restOptions } = options
+
+      if (typeof modules === `boolean` && options.modules) {
+        moduleOptions = {
+          namedExport: true,
         }
       } else {
-        // develop without ssr is using style-loader
-        return {
-          loader: require.resolve(`style-loader`),
-          options,
-        }
+        moduleOptions = modules
+      }
+
+      return {
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+          modules: moduleOptions,
+          ...restOptions,
+        },
       }
     },
 
     css: (options = {}) => {
-      return {
-        loader: isSSR
-          ? require.resolve(`css-loader/locals`)
-          : require.resolve(`css-loader`),
-        options: {
-          sourceMap: !PRODUCTION,
-          camelCase: `dashesOnly`,
-          // https://github.com/webpack-contrib/css-loader/issues/406
+      let modulesOptions: CSSModulesOptions = false
+      if (options.modules) {
+        modulesOptions = {
+          auto: undefined,
+          namedExport: true,
           localIdentName: `[name]--[local]--[hash:base64:5]`,
-          ...options,
+          exportLocalsConvention: `dashesOnly`,
+          exportOnlyLocals: isSSR,
+        }
+
+        if (typeof options.modules === `object`) {
+          modulesOptions = {
+            ...modulesOptions,
+            ...options.modules,
+          }
+        }
+      }
+
+      return {
+        loader: require.resolve(`css-loader`),
+        options: {
+          // Absolute urls (https or //) are not send to this function. Only resolvable paths absolute or relative ones.
+          url: function (url: string): boolean {
+            // When an url starts with /
+            if (url.startsWith(`/`)) {
+              return false
+            }
+
+            return true
+          },
+          sourceMap: !PRODUCTION,
+          modules: modulesOptions,
         },
       }
     },
 
     postcss: (options = {}) => {
-      let {
+      const {
         plugins,
         overrideBrowserslist = supportedBrowsers,
         ...postcssOpts
@@ -245,23 +306,35 @@ export const createWebpackUtils = (
       return {
         loader: require.resolve(`postcss-loader`),
         options: {
-          ident: `postcss-${++ident}`,
+          execute: false,
           sourceMap: !PRODUCTION,
-          plugins: (loader: Loader): Array<postcss.Plugin<any>> => {
-            plugins =
-              (typeof plugins === `function` ? plugins(loader) : plugins) || []
+          // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+          postcssOptions: (loaderContext: any) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            let postCSSPlugins: Array<PostCSSPlugin> = []
+            if (plugins) {
+              postCSSPlugins =
+                typeof plugins === `function` ? plugins(loaderContext) : plugins
+            }
 
             const autoprefixerPlugin = autoprefixer({
               overrideBrowserslist,
               flexbox: `no-2009`,
-              ...((plugins.find(
-                plugin => plugin.postcssPlugin === `autoprefixer`
-              ) as autoprefixer.Autoprefixer)?.options ?? {}),
+              ...((
+                postCSSPlugins.find(
+                  plugin => plugin.postcssPlugin === `autoprefixer`
+                ) as unknown as autoprefixer.ExportedAPI
+              )?.options ?? {}),
             })
 
-            return [flexbugs, autoprefixerPlugin, ...plugins]
+            postCSSPlugins.unshift(autoprefixerPlugin)
+            postCSSPlugins.unshift(flexbugs)
+
+            return {
+              plugins: postCSSPlugins,
+              ...postcssOpts,
+            }
           },
-          ...postcssOpts,
         },
       }
     },
@@ -318,29 +391,6 @@ export const createWebpackUtils = (
           ...options,
         },
         loader: require.resolve(`babel-loader`),
-      }
-    },
-
-    eslint: (schema: GraphQLSchema) => {
-      const options = eslintConfig(schema, jsxRuntimeExists)
-
-      return {
-        options,
-        loader: require.resolve(`eslint-loader`),
-      }
-    },
-
-    imports: (options = {}) => {
-      return {
-        options,
-        loader: require.resolve(`imports-loader`),
-      }
-    },
-
-    exports: (options = {}) => {
-      return {
-        options,
-        loader: require.resolve(`exports-loader`),
       }
     },
   }
@@ -480,21 +530,11 @@ export const createWebpackUtils = (
     rules.dependencies = dependencies
   }
 
-  rules.eslint = (schema: GraphQLSchema): RuleSetRule => {
-    return {
-      enforce: `pre`,
-      test: /\.jsx?$/,
-      exclude: (modulePath: string): boolean =>
-        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
-        vendorRegex.test(modulePath),
-      use: [loaders.eslint(schema)],
-    }
-  }
-
   rules.yaml = (): RuleSetRule => {
     return {
       test: /\.ya?ml$/,
-      use: [loaders.json(), loaders.yaml()],
+      type: `json`,
+      use: [loaders.yaml()],
     }
   }
 
@@ -547,13 +587,10 @@ export const createWebpackUtils = (
     const css: IRuleUtils["css"] = (options = {}): RuleSetRule => {
       const { browsers, ...restOptions } = options
       const use = [
+        !isSSR && loaders.miniCssExtract(restOptions),
         loaders.css({ ...restOptions, importLoaders: 1 }),
         loaders.postcss({ browsers }),
-      ]
-      if (!isSSR)
-        use.unshift(
-          loaders.miniCssExtract({ hmr: !PRODUCTION && !restOptions.modules })
-        )
+      ].filter(Boolean) as RuleSetRule["use"]
 
       return {
         use,
@@ -607,19 +644,18 @@ export const createWebpackUtils = (
   plugins.minifyJs = ({
     terserOptions,
     ...options
-  }: { terserOptions?: TerserPlugin.TerserPluginOptions } = {}): Plugin =>
+  }: {
+    terserOptions?: TerserOptions
+  } = {}): WebpackPluginInstance =>
     new TerserPlugin({
-      // TODO add proper cache keys
-      cache: path.join(program.directory, `.cache`, `webpack`, `terser`),
       exclude: /\.min\.js/,
-      sourceMap: true,
       terserOptions: {
         ie8: false,
         mangle: {
           safari10: true,
         },
         parse: {
-          ecma: 8,
+          ecma: 5,
         },
         compress: {
           ecma: 5,
@@ -629,96 +665,145 @@ export const createWebpackUtils = (
         },
         ...terserOptions,
       },
+      parallel: Math.max(1, cpuCoreCount() - 1),
       ...options,
     })
 
   plugins.minifyCss = (
     options = {
-      cssProcessorPluginOptions: {
+      minimizerOptions: {
         preset: [
           `default`,
           {
             svgo: {
               full: true,
               plugins: [
-                {
-                  // potentially destructive plugins removed - see https://github.com/gatsbyjs/gatsby/issues/15629
-                  // convertShapeToPath: true,
-                  // removeViewBox: true,
-                  removeUselessDefs: true,
-                  addAttributesToSVGElement: true,
-                  addClassesToSVGElement: true,
-                  cleanupAttrs: true,
-                  cleanupEnableBackground: true,
-                  cleanupIDs: true,
-                  cleanupListOfValues: true,
-                  cleanupNumericValues: true,
-                  collapseGroups: true,
-                  convertColors: true,
-                  convertPathData: true,
-                  convertStyleToAttrs: true,
-                  convertTransform: true,
-                  inlineStyles: true,
-                  mergePaths: true,
-                  minifyStyles: true,
-                  moveElemsAttrsToGroup: true,
-                  moveGroupAttrsToElems: true,
-                  prefixIds: true,
-                  removeAttributesBySelector: true,
-                  removeAttrs: true,
-                  removeComments: true,
-                  removeDesc: true,
-                  removeDimensions: true,
-                  removeDoctype: true,
-                  removeEditorsNSData: true,
-                  removeElementsByAttr: true,
-                  removeEmptyAttrs: true,
-                  removeEmptyContainers: true,
-                  removeEmptyText: true,
-                  removeHiddenElems: true,
-                  removeMetadata: true,
-                  removeNonInheritableGroupAttrs: true,
-                  removeOffCanvasPaths: true,
-                  removeRasterImages: true,
-                  removeScriptElement: true,
-                  removeStyleElement: true,
-                  removeTitle: true,
-                  removeUnknownsAndDefaults: true,
-                  removeUnusedNS: true,
-                  removeUselessStrokeAndFill: true,
-                  removeXMLNS: true,
-                  removeXMLProcInst: true,
-                  reusePaths: true,
-                  sortAttrs: true,
-                },
+                // potentially destructive plugins removed - see https://github.com/gatsbyjs/gatsby/issues/15629
+                // use correct config format and remove plugins requiring specific params - see https://github.com/gatsbyjs/gatsby/issues/31619
+                // List of default plugins and their defaults: https://github.com/svg/svgo#built-in-plugins
+                // Last update 2021-08-17
+                `cleanupAttrs`,
+                `cleanupEnableBackground`,
+                `cleanupIDs`,
+                `cleanupListOfValues`, // Default: disabled
+                `cleanupNumericValues`,
+                `collapseGroups`,
+                `convertColors`,
+                `convertPathData`,
+                `convertStyleToAttrs`, // Default: disabled
+                `convertTransform`,
+                `inlineStyles`,
+                `mergePaths`,
+                `minifyStyles`,
+                `moveElemsAttrsToGroup`,
+                `moveGroupAttrsToElems`,
+                `prefixIds`, // Default: disabled
+                `removeComments`,
+                `removeDesc`,
+                `removeDoctype`,
+                `removeEditorsNSData`,
+                `removeEmptyAttrs`,
+                `removeEmptyContainers`,
+                `removeEmptyText`,
+                `removeHiddenElems`,
+                `removeMetadata`,
+                `removeNonInheritableGroupAttrs`,
+                `removeOffCanvasPaths`, // Default: disabled
+                `removeRasterImages`, // Default: disabled
+                `removeScriptElement`, // Default: disabled
+                `removeStyleElement`, // Default: disabled
+                `removeTitle`,
+                `removeUnknownsAndDefaults`,
+                `removeUnusedNS`,
+                `removeUselessDefs`,
+                `removeUselessStrokeAndFill`,
+                `removeXMLProcInst`,
+                `reusePaths`, // Default: disabled
+                `sortAttrs`, // Default: disabled
               ],
             },
           },
         ],
       },
     }
-  ): OptimizeCssAssetsPlugin => new OptimizeCssAssetsPlugin(options)
-
-  plugins.fastRefresh = (): Plugin =>
-    new ReactRefreshWebpackPlugin({
-      overlay: false,
+  ): CssMinimizerPlugin =>
+    new CssMinimizerPlugin({
+      parallel: Math.max(1, cpuCoreCount() - 1),
+      ...options,
     })
 
-  plugins.extractText = (options: any): Plugin =>
+  plugins.fastRefresh = ({ modulesThatUseGatsby }): WebpackPluginInstance => {
+    const regExpToHack = /node_modules/
+    regExpToHack.test = (modulePath: string): boolean => {
+      // when it's not coming from node_modules we treat it as a source file.
+      if (!vendorRegex.test(modulePath)) {
+        return false
+      }
+
+      // If the module uses Gatsby as a dependency
+      // we want to treat it as src because of shadowing
+      return !modulesThatUseGatsby.some(module =>
+        modulePath.includes(module.path)
+      )
+    }
+
+    return new ReactRefreshWebpackPlugin({
+      overlay: {
+        sockIntegration: `whm`,
+        module: path.join(__dirname, `fast-refresh-module`),
+      },
+      // this is a bit hacky - exclude expect string or regexp or array of those
+      // so this is tricking ReactRefreshWebpackPlugin with providing regexp with
+      // overwritten .test method
+      exclude: regExpToHack,
+    })
+  }
+
+  plugins.extractText = (options: any): WebpackPluginInstance =>
     new MiniCssExtractPlugin({
       ...options,
     })
 
-  plugins.moment = (): Plugin => plugins.ignore(/^\.\/locale$/, /moment$/)
+  plugins.moment = (): WebpackPluginInstance =>
+    plugins.ignore({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ })
 
   plugins.extractStats = (): GatsbyWebpackStatsExtractor =>
     new GatsbyWebpackStatsExtractor()
 
-  plugins.eslintGraphqlSchemaReload = (): GatsbyWebpackEslintGraphqlSchemaReload =>
-    new GatsbyWebpackEslintGraphqlSchemaReload()
+  plugins.eslintGraphqlSchemaReload =
+    (): GatsbyWebpackEslintGraphqlSchemaReload =>
+      new GatsbyWebpackEslintGraphqlSchemaReload()
 
   plugins.virtualModules = (): GatsbyWebpackVirtualModules =>
     new GatsbyWebpackVirtualModules()
+
+  plugins.eslint = (schema: GraphQLSchema): WebpackPluginInstance => {
+    const options = {
+      extensions: [`js`, `jsx`],
+      exclude: [
+        `/node_modules/`,
+        `/bower_components/`,
+        VIRTUAL_MODULES_BASE_PATH,
+      ],
+      ...eslintConfig(schema, jsxRuntimeExists),
+    }
+    // @ts-ignore
+    return new ESLintPlugin(options)
+  }
+
+  plugins.eslintRequired = (): WebpackPluginInstance => {
+    const options = {
+      extensions: [`js`, `jsx`],
+      exclude: [
+        `/node_modules/`,
+        `/bower_components/`,
+        VIRTUAL_MODULES_BASE_PATH,
+      ],
+      ...eslintRequiredConfig,
+    }
+    // @ts-ignore
+    return new ESLintPlugin(options)
+  }
 
   return {
     loaders,

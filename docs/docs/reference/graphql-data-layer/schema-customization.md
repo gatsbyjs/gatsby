@@ -224,7 +224,7 @@ The types passed in are used to determine child relations of the node.
 
 #### Defining child relations
 
-The `@childOf` extension can be used to explicitly define what node types or media types a node is a child of and immediately add `child[MyType]` or `children[MyType]` as a field on the parent.
+The `@childOf` extension can be used to explicitly define what node types or media types a node is a child of and immediately add `child[MyType]` and `children[MyType]` fields on the parent.
 
 The `types` argument takes an array of strings and determines what node types the node is a child of:
 
@@ -251,20 +251,6 @@ The `mimeTypes` and `types` arguments can be combined as follows:
 # Adds `childMdx` as a child to `File` nodes *and* nodes with `@mimeTypes` set to "text/markdown" or "text/x-markdown"
 type Mdx implements Node
   @childOf(types: ["File"], mimeTypes: ["text/markdown", "text/x-markdown"]) {
-  id: ID!
-}
-```
-
-If `many: true` is set, then instead of creating a single child field on the parent, it will create multiple:
-
-```graphql
-# Adds `childMdx1` with type `Mdx1` to `File`.
-type Mdx1 implements Node @childOf(types: ["File"]) {
-  id: ID!
-}
-
-# Adds `childrenMdx2` with type `[Mdx2]` as a field of `File`.
-type Mdx2 implements Node @childOf(types: ["File"], many: true) {
   id: ID!
 }
 ```
@@ -408,17 +394,22 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
           resolve: (source, args, context, info) => {
             // If you were linking by ID, you could use `getNodeById` to
             // find the correct author:
+            //
             // return context.nodeModel.getNodeById({
             //   id: source.author,
             //   type: "AuthorJson",
             // })
+            //
             // But since the example is using the author email as foreign key,
-            // you can use `runQuery`, or get all author nodes
-            // with `getAllNodes` and manually find the linked author
-            // node:
-            return context.nodeModel
-              .getAllNodes({ type: "AuthorJson" })
-              .find(author => author.email === source.author)
+            // you can use `nodeModel.findOne` to find the linked author node.
+            // Note: Instead of getting all nodes and then using Array.prototype.find()
+            // Use nodeModel.findOne instead where possible!
+            return context.nodeModel.findOne({
+              type: "AuthorJson",
+              query: {
+                filter: { email: { eq: source.author } }
+              }
+            })
           },
         },
       },
@@ -449,12 +440,41 @@ type AuthorJson implements Node {
 }
 ```
 
+This example assumes that your markdown frontmatter is in the shape of:
+
+```markdown
+---
+reviewers:
+  - jane@example.com
+  - doe@example.com
+---
+```
+
+And your author JSON looks like this:
+
+```json
+[
+  {
+    "name": "Doe",
+    "firstName": "Jane",
+    "email": "jane@example.com"
+  },
+  {
+    "name": "Doe",
+    "firstName": "Zoe",
+    "email": "zoe@example.com"
+  }
+]
+```
+
 You provide a `@link` directive on a field and Gatsby will internally
 add a resolver that is quite similar to the one written manually above. If no
 argument is provided, Gatsby will use the `id` field as the foreign-key,
 otherwise the foreign-key has to be provided with the `by` argument. The
 optional `from` argument allows getting the field on the current type which acts as the foreign-key to the field specified in `by`.
 In other words, you `link` **on** `from` **to** `by`. This makes `from` especially helpful when adding a field for back-linking.
+
+For the above example you can read `@link` this way: Use the value from the field `Frontmatter.reviewers` and match it by the field `AuthorJson.email`.
 
 Keep in mind that in the example above, the link of `posts` in `AuthorJson` works because `frontmatter` and `author` are both objects. If, for example, the `Frontmatter` type had a list of `authors` instead (`frontmatter.authors.email`), it wouldn't work since the `by` argument doesn't support arrays. In that case, you'd have to provide a custom resolver with [Gatsby Type Builders](/docs/reference/graphql-data-layer/schema-customization/#gatsby-type-builders) or [createResolvers API](/docs/reference/graphql-data-layer/schema-customization/#createresolvers-api).
 
@@ -751,10 +771,9 @@ available to custom field resolvers on the `context.nodeModel` argument passed
 to every resolver. Accessing node(s) by `id` (and optional `type`) is possible
 with [`getNodeById`](/docs/reference/graphql-data-layer/node-model/#getNodeById) and
 [`getNodesByIds`](/docs/reference/graphql-data-layer/node-model/#getNodesByIds). To get all nodes, or all
-nodes of a certain type, use [`getAllNodes`](/docs/reference/graphql-data-layer/node-model/#getAllNodes).
+nodes of a certain type, use [`findAll`](/docs/reference/graphql-data-layer/node-model/#findAll).
 And running a query from inside your resolver functions can be accomplished
-with [`runQuery`](/docs/reference/graphql-data-layer/node-model/#runQuery), which accepts `filter` and `sort`
-query arguments.
+with `findAll` as well, which accepts `filter` and `sort` query arguments.
 
 You could for example add a field to the `AuthorJson` type that lists all recent
 posts by an author:
@@ -765,8 +784,8 @@ exports.createResolvers = ({ createResolvers }) => {
     AuthorJson: {
       recentPosts: {
         type: ["MarkdownRemark"],
-        resolve(source, args, context, info) {
-          return context.nodeModel.runQuery({
+        resolve: async (source, args, context, info) => {
+          const { entries } = await context.nodeModel.findAll({
             query: {
               filter: {
                 frontmatter: {
@@ -776,8 +795,8 @@ exports.createResolvers = ({ createResolvers }) => {
               },
             },
             type: "MarkdownRemark",
-            firstOnly: false,
           })
+          return entries
         },
       },
     },
@@ -786,13 +805,13 @@ exports.createResolvers = ({ createResolvers }) => {
 }
 ```
 
-When using `runQuery` to sort query results, be aware that both `sort.fields`
+When using `findAll` to sort query results, be aware that both `sort.fields`
 and `sort.order` are `GraphQLList` fields. Also, nested fields on `sort.fields`
 have to be provided in dot-notation (not separated by triple underscores).
 For example:
 
 ```js
-context.nodeModel.runQuery({
+context.nodeModel.findAll({
   query: {
     sort: {
       fields: ["frontmatter.publishedAt"],
@@ -818,16 +837,17 @@ exports.createResolvers = ({ createResolvers }) => {
     Query: {
       contributorsWithSwag: {
         type: ["ContributorJson"],
-        resolve(source, args, context, info) {
-          return context.nodeModel.runQuery({
+        resolve: async (source, args, context, info) => {
+          const { entries } = await context.nodeModel.findAll({
             query: {
               filter: {
                 receivedSwag: { eq: true },
               },
             },
             type: "ContributorJson",
-            firstOnly: false,
           })
+
+          return entries
         },
       },
     },
@@ -848,16 +868,17 @@ exports.createResolvers = ({ createResolvers }) => {
         args: {
           receivedSwag: "Boolean!",
         },
-        resolve(source, args, context, info) {
-          return context.nodeModel.runQuery({
+        resolve: async (source, args, context, info) => {
+          const { entries } = await context.nodeModel.findAll({
             query: {
               filter: {
                 receivedSwag: { eq: args.receivedSwag },
               },
             },
             type: "ContributorJson",
-            firstOnly: false,
           })
+
+          return entries
         },
       },
     },
@@ -881,28 +902,30 @@ exports.createResolvers = ({ createResolvers }) => {
         args: {
           postsCount: "input PostsCountInput { min: Int, max: Int }",
         },
-        resolve(source, args, context, info) {
+        resolve: async (source, args, context, info) => {
           const { max, min = 0 } = args.postsCount || {}
           const operator = max != null ? { lte: max } : { gte: min }
-          return context.nodeModel.runQuery({
+
+          const { entries } = await context.nodeModel.findAll({
             query: {
               filter: {
                 posts: operator,
               },
             },
             type: "ContributorJson",
-            firstOnly: false,
           })
+
+          return entries
         },
       },
     },
     ContributorJson: {
       posts: {
         type: `Int`,
-        resolve: (source, args, context, info) => {
-          return context.nodeModel
-            .getAllNodes({ type: "MarkdownRemark" })
-            .filter(post => post.frontmatter.author === source.email).length
+        resolve: async (source, args, context, info) => {
+          const { entries } = await context.nodeModel.findAll({ type: "MarkdownRemark" })
+          const posts = entries.filter(post => post.frontmatter.author === source.email)
+          return Array.from(posts).length
         },
       },
     },
@@ -917,15 +940,12 @@ When creating custom field resolvers, it is important to ensure that Gatsby
 knows about the data a page depends on for hot reloading to work properly. When
 you retrieve nodes from the store with [`context.nodeModel`](/docs/reference/graphql-data-layer/node-model/) methods,
 it is usually not necessary to do anything manually, because Gatsby will register
-dependencies for the query results automatically. The exception is `getAllNodes`
-which will _not_ register data dependencies by default. This is because
-requesting re-running of queries when any node of a certain type changes is
-potentially a very expensive operation. If you are sure you really need this,
+dependencies for the query results automatically. If you want to customize this,
 you can add a page data dependency either programmatically with
 [`context.nodeModel.trackPageDependencies`](/docs/reference/graphql-data-layer/node-model/#trackPageDependencies), or with:
 
 ```js
-context.nodeModel.getAllNodes(
+context.nodeModel.findAll(
   { type: "MarkdownRemark" },
   { connectionType: "MarkdownRemark" }
 )
@@ -980,8 +1000,11 @@ exports.createResolvers = ({ createResolvers }) => {
     Query: {
       allTeamMembers: {
         type: ["TeamMember"],
-        resolve(source, args, context, info) {
-          return context.nodeModel.getAllNodes({ type: "TeamMember" })
+        resolve: async (source, args, context, info) => {
+          // Whenever possible, use `limit` and `skip` on findAll calls to increase performance
+          const { entries } = await context.nodeModel.findAll({ type: "TeamMember", query: { limit: args.limit, skip: args.skip } })
+
+          return entries
         },
       },
     },
@@ -1014,18 +1037,17 @@ export const query = graphql`
 `
 ```
 
-### Queryable interfaces with the `@nodeInterface` extension
+### Queryable interfaces
 
-Since Gatsby 2.13.22, you can achieve the same thing as above by adding the `@nodeInterface`
-extension to the `TeamMember` interface. This will treat the interface like a normal
-top-level type that implements the `Node` interface, and thus automatically add root
-query fields for the interface.
+Since Gatsby 3.0.0, you can use interface inheritance to achieve the same thing as above:
+`TeamMember implements Node`. This will treat the interface like a normal top-level type that
+implements the `Node` interface, and thus automatically add root query fields for the interface.
 
 ```js:title=gatsby-node.js
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
-    interface TeamMember @nodeInterface {
+    interface TeamMember implements Node {
       id: ID!
       name: String!
       firstName: String!
@@ -1093,8 +1115,7 @@ data.allTeamMember.nodes.map(node => {
 })
 ```
 
-> Note: All types implementing an interface with the `@nodeInterface` extension
-> must also implement the `Node` interface.
+> Note: All types implementing a queryable interface must also implement the `Node` interface
 
 ## Extending third-party types
 

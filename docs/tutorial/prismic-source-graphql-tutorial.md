@@ -42,7 +42,7 @@ If you want to focus on learning how to fetch and render data from a Prismic rep
 
 ## Configuring the plugin
 
-You will setup the Gatsby source plugin so it can fetch data from the Prismic repository. For this the only option you have to specify is the repository's name.
+You will set up the Gatsby source plugin so it can fetch data from the Prismic repository. For this the only option you have to specify is the repository's name.
 
 ```javascript:title=gatsby-config.js
 {
@@ -200,7 +200,7 @@ exports.linkResolver = function linkResolver(doc) {
 
 This function's goal is to generate a navigation url that depends on the document type. In this case, it will be `/blog/{unique slug}` for documents of the type `post` and the root folder `/` for every other document type, including `blog_home`. As you can see, the data required to generate a proper url with this helper function is the document's type and unique identifier. These fields are always present as part of the `_meta` field, so make sure to retrieve it in your query.
 
-You will have to setup your `gatsby-browser.js` file to use the Link Resolver as well.
+You will have to set up your `gatsby-browser.js` file to use the Link Resolver as well.
 
 ```javascript:title=gatsby-browser.js
 const { registerLinkResolver } = require("gatsby-source-prismic-graphql")
@@ -307,7 +307,7 @@ And with this last step you should be able to see all of your blog posts rendere
 
 ## Setting up for Previews
 
-One of the most exciting features that this Gatsby Prismic source plugin provides is the ability to preview changes to your documents without having to publish them or rebuild your Gatsby app. To activate this, you first need to setup an endpoint in your Prismic repository.
+One of the most exciting features that this Gatsby Prismic source plugin provides is the ability to preview changes to your documents without having to publish them or rebuild your Gatsby app. To activate this, you first need to set up an endpoint in your Prismic repository.
 
 In your repository, go to **Settings > Previews > Create a New Preview** and fill in the fields for your setup. For a default local development environment, you should use `http://localhost:8000` as the Domain, with `/preview` as the optional Link Resolver. Don't worry about including the toolbar script, the plugin will take care of it.
 
@@ -343,7 +343,7 @@ After following this tutorial you have a minimalist blog that uses a Prismic rep
 - Render that data in your site.
 - Create templates to generate pages programmatically.
 - Build links to navigate your site.
-- And most importantly, how to setup previews so you can view changes to your documents without publishing them.
+- And most importantly, how to set up previews so you can view changes to your documents without publishing them.
 
 ## Where to go from here
 
@@ -353,4 +353,4 @@ If you want to go further, here are some more advanced things you can do using P
 - Using [webhooks](https://user-guides.prismic.io/webhooks/webhooks) as a trigger to rebuild your site.
 - Using a [helper function](https://prismic.io/docs/reactjs/getting-started/prismic-gatsby#27_0-using-the-html-serializer) to change links inside rich text fields to Link components.
 
-You can read more about it in [Prismic's Gatsby documentation](https://prismic.io/docs/reactjs/getting-started/prismic-gatsby), build your [own full featured blog](https://user-guides.prismic.io/examples/gatsby-js-samples/sample-blog-with-api-based-cms-gatsbyjs) where you can try out Slices.
+You can read more about it in [Prismic's Gatsby documentation](https://prismic.io/docs/reactjs/getting-started/prismic-gatsby), build your [own full-featured blog](https://user-guides.prismic.io/examples/gatsby-js-samples/sample-blog-with-api-based-cms-gatsbyjs) where you can try out Slices.

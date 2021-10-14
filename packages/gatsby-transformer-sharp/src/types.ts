@@ -30,7 +30,7 @@ export const ImageLayoutType = new GraphQLEnumType({
   name: `ImageLayout`,
   values: {
     FIXED: { value: `fixed` },
-    FLUID: { value: `fluid` },
+    FULL_WIDTH: { value: `fullWidth` },
     CONSTRAINED: { value: `constrained` },
   },
 })

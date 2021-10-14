@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import React from "react"
-import { Link, Location } from "@reach/router"
-import { resolve } from "@reach/router/lib/utils"
+import { Link, Location } from "@gatsbyjs/reach-router"
+import { resolve } from "@gatsbyjs/reach-router/lib/utils"
 
 import { parsePath } from "./parse-path"
 
@@ -117,17 +117,19 @@ class GatsbyLink extends React.Component {
   }
 
   _prefetch() {
-    let currentPath = window.location.pathname
+    let currentPath = window.location.pathname + window.location.search
 
     // reach router should have the correct state
     if (this.props._location && this.props._location.pathname) {
-      currentPath = this.props._location.pathname
+      currentPath = this.props._location.pathname + this.props._location.search
     }
 
     const rewrittenPath = rewriteLinkPath(this.props.to, currentPath)
-    const newPathName = parsePath(rewrittenPath).pathname
+    const parsed = parsePath(rewrittenPath)
 
-    // Prefech is used to speed up next navigations. When you use it on the current navigation,
+    const newPathName = parsed.pathname + parsed.search
+
+    // Prefetch is used to speed up next navigations. When you use it on the current navigation,
     // there could be a race-condition where Chrome uses the stale data instead of waiting for the network to complete
     if (currentPath !== newPathName) {
       ___loader.enqueue(newPathName)
@@ -224,7 +226,8 @@ class GatsbyLink extends React.Component {
           if (onMouseEnter) {
             onMouseEnter(e)
           }
-          ___loader.hovering(parsePath(prefixedTo).pathname)
+          const parsed = parsePath(prefixedTo)
+          ___loader.hovering(parsed.pathname + parsed.search)
         }}
         onClick={e => {
           if (onClick) {
@@ -272,31 +275,10 @@ GatsbyLink.propTypes = {
   state: PropTypes.object,
 }
 
-const showDeprecationWarning = (functionName, altFunctionName, version) =>
-  console.warn(
-    `The "${functionName}" method is now deprecated and will be removed in Gatsby v${version}. Please use "${altFunctionName}" instead.`
-  )
-
 export default React.forwardRef((props, ref) => (
   <GatsbyLinkLocationWrapper innerRef={ref} {...props} />
 ))
 
 export const navigate = (to, options) => {
   window.___navigate(rewriteLinkPath(to, window.location.pathname), options)
-}
-
-export const push = to => {
-  showDeprecationWarning(`push`, `navigate`, 3)
-  window.___push(rewriteLinkPath(to, window.location.pathname))
-}
-
-export const replace = to => {
-  showDeprecationWarning(`replace`, `navigate`, 3)
-  window.___replace(rewriteLinkPath(to, window.location.pathname))
-}
-
-// TODO: Remove navigateTo for Gatsby v3
-export const navigateTo = to => {
-  showDeprecationWarning(`navigateTo`, `navigate`, 3)
-  return push(to)
 }

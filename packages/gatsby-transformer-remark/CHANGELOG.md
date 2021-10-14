@@ -1,43 +1,211 @@
-# Change Log
+# Changelog: `gatsby-transformer-remark`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.15.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.14.0-next.2...gatsby-transformer-remark@2.15.0-next.0) (2020-12-29)
+## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@4.11.0/packages/gatsby-transformer-remark) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Features
+
+- use subplugin annotation to use automatic subplugin module loading [#33039](https://github.com/gatsbyjs/gatsby/issues/33039) ([3260b1a](https://github.com/gatsbyjs/gatsby/commit/3260b1a43ace66349b0a683ab052f0d5c10f33d2))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+
+#### Other Changes
+
+- Revert "chore(release): Publish next" ([a0c4d44](https://github.com/gatsbyjs/gatsby/commit/a0c4d44488ce00c8917b4d364e4369d337fdcfd9))
+
+## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@4.10.0/packages/gatsby-transformer-remark) (2021-09-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
+
+#### Chores
+
+- re-generate changelogs [#32886](https://github.com/gatsbyjs/gatsby/issues/32886) ([417df15](https://github.com/gatsbyjs/gatsby/commit/417df15230be368a9db91f2ad1a9bc0442733177))
+
+## [4.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@4.9.0/packages/gatsby-transformer-remark) (2021-08-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
+
+#### Chores
+
+- update formatting & linting [#32626](https://github.com/gatsbyjs/gatsby/issues/32626) ([4a765b5](https://github.com/gatsbyjs/gatsby/commit/4a765b5c62208d58f0bd7fd59558160c0b9feed3))
+- update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
+
+## [4.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@4.8.0/packages/gatsby-transformer-remark) (2021-08-04)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 **Note:** Version bump only for package gatsby-transformer-remark
 
-# [2.14.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.14.0-next.1...gatsby-transformer-remark@2.14.0-next.2) (2020-12-29)
+## [4.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@4.7.0/packages/gatsby-transformer-remark) (2021-07-20)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
+
+#### Chores
+
+- update babel monorepo [#32238](https://github.com/gatsbyjs/gatsby/issues/32238) ([466d4c0](https://github.com/gatsbyjs/gatsby/commit/466d4c087bbc96abb942a02c67243bcc9a4f2a0a))
+
+## [4.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@4.6.0/packages/gatsby-transformer-remark) (2021-07-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
 
 **Note:** Version bump only for package gatsby-transformer-remark
 
-# [2.14.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.14.0-next.0...gatsby-transformer-remark@2.14.0-next.1) (2020-12-17)
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@4.5.0/packages/gatsby-transformer-remark) (2021-06-23)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) ([7d42e8d](https://github.com/gatsbyjs/gatsby/commit/7d42e8d866e46e9c39838d812d080d06433f7060))
+
+### [4.4.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@4.4.1/packages/gatsby-transformer-remark) (2021-06-10)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) [#31859](https://github.com/gatsbyjs/gatsby/issues/31859) ([8636025](https://github.com/gatsbyjs/gatsby/commit/863602567930a39142ed33d9d1f1813b7dec8686))
+
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@4.4.0/packages/gatsby-transformer-remark) (2021-06-09)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
+
+#### Chores
+
+- update babel monorepo [#31143](https://github.com/gatsbyjs/gatsby/issues/31143) ([701ab2f](https://github.com/gatsbyjs/gatsby/commit/701ab2f6690c3f1bbaf60cf572513ea566cc9ec9))
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@4.3.0/packages/gatsby-transformer-remark) (2021-05-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
 
 **Note:** Version bump only for package gatsby-transformer-remark
 
-# [2.14.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.13.0-next.1...gatsby-transformer-remark@2.14.0-next.0) (2020-12-10)
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@4.2.0/packages/gatsby-transformer-remark) (2021-05-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
+
+#### Bug Fixes
+
+- Activate footnotes by default & remove included options with remark v13 [#31019](https://github.com/gatsbyjs/gatsby/issues/31019) ([a35d615](https://github.com/gatsbyjs/gatsby/commit/a35d615f9c8d596230ecd1f121f214b9879eb7d3))
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@4.1.0/packages/gatsby-transformer-remark) (2021-04-28)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
+
+#### Bug Fixes
+
+- Activate footnotes by default & remove included options with remark v13 [#31019](https://github.com/gatsbyjs/gatsby/issues/31019) [#31080](https://github.com/gatsbyjs/gatsby/issues/31080) ([bab3b55](https://github.com/gatsbyjs/gatsby/commit/bab3b5552ee848216eef52cb02f08c0e84b41231))
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@4.0.0/packages/gatsby-transformer-remark) (2021-04-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
 
 **Note:** Version bump only for package gatsby-transformer-remark
 
-# [2.13.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.13.0-next.0...gatsby-transformer-remark@2.13.0-next.1) (2020-12-03)
+## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@3.2.0/packages/gatsby-transformer-remark) (2021-03-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
 
 **Note:** Version bump only for package gatsby-transformer-remark
 
-# [2.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.12.0-next.0...gatsby-transformer-remark@2.13.0-next.0) (2020-11-26)
+## [3.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@3.1.0/packages/gatsby-transformer-remark) (2021-03-16)
 
-### Bug Fixes
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
 
-- **gatsby-transformer-remark:** ensure `getNodesByType()` is passed through ([#28218](https://github.com/gatsbyjs/gatsby/issues/28218)) ([7867897](https://github.com/gatsbyjs/gatsby/commit/7867897c5cc4f627a4fb91c939b24d884497ee20))
+#### Bug Fixes
 
-# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.11.0-next.0...gatsby-transformer-remark@2.12.0-next.0) (2020-11-18)
+- update lodash monorepo to ^4.17.21 [#29382](https://github.com/gatsbyjs/gatsby/issues/29382) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
+
+#### Refactoring
+
+- Refactors out Bluebird usage in transformer-remark [#29638](https://github.com/gatsbyjs/gatsby/issues/29638) ([7193303](https://github.com/gatsbyjs/gatsby/commit/7193303a4adb7c1a880d6f0580780dc75e407c32))
+
+#### Chores
+
+- update eslint to fix linting issues fix [#29988](https://github.com/gatsbyjs/gatsby/issues/29988) ([5636389](https://github.com/gatsbyjs/gatsby/commit/5636389e8fa626c644e90abc14589e9961d98c68))
+
+## [3.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@3.0.0/packages/gatsby-transformer-remark) (2021-03-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
+
+#### Features
+
+- shim reporter from gatsby [#29669](https://github.com/gatsbyjs/gatsby/issues/29669) ([249905a](https://github.com/gatsbyjs/gatsby/commit/249905ac92f11efdb2333828667b946a860a1a27))
+
+#### Other Changes
+
+- V3/remark todo [#29453](https://github.com/gatsbyjs/gatsby/issues/29453) ([8bd42aa](https://github.com/gatsbyjs/gatsby/commit/8bd42aa01563eca49004056564df6bf6810b36ab))
+
+### [2.16.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@2.16.1/packages/gatsby-transformer-remark) (2021-02-24)
 
 **Note:** Version bump only for package gatsby-transformer-remark
 
-# [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.10.0-next.0...gatsby-transformer-remark@2.10.0-next.1) (2020-11-10)
+## [2.16.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@2.16.0/packages/gatsby-transformer-remark) (2021-02-02)
 
-### Bug Fixes
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
 
-- **gatsby-transformer-remark:** wait for cache promises before returning ([#27871](https://github.com/gatsbyjs/gatsby/issues/27871)) ([071d50d](https://github.com/gatsbyjs/gatsby/commit/071d50d665c6f5542e29286eaef4dc54a61bb4d8))
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.15.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@2.15.0/packages/gatsby-transformer-remark) (2021-01-20)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@2.14.0/packages/gatsby-transformer-remark) (2021-01-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+### [2.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@2.13.1/packages/gatsby-transformer-remark) (2020-12-23)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@2.13.0/packages/gatsby-transformer-remark) (2020-12-15)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
+
+#### Chores
+
+- update dependency cross-env to ^7.0.3 [#28505](https://github.com/gatsbyjs/gatsby/issues/28505) ([a819b9b](https://github.com/gatsbyjs/gatsby/commit/a819b9bfb663139f7b06c3ed7d6d6069a2382b2c))
+- cache the cache key [#28444](https://github.com/gatsbyjs/gatsby/issues/28444) ([1fe3f2d](https://github.com/gatsbyjs/gatsby/commit/1fe3f2dfe696b6aef772cb11ea77c145f81e8f77))
+
+## [2.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@2.12.0/packages/gatsby-transformer-remark) (2020-12-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
+
+#### Bug Fixes
+
+- ensure `getNodesByType()` is passed through [#28218](https://github.com/gatsbyjs/gatsby/issues/28218) ([7867897](https://github.com/gatsbyjs/gatsby/commit/7867897c5cc4f627a4fb91c939b24d884497ee20))
+
+### [2.11.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@2.11.1/packages/gatsby-transformer-remark) (2020-11-25)
+
+#### Bug Fixes
+
+- ensure `getNodesByType()` is passed through [#28218](https://github.com/gatsbyjs/gatsby/issues/28218) [#28261](https://github.com/gatsbyjs/gatsby/issues/28261) ([63e189d](https://github.com/gatsbyjs/gatsby/commit/63e189d8408d7b1a96be5f911ce06fd7e90d655b))
+
+## [2.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@2.11.0/packages/gatsby-transformer-remark) (2020-11-20)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.27)
+
+#### Chores
+
+- update babel monorepo [#27528](https://github.com/gatsbyjs/gatsby/issues/27528) ([539dbb0](https://github.com/gatsbyjs/gatsby/commit/539dbb09166e346a6cee568973d2de3d936e8ef3))
+
+## [2.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@2.10.0/packages/gatsby-transformer-remark) (2020-11-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.26)
+
+#### Bug Fixes
+
+- wait for cache promises before returning [#27871](https://github.com/gatsbyjs/gatsby/issues/27871) ([071d50d](https://github.com/gatsbyjs/gatsby/commit/071d50d665c6f5542e29286eaef4dc54a61bb4d8))
+
+<a name="before-release-process"></a>
 
 ## [2.9.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.9.0...gatsby-transformer-remark@2.9.1) (2020-11-02)
 

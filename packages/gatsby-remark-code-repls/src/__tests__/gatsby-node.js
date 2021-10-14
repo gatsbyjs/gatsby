@@ -5,7 +5,7 @@ jest.mock(`fs`, () => {
   }
 })
 jest.mock(`recursive-readdir`, () => jest.fn())
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby/reporter`, () => {
   return {
     panic: jest.fn(),
   }
@@ -15,7 +15,7 @@ const fs = require(`fs`)
 const nodePath = require(`path`)
 const readdir = require(`recursive-readdir`)
 
-const reporter = require(`gatsby-cli/lib/reporter`)
+const reporter = require(`gatsby/reporter`)
 
 const {
   OPTION_DEFAULT_REPL_DIRECTORY,

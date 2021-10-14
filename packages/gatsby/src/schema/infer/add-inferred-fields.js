@@ -7,9 +7,9 @@ const report = require(`gatsby-cli/lib/reporter`)
 import { isFile } from "./is-file"
 import { isDate } from "../types/date"
 import { addDerivedType } from "../types/derived-types"
+import { warnOnce } from "../../utils/warn-once"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
-import { printDirectives } from "../print"
-const { getNode, getNodes } = require(`../../redux/nodes`)
+const { getDataStore } = require(`../../datastore`)
 
 const addInferredFields = ({
   schemaComposer,
@@ -22,9 +22,6 @@ const addInferredFields = ({
     typeComposer,
     defaults: {
       shouldAddFields: true,
-      shouldAddDefaultResolvers: typeComposer.hasExtension(`infer`)
-        ? false
-        : true,
     },
   })
   addInferredFieldsImpl({
@@ -36,6 +33,14 @@ const addInferredFields = ({
     typeMapping,
     config,
   })
+
+  if (deprecatedNodeKeys.size > 0) {
+    warnOnce(
+      `The ___NODE convention is deprecated. Please use the @link directive instead.\nType: ${typeComposer.getTypeName()}, Keys: ${Array.from(
+        deprecatedNodeKeys
+      ).join(`, `)}\nMigration: https://gatsby.dev/node-convention-deprecation`
+    )
+  }
 }
 
 module.exports = {
@@ -96,58 +101,13 @@ const addInferredFieldsImpl = ({
         typeComposer.addFields({ [key]: fieldConfig })
         typeComposer.setFieldExtension(key, `createdFrom`, `inference`)
       }
-    } else {
-      // Deprecated, remove in v3
-      if (config.shouldAddDefaultResolvers) {
-        // Add default resolvers to existing fields if the type matches
-        // and the field has neither args nor resolver explicitly defined.
-        const field = typeComposer.getField(key)
-        if (
-          field.type.toString().replace(/[[\]!]/g, ``) ===
-            fieldConfig.type.toString() &&
-          _.isEmpty(field.args) &&
-          !field.resolve
-        ) {
-          const { extensions } = fieldConfig
-          if (extensions) {
-            Object.keys(extensions)
-              .filter(name =>
-                // It is okay to list allowed extensions explicitly here,
-                // since this is deprecated anyway and won't change.
-                [`dateformat`, `fileByRelativePath`, `link`, `proxy`].includes(
-                  name
-                )
-              )
-              .forEach(name => {
-                if (!typeComposer.hasFieldExtension(key, name)) {
-                  typeComposer.setFieldExtension(key, name, extensions[name])
-
-                  const typeName = typeComposer.getTypeName()
-                  const implementsNode =
-                    unsanitizedFieldPath.length === 1 ? `implements Node ` : ``
-                  const extension = printDirectives(
-                    { [name]: extensions[name] },
-                    schemaComposer.getDirectives()
-                  )
-                  report.warn(
-                    `Deprecation warning: adding inferred extension \`${name}\` for field \`${typeName}.${key}\`.\n` +
-                      `In Gatsby v3, only fields with an explicit directive/extension will be resolved correctly.\n` +
-                      `Add the following type definition to fix this:\n\n` +
-                      `  type ${typeComposer.getTypeName()} ${implementsNode}{\n` +
-                      `    ${key}: ${field.type.toString()}${extension}\n` +
-                      `  }\n\n` +
-                      `https://www.gatsbyjs.com/docs/actions/#createTypes`
-                  )
-                }
-              })
-          }
-        }
-      }
     }
   })
 
   return typeComposer
 }
+
+const deprecatedNodeKeys = new Set()
 
 const getFieldConfig = ({
   schemaComposer,
@@ -176,12 +136,17 @@ const getFieldConfig = ({
     // i.e. does the config contain sanitized field names?
     fieldConfig = getFieldConfigFromMapping({ typeMapping, selector })
   } else if (unsanitizedKey.includes(`___NODE`)) {
+    // TODO(v5): Remove ability to use foreign keys like this (e.g. author___NODE___contact___email)
+    // and recommend using schema customization instead
+
     fieldConfig = getFieldConfigFromFieldNameConvention({
       schemaComposer,
       value: exampleValue,
       key: unsanitizedKey,
     })
     arrays = arrays + (value.multiple ? 1 : 0)
+
+    deprecatedNodeKeys.add(unsanitizedKey)
   } else {
     fieldConfig = getSimpleFieldConfig({
       schemaComposer,
@@ -262,17 +227,28 @@ const getFieldConfigFromFieldNameConvention = ({
   const path = key.split(`___NODE___`)[1]
   // Allow linking by nested fields, e.g. `author___NODE___contact___email`
   const foreignKey = path && path.replace(/___/g, `.`)
+  const linkedTypesSet = new Set()
 
-  const getNodeBy = value =>
-    foreignKey
-      ? getNodes().find(node => _.get(node, foreignKey) === value)
-      : getNode(value)
+  if (foreignKey) {
+    const linkedValues = new Set(value.linkedNodes)
+    getDataStore()
+      .iterateNodes()
+      .forEach(node => {
+        const value = _.get(node, foreignKey)
+        if (linkedValues.has(value)) {
+          linkedTypesSet.add(node.internal.type)
+        }
+      })
+  } else {
+    value.linkedNodes.forEach(id => {
+      const node = getDataStore().getNode(id)
+      if (node) {
+        linkedTypesSet.add(node.internal.type)
+      }
+    })
+  }
 
-  const linkedNodes = value.linkedNodes.map(getNodeBy)
-
-  const linkedTypes = _.uniq(
-    linkedNodes.filter(Boolean).map(node => node.internal.type)
-  )
+  const linkedTypes = [...linkedTypesSet]
 
   invariant(
     linkedTypes.length,
@@ -358,9 +334,7 @@ const getSimpleFieldConfig = ({
           if (lists !== arrays) return null
         } else {
           // When the field type has not been explicitly defined, we
-          // don't need to continue in case of @dontInfer, because
-          // "addDefaultResolvers: true" only makes sense for
-          // pre-existing types.
+          // don't need to continue in case of @dontInfer
           if (!config.shouldAddFields) return null
 
           const typeName = createTypeName(selector)
@@ -448,8 +422,5 @@ const getInferenceConfig = ({ typeComposer, defaults }) => {
     shouldAddFields: typeComposer.hasExtension(`infer`)
       ? typeComposer.getExtension(`infer`)
       : defaults.shouldAddFields,
-    shouldAddDefaultResolvers: typeComposer.hasExtension(`addDefaultResolvers`)
-      ? typeComposer.getExtension(`addDefaultResolvers`)
-      : defaults.shouldAddDefaultResolvers,
   }
 }

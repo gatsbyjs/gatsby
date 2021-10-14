@@ -153,7 +153,15 @@ describe(`init-starter`, () => {
       )
       expect(execa).toBeCalledWith(
         `npm`,
-        [`install`, `--loglevel`, `error`, `--color`, `always`, `one-package`],
+        [
+          `install`,
+          `--loglevel`,
+          `error`,
+          `--color`,
+          `always`,
+          `--legacy-peer-deps`,
+          `one-package`,
+        ],
         { stderr: `inherit` }
       )
     })

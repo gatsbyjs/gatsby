@@ -9,6 +9,9 @@ interface IErrorMeta {
   context: Record<string, unknown>
 }
 
+const isNotTestEnv = process.env.NODE_ENV !== `test`
+const isProductionEnv = process.env.NODE_ENV === `production`
+
 export function validatePageComponent(
   page: IGatsbyPage,
   directory: string,
@@ -35,7 +38,7 @@ export function validatePageComponent(
     }
   }
 
-  if (process.env.NODE_ENV !== `test`) {
+  if (isNotTestEnv) {
     if (!fs.existsSync(component)) {
       return {
         error: {
@@ -54,10 +57,7 @@ export function validatePageComponent(
   // (hopefully a component).
   //
 
-  if (
-    !component.includes(`/.cache/`) &&
-    process.env.NODE_ENV === `production`
-  ) {
+  if (!component.includes(`/.cache/`) && isProductionEnv) {
     const fileContent = fs.readFileSync(component, `utf-8`)
 
     if (fileContent === ``) {

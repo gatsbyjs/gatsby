@@ -223,7 +223,7 @@ const fs = require("fs")
 const yaml = require("js-yaml")
 exports.createPages = ({ actions }) => {
   const { createPage } = actions
-  const ymlDoc = yaml.safeLoad(fs.readFileSync("./content/index.yaml", "utf-8"))
+  const ymlDoc = yaml.load(fs.readFileSync("./content/index.yaml", "utf-8"))
   ymlDoc.forEach(element => {
     createPage({
       path: element.path,

@@ -6,8 +6,10 @@ exports.DEFAULT_OPTIONS = {
   showCaptions: false,
   markdownCaptions: false,
   withWebp: false,
+  withAvif: false,
   tracedSVG: false,
   loading: `lazy`,
+  decoding: `async`,
   disableBgImageOnAlpha: false,
   disableBgImage: false,
 }

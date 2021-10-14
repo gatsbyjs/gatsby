@@ -35,7 +35,7 @@ describe(`Query schema`, () => {
   let schema
   let schemaComposer
 
-  const runQuery = query =>
+  const runQuery = (query, variables) =>
     graphql(
       schema,
       query,
@@ -43,7 +43,8 @@ describe(`Query schema`, () => {
       withResolverContext({
         schema,
         schemaComposer,
-      })
+      }),
+      variables
     )
 
   beforeAll(async () => {
@@ -860,6 +861,87 @@ describe(`Query schema`, () => {
         expect(results.data).toEqual(expected)
       })
 
+      it(`recursively groups query results`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              group(field: frontmatter___title) {
+                fieldValue
+                group(field: frontmatter___authors___name) {
+                  fieldValue
+                  edges {
+                    node {
+                      frontmatter {
+                        title
+                        date(formatString: "YYYY-MM-DD")
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `
+        const results = await runQuery(query)
+        const expected = {
+          allMarkdown: {
+            group: [
+              {
+                fieldValue: `Markdown File 1`,
+                group: [
+                  {
+                    fieldValue: `Author 1`,
+                    edges: [
+                      {
+                        node: {
+                          frontmatter: {
+                            title: `Markdown File 1`,
+                            date: `2019-01-01`,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    fieldValue: `Author 2`,
+                    edges: [
+                      {
+                        node: {
+                          frontmatter: {
+                            title: `Markdown File 1`,
+                            date: `2019-01-01`,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                fieldValue: `Markdown File 2`,
+                group: [
+                  {
+                    fieldValue: `Author 1`,
+                    edges: [
+                      {
+                        node: {
+                          frontmatter: {
+                            title: `Markdown File 2`,
+                            date: null,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        }
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toEqual(expected)
+      })
+
       it(`handles groups added in fragment`, async () => {
         const query = `
           fragment GroupTest on MarkdownConnection {
@@ -1202,6 +1284,171 @@ describe(`Query schema`, () => {
           }
         `)
       })
+    })
+    describe(`aggregation fields`, () => {
+      it(`calculates max value of numeric field`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              max(field: frontmatter___views)
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data.allMarkdown.max).toEqual(200)
+      })
+
+      it(`calculates max value of numeric string field`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              max(field: frontmatter___price)
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data.allMarkdown.max).toEqual(3.99)
+      })
+
+      it(`calculates min value of numeric field`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              min(field: frontmatter___views)
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data.allMarkdown.min).toEqual(100)
+      })
+
+      it(`calculates min value of numeric string field`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              min(field: frontmatter___price)
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data.allMarkdown.min).toEqual(1.99)
+      })
+    })
+
+    it(`calculates sum of numeric field`, async () => {
+      const query = `
+        {
+          allMarkdown {
+            sum(field: frontmatter___views)
+          }
+        }
+      `
+      const results = await runQuery(query)
+      expect(results.errors).toBeUndefined()
+      expect(results.data.allMarkdown.sum).toEqual(300)
+    })
+
+    it(`calculates sum of numeric string field`, async () => {
+      const query = `
+        {
+          allMarkdown {
+            sum(field: frontmatter___price)
+          }
+        }
+      `
+      const results = await runQuery(query)
+      expect(results.errors).toBeUndefined()
+      expect(results.data.allMarkdown.sum).toEqual(5.98)
+    })
+
+    it(`returns null for min of non-numeric fields`, async () => {
+      const query = `
+        {
+          allMarkdown {
+            min(field: frontmatter___title)
+          }
+        }
+      `
+      const results = await runQuery(query)
+      expect(results.errors).toBeUndefined()
+      expect(results.data.allMarkdown.min).toBeNull()
+    })
+
+    it(`returns null for max of non-numeric fields`, async () => {
+      const query = `
+        {
+          allMarkdown {
+            max(field: frontmatter___title)
+          }
+        }
+      `
+      const results = await runQuery(query)
+      expect(results.errors).toBeUndefined()
+      expect(results.data.allMarkdown.max).toBeNull()
+    })
+
+    it(`returns null for sum of non-numeric fields`, async () => {
+      const query = `
+        {
+          allMarkdown {
+            sum(field: frontmatter___title)
+          }
+        }
+      `
+      const results = await runQuery(query)
+      expect(results.errors).toBeUndefined()
+      expect(results.data.allMarkdown.sum).toBeNull()
+    })
+
+    it(`calculates aggregation in recursively grouped query results`, async () => {
+      const query = `
+        {
+          allMarkdown {
+            group(field: frontmatter___authors___name) {
+              fieldValue
+              group(field: frontmatter___title) {
+                fieldValue
+                max(field: frontmatter___price)
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        allMarkdown: {
+          group: [
+            {
+              fieldValue: `Author 1`,
+              group: [
+                {
+                  fieldValue: `Markdown File 1`,
+                  max: 1.99,
+                },
+                {
+                  fieldValue: `Markdown File 2`,
+                  max: 3.99,
+                },
+              ],
+            },
+            {
+              fieldValue: `Author 2`,
+              group: [
+                {
+                  fieldValue: `Markdown File 1`,
+                  max: 1.99,
+                },
+              ],
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
     })
   })
 
@@ -1589,6 +1836,188 @@ describe(`Query schema`, () => {
       }
       expect(results.errors).toBeUndefined()
       expect(results.data).toEqual(expected)
+    })
+  })
+
+  describe(`with regex filter`, () => {
+    /**
+     * double-escape character escape sequences when written inline (test only)
+     * (see also the test src/utils/__tests__/prepare-regex.ts)
+     */
+    it(`escape sequences work when correctly escaped`, async () => {
+      const query = `
+        {
+          allMarkdown(filter: { frontmatter: { authors: { elemMatch: { email: { regex: "/^\\\\w{6}\\\\d@\\\\w{7}\\\\.COM$/i" } } } } }) {
+            nodes {
+              frontmatter {
+                authors {
+                  email
+                }
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        allMarkdown: {
+          nodes: [
+            {
+              frontmatter: {
+                authors: [
+                  {
+                    email: `author1@example.com`,
+                  },
+                  {
+                    email: `author2@example.com`,
+                  },
+                ],
+              },
+            },
+            {
+              frontmatter: {
+                authors: [
+                  {
+                    email: `author1@example.com`,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
+    })
+
+    /**
+     * queries are read from file and parsed with babel
+     */
+    it(`escape sequences work when correctly escaped`, async () => {
+      const fs = require(`fs`)
+      const path = require(`path`)
+      const babel = require(`@babel/parser`)
+      const fileContent = fs.readFileSync(
+        path.join(__dirname, `./fixtures/regex-query.js`),
+        `utf-8`
+      )
+      const ast = babel.parse(fileContent)
+      const query = ast.program.body[0].expression.right.quasis[0].value.raw
+
+      const results = await runQuery(query)
+      const expected = {
+        allMarkdown: {
+          nodes: [
+            {
+              frontmatter: {
+                authors: [
+                  {
+                    email: `author1@example.com`,
+                  },
+                  {
+                    email: `author2@example.com`,
+                  },
+                ],
+              },
+            },
+            {
+              frontmatter: {
+                authors: [
+                  {
+                    email: `author1@example.com`,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
+    })
+  })
+
+  describe(`with skip/limit`, () => {
+    const query = `
+        query ($limit: Int!, $skip: Int!) {
+          allFile(limit: $limit, skip: $skip) {
+            totalCount
+            pageInfo {
+              currentPage
+              hasNextPage
+              hasPreviousPage
+              itemCount
+              pageCount
+              perPage
+              totalCount
+            }
+          }
+        }
+      `
+    it(`return correct pagination info for the first page`, async () => {
+      const results = await runQuery(query, { limit: 1, skip: 0 })
+      expect(results).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "allFile": Object {
+              "pageInfo": Object {
+                "currentPage": 1,
+                "hasNextPage": true,
+                "hasPreviousPage": false,
+                "itemCount": 1,
+                "pageCount": 3,
+                "perPage": 1,
+                "totalCount": 3,
+              },
+              "totalCount": 3,
+            },
+          },
+        }
+      `)
+    })
+
+    it(`return correct pagination info for the page in the middle`, async () => {
+      const results = await runQuery(query, { limit: 1, skip: 1 })
+      expect(results).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "allFile": Object {
+              "pageInfo": Object {
+                "currentPage": 2,
+                "hasNextPage": true,
+                "hasPreviousPage": true,
+                "itemCount": 1,
+                "pageCount": 3,
+                "perPage": 1,
+                "totalCount": 3,
+              },
+              "totalCount": 3,
+            },
+          },
+        }
+      `)
+    })
+
+    it(`return correct pagination info for the last page`, async () => {
+      const results = await runQuery(query, { limit: 1, skip: 2 })
+      expect(results).toMatchInlineSnapshot(`
+        Object {
+          "data": Object {
+            "allFile": Object {
+              "pageInfo": Object {
+                "currentPage": 3,
+                "hasNextPage": false,
+                "hasPreviousPage": true,
+                "itemCount": 1,
+                "pageCount": 3,
+                "perPage": 1,
+                "totalCount": 3,
+              },
+              "totalCount": 3,
+            },
+          },
+        }
+      `)
     })
   })
 })

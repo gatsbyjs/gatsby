@@ -1,14 +1,14 @@
 import React from "react"
 import { Link } from "gatsby"
 
-import styles from "../styles/another-page.module.css"
+import { page, link, header } from "../styles/another-page.module.css"
 
 class IndexComponent extends React.Component {
   render() {
     return (
-      <div className={styles.page}>
-        <h1 className={styles.header}>Hello mildly weary world</h1>
-        <Link to="/" className={styles.link}>
+      <div className={page}>
+        <h1 className={header}>Hello mildly weary world</h1>
+        <Link to="/" className={link}>
           Back home
         </Link>
       </div>

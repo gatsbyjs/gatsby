@@ -1,4 +1,7 @@
 module.exports = {
+  siteMetadata: {
+    title: `Shadowed Site Title`,
+  },
   plugins: [
     {
       resolve: `gatsby-theme-notes`,
@@ -11,7 +14,4 @@ module.exports = {
     // will override the theme-ui context from other themes
     { resolve: `gatsby-theme-blog` },
   ],
-  siteMetadata: {
-    title: `Shadowed Site Title`,
-  },
 }

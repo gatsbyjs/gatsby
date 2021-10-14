@@ -48,7 +48,7 @@ For example to get the entries from your models `myHeader`, `myFooter`:
 Or you can query by urlPath for your page models:
 
 ```graphql
-query($path: String!) {
+query ($path: String!) {
   allBuilderModels {
     myPageModel(
       target: { urlPath: $path }

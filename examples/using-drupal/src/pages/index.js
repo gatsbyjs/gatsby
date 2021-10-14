@@ -21,7 +21,7 @@ class IndexPage extends React.Component {
 
     const FirstPromoted = ({ recipe }) => (
       <Link
-        to={recipe.fields.slug}
+        to={recipe.gatsbyPath}
         css={{
           display: `block`,
           color: `inherit`,
@@ -52,7 +52,10 @@ class IndexPage extends React.Component {
           <h2>{recipe.title}</h2>
         </div>
         <Img
-          fluid={recipe.relationships.image.localFile.childImageSharp.fluid}
+          fluid={
+            recipe.relationships.image.relationships.imageFile.localFile
+              .childImageSharp.fluid
+          }
         />
       </Link>
     )
@@ -64,7 +67,7 @@ class IndexPage extends React.Component {
       marginBottom = rhythm(1 / 2),
     }) => (
       <Link
-        to={recipe.fields.slug}
+        to={recipe.gatsbyPath}
         css={{
           color: `inherit`,
           textDecoration: `none`,
@@ -77,16 +80,20 @@ class IndexPage extends React.Component {
         }}
       >
         <Img
-          fluid={recipe.relationships.image.localFile.childImageSharp.fluid}
+          fluid={
+            recipe.relationships.image.relationships.imageFile.localFile
+              .childImageSharp.fluid
+          }
         />
         <div
           css={{
             padding: `${rhythm(3 / 4)} ${rhythm(1)}`,
             width:
-              recipe.relationships.image.localFile.childImageSharp.fluid.width,
+              recipe.relationships.image.relationships.imageFile.localFile
+                .childImageSharp.fluid.width,
             height: square
-              ? recipe.relationships.image.localFile.childImageSharp.fluid
-                  .height
+              ? recipe.relationships.image.relationships.imageFile.localFile
+                  .childImageSharp.fluid.height
               : undefined,
           }}
         >
@@ -124,7 +131,7 @@ class IndexPage extends React.Component {
                   square={true}
                   columns={4}
                   marginBottom={0}
-                  key={recipe.fields.slug}
+                  key={recipe.gatsbyPath}
                 />
               ))}
             </div>
@@ -183,7 +190,7 @@ class IndexPage extends React.Component {
                 <PromotedCard
                   recipe={recipe}
                   columns={2}
-                  key={recipe.fields.slug}
+                  key={recipe.gatsbyPath}
                 />
               ))}
             </div>
@@ -213,19 +220,21 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query {
-    topRecipe: allNodeRecipe(sort: { fields: [created] }, limit: 1) {
+    topRecipe: allRecipes(sort: { fields: [createdAt] }, limit: 1) {
       edges {
         node {
           title
-          fields {
-            slug
-          }
+          gatsbyPath(filePath: "/{Recipes.title}")
           relationships {
-            image: field_image {
-              localFile {
-                childImageSharp {
-                  fluid(maxWidth: 740, maxHeight: 555) {
-                    ...GatsbyImageSharpFluid
+            image {
+              relationships {
+                imageFile {
+                  localFile {
+                    childImageSharp {
+                      fluid(maxWidth: 740, maxHeight: 555) {
+                        ...GatsbyImageSharpFluid
+                      }
+                    }
                   }
                 }
               }
@@ -234,26 +243,28 @@ export const pageQuery = graphql`
         }
       }
     }
-    nextTwoPromotedRecipes: allNodeRecipe(
-      sort: { fields: [created] }
+    nextTwoPromotedRecipes: allRecipes(
+      sort: { fields: [createdAt] }
       limit: 2
       skip: 1
     ) {
       edges {
         node {
           title
-          fields {
-            slug
-          }
+          gatsbyPath(filePath: "/{Recipes.title}")
           relationships {
-            category: field_recipe_category {
+            category {
               name
             }
-            image: field_image {
-              localFile {
-                childImageSharp {
-                  fluid(maxWidth: 240, maxHeight: 240) {
-                    ...GatsbyImageSharpFluid
+            image {
+              relationships {
+                imageFile {
+                  localFile {
+                    childImageSharp {
+                      fluid(maxWidth: 240, maxHeight: 240) {
+                        ...GatsbyImageSharpFluid
+                      }
+                    }
                   }
                 }
               }
@@ -262,26 +273,29 @@ export const pageQuery = graphql`
         }
       }
     }
-    nextFourPromotedRecipes: allNodeRecipe(
-      sort: { fields: [created] }
+    nextFourPromotedRecipes: allRecipes(
+      sort: { fields: [createdAt] }
       limit: 4
       skip: 3
     ) {
       edges {
         node {
+          id
           title
-          fields {
-            slug
-          }
+          gatsbyPath(filePath: "/{Recipes.title}")
           relationships {
-            category: field_recipe_category {
+            category {
               name
             }
-            image: field_image {
-              localFile {
-                childImageSharp {
-                  fluid(maxWidth: 475, maxHeight: 475) {
-                    ...GatsbyImageSharpFluid
+            image {
+              relationships {
+                imageFile {
+                  localFile {
+                    childImageSharp {
+                      fluid(maxWidth: 475, maxHeight: 475) {
+                        ...GatsbyImageSharpFluid
+                      }
+                    }
                   }
                 }
               }

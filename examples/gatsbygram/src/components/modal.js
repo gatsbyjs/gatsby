@@ -6,7 +6,7 @@ import Close from "react-icons/lib/md/close"
 import findIndex from "lodash/findIndex"
 import mousetrap from "mousetrap"
 import * as PropTypes from "prop-types"
-import { push, StaticQuery, graphql } from "gatsby"
+import { navigate, StaticQuery, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
@@ -55,7 +55,7 @@ class GatsbyGramModal extends React.Component {
       } else {
         nextPost = posts[currentIndex + 1]
       }
-      push(`/${nextPost.id}/`)
+      navigate(nextPost.gatsbyPath)
     }
   }
 
@@ -72,7 +72,7 @@ class GatsbyGramModal extends React.Component {
       } else {
         previousPost = posts[currentIndex - 1]
       }
-      push(`/${previousPost.id}/`)
+      navigate(previousPost.gatsbyPath)
     }
   }
 
@@ -84,7 +84,7 @@ class GatsbyGramModal extends React.Component {
             allPostsJson {
               edges {
                 node {
-                  id
+                  gatsbyPath(filePath: "/{PostsJson.id}")
                 }
               }
             }
@@ -97,7 +97,7 @@ class GatsbyGramModal extends React.Component {
           return (
             <Modal
               isOpen={this.props.isOpen}
-              onRequestClose={() => push(`/`)}
+              onRequestClose={() => navigate(`/`)}
               style={{
                 overlay: {
                   position: `fixed`,
@@ -123,7 +123,7 @@ class GatsbyGramModal extends React.Component {
               contentLabel="Modal"
             >
               <div
-                onClick={() => push(`/`)}
+                onClick={() => navigate(`/`)}
                 css={{
                   display: `flex`,
                   position: `relative`,
@@ -164,7 +164,7 @@ class GatsbyGramModal extends React.Component {
                 </div>
                 <Close
                   data-testid="modal-close"
-                  onClick={() => push(`/`)}
+                  onClick={() => navigate(`/`)}
                   css={{
                     cursor: `pointer`,
                     color: `rgba(255,255,255,0.8)`,

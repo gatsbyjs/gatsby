@@ -20,3 +20,16 @@ Complex/complete websites are for studying how to build more complex websites.
 - Notifications setup to ping PRs on success/failure of build
 - For `using-x` websites, link to the site from the plugin README and to the
   plugin(s) from the website.
+
+## Building all the example websites
+
+There's also a bash script in this folder called `build-all-examples.sh`, which automates the process of changing into each example folder, running `npm i`, and running `gatsby build`.
+
+To execute this script, run the following commands from the terminal:
+
+```sh
+cd examples
+./build-all-examples.sh > build-results.txt
+```
+
+🚨 WARNING: This script takes a LONG time to run. (Hours.)

@@ -6,8 +6,8 @@
   "dependencies": {
     "gatsby": "^2.13.14",
     "gatsby-theme-about": "*",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "license": "MIT",
   "scripts": {
@@ -22,7 +22,7 @@
     "update": "node scripts/update.js",
     "start-server-and-test": "start-server-and-test develop http://localhost:8000 cy:run",
     "cy:open": "cypress open",
-    "cy:run": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome"
+    "cy:run": "node ../../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
@@ -31,6 +31,9 @@
     "is-ci": "^2.0.0",
     "prettier": "2.0.4",
     "start-server-and-test": "^1.7.11"
+  },
+  "resolutions": {
+    "graphql-config": "3.3.0"
   },
   "repository": {
     "type": "git",

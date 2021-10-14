@@ -1,4 +1,4 @@
-/** *
+/***
  * Jobs of this module
  * - Maintain the list of components in the Redux store. So monitor new components
  *   and add/remove components.
@@ -15,11 +15,12 @@ import path from "path"
 import { slash } from "gatsby-core-utils"
 
 import { store, emitter } from "../redux/"
-import { boundActionCreators } from "../redux/actions"
+import { actions } from "../redux/actions"
 import { IGatsbyStaticQueryComponents } from "../redux/types"
 import queryCompiler from "./query-compiler"
 import report from "gatsby-cli/lib/reporter"
 import { getGatsbyDependents } from "../utils/gatsby-dependents"
+import { processNodeManifests } from "../utils/node-manifest"
 
 const debug = require(`debug`)(`gatsby:query-watcher`)
 
@@ -97,13 +98,15 @@ const handleQuery = (
       oldQuery?.hash !== query.hash ||
       oldQuery?.query !== query.text
     ) {
-      boundActionCreators.replaceStaticQuery({
-        name: query.name,
-        componentPath: query.path,
-        id: query.id,
-        query: query.text,
-        hash: query.hash,
-      })
+      store.dispatch(
+        actions.replaceStaticQuery({
+          name: query.name,
+          componentPath: query.path,
+          id: query.id,
+          query: query.text,
+          hash: query.hash,
+        })
+      )
 
       debug(
         `Static query in ${component} ${
@@ -233,10 +236,12 @@ export const updateStateAndRunQueries = async (
     const { isStaticQuery = false, text = `` } =
       queries.get(c.componentPath) || {}
 
-    boundActionCreators.queryExtracted({
-      componentPath: c.componentPath,
-      query: isStaticQuery ? `` : text,
-    })
+    store.dispatch(
+      actions.queryExtracted({
+        componentPath: c.componentPath,
+        query: isStaticQuery ? `` : text,
+      })
+    )
   })
 
   let queriesWillNotRun = false
@@ -272,6 +277,13 @@ export const updateStateAndRunQueries = async (
         query and pass data down into the child component — https://graphql.org/learn/queries/#fragments
 
       `)
+  }
+
+  if (process.env.NODE_ENV === `development`) {
+    /**
+     * only process node manifests here in develop. we want this to run every time queries are updated. for gatsby build we process node manifests in src/services/run-page-queries.ts after all queries are run and pages are created. If we process node manifests in this location for gatsby build we wont have all the information needed to create the manifests. If we don't process manifests in this location during gatsby develop manifests will only be written once and never again when more manifests are created.
+     */
+    await processNodeManifests()
   }
 }
 

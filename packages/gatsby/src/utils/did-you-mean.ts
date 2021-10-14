@@ -1,7 +1,7 @@
 import meant from "meant"
 
 export const KNOWN_CONFIG_KEYS = [
-  `__experimentalThemes`,
+  `flags`,
   `polyfill`,
   `assetPrefix`,
   `pathPrefix`,

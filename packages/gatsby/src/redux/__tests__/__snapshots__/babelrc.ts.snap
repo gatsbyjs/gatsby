@@ -1,5 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Babelrc actions/reducer adds stage option to babel-preset-gatsby defined with userland babelrc 1`] = `
+Array [
+  Array [
+    Array [
+      "/path/to/module/babel-preset-gatsby",
+      Object {
+        "stage": "develop",
+      },
+    ],
+    Object {
+      "type": "preset",
+    },
+  ],
+]
+`;
+
 exports[`Babelrc actions/reducer allows adding a new plugin 1`] = `
 Object {
   "stages": Object {

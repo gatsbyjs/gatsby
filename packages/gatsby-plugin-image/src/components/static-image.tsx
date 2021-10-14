@@ -2,6 +2,7 @@ import {
   GatsbyImage as GatsbyImageBrowser,
   IGatsbyImageData,
 } from "./gatsby-image.browser"
+import React from "react"
 import {
   _getStaticImage,
   propTypes,
@@ -13,9 +14,8 @@ interface IPrivateProps {
   __error?: string
 }
 
-const StaticImage: React.FC<
-  IStaticImageProps & IPrivateProps
-> = _getStaticImage(GatsbyImageBrowser)
+const StaticImage: React.FC<IStaticImageProps & IPrivateProps> =
+  _getStaticImage(GatsbyImageBrowser)
 
 StaticImage.displayName = `StaticImage`
 StaticImage.propTypes = propTypes

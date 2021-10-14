@@ -25,7 +25,7 @@ module.exports = {
 }
 ```
 
-# Options
+## Options
 
 You can pass options to the plugin, see the [Styled Components docs](https://styled-components.com/docs/tooling#babel-plugin) for a full list of options.
 
@@ -39,15 +39,12 @@ options: {
 
 Note: The `ssr` option will be ignored. Gatsby will apply it automatically when needed.
 
-### Breaking changes history
+### Disabling vendor prefixing
 
-<!-- Please keep the breaking changes list ordered with the newest change at the top -->
+If you don't require vendor prefixes for adding legacy CSS properties then this can be disabled by supplying the `disableVendorPrefixes` option:
 
-#### v3.0.0
-
-support Gatsby v2 only
-
-#### v2.0.1
-
-`styled-components` is moved to a peer dependency. Installing the package
-alongside `gatsby-plugin-styled-components` is now required. Use `npm install styled-components`
+```js
+options: {
+  disableVendorPrefixes: true
+}
+```

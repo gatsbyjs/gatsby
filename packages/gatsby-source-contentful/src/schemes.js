@@ -1,16 +1,37 @@
-const { GraphQLEnumType } = require(`gatsby/graphql`)
+// @ts-check
+import { GraphQLEnumType } from "gatsby/graphql"
 
-const ImageFormatType = new GraphQLEnumType({
+export const ImageFormatType = new GraphQLEnumType({
   name: `ContentfulImageFormat`,
   values: {
     NO_CHANGE: { value: `` },
+    AUTO: { value: `` },
     JPG: { value: `jpg` },
     PNG: { value: `png` },
     WEBP: { value: `webp` },
   },
 })
 
-const ImageResizingBehavior = new GraphQLEnumType({
+export const ImageLayoutType = new GraphQLEnumType({
+  name: `ContentfulImageLayout`,
+  values: {
+    FIXED: { value: `fixed` },
+    FULL_WIDTH: { value: `fullWidth` },
+    CONSTRAINED: { value: `constrained` },
+  },
+})
+
+export const ImagePlaceholderType = new GraphQLEnumType({
+  name: `ContentfulImagePlaceholder`,
+  values: {
+    DOMINANT_COLOR: { value: `dominantColor` },
+    TRACED_SVG: { value: `tracedSVG` },
+    BLURRED: { value: `blurred` },
+    NONE: { value: `none` },
+  },
+})
+
+export const ImageResizingBehavior = new GraphQLEnumType({
   name: `ImageResizingBehavior`,
   values: {
     NO_CHANGE: {
@@ -40,7 +61,7 @@ const ImageResizingBehavior = new GraphQLEnumType({
   },
 })
 
-const ImageCropFocusType = new GraphQLEnumType({
+export const ImageCropFocusType = new GraphQLEnumType({
   name: `ContentfulImageCropFocus`,
   values: {
     TOP: { value: `top` },
@@ -56,9 +77,3 @@ const ImageCropFocusType = new GraphQLEnumType({
     CENTER: { value: `center` },
   },
 })
-
-module.exports = {
-  ImageFormatType,
-  ImageResizingBehavior,
-  ImageCropFocusType,
-}

@@ -2,7 +2,7 @@
  * https://github.com/evanw/node-source-map-support/blob/master/source-map-support.js
  */
 
-import { readFileSync } from "fs"
+import { readFileSync, readdirSync } from "fs"
 import { codeFrameColumns } from "@babel/code-frame"
 import stackTrace from "stack-trace"
 import {
@@ -11,9 +11,10 @@ import {
   IndexedSourceMapConsumer,
   NullableMappedPosition,
 } from "source-map"
+import * as path from "path"
 
 export class ErrorWithCodeFrame extends Error {
-  codeFrame = ``
+  codeFrame?: string = ``
 
   constructor(error: Error) {
     super(error.message)
@@ -28,13 +29,25 @@ export class ErrorWithCodeFrame extends Error {
 
 export async function prepareStackTrace(
   error: Error,
-  source: string
+  sourceOfMainMap: string
 ): Promise<ErrorWithCodeFrame> {
   const newError = new ErrorWithCodeFrame(error)
-  const map = await new SourceMapConsumer(readFileSync(source, `utf8`))
+  // source point to single map, but with code splitting for build-html we need to handle more maps
+  // we use fact that all .map files will be in same dir as main one here
+  const bundleDir = path.dirname(sourceOfMainMap)
+  const bundleDirMapFiles = readdirSync(bundleDir)
+    .filter(fileName => fileName.endsWith(`.js.map`))
+    .map(fileName => path.join(bundleDir, fileName))
+
+  const maps = await Promise.all(
+    bundleDirMapFiles.map(
+      async source => await new SourceMapConsumer(readFileSync(source, `utf8`))
+    )
+  )
+
   const stack = stackTrace
     .parse(newError)
-    .map(frame => wrapCallSite(map, frame))
+    .map(frame => wrapCallSite(maps, frame))
     .filter(
       frame =>
         `wasConverted` in frame &&
@@ -44,7 +57,7 @@ export async function prepareStackTrace(
             .match(/^webpack:\/+(lib\/)?(webpack\/|\.cache\/)/))
     )
 
-  newError.codeFrame = getErrorSource(map, stack[0])
+  newError.codeFrame = getErrorSource(maps, stack[0])
   newError.stack =
     `${newError.name}: ${newError.message}\n` +
     stack.map(frame => `    at ${frame}`).join(`\n`)
@@ -53,10 +66,17 @@ export async function prepareStackTrace(
 }
 
 function getErrorSource(
-  map: BasicSourceMapConsumer | IndexedSourceMapConsumer,
+  maps: Array<BasicSourceMapConsumer | IndexedSourceMapConsumer>,
   topFrame: stackTrace.StackFrame | IWrappedStackFrame
 ): string {
-  const source = map.sourceContentFor(topFrame.getFileName(), true)
+  let source
+  for (const map of maps) {
+    source = map.sourceContentFor(topFrame.getFileName(), true)
+    if (source) {
+      break
+    }
+  }
+
   return source
     ? codeFrameColumns(
         source,
@@ -83,13 +103,13 @@ interface IWrappedStackFrame {
 }
 
 function wrapCallSite(
-  map: BasicSourceMapConsumer | IndexedSourceMapConsumer,
+  maps: Array<BasicSourceMapConsumer | IndexedSourceMapConsumer>,
   frame: stackTrace.StackFrame
 ): IWrappedStackFrame | stackTrace.StackFrame {
   const source = frame.getFileName()
   if (!source) return frame
 
-  const position = getPosition({ map, frame })
+  const position = getPosition({ maps, frame })
   if (!position.source) return frame
 
   return {
@@ -103,15 +123,35 @@ function wrapCallSite(
 }
 
 function getPosition({
-  map,
+  maps,
   frame,
 }: {
-  map: BasicSourceMapConsumer | IndexedSourceMapConsumer
+  maps: Array<BasicSourceMapConsumer | IndexedSourceMapConsumer>
   frame: stackTrace.StackFrame
 }): NullableMappedPosition {
+  if (frame.getFileName().includes(`webpack:`)) {
+    // if source-map-register is initiated, stack traces would already be converted
+    return {
+      column: frame.getColumnNumber() - 1,
+      line: frame.getLineNumber(),
+      source: frame
+        .getFileName()
+        .substr(frame.getFileName().indexOf(`webpack:`))
+        .replace(/webpack:\/+/g, `webpack://`),
+      name: null,
+    }
+  }
+
   const line = frame.getLineNumber()
   const column = frame.getColumnNumber()
-  return map.originalPositionFor({ line, column })
+  for (const map of maps) {
+    const test = map.originalPositionFor({ line, column })
+    if (test.source) {
+      return test
+    }
+  }
+
+  return { source: null, column: null, line: null, name: null }
 }
 
 // This is copied almost verbatim from the V8 source code at

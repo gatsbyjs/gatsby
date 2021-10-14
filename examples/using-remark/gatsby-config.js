@@ -27,9 +27,7 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         gfm: true,
-        commonmark: true,
         footnotes: true,
-        pedantic: true,
         // blocks: ["h2"], Blocks option value can be provided here as an array.
         excerpt_separator: `<!-- end -->`,
         plugins: [

@@ -5,13 +5,12 @@ import {
   Actions,
   Store,
 } from "gatsby"
-import * as PluginSharp from "gatsby-plugin-sharp"
-import { createFileNode } from "gatsby-source-filesystem/create-file-node"
 import fs from "fs-extra"
 import path from "path"
-import { ImageProps, SharpProps } from "../utils"
 import { watchImage } from "./watcher"
-import { createRemoteFileNode, FileSystemNode } from "gatsby-source-filesystem"
+import type { FileSystemNode } from "gatsby-source-filesystem"
+import { IStaticImageProps } from "../components/static-image.server"
+import { ISharpGatsbyImageArgs } from "../image-utils"
 
 const supportedTypes = new Set([`image/png`, `image/jpeg`, `image/webp`])
 export interface IImageMetadata {
@@ -25,15 +24,27 @@ export async function createImageNode({
   fullPath,
   createNodeId,
   createNode,
+  reporter,
 }: {
   fullPath: string
   createNodeId: ParentSpanPluginArgs["createNodeId"]
   createNode: Actions["createNode"]
+  reporter: Reporter
 }): Promise<FileSystemNode | undefined> {
   if (!fs.existsSync(fullPath)) {
     return undefined
   }
-  const file: FileSystemNode = await createFileNode(fullPath, createNodeId, {})
+
+  let file: FileSystemNode
+  try {
+    const {
+      createFileNode,
+    } = require(`gatsby-source-filesystem/create-file-node`)
+    file = await createFileNode(fullPath, createNodeId, {})
+  } catch (e) {
+    reporter.panic(`Please install gatsby-source-filesystem`)
+    return undefined
+  }
 
   if (!file) {
     return undefined
@@ -59,8 +70,9 @@ export async function writeImages({
   createNodeId,
   createNode,
   store,
+  filename,
 }: {
-  images: Map<string, ImageProps>
+  images: Map<string, IStaticImageProps>
   pathPrefix: string
   cacheDir: string
   reporter: Reporter
@@ -69,12 +81,25 @@ export async function writeImages({
   createNodeId: ParentSpanPluginArgs["createNodeId"]
   createNode: Actions["createNode"]
   store: Store
+  filename: string
 }): Promise<void> {
   const promises = [...images.entries()].map(
     async ([hash, { src, ...args }]) => {
       let file: FileSystemNode | undefined
       let fullPath
-      if (process.env.GATSBY_EXPERIMENTAL_REMOTE_IMAGES && isRemoteURL(src)) {
+      if (!src) {
+        reporter.warn(`Missing StaticImage "src" in ${filename}.`)
+        return
+      }
+      if (isRemoteURL(src)) {
+        let createRemoteFileNode
+        try {
+          createRemoteFileNode =
+            require(`gatsby-source-filesystem`).createRemoteFileNode
+        } catch (e) {
+          reporter.panic(`Please install gatsby-source-filesystem`)
+        }
+
         try {
           file = await createRemoteFileNode({
             url: src,
@@ -85,16 +110,16 @@ export async function writeImages({
             reporter,
           })
         } catch (err) {
-          reporter.error(`Error loading image ${src}`)
+          reporter.error(`Error loading image ${src}`, err)
           return
         }
         if (
-          !file.internal.mediaType ||
+          !file?.internal.mediaType ||
           !supportedTypes.has(file.internal.mediaType)
         ) {
           reporter.error(
             `The file loaded from ${src} is not a valid image type. Found "${
-              file.internal.mediaType || `unknown`
+              file?.internal.mediaType || `unknown`
             }"`
           )
           return
@@ -103,10 +128,21 @@ export async function writeImages({
         fullPath = path.resolve(sourceDir, src)
 
         if (!fs.existsSync(fullPath)) {
-          reporter.warn(`Could not find image "${src}". Looked for ${fullPath}`)
+          reporter.warn(
+            `Could not find image "${src}" in "${filename}". Looked for ${fullPath}.`
+          )
           return
         }
-        file = await createFileNode(fullPath, createNodeId, {})
+
+        try {
+          const {
+            createFileNode,
+          } = require(`gatsby-source-filesystem/create-file-node`)
+
+          file = await createFileNode(fullPath, createNodeId, {})
+        } catch (e) {
+          reporter.panic(`Please install gatsby-source-filesystem`)
+        }
       }
 
       if (!file) {
@@ -155,21 +191,27 @@ export async function writeImages({
 
 export async function writeImage(
   file: FileSystemNode,
-  args: SharpProps,
+  args: ISharpGatsbyImageArgs,
   pathPrefix: string,
   reporter: Reporter,
   cache: GatsbyCache,
   filename: string
 ): Promise<void> {
+  let generateImageData
+  try {
+    generateImageData = require(`gatsby-plugin-sharp`).generateImageData
+  } catch (e) {
+    reporter.panic(`Please install gatsby-plugin-sharp`)
+  }
   try {
     const options = { file, args, pathPrefix, reporter, cache }
 
-    if (!PluginSharp.generateImageData) {
+    if (!generateImageData) {
       reporter.warn(`Please upgrade gatsby-plugin-sharp`)
       return
     }
     // get standard set of fields from sharp
-    const sharpData = await PluginSharp.generateImageData(options)
+    const sharpData = await generateImageData(options)
 
     if (sharpData) {
       // Write the image properties to the cache
