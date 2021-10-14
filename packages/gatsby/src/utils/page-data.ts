@@ -20,6 +20,7 @@ import { Span } from "opentracing"
 export { reverseFixedPagePath }
 
 import { IExecutionResult } from "../query/types"
+import { getPageMode } from "./page-mode"
 
 export interface IPageDataWithQueryResult extends IPageData {
   result: IExecutionResult
@@ -198,7 +199,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
 
         if (hasFlag(query.dirty, FLAG_DIRTY_NEW_PAGE)) {
           // query results are not written yet
-          process.nextTick(() => cb(null, true))
+          setImmediate(() => cb(null, true))
           return
         }
       }
@@ -208,7 +209,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
       if (
         _CFLAGS_.GATSBY_MAJOR !== `4` ||
         !isBuild ||
-        (isBuild && page.mode === `SSG`)
+        (isBuild && getPageMode(page) === `SSG`)
       ) {
         const staticQueryHashes =
           staticQueriesByTemplate.get(page.componentPath) || []
@@ -239,9 +240,9 @@ export async function flush(parentSpan?: Span): Promise<void> {
       },
     })
 
-    // `process.nextTick` below is a workaround against stack overflow
+    // `setImmediate` below is a workaround against stack overflow
     // occurring when there are many non-SSG pages
-    process.nextTick(() => cb(null, true))
+    setImmediate(() => cb(null, true))
     return
   }, 25)
 

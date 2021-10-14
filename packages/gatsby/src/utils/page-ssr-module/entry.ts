@@ -1,3 +1,7 @@
+// "engines-fs-provider" must be first import, as it sets up global
+// fs and this need to happen before anything else tries to import fs
+import "../engines-fs-provider"
+
 // just types - those should not be bundled
 import type { GraphQLEngine } from "../../schema/graphql-engine/entry"
 import type { IExecutionResult } from "../../query/types"
@@ -8,7 +12,6 @@ import type { Request } from "express"
 import type { Span, SpanContext } from "opentracing"
 
 // actual imports
-import "../engines-fs-provider"
 import * as path from "path"
 import * as fs from "fs-extra"
 import {
@@ -20,6 +23,7 @@ import htmlComponentRenderer, { getPageChunk } from "./routes/render-page"
 import { getServerData, IServerData } from "../get-server-data"
 import reporter from "gatsby-cli/lib/reporter"
 import { initTracer } from "../tracer"
+import { getCodeFrame } from "../../query/graphql-errors-codeframe"
 
 export interface ITemplateDetails {
   query: string
@@ -32,6 +36,7 @@ export interface ISSRData {
   templateDetails: ITemplateDetails
   potentialPagePath: string
   serverDataHeaders?: Record<string, string>
+  searchString: string
 }
 
 initTracer(process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``)
@@ -127,9 +132,23 @@ export async function getData({
           }
         )
         .then(queryResults => {
-          results = queryResults
           if (runningQueryActivity) {
             runningQueryActivity.end()
+          }
+
+          if (queryResults.errors && queryResults.errors.length > 0) {
+            const e = queryResults.errors[0]
+            const codeFrame = getCodeFrame(
+              templateDetails.query,
+              e.locations && e.locations[0].line,
+              e.locations && e.locations[0].column
+            )
+
+            const queryRunningError = new Error(e.message + `\n\n` + codeFrame)
+            queryRunningError.stack = e.stack
+            throw queryRunningError
+          } else {
+            results = queryResults
           }
         })
     )
@@ -168,6 +187,15 @@ export async function getData({
 
   if (getDataWrapperActivity) {
     getDataWrapperActivity.end()
+    
+  let searchString = ``
+  if (req?.query) {
+    const maybeQueryString = Object.entries(req.query)
+      .map(([k, v]) => `${k}=${v}`)
+      .join(`&`)
+    if (maybeQueryString) {
+      searchString = `?${maybeQueryString}`
+    }
   }
 
   return {
@@ -176,7 +204,16 @@ export async function getData({
     templateDetails,
     potentialPagePath,
     serverDataHeaders: serverData?.headers,
+    searchString,
   }
+}
+
+function getPath(data: ISSRData): string {
+  return (
+    (data.page.mode !== `SSG` && data.page.matchPath
+      ? data.potentialPagePath
+      : data.page.path) + (data.page.mode === `SSR` ? data.searchString : ``)
+  )
 }
 
 export async function renderPageData({
@@ -197,10 +234,7 @@ export async function renderPageData({
   const results = await constructPageDataString(
     {
       componentChunkName: data.page.componentChunkName,
-      path:
-        data.page.mode !== `SSG` && data.page.matchPath
-          ? data.potentialPagePath
-          : data.page.path,
+      path: getPath(data),
       matchPath: data.page.matchPath,
       staticQueryHashes: data.templateDetails.staticQueryHashes,
     },
@@ -277,10 +311,7 @@ export async function renderHTML({
     renderHTMLActivity.start()
   }
   const results = await htmlComponentRenderer({
-    pagePath:
-      data.page.mode !== `SSG` && data.page.matchPath
-        ? data.potentialPagePath
-        : data.page.path,
+    pagePath: getPath(data),
     pageData,
     staticQueryContext,
     ...data.templateDetails.assets,

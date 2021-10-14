@@ -53,8 +53,10 @@ exports.onPostBuild = async (
   for (const [pathname, page] of pages) {
     if (page.mode && page.mode !== `SSG`) {
       index++
-      batch[generateHtmlPath(``, pathname)] = page.mode
-      batch[generatePageDataPath(``, pathname)] = page.mode
+
+      const fullPathName = page.matchPath ? page.matchPath : pathname
+      batch[generateHtmlPath(``, fullPathName)] = page.mode
+      batch[generatePageDataPath(``, fullPathName)] = page.mode
 
       if (index % 1000 === 0) {
         await emitRoutes(batch)

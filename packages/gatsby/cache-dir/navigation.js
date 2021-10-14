@@ -85,7 +85,7 @@ const navigate = (to, options = {}) => {
     })
   }, 1000)
 
-  loader.loadPage(pathname).then(pageResources => {
+  loader.loadPage(pathname + search).then(pageResources => {
     // If no page resources, then refresh the page
     // Do this, rather than simply `window.location.reload()`, so that
     // pressing the back/forward buttons work - otherwise when pressing
@@ -102,10 +102,6 @@ const navigate = (to, options = {}) => {
     // If the loaded page has a different compilation hash to the
     // window, then a rebuild has occurred on the server. Reload.
     if (process.env.NODE_ENV === `production` && pageResources) {
-      // window.___webpackCompilationHash gets set in production-app.js after navigationInit() is called
-      // So on a direct visit of a page with a browser redirect this check is truthy and thus the codepath is hit
-      // While the resource actually exists, but only too late
-      // TODO: This should probably be fixed by setting ___webpackCompilationHash before navigationInit() is called
       if (
         pageResources.page.webpackCompilationHash !==
         window.___webpackCompilationHash
@@ -172,9 +168,6 @@ function init() {
   window.___push = to => navigate(to, { replace: false })
   window.___replace = to => navigate(to, { replace: true })
   window.___navigate = (to, options) => navigate(to, options)
-
-  // Check for initial page-load redirect
-  maybeRedirect(window.location.pathname)
 }
 
 class RouteAnnouncer extends React.Component {

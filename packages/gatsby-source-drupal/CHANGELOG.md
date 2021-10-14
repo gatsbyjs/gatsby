@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@4.14.1/packages/gatsby-source-drupal) (2021-10-06)
+
+#### Features
+
+- port hot-fixes for Drupal/Gatsby customer to package fixes [#33419](https://github.com/gatsbyjs/gatsby/issues/33419) fixes [#33435](https://github.com/gatsbyjs/gatsby/issues/33435) ([d0a152f](https://github.com/gatsbyjs/gatsby/commit/d0a152ffc43b1a1eb58221f8f13baa3e9464aa69))
+
+#### Bug Fixes
+
+- Add tests for meta.count support & fix bug with i18n fix [#33423](https://github.com/gatsbyjs/gatsby/issues/33423) fix [#33440](https://github.com/gatsbyjs/gatsby/issues/33440) ([aae86b5](https://github.com/gatsbyjs/gatsby/commit/aae86b5a44754b714823691b6f74053bde822b80))
+
 ## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@4.14.0/packages/gatsby-source-drupal) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
