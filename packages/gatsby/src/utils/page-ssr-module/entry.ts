@@ -187,7 +187,8 @@ export async function getData({
 
   if (getDataWrapperActivity) {
     getDataWrapperActivity.end()
-    
+  }
+
   let searchString = ``
   if (req?.query) {
     const maybeQueryString = Object.entries(req.query)
