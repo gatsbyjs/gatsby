@@ -484,6 +484,10 @@ Gatsby provides several actions available in `sourceNodes` and `onCreateNode` AP
 - [deleteNode](/docs/reference/config-files/actions/#deleteNode)
 - [createNodeField](/docs/reference/config-files/actions/#createNodeField)
 
+### `___NODE` convention
+
+Please note that the [deprecation of the `___NODE` convention](#___node-convention-is-deprecated) especially affects source plugins and for Gatsby v5 you'll need to update your usage to keep compatibility.
+
 ### No support for circular references in data
 
 The current state persistence mechanism supported circular references in nodes. With Gatsby 4 and LMDB this is no longer supported.
