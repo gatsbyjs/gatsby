@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
+    "skipLibCheck": true,
     "strictBindCallApply": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
@@ -13,7 +15,11 @@
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "typeRoots": ["./types", "**/node_modules/@types", "node_modules/@types"],
+    "paths": {
+      "@reach/router/*": ["./node_modules/@gatsbyjs/reach-router/*"]
+    }
   },
   "exclude": ["peril/*", "examples/*"]
 }

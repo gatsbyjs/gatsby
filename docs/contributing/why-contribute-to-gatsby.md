@@ -6,7 +6,7 @@ There are many reasons to contribute to Gatsby.js and open source software in ge
 
 - **Growing your community.** Working with Gatsby.js in open source can connect you with people working on similar things. You can get help or give help, and you might even make an IRL acquaintance! It has happened.
 
-- **Improving your skills.** When you work on a Gatsby issue or pull request, inevitably you'll learn more about how something works in the project; either by asking questions and gathering info or by digging deeper into the code yourself. Gatsby.js also offers free [pair programming sessions](/contributing/pair-programming/) to the community, if there's something you'd like to work on together. There's a skill-building benefit to contributing to OSS!
+- **Improving your skills.** When you work on a Gatsby issue or pull request, inevitably you'll learn more about how something works in the project; either by asking questions and gathering info or by digging deeper into the code yourself. There's a skill-building benefit to contributing to OSS!
 
 - **Getting free swag!** By participating in the repo on GitHub, you can become eligible for free swag that the Gatsby team offers as a way to say thank you. With 5 contributions, you can advance to a second level with even more swag options! Learn more about this [sweet swag deal](/contributing/contributor-swag/).
 

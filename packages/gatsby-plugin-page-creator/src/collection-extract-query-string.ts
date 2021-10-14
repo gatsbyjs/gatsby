@@ -1,6 +1,6 @@
 import { generateQueryFromString } from "./extract-query"
 import fs from "fs-extra"
-import { Reporter } from "gatsby"
+import { Reporter } from "gatsby/reporter"
 import { extractModel } from "./path-utils"
 import { CODES, prefixId } from "./error-utils"
 

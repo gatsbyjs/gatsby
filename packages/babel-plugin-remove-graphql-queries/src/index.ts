@@ -4,6 +4,7 @@ import graphql from "gatsby/graphql"
 import { murmurhash } from "./murmur"
 import nodePath from "path"
 import { NodePath, PluginObj } from "@babel/core"
+import { slash } from "gatsby-core-utils"
 import { Binding } from "babel__traverse"
 import {
   CallExpression,
@@ -137,8 +138,10 @@ function getTagImport(tag: NodePath<Identifier>): NodePath | null {
     path.isVariableDeclarator() &&
     (path.get(`init`) as NodePath).isCallExpression() &&
     (path.get(`init.callee`) as NodePath).isIdentifier({ name: `require` }) &&
-    ((path.get(`init`) as NodePath<CallExpression>).node
-      .arguments[0] as StringLiteral).value === `gatsby`
+    (
+      (path.get(`init`) as NodePath<CallExpression>).node
+        .arguments[0] as StringLiteral
+    ).value === `gatsby`
   ) {
     const id = path.get(`id`) as NodePath
     if (id.isObjectPattern()) {
@@ -274,8 +277,7 @@ export default function ({ types: t }): PluginObj {
           JSXIdentifier(path2: NodePath<JSXIdentifier>): void {
             if (
               (process.env.NODE_ENV === `test` ||
-                state.opts.stage === `develop-html` ||
-                state.opts.stage === `build-html`) &&
+                state.opts.stage === `develop-html`) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
               path2.referencesImport(`gatsby`, ``) &&
               path2.parent.type !== `JSXClosingElement`
@@ -294,18 +296,19 @@ export default function ({ types: t }): PluginObj {
                 )
               )
               // Add import
-              const importDefaultSpecifier = t.importDefaultSpecifier(
-                identifier
-              )
+              const importDefaultSpecifier =
+                t.importDefaultSpecifier(identifier)
               const importDeclaration = t.importDeclaration(
                 [importDefaultSpecifier],
                 t.stringLiteral(
-                  filename
-                    ? nodePath.relative(
-                        nodePath.parse(filename).dir,
-                        resultPath
-                      )
-                    : shortResultPath
+                  slash(
+                    filename
+                      ? nodePath.relative(
+                          nodePath.dirname(filename),
+                          resultPath
+                        )
+                      : shortResultPath
+                  )
                 )
               )
               path.node.body.unshift(importDeclaration)
@@ -317,8 +320,7 @@ export default function ({ types: t }): PluginObj {
           CallExpression(path2: NodePath<CallExpression>): void {
             if (
               (process.env.NODE_ENV === `test` ||
-                state.opts.stage === `develop-html` ||
-                state.opts.stage === `build-html`) &&
+                state.opts.stage === `develop-html`) &&
               isUseStaticQuery(path2)
             ) {
               const identifier = t.identifier(`staticQueryData`)
@@ -336,9 +338,9 @@ export default function ({ types: t }): PluginObj {
               // cannot remove all 'gatsby' imports.
               if (path2.node.callee.type !== `MemberExpression`) {
                 // Remove imports to useStaticQuery
-                const importPath = (path2.scope.getBinding(
-                  `useStaticQuery`
-                ) as Binding).path
+                const importPath = (
+                  path2.scope.getBinding(`useStaticQuery`) as Binding
+                ).path
                 const parent = importPath.parentPath
                 if (importPath.isImportSpecifier())
                   if (
@@ -355,18 +357,19 @@ export default function ({ types: t }): PluginObj {
               )
 
               // Add import
-              const importDefaultSpecifier = t.importDefaultSpecifier(
-                identifier
-              )
+              const importDefaultSpecifier =
+                t.importDefaultSpecifier(identifier)
               const importDeclaration = t.importDeclaration(
                 [importDefaultSpecifier],
                 t.stringLiteral(
-                  filename
-                    ? nodePath.relative(
-                        nodePath.parse(filename).dir,
-                        resultPath
-                      )
-                    : shortResultPath
+                  slash(
+                    filename
+                      ? nodePath.relative(
+                          nodePath.dirname(filename),
+                          resultPath
+                        )
+                      : shortResultPath
+                  )
                 )
               )
               path.node.body.unshift(importDeclaration)

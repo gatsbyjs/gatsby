@@ -1,41 +1,47 @@
-const fs = require(`fs`)
-const path = require(`path`)
-const crypto = require(`crypto`)
-
-const Promise = require(`bluebird`)
-const {
-  GraphQLObjectType,
+// @ts-check
+import { stripIndent } from "common-tags"
+import fs from "fs-extra"
+import { fetchRemoteFile } from "gatsby-core-utils"
+import {
   GraphQLBoolean,
-  GraphQLString,
-  GraphQLInt,
   GraphQLFloat,
+  GraphQLInt,
+  GraphQLJSON,
+  GraphQLList,
   GraphQLNonNull,
-} = require(`gatsby/graphql`)
-const qs = require(`qs`)
-const base64Img = require(`base64-img`)
-
-const cacheImage = require(`./cache-image`)
+  GraphQLObjectType,
+  GraphQLString,
+} from "gatsby/graphql"
+import sortBy from "lodash/sortBy"
+import path from "path"
+import { URLSearchParams } from "url"
+import {
+  ImageCropFocusType,
+  ImageFormatType,
+  ImageLayoutType,
+  ImagePlaceholderType,
+  ImageResizingBehavior,
+} from "./schemes"
 
 // By default store the images in `.cache` but allow the user to override
 // and store the image cache away from the gatsby cache. After all, the gatsby
 // cache is more likely to go stale than the images (which never go stale)
 // Note that the same image might be requested multiple times in the same run
 
-if (process.env.GATSBY_REMOTE_CACHE) {
-  console.warn(
-    `Note: \`GATSBY_REMOTE_CACHE\` will be removed soon because it has been renamed to \`GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE\``
-  )
-}
-if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE) {
-  console.warn(
-    `Please be aware that the \`GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE\` env flag is not officially supported and could be removed at any time`
-  )
-}
-const REMOTE_CACHE_FOLDER =
-  process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_REMOTE_CACHE ??
-  process.env.GATSBY_REMOTE_CACHE ??
-  path.join(process.cwd(), `.cache/remote_cache`)
-const CACHE_IMG_FOLDER = path.join(REMOTE_CACHE_FOLDER, `images`)
+// Supported Image Formats from https://www.contentful.com/developers/docs/references/images-api/#/reference/changing-formats/image-format
+const validImageFormats = new Set([`jpg`, `png`, `webp`, `gif`])
+
+const mimeTypeExtensions = new Map([
+  [`image/jpeg`, `.jpg`],
+  [`image/jpg`, `.jpg`],
+  [`image/gif`, `.gif`],
+  [`image/png`, `.png`],
+  [`image/webp`, `.webp`],
+])
+
+exports.mimeTypeExtensions = mimeTypeExtensions
+
+const isImage = image => mimeTypeExtensions.has(image?.file?.contentType)
 
 // Promises that rejected should stay in this map. Otherwise remove promise and put their data in resolvedBase64Cache
 const inFlightBase64Cache = new Map()
@@ -43,27 +49,32 @@ const inFlightBase64Cache = new Map()
 // The images are based on urls with w=20 and should be relatively small (<2kb) but it does stick around in memory
 const resolvedBase64Cache = new Map()
 
-const {
-  ImageFormatType,
-  ImageResizingBehavior,
-  ImageCropFocusType,
-} = require(`./schemes`)
-
 // @see https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-width-&-height
 const CONTENTFUL_IMAGE_MAX_SIZE = 4000
 
-const isImage = image =>
-  [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`].includes(
-    image?.file?.contentType
-  )
-
 // Note: this may return a Promise<body>, body (sync), or null
-const getBase64Image = imageProps => {
+export const getBase64Image = (imageProps, cache) => {
   if (!imageProps) {
     return null
   }
 
-  const requestUrl = `https:${imageProps.baseUrl}?w=20`
+  // We only support images that are delivered through Contentful's Image API
+  if (imageProps.baseUrl.indexOf(`images.ctfassets.net`) === -1) {
+    return null
+  }
+
+  // Keep aspect ratio, image format and other transform options
+  const { aspectRatio } = imageProps
+  const originalFormat = imageProps.image.file.contentType.split(`/`)[1]
+  const toFormat = imageProps.options.toFormat
+  const imageOptions = {
+    ...imageProps.options,
+    toFormat,
+    width: 20,
+    height: Math.floor(20 * aspectRatio),
+  }
+
+  const requestUrl = createUrl(imageProps.baseUrl, imageOptions)
 
   // Prefer to return data sync if we already have it
   const alreadyFetched = resolvedBase64Cache.get(requestUrl)
@@ -77,42 +88,24 @@ const getBase64Image = imageProps => {
     return inFlight
   }
 
-  // Note: sha1 is unsafe for crypto but okay for this particular case
-  const shasum = crypto.createHash(`sha1`)
-  shasum.update(requestUrl)
-  const urlSha = shasum.digest(`hex`)
+  const loadImage = async () => {
+    const {
+      file: { contentType },
+    } = imageProps.image
 
-  // TODO: Find the best place for this step. This is definitely not it.
-  fs.mkdirSync(CACHE_IMG_FOLDER, { recursive: true })
+    const extension = mimeTypeExtensions.get(contentType)
 
-  const cacheFile = path.join(CACHE_IMG_FOLDER, urlSha + `.base64`)
-
-  if (fs.existsSync(cacheFile)) {
-    // TODO: against dogma, confirm whether readFileSync is indeed slower
-    const promise = fs.promises.readFile(cacheFile, `utf8`)
-    inFlightBase64Cache.set(requestUrl, promise)
-    return promise.then(body => {
-      inFlightBase64Cache.delete(requestUrl)
-      resolvedBase64Cache.set(requestUrl, body)
-      return body
+    const absolutePath = await fetchRemoteFile({
+      url: requestUrl,
+      cache,
+      ext: extension,
     })
+
+    const base64 = (await fs.readFile(absolutePath)).toString(`base64`)
+    return `data:image/${toFormat || originalFormat};base64,${base64}`
   }
 
-  const promise = new Promise((resolve, reject) => {
-    base64Img.requestBase64(requestUrl, (a, b, body) => {
-      // TODO: against dogma, confirm whether writeFileSync is indeed slower
-      fs.promises
-        .writeFile(cacheFile, body)
-        .then(() => resolve(body))
-        .catch(e => {
-          console.error(
-            `Contentful:getBase64Image: failed to write ${body.length} bytes remotely fetched from \`${requestUrl}\` to: \`${cacheFile}\`\nError: ${e}`
-          )
-          reject(e)
-        })
-    })
-  })
-
+  const promise = loadImage()
   inFlightBase64Cache.set(requestUrl, promise)
 
   return promise.then(body => {
@@ -140,25 +133,94 @@ const getBasicImageProps = (image, args) => {
   }
 }
 
-const createUrl = (imgUrl, options = {}) => {
+export const createUrl = (imgUrl, options = {}) => {
+  // If radius is -1, we need to pass `max` to the API
+  const cornerRadius =
+    options.cornerRadius === -1 ? `max` : options.cornerRadius
+
   // Convert to Contentful names and filter out undefined/null values.
   const urlArgs = {
     w: options.width || undefined,
     h: options.height || undefined,
-    fl: options.jpegProgressive ? `progressive` : undefined,
+    fl:
+      options.toFormat === `jpg` && options.jpegProgressive
+        ? `progressive`
+        : undefined,
     q: options.quality || undefined,
     fm: options.toFormat || undefined,
     fit: options.resizingBehavior || undefined,
     f: options.cropFocus || undefined,
     bg: options.background || undefined,
+    r: cornerRadius || undefined,
   }
 
-  // Note: qs will ignore keys that are `undefined`. `qs.stringify({a: undefined, b: null, c: 1})` => `b=&c=1`
-  return `${imgUrl}?${qs.stringify(urlArgs)}`
-}
-exports.createUrl = createUrl
+  const searchParams = new URLSearchParams()
+  for (const paramKey in urlArgs) {
+    if (typeof urlArgs[paramKey] !== `undefined`) {
+      searchParams.append(paramKey, urlArgs[paramKey] ?? ``)
+    }
+  }
 
-const resolveFixed = (image, options) => {
+  return `https:${imgUrl}?${searchParams.toString()}`
+}
+
+export const generateImageSource = (
+  filename,
+  width,
+  height,
+  toFormat,
+  _fit, // We use resizingBehavior instead
+  imageTransformOptions
+) => {
+  const {
+    jpegProgressive,
+    quality,
+    cropFocus,
+    backgroundColor,
+    resizingBehavior,
+    cornerRadius,
+  } = imageTransformOptions
+  // Ensure we stay within Contentfuls Image API limits
+  if (width > CONTENTFUL_IMAGE_MAX_SIZE) {
+    height = Math.floor((height / width) * CONTENTFUL_IMAGE_MAX_SIZE)
+    width = CONTENTFUL_IMAGE_MAX_SIZE
+  }
+
+  if (height > CONTENTFUL_IMAGE_MAX_SIZE) {
+    width = Math.floor((width / height) * CONTENTFUL_IMAGE_MAX_SIZE)
+    height = CONTENTFUL_IMAGE_MAX_SIZE
+  }
+
+  if (!validImageFormats.has(toFormat)) {
+    console.warn(
+      `[gatsby-source-contentful] Invalid image format "${toFormat}". Supported types are jpg, png and webp"`
+    )
+    return undefined
+  }
+
+  const src = createUrl(filename, {
+    width,
+    height,
+    toFormat,
+    resizingBehavior,
+    background: backgroundColor?.replace(`#`, `rgb:`),
+    quality,
+    jpegProgressive,
+    cropFocus,
+    cornerRadius,
+  })
+  return { width, height, format: toFormat, src }
+}
+
+const fitMap = new Map([
+  [`pad`, `contain`],
+  [`fill`, `cover`],
+  [`scale`, `fill`],
+  [`crop`, `cover`],
+  [`thumb`, `cover`],
+])
+
+export const resolveFixed = (image, options) => {
   if (!isImage(image)) return null
 
   const { baseUrl, width, aspectRatio } = getBasicImageProps(image, options)
@@ -211,8 +273,11 @@ const resolveFixed = (image, options) => {
     )
   })
 
+  // Sort sizes for prettiness.
+  const sortedSizes = sortBy(filteredSizes)
+
   // Create the srcSet.
-  const srcSet = filteredSizes
+  const srcSet = sortedSizes
     .map((size, i) => {
       let resolution
       switch (i) {
@@ -239,7 +304,8 @@ const resolveFixed = (image, options) => {
     })
     .join(`,\n`)
 
-  let pickedHeight, pickedWidth
+  let pickedHeight
+  let pickedWidth
   if (options.height) {
     pickedHeight = options.height
     pickedWidth = options.height * desiredAspectRatio
@@ -260,9 +326,8 @@ const resolveFixed = (image, options) => {
     srcSet,
   }
 }
-exports.resolveFixed = resolveFixed
 
-const resolveFluid = (image, options) => {
+export const resolveFluid = (image, options) => {
   if (!isImage(image)) return null
 
   const { baseUrl, width, aspectRatio } = getBasicImageProps(image, options)
@@ -316,17 +381,19 @@ const resolveFluid = (image, options) => {
 
   // Add the original image (if it isn't already in there) to ensure the largest image possible
   // is available for small images.
-  const pwidth = parseInt(width, 10)
   if (
-    !filteredSizes.includes(pwidth) &&
-    pwidth < CONTENTFUL_IMAGE_MAX_SIZE &&
-    Math.round(pwidth / desiredAspectRatio) < CONTENTFUL_IMAGE_MAX_SIZE
+    !filteredSizes.includes(width) &&
+    width < CONTENTFUL_IMAGE_MAX_SIZE &&
+    Math.round(width / desiredAspectRatio) < CONTENTFUL_IMAGE_MAX_SIZE
   ) {
-    filteredSizes.push(pwidth)
+    filteredSizes.push(width)
   }
 
+  // Sort sizes for prettiness.
+  const sortedSizes = sortBy(filteredSizes)
+
   // Create the srcSet.
-  const srcSet = filteredSizes
+  const srcSet = sortedSizes
     .map(width => {
       const h = Math.round(width / desiredAspectRatio)
       return `${createUrl(image.file.url, {
@@ -349,9 +416,8 @@ const resolveFluid = (image, options) => {
     sizes: options.sizes,
   }
 }
-exports.resolveFluid = resolveFluid
 
-const resolveResize = (image, options) => {
+export const resolveResize = (image, options) => {
   if (!isImage(image)) return null
 
   const { baseUrl, aspectRatio } = getBasicImageProps(image, options)
@@ -369,8 +435,8 @@ const resolveResize = (image, options) => {
     }
   }
 
-  let pickedHeight = options.height,
-    pickedWidth = options.width
+  let pickedHeight = options.height
+  let pickedWidth = options.width
 
   if (pickedWidth === undefined) {
     pickedWidth = pickedHeight * aspectRatio
@@ -389,18 +455,14 @@ const resolveResize = (image, options) => {
   }
 }
 
-exports.resolveResize = resolveResize
-
-const fixedNodeType = ({ name, getTracedSVG }) => {
+const fixedNodeType = ({ name, getTracedSVG, cache }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
       fields: {
         base64: {
           type: GraphQLString,
-          resolve(imageProps) {
-            return getBase64Image(imageProps)
-          },
+          resolve: imageProps => getBase64Image(imageProps, cache),
         },
         tracedSVG: {
           type: GraphQLString,
@@ -413,7 +475,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
         srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
-          resolve({ image, options, context }) {
+          resolve({ image, options }) {
             if (
               image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
@@ -430,7 +492,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
         },
         srcSetWebp: {
           type: GraphQLString,
-          resolve({ image, options, context }) {
+          resolve({ image, options }) {
             if (
               image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
@@ -469,6 +531,13 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
         type: ImageCropFocusType,
         defaultValue: null,
       },
+      cornerRadius: {
+        type: GraphQLInt,
+        defaultValue: 0,
+        description: stripIndent`
+         Desired corner radius in pixels. Results in an image with rounded corners.
+         Pass \`-1\` for a full circle/ellipse.`,
+      },
       background: {
         type: GraphQLString,
         defaultValue: null,
@@ -488,16 +557,14 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
   }
 }
 
-const fluidNodeType = ({ name, getTracedSVG }) => {
+const fluidNodeType = ({ name, getTracedSVG, cache }) => {
   return {
     type: new GraphQLObjectType({
       name: name,
       fields: {
         base64: {
           type: GraphQLString,
-          resolve(imageProps) {
-            return getBase64Image(imageProps)
-          },
+          resolve: imageProps => getBase64Image(imageProps, cache),
         },
         tracedSVG: {
           type: GraphQLString,
@@ -508,7 +575,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
         srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
-          resolve({ image, options, context }) {
+          resolve({ image, options }) {
             if (
               image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
@@ -525,7 +592,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
         },
         srcSetWebp: {
           type: GraphQLString,
-          resolve({ image, options, context }) {
+          resolve({ image, options }) {
             if (
               image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
@@ -565,6 +632,13 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
         type: ImageCropFocusType,
         defaultValue: null,
       },
+      cornerRadius: {
+        type: GraphQLInt,
+        defaultValue: 0,
+        description: stripIndent`
+         Desired corner radius in pixels. Results in an image with rounded corners.
+         Pass \`-1\` for a full circle/ellipse.`,
+      },
       background: {
         type: GraphQLString,
         defaultValue: null,
@@ -587,25 +661,33 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
   }
 }
 
-exports.extendNodeType = ({ type, store, cache, getNodesByType }) => {
+export async function setFieldsOnGraphQLNodeType({ type, cache }) {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
 
   const getTracedSVG = async args => {
-    const { traceSVG } = require(`gatsby-plugin-sharp`)
+    const { traceSVG } = await import(`gatsby-plugin-sharp`)
 
     const { image, options } = args
     const {
-      file: { contentType },
+      file: { contentType, url: imgUrl, fileName },
     } = image
 
     if (contentType.indexOf(`image/`) !== 0) {
       return null
     }
 
-    const absolutePath = await cacheImage(store, image, options)
-    const extension = path.extname(absolutePath)
+    const extension = mimeTypeExtensions.get(contentType)
+    const url = createUrl(imgUrl, options)
+    const name = path.basename(fileName, extension)
+
+    const absolutePath = await fetchRemoteFile({
+      url,
+      name,
+      cache,
+      ext: extension,
+    })
 
     return traceSVG({
       file: {
@@ -619,32 +701,209 @@ exports.extendNodeType = ({ type, store, cache, getNodesByType }) => {
     })
   }
 
-  // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
-  const fixedNode = fixedNodeType({ name: `ContentfulFixed`, getTracedSVG })
-  const resolutionsNode = fixedNodeType({
-    name: `ContentfulResolutions`,
-    getTracedSVG,
-  })
-  resolutionsNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fixed" https://example.com/write-docs-and-fix-this-example-link`
+  const getDominantColor = async ({ image, options }) => {
+    let pluginSharp
 
-  const fluidNode = fluidNodeType({ name: `ContentfulFluid`, getTracedSVG })
-  const sizesNode = fluidNodeType({ name: `ContentfulSizes`, getTracedSVG })
-  sizesNode.deprecationReason = `Sizes was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
+    try {
+      pluginSharp = await import(`gatsby-plugin-sharp`)
+    } catch (e) {
+      console.error(
+        `[gatsby-source-contentful] Please install gatsby-plugin-sharp`,
+        e
+      )
+      return `rgba(0,0,0,0.5)`
+    }
+
+    try {
+      const {
+        file: { contentType, url: imgUrl, fileName },
+      } = image
+
+      if (contentType.indexOf(`image/`) !== 0) {
+        return null
+      }
+
+      // 256px should be enough to properly detect the dominant color
+      if (!options.width) {
+        options.width = 256
+      }
+
+      const extension = mimeTypeExtensions.get(contentType)
+      const url = createUrl(imgUrl, options)
+      const name = path.basename(fileName, extension)
+
+      const absolutePath = await fetchRemoteFile({
+        url,
+        name,
+        cache,
+        ext: extension,
+      })
+
+      if (!(`getDominantColor` in pluginSharp)) {
+        console.error(
+          `[gatsby-source-contentful] Please upgrade gatsby-plugin-sharp`
+        )
+        return `rgba(0,0,0,0.5)`
+      }
+
+      return pluginSharp.getDominantColor(absolutePath)
+    } catch (e) {
+      console.error(
+        `[gatsby-source-contentful] Could not getDominantColor from image`,
+        e
+      )
+      return `rgba(0,0,0,0.5)`
+    }
+  }
+
+  const resolveGatsbyImageData = async (image, options) => {
+    if (!isImage(image)) return null
+
+    const { generateImageData } = await import(`gatsby-plugin-image`)
+
+    const { baseUrl, contentType, width, height } = getBasicImageProps(
+      image,
+      options
+    )
+    let [, format] = contentType.split(`/`)
+    if (format === `jpeg`) {
+      format = `jpg`
+    }
+    const imageProps = generateImageData({
+      ...options,
+      pluginName: `gatsby-source-contentful`,
+      sourceMetadata: { width, height, format },
+      filename: baseUrl,
+      generateImageSource,
+      fit: fitMap.get(options.resizingBehavior),
+      options,
+    })
+
+    let placeholderDataURI = null
+
+    if (options.placeholder === `dominantColor`) {
+      imageProps.backgroundColor = await getDominantColor({
+        image,
+        options,
+      })
+    }
+
+    if (options.placeholder === `blurred`) {
+      placeholderDataURI = await getBase64Image(
+        {
+          baseUrl,
+          image,
+          options,
+        },
+        cache
+      )
+    }
+
+    if (options.placeholder === `tracedSVG`) {
+      placeholderDataURI = await getTracedSVG({
+        image,
+        options,
+      })
+    }
+
+    if (placeholderDataURI) {
+      imageProps.placeholder = { fallback: placeholderDataURI }
+    }
+
+    return imageProps
+  }
+
+  const fixedNode = fixedNodeType({
+    name: `ContentfulFixed`,
+    getTracedSVG,
+    cache,
+  })
+
+  const fluidNode = fluidNodeType({
+    name: `ContentfulFluid`,
+    getTracedSVG,
+    cache,
+  })
+
+  // gatsby-plugin-image
+  const getGatsbyImageData = async () => {
+    const { getGatsbyImageFieldConfig } = await import(
+      `gatsby-plugin-image/graphql-utils`
+    )
+
+    const fieldConfig = getGatsbyImageFieldConfig(resolveGatsbyImageData, {
+      jpegProgressive: {
+        type: GraphQLBoolean,
+        defaultValue: true,
+      },
+      resizingBehavior: {
+        type: ImageResizingBehavior,
+      },
+      cropFocus: {
+        type: ImageCropFocusType,
+      },
+      cornerRadius: {
+        type: GraphQLInt,
+        defaultValue: 0,
+        description: stripIndent`
+         Desired corner radius in pixels. Results in an image with rounded corners.
+         Pass \`-1\` for a full circle/ellipse.`,
+      },
+      quality: {
+        type: GraphQLInt,
+        defaultValue: 50,
+      },
+      layout: {
+        type: ImageLayoutType,
+        description: stripIndent`
+            The layout for the image.
+            CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
+            FIXED: A static image size, that does not resize according to the screen width
+            FULL_WIDTH: The image resizes to fit its container, even if that is larger than the source image.
+            Pass a value to "sizes" if the container is not the full width of the screen.
+        `,
+        defaultValue: `constrained`,
+      },
+      placeholder: {
+        type: ImagePlaceholderType,
+        description: stripIndent`
+            Format of generated placeholder image, displayed while the main image loads.
+            BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
+            DOMINANT_COLOR: a solid color, calculated from the dominant color of the image.
+            TRACED_SVG: a low-resolution traced SVG of the image.
+            NONE: no placeholder. Set the argument "backgroundColor" to use a fixed background color.`,
+        defaultValue: `dominantColor`,
+      },
+      formats: {
+        type: GraphQLList(ImageFormatType),
+        description: stripIndent`
+            The image formats to generate. Valid values are AUTO (meaning the same format as the source image), JPG, PNG, and WEBP.
+            The default value is [AUTO, WEBP], and you should rarely need to change this. Take care if you specify JPG or PNG when you do
+            not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying
+            both PNG and JPG is not supported and will be ignored.
+        `,
+        defaultValue: [``, `webp`],
+      },
+    })
+
+    fieldConfig.type = GraphQLJSON
+
+    return fieldConfig
+  }
+
+  const gatsbyImageData = await getGatsbyImageData()
 
   return {
     fixed: fixedNode,
-    resolutions: resolutionsNode,
     fluid: fluidNode,
-    sizes: sizesNode,
+    gatsbyImageData,
     resize: {
       type: new GraphQLObjectType({
         name: `ContentfulResize`,
         fields: {
           base64: {
             type: GraphQLString,
-            resolve(imageProps) {
-              return getBase64Image(imageProps)
-            },
+            resolve: imageProps => getBase64Image(imageProps, cache),
           },
           tracedSVG: {
             type: GraphQLString,
@@ -686,8 +945,15 @@ exports.extendNodeType = ({ type, store, cache, getNodesByType }) => {
           type: GraphQLString,
           defaultValue: null,
         },
+        cornerRadius: {
+          type: GraphQLInt,
+          defaultValue: 0,
+          description: stripIndent`
+         Desired corner radius in pixels. Results in an image with rounded corners.
+         Pass \`-1\` for a full circle/ellipse.`,
+        },
       },
-      resolve(image, options, context) {
+      resolve(image, options) {
         return resolveResize(image, options)
       },
     },

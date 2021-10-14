@@ -12,7 +12,7 @@ const Page = () => {
           src="../../images/cornwall.jpg"
           alt="cornwall"
           formats={["avif"]}
-          maxWidth={1024}
+          width={1024}
         />
       </TestWrapper>
     </Layout>

@@ -5,18 +5,17 @@
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build",
-    "test": "jest --config=../jest.config.js long-term-caching/",
+    "test": "jest",
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "gatsby": "^2.0.118",
+    "gatsby": "^3.0.0-next.0",
     "gray-percentage": "^2.0.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "devDependencies": {
     "babel-plugin-dynamic-import-node-sync": "^2.0.1",
-    "jest": "^24.0.0",
-    "jest-cli": "^24.0.0"
+    "jest": "^24.0.0"
   }
 }

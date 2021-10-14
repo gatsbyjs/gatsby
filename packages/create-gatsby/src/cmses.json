@@ -1,8 +1,11 @@
 {
-  "gatsby-source-wordpress-experimental": { "message": "WordPress" },
+  "gatsby-source-wordpress": { "message": "WordPress" },
   "gatsby-source-contentful": { "message": "Contentful" },
   "gatsby-source-sanity": { "message": "Sanity" },
   "gatsby-source-datocms": { "message": "DatoCMS" },
   "gatsby-source-shopify": { "message": "Shopify" },
-  "gatsby-plugin-netlify-cms": {"message": "Netlify CMS", "dependencies": ["netlify-cms-app"]}
+  "gatsby-plugin-netlify-cms": {
+    "message": "Netlify CMS",
+    "dependencies": ["netlify-cms-app"]
+  }
 }

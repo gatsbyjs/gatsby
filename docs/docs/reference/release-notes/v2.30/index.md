@@ -1,10 +1,7 @@
 ---
 date: "2021-01-05"
 version: "2.30.0"
----
-
-# [v2.30](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.30.0-next.0...gatsby@2.30.0) (January 2021 #1)
-
+title: "v2.30 Release Notes"
 ---
 
 Welcome to `gatsby@2.30.0` release (January 2021 #1)
@@ -13,7 +10,7 @@ Key highlights of this release:
 
 - [Query on Demand and Lazy Images: Generally available](#query-on-demand-and-lazy-images-generally-available) - improves `gatsby develop` bootup time
 - [Server Side Rendering (SSR) in development](#server-side-rendering-ssr-in-development) — helps you find and fix many build errors in development. We're starting a partial release of this feature to 5% of users.
-- [gatsby-plugin-sass v3](#gatsby-plugin-sass300) - use the latest `sass-loader` and `Dart Sass` by default
+- [`gatsby-plugin-sass` v3](#gatsby-plugin-sass300) - use the latest `sass-loader` and `Dart Sass` by default
 - [Image transformations up to 30% faster](#gatsby-plugin-sharp2120)
 
 And several impactful updates in the new [`gatsby-plugin-image`](#gatsby-plugin-image050-beta) (beta):
@@ -76,7 +73,7 @@ module.exports = {
 }
 ```
 
-## gatsby-plugin-sass@3.0.0
+## `gatsby-plugin-sass@3.0.0`
 
 Now that [LibSass and Node Sass are deprecated](https://sass-lang.com/blog/libsass-is-deprecated), we've
 upgraded `sass-loader` to `10.1.0` and thus switched sass implementation to [Dart Sass](https://sass-lang.com/dart-sass).
@@ -92,7 +89,7 @@ See also:
 - https://github.com/gatsbyjs/gatsby/issues/27754
 - https://github.com/gatsbyjs/gatsby/pull/27991
 
-## gatsby-plugin-sharp@2.12.0
+## `gatsby-plugin-sharp@2.12.0`
 
 New approach to concurrency speeds up image transformations up to 30%.
 
@@ -102,11 +99,11 @@ to each image serially.
 
 Another major change is [lazy images in develop](#query-on-demand-and-lazy-images-generally-available).
 
-## gatsby-plugin-image@0.5.0 (beta)
+## `gatsby-plugin-image@0.5.0 (beta)`
 
 ### AVIF support
 
-This release adds beta support for generating and displaying [AVIF images](https://netflixtechblog.com/avif-for-next-generation-image-coding-b1d75675fe4). AVIF is a brand new image format, which offers considerably better filesizes and quality than JPG and even WebP. It is currently [only supported in Chrome](https://caniuse.com/avif), with Firefox support coming soon. However it is safe to use today, because unsupported browsers will fall back to using a supported format.
+This release adds beta support for generating and displaying [AVIF images](https://netflixtechblog.com/avif-for-next-generation-image-coding-b1d75675fe4). AVIF is a brand-new image format, which offers considerably better filesizes and quality than JPG and even WebP. It is currently [only supported in Chrome](https://caniuse.com/avif), with Firefox support coming soon. However it is safe to use today, because unsupported browsers will fall back to using a supported format.
 
 AVIF is not currently enabled by default, so to use it in your site you need to add it to the `formats` array. You should also include auto and WebP to support other browsers. Ensure that you have upgraded to the latest version of `gatsby-plugin-sharp`, `gatsby-transformer-sharp` and `gatsby-plugin-image`, and then use the following syntax:
 
@@ -154,7 +151,7 @@ GATSBY_EXPERIMENTAL_REMOTE_IMAGES=1 gatsby build
 
 You can then pass absolute URLs to `StaticImage`:
 
-```js
+```jsx
 <StaticImage src="https://placekitten.com/400/400" alt="Kittin" />
 ```
 

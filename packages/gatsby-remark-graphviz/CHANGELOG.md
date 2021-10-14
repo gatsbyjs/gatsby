@@ -1,31 +1,182 @@
-# Change Log
+# Changelog: `gatsby-remark-graphviz`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-graphviz@1.8.0-next.0...gatsby-remark-graphviz@1.9.0-next.0) (2020-12-29)
+## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@3.11.0/packages/gatsby-remark-graphviz) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@3.10.0/packages/gatsby-remark-graphviz) (2021-09-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
+
+#### Chores
+
+- re-generate changelogs [#32886](https://github.com/gatsbyjs/gatsby/issues/32886) ([417df15](https://github.com/gatsbyjs/gatsby/commit/417df15230be368a9db91f2ad1a9bc0442733177))
+
+## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@3.9.0/packages/gatsby-remark-graphviz) (2021-08-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
+
+#### Bug Fixes
+
+- update dependency cheerio to ^1.0.0-rc.10 for gatsby-remark-graphviz [#32578](https://github.com/gatsbyjs/gatsby/issues/32578) ([09a4723](https://github.com/gatsbyjs/gatsby/commit/09a4723ae8164abc2341b213df794480fafba264))
+
+#### Chores
+
+- update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
+
+## [3.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@3.8.0/packages/gatsby-remark-graphviz) (2021-08-04)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 **Note:** Version bump only for package gatsby-remark-graphviz
 
-# [1.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-graphviz@1.7.0-next.0...gatsby-remark-graphviz@1.8.0-next.0) (2020-12-10)
+## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@3.7.0/packages/gatsby-remark-graphviz) (2021-07-20)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
+
+#### Chores
+
+- update dependency hast-util-to-html to ^7.1.3 for gatsby-remark-graphviz [#32247](https://github.com/gatsbyjs/gatsby/issues/32247) ([64b9c99](https://github.com/gatsbyjs/gatsby/commit/64b9c991571e3f6da3f510cf3664b3a9f6296aae))
+- update babel monorepo [#32238](https://github.com/gatsbyjs/gatsby/issues/32238) ([466d4c0](https://github.com/gatsbyjs/gatsby/commit/466d4c087bbc96abb942a02c67243bcc9a4f2a0a))
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@3.6.0/packages/gatsby-remark-graphviz) (2021-07-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
 
 **Note:** Version bump only for package gatsby-remark-graphviz
 
-# [1.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-graphviz@1.6.0-next.1...gatsby-remark-graphviz@1.7.0-next.0) (2020-11-26)
+## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@3.5.0/packages/gatsby-remark-graphviz) (2021-06-23)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) ([7d42e8d](https://github.com/gatsbyjs/gatsby/commit/7d42e8d866e46e9c39838d812d080d06433f7060))
+
+### [3.4.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@3.4.1/packages/gatsby-remark-graphviz) (2021-06-10)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) [#31859](https://github.com/gatsbyjs/gatsby/issues/31859) ([8636025](https://github.com/gatsbyjs/gatsby/commit/863602567930a39142ed33d9d1f1813b7dec8686))
+
+## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@3.4.0/packages/gatsby-remark-graphviz) (2021-06-09)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
+
+#### Chores
+
+- update babel monorepo [#31143](https://github.com/gatsbyjs/gatsby/issues/31143) ([701ab2f](https://github.com/gatsbyjs/gatsby/commit/701ab2f6690c3f1bbaf60cf572513ea566cc9ec9))
+
+## [3.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@3.3.0/packages/gatsby-remark-graphviz) (2021-05-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
+
+#### Bug Fixes
+
+- update cheerio snapshots [#31298](https://github.com/gatsbyjs/gatsby/issues/31298) ([e06599d](https://github.com/gatsbyjs/gatsby/commit/e06599d9acc53442f8830b04f8fa2c749a820cc5))
+
+### [3.2.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@3.2.1/packages/gatsby-remark-graphviz) (2021-05-19)
+
+#### Bug Fixes
+
+- update cheerio snapshots [#31298](https://github.com/gatsbyjs/gatsby/issues/31298) [#31483](https://github.com/gatsbyjs/gatsby/issues/31483) ([67a4fce](https://github.com/gatsbyjs/gatsby/commit/67a4fcef4651443cbe89923d4ac80e5600d94c41))
+
+## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@3.2.0/packages/gatsby-remark-graphviz) (2021-05-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
 
 **Note:** Version bump only for package gatsby-remark-graphviz
 
-# [1.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-graphviz@1.6.0-next.0...gatsby-remark-graphviz@1.6.0-next.1) (2020-11-18)
+## [3.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@3.1.0/packages/gatsby-remark-graphviz) (2021-04-28)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
 
 **Note:** Version bump only for package gatsby-remark-graphviz
 
-# [1.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-graphviz@1.5.0-next.0...gatsby-remark-graphviz@1.6.0-next.0) (2020-11-18)
+## [3.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@3.0.0/packages/gatsby-remark-graphviz) (2021-04-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
 
 **Note:** Version bump only for package gatsby-remark-graphviz
 
-# [1.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-graphviz@1.4.0-next.0...gatsby-remark-graphviz@1.4.0-next.1) (2020-11-10)
+## [2.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@2.2.0/packages/gatsby-remark-graphviz) (2021-03-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
 
 **Note:** Version bump only for package gatsby-remark-graphviz
+
+## [2.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@2.1.0/packages/gatsby-remark-graphviz) (2021-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
+
+#### Chores
+
+- update eslint to fix linting issues fix [#29988](https://github.com/gatsbyjs/gatsby/issues/29988) ([5636389](https://github.com/gatsbyjs/gatsby/commit/5636389e8fa626c644e90abc14589e9961d98c68))
+
+## [2.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@2.0.0/packages/gatsby-remark-graphviz) (2021-03-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
+
+**Note:** Version bump only for package gatsby-remark-graphviz
+
+## [1.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@1.10.0/packages/gatsby-remark-graphviz) (2021-02-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
+
+**Note:** Version bump only for package gatsby-remark-graphviz
+
+## [1.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@1.9.0/packages/gatsby-remark-graphviz) (2021-01-20)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
+
+#### Chores
+
+- Fix all `/packages` links to `/plugins` Fix [#28816](https://github.com/gatsbyjs/gatsby/issues/28816) ([200e307](https://github.com/gatsbyjs/gatsby/commit/200e30748102a478267a67700238304a2a56068b))
+
+## [1.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@1.8.0/packages/gatsby-remark-graphviz) (2021-01-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
+
+**Note:** Version bump only for package gatsby-remark-graphviz
+
+## [1.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@1.7.0/packages/gatsby-remark-graphviz) (2020-12-15)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
+
+#### Chores
+
+- update dependency cross-env to ^7.0.3 [#28505](https://github.com/gatsbyjs/gatsby/issues/28505) ([a819b9b](https://github.com/gatsbyjs/gatsby/commit/a819b9bfb663139f7b06c3ed7d6d6069a2382b2c))
+
+## [1.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@1.6.0/packages/gatsby-remark-graphviz) (2020-12-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
+
+#### Chores
+
+- update minor and patch for gatsby-remark-graphviz [#28086](https://github.com/gatsbyjs/gatsby/issues/28086) ([b30ad09](https://github.com/gatsbyjs/gatsby/commit/b30ad09f53b145eacb95961110e01fe18b846e94))
+
+## [1.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@1.5.0/packages/gatsby-remark-graphviz) (2020-11-20)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.27)
+
+#### Chores
+
+- update babel monorepo [#27528](https://github.com/gatsbyjs/gatsby/issues/27528) ([539dbb0](https://github.com/gatsbyjs/gatsby/commit/539dbb09166e346a6cee568973d2de3d936e8ef3))
+
+## [1.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-graphviz@1.4.0/packages/gatsby-remark-graphviz) (2020-11-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.26)
+
+**Note:** Version bump only for package gatsby-remark-graphviz
+
+<a name="before-release-process"></a>
 
 ## [1.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-graphviz@1.3.12...gatsby-remark-graphviz@1.3.13) (2020-10-06)
 

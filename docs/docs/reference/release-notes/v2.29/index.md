@@ -1,10 +1,7 @@
 ---
 date: "2020-12-15"
 version: "2.29.0"
----
-
-# [v2.29](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.29.0-next.0...gatsby@2.29.0) (December 2020 #2)
-
+title: "v2.29 Release Notes"
 ---
 
 Welcome to `gatsby@2.29.0` release (December 2020 #2)
@@ -20,7 +17,7 @@ Other notable changes:
 
 - [Performance improvements](#performance-improvements)
 - [Slugify option for File System Route API](#slugify-option-for-file-system-route-api)
-- [gatsby-image codemod](#gatsby-image-codemod)
+- [`gatsby-image` codemod](#gatsby-image-codemod)
 - [Notable bugfixes](#notable-bugfixes)
 
 **Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
@@ -96,9 +93,9 @@ The regular `gatsby-cli` received a new command to list out all plugins in your 
 
 ## Experimental: Parallel data sourcing
 
-In [v2.28](/docs/reference/release-notes/v2.28#experimental-parallel-data-sourcing) we gave a sneak peak at a new feature that enables parallel data sourcing. As a recap:
+In [v2.28](/docs/reference/release-notes/v2.28#experimental-parallel-data-sourcing) we gave a sneak peek at a new feature that enables parallel data sourcing. As a recap:
 
-> Plugin APIs in Gatsby run serially. Generally this what we want as most API calls are CPU/IO bound so things are fastest letting each plugin have the full undivided attention of your computer. But source plugins are often _network_ bound as they're hitting remote APIs and waiting for responses. We tried [changing the invocation of `sourceNodes` to parallel](https://github.com/gatsbyjs/gatsby/pull/28214) on a few sites with 4+ source plugins and saw a big speedup on sourcing (40%+) as they were no longer waiting on each other to start their API calls.
+> Plugin APIs in Gatsby run serially. Generally this is what we want as most API calls are CPU/IO bound so things are fastest letting each plugin have the full undivided attention of your computer. But source plugins are often _network_ bound as they're hitting remote APIs and waiting for responses. We tried [changing the invocation of `sourceNodes` to parallel](https://github.com/gatsbyjs/gatsby/pull/28214) on a few sites with 4+ source plugins and saw a big speedup on sourcing (40%+) as they were no longer waiting on each other to start their API calls.
 
 You're now able to activate this experiment in the stable release of Gatsby by adding a flag to your `gatsby-config.js`:
 
@@ -131,7 +128,7 @@ We were able to ship a bunch of performance improvements both to Gatsby itself a
 
 The File System Route API uses [slugify](https://github.com/sindresorhus/slugify) to create slugs for the generated routes. You're now able to pass custom options to that instance, e.g. when you want to change the separator. The full details are listed in the [README](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator) of `gatsby-plugin-page-creator`.
 
-## gatsby-image codemod
+## `gatsby-image` codemod
 
 We introduced some API changes for working with images when we published the new `gatsby-plugin-image` in [v2.26](/docs/reference/release-notes/v2.26#gatsby-plugin-image010-beta). In order to make it easier to migrate your code to work with the new plugin, we've created a codemod. Follow the migration instructions in the [README](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image#upgrading-from-the-gatsby-image2) in order to run the codemod against your project.
 

@@ -12,9 +12,9 @@ export async function calculateDirtyQueries({
 }> {
   assertStore(store)
   const state = store.getState()
-  const queryIds = calcDirtyQueryIds(state)
+  const queryIds: Array<string> = calcDirtyQueryIds(state)
 
-  let queriesToRun: Array<string> = queryIds
+  let queriesToRun = queryIds
 
   if (
     process.env.gatsby_executing_command === `develop` &&

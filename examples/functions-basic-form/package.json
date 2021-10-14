@@ -1,0 +1,23 @@
+{
+  "name": "form",
+  "version": "1.0.0",
+  "private": true,
+  "description": "form",
+  "author": "Kyle Mathews",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "gatsby": "next",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-hook-form": "^7.5.2"
+  }
+}

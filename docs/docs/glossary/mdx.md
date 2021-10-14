@@ -47,10 +47,10 @@ You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.com/)
 <Figure data="chart.svg" caption="MDX adoption has increased 120% since last year." />
 ```
 
-If you're creating a Gatsby site from scratch, the [gatsby-starter-mdx-basic](https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic) is the fastest way to add MDX support. Use the Gatsby [CLI](/docs/glossary/#cli) to create a new project with this starter as a base.
+If you're creating a Gatsby site from scratch, the [gatsby-starter-mdx-basic](https://github.com/gatsbyjs/gatsby-starter-mdx-basic) is the fastest way to add MDX support. Use the Gatsby [CLI](/docs/glossary/#cli) to create a new project with this starter as a base.
 
 ```shell
-gatsby new my-mdx-starter https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic
+gatsby new my-mdx-starter https://github.com/gatsbyjs/gatsby-starter-mdx-basic
 ```
 
 To use MDX with an existing Gatsby site, add the [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/?=gatsby-plugin-mdx) plugin. As with Gatsby itself, you can install it using [npm](/docs/glossary/#npm). You'll also need to install MDX itself, and the React implementation of MDX.

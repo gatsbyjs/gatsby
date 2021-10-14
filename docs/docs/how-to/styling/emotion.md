@@ -1,5 +1,8 @@
 ---
 title: Emotion
+examples:
+  - label: Using Emotion
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-emotion"
 ---
 
 In this guide, you will learn how to set up a site with the CSS-in-JS library [Emotion](https://emotion.sh).

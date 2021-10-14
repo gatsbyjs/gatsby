@@ -31,13 +31,13 @@ module.exports = (
     return aliases[lower] || lower
   }
 
-  //Load language extension if defined
+  // Load language extension if defined
   loadLanguageExtension(languageExtensions)
 
   visit(markdownAST, `code`, node => {
     let language = node.meta ? node.lang + node.meta : node.lang
     let diffLanguage
-    let {
+    const {
       splitLanguage,
       highlightLines,
       showLineNumbersLocal,
@@ -98,7 +98,9 @@ module.exports = (
       diffLanguage
     )
 
-    let numLinesStyle, numLinesClass, numLinesNumber
+    let numLinesStyle
+    let numLinesClass
+    let numLinesNumber
     numLinesStyle = numLinesClass = numLinesNumber = ``
     if (showLineNumbers) {
       numLinesStyle = ` style="counter-reset: linenumber ${
@@ -137,7 +139,10 @@ module.exports = (
       let languageName = `text`
 
       if (inlineCodeMarker) {
-        let [language, restOfValue] = node.value.split(`${inlineCodeMarker}`, 2)
+        const [language, restOfValue] = node.value.split(
+          `${inlineCodeMarker}`,
+          2
+        )
         if (language && restOfValue) {
           languageName = normalizeLanguage(language)
           node.value = restOfValue

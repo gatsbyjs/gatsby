@@ -89,7 +89,11 @@ describe(`Print type definitions`, () => {
       type OneMoreTest implements Node @infer {
         bar: Boolean
       }
-      interface ITest @nodeInterface {
+      interface ITest implements Node {
+        id: ID!
+        date: Date @dateformat(formatString: "YYYY")
+      }
+      interface ITest2 implements Node {
         id: ID!
         date: Date @dateformat(formatString: "YYYY")
       }

@@ -682,7 +682,7 @@ Here's an example with a class named `.my-class-name`:
 
 ```diff
 import React from "react"
-import myStyles from "./my.module.css"
+import * as myStyles from "./my.module.css"
 
 export default function Component({ children }) (
 -  <div className={myStyles['my-class-name']}>
@@ -1042,7 +1042,7 @@ Here's a brief section on starting a new project with Gatsby v2 instead of upgra
 
 _Start from scratch:_ If you're a _start from scratch_ kind of person, you can install Gatsby and React like this: `npm install gatsby react react-dom`
 
-_Tutorial:_ If you'd like a step-by-step guide, [follow the tutorial](/tutorial/) to get started with Gatsby v2.
+_Tutorial:_ If you'd like a step-by-step guide, [follow the tutorial](/docs/tutorial/) to get started with Gatsby v2.
 
 _Starters:_ If you'd rather use one of the official starters, install your favorite one with the Gatsby CLI.
 

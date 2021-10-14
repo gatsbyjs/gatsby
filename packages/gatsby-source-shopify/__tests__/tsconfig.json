@@ -1,0 +1,6 @@
+{
+  "include": ["../**/*.ts"],
+  "compilerOptions": {
+    "outDir": "../temp"
+  }
+}

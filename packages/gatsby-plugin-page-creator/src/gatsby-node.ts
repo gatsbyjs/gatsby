@@ -23,6 +23,19 @@ import { derivePath } from "./derive-path"
 import { validatePathQuery } from "./validate-path-query"
 import { CODES, ERROR_MAP, prefixId } from "./error-utils"
 
+let coreSupportsOnPluginInit: `unstable` | `stable` | undefined
+
+try {
+  const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
+  if (isGatsbyNodeLifecycleSupported(`onPluginInit`)) {
+    coreSupportsOnPluginInit = `stable`
+  } else if (isGatsbyNodeLifecycleSupported(`unstable_onPluginInit`)) {
+    coreSupportsOnPluginInit = `unstable`
+  }
+} catch (e) {
+  console.error(`Could not check if Gatsby supports onPluginInit lifecycle`)
+}
+
 interface IOptions extends PluginOptions {
   path: string
   pathCheck?: boolean
@@ -166,7 +179,7 @@ Please pick a path to an existing directory.`,
 export function setFieldsOnGraphQLNodeType(
   { getNode, type, store, reporter }: SetFieldsOnGraphQLNodeTypeArgs,
   { slugify: slugifyOptions }: PluginOptions & { slugify: ISlugifyOptions }
-): object {
+): Record<string, unknown> {
   try {
     const extensions = store.getState().program.extensions
     const collectionQuery = _.camelCase(`all ${type.name}`)
@@ -180,7 +193,7 @@ export function setFieldsOnGraphQLNodeType(
             },
           },
           resolve: (
-            source: object,
+            source: Record<string, unknown>,
             { filePath }: { filePath: string }
           ): string => {
             // This is a quick hack for attaching parents to the node.
@@ -221,7 +234,7 @@ export function setFieldsOnGraphQLNodeType(
   }
 }
 
-export async function onPreInit(
+async function initializePlugin(
   { reporter }: ParentSpanPluginArgs,
   { path: pagesPath }: IOptions
 ): Promise<void> {
@@ -264,4 +277,13 @@ export async function onPreInit(
       },
     })
   }
+}
+
+if (coreSupportsOnPluginInit === `stable`) {
+  // need to conditionally export otherwise it throws an error for older versions
+  exports.onPluginInit = initializePlugin
+} else if (coreSupportsOnPluginInit === `unstable`) {
+  exports.unstable_onPluginInit = initializePlugin
+} else {
+  exports.onPreInit = initializePlugin
 }

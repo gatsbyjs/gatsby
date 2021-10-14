@@ -2,11 +2,17 @@
 title: Gatsby Link API
 ---
 
-For internal navigation, Gatsby includes a built-in `<Link>` component as well as a `navigate` function which is used for programmatic navigation.
-
-Gatsby's `<Link>` component enables linking to internal pages as well as a powerful performance feature called preloading. Preloading is used to prefetch resources so that the resources are fetched by the time the user navigates with this component. We use an `IntersectionObserver` to fetch a low-priority request when the `Link` is in the viewport and then use an `onMouseOver` event to trigger a high-priority request when it is likely that a user will navigate to the requested resource.
+For internal navigation, Gatsby includes a built-in `<Link>` component for creating links between internal pages as well as a `navigate` function for programmatic navigation.
 
 The component is a wrapper around [@reach/router's Link component](https://reach.tech/router/api/Link) that adds useful enhancements specific to Gatsby. All props are passed through to @reach/router's `Link` component.
+
+## `<Link>` drives Gatsby's fast page navigation
+
+The `<Link>` component drives a powerful performance feature called preloading. Preloading is used to prefetch page resources so that the resources are available by the time the user navigates to the page. We use the browser's [`Intersection Observer API`](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to observe when a `<Link>` component enters the user viewport and then start a low-priority request for the linked page's resources. Then when a user moves their mouse over a link and the `onMouseOver` event is triggered, we upgrade the fetches to high-priority.
+
+This two stage preloading helps ensure the page is ready to be rendered as soon as the user clicks to navigate.
+
+Intelligent preloading like this eliminates the latency users experience when clicking on links in sites built in most other frameworks.
 
 ## How to use Gatsby Link
 
@@ -17,7 +23,14 @@ The component is a wrapper around [@reach/router's Link component](https://reach
 
 ### Replace `a` tags with the `Link` tag for local links
 
-In any situation where you want to link between pages on the same site, use the `Link` component instead of an `a` tag.
+In any situation where you want to link between pages on the same site, use the `Link` component instead of an `a` tag. The two elements work much the same except `href` is now `to`.
+
+```diff
+-<a href="/blog">Blog</a>
++<Link to="/blog">Blog</Link>
+```
+
+A full example:
 
 ```jsx
 import React from "react"

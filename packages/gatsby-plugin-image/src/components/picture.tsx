@@ -69,8 +69,15 @@ export const Picture = forwardRef<HTMLImageElement, PictureProps>(
     { fallback, sources = [], shouldLoad = true, ...props },
     ref
   ) {
+    const sizes = props.sizes || fallback?.sizes
     const fallbackImage = (
-      <Image {...props} {...fallback} shouldLoad={shouldLoad} innerRef={ref} />
+      <Image
+        {...props}
+        {...fallback}
+        sizes={sizes}
+        shouldLoad={shouldLoad}
+        innerRef={ref}
+      />
     )
 
     if (!sources.length) {
@@ -84,7 +91,9 @@ export const Picture = forwardRef<HTMLImageElement, PictureProps>(
             key={`${media}-${type}-${srcSet}`}
             type={type}
             media={media}
-            srcSet={srcSet}
+            srcSet={shouldLoad ? srcSet : undefined}
+            data-srcset={!shouldLoad ? srcSet : undefined}
+            sizes={sizes}
           />
         ))}
         {fallbackImage}

@@ -1,14 +1,5 @@
-const { downloadContentfulAssets } = require(`../download-contentful-assets`)
-
-jest.mock(
-  `progress`,
-  () =>
-    class MockProgress {
-      constructor() {
-        this.tick = jest.fn()
-      }
-    }
-)
+// @ts-check
+import { downloadContentfulAssets } from "../download-contentful-assets"
 
 jest.mock(`gatsby-source-filesystem`, () => {
   return {
@@ -19,6 +10,15 @@ jest.mock(`gatsby-source-filesystem`, () => {
     }),
   }
 })
+
+const reporter = {
+  createProgress: jest.fn(() => {
+    return {
+      start: jest.fn(),
+      tick: jest.fn(),
+    }
+  }),
+}
 
 const fixtures = [
   {
@@ -55,7 +55,7 @@ const fixtures = [
   },
 ]
 
-describe.only(`downloadContentfulAssets`, () => {
+describe(`downloadContentfulAssets`, () => {
   it(`derives unique cache key from node locale and id`, async () => {
     const cache = {
       get: jest.fn(() => Promise.resolve(null)),
@@ -66,6 +66,7 @@ describe.only(`downloadContentfulAssets`, () => {
       getNodesByType: () => fixtures,
       cache,
       assetDownloadWorkers: 50,
+      reporter,
     })
 
     fixtures.forEach(n => {

@@ -19,7 +19,7 @@ async function createGraphQLNode(
   cache,
   createContentDigest
 ) {
-  let id = !ent.id ? (!ent.ID ? 0 : ent.ID) : ent.id
+  const id = !ent.id ? (!ent.ID ? 0 : ent.ID) : ent.id
   let node = {
     id: `${type}_${id.toString()}`,
     children: [],
@@ -43,9 +43,9 @@ exports.createGraphQLNode = createGraphQLNode
  * @returns the new node
  */
 function recursiveAddFields(ent, newEnt) {
-  for (let k of Object.keys(ent)) {
+  for (const k of Object.keys(ent)) {
     if (!newEnt.hasOwnProperty(k)) {
-      let key = getValidKey(k)
+      const key = getValidKey(k)
       newEnt[key] = ent[k]
       // Nested Objects & Arrays of Objects
       if (typeof ent[key] === `object`) {
@@ -133,8 +133,8 @@ exports.createNodesFromEntities = ({
   createContentDigest,
 }) => {
   entities.forEach(e => {
-    let { ...entity } = e
-    let node = {
+    const { ...entity } = e
+    const node = {
       ...entity,
       parent: null,
       children: [],
