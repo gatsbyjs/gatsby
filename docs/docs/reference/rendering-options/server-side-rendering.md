@@ -53,7 +53,7 @@ const Page = ({ serverData }) => {
 }
 
 export async function getServerData() {
-  const res = await fetch(`https://a-dog-image.com/random`)
+  const res = await fetch(`https://dog.ceo/api/breeds/image/random`)
   const data = await res.json()
 
   return {
@@ -94,7 +94,7 @@ export const pageQuery = graphql`
 `
 
 export async function getServerData() {
-  const res = await fetch(`https://a-dog-image.com/random`)
+  const res = await fetch(`https://dog.ceo/api/breeds/image/random`)
   const data = await res.json()
 
   return {
