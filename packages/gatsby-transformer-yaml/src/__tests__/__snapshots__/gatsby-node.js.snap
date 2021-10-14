@@ -319,7 +319,7 @@ Array [
         "type": "FooBarYaml",
       },
       "parent": "whatever",
-      "yaml_id": "some",
+      "yamlId": "some",
     },
   ],
 ]
@@ -339,7 +339,7 @@ Array [
           "type": "FooBarYaml",
         },
         "parent": "whatever",
-        "yaml_id": "some",
+        "yamlId": "some",
       },
       "parent": Object {
         "children": Array [],
@@ -376,7 +376,7 @@ Array [
         "type": "fixed",
       },
       "parent": "whatever",
-      "yaml_id": "some",
+      "yamlId": "some",
     },
   ],
 ]
@@ -396,7 +396,7 @@ Array [
           "type": "fixed",
         },
         "parent": "whatever",
-        "yaml_id": "some",
+        "yamlId": "some",
       },
       "parent": Object {
         "children": Array [],
@@ -433,7 +433,7 @@ Array [
         "type": "yup",
       },
       "parent": "whatever",
-      "yaml_id": "some",
+      "yamlId": "some",
     },
   ],
 ]
@@ -453,7 +453,7 @@ Array [
           "type": "yup",
         },
         "parent": "whatever",
-        "yaml_id": "some",
+        "yamlId": "some",
       },
       "parent": Object {
         "children": Array [],
@@ -784,7 +784,7 @@ Array [
         "type": "OtherYaml",
       },
       "parent": "whatever",
-      "yaml_id": "some",
+      "yamlId": "some",
     },
   ],
 ]
@@ -804,7 +804,7 @@ Array [
           "type": "OtherYaml",
         },
         "parent": "whatever",
-        "yaml_id": "some",
+        "yamlId": "some",
       },
       "parent": Object {
         "children": Array [],
@@ -839,7 +839,7 @@ Array [
         "type": "fixed",
       },
       "parent": "whatever",
-      "yaml_id": "some",
+      "yamlId": "some",
     },
   ],
 ]
@@ -859,7 +859,7 @@ Array [
           "type": "fixed",
         },
         "parent": "whatever",
-        "yaml_id": "some",
+        "yamlId": "some",
       },
       "parent": Object {
         "children": Array [],
@@ -894,7 +894,7 @@ Array [
         "type": "yup",
       },
       "parent": "whatever",
-      "yaml_id": "some",
+      "yamlId": "some",
     },
   ],
 ]
@@ -914,7 +914,7 @@ Array [
           "type": "yup",
         },
         "parent": "whatever",
-        "yaml_id": "some",
+        "yamlId": "some",
       },
       "parent": Object {
         "children": Array [],
