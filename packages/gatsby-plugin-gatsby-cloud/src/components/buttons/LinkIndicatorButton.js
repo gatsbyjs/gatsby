@@ -32,7 +32,7 @@ export default function LinkIndicatorButton(props) {
 
   const buttonProps = getButtonProps(props)
 
-  const copyLinkClick = useCallback(() => {
+  const copyLinkClick = () => {
     trackEvent({
       eventType: `PREVIEW_INDICATOR_CLICK`,
       orgId,
@@ -63,7 +63,7 @@ export default function LinkIndicatorButton(props) {
     if (window) {
       navigator.clipboard.writeText(window.location.href)
     }
-  }, [])
+  }
 
   const trackHover = () => {
     trackEvent({
