@@ -113,7 +113,7 @@ exports.onPostBuild = async (
   }
 
   await Promise.all([
-    maybeFileNodesEmittedPromise,
+    ensureEmittingFileNodesFinished,
     buildHeadersProgram(pluginData, pluginOptions),
     createSiteConfig(pluginData, pluginOptions),
     createRedirects(pluginData, redirects, rewrites),
@@ -161,20 +161,24 @@ exports.pluginOptionsSchema = pluginOptionsSchema
  * We emit File Nodes via IPC and we need to make sure build doesn't finish before all of
  * messages were sent.
  */
-let maybeFileNodesEmittedPromise
+let ensureEmittingFileNodesFinished
 exports.onPreBootstrap = ({ emitter, getNodesByType }) => {
-  emitter.on(`API_FINISHED`, async action => {
+  emitter.on(`API_FINISHED`, action => {
     if (action.payload.apiName !== `sourceNodes`) {
       return
     }
 
-    const fileNodes = getNodesByType(`File`)
+    async function doEmitFileNodes() {
+      const fileNodes = getNodesByType(`File`)
 
-    // TODO: This is missing the cacheLocations .cache/caches + .cache/caches-lmdb
-    for (const file of fileNodes) {
-      maybeFileNodesEmittedPromise = await emitFileNodes({
-        path: file.absolutePath,
-      })
+      // TODO: This is missing the cacheLocations .cache/caches + .cache/caches-lmdb
+      for (const file of fileNodes) {
+        await emitFileNodes({
+          path: file.absolutePath,
+        })
+      }
     }
+
+    ensureEmittingFileNodesFinished = doEmitFileNodes()
   })
 }
