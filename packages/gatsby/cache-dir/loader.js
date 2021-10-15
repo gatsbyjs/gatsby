@@ -98,7 +98,7 @@ export class BaseLoader {
     this.inFlightDb = new Map()
     this.staticQueryDb = {}
     this.pageDataDb = new Map()
-    this.isThrottling = false
+    this.isPrefetchQueueRunning = false
     this.prefetchQueued = []
     this.prefetchTriggered = new Set()
     this.prefetchCompleted = new Set()
@@ -429,10 +429,10 @@ export class BaseLoader {
       }
     })
 
-    if (!this.isThrottling) {
-      this.isThrottling = true
+    if (!this.isPrefetchQueueRunning) {
+      this.isPrefetchQueueRunning = true
       setTimeout(() => {
-        this._throttlePrefetch()
+        this._processNextPrefetchBatch()
       }, 3000)
     }
 
@@ -442,7 +442,7 @@ export class BaseLoader {
     }
   }
 
-  _throttlePrefetch() {
+  _processNextPrefetchBatch() {
     const idleCallback = window.requestIdleCallback || (cb => setTimeout(cb, 0))
 
     idleCallback(() => {
@@ -475,11 +475,11 @@ export class BaseLoader {
       if (this.prefetchQueued.length) {
         prefetches.then(() => {
           setTimeout(() => {
-            this._throttlePrefetch()
+            this._processNextPrefetchBatch()
           }, 3000)
         })
       } else {
-        this.isThrottling = false
+        this.isPrefetchQueueRunning = false
       }
     })
   }

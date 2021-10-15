@@ -6,6 +6,7 @@ codegen`
   module.exports = imports.map(file => 'import "core-js/' + file + '"').join("\\n")
 `
 
+import "abort-controller-polyfill"
 import "whatwg-fetch"
 import "url-polyfill"
 import assign from "object-assign"
