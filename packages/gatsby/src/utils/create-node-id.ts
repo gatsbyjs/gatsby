@@ -1,6 +1,7 @@
-import { v5 as uuidv5 } from "uuid"
+import uuid from "uuid"
 import report from "gatsby-cli/lib/reporter"
 
+const uuidv5 = uuid.v5
 const seedConstant = `638f7a53-c567-4eca-8fc1-b23efb1cfb2b`
 
 // This cache prevents duplicate calls to uuid which is relevant for certain cases
