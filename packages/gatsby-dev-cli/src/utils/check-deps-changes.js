@@ -60,8 +60,9 @@ exports.checkDepsChanges = async ({
     // this allow us to not publish to local repository
     // and save some time/work
     try {
+      const version = getPackageVersion(packageName)
       const response = await got(
-        `https://unpkg.com/${packageName}/package.json`
+        `https://unpkg.com/${packageName}@${version}/package.json`
       )
       if (response?.statusCode !== 200) {
         throw new Error(`No response or non 200 code`)
@@ -180,5 +181,18 @@ exports.checkDepsChanges = async ({
   return {
     didDepsChanged: false,
     packageNotInstalled,
+  }
+}
+
+function getPackageVersion(packageName) {
+  try {
+    const projectPackageJson = JSON.parse(
+      fs.readFileSync(`./package.json`, `utf-8`)
+    )
+    const { dependencies, devDependencies } = projectPackageJson
+    const version = dependencies[packageName] || devDependencies[packageName]
+    return version || `latest`
+  } catch (e) {
+    return `latest`
   }
 }
