@@ -187,7 +187,7 @@ function getPackageVersion(packageName) {
   const projectPackageJson = JSON.parse(
     fs.readFileSync(`./package.json`, `utf-8`)
   )
-  const { dependencies, devDependencies } = projectPackageJson
+  const { dependencies = {}, devDependencies = {} } = projectPackageJson
   const version = dependencies[packageName] || devDependencies[packageName]
   return version || `latest`
 }
