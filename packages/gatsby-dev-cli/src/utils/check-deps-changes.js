@@ -61,16 +61,15 @@ exports.checkDepsChanges = async ({
     // and save some time/work
     try {
       const version = getPackageVersion(packageName)
-      const response = await got(
-        `https://unpkg.com/${packageName}@${version}/package.json`
-      )
+      const url = `https://unpkg.com/${packageName}@${version}/package.json`
+      const response = await got(url)
       if (response?.statusCode !== 200) {
-        throw new Error(`No response or non 200 code`)
+        throw new Error(`No response or non 200 code for ${url}`)
       }
       localPKGjson = JSON.parse(response.body)
-    } catch {
+    } catch (e) {
       console.log(
-        `'${packageName}' doesn't seem to be installed and is not published on NPM.`
+        `'${packageName}' doesn't seem to be installed and is not published on NPM. Error: ${e.message}`
       )
       return {
         didDepsChanged: true,
@@ -185,14 +184,10 @@ exports.checkDepsChanges = async ({
 }
 
 function getPackageVersion(packageName) {
-  try {
-    const projectPackageJson = JSON.parse(
-      fs.readFileSync(`./package.json`, `utf-8`)
-    )
-    const { dependencies, devDependencies } = projectPackageJson
-    const version = dependencies[packageName] || devDependencies[packageName]
-    return version || `latest`
-  } catch (e) {
-    return `latest`
-  }
+  const projectPackageJson = JSON.parse(
+    fs.readFileSync(`./package.json`, `utf-8`)
+  )
+  const { dependencies, devDependencies } = projectPackageJson
+  const version = dependencies[packageName] || devDependencies[packageName]
+  return version || `latest`
 }
