@@ -15,7 +15,7 @@ export function updateNodes(
     }
     case `DELETE_NODE`: {
       if (action.payload) {
-        return nodesDb.remove(action.payload.id)
+        return nodesDb.removeSync(action.payload.id)
       }
       return false
     }
