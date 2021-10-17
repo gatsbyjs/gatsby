@@ -21,6 +21,7 @@ import {
   getTypes,
 } from "../datastore"
 import { isIterable } from "../datastore/common/iterable"
+import { reportOnce } from "../utils/report-once"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -194,7 +195,7 @@ class LocalNodeModel {
    */
   getAllNodes(args, pageDependencies = {}) {
     // TODO(v5): Remove API
-    reporter.warn(
+    reportOnce(
       `nodeModel.getAllNodes() is deprecated. Use nodeModel.findAll() with an empty query instead.`
     )
     const { type = `Node` } = args || {}
@@ -236,7 +237,7 @@ class LocalNodeModel {
    */
   async runQuery(args, pageDependencies = {}) {
     // TODO(v5): Remove API
-    reporter.warn(
+    reportOnce(
       `nodeModel.runQuery() is deprecated. Use nodeModel.findAll() or nodeModel.findOne() instead.`
     )
     if (args.firstOnly) {

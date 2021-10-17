@@ -5,7 +5,7 @@ import {
   IMaterializePageMode,
   PageMode,
 } from "../redux/types"
-import { warnOnce } from "./warn-once"
+import { reportOnce } from "./report-once"
 
 /**
  * In develop IGatsbyPage["mode"] can change at any time, so as a general rule we need to resolve it
@@ -48,7 +48,7 @@ function resolvePageMode(
     pageMode !== `SSG` &&
     (page.path === `/404.html` || page.path === `/500.html`)
   ) {
-    warnOnce(
+    reportOnce(
       `Status page "${page.path}" ignores page mode ("${pageMode}") and force sets it to SSG (this page can't be lazily rendered).`
     )
     pageMode = `SSG`
