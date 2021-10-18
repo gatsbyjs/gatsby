@@ -39,7 +39,9 @@ export interface ISSRData {
   searchString: string
 }
 
-initTracer(process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``)
+const tracerReadyPromise = initTracer(
+  process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``
+)
 
 const pageTemplateDetailsMap: Record<
   string,
@@ -62,150 +64,166 @@ export async function getData({
   req?: Partial<Pick<Request, "query" | "method" | "url" | "headers">>
   spanContext?: Span | SpanContext
 }): Promise<ISSRData> {
+  await tracerReadyPromise
+
   let getDataWrapperActivity: MaybePhantomActivity
-  let findMetaActivity: MaybePhantomActivity
-
-  if (spanContext) {
-    getDataWrapperActivity = reporter.phantomActivity(`Running getData`, {
-      parentSpan: spanContext,
-    })
-    getDataWrapperActivity.start()
-
-    findMetaActivity = reporter.phantomActivity(
-      `Finding details about page and template`,
-      {
-        parentSpan: getDataWrapperActivity.span,
-      }
-    )
-    findMetaActivity.start()
-  }
-
-  const potentialPagePath = getPagePathFromPageDataPath(pathName) || pathName
-
-  // 1. Find a page for pathname
-  const page = graphqlEngine.findPageByPath(potentialPagePath)
-
-  if (!page) {
-    // page not found, nothing to run query for
-    throw new Error(`Page for "${pathName}" not found`)
-  }
-
-  // 2. Lookup query used for a page (template)
-  const templateDetails = pageTemplateDetailsMap[page.componentChunkName]
-  if (!templateDetails) {
-    throw new Error(
-      `Page template details for "${page.componentChunkName}" not found`
-    )
-  }
-
-  if (findMetaActivity) {
-    findMetaActivity.end()
-  }
-
-  const executionPromises: Array<Promise<any>> = []
-
-  // 3. Execute query
-  // query-runner handles case when query is not there - so maybe we should consider using that somehow
-  let results: IExecutionResult = {}
-  let serverData: IServerData | undefined
-  if (templateDetails.query) {
-    let runningQueryActivity: MaybePhantomActivity
-    if (getDataWrapperActivity) {
-      runningQueryActivity = reporter.phantomActivity(`Running page query`, {
-        parentSpan: getDataWrapperActivity.span,
+  try {
+    if (spanContext) {
+      getDataWrapperActivity = reporter.phantomActivity(`Running getData`, {
+        parentSpan: spanContext,
       })
-      runningQueryActivity.start()
+      getDataWrapperActivity.start()
     }
-    executionPromises.push(
-      graphqlEngine
-        .runQuery(
-          templateDetails.query,
+
+    let page: IGatsbyPage
+    let templateDetails: ITemplateDetails
+    let potentialPagePath: string
+    let findMetaActivity: MaybePhantomActivity
+    try {
+      if (getDataWrapperActivity) {
+        findMetaActivity = reporter.phantomActivity(
+          `Finding details about page and template`,
           {
-            ...page,
-            ...page.context,
-          },
-          {
-            queryName: page.path,
-            componentPath: page.componentPath,
-            parentSpan: runningQueryActivity?.span,
-            forceGraphqlTracing: !!runningQueryActivity,
+            parentSpan: getDataWrapperActivity.span,
           }
         )
-        .then(queryResults => {
-          if (runningQueryActivity) {
-            runningQueryActivity.end()
-          }
+        findMetaActivity.start()
+      }
+      potentialPagePath = getPagePathFromPageDataPath(pathName) || pathName
 
-          if (queryResults.errors && queryResults.errors.length > 0) {
-            const e = queryResults.errors[0]
-            const codeFrame = getCodeFrame(
-              templateDetails.query,
-              e.locations && e.locations[0].line,
-              e.locations && e.locations[0].column
-            )
+      // 1. Find a page for pathname
+      const maybePage = graphqlEngine.findPageByPath(potentialPagePath)
 
-            const queryRunningError = new Error(e.message + `\n\n` + codeFrame)
-            queryRunningError.stack = e.stack
-            throw queryRunningError
-          } else {
-            results = queryResults
-          }
-        })
-    )
-  }
+      if (!maybePage) {
+        // page not found, nothing to run query for
+        throw new Error(`Page for "${pathName}" not found`)
+      }
 
-  // 4. (if SSR) run getServerData
-  if (page.mode === `SSR`) {
-    let runningGetServerDataActivity: MaybePhantomActivity
-    if (getDataWrapperActivity) {
-      runningGetServerDataActivity = reporter.phantomActivity(
-        `Running getServerData`,
-        {
+      page = maybePage
+
+      // 2. Lookup query used for a page (template)
+      templateDetails = pageTemplateDetailsMap[page.componentChunkName]
+      if (!templateDetails) {
+        throw new Error(
+          `Page template details for "${page.componentChunkName}" not found`
+        )
+      }
+    } finally {
+      if (findMetaActivity) {
+        findMetaActivity.end()
+      }
+    }
+
+    const executionPromises: Array<Promise<any>> = []
+
+    // 3. Execute query
+    // query-runner handles case when query is not there - so maybe we should consider using that somehow
+    let results: IExecutionResult = {}
+    let serverData: IServerData | undefined
+    if (templateDetails.query) {
+      let runningQueryActivity: MaybePhantomActivity
+      if (getDataWrapperActivity) {
+        runningQueryActivity = reporter.phantomActivity(`Running page query`, {
           parentSpan: getDataWrapperActivity.span,
-        }
-      )
-      runningGetServerDataActivity.start()
-    }
-    executionPromises.push(
-      getPageChunk(page)
-        .then(mod => getServerData(req, page, potentialPagePath, mod))
-        .then(serverDataResults => {
-          serverData = serverDataResults
-          if (runningGetServerDataActivity) {
-            runningGetServerDataActivity.end()
-          }
         })
-    )
-  }
+        runningQueryActivity.start()
+      }
+      executionPromises.push(
+        graphqlEngine
+          .runQuery(
+            templateDetails.query,
+            {
+              ...page,
+              ...page.context,
+            },
+            {
+              queryName: page.path,
+              componentPath: page.componentPath,
+              parentSpan: runningQueryActivity?.span,
+              forceGraphqlTracing: !!runningQueryActivity,
+            }
+          )
+          .then(queryResults => {
+            if (queryResults.errors && queryResults.errors.length > 0) {
+              const e = queryResults.errors[0]
+              const codeFrame = getCodeFrame(
+                templateDetails.query,
+                e.locations && e.locations[0].line,
+                e.locations && e.locations[0].column
+              )
 
-  await Promise.all(executionPromises)
-
-  if (serverData) {
-    results.serverData = serverData.props
-  }
-  results.pageContext = page.context
-
-  if (getDataWrapperActivity) {
-    getDataWrapperActivity.end()
-  }
-
-  let searchString = ``
-  if (req?.query) {
-    const maybeQueryString = Object.entries(req.query)
-      .map(([k, v]) => `${k}=${v}`)
-      .join(`&`)
-    if (maybeQueryString) {
-      searchString = `?${maybeQueryString}`
+              const queryRunningError = new Error(
+                e.message + `\n\n` + codeFrame
+              )
+              queryRunningError.stack = e.stack
+              throw queryRunningError
+            } else {
+              results = queryResults
+            }
+          })
+          .finally(() => {
+            if (runningQueryActivity) {
+              runningQueryActivity.end()
+            }
+          })
+      )
     }
-  }
 
-  return {
-    results,
-    page,
-    templateDetails,
-    potentialPagePath,
-    serverDataHeaders: serverData?.headers,
-    searchString,
+    // 4. (if SSR) run getServerData
+    if (page.mode === `SSR`) {
+      let runningGetServerDataActivity: MaybePhantomActivity
+      if (getDataWrapperActivity) {
+        runningGetServerDataActivity = reporter.phantomActivity(
+          `Running getServerData`,
+          {
+            parentSpan: getDataWrapperActivity.span,
+          }
+        )
+        runningGetServerDataActivity.start()
+      }
+      executionPromises.push(
+        getPageChunk(page)
+          .then(mod => getServerData(req, page, potentialPagePath, mod))
+          .then(serverDataResults => {
+            serverData = serverDataResults
+          })
+          .finally(() => {
+            if (runningGetServerDataActivity) {
+              runningGetServerDataActivity.end()
+            }
+          })
+      )
+    }
+
+    await Promise.all(executionPromises)
+
+    if (serverData) {
+      results.serverData = serverData.props
+    }
+    results.pageContext = page.context
+
+    let searchString = ``
+    if (req?.query) {
+      const maybeQueryString = Object.entries(req.query)
+        .map(([k, v]) => `${k}=${v}`)
+        .join(`&`)
+      if (maybeQueryString) {
+        searchString = `?${maybeQueryString}`
+      }
+    }
+
+    return {
+      results,
+      page,
+      templateDetails,
+      potentialPagePath,
+      serverDataHeaders: serverData?.headers,
+      searchString,
+    }
+  } finally {
+    if (getDataWrapperActivity) {
+      getDataWrapperActivity.end()
+    }
   }
 }
 
@@ -224,29 +242,32 @@ export async function renderPageData({
   data: ISSRData
   spanContext?: Span | SpanContext
 }): Promise<IPageDataWithQueryResult> {
+  await tracerReadyPromise
+
   let activity: MaybePhantomActivity
-  if (spanContext) {
-    activity = reporter.phantomActivity(`Rendering page-data`, {
-      parentSpan: spanContext,
-    })
-    activity.start()
+  try {
+    if (spanContext) {
+      activity = reporter.phantomActivity(`Rendering page-data`, {
+        parentSpan: spanContext,
+      })
+      activity.start()
+    }
+    const results = await constructPageDataString(
+      {
+        componentChunkName: data.page.componentChunkName,
+        path: getPath(data),
+        matchPath: data.page.matchPath,
+        staticQueryHashes: data.templateDetails.staticQueryHashes,
+      },
+      JSON.stringify(data.results)
+    )
+
+    return JSON.parse(results)
+  } finally {
+    if (activity) {
+      activity.end()
+    }
   }
-
-  const results = await constructPageDataString(
-    {
-      componentChunkName: data.page.componentChunkName,
-      path: getPath(data),
-      matchPath: data.page.matchPath,
-      staticQueryHashes: data.templateDetails.staticQueryHashes,
-    },
-    JSON.stringify(data.results)
-  )
-
-  if (activity) {
-    activity.end()
-  }
-
-  return JSON.parse(results)
 }
 
 const readStaticQueryContext = async (
@@ -272,58 +293,74 @@ export async function renderHTML({
   pageData?: IPageDataWithQueryResult
   spanContext?: Span | SpanContext
 }): Promise<string> {
+  await tracerReadyPromise
+
   let wrapperActivity: MaybePhantomActivity
-  if (spanContext) {
-    wrapperActivity = reporter.phantomActivity(`Rendering HTML`, {
-      parentSpan: spanContext,
-    })
-    wrapperActivity.start()
-  }
+  try {
+    if (spanContext) {
+      wrapperActivity = reporter.phantomActivity(`Rendering HTML`, {
+        parentSpan: spanContext,
+      })
+      wrapperActivity.start()
+    }
 
-  if (!pageData) {
-    pageData = await renderPageData({
-      data,
-      spanContext: wrapperActivity?.span,
-    })
-  }
+    if (!pageData) {
+      pageData = await renderPageData({
+        data,
+        spanContext: wrapperActivity?.span,
+      })
+    }
 
-  let readStaticQueryContextActivity: MaybePhantomActivity
-  if (wrapperActivity) {
-    readStaticQueryContextActivity = reporter.phantomActivity(
-      `Preparing StaticQueries context`,
-      {
-        parentSpan: wrapperActivity.span,
+    let readStaticQueryContextActivity: MaybePhantomActivity
+    let staticQueryContext: Record<string, { data: unknown }>
+    try {
+      if (wrapperActivity) {
+        readStaticQueryContextActivity = reporter.phantomActivity(
+          `Preparing StaticQueries context`,
+          {
+            parentSpan: wrapperActivity.span,
+          }
+        )
+        readStaticQueryContextActivity.start()
       }
-    )
-    readStaticQueryContextActivity.start()
-  }
-  const staticQueryContext = await readStaticQueryContext(
-    data.page.componentChunkName
-  )
-  if (readStaticQueryContextActivity) {
-    readStaticQueryContextActivity.end()
-  }
+      staticQueryContext = await readStaticQueryContext(
+        data.page.componentChunkName
+      )
+    } finally {
+      if (readStaticQueryContextActivity) {
+        readStaticQueryContextActivity.end()
+      }
+    }
 
-  let renderHTMLActivity: MaybePhantomActivity
-  if (wrapperActivity) {
-    renderHTMLActivity = reporter.phantomActivity(`Actually rendering HTML`, {
-      parentSpan: wrapperActivity.span,
-    })
-    renderHTMLActivity.start()
-  }
-  const results = await htmlComponentRenderer({
-    pagePath: getPath(data),
-    pageData,
-    staticQueryContext,
-    ...data.templateDetails.assets,
-    inlinePageData: data.page.mode === `SSR` && data.results.serverData,
-  })
-  if (renderHTMLActivity) {
-    renderHTMLActivity.end()
-  }
-  if (wrapperActivity) {
-    wrapperActivity.end()
-  }
+    let renderHTMLActivity: MaybePhantomActivity
+    try {
+      if (wrapperActivity) {
+        renderHTMLActivity = reporter.phantomActivity(
+          `Actually rendering HTML`,
+          {
+            parentSpan: wrapperActivity.span,
+          }
+        )
+        renderHTMLActivity.start()
+      }
 
-  return results.html
+      const results = await htmlComponentRenderer({
+        pagePath: getPath(data),
+        pageData,
+        staticQueryContext,
+        ...data.templateDetails.assets,
+        inlinePageData: data.page.mode === `SSR` && data.results.serverData,
+      })
+
+      return results.html
+    } finally {
+      if (renderHTMLActivity) {
+        renderHTMLActivity.end()
+      }
+    }
+  } finally {
+    if (wrapperActivity) {
+      wrapperActivity.end()
+    }
+  }
 }

@@ -91,7 +91,7 @@ const matchPathRouter =
 module.exports = async (program: IServeProgram): Promise<void> => {
   telemetry.trackCli(`SERVE_START`)
   telemetry.startBackgroundUpdate()
-  initTracer(
+  await initTracer(
     process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
   )
   let { prefixPaths, port, open, host } = program

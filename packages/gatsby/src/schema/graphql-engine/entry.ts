@@ -25,7 +25,13 @@ import {
 } from ".cache/query-engine-plugins"
 import { initTracer } from "../../utils/tracer"
 
-initTracer(process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``)
+type MaybePhantomActivity =
+  | ReturnType<typeof reporter.phantomActivity>
+  | undefined
+
+const tracerReadyPromise = initTracer(
+  process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``
+)
 
 export class GraphQLEngine {
   // private schema: GraphQLSchema
@@ -38,6 +44,7 @@ export class GraphQLEngine {
   }
 
   private async _doGetRunner(): Promise<GraphQLRunner> {
+    await tracerReadyPromise
     // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
     store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
 
@@ -98,38 +105,58 @@ export class GraphQLEngine {
     const engineContext = {
       requestId: uuid.v4(),
     }
-    let waitingForJobsCreatedByCurrentRequestActivity
+
     const doRunQuery = async (): Promise<ExecutionResult> => {
-      const graphqlRunner = await this.getRunner()
       if (!opts) {
         opts = {
           queryName: `GraphQL Engine query`,
           parentSpan: undefined,
         }
       }
+
+      let gettingRunnerActivity: MaybePhantomActivity
+      let graphqlRunner: GraphQLRunner
+      try {
+        if (opts.parentSpan) {
+          gettingRunnerActivity = reporter.phantomActivity(
+            `Waiting for graphql runner to init`,
+            {
+              parentSpan: opts.parentSpan,
+            }
+          )
+          gettingRunnerActivity.start()
+        }
+        graphqlRunner = await this.getRunner()
+      } finally {
+        if (gettingRunnerActivity) {
+          gettingRunnerActivity.end()
+        }
+      }
+
+      // graphqlRunner creates it's own Span as long as we pass `parentSpan`
       const result = await graphqlRunner.query(query, context, opts)
 
-      if (opts.parentSpan) {
-        waitingForJobsCreatedByCurrentRequestActivity =
-          reporter.phantomActivity(`Waiting for jobs to finish`, {
-            parentSpan: opts.parentSpan,
-          })
-        waitingForJobsCreatedByCurrentRequestActivity.start()
-      }
-      await waitJobsByRequest(engineContext.requestId)
-      if (waitingForJobsCreatedByCurrentRequestActivity) {
-        waitingForJobsCreatedByCurrentRequestActivity.end()
-        waitingForJobsCreatedByCurrentRequestActivity = null
+      let waitingForJobsCreatedByCurrentRequestActivity: MaybePhantomActivity
+      try {
+        if (opts.parentSpan) {
+          waitingForJobsCreatedByCurrentRequestActivity =
+            reporter.phantomActivity(`Waiting for jobs to finish`, {
+              parentSpan: opts.parentSpan,
+            })
+          waitingForJobsCreatedByCurrentRequestActivity.start()
+        }
+        await waitJobsByRequest(engineContext.requestId)
+      } finally {
+        if (waitingForJobsCreatedByCurrentRequestActivity) {
+          waitingForJobsCreatedByCurrentRequestActivity.end()
+        }
       }
       return result
     }
+
     try {
       return await runWithEngineContext(engineContext, doRunQuery)
     } finally {
-      if (waitingForJobsCreatedByCurrentRequestActivity) {
-        waitingForJobsCreatedByCurrentRequestActivity.end()
-        waitingForJobsCreatedByCurrentRequestActivity = null
-      }
       // Reset job-to-request mapping
       store.dispatch({
         type: `CLEAR_JOB_V2_CONTEXT`,
