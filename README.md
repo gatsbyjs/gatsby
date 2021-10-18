@@ -173,7 +173,7 @@ We are only accepting critical security patches for Gatsby v2.
 
 Licensed under the [MIT License](./LICENSE).
 
-## 💜 Thanks
+## 💜 Thanks And Come Again 
 
 Thanks go out to all our many contributors creating plugins, starters, videos, and blog posts. And a special appreciation for our community members helping with issues and PRs, or answering questions on Discord and GitHub Discussions.
 
