@@ -32,7 +32,8 @@ emitter.on(`CREATE_PAGE`, action => {
             ...storedPage,
             path: `/${status}.html`,
           },
-          action.plugin
+          action.plugin,
+          action
         )
       )
     }
