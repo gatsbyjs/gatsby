@@ -403,10 +403,11 @@ export function link<TSource, TArgs>(
       }
     }
 
-    const resultOrPromise = context.nodeModel.runQuery(
+    const resultOrPromise = context.nodeModel.findAll(
       {
         query: runQueryArgs,
-        firstOnly,
+        skip: firstOnly ? 0 : undefined,
+        limit: firstOnly ? 1 : undefined,
         type,
         stats: context.stats,
         tracer: context.tracer,
@@ -492,7 +493,7 @@ export function fileByPath<TSource, TArgs>(
     }
 
     function queryNodeByPath(relPath: string): Promise<IGatsbyNode> {
-      return context.nodeModel.runQuery({
+      return context.nodeModel.findOne({
         query: {
           filter: {
             absolutePath: {
@@ -500,7 +501,6 @@ export function fileByPath<TSource, TArgs>(
             },
           },
         },
-        firstOnly: true,
         type: `File`,
       })
     }

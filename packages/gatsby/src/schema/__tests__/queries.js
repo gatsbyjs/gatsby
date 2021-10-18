@@ -57,11 +57,11 @@ describe(`Query schema`, () => {
               [`frontmatter.authorNames`]: {
                 type: `[String!]!`,
                 async resolve(source, args, context, info) {
-                  const authors = await context.nodeModel.runQuery({
+                  const { entries } = await context.nodeModel.findAll({
                     type: `Author`,
                     query: { filter: { email: { in: source.authors } } },
-                    firstOnly: false,
                   })
+                  const authors = Array.from(entries)
                   return authors.map(author => author.name)
                 },
               },
@@ -113,7 +113,7 @@ describe(`Query schema`, () => {
                   // Another thing to note is that we don't have to use the
                   // `$elemMatch` operator when querying arrays of objects
                   // (although we could).
-                  return context.nodeModel.runQuery({
+                  return context.nodeModel.findAll({
                     type: `Markdown`,
                     query: {
                       filter: {
@@ -125,7 +125,6 @@ describe(`Query schema`, () => {
                         },
                       },
                     },
-                    firstOnly: false,
                   })
                 },
               },

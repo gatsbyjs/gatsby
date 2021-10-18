@@ -342,7 +342,7 @@ const mockCreateResolvers = ({ createResolvers }) => {
       likedEnough: {
         type: `[PostsJson]`,
         async resolve(parent, args, context) {
-          const result = await context.nodeModel.runQuery({
+          const { entries } = await context.nodeModel.findAll({
             type: `PostsJson`,
             query: {
               filter: {
@@ -356,8 +356,8 @@ const mockCreateResolvers = ({ createResolvers }) => {
                 order: [`DESC`],
               },
             },
-            firstOnly: false,
           })
+          const result = Array.from(entries)
           return result.slice(0, 2)
         },
       },
