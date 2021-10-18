@@ -18,7 +18,8 @@ export const create = (): GatsbyWorkerPool => {
   if (workerPool) {
     return workerPool
   } else {
-    const numWorkers = Math.max(1, cpuCoreCount() - 1)
+    const numWorkers =
+      process.env.GATSBY_WORKERS_COUNT || Math.max(1, cpuCoreCount() - 1)
     // const numWorkers = 4
     reporter.verbose(`Creating ${numWorkers} worker`)
 
