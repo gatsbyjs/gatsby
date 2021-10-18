@@ -61,6 +61,7 @@ export const handleWpActions = async api => {
       break
     case `NON_NODE_ROOT_FIELDS`:
       await fetchAndCreateNonNodeRootFields()
+      break
     case `REFETCH_ALL`:
       await sourceNodes({ ...helpers, refetchAll: true }, {})
   }
