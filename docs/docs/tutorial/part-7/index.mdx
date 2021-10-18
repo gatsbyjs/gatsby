@@ -354,8 +354,8 @@ Once you have your GraphQL query set up, you can add it to your blog post page t
 
     // highlight-start
     export const query = graphql`
-      query($slug: String) {
-        mdx(slug: {eq: $slug}) {
+      query($id: String) {
+        mdx(id: {eq: $id}) {
           body
           frontmatter {
             title
