@@ -14,10 +14,7 @@ export function updateNodesByType(
     }
     case `DELETE_NODE`: {
       return action.payload
-        ? nodesByTypeDb.removeSync(
-            action.payload.internal.type,
-            action.payload.id
-          )
+        ? nodesByTypeDb.remove(action.payload.internal.type, action.payload.id)
         : false
     }
   }
