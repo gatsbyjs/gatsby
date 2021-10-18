@@ -12,7 +12,9 @@ import {
   ObjectTypeComposerAsObjectDefinition as ComposeObjectTypeConfig,
   ScalarTypeComposerAsObjectDefinition as ComposeScalarTypeConfig,
   UnionTypeComposerAsObjectDefinition as ComposeUnionTypeConfig,
+  ObjectTypeComposerFieldConfigMapDefinition
 } from "graphql-compose"
+export { IGatsbyNode} from "./src/redux/types"
 import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
@@ -452,8 +454,8 @@ export interface GatsbyNode<
   setFieldsOnGraphQLNodeType?(
     args: SetFieldsOnGraphQLNodeTypeArgs,
     options: PluginOptions,
-    callback: PluginCallback<any>
-  ): any
+    callback: PluginCallback<ObjectTypeComposerFieldConfigMapDefinition>
+  ): ObjectTypeComposerFieldConfigMapDefinition
 
   /**
    * Extension point to tell plugins to source nodes. This API is called during
@@ -807,7 +809,7 @@ export interface ResolvableExtensionsArgs extends ParentSpanPluginArgs {
 export interface SetFieldsOnGraphQLNodeTypeArgs extends ParentSpanPluginArgs {
   type: {
     name: string
-    nodes: any[]
+    nodes: IGatsbyNode[]
   }
   traceId: "initial-setFieldsOnGraphQLNodeType"
 }
