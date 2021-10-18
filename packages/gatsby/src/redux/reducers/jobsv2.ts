@@ -78,6 +78,12 @@ export const jobsV2Reducer = (
     case `SET_JOB_V2_CONTEXT`: {
       const { requestId, job } = action.payload
 
+      // A workaround for a stale cache bug:
+      // in some edge case redux cache is not cleared (even after gatsby-config and package.json changes).
+      // TODO: figure out the root cause and remove this workaround (see also CLEAR_JOB_V2_CONTEXT)
+      if (!state.jobsByRequest) {
+        state.jobsByRequest = new Map()
+      }
       let jobs = state.jobsByRequest.get(requestId)
       if (!jobs) {
         jobs = new Set<string>()
@@ -90,6 +96,9 @@ export const jobsV2Reducer = (
 
     case `CLEAR_JOB_V2_CONTEXT`: {
       const { requestId } = action.payload
+      if (!state.jobsByRequest) {
+        state.jobsByRequest = new Map()
+      }
       state.jobsByRequest.delete(requestId)
     }
   }
