@@ -345,6 +345,8 @@ const mockCreateResolvers = ({ createResolvers }) => {
           const { entries } = await context.nodeModel.findAll({
             type: `PostsJson`,
             query: {
+              limit: 2,
+              skip: 0,
               filter: {
                 likes: {
                   ne: null,
@@ -357,8 +359,7 @@ const mockCreateResolvers = ({ createResolvers }) => {
               },
             },
           })
-          const result = Array.from(entries)
-          return result.slice(0, 2)
+          return entries
         },
       },
     },
