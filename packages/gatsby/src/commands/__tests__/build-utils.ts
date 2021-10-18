@@ -9,6 +9,7 @@ const platformSpy = jest.spyOn(require(`os`), `platform`)
 interface IMinimalStateSliceForTest {
   html: IGatsbyState["html"]
   pages: IGatsbyState["pages"]
+  components: IGatsbyState["components"]
 }
 
 describe(`calcDirtyHtmlFiles`, () => {
@@ -37,7 +38,16 @@ describe(`calcDirtyHtmlFiles`, () => {
         unsafeBuiltinWasUsedInSSR: false,
         trackedStaticQueryResults: new Map<string, IStaticQueryResultState>(),
       },
+      components: new Map(),
     }
+    state.components.set(`/foo`, {
+      componentPath: `/foo`,
+      componentChunkName: `foo`,
+      pages: new Set(),
+      isInBootstrap: false,
+      query: ``,
+      serverData: false,
+    })
 
     for (const pagePath in pages) {
       const page = pages[pagePath]
@@ -57,6 +67,8 @@ describe(`calcDirtyHtmlFiles`, () => {
           pluginCreator___NODE: `foo`,
           updatedAt: 1,
           mode: `SSG`,
+          defer: false,
+          ownerNodeId: ``,
         })
       }
 

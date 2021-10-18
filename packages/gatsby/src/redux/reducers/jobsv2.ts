@@ -6,12 +6,15 @@ import {
   IGatsbyIncompleteJobV2,
   IGatsbyCompleteJobV2,
   IDeleteCacheAction,
+  ISetJobV2Context,
+  IClearJobV2Context,
 } from "../types"
 
 const initialState = (): IGatsbyState["jobsV2"] => {
   return {
     incomplete: new Map(),
     complete: new Map(),
+    jobsByRequest: new Map(),
   }
 }
 
@@ -21,6 +24,8 @@ export const jobsV2Reducer = (
     | ICreateJobV2Action
     | IRemoveStaleJobV2Action
     | IEndJobV2Action
+    | ISetJobV2Context
+    | IClearJobV2Context
     | IDeleteCacheAction
 ): IGatsbyState["jobsV2"] => {
   switch (action.type) {
@@ -68,6 +73,33 @@ export const jobsV2Reducer = (
       state.complete.delete(contentDigest)
 
       return state
+    }
+
+    case `SET_JOB_V2_CONTEXT`: {
+      const { requestId, job } = action.payload
+
+      // A workaround for a stale cache bug:
+      // in some edge case redux cache is not cleared (even after gatsby-config and package.json changes).
+      // TODO: figure out the root cause and remove this workaround (see also CLEAR_JOB_V2_CONTEXT)
+      if (!state.jobsByRequest) {
+        state.jobsByRequest = new Map()
+      }
+      let jobs = state.jobsByRequest.get(requestId)
+      if (!jobs) {
+        jobs = new Set<string>()
+        state.jobsByRequest.set(requestId, jobs)
+      }
+      jobs.add(job.contentDigest)
+
+      return state
+    }
+
+    case `CLEAR_JOB_V2_CONTEXT`: {
+      const { requestId } = action.payload
+      if (!state.jobsByRequest) {
+        state.jobsByRequest = new Map()
+      }
+      state.jobsByRequest.delete(requestId)
     }
   }
 

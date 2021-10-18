@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@3.14.1/packages/gatsby-cli) (2021-10-06)
+
+#### Features
+
+- Don't crash the build process when in preview mode [#33184](https://github.com/gatsbyjs/gatsby/issues/33184) [#33433](https://github.com/gatsbyjs/gatsby/issues/33433) ([1604efb](https://github.com/gatsbyjs/gatsby/commit/1604efbdde97c138b11626923875ae118f7b5e67))
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@3.14.0/packages/gatsby-cli) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

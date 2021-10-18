@@ -319,6 +319,18 @@ Default is false because sometimes non-critical errors are returned alongside va
               }
             `),
         }),
+      allow401Images: Joi.boolean()
+        .default(false)
+        .description(
+          `This option allows images url's that return a 401 to not fail production builds. 401s are sometimes returned in place of 404's for protected content to hide whether the content exists.`
+        )
+        .meta({
+          example: wrapOptions(`
+              production: {
+                allow401Images: true
+              }
+            `),
+        }),
     }),
     develop: Joi.object({
       nodeUpdateInterval: Joi.number()
@@ -586,6 +598,19 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
           example: wrapOptions(`
               html: {
                 useGatsbyImage: true,
+              },
+            `),
+        }),
+      gatsbyImageOptions: Joi.object()
+        .allow(null)
+        .description(`Set custom options for your Gatsby Images`)
+        .meta({
+          example: wrapOptions(`
+              html: {
+                gatsbyImageOptions: {
+                  [your-option-key]: "your-option-value",
+                  [your-option-key-2]: "your-option-value-2",
+                },
               },
             `),
         }),

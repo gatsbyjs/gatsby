@@ -1,8 +1,12 @@
 jest.mock(`got`, () =>
   jest.fn(path => {
-    const last = path.split(`/`).pop()
+    let last = ``
+    if (path.includes(`i18n-test`)) {
+      last = `i18n-test-`
+    }
+    last += path.split(`/`).pop()
     try {
-      return { body: require(`./fixtures/${last}.json`) }
+      return { body: require(`./fixtures/${last}.json`.replace(`?`, `___`)) }
     } catch (e) {
       console.log(`Error`, e)
       return null
@@ -21,7 +25,7 @@ const downloadFileSpy = jest.spyOn(normalize, `downloadFile`)
 
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
-const { sourceNodes } = require(`../gatsby-node`)
+const { sourceNodes, onPreBootstrap } = require(`../gatsby-node`)
 const { handleWebhookUpdate } = require(`../utils`)
 
 describe(`gatsby-source-drupal`, () => {
@@ -48,6 +52,7 @@ describe(`gatsby-source-drupal`, () => {
   }
   const reporter = {
     info: jest.fn(),
+    warn: jest.fn(),
     verbose: jest.fn(),
     activityTimer: jest.fn(() => activity),
     log: jest.fn(),
@@ -125,6 +130,10 @@ describe(`gatsby-source-drupal`, () => {
     expect(
       nodes[createNodeId(`und.article-3`)].relationships.field_main_image___NODE
     ).toEqual(createNodeId(`und.file-1`))
+
+    expect(nodes[createNodeId(`und.paragraph-image-1`)].relationships).toEqual({
+      field_gallery___NODE: createNodeId(`und.article-2`),
+    })
   })
 
   it(`Handles 1:N relationship`, () => {
@@ -425,6 +434,42 @@ describe(`gatsby-source-drupal`, () => {
     )
   })
 
+  describe(`supports JSON:API extras meta.count to parallelize fetches`, () => {
+    it(`for non-translated content`, async () => {
+      // Reset nodes and test includes relationships.
+      Object.keys(nodes).forEach(key => delete nodes[key])
+      const apiBase = `jsonapi-meta.count`
+      await sourceNodes(args, {
+        baseUrl,
+        apiBase,
+      })
+      expect(Object.keys(nodes).length).toEqual(3)
+    })
+
+    it(`for translated content`, async () => {
+      // Reset nodes and test includes relationships.
+      Object.keys(nodes).forEach(key => delete nodes[key])
+      const apiBase = `jsonapi-meta.count-i18n`
+      const options = {
+        baseUrl,
+        apiBase,
+        languageConfig: {
+          defaultLanguage: `en_US`,
+          enabledLanguages: [`en_US`, `i18n-test`],
+          translatableEntities: [`node--article`],
+          nonTranslatableEntities: [],
+        },
+      }
+      // Call onPreBootstrap to set options
+      await onPreBootstrap(args, options)
+      await sourceNodes(args, options)
+      expect(Object.keys(nodes).length).toEqual(4)
+      expect(
+        Object.values(nodes).filter(n => n.langcode === `i18n-test`).length
+      ).toEqual(2)
+    })
+  })
+
   describe(`Fastbuilds sync`, () => {
     describe(`Before sync with expired timestamp`, () => {
       beforeAll(async () => {
@@ -432,7 +477,9 @@ describe(`gatsby-source-drupal`, () => {
         Object.keys(nodes).forEach(key => delete nodes[key])
 
         const fastBuilds = true
-        await sourceNodes(args, { baseUrl, fastBuilds })
+        const options = { baseUrl, fastBuilds }
+        await onPreBootstrap(args, options)
+        await sourceNodes(args, options)
       })
 
       it(`Attributes`, () => {
@@ -494,6 +541,11 @@ describe(`gatsby-source-drupal`, () => {
           field_tags___NODE: [createNodeId(`und.tag-2`)],
         })
         expect(
+          nodes[createNodeId(`und.paragraph-image-1`)].relationships
+        ).toEqual({
+          field_gallery___NODE: createNodeId(`und.article-1`),
+        })
+        expect(
           nodes[createNodeId(`und.article-2`)].relationships
             .field_secondary_image___NODE
         ).toBe(undefined)
@@ -522,6 +574,10 @@ describe(`gatsby-source-drupal`, () => {
         expect(
           nodes[createNodeId(`und.tag-2`)].relationships[`node__article___NODE`]
         ).toContain(createNodeId(`und.article-3`))
+        // Created a new node article-9 with reference to tag-2
+        expect(
+          nodes[createNodeId(`und.tag-2`)].relationships[`node__article___NODE`]
+        ).toContain(createNodeId(`und.article-9`))
       })
     })
   })
@@ -593,20 +649,17 @@ describe(`gatsby-source-drupal`, () => {
       it(`during refresh webhook handling`, async () => {
         expect.assertions(5)
 
-        try {
-          await sourceNodes(
-            {
-              ...args,
-              webhookBody: {
-                malformattedPayload: true,
-              },
+        await sourceNodes(
+          {
+            ...args,
+            webhookBody: {
+              malformattedPayload: true,
             },
-            { baseUrl }
-          )
-        } catch (e) {
-          expect(e).toBeTruthy()
-        }
+          },
+          { baseUrl }
+        )
 
+        expect(reporter.warn).toHaveBeenCalledTimes(1)
         expect(reporter.activityTimer).toHaveBeenCalledTimes(1)
         expect(reporter.activityTimer).toHaveBeenNthCalledWith(
           1,

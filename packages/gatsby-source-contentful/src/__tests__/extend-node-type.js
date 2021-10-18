@@ -1,11 +1,17 @@
-const {
+// @ts-check
+import fs from "fs-extra"
+import { fetchRemoteFile } from "gatsby-core-utils"
+import {
   createUrl,
+  generateImageSource,
+  getBase64Image,
   resolveFixed,
   resolveFluid,
   resolveResize,
-  generateImageSource,
-  getBase64Image,
-} = require(`../extend-node-type`)
+} from "../extend-node-type"
+
+jest.mock(`gatsby-core-utils`)
+jest.mock(`fs-extra`)
 
 describe(`contentful extend node type`, () => {
   describe(`createUrl`, () => {
@@ -102,6 +108,13 @@ describe(`contentful extend node type`, () => {
   })
 
   describe(`getBase64Image`, () => {
+    beforeEach(() => {
+      // @ts-ignore
+      fetchRemoteFile.mockClear()
+      // @ts-ignore
+      fs.readFile.mockResolvedValue(Buffer.from(`test`))
+    })
+
     const imageProps = {
       aspectRatio: 4.8698224852071,
       baseUrl: `//images.ctfassets.net/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png`,
@@ -128,18 +141,18 @@ describe(`contentful extend node type`, () => {
     }
     test(`keeps image format`, async () => {
       const result = await getBase64Image(imageProps)
-      expect(result).toMatch(
-        `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAMAAAC5ge+kAAAAllBMVEUAAABHl745rOE7tOc7tOcqMDkqMDkqMDkqMDnfzG9Pm7o7tOc7tOcqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDn4wF/eXWDtXGjtXGgqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDkqMDnbVmDpWGbtXGjtXGh1tTylAAAAMnRSTlMATd3gVSUjTCDgHRIscF+MeqB8qpqbk4ienYAxr+AeEipyZI9/aW+No4WJeWuuTdzgVnu3oiUAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAHdElNRQflCBQANxNx70pyAAAAMklEQVQI12NkBII/DCDA+htIsDEy/mBj4WDEBCwiyLwnIpyMjL/ZWASB7PMMMPAZTAIALlUHKTqI1/MAAAAASUVORK5CYII=`
-      )
+
+      expect(fetchRemoteFile).toHaveBeenCalled()
+      expect(result).toMatchInlineSnapshot(`"data:image/png;base64,dGVzdA=="`)
     })
     test(`uses given image format`, async () => {
       const result = await getBase64Image({
         ...imageProps,
         options: { ...imageProps.options, toFormat: `jpg` },
       })
-      expect(result).toMatch(
-        `data:image/jpg;base64,/9j/4AAQSkZJRgABAQIAHAAcAAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAAEABQDASIAAhEBAxEB/8QAFwABAAMAAAAAAAAAAAAAAAAAAAIDBv/EACQQAAIBAgQHAQAAAAAAAAAAAAECAAMRBBITJAUUFSFBUWHB/8QAFQEBAQAAAAAAAAAAAAAAAAAAAgH/xAAXEQEBAQEAAAAAAAAAAAAAAAABAAIx/9oADAMBAAIRAxEAPwDV4NObWqM70dOoVvROUt9Psy7pYud5jO/jWiJM8lsDSFB+Do+Xe4xQosAtW35ERFC//9k=`
-      )
+
+      expect(fetchRemoteFile).toHaveBeenCalled()
+      expect(result).toMatchInlineSnapshot(`"data:image/jpg;base64,dGVzdA=="`)
     })
   })
 
