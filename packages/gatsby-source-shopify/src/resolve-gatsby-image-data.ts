@@ -7,10 +7,9 @@ import {
   IImage,
   ImageFormat,
 } from "gatsby-plugin-image"
+import { IGatsbyImageFieldArgs } from "gatsby-plugin-image/graphql-utils"
 import { readFileSync } from "fs"
 import { IShopifyImage, urlBuilder } from "./get-shopify-image"
-
-type ImageLayout = "constrained" | "fixed" | "fullWidth"
 
 type IImageWithPlaceholder = IImage & {
   placeholder: string
@@ -48,7 +47,7 @@ export function makeResolveGatsbyImageData(cache: any) {
       formats = [`auto`],
       layout = `constrained`,
       ...options
-    }: { formats: Array<ImageFormat>; layout: ImageLayout }
+    }: IGatsbyImageFieldArgs
   ): Promise<IGatsbyImageData> {
     const remainingOptions = options as Record<string, any>
     let [basename] = image.originalSrc.split(`?`)
