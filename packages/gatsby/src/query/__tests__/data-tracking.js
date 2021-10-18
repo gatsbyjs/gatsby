@@ -31,6 +31,7 @@ jest.mock(`fs-extra`, () => {
   return {
     outputFile: jest.fn(),
     ensureDir: jest.fn(),
+    readFileSync: jest.fn(() => `foo`), // createPage action reads the page template file trying to find `getServerData`
   }
 })
 
@@ -52,6 +53,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
+    verbose: jest.fn(),
     panicOnBuild: console.log,
     activityTimer: () => {
       return {
@@ -1124,7 +1126,7 @@ describe(`query caching between builds`, () => {
         },
         createSchemaCustomization: ({ actions: { createTypes } }) => {
           createTypes(`
-            interface NodeInterface @nodeInterface {
+            interface NodeInterface implements Node {
               id: ID!
               test: String
             }
@@ -1358,7 +1360,8 @@ describe(`query caching between builds`, () => {
             })
           }
           if (stage === `delete-foo`) {
-            nodeApiContext.actions.deleteNode({ node: { id: `foo-1` } })
+            const node = { id: `foo-1` }
+            nodeApiContext.actions.deleteNode(node)
           }
           if (stage === `add-bar2`) {
             createBarNode({
@@ -1367,10 +1370,12 @@ describe(`query caching between builds`, () => {
             })
           }
           if (stage === `delete-bar2`) {
-            nodeApiContext.actions.deleteNode({ node: { id: `bar-2` } })
+            const node = { id: `bar-2` }
+            nodeApiContext.actions.deleteNode(node)
           }
           if (stage === `delete-bar1`) {
-            nodeApiContext.actions.deleteNode({ node: { id: `bar-1` } })
+            const node = { id: `bar-1` }
+            nodeApiContext.actions.deleteNode(node)
           }
         },
         createPages: ({ actions: { createPage } }, _pluginOptions) => {

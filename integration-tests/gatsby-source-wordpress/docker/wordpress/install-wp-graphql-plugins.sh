@@ -5,9 +5,10 @@ PLUGIN_DIR=${WP_CONTENT_DIR}/plugins
 mkdir -p ${PLUGIN_DIR} && \
 
 # WP GraphQL from GitHub release
-git clone --depth 1 -b ${WPGRAPHQL_VERSION} https://github.com/wp-graphql/wp-graphql.git ${PLUGIN_DIR}/wp-graphql && \
-
-composer install --working-dir=${PLUGIN_DIR}/wp-graphql && \
+# example release url: https://github.com/wp-graphql/wp-graphql/releases/download/v1.3.7/wp-graphql.zip
+mkdir -p ${PLUGIN_DIR}/wp-graphql \
+    && curl -LO https://github.com/wp-graphql/wp-graphql/releases/download/${WPGRAPHQL_VERSION}/wp-graphql.zip \
+    && unzip ./wp-graphql.zip -d ${PLUGIN_DIR}/wp-graphql && \
 
 # Install wp-gatsby using git, and apply a diff
 git clone --depth 1 -b ${WPGATSBY_VERSION} https://github.com/gatsbyjs/wp-gatsby.git ${PLUGIN_DIR}/wp-gatsby && \

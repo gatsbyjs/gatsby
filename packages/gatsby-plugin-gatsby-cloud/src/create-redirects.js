@@ -1,5 +1,6 @@
 import { writeFile } from "fs-extra"
 import { REDIRECTS_FILENAME } from "./constants"
+import { emitRedirects, emitRewrites } from "./ipc"
 
 export default async function writeRedirectsFile(
   pluginData,
@@ -24,6 +25,24 @@ export default async function writeRedirectsFile(
       return redirect
     })
   }
+
+  /**
+   * IPC Emit for redirects
+   */
+  let lastMessageSent
+  redirects.forEach(redirect => {
+    lastMessageSent = emitRedirects(redirect)
+  })
+
+  /**
+   * IPC Emit for rewrites
+   */
+  rewrites.forEach(rewrite => {
+    lastMessageSent = emitRewrites(rewrite)
+  })
+
+  // This prevents process from exiting before handling the last IPC message
+  await lastMessageSent
 
   // Is it ok to pass through the data or should we format it so that we don't have dependencies
   // between the redirects and rewrites formats? What are the chances those will change?

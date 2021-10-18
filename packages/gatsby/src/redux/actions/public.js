@@ -11,7 +11,7 @@ const { slash, createContentDigest } = require(`gatsby-core-utils`)
 const { hasNodeChanged } = require(`../../utils/nodes`)
 const { getNode } = require(`../../datastore`)
 const sanitizeNode = require(`../../utils/sanitize-node`)
-const { store } = require(`..`)
+const { store } = require(`../index`)
 const { validatePageComponent } = require(`../../utils/validate-page-component`)
 import { nodeSchema } from "../../joi-schemas/joi"
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
@@ -23,8 +23,12 @@ const {
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+const { getPageMode } = require(`../../utils/page-mode`)
+const normalizePath = require(`../../utils/normalize-path`).default
 import { createJobV2FromInternalJob } from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
+import { reportOnce } from "../../utils/report-once"
+import fs from "fs-extra"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
@@ -70,15 +74,6 @@ const findChildren = initialChildren => {
   return children
 }
 
-const displayedWarnings = new Set()
-const warnOnce = (message, key) => {
-  const messageId = key ?? message
-  if (!displayedWarnings.has(messageId)) {
-    displayedWarnings.add(messageId)
-    report.warn(message)
-  }
-}
-
 import type { Plugin } from "./types"
 
 type Job = {
@@ -100,7 +95,7 @@ type PageInput = {
   defer?: boolean,
 }
 
-type PageMode = "SSG" | "DSR" | "SSR"
+type PageMode = "SSG" | "DSG" | "SSR"
 
 type Page = {
   path: string,
@@ -281,9 +276,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.component = pageComponentPath
   }
 
+  const rootPath = store.getState().program.directory
   const { error, message, panicOnBuild } = validatePageComponent(
     page,
-    store.getState().program.directory,
+    rootPath,
     name
   )
 
@@ -321,10 +317,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         trueComponentPath = slash(trueCasePathSync(page.component))
       } catch (e) {
         // systems where user doesn't have access to /
-        const commonDir = getCommonDir(
-          store.getState().program.directory,
-          page.component
-        )
+        const commonDir = getCommonDir(rootPath, page.component)
 
         // using `path.win32` to force case insensitive relative path
         const relativePath = slash(
@@ -398,7 +391,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
-    component: page.component,
+    component: normalizePath(page.component),
+    componentPath: normalizePath(page.component),
     componentChunkName: generateComponentChunkName(page.component),
     isCreatedByStatefulCreatePages:
       actionOptions?.traceId === `initial-createPagesStatefully`,
@@ -412,11 +406,12 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    let pageMode: PageMode = `SSG`
     if (page.defer) {
-      pageMode = `DSR`
+      internalPage.defer = true
     }
-    internalPage.mode = pageMode
+    // Note: mode is updated in the end of the build after we get access to all page components,
+    // see materializePageMode in utils/page-mode.ts
+    internalPage.mode = getPageMode(internalPage)
   }
 
   if (page.ownerNodeId) {
@@ -521,26 +516,7 @@ const deleteNodeDeprecationWarningDisplayedMessages = new Set()
  * deleteNode(node)
  */
 actions.deleteNode = (node: any, plugin?: Plugin) => {
-  let id
-
-  // TODO(v4): Remove this deprecation warning and only allow deleteNode(node)
-  if (node && node.node) {
-    let msg =
-      `Calling "deleteNode" with {node} is deprecated. Please pass ` +
-      `the node directly to the function: deleteNode(node)`
-
-    if (plugin && plugin.name) {
-      msg = msg + ` "deleteNode" was called by ${plugin.name}`
-    }
-    if (!deleteNodeDeprecationWarningDisplayedMessages.has(msg)) {
-      report.warn(msg)
-      deleteNodeDeprecationWarningDisplayedMessages.add(msg)
-    }
-
-    id = node.node.id
-  } else {
-    id = node && node.id
-  }
+  const id = node && node.id
 
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
@@ -914,24 +890,6 @@ const touchNodeDeprecationWarningDisplayedMessages = new Set()
  * touchNode(node)
  */
 actions.touchNode = (node: any, plugin?: Plugin) => {
-  // TODO(v4): Remove this deprecation warning and only allow touchNode(node)
-  if (node && node.nodeId) {
-    let msg =
-      `Calling "touchNode" with an object containing the nodeId is deprecated. Please pass ` +
-      `the node directly to the function: touchNode(node)`
-
-    if (plugin && plugin.name) {
-      msg = msg + ` "touchNode" was called by ${plugin.name}`
-    }
-
-    if (!touchNodeDeprecationWarningDisplayedMessages.has(msg)) {
-      report.warn(msg)
-      touchNodeDeprecationWarningDisplayedMessages.add(msg)
-    }
-
-    node = getNode(node.nodeId)
-  }
-
   if (node && !typeOwners[node.internal.type]) {
     typeOwners[node.internal.type] = node.internal.owner
   }
@@ -1240,7 +1198,7 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `CREATE_JOB`,
@@ -1294,7 +1252,7 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `SET_JOB`,
@@ -1321,7 +1279,7 @@ actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `END_JOB`,

@@ -7,11 +7,20 @@ import {
 } from "../../../redux"
 import { GatsbyStateKeys } from "../../../redux/types"
 
+jest.mock(`gatsby-telemetry`, () => {
+  return {
+    decorateEvent: jest.fn(),
+    trackError: jest.fn(),
+    trackCli: jest.fn(),
+  }
+})
+
 let worker: GatsbyTestWorkerPool | undefined
 
 const dummyPagePayload = {
   path: `/foo/`,
   component: `/foo`,
+  componentPath: `/foo`,
 }
 
 describe(`worker (share-state)`, () => {
@@ -95,6 +104,7 @@ describe(`worker (share-state)`, () => {
               "/foo/",
             },
             "query": "",
+            "serverData": false,
           },
         },
       }
@@ -115,6 +125,7 @@ describe(`worker (share-state)`, () => {
               "/foo/",
             },
             "query": "",
+            "serverData": false,
           },
         },
         "staticQueryComponents": Map {
@@ -223,6 +234,7 @@ describe(`worker (share-state)`, () => {
         "isInBootstrap": true,
         "pages": Object {},
         "query": "I'm a page query",
+        "serverData": false,
       }
     `)
 

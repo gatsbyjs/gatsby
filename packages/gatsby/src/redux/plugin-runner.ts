@@ -68,6 +68,7 @@ export const startPluginRunner = (): void => {
       if (node.internal.type === `SitePage`) {
         apiRunnerNode(`onCreateNode`, {
           node,
+          parentSpan: action.parentSpan,
           traceTags: { nodeId: node.id, nodeType: node.internal.type },
         })
       }

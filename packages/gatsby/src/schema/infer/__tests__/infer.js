@@ -18,6 +18,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
+    verbose: jest.fn(),
     activityTimer: () => {
       return {
         start: jest.fn(),
@@ -117,7 +118,7 @@ const addNodes = nodes => {
 
 const deleteNodes = nodes => {
   nodes.forEach(node => {
-    store.dispatch(actions.deleteNode({ node }, { name: `test` }))
+    store.dispatch(actions.deleteNode(node, { name: `test` }))
   })
 }
 

@@ -4,6 +4,13 @@ import * as path from "path"
 
 let worker: GatsbyTestWorkerPool | undefined
 
+jest.mock(`gatsby-telemetry`, () => {
+  return {
+    decorateEvent: jest.fn(),
+    trackCli: jest.fn(),
+  }
+})
+
 beforeEach(() => {
   store.dispatch({ type: `DELETE_CACHE` })
 })

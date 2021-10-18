@@ -13,6 +13,7 @@ import {
   HEADERS_FILENAME,
   PAGE_DATA_DIR,
 } from "./constants"
+import { emitHeaders } from "./ipc"
 
 function getHeaderName(header) {
   const matches = header.match(/^([^:]+):/)
@@ -99,15 +100,6 @@ function preloadHeadersByPage({ pages, manifest, pathPrefix, publicFolder }) {
   const appDataPath = publicFolder(PAGE_DATA_DIR, `app-data.json`)
   const hasAppData = existsSync(appDataPath)
 
-  let hasPageData = false
-  if (pages.size) {
-    // test if 1 page-data file exists, if it does we know we're on a gatsby version that supports page-data
-    const pageDataPath = publicFolder(
-      getPageDataPath(pages.get(pages.keys().next().value).path)
-    )
-    hasPageData = existsSync(pageDataPath)
-  }
-
   pages.forEach(page => {
     const scripts = _.flatMap(COMMON_BUNDLES, file =>
       getScriptPath(file, manifest)
@@ -120,7 +112,9 @@ function preloadHeadersByPage({ pages, manifest, pathPrefix, publicFolder }) {
       json.push(posix.join(PAGE_DATA_DIR, `app-data.json`))
     }
 
-    if (hasPageData) {
+    // page-data gets inline for SSR, so we won't be doing page-data request
+    // and we shouldn't add preload link header for it.
+    if (page.mode !== `SSR`) {
       json.push(getPageDataPath(page.path))
     }
 
@@ -309,36 +303,52 @@ const applyTransfromHeaders =
   headers =>
     _.mapValues(headers, transformHeaders)
 
-const writeHeadersFile =
+const sendHeadersViaIPC = async headers => {
+  /**
+   * Emit Headers via IPC
+   */
+  let lastMessage
+  Object.entries(headers).forEach(([k, val]) => {
+    lastMessage = emitHeaders({
+      url: k,
+      headers: val,
+    })
+  })
+  await lastMessage
+}
+
+const writeHeadersFile = async (publicFolder, contents) =>
+  new Promise((resolve, reject) => {
+    const contentsStr = JSON.stringify(contents)
+    const writeStream = createWriteStream(publicFolder(HEADERS_FILENAME))
+    const chunkSize = 10000
+    const numChunks = Math.ceil(contentsStr.length / chunkSize)
+
+    for (let i = 0; i < numChunks; i++) {
+      writeStream.write(
+        contentsStr.slice(
+          i * chunkSize,
+          Math.min((i + 1) * chunkSize, contentsStr.length)
+        )
+      )
+    }
+
+    writeStream.end()
+    writeStream.on(`finish`, () => {
+      resolve()
+    })
+    writeStream.on(`error`, reject)
+  })
+
+const saveHeaders =
   ({ publicFolder }) =>
   contents =>
-    new Promise((resolve, reject) => {
-      const contentsStr = JSON.stringify(contents)
-      const writeStream = createWriteStream(publicFolder(HEADERS_FILENAME))
-      const chunkSize = 10000
-      const numChunks = Math.ceil(contentsStr.length / chunkSize)
+    Promise.all([
+      sendHeadersViaIPC(contents),
+      writeHeadersFile(publicFolder, contents),
+    ])
 
-      for (let i = 0; i < numChunks; i++) {
-        writeStream.write(
-          contentsStr.slice(
-            i * chunkSize,
-            Math.min((i + 1) * chunkSize, contentsStr.length)
-          )
-        )
-      }
-
-      writeStream.end()
-      writeStream.on(`finish`, () => {
-        resolve()
-      })
-      writeStream.on(`error`, reject)
-    })
-
-export default function buildHeadersProgram(
-  pluginData,
-  pluginOptions,
-  reporter
-) {
+export default function buildHeadersProgram(pluginData, pluginOptions) {
   return _.flow(
     mapUserLinkHeaders(pluginData),
     applySecurityHeaders(pluginOptions),
@@ -346,6 +356,6 @@ export default function buildHeadersProgram(
     mapUserLinkAllPageHeaders(pluginData, pluginOptions),
     applyLinkHeaders(pluginData, pluginOptions),
     applyTransfromHeaders(pluginOptions),
-    writeHeadersFile(pluginData)
+    saveHeaders(pluginData)
   )(pluginOptions.headers)
 }

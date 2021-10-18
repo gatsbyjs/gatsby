@@ -19,6 +19,7 @@ import { formatLogMessage } from "~/utils/format-log-message"
 import { touchValidNodes } from "../source-nodes/update-nodes/fetch-node-updates"
 
 import { Reporter } from "gatsby/reporter"
+import { invokeAndCleanupLeftoverPreviewCallbacks } from "./cleanup"
 
 const inDevelopPreview =
   process.env.NODE_ENV === `development` &&
@@ -367,14 +368,11 @@ export const sourcePreviews = async (helpers: GatsbyHelpers): Promise<void> => {
     dump(webhookBody)
   }
 
-  if (previewForIdIsAlreadyBeingProcessed(webhookBody?.id)) {
-    if (inPreviewDebugMode) {
-      reporter.info(
-        `Preview for id ${webhookBody?.id} is already being sourced.`
-      )
-    }
-    return
-  }
+  // in case there are preview callbacks from our last build
+  await invokeAndCleanupLeftoverPreviewCallbacks({
+    status: `GATSBY_PREVIEW_PROCESS_ERROR`,
+    context: `Starting sourcePreviews`,
+  })
 
   const wpGatsbyPreviewNodeManifestsAreSupported =
     await remoteSchemaSupportsFieldNameOnTypeName({

@@ -1,3 +1,27 @@
+const base64ImageExp = /data:image\/(jpeg|png|gif);base64,[a-zA-Z0-9/+]+=*/g
+
+// The base64 data of image previews might change over time
+// when Contentful adjusts their Image API
+function testWithBase64(elem) {
+  elem.invoke("prop", "outerHTML").then(html => {
+    // Check if we have a valid base64 data
+    expect(html).to.match(base64ImageExp)
+
+    // Remove all base64 data
+    const cleanHtml = html.replace(
+      base64ImageExp,
+      `data:image/redacted;base64,redacted`
+    )
+
+    // Create a DOM element with the redacted base64 data
+    cy.document().then(document => {
+      var temp = document.createElement("div")
+      temp.innerHTML = cleanHtml
+      cy.wrap(temp.firstChild).snapshot()
+    })
+  })
+}
+
 describe(`rich-text`, () => {
   beforeEach(() => {
     cy.visit("/rich-text").waitForRouteChange()
@@ -7,7 +31,7 @@ describe(`rich-text`, () => {
       duration: 500,
     })
     cy.wait(1000)
-    cy.get(`[data-cy-id="rich-text-all-features"]`).snapshot()
+    testWithBase64(cy.get(`[data-cy-id="rich-text-all-features"]`))
   })
   it(`rich-text: Basic`, () => {
     cy.get(`[data-cy-id="rich-text-basic"]`).snapshot()
@@ -20,7 +44,7 @@ describe(`rich-text`, () => {
       duration: 500,
     })
     cy.wait(1000)
-    cy.get(`[data-cy-id="rich-text-embedded-asset"]`).snapshot()
+    testWithBase64(cy.get(`[data-cy-id="rich-text-embedded-asset"]`))
   })
   it(`rich-text: Embedded Entry With Deep Reference Loop`, () => {
     cy.get(

@@ -56,14 +56,13 @@ sharp.concurrency(1)
 exports.processFile = (file, transforms, options = {}) => {
   let pipeline
   try {
-    pipeline = !options.failOnError
-      ? sharp(file, { failOnError: false })
-      : sharp(file)
+    pipeline = !options.failOnError ? sharp({ failOnError: false }) : sharp()
 
     // Keep Metadata
     if (!options.stripMetadata) {
       pipeline = pipeline.withMetadata()
     }
+    fs.createReadStream(file).pipe(pipeline)
   } catch (err) {
     throw new SharpError(`Failed to load image ${file} into sharp.`, err)
   }
@@ -152,7 +151,8 @@ exports.processFile = (file, transforms, options = {}) => {
       }
 
       try {
-        await clonedPipeline.toFile(outputPath)
+        const buffer = await clonedPipeline.toBuffer()
+        await fs.writeFile(outputPath, buffer)
       } catch (err) {
         throw new Error(
           `Failed to write ${file} into ${outputPath}. (${err.message})`

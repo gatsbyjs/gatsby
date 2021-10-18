@@ -1,10 +1,9 @@
-import uuidv4 from "uuid/v4"
 import path from "path"
 import hasha from "hasha"
 import fs from "fs-extra"
 import pDefer from "p-defer"
 import _ from "lodash"
-import { createContentDigest, slash } from "gatsby-core-utils"
+import { createContentDigest, slash, uuid } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { IPhantomReporter } from "gatsby-cli"
 import {
@@ -17,6 +16,7 @@ import {
   IJobNotWhitelisted,
   WorkerError,
 } from "./types"
+import { requireGatsbyPlugin } from "../require-gatsby-plugin"
 
 type IncomingMessages = IJobCompletedMessage | IJobFailed | IJobNotWhitelisted
 
@@ -157,7 +157,7 @@ function runJob(
 ): Promise<Record<string, unknown>> {
   const { plugin } = job
   try {
-    const worker = require(path.posix.join(plugin.resolve, `gatsby-worker.js`))
+    const worker = requireGatsbyPlugin(plugin, `gatsby-worker`)
     if (!worker[job.name]) {
       throw new Error(`No worker function found for ${job.name}`)
     }
@@ -220,7 +220,7 @@ export function createInternalJob(
   })
 
   const internalJob: InternalJob = {
-    id: uuidv4(),
+    id: uuid.v4(),
     name,
     contentDigest: ``,
     inputPaths: inputPathsWithContentDigest,
@@ -322,6 +322,16 @@ export function removeInProgressJob(contentDigest: string): void {
  */
 export function waitUntilAllJobsComplete(): Promise<void> {
   return hasActiveJobs ? hasActiveJobs.promise : Promise.resolve()
+}
+
+export async function waitJobs(jobDigests: Set<string>): Promise<void> {
+  const promises: Array<Promise<any>> = []
+  for (const [digest, job] of jobsInProcess) {
+    if (jobDigests.has(digest)) {
+      promises.push(job.deferred.promise)
+    }
+  }
+  await Promise.all(promises)
 }
 
 export function isJobStale(

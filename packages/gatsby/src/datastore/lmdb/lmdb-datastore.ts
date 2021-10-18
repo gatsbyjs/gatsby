@@ -27,24 +27,32 @@ const lmdbDatastore = {
   getNodesByType,
 }
 
-const rootDbFile =
-  process.env.NODE_ENV === `test`
-    ? `test-datastore-${
-        // FORCE_TEST_DATABASE_ID will be set if this gets executed in worker context
-        // when running jest tests. JEST_WORKER_ID will be set when this gets executed directly
-        // in test context (jest will use jest-worker internally).
-        process.env.FORCE_TEST_DATABASE_ID ?? process.env.JEST_WORKER_ID
-      }`
-    : `datastore`
+function getDefaultDbPath(): string {
+  const dbFileName =
+    process.env.NODE_ENV === `test`
+      ? `test-datastore-${
+          // FORCE_TEST_DATABASE_ID will be set if this gets executed in worker context
+          // when running jest tests. JEST_WORKER_ID will be set when this gets executed directly
+          // in test context (jest will use jest-worker internally).
+          process.env.FORCE_TEST_DATABASE_ID ?? process.env.JEST_WORKER_ID
+        }`
+      : `datastore`
 
+  return process.cwd() + `/.cache/data/` + dbFileName
+}
+
+let fullDbPath
 let rootDb
 let databases
 
 function getRootDb(): RootDatabase {
   if (!rootDb) {
+    if (!fullDbPath) {
+      throw new Error(`LMDB path is not set!`)
+    }
     rootDb = open({
       name: `root`,
-      path: process.cwd() + `/.cache/data/` + rootDbFile,
+      path: fullDbPath,
       compression: true,
     })
   }
@@ -186,7 +194,8 @@ function updateDataStore(action: ActionsUnion): void {
     case `CREATE_NODE`:
     case `ADD_FIELD_TO_NODE`:
     case `ADD_CHILD_NODE_TO_PARENT_NODE`:
-    case `DELETE_NODE`: {
+    case `DELETE_NODE`:
+    case `MATERIALIZE_PAGE_MODE`: {
       const dbs = getDatabases()
       lastOperationPromise = Promise.all([
         updateNodes(dbs.nodes, action),
@@ -211,7 +220,11 @@ async function ready(): Promise<void> {
   await lastOperationPromise
 }
 
-export function setupLmdbStore(): IDataStore {
+export function setupLmdbStore({
+  dbPath = getDefaultDbPath(),
+}: { dbPath?: string } = {}): IDataStore {
+  fullDbPath = dbPath
+
   replaceReducer({
     nodes: (state = new Map(), action) =>
       action.type === `DELETE_CACHE` ? new Map() : state,

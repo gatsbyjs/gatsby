@@ -88,7 +88,7 @@ describe(`Kitchen sink schema test`, () => {
     store.dispatch({
       type: `CREATE_TYPES`,
       payload: `
-        interface Post @nodeInterface {
+        interface Post implements Node {
           id: ID!
           code: String
         }
