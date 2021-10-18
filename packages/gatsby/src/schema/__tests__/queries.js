@@ -61,8 +61,7 @@ describe(`Query schema`, () => {
                     type: `Author`,
                     query: { filter: { email: { in: source.authors } } },
                   })
-                  const authors = Array.from(entries)
-                  return authors.map(author => author.name)
+                  return entries.map(author => author.name)
                 },
               },
               [`frontmatter.anotherField`]: {
