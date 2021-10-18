@@ -62,7 +62,7 @@ export const handleWpActions = async api => {
     case `NON_NODE_ROOT_FIELDS`:
       await fetchAndCreateNonNodeRootFields()
     case `REFETCH_ALL`:
-       await sourceNodes({ ...helpers, refetchAll: true }, {})
+      await sourceNodes({ ...helpers, refetchAll: true }, {})
   }
 
   await setHardCachedNodes({ helpers })
