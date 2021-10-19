@@ -141,7 +141,7 @@ More markdown content...
 
 ## Docs renaming instructions
 
-Sometimes it makes sense to move or rename a file as part of docs restructuring or for content clarification. While we recommend keeping URLs consistent as often as possible, here are some tips to minimize errors and keep the docs in a good state:
+It is sometimes necessary to relocate or rename a file as part of documents reorganisation or for content clarity. While we recommend keeping URLs consistent as often as possible, here are some tips to minimize errors and keep the docs in a good state:
 
 - Run proposed structure changes by the Gatsby docs team in [a GitHub issue](/contributing/how-to-file-an-issue/) to ensure your change is accepted.
 - Update all instances of the old URL to your new one. [Find and replace](https://code.visualstudio.com/docs/editor/codebasics#_search-across-files) in VS Code can help. Check that the context of the original link reference still makes sense with the new one.
