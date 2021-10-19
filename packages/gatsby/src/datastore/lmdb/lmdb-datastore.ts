@@ -1,6 +1,6 @@
 import { RootDatabase, open, ArrayLikeIterable } from "lmdb-store"
 // import { performance } from "perf_hooks"
-import { ActionsUnion, IDeleteNodeAction, IGatsbyNode } from "../../redux/types"
+import { ActionsUnion, IGatsbyNode } from "../../redux/types"
 import { updateNodes } from "./updates/nodes"
 import { updateNodesByType } from "./updates/nodes-by-type"
 import { IDataStore, ILmdbDatabases, IQueryResult } from "../types"
