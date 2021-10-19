@@ -318,7 +318,7 @@ export interface IGatsbyState {
     } | null
     thirdPartySchemas: Array<GraphQLSchema>
     types: Array<
-      string | { typeOrTypeDef: DocumentNode; plugin: IGatsbyPlugin }
+      { typeOrTypeDef: DocumentNode | GraphQLOutputType | GatsbyGraphQLType; plugin: IGatsbyPlugin }
     >
   }
   logs: IGatsbyCLIState
