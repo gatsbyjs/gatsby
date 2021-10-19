@@ -213,10 +213,8 @@ function updateDataStore(action: ActionsUnion): void {
         preSyncDeletedNodeIdsCache.delete(action.payload.id)
       }
 
-      if (action.type === `DELETE_NODE`) {
-        preSyncDeletedNodeIdsCache.add(
-          ((action as IDeleteNodeAction).payload as IGatsbyNode).id
-        )
+      if (action.type === `DELETE_NODE` && action.payload?.id) {
+        preSyncDeletedNodeIdsCache.add(action.payload.id)
         operationPromise.then(() => {
           // only clear if no other operations have been done in the meantime
           if (lastOperationPromise === operationPromise) {
