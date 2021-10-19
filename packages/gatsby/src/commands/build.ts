@@ -107,6 +107,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     parentSpan: buildSpan,
   })
 
+  await apiRunnerNode(`onPreBuild`, {
+    graphql: gatsbyNodeGraphQLFunction,
+    parentSpan: buildSpan,
+  })
+
   // writes sync and async require files to disk
   // used inside routing "html" + "javascript"
   await writeOutRequires({
@@ -291,11 +296,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       },
     })
   }
-
-  await apiRunnerNode(`onPreBuild`, {
-    graphql: gatsbyNodeGraphQLFunction,
-    parentSpan: buildSpan,
-  })
 
   // Copy files from the static directory to
   // an equivalent static directory within public.
