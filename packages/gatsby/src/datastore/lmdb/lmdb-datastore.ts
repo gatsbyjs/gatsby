@@ -202,10 +202,11 @@ function updateDataStore(action: ActionsUnion): void {
     case `ADD_CHILD_NODE_TO_PARENT_NODE`:
     case `MATERIALIZE_PAGE_MODE`: {
       const dbs = getDatabases()
-      lastOperationPromise = Promise.all([
+      const operationPromise = Promise.all([
         updateNodes(dbs.nodes, action),
         updateNodesByType(dbs.nodesByType, action),
       ])
+      lastOperationPromise = operationPromise
 
       // if create is used in the same transaction as delete we should remove it from cache
       if (action.type === `CREATE_NODE`) {
@@ -216,8 +217,11 @@ function updateDataStore(action: ActionsUnion): void {
         preSyncDeletedNodeIdsCache.add(
           ((action as IDeleteNodeAction).payload as IGatsbyNode).id
         )
-        lastOperationPromise.then(() => {
-          preSyncDeletedNodeIdsCache.clear()
+        operationPromise.then(() => {
+          // only clear if no other operations have been done in the meantime
+          if (lastOperationPromise === operationPromise) {
+            preSyncDeletedNodeIdsCache.clear()
+          }
         })
       }
     }
