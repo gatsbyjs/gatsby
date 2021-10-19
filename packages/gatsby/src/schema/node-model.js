@@ -20,7 +20,7 @@ import {
   getNodesByType,
   getTypes,
 } from "../datastore"
-import { isIterable } from "../datastore/common/iterable"
+import { GatsbyIterable, isIterable } from "../datastore/common/iterable"
 import { reportOnce } from "../utils/report-once"
 
 type TypeOrTypeName = string | GraphQLOutputType
@@ -784,7 +784,7 @@ async function resolveRecursive(
         )
       } else if (
         isCompositeType(gqlFieldType) &&
-        _.isArray(innerValue) &&
+        (_.isArray(innerValue) || innerValue instanceof GatsbyIterable) &&
         gqlNonNullType instanceof GraphQLList
       ) {
         innerValue = await Promise.all(

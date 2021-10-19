@@ -1,7 +1,10 @@
 {
+  "presets": [
+    "@babel/preset-react"
+  ],
   "plugins": [
     [
-      "../../../babel-plugin-remove-api",
+      "../../../../babel-plugin-remove-api",
       {
         "apis": [
           "getServerData",
