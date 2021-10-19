@@ -106,7 +106,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     program,
     parentSpan: buildSpan,
   })
-  
+
   await apiRunnerNode(`onPreBuild`, {
     graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
