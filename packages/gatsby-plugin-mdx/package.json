@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-mdx",
-  "version": "3.0.0-zz-next.3",
+  "version": "3.0.0-zz-next.4",
   "description": "MDX integration for Gatsby",
   "main": "index.js",
   "license": "MIT",
