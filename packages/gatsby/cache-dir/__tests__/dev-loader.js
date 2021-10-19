@@ -482,26 +482,32 @@ describe(`Dev loader`, () => {
   describe(`prefetch`, () => {
     const flushPromises = () => new Promise(resolve => setImmediate(resolve))
 
-    it(`shouldn't prefetch when shouldPrefetch is false`, () => {
-      const devLoader = new DevLoader(asyncRequires, [])
+    it(`shouldn't prefetch when shouldPrefetch is false`, async () => {
+      jest.useFakeTimers()
+      const devLoader = new DevLoader(null, [])
       devLoader.shouldPrefetch = jest.fn(() => false)
       devLoader.doPrefetch = jest.fn()
       devLoader.apiRunner = jest.fn()
+      const prefetchPromise = devLoader.prefetch(`/mypath/`)
+      jest.runAllTimers()
 
-      expect(devLoader.prefetch(`/mypath/`)).toBe(false)
+      expect(await prefetchPromise).toBe(false)
       expect(devLoader.shouldPrefetch).toHaveBeenCalledWith(`/mypath/`)
       expect(devLoader.apiRunner).not.toHaveBeenCalled()
       expect(devLoader.doPrefetch).not.toHaveBeenCalled()
     })
 
-    it(`should trigger custom prefetch logic when core is disabled`, () => {
-      const devLoader = new DevLoader(asyncRequires, [])
+    it(`should trigger custom prefetch logic when core is disabled`, async () => {
+      jest.useFakeTimers()
+      const devLoader = new DevLoader(null, [])
       devLoader.shouldPrefetch = jest.fn(() => true)
       devLoader.doPrefetch = jest.fn()
       devLoader.apiRunner = jest.fn()
       devLoader.prefetchDisabled = true
 
-      expect(devLoader.prefetch(`/mypath/`)).toBe(false)
+      const prefetchPromise = devLoader.prefetch(`/mypath/`)
+      jest.runAllTimers()
+      expect(await prefetchPromise).toBe(false)
       expect(devLoader.shouldPrefetch).toHaveBeenCalledWith(`/mypath/`)
       expect(devLoader.apiRunner).toHaveBeenCalledWith(`onPrefetchPathname`, {
         pathname: `/mypath/`,
@@ -511,12 +517,14 @@ describe(`Dev loader`, () => {
 
     it(`should prefetch when not yet triggered`, async () => {
       jest.useFakeTimers()
-      const devLoader = new DevLoader(asyncRequires, [])
+      const devLoader = new DevLoader(null, [])
       devLoader.shouldPrefetch = jest.fn(() => true)
       devLoader.apiRunner = jest.fn()
       devLoader.doPrefetch = jest.fn(() => Promise.resolve({}))
+      const prefetchPromise = devLoader.prefetch(`/mypath/`)
+      jest.runAllTimers()
 
-      expect(devLoader.prefetch(`/mypath/`)).toBe(true)
+      expect(await prefetchPromise).toBe(true)
 
       // wait for doPrefetchPromise
       await flushPromises()
@@ -530,31 +538,6 @@ describe(`Dev loader`, () => {
         {
           pathname: `/mypath/`,
         }
-      )
-    })
-
-    it(`should only run apis once`, async () => {
-      const devLoader = new DevLoader(asyncRequires, [])
-      devLoader.shouldPrefetch = jest.fn(() => true)
-      devLoader.apiRunner = jest.fn()
-      devLoader.doPrefetch = jest.fn(() => Promise.resolve({}))
-
-      expect(devLoader.prefetch(`/mypath/`)).toBe(true)
-      expect(devLoader.prefetch(`/mypath/`)).toBe(true)
-
-      // wait for doPrefetchPromise
-      await flushPromises()
-
-      expect(devLoader.apiRunner).toHaveBeenCalledTimes(2)
-      expect(devLoader.apiRunner).toHaveBeenNthCalledWith(
-        1,
-        `onPrefetchPathname`,
-        expect.anything()
-      )
-      expect(devLoader.apiRunner).toHaveBeenNthCalledWith(
-        2,
-        `onPostPrefetchPathname`,
-        expect.anything()
       )
     })
   })

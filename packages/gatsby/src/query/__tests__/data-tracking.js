@@ -1291,9 +1291,8 @@ describe(`query caching between builds`, () => {
         createSchemaCustomization: ({ actions: { createTypes }, schema }) => {
           // Define fields with custom resolvers first
           const resolveOne = type => (value, args, context) =>
-            context.nodeModel.runQuery({
+            context.nodeModel.findOne({
               query: { testId: { eq: value.id } },
-              firstOnly: true,
               type,
             })
 
@@ -1321,11 +1320,13 @@ describe(`query caching between builds`, () => {
                 },
                 fooList: {
                   type: [`Foo`],
-                  resolve: (value, args, context) =>
-                    context.nodeModel.runQuery({
+                  resolve: async (value, args, context) => {
+                    const { entries } = await context.nodeModel.findAll({
                       query: { testId: { eq: value.id } },
                       type: `Foo`,
-                    }),
+                    })
+                    return entries
+                  },
                 },
                 barList: {
                   type: [`Bar`],
