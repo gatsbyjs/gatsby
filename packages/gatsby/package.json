@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "4.0.0-zz-next.8",
+  "version": "4.0.0-zz-next.9",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./cli.js"
@@ -35,7 +35,7 @@
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-lodash": "^3.3.4",
     "babel-plugin-remove-graphql-queries": "^4.0.0-zz-next.3",
-    "babel-preset-gatsby": "^2.0.0-zz-next.4",
+    "babel-preset-gatsby": "^2.0.0-zz-next.5",
     "better-opn": "^2.1.1",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
@@ -80,8 +80,8 @@
     "gatsby-cli": "^4.0.0-zz-next.5",
     "gatsby-core-utils": "^3.0.0-zz-next.3",
     "gatsby-graphiql-explorer": "^2.0.0-zz-next.2",
-    "gatsby-legacy-polyfills": "^2.0.0-zz-next.2",
-    "gatsby-link": "^4.0.0-zz-next.4",
+    "gatsby-legacy-polyfills": "^2.0.0-zz-next.3",
+    "gatsby-link": "^4.0.0-zz-next.5",
     "gatsby-plugin-page-creator": "^4.0.0-zz-next.3",
     "gatsby-plugin-typescript": "^4.0.0-zz-next.3",
     "gatsby-plugin-utils": "^2.0.0-zz-next.3",

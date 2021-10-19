@@ -1,7 +1,7 @@
 {
   "name": "gatsby-legacy-polyfills",
   "description": "Polyfills for legacy browsers",
-  "version": "2.0.0-zz-next.2",
+  "version": "2.0.0-zz-next.3",
   "main": "dist/polyfills.js",
   "author": "Ward Peeters <ward@gatsbyjs.com>",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-legacy-polyfills#readme",
@@ -31,7 +31,6 @@
     "dist/"
   ],
   "devDependencies": {
-    "yet-another-abortcontroller-polyfill": "0.0.4",
     "chokidar-cli": "^3.0.0",
     "codegen.macro": "^4.1.0",
     "core-js": "3.9.0",
@@ -44,6 +43,7 @@
     "object-assign": "^4.1.1",
     "source-map": "^0.7.3",
     "url-polyfill": "^1.1.12",
-    "whatwg-fetch": "^3.6.2"
+    "whatwg-fetch": "^3.6.2",
+    "yet-another-abortcontroller-polyfill": "0.0.4"
   }
 }
