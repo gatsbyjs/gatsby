@@ -134,13 +134,7 @@ function iterateNodesByType(type: string): GatsbyIterable<IGatsbyNode> {
   return new GatsbyIterable(
     nodesByType
       .getValues(type)
-      .map(nodeId => {
-        if (preSyncDeletedNodeIdsCache.has(nodeId)) {
-          return undefined
-        }
-
-        return getNode(nodeId)
-      })
+      .map(nodeId => getNode(nodeId))
       .filter(Boolean) as ArrayLikeIterable<IGatsbyNode>
   )
 }
