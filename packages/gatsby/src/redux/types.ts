@@ -645,7 +645,7 @@ export interface ICreateTypes {
   type: `CREATE_TYPES`
   plugin: IGatsbyPlugin
   traceId?: string
-  payload: DocumentNode | Array<DocumentNode>
+  payload: DocumentNode | GraphQLOutputType | GatsbyGraphQLType | Array<DocumentNode | GraphQLOutputType | GatsbyGraphQLType>
 }
 
 export interface ICreateFieldExtension {
