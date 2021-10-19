@@ -57,12 +57,11 @@ describe(`Query schema`, () => {
               [`frontmatter.authorNames`]: {
                 type: `[String!]!`,
                 async resolve(source, args, context, info) {
-                  const authors = await context.nodeModel.runQuery({
+                  const { entries } = await context.nodeModel.findAll({
                     type: `Author`,
                     query: { filter: { email: { in: source.authors } } },
-                    firstOnly: false,
                   })
-                  return authors.map(author => author.name)
+                  return entries.map(author => author.name)
                 },
               },
               [`frontmatter.anotherField`]: {
@@ -103,17 +102,8 @@ describe(`Query schema`, () => {
             },
             Author: {
               posts: {
-                resolve(source, args, context, info) {
-                  // NOTE: One of the differences between using `runQuery` and
-                  // `getAllNodes` is that the latter will always get the nodes
-                  // which will be queried directly from the store, while `runQuery`
-                  // will first try to call field resolvers, e.g. to expand
-                  // foreign-key fields to full nodes. Here for example we can
-                  // query `authors.email`.
-                  // Another thing to note is that we don't have to use the
-                  // `$elemMatch` operator when querying arrays of objects
-                  // (although we could).
-                  return context.nodeModel.runQuery({
+                async resolve(source, args, context, info) {
+                  const { entries } = await context.nodeModel.findAll({
                     type: `Markdown`,
                     query: {
                       filter: {
@@ -125,8 +115,8 @@ describe(`Query schema`, () => {
                         },
                       },
                     },
-                    firstOnly: false,
                   })
+                  return entries
                 },
               },
             },

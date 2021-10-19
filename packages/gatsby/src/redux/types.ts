@@ -92,6 +92,7 @@ export interface IGatsbyConfig {
   developMiddleware?: any
   proxy?: any
   pathPrefix?: string
+  assetPrefix?: string
   mapping?: Record<string, string>
 }
 
