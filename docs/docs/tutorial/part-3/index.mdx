@@ -132,10 +132,12 @@ npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-source-filesystem
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
-The `StaticImage` component requires a few additional plugins to work. These extra plugins are called **peer dependencies**, and you'll need to install them along with the `gatsby-plugin-image` package:
+The `StaticImage` component requires a few additional plugins to work. These extra plugins are called **peer dependencies**, and if your npm version is lower than 7 you'll need to install them along with the `gatsby-plugin-image` package:
 
 * `gatsby-plugin-sharp`: Handles the actual image processing that is used by `gatsby-plugin-image`.
 * `gatsby-source-filesystem`: Lets you pull in data from your computer's filesystem. (You'll learn more about this plugin later. Just install it for now.)
+
+**Tip:** Automatically installing peer dependencies is an exciting new feature introduced in npm 7. If your version of npm is 7 or higher then you won't need to install `gatsby-plugin-sharp` manually, npm will handle installing it automatically.
 
 **Tip:** When adding a new plugin to your site, check the plugin README in the [Gatsby Plugin Library](/plugins) to see if there are any special setup instructions.
 
