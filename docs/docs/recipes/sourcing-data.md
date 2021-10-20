@@ -202,7 +202,7 @@ export const pageQuery = graphql`
 
 ### Additional resources
 
-- [Tutorial: Programmatically create pages from data](/docs/tutorial/part-seven/)
+- [Tutorial: Programmatically create pages from data](/docs/tutorial/part-7/)
 - [Creating and modifying pages](/docs/creating-and-modifying-pages/)
 - [Adding Markdown pages](/docs/how-to/routing/adding-markdown-pages/)
 - [Guide to creating pages from data programmatically](/docs/programmatically-create-pages-from-data/)
@@ -633,4 +633,4 @@ export const query = graphql`
 
 - [Using Decoupled Drupal with Gatsby](/blog/2018-08-13-using-decoupled-drupal-with-gatsby/)
 - [More on sourcing from Drupal](/docs/how-to/sourcing-data/sourcing-from-drupal)
-- [Tutorial: Programmatically create pages from data](/docs/tutorial/part-seven/)
+- [Tutorial: Programmatically create pages from data](/docs/tutorial/part-7/)
