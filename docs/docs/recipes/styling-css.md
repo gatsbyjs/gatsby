@@ -213,7 +213,7 @@ Notice that the file extension is `.module.css` instead of `.css`, which tells G
 
 ### Additional resources
 
-- More on [Using CSS Modules](/docs/tutorial/part-two/#css-modules)
+- More on [Using CSS Modules](/docs/tutorial/part-2/#css-modules)
 - [Live example on Using CSS modules](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-css-modules)
 
 ## Using Sass/SCSS
