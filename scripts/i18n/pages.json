@@ -7,14 +7,14 @@
     "name": "tutorial",
     "pages": [
       "index",
-      "part-0",
-      "part-1",
-      "part-2",
-      "part-3",
-      "part-4",
-      "part-5",
-      "part-6",
-      "part-7",
+      "part-zero",
+      "part-one",
+      "part-two",
+      "part-three",
+      "part-four",
+      "part-five",
+      "part-six",
+      "part-seven",
       "part-eight"
     ]
   },
