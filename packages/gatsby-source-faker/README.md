@@ -13,7 +13,7 @@ npm install gatsby-source-faker
 or
 
 ```shell
-npm install gatsby-source-faker
+yarn add gatsby-source-faker
 ```
 
 Add `gatsby-source-faker` to the `gatsby-config.js` as follows
