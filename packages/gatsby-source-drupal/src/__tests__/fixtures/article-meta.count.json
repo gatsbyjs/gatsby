@@ -1,0 +1,39 @@
+{
+  "data": [
+    {
+      "type": "node--article",
+      "id": "article-1",
+      "attributes": {
+        "id": 21,
+        "uuid": "article-1",
+        "title": "Article #1",
+        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent accumsan nisl nulla, a commodo neque luctus viverra. Praesent sed elit nisl. In sagittis, velit lacinia varius cursus, lectus urna aliquet tortor, in convallis lacus justo ut enim. Nullam tempus diam non mattis pulvinar. Fusce viverra vitae ex eget efficitur. Nunc sed ligula magna. Fusce ligula diam, lobortis et neque vel, finibus laoreet augue. Duis tristique lacinia odio, tincidunt lacinia nunc cursus a. Vivamus nec mauris sed lectus commodo bibendum vel a felis."
+      },
+      "relationships": {
+        "field_main_image": {
+          "data": null
+        },
+        "field_tags": {
+          "data": [
+            {
+              "type": "taxonomy_term--tags",
+              "id": "tag-1"
+            },
+            {
+              "type": "taxonomy_term--tags",
+              "id": "tag-2"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "links": {
+    "next": {
+      "href": "http://fixture/jsonapi/node/articlemeta.count?page[limit]=3&page[offset]=1"
+    }
+  },
+  "meta": {
+    "count": 7
+  }
+}

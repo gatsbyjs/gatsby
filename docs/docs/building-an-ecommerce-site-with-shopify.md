@@ -89,7 +89,7 @@ const ProductsPage = ({ data }) => (
         <li key={node.shopifyId}>
           <h3>
             <Link to={`/products/${node.handle}`}>{node.title}</Link>
-            {" - "}${node.priceRange.minVariantPrice.amount}
+            {" - "}${node.priceRangeV2.minVariantPrice.amount}
           </h3>
           <p>{node.description}</p>
         </li>
@@ -123,7 +123,7 @@ export const query = graphql`
 
 ## Generating a page for each product
 
-You can [programmatically create pages](/docs/tutorial/part-seven/) in Gatsby for every product in your Shopify store.
+You can [programmatically create pages](/docs/tutorial/part-7/) in Gatsby for every product in your Shopify store.
 
 Create a template for your product pages by adding a new file, `/src/templates/product.js`.
 

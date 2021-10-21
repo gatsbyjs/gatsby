@@ -6,6 +6,7 @@ import { BuildError } from "./components/build-error"
 import { RuntimeErrors } from "./components/runtime-errors"
 import { GraphqlErrors } from "./components/graphql-errors"
 import { DevSsrError } from "./components/dev-ssr-error"
+import { GetServerDataError } from "./components/getserverdata-error"
 
 const reducer = (state, event) => {
   switch (event.action) {
@@ -28,6 +29,12 @@ const reducer = (state, event) => {
     case `SHOW_RUNTIME_ERRORS`: {
       return { ...state, errors: state.errors.concat(event.payload) }
     }
+    case `SHOW_GETSERVERDATA_ERROR`: {
+      return {
+        ...state,
+        getServerDataError: event.payload,
+      }
+    }
     case `SHOW_GRAPHQL_ERRORS`: {
       return {
         ...state,
@@ -43,6 +50,7 @@ const reducer = (state, event) => {
         buildError: null,
         errors: [],
         graphqlErrors: [],
+        getServerDataError: null,
       }
     }
     default: {
@@ -55,6 +63,7 @@ const initialState = {
   errors: [],
   buildError: null,
   devSsrError: null,
+  getServerDataError: null,
   graphqlErrors: [],
 }
 
@@ -83,20 +92,31 @@ function DevOverlay({ children }) {
 
   const dismiss = () => {
     dispatch({ action: `DISMISS` })
+    // Setting gatsbyEvents = [] is necessary for the runtime errors to correctly clear
+    // However, using this for serverData errors doesn't work and results in the overlay not showing up
+    // again since the component isn't remounted and thus the .push method is not reinitalized
     window._gatsbyEvents = []
   }
 
   const hasBuildError = state.buildError !== null
   const hasRuntimeErrors = Boolean(state.errors.length)
+  const hasGetServerDataError = Boolean(state.getServerDataError)
   const hasGraphqlErrors = Boolean(state.graphqlErrors.length)
   const hasDevSsrError = state.devSsrError !== null
   const hasErrors =
-    hasBuildError || hasRuntimeErrors || hasGraphqlErrors || hasDevSsrError
+    hasBuildError ||
+    hasRuntimeErrors ||
+    hasGraphqlErrors ||
+    hasDevSsrError ||
+    hasGetServerDataError
 
   // This component has a deliberate order (priority)
   const ErrorComponent = () => {
     if (hasBuildError) {
       return <BuildError error={state.buildError} />
+    }
+    if (hasGetServerDataError) {
+      return <GetServerDataError error={state.getServerDataError} />
     }
     if (hasRuntimeErrors) {
       return <RuntimeErrors errors={state.errors} dismiss={dismiss} />

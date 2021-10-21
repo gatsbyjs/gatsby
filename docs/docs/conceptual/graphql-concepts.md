@@ -118,7 +118,7 @@ When starting out with GraphQL, we recommend the following two tutorials:
 - https://www.howtographql.com/
 - https://graphql.org/learn/
 
-[The official Gatsby tutorial](/docs/tutorial/part-four/) also includes an introduction to using GraphQL specifically with Gatsby.
+[The official Gatsby tutorial](/docs/tutorial/part-4/) also includes an introduction to using GraphQL specifically with Gatsby.
 
 ## How do GraphQL and Gatsby work together?
 

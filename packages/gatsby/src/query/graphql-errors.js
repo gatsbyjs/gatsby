@@ -7,6 +7,7 @@ const { distance: levenshtein } = require(`fastest-levenshtein`)
 import _ from "lodash"
 import report from "gatsby-cli/lib/reporter"
 const { locInGraphQlToLocInFile } = require(`./error-parser`)
+import { getCodeFrame } from "./graphql-errors-codeframe"
 
 type RelayGraphQLError = Error & { validationErrors?: Object }
 
@@ -92,22 +93,6 @@ function findLocation(extractedMessage, def) {
     },
   })
   return location
-}
-
-export function getCodeFrame(query: string, line?: number, column?: number) {
-  return codeFrameColumns(
-    query,
-    {
-      start: {
-        line,
-        column,
-      },
-    },
-    {
-      linesAbove: 10,
-      linesBelow: 10,
-    }
-  )
 }
 
 function getCodeFrameFromRelayError(

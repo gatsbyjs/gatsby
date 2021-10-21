@@ -330,11 +330,9 @@ describe(`NodeModel`, () => {
         const query = {
           filter: { frontmatter: { published: { eq: false } } },
         }
-        const firstOnly = true
         nodeModel.replaceFiltersCache()
-        const result = await nodeModel.runQuery({
+        const result = await nodeModel.findOne({
           query,
-          firstOnly,
           type,
         })
         expect(result.id).toBe(`post1`)
@@ -345,14 +343,14 @@ describe(`NodeModel`, () => {
         const query = {
           filter: { frontmatter: { published: { eq: false } } },
         }
-        const firstOnly = false
         nodeModel.replaceFiltersCache()
-        const result = await nodeModel.runQuery({
+        const { entries, totalCount } = await nodeModel.findAll({
           query,
-          firstOnly,
           type,
         })
-        expect(result.length).toBe(2)
+        const result = Array.from(entries)
+        const count = await totalCount()
+        expect(count).toBe(2)
         expect(result[0].id).toBe(`post1`)
         expect(result[1].id).toBe(`post3`)
       })
@@ -362,12 +360,10 @@ describe(`NodeModel`, () => {
         const query = {
           filter: { frontmatter: { published: { eq: false } } },
         }
-        const firstOnly = false
         nodeModel.replaceFiltersCache()
-        await nodeModel.runQuery(
+        await nodeModel.findAll(
           {
             query,
-            firstOnly,
             type,
           },
           { path: `/` }
@@ -384,11 +380,9 @@ describe(`NodeModel`, () => {
         const query = {
           filter: { frontmatter: { published: { eq: false } } },
         }
-        const firstOnly = false
         nodeModel.replaceFiltersCache()
-        await nodeModel.withContext({ path: `/` }).runQuery({
+        await nodeModel.withContext({ path: `/` }).findAll({
           query,
-          firstOnly,
           type,
         })
         expect(createPageDependency).toHaveBeenCalledTimes(1)
@@ -403,12 +397,10 @@ describe(`NodeModel`, () => {
         const query = {
           filter: { frontmatter: { published: { eq: false } } },
         }
-        const firstOnly = false
         nodeModel.replaceFiltersCache()
-        await nodeModel.runQuery(
+        await nodeModel.findAll(
           {
             query,
-            firstOnly,
             type,
           },
           { path: `/`, connectionType: `Post` }
@@ -425,12 +417,10 @@ describe(`NodeModel`, () => {
         const query = {
           filter: { frontmatter: { published: { eq: false } } },
         }
-        const firstOnly = false
         nodeModel.replaceFiltersCache()
-        await nodeModel.runQuery(
+        await nodeModel.findAll(
           {
             query,
-            firstOnly,
             type,
           },
           { path: `/`, connectionType: null }
@@ -451,12 +441,10 @@ describe(`NodeModel`, () => {
         const query = {
           filter: { frontmatter: { published: { eq: false } } },
         }
-        const firstOnly = false
         nodeModel.replaceFiltersCache()
-        await nodeModel.runQuery(
+        await nodeModel.findAll(
           {
             query,
-            firstOnly,
             type,
           },
           { path: `/`, track: false }
@@ -469,12 +457,10 @@ describe(`NodeModel`, () => {
         const query = {
           filter: { frontmatter: { published: { eq: false } } },
         }
-        const firstOnly = false
         nodeModel.replaceFiltersCache()
-        await nodeModel.withContext({ path: `/` }).runQuery(
+        await nodeModel.withContext({ path: `/` }).findAll(
           {
             query,
-            firstOnly,
             type,
           },
           { track: false }
@@ -485,11 +471,9 @@ describe(`NodeModel`, () => {
       it(`doesn't allow querying union types`, () => {
         const type = `AllFiles`
         const query = {}
-        const firstOnly = true
         nodeModel.replaceFiltersCache()
-        const result = nodeModel.runQuery({
+        const result = nodeModel.findOne({
           query,
-          firstOnly,
           type,
         })
         return expect(result).rejects.toThrowError(
@@ -500,11 +484,9 @@ describe(`NodeModel`, () => {
       it(`handles interface types`, async () => {
         const type = `TeamMember`
         const query = { name: { ne: null } }
-        const firstOnly = true
         nodeModel.replaceFiltersCache()
-        const result = await nodeModel.runQuery({
+        const result = await nodeModel.findOne({
           query,
-          firstOnly,
           type,
         })
         expect(result.name).toBe(`Person1`)
@@ -517,14 +499,14 @@ describe(`NodeModel`, () => {
             children: { elemMatch: { internal: { type: { eq: `Post` } } } },
           },
         }
-        const firstOnly = false
         nodeModel.replaceFiltersCache()
-        const result = await nodeModel.runQuery({
+        const { entries, totalCount } = await nodeModel.findAll({
           query,
-          firstOnly,
           type,
         })
-        expect(result.length).toBe(2)
+        const result = Array.from(entries)
+        const count = await totalCount()
+        expect(count).toBe(2)
         expect(result[0].id).toBe(`file1`)
         expect(result[1].id).toBe(`file3`)
       })
@@ -536,11 +518,9 @@ describe(`NodeModel`, () => {
             nestedObject: { elemMatch: { nestedValue: { eq: `2` } } },
           },
         }
-        const firstOnly = true
         nodeModel.replaceFiltersCache()
-        const result = await nodeModel.runQuery({
+        const result = await nodeModel.findOne({
           query,
-          firstOnly,
           type,
         })
         expect(result).toBeDefined()
@@ -561,15 +541,15 @@ describe(`NodeModel`, () => {
             },
           },
         }
-        const firstOnly = false
         nodeModel.replaceTypeKeyValueCache()
-        const result = await nodeModel.runQuery({
+        const { entries, totalCount } = await nodeModel.findAll({
           query,
-          firstOnly,
           type,
         })
+        const result = Array.from(entries)
+        const count = await totalCount()
         expect(result).toBeDefined()
-        expect(result.length).toEqual(2)
+        expect(count).toEqual(2)
         expect(result[0].id).toEqual(`post2`)
         expect(result[1].id).toEqual(`post3`)
       })
@@ -873,10 +853,9 @@ describe(`NodeModel`, () => {
 
     it(`should not resolve prepared nodes more than once`, async () => {
       nodeModel.replaceFiltersCache()
-      await nodeModel.runQuery(
+      await nodeModel.findAll(
         {
           query: { filter: { betterTitle: { eq: `foo` } } },
-          firstOnly: false,
           type: `Test`,
         },
         { path: `/` }
@@ -884,10 +863,9 @@ describe(`NodeModel`, () => {
       expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
       expect(resolveOtherTitleMock.mock.calls.length).toBe(0)
       nodeModel.replaceFiltersCache()
-      await nodeModel.runQuery(
+      await nodeModel.findAll(
         {
           query: { filter: { betterTitle: { eq: `foo` } } },
-          firstOnly: false,
           type: `Test`,
         },
         { path: `/` }
@@ -895,12 +873,11 @@ describe(`NodeModel`, () => {
       expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
       expect(resolveOtherTitleMock.mock.calls.length).toBe(0)
       nodeModel.replaceFiltersCache()
-      await nodeModel.runQuery(
+      await nodeModel.findAll(
         {
           query: {
             filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
           },
-          firstOnly: false,
           type: `Test`,
         },
         { path: `/` }
@@ -908,12 +885,11 @@ describe(`NodeModel`, () => {
       expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
       expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
       nodeModel.replaceFiltersCache()
-      await nodeModel.runQuery(
+      await nodeModel.findAll(
         {
           query: {
             filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
           },
-          firstOnly: false,
           type: `Test`,
         },
         { path: `/` }
@@ -921,12 +897,11 @@ describe(`NodeModel`, () => {
       expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
       expect(resolveOtherTitleMock.mock.calls.length).toBe(2)
       nodeModel.replaceFiltersCache()
-      await nodeModel.runQuery(
+      await nodeModel.findOne(
         {
           query: {
             filter: { betterTitle: { eq: `foo` }, otherTitle: { eq: `Bar` } },
           },
-          firstOnly: true,
           type: `Test`,
         },
         { path: `/` }
@@ -937,10 +912,9 @@ describe(`NodeModel`, () => {
 
     it(`should not resolve prepared nodes more than once (with mixed interfaces and node types)`, async () => {
       nodeModel.replaceFiltersCache()
-      await nodeModel.runQuery(
+      await nodeModel.findAll(
         {
           query: { filter: { slug: { eq: `id1` } } },
-          firstOnly: false,
           type: `Test`,
         },
         { path: `/` }
@@ -948,10 +922,9 @@ describe(`NodeModel`, () => {
       expect(resolveSlugMock.mock.calls.length).toBe(2)
       expect(resolveBetterTitleMock.mock.calls.length).toBe(0)
       nodeModel.replaceFiltersCache()
-      await nodeModel.runQuery(
+      await nodeModel.findAll(
         {
           query: { filter: { slug: { eq: `id1` } } },
-          firstOnly: false,
           type: `TestInterface`,
         },
         { path: `/` }
@@ -959,12 +932,11 @@ describe(`NodeModel`, () => {
       expect(resolveSlugMock.mock.calls.length).toBe(2)
       expect(resolveBetterTitleMock.mock.calls.length).toBe(0)
       nodeModel.replaceFiltersCache()
-      await nodeModel.runQuery(
+      await nodeModel.findAll(
         {
           query: {
             filter: { slug: { eq: `id1` }, betterTitle: { eq: `foo` } },
           },
-          firstOnly: false,
           type: `Test`,
         },
         { path: `/` }
@@ -972,12 +944,11 @@ describe(`NodeModel`, () => {
       expect(resolveSlugMock.mock.calls.length).toBe(2)
       expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
       nodeModel.replaceFiltersCache()
-      await nodeModel.runQuery(
+      await nodeModel.findAll(
         {
           query: {
             filter: { slug: { eq: `id1` } },
           },
-          firstOnly: false,
           type: `TestInterface`,
         },
         { path: `/` }
@@ -985,12 +956,11 @@ describe(`NodeModel`, () => {
       expect(resolveSlugMock.mock.calls.length).toBe(2)
       expect(resolveBetterTitleMock.mock.calls.length).toBe(2)
       nodeModel.replaceFiltersCache()
-      await nodeModel.runQuery(
+      await nodeModel.findOne(
         {
           query: {
             filter: { slug: { eq: `id1` }, betterTitle: { eq: `foo` } },
           },
-          firstOnly: true,
           type: `Test`,
         },
         { path: `/` }
@@ -1001,17 +971,18 @@ describe(`NodeModel`, () => {
 
     it(`can filter by resolved fields`, async () => {
       nodeModel.replaceFiltersCache()
-      const result = await nodeModel.runQuery(
+      const { entries, totalCount } = await nodeModel.findAll(
         {
           query: {
             filter: { hidden: { eq: false } },
           },
-          firstOnly: false,
           type: `Test`,
         },
         { path: `/` }
       )
-      expect(result.length).toBe(2)
+      const result = Array.from(entries)
+      const count = await totalCount()
+      expect(count).toBe(2)
       expect(result[0].id).toBe(`id1`)
       expect(result[1].id).toBe(`id2`)
     })
@@ -1019,40 +990,44 @@ describe(`NodeModel`, () => {
     it(`merges query caches when filtering by nested field`, async () => {
       // See https://github.com/gatsbyjs/gatsby/issues/26056
       nodeModel.replaceFiltersCache()
-      const result1 = await nodeModel.runQuery(
-        {
-          query: {
-            filter: { nested: { foo: { eq: `foo1` } } },
+      const { entries: entries1, totalCount: totalCount1 } =
+        await nodeModel.findAll(
+          {
+            query: {
+              filter: { nested: { foo: { eq: `foo1` } } },
+            },
+            type: `Test`,
           },
-          firstOnly: false,
-          type: `Test`,
-        },
-        { path: `/` }
-      )
-      const result2 = await nodeModel.runQuery(
-        {
-          query: {
-            filter: { nested: { bar: { eq: `bar2` } } },
+          { path: `/` }
+        )
+      const { entries: entries2, totalCount: totalCount2 } =
+        await nodeModel.findAll(
+          {
+            query: {
+              filter: { nested: { bar: { eq: `bar2` } } },
+            },
+            type: `Test`,
           },
-          firstOnly: false,
-          type: `Test`,
-        },
-        { path: `/` }
-      )
+          { path: `/` }
+        )
+      const result1 = Array.from(entries1)
+      const result2 = Array.from(entries2)
+      const count1 = await totalCount1()
+      const count2 = await totalCount2()
 
       expect(result1).toBeTruthy()
-      expect(result1.length).toBe(1)
+      expect(count1).toBe(1)
       expect(result1[0].id).toBe(`id1`)
 
       expect(result2).toBeTruthy()
-      expect(result2.length).toBe(1)
+      expect(count2).toBe(1)
       expect(result2[0].id).toBe(`id2`)
     })
 
     it(`always uses a custom resolvers for query fields`, async () => {
       // See https://github.com/gatsbyjs/gatsby/issues/27368
       nodeModel.replaceFiltersCache()
-      const result1 = await nodeModel.runQuery(
+      const { entries: entries1 } = await nodeModel.findAll(
         {
           query: {
             sort: {
@@ -1060,12 +1035,11 @@ describe(`NodeModel`, () => {
               order: [`desc`],
             },
           },
-          firstOnly: false,
           type: `Test4`,
         },
         { path: `/` }
       )
-      const result2 = await nodeModel.runQuery(
+      const { entries: entries2 } = await nodeModel.findAll(
         {
           query: {
             filter: { Meta: { Category: { eq: `Gatsby` } } },
@@ -1074,16 +1048,18 @@ describe(`NodeModel`, () => {
               order: [`desc`],
             },
           },
-          firstOnly: false,
           type: `Test4`,
         },
         { path: `/` }
       )
 
-      expect(Array.isArray(result1)).toBeTruthy()
+      const result1 = Array.from(entries1)
+      const result2 = Array.from(entries2)
+
+      expect(result1).toBeTruthy()
       expect(result1.map(node => node.id)).toEqual([`id4`, `id5`])
 
-      expect(Array.isArray(result2)).toBeTruthy()
+      expect(result2).toBeTruthy()
       expect(result2.map(node => node.id)).toEqual([`id4`, `id5`])
     })
 
@@ -1092,19 +1068,18 @@ describe(`NodeModel`, () => {
       nodeModel.replaceFiltersCache()
 
       // This is required to setup a state after which the error reveals itself
-      const result1 = await nodeModel.runQuery(
+      const result1 = await nodeModel.findOne(
         {
           query: {
             filter: { id: { regex: `/non-existing/` } },
           },
-          firstOnly: true,
           type: `Test5`,
         },
         { path: `/` }
       )
 
       // Filter by the same regex with sorting
-      const result2 = await nodeModel.runQuery(
+      const { entries } = await nodeModel.findAll(
         {
           query: {
             filter: { id: { regex: `/id/` } },
@@ -1113,11 +1088,11 @@ describe(`NodeModel`, () => {
               order: [`desc`],
             },
           },
-          firstOnly: false,
           type: `Test5`,
         },
         { path: `/` }
       )
+      const result2 = Array.from(entries)
 
       expect(result1).toEqual(null)
 
@@ -1127,29 +1102,29 @@ describe(`NodeModel`, () => {
 
     it(`handles nulish values within array of interface type`, async () => {
       nodeModel.replaceFiltersCache()
-      const result = await nodeModel.runQuery(
+      const { entries, totalCount } = await nodeModel.findAll(
         {
           query: {
             filter: { arrayWithNulls: { elemMatch: { foo: { eq: `id1` } } } },
           },
-          firstOnly: false,
           type: `Test`,
         },
         { path: `/` }
       )
+      const result = Array.from(entries)
+      const count = await totalCount()
       expect(result).toBeTruthy()
-      expect(result.length).toEqual(1)
+      expect(count).toEqual(1)
       expect(result[0].id).toEqual(`id1`)
     })
 
     it(`handles fields with custom resolvers on interfaces having multiple implementations`, async () => {
       nodeModel.replaceFiltersCache()
-      const result = await nodeModel.runQuery(
+      const result = await nodeModel.findOne(
         {
           query: {
             filter: { slug: { eq: `id3` } },
           },
-          firstOnly: true,
           type: `TestInterface`,
         },
         { path: `/` }
@@ -1285,13 +1260,14 @@ describe(`NodeModel`, () => {
     describe(`Tracks nodes returned by queries`, () => {
       it(`Tracks objects when running query without filter`, async () => {
         nodeModel.replaceFiltersCache()
-        const result = await nodeModel.runQuery({
+        const { entries, totalCount } = await nodeModel.findAll({
           query: {},
           type: schema.getType(`Test`),
-          firstOnly: false,
         })
+        const result = Array.from(entries)
+        const count = await totalCount()
 
-        expect(result.length).toEqual(2)
+        expect(count).toEqual(2)
         expect(nodeModel.findRootNodeAncestor(result[0].inlineObject)).toEqual(
           result[0]
         )
@@ -1302,7 +1278,7 @@ describe(`NodeModel`, () => {
 
       it(`Tracks objects when running query with filter`, async () => {
         nodeModel.replaceFiltersCache()
-        const result = await nodeModel.runQuery({
+        const { entries, totalCount } = await nodeModel.findAll({
           query: {
             filter: {
               inlineObject: {
@@ -1313,10 +1289,11 @@ describe(`NodeModel`, () => {
             },
           },
           type: schema.getType(`Test`),
-          firstOnly: false,
         })
+        const result = Array.from(entries)
+        const count = await totalCount()
 
-        expect(result.length).toEqual(1)
+        expect(count).toEqual(1)
         expect(nodeModel.findRootNodeAncestor(result[0].inlineObject)).toEqual(
           result[0]
         )

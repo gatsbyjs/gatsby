@@ -38,18 +38,17 @@ type WrapReturnInArray<MaybeFunction> = MaybeFunction extends (
   ? (...a: Parameters<MaybeFunction>) => Array<ReturnType<MaybeFunction>>
   : never
 
-export type CreateWorkerPoolType<ExposedFunctions> = WorkerPool &
-  {
-    [FunctionName in keyof ExposedFunctions]: EnsureFunctionReturnsAPromise<
-      ExposedFunctions[FunctionName]
+export type CreateWorkerPoolType<ExposedFunctions> = WorkerPool & {
+  [FunctionName in keyof ExposedFunctions]: EnsureFunctionReturnsAPromise<
+    ExposedFunctions[FunctionName]
+  >
+} & {
+  all: {
+    [FunctionName in keyof ExposedFunctions]: WrapReturnInArray<
+      EnsureFunctionReturnsAPromise<ExposedFunctions[FunctionName]>
     >
-  } & {
-    all: {
-      [FunctionName in keyof ExposedFunctions]: WrapReturnInArray<
-        EnsureFunctionReturnsAPromise<ExposedFunctions[FunctionName]>
-      >
-    }
   }
+}
 
 const childWrapperPath = require.resolve(`./child`)
 

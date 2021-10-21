@@ -5,6 +5,7 @@ import { Plugin as PostCSSPlugin } from "postcss"
 import autoprefixer from "autoprefixer"
 import flexbugs from "postcss-flexbugs-fixes"
 import TerserPlugin from "terser-webpack-plugin"
+import type { MinifyOptions as TerserOptions } from "terser"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
@@ -644,7 +645,7 @@ export const createWebpackUtils = (
     terserOptions,
     ...options
   }: {
-    terserOptions?: TerserPlugin.TerserPluginOptions
+    terserOptions?: TerserOptions
   } = {}): WebpackPluginInstance =>
     new TerserPlugin({
       exclude: /\.min\.js/,
@@ -654,7 +655,7 @@ export const createWebpackUtils = (
           safari10: true,
         },
         parse: {
-          ecma: 8,
+          ecma: 5,
         },
         compress: {
           ecma: 5,

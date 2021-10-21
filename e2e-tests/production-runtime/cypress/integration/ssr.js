@@ -106,3 +106,29 @@ describe(`Wildcard path ('${wildcardPath}*')`, () => {
     cy.getTestElement(`params`).contains(`{"wildcard":"baz"}`)
   })
 })
+
+describe(`500 status`, () => {
+  const errorPath = `/ssr/error-path/`
+
+  it(`Display 500 page on direct navigation`, () => {
+    cy.visit(errorPath, { failOnStatusCode: false }).waitForRouteChange()
+
+    cy.location(`pathname`)
+      .should(`equal`, errorPath)
+      .getTestElement(`500`)
+      .should(`exist`)
+  })
+
+  it(`Display 500 page on client navigation`, () => {
+    cy.visit(`/`).waitForRouteChange()
+
+    cy.window()
+      .then(win => win.___navigate(errorPath))
+      .waitForRouteChange()
+
+    cy.location(`pathname`)
+      .should(`equal`, errorPath)
+      .getTestElement(`500`)
+      .should(`exist`)
+  })
+})

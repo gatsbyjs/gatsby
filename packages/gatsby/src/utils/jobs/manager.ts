@@ -324,6 +324,16 @@ export function waitUntilAllJobsComplete(): Promise<void> {
   return hasActiveJobs ? hasActiveJobs.promise : Promise.resolve()
 }
 
+export async function waitJobs(jobDigests: Set<string>): Promise<void> {
+  const promises: Array<Promise<any>> = []
+  for (const [digest, job] of jobsInProcess) {
+    if (jobDigests.has(digest)) {
+      promises.push(job.deferred.promise)
+    }
+  }
+  await Promise.all(promises)
+}
+
 export function isJobStale(
   job: Partial<InternalJob> & { inputPaths: InternalJob["inputPaths"] }
 ): boolean {

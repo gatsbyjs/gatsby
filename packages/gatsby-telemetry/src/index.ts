@@ -89,7 +89,10 @@ export function aggregateStats(data: Array<number>): IAggregateStats {
   return instance.aggregateStats(data)
 }
 
-export function addSiteMeasurement(event: string, obj): void {
+export function addSiteMeasurement(
+  event: string,
+  obj: ITelemetryTagsPayload["siteMeasurements"]
+): void {
   instance.addSiteMeasurement(event, obj)
 }
 
