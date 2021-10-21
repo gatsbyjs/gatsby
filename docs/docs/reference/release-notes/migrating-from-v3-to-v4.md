@@ -273,7 +273,7 @@ Breaking Changes in plugins that we own and maintain.
 #### `gatsby-plugin-feed`
 
 - The `feeds` option is required now
-- The `serialize` key inside the `feeds` option is required now. Please define your own function if you used the default one until now.
+- The `serialize` & `title` key inside the `feeds` option is required now. Please define your own `serialize` function if you used the default one until now.
 
 #### `gatsby-plugin-sharp`
 
