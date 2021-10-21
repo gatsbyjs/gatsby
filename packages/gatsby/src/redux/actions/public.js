@@ -28,17 +28,14 @@ const normalizePath = require(`../../utils/normalize-path`).default
 import { createJobV2FromInternalJob } from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
 import { reportOnce } from "../../utils/report-once"
-import fs from "fs-extra"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
 
-/**
- * Memoize function used to pick shadowed page components to avoid expensive I/O.
- * Ideally, we should invalidate memoized values if there are any FS operations
- * on files that are in shadowing chain, but webpack currently doesn't handle
- * shadowing changes during develop session, so no invalidation is not a deal breaker.
- */
+// Memoize function used to pick shadowed page components to avoid expensive I/O.
+// Ideally, we should invalidate memoized values if there are any FS operations
+// on files that are in shadowing chain, but webpack currently doesn't handle
+// shadowing changes during develop session, so no invalidation is not a deal breaker.
 const shadowCreatePagePath = _.memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 )
