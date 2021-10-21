@@ -33,9 +33,45 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 If you're looking for an overview of all breaking changes and how to migrate, please see the [migrating from v3 to v4 guide](/docs/reference/release-notes/migrating-from-v3-to-v4/).
 
+## Overview Video
+
+Prefer video over text? No problem! Learn more about all the new features (+ demo) and what we'll work on beyond Gatsby 4 in the video below:
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/6Eglvixg4eg"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
+
 ## Parallel Query Running
 
-TODO
+Query running is the portion of the Gatsby build process that happens after your site's content has been sourced from the various content sources configured for your Gatsby site. This step is understandably one of the more expensive portions of the build process because it's where all of the data is being extracted into the corresponding page data required to efficiently generate the actual website pages that your visitors interact with.
+
+We've rearchitected the Gatsby data layer (not a trivial thing to do!) to allow page queries and static queries to occur in parallel, leading to a **40% reduction in build times** for some sites! This innovation starts with allowing for parallel content queries, but positions Gatsby for a number of interesting use cases (imagine what you can do with a portable data layer 🤔).
+
+### How does it work?
+
+The crux of the matter, regarding query running, is that Gatsby had historically utilized [Redux](https://redux.js.org/) as its internal, in-process data store. Now, our existing datastore is very fast because it’s an in-memory data store, but it carries a key limitation that was hindering our ability to substantially optimize the Gatsby build process: It’s only accessible via the current thread/process. This means that the Gatsby build process, and more specifically the query running portion of that process, could not be shared across CPU cores.
+
+The team evaluated a collection of strategies for optimizing and decoupling the data layer in order to allow cross-cpu, and possibly cross-machine coordination of content queries and landed on the node.js implementation of [LMDB](http://www.lmdb.tech/doc/): [lmdb-store](https://github.com/DoctorEvidence/lmdb-store) as the foundation for the architecture update. `lmdb-store` affords incredibly efficient data access, focused on fast read operations, which makes it suitable for the Gatsby user’s use case.
+
+The Gatsby main process now coordinates content query workers with the now-shared data store. Therefore, you will now have `n-1` query workers when building your Gatsby site, where n is the total number of CPU’s provisioned for your Gatsby Cloud (or other CI/CD host) site.
+
+You can learn more about Parallel Query Running in the video below:
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/X3haR60VjZc"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
 
 ## Deferred Static Generation (DSG)
 
@@ -64,3 +100,57 @@ Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-rele
 ## Contributors
 
 A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.14.0-next.0...gatsby@4.0.0) to this release 💜
+
+- [merceyz](https://github.com/merceyz): fix: add missing dependencies [PR #31837](https://github.com/gatsbyjs/gatsby/pull/31837)
+- [actuallyatiger](https://github.com/actuallyatiger): chore(docs): Update GitHub Pages doc [PR #29031](https://github.com/gatsbyjs/gatsby/pull/29031)
+- [acbramley](https://github.com/acbramley): Document filtering temporary files [PR #32048](https://github.com/gatsbyjs/gatsby/pull/32048)
+- [jabrks](https://github.com/jabrks): fix(gatsby): Don't bundle moment locale files [PR #33092](https://github.com/gatsbyjs/gatsby/pull/33092)
+- [nagiek](https://github.com/nagiek): feat(gatsby): Add aggregation resolvers to group [PR #32533](https://github.com/gatsbyjs/gatsby/pull/32533)
+- [aleksanderantropov](https://github.com/aleksanderantropov)
+  - chore(docs): Correct gatsby-cloud plugin in tutorial part 3 [PR #33118](https://github.com/gatsbyjs/gatsby/pull/33118)
+  - docs: fix typo [PR #33137](https://github.com/gatsbyjs/gatsby/pull/33137)
+  - chore(docs): Remove highlight-line from tutorial part 5 [PR #33121](https://github.com/gatsbyjs/gatsby/pull/33121)
+- [bartveneman](https://github.com/bartveneman): docs(gatsby-plugin-gatsby-cloud): fix typo: asterix -> asterisk [PR #33135](https://github.com/gatsbyjs/gatsby/pull/33135)
+- [rudouglas](https://github.com/rudouglas): chore(gatsby): add environment variable for setting tracing config file [PR #32513](https://github.com/gatsbyjs/gatsby/pull/32513)
+- [herecydev](https://github.com/herecydev): feat(gatsby-plugin-styled-components): Add ability to disable vendor prefixes [PR #33147](https://github.com/gatsbyjs/gatsby/pull/33147)
+- [minimalsm](https://github.com/minimalsm): docs: Fix broken link on Getting Started with MDX page [PR #33148](https://github.com/gatsbyjs/gatsby/pull/33148)
+- [angeloashmore](https://github.com/angeloashmore)
+  - fix(gatsby): allow null plugin option values on build [PR #33227](https://github.com/gatsbyjs/gatsby/pull/33227)
+  - fix(gatsby-source-graphql): support Gatsby 4 [PR #33310](https://github.com/gatsbyjs/gatsby/pull/33310)
+  - feat(gatsby-plugin-image): support multiple sources using gatsby-plugin-image [PR #32544](https://github.com/gatsbyjs/gatsby/pull/32544)
+- [axe312ger](https://github.com/axe312ger)
+  - fix(contentful): createUrl now enforces https protocol [PR #33236](https://github.com/gatsbyjs/gatsby/pull/33236)
+  - feat(gatsby-source-contentful): move types into createSchemaCustomization [PR #33207](https://github.com/gatsbyjs/gatsby/pull/33207)
+  - chore(gatsby-source-contentful): download assets via gatsby-core-utils [PR #33482](https://github.com/gatsbyjs/gatsby/pull/33482)
+  - chore(gatsby-source-contentful): clean up code base and introduce es-module syntax [PR #33213](https://github.com/gatsbyjs/gatsby/pull/33213)
+- [fbuireu](https://github.com/fbuireu): chore(gatsby-source-contentful): Fix RichText example [PR #33261](https://github.com/gatsbyjs/gatsby/pull/33261)
+- [alvis](https://github.com/alvis): fix(gatsby): correct the definition for getNode [PR #33259](https://github.com/gatsbyjs/gatsby/pull/33259)
+- [Xenonym](https://github.com/Xenonym): chore(docs): fix typo in site perfomance guide [PR #33294](https://github.com/gatsbyjs/gatsby/pull/33294)
+- [labifrancis](https://github.com/labifrancis): chore(docs): Improve Shopify guide [PR #33298](https://github.com/gatsbyjs/gatsby/pull/33298)
+- [aaronadamsCA](https://github.com/aaronadamsCA): chore(gatsby): Fix static query types, document useStaticQuery [PR #33322](https://github.com/gatsbyjs/gatsby/pull/33322)
+- [crstnre](https://github.com/crstnre): docs: fix "(r)esource congestion" [PR #33392](https://github.com/gatsbyjs/gatsby/pull/33392)
+- [NikSchaefer](https://github.com/NikSchaefer): chore(docs): Fix Grammar Issue [PR #33408](https://github.com/gatsbyjs/gatsby/pull/33408)
+- [torn4dom4n](https://github.com/torn4dom4n): chore(gatsby-plugin-manifest): Update README links [PR #33406](https://github.com/gatsbyjs/gatsby/pull/33406)
+- [orsi](https://github.com/orsi): chore(gatsby-source-contentful): Improve README on rich text ref [PR #33401](https://github.com/gatsbyjs/gatsby/pull/33401)
+- [ondrabus](https://github.com/ondrabus): chore(docs): Update Kentico Kontent references [PR #33411](https://github.com/gatsbyjs/gatsby/pull/33411)
+- [samouss](https://github.com/samouss): fix(gatsby): postcss-svgo - remove plugin removeAttrs [PR #33266](https://github.com/gatsbyjs/gatsby/pull/33266)
+- [raresportan](https://github.com/raresportan): fix(gatsby): replace checks for .cache/json with checks for .cache/caches-lmdb [PR #33431](https://github.com/gatsbyjs/gatsby/pull/33431)
+- [amalitsky](https://github.com/amalitsky): chore(gatsby-plugin-sitemap): Fix a typo [PR #33467](https://github.com/gatsbyjs/gatsby/pull/33467)
+- [mrudden](https://github.com/mrudden): chore(docs): Removed plugin in tutorial not mentioned elsewhere [PR #33486](https://github.com/gatsbyjs/gatsby/pull/33486)
+- [shreemaan-abhishek](https://github.com/shreemaan-abhishek)
+  - docs(gatsby): fix grammatical errors [PR #33471](https://github.com/gatsbyjs/gatsby/pull/33471)
+  - docs(gatsby): fix typo [PR #33502](https://github.com/gatsbyjs/gatsby/pull/33502)
+  - docs(gatsby): fix preposition usage [PR #33510](https://github.com/gatsbyjs/gatsby/pull/33510)
+- [JSinkler713](https://github.com/JSinkler713): docs: Update building-an-ecommerce-site-with-shopify.md [PR #33478](https://github.com/gatsbyjs/gatsby/pull/33478)
+- [RomerDev](https://github.com/RomerDev): chore(docs): Updating Git adding Remote Origin [PR #33314](https://github.com/gatsbyjs/gatsby/pull/33314)
+- [joshatoutthink](https://github.com/joshatoutthink)
+  - BREAKING(gatsby-transformer-json): Prefix `id` and only use createNodeId [PR #28942](https://github.com/gatsbyjs/gatsby/pull/28942)
+  - BREAKING(gatsby-transformer-yaml): Prefix `id` and only use createNodeId [PR #28943](https://github.com/gatsbyjs/gatsby/pull/28943)
+- [tim-hanssen](https://github.com/tim-hanssen): chore(docs): Add 'Prepr CMS' guide to docs [PR #33480](https://github.com/gatsbyjs/gatsby/pull/33480)
+- [ParasRawat29](https://github.com/ParasRawat29): chore(docs): Fix typo in part-7 tutorial [PR #33556](https://github.com/gatsbyjs/gatsby/pull/33556)
+- [digiturnal](https://github.com/digiturnal): chore(gatsby-plugin-react-helmet): Update Examples [PR #33552](https://github.com/gatsbyjs/gatsby/pull/33552)
+- [shivangisareen](https://github.com/shivangisareen): chore(docs): Update query var in part-7 tutorial [PR #33559](https://github.com/gatsbyjs/gatsby/pull/33559)
+- [aaronm-git](https://github.com/aaronm-git): chore(docs): Clarify SEO component guide [PR #33451](https://github.com/gatsbyjs/gatsby/pull/33451)
+- [erikbgithub](https://github.com/erikbgithub): specifying what actually changed [PR #33452](https://github.com/gatsbyjs/gatsby/pull/33452)
+- [tonyhallett](https://github.com/tonyhallett): chore(gatsby): Add `assetPrefix` to `IGatsbyConfig` [PR #33575](https://github.com/gatsbyjs/gatsby/pull/33575)
+- [psharma-ii](https://github.com/psharma-ii): fix(gatsby-source-wordpress): Add steps for `refetch_ALL` [PR #33264](https://github.com/gatsbyjs/gatsby/pull/33264)
