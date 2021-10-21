@@ -75,11 +75,23 @@ You can learn more about Parallel Query Running in the video below:
 
 ## Deferred Static Generation (DSG)
 
-TODO
+When a Gatsby site uses Deferred Static Generation, it means they are deferring or delaying the building of particular pages on their website until runtime. Once a delayed page is requested (visited) by a site visitor it will be built on the fly in the same manner as any Server-Side Rendered page, but it will now persist as a static build on the edge. So, for that first, and only first user on a deferred page – they will get the performance of any other SSR page, but each and every user after that will receive a completely statically generated page.
+
+For example, imagine you have an archive of old articles that no longer receive significant traffic. There is no practical reason to generate them on each build (and thus delay the delivery of fresh articles). In this case, you may choose to defer the generation of old pages, and Gatsby will skip them during the build step.
+
+Due to the introduction of `lmdb-store` as the data store the generation of DSG pages happens with a snapshot of all the data at buildtime which means no APIs need to be requested on runtime and the data will be the same for everyone. Gatsby generates an engine internally that can build pages with the provided data, meaning that each of your deploys will be atomic as both page generation & data for each page is saved. Once you update your content, Incremental Builds only updates the necessary pages and updates the data store.
+
+You can learn more about the [different rendering options](/docs/conceptual/rendering-options/) or read the [How-To on using DSG](/docs/how-to/rendering-options/using-deferred-static-generation/).
 
 ## Server-Side Rendering (SSR)
 
-TODO
+Gatsby 4 now supports Server-Side Rendering, giving developers the choice of generating content at either build time, as with static-site generation, or at runtime. With Server-Side Rendering, teams can now run more effective A/B tests, personalize content, and more all while still using the Gatsby framework.
+
+Server-Side Rendering is a method of content rendering in which each web page is served to a site visitor at runtime, meaning that a portion of the build process happens on each page request. Because the content is rendering during runtime, visitors will always get the latest version of content directly from the server — though they may have to wait a few seconds for it display.
+
+For example, imagine you are building a site with user reviews. You want those reviews to be immediately indexed by search engines as soon as they are posted, so client-side rendering is not an option.
+
+You can learn more about the [different rendering options](/docs/conceptual/rendering-options/) or read the [How-To on using SSR](/docs/how-to/rendering-options/using-server-side-rendering).
 
 ## Node 14
 
@@ -88,6 +100,8 @@ We are dropping support for Node 12 as a new underlying dependency (`lmdb-store`
 Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-release-working-group) for version statuses.
 
 ## Pages Output in CLI
+
+With our new rendering options you now can have different kinds of pages in your project. We've added an output for `gatsby build` that tells you exactly which pages are SSG, DSG, SSR, or a Gatsby Function.
 
 ![CLI showing an overview of all pages. Pages that are DSG are marked with a "D", SSR pages are marked with a "∞" and Gatsby Functions are marked with a "λ". All other pages are SSG.](./build-page-tree.jpg)
 
