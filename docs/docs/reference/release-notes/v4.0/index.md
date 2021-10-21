@@ -6,11 +6,15 @@ title: "v4 Release Notes"
 
 Welcome to `gatsby@4.0.0` release (October 2021 #1).
 
-This is the new major of Gatsby since [March 2021](https://www.npmjs.com/package/gatsby/v/3.0.0)!
+We've released Gatsby 3 in [March 2021](/docs/reference/release-notes/v3.0) and now have a lot of exciting new features for Gatsby 4!
 We’ve tried to make migration smooth. Please refer to the [migration guide](/docs/reference/release-notes/migrating-from-v3-to-v4/)
 and [let us know](https://github.com/gatsbyjs/gatsby/issues/new/choose) if you encounter any issues when migrating.
 
 Key highlights of this release:
+
+- Parallel Query Running
+- Deferred Static Generation (DSG)
+- Server-Side Rendering (SSR)
 
 Major dependency updates:
 
