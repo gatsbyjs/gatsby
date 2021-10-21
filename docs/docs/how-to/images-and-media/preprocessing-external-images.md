@@ -132,7 +132,7 @@ query {
 }
 ```
 
-And finally, you can update the template for this blog post to include a featured image node. Note the alt text still comes from the post frontmatter. This template is based on the one in the [Programmatically create pages from data](/docs/tutorial/part-seven/) section of the Gatsby Tutorial.
+And finally, you can update the template for this blog post to include a featured image node. Note the alt text still comes from the post frontmatter. This template is based on the one in the [Programmatically create pages from data](/docs/tutorial/part-7/) section of the Gatsby Tutorial.
 
 ```jsx
 import React from "react"
