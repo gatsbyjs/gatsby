@@ -4,11 +4,11 @@ title: Migrating from v3 to v4
 
 Looking for the [v3 docs](https://v3.gatsbyjs.com)?
 
-> Have you run into something that's not covered here? [Add your changes to GitHub](https://github.com/gatsbyjs/gatsby/tree/v4-docs/docs/docs/reference/release-notes/migrating-from-v3-to-v4.md)!
+> Have you run into something that's not covered here? [Add your changes to GitHub](https://github.com/gatsbyjs/gatsby/tree/master/docs/docs/reference/release-notes/migrating-from-v3-to-v4.md)!
 
 ## Introduction
 
-This is a reference for upgrading your site from Gatsby 3 to Gatsby 4. Version 4 is currently in Beta and thus this guide is not finalized yet. While the (breaking) changes might slightly change during the Beta and Release Candidate period the major breaking changes are already in and following this guide should set you up for success when the stable release is available.
+This is a reference for upgrading your site from Gatsby 3 to Gatsby 4. Version 4 introduces big performance improvements of up to 40% build time reduction and two new rendering options: [Deferred Static Generation (DSG)](/docs/conceptual/rendering-options/#deferred-static-generation-dsg) and [Server-Side Rendering (SSR)](/docs/conceptual/rendering-options/#server-side-rendering-ssr). If you're curious what's new, head over to the [v4.0 release notes](/docs/reference/release-notes/v4.0/).
 
 ## Table of Contents
 
@@ -22,25 +22,25 @@ This is a reference for upgrading your site from Gatsby 3 to Gatsby 4. Version 4
 ## Handling Deprecations
 
 Before upgrading to v4 we highly recommend upgrading `gatsby` (and all plugins) to the latest v3 version.
-Some changes required for Gatsby v4 could be applied incrementally to the latest v3 which should contribute to smoother upgrade experience.
+Some changes required for Gatsby 4 could be applied incrementally to the latest v3 which should contribute to smoother upgrade experience.
 
-> Use `npm outdated` or `yarn upgrade-interactive --latest` for automatic upgrade to the latest v3 release.
+> Use `npm outdated` or `yarn upgrade-interactive` for automatic upgrade to the latest v3 release.
 
 After upgrading, run `gatsby build` and look for deprecation messages in the build log.
 Follow instructions to fix those deprecations.
 
 ## Updating Your Dependencies
 
-Next, you need to update your dependencies to v4 beta.
+Next, you need to update your dependencies to v4.
 
 ### Update Gatsby version
 
-You need to update your `package.json` to use the `next` version of Gatsby.
+You need to update your `package.json` to use the `latest` version of Gatsby.
 
 ```json:title=package.json
 {
   "dependencies": {
-    "gatsby": "next"
+    "gatsby": "^4.0.0"
   }
 }
 ```
@@ -48,18 +48,18 @@ You need to update your `package.json` to use the `next` version of Gatsby.
 Or run
 
 ```shell
-npm install gatsby@next
+npm install gatsby@latest
 ```
 
 **Please note:** If you use **npm 7** you'll want to use the `--legacy-peer-deps` option when following the instructions in this guide. For example, the above command would be:
 
 ```shell
-npm install gatsby@next --legacy-peer-deps
+npm install gatsby@latest --legacy-peer-deps
 ```
 
 ### Update Gatsby related packages
 
-Update your `package.json` to use the `next` version of Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note, this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. If you're using community plugins, they might not be upgraded yet. Please check their repository for the current status.
+Update your `package.json` to use the `latest` version of Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note, this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. If you're using community plugins, they might not be upgraded yet. Please check their repository for the current status.
 
 #### Updating community plugins
 
@@ -252,6 +252,12 @@ The recommended approach is to always create nodes in `sourceNodes`. We are goin
 this workaround that will work using `sourceNodes`. It is still being worked on, please post your use-cases and ideas
 in [this discussion](https://github.com/gatsbyjs/gatsby/discussions/32860#discussioncomment-1262874) to help us shape this new APIs.
 
+You can also learn more about this in the [migration guide for source plugins](/docs/reference/release-notes/migrating-source-plugin-from-v3-to-v4/#2-data-mutations-need-to-happen-during-sourcenodes-or-oncreatenode).
+
+### Changes to built-in types
+
+The built-in type `SitePage` now returns the `pageContext` key as `JSON` and won't infer any other information anymore. The `SitePlugin` type now has two new keys: `pluginOptions: JSON` and `packageJson: JSON`.
+
 ### Removal of `gatsby-admin`
 
 You can no longer use `gatsby-admin` (activated with environment variable `GATSBY_EXPERIMENTAL_ENABLE_ADMIN`) as we removed this functionality from `gatsby` itself. We didn't see any major usage and don't plan on developing this further in the foreseeable future.
@@ -424,6 +430,8 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
+To find out if you're using this old syntax you can run `gatsby develop --verbose` or `gatsby build --verbose` and warnings will be shown.
+
 Follow [this how-to guide](/docs/how-to/plugins-and-themes/creating-a-source-plugin/#create-foreign-key-relationships-between-data) for up-to-date guide on sourcing and defining data relations.
 
 ## For Plugin Maintainers
@@ -453,6 +461,8 @@ If your plugin supports both versions:
   }
 }
 ```
+
+You can also learn more about this in the [migration guide for source plugins](/docs/reference/release-notes/migrating-source-plugin-from-v3-to-v4/).
 
 ### Don't mutate nodes outside of expected APIs
 
