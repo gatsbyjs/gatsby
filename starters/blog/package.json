@@ -10,7 +10,7 @@
   "dependencies": {
     "gatsby": "^4.0.0",
     "gatsby-plugin-feed": "^4.0.0",
-    "gatsby-plugin-gatsby-cloud": "^4.0.0-zz-next.1",
+    "gatsby-plugin-gatsby-cloud": "^4.0.0",
     "gatsby-plugin-google-analytics": "^4.0.0",
     "gatsby-plugin-image": "^2.0.0",
     "gatsby-plugin-manifest": "^4.0.0",
@@ -25,7 +25,7 @@
     "gatsby-source-filesystem": "^4.0.0",
     "gatsby-transformer-remark": "^5.0.0",
     "gatsby-transformer-sharp": "^4.0.0",
-    "prismjs": "^1.24.1",
+    "prismjs": "^1.25.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
