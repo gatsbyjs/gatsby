@@ -2,7 +2,7 @@
 title: Upgrade Your Source Plugins for Gatsby 4
 ---
 
-import { Announcement } from 'gatsby-interface'
+import { Announcement } from "gatsby-interface"
 
 Gatsby 4 is here! Following on the heels of Gatsby 3, Gatsby 4 further improves build performance and introduces new parallel processing capabilities. In the guide below, we'll walk you through preparing your source plugin for Gatsby 4. You'll find this guide useful if you are a maintainer for a source plugin (as opposed to a consumer using a source plugin in your Gatsby site).
 

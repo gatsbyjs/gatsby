@@ -2,7 +2,7 @@
 title: Rendering Options
 ---
 
-import { Announcement } from 'gatsby-interface'
+import { Announcement } from "gatsby-interface"
 
 Gatsby is historically known as a static site generator enhanced with [React Hydration][1].
 But starting with Gatsby 4, you can choose alternative rendering options in addition to static site generation (SSG) — on a per-page basis.
@@ -45,7 +45,7 @@ have any features that single-page applications (SPAs) can have.
 
 Here is how SSG works in Gatsby Cloud (although the principle remains the same with any build and CDN provider):
 
-![Static Site Generation diagram](../images/ssg-diagram.jpg)
+![Diagram explaining SSG. On the first request of a visitor the HTML is served through a CDN cache to the user. On the second visit this also happens in the same way. The HTML is generated before publishing it to the CDN by a Gatsby Cloud worker.](../images/ssg-diagram.jpg)
 
 One downside of SSG is longer build times. As the number of pages of your site grows, so does the build time.
 Gatsby supports [incremental builds][5] to make sure the 2nd and subsequent builds only rebuild the parts of your site that changed,
@@ -63,7 +63,7 @@ Subsequent requests to pages using DSG will hit the CDN cache the same way as wi
 
 - [How-To Guide: Using Deferred Static Generation][7]
 
-![Deferred Static Generation diagram](../images/dsg-diagram.jpg)
+![Diagram explaining DSG. On the first request of a visitor there's a cache miss and a Gatsby Cloud worker creates the requested page on the fly (through 3rdparty APIs and Gatsby DB). The visitor then will get the worker response while the generated file it uploaded to the CDN cache. On the second request the user will get the HTML from the CDN cache.](../images/dsg-diagram.jpg)
 
 Unlike SSG, Deferred Static Generation requires you to keep the build server running after the initial build (using the `gatsby serve` command).
 It implies a different deployment model and requires backend infrastructure. But don't worry: [Gatsby Cloud][6] supports it out-of-the-box.
@@ -85,7 +85,7 @@ You can also return HTTP headers along with data to control the page-caching str
 
 - [How to use server-side rendering][8]
 
-![Server-side Rendering diagram](../images/ssr-diagram.jpg)
+![Diagram explaining Server-Side rendering. Each request of a visitor is a cache miss and the necessary HTML/JSON is generated every time a request comes in.](../images/ssr-diagram.jpg)
 
 [1]: /docs/conceptual/react-hydration/
 [2]: /docs/adding-app-and-website-functionality/
