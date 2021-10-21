@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/gatsbyjs/gatsby/commits/HEAD/packages/gatsby-source-shopify) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
 ### [5.6.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@5.6.1/packages/gatsby-source-shopify) (2021-10-06)
 
 #### Features

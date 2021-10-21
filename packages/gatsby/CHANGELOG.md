@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/HEAD/packages/gatsby) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- Update README [#33615](https://github.com/gatsbyjs/gatsby/issues/33615) ([0790895](https://github.com/gatsbyjs/gatsby/commit/079089523b9cb4bf4c112deb71b7ef1d175ab1c6))
+- Change comment format in actions/public [#33592](https://github.com/gatsbyjs/gatsby/issues/33592) ([06760d7](https://github.com/gatsbyjs/gatsby/commit/06760d7801d1b1da4cfdb4925ff33bd086a75c0c))
+
 ### [3.14.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@3.14.2/packages/gatsby) (2021-10-06)
 
 #### Features
