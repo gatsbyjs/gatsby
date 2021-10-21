@@ -12,9 +12,9 @@ and [let us know](https://github.com/gatsbyjs/gatsby/issues/new/choose) if you e
 
 Key highlights of this release:
 
-- Parallel Query Running
-- Deferred Static Generation (DSG)
-- Server-Side Rendering (SSR)
+- [Parallel Query Running](#parallel-query-running) - up to 40% reduction in build times
+- [Deferred Static Generation (DSG)](#deferred-static-generation-dsg) - defer page generation to user request, speeding up build times
+- [Server-Side Rendering (SSR)](#server-side-rendering-ssr) - pre-render a page with data that is fetched when a user visits the page
 
 Major dependency updates:
 
@@ -32,3 +32,35 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 ## Breaking Changes
 
 If you're looking for an overview of all breaking changes and how to migrate, please see the [migrating from v3 to v4 guide](/docs/reference/release-notes/migrating-from-v3-to-v4/).
+
+## Parallel Query Running
+
+TODO
+
+## Deferred Static Generation (DSG)
+
+TODO
+
+## Server-Side Rendering (SSR)
+
+TODO
+
+## Node 14
+
+We are dropping support for Node 12 as a new underlying dependency (`lmdb-store`) is requiring `>=14.15.0`. See the main changes in [Node 14 release notes](https://nodejs.org/en/blog/release/v14.0.0/).
+
+Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-release-working-group) for version statuses.
+
+## Pages Output in CLI
+
+![CLI showing an overview of all pages. Pages that are DSG are marked with a "D", SSR pages are marked with a "∞" and Gatsby Functions are marked with a "λ". All other pages are SSG.](./build-page-tree.jpg)
+
+## Notable bugfixes and improvements
+
+- `gatsby`: Reduce page-renderer size, via [PR #33051](https://github.com/gatsbyjs/gatsby/pull/33051)
+- `gatsby`: Add queue to prefetch, making it less eage. Via [PR #33530](https://github.com/gatsbyjs/gatsby/pull/33530)
+- `gatsby-source-wordpress`: Use `gatsby-plugin-image`, via [PR #33138](https://github.com/gatsbyjs/gatsby/pull/33138)
+
+## Contributors
+
+A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.14.0-next.0...gatsby@4.0.0) to this release 💜
