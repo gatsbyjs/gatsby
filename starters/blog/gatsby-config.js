@@ -105,7 +105,7 @@ module.exports = {
               }
             `,
             output: "/rss.xml",
-            title: "Gatsby Start Blog RSS Feed",
+            title: "Gatsby Starter Blog RSS Feed",
           },
         ],
       },
