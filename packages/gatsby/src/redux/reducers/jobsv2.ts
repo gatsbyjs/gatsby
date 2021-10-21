@@ -44,14 +44,19 @@ export const jobsV2Reducer = (
 
     case `CREATE_JOB_V2`: {
       const { job } = action.payload
-      state.incomplete.set(job.contentDigest, job)
+
+      state.incomplete.set(job.contentDigest, {
+        job,
+      } as IGatsbyIncompleteJobV2)
 
       return state
     }
 
     case `END_JOB_V2`: {
       const { jobContentDigest, result } = action.payload
-      const { job } = state.incomplete.get(jobContentDigest)
+      const { job } = state.incomplete.get(
+        jobContentDigest
+      ) as IGatsbyIncompleteJobV2
 
       if (!job) {
         throw new Error(
@@ -65,7 +70,7 @@ export const jobsV2Reducer = (
       state.complete.set(job.contentDigest, {
         result,
         inputPaths: job.inputPaths,
-      })
+      } as IGatsbyCompleteJobV2)
 
       return state
     }
