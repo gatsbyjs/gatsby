@@ -1,5 +1,9 @@
-import { ExecutionResult, Source } from "graphql"
+// "engines-fs-provider" must be first import, as it sets up global
+// fs and this need to happen before anything else tries to import fs
 import "../../utils/engines-fs-provider"
+
+import { ExecutionResult, Source } from "graphql"
+import { uuid } from "gatsby-core-utils"
 import { build } from "../index"
 import { setupLmdbStore } from "../../datastore/lmdb/lmdb-datastore"
 import { store } from "../../redux"
@@ -9,12 +13,13 @@ import {
   createGraphQLRunner,
   Runner,
 } from "../../bootstrap/create-graphql-runner"
-import { waitUntilAllJobsComplete } from "../../utils/wait-until-jobs-complete"
+import { waitJobsByRequest } from "../../utils/wait-until-jobs-complete"
 
 import { setGatsbyPluginCache } from "../../utils/require-gatsby-plugin"
 import apiRunnerNode from "../../utils/api-runner-node"
 import type { IGatsbyPage, IGatsbyState } from "../../redux/types"
 import { findPageByPath } from "../../utils/find-page-by-path"
+import { runWithEngineContext } from "../../utils/engine-context"
 import { getDataStore } from "../../datastore"
 import {
   gatsbyNodes,
@@ -90,13 +95,24 @@ export class GraphQLEngine {
     query: string | Source,
     context: Record<string, any>
   ): Promise<ExecutionResult> {
-    const graphqlRunner = await this.getRunner()
-    const result = await graphqlRunner(query, context)
-    // Def not ideal - this is just waiting for all jobs and not jobs for current
-    // query, but we don't track jobs per query right now
-    // TODO: start tracking jobs per query to be able to await just those
-    await waitUntilAllJobsComplete()
-    return result
+    const engineContext = {
+      requestId: uuid.v4(),
+    }
+    const doRunQuery = async (): Promise<ExecutionResult> => {
+      const graphqlRunner = await this.getRunner()
+      const result = await graphqlRunner(query, context)
+      await waitJobsByRequest(engineContext.requestId)
+      return result
+    }
+    try {
+      return await runWithEngineContext(engineContext, doRunQuery)
+    } finally {
+      // Reset job-to-request mapping
+      store.dispatch({
+        type: `CLEAR_JOB_V2_CONTEXT`,
+        payload: engineContext,
+      })
+    }
   }
 
   public findPageByPath(pathName: string): IGatsbyPage | undefined {

@@ -1,6 +1,7 @@
 /**
  * @jest-environment node
  */
+// @ts-check
 
 import nock from "nock"
 import { fetchContent } from "../fetch"
@@ -66,7 +67,7 @@ describe(`fetch-retry`, () => {
       )
       .reply(200, { items: [] })
 
-    await fetchContent({ pluginConfig, reporter })
+    await fetchContent({ pluginConfig, reporter, syncToken: null })
 
     expect(reporter.panic).not.toBeCalled()
     expect(scope.isDone()).toBeTruthy()
@@ -101,8 +102,8 @@ describe(`fetch-retry`, () => {
       )
 
     try {
-      await fetchContent({ pluginConfig, reporter })
-      jest.fail()
+      await fetchContent({ pluginConfig, reporter, syncToken: null })
+      throw new Error(`fetchContent should throw an error`)
     } catch (e) {
       const msg = expect(e.context.sourceMessage)
       msg.toEqual(
@@ -133,8 +134,9 @@ describe(`fetch-network-errors`, () => {
           contentfulClientConfig: { retryOnError: false },
         }),
         reporter,
+        syncToken: null,
       })
-      jest.fail()
+      throw new Error(`fetchContent should throw an error`)
     } catch (e) {
       expect(e.context.sourceMessage).toEqual(
         expect.stringContaining(
@@ -160,8 +162,9 @@ describe(`fetch-network-errors`, () => {
           contentfulClientConfig: { retryOnError: false },
         }),
         reporter,
+        syncToken: null,
       })
-      jest.fail()
+      throw new Error(`fetchContent should throw an error`)
     } catch (e) {
       expect(e.context.sourceMessage).toEqual(
         expect.stringContaining(
@@ -194,8 +197,9 @@ describe(`fetch-network-errors`, () => {
           contentfulClientConfig: { retryOnError: false },
         }),
         reporter,
+        syncToken: null,
       })
-      jest.fail()
+      throw new Error(`fetchContent should throw an error`)
     } catch (e) {
       const msg = expect(e.context.sourceMessage)
 

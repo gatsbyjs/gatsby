@@ -1,23 +1,16 @@
-// @todo import syntax!
-const _ = require(`lodash`)
-const fetch = require(`@vercel/fetch-retry`)(require(`node-fetch`))
+// @ts-check
+import _ from "lodash"
+import origFetch from "node-fetch"
+import fetchRetry from "@vercel/fetch-retry"
 
-const { createSchemaCustomization } = require(`./create-schema-customization`)
-const { sourceNodes } = require(`./source-nodes`)
-const { onPreBootstrap } = require(`./on-pre-bootstrap`)
-const { maskText } = require(`./plugin-options`)
+import { maskText } from "./plugin-options"
 
-exports.setFieldsOnGraphQLNodeType =
-  require(`./extend-node-type`).extendNodeType
+export { createSchemaCustomization } from "./create-schema-customization"
+export { sourceNodes } from "./source-nodes"
+export { onPreBootstrap } from "./on-pre-bootstrap"
+export { setFieldsOnGraphQLNodeType } from "./extend-node-type"
 
-exports.createSchemaCustomization = createSchemaCustomization
-
-exports.sourceNodes = sourceNodes
-
-exports.onPreBootstrap = onPreBootstrap
-
-exports.setFieldsOnGraphQLNodeType =
-  require(`./extend-node-type`).extendNodeType
+const fetch = fetchRetry(origFetch)
 
 const validateContentfulAccess = async pluginOptions => {
   if (process.env.NODE_ENV === `test`) return undefined
@@ -49,7 +42,7 @@ const validateContentfulAccess = async pluginOptions => {
   return undefined
 }
 
-const pluginOptionsSchema = ({ Joi }) =>
+export const pluginOptionsSchema = ({ Joi }) =>
   Joi.object()
     .keys({
       accessToken: Joi.string()
@@ -139,5 +132,3 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
       plugins: Joi.array(),
     })
     .external(validateContentfulAccess)
-
-exports.pluginOptionsSchema = pluginOptionsSchema

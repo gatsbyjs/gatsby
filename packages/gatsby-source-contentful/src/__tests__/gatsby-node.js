@@ -1,4 +1,17 @@
+// @ts-check
 // This is more an integration test than it is a unit test. We try to mock as little as we can
+import _ from "lodash"
+import {
+  onPreBootstrap,
+  createSchemaCustomization,
+  sourceNodes,
+} from "../gatsby-node"
+import { fetchContent, fetchContentTypes } from "../fetch"
+import { makeId } from "../normalize"
+
+import startersBlogFixture from "../__fixtures__/starter-blog-data"
+import richTextFixture from "../__fixtures__/rich-text-data"
+import restrictedContentTypeFixture from "../__fixtures__/restricted-content-type"
 
 jest.mock(`../fetch`)
 jest.mock(`gatsby-core-utils`, () => {
@@ -7,17 +20,9 @@ jest.mock(`gatsby-core-utils`, () => {
   }
 })
 
-const gatsbyNode = require(`../gatsby-node`)
-const { fetchContent, fetchContentTypes } = require(`../fetch`)
-const normalize = require(`../normalize`)
-const _ = require(`lodash`)
-
-const startersBlogFixture = require(`../__fixtures__/starter-blog-data`)
-const richTextFixture = require(`../__fixtures__/rich-text-data`)
-const restrictedContentTypeFixture = require(`../__fixtures__/restricted-content-type`)
-
 const defaultPluginOptions = { spaceId: `testSpaceId` }
 
+// @ts-ignore
 fetchContentTypes.mockImplementation(() =>
   startersBlogFixture.contentTypeItems()
 )
@@ -63,14 +68,14 @@ describe(`gatsby-node`, () => {
   const simulateGatsbyBuild = async function (
     pluginOptions = defaultPluginOptions
   ) {
-    await gatsbyNode.onPreBootstrap({ store })
+    await onPreBootstrap({ store })
 
-    await gatsbyNode.createSchemaCustomization(
-      { schema, actions, cache, reporter },
+    await createSchemaCustomization(
+      { schema, actions, reporter, cache },
       pluginOptions
     )
 
-    await gatsbyNode.sourceNodes(
+    await sourceNodes(
       {
         actions,
         getNode,
@@ -110,7 +115,7 @@ describe(`gatsby-node`, () => {
         )
 
         const nodeId = createNodeId(
-          normalize.makeId({
+          makeId({
             spaceId: entry.sys.space.sys.id,
             defaultLocale: defaultLocale,
             currentLocale: locale,
@@ -133,7 +138,7 @@ describe(`gatsby-node`, () => {
           switch (fieldDefinition.type) {
             case `Link`: {
               const linkId = createNodeId(
-                normalize.makeId({
+                makeId({
                   spaceId: entry.sys.space.sys.id,
                   defaultLocale: defaultLocale,
                   currentLocale: locale,
@@ -197,7 +202,7 @@ describe(`gatsby-node`, () => {
     locales.forEach(locale => {
       deletedEntries.forEach(entry => {
         const nodeId = createNodeId(
-          normalize.makeId({
+          makeId({
             spaceId: entry.sys.space.sys.id,
             defaultLocale: defaultLocale,
             currentLocale: locale,
@@ -226,7 +231,7 @@ describe(`gatsby-node`, () => {
     locales.forEach(locale => {
       assets.forEach(asset => {
         const assetId = createNodeId(
-          normalize.makeId({
+          makeId({
             spaceId: asset.sys.space.sys.id,
             defaultLocale: defaultLocale,
             currentLocale: locale,
@@ -246,7 +251,7 @@ describe(`gatsby-node`, () => {
     locales.forEach(locale => {
       assets.forEach(asset => {
         const assetId = createNodeId(
-          normalize.makeId({
+          makeId({
             spaceId: asset.sys.space.sys.id,
             defaultLocale: defaultLocale,
             currentLocale: locale,
@@ -275,7 +280,7 @@ describe(`gatsby-node`, () => {
     locales.forEach(locale => {
       deletedAssets.forEach(asset => {
         const assetId = createNodeId(
-          normalize.makeId({
+          makeId({
             spaceId: asset.sys.space.sys.id,
             defaultLocale: defaultLocale,
             currentLocale: locale,
@@ -291,7 +296,9 @@ describe(`gatsby-node`, () => {
   }
 
   beforeEach(() => {
+    // @ts-ignore
     fetchContent.mockClear()
+    // @ts-ignore
     fetchContentTypes.mockClear()
     currentNodeMap = new Map()
     actions.createNode = jest.fn(async node => {
@@ -311,6 +318,7 @@ describe(`gatsby-node`, () => {
   })
 
   it(`should create nodes from initial payload`, async () => {
+    // @ts-ignore
     fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
     const locales = [`en-US`, `nl`]
 
@@ -376,13 +384,14 @@ describe(`gatsby-node`, () => {
     const locales = [`en-US`, `nl`]
 
     fetchContent
+      // @ts-ignore
       .mockImplementationOnce(startersBlogFixture.initialSync)
       .mockImplementationOnce(startersBlogFixture.createBlogPost)
 
     const createdBlogEntry =
       startersBlogFixture.createBlogPost().currentSyncData.entries[0]
     const createdBlogEntryIds = locales.map(locale =>
-      normalize.makeId({
+      makeId({
         spaceId: createdBlogEntry.sys.space.sys.id,
         currentLocale: locale,
         defaultLocale: locales[0],
@@ -423,6 +432,7 @@ describe(`gatsby-node`, () => {
   it(`should update a blogpost`, async () => {
     const locales = [`en-US`, `nl`]
     fetchContent
+      // @ts-ignore
       .mockImplementationOnce(startersBlogFixture.initialSync)
       .mockImplementationOnce(startersBlogFixture.createBlogPost)
       .mockImplementationOnce(startersBlogFixture.updateBlogPost)
@@ -430,7 +440,7 @@ describe(`gatsby-node`, () => {
     const updatedBlogEntry =
       startersBlogFixture.updateBlogPost().currentSyncData.entries[0]
     const updatedBlogEntryIds = locales.map(locale =>
-      normalize.makeId({
+      makeId({
         spaceId: updatedBlogEntry.sys.space.sys.id,
         currentLocale: locale,
         defaultLocale: locales[0],
@@ -474,6 +484,7 @@ describe(`gatsby-node`, () => {
   it(`should remove a blogpost and update linkedNodes`, async () => {
     const locales = [`en-US`, `nl`]
     fetchContent
+      // @ts-ignore
       .mockImplementationOnce(startersBlogFixture.initialSync)
       .mockImplementationOnce(startersBlogFixture.createBlogPost)
       .mockImplementationOnce(startersBlogFixture.removeBlogPost)
@@ -484,7 +495,7 @@ describe(`gatsby-node`, () => {
       ? removedBlogEntry.sys.type.substring(`Deleted`.length)
       : removedBlogEntry.sys.type
     const removedBlogEntryIds = locales.map(locale =>
-      normalize.makeId({
+      makeId({
         spaceId: removedBlogEntry.sys.space.sys.id,
         currentLocale: locale,
         defaultLocale: locales[0],
@@ -526,6 +537,7 @@ describe(`gatsby-node`, () => {
     const locales = [`en-US`, `nl`]
 
     fetchContent
+      // @ts-ignore
       .mockImplementationOnce(startersBlogFixture.initialSync)
       .mockImplementationOnce(startersBlogFixture.createBlogPost)
       .mockImplementationOnce(startersBlogFixture.removeAsset)
@@ -533,7 +545,7 @@ describe(`gatsby-node`, () => {
     const removedAssetEntry =
       startersBlogFixture.createBlogPost().currentSyncData.entries[0]
     const removedAssetEntryIds = locales.map(locale =>
-      normalize.makeId({
+      makeId({
         spaceId: removedAssetEntry.sys.space.sys.id,
         currentLocale: locale,
         defaultLocale: locales[0],
@@ -575,7 +587,9 @@ describe(`gatsby-node`, () => {
   })
 
   it(`stores rich text as raw with references attached`, async () => {
+    // @ts-ignore
     fetchContent.mockImplementationOnce(richTextFixture.initialSync)
+    // @ts-ignore
     fetchContentTypes.mockImplementationOnce(richTextFixture.contentTypeItems)
 
     // initial sync
@@ -596,6 +610,7 @@ describe(`gatsby-node`, () => {
   })
 
   it(`panics when localeFilter reduces locale list to 0`, async () => {
+    // @ts-ignore
     fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
     const locales = [`en-US`, `nl`]
 
@@ -616,9 +631,11 @@ describe(`gatsby-node`, () => {
   })
 
   it(`panics when response contains restricted content types`, async () => {
+    // @ts-ignore
     fetchContent.mockImplementationOnce(
       restrictedContentTypeFixture.initialSync
     )
+    // @ts-ignore
     fetchContentTypes.mockImplementationOnce(
       restrictedContentTypeFixture.contentTypeItems
     )

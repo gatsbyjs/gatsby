@@ -130,7 +130,7 @@
     "lerna": "lerna",
     "lerna-prepare": "lerna run prepare",
     "lint": "npm-run-all --continue-on-error -p lint:code lint:docs lint:other",
-    "lint:code": "eslint --ext .js,.jsx,.ts,.tsx .",
+    "lint:code": "eslint --ext .js,.jsx,.ts,.tsx --quiet .",
     "lint:docs": "remark docs/{contributing,docs,tutorial}",
     "lint:other": "npm run prettier -- --check",
     "lint:scripts": "sh scripts/lint-shell-scripts.sh",

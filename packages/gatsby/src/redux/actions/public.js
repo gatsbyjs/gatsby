@@ -27,7 +27,7 @@ const { getPageMode } = require(`../../utils/page-mode`)
 const normalizePath = require(`../../utils/normalize-path`).default
 import { createJobV2FromInternalJob } from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
-import { warnOnce } from "../../utils/warn-once"
+import { reportOnce } from "../../utils/report-once"
 import fs from "fs-extra"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
@@ -1199,7 +1199,7 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `CREATE_JOB`,
@@ -1253,7 +1253,7 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `SET_JOB`,
@@ -1280,7 +1280,7 @@ actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `END_JOB`,

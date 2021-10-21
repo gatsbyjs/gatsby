@@ -1,8 +1,9 @@
-const contentful = require(`contentful`)
-const _ = require(`lodash`)
-const chalk = require(`chalk`)
-const { formatPluginOptionsForCLI } = require(`./plugin-options`)
-const { CODES } = require(`./report`)
+// @ts-check
+import chalk from "chalk"
+import { createClient } from "contentful"
+import _ from "lodash"
+import { formatPluginOptionsForCLI } from "./plugin-options"
+import { CODES } from "./report"
 
 /**
  * Generate a user friendly error message.
@@ -210,13 +211,13 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
  * * Entries and assets
  * * Tags
  */
-async function fetchContent({ syncToken, pluginConfig, reporter }) {
+export async function fetchContent({ syncToken, pluginConfig, reporter }) {
   // Fetch locales and check connectivity
   const contentfulClientOptions = createContentfulClientOptions({
     pluginConfig,
     reporter,
   })
-  const client = contentful.createClient(contentfulClientOptions)
+  const client = createClient(contentfulClientOptions)
 
   // The sync API puts the locale in all fields in this format { fieldName:
   // {'locale': value} } so we need to get the space and its default local.
@@ -254,7 +255,7 @@ async function fetchContent({ syncToken, pluginConfig, reporter }) {
     reporter,
     syncProgress,
   })
-  const syncClient = contentful.createClient(contentfulSyncClientOptions)
+  const syncClient = createClient(contentfulSyncClientOptions)
 
   let currentSyncData
   let currentPageLimit = pageLimit
@@ -353,18 +354,16 @@ async function fetchContent({ syncToken, pluginConfig, reporter }) {
   return result
 }
 
-exports.fetchContent = fetchContent
-
 /**
  * Fetches:
  * * Content types
  */
-async function fetchContentTypes({ pluginConfig, reporter }) {
+export async function fetchContentTypes({ pluginConfig, reporter }) {
   const contentfulClientOptions = createContentfulClientOptions({
     pluginConfig,
     reporter,
   })
-  const client = contentful.createClient(contentfulClientOptions)
+  const client = createClient(contentfulClientOptions)
   const pageLimit = pluginConfig.get(`pageLimit`)
   const sourceId = `${pluginConfig.get(`spaceId`)}-${pluginConfig.get(
     `environment`
@@ -398,8 +397,6 @@ async function fetchContentTypes({ pluginConfig, reporter }) {
 
   return contentTypes
 }
-
-exports.fetchContentTypes = fetchContentTypes
 
 /**
  * Gets all the existing entities based on pagination parameters.

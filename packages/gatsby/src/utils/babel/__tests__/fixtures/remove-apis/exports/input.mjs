@@ -1,7 +1,4 @@
-import * as fs from "fs"
-
 const { fetch, Response } = require('node-fetch');
-const unusedReference = fs.readFileSync('./myfile.json');
 const usedReference = 'used reference';
 
 module.exports = function () {
