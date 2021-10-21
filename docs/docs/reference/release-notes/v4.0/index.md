@@ -108,7 +108,7 @@ With our new rendering options you now can have different kinds of pages in your
 ## Notable bugfixes and improvements
 
 - `gatsby`: Reduce page-renderer size, via [PR #33051](https://github.com/gatsbyjs/gatsby/pull/33051)
-- `gatsby`: Add queue to prefetch, making it less eage. Via [PR #33530](https://github.com/gatsbyjs/gatsby/pull/33530)
+- `gatsby`: Add queue to prefetch, making it less eager. Via [PR #33530](https://github.com/gatsbyjs/gatsby/pull/33530)
 - `gatsby-source-wordpress`: Use `gatsby-plugin-image`, via [PR #33138](https://github.com/gatsbyjs/gatsby/pull/33138)
 
 ## Contributors
