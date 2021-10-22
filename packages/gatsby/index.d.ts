@@ -1086,10 +1086,6 @@ interface CreateNodeFieldArgs {
   value: string
 }
 
-interface ActionOptions {
-  [key: string]: unknown
-}
-
 export interface BuildArgs extends ParentSpanPluginArgs {
   graphql<TData, TVariables = any>(
     query: string,
