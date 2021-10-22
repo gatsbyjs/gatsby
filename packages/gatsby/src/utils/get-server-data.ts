@@ -15,6 +15,7 @@ interface IModuleWithServerData {
     url: string
     query?: Record<string, unknown>
     params?: Record<string, unknown>
+    pageContext: Record<string, unknown>
   }) => Promise<IServerData>
 }
 
@@ -41,6 +42,7 @@ export async function getServerData(
     method: req?.method ?? `GET`,
     url: req?.url ?? `"req" most likely wasn't passed in`,
     query: req?.query ?? {},
+    pageContext: page.context,
     params,
   }
 
