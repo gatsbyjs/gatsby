@@ -29,10 +29,20 @@ export const jobsV2Reducer = (
     | IDeleteCacheAction
 ): IGatsbyState["jobsV2"] => {
   switch (action.type) {
-    case `DELETE_CACHE`:
-      return (action as IDeleteCacheAction).cacheIsCorrupt
-        ? initialState()
-        : state
+    case `DELETE_CACHE`: {
+      // Wipe the cache if state shape doesn't match the initial shape
+      // It is possible when the old cache is loaded for the new version of this reducer
+      const cleanState = initialState()
+      const cleanStateKeys = Object.keys(cleanState)
+
+      const isOutdatedJobsState =
+        cleanStateKeys.length !== Object.keys(state).length ||
+        cleanStateKeys.some(
+          key => !Object.prototype.hasOwnProperty.call(state, key)
+        )
+
+      return action.cacheIsCorrupt || isOutdatedJobsState ? cleanState : state
+    }
 
     case `CREATE_JOB_V2`: {
       const { job } = action.payload
@@ -78,12 +88,6 @@ export const jobsV2Reducer = (
     case `SET_JOB_V2_CONTEXT`: {
       const { requestId, job } = action.payload
 
-      // A workaround for a stale cache bug:
-      // in some edge case redux cache is not cleared (even after gatsby-config and package.json changes).
-      // TODO: figure out the root cause and remove this workaround (see also CLEAR_JOB_V2_CONTEXT)
-      if (!state.jobsByRequest) {
-        state.jobsByRequest = new Map()
-      }
       let jobs = state.jobsByRequest.get(requestId)
       if (!jobs) {
         jobs = new Set<string>()
@@ -96,9 +100,6 @@ export const jobsV2Reducer = (
 
     case `CLEAR_JOB_V2_CONTEXT`: {
       const { requestId } = action.payload
-      if (!state.jobsByRequest) {
-        state.jobsByRequest = new Map()
-      }
       state.jobsByRequest.delete(requestId)
     }
   }
