@@ -17,6 +17,7 @@ export function updateNodes(
       if (action.payload) {
         return nodesDb.remove(action.payload.id)
       }
+
       return false
     }
   }
