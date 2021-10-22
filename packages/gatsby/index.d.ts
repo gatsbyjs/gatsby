@@ -685,7 +685,7 @@ export interface GatsbySSR<
    *   replaceBodyHTMLString(inlinedHTML)
    * }
    */
-  replaceRenderer?(args: ReplaceRendererArgs, options: PluginOptions): void
+  replaceRenderer?(args: ReplaceRendererArgs, options: PluginOptions): void | Promise<void>
 
   /**
    * Allow a plugin to wrap the page element.
@@ -882,20 +882,21 @@ export interface CreateSchemaCustomizationArgs extends ParentSpanPluginArgs {
   traceId: "initial-createSchemaCustomization"
 }
 
-export interface PreRenderHTMLArgs extends NodePluginArgs {
+export interface PreRenderHTMLArgs {
   getHeadComponents: () => React.ReactNode[]
   replaceHeadComponents: (comp: React.ReactNode[]) => void
   getPreBodyComponents: () => React.ReactNode[]
   replacePreBodyComponents: (comp: React.ReactNode[]) => void
   getPostBodyComponents: () => React.ReactNode[]
   replacePostBodyComponents: (comp: React.ReactNode[]) => void
+  pathname: string
 }
 
 type ReactProps<T extends Element> = React.DetailedHTMLProps<
   React.HTMLAttributes<T>,
   T
 >
-export interface RenderBodyArgs extends NodePluginArgs {
+export interface RenderBodyArgs {
   pathname: string
   setHeadComponents: (comp: React.ReactNode[]) => void
   setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void
@@ -905,7 +906,7 @@ export interface RenderBodyArgs extends NodePluginArgs {
   setBodyProps: Function
 }
 
-export interface ReplaceRendererArgs extends NodePluginArgs {
+export interface ReplaceRendererArgs {
   replaceBodyHTMLString: (str: string) => void
   bodyComponent: React.ReactNode
   setHeadComponents: (comp: React.ReactNode[]) => void
@@ -914,19 +915,20 @@ export interface ReplaceRendererArgs extends NodePluginArgs {
   setPreBodyComponents: (comp: React.ReactNode[]) => void
   setPostBodyComponents: (comp: React.ReactNode[]) => void
   setBodyProps: Function
+  pathname: string
 }
 
 export interface WrapPageElementNodeArgs<
   DataType = Record<string, unknown>,
   PageContextType = Record<string, unknown>
-> extends NodePluginArgs {
+> {
   element: React.ReactElement
   props: PageProps<DataType, PageContextType>
-  pathname: string
 }
 
-export interface WrapRootElementNodeArgs extends NodePluginArgs {
+export interface WrapRootElementNodeArgs {
   element: React.ReactElement
+  pathname: string
 }
 
 export interface ParentSpanPluginArgs extends NodePluginArgs {
