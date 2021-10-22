@@ -1109,7 +1109,6 @@ export interface Actions {
     this: void,
     args: Page<TContext>,
     plugin?: ActionPlugin,
-    option?: ActionOptions
   ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#deletePage */
@@ -1120,7 +1119,6 @@ export interface Actions {
     this: void,
     node: NodeInput & TNode,
     plugin?: ActionPlugin,
-    options?: ActionOptions
   ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#touchNode */
@@ -1135,7 +1133,6 @@ export interface Actions {
       value: any
     },
     plugin?: ActionPlugin,
-    options?: ActionOptions
   ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createParentChildLink */
@@ -1225,7 +1222,6 @@ export interface Actions {
     this: void,
     args: { schema: object },
     plugin?: ActionPlugin,
-    traceId?: string
   ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createTypes */
@@ -1239,7 +1235,6 @@ export interface Actions {
       | GraphQLOutputType[]
       | GatsbyGraphQLType[],
     plugin?: ActionPlugin,
-    traceId?: string
   ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createFieldExtension */
@@ -1247,7 +1242,6 @@ export interface Actions {
     this: void,
     extension: object,
     plugin?: ActionPlugin,
-    traceId?: string
   ): void
 
   printTypeDefinitions(
@@ -1257,7 +1251,12 @@ export interface Actions {
     exclude?: { types?: Array<string>; plugins?: Array<string> },
     withFieldTypes?: boolean,
     plugin?: ActionPlugin,
-    traceId?: string
+  ): void
+  
+  createResolverContext(
+    this: void,
+    context: Record<string,any>,
+    plugin?: ActionPlugin,
   ): void
 }
 
