@@ -227,7 +227,7 @@ GitHub is a website that many developers use to back up and share their code onl
 3. To push your existing code from your computer to your new GitHub repository, enter the commands below in the command line. Be sure to swap out `YOUR_GITHUB_USERNAME` for your actual username and `YOUR_GITHUB_REPO_NAME` with the name you gave your GitHub repo (like `my-first-gatsby-site`).
 
    ```
-   git remote add origin git@github.com:YOUR_GITHUB_USERNAME/YOUR_GITHUB_REPO_NAME.git
+   git remote add origin https://github.com/YOUR_GITHUB_USERNAME/YOUR_GITHUB_REPO_NAME.git
    git branch -M main
    git push -u origin main
    ```
@@ -236,9 +236,9 @@ GitHub is a website that many developers use to back up and share their code onl
 
 **Using GitHub for the first time?**
 
-If you get an error about permissions when you try to push your code to GitHub for the first time, you might need to set up an SSH key for your GitHub account. This lets GitHub know that your computer has permission to push code changes to your remote repos.
+If you get an error about permissions when you try to push your code to GitHub for the first time, you might need to set up a **personal access token** for your GitHub account. This lets GitHub know that your computer has permission to push code changes to your remote repos.
 
-For instructions on how to set up an SSH key, follow GitHub's guide: [Connecting to GitHub with SSH](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh).
+For instructions on how to set up a personal access token, follow GitHub's guide: [Creating a personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token). Your personal access token will need the **repo** scope to be able to push changes to your repository.
 
 </Announcement>
 
