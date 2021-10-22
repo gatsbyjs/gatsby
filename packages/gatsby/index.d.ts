@@ -1242,10 +1242,12 @@ export interface Actions {
 
   printTypeDefinitions(
     this: void,
-    path?: string,
-    include?: { types?: Array<string>; plugins?: Array<string> },
-    exclude?: { types?: Array<string>; plugins?: Array<string> },
-    withFieldTypes?: boolean,
+    options: {
+      path?: string,
+      include?: { types?: Array<string>; plugins?: Array<string> },
+      exclude?: { types?: Array<string>; plugins?: Array<string> },
+      withFieldTypes?: boolean,
+    }
     plugin?: ActionPlugin,
   ): void
   
