@@ -318,9 +318,10 @@ export interface IGatsbyState {
       withFieldTypes?: boolean
     } | null
     thirdPartySchemas: Array<GraphQLSchema>
-    types: Array<
-      { typeOrTypeDef: DocumentNode | GraphQLOutputType | GatsbyGraphQLType; plugin: IGatsbyPlugin }
-    >
+    types: Array<{
+      typeOrTypeDef: DocumentNode | GraphQLOutputType | GatsbyGraphQLType
+      plugin: IGatsbyPlugin
+    }>
   }
   logs: IGatsbyCLIState
   inferenceMetadata: {
@@ -646,7 +647,11 @@ export interface ICreateTypes {
   type: `CREATE_TYPES`
   plugin: IGatsbyPlugin
   traceId?: string
-  payload: DocumentNode | GraphQLOutputType | GatsbyGraphQLType | Array<DocumentNode | GraphQLOutputType | GatsbyGraphQLType>
+  payload:
+    | DocumentNode
+    | GraphQLOutputType
+    | GatsbyGraphQLType
+    | Array<DocumentNode | GraphQLOutputType | GatsbyGraphQLType>
 }
 
 export interface ICreateFieldExtension {
