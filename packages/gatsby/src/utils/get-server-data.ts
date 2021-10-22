@@ -36,6 +36,8 @@ export async function getServerData(
     : `/${pagePath}`
 
   const { params } = match(page.matchPath || page.path, ensuredLeadingSlash)
+  const fsRouteParams =
+    typeof page.context[`__params`] === `object` ? page.context[`__params`] : {}
 
   const getServerDataArg = {
     headers: new Map(Object.entries(req?.headers ?? {})),
@@ -43,7 +45,10 @@ export async function getServerData(
     url: req?.url ?? `"req" most likely wasn't passed in`,
     query: req?.query ?? {},
     pageContext: page.context,
-    params,
+    params: {
+      ...params,
+      ...fsRouteParams,
+    },
   }
 
   return mod.getServerData(getServerDataArg)
