@@ -336,7 +336,7 @@ class LocalNodeModel {
    * @param {Object} args.query Query arguments (e.g. `limit` and `skip`)
    * @param {(string|GraphQLOutputType)} args.type Type
    * @param {PageDependencies} [pageDependencies]
-   * @return {Object} Object containing `{ entries: GatsbyIterable, totalCount: () => Promise<number> }`
+   * @return {Promise<Object>} Object containing `{ entries: GatsbyIterable, totalCount: () => Promise<number> }`
    */
   async findAll(args, pageDependencies = {}) {
     const { gqlType, ...result } = await this._query(args, pageDependencies)
