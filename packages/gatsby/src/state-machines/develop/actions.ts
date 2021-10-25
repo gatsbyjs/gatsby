@@ -114,6 +114,7 @@ export const assignServiceResult = assign<IBuildContext, DoneEventObject>(
  * This spawns the service that listens to the `emitter` for various mutation events
  */
 export const spawnMutationListener = assign<IBuildContext>({
+  // @ts-ignore - TODO: Fixing this seems more involved: https://xstate.js.org/docs/guides/typescript.html#troubleshooting & https://github.com/statelyai/xstate/issues/2664
   mutationListener: () => spawn(listenForMutations, `listen-for-mutations`),
 })
 
@@ -126,6 +127,7 @@ export const assignServers = assign<IBuildContext, AnyEventObject>(
 )
 
 export const spawnWebpackListener = assign<IBuildContext, AnyEventObject>({
+  // @ts-ignore - TODO: Fixing this seems more involved: https://xstate.js.org/docs/guides/typescript.html#troubleshooting & https://github.com/statelyai/xstate/issues/2664
   webpackListener: ({ compiler }) => {
     if (!compiler) {
       return undefined

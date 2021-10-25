@@ -29,11 +29,6 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(
         `Parse the caption as markdown instead of raw text. Ignored if showCaptions is false.`
       ),
-    sizeByPixelDensity: Joi.boolean()
-      .default(false)
-      .description(
-        `[deprecated] Pixel density is only used in vector images, which Gatsby’s implementation of Sharp doesn’t support. This option is currently a no-op and will be removed in the next major version of Gatsby.`
-      ),
     wrapperStyle: Joi.alternatives().try(
       Joi.object({}).unknown(true),
       Joi.function().maxArity(1),
@@ -53,6 +48,12 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .default(false)
       .description(
         `Additionally generate WebP versions alongside your chosen file format. They are added as a srcset with the appropriate mimetype and will be loaded in browsers that support the format. Pass true for default support, or an object of options to specifically override those for the WebP files. For example, pass { quality: 80 } to have the WebP images be at quality level 80.`
+      ),
+    withAvif: Joi.alternatives()
+      .try(Joi.object({ quality: Joi.number() }), Joi.boolean())
+      .default(false)
+      .description(
+        `Additionally generate AVIF versions alongside your chosen file format. They are added as a srcset with the appropriate mimetype and will be loaded in browsers that support the format. Pass true for default support, or an object of options to specifically override those for the AVIF files. For example, pass { quality: 80 } to have the AVIF images be at quality level 80.`
       ),
     tracedSVG: Joi.alternatives()
       .try(

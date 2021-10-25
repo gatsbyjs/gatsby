@@ -112,4 +112,6 @@ export default async ({
   warnForPluginsWithoutNodes(state, nodes)
 
   deleteStaleNodes(state, nodes)
+
+  store.dispatch(actions.apiFinished({ apiName: `sourceNodes` }))
 }

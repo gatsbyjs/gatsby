@@ -47,10 +47,6 @@ module.exports = async (
   const modulesThatUseGatsby = await getGatsbyDependents()
   const directoryPath = withBasePath(directory)
 
-  // we will converge to build-html later on but for now this was the fastest way to get SSR to work
-  // TODO remove in v4 - we deprecated this in v3
-  process.env.GATSBY_BUILD_STAGE = suppliedStage
-
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
   const stage = suppliedStage

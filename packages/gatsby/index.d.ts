@@ -492,11 +492,8 @@ export interface GatsbyNode<
    *   built schema from `info.schema`.
    * * Gatsby's data layer, including all internal query capabilities, is
    *   exposed on [`context.nodeModel`](/docs/node-model/). The node store can be
-   *   queried directly with `getAllNodes`, `getNodeById` and `getNodesByIds`,
-   *   while more advanced queries can be composed with `runQuery`. Note that
-   *   `runQuery` will call field resolvers before querying, so e.g. foreign-key
-   *   fields will be expanded to full nodes. The other methods on `nodeModel`
-   *   don't do this.
+   *   queried directly with `findOne`, `getNodeById` and `getNodesByIds`,
+   *   while more advanced queries can be composed with `findAll`.
    * * It is possible to add fields to the root `Query` type.
    * * When using the first resolver argument (`source` in the example below,
    *   often also called `parent` or `root`), take care of the fact that field
@@ -506,7 +503,7 @@ export interface GatsbyNode<
    *
    * For fuller examples, see [`using-type-definitions`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-type-definitions).
    *
-   * @see https://www.gatsbyjs.org/docs/node-apis/#createResolvers
+   * @see https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#createResolvers
    */
   createResolvers?(
     args: CreateResolversArgs,
@@ -688,7 +685,7 @@ export interface GatsbySSR<
    *   replaceBodyHTMLString(inlinedHTML)
    * }
    */
-  replaceRenderer?(args: ReplaceRendererArgs, options: PluginOptions): void
+  replaceRenderer?(args: ReplaceRendererArgs, options: PluginOptions): void | Promise<void>
 
   /**
    * Allow a plugin to wrap the page element.
@@ -885,20 +882,21 @@ export interface CreateSchemaCustomizationArgs extends ParentSpanPluginArgs {
   traceId: "initial-createSchemaCustomization"
 }
 
-export interface PreRenderHTMLArgs extends NodePluginArgs {
+export interface PreRenderHTMLArgs {
   getHeadComponents: () => React.ReactNode[]
   replaceHeadComponents: (comp: React.ReactNode[]) => void
   getPreBodyComponents: () => React.ReactNode[]
   replacePreBodyComponents: (comp: React.ReactNode[]) => void
   getPostBodyComponents: () => React.ReactNode[]
   replacePostBodyComponents: (comp: React.ReactNode[]) => void
+  pathname: string
 }
 
 type ReactProps<T extends Element> = React.DetailedHTMLProps<
   React.HTMLAttributes<T>,
   T
 >
-export interface RenderBodyArgs extends NodePluginArgs {
+export interface RenderBodyArgs {
   pathname: string
   setHeadComponents: (comp: React.ReactNode[]) => void
   setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void
@@ -908,7 +906,7 @@ export interface RenderBodyArgs extends NodePluginArgs {
   setBodyProps: Function
 }
 
-export interface ReplaceRendererArgs extends NodePluginArgs {
+export interface ReplaceRendererArgs {
   replaceBodyHTMLString: (str: string) => void
   bodyComponent: React.ReactNode
   setHeadComponents: (comp: React.ReactNode[]) => void
@@ -917,19 +915,20 @@ export interface ReplaceRendererArgs extends NodePluginArgs {
   setPreBodyComponents: (comp: React.ReactNode[]) => void
   setPostBodyComponents: (comp: React.ReactNode[]) => void
   setBodyProps: Function
+  pathname: string
 }
 
 export interface WrapPageElementNodeArgs<
   DataType = Record<string, unknown>,
   PageContextType = Record<string, unknown>
-> extends NodePluginArgs {
+> {
   element: React.ReactElement
   props: PageProps<DataType, PageContextType>
-  pathname: string
 }
 
-export interface WrapRootElementNodeArgs extends NodePluginArgs {
+export interface WrapRootElementNodeArgs {
   element: React.ReactElement
+  pathname: string
 }
 
 export interface ParentSpanPluginArgs extends NodePluginArgs {

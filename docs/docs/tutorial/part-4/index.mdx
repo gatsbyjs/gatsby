@@ -680,6 +680,28 @@ query MyQuery {
 }
 ```
 
+<Collapsible
+  summary="Seeing more nodes than expected?"
+>
+
+If you're still using a `StaticImage` from an external URL (like `https://some-site/image.jpg`) on your home page, you'll see an extra node for that image show up in your GraphQL response. That's because `StaticImage` uses [`createRemoteFileNode`](https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/#createremotefilenode) under the hood which creates a `File` node for each image it downloads. If you're only using images from your filesystem, you won't see the extra ndoe.
+
+To get rid of it, you can update your GraphQL query to filter the File nodes using the `sourceInstanceName` field (which corresponds to the value of the `name` option you set for `gatsby-source-filesystem` in your `gatsby-config.js` file).
+
+```graphql:title=src/pages/blog.js
+query {
+  allFile(filter: {sourceInstanceName: {eq: "blog"}}) {
+    nodes {
+      name
+    }
+  }
+}
+```
+
+`filter` is an **argument** that gets passed into the `allFile` field. Some fields take arguments, which you can use to change the way that nodes get returned in your final GraphQL response.
+
+</Collapsible>
+
 ### Task: Use a page query to pull the list of post filenames into your blog page
 
 Now that you've built a GraphQL query that returns a list of your post filenames, it's time to render that data in your blog page!
