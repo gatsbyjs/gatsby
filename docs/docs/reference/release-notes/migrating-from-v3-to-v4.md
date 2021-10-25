@@ -266,6 +266,10 @@ You can no longer use `gatsby-admin` (activated with environment variable `GATSB
 
 This environment variable was internally used by `gatsby-preset-gatsby`. If you're using it you now must pass the `stage` as an option to the preset.
 
+### Windows-specific: No support for WSL1
+
+With the introduction of `lmdb-store` instances running [WSL1](https://docs.microsoft.com/en-us/windows/wsl/about) sadly won't work anymore. You'll see errors like `Error: MDB_BAD_RSLOT: Invalid reuse of reader locktable slot` or similar. This is an [upstream issue](https://github.com/microsoft/WSL/issues/3451) that we can't fix and we recommend updating to WSL2 ([Comparison of WSL1 & WSL2](https://docs.microsoft.com/en-us/windows/wsl/compare-versions)).
+
 ### Gatsby related packages
 
 Breaking Changes in plugins that we own and maintain.
