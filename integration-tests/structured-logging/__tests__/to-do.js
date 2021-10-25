@@ -645,13 +645,25 @@ describe(`build`, () => {
         })
 
         await new Promise((resolve, reject) => {
+          let listening = true
           gatsbyProcess.on(`message`, msg => {
+            if (!listening) {
+              return
+            }
             events.push(msg)
+
+            if (
+              msg.action &&
+              msg.action.type === `SET_STATUS` &&
+              msg.action.payload !== `IN_PROGRESS`
+            ) {
+              setTimeout(() => {
+                listening = false
+                gatsbyProcess.kill(`SIGTERM`)
+                waitChildProcessExit(gatsbyProcess.pid, resolve, reject)
+              }, 2000)
+            }
           })
-          setTimeout(() => {
-            gatsbyProcess.kill(`SIGTERM`)
-            waitChildProcessExit(gatsbyProcess.pid, resolve, reject)
-          }, 1000)
         })
       })
       commonAssertionsForFailure(events)
