@@ -688,7 +688,7 @@ If you're still using a `StaticImage` from an external URL (like `https://some-s
 
 To get rid of it, you can update your GraphQL query to filter the File nodes using the `sourceInstanceName` field (which corresponds to the value of the `name` option you set for `gatsby-source-filesystem` in your `gatsby-config.js` file).
 
-```js:title=src/pages/blog.js
+```graphql:title=src/pages/blog.js
 query {
   allFile(filter: {sourceInstanceName: {eq: "blog"}}) {
     nodes {
