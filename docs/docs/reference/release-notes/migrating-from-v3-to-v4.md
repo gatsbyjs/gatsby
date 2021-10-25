@@ -368,6 +368,8 @@ const { entries, totalCount } = await nodeModel.findAll({
   query: { limit: 20, skip: 10 },
 })
 const count = await totalCount()
+// load the entries
+const entries = Array.from(entries);
 ```
 
 If you don't pass `limit` and `skip`, `findAll` returns all nodes in `{ entries }` iterable.
