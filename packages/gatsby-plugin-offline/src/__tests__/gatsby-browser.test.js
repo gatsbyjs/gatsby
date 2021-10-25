@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 const { onServiceWorkerActive } = require(`../gatsby-browser`)
 
 it(`does not add prefetch for preconnect/prefetch/prerender`, () => {

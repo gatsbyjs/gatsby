@@ -1,6 +1,7 @@
 describe(`highlight code and lines with PrismJS`, () => {
   afterEach(() => {
     jest.resetModules()
+    jest.clearAllMocks()
   })
 
   it(`for language cpp`, () => {
