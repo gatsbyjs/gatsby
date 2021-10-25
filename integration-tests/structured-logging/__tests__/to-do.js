@@ -52,8 +52,7 @@ const collectEventsForDevelop = (events, env = {}) => {
         setTimeout(() => {
           listening = false
           gatsbyProcess.kill()
-
-          setTimeout(resolve, 1000)
+          waitChildProcessExit(gatsbyProcess, resolve)
         }, 5000)
       }
     })
@@ -310,9 +309,7 @@ describe(`develop`, () => {
 
         setTimeout(() => {
           gatsbyProcess.kill(`SIGTERM`)
-          setTimeout(() => {
-            done()
-          }, 5000)
+          waitChildProcessExit(gatsbyProcess, done)
         }, 5000)
 
         finishedPromise.then(done)
@@ -365,7 +362,7 @@ describe(`develop`, () => {
 
     afterAll(done => {
       gatsbyProcess.kill()
-      setTimeout(done, 1000)
+      waitChildProcessExit(gatsbyProcess, done)
     })
 
     describe(`code change`, () => {
@@ -642,13 +639,9 @@ describe(`build`, () => {
           gatsbyProcess.on(`message`, msg => {
             events.push(msg)
           })
-
-          gatsbyProcess.on(`exit`, exitCode => {
-            resolve()
-          })
-
           setTimeout(() => {
             gatsbyProcess.kill(`SIGTERM`)
+            waitChildProcessExit(gatsbyProcess, resolve)
           }, 1000)
         })
       })
@@ -661,5 +654,19 @@ describe(`build`, () => {
     })
   })
 })
+
+function waitChildProcessExit(child, cb, attempt = 0) {
+  try {
+    child.kill(0) // check if process is still running
+    if (attempt > 20) {
+      throw new Error("Gatsby process hasn't exited in 20 seconds")
+    }
+    setTimeout(() => {
+      waitChildProcessExit(child, cb, attempt + 1)
+    }, 1000)
+  } catch (e) {
+    cb()
+  }
+}
 
 //TO-DO: add api running activity
