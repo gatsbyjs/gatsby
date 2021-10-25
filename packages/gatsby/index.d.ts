@@ -1240,6 +1240,7 @@ export interface Actions {
     plugin?: ActionPlugin,
   ): void
 
+  /** @see https://www.gatsbyjs.org/docs/actions/#printTypeDefinitions */
   printTypeDefinitions(
     this: void,
     options: {
@@ -1251,6 +1252,7 @@ export interface Actions {
     plugin?: ActionPlugin,
   ): void
   
+  /** @see https://www.gatsbyjs.org/docs/actions/#createResolverContext */
   createResolverContext(
     this: void,
     context: Record<string,any>,
