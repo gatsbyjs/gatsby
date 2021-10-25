@@ -193,7 +193,7 @@ jobs:
       - <<: *check_lockfile
       - <<: *validate_renovate
       - <<: *persist_cache
-      - run: yarn bootstrap -- concurrency=2
+      - run: yarn bootstrap --concurrency=2
       # Persist the workspace again with all packages already built
       - persist_to_workspace:
           root: ./
@@ -571,7 +571,7 @@ jobs:
           name: "Update React to prerelease"
           command: "REACT_CHANNEL=<< parameters.version >> node ./scripts/upgrade-react"
       - run: yarn install
-      - run: yarn bootstrap -- concurrency=2
+      - run: yarn bootstrap --concurrency=2
       - run: yarn list react
       - persist_to_workspace:
           root: ./
