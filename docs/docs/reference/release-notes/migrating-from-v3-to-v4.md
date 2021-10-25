@@ -398,14 +398,14 @@ resolve: async (source, args, context, info) => {
 // Example: Use .filter on the iterable
 resolve: async (source, args, context, info) => {
   const { entries } = await context.nodeModel.findAll({ type: `BlogPost` })
-  return entries.filter(
-    post => post.publishedAt > Date.UTC(2018, 0, 1)
-  )
+  return entries.filter(post => post.publishedAt > Date.UTC(2018, 0, 1))
 }
 
 // Example: Convert to array to use methods not available on iterable
 resolve: async (source, args, context, info) => {
-  const { entries } = await context.nodeModel.findAll({ type: "MarkdownRemark" })
+  const { entries } = await context.nodeModel.findAll({
+    type: "MarkdownRemark",
+  })
   const posts = entries.filter(post => post.frontmatter.author === source.email)
   return Array.from(posts).length
 }
