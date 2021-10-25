@@ -206,7 +206,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
         }
 
         changesActivity.end()
-        await storeRefsLookups({ cache, getNodes })
+        await storeRefsLookups({ cache })
         return
       }
 
@@ -237,7 +237,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
       return
     }
     changesActivity.end()
-    await storeRefsLookups({ cache, getNodes })
+    await storeRefsLookups({ cache })
     return
   }
 
@@ -368,6 +368,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
         drupalFetchIncrementalActivity.end()
         fastBuildsSpan.finish()
+        await storeRefsLookups({ cache })
         return
       }
 
@@ -378,7 +379,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
       initialSourcing = false
 
       if (!requireFullRebuild) {
-        await storeRefsLookups({ cache, getNodes })
+        await storeRefsLookups({ cache })
         return
       }
     }

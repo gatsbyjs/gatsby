@@ -9,49 +9,34 @@ const {
 
 const { getOptions } = require(`./plugin-options`)
 
-const backRefsNamesLookup = new Map()
-const referencedNodesLookup = new Map()
+let backRefsNamesLookup = new Map()
+let referencedNodesLookup = new Map()
 
-const initRefsLookups = async ({ cache, getNode }) => {
-  const backRefsNamesLookupArray = await cache.get(`backRefsNamesLookup`)
-  const referencedNodesLookupArray = await cache.get(`referencedNodesLookup`)
+const initRefsLookups = async ({ cache }) => {
+  const backRefsNamesLookupStr = await cache.get(`backRefsNamesLookup`)
+  const referencedNodesLookupStr = await cache.get(`referencedNodesLookup`)
 
-  if (backRefsNamesLookupArray) {
-    for (const [nodeId, value] of backRefsNamesLookupArray) {
-      backRefsNamesLookup.set(getNode(nodeId), value)
-    }
+  if (backRefsNamesLookupStr) {
+    backRefsNamesLookup = new Map(JSON.parse(backRefsNamesLookupStr))
   }
 
-  if (referencedNodesLookupArray) {
-    for (const [nodeId, value] of referencedNodesLookupArray) {
-      referencedNodesLookup.set(getNode(nodeId), value)
-    }
+  if (referencedNodesLookupStr) {
+    referencedNodesLookup = new Map(JSON.parse(referencedNodesLookupStr))
   }
 }
 
 exports.initRefsLookups = initRefsLookups
 
-const storeRefsLookups = async ({ cache, getNodes }) => {
-  const backRefsNamesLookupArray = []
-  const referencedNodesLookupArray = []
-
-  const allNodes = getNodes()
-
-  for (const node of allNodes) {
-    const backRefItem = backRefsNamesLookup.get(node)
-    if (backRefItem) {
-      backRefsNamesLookupArray.push([node.id, backRefItem])
-    }
-
-    const referencedNodeItem = referencedNodesLookup.get(node)
-    if (referencedNodeItem) {
-      referencedNodesLookupArray.push([node.id, referencedNodeItem])
-    }
-  }
-
+const storeRefsLookups = async ({ cache }) => {
   await Promise.all([
-    cache.set(`backRefsNamesLookup`, backRefsNamesLookupArray),
-    cache.set(`referencedNodesLookup`, referencedNodesLookupArray),
+    cache.set(
+      `backRefsNamesLookup`,
+      JSON.stringify(Array.from(backRefsNamesLookup.entries()))
+    ),
+    cache.set(
+      `referencedNodesLookup`,
+      JSON.stringify(Array.from(referencedNodesLookup.entries()))
+    ),
   ])
 }
 
