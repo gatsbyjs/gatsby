@@ -1247,7 +1247,7 @@ export interface Actions {
       include?: { types?: Array<string>; plugins?: Array<string> },
       exclude?: { types?: Array<string>; plugins?: Array<string> },
       withFieldTypes?: boolean,
-    }
+    },
     plugin?: ActionPlugin,
   ): void
   
