@@ -62,6 +62,9 @@ async function worker([url, options]) {
   const response = await got(url, {
     agent,
     cache: false,
+    timeout: {
+      request: 15000,
+    },
     // request: http2wrapper.auto,
     // http2: true,
     ...options,
@@ -253,7 +256,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
     // lastFetched isn't set so do a full rebuild.
     if (!lastFetched) {
-      setPluginStatus({ lastFetched: new Date().getTime() })
+      setPluginStatus({ lastFetched: Math.floor(new Date().getTime() / 1000) })
       requireFullRebuild = true
     } else {
       const drupalFetchIncrementalActivity = reporter.activityTimer(
@@ -264,9 +267,14 @@ ${JSON.stringify(webhookBody, null, 4)}`
       drupalFetchIncrementalActivity.start()
 
       try {
+        console.time(`drupal: gatsby-fastbuilds/sync`)
         // Hit fastbuilds endpoint with the lastFetched date.
         const res = await requestQueue.push([
-          urlJoin(baseUrl, `gatsby-fastbuilds/sync/`, lastFetched.toString()),
+          urlJoin(
+            baseUrl,
+            `gatsby-fastbuilds/sync/`,
+            Math.floor(lastFetched).toString()
+          ),
           {
             username: basicAuth.username,
             password: basicAuth.password,
@@ -276,6 +284,8 @@ ${JSON.stringify(webhookBody, null, 4)}`
             parentSpan: fastBuildsSpan,
           },
         ])
+
+        console.timeEnd(`drupal: gatsby-fastbuilds/sync`)
 
         // Fastbuilds returns a -1 if:
         // - the timestamp has expired
@@ -289,6 +299,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
         } else {
           // Touch nodes so they are not garbage collected by Gatsby.
           if (initialSourcing) {
+            console.time(`drupal: touchNode`)
             const touchNodesSpan = tracer.startSpan(`sourceNodes.touchNodes`, {
               childOf: fastBuildsSpan,
             })
@@ -300,6 +311,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
                 touchNode(node)
               }
             })
+            console.timeEnd(`drupal: touchNode`)
             touchNodesSpan.setTag(`sourceNodes.touchNodes.count`, touchCount)
             touchNodesSpan.finish()
           }
@@ -315,6 +327,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
           )
 
           // Process sync data from Drupal.
+          console.time(`drupal: process synced data`)
           const nodesToSync = res.body.entities
           for (const nodeSyncData of nodesToSync) {
             if (nodeSyncData.action === `delete`) {
@@ -353,6 +366,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
               }
             }
           }
+          console.timeEnd(`drupal: process synced data`)
 
           createNodesSpan.finish()
           setPluginStatus({ lastFetched: res.body.timestamp })
