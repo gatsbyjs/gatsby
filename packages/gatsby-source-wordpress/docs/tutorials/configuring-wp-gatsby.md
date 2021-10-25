@@ -27,7 +27,7 @@ Now that your Builds webhook is set up, when content is updated in WordPress you
 
 ## Setting Up Preview
 
-Once configured in the GatsbyJS settings page in wp-admin, Previews will work out of the box. See the [feature page on Preview](../features/preview.md) for more information about how Preview works. WPGatsby has been updated to use Gatsby Cloud's new Content Sync service, which is a service that handles the loading view, error handling, and redirection for users that are previewing content. Make sure you've upgraded to the latest versions of WPGatsby, `gatsby`, and `gatsby-source-wordpress`. For documentation about legacy previews where the preview loader used to live on the WordPress side [see here](./configuring-previews-legacy.md).
+Once configured in the GatsbyJS settings page in wp-admin, Previews will work out of the box. See the [feature page on Preview](../features/preview.md) for more information about how Preview works. WPGatsby has been updated to use Gatsby Cloud's new Content Sync service, which is a service that handles the loading view, error handling, and redirection for users that are previewing content. Make sure you've upgraded to the latest versions of WPGatsby, `gatsby` (v3 or v4), and `gatsby-source-wordpress`. For documentation about legacy previews where the preview loader used to live on the WordPress side [see here](./configuring-previews-legacy.md).
 
 ### Connecting Preview
 
