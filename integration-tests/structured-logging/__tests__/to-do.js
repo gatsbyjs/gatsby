@@ -23,7 +23,7 @@ const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
 const defaultStdio = `ignore`
 
-const collectEventsForDevelop = (events, env = {}) => {
+const collectEventsForDevelop = (events, env = {}, signal = undefined) => {
   const gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {
     stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
     env: {
@@ -51,7 +51,7 @@ const collectEventsForDevelop = (events, env = {}) => {
       ) {
         setTimeout(() => {
           listening = false
-          gatsbyProcess.kill()
+          gatsbyProcess.kill(signal)
           waitChildProcessExit(gatsbyProcess, resolve)
         }, 5000)
       }
@@ -304,13 +304,17 @@ describe(`develop`, () => {
       let events = []
 
       beforeAll(done => {
-        const { finishedPromise, gatsbyProcess } =
-          collectEventsForDevelop(events)
-
-        setTimeout(() => {
-          gatsbyProcess.kill(`SIGTERM`)
-          waitChildProcessExit(gatsbyProcess, done)
-        }, 5000)
+        const { finishedPromise, gatsbyProcess } = collectEventsForDevelop(
+          events,
+          {},
+          `SIGTERM`
+        )
+        //
+        // setTimeout(() => {
+        //   console.log(`Sending signal!`, gatsbyProcess.pid, gatsbyProcess.kill)
+        //   gatsbyProcess.kill(`SIGTERM`)
+        //   waitChildProcessExit(gatsbyProcess, done)
+        // }, 5000)
 
         finishedPromise.then(done)
       })
