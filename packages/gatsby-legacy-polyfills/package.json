@@ -15,11 +15,11 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "npm-run-all -p build:*",
+    "build": "npm-run-all -p build:\\*",
     "build:exclude": "cpy \"src/exclude.js\" \"./dist\"",
     "build:polyfills": "microbundle -f iife -i src/polyfills.js --no-sourcemap --external=none",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "npm-run-all -p watch:*",
+    "watch": "npm-run-all -p watch:\\*",
     "watch:exclude": "npm run build:exclude && chokidar \"src/exclude.js\" -c \"npm run build:exclude\"",
     "watch:polyfills": "microbundle -f iife -i src/polyfills.js --no-sourcemap --external=none --watch"
   },
