@@ -107,7 +107,7 @@ const sitePageType = `
     internalComponentName: String!
     componentChunkName: String!
     matchPath: String
-    pageContext: JSON
+    pageContext: JSON @proxy(from: "context")
     pluginCreator: SitePlugin @link(from: "pluginCreatorId")
   }
 `
