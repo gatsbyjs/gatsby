@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from "react"
 import { GatsbyImage, IGatsbyImageData } from "../gatsby-image.browser"
 import { render, waitFor } from "@testing-library/react"

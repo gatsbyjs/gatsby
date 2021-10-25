@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 // This is by no means a full test file for loader.js so feel free to add more tests.
 import mock from "xhr-mock"
 import DevLoader from "../dev-loader"

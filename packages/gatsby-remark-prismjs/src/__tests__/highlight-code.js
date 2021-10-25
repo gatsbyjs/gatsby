@@ -81,7 +81,7 @@ export default Counter
 
   describe(`with language-text`, () => {
     it(`escapes &, <, " elements and warns`, () => {
-      spyOn(console, `warn`)
+      jest.spyOn(console, `warn`)
 
       const highlightCode = require(`../highlight-code`)
       const language = `text`
@@ -96,7 +96,7 @@ export default Counter
     })
 
     it(`can warn about languages missing from inline code`, () => {
-      spyOn(console, `warn`)
+      jest.spyOn(console, `warn`)
 
       const highlightCode = require(`../highlight-code`)
       const language = `text`
@@ -109,7 +109,7 @@ export default Counter
     })
 
     it(`warns once per language`, () => {
-      spyOn(console, `warn`)
+      jest.spyOn(console, `warn`)
 
       const highlightCode = require(`../highlight-code`)
       const language1 = `text`

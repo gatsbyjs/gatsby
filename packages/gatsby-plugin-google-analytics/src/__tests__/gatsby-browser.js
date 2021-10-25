@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { onInitialClientRender, onRouteUpdate } from "../gatsby-browser"
 import { Minimatch } from "minimatch"
 import { getLCP, getFID, getCLS } from "web-vitals/base"

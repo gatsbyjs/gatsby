@@ -1,9 +1,12 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from "react"
 import "@testing-library/jest-dom/extend-expect"
 import userEvent from "@testing-library/user-event"
 import { render, screen, act, waitFor, fireEvent } from "@testing-library/react"
 
-// import { wrapRootElement } from "../gatsby-browser"
 import Indicator from "../components/Indicator"
 
 import { server } from "./mocks/server"
