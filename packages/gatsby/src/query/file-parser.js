@@ -465,7 +465,10 @@ export default class FileParser {
     this.parentSpan = parentSpan
   }
 
-  async parseFile(file: string, addError): Promise<?Array<GraphQLDocumentInFile>> {
+  async parseFile(
+    file: string,
+    addError
+  ): Promise<?Array<GraphQLDocumentInFile>> {
     let text
     try {
       text = await fs.readFile(file, `utf8`)
