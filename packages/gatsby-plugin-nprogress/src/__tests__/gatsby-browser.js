@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 jest.mock(`nprogress`)
 
 import NProgress from "nprogress"

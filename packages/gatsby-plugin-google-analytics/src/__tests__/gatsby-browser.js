@@ -50,7 +50,7 @@ describe(`gatsby-plugin-google-analytics`, () => {
         })
 
         beforeEach(() => {
-          jest.useFakeTimers()
+          jest.useFakeTimers(`legacy`)
           jest.clearAllMocks()
           window.ga = jest.fn()
         })
