@@ -63,6 +63,7 @@ async function worker([url, options]) {
     agent,
     cache: false,
     timeout: {
+      // Occasionally requests to Drupal stall. Set a 15s timeout to retry in this case.
       request: 15000,
     },
     // request: http2wrapper.auto,
@@ -267,7 +268,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
       drupalFetchIncrementalActivity.start()
 
       try {
-        console.time(`drupal: gatsby-fastbuilds/sync`)
         // Hit fastbuilds endpoint with the lastFetched date.
         const res = await requestQueue.push([
           urlJoin(
@@ -285,8 +285,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
           },
         ])
 
-        console.timeEnd(`drupal: gatsby-fastbuilds/sync`)
-
         // Fastbuilds returns a -1 if:
         // - the timestamp has expired
         // - if old fastbuild logs were purged
@@ -299,7 +297,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
         } else {
           // Touch nodes so they are not garbage collected by Gatsby.
           if (initialSourcing) {
-            console.time(`drupal: touchNode`)
             const touchNodesSpan = tracer.startSpan(`sourceNodes.touchNodes`, {
               childOf: fastBuildsSpan,
             })
@@ -311,7 +308,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
                 touchNode(node)
               }
             })
-            console.timeEnd(`drupal: touchNode`)
             touchNodesSpan.setTag(`sourceNodes.touchNodes.count`, touchCount)
             touchNodesSpan.finish()
           }
@@ -327,7 +323,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
           )
 
           // Process sync data from Drupal.
-          console.time(`drupal: process synced data`)
           const nodesToSync = res.body.entities
           for (const nodeSyncData of nodesToSync) {
             if (nodeSyncData.action === `delete`) {
@@ -366,7 +361,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
               }
             }
           }
-          console.timeEnd(`drupal: process synced data`)
 
           createNodesSpan.finish()
           setPluginStatus({ lastFetched: res.body.timestamp })
