@@ -503,6 +503,16 @@ If your plugin supports both versions:
 }
 ```
 
+If you defined the `engines` key you'll also need to update the minimum version:
+
+```json:title=package.json
+{
+  "engines": {
+    "node": ">=14.15.0"
+  }
+}
+```
+
 You can also learn more about this in the [migration guide for source plugins](/docs/reference/release-notes/migrating-source-plugin-from-v3-to-v4/).
 
 ### Don't mutate nodes outside of expected APIs
