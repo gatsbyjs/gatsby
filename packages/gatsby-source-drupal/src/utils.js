@@ -9,8 +9,38 @@ const {
 
 const { getOptions } = require(`./plugin-options`)
 
-const backRefsNamesLookup = new Map()
-const referencedNodesLookup = new Map()
+let backRefsNamesLookup = new Map()
+let referencedNodesLookup = new Map()
+
+const initRefsLookups = async ({ cache }) => {
+  const backRefsNamesLookupStr = await cache.get(`backRefsNamesLookup`)
+  const referencedNodesLookupStr = await cache.get(`referencedNodesLookup`)
+
+  if (backRefsNamesLookupStr) {
+    backRefsNamesLookup = new Map(JSON.parse(backRefsNamesLookupStr))
+  }
+
+  if (referencedNodesLookupStr) {
+    referencedNodesLookup = new Map(JSON.parse(referencedNodesLookupStr))
+  }
+}
+
+exports.initRefsLookups = initRefsLookups
+
+const storeRefsLookups = async ({ cache }) => {
+  await Promise.all([
+    cache.set(
+      `backRefsNamesLookup`,
+      JSON.stringify(Array.from(backRefsNamesLookup.entries()))
+    ),
+    cache.set(
+      `referencedNodesLookup`,
+      JSON.stringify(Array.from(referencedNodesLookup.entries()))
+    ),
+  ])
+}
+
+exports.storeRefsLookups = storeRefsLookups
 
 const handleReferences = (
   node,
@@ -333,7 +363,9 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     }
     node.internal.contentDigest = createContentDigest(node)
     createNode(node)
-    reporter.log(`Updated Gatsby node: ${node.id}`)
+    reporter.log(
+      `Updated Gatsby node: id: ${node.id} — type: ${node.internal.type}`
+    )
   }
 }
 
