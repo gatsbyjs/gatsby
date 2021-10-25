@@ -324,7 +324,7 @@ describe(`develop`, () => {
 
       commonAssertionsForFailure(events)
 
-      // Note: this will fail on windows because it doesn't support POSIX signales (i.e. SIGTERM)
+      // Note: this will fail on windows because it doesn't support POSIX signals (i.e. SIGTERM)
       it(`emit final SET_STATUS with INTERRUPTED - last message`, () => {
         const event = last(events)
         expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
