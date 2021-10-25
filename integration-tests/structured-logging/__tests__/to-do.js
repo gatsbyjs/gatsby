@@ -645,20 +645,13 @@ describe(`build`, () => {
         })
 
         await new Promise((resolve, reject) => {
-          let listening = true
+          let killing = false
           gatsbyProcess.on(`message`, msg => {
-            if (!listening) {
-              return
-            }
             events.push(msg)
 
-            if (
-              msg.action &&
-              msg.action.type === `SET_STATUS` &&
-              msg.action.payload !== `IN_PROGRESS`
-            ) {
+            if (!killing) {
+              killing = true
               setTimeout(() => {
-                listening = false
                 gatsbyProcess.kill(`SIGTERM`)
                 waitChildProcessExit(gatsbyProcess.pid, resolve, reject)
               }, 2000)
