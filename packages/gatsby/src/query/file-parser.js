@@ -465,7 +465,10 @@ export default class FileParser {
     this.parentSpan = parentSpan
   }
 
-  async parseFile(file: string, addError): Promise<?DocumentNode> {
+  async parseFile(
+    file: string,
+    addError
+  ): Promise<?Array<GraphQLDocumentInFile>> {
     let text
     try {
       text = await fs.readFile(file, `utf8`)
@@ -625,7 +628,7 @@ export default class FileParser {
   async parseFiles(
     files: Array<string>,
     addError
-  ): Promise<Array<DocumentNode>> {
+  ): Promise<Array<GraphQLDocumentInFile>> {
     const documents = []
 
     return Promise.all(
