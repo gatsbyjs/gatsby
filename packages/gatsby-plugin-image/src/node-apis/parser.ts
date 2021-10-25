@@ -65,6 +65,7 @@ export function babelParseToAst(
   contents: string,
   filePath: string
 ): babel.types.File {
+  // @ts-ignore - Babel problems
   return parse(contents, getBabelParserOptions(filePath))
 }
 

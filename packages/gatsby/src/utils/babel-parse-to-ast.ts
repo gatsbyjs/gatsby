@@ -57,5 +57,6 @@ export function getBabelParserOptions(filePath: string): ParserOptions {
 }
 
 export function babelParseToAst(contents: string, filePath: string): File {
+  // @ts-ignore xxx
   return parse(contents, getBabelParserOptions(filePath))
 }
