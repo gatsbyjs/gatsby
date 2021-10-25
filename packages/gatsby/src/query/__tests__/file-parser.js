@@ -9,6 +9,7 @@ jest.mock(`../../utils/api-runner-node`, () => () => [])
 jest.mock(`gatsby-cli/lib/reporter/index`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const fs = require(`fs-extra`)
+// Test
 
 const FileParser = require(`../file-parser`).default
 
@@ -285,8 +286,8 @@ module.exports = () => {
 
     // The second param is a "hint", see: https://jestjs.io/docs/en/expect#tomatchsnapshotpropertymatchers-hint
     expect(results).toMatchSnapshot({}, `results`)
-    expect(reporter.warn).toMatchSnapshot({}, `warn`)
-    expect(reporter.panicOnBuild).toMatchSnapshot({}, `panicOnBuild`)
+    expect(reporter.warn.mock.calls).toMatchSnapshot({}, `warn`)
+    expect(reporter.panicOnBuild.mock.calls).toMatchSnapshot({}, `panicOnBuild`)
     expect(errors.length).toEqual(1)
   })
 
