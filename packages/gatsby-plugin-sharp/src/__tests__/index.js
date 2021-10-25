@@ -1,6 +1,5 @@
 const path = require(`path`)
 const fs = require(`fs-extra`)
-jest.mock(`../scheduler`)
 
 jest.mock(`async/queue`, () => () => {
   return {
@@ -16,8 +15,6 @@ jest.mock(`gatsby/dist/redux/actions`, () => {
 })
 
 const sharp = require(`sharp`)
-const { scheduleJob } = require(`../scheduler`)
-scheduleJob.mockReturnValue(Promise.resolve())
 fs.ensureDirSync = jest.fn()
 fs.existsSync = jest.fn().mockReturnValue(false)
 
@@ -71,100 +68,63 @@ describe(`gatsby-plugin-sharp`, () => {
   }
 
   describe(`queueImageResizing`, () => {
-    ;[`createJob`, `createJobV2`].forEach(api => {
-      describe(`with ${api}`, () => {
-        let actions
-        beforeEach(() => {
-          actions = {}
-          if (api === `createJobV2`) {
-            actions.createJobV2 = jest.fn().mockReturnValue(Promise.resolve())
-          }
-          setActions(actions)
-          scheduleJob.mockClear()
-        })
-
-        it(`should round height when auto-calculated ${api}`, () => {
-          // Resize 144-density.png (281x136) with a 3px width
-          const result = queueImageResizing({
-            file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-            args: { width: 3 },
-          })
-
-          // Width should be: w = (3 * 136) / 281 = 1.451957295
-          // We expect value to be rounded to 1
-          expect(result.height).toBe(1)
-          if (api === `createJobV2`) {
-            expect(actions.createJobV2).toHaveBeenCalledTimes(1)
-            expect(actions.createJobV2).toMatchSnapshot()
-          } else {
-            expect(scheduleJob).toHaveBeenCalledTimes(1)
-            expect(scheduleJob).toMatchSnapshot()
-          }
-        })
-
-        it(`file name works with spaces & special characters ${api}`, async () => {
-          // test name encoding with various characters
-          const testName = `spaces and '"@#$%^&,`
-
-          const queueResult = queueImageResizing({
-            file: getFileObject(
-              path.join(__dirname, `images/144-density.png`),
-              testName
-            ),
-            args: { width: 3 },
-          })
-
-          const queueResultName = path.parse(queueResult.src).name
-
-          // decoding to check for outputting same name
-          expect(decodeURIComponent(queueResultName)).toBe(testName)
-
-          // regex for special characters above and spaces
-          // testname should match, the queue result should not
-          expect(testName.match(/[!@#$^&," ]/)).not.toBe(false)
-          expect(queueResultName.match(/[!@#$^&," ]/)).not.toBe(true)
-          if (api === `createJobV2`) {
-            expect(actions.createJobV2).toHaveBeenCalledTimes(1)
-            expect(actions.createJobV2).toMatchSnapshot()
-          } else {
-            expect(scheduleJob).toHaveBeenCalledTimes(1)
-            expect(scheduleJob).toMatchSnapshot()
-          }
-        })
-
-        // re-enable when image processing on demand is implemented
-        it.skip(`should process immediately when asked`, async () => {
-          const result = queueImageResizing({
-            file: getFileObject(path.join(__dirname, `images/144-density.png`)),
-            args: { width: 3 },
-          })
-
-          await result.finishedPromise
-
-          expect(scheduleJob).toMatchSnapshot()
-        })
-      })
-    })
-
-    it(`should return the same result when using createJob as createJobV2`, async () => {
-      scheduleJob.mockClear()
-      const actions = {
-        createJobV2: jest.fn(() => Promise.resolve()),
+    let actions
+    beforeEach(() => {
+      actions = {
+        createJobV2: jest.fn().mockReturnValue(Promise.resolve()),
       }
       setActions(actions)
-      const resultV2 = await queueImageResizing({
+    })
+
+    it(`should round height when auto-calculated createJobV2`, () => {
+      // Resize 144-density.png (281x136) with a 3px width
+      const result = queueImageResizing({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
         args: { width: 3 },
       })
 
-      setActions({})
-      const result = await queueImageResizing({
+      // Width should be: w = (3 * 136) / 281 = 1.451957295
+      // We expect value to be rounded to 1
+      expect(result.height).toBe(1)
+      expect(actions.createJobV2).toHaveBeenCalledTimes(1)
+      expect(actions.createJobV2).toMatchSnapshot()
+    })
+
+    it(`file name works with spaces & special characters createJobV2`, async () => {
+      // test name encoding with various characters
+      const testName = `spaces and '"@#$%^&,`
+
+      const queueResult = queueImageResizing({
+        file: getFileObject(
+          path.join(__dirname, `images/144-density.png`),
+          testName
+        ),
+        args: { width: 3 },
+      })
+
+      const queueResultName = path.parse(queueResult.src).name
+
+      // decoding to check for outputting same name
+      expect(decodeURIComponent(queueResultName)).toBe(testName)
+
+      // regex for special characters above and spaces
+      // testname should match, the queue result should not
+      expect(testName.match(/[!@#$^&," ]/)).not.toBe(false)
+      expect(queueResultName.match(/[!@#$^&," ]/)).not.toBe(true)
+      expect(actions.createJobV2).toHaveBeenCalledTimes(1)
+      expect(actions.createJobV2).toMatchSnapshot()
+    })
+
+    // re-enable when image processing on demand is implemented
+    it.skip(`should process immediately when asked`, async () => {
+      const result = queueImageResizing({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
         args: { width: 3 },
       })
-      expect(actions.createJobV2).toHaveBeenCalledTimes(1)
-      expect(scheduleJob).toHaveBeenCalledTimes(1)
-      expect(result).toStrictEqual(resultV2)
+
+      await result.finishedPromise
+
+      expect(actions.createJobV2).toMatchSnapshot()
     })
   })
 
@@ -173,7 +133,6 @@ describe(`gatsby-plugin-sharp`, () => {
     beforeEach(() => {
       actions.createJobV2 = jest.fn().mockReturnValue(Promise.resolve())
       setActions(actions)
-      scheduleJob.mockClear()
     })
 
     it(`includes responsive image properties, e.g. sizes, srcset, etc.`, async () => {
@@ -181,26 +140,6 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(actions.createJobV2).toHaveBeenCalledTimes(1)
       expect(result).toMatchSnapshot()
-    })
-
-    it(`includes responsive image properties, e.g. sizes, srcset, etc. with the createJob api`, async () => {
-      setActions({})
-      const result = await fluid({ file })
-
-      expect(actions.createJobV2).not.toHaveBeenCalled()
-      expect(scheduleJob).toHaveBeenCalledTimes(1)
-      expect(result).toMatchSnapshot()
-    })
-
-    it(`should give the same result with createJob as with createJobV2`, async () => {
-      const resultV2 = await fluid({ file })
-
-      setActions({})
-      const result = await fluid({ file })
-      expect(actions.createJobV2).toHaveBeenCalledTimes(1)
-      expect(scheduleJob).toHaveBeenCalledTimes(1)
-      expect(result).toStrictEqual(resultV2)
-      expect(actions.createJobV2).toMatchSnapshot()
     })
 
     it(`adds pathPrefix if defined`, async () => {
@@ -416,23 +355,7 @@ describe(`gatsby-plugin-sharp`, () => {
     beforeEach(() => {
       actions.createJobV2 = jest.fn().mockReturnValue(Promise.resolve())
       setActions(actions)
-      scheduleJob.mockClear()
       console.warn = jest.fn()
-    })
-
-    it(`should give the same result with createJob as with createJobV2`, async () => {
-      const actions = {
-        createJobV2: jest.fn(() => Promise.resolve()),
-      }
-      setActions(actions)
-      const resultV2 = await fixed({ file, args: { width: 1 } })
-
-      setActions({})
-      const result = await fixed({ file, args: { width: 1 } })
-      expect(actions.createJobV2).toHaveBeenCalledTimes(1)
-      expect(scheduleJob).toHaveBeenCalledTimes(1)
-      expect(result).toStrictEqual(resultV2)
-      expect(actions.createJobV2).toMatchSnapshot()
     })
 
     it(`does not warn when the requested width is equal to the image width`, async () => {

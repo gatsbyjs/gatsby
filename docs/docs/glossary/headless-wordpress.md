@@ -7,7 +7,7 @@ Learn what headless WordPress means, how it differs from other ways of using Wor
 
 ### First, what is a Headless CMS?
 
-A [headless CMS](/docs/glossary/what-is-a-headless-cms) is a Content Management System that uses a decoupled architecture to allow it to act as a backend service accessed via an API or SDK. Traditionally, CMS have acted as both the frontend (presentation layer) and backend (content database) for content editing. With a headless implementation, the CMS only acts in the capacity of content editing and the frontend is served by another solution - like Gatsby.
+A [headless CMS](/docs/glossary/headless-cms/) is a Content Management System that uses a decoupled architecture to allow it to act as a backend service accessed via an API or SDK. Traditionally, CMS have acted as both the frontend (presentation layer) and backend (content database) for content editing. With a headless implementation, the CMS only acts in the capacity of content editing and the frontend is served by another solution - like Gatsby.
 
 ## Headless WordPress
 

@@ -6,12 +6,15 @@ import {
   IGatsbyIncompleteJobV2,
   IGatsbyCompleteJobV2,
   IDeleteCacheAction,
+  ISetJobV2Context,
+  IClearJobV2Context,
 } from "../types"
 
 const initialState = (): IGatsbyState["jobsV2"] => {
   return {
     incomplete: new Map(),
     complete: new Map(),
+    jobsByRequest: new Map(),
   }
 }
 
@@ -21,13 +24,25 @@ export const jobsV2Reducer = (
     | ICreateJobV2Action
     | IRemoveStaleJobV2Action
     | IEndJobV2Action
+    | ISetJobV2Context
+    | IClearJobV2Context
     | IDeleteCacheAction
 ): IGatsbyState["jobsV2"] => {
   switch (action.type) {
-    case `DELETE_CACHE`:
-      return (action as IDeleteCacheAction).cacheIsCorrupt
-        ? initialState()
-        : state
+    case `DELETE_CACHE`: {
+      // Wipe the cache if state shape doesn't match the initial shape
+      // It is possible when the old cache is loaded for the new version of this reducer
+      const cleanState = initialState()
+      const cleanStateKeys = Object.keys(cleanState)
+
+      const isOutdatedJobsState =
+        cleanStateKeys.length !== Object.keys(state).length ||
+        cleanStateKeys.some(
+          key => !Object.prototype.hasOwnProperty.call(state, key)
+        )
+
+      return action.cacheIsCorrupt || isOutdatedJobsState ? cleanState : state
+    }
 
     case `CREATE_JOB_V2`: {
       const { job } = action.payload
@@ -68,6 +83,24 @@ export const jobsV2Reducer = (
       state.complete.delete(contentDigest)
 
       return state
+    }
+
+    case `SET_JOB_V2_CONTEXT`: {
+      const { requestId, job } = action.payload
+
+      let jobs = state.jobsByRequest.get(requestId)
+      if (!jobs) {
+        jobs = new Set<string>()
+        state.jobsByRequest.set(requestId, jobs)
+      }
+      jobs.add(job.contentDigest)
+
+      return state
+    }
+
+    case `CLEAR_JOB_V2_CONTEXT`: {
+      const { requestId } = action.payload
+      state.jobsByRequest.delete(requestId)
     }
   }
 

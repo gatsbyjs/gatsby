@@ -594,7 +594,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type Relative implements Node @dontInfer @mimeTypes(types: ["multipart/related"]) {
           id: ID!
         }
-        interface NextGeneration @nodeInterface @childOf(mimeTypes: ["application/listenup", "multipart/related"]) {
+        interface NextGeneration implements Node @childOf(mimeTypes: ["application/listenup", "multipart/related"]) {
           id: ID!
           name: String
         }
@@ -675,10 +675,10 @@ describe(`Define parent-child relationships with field extensions`, () => {
     expect(results).toEqual(expected)
   })
 
-  it(`adds children fields to interfaces with @nodeInterface`, async () => {
+  it(`adds children fields to interfaces with Node interface`, async () => {
     dispatch(
       createTypes(`
-        interface Ancestors @nodeInterface {
+        interface Ancestors implements Node {
           id: ID!
         }
         type Parent implements Node & Ancestors {
@@ -747,10 +747,10 @@ describe(`Define parent-child relationships with field extensions`, () => {
     expect(results).toEqual(expected)
   })
 
-  it(`adds children fields to interfaces with @nodeInterface (mime-type relation)`, async () => {
+  it(`adds children fields to interfaces with Node interface (mime-type relation)`, async () => {
     dispatch(
       createTypes(`
-        interface Ancestors @nodeInterface @mimeTypes(types: ["application/listenup"]) {
+        interface Ancestors implements Node @mimeTypes(types: ["application/listenup"]) {
           id: ID!
         }
         type Parent implements Node & Ancestors @mimeTypes(types: ["application/listenup"]) {
@@ -813,7 +813,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
     expect(results).toEqual(expected)
   })
 
-  it(`does not add children fields to interfaces without @nodeInterface`, async () => {
+  it(`does not add children fields to interfaces without Node interface`, async () => {
     dispatch(
       createTypes(`
         interface Ancestors {
@@ -835,7 +835,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
     )
   })
 
-  it(`does not add children fields from interfaces without @nodeInterface`, async () => {
+  it(`does not add children fields from interfaces without Node interface`, async () => {
     dispatch(
       createTypes(`
         type Parent implements Node {
@@ -852,8 +852,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
     )
     await buildSchema()
     expect(report.error).toBeCalledWith(
-      `The \`childOf\` extension can only be used on interface types that have ` +
-        `the \`@nodeInterface\` extension.\n` +
+      `The \`childOf\` extension can only be used on types that implement the \`Node\` interface.\n` +
         `Check the type definition of \`NextGeneration\`.`
     )
   })

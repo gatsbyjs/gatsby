@@ -1,4 +1,5 @@
-const { downloadContentfulAssets } = require(`../download-contentful-assets`)
+// @ts-check
+import { downloadContentfulAssets } from "../download-contentful-assets"
 
 jest.mock(`gatsby-source-filesystem`, () => {
   return {
@@ -54,7 +55,7 @@ const fixtures = [
   },
 ]
 
-describe.only(`downloadContentfulAssets`, () => {
+describe(`downloadContentfulAssets`, () => {
   it(`derives unique cache key from node locale and id`, async () => {
     const cache = {
       get: jest.fn(() => Promise.resolve(null)),

@@ -15,8 +15,6 @@ const trimPathname = rawPathname => {
   )
     // Remove any hashfragment
     .split(`#`)[0]
-    // Remove search query
-    .split(`?`)[0]
 
   return trimmedPathname
 }
