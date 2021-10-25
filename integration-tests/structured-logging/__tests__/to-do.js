@@ -34,6 +34,11 @@ const collectEventsForDevelop = (events, env = {}, signal = undefined) => {
     },
   })
 
+  let startedPromiseResolve = () => {}
+  const startedPromise = new Promise(resolve => {
+    startedPromiseResolve = resolve
+  })
+
   const finishedPromise = new Promise((resolve, reject) => {
     let listening = true
 
@@ -41,6 +46,7 @@ const collectEventsForDevelop = (events, env = {}, signal = undefined) => {
       if (!listening) {
         return
       }
+      startedPromiseResolve()
 
       events.push(msg)
       // we are ready for tests
@@ -51,8 +57,8 @@ const collectEventsForDevelop = (events, env = {}, signal = undefined) => {
       ) {
         setTimeout(() => {
           listening = false
-          gatsbyProcess.kill(signal)
-          waitChildProcessExit(gatsbyProcess, resolve)
+          gatsbyProcess.kill()
+          waitChildProcessExit(gatsbyProcess, resolve, reject)
         }, 5000)
       }
     })
@@ -60,6 +66,7 @@ const collectEventsForDevelop = (events, env = {}, signal = undefined) => {
 
   return {
     finishedPromise,
+    startedPromise,
     gatsbyProcess,
   }
 }
@@ -304,19 +311,22 @@ describe(`develop`, () => {
       let events = []
 
       beforeAll(done => {
-        const { finishedPromise, gatsbyProcess } = collectEventsForDevelop(
-          events,
-          {},
-          `SIGTERM`
-        )
-        //
-        // setTimeout(() => {
-        //   console.log(`Sending signal!`, gatsbyProcess.pid, gatsbyProcess.kill)
-        //   gatsbyProcess.kill(`SIGTERM`)
-        //   waitChildProcessExit(gatsbyProcess, done)
-        // }, 5000)
+        const { startedPromise, gatsbyProcess } =
+          collectEventsForDevelop(events)
 
-        finishedPromise.then(done)
+        startedPromise.then(() => {
+          setTimeout(() => {
+            // console.debug(
+            //   `Sending signal!`,
+            //   gatsbyProcess.pid,
+            //   gatsbyProcess.killed
+            // )
+            // gatsbyProcess.send({ type: `HEARTBEAT` })
+            const killed = gatsbyProcess.kill(`SIGTERM`)
+            // console.debug(`killed?`, killed, gatsbyProcess.killed)
+            waitChildProcessExit(gatsbyProcess, done, done.fail)
+          }, 5000)
+        })
       })
 
       commonAssertionsForFailure(events)
@@ -366,7 +376,7 @@ describe(`develop`, () => {
 
     afterAll(done => {
       gatsbyProcess.kill()
-      waitChildProcessExit(gatsbyProcess, done)
+      waitChildProcessExit(gatsbyProcess, done, done.fail)
     })
 
     describe(`code change`, () => {
@@ -639,13 +649,13 @@ describe(`build`, () => {
           },
         })
 
-        await new Promise(resolve => {
+        await new Promise((resolve, reject) => {
           gatsbyProcess.on(`message`, msg => {
             events.push(msg)
           })
           setTimeout(() => {
             gatsbyProcess.kill(`SIGTERM`)
-            waitChildProcessExit(gatsbyProcess, resolve)
+            waitChildProcessExit(gatsbyProcess, resolve, reject)
           }, 1000)
         })
       })
@@ -659,17 +669,18 @@ describe(`build`, () => {
   })
 })
 
-function waitChildProcessExit(child, cb, attempt = 0) {
+function waitChildProcessExit(child, resolve, reject, attempt = 0) {
   try {
     child.kill(0) // check if process is still running
-    if (attempt > 20) {
-      throw new Error("Gatsby process hasn't exited in 20 seconds")
+    if (attempt > 15) {
+      reject(new Error("Gatsby process hasn't exited in 15 seconds"))
+      return
     }
     setTimeout(() => {
-      waitChildProcessExit(child, cb, attempt + 1)
+      waitChildProcessExit(child, resolve, reject, attempt + 1)
     }, 1000)
   } catch (e) {
-    cb()
+    resolve()
   }
 }
 
