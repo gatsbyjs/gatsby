@@ -23,7 +23,7 @@ const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
 const defaultStdio = `ignore`
 
-const collectEventsForDevelop = (events, env = {}, signal = undefined) => {
+const collectEventsForDevelop = (events, env = {}) => {
   const gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {
     stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
     env: {
@@ -58,7 +58,7 @@ const collectEventsForDevelop = (events, env = {}, signal = undefined) => {
         setTimeout(() => {
           listening = false
           gatsbyProcess.kill()
-          waitChildProcessExit(gatsbyProcess, resolve, reject)
+          waitChildProcessExit(gatsbyProcess.pid, resolve, reject)
         }, 5000)
       }
     })
@@ -316,20 +316,15 @@ describe(`develop`, () => {
 
         startedPromise.then(() => {
           setTimeout(() => {
-            // console.debug(
-            //   `Sending signal!`,
-            //   gatsbyProcess.pid,
-            //   gatsbyProcess.killed
-            // )
-            // gatsbyProcess.send({ type: `HEARTBEAT` })
-            const killed = gatsbyProcess.kill(`SIGTERM`)
-            // console.debug(`killed?`, killed, gatsbyProcess.killed)
-            waitChildProcessExit(gatsbyProcess, done, done.fail)
+            gatsbyProcess.kill(`SIGTERM`)
+            waitChildProcessExit(gatsbyProcess.pid, done, done.fail)
           }, 5000)
         })
       })
 
       commonAssertionsForFailure(events)
+
+      // Note: this will fail on windows because it doesn't support POSIX signales (i.e. SIGTERM)
       it(`emit final SET_STATUS with INTERRUPTED - last message`, () => {
         const event = last(events)
         expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
@@ -376,7 +371,7 @@ describe(`develop`, () => {
 
     afterAll(done => {
       gatsbyProcess.kill()
-      waitChildProcessExit(gatsbyProcess, done, done.fail)
+      waitChildProcessExit(gatsbyProcess.pid, done, done.fail)
     })
 
     describe(`code change`, () => {
@@ -655,7 +650,7 @@ describe(`build`, () => {
           })
           setTimeout(() => {
             gatsbyProcess.kill(`SIGTERM`)
-            waitChildProcessExit(gatsbyProcess, resolve, reject)
+            waitChildProcessExit(gatsbyProcess.pid, resolve, reject)
           }, 1000)
         })
       })
@@ -669,15 +664,15 @@ describe(`build`, () => {
   })
 })
 
-function waitChildProcessExit(child, resolve, reject, attempt = 0) {
+function waitChildProcessExit(pid, resolve, reject, attempt = 0) {
   try {
-    child.kill(0) // check if process is still running
+    process.kill(pid, 0) // check if process is still running
     if (attempt > 15) {
       reject(new Error("Gatsby process hasn't exited in 15 seconds"))
       return
     }
     setTimeout(() => {
-      waitChildProcessExit(child, resolve, reject, attempt + 1)
+      waitChildProcessExit(pid, resolve, reject, attempt + 1)
     }, 1000)
   } catch (e) {
     resolve()
