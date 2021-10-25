@@ -330,7 +330,7 @@ class LocalNodeModel {
 
   /**
    * Get all nodes in the store, or all nodes of a specified type (optionally with limit/skip).
-   * Returns slice of result as iterable.
+   * Returns slice of result as iterable and total count of nodes.
    *
    * @param {*} args
    * @param {Object} args.query Query arguments (e.g. `limit` and `skip`)
