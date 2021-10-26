@@ -64,6 +64,9 @@ async function worker([url, options]) {
   const response = await got(url, {
     agent,
     cache: false,
+    timeout: {
+      request: 40000,
+    },
     // request: http2wrapper.auto,
     // http2: true,
     ...options,
