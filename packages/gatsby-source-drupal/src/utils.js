@@ -1,3 +1,4 @@
+const { has } = require("lodash")
 const _ = require(`lodash`)
 
 const {
@@ -242,13 +243,19 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
 `
   )
 
-  const { createNode } = actions
+  const { createNode, unstable_createNodeManifest } = actions
 
   const newNode = nodeFromData(
     nodeToUpdate,
     createNodeId,
     pluginOptions.entityReferenceRevisions
   )
+
+  drupalCreateNodeManifest({
+    attributes: nodeToUpdate.attributes,
+    gatsbyNode: newNode,
+    unstable_createNodeManifest,
+  })
 
   const nodesToUpdate = [newNode]
 
@@ -334,6 +341,33 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     node.internal.contentDigest = createContentDigest(node)
     createNode(node)
     reporter.log(`Updated Gatsby node: ${node.id}`)
+  }
+}
+
+let hasLogs = false
+/**
+ * This fn creates node manifests which are used for Gatsby Cloud Previews via the Content Sync API/feature.
+ * Content Sync routes a user from Drupal to a page created from the entry data they're interested in previewing.
+ */
+function drupalCreateNodeManifest({
+  attributes,
+  gatsbyNode,
+  unstable_createNodeManifest,
+}) {
+  if (typeof unstable_createNodeManifest === `function`) {
+    const manifestId = `${attributes.drupal_internal__nid}-${attributes.revision_timestamp}`
+
+    console.info(`Drupal: Creating node manifest with id ${manifestId}`)
+
+    unstable_createNodeManifest({
+      manifestId,
+      node: gatsbyNode,
+    })
+  } else if (!hasLogs) {
+    hasLogs = true
+    console.warn(
+      `Drupal: Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
+    )
   }
 }
 

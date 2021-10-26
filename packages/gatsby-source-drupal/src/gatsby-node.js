@@ -686,6 +686,7 @@ exports.onCreateDevServer = (
             getNode,
             reporter,
             store,
+            unstable_createNodeManifest,
           },
           pluginOptions
         )
