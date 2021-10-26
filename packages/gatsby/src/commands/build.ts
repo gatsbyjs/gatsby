@@ -213,7 +213,17 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   }
 
   // exec outer config function for each template
-  await preparePageTemplateConfigs()
+  const pageConfigActivity = report.activityTimer(`Execute page configs`, {
+    parentSpan: buildSpan,
+  })
+  pageConfigActivity.start()
+  try {
+    await preparePageTemplateConfigs(gatsbyNodeGraphQLFunction)
+  } catch (err) {
+    reporter.panic(err)
+  } finally {
+    pageConfigActivity.end()
+  }
 
   if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
     const validateEnginesActivity = report.activityTimer(

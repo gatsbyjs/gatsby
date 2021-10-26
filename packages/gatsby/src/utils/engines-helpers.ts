@@ -15,5 +15,5 @@ emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {
 })
 emitter.on(`SET_COMPONENT_FEATURES`, (action: ISetComponentFeatures) => {
   if (action.payload.serverData) generate = true
-  // TODO: if (action.payload.config) generate = true
+  if (action.payload.config) generate = true
 })

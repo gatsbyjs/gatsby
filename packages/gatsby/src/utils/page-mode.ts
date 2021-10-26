@@ -7,6 +7,7 @@ import {
 } from "../redux/types"
 import { reportOnce } from "./report-once"
 import { ROUTES_DIRECTORY } from "../constants"
+import { Runner } from "../bootstrap/create-graphql-runner"
 
 type IPageConfigFn = (arg: { params: Record<string, unknown> }) => {
   defer: boolean
@@ -42,8 +43,13 @@ function resolvePageMode(
   } else if (component.config) {
     const pageConfigFn = pageConfigMap.get(page.componentChunkName)
     if (!pageConfigFn) {
-      console.error({ page, component, pageConfigFn, pageConfigMap })
-      throw new Error(`There should be config, but we can't use it yet`)
+      // This is possible in warm builds when `component.config` was persisted but
+      // `preparePageTemplateConfigs` hasn't been executed yet
+      // TODO: if we move `mode` away from page and persist it in the state separately,
+      //  we can just return the old `mode` that should be in sync with `component.config`
+      // console.error({ page, component, pageConfigFn, pageConfigMap })
+      // throw new Error(`There should be config, but we can't use it yet`)
+      return `SSG`
     }
 
     const fsRouteParams = (
@@ -110,7 +116,9 @@ export async function materializePageMode(): Promise<void> {
   }
 }
 
-export async function preparePageTemplateConfigs(): Promise<void> {
+export async function preparePageTemplateConfigs(
+  graphql: Runner
+): Promise<void> {
   const { program } = store.getState()
   const pageRendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
 
@@ -122,7 +130,9 @@ export async function preparePageTemplateConfigs(): Promise<void> {
         const componentInstance = await pageRenderer.getPageChunk({
           componentChunkName: component.componentChunkName,
         })
-        const pageConfigFn = await componentInstance.config()
+        const pageConfigFn = await componentInstance.config({
+          graphql,
+        })
         if (typeof pageConfigFn !== `function`) {
           throw new Error(
             `Unexpected result of config factory. Expected "function", got "${typeof pageConfigFn}".`
