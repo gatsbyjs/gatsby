@@ -15,7 +15,11 @@ import { GraphQLRunner } from "./graphql-runner"
 import { IExecutionResult, PageContext } from "./types"
 import { pageDataExists, savePageQueryResult } from "../utils/page-data"
 
-const resultHashes = new Map()
+const GatsbyCacheLmdbImpl = require(`../utils/cache-lmdb`).default
+const resultHashCache = new GatsbyCacheLmdbImpl({
+  name: `query-result-hashes`,
+  encoding: `string`,
+}).init()
 
 export interface IQueryJob {
   id: string
@@ -172,11 +176,11 @@ export async function queryRunner(
     .digest(`base64`)
 
   if (
-    resultHash !== resultHashes.get(queryJob.id) ||
+    resultHash !== (await resultHashCache.get(queryJob.id)) ||
     (queryJob.isPage &&
       !pageDataExists(path.join(program.directory, `public`), queryJob.id))
   ) {
-    resultHashes.set(queryJob.id, resultHash)
+    resultHashCache.set(queryJob.id, resultHash)
 
     if (queryJob.isPage) {
       // We need to save this temporarily in cache because
