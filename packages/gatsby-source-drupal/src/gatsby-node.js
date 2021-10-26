@@ -262,7 +262,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
     // lastFetched isn't set so do a full rebuild.
     if (!lastFetched) {
-      setPluginStatus({ lastFetched: new Date().getTime() })
+      setPluginStatus({ lastFetched: Math.floor(new Date().getTime() / 1000) })
       requireFullRebuild = true
     } else {
       const drupalFetchIncrementalActivity = reporter.activityTimer(
