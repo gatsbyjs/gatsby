@@ -16,7 +16,7 @@ type Reporter = typeof reporter
 
 const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
 const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
-const cacheLocation = path.join(process.cwd(), `.cache`, `caches`, `page-ssr`)
+const cacheLocation = path.join(process.cwd(), `.cache`, `webpack`, `page-ssr`)
 
 export async function writeQueryContext({
   staticQueriesByTemplate,

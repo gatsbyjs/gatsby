@@ -16,7 +16,7 @@ const outputDir = path.join(process.cwd(), `.cache`, `query-engine`)
 const cacheLocation = path.join(
   process.cwd(),
   `.cache`,
-  `caches`,
+  `webpack`,
   `query-engine`
 )
 
