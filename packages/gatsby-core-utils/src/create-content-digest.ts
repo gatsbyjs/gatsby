@@ -27,24 +27,7 @@ export const createContentDigest = (
   input: BinaryLike | string | any
 ): string => {
   if (typeof input === `object` && !Buffer.isBuffer(input)) {
-    if (`internal` in input) {
-      return hasher.hash({
-        ...input,
-        internal: {
-          ...input.internal,
-          // Remove auto-generated fields that'd prevent
-          // creating a consistent contentDigest.
-          contentDigest: undefined,
-          owner: undefined,
-          fieldOwners: undefined,
-          ignoreType: undefined,
-          counter: undefined,
-        },
-        fields: undefined,
-      })
-    } else {
-      return hasher.hash(input)
-    }
+    return hasher.hash(input)
   }
 
   return hashPrimitive(input)
