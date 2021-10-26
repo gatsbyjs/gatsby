@@ -49,6 +49,12 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(
         `Additionally generate WebP versions alongside your chosen file format. They are added as a srcset with the appropriate mimetype and will be loaded in browsers that support the format. Pass true for default support, or an object of options to specifically override those for the WebP files. For example, pass { quality: 80 } to have the WebP images be at quality level 80.`
       ),
+    withAvif: Joi.alternatives()
+      .try(Joi.object({ quality: Joi.number() }), Joi.boolean())
+      .default(false)
+      .description(
+        `Additionally generate AVIF versions alongside your chosen file format. They are added as a srcset with the appropriate mimetype and will be loaded in browsers that support the format. Pass true for default support, or an object of options to specifically override those for the AVIF files. For example, pass { quality: 80 } to have the AVIF images be at quality level 80.`
+      ),
     tracedSVG: Joi.alternatives()
       .try(
         Joi.boolean(),

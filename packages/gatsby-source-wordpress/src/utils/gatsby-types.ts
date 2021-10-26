@@ -9,6 +9,7 @@ export type GatsbyNodeApiHelpers = NodePluginArgs & {
     context: any
     updatedAt: number
   }
+  refetchAll?: boolean
 }
 export type GatsbyHelpers = GatsbyNodeApiHelpers
 export type GatsbyReporter = Reporter

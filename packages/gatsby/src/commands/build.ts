@@ -107,6 +107,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     parentSpan: buildSpan,
   })
 
+  await apiRunnerNode(`onPreBuild`, {
+    graphql: gatsbyNodeGraphQLFunction,
+    parentSpan: buildSpan,
+  })
+
   // writes sync and async require files to disk
   // used inside routing "html" + "javascript"
   await writeOutRequires({
@@ -292,11 +297,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     })
   }
 
-  await apiRunnerNode(`onPreBuild`, {
-    graphql: gatsbyNodeGraphQLFunction,
-    parentSpan: buildSpan,
-  })
-
   // Copy files from the static directory to
   // an equivalent static directory within public.
   copyStaticDirs()
@@ -380,10 +380,28 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   await waitMaterializePageMode
   const waitWorkerPoolEnd = Promise.all(workerPool.end())
 
-  telemetry.addSiteMeasurement(`BUILD_END`, {
-    pagesCount: toRegenerate.length, // number of html files that will be written
-    totalPagesCount: store.getState().pages.size, // total number of pages
-  })
+  {
+    let SSGCount = 0
+    let DSGCount = 0
+    let SSRCount = 0
+    for (const page of store.getState().pages.values()) {
+      if (page.mode === `SSR`) {
+        SSRCount++
+      } else if (page.mode === `DSG`) {
+        DSGCount++
+      } else {
+        SSGCount++
+      }
+    }
+
+    telemetry.addSiteMeasurement(`BUILD_END`, {
+      pagesCount: toRegenerate.length, // number of html files that will be written
+      totalPagesCount: store.getState().pages.size, // total number of pages
+      SSRCount,
+      DSGCount,
+      SSGCount,
+    })
+  }
 
   const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {
     parentSpan: buildSpan,

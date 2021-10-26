@@ -1,4 +1,4 @@
-import { RootDatabase, open } from "lmdb-store"
+import { RootDatabase, open, ArrayLikeIterable } from "lmdb-store"
 // import { performance } from "perf_hooks"
 import { ActionsUnion, IGatsbyNode } from "../../redux/types"
 import { updateNodes } from "./updates/nodes"
@@ -26,6 +26,8 @@ const lmdbDatastore = {
   getNodes,
   getNodesByType,
 }
+
+const preSyncDeletedNodeIdsCache = new Set()
 
 function getDefaultDbPath(): string {
   const dbFileName =
@@ -122,10 +124,8 @@ function iterateNodes(): GatsbyIterable<IGatsbyNode> {
   return new GatsbyIterable(
     nodesDb
       .getKeys({ snapshot: false })
-      .map(
-        nodeId => (typeof nodeId === `string` ? getNode(nodeId) : undefined)!
-      )
-      .filter(Boolean)
+      .map(nodeId => (typeof nodeId === `string` ? getNode(nodeId) : undefined))
+      .filter(Boolean) as ArrayLikeIterable<IGatsbyNode>
   )
 }
 
@@ -134,13 +134,16 @@ function iterateNodesByType(type: string): GatsbyIterable<IGatsbyNode> {
   return new GatsbyIterable(
     nodesByType
       .getValues(type)
-      .map(nodeId => getNode(nodeId)!)
-      .filter(Boolean)
+      .map(nodeId => getNode(nodeId))
+      .filter(Boolean) as ArrayLikeIterable<IGatsbyNode>
   )
 }
 
 function getNode(id: string): IGatsbyNode | undefined {
-  if (!id) return undefined
+  if (!id || preSyncDeletedNodeIdsCache.has(id)) {
+    return undefined
+  }
+
   const { nodes } = getDatabases()
   return nodes.get(id)
 }
@@ -151,9 +154,11 @@ function getTypes(): Array<string> {
 
 function countNodes(typeName?: string): number {
   if (!typeName) {
-    const stats = getDatabases().nodes.getStats()
-    // @ts-ignore
-    return Number(stats.entryCount || 0) // FIXME: add -1 when restoring shared structures key
+    const stats = getDatabases().nodes.getStats() as { entryCount: number }
+    return Math.max(
+      Number(stats.entryCount) - preSyncDeletedNodeIdsCache.size,
+      0
+    ) // FIXME: add -1 when restoring shared structures key
   }
 
   const { nodesByType } = getDatabases()
@@ -192,15 +197,31 @@ function updateDataStore(action: ActionsUnion): void {
       break
     }
     case `CREATE_NODE`:
+    case `DELETE_NODE`:
     case `ADD_FIELD_TO_NODE`:
     case `ADD_CHILD_NODE_TO_PARENT_NODE`:
-    case `DELETE_NODE`:
     case `MATERIALIZE_PAGE_MODE`: {
       const dbs = getDatabases()
-      lastOperationPromise = Promise.all([
+      const operationPromise = Promise.all([
         updateNodes(dbs.nodes, action),
         updateNodesByType(dbs.nodesByType, action),
       ])
+      lastOperationPromise = operationPromise
+
+      // if create is used in the same transaction as delete we should remove it from cache
+      if (action.type === `CREATE_NODE`) {
+        preSyncDeletedNodeIdsCache.delete(action.payload.id)
+      }
+
+      if (action.type === `DELETE_NODE` && action.payload?.id) {
+        preSyncDeletedNodeIdsCache.add(action.payload.id)
+        operationPromise.then(() => {
+          // only clear if no other operations have been done in the meantime
+          if (lastOperationPromise === operationPromise) {
+            preSyncDeletedNodeIdsCache.clear()
+          }
+        })
+      }
     }
   }
 }

@@ -403,25 +403,33 @@ export function link<TSource, TArgs>(
       }
     }
 
-    const resultOrPromise = context.nodeModel.runQuery(
-      {
-        query: runQueryArgs,
-        firstOnly,
-        type,
-        stats: context.stats,
-        tracer: context.tracer,
-      },
-      { path: context.path }
-    )
-
-    // Note: for this function, at scale, conditional .then is more efficient than generic await
-    if (typeof resultOrPromise?.then === `function`) {
-      return resultOrPromise.then(result =>
-        linkResolverQueryResult(fieldValue, result, returnType)
-      )
+    if (firstOnly) {
+      return context.nodeModel
+        .findOne(
+          {
+            query: runQueryArgs,
+            type,
+            stats: context.stats,
+            tracer: context.tracer,
+          },
+          { path: context.path }
+        )
+        .then(result => linkResolverQueryResult(fieldValue, result, returnType))
     }
 
-    return linkResolverQueryResult(fieldValue, resultOrPromise, returnType)
+    return context.nodeModel
+      .findAll(
+        {
+          query: runQueryArgs,
+          type,
+          stats: context.stats,
+          tracer: context.tracer,
+        },
+        { path: context.path }
+      )
+      .then(({ entries }) =>
+        linkResolverQueryResult(fieldValue, Array.from(entries), returnType)
+      )
   }
 
   function linkResolverQueryResult(
@@ -492,7 +500,7 @@ export function fileByPath<TSource, TArgs>(
     }
 
     function queryNodeByPath(relPath: string): Promise<IGatsbyNode> {
-      return context.nodeModel.runQuery({
+      return context.nodeModel.findOne({
         query: {
           filter: {
             absolutePath: {
@@ -500,7 +508,6 @@ export function fileByPath<TSource, TArgs>(
             },
           },
         },
-        firstOnly: true,
         type: `File`,
       })
     }
