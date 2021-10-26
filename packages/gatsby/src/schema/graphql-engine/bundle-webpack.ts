@@ -47,7 +47,7 @@ export async function createGraphqlEngineBundle(
     },
     cache: {
       type: `filesystem`,
-      name: `query-engine`,
+      name: `graphql-engine`,
       cacheLocation,
       buildDependencies: {
         config: [__filename],
