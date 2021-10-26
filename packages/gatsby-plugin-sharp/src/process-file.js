@@ -65,7 +65,6 @@ exports.processFile = async (file, transforms, options = {}) => {
     if (!options.stripMetadata) {
       pipeline = pipeline.withMetadata()
     }
-    fs.createReadStream(file).pipe(pipeline)
   } catch (err) {
     throw new SharpError(`Failed to load image ${file} into sharp.`, err)
   }
