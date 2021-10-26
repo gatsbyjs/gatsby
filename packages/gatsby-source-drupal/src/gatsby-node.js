@@ -12,6 +12,8 @@ const { setOptions, getOptions } = require(`./plugin-options`)
 
 const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
 const {
+  initRefsLookups,
+  storeRefsLookups,
   handleReferences,
   handleWebhookUpdate,
   handleDeletedNode,
@@ -154,6 +156,8 @@ exports.sourceNodes = async (
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
 
+  await initRefsLookups({ cache, getNode })
+
   // Update the concurrency limit from the plugin options
   requestQueue.concurrency = concurrentAPIRequests
 
@@ -206,6 +210,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
         }
 
         changesActivity.end()
+        await storeRefsLookups({ cache })
         return
       }
 
@@ -236,6 +241,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
       return
     }
     changesActivity.end()
+    await storeRefsLookups({ cache })
     return
   }
 
@@ -370,6 +376,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
         drupalFetchIncrementalActivity.end()
         fastBuildsSpan.finish()
+        await storeRefsLookups({ cache })
         return
       }
 
@@ -380,6 +387,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
       initialSourcing = false
 
       if (!requireFullRebuild) {
+        await storeRefsLookups({ cache })
         return
       }
     }
@@ -643,6 +651,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
   initialSourcing = false
 
   createNodesSpan.finish()
+  await storeRefsLookups({ cache, getNodes })
   return
 }
 

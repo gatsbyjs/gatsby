@@ -35,15 +35,12 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
   })
 }
 
-exports.onPostBuild = async (
-  { store, pathPrefix, getNodesByType },
-  userPluginOptions
-) => {
-  const pluginData = makePluginData(store, assetsManifest, pathPrefix)
-
+exports.onPostBuild = async ({ store, getNodesByType }, userPluginOptions) => {
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
   const { redirects, pageDataStats, nodes, pages } = store.getState()
+
+  const pluginData = makePluginData(store, assetsManifest)
 
   /**
    * Emit via IPC routes for which pages are non SSG
