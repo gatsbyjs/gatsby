@@ -272,6 +272,9 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
       drupalFetchIncrementalActivity.start()
 
+      console.log(
+        urlJoin(baseUrl, `gatsby-fastbuilds/sync/`, lastFetched.toString())
+      )
       try {
         // Hit fastbuilds endpoint with the lastFetched date.
         const res = await requestQueue.push([
