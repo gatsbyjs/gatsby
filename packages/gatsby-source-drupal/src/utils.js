@@ -28,15 +28,17 @@ const initRefsLookups = async ({ cache }) => {
 exports.initRefsLookups = initRefsLookups
 
 const storeRefsLookups = async ({ cache }) => {
+  const backRefsNamesLookupStr = JSON.stringify(
+    Array.from(backRefsNamesLookup.entries())
+  )
+
+  const referencedNodesLookupStr = JSON.stringify(
+    Array.from(referencedNodesLookup.entries())
+  )
+
   await Promise.all([
-    cache.set(
-      `backRefsNamesLookup`,
-      JSON.stringify(Array.from(backRefsNamesLookup.entries()))
-    ),
-    cache.set(
-      `referencedNodesLookup`,
-      JSON.stringify(Array.from(referencedNodesLookup.entries()))
-    ),
+    cache.set(`backRefsNamesLookup`, backRefsNamesLookupStr),
+    cache.set(`referencedNodesLookup`, referencedNodesLookupStr),
   ])
 }
 
@@ -229,7 +231,10 @@ const handleDeletedNode = async ({
         if (node.fields) {
           delete node.fields
         }
-        node.internal.contentDigest = createContentDigest(node)
+        node.internal.contentDigest = createContentDigest({
+          ...node,
+          internal: null,
+        })
         actions.createNode(node)
       }
     })
@@ -355,17 +360,26 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
   }
 
   for (const node of nodesToUpdate) {
-    if (node.internal.owner) {
-      delete node.internal.owner
+    const oldNode = getNode(node.id)
+    const oldDigest = oldNode.internal.contentDigest
+    node.internal.contentDigest = createContentDigest({
+      ...node,
+      internal: null,
+    })
+
+    if (oldDigest !== node.internal.contentDigest) {
+      if (node.internal.owner) {
+        delete node.internal.owner
+      }
+      if (node.fields) {
+        delete node.fields
+      }
+
+      createNode(node)
+      reporter.log(
+        `Updated Gatsby node: id: ${node.id} — type: ${node.internal.type}`
+      )
     }
-    if (node.fields) {
-      delete node.fields
-    }
-    node.internal.contentDigest = createContentDigest(node)
-    createNode(node)
-    reporter.log(
-      `Updated Gatsby node: id: ${node.id} — type: ${node.internal.type}`
-    )
   }
 }
 

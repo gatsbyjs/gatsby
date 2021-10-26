@@ -27,7 +27,7 @@ export const createContentDigest = (
   input: BinaryLike | string | any
 ): string => {
   if (typeof input === `object` && !Buffer.isBuffer(input)) {
-    return hasher.hash(input)
+    return hasher.hash({ ...input, internal: null })
   }
 
   return hashPrimitive(input)
