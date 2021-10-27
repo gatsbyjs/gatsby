@@ -22,6 +22,10 @@ import {
   VariableDeclarator,
   SourceLocation,
   Expression,
+  ExportNamedDeclaration,
+  isFunctionDeclaration,
+  isVariableDeclaration,
+  isIdentifier,
 } from "@babel/types"
 
 interface ISourcePosition {
@@ -511,6 +515,7 @@ export default function ({ types: t }): PluginObj {
         })
 
         // Run it again to remove non-staticquery versions
+        let keepImport = false
         path.traverse({
           TaggedTemplateExpression(path2: NodePath<TaggedTemplateExpression>) {
             const { ast, hash, isGlobal } = getGraphQLTag(path2)
@@ -528,24 +533,48 @@ export default function ({ types: t }): PluginObj {
             if (potentialExportPath?.isExportNamedDeclaration()) {
               potentialExportPath.replaceWith(path2.parentPath.parentPath)
             }
-
+            // Keep the `graphql` tag (and related import) in place for function config() {}
+            if (isWithinConfigExport(path2)) {
+              keepImport = true
+              return null
+            }
             const tag = path2.get(`tag`)
             if (!isGlobal) {
               // Enqueue import removal. If we would remove it here, subsequent named exports
               // wouldn't be handled properly
               tagsToRemoveImportsFrom.add(tag)
             }
-
-            // Replace the query with the hash of the query.
             path2.replaceWith(t.StringLiteral(queryHash))
             return null
           },
         })
-
-        tagsToRemoveImportsFrom.forEach(removeImport)
+        if (!keepImport) {
+          tagsToRemoveImportsFrom.forEach(removeImport)
+        }
       },
     },
   }
+}
+
+function isWithinConfigExport(
+  path: NodePath<TaggedTemplateExpression>
+): boolean {
+  const parentExport = path.findParent(parent =>
+    parent.isExportNamedDeclaration()
+  ) as NodePath<ExportNamedDeclaration> | null
+
+  const declaration = parentExport?.node?.declaration
+
+  if (isFunctionDeclaration(declaration)) {
+    return declaration.id?.name === `config`
+  }
+  if (
+    isVariableDeclaration(declaration) &&
+    isIdentifier(declaration.declarations[0]?.id)
+  ) {
+    return declaration.declarations[0]?.id?.name === `config`
+  }
+  return false
 }
 
 export {
@@ -553,5 +582,6 @@ export {
   StringInterpolationNotAllowedError,
   EmptyGraphQLTagError,
   GraphQLSyntaxError,
+  isWithinConfigExport,
   murmurhash,
 }

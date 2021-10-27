@@ -89,7 +89,13 @@ StaticQuery.propTypes = {
   children: PropTypes.func,
 }
 
-function graphql() {
+function graphql(strings) {
+  if (
+    process.env.BUILD_STAGE === `build-html` ||
+    process.env.BUILD_STAGE === `develop-html`
+  ) {
+    return strings.raw[0]
+  }
   throw new Error(
     `It appears like Gatsby is misconfigured. Gatsby related \`graphql\` calls ` +
       `are supposed to only be evaluated at compile time, and then compiled away. ` +

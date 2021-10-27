@@ -131,7 +131,7 @@ export async function preparePageTemplateConfigs(
           componentChunkName: component.componentChunkName,
         })
         const pageConfigFn = await componentInstance.config({
-          graphql,
+          query: graphql,
         })
         if (typeof pageConfigFn !== `function`) {
           throw new Error(

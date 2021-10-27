@@ -465,4 +465,33 @@ describe(`babel-plugin-remove-graphql-queries`, () => {
   \`
   `)
   })
+
+  it(`Doesn't remove graphql query from config`, () => {
+    matchesSnapshot(`
+  import * as React from 'react'
+  import { graphql } from "gatsby"
+
+  const Test = () => (
+    <div></div>
+  )
+
+  export default Test
+
+  export async function config() {
+    const data = await graphql\`{ __typename }\`
+
+    return () => {
+      return {
+        defer: true
+      }
+    }
+  }
+
+  export const fragment = graphql\`
+    fragment MarkdownNodeFragment on MarkdownRemark {
+      html
+    }
+  \`
+  `)
+  })
 })
