@@ -122,7 +122,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     process.exit(0)
   })
 
-  initTracer(
+  await initTracer(
     process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
   )
   markWebpackStatusAsPending()
