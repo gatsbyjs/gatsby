@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.0.1](https://github.com/gatsbyjs/gatsby/commits/HEAD/packages/gatsby-plugin-sharp) (2021-10-27)
+
+#### Bug Fixes
+
+- pass input buffer instead of readStream when processing image jobs [#33685](https://github.com/gatsbyjs/gatsby/issues/33685) [#33694](https://github.com/gatsbyjs/gatsby/issues/33694) ([9b3d44f](https://github.com/gatsbyjs/gatsby/commit/9b3d44fd50185bddd7b74b7c1bdfadd774b81db5))
+
 ## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/HEAD/packages/gatsby-plugin-sharp) (2021-10-21)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
