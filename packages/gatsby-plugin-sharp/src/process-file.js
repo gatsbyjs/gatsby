@@ -53,122 +53,126 @@ sharp.concurrency(1)
  * @param {String} file
  * @param {Transform[]} transforms
  */
-exports.processFile = (file, transforms, options = {}) => {
+exports.processFile = async (file, transforms, options = {}) => {
   let pipeline
   try {
-    pipeline = !options.failOnError ? sharp({ failOnError: false }) : sharp()
+    const inputBuffer = await fs.readFile(file)
+    pipeline = !options.failOnError
+      ? sharp(inputBuffer, { failOnError: false })
+      : sharp(inputBuffer)
 
     // Keep Metadata
     if (!options.stripMetadata) {
       pipeline = pipeline.withMetadata()
     }
-    fs.createReadStream(file).pipe(pipeline)
   } catch (err) {
     throw new SharpError(`Failed to load image ${file} into sharp.`, err)
   }
 
-  return transforms.map(async transform => {
-    try {
-      const { outputPath, args } = transform
-      debug(`Start processing ${outputPath}`)
-      await fs.ensureDir(path.dirname(outputPath))
-
-      const transformArgs = healOptions(
-        { defaultQuality: options.defaultQuality },
-        args
-      )
-
-      let clonedPipeline = transforms.length > 1 ? pipeline.clone() : pipeline
-
-      if (transformArgs.trim) {
-        clonedPipeline = clonedPipeline.trim(transformArgs.trim)
-      }
-
-      if (!transformArgs.rotate) {
-        clonedPipeline = clonedPipeline.rotate()
-      }
-
-      // Sharp only allows ints as height/width. Since both aren't always
-      // set, check first before trying to round them.
-      let roundedHeight = transformArgs.height
-      if (roundedHeight) {
-        roundedHeight = Math.round(roundedHeight)
-      }
-
-      let roundedWidth = transformArgs.width
-      if (roundedWidth) {
-        roundedWidth = Math.round(roundedWidth)
-      }
-
-      clonedPipeline
-        .resize(roundedWidth, roundedHeight, {
-          position: transformArgs.cropFocus,
-          fit: transformArgs.fit,
-          background: transformArgs.background,
-        })
-        .png({
-          compressionLevel: transformArgs.pngCompressionLevel,
-          adaptiveFiltering: false,
-          quality: transformArgs.pngQuality || transformArgs.quality,
-          force: transformArgs.toFormat === `png`,
-        })
-        .webp({
-          quality: transformArgs.webpQuality || transformArgs.quality,
-          force: transformArgs.toFormat === `webp`,
-        })
-        .tiff({
-          quality: transformArgs.quality,
-          force: transformArgs.toFormat === `tiff`,
-        })
-        .avif({
-          quality: transformArgs.quality,
-          force: transformArgs.toFormat === `avif`,
-        })
-        .jpeg({
-          mozjpeg: options.useMozJpeg,
-          quality: transformArgs.jpegQuality || transformArgs.quality,
-          progressive: transformArgs.jpegProgressive,
-          force: transformArgs.toFormat === `jpg`,
-        })
-
-      // grayscale
-      if (transformArgs.grayscale) {
-        clonedPipeline = clonedPipeline.grayscale()
-      }
-
-      // rotate
-      if (transformArgs.rotate && transformArgs.rotate !== 0) {
-        clonedPipeline = clonedPipeline.rotate(transformArgs.rotate)
-      }
-
-      // duotone
-      if (transformArgs.duotone) {
-        clonedPipeline = await duotone(
-          transformArgs.duotone,
-          transformArgs.toFormat,
-          clonedPipeline
-        )
-      }
-
+  return Promise.all(
+    transforms.map(async transform => {
       try {
-        const buffer = await clonedPipeline.toBuffer()
-        await fs.writeFile(outputPath, buffer)
-      } catch (err) {
-        throw new Error(
-          `Failed to write ${file} into ${outputPath}. (${err.message})`
+        const { outputPath, args } = transform
+        debug(`Start processing ${outputPath}`)
+        await fs.ensureDir(path.dirname(outputPath))
+
+        const transformArgs = healOptions(
+          { defaultQuality: options.defaultQuality },
+          args
         )
-      }
-    } catch (err) {
-      if (err instanceof SharpError) {
-        // rethrow
-        throw err
+
+        let clonedPipeline = transforms.length > 1 ? pipeline.clone() : pipeline
+
+        if (transformArgs.trim) {
+          clonedPipeline = clonedPipeline.trim(transformArgs.trim)
+        }
+
+        if (!transformArgs.rotate) {
+          clonedPipeline = clonedPipeline.rotate()
+        }
+
+        // Sharp only allows ints as height/width. Since both aren't always
+        // set, check first before trying to round them.
+        let roundedHeight = transformArgs.height
+        if (roundedHeight) {
+          roundedHeight = Math.round(roundedHeight)
+        }
+
+        let roundedWidth = transformArgs.width
+        if (roundedWidth) {
+          roundedWidth = Math.round(roundedWidth)
+        }
+
+        clonedPipeline
+          .resize(roundedWidth, roundedHeight, {
+            position: transformArgs.cropFocus,
+            fit: transformArgs.fit,
+            background: transformArgs.background,
+          })
+          .png({
+            compressionLevel: transformArgs.pngCompressionLevel,
+            adaptiveFiltering: false,
+            quality: transformArgs.pngQuality || transformArgs.quality,
+            force: transformArgs.toFormat === `png`,
+          })
+          .webp({
+            quality: transformArgs.webpQuality || transformArgs.quality,
+            force: transformArgs.toFormat === `webp`,
+          })
+          .tiff({
+            quality: transformArgs.quality,
+            force: transformArgs.toFormat === `tiff`,
+          })
+          .avif({
+            quality: transformArgs.quality,
+            force: transformArgs.toFormat === `avif`,
+          })
+          .jpeg({
+            mozjpeg: options.useMozJpeg,
+            quality: transformArgs.jpegQuality || transformArgs.quality,
+            progressive: transformArgs.jpegProgressive,
+            force: transformArgs.toFormat === `jpg`,
+          })
+
+        // grayscale
+        if (transformArgs.grayscale) {
+          clonedPipeline = clonedPipeline.grayscale()
+        }
+
+        // rotate
+        if (transformArgs.rotate && transformArgs.rotate !== 0) {
+          clonedPipeline = clonedPipeline.rotate(transformArgs.rotate)
+        }
+
+        // duotone
+        if (transformArgs.duotone) {
+          clonedPipeline = await duotone(
+            transformArgs.duotone,
+            transformArgs.toFormat,
+            clonedPipeline
+          )
+        }
+
+        try {
+          const buffer = await clonedPipeline.toBuffer()
+          await fs.writeFile(outputPath, buffer)
+        } catch (err) {
+          throw new Error(
+            `Failed to write ${file} into ${outputPath}. (${err.message})`
+          )
+        }
+      } catch (err) {
+        if (err instanceof SharpError) {
+          // rethrow
+          throw err
+        }
+
+        throw new SharpError(`Processing ${file} failed`, err)
       }
 
-      throw new SharpError(`Processing ${file} failed`, err)
-    }
-
-    return transform
-  })
+      return transform
+    })
+  )
 }
 
 exports.createArgsDigest = args => {

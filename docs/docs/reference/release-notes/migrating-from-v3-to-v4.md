@@ -371,8 +371,45 @@ const count = await totalCount()
 ```
 
 If you don't pass `limit` and `skip`, `findAll` returns all nodes in `{ entries }` iterable.
-Check out the [source code of GatsbyIterable](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/datastore/common/iterable.ts)
+Check out the [source code of `GatsbyIterable`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/datastore/common/iterable.ts)
 for usage.
+
+The `GatsbyIterable` has some convenience methods similar to arrays, namely: `concat`, `map`, `filter`, `slice`, `deduplicate`, `forEach`, `mergeSorted`, `intersectSorted`, and `deduplicateSorted`. You can use these instead of first creating an array from `entries` (with `Array.from(entries)`) which should be faster for larger datasets.
+
+Furthermore, you can directly return `entries` in GraphQL resolvers.
+
+```js
+// Example: Directly return `entries`
+resolve: async (source, args, context, info) => {
+  const { entries } = await context.nodeModel.findAll({
+    query: {
+      filter: {
+        frontmatter: {
+          author: { eq: source.email },
+          date: { gt: "2019-01-01" },
+        },
+      },
+    },
+    type: "MarkdownRemark",
+  })
+  return entries
+}
+
+// Example: Use .filter on the iterable
+resolve: async (source, args, context, info) => {
+  const { entries } = await context.nodeModel.findAll({ type: `BlogPost` })
+  return entries.filter(post => post.publishedAt > Date.UTC(2018, 0, 1))
+}
+
+// Example: Convert to array to use methods not available on iterable
+resolve: async (source, args, context, info) => {
+  const { entries } = await context.nodeModel.findAll({
+    type: "MarkdownRemark",
+  })
+  const posts = entries.filter(post => post.frontmatter.author === source.email)
+  return Array.from(posts).length
+}
+```
 
 ### `nodeModel.getAllNodes` is deprecated
 
@@ -462,6 +499,16 @@ If your plugin supports both versions:
   "peerDependencies": {
 -   "gatsby": "^2.32.0",
 +   "gatsby": "^3.0.0 || ^4.0.0",
+  }
+}
+```
+
+If you defined the `engines` key you'll also need to update the minimum version:
+
+```json:title=package.json
+{
+  "engines": {
+    "node": ">=14.15.0"
   }
 }
 ```

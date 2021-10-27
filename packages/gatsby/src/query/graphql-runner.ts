@@ -24,6 +24,13 @@ import GraphQLSpanTracer from "./graphql-span-tracer"
 
 type Query = string | Source
 
+export interface IQueryOptions {
+  parentSpan: Span | undefined
+  queryName: string
+  componentPath?: string | undefined
+  forceGraphqlTracing?: boolean
+}
+
 export interface IGraphQLRunnerOptions {
   collectStats?: boolean
   graphqlTracing?: boolean
@@ -145,11 +152,8 @@ export class GraphQLRunner {
       parentSpan,
       queryName,
       componentPath,
-    }: {
-      parentSpan: Span | undefined
-      queryName: string
-      componentPath?: string | undefined
-    }
+      forceGraphqlTracing = false,
+    }: IQueryOptions
   ): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
 
@@ -191,7 +195,7 @@ export class GraphQLRunner {
     }
 
     let tracer
-    if (this.graphqlTracing && parentSpan) {
+    if ((this.graphqlTracing || forceGraphqlTracing) && parentSpan) {
       tracer = new GraphQLSpanTracer(`GraphQL Query`, {
         parentSpan,
         tags: {
