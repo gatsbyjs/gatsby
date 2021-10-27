@@ -266,10 +266,9 @@ module.exports = async (program: IServeProgram): Promise<void> => {
                   res.setHeader(name, value)
                 }
               }
-              requestActivity.end()
+
               return void res.send(results)
             } catch (e) {
-              requestActivity.end()
               report.error(
                 `Generating page-data for "${requestedPagePath}" / "${potentialPagePath}" failed.`,
                 e
@@ -278,6 +277,8 @@ module.exports = async (program: IServeProgram): Promise<void> => {
                 .status(500)
                 .contentType(`text/plain`)
                 .send(`Internal server error.`)
+            } finally {
+              requestActivity.end()
             }
           }
 
@@ -311,10 +312,9 @@ module.exports = async (program: IServeProgram): Promise<void> => {
                   res.setHeader(name, value)
                 }
               }
-              requestActivity.end()
+
               return res.send(results)
             } catch (e) {
-              requestActivity.end()
               report.error(
                 `Rendering html for "${potentialPagePath}" failed.`,
                 e
@@ -324,6 +324,8 @@ module.exports = async (program: IServeProgram): Promise<void> => {
                   res.contentType(`text/plain`).send(`Internal server error.`)
                 }
               })
+            } finally {
+              requestActivity.end()
             }
           }
         }
