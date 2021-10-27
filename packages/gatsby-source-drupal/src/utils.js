@@ -361,9 +361,7 @@ function drupalCreateNodeManifest({
   if (typeof unstable_createNodeManifest === `function` && isPreview) {
     const manifestId = `${attributes.drupal_internal__nid}-${attributes.revision_timestamp}`
 
-    console.info(
-      `Drupal: Creating node manifest with id ${manifestId} for node ${gatsbyNode?.id}`
-    )
+    console.info(`Drupal: Creating node manifest with id ${manifestId}`)
 
     unstable_createNodeManifest({
       manifestId,
