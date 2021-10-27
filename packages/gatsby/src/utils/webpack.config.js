@@ -56,7 +56,7 @@ module.exports = async (
 
   const publicPath = getPublicPath({ assetPrefix, pathPrefix, ...program })
 
-  function processEnv(stage, defaultNodeEnv) {
+  function processEnv(stage, defaultNodeEnv, isPrivate = false) {
     debug(`Building env for "${stage}"`)
     // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
     // this variable is used inside webpack
@@ -89,6 +89,11 @@ module.exports = async (
       return acc
     }, {})
 
+    const varsFromProcessEnv = Object.keys(process.env).reduce((acc, key) => {
+      acc[key] = JSON.stringify(process.env[key])
+      return acc
+    }, {})
+
     // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
     envObject.NODE_ENV = JSON.stringify(nodeEnv)
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
@@ -104,7 +109,10 @@ module.exports = async (
       )
     }
 
-    const mergedEnvVars = Object.assign(envObject, gatsbyVarObject)
+    const mergedEnvVars = Object.assign(
+      envObject,
+      isPrivate ? varsFromProcessEnv : gatsbyVarObject
+    )
 
     return Object.keys(mergedEnvVars).reduce(
       (acc, key) => {
@@ -295,6 +303,11 @@ module.exports = async (
           plugins.provide({
             fetch: require.resolve(`node-fetch`),
             "global.fetch": require.resolve(`node-fetch`),
+          })
+        )
+        configPlugins.push(
+          plugins.define({
+            ...processEnv(stage, `development`, true),
           })
         )
         break
