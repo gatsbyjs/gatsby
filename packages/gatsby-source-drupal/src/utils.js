@@ -231,10 +231,7 @@ const handleDeletedNode = async ({
         if (node.fields) {
           delete node.fields
         }
-        node.internal.contentDigest = createContentDigest({
-          ...node,
-          internal: null,
-        })
+        node.internal.contentDigest = createContentDigest(node)
         actions.createNode(node)
       }
     })
@@ -361,14 +358,11 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
 
   for (const node of nodesToUpdate) {
     const oldNode = getNode(node.id)
-    const oldDigest = oldNode.internal.contentDigest
-    node.internal.contentDigest = createContentDigest({
-      ...node,
-      internal: null,
-    })
+    const oldDigest = oldNode?.internal?.contentDigest
+    node.internal.contentDigest = createContentDigest(node)
 
-    console.log({ oldDigest, newDigest: node.internal.contentDigest })
     if (oldDigest !== node.internal.contentDigest) {
+      console.log({ oldDigest, newDigest: node.internal.contentDigest })
       if (node.internal.owner) {
         delete node.internal.owner
       }

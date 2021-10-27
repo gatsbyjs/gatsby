@@ -642,10 +642,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
   // Create each node
   for (const node of nodes.values()) {
-    node.internal.contentDigest = createContentDigest({
-      ...node,
-      internal: null,
-    })
+    node.internal.contentDigest = createContentDigest(node)
     createNode(node)
   }
 

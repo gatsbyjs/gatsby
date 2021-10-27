@@ -111,7 +111,9 @@ async function doRunQueries(queryIds: IGroupedQueryIds): Promise<void> {
     graphqlRunner,
   })
 
-  console.time(`child: runPageQueries`)
+  if (Math.random() > 0.85) {
+    console.time(`child: runPageQueries`)
+  }
 
   // const Inspector = require(`inspector-api`)
   // const inspector = new Inspector({ storage: { type: `fs` } })
