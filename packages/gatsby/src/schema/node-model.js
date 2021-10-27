@@ -70,13 +70,19 @@ export interface NodeModel {
 }
 
 class LocalNodeModel {
-  constructor({ schema, schemaComposer, createPageDependency }) {
+  constructor({
+    schema,
+    schemaComposer,
+    createPageDependency,
+    _rootNodeMap,
+    _trackedRootNodes,
+  }) {
     this.schema = schema
     this.schemaComposer = schemaComposer
     this.createPageDependencyActionCreator = createPageDependency
 
-    this._rootNodeMap = new WeakMap()
-    this._trackedRootNodes = new WeakSet()
+    this._rootNodeMap = _rootNodeMap
+    this._trackedRootNodes = _trackedRootNodes
     this._prepareNodesQueues = {}
     this._prepareNodesPromises = {}
     this._preparedNodesCache = new Map()

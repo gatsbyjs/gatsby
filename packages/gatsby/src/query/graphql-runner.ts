@@ -22,6 +22,10 @@ import { IGatsbyState } from "../redux/types"
 import { IGraphQLRunnerStatResults, IGraphQLRunnerStats } from "./types"
 import GraphQLSpanTracer from "./graphql-span-tracer"
 
+// Preserve these caches across graphql instances.
+const _rootNodeMap = new WeakMap()
+const _trackedRootNodes = new WeakSet()
+
 type Query = string | Source
 
 export interface IQueryOptions {
@@ -60,6 +64,8 @@ export class GraphQLRunner {
       schema,
       schemaComposer: schemaCustomization.composer,
       createPageDependency,
+      _rootNodeMap,
+      _trackedRootNodes,
     })
     this.schema = schema
     this.parseCache = new Map()
