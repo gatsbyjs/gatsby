@@ -933,11 +933,15 @@ function attachTracingResolver({ schemaComposer }) {
     ) {
       typeComposer.getFieldNames().forEach(fieldName => {
         const field = typeComposer.getField(fieldName)
+        let resolver = defaultResolver
+        if (field.resolve && field.resolve !== defaultResolver) {
+          resolver = field.resolve.isTracingResolver
+            ? field.resolve
+            : wrappingResolver(field.resolve)
+        }
+
         typeComposer.extendField(fieldName, {
-          resolve:
-            field.resolve && field.resolve !== defaultResolver
-              ? wrappingResolver(field.resolve)
-              : defaultResolver,
+          resolve: resolver,
         })
       })
     }
