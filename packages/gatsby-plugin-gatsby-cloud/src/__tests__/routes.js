@@ -27,7 +27,6 @@ describe(`Routes IPC`, () => {
 
     onPostBuild(
       {
-        pathPrefix: ``,
         store: {
           getState() {
             return {
@@ -56,6 +55,10 @@ describe(`Routes IPC`, () => {
                   },
                 ],
               ]),
+              config: {
+                assetPath: ``,
+                pathPrefix: ``,
+              },
             }
           },
         },
