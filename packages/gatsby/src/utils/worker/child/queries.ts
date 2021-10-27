@@ -111,26 +111,21 @@ async function doRunQueries(queryIds: IGroupedQueryIds): Promise<void> {
     graphqlRunner,
   })
 
+  let timing = false
   if (Math.random() > 0.85) {
+    timing = true
     console.time(`child: runPageQueries`)
   }
 
-  // const Inspector = require(`inspector-api`)
-  // const inspector = new Inspector({ storage: { type: `fs` } })
-
-  // await inspector.profiler.enable()
-  // await inspector.profiler.start()
-  // await inspector.heap.enable()
-  // await inspector.heap.startSampling()
   await runPageQueries({
     queryIds,
     store,
     graphqlRunner,
   })
 
-  // await inspector.profiler.stop()
-  // await inspector.heap.stopSampling()
-  console.timeEnd(`child: runPageQueries`)
+  if (timing) {
+    console.timeEnd(`child: runPageQueries`)
+  }
 
   await getDataStore().ready()
 }

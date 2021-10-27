@@ -362,7 +362,6 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     node.internal.contentDigest = createContentDigest(node)
 
     if (oldDigest !== node.internal.contentDigest) {
-      console.log({ oldDigest, newDigest: node.internal.contentDigest })
       if (node.internal.owner) {
         delete node.internal.owner
       }
