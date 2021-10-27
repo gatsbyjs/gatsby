@@ -174,7 +174,7 @@ commands:
       - <<: *attach_to_bootstrap
       - run:
           name: Install gatsby-dev
-          command: yarn global add gatsby-dev-cli
+          command: yarn global add gatsby-dev-cli@latest-v3
       - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
