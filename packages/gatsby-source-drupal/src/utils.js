@@ -353,7 +353,12 @@ function drupalCreateNodeManifest({
   gatsbyNode,
   unstable_createNodeManifest,
 }) {
-  if (typeof unstable_createNodeManifest === `function`) {
+  const isPreview =
+    (process.env.NODE_ENV === `development` &&
+      process.env.ENABLE_GATSBY_REFRESH_ENDPOINT) ||
+    process.env.GATSBY_IS_PREVIEW === `true`
+
+  if (typeof unstable_createNodeManifest === `function` && isPreview) {
     const manifestId = `${attributes.drupal_internal__nid}-${attributes.revision_timestamp}`
 
     console.info(`Drupal: Creating node manifest with id ${manifestId}`)
