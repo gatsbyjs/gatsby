@@ -107,7 +107,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes({
     `
       type CustomImage implements Node {
-        localImage: File!
+        localImage: File @link
       }
     `
   })
