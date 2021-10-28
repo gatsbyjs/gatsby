@@ -202,7 +202,7 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: yarn workspaces focus
+      - run: yarn workspaces focus packages/babel-preset-gatsby
       - run: yarn lint:code
       - run: yarn lint:docs
       - run: yarn lint:other
