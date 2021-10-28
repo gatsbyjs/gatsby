@@ -85,7 +85,10 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
     )
   }
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4` && stage === `build-html`) {
+  if (
+    _CFLAGS_.GATSBY_MAJOR === `4` &&
+    (stage === `build-html` || stage === `develop-html`)
+  ) {
     requiredPlugins.push(
       babel.createConfigItem(
         [
