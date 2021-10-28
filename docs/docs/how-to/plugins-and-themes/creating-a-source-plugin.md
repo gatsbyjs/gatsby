@@ -560,7 +560,7 @@ module.exports = {
 
 By installing the sharp plugins in the site, they'll run after the source plugin and transform the file nodes and add fields for the optimized versions at `childImageSharp`. The transformer plugin looks for `File` nodes with extensions like `.jpg` and `.png` to create optimized images and creates the GraphQL fields for you.
 
-Now when you run your site, you will also be able to query a `childImageSharp` field on the `post.fields.localFile`:
+Now when you run your site, you will also be able to query a `childImageSharp` field on the `post.localFile`:
 
 ```graphql
 query {
