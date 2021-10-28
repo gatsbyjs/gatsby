@@ -193,7 +193,7 @@ jobs:
       - <<: *check_lockfile
       - <<: *validate_renovate
       - <<: *persist_cache
-      - run: yarn bootstrap --concurrency=2
+      - run: yarn bootstrap --concurrency=2 --stream
       # Persist the workspace again with all packages already built
       - persist_to_workspace:
           root: ./

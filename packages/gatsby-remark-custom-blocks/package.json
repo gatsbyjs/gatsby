@@ -34,7 +34,6 @@
   "peerDependencies": {
     "gatsby": "^4.0.0-next"
   },
-  "private": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby.git",
