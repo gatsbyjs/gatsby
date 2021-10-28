@@ -29,7 +29,7 @@ export const buildFallbackChain = locales => {
   )
   return localesFallback
 }
-export const makeGetLocalizedField =
+const makeGetLocalizedField =
   ({ locale, localesFallback }) =>
   field =>
     getLocalizedField({ field, locale, localesFallback })
@@ -43,7 +43,7 @@ export const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
     : `${spaceId}___${id}___${normalizedType}___${currentLocale}`
 }
 
-export const makeMakeId =
+const makeMakeId =
   ({ currentLocale, defaultLocale, createNodeId }) =>
   (spaceId, id, type) =>
     createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
@@ -718,7 +718,6 @@ export const createAssetNodes = ({
   defaultLocale,
   locales,
   space,
-  assetsFileMap,
 }) => {
   const createNodePromises = []
   locales.forEach(locale => {
@@ -755,15 +754,8 @@ export const createAssetNodes = ({
       },
     }
 
-    if (assetsFileMap) {
-      const assetFile = assetsFileMap.get(assetNode.id)
-      if (assetFile) {
-        assetNode.localFile___NODE = assetFile
-      }
-    }
-
+    // Revision applies to entries, assets, and content types
     if (assetItem.sys.revision) {
-      // Revision applies to entries, assets, and content types
       assetNode.sys.revision = assetItem.sys.revision
     }
 
