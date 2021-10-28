@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^4.0.1",
+    "gatsby": "^4.0.2",
     "gatsby-plugin-gatsby-cloud": "^4.0.0",
     "gatsby-plugin-image": "^2.0.0",
     "gatsby-plugin-manifest": "^4.0.0",
