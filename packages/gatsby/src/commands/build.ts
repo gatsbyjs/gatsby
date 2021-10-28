@@ -287,7 +287,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     })
   }
 
-  if (process.send) {
+  if (process.send && shouldGenerateEngines()) {
     process.send({
       type: `LOG_ACTION`,
       action: {
