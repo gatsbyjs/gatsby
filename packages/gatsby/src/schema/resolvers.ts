@@ -647,7 +647,11 @@ export function wrappingResolver<TSource, TArgs>(
   //       it does not return a promise and this makes a significant difference at scale.
   //       GraphQL will gracefully handle the resolver result of a promise or non-promise.
 
-  return function wrappedTracingResolver(
+  if (resolver[`isTracingResolver`]) {
+    return resolver
+  }
+
+  const wrappedTracingResolver = function wrappedTracingResolver(
     parent,
     args,
     context,
@@ -689,6 +693,10 @@ export function wrappingResolver<TSource, TArgs>(
     }
     return result
   }
+
+  wrappedTracingResolver.isTracingResolver = true
+
+  return wrappedTracingResolver
 }
 
 export const defaultResolver = wrappingResolver(defaultFieldResolver)
