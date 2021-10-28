@@ -14,7 +14,7 @@ export default declare(function replaceEnvVars(
 
   if (!apisToInclude.length) {
     console.warn(
-      `No list of APIs was given to remove, check your plugin options.`
+      `No list of APIs was given to replace env vars, check your plugin options.`
     )
   }
 
