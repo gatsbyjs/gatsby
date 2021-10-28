@@ -20,6 +20,7 @@ import { LocalNodeModel } from "../schema/node-model"
 import { Store } from "redux"
 import { IGatsbyState } from "../redux/types"
 import { IGraphQLRunnerStatResults, IGraphQLRunnerStats } from "./types"
+import { IGraphQLTelemetryRecord } from "../schema/type-definitions"
 import GraphQLSpanTracer from "./graphql-span-tracer"
 
 type Query = string | Source
@@ -29,6 +30,7 @@ export interface IQueryOptions {
   queryName: string
   componentPath?: string | undefined
   forceGraphqlTracing?: boolean
+  telemetryResolverTimings?: Array<IGraphQLTelemetryRecord>
 }
 
 export interface IGraphQLRunnerOptions {
@@ -153,6 +155,7 @@ export class GraphQLRunner {
       queryName,
       componentPath,
       forceGraphqlTracing = false,
+      telemetryResolverTimings,
     }: IQueryOptions
   ): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
@@ -220,6 +223,7 @@ export class GraphQLRunner {
           nodeModel: this.nodeModel,
           stats: this.stats,
           tracer,
+          telemetryResolverTimings,
         }),
         variableValues: context,
       })
