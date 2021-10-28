@@ -26,6 +26,7 @@ export const componentsReducer = (
           pages: new Set(),
           isInBootstrap: true,
           serverData: false,
+          config: false,
         }
       }
       component.pages.add(action.payload.path)
