@@ -80,16 +80,14 @@ const createIntersectionObserver = (el, cb) => {
       if (el === entry.target) {
         // Check if element is within viewport, remove listener, destroy observer, and run link callback.
         // MSEdge doesn't currently support isIntersecting, so also test for  an intersectionRatio > 0
-        if (entry.isIntersecting || entry.intersectionRatio > 0) {
-          io.unobserve(el)
-          io.disconnect()
-          cb()
-        }
+        cb(entry.isIntersecting || entry.intersectionRatio > 0)
       }
     })
   })
+
   // Add element to the observer
   io.observe(el)
+
   return { instance: io, el }
 }
 
@@ -113,6 +111,7 @@ class GatsbyLink extends React.Component {
     this.state = {
       IOSupported,
     }
+    this.abortPrefetch = null
     this.handleRef = this.handleRef.bind(this)
   }
 
@@ -132,22 +131,10 @@ class GatsbyLink extends React.Component {
     // Prefetch is used to speed up next navigations. When you use it on the current navigation,
     // there could be a race-condition where Chrome uses the stale data instead of waiting for the network to complete
     if (currentPath !== newPathName) {
-      ___loader.enqueue(newPathName)
+      return ___loader.enqueue(newPathName)
     }
-  }
 
-  componentDidUpdate(prevProps, prevState) {
-    // Preserve non IO functionality if no support
-    if (this.props.to !== prevProps.to && !this.state.IOSupported) {
-      this._prefetch()
-    }
-  }
-
-  componentDidMount() {
-    // Preserve non IO functionality if no support
-    if (!this.state.IOSupported) {
-      this._prefetch()
-    }
+    return undefined
   }
 
   componentWillUnmount() {
@@ -156,12 +143,19 @@ class GatsbyLink extends React.Component {
     }
     const { instance, el } = this.io
 
+    if (this.abortPrefetch) {
+      this.abortPrefetch.abort()
+    }
+
     instance.unobserve(el)
     instance.disconnect()
   }
 
   handleRef(ref) {
-    if (this.props.innerRef && this.props.innerRef.hasOwnProperty(`current`)) {
+    if (
+      this.props.innerRef &&
+      Object.prototype.hasOwnProperty.call(this.props.innerRef, `current`)
+    ) {
       this.props.innerRef.current = ref
     } else if (this.props.innerRef) {
       this.props.innerRef(ref)
@@ -169,8 +163,14 @@ class GatsbyLink extends React.Component {
 
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
-      this.io = createIntersectionObserver(ref, () => {
-        this._prefetch()
+      this.io = createIntersectionObserver(ref, inViewPort => {
+        if (inViewPort) {
+          this.abortPrefetch = this._prefetch()
+        } else {
+          if (this.abortPrefetch) {
+            this.abortPrefetch.abort()
+          }
+        }
       })
     }
   }

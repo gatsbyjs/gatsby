@@ -29,10 +29,20 @@ export const jobsV2Reducer = (
     | IDeleteCacheAction
 ): IGatsbyState["jobsV2"] => {
   switch (action.type) {
-    case `DELETE_CACHE`:
-      return (action as IDeleteCacheAction).cacheIsCorrupt
-        ? initialState()
-        : state
+    case `DELETE_CACHE`: {
+      // Wipe the cache if state shape doesn't match the initial shape
+      // It is possible when the old cache is loaded for the new version of this reducer
+      const cleanState = initialState()
+      const cleanStateKeys = Object.keys(cleanState)
+
+      const isOutdatedJobsState =
+        cleanStateKeys.length !== Object.keys(state).length ||
+        cleanStateKeys.some(
+          key => !Object.prototype.hasOwnProperty.call(state, key)
+        )
+
+      return action.cacheIsCorrupt || isOutdatedJobsState ? cleanState : state
+    }
 
     case `CREATE_JOB_V2`: {
       const { job } = action.payload
