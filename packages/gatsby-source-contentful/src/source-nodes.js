@@ -388,6 +388,26 @@ export async function sourceNodes(
     deletionActivity.end()
   }
 
+  let assetsFileMap = undefined
+  // @todo add own activity!
+  if (pluginConfig.get(`downloadLocal`)) {
+    reporter.info(`Download Contentful asset files`)
+
+    assetsFileMap = await downloadContentfulAssets(assets, {
+      actions,
+      createNodeId,
+      store,
+      cache,
+      getCache,
+      getNode,
+      reporter,
+      assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),
+      space,
+      locales,
+      defaultLocale,
+    })
+  }
+
   const creationActivity = reporter.activityTimer(
     `Contentful: Create nodes (${sourceId})`,
     {
@@ -448,6 +468,7 @@ export async function sourceNodes(
         defaultLocale,
         locales,
         space,
+        assetsFileMap,
       })
     )
   }
@@ -470,22 +491,4 @@ export async function sourceNodes(
   }
 
   creationActivity.end()
-
-  // @todo add own activity!
-
-  if (pluginConfig.get(`downloadLocal`)) {
-    reporter.info(`Download Contentful asset files`)
-
-    await downloadContentfulAssets({
-      actions,
-      createNodeId,
-      store,
-      cache,
-      getCache,
-      getNode,
-      getNodesByType,
-      reporter,
-      assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),
-    })
-  }
 }
