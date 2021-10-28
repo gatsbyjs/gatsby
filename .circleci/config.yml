@@ -172,9 +172,6 @@ commands:
 
       - <<: *attach_to_bootstrap
       - run:
-          name: Install gatsby-dev
-          command: yarn global add gatsby-dev-cli
-      - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
@@ -205,13 +202,7 @@ jobs:
     executor: node
     steps:
       - checkout
-      # installation of dependencies takes a while because of the 100 packages we have inside the monorepo
-      # Linting only needs the root packages, we remove the workspace and only install root packages
-      - run:
-          name: "remove workspaces from package.json"
-          command: |
-            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]/,"workspaces":\["packages\/babel-preset-gatsby"\]/g' package.json
-      - <<: *install_node_modules
+      - run: yarn workspaces focus
       - run: yarn lint:code
       - run: yarn lint:docs
       - run: yarn lint:other
