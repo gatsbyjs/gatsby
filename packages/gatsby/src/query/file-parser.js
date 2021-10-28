@@ -36,7 +36,7 @@ const generateQueryName = ({ def, hash, file, queryType }) => {
       lower: false,
     })
     def.name = {
-      value: `${_.camelCase(`${slugified}-${queryType}-${hash}`)}`,
+      value: `${_.camelCase(`${queryType}-${slugified}-${hash}`)}`,
       kind: `Name`,
     }
   }
