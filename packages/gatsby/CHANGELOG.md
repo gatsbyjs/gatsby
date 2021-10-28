@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.0.2](https://github.com/gatsbyjs/gatsby/commits/HEAD/packages/gatsby) (2021-10-28)
+
+#### Bug Fixes
+
+- only send ipc of ENGINES_READY when needed [#33716](https://github.com/gatsbyjs/gatsby/issues/33716) [#33722](https://github.com/gatsbyjs/gatsby/issues/33722) ([03efe4d](https://github.com/gatsbyjs/gatsby/commit/03efe4dc156888b8c47d2d51ba1053e29842595e))
+- reset jobs cache when its outdated [#33617](https://github.com/gatsbyjs/gatsby/issues/33617) [#33660](https://github.com/gatsbyjs/gatsby/issues/33660) ([42358ee](https://github.com/gatsbyjs/gatsby/commit/42358ee71bb88fb6c6d0a721a3e0fe54f9a60fd5))
+- pageContext should proxy to page.context [#33627](https://github.com/gatsbyjs/gatsby/issues/33627) [#33661](https://github.com/gatsbyjs/gatsby/issues/33661) ([8c99000](https://github.com/gatsbyjs/gatsby/commit/8c99000646b29688b235408b4400d9e54c9d3f5f))
+
+#### Chores
+
+- Update README [#33615](https://github.com/gatsbyjs/gatsby/issues/33615) ([0790895](https://github.com/gatsbyjs/gatsby/commit/079089523b9cb4bf4c112deb71b7ef1d175ab1c6))
+- Change comment format in actions/public [#33592](https://github.com/gatsbyjs/gatsby/issues/33592) ([06760d7](https://github.com/gatsbyjs/gatsby/commit/06760d7801d1b1da4cfdb4925ff33bd086a75c0c))
+
 ### [4.0.1](https://github.com/gatsbyjs/gatsby/commits/HEAD/packages/gatsby) (2021-10-25)
 
 #### Bug Fixes
