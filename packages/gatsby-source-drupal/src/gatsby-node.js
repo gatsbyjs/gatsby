@@ -7,6 +7,7 @@ const opentracing = require(`opentracing`)
 const { SemanticAttributes } = require(`@opentelemetry/semantic-conventions`)
 
 const { HttpsAgent } = HttpAgent
+const GATSBY_SOURCE_DRUPAL_TIMEOUT = process.env.GATSBY_SOURCE_DRUPAL_TIMEOUT
 
 const { setOptions, getOptions } = require(`./plugin-options`)
 
@@ -66,7 +67,9 @@ async function worker([url, options]) {
     cache: false,
     timeout: {
       // Occasionally requests to Drupal stall. Set a 15s timeout to retry in this case.
-      request: 15000,
+      request: GATSBY_SOURCE_DRUPAL_TIMEOUT
+        ? parseInt(GATSBY_SOURCE_DRUPAL_TIMEOUT, 10)
+        : 15000,
     },
     // request: http2wrapper.auto,
     // http2: true,
@@ -263,7 +266,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
     // lastFetched isn't set so do a full rebuild.
     if (!lastFetched) {
-      setPluginStatus({ lastFetched: Math.floor(new Date().getTime() / 1000) })
+      setPluginStatus({ lastFetched: new Date().getTime() })
       requireFullRebuild = true
     } else {
       const drupalFetchIncrementalActivity = reporter.activityTimer(
