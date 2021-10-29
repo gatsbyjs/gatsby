@@ -17,8 +17,8 @@
     "webpack-assets-manifest": "^5.0.6"
   },
   "devDependencies": {
-    "@babel/cli": "^7.15.4",
-    "@babel/core": "^7.15.5",
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.8",
     "@testing-library/dom": "^8.5.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",

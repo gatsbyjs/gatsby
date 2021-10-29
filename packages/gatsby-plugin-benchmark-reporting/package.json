@@ -14,8 +14,8 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-benchmark-reporting#readme",
   "devDependencies": {
-    "@babel/cli": "^7.15.4",
-    "@babel/core": "^7.15.5",
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.8",
     "babel-preset-gatsby-package": "^2.1.0-next.0"
   },
   "dependencies": {
