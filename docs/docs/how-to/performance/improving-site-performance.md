@@ -192,13 +192,13 @@ Font optimizations are usually small, but easy performance wins.
 
 Media files are often the largest files on a site, and so can delay page load significantly while they are pulled over the network, especially if their location is not well-defined.
 
-[Gatsby Plugin Image](/docs/how-to/images-and-media/using-gatsby-image/) is our approach to optimizing image loading performance. It does three basic things:
+[Gatsby Plugin Image](/docs/how-to/images-and-media/using-gatsby-plugin-image/) is our approach to optimizing image loading performance. It does three basic things:
 
 1. It delays non-essential work for images not above the fold to avoid resource congestion.
 2. It provides a placeholder during image fetch.
 3. It minimizes image file size to reduce request roundtrip time.
 
-The `gatsby-plugin-image` documentation is fairly exhaustive, ranging from [why image optimization is important](/docs/conceptual/using-gatsby-image/), or [how to implement Gatsby Plugin Image](/docs/how-to/images-and-media/using-gatsby-plugin-image/), to a [Gatsby Image reference](/docs/reference/built-in-components/gatsby-image/).
+The `gatsby-plugin-image` documentation is fairly exhaustive, ranging from [why image optimization is important](/docs/conceptual/using-gatsby-image/) to [how to implement Gatsby Plugin Image](/docs/how-to/images-and-media/using-gatsby-plugin-image/).
 
 Implementing Gatsby Image is typically the bulk of image- and media-related performance optimization.
 

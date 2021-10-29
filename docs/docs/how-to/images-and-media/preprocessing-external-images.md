@@ -2,7 +2,7 @@
 title: Preprocessing External Images
 ---
 
-Gatsby allows powerful image processing features using the [`Sharp`](https://github.com/lovell/sharp/) library to automatically process images to be performant, with features like lazy-loading. That said, this only works if the image is a `File` node in the GraphQL layer.
+Gatsby allows powerful image processing features using the [`sharp`](https://github.com/lovell/sharp/) library to automatically process images to be performant, with features like lazy-loading. That said, this only works if the image is a `File` node in the GraphQL layer.
 
 If you want the same functionality for files that are remotely hosted online and not located in your Git repo, [`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem/) has an API called `createRemoteFileNode` to solve this.
 
@@ -24,7 +24,7 @@ featuredImgAlt: Mountains with a starry sky
 Hello World
 ```
 
-You can use a custom Frontmatter field for the URL of the featured image you want to pull down and use as part of the site.
+You can use a custom frontmatter field for the URL of the featured image you want to pull down and use as part of the site.
 
 By default, this is a string value as you haven't told Gatsby yet how to interpret it. However, you can add some code into `gatsby-node.js` to modify it.
 
@@ -43,7 +43,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes(`
     type MarkdownRemark implements Node {
       frontmatter: Frontmatter
-      featuredImg: File @link(from: "featuredImg___NODE")
+      featuredImg: File @link(from: "fields.localFile")
     }
 
     type Frontmatter {
@@ -56,7 +56,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 exports.onCreateNode = async ({
   node,
-  actions: { createNode },
+  actions: { createNode, createNodeField },
   store,
   cache,
   createNodeId,
@@ -66,7 +66,7 @@ exports.onCreateNode = async ({
     node.internal.type === "MarkdownRemark" &&
     node.frontmatter.featuredImgUrl !== null
   ) {
-    let fileNode = await createRemoteFileNode({
+    const fileNode = await createRemoteFileNode({
       url: node.frontmatter.featuredImgUrl, // string that points to the URL of the image
       parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
       createNode, // helper function in gatsby-node to generate the node
@@ -75,9 +75,9 @@ exports.onCreateNode = async ({
       store, // Gatsby's Redux store
     })
 
-    // if the file was created, attach the new node to the parent node
+    // if the file was created, extend the node with "localFile"
     if (fileNode) {
-      node.featuredImg___NODE = fileNode.id
+      createNodeField({ node, name: "localFile", value: fileNode.id })
     }
   }
 }
@@ -85,10 +85,10 @@ exports.onCreateNode = async ({
 
 Going step by step through the code:
 
-1. Define some types for `MarkdownRemark` using the Schema Customization API. For `featuredImg`, use the `from` argument to point the `link` extension to the correct field name (with a `___NODE` suffix), [more details about foreign-key fields here](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields). Defining a field for alternative text as `featuredImgAlt` can also improve accessibility, in addition to providing context for the image if it fails to load.
+1. Define some types for `MarkdownRemark` using the Schema Customization API. For `featuredImg`, use the `from` argument to point the `link` extension to the correct field name (the `createNodeField` extends the node with a `fields` key), [more details about foreign-key fields here](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields). Defining a field for alternative text as `featuredImgAlt` can also improve accessibility, in addition to providing context for the image if it fails to load.
 2. Create an `onCreateNode` function so you can watch for when `MarkdownRemark` nodes are made.
 3. Use `createRemoteFileNode` by passing in the various required fields and get a reference to the file afterwards.
-4. If the Node is created, attach it as a child of the original Node. `___NODE` tells the GraphQL layer that the name before it is going to be a field on the parent Node that links to another Node. To do this, pass the `id` as the reference. Do note, this new node is now attached to the root of the `markdownRemark` node instead of the `frontmatter` field.
+4. If the Node is created, extend the node with a `localFile` field. To do this, pass the `id` as the reference. Do note, this new node is now attached to the root of the `markdownRemark` node instead of the `frontmatter` field as `fields`.
 
 And since it is a File Node, `gatsby-transformer-sharp` will pick it up and create a `childImageSharp` child Node inside this newly created Node.
 
@@ -114,7 +114,7 @@ query {
 
 ![GraphiQL with above query inserted](../../images/remote-file-node-graphiql-preview.png)
 
-You can then use `gatsby-transformer-sharp` to fill in the query for a fixed image here. For more information on transforming images using parameters and fragments, check out the [Gatsby Image API docs](/docs/reference/built-in-components/gatsby-image/).
+You can then use `gatsby-transformer-sharp` & `gatsby-plugin-image` to fill in the query for a fixed image here. For more information on transforming images using parameters and fragments, check out the ["Using Gatsby Plugin Image" guide](/docs/how-to/images-and-media/using-gatsby-plugin-image/).
 
 ```graphql
 query {
@@ -122,9 +122,7 @@ query {
     nodes {
       featuredImg {
         childImageSharp {
-          fixed(width: 600) {
-            ...GatsbyImageSharpFixed
-          }
+          gatsbyImageData(width: 600, layout: FIXED)
         }
       }
     }
@@ -136,7 +134,7 @@ And finally, you can update the template for this blog post to include a feature
 
 ```jsx
 import React from "react"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 import { graphql } from "gatsby"
 
 const template = ({ data }) => {
@@ -144,8 +142,10 @@ const template = ({ data }) => {
     <>
       <h1>{data.markdownRemark.frontmatter.title}</h1>
       {data.markdownRemark.featuredImg && (
-        <Img
-          fixed={data.markdownRemark.featuredImg.childImageSharp.fixed}
+        <GatsbyImage
+          image={
+            data.markdownRemark.featuredImg.childImageSharp.gatsbyImageData
+          }
           alt={data.markdownRemark.frontmatter.featuredImgAlt}
         />
       )}
@@ -166,9 +166,7 @@ export const query = graphql`
       html
       featuredImg {
         childImageSharp {
-          fixed(width: 600) {
-            ...GatsbyImageSharpFixed
-          }
+          gatsbyImageData(width: 600, layout: FIXED)
         }
       }
     }
