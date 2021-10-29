@@ -93,8 +93,8 @@ describe(`Process JSON nodes correctly`, () => {
     })
   })
 
-  it(`coerces an id field to always be a String`, async () => {
-    const data = { id: 12345, blue: true, funny: `yup` }
+  it(`creates a jsonId key if id was given`, async () => {
+    const data = { id: `123`, blue: true, funny: `yup` }
     const node = {
       ...baseFileNode,
       content: JSON.stringify(data),

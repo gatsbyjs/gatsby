@@ -209,7 +209,7 @@ ${contentWithoutFrontmatter}`
     debug(`required`, plugin)
     if (_.isFunction(requiredPlugin.setParserPlugins)) {
       for (const parserPlugin of requiredPlugin.setParserPlugins(
-        plugin.options || {}
+        plugin.pluginOptions || {}
       )) {
         if (_.isArray(parserPlugin)) {
           const [parser, parserPluginOptions] = parserPlugin

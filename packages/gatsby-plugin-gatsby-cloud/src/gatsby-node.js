@@ -35,15 +35,12 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
   })
 }
 
-exports.onPostBuild = async (
-  { store, pathPrefix, getNodesByType },
-  userPluginOptions
-) => {
-  const pluginData = makePluginData(store, assetsManifest, pathPrefix)
-
+exports.onPostBuild = async ({ store, getNodesByType }, userPluginOptions) => {
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
   const { redirects, pageDataStats, nodes, pages } = store.getState()
+
+  const pluginData = makePluginData(store, assetsManifest)
 
   /**
    * Emit via IPC routes for which pages are non SSG
@@ -53,8 +50,10 @@ exports.onPostBuild = async (
   for (const [pathname, page] of pages) {
     if (page.mode && page.mode !== `SSG`) {
       index++
-      batch[generateHtmlPath(``, pathname)] = page.mode
-      batch[generatePageDataPath(``, pathname)] = page.mode
+
+      const fullPathName = page.matchPath ? page.matchPath : pathname
+      batch[generateHtmlPath(``, fullPathName)] = page.mode
+      batch[generatePageDataPath(``, fullPathName)] = page.mode
 
       if (index % 1000 === 0) {
         await emitRoutes(batch)
@@ -111,6 +110,7 @@ exports.onPostBuild = async (
   }
 
   await Promise.all([
+    ensureEmittingFileNodesFinished,
     buildHeadersProgram(pluginData, pluginOptions),
     createSiteConfig(pluginData, pluginOptions),
     createRedirects(pluginData, redirects, rewrites),
@@ -154,18 +154,28 @@ const pluginOptionsSchema = function ({ Joi }) {
 
 exports.pluginOptionsSchema = pluginOptionsSchema
 
-exports.onPostBootstrap = async ({ getNodesByType }) => {
-  /**
-   * Emit via IPC absolute paths to files that should be stored
-   */
-  const fileNodes = getNodesByType(`File`)
+/**
+ * We emit File Nodes via IPC and we need to make sure build doesn't finish before all of
+ * messages were sent.
+ */
+let ensureEmittingFileNodesFinished
+exports.onPreBootstrap = ({ emitter, getNodesByType }) => {
+  emitter.on(`API_FINISHED`, action => {
+    if (action.payload.apiName !== `sourceNodes`) {
+      return
+    }
 
-  // TODO: This is missing the cacheLocations .cache/caches + .cache/caches-lmdb
-  let fileNodesEmitted
-  for (const file of fileNodes) {
-    fileNodesEmitted = emitFileNodes({
-      path: file.absolutePath,
-    })
-  }
-  await fileNodesEmitted
+    async function doEmitFileNodes() {
+      const fileNodes = getNodesByType(`File`)
+
+      // TODO: This is missing the cacheLocations .cache/caches + .cache/caches-lmdb
+      for (const file of fileNodes) {
+        await emitFileNodes({
+          path: file.absolutePath,
+        })
+      }
+    }
+
+    ensureEmittingFileNodesFinished = doEmitFileNodes()
+  })
 }

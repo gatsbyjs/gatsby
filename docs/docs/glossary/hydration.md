@@ -7,7 +7,7 @@ Learn what _hydration_ means, and how Gatsby makes use of React's hydration feat
 
 ## What is hydration?
 
-_Hydration_ is the process of using client-side JavaScript to add application state and interactivity to server-rendered HTML. It's a feature of [React](/docs/glossary/react/), one of the underlying tools that makes the Gatsby framework. Gatsby uses hydration to transform the static HTML created at [build time](/docs/glossary/build/) into a React application.
+_Hydration_ is the process of using client-side JavaScript to add application state and interactivity to server-rendered HTML. It's a feature of [React](/docs/glossary/react/), one of the underlying tools that make the Gatsby framework. Gatsby uses hydration to transform the static HTML created at [build time](/docs/glossary/build/) into a React application.
 
 A typical React application relies on client-side rendering. Instead of parsing HTML to create the [DOM](/docs/glossary#dom), client-side rendering uses JavaScript to create it. A minimal HTML document serves as the application container, and only contains links to the JavaScript and CSS necessary to render the application.
 
@@ -34,9 +34,9 @@ A typical React application relies on client-side rendering. Instead of parsing 
 
 With client-side rendering, most actions trigger local DOM updates instead of network requests. Clicking a navigation link builds the requested page on the client instead of requesting it from the server. Because they make fewer network requests, applications rendered in the browser provide a blazing-fast user experience &mdash; after the initial download.
 
-That's the drawback to client-side rendering: none of your site's content is visible or interactive until the client downloads JavaScript and builds the DOM. However, not all clients can construct a DOM. For example, client-side rendering can prevent search engine and social media crawlers from consuming and indexing your site's URLs. Browser users, on the other hand, may see a blank page or loading image while your JavaScript bundle downloads and executes.
+That's the drawback to client-side rendering: none of your site's content is visible or interactive until the client downloads JavaScript and builds the DOM. However, not all clients can construct a DOM. For example, client-side rendering can prevent search engines and social media crawlers from consuming and indexing your site's URLs. Browser users, on the other hand, may see a blank page or loading image while your JavaScript bundle downloads and executes.
 
-[Server-side rendering](/docs/glossary/server-side-rendering/) makes HTML available to the client _before_ JavaScript loads. Your site visitors can see and read your content even if it is not fully interactive. Server rendering eliminates the blank page problem. Rendered HTML also makes it easier for search engine and social media crawlers to consume your site. Server-side rendering also has a drawback: every URL request requires another round trip to the server.
+[Server-side rendering](/docs/glossary/server-side-rendering/) makes HTML available to the client _before_ JavaScript loads. Your site visitors can see and read your content even if it is not fully interactive. Server rendering eliminates the blank page problem. Rendered HTML also makes it easier for search engines and social media crawlers to consume your site. Server-side rendering also has a drawback: every URL request requires another round trip to the server.
 
 Hydration lets us take a hybrid approach.
 

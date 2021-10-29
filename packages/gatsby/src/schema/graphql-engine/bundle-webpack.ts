@@ -13,6 +13,12 @@ type Reporter = typeof reporter
 const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
 
 const outputDir = path.join(process.cwd(), `.cache`, `query-engine`)
+const cacheLocation = path.join(
+  process.cwd(),
+  `.cache`,
+  `webpack`,
+  `query-engine`
+)
 
 export async function createGraphqlEngineBundle(
   rootDir: string,
@@ -38,6 +44,14 @@ export async function createGraphqlEngineBundle(
     target: `node`,
     externalsPresets: {
       node: false,
+    },
+    cache: {
+      type: `filesystem`,
+      name: `graphql-engine`,
+      cacheLocation,
+      buildDependencies: {
+        config: [__filename],
+      },
     },
     // those are required in some runtime paths, but we don't need them
     externals: [

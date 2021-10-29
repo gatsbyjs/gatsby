@@ -238,3 +238,9 @@ module.exports = {
   }
 }
 ```
+
+## Troubleshooting
+
+### `id` and `yamlId` key
+
+If your data contains an `id` key the transformer will automatically convert this key to `yamlId` as `id` is a reserved internal keyword for Gatsby.

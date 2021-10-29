@@ -305,6 +305,10 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
             process.env.PREFIX_PATHS === `true` ||
             process.env.PREFIX_PATHS === `1`,
           describe: `Serve site with link paths prefixed with the pathPrefix value in gatsby-config.js.Default is env.PREFIX_PATHS or false.`,
+        })
+        .option(`open-tracing-config-file`, {
+          type: `string`,
+          describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         }),
 
     handler: getCommandHandler(`serve`),
