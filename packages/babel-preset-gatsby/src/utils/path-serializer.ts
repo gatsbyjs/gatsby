@@ -1,10 +1,5 @@
 import { slash } from "gatsby-core-utils"
 
-interface ISerializer {
-  test(val: unknown): boolean
-  print(val: string, serialize: (val: string) => string): string
-}
-
 const cleanNodeModules = (dir: string): string => {
   const x = dir.split(`node_modules/`)
 
@@ -15,13 +10,10 @@ const cleanNodeModules = (dir: string): string => {
   return slash(`<PROJECT_ROOT>/node_modules/${x[1]}`)
 }
 
-export function createSeralizer(): ISerializer {
-  return {
-    test(val: unknown): boolean {
-      return typeof val === `string` && val !== cleanNodeModules(val)
-    },
-    print(val: string, serialize: (val: string) => string): string {
-      return serialize(cleanNodeModules(val))
-    },
-  }
-}
+export const test = (val: unknown): boolean =>
+  typeof val === `string` && val !== cleanNodeModules(val)
+
+export const print = (
+  val: string,
+  serialize: (val: string) => string
+): string => serialize(cleanNodeModules(val))
