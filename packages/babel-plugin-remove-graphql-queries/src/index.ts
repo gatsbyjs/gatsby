@@ -25,6 +25,7 @@ import {
   ExportNamedDeclaration,
   isFunctionDeclaration,
   isVariableDeclaration,
+  isFunction,
   isIdentifier,
 } from "@babel/types"
 
@@ -99,6 +100,20 @@ class GraphQLSyntaxError extends Error {
     this.originalError = originalError
     this.templateLoc = locationOfGraphqlString
     Error.captureStackTrace(this, GraphQLSyntaxError)
+  }
+}
+
+class ExportIsNotAsyncError extends Error {
+  exportStart: ISourcePosition | undefined
+  exportName: string
+
+  constructor(exportName: string, exportStart: ISourcePosition | undefined) {
+    super(
+      `BabelPluginRemoveGraphQLQueries: the "${exportName}" export must be async when using it with graphql`
+    )
+    this.exportName = exportName
+    this.exportStart = JSON.parse(JSON.stringify(exportStart))
+    Error.captureStackTrace(this, ExportIsNotAsyncError)
   }
 }
 
@@ -515,7 +530,6 @@ export default function ({ types: t }): PluginObj {
         })
 
         // Run it again to remove non-staticquery versions
-        let keepImport = false
         path.traverse({
           TaggedTemplateExpression(path2: NodePath<TaggedTemplateExpression>) {
             const { ast, hash, isGlobal } = getGraphQLTag(path2)
@@ -533,24 +547,42 @@ export default function ({ types: t }): PluginObj {
             if (potentialExportPath?.isExportNamedDeclaration()) {
               potentialExportPath.replaceWith(path2.parentPath.parentPath)
             }
-            // Keep the `graphql` tag (and related import) in place for function config() {}
-            if (isWithinConfigExport(path2)) {
-              keepImport = true
-              return null
-            }
+
             const tag = path2.get(`tag`)
             if (!isGlobal) {
               // Enqueue import removal. If we would remove it here, subsequent named exports
               // wouldn't be handled properly
               tagsToRemoveImportsFrom.add(tag)
             }
+
+            // When graphql tag is found inside config function, we replace it with global call, e.g.:
+            //   export async function config() {
+            //     const { data } = graphql`{ __typename }`
+            //   }
+            // is replaced with:
+            //   export async function config() {
+            //     const { data } = await global.__gatsbyGraphql(`{ __typename }`)
+            //   }
+            // Note: isWithinConfigExport will throw if "config" export is not async
+            if (isWithinConfigExport(path2)) {
+              const globalCall = t.awaitExpression(
+                t.callExpression(
+                  t.memberExpression(
+                    t.identifier(`global`),
+                    t.identifier(`__gatsbyGraphql`)
+                  ),
+                  [path2.node.quasi]
+                )
+              )
+              path2.replaceWith(globalCall)
+              return null
+            }
+
             path2.replaceWith(t.StringLiteral(queryHash))
             return null
           },
         })
-        if (!keepImport) {
-          tagsToRemoveImportsFrom.forEach(removeImport)
-        }
+        tagsToRemoveImportsFrom.forEach(removeImport)
       },
     },
   }
@@ -565,14 +597,22 @@ function isWithinConfigExport(
 
   const declaration = parentExport?.node?.declaration
 
-  if (isFunctionDeclaration(declaration)) {
-    return declaration.id?.name === `config`
+  if (isFunctionDeclaration(declaration) && declaration.id?.name === `config`) {
+    if (!declaration.async) {
+      throw new ExportIsNotAsyncError(`config`, declaration.loc?.start)
+    }
+    return true
   }
   if (
     isVariableDeclaration(declaration) &&
-    isIdentifier(declaration.declarations[0]?.id)
+    isIdentifier(declaration.declarations[0]?.id) &&
+    declaration.declarations[0]?.id?.name === `config`
   ) {
-    return declaration.declarations[0]?.id?.name === `config`
+    const init = declaration.declarations[0]?.init
+    if (!isFunction(init) || !init.async) {
+      throw new ExportIsNotAsyncError(`config`, init?.loc?.start)
+    }
+    return true
   }
   return false
 }
@@ -582,6 +622,7 @@ export {
   StringInterpolationNotAllowedError,
   EmptyGraphQLTagError,
   GraphQLSyntaxError,
+  ExportIsNotAsyncError,
   isWithinConfigExport,
   murmurhash,
 }

@@ -13,6 +13,7 @@ const {
   StringInterpolationNotAllowedError,
   EmptyGraphQLTagError,
   GraphQLSyntaxError,
+  ExportIsNotAsyncError,
   isWithinConfigExport,
 } = require(`babel-plugin-remove-graphql-queries`)
 
@@ -614,6 +615,21 @@ export default class FileParser {
                 })
               : null,
             sourceMessage: err.originalError.message,
+          },
+        }
+      } else if (err instanceof ExportIsNotAsyncError) {
+        const location = {
+          start: err.exportStart,
+          end: err.exportStart,
+        }
+        structuredError = {
+          id: `85929`,
+          location,
+          context: {
+            exportName: err.exportName,
+            codeFrame: codeFrameColumns(text, location, {
+              highlightCode: process.env.FORCE_COLOR !== `0`,
+            }),
           },
         }
       }

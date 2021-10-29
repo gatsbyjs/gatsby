@@ -258,7 +258,7 @@ query PageQuery {
   foo
 }
 \`
-export function config() {
+export async function config() {
   const query = graphql\`query ConfigQuery { __typename }\`
 }
 `,
@@ -268,7 +268,7 @@ query PageQuery {
   foo
 }
 \`
-export const config = () => {
+export const config = async () => {
   const query = graphql\`{ __typename }\`
 }
 `,

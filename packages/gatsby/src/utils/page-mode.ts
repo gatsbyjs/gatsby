@@ -123,6 +123,7 @@ export async function preparePageTemplateConfigs(
   const pageRendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
 
   const pageRenderer = require(pageRendererPath)
+  global[`__gatsbyGraphql`] = graphql
 
   await Promise.all(
     Array.from(store.getState().components.values()).map(async component => {
@@ -130,9 +131,7 @@ export async function preparePageTemplateConfigs(
         const componentInstance = await pageRenderer.getPageChunk({
           componentChunkName: component.componentChunkName,
         })
-        const pageConfigFn = await componentInstance.config({
-          query: graphql,
-        })
+        const pageConfigFn = await componentInstance.config()
         if (typeof pageConfigFn !== `function`) {
           throw new Error(
             `Unexpected result of config factory. Expected "function", got "${typeof pageConfigFn}".`
@@ -143,4 +142,5 @@ export async function preparePageTemplateConfigs(
       }
     })
   )
+  delete global[`__gatsbyGraphql`]
 }
