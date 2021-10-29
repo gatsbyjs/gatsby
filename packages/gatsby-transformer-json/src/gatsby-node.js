@@ -39,6 +39,9 @@ async function onCreateNode(
         type,
       },
     }
+    if (obj.id) {
+      jsonNode[`jsonId`] = obj.id
+    }
     createNode(jsonNode)
     createParentChildLink({ parent: node, child: jsonNode })
   }
@@ -60,16 +63,14 @@ async function onCreateNode(
     parsedContent.forEach((obj, i) => {
       transformObject(
         obj,
-        obj.id ? String(obj.id) : createNodeId(`${node.id} [${i}] >>> JSON`),
+        createNodeId(`${node.id} [${i}] >>> JSON`),
         getType({ node, object: obj, isArray: true })
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
     transformObject(
       parsedContent,
-      parsedContent.id
-        ? String(parsedContent.id)
-        : createNodeId(`${node.id} >>> JSON`),
+      createNodeId(`${node.id} >>> JSON`),
       getType({ node, object: parsedContent, isArray: false })
     )
   }

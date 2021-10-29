@@ -11,6 +11,7 @@ Object {
         "/my-sweet-new-page/",
       },
       "query": "",
+      "serverData": false,
     },
   },
   "html": Object {
@@ -29,6 +30,7 @@ Object {
   "jobsV2": Object {
     "complete": Map {},
     "incomplete": Map {},
+    "jobsByRequest": Map {},
   },
   "nodes": Map {
     "pageA" => Object {

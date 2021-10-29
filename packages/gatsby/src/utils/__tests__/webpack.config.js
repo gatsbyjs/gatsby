@@ -104,7 +104,6 @@ describe(`environment variables`, () => {
         [
           `__PATH_PREFIX__`,
           `process.env.BUILD_STAGE`,
-          `process.env.GATSBY_BUILD_STAGE`,
           `process.env.NODE_ENV`,
           `process.env.PUBLIC_DIR`,
         ].reduce((merged, key) => {
