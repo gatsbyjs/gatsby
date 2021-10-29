@@ -52,7 +52,8 @@ let initialRun = true
 export async function runQueriesInWorkersQueue(
   pool: GatsbyWorkerPool,
   queryIds: IGroupedQueryIds,
-  chunkSize = queriesChunkSize
+  chunkSize = queriesChunkSize,
+  parentSpan
 ): Promise<void> {
   const staticQuerySegments = chunk(queryIds.staticQueryIds, chunkSize)
   const pageQuerySegments = chunk(queryIds.pageQueryIds, chunkSize)
@@ -63,7 +64,9 @@ export async function runQueriesInWorkersQueue(
 
   const activity = reporter.createProgress(
     `run queries in workers`,
-    queryIds.staticQueryIds.length + queryIds.pageQueryIds.length
+    queryIds.staticQueryIds.length + queryIds.pageQueryIds.length,
+    0,
+    { parentSpan }
   )
   activity.start()
 
@@ -102,8 +105,11 @@ export async function runQueriesInWorkersQueue(
   activity.end()
 }
 
-export async function mergeWorkerState(pool: GatsbyWorkerPool): Promise<void> {
-  const activity = reporter.activityTimer(`Merge worker state`)
+export async function mergeWorkerState(
+  pool: GatsbyWorkerPool,
+  parentSpan
+): Promise<void> {
+  const activity = reporter.activityTimer(`Merge worker state`, { parentSpan })
   activity.start()
 
   for (const { workerId } of pool.getWorkerInfo()) {

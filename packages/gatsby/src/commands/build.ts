@@ -119,12 +119,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const waitForWorkerPoolRestart = Promise.resolve()
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    await runQueriesInWorkersQueue(workerPool, queryIds)
+    await runQueriesInWorkersQueue(workerPool, queryIds, 50, buildSpan)
     // Jobs still might be running even though query running finished
     await waitUntilAllJobsComplete()
     // Restart worker pool before merging state to lower memory pressure while merging state
     // waitForWorkerPoolRestart = workerPool.restart()
-    await mergeWorkerState(workerPool)
+    await mergeWorkerState(workerPool, buildSpan)
   } else {
     await runStaticQueries({
       queryIds,
