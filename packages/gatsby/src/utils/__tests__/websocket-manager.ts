@@ -395,6 +395,7 @@ describe(`websocket-manager`, () => {
             payload: {
               path: `/404.html`,
               component: `not-important`,
+              componentPath: `not-important`,
               context: {},
             },
             plugin: { name: `websocket-manager-test` },
@@ -404,6 +405,7 @@ describe(`websocket-manager`, () => {
             payload: {
               path: `/dev-404-page/`,
               component: `not-important`,
+              componentPath: `not-important`,
               context: {},
             },
             plugin: { name: `websocket-manager-test` },

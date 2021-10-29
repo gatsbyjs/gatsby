@@ -27,3 +27,34 @@ If you'd like to set up a minimal site without answering any prompts you can run
 ```
 npm init gatsby -y <site-directory>
 ```
+
+## Working on create-gatsby locally?
+
+If you're making changes to the create-gatsby package, you can follow the steps below to test out your changes locally:
+
+```sh
+# Move into the create-gatsby package
+cd packages/create-gatsby
+
+# Install dependencies and build the package
+yarn && yarn build
+
+# Run the create-gatsby script
+node cli.js
+```
+
+Note that if you use the `build` script, you'll have to rebuild after each change. Alternatively, you can use the `watch` script to automatically rebuild after local changes. In that case, you'll need to run `cli.js` from the top-level directory of the `gatsby` repo:
+
+```sh
+# Move into the create-gatsby package
+cd packages/create-gatsby
+
+# Install dependencies and build the package
+yarn && yarn watch
+
+# Open another terminal window and get back to the gatsby monorepo
+cd <path-to-gatsby-monorepo>
+
+# Run the create-gatsby script
+node packages/create-gatsby/cli.js
+```

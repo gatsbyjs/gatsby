@@ -1,4 +1,3 @@
-import compress from "graphql-query-compress"
 import store from "~/store"
 import { findTypeName } from "~/steps/create-schema-customization/helpers"
 
@@ -64,13 +63,12 @@ export const buildNodesQueryOnFieldName = ({
   queryVariables = ``,
   fieldVariables = ``,
 }) =>
-  compress(
-    buildQuery({
-      queryName: `NODE_LIST_QUERY`,
-      variables: `$first: Int!, $after: String, ${queryVariables}`,
-      fieldName,
-      fieldVariables: `first: $first, after: $after, ${fieldVariables}`,
-      builtSelectionSet: `
+  buildQuery({
+    queryName: `NODE_LIST_QUERY`,
+    variables: `$first: Int!, $after: String, ${queryVariables}`,
+    fieldName,
+    fieldVariables: `first: $first, after: $after, ${fieldVariables}`,
+    builtSelectionSet: `
         nodes {
           ${builtSelectionSet}
         }
@@ -79,9 +77,8 @@ export const buildNodesQueryOnFieldName = ({
           endCursor
         }
       `,
-      builtFragments,
-    })
-  )
+    builtFragments,
+  })
 
 const buildVariables = variables =>
   variables && typeof variables === `string` ? `(${variables})` : ``
@@ -220,13 +217,11 @@ export const buildNodeQueryOnFieldName = ({
   fieldInputArguments = `id: $id`,
   queryName = `SINGLE_CONTENT_QUERY`,
 }) =>
-  compress(
-    buildQuery({
-      queryName,
-      variables,
-      fieldName,
-      fieldVariables: fieldInputArguments,
-      builtFragments,
-      builtSelectionSet,
-    })
-  )
+  buildQuery({
+    queryName,
+    variables,
+    fieldName,
+    fieldVariables: fieldInputArguments,
+    builtFragments,
+    builtSelectionSet,
+  })

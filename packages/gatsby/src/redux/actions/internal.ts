@@ -35,6 +35,7 @@ import {
   removeInProgressJob,
   getInProcessJobPromise,
 } from "../../utils/jobs/manager"
+import { getEngineContext } from "../../utils/engine-context"
 
 /**
  * Create a dependency between a page and data. Probably for
@@ -376,6 +377,22 @@ export const createJobV2FromInternalJob =
         currentState.jobsV2.complete.get(jobContentDigest)!.result
       )
     }
+    const engineContext = getEngineContext()
+
+    // Always set context, even if engineContext is undefined.
+    // We do this because the final list of jobs for a given engine request includes both:
+    //  - jobs with the same requestId
+    //  - jobs without requestId (technically with requestId === "")
+    //
+    // See https://nodejs.org/dist/latest-v16.x/docs/api/async_context.html#async_context_troubleshooting_context_loss
+    // on cases when async context could be lost.
+    dispatch({
+      type: `SET_JOB_V2_CONTEXT`,
+      payload: {
+        job: internalJob,
+        requestId: engineContext?.requestId ?? ``,
+      },
+    })
 
     const inProgressJobPromise = getInProcessJobPromise(jobContentDigest)
     if (inProgressJobPromise) {
