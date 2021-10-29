@@ -520,7 +520,6 @@ describe(`Production loader`, () => {
 
   describe(`prefetch`, () => {
     const flushPromises = () => new Promise(resolve => setImmediate(resolve))
-    // Test
 
     it(`shouldn't prefetch when shouldPrefetch is false`, async () => {
       jest.useFakeTimers()
