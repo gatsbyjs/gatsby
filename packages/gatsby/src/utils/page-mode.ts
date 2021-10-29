@@ -47,8 +47,6 @@ function resolvePageMode(
       // `preparePageTemplateConfigs` hasn't been executed yet
       // TODO: if we move `mode` away from page and persist it in the state separately,
       //  we can just return the old `mode` that should be in sync with `component.config`
-      // console.error({ page, component, pageConfigFn, pageConfigMap })
-      // throw new Error(`There should be config, but we can't use it yet`)
       return `SSG`
     }
 
