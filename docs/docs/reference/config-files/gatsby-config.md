@@ -358,7 +358,7 @@ See more about [adding develop middleware](/docs/api-proxy/#advanced-proxying).
 
 ## jsxRuntime
 
-Setting to "automatic" allows the use of JSX without having to import React.
+Setting to "automatic" allows the use of JSX without having to import React. More information can be found on the [Introducing the new JSX Transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) blog post.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
