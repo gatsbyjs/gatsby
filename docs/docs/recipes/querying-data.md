@@ -429,7 +429,6 @@ Fragments can be nested inside other fragments, and multiple fragments can be us
 
 - [Example repo using fragments](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-fragments)
 - [Gatsby GraphQL reference for fragments](/docs/graphql-reference/#fragments)
-- [Gatsby image fragments](/docs/reference/built-in-components/gatsby-image/#image-query-fragments)
 - [Example repo with co-located data](https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram)
 
 ## Querying data client-side with `fetch`

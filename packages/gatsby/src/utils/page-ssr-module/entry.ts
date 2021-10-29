@@ -6,6 +6,7 @@ import "../engines-fs-provider"
 import type { GraphQLEngine } from "../../schema/graphql-engine/entry"
 import type { IExecutionResult } from "../../query/types"
 import type { IGatsbyPage } from "../../redux/types"
+import { IGraphQLTelemetryRecord } from "../../schema/type-definitions"
 import type { IScriptsAndStyles } from "../client-assets-for-template"
 import type { IPageDataWithQueryResult } from "../page-data"
 import type { Request } from "express"
@@ -58,11 +59,13 @@ export async function getData({
   graphqlEngine,
   req,
   spanContext,
+  telemetryResolverTimings,
 }: {
   graphqlEngine: GraphQLEngine
   pathName: string
   req?: Partial<Pick<Request, "query" | "method" | "url" | "headers">>
   spanContext?: Span | SpanContext
+  telemetryResolverTimings?: Array<IGraphQLTelemetryRecord>
 }): Promise<ISSRData> {
   await tracerReadyPromise
 
@@ -141,6 +144,7 @@ export async function getData({
               componentPath: page.componentPath,
               parentSpan: runningQueryActivity?.span,
               forceGraphqlTracing: !!runningQueryActivity,
+              telemetryResolverTimings,
             }
           )
           .then(queryResults => {

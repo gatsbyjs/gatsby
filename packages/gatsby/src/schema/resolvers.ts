@@ -668,6 +668,7 @@ export function wrappingResolver<TSource, TArgs>(
     }
 
     let activity
+    let time
     if (context?.tracer) {
       activity = context.tracer.createResolverActivity(
         info.path,
@@ -675,13 +676,23 @@ export function wrappingResolver<TSource, TArgs>(
       )
       activity.start()
     }
+    if (context.telemetryResolverTimings) {
+      time = process.hrtime.bigint()
+    }
+
     const result = resolver(parent, args, context, info)
 
-    if (!activity) {
+    if (!activity && !time) {
       return result
     }
 
     const endActivity = (): void => {
+      if (context.telemetryResolverTimings) {
+        context.telemetryResolverTimings.push({
+          name: `${info.parentType}.${info.fieldName}`,
+          duration: Number(process.hrtime.bigint() - time) / 1000 / 1000,
+        })
+      }
       if (activity) {
         activity.end()
       }
