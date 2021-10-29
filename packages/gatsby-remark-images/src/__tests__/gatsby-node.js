@@ -13,6 +13,7 @@ describe(`pluginOptionsSchema`, () => {
       `"backgroundColor" must be a string`,
       `"quality" must be a number`,
       `"withWebp" must be one of [object, boolean]`,
+      `"withAvif" must be one of [object, boolean]`,
       `"tracedSVG" must be one of [boolean, object]`,
       `"loading" must be one of [lazy, eager, auto]`,
       `"decoding" must be one of [async, sync, auto]`,
@@ -30,6 +31,7 @@ describe(`pluginOptionsSchema`, () => {
       backgroundColor: 123,
       quality: `This should be a number`,
       withWebp: `This should be a boolean or an object`,
+      withAvif: `This should be a boolean or an object`,
       tracedSVG: `This should be a boolean`,
       loading: `This should be lazy, eager or auto`,
       decoding: `This should be async, sync or auto`,
@@ -51,6 +53,7 @@ describe(`pluginOptionsSchema`, () => {
       backgroundColor: `red`,
       quality: 77,
       withWebp: true,
+      withAvif: true,
       tracedSVG: true,
       loading: `eager`,
       decoding: `async`,
@@ -65,6 +68,14 @@ describe(`pluginOptionsSchema`, () => {
   it(`should validate the withWebp prop`, async () => {
     const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
       withWebp: { quality: 100 },
+    })
+
+    expect(isValid).toBe(true)
+  })
+
+  it(`should validate the withAvif prop`, async () => {
+    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+      withAvif: { quality: 100 },
     })
 
     expect(isValid).toBe(true)

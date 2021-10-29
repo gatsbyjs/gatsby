@@ -16,6 +16,7 @@ type Reporter = typeof reporter
 
 const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
 const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
+const cacheLocation = path.join(process.cwd(), `.cache`, `webpack`, `page-ssr`)
 
 export async function writeQueryContext({
   staticQueriesByTemplate,
@@ -82,6 +83,14 @@ export async function createPageSSRBundle({
     target: `node`,
     externalsPresets: {
       node: false,
+    },
+    cache: {
+      type: `filesystem`,
+      name: `page-ssr`,
+      cacheLocation,
+      buildDependencies: {
+        config: [__filename],
+      },
     },
     // those are required in some runtime paths, but we don't need them
     externals: [

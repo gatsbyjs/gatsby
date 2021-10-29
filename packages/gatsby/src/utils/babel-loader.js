@@ -34,6 +34,7 @@ module.exports = babelLoader.custom(babel => {
     customOptions({
       stage = `test`,
       reactRuntime = `classic`,
+      reactImportSource,
       rootDir = process.cwd(),
       ...options
     }) {
@@ -45,6 +46,7 @@ module.exports = babelLoader.custom(babel => {
         custom: {
           stage,
           reactRuntime,
+          reactImportSource,
         },
         loader: {
           cacheIdentifier: JSON.stringify({

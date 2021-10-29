@@ -20,17 +20,15 @@ exports.IMAGE_PROCESSING_JOB_NAME = `IMAGE_PROCESSING`
  */
 const q = queue(
   async ({ inputPaths, outputDir, args }) =>
-    Promise.all(
-      processFile(
-        inputPaths[0].path,
-        args.operations.map(operation => {
-          return {
-            outputPath: path.join(outputDir, operation.outputPath),
-            args: operation.args,
-          }
-        }),
-        args.pluginOptions
-      )
+    processFile(
+      inputPaths[0].path,
+      args.operations.map(operation => {
+        return {
+          outputPath: path.join(outputDir, operation.outputPath),
+          args: operation.args,
+        }
+      }),
+      args.pluginOptions
     ),
   // When inside query workers, we only want to use the current core
   process.env.GATSBY_WORKER_POOL_WORKER ? 1 : Math.max(1, cpuCoreCount() - 1)

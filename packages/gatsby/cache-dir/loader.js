@@ -33,7 +33,7 @@ const createPageDataUrl = rawPath => {
 }
 
 function doFetch(url, method = `GET`) {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     const req = new XMLHttpRequest()
     req.open(method, url, true)
     req.onreadystatechange = () => {
@@ -98,6 +98,8 @@ export class BaseLoader {
     this.inFlightDb = new Map()
     this.staticQueryDb = {}
     this.pageDataDb = new Map()
+    this.isPrefetchQueueRunning = false
+    this.prefetchQueued = []
     this.prefetchTriggered = new Set()
     this.prefetchCompleted = new Set()
     this.loadComponent = loadComponent
@@ -396,32 +398,90 @@ export class BaseLoader {
 
   prefetch(pagePath) {
     if (!this.shouldPrefetch(pagePath)) {
-      return false
+      return {
+        then: resolve => resolve(false),
+        abort: () => {},
+      }
+    }
+    if (this.prefetchTriggered.has(pagePath)) {
+      return {
+        then: resolve => resolve(true),
+        abort: () => {},
+      }
     }
 
-    // Tell plugins with custom prefetching logic that they should start
-    // prefetching this path.
-    if (!this.prefetchTriggered.has(pagePath)) {
-      this.apiRunner(`onPrefetchPathname`, { pathname: pagePath })
-      this.prefetchTriggered.add(pagePath)
+    const defer = {
+      resolve: null,
+      reject: null,
+      promise: null,
     }
-
-    // If a plugin has disabled core prefetching, stop now.
-    if (this.prefetchDisabled) {
-      return false
-    }
-
-    const realPath = findPath(pagePath)
-    // Todo make doPrefetch logic cacheable
-    // eslint-disable-next-line consistent-return
-    this.doPrefetch(realPath).then(() => {
-      if (!this.prefetchCompleted.has(pagePath)) {
-        this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
-        this.prefetchCompleted.add(pagePath)
+    defer.promise = new Promise((resolve, reject) => {
+      defer.resolve = resolve
+      defer.reject = reject
+    })
+    this.prefetchQueued.push([pagePath, defer])
+    const abortC = new AbortController()
+    abortC.signal.addEventListener(`abort`, () => {
+      const index = this.prefetchQueued.findIndex(([p]) => p === pagePath)
+      // remove from the queue
+      if (index !== -1) {
+        this.prefetchQueued.splice(index, 1)
       }
     })
 
-    return true
+    if (!this.isPrefetchQueueRunning) {
+      this.isPrefetchQueueRunning = true
+      setTimeout(() => {
+        this._processNextPrefetchBatch()
+      }, 3000)
+    }
+
+    return {
+      then: (resolve, reject) => defer.promise.then(resolve, reject),
+      abort: abortC.abort.bind(abortC),
+    }
+  }
+
+  _processNextPrefetchBatch() {
+    const idleCallback = window.requestIdleCallback || (cb => setTimeout(cb, 0))
+
+    idleCallback(() => {
+      const toPrefetch = this.prefetchQueued.splice(0, 4)
+      const prefetches = Promise.all(
+        toPrefetch.map(([pagePath, dPromise]) => {
+          // Tell plugins with custom prefetching logic that they should start
+          // prefetching this path.
+          if (!this.prefetchTriggered.has(pagePath)) {
+            this.apiRunner(`onPrefetchPathname`, { pathname: pagePath })
+            this.prefetchTriggered.add(pagePath)
+          }
+
+          // If a plugin has disabled core prefetching, stop now.
+          if (this.prefetchDisabled) {
+            return dPromise.resolve(false)
+          }
+
+          return this.doPrefetch(findPath(pagePath)).then(() => {
+            if (!this.prefetchCompleted.has(pagePath)) {
+              this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
+              this.prefetchCompleted.add(pagePath)
+            }
+
+            dPromise.resolve(true)
+          })
+        })
+      )
+
+      if (this.prefetchQueued.length) {
+        prefetches.then(() => {
+          setTimeout(() => {
+            this._processNextPrefetchBatch()
+          }, 3000)
+        })
+      } else {
+        this.isPrefetchQueueRunning = false
+      }
+    })
   }
 
   doPrefetch(pagePath) {

@@ -29,7 +29,7 @@ async function distributeWorkload(workers, count = 50) {
 
 export async function downloadContentfulAssets(gatsbyFunctions) {
   const {
-    actions: { createNode, touchNode },
+    actions: { createNode, touchNode, createNodeField },
     createNodeId,
     store,
     cache,
@@ -95,7 +95,7 @@ export async function downloadContentfulAssets(gatsbyFunctions) {
       }
 
       if (fileNodeID) {
-        node.localFile___NODE = fileNodeID
+        createNodeField({ node, name: `localFile`, value: fileNodeID })
       }
 
       return node

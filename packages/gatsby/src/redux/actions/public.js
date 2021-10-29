@@ -27,18 +27,15 @@ const { getPageMode } = require(`../../utils/page-mode`)
 const normalizePath = require(`../../utils/normalize-path`).default
 import { createJobV2FromInternalJob } from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
-import { warnOnce } from "../../utils/warn-once"
-import fs from "fs-extra"
+import { reportOnce } from "../../utils/report-once"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
 
-/**
- * Memoize function used to pick shadowed page components to avoid expensive I/O.
- * Ideally, we should invalidate memoized values if there are any FS operations
- * on files that are in shadowing chain, but webpack currently doesn't handle
- * shadowing changes during develop session, so no invalidation is not a deal breaker.
- */
+// Memoize function used to pick shadowed page components to avoid expensive I/O.
+// Ideally, we should invalidate memoized values if there are any FS operations
+// on files that are in shadowing chain, but webpack currently doesn't handle
+// shadowing changes during develop session, so no invalidation is not a deal breaker.
 const shadowCreatePagePath = _.memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 )
@@ -163,6 +160,7 @@ const reservedFields = [
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pageContext` as well as to the graphql query
  * as graphql arguments.
+ * @param {boolean} page.defer When set to `true`, Gatsby will exclude the page from the build step and instead generate it during the first HTTP request. Default value is `false`. Also see docs on [Deferred Static Generation](/docs/reference/rendering-options/deferred-static-generation/).
  * @example
  * createPage({
  *   path: `/my-sweet-new-page/`,
@@ -1198,7 +1196,7 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `CREATE_JOB`,
@@ -1252,7 +1250,7 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `SET_JOB`,
@@ -1279,7 +1277,7 @@ actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `END_JOB`,
