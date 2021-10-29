@@ -111,7 +111,7 @@ You can add multiple custom fields by incrementing the index of the `data-item-c
 
 ### Selling digital products
 
-Snipcart enables the sale of digital goods such as e-books, photography, and other artwork. To sell a file you intend for download, you'll need to upload it to your Snipcart dashboard and then add the resulting GUID as the value of the `data-item-file-guid` attribute to your product's markup. You can specify a file access expiry in days and a maximum number of downloads per order from the dashboard.
+Snipcart enables the sale of digital goods such as e-books, photography, and other artwork. To sell a file for others to download, you'll need to upload it to your Snipcart dashboard and then add the resulting GUID as the value of the `data-item-file-guid` attribute to your product's markup. You can specify a file access expiry in days and a maximum number of downloads per order from the dashboard.
 
 ```jsx
 <section>

@@ -298,7 +298,7 @@ describeWhenLMDB(`worker (queries)`, () => {
     const spy = jest.spyOn(worker.single, `runQueries`)
 
     // @ts-ignore - worker is defined
-    await runQueriesInWorkersQueue(worker, queryIdsBig, 10)
+    await runQueriesInWorkersQueue(worker, queryIdsBig, { chunkSize: 10 })
     const stateFromWorker = await worker.single.getState()
 
     // Called the complete ABC so we can test _a

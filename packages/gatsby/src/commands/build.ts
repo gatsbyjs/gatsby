@@ -55,7 +55,7 @@ import {
 import { shouldGenerateEngines } from "../utils/engines-helpers"
 import reporter from "gatsby-cli/lib/reporter"
 import type webpack from "webpack"
-import { materializePageMode } from "../utils/page-mode"
+import { materializePageMode, getPageMode } from "../utils/page-mode"
 import { validateEngines } from "../utils/validate-engines"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
@@ -86,7 +86,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   markWebpackStatusAsPending()
 
   const publicDir = path.join(program.directory, `public`)
-  initTracer(
+  await initTracer(
     process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
   )
   const buildActivity = report.phantomActivity(`build`)
@@ -104,6 +104,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const { gatsbyNodeGraphQLFunction, workerPool } = await bootstrap({
     program,
+    parentSpan: buildSpan,
+  })
+
+  await apiRunnerNode(`onPreBuild`, {
+    graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
   })
 
@@ -221,7 +226,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   }
 
   const cacheActivity = report.activityTimer(`Caching Webpack compilations`, {
-    parentSpan: buildActivityTimer.span,
+    parentSpan: buildSpan,
   })
   try {
     cacheActivity.start()
@@ -243,18 +248,20 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // Only run queries with mode SSG
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
-      query => query.mode === `SSG`
+      query => getPageMode(query) === `SSG`
     )
   }
 
   let waitForWorkerPoolRestart = Promise.resolve()
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    await runQueriesInWorkersQueue(workerPool, queryIds)
+    await runQueriesInWorkersQueue(workerPool, queryIds, {
+      parentSpan: buildSpan,
+    })
     // Jobs still might be running even though query running finished
     await waitUntilAllJobsComplete()
     // Restart worker pool before merging state to lower memory pressure while merging state
     waitForWorkerPoolRestart = workerPool.restart()
-    await mergeWorkerState(workerPool)
+    await mergeWorkerState(workerPool, buildSpan)
   } else {
     await runStaticQueries({
       queryIds,
@@ -280,7 +287,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     })
   }
 
-  if (process.send) {
+  if (process.send && shouldGenerateEngines()) {
     process.send({
       type: `LOG_ACTION`,
       action: {
@@ -289,11 +296,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       },
     })
   }
-
-  await apiRunnerNode(`onPreBuild`, {
-    graphql: gatsbyNodeGraphQLFunction,
-    parentSpan: buildSpan,
-  })
 
   // Copy files from the static directory to
   // an equivalent static directory within public.
@@ -378,10 +380,28 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   await waitMaterializePageMode
   const waitWorkerPoolEnd = Promise.all(workerPool.end())
 
-  telemetry.addSiteMeasurement(`BUILD_END`, {
-    pagesCount: toRegenerate.length, // number of html files that will be written
-    totalPagesCount: store.getState().pages.size, // total number of pages
-  })
+  {
+    let SSGCount = 0
+    let DSGCount = 0
+    let SSRCount = 0
+    for (const page of store.getState().pages.values()) {
+      if (page.mode === `SSR`) {
+        SSRCount++
+      } else if (page.mode === `DSG`) {
+        DSGCount++
+      } else {
+        SSGCount++
+      }
+    }
+
+    telemetry.addSiteMeasurement(`BUILD_END`, {
+      pagesCount: toRegenerate.length, // number of html files that will be written
+      totalPagesCount: store.getState().pages.size, // total number of pages
+      SSRCount,
+      DSGCount,
+      SSGCount,
+    })
+  }
 
   const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {
     parentSpan: buildSpan,

@@ -2,6 +2,7 @@ import { WorkerPool } from "gatsby-worker"
 import { chunk } from "lodash"
 import reporter from "gatsby-cli/lib/reporter"
 import { cpuCoreCount } from "gatsby-core-utils"
+import { Span } from "opentracing"
 
 import { IGroupedQueryIds } from "../../services"
 import { initJobsMessagingInMainProcess } from "../jobs/worker-messaging"
@@ -46,16 +47,27 @@ function handleRunQueriesInWorkersQueueError(e: Error): never {
 export async function runQueriesInWorkersQueue(
   pool: GatsbyWorkerPool,
   queryIds: IGroupedQueryIds,
-  chunkSize = queriesChunkSize
+  opts?: {
+    chunkSize?: number
+    parentSpan?: Span
+  }
 ): Promise<void> {
   const activity = reporter.createProgress(
     `run queries in workers`,
-    queryIds.staticQueryIds.length + queryIds.pageQueryIds.length
+    queryIds.staticQueryIds.length + queryIds.pageQueryIds.length,
+    0,
+    { parentSpan: opts?.parentSpan }
   )
   activity.start()
   try {
-    const staticQuerySegments = chunk(queryIds.staticQueryIds, chunkSize)
-    const pageQuerySegments = chunk(queryIds.pageQueryIds, chunkSize)
+    const staticQuerySegments = chunk(
+      queryIds.staticQueryIds,
+      opts?.chunkSize ?? queriesChunkSize
+    )
+    const pageQuerySegments = chunk(
+      queryIds.pageQueryIds,
+      opts?.chunkSize ?? queriesChunkSize
+    )
 
     pool.all.setComponents()
 
@@ -90,8 +102,11 @@ export async function runQueriesInWorkersQueue(
   }
 }
 
-export async function mergeWorkerState(pool: GatsbyWorkerPool): Promise<void> {
-  const activity = reporter.activityTimer(`Merge worker state`)
+export async function mergeWorkerState(
+  pool: GatsbyWorkerPool,
+  parentSpan?: Span
+): Promise<void> {
+  const activity = reporter.activityTimer(`Merge worker state`, { parentSpan })
   activity.start()
 
   for (const { workerId } of pool.getWorkerInfo()) {

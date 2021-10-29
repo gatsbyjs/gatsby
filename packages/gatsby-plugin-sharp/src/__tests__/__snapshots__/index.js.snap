@@ -166,63 +166,6 @@ exports[`gatsby-plugin-sharp fixed does not warn when the requested width is equ
 }
 `;
 
-exports[`gatsby-plugin-sharp fixed should give the same result with createJob as with createJobV2 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      Object {
-        "args": Object {
-          "isLazy": false,
-          "operations": Array [
-            Object {
-              "args": Object {
-                "toFormat": "png",
-                "width": 1,
-              },
-              "outputPath": "89172/test.png",
-            },
-            Object {
-              "args": Object {
-                "toFormat": "png",
-                "width": 2,
-              },
-              "outputPath": "002c7/test.png",
-            },
-            Object {
-              "args": Object {
-                "toFormat": "png",
-                "width": 2,
-              },
-              "outputPath": "002c7/test.png",
-            },
-          ],
-          "pluginOptions": Object {
-            "base64Width": 20,
-            "defaultQuality": 50,
-            "failOnError": true,
-            "forceBase64Format": "",
-            "lazyImageGeneration": true,
-            "stripMetadata": true,
-            "useMozJpeg": false,
-          },
-        },
-        "inputPaths": Array [
-          "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/test.png",
-        ],
-        "name": "IMAGE_PROCESSING",
-        "outputDir": "<PROJECT_ROOT>/public/static/1234",
-      },
-    ],
-  ],
-  "results": Array [
-    Object {
-      "type": "return",
-      "value": Promise {},
-    },
-  ],
-}
-`;
-
 exports[`gatsby-plugin-sharp fixed warns when the requested width is greater than the image width 1`] = `
 [MockFunction] {
   "calls": Array [
@@ -1085,23 +1028,6 @@ Object {
 }
 `;
 
-exports[`gatsby-plugin-sharp fluid includes responsive image properties, e.g. sizes, srcset, etc. with the createJob api 1`] = `
-Object {
-  "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABP0lEQVQ4y2P4r8ZANmKgvuZ/agy/VaHojyopmv+CNf/XQCCoCEHNf1VBqv+oM5yVY1giwbBakuG2AkjknzoW/eh2/tdgOCPHYM7OwMDAwAgiGFgYGMJ5GF4og43ApRmuk58JqpMJRjIwMBizMbxTZviPaj8ihCD6rThAStkgljJATWEHc3P5wT5SxdD8B2ztERmQIiYGdAAxSpaF4T2q5TDN4HCaLgZSxMyAE1yQgwY+Fs1zxQloviSPTTMktM7JgVzIiKEH4hElFoavKogAQgltiJA3F0gdOyPC58yw8GsUwhFgUMvVGR4oMqiwogQbhOHLxfBLDcVabIlEneGxEkMMLwMvTLc4M0OdEMN3VfRIxp48/6mDnPdCieGkHCiRflRh+K+JPXljz1IQJ0AzhjrRGQPZC5As+ZeuhQGRmgHU8mT34D0STQAAAABJRU5ErkJggg==",
-  "density": 72,
-  "originalImg": "/static/1234/7e516/test.png",
-  "originalName": "test.png",
-  "presentationHeight": 100,
-  "presentationWidth": 100,
-  "sizes": "(max-width: 100px) 100vw, 100px",
-  "src": "/static/1234/7e516/test.png",
-  "srcSet": "/static/1234/7e516/test.png 100w",
-  "srcSetType": "image/png",
-  "tracedSVG": undefined,
-}
-`;
-
 exports[`gatsby-plugin-sharp fluid infers the maxWidth if only maxHeight is given 1`] = `
 [MockFunction] {
   "calls": Array [
@@ -1358,49 +1284,6 @@ exports[`gatsby-plugin-sharp fluid reject any breakpoints larger than the origin
 }
 `;
 
-exports[`gatsby-plugin-sharp fluid should give the same result with createJob as with createJobV2 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      Object {
-        "args": Object {
-          "isLazy": false,
-          "operations": Array [
-            Object {
-              "args": Object {
-                "toFormat": "png",
-                "width": 100,
-              },
-              "outputPath": "7e516/test.png",
-            },
-          ],
-          "pluginOptions": Object {
-            "base64Width": 20,
-            "defaultQuality": 50,
-            "failOnError": true,
-            "forceBase64Format": "",
-            "lazyImageGeneration": true,
-            "stripMetadata": true,
-            "useMozJpeg": false,
-          },
-        },
-        "inputPaths": Array [
-          "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/test.png",
-        ],
-        "name": "IMAGE_PROCESSING",
-        "outputDir": "<PROJECT_ROOT>/public/static/1234",
-      },
-    ],
-  ],
-  "results": Array [
-    Object {
-      "type": "return",
-      "value": Promise {},
-    },
-  ],
-}
-`;
-
 exports[`gatsby-plugin-sharp fluid should throw if maxWidth is less than 1 1`] = `[MockFunction]`;
 
 exports[`gatsby-plugin-sharp fluid should throw on srcSet breakpoints less than 1 1`] = `[MockFunction]`;
@@ -1416,97 +1299,7 @@ Object {
 }
 `;
 
-exports[`gatsby-plugin-sharp queueImageResizing with createJob file name works with spaces & special characters createJob 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      Object {
-        "args": Object {
-          "isLazy": false,
-          "operations": Array [
-            Object {
-              "args": Object {
-                "toFormat": "png",
-                "width": 3,
-              },
-              "outputPath": "4a20d/spaces and '\\"@#$%^&,.png",
-            },
-          ],
-          "pluginOptions": Object {
-            "base64Width": 20,
-            "defaultQuality": 50,
-            "failOnError": true,
-            "forceBase64Format": "",
-            "lazyImageGeneration": true,
-            "stripMetadata": true,
-            "useMozJpeg": false,
-          },
-        },
-        "inputPaths": Array [
-          "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
-        ],
-        "name": "IMAGE_PROCESSING",
-        "outputDir": "<PROJECT_ROOT>/public/static/1234",
-      },
-      Object {},
-      undefined,
-    ],
-  ],
-  "results": Array [
-    Object {
-      "type": "return",
-      "value": Promise {},
-    },
-  ],
-}
-`;
-
-exports[`gatsby-plugin-sharp queueImageResizing with createJob should round height when auto-calculated createJob 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      Object {
-        "args": Object {
-          "isLazy": false,
-          "operations": Array [
-            Object {
-              "args": Object {
-                "toFormat": "png",
-                "width": 3,
-              },
-              "outputPath": "4a20d/test.png",
-            },
-          ],
-          "pluginOptions": Object {
-            "base64Width": 20,
-            "defaultQuality": 50,
-            "failOnError": true,
-            "forceBase64Format": "",
-            "lazyImageGeneration": true,
-            "stripMetadata": true,
-            "useMozJpeg": false,
-          },
-        },
-        "inputPaths": Array [
-          "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
-        ],
-        "name": "IMAGE_PROCESSING",
-        "outputDir": "<PROJECT_ROOT>/public/static/1234",
-      },
-      Object {},
-      undefined,
-    ],
-  ],
-  "results": Array [
-    Object {
-      "type": "return",
-      "value": Promise {},
-    },
-  ],
-}
-`;
-
-exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 file name works with spaces & special characters createJobV2 1`] = `
+exports[`gatsby-plugin-sharp queueImageResizing file name works with spaces & special characters createJobV2 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
@@ -1549,7 +1342,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 file name works
 }
 `;
 
-exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 should round height when auto-calculated createJobV2 1`] = `
+exports[`gatsby-plugin-sharp queueImageResizing should round height when auto-calculated createJobV2 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
