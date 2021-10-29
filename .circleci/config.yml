@@ -648,13 +648,10 @@ workflows:
       - windows_unit_tests:
           <<: *ignore_docs
           requires:
-            - lint
             - bootstrap
       - unit_tests_node14:
           <<: *ignore_docs
           requires:
-            - lint
-            - typecheck
             - bootstrap
       - unit_tests_node14_lmdb_store:
           <<: *ignore_docs
