@@ -59,7 +59,6 @@ function resolvePageMode(
     const pageConfig = pageConfigFn({ params: fsRouteParams })
     if (typeof pageConfig.defer === `boolean`) {
       pageMode = pageConfig.defer ? `DSG` : `SSG`
-      console.log(`page: "${page.path}" - "${pageMode}"`, pageConfig)
     }
   }
 
