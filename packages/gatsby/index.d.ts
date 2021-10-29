@@ -207,6 +207,8 @@ export interface GatsbyConfig {
   /** Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.*/
   polyfill?: boolean
   mapping?: Record<string, string>
+  jsxRuntime?: "automatic" | "classic"
+  jsxImportSource?: string
   /**
    * Setting the proxy config option will tell the develop server to proxy any unknown requests to your specified server.
    * @see https://www.gatsbyjs.org/docs/api-proxy/
@@ -685,7 +687,10 @@ export interface GatsbySSR<
    *   replaceBodyHTMLString(inlinedHTML)
    * }
    */
-  replaceRenderer?(args: ReplaceRendererArgs, options: PluginOptions): void | Promise<void>
+  replaceRenderer?(
+    args: ReplaceRendererArgs,
+    options: PluginOptions
+  ): void | Promise<void>
 
   /**
    * Allow a plugin to wrap the page element.

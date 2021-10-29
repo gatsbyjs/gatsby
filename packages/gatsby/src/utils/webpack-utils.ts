@@ -367,6 +367,7 @@ export const createWebpackUtils = (
         options: {
           stage,
           reactRuntime: config.jsxRuntime,
+          reactImportSource: config.jsxImportSource,
           cacheDirectory: path.join(
             program.directory,
             `.cache`,

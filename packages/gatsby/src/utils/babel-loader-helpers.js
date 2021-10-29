@@ -31,7 +31,7 @@ const getCustomOptions = stage => {
 const configItemsMemoCache = new Map()
 
 const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
-  const { stage, reactRuntime } = options
+  const { stage, reactRuntime, reactImportSource } = options
 
   if (configItemsMemoCache.has(stage)) {
     return configItemsMemoCache.get(stage)
@@ -103,6 +103,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
         {
           stage,
           reactRuntime,
+          reactImportSource,
         },
       ],
       {
