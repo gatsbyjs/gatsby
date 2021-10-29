@@ -75,7 +75,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   markWebpackStatusAsPending()
 
   const publicDir = path.join(program.directory, `public`)
-  initTracer(
+  await initTracer(
     process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
   )
   const buildActivity = report.phantomActivity(`build`)
@@ -358,9 +358,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   report.info(`Done building in ${process.uptime()} sec`)
 
-  buildSpan.finish()
-  await stopTracer()
   buildActivity.end()
+  await stopTracer()
 
   if (program.logPages) {
     if (toRegenerate.length) {
