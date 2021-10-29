@@ -471,11 +471,8 @@ export async function sourceNodes(
 
   creationActivity.end()
 
-  // @todo add own activity!
-
+  // Download asset files to local fs
   if (pluginConfig.get(`downloadLocal`)) {
-    reporter.info(`Download Contentful asset files`)
-
     await downloadContentfulAssets({
       actions,
       createNodeId,
