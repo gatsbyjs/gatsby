@@ -258,6 +258,48 @@ describe(`actual compiling`, () => {
       expect(errors).toEqual([])
       expect(result.get(`mockFile`)).toBeUndefined()
     })
+
+    it(`supports page and config query in one file`, () => {
+      const nodes = [
+        createGatsbyDoc(
+          `mockFile`,
+          `query page { allPostsJson { nodes { id } } }`
+        ),
+        createGatsbyDoc(
+          `mockFile`,
+          `query config { allPostsJson { nodes { id } } }`,
+          { isConfigQuery: true }
+        ),
+      ]
+      const errors = []
+      const result = processQueries({
+        schema,
+        parsedQueries: nodes,
+        addError: e => {
+          errors.push(e)
+        },
+      })
+      expect(errors).toEqual([])
+      expect(result.get(`mockFile`)).toMatchInlineSnapshot(`
+        Object {
+          "hash": "hash",
+          "isConfigQuery": false,
+          "isHook": false,
+          "isStaticQuery": false,
+          "name": "page",
+          "originalText": "query page { allPostsJson { nodes { id } } }",
+          "path": "mockFile",
+          "text": "query page {
+          allPostsJson {
+            nodes {
+              id
+            }
+          }
+        }
+        ",
+        }
+      `)
+    })
   })
 
   it(`adds fragments from same documents`, async () => {
