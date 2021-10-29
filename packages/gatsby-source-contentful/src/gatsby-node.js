@@ -7,7 +7,6 @@ import { maskText } from "./plugin-options"
 
 export { createSchemaCustomization } from "./create-schema-customization"
 export { sourceNodes } from "./source-nodes"
-export { onPreBootstrap } from "./on-pre-bootstrap"
 export { setFieldsOnGraphQLNodeType } from "./extend-node-type"
 
 const fetch = fetchRetry(origFetch)
