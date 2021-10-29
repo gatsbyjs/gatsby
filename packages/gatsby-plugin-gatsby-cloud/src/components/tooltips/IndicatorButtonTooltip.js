@@ -7,13 +7,13 @@ export default function IndicatorButtonTooltip({
   testId,
   elementRef,
 }) {
-  const elmOffsetTop = useMemo(() => {
+  const elmOffsetTop = () => {
     if (elementRef && elementRef.current) {
       const elm = elementRef.current
       return elm.offsetTop
     }
     return 0
-  }, [elementRef])
+  }
   return (
     <div
       data-gatsby-preview-indicator="tooltip"
