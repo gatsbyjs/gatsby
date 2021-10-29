@@ -427,8 +427,9 @@ const processDefinitions = ({
       )
     }
 
-    // We ignore config queries for now
-    // TODO: change structure of processedQueries to Map<filePath, Map<`pageQuery`|`staticQuery`|`configQuery`, Query>>
+    // Our current code only supports single graphql query per file (page or static query per file)
+    // So, not adding config query because it can overwrite existing page query
+    // TODO: allow multiple queries in single file, while preserving limitation of a single page query per file
     if (!query.isConfigQuery) {
       processedQueries.set(filePath, query)
     }
