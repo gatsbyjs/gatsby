@@ -236,8 +236,13 @@ export function generateImageSource(
   return { width, height, format: toFormat, src }
 }
 
-export async function resolveGatsbyImageData(image, options, ...restArgs) {
-  const { cache } = restArgs.pop()
+export async function resolveGatsbyImageData(
+  image,
+  options,
+  context,
+  info,
+  { cache }
+) {
   if (!isImage(image)) return null
 
   const { generateImageData } = await import(`gatsby-plugin-image`)
