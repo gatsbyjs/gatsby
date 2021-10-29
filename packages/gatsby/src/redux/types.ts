@@ -140,7 +140,7 @@ export interface IGatsbyPageComponent {
   pages: Set<string>
   isInBootstrap: boolean
   serverData: boolean
-  // TODO: config: boolean
+  config: boolean
 }
 
 export interface IDefinitionMeta {
@@ -433,7 +433,7 @@ export interface ISetComponentFeatures {
   payload: {
     componentPath: string
     serverData: boolean
-    // TODO: config: boolean
+    config: boolean
   }
 }
 
