@@ -51,8 +51,6 @@ async function recompileSSRBundle({
 
   clearRequireCacheRecursively(rendererPath)
 
-  // exec outer config function for each template
-
   if (websocketManager) {
     websocketManager.emitStaleServerData()
   }
