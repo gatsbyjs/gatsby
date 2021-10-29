@@ -94,7 +94,7 @@ export interface IGatsbyConfig {
   pathPrefix?: string
   assetPrefix?: string
   mapping?: Record<string, string>
-  jsxRuntime?: string
+  jsxRuntime?: "classic" | "automatic"
   jsxImportSource?: string
 }
 
