@@ -365,3 +365,13 @@ module.exports = {
   jsxRuntime: "automatic",
 }
 ```
+
+## jsxImportSource
+
+With the new jsxRuntime you can set which package React should use as underlying jsx transformer. For example you can set it to "@emotion/react" so by default @emotion/react is used instead of the react package.
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  jsxImportSource: "@emotion/react",
+}
+```
