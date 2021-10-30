@@ -20,6 +20,7 @@ import { Span } from "opentracing"
 export { reverseFixedPagePath }
 
 import { IExecutionResult } from "../query/types"
+import { getPageMode } from "./page-mode"
 
 export interface IPageDataWithQueryResult extends IPageData {
   result: IExecutionResult
@@ -208,7 +209,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
       if (
         _CFLAGS_.GATSBY_MAJOR !== `4` ||
         !isBuild ||
-        (isBuild && page.mode === `SSG`)
+        (isBuild && getPageMode(page) === `SSG`)
       ) {
         const staticQueryHashes =
           staticQueriesByTemplate.get(page.componentPath) || []

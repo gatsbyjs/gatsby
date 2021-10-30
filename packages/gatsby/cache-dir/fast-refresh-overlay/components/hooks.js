@@ -45,3 +45,35 @@ export function useStackFrame({ moduleId, lineNumber, columnNumber }) {
 
   return response
 }
+
+export function useFileCodeFrame({ filePath, lineNumber, columnNumber }) {
+  const url =
+    `/__file-code-frame?filePath=` +
+    window.encodeURIComponent(filePath) +
+    `&lineNumber=` +
+    window.encodeURIComponent(lineNumber) +
+    `&columnNumber=` +
+    window.encodeURIComponent(columnNumber)
+
+  const [response, setResponse] = React.useState({ decoded: null })
+
+  React.useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch(url)
+        const json = await res.json()
+        const decoded = prettifyStack(json.codeFrame)
+        setResponse({
+          decoded,
+        })
+      } catch (err) {
+        setResponse({
+          decoded: prettifyStack(err.message),
+        })
+      }
+    }
+    fetchData()
+  }, [])
+
+  return response
+}
