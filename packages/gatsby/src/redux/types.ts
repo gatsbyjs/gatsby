@@ -94,6 +94,8 @@ export interface IGatsbyConfig {
   pathPrefix?: string
   assetPrefix?: string
   mapping?: Record<string, string>
+  jsxRuntime?: "classic" | "automatic"
+  jsxImportSource?: string
 }
 
 export interface IGatsbyNode {
@@ -140,7 +142,7 @@ export interface IGatsbyPageComponent {
   pages: Set<string>
   isInBootstrap: boolean
   serverData: boolean
-  // TODO: config: boolean
+  config: boolean
 }
 
 export interface IDefinitionMeta {
@@ -433,7 +435,7 @@ export interface ISetComponentFeatures {
   payload: {
     componentPath: string
     serverData: boolean
-    // TODO: config: boolean
+    config: boolean
   }
 }
 

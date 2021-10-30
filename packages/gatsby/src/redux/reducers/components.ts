@@ -26,6 +26,7 @@ export const componentsReducer = (
           pages: new Set(),
           isInBootstrap: true,
           serverData: false,
+          config: false,
         }
       }
       component.pages.add(action.payload.path)
@@ -50,7 +51,7 @@ export const componentsReducer = (
       const component = state.get(path)
       if (component) {
         component.serverData = action.payload.serverData
-        // TODO: component.config = action.payload.config
+        component.config = action.payload.config
       }
       return state
     }

@@ -55,7 +55,11 @@ import {
 import { shouldGenerateEngines } from "../utils/engines-helpers"
 import reporter from "gatsby-cli/lib/reporter"
 import type webpack from "webpack"
-import { materializePageMode, getPageMode } from "../utils/page-mode"
+import {
+  materializePageMode,
+  getPageMode,
+  preparePageTemplateConfigs,
+} from "../utils/page-mode"
 import { validateEngines } from "../utils/validate-engines"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
@@ -206,6 +210,19 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
   } finally {
     buildSSRBundleActivityProgress.end()
+  }
+
+  // exec outer config function for each template
+  const pageConfigActivity = report.activityTimer(`Execute page configs`, {
+    parentSpan: buildSpan,
+  })
+  pageConfigActivity.start()
+  try {
+    await preparePageTemplateConfigs(gatsbyNodeGraphQLFunction)
+  } catch (err) {
+    reporter.panic(err)
+  } finally {
+    pageConfigActivity.end()
   }
 
   if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
