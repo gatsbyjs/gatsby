@@ -1,11 +1,7 @@
 // @ts-check
 // This is more an integration test than it is a unit test. We try to mock as little as we can
 import _ from "lodash"
-import {
-  onPreBootstrap,
-  createSchemaCustomization,
-  sourceNodes,
-} from "../gatsby-node"
+import { createSchemaCustomization, sourceNodes } from "../gatsby-node"
 import { fetchContent, fetchContentTypes } from "../fetch"
 import { makeId } from "../normalize"
 
@@ -68,8 +64,6 @@ describe(`gatsby-node`, () => {
   const simulateGatsbyBuild = async function (
     pluginOptions = defaultPluginOptions
   ) {
-    await onPreBootstrap({ store })
-
     await createSchemaCustomization(
       { schema, actions, reporter, cache },
       pluginOptions

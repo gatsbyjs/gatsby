@@ -21,6 +21,7 @@ describe(`setSiteConfig`, () => {
     expect(action).toMatchInlineSnapshot(`
       Object {
         "payload": Object {
+          "jsxRuntime": "classic",
           "pathPrefix": "",
           "polyfill": true,
           "siteMetadata": Object {
@@ -37,6 +38,7 @@ describe(`setSiteConfig`, () => {
     expect(action).toMatchInlineSnapshot(`
       Object {
         "payload": Object {
+          "jsxRuntime": "classic",
           "pathPrefix": "",
           "polyfill": true,
         },

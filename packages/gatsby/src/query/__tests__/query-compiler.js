@@ -179,6 +179,129 @@ describe(`actual compiling`, () => {
     })
   })
 
+  describe(`config queries`, () => {
+    // config query is kept as is (at least for now)
+    // it is validated but not extracted
+    it(`validates config query`, async () => {
+      const nodes = [
+        createGatsbyDoc(
+          `mockFile`,
+          `query mockFileQuery {
+             allPostsJson {
+               nodes {
+                 nonExistingField
+               }
+            }
+          }`,
+          {
+            isConfigQuery: true,
+          }
+        ),
+      ]
+      const errors = []
+      const result = processQueries({
+        schema,
+        parsedQueries: nodes,
+        addError: e => {
+          errors.push(e)
+        },
+      })
+      expect(errors.length).toEqual(1)
+      expect(errors[0]).toMatchInlineSnapshot(`
+        Object {
+          "context": Object {
+            "field": "nonExistingField",
+            "sourceMessage": "Cannot query field \\"nonExistingField\\" on type \\"PostsJson\\".",
+            "type": "PostsJson",
+          },
+          "filePath": "mockFile",
+          "id": "85923",
+          "location": Object {
+            "end": Object {
+              "column": 18,
+              "line": 4,
+            },
+            "start": Object {
+              "column": 18,
+              "line": 4,
+            },
+          },
+        }
+      `)
+      expect(result).toEqual(new Map())
+    })
+
+    it(`doesn't extract config query`, async () => {
+      const nodes = [
+        createGatsbyDoc(
+          `mockFile`,
+          `query mockFileQuery {
+             allPostsJson {
+               nodes {
+                 id
+               }
+            }
+          }`,
+          {
+            isConfigQuery: true,
+          }
+        ),
+      ]
+      const errors = []
+      const result = processQueries({
+        schema,
+        parsedQueries: nodes,
+        addError: e => {
+          errors.push(e)
+        },
+      })
+      expect(errors).toEqual([])
+      expect(result.get(`mockFile`)).toBeUndefined()
+    })
+
+    it(`supports page and config query in one file`, () => {
+      const nodes = [
+        createGatsbyDoc(
+          `mockFile`,
+          `query page { allPostsJson { nodes { id } } }`
+        ),
+        createGatsbyDoc(
+          `mockFile`,
+          `query config { allPostsJson { nodes { id } } }`,
+          { isConfigQuery: true }
+        ),
+      ]
+      const errors = []
+      const result = processQueries({
+        schema,
+        parsedQueries: nodes,
+        addError: e => {
+          errors.push(e)
+        },
+      })
+      expect(errors).toEqual([])
+      expect(result.get(`mockFile`)).toMatchInlineSnapshot(`
+        Object {
+          "hash": "hash",
+          "isConfigQuery": false,
+          "isHook": false,
+          "isStaticQuery": false,
+          "name": "page",
+          "originalText": "query page { allPostsJson { nodes { id } } }",
+          "path": "mockFile",
+          "text": "query page {
+          allPostsJson {
+            nodes {
+              id
+            }
+          }
+        }
+        ",
+        }
+      `)
+    })
+  })
+
   it(`adds fragments from same documents`, async () => {
     const nodes = [
       createGatsbyDoc(
@@ -325,6 +448,7 @@ describe(`actual compiling`, () => {
     expect(result.get(`mockFile1`)).toMatchInlineSnapshot(`
       Object {
         "hash": "hash",
+        "isConfigQuery": false,
         "isHook": false,
         "isStaticQuery": false,
         "name": "mockFileQuery1",
@@ -361,6 +485,7 @@ describe(`actual compiling`, () => {
     expect(result.get(`mockFile2`)).toMatchInlineSnapshot(`
       Object {
         "hash": "hash",
+        "isConfigQuery": false,
         "isHook": false,
         "isStaticQuery": false,
         "name": "mockFileQuery2",
@@ -989,6 +1114,7 @@ describe(`actual compiling`, () => {
       Map {
         "mockFile" => Object {
           "hash": "hash",
+          "isConfigQuery": false,
           "isHook": false,
           "isStaticQuery": false,
           "name": "mockFileQuery",
@@ -1075,7 +1201,7 @@ describe(`actual compiling`, () => {
 const createGatsbyDoc = (
   filePath,
   query,
-  { isHook, isStaticQuery } = { isHook: false, isStaticQuery: false }
+  { isHook = false, isStaticQuery = false, isConfigQuery = false } = {}
 ) => {
   const doc = parse(query)
   return {
@@ -1084,6 +1210,7 @@ const createGatsbyDoc = (
     text: query,
     isHook,
     isStaticQuery,
+    isConfigQuery,
     hash: `hash`,
     templateLoc: {
       start: {
