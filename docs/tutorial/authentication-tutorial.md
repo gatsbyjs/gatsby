@@ -41,9 +41,7 @@ export default function NavBar() {
 
       <nav>
         <Link to="/">Home</Link>
-        {` `}
         <Link to="/">Profile</Link>
-        {` `}
         <Link to="/">Logout</Link>
       </nav>
     </div>
@@ -331,9 +329,7 @@ export default function NavBar() {
       <span>{greetingMessage}</span> {/* highlight-line */}
       <nav>
         <Link to="/">Home</Link>
-        {` `}
         <Link to="/app/profile">Profile</Link> {/* highlight-line */}
-        {` `}
         {/* highlight-start */}
         {isLoggedIn() ? (
           <a
