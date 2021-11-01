@@ -111,7 +111,7 @@
   },
   "private": true,
   "resolutions": {
-    "theme-ui": "0.4.0-rc.14",
+    "theme-ui": "0.12.0",
     "csstype": "2.6.17"
   },
   "scripts": {
