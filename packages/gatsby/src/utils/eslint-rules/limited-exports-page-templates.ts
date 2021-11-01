@@ -18,25 +18,25 @@ import { isPageTemplate } from "../eslint-rules-helpers"
 
 const DEFAULT_GRAPHQL_TAG_NAME = `graphql`
 
-function isGetServerData(node: ExportNamedDeclaration): boolean {
+function isApiExport(node: ExportNamedDeclaration, name: string): boolean {
   // check for
-  // export function getServerData() {}
-  // export async function getServerData() {}
+  // export function name() {}
+  // export async function name() {}
   if (
     node.declaration?.type === `FunctionDeclaration` &&
-    node.declaration.id?.name === `getServerData`
+    node.declaration.id?.name === name
   ) {
     return true
   }
 
   // check for
-  // export const getServerData = () => {}
+  // export const name = () => {}
   if (node.declaration?.type === `VariableDeclaration`) {
     for (const declaration of node.declaration.declarations) {
       if (
         declaration.type === `VariableDeclarator` &&
         declaration.id.type === `Identifier` &&
-        declaration.id.name === `getServerData`
+        declaration.id.name === name
       ) {
         return true
       }
@@ -113,7 +113,7 @@ const limitedExports: Rule.RuleModule = {
   meta: {
     type: `problem`,
     messages: {
-      limitedExportsPageTemplates: `In page templates only a default export of a valid React component and the named export of a page query is allowed.
+      limitedExportsPageTemplates: `In page templates only a default export of a valid React component and the named exports of a page query, getServerData or config are allowed.
         All other named exports will cause Fast Refresh to not preserve local component state and do a full refresh.
 
         Please move your other named exports to another file. Also make sure that you only export page queries that use the "graphql" tag from "gatsby".
@@ -225,7 +225,11 @@ const limitedExports: Rule.RuleModule = {
           return undefined
         }
 
-        if (isGetServerData(node)) {
+        if (isApiExport(node, `getServerData`)) {
+          return undefined
+        }
+
+        if (isApiExport(node, `config`)) {
           return undefined
         }
 
