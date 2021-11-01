@@ -2,6 +2,7 @@
 title: The Original
 date: 2020-10-01
 topic: Westworld
+priority: high
 ---
 
 Westworld is a huge Western-themed park where human guests can interact with lifelike android "hosts", programmed to run through a daily narrative, without memory of prior days' events, and interact with guests. As hosts are unable to harm guests, guests often live out their darkest desires, including violent and sexual ones.

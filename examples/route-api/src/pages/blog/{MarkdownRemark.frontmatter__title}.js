@@ -27,8 +27,34 @@ export const query = graphql`
         date(formatString: "MM-DD-YYYY")
         topic
         title
+        priority
       }
       html
     }
   }
 `
+
+export async function config(){
+  const { data } = graphql`
+  {
+    oldPosts: allMarkdownRemark(filter: {frontmatter: {date: {lt: "2020-10-02"}}}) {
+      nodes {
+        frontmatter {
+          date
+          title
+          topic
+          priority
+        }
+      }
+    }
+  }
+  
+`
+
+return ({params})=>{
+    console.log(`Here are the params: ${JSON.stringify(params)}`);
+    return {
+      defer: params.frontmatter__priority === "high"
+    }
+  }
+}
