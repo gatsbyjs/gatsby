@@ -19,7 +19,7 @@
     "git-up": "^4.0.5",
     "is-docker": "^2.2.1",
     "lodash": "^4.17.21",
-    "node-fetch": "^2.6.5"
+    "node-fetch": "^2.6.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
