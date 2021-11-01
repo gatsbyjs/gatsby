@@ -176,7 +176,7 @@ Object {
                               "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.897438em;vertical-align:-0.08333em;",
+                              "style": "height:0.8974em;vertical-align:-0.0833em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -262,7 +262,7 @@ Object {
                                               "className": Array [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8141079999999999em;",
+                                              "style": "height:0.8141em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
@@ -309,7 +309,7 @@ Object {
                               "className": Array [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2222222222222222em;",
+                              "style": "margin-right:0.2222em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -335,7 +335,7 @@ Object {
                               "className": Array [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2222222222222222em;",
+                              "style": "margin-right:0.2222em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -357,7 +357,7 @@ Object {
                               "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.8141079999999999em;vertical-align:0em;",
+                              "style": "height:0.8141em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -443,7 +443,7 @@ Object {
                                               "className": Array [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8141079999999999em;",
+                                              "style": "height:0.8141em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
@@ -490,7 +490,7 @@ Object {
                               "className": Array [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2777777777777778em;",
+                              "style": "margin-right:0.2778em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -516,7 +516,7 @@ Object {
                               "className": Array [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2777777777777778em;",
+                              "style": "margin-right:0.2778em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -538,7 +538,7 @@ Object {
                               "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.8141079999999999em;vertical-align:0em;",
+                              "style": "height:0.8141em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -624,7 +624,7 @@ Object {
                                               "className": Array [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8141079999999999em;",
+                                              "style": "height:0.8141em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
@@ -925,7 +925,7 @@ Object {
                               "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.897438em;vertical-align:-0.08333em;",
+                              "style": "height:0.8974em;vertical-align:-0.0833em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -1011,7 +1011,7 @@ Object {
                                               "className": Array [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8141079999999999em;",
+                                              "style": "height:0.8141em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
@@ -1058,7 +1058,7 @@ Object {
                               "className": Array [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2222222222222222em;",
+                              "style": "margin-right:0.2222em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -1084,7 +1084,7 @@ Object {
                               "className": Array [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2222222222222222em;",
+                              "style": "margin-right:0.2222em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -1106,7 +1106,7 @@ Object {
                               "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.8141079999999999em;vertical-align:0em;",
+                              "style": "height:0.8141em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -1192,7 +1192,7 @@ Object {
                                               "className": Array [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8141079999999999em;",
+                                              "style": "height:0.8141em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
@@ -1239,7 +1239,7 @@ Object {
                               "className": Array [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2777777777777778em;",
+                              "style": "margin-right:0.2778em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -1265,7 +1265,7 @@ Object {
                               "className": Array [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2777777777777778em;",
+                              "style": "margin-right:0.2778em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -1287,7 +1287,7 @@ Object {
                               "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.8141079999999999em;vertical-align:0em;",
+                              "style": "height:0.8141em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -1373,7 +1373,7 @@ Object {
                                               "className": Array [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8141079999999999em;",
+                                              "style": "height:0.8141em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
@@ -1675,7 +1675,7 @@ Object {
                               "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.9474379999999999em;vertical-align:-0.08333em;",
+                              "style": "height:0.9474em;vertical-align:-0.0833em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -1761,7 +1761,7 @@ Object {
                                               "className": Array [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8641079999999999em;",
+                                              "style": "height:0.8641em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
@@ -1808,7 +1808,7 @@ Object {
                               "className": Array [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2222222222222222em;",
+                              "style": "margin-right:0.2222em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -1834,7 +1834,7 @@ Object {
                               "className": Array [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2222222222222222em;",
+                              "style": "margin-right:0.2222em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -1856,7 +1856,7 @@ Object {
                               "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.8641079999999999em;vertical-align:0em;",
+                              "style": "height:0.8641em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -1942,7 +1942,7 @@ Object {
                                               "className": Array [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8641079999999999em;",
+                                              "style": "height:0.8641em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
@@ -1989,7 +1989,7 @@ Object {
                               "className": Array [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2777777777777778em;",
+                              "style": "margin-right:0.2778em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -2015,7 +2015,7 @@ Object {
                               "className": Array [
                                 "mspace",
                               ],
-                              "style": "margin-right:0.2777777777777778em;",
+                              "style": "margin-right:0.2778em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -2037,7 +2037,7 @@ Object {
                               "className": Array [
                                 "strut",
                               ],
-                              "style": "height:0.8641079999999999em;vertical-align:0em;",
+                              "style": "height:0.8641em;",
                             },
                             "tagName": "span",
                             "type": "element",
@@ -2123,7 +2123,7 @@ Object {
                                               "className": Array [
                                                 "vlist",
                                               ],
-                                              "style": "height:0.8641079999999999em;",
+                                              "style": "height:0.8641em;",
                                             },
                                             "tagName": "span",
                                             "type": "element",
