@@ -2,14 +2,34 @@
 title: Deferred Static Generation API
 ---
 
-> **Note:** This feature requires running NodeJS server.
-> It is currently fully supported with [`gatsby serve`](/docs/reference/gatsby-cli/#serve) and in [Gatsby Cloud](/products/cloud/).
-
 Deferred Static Generation (DSG) allows you to defer non-critical page generation to the first user request, speeding up build times.
 Instead of generating _every_ page up front, you can decide to generate certain pages at build time and others only when a user accesses the page for the first time.
 Subsequent page requests use the same HTML and JSON generated during the very first request to this page.
 
+> **Note:** This feature requires running NodeJS server.
+> It is currently fully supported with [`gatsby serve`](/docs/reference/gatsby-cli/#serve) and in [Gatsby Cloud](/products/cloud/).
+
 ## Creating deferred pages
+
+### `config`
+
+Inside [File System Route API](/docs/reference/routing/file-system-route-api/) templates you can export an async function called `config` that returns an object with the key `defer`:
+
+```js
+export async function config() {
+  // Optionally use GraphQL here
+
+  return ({ params }) => {
+    return {
+      defer: true,
+    }
+  }
+}
+```
+
+Read the [Deferred Static Generation guide](/docs/how-to/rendering-options/using-deferred-static-generation/) to see a real-world example.
+
+### `createPage`
 
 Creating deferred pages is almost identical to [creating regular pages](/docs/reference/routing/creating-routes/#using-gatsby-nodejs).
 The only difference is the new `defer` argument for [`createPage` action](/docs/reference/config-files/actions/#createPage).

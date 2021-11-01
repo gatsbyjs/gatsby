@@ -2,11 +2,11 @@
 title: Server-Side Rendering API
 ---
 
-> **Note:** This feature requires running NodeJS server.
-> It is currently fully supported with [`gatsby serve`](/docs/reference/gatsby-cli/#serve) and in [Gatsby Cloud](/products/cloud/).
-
 Server-Side Rendering (SSR) allows you to render a page at run-time with data that is fetched when a user visits the page.
 The server generates the full HTML during HTTP request and sends it to the user. The API is focused on data fetching outside of the Gatsby data layer.
+
+> **Note:** This feature requires running NodeJS server.
+> It is currently fully supported with [`gatsby serve`](/docs/reference/gatsby-cli/#serve) and in [Gatsby Cloud](/products/cloud/).
 
 ## Creating server-rendered pages
 
