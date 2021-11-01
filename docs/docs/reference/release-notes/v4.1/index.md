@@ -9,7 +9,7 @@ Welcome to `gatsby@4.1.0` release (November 2021 #1)
 Key highlights of this release:
 
 - [Support for Deferred Static Generation in File System Route API](#support-for-deferred-static-generation-in-file-system-route-api)
-- [JSX Runtime Options in `gatsby-config.js`](#jsx-runtime-options-in-gatsby-config-js)
+- [JSX Runtime Options in `gatsby-config.js`](#jsx-runtime-options-in-gatsby-configjs)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -78,7 +78,7 @@ export const pageQuery = graphql`
 `
 ```
 
-In the async function `config()` you can use GraphQL to query the data layer you're used to. But you don't have to -- you can also use regular JavaScript or skip the outer function completely. `config()` must return a function itself in which you get `params` as an argument. `params` is the same object you also get as `props.params` in the page component (see [File System Route API documentation](/docs/reference/routing/file-system-route-api/#collection-route-components)), e.g. `src/pages/{Product.name}.js` has `params.name`.
+In the async function `config()` you can use GraphQL to query the data layer you're used to. But you don't have to -- you can also use regular JavaScript or skip the outer function completely. `config()` must return a function itself in which you get `params` as an argument. `params` is the same object you also get as `props.params` in the page component (see [params documentation](/docs/reference/routing/file-system-route-api/#collection-route-components)), e.g. `src/pages/{Product.name}.js` has `params.name`.
 
 Here's a minimal version of `config()` that defers every page of the current File System Route template:
 
