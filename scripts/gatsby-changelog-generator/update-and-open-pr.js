@@ -37,7 +37,23 @@ async function run() {
   )
   await execa(`git`, [`add`, ...updatedChangelogs])
   await execa(`git`, [`commit`, `-m`, commitMessage])
-  await execa(`git`, [`push`, `-u`, `origin`, branch])
+  try {
+    await execa(`git`, [
+      `remote`,
+      `set-url`,
+      `origin`,
+      `https://gatsbybot:${process.env.GITHUB_BOT_AUTH_TOKEN}@github.com/gatsbyjs/gatsby.git`,
+    ])
+    await execa(`git`, [`push`, `-u`, `origin`, branch])
+  } finally {
+    // Reset the token to not store it on disk
+    await execa(`git`, [
+      `remote`,
+      `set-url`,
+      `origin`,
+      `https://github.com/gatsbyjs/gatsby.git`,
+    ])
+  }
 
   const octokit = new Octokit({
     auth: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
