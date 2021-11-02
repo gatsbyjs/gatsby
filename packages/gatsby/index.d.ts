@@ -30,7 +30,7 @@ export const useScrollRestoration: (key: string) => {
   onScroll(): void
 }
 
-class StaticQueryDocument {
+export class StaticQueryDocument {
   /** Prevents structural type widening. */
   #kind: "StaticQueryDocument"
 
