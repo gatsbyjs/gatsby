@@ -438,12 +438,12 @@ export const buildHTML = async ({
 export async function buildHTMLPagesAndDeleteStaleArtifacts({
   pageRenderer,
   workerPool,
-  buildSpan,
+  parentSpan,
   program,
 }: {
   pageRenderer: string
   workerPool: GatsbyWorkerPool
-  buildSpan?: Span
+  parentSpan?: Span
   program: IBuildArgs
 }): Promise<{
   toRegenerate: Array<string>
@@ -465,7 +465,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
       toRegenerate.length,
       0,
       {
-        parentSpan: buildSpan,
+        parentSpan,
       }
     )
     buildHTMLActivityProgress.start()
@@ -515,7 +515,8 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   if (toDelete.length > 0) {
     const publicDir = path.join(program.directory, `public`)
     const deletePageDataActivityTimer = reporter.activityTimer(
-      `Delete previous page data`
+      `Delete previous page data`,
+      { parentSpan }
     )
     deletePageDataActivityTimer.start()
     await buildUtils.removePageFiles(publicDir, toDelete)

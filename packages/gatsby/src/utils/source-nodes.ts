@@ -86,6 +86,7 @@ function deleteStaleNodes(state: IGatsbyState, nodes: Array<Node>): void {
 }
 
 let initialSourcing = true
+let sourcingCount = 0
 export default async ({
   webhookBody,
   pluginName,
@@ -98,8 +99,12 @@ export default async ({
   deferNodeMutation?: boolean
 }): Promise<void> => {
   console.time(`sourceNodes`)
+  const traceId = initialSourcing
+    ? `initial-sourceNodes`
+    : `sourceNodes #${sourcingCount}`
+
   await apiRunner(`sourceNodes`, {
-    traceId: `initial-sourceNodes`,
+    traceId,
     waitForCascadingActions: true,
     deferNodeMutation,
     parentSpan,
@@ -107,6 +112,8 @@ export default async ({
     pluginName,
   })
   console.timeEnd(`sourceNodes`)
+
+  sourcingCount += 1
 
   console.time(`sourceNodes: await dataStore`)
   await getDataStore().ready()

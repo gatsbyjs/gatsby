@@ -53,7 +53,10 @@ import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpa
 import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
 
-module.exports = async function build(program: IBuildArgs): Promise<void> {
+module.exports = async function build(
+  program: IBuildArgs,
+  externalTracer = false
+): Promise<void> {
   if (isTruthy(process.env.VERBOSE)) {
     program.verbose = true
   }
@@ -75,9 +78,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   markWebpackStatusAsPending()
 
   const publicDir = path.join(program.directory, `public`)
-  await initTracer(
-    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
-  )
+  if (!externalTracer) {
+    await initTracer(
+      process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ||
+        program.openTracingConfigFile
+    )
+  }
   const buildActivity = report.phantomActivity(`build`)
   buildActivity.start()
 
@@ -321,7 +327,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       program,
       pageRenderer,
       workerPool,
-      buildSpan,
+      parentSpan: buildSpan,
     })
 
   // const waitWorkerPoolEnd = Promise.all(workerPool.end())
@@ -359,7 +365,9 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   report.info(`Done building in ${process.uptime()} sec`)
 
   buildActivity.end()
-  await stopTracer()
+  if (!externalTracer) {
+    await stopTracer()
+  }
 
   if (program.logPages) {
     if (toRegenerate.length) {
