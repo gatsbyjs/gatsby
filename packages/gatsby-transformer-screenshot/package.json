@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "axios": "^0.21.1",
-    "fastq": "^1.11.1"
+    "fastq": "^1.13.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
