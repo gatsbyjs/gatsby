@@ -6,6 +6,7 @@
 <h1 align="center">
   Gatsby v3
 </h1>
+
 <p align="center">
   ⚛️ 📄 🚀
 </p>
