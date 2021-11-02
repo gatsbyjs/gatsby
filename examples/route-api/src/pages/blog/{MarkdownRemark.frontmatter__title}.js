@@ -33,28 +33,3 @@ export const query = graphql`
     }
   }
 `
-
-export async function config(){
-  const { data } = graphql`
-  {
-    oldPosts: allMarkdownRemark(filter: {frontmatter: {date: {lt: "2020-10-02"}}}) {
-      nodes {
-        frontmatter {
-          date
-          title
-          topic
-          priority
-        }
-      }
-    }
-  }
-  
-`
-
-return ({params})=>{
-    console.log(`Here are the params: ${JSON.stringify(params)}`);
-    return {
-      defer: true //params.frontmatter__priority === "high"
-    }
-  }
-}
