@@ -92,7 +92,7 @@ export async function config() {
 }
 ```
 
-You can read the [API reference](TODO) or the [DSG guide](/docs/how-to/rendering-options/using-deferred-static-generation/) to learn more.
+You can read the [API reference](/docs/reference/routing/file-system-route-api#config-function) or the [DSG guide](/docs/how-to/rendering-options/using-deferred-static-generation/) to learn more.
 
 **Please note:** As DSG has no effect in `gatsby develop` at the moment you can only test `config()` in `gatsby build` right now. As this is the first iteration of the `config()` API we're [looking for feedback](https://github.com/gatsbyjs/gatsby/discussions/33789)!
 
@@ -119,6 +119,8 @@ Setting `jsxRuntime` to `automatic` allows the use of JSX without having to impo
 - `gatsby`:
   - Cache Query Engine & SSR engine (when you use DSG) to improve build times, via [PR #33665](https://github.com/gatsbyjs/gatsby/pull/33665)
   - Pass `pageContext` to `getServerData()`, via [PR #33626](https://github.com/gatsbyjs/gatsby/pull/33626)
+- `gatsby-remark-images`: Fix figure caption generation when using `GATSBY_EMPTY_ALT`, via [PR #30468](https://github.com/gatsbyjs/gatsby/pull/30468)
+- `gatsby-plugin-sharp`: Pass `failOnError` to sharp when using `gatsby-plugin-image`, via [PR #33547](https://github.com/gatsbyjs/gatsby/pull/33547)
 
 ## Contributors
 
