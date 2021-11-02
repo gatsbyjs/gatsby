@@ -56,7 +56,7 @@ function Index({ data }) {
         <ul>
           {data.blog.nodes.map(post => (
             <li key={post.parent.name}>
-              <Link to={`/blog/${post.parent.name}`}>
+              <Link to={`${post.gatsbyPath}`}>
                 {post.frontmatter.title}
               </Link>
             </li>
@@ -136,6 +136,7 @@ export const query = graphql`
         frontmatter {
           title
         }
+        gatsbyPath(filePath: "/blog/{MarkdownRemark.frontmatter__title}")
         parent {
           ... on File {
             name
