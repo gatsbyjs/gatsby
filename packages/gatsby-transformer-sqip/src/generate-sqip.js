@@ -2,9 +2,8 @@ const { resolve, parse } = require(`path`)
 
 const Debug = require(`debug`)
 const { exists, readFile, writeFile } = require(`fs-extra`)
-const svgToMiniDataURI = require(`mini-svg-data-uri`)
 const { default: PQueue } = require(`p-queue`)
-const sqip = require(`sqip`)
+const { sqip } = require(`sqip`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 
 const queue = new PQueue({ concurrency: 1 })
@@ -60,36 +59,48 @@ module.exports = async function generateSqip(options) {
             `Primitive result file already exists for ${name} (${contentDigest}-${optionsHash})`
           )
           const svgBuffer = await readFile(cachePath)
-          svg = svgBuffer.toString()
+          svg = JSON.parse(svgBuffer.toString())
         } else {
           debug(
             `Generate primitive result file of ${name} (${contentDigest}-${optionsHash})`
           )
 
-          const result = await new Promise((resolve, reject) => {
-            try {
-              const result = sqip({
-                filename: absolutePath,
-                ...sqipOptions,
-              })
-              resolve(result)
-            } catch (error) {
-              reject(error)
-            }
+          const result = await sqip({
+            input: absolutePath,
+            plugins: [
+              {
+                name: `sqip-plugin-primitive`,
+                options: {
+                  numberOfPrimitives: sqipOptions.numberOfPrimitives,
+                  mode: sqipOptions.mode,
+                },
+              },
+              sqipOptions.blur && {
+                name: `sqip-plugin-blur`,
+                options: {
+                  blur: sqipOptions.blur,
+                },
+              },
+              `sqip-plugin-data-uri`,
+              `sqip-plugin-svgo`,
+            ].filter(Boolean),
           })
 
-          svg = result.final_svg
+          const { dataURI, ...metadata } = result.metadata
 
-          await writeFile(cachePath, svg)
+          svg = {
+            svg: result.content.toString(),
+            dataURI,
+            metadata: metadata,
+          }
+
+          await writeFile(cachePath, JSON.stringify(svg))
           debug(
             `Wrote primitive result file to disk for ${name} (${contentDigest}-${optionsHash})`
           )
         }
 
-        primitiveData = {
-          svg,
-          dataURI: svgToMiniDataURI(svg),
-        }
+        primitiveData = svg
 
         await cache.set(cacheKey, primitiveData)
       } catch (err) {

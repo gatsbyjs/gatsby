@@ -1,7 +1,7 @@
 import * as React from "react"
 import PropTypes from "prop-types"
 
-import Image from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 
 // Styling based on https://codepen.io/havardob/pen/ZOOmMe
 
@@ -67,10 +67,10 @@ const Polaroid = ({ image }) => {
       style={generateDynamicStyle(imageData)}
     >
       <div className="polaroid-image-wrapper">
-        <Image
-          fluid={{
-            ...image.childImageSharp.fluid,
-            base64: image.childImageSharp.sqip.dataURI,
+        <GatsbyImage
+          image={{
+            ...image.childImageSharp.gatsbyImageData,
+            placeholder: { fallback: image.childImageSharp.sqip.dataURI },
           }}
         />
       </div>

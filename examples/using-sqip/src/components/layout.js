@@ -1,6 +1,6 @@
 import * as React from "react"
 import PropTypes from "prop-types"
-import Image from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 import Polaroid from "../components/polaroid"
 
 import "../index.css"
@@ -20,11 +20,11 @@ const Layout = ({ children, data }) => {
           zIndex: 0,
         }}
       >
-        <Image
+        <GatsbyImage
           // Inject the sqip dataURI as base64 value
-          fluid={{
-            ...background.childImageSharp.fluid,
-            base64: background.childImageSharp.sqip.dataURI,
+          image={{
+            ...background.childImageSharp.gatsbyImageData,
+            placeholder: { fallback: background.childImageSharp.sqip.dataURI },
           }}
           alt={background.name}
         />

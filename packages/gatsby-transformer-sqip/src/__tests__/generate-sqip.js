@@ -1,22 +1,35 @@
 const { resolve } = require(`path`)
 
 const { exists, readFile, writeFile } = require(`fs-extra`)
-const sqip = require(`sqip`)
+const { sqip } = require(`sqip`)
 
 const generateSqip = require(`../generate-sqip.js`)
 
-jest.mock(`sqip`, () =>
-  jest.fn(() => {
-    return {
-      final_svg: `<svg><!-- Mocked SQIP SVG --></svg>`,
-    }
-  })
-)
+jest.mock(`sqip`, () => {
+  return {
+    sqip: jest.fn(() => {
+      return {
+        content: Buffer.from(`<svg><!-- Mocked SQIP SVG --></svg>`),
+        metadata: {
+          dataURI: `data:image/svg+xml,dataURI`,
+        },
+      }
+    }),
+  }
+})
 
 jest.mock(`fs-extra`, () => {
   return {
     exists: jest.fn(() => false),
-    readFile: jest.fn(() => `<svg><!-- Cached SQIP SVG --></svg>`),
+    readFile: jest.fn(() =>
+      JSON.stringify({
+        svg: `<svg><!-- Cached SVG --></svg>`,
+        metadata: {
+          dataURI: `data:image/svg+xml,dataURI`,
+          anyOther: `metadata-value`,
+        },
+      })
+    ),
     writeFile: jest.fn(),
   }
 })
@@ -57,8 +70,8 @@ describe(`gatsby-transformer-sqip`, () => {
 
       expect(sqip).toHaveBeenCalledTimes(1)
       const sqipArgs = sqip.mock.calls[0][0]
-      expect(sqipArgs.filename).toMatch(absolutePath)
-      delete sqipArgs.filename
+      expect(sqipArgs.input).toMatch(absolutePath)
+      delete sqipArgs.input
       expect(sqipArgs).toMatchSnapshot()
 
       expect(exists).toHaveBeenCalledTimes(1)

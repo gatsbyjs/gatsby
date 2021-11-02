@@ -17,7 +17,7 @@ module.exports = {
         path: `${__dirname}/src/background/`,
       },
     },
-    `gatsby-image`,
+    `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-sqip`,

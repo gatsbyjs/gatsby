@@ -173,9 +173,7 @@ export const query = graphql`
           publicURL
           name
           childImageSharp {
-            fluid(maxWidth: 400, maxHeight: 400) {
-              ...GatsbyImageSharpFluid_noBase64
-            }
+            gatsbyImageData(width: 400, height: 400)
             sqip(
               # Make sure to keep the same aspect ratio when cropping
               # With 256px as maximum dimension is the perfect value to speed up the process
@@ -199,9 +197,7 @@ export const query = graphql`
           publicURL
           name
           childImageSharp {
-            fluid(maxWidth: 4000) {
-              ...GatsbyImageSharpFluid_noBase64
-            }
+            gatsbyImageData(layout: FULL_WIDTH)
             sqip(numberOfPrimitives: 160, blur: 0) {
               dataURI
             }
