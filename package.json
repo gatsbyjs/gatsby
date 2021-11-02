@@ -13,7 +13,7 @@
     "@types/cache-manager": "^2.10.3",
     "@types/common-tags": "^1.8.0",
     "@types/express": "^4.17.3",
-    "@types/fs-extra": "^9.0.12",
+    "@types/fs-extra": "^9.0.13",
     "@types/jaeger-client": "^3.18.0",
     "@types/jest": "^24.9.1",
     "@types/joi": "^14.3.4",

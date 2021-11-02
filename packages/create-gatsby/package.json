@@ -20,7 +20,7 @@
     "@babel/runtime": "^7.15.4",
     "@lukeed/uuid": "^2.0.0",
     "@types/configstore": "^4.0.0",
-    "@types/fs-extra": "^9.0.12",
+    "@types/fs-extra": "^9.0.13",
     "@types/node": "^14.17.32",
     "ansi-wordwrap": "^1.0.2",
     "common-tags": "^1.8.0",
