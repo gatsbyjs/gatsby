@@ -34,6 +34,11 @@ const collectEventsForDevelop = (events, env = {}) => {
     },
   })
 
+  let startedPromiseResolve = () => {}
+  const startedPromise = new Promise(resolve => {
+    startedPromiseResolve = resolve
+  })
+
   const finishedPromise = new Promise((resolve, reject) => {
     let listening = true
 
@@ -41,6 +46,7 @@ const collectEventsForDevelop = (events, env = {}) => {
       if (!listening) {
         return
       }
+      startedPromiseResolve()
 
       events.push(msg)
       // we are ready for tests
@@ -52,8 +58,7 @@ const collectEventsForDevelop = (events, env = {}) => {
         setTimeout(() => {
           listening = false
           gatsbyProcess.kill()
-
-          setTimeout(resolve, 1000)
+          waitChildProcessExit(gatsbyProcess.pid, resolve, reject)
         }, 5000)
       }
     })
@@ -61,6 +66,7 @@ const collectEventsForDevelop = (events, env = {}) => {
 
   return {
     finishedPromise,
+    startedPromise,
     gatsbyProcess,
   }
 }
@@ -305,20 +311,20 @@ describe(`develop`, () => {
       let events = []
 
       beforeAll(done => {
-        const { finishedPromise, gatsbyProcess } =
+        const { startedPromise, gatsbyProcess } =
           collectEventsForDevelop(events)
 
-        setTimeout(() => {
-          gatsbyProcess.kill(`SIGTERM`)
+        startedPromise.then(() => {
           setTimeout(() => {
-            done()
+            gatsbyProcess.kill(`SIGTERM`)
+            waitChildProcessExit(gatsbyProcess.pid, done, done.fail)
           }, 5000)
-        }, 5000)
-
-        finishedPromise.then(done)
+        })
       })
 
       commonAssertionsForFailure(events)
+
+      // Note: this will fail on windows because it doesn't support POSIX signals (i.e. SIGTERM)
       it(`emit final SET_STATUS with INTERRUPTED - last message`, () => {
         const event = last(events)
         expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
@@ -365,7 +371,7 @@ describe(`develop`, () => {
 
     afterAll(done => {
       gatsbyProcess.kill()
-      setTimeout(done, 1000)
+      waitChildProcessExit(gatsbyProcess.pid, done, done.fail)
     })
 
     describe(`code change`, () => {
@@ -638,18 +644,19 @@ describe(`build`, () => {
           },
         })
 
-        await new Promise(resolve => {
+        await new Promise((resolve, reject) => {
+          let killing = false
           gatsbyProcess.on(`message`, msg => {
             events.push(msg)
-          })
 
-          gatsbyProcess.on(`exit`, exitCode => {
-            resolve()
+            if (!killing) {
+              killing = true
+              setTimeout(() => {
+                gatsbyProcess.kill(`SIGTERM`)
+                waitChildProcessExit(gatsbyProcess.pid, resolve, reject)
+              }, 2000)
+            }
           })
-
-          setTimeout(() => {
-            gatsbyProcess.kill(`SIGTERM`)
-          }, 1000)
         })
       })
       commonAssertionsForFailure(events)
@@ -661,5 +668,20 @@ describe(`build`, () => {
     })
   })
 })
+
+function waitChildProcessExit(pid, resolve, reject, attempt = 0) {
+  try {
+    process.kill(pid, 0) // check if process is still running
+    if (attempt > 15) {
+      reject(new Error("Gatsby process hasn't exited in 15 seconds"))
+      return
+    }
+    setTimeout(() => {
+      waitChildProcessExit(pid, resolve, reject, attempt + 1)
+    }, 1000)
+  } catch (e) {
+    resolve()
+  }
+}
 
 //TO-DO: add api running activity

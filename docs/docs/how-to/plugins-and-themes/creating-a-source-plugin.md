@@ -3,6 +3,8 @@ title: "Creating a Source Plugin"
 tableOfContentsDepth: 2
 ---
 
+import { Announcement } from "gatsby-interface"
+
 In this tutorial, you'll create your own source plugin that will gather data from an API. The plugin will source data, optimize remote images, and create foreign key relationships between data sourced by your plugin.
 
 ## What is a source plugin?
@@ -426,7 +428,7 @@ Each node of post data has an `imgUrl` field with the URL of an image on Unsplas
 
 You can read about [how to use Gatsby Image to prevent image bloat](/docs/how-to/images-and-media/using-gatsby-image/) if you are unfamiliar with it.
 
-#### Create `remoteFileNode`'s from a URL
+#### Create remote file node from a URL
 
 To create optimized images from URLs, `File` nodes for image files need to be added to your site's data. Then, you can install `gatsby-plugin-sharp` and `gatsby-transformer-sharp` which will automatically find image files and add the data needed for `gatsby-image`.
 
@@ -461,7 +463,7 @@ Then export a new function `onCreateNode`, and call `createRemoteFileNode` in it
 // called each time a node is created
 exports.onCreateNode = async ({
   node, // the node that was just created
-  actions: { createNode },
+  actions: { createNode, createNodeField },
   createNodeId,
   getCache,
 }) => {
@@ -476,7 +478,7 @@ exports.onCreateNode = async ({
     })
 
     if (fileNode) {
-      node.remoteImage___NODE = fileNode.id
+      createNodeField({ node, name: 'localFile', value: fileNode.id })
     }
   }
 }
@@ -486,29 +488,42 @@ This code is called every time a node is created, e.g. when `createNode` is invo
 
 ```javascript:title=source-plugin/gatsby-node.js
 if (fileNode) {
-  // save the ID of the fileNode on the Post node
-  node.remoteImage___NODE = fileNode.id
+  createNodeField({ node, name: 'localFile', value: fileNode.id })
 }
 ```
 
-By assigning a field called `remoteImage___NODE` to the ID of the `File` node that was created, Gatsby will be able to [infer](/docs/glossary#inference) a connection between this field and the file node. This will allow fields on the file to be queried from the post node.
+By using [`createNodeField`](/docs/reference/config-files/actions/#createNodeField) you're extending the existing node and place a new field named `localFile` under the `fields` key.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Note:** Do not mutate the `node` directly and use `createNodeField` instead. Otherwise the change won't be persisted and you might see inconsistent data. This behavior changed with Gatsby 4, read the [migration guide](/docs/reference/release-notes/migrating-from-v3-to-v4/#dont-mutate-nodes-outside-of-expected-apis) to learn more.
+
+</Announcement>
+
+In the previous step you only defined the `fileNode.id` as a `value` but at this time Gatsby can't just yet resolve this to the `fileNode` (and susequently the image) itself. Therefore, you'll need to create a foreign-key relationship between the `Post` node and the respective `File` node. Use the [`createSchemaCustomization`](/docs/reference/config-files/gatsby-node/#createSchemaCustomization) API to define this relationship:
+
+```javascript:title=source-plugin/gatsby-node.js
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+
+  createTypes(`
+    type Post implements Node {
+      localFile: File @link(from: "fields.localFile")
+    }
+  `)
+}
+```
+
+_**Note**: You can use [schema customization APIs](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields) to create these kinds of connections between nodes as well as sturdier and more strictly typed ones._
+
+You now can query the image like this:
 
 ```graphql
-# leaving off the ___NODE field will give you:
 query {
   allPost {
     nodes {
       id
-      remoteImage # returns an ID like "ecd83d94-7111-5386-bd3f-0066248b6fa9"
-    }
-  }
-}
-# instead of an entire node you can query more fields on:
-query {
-  allPost {
-    nodes {
-      id
-      remoteImage {
+      localFile {
         id
         relativePath
       }
@@ -516,8 +531,6 @@ query {
   }
 }
 ```
-
-_**Note**: you can use [schema customization APIs](/docs/reference/graphql-data-layer/schema-customization) to create these kinds of connections between nodes as well as sturdier and more strictly typed ones._
 
 At this point you have created local image files from the remote locations and associated them with your posts, but you still need to transform the files into optimized versions.
 
@@ -547,13 +560,13 @@ module.exports = {
 
 By installing the sharp plugins in the site, they'll run after the source plugin and transform the file nodes and add fields for the optimized versions at `childImageSharp`. The transformer plugin looks for `File` nodes with extensions like `.jpg` and `.png` to create optimized images and creates the GraphQL fields for you.
 
-Now when you run your site, you will also be able to query a `childImageSharp` field on the `post.remoteImage`:
+Now when you run your site, you will also be able to query a `childImageSharp` field on the `post.localFile`:
 
 ```graphql
 query {
   allPost {
     nodes {
-      remoteImage {
+      localFile {
         // highlight-start
         childImageSharp {
           id
@@ -569,7 +582,7 @@ With data available, you can now query optimized images to use with the `gatsby-
 
 ### Create foreign key relationships between data
 
-To link the posts to the authors, Gatsby needs to be aware that the two are associated, and how. You have already implemented one example of this when Gatsby inferred a connection between a `remoteImage` and the remote file from Unsplash.
+To link the posts to the authors, Gatsby needs to be aware that the two are associated, and how. You have already implemented one example of this when Gatsby inferred a connection between a `localFile` and the remote file from Unsplash.
 
 The best approach for connecting related data is through customizing the GraphQL schema. By implementing the `createSchemaCustomization` API, you can specify the exact shape of a node's data. While defining that shape, you can optionally link a node to other nodes to create a relationship.
 
@@ -585,32 +598,22 @@ exports.createSchemaCustomization = ({ actions }) => {
       description: String!
       imgUrl: String!
       imgAlt: String!
-      # create relationships between Post and File nodes for optimized images
-      remoteImage: File @link
       # create relationships between Post and Author nodes
       author: Author @link(from: "author.name" by: "name")
+      # Created in previous step
+      localFile: @link(from: "fields.localFile")
     }
     type Author implements Node {
       id: ID!
       name: String!
-    }`)
+    }
+  `)
 }
 ```
 
 The `author: Author @link(from: "author.name" by: "name")` line tells Gatsby to look for the value on the `Post` node at `post.author.name` and relate it with an `Author` node with a matching `name`. This demonstrates the ability to link using more than just an ID.
 
-The line `remoteImage: File @link` tells Gatsby to look for a `remoteImage` field on a `Post` node and link it to a `File` node with the ID there.
-
-Now, instead of using inference in for the `remoteImage` field, you can take off the `___NODE` suffix. You can update the code in the `onCreateNode` API now like this:
-
-```diff:title=source-plugin/gatsby-node.js
-  if (fileNode) {
--   node.remoteImage___NODE = fileNode.id
-+   node.remoteImage = fileNode.id
-  }
-```
-
-Now running the site will allow you to query authors and remoteImages from the post nodes!
+Now running the site will allow you to query authors from the post nodes!
 
 ```graphql
 query {
@@ -620,9 +623,6 @@ query {
       // highlight-start
       author {
         name
-      }
-      remoteImage {
-        id
       }
       // highlight-end
     }
@@ -666,7 +666,7 @@ export default ({ data }) => (
           <span>By: {post.author.name}</span>
           <p>{post.description}</p>
           <Img
-            fluid={post.remoteImage.childImageSharp.fluid}
+            fluid={post.localFile?.childImageSharp?.fluid}
             alt={post.imgAlt}
           />
         </div>
@@ -687,7 +687,7 @@ export const query = graphql`
           id
           name
         }
-        remoteImage {
+        localFile {
           id
           childImageSharp {
             id
