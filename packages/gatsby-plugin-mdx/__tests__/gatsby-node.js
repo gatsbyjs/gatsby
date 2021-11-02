@@ -63,6 +63,7 @@ describe(`pluginOptionsSchema`, () => {
       mediaTypes: [`text/markdown`, `text/x-markdown`, `custom-media/type`],
       shouldBlockNodeFromTransformation: node => Boolean(node),
       root: `james-holden`,
+      commonmark: true,
     })
 
     expect(isValid).toBe(true)
