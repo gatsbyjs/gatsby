@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-sitemap",
   "description": "Gatsby plugin that automatically creates a sitemap for your site",
-  "version": "5.1.0-next.0",
+  "version": "5.2.0-next.0",
   "contributors": [
     "Alex Moon <alex.jared.moon@gmail.com>",
     "Nicholas Young <nicholas@nicholaswyoung.com>"
@@ -18,9 +18,9 @@
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
-    "babel-preset-gatsby-package": "^2.1.0-next.0",
+    "babel-preset-gatsby-package": "^2.2.0-next.0",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-utils": "^2.1.0-next.0"
+    "gatsby-plugin-utils": "^2.2.0-next.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap#readme",
   "keywords": [

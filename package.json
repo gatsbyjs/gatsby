@@ -22,7 +22,7 @@
     "@types/node-fetch": "^2.5.10",
     "@types/normalize-path": "^3.0.0",
     "@types/react": "^16.14.8",
-    "@types/semver": "^7.3.8",
+    "@types/semver": "^7.3.9",
     "@types/signal-exit": "^3.0.0",
     "@types/stack-trace": "^0.0.29",
     "@types/webpack-merge": "^4.1.5",
@@ -39,8 +39,8 @@
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-filenames": "^1.3.2",
-    "eslint-plugin-flowtype": "^6.1.0",
-    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-flowtype": "^6.1.1",
+    "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
@@ -87,7 +87,7 @@
     "rimraf": "^3.0.2",
     "svgo": "1.3.2",
     "ts-jest": "^22",
-    "typescript": "^4.4.3",
+    "typescript": "^4.4.4",
     "unified": "^9.2.0",
     "yargs": "^15.4.1"
   },
@@ -112,7 +112,7 @@
   "private": true,
   "resolutions": {
     "theme-ui": "0.4.0-rc.14",
-    "csstype": "2.6.17"
+    "csstype": "2.6.18"
   },
   "scripts": {
     "bootstrap": "cross-env COMPILER_OPTIONS=\"GATSBY_MAJOR=4\" npm-run-all -s check-versions \"lerna-prepare -- --{@}\" --",

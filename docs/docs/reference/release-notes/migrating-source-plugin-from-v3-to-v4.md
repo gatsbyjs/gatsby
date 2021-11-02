@@ -30,13 +30,11 @@ There are three APIs that can modify Gatsby's GraphQL schema: [`createTypes`](/d
 exports.sourceNodes = ({ actions }) => { // highlight-line
   const { createTypes } = actions;
 
-  createTypes({
-    `
-      type AuthorJson implements Node {
-        joinedAt: Date
-      }
-    `
-  })
+  createTypes(`
+    type AuthorJson implements Node {
+      joinedAt: Date
+    }
+  `)
 }
 ```
 
@@ -48,13 +46,11 @@ exports.sourceNodes = ({ actions }) => { // highlight-line
 exports.createSchemaCustomization = ({ actions }) => { // highlight-line
   const { createTypes } = actions;
 
-  createTypes({
-    `
-      type AuthorJson implements Node {
-        joinedAt: Date
-      }
-    `
-  })
+  createTypes(`
+    type AuthorJson implements Node {
+      joinedAt: Date
+    }
+  `)
 }
 ```
 
@@ -104,13 +100,11 @@ The type is created in `createSchemaCustomization` and then referenced inside `s
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions;
 
-  createTypes({
-    `
-      type CustomImage implements Node {
-        localImage: File!
-      }
-    `
-  })
+  createTypes(`
+    type CustomImage implements Node {
+      localImage: File @link
+    }
+  `)
 }
 
 exports.sourceNodes = async ({ // highlight-line
