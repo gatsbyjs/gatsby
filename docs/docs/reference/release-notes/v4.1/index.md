@@ -126,4 +126,26 @@ Setting `jsxRuntime` to `automatic` allows the use of JSX without having to impo
 
 A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@4.1.0-next.0...gatsby@4.1.0) to this release 💜
 
-TODO
+- [bicstone](https://github.com/bicstone): chore(docs): Fix links to old tutorial docs [PR #33605](https://github.com/gatsbyjs/gatsby/pull/33605)
+- [shreemaan-abhishek](https://github.com/shreemaan-abhishek): docs(gatsby): fix grammar issue [PR #33525](https://github.com/gatsbyjs/gatsby/pull/33525)
+- [marijoo](https://github.com/marijoo): chore(gatsby-source-faker): Update README [PR #33606](https://github.com/gatsbyjs/gatsby/pull/33606)
+- [tonyhallett](https://github.com/tonyhallett)
+  - chore(docs): Fixes in schema-generation [PR #33597](https://github.com/gatsbyjs/gatsby/pull/33597)
+  - chore(gatsby): Correct Gatsby SSR APIs types [PR #33581](https://github.com/gatsbyjs/gatsby/pull/33581)
+  - chore(gatsby): Update `api-ssr-docs` [PR #33580](https://github.com/gatsbyjs/gatsby/pull/33580)
+  - chore(docs): Update code link gatsby-internals-terminology [PR #33596](https://github.com/gatsbyjs/gatsby/pull/33596)
+  - chore(gatsby): correct flow typing file-parser [PR #33584](https://github.com/gatsbyjs/gatsby/pull/33584)
+- [codejet](https://github.com/codejet): chore(gatsby-remark-images): Fix typo in README [PR #33646](https://github.com/gatsbyjs/gatsby/pull/33646)
+- [desirekaleba](https://github.com/desirekaleba): chore(starters): Fix link to old GraphQL tutorial [PR #33654](https://github.com/gatsbyjs/gatsby/pull/33654)
+- [abhirajkrishnan](https://github.com/abhirajkrishnan): chore(docs): Fix Broken Link For Headless CMS Definition [PR #33645](https://github.com/gatsbyjs/gatsby/pull/33645)
+- [Mrtenz](https://github.com/Mrtenz): chore(docs): NodeModel.findAll returns a Promise [PR #33653](https://github.com/gatsbyjs/gatsby/pull/33653)
+- [sarvesh4396](https://github.com/sarvesh4396): chore(gatsby-source-wordpress): Fix typos [PR #33639](https://github.com/gatsbyjs/gatsby/pull/33639)
+- [erikbgithub](https://github.com/erikbgithub): chore(gatsby-plugin-mdx): Fix grammar [PR #33485](https://github.com/gatsbyjs/gatsby/pull/33485)
+- [Simply007](https://github.com/Simply007): chore(docs): Improve v3->v4 migration guide on `GatsbyIterable` [PR #33666](https://github.com/gatsbyjs/gatsby/pull/33666)
+- [Dgiordano33](https://github.com/Dgiordano33): chore(examples): Swapped to deploy on Gatsby Cloud [PR #33686](https://github.com/gatsbyjs/gatsby/pull/33686)
+- [raresportan](https://github.com/raresportan): fix(gatsby-plugin-image): GatsbyImage not displaying image in IE11 [PR #33416](https://github.com/gatsbyjs/gatsby/pull/33416)
+- [TommasoAmici](https://github.com/TommasoAmici): fix(gatsby-plugin-mdx): mkdirp needs to be listed as a direct depende… [PR #33724](https://github.com/gatsbyjs/gatsby/pull/33724)
+- [redabacha](https://github.com/redabacha): fix(gatsby-plugin-sharp): pass failOnError to sharp in getImageMetadata [PR #33547](https://github.com/gatsbyjs/gatsby/pull/33547)
+- [herecydev](https://github.com/herecydev): feat(gatsby): Add JSX Runtime options to `gatsby-config.js` [PR #33050](https://github.com/gatsbyjs/gatsby/pull/33050)
+- [nategiraudeau](https://github.com/nategiraudeau): fix(gatsby-remark-images): GATSBY_EMPTY_ALT figcaption generation [PR #30468](https://github.com/gatsbyjs/gatsby/pull/30468)
+- [Rutam21](https://github.com/Rutam21): chore(docs): Improve "Adding a service worker" [PR #33737](https://github.com/gatsbyjs/gatsby/pull/33737)
