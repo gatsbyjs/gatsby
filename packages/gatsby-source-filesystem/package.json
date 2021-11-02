@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "chokidar": "^3.5.2",
-    "fastq": "^1.11.1",
+    "fastq": "^1.13.0",
     "file-type": "^16.5.3",
     "fs-extra": "^10.0.0",
     "gatsby-core-utils": "^3.2.0-next.0",
@@ -19,7 +19,7 @@
     "pretty-bytes": "^5.4.1",
     "progress": "^2.0.3",
     "valid-url": "^1.0.9",
-    "xstate": "^4.14.0"
+    "xstate": "^4.25.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",

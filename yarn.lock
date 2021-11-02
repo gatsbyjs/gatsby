@@ -27096,7 +27096,7 @@ xss@^1.0.6:
     commander "^2.20.3"
     cssfilter "0.0.10"
 
-xstate@^4.14.0, xstate@^4.25.0, xstate@^4.9.1:
+xstate@^4.25.0, xstate@^4.9.1:
   version "4.25.0"
   resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.25.0.tgz#d902ef33137532043f7a88597af8e5e1c7ad6bdf"
   integrity sha512-qP7lc/ypOuuWME4ArOBnzaCa90TfHkjiqYDmxpiCjPy6FcXstInA2vH6qRVAHbPXRK4KQIYfIEOk1X38P+TldQ==
