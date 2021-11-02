@@ -52,6 +52,7 @@ describe(`no-anonymous-exports-page-templates`, () => {
       test({
         code: `import { graphql } from "gatsby"\nconst Template = () => {}\nconst query = graphql\`test\`\nexport { query }\nexport default Template`,
       }),
+      // getServerData
       test({
         code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport function getServerData() { return { props: { foo: "bar" }}}`,
       }),
@@ -63,6 +64,19 @@ describe(`no-anonymous-exports-page-templates`, () => {
       }),
       test({
         code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexports.getServerData = () => { return { props: { foo: "bar" }}}`,
+      }),
+      // config
+      test({
+        code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport function config() { return ({ params }) => { defer: true }}`,
+      }),
+      test({
+        code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport async function config() { const { data } = graphql\`test\`\nreturn ({ params }) => { defer: true }}`,
+      }),
+      test({
+        code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexport const config = () => { return ({ params }) => { defer: true }}`,
+      }),
+      test({
+        code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template\nexports.config = () => { return ({ params }) => { defer: true }}`,
       }),
     ],
     invalid: [
