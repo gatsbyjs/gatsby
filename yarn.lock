@@ -4396,10 +4396,10 @@
   dependencies:
     "@types/unist" "*"
 
-"@types/hosted-git-info@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@types/hosted-git-info/-/hosted-git-info-3.0.1.tgz#ae017651a1c3aab1c72674ff0924aa5a0c325437"
-  integrity sha512-aiwBC0e2PndtyQ9pOwA9ujBJ6ayysuvbQzQ4M38LGHLZniuTFAqjlKnW5TZLqpF3rgD+kevFoLjkw8ZJSdqhzQ==
+"@types/hosted-git-info@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@types/hosted-git-info/-/hosted-git-info-3.0.2.tgz#aa671076f5edefa4fab1189b467e6c63987be818"
+  integrity sha512-RURNTeEFUwF+ifnp7kK3WLLlTmBSlRynLNS9jeAsI6RHtSrupV0l0nO6kmpaz75EUJVexy348bR452SvmH98vQ==
 
 "@types/html-minifier-terser@^5.0.0":
   version "5.1.1"
@@ -13457,17 +13457,17 @@ ink-select-input@^4.2.0:
     figures "^3.2.0"
     lodash.isequal "^4.5.0"
 
-ink-spinner@^4.0.1, ink-spinner@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/ink-spinner/-/ink-spinner-4.0.2.tgz#ee87a363533fa4932998e1bd303e0aa186572b02"
-  integrity sha512-vQGmhWUEh3IG1IxK1Hl2w6RfH6aaRIJWw9lrG8CvFFyrQ23UpJ8GClJs5/sFBxkNvsrrK9sKNEGlGnsqTYiUww==
+ink-spinner@^4.0.1, ink-spinner@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/ink-spinner/-/ink-spinner-4.0.3.tgz#0d0f4a787ae1a4270928e063d9c52527cb264feb"
+  integrity sha512-uJ4nbH00MM9fjTJ5xdw0zzvtXMkeGb0WV6dzSWvFv2/+ks6FIhpkt+Ge/eLdh0Ah6Vjw5pLMyNfoHQpRDRVFbQ==
   dependencies:
     cli-spinners "^2.3.0"
 
-ink@*, ink@^3.0.8:
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/ink/-/ink-3.0.8.tgz#c527957c8fa4efcc139b67a4cbba7bb8a62b18b0"
-  integrity sha512-ubMFylXYaG4IkXQVhPautbhV/p6Lo0GlvAMI/jh8cGJQ39yeznJbaTTJP2CqZXezA4GOHzalpwCWqux/NEY38w==
+ink@*, ink@^3.0.8, ink@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/ink/-/ink-3.2.0.tgz#434793630dc57d611c8fe8fffa1db6b56f1a16bb"
+  integrity sha512-firNp1q3xxTzoItj/eOOSZQnYSlyrWks5llCTVX37nJ59K3eXbQ8PtzCguqo8YI19EELo5QxaKnJd4VxzhU8tg==
   dependencies:
     ansi-escapes "^4.2.1"
     auto-bind "4.0.0"
@@ -13480,17 +13480,17 @@ ink@*, ink@^3.0.8:
     is-ci "^2.0.0"
     lodash "^4.17.20"
     patch-console "^1.0.0"
-    react-devtools-core "^4.6.0"
-    react-reconciler "^0.24.0"
-    scheduler "^0.18.0"
+    react-devtools-core "^4.19.1"
+    react-reconciler "^0.26.2"
+    scheduler "^0.20.2"
     signal-exit "^3.0.2"
     slice-ansi "^3.0.0"
     stack-utils "^2.0.2"
-    string-length "^3.1.0"
+    string-width "^4.2.2"
     type-fest "^0.12.0"
     widest-line "^3.1.0"
     wrap-ansi "^6.2.0"
-    ws "^7.2.5"
+    ws "^7.5.5"
     yoga-layout-prebuilt "^1.9.6"
 
 inline-style-parser@0.1.1:
@@ -20834,10 +20834,10 @@ react-dev-utils@^11.0.4:
     strip-ansi "6.0.0"
     text-table "0.2.0"
 
-react-devtools-core@^4.6.0:
-  version "4.8.2"
-  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.8.2.tgz#4465f2e8de7795564aa20f28b2f3a9737586db23"
-  integrity sha512-3Lv3nI8FPAwKqUco35oOlgf+4j8mgYNnIcDv2QTfxEqg2G69q17ZJ8ScU9aBnymS28YC1OW+kTxLmdIQeTN8yg==
+react-devtools-core@^4.19.1:
+  version "4.20.2"
+  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.20.2.tgz#0be500c80e09b640a2ee57f5ad5407e53bff6651"
+  integrity sha512-ep2j84M1ZtDFWsTtFrKyLyg4GEbnw4gFj/8brA+BZtsINgKHhWEVzscz5E/bFWRdyTM8mWdcaKQAk2hR+IezPw==
   dependencies:
     shell-quote "^1.6.1"
     ws "^7"
@@ -20887,16 +20887,6 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-reconciler@^0.24.0:
-  version "0.24.0"
-  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.24.0.tgz#5a396b2c2f5efe8554134a5935f49f546723f2dd"
-  integrity sha512-gAGnwWkf+NOTig9oOowqid9O0HjTDC+XVGBCAmJYYJ2A2cN/O4gDdIuuUQjv8A4v6GDwVfJkagpBBLW5OW9HSw==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
-    scheduler "^0.18.0"
-
 react-reconciler@^0.25.1:
   version "0.25.1"
   resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.25.1.tgz#f9814d59d115e1210762287ce987801529363aaa"
@@ -20906,6 +20896,15 @@ react-reconciler@^0.25.1:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.19.1"
+
+react-reconciler@^0.26.2:
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.26.2.tgz#bbad0e2d1309423f76cf3c3309ac6c96e05e9d91"
+  integrity sha512-nK6kgY28HwrMNwDnMui3dvm3rCFjZrcGiuwLc5COUipBK5hWHLOxMJhSnSomirqWwjPBJKV1QcbkI0VJr7Gl1Q==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    scheduler "^0.20.2"
 
 react-refresh@^0.9.0:
   version "0.9.0"
@@ -22909,10 +22908,10 @@ rollup@^1:
     "@types/node" "*"
     acorn "^7.1.0"
 
-rollup@^2.34.2, rollup@^2.35.1, rollup@^2.52.7:
-  version "2.52.7"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.52.7.tgz#e15a8bf734f6e4c204b7cdf33521151310250cb2"
-  integrity sha512-55cSH4CCU6MaPr9TAOyrIC+7qFCHscL7tkNsm1MBfIJRRqRbCEY0mmeFn4Wg8FKsHtEH8r389Fz38r/o+kgXLg==
+rollup@^2.34.2, rollup@^2.35.1, rollup@^2.58.3:
+  version "2.58.3"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.58.3.tgz#71a08138d9515fb65043b6a18618b2ed9ac8d239"
+  integrity sha512-ei27MSw1KhRur4p87Q0/Va2NAYqMXOX++FNEumMBcdreIRLURKy+cE2wcDJKBn0nfmhP2ZGrJkP1XPO+G8FJQw==
   optionalDependencies:
     fsevents "~2.3.2"
 
@@ -23089,6 +23088,14 @@ scheduler@^0.19.1:
   version "0.19.1"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.19.1.tgz#4f3e2ed2c1a7d65681f4c854fa8c5a1ccb40f196"
   integrity sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
+scheduler@^0.20.2:
+  version "0.20.2"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.20.2.tgz#4baee39436e34aa93b4874bddcbf0fe8b8b50e91"
+  integrity sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
@@ -23960,14 +23967,6 @@ string-length@^2.0.0:
   dependencies:
     astral-regex "^1.0.0"
     strip-ansi "^4.0.0"
-
-string-length@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/string-length/-/string-length-3.1.0.tgz#107ef8c23456e187a8abd4a61162ff4ac6e25837"
-  integrity sha512-Ttp5YvkGm5v9Ijagtaz1BnN+k9ObpvS0eIBblPMp2YWL8FBmi9qblQ9fexc2k/CXFgrTIteU3jAw3payCnwSTA==
-  dependencies:
-    astral-regex "^1.0.0"
-    strip-ansi "^5.2.0"
 
 string-length@^4.0.1, string-length@^4.0.2:
   version "4.0.2"
@@ -26978,7 +26977,7 @@ ws@^5.2.0:
   dependencies:
     async-limiter "~1.0.0"
 
-"ws@^5.2.0 || ^6.0.0 || ^7.0.0", ws@^7, ws@^7.0.0, ws@^7.2.3, ws@^7.2.5, ws@^7.3.0, ws@^7.4.6:
+"ws@^5.2.0 || ^6.0.0 || ^7.0.0", ws@^7, ws@^7.0.0, ws@^7.2.3, ws@^7.3.0, ws@^7.4.6, ws@^7.5.5:
   version "7.5.5"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.5.tgz#8b4bc4af518cfabd0473ae4f99144287b33eb881"
   integrity sha512-BAkMFcAzl8as1G/hArkxOxq3G7pjUqQ3gzYbLL0/5zNkph70e+lCoxBGnm6AW1+/aiNeV4fnKqZ8m4GZewmH2w==
