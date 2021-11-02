@@ -54,7 +54,7 @@ export async function config(){
 return ({params})=>{
     console.log(`Here are the params: ${JSON.stringify(params)}`);
     return {
-      defer: params.frontmatter__priority === "high"
+      defer: true //params.frontmatter__priority === "high"
     }
   }
 }
