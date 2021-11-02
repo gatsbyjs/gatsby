@@ -14,3 +14,7 @@ export {
   saveQueriesDependencies,
 } from "./queries"
 export { loadConfigAndPlugins } from "./load-config-and-plugins"
+
+export function deleteModuleCache(htmlComponentRendererPath) {
+  delete require.cache[require.resolve(htmlComponentRendererPath)]
+}
