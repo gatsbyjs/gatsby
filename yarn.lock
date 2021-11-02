@@ -1946,7 +1946,7 @@
     camel-case "4.1.1"
     tslib "~2.0.1"
 
-"@graphql-tools/utils@^7.0.2", "@graphql-tools/utils@^7.1.2", "@graphql-tools/utils@^7.7.0", "@graphql-tools/utils@^7.7.1", "@graphql-tools/utils@^7.7.3", "@graphql-tools/utils@^7.8.1":
+"@graphql-tools/utils@^7.0.2", "@graphql-tools/utils@^7.1.2", "@graphql-tools/utils@^7.10.0", "@graphql-tools/utils@^7.7.0", "@graphql-tools/utils@^7.7.1", "@graphql-tools/utils@^7.8.1":
   version "7.10.0"
   resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-7.10.0.tgz#07a4cb5d1bec1ff1dc1d47a935919ee6abd38699"
   integrity sha512-d334r6bo9mxdSqZW6zWboEnnOOFRrAPVQJ7LkU8/6grglrbcu6WhwCLzHb90E94JI3TD3ricC3YGbUqIi9Xg0w==

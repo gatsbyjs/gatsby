@@ -9,14 +9,14 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "@graphql-tools/links": "^7.1.0",
-    "@graphql-tools/utils": "^7.7.3",
+    "@graphql-tools/utils": "^7.10.0",
     "@graphql-tools/wrap": "^7.0.8",
     "apollo-link": "1.2.14",
     "apollo-link-http": "^1.5.17",
     "dataloader": "^2.0.0",
     "gatsby-core-utils": "^3.2.0-next.0",
     "invariant": "^2.2.4",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
