@@ -48,9 +48,25 @@ if (process.send) {
 }
 
 onExit(() => {
+  let SSGCount = 0
+  let DSGCount = 0
+  let SSRCount = 0
+  for (const page of store.getState().pages.values()) {
+    if (page.mode === `SSR`) {
+      SSRCount++
+    } else if (page.mode === `DSG`) {
+      DSGCount++
+    } else {
+      SSGCount++
+    }
+  }
+
   telemetry.trackCli(`DEVELOP_STOP`, {
     siteMeasurements: {
       totalPagesCount: store.getState().pages.size,
+      SSRCount,
+      DSGCount,
+      SSGCount,
     },
   })
 })
@@ -106,7 +122,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     process.exit(0)
   })
 
-  initTracer(
+  await initTracer(
     process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
   )
   markWebpackStatusAsPending()

@@ -10,9 +10,7 @@ import { CreateDevServerArgs, ParentSpanPluginArgs } from "gatsby"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
 import chokidar from "chokidar"
-// We use an ancient version of path-to-regexp as it has breaking changes to express v4
-// see: https://github.com/pillarjs/path-to-regexp/tree/77df63869075cfa5feda1988642080162c584427#compatibility-with-express--4x
-import pathToRegexp from "path-to-regexp"
+import { match } from "@gatsbyjs/reach-router/lib/utils"
 import cookie from "cookie"
 import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
 import { internalActions } from "../../redux/actions"
@@ -27,14 +25,6 @@ interface IGlobPattern {
   rootPath: string
   /** The glob pattern **/
   globPattern: string
-}
-
-interface IPathToRegexpKey {
-  name: string | number
-  prefix: string
-  suffix: string
-  pattern: string
-  modifier: string
 }
 
 // During development, we lazily compile functions only when they're requested.
@@ -496,24 +486,22 @@ export async function onCreateDevServer({
         // Check if there's any matchPaths that match.
         // We loop until we find the first match.
         functions.some(f => {
-          let exp
-          const keys: Array<IPathToRegexpKey> = []
           if (f.matchPath) {
-            exp = pathToRegexp(f.matchPath, keys)
-          }
-          if (exp && exp.exec(pathFragment) !== null) {
-            functionObj = f
-            const matches = [...pathFragment.match(exp)].slice(1)
-            const newParams = {}
-            matches.forEach(
-              (match, index) => (newParams[keys[index].name] = match)
-            )
-            req.params = newParams
+            const matchResult = match(f.matchPath, pathFragment)
+            if (matchResult) {
+              req.params = matchResult.params
+              if (req.params[`*`]) {
+                // Backwards compatability for v3
+                // TODO remove in v5
+                req.params[`0`] = req.params[`*`]
+              }
+              functionObj = f
 
-            return true
-          } else {
-            return false
+              return true
+            }
           }
+
+          return false
         })
       }
 

@@ -60,7 +60,7 @@ module.exports = async function getSourcePluginsAsRemarkPlugins({
             cache,
             ...helpers,
           },
-          plugin.options || {}
+          plugin.pluginOptions || {}
         )
 
         return markdownAST

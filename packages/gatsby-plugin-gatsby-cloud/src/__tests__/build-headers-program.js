@@ -19,7 +19,7 @@ describe(`build-headers-program`, () => {
 
   const createPluginData = async () => {
     const tmpDir = await fs.mkdtemp(
-      path.join(os.tmpdir(), `abhi-plugin-fastly-`)
+      path.join(os.tmpdir(), `gatsby-plugin-gatsby-cloud-`)
     )
 
     return {
@@ -198,6 +198,7 @@ describe(`build-headers-program`, () => {
         ],
       },
       pathPrefix: ``,
+      assetPrefix: ``,
       publicFolder: (...files) => path.join(tmpDir, ...files),
     }
   }
@@ -348,5 +349,25 @@ describe(`build-headers-program`, () => {
       },
       expect.any(Function)
     )
+  })
+
+  it(`with an assetPrefix`, async () => {
+    let pluginData = await createPluginData()
+    pluginData = {
+      ...pluginData,
+      assetPrefix: `http://cloud.gatsbyjs.io`,
+    }
+
+    const pluginOptions = {
+      ...DEFAULT_OPTIONS,
+    }
+
+    await buildHeadersProgram(pluginData, pluginOptions)
+
+    const output = await fs.readFile(
+      pluginData.publicFolder(HEADERS_FILENAME),
+      `utf8`
+    )
+    expect(output).toMatchSnapshot()
   })
 })

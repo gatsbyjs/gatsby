@@ -5,6 +5,7 @@ import { Plugin as PostCSSPlugin } from "postcss"
 import autoprefixer from "autoprefixer"
 import flexbugs from "postcss-flexbugs-fixes"
 import TerserPlugin from "terser-webpack-plugin"
+import type { MinifyOptions as TerserOptions } from "terser"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
@@ -21,6 +22,7 @@ import {
 import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
 import { eslintConfig, eslintRequiredConfig } from "./eslint-config"
+import { store } from "../redux"
 
 type Loader = string | { loader: string; options?: { [name: string]: any } }
 type LoaderResolver<T = Record<string, unknown>> = (options?: T) => Loader
@@ -179,8 +181,8 @@ export const createWebpackUtils = (
   const PRODUCTION = !stage.includes(`develop`)
 
   const isSSR = stage.includes(`html`)
+  const { config } = store.getState()
 
-  const jsxRuntimeExists = reactHasJsxRuntime()
   const makeExternalOnly =
     (original: RuleFactory) =>
     (options = {}): RuleSetRule => {
@@ -364,7 +366,8 @@ export const createWebpackUtils = (
       return {
         options: {
           stage,
-          reactRuntime: jsxRuntimeExists ? `automatic` : `classic`,
+          reactRuntime: config.jsxRuntime,
+          reactImportSource: config.jsxImportSource,
           cacheDirectory: path.join(
             program.directory,
             `.cache`,
@@ -644,7 +647,7 @@ export const createWebpackUtils = (
     terserOptions,
     ...options
   }: {
-    terserOptions?: TerserPlugin.TerserPluginOptions
+    terserOptions?: TerserOptions
   } = {}): WebpackPluginInstance =>
     new TerserPlugin({
       exclude: /\.min\.js/,
@@ -654,7 +657,7 @@ export const createWebpackUtils = (
           safari10: true,
         },
         parse: {
-          ecma: 8,
+          ecma: 5,
         },
         compress: {
           ecma: 5,
@@ -697,7 +700,6 @@ export const createWebpackUtils = (
                 `moveElemsAttrsToGroup`,
                 `moveGroupAttrsToElems`,
                 `prefixIds`, // Default: disabled
-                `removeAttrs`, // Default: disabled
                 `removeComments`,
                 `removeDesc`,
                 `removeDoctype`,
@@ -785,7 +787,7 @@ export const createWebpackUtils = (
         `/bower_components/`,
         VIRTUAL_MODULES_BASE_PATH,
       ],
-      ...eslintConfig(schema, jsxRuntimeExists),
+      ...eslintConfig(schema, config.jsxRuntime === `automatic`),
     }
     // @ts-ignore
     return new ESLintPlugin(options)
@@ -810,27 +812,4 @@ export const createWebpackUtils = (
     rules,
     plugins,
   }
-}
-
-export function reactHasJsxRuntime(): boolean {
-  // We've got some complains about the ecosystem not being ready for automatic so we disable it by default.
-  // People can use a custom babelrc file to support it
-  // try {
-  //   // React is shipping a new jsx runtime that is to be used with
-  //   // an option on @babel/preset-react called `runtime: automatic`
-  //   // Not every version of React has this jsx-runtime yet. Eventually,
-  //   // it will be backported to older versions of react and this check
-  //   // will become unnecessary.
-  //   // for now we also do the semver check until react 17 is more widely used
-  //   // const react = require(`react/package.json`)
-  //   // return (
-  //   //   !!require.resolve(`react/jsx-runtime.js`) &&
-  //   //   semver.major(react.version) >= 17
-  //   // )
-  // } catch (e) {
-  //   // If the require.resolve throws, that means this version of React
-  //   // does not support the jsx runtime.
-  // }
-
-  return false
 }

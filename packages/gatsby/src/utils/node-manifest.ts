@@ -70,9 +70,7 @@ async function findPageOwnedByNodeId({ nodeId }: { nodeId: string }): Promise<{
 
   let foundPageBy: FoundPageBy = pagePath ? `queryTracking` : `none`
 
-  // but if we have more than one page where this node shows up
-  // we need to try to be more specific
-  if (pagePathSetOrMap && pagePathSetOrMap.size > 1) {
+  if (pagePathSetOrMap) {
     let ownerPagePath: string | undefined
     let foundOwnerNodeId = false
 

@@ -191,7 +191,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       // Important: mark source files as clean when recompiling starts
       // Doing this `onDone` will wipe all file change events that occur **during** recompilation
       // See https://github.com/gatsbyjs/gatsby/issues/27609
-      entry: `markSourceFilesClean`,
+      entry: [`setRecompiledFiles`, `markSourceFilesClean`],
       invoke: {
         src: `recompile`,
         onDone: {

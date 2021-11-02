@@ -53,6 +53,7 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
 
     expect(manifestFileContents.node.id).toBe(`1`)
     expect(manifestFileContents.page.path).toBe(`/one`)
+    expect(manifestFileContents.foundPageBy).toBe(`ownerNodeId`)
   })
 
   it(`Creates an accurate node manifest when ownerNodeId isn't present but there's a matching "id" in pageContext`, async () => {
@@ -60,6 +61,7 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
 
     expect(manifestFileContents.node.id).toBe(`2`)
     expect(manifestFileContents.page.path).toBe(`/two`)
+    expect(manifestFileContents.foundPageBy).toBe(`context.id`)
   })
 
   if (gatsbyCommandName === `build`) {
@@ -74,6 +76,7 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
           manifestFileContents.page.path
         )
       ).toBe(true)
+      expect(manifestFileContents.foundPageBy).toBe(`queryTracking`)
     })
 
     // this doesn't work in gatsby develop since page-data.json files aren't written out
@@ -93,6 +96,7 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
 
     expect(manifestFileContents.node.id).toBe(`4`)
     expect(manifestFileContents.page.path).toBe(null)
+    expect(manifestFileContents.foundPageBy).toBe(`none`)
   })
 
   it(`Creates a Node manifest for filesystem routes`, async () => {
@@ -100,5 +104,6 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
 
     expect(manifestFileContents.node.id).toBe(`filesystem-1`)
     expect(manifestFileContents.page.path).toBe(`/filesystem-1/`)
+    expect(manifestFileContents.foundPageBy).toBe(`filesystem-route-api`)
   })
 })
