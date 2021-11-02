@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.0.0/packages/gatsby-plugin-mdx) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Bug Fixes
+
+- properly pass plugin options to subplugins [#33537](https://github.com/gatsbyjs/gatsby/issues/33537) ([83396a5](https://github.com/gatsbyjs/gatsby/commit/83396a5a91eb2f329d4b5e49ef5544106d0e380f))
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
+#### Other Changes
+
+- adjust tests after the bump [#33171](https://github.com/gatsbyjs/gatsby/issues/33171) ([4712acc](https://github.com/gatsbyjs/gatsby/commit/4712acc619c19cd23a1b2e94e7253ddd624aa927))
+
 ## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@2.14.0/packages/gatsby-plugin-mdx) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

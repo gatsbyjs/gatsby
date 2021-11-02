@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@5.0.0/packages/gatsby-transformer-remark) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Features
+
+- Remove two obsolete options & improve README [#33295](https://github.com/gatsbyjs/gatsby/issues/33295) ([bd59514](https://github.com/gatsbyjs/gatsby/commit/bd595142d4391fa96444052785cfe65d8e7fc56c))
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
+#### Other Changes
+
+- adjust tests after the bump [#33171](https://github.com/gatsbyjs/gatsby/issues/33171) ([4712acc](https://github.com/gatsbyjs/gatsby/commit/4712acc619c19cd23a1b2e94e7253ddd624aa927))
+
 ## [4.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@4.11.0/packages/gatsby-transformer-remark) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

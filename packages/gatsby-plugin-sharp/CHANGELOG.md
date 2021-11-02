@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.0.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.0.1/packages/gatsby-plugin-sharp) (2021-10-27)
+
+#### Bug Fixes
+
+- pass input buffer instead of readStream when processing image jobs [#33685](https://github.com/gatsbyjs/gatsby/issues/33685) [#33694](https://github.com/gatsbyjs/gatsby/issues/33694) ([9b3d44f](https://github.com/gatsbyjs/gatsby/commit/9b3d44fd50185bddd7b74b7c1bdfadd774b81db5))
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.0.0/packages/gatsby-plugin-sharp) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Bug Fixes
+
+- run sharp in 1 core when in gatsby worker [#33505](https://github.com/gatsbyjs/gatsby/issues/33505) ([4658b80](https://github.com/gatsbyjs/gatsby/commit/4658b80c37ece59c490fac0bebf8d68a21879fa5))
+
+#### Chores
+
+- update sharp [#33379](https://github.com/gatsbyjs/gatsby/issues/33379) ([eb70b46](https://github.com/gatsbyjs/gatsby/commit/eb70b46e2e4384f5649160d3d2206ea3d96b8a71))
+- remove old unused code [#33504](https://github.com/gatsbyjs/gatsby/issues/33504) ([31952b4](https://github.com/gatsbyjs/gatsby/commit/31952b4faf33abcb30e765abd160208e3b22e912))
+- Remove `sizeByPixelDensity` option [#33468](https://github.com/gatsbyjs/gatsby/issues/33468) ([d467372](https://github.com/gatsbyjs/gatsby/commit/d4673723a14cfbeb727bf6c2472e6693beeee817))
+
+### [3.14.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@3.14.3/packages/gatsby-plugin-sharp) (2021-11-02)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+### [3.14.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@3.14.2/packages/gatsby-plugin-sharp) (2021-10-28)
+
+#### Bug Fixes
+
+- pass input buffer instead of readStream when processing image jobs [#33685](https://github.com/gatsbyjs/gatsby/issues/33685) [#33703](https://github.com/gatsbyjs/gatsby/issues/33703) ([84053a2](https://github.com/gatsbyjs/gatsby/commit/84053a2e23cc0aac821b2ad4c4728c7701e1af8c))
+
 ### [3.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@3.14.1/packages/gatsby-plugin-sharp) (2021-10-06)
 
 **Note:** Version bump only for package gatsby-plugin-sharp

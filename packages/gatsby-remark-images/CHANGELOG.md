@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@6.0.0/packages/gatsby-remark-images) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- Remove `sizeByPixelDensity` option [#33468](https://github.com/gatsbyjs/gatsby/issues/33468) ([d467372](https://github.com/gatsbyjs/gatsby/commit/d4673723a14cfbeb727bf6c2472e6693beeee817))
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@5.11.0/packages/gatsby-remark-images) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
