@@ -44,7 +44,7 @@ exports.sourceNodes = (
           createNodes(
             db,
             pluginOptions,
-            dbName,
+            pluginOptions.name ?? dbName,
             createNode,
             createNodeId,
             col,
