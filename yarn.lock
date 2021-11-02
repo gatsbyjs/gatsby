@@ -8060,10 +8060,10 @@ contentful-sdk-core@^6.5.0, contentful-sdk-core@^6.7.0:
     fast-copy "^2.1.0"
     qs "^6.9.4"
 
-contentful@^8.4.2:
-  version "8.4.2"
-  resolved "https://registry.yarnpkg.com/contentful/-/contentful-8.4.2.tgz#e9d0088772d41edefcc91ec79db99c5e679c4b34"
-  integrity sha512-ddbJaJEQm58XBNjzne/lLkapEW9bWX0K3vVF16UEYyekiv2CAIaO5OwWgDD9w+VJe2wliPcDPmbtVeB9BIc/zA==
+contentful@^8.5.0:
+  version "8.5.0"
+  resolved "https://registry.yarnpkg.com/contentful/-/contentful-8.5.0.tgz#7c3aa0d482bdf00a1ff56d3eb20a278729962f45"
+  integrity sha512-DhbUMLvwq2F1M6+fiBRZJO9kK2jwhmhbqbamTvCHYpQMnuzcj+owHAvKOcIiHY77kKpGNe1jFDDtOGLeeU4zwg==
   dependencies:
     axios "^0.21.1"
     contentful-resolve-response "^1.3.0"
@@ -22736,10 +22736,10 @@ retext@^7.0.1:
     retext-stringify "^2.0.0"
     unified "^8.0.0"
 
-retry-axios@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/retry-axios/-/retry-axios-2.4.0.tgz#b5da2afed8dd0134c73c86206e1d1881d7c66a67"
-  integrity sha512-rK7UBYgbrNoVothbSmM0tEm9DIiXapmVUrnUYn+d9AuQvF0AY5RkJU2FQvlufe9hlFwrCdDhrJTwiyRtR7wUaA==
+retry-axios@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/retry-axios/-/retry-axios-2.6.0.tgz#d4dc5c8a8e73982e26a705e46a33df99a28723e0"
+  integrity sha512-pOLi+Gdll3JekwuFjXO3fTq+L9lzMQGcSq7M5gIjExcl3Gu1hd4XXuf5o3+LuSBsaULQH7DiNbsqPd1chVpQGQ==
 
 retry@0.12.0, retry@^0.12.0:
   version "0.12.0"
