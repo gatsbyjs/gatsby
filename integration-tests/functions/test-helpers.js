@@ -285,7 +285,7 @@ export function runTests(env, host) {
     describe(`ignores files that match the pattern`, () => {
       test(`dotfile`, async () => {
         const result = await fetch(
-          `${host}/api/ignore/.gitignore`
+          `${host}/api/ignore/.config`
         )
         expect(result.status).toEqual(404)
       })

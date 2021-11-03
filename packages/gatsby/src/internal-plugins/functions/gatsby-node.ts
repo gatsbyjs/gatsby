@@ -79,9 +79,7 @@ const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
     const nestedFolder = pluginName ? `/${pluginName}/**/` : `/**/`
 
     return [
-      `${root}/src/api${nestedFolder}.*`, // Dotfiles
-      // Tests
-      `${root}/src/api${nestedFolder}__tests__/**/*.+(js|ts)`,
+      `${root}/src/api${nestedFolder}__tests__/**/*.+(js|ts)`, // Jest tests
       `${root}/src/api${nestedFolder}+(*.)+(spec|test).+(js|ts)`,
       `${root}/src/api${nestedFolder}+(*.)+(d).ts`, // .d.ts files
     ]
