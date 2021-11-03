@@ -59,34 +59,37 @@ async function run() {
     auth: `token ${process.env.GITHUB_BOT_AUTH_TOKEN}`,
   })
 
-  try {
-    const owner = `gatsbyjs`
-    const repo = `gatsby`
+  const owner = `gatsbyjs`
+  const repo = `gatsby`
 
-    // Note: PR may already exist for this branch.
-    // Then it will throw but we don't care too much
-    const pr = await octokit.pulls.create({
-      owner,
-      repo,
-      title: commitMessage,
-      head: branch,
-      base,
-      body: `Updated changelogs of the following packages:\n\n${updatedPackages
-        .map(p => `- ${p}`)
-        .join(`\n`)}`,
-    })
+  // Note: PR may already exist for this branch.
+  // Then it will throw but we don't care too much
+  const pr = await octokit.pulls.create({
+    owner,
+    repo,
+    title: commitMessage,
+    head: branch,
+    base,
+    body: `Updated changelogs of the following packages:\n\n${updatedPackages
+      .map(p => `- ${p}`)
+      .join(`\n`)}`,
+  })
 
-    console.log(`\n---\n\nPR opened - ${pr.data.html_url}`)
+  console.log(`\n---\n\nPR opened - ${pr.data.html_url}`)
 
-    await octokit.issues.addLabels({
-      owner,
-      repo,
-      issue_number: pr.data.number,
-      labels: [`type: maintenance`],
-    })
-  } catch (e) {
-    console.error(e)
-  }
+  await octokit.issues.addLabels({
+    owner,
+    repo,
+    issue_number: pr.data.number,
+    labels: [`type: maintenance`],
+  })
 }
 
-run()
+run().catch(error => {
+  const safeError = String(error)
+    .split(process.env.GITHUB_BOT_AUTH_TOKEN)
+    .join(`{process.env.GITHUB_BOT_AUTH_TOKEN}`)
+
+  console.error(safeError)
+  process.exit(1)
+})
