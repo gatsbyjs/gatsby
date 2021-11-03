@@ -55,7 +55,7 @@ import { shouldGenerateEngines } from "../utils/engines-helpers"
 
 module.exports = async function build(
   program: IBuildArgs,
-  externalTracer = false
+  externalTracerTags
 ): Promise<void> {
   if (isTruthy(process.env.VERBOSE)) {
     program.verbose = true
@@ -78,7 +78,7 @@ module.exports = async function build(
   markWebpackStatusAsPending()
 
   const publicDir = path.join(program.directory, `public`)
-  if (!externalTracer) {
+  if (!externalTracerTags) {
     await initTracer(
       process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ||
         program.openTracingConfigFile
@@ -96,6 +96,13 @@ module.exports = async function build(
 
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
+
+  // Add external tags to buildSpan
+  if (externalTracerTags) {
+    Object.entries(externalTracerTags).forEach(([key, value]) => {
+      buildActivity.span.setTag(key, value)
+    })
+  }
 
   const { gatsbyNodeGraphQLFunction, workerPool } = await bootstrap({
     program,
@@ -365,7 +372,7 @@ module.exports = async function build(
   report.info(`Done building in ${process.uptime()} sec`)
 
   buildActivity.end()
-  if (!externalTracer) {
+  if (!externalTracerTags) {
     await stopTracer()
   }
 
