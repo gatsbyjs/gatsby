@@ -43,7 +43,7 @@ const IndexPage = ({ data }) => (
       <li>A single header image or a full sized hero might take 1-10kb</li>
       <li>
         For frequent previews like article teasers or image gallery thumbnails
-        I’d recommend 15-25 shapes
+        we’d recommend 15-25 shapes
       </li>
       <li>For header and hero images you may go up to 50-200 shapes</li>
     </ul>
@@ -58,11 +58,9 @@ const IndexPage = ({ data }) => (
     <p>Getting the data via GraphQL:</p>
     <pre>
       <code>{`image {
-    sqip(numberOfPrimitives: 12, blur: 12, width: 256, height: 256),
-    sizes(maxWidth: 400, maxHeight: 400) {
-    ...GatsbyImageSharpSizes_noBase64
-    }
-  }`}</code>
+  sqip(numberOfPrimitives: 12, blur: 12, width: 256, height: 256),
+  gatsbyImageData(width: 400, height: 400)
+}`}</code>
     </pre>
     <p>
       <strong>Hint:</strong> Make sure to set the same aspect ratio for sqip and
@@ -113,23 +111,14 @@ const IndexPage = ({ data }) => (
       </li>
     </ul>
 
-    <h3>Gatsby Image</h3>
+    <h3>Gatsby Plugin Image</h3>
     <pre>
-      <code>{`const Img = require(\`gatsby-image\`)
+      <code>{`const { GatsbyImage } = require(\`gatsby-image\`)
 
-<Img
-  resolutions={{
-    ...image.resolutions,
-    base64: image.sqip
-  }}
-/>
-
-// or
-
-<Img
-  sizes={{
-    ...image.sizes,
-    base64: image.sqip
+<GatsbyImage
+  image={{
+    ...image.gatsbyImageData,
+    placeholder: { fallback: image.childImageSharp.sqip.dataURI },
   }}
 />`}</code>
     </pre>
