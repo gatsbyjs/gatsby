@@ -265,7 +265,7 @@ Page context is serialized before being passed to pages. This means it can't be 
 
 ### Optimizing pages for content sync
 
-If using the Preview UI Content Sync feature on Gatsby Cloud, an optional parameter, `ownerNodeId` can be passed to the `createPage` invocation to ensure that the CMS content is properly mapped to the page you would like to preview it on. For example, the value of `ownerNodeId` can be set to `node.id` when pages are generated for each queried node.
+If using the Preview UI Content Sync feature on Gatsby Cloud, an optional parameter, `ownerNodeId` can be passed to the `createPage` invocation to give you greater control over how content is previewed. By passing a value to `ownerNodeId`, you can ensure that the CMS content is properly mapped to the page you would like to preview it on. For example, the value of `ownerNodeId` can be set to `node.id` when pages are generated for each queried node.
 
 ```javascript:title=gatsby-node.js
 const posts = result.data.allContentfulBlogPost.nodes
