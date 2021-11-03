@@ -37,8 +37,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-source-shopify
 
-
-
 ### [5.6.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@5.6.1/packages/gatsby-source-shopify) (2021-10-06)
 
 #### Features

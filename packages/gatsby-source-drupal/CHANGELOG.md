@@ -35,8 +35,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - cache backlink records [#33444](https://github.com/gatsbyjs/gatsby/issues/33444) [#33701](https://github.com/gatsbyjs/gatsby/issues/33701) [#33181](https://github.com/gatsbyjs/gatsby/issues/33181) [#33228](https://github.com/gatsbyjs/gatsby/issues/33228) ([26c51c0](https://github.com/gatsbyjs/gatsby/commit/26c51c0c4ecb28247c79ee787822a27bea899e0c))
 - Correctly update nodes with changed back references so queries are re-run [#33328](https://github.com/gatsbyjs/gatsby/issues/33328) [#33699](https://github.com/gatsbyjs/gatsby/issues/33699) ([b80c53a](https://github.com/gatsbyjs/gatsby/commit/b80c53a31348a6a6024fa36cee50a171b80f9632))
 
-
-
 ### [4.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@4.14.1/packages/gatsby-source-drupal) (2021-10-06)
 
 #### Features

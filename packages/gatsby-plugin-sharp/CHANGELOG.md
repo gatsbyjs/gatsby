@@ -42,8 +42,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - pass input buffer instead of readStream when processing image jobs [#33685](https://github.com/gatsbyjs/gatsby/issues/33685) [#33703](https://github.com/gatsbyjs/gatsby/issues/33703) ([84053a2](https://github.com/gatsbyjs/gatsby/commit/84053a2e23cc0aac821b2ad4c4728c7701e1af8c))
 
-
-
 ### [3.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@3.14.1/packages/gatsby-plugin-sharp) (2021-10-06)
 
 **Note:** Version bump only for package gatsby-plugin-sharp

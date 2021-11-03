@@ -29,8 +29,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-transformer-sqip
 
-
-
 ### [3.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@3.14.1/packages/gatsby-transformer-sqip) (2021-10-06)
 
 **Note:** Version bump only for package gatsby-transformer-sqip

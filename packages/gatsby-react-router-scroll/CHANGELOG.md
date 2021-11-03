@@ -18,8 +18,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update dependency history to v5 for gatsby-react-router-scroll [#32650](https://github.com/gatsbyjs/gatsby/issues/32650) ([fb55ff6](https://github.com/gatsbyjs/gatsby/commit/fb55ff6b0f325118e34aa6269dff45f5bf03fa36))
 - apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
 
-
-
 ## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-react-router-scroll@4.14.0/packages/gatsby-react-router-scroll) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

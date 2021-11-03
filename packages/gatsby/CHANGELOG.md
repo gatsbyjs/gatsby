@@ -158,8 +158,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - support named splats in functions [#33301](https://github.com/gatsbyjs/gatsby/issues/33301) [#33516](https://github.com/gatsbyjs/gatsby/issues/33516) ([c9bb766](https://github.com/gatsbyjs/gatsby/commit/c9bb76693ced0ca5b7225b7d0978853236ec8d18))
 
-
-
 ### [3.14.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@3.14.2/packages/gatsby) (2021-10-06)
 
 #### Features

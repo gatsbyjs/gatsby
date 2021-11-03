@@ -23,8 +23,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update formatting & linting [#33378](https://github.com/gatsbyjs/gatsby/issues/33378) ([d5634a4](https://github.com/gatsbyjs/gatsby/commit/d5634a48611456bbedb8c2a2eb3a45a54a0d5db4))
 - apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
 
-
-
 ## [0.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-worker@0.5.0/packages/gatsby-worker) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

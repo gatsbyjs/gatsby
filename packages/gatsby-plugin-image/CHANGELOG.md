@@ -32,8 +32,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - GatsbyImage not displaying image in IE11 [#33416](https://github.com/gatsbyjs/gatsby/issues/33416) [#33806](https://github.com/gatsbyjs/gatsby/issues/33806) ([35b48f8](https://github.com/gatsbyjs/gatsby/commit/35b48f80f62668542aca3f69c6fef676f58f0679))
 - flickering when state changes [#33732](https://github.com/gatsbyjs/gatsby/issues/33732) [#33807](https://github.com/gatsbyjs/gatsby/issues/33807) ([880022e](https://github.com/gatsbyjs/gatsby/commit/880022e52dfb6c7a4cdd5cb4c6b77bfc793bbb29))
 
-
-
 ### [1.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@1.14.1/packages/gatsby-plugin-image) (2021-10-06)
 
 #### Features

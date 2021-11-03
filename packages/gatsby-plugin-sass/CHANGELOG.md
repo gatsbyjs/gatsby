@@ -18,8 +18,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update dependency autoprefixer to ^10.3.6 for gatsby-plugin-sass [#33352](https://github.com/gatsbyjs/gatsby/issues/33352) ([97620ac](https://github.com/gatsbyjs/gatsby/commit/97620acc3e751e967a2884d3d0edc7791d5bc2f3))
 - apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
 
-
-
 ## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@4.14.0/packages/gatsby-plugin-sass) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

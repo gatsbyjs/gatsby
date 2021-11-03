@@ -46,8 +46,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Fix tests for WordPress, Contentful & update CircleCI Fix [#33256](https://github.com/gatsbyjs/gatsby/issues/33256) Fix [#33439](https://github.com/gatsbyjs/gatsby/issues/33439) ([1759c1c](https://github.com/gatsbyjs/gatsby/commit/1759c1c4f588d357572c0280ffd02b304d2408e0))
 
-
-
 ## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@5.14.0/packages/gatsby-source-contentful) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

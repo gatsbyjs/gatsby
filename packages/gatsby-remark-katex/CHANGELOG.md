@@ -18,8 +18,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update dependency katex to ^0.13.18 for gatsby-remark-katex [#33354](https://github.com/gatsbyjs/gatsby/issues/33354) ([a5d8797](https://github.com/gatsbyjs/gatsby/commit/a5d8797543f01e08ed0250f2c62391cff258e5a0))
 - apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
 
-
-
 ## [5.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-katex@5.11.0/packages/gatsby-remark-katex) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

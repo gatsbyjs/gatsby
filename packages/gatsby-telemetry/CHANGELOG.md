@@ -30,8 +30,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - remove deps that are global [#33270](https://github.com/gatsbyjs/gatsby/issues/33270) ([a960906](https://github.com/gatsbyjs/gatsby/commit/a96090690b479e7e042544ec18eec39d81ed4c96))
 - apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
 
-
-
 ## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-telemetry@2.14.0/packages/gatsby-telemetry) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

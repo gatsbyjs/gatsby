@@ -21,8 +21,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Prefix `id` and only use createNodeId fix [#28943](https://github.com/gatsbyjs/gatsby/issues/28943) ([76f0224](https://github.com/gatsbyjs/gatsby/commit/76f0224ae8590a8122ed5f9ef585a9fe29b94fa8))
 
-
-
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-yaml@3.14.0/packages/gatsby-transformer-yaml) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

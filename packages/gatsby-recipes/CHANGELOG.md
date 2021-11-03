@@ -17,8 +17,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-recipes
 
-
-
 ## [0.25.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.25.0/packages/gatsby-recipes) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
