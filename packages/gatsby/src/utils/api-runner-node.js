@@ -278,10 +278,13 @@ const runAPI = async (plugin, api, args, activity) => {
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
     const spanOptions = parentSpan ? { childOf: parentSpan } : {}
-    const pluginSpan = tracer.startSpan(`run-plugin`, spanOptions)
+    let pluginSpan
+    if (parentSpan) {
+      pluginSpan = tracer.startSpan(`run-plugin`, spanOptions)
 
-    pluginSpan.setTag(`api`, api)
-    pluginSpan.setTag(`plugin`, plugin.name)
+      pluginSpan.setTag(`api`, api)
+      pluginSpan.setTag(`plugin`, plugin.name)
+    }
     const {
       publicActions,
       restrictedActionsAvailableInAPI,
@@ -430,7 +433,7 @@ const runAPI = async (plugin, api, args, activity) => {
     if (gatsbyNode[api].length === 3) {
       return Promise.fromCallback(callback => {
         const cb = (err, val) => {
-          pluginSpan.finish()
+          pluginSpan?.finish()
           apiFinished = true
           endInProgressActivitiesCreatedByThisRun()
           callback(err, val)
@@ -450,7 +453,7 @@ const runAPI = async (plugin, api, args, activity) => {
       try {
         return await gatsbyNode[api](...apiCallArgs)
       } finally {
-        pluginSpan.finish()
+        pluginSpan?.finish()
         apiFinished = true
         endInProgressActivitiesCreatedByThisRun()
       }
@@ -490,12 +493,15 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
   return new Promise(resolve => {
     const { parentSpan, traceId, traceTags, waitForCascadingActions } = args
     const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
-    const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
+    let apiSpan
+    if (api !== `setFieldsOnGraphQLNodeType`) {
+      apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
 
-    apiSpan.setTag(`api`, api)
-    _.forEach(traceTags, (value, key) => {
-      apiSpan.setTag(key, value)
-    })
+      apiSpan.setTag(`api`, api)
+      _.forEach(traceTags, (value, key) => {
+        apiSpan.setTag(key, value)
+      })
+    }
 
     const apiRunInstance = {
       api,
@@ -676,7 +682,7 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
       // Filter out empty responses and return if the
       // api caller isn't waiting for cascading actions to finish.
       if (!waitForCascadingActions) {
-        apiSpan.finish()
+        apiSpan?.finish()
         resolve(apiRunInstance.results)
       }
 
@@ -686,7 +692,7 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
           // If none of its trace IDs are running, it's done.
           const apisByTraceIdCount = apisRunningByTraceId.get(instance.traceId)
           if (apisByTraceIdCount === 0) {
-            instance.span.finish()
+            instance.span?.finish()
             instance.resolve(instance.results)
             return false
           } else {
