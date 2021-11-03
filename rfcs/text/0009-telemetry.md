@@ -26,9 +26,9 @@ By collecting anonymous analytics, we’ll be able to prioritize fixes and featu
 For example:
 
 - We will be able to understand which plugins are used together, surface that information in the public plugin library, and, for example, build more relevant starters and tutorials.
-- We will be able to surface popularity of different starters in the starter showcase.
-- We will be able to surface error rates in each build stage, and focusing on driving these down over time. We want the experience to remain error free.
-- We will be able to surface reliability of different plugins and starters, and detect the ones which seen buggy to then improve these.
+- We will be able to surface the popularity of different starters in the starter showcase.
+- We will be able to surface error rates in each build stage, and focus on driving these down over time. We want the experience to remain error free.
+- We will be able to surface reliability of different plugins and starters, and detect the ones which seem buggy to then improve these.
 - We will be able to see timings for different build stages to guide us in where we should focus optimization work.
 
 ### Privacy
@@ -46,7 +46,7 @@ We will record the following types of events:
 - BUILD*ERROR*[STAGE] when a gatsby build command throws an error
 - CLI*ERROR*[ERROR_TYPE] when a gatsby cli runs into an unexpected error
 
-Depending on the event, we will record following information:
+Depending on the event, we will record the following information:
 
 - A Gatsby machine ID, a randomly generated UUID and stored at ~/.config/gatsby. This does not allow us to track individual users but does enable us to accurately measure user counts vs. event counts.
 - A Gatsby repo ID, that is a one-way hash of the repository path
@@ -58,7 +58,7 @@ Depending on the event, we will record following information:
 ### Opting out
 
 Gatsby analytics helps us maintainers so we will appreciate leaving it on.
-If you want to opt out, however, you can run `gatsby analytics --disable` or edit the ~/.config/gatsby/config.json and add `"analytics": false`.
+If you want to opt-out, however, you can run `gatsby analytics --disable` or edit the ~/.config/gatsby/config.json and add `"analytics": false`.
 
 To opt back in, you can run `gatsby analytics --enable`.
 
@@ -72,6 +72,6 @@ We do have somewhat detailed (albeit spotty) ways of getting some information ab
 
 There aren't really any alternatives — without directly sending information about usage, we only have proxy telemetry which are incomplete and often misleading (hello NPM downloads count).
 
-We could do opt-in instead of opt-out but that would mean most people wouldn't ever know to opt-in and our data collection would be probably useless as we'd only see a small % of user activity and never be sure what % it is of the real total.
+We could do opt-in instead of opt-out but that would mean most people wouldn't even know to opt-in and our data collection would be probably useless as we'd only see a small % of user activity and never be sure what % it is of the real total.
 
 Given the information is valuable to the community as a whole and completely private, we're confident this is the right choice.
