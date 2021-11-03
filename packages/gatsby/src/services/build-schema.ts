@@ -6,10 +6,8 @@ export async function buildSchema({
   parentSpan,
   refresh,
 }: Partial<IDataLayerContext>): Promise<void> {
-  if (
-    refresh &&
-    Boolean(process.env.GATSBY_EXPERIMENTAL_DISABLE_SCHEMA_REBUILD)
-  ) {
+  if (refresh) {
+    console.trace()
     return
   }
   const activity = reporter.activityTimer(`building schema`, {
