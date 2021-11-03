@@ -24,8 +24,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - resolve correct versions of packages with unpkg resolve [#33551](https://github.com/gatsbyjs/gatsby/issues/33551) resolve [#33570](https://github.com/gatsbyjs/gatsby/issues/33570) ([016bab7](https://github.com/gatsbyjs/gatsby/commit/016bab788b4bc1cb859cee15f92ded287cbdf661))
 
-
-
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@3.14.0/packages/gatsby-dev-cli) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

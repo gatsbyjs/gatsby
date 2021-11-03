@@ -23,8 +23,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update testing library (major) [#32656](https://github.com/gatsbyjs/gatsby/issues/32656) ([ab2902b](https://github.com/gatsbyjs/gatsby/commit/ab2902b06f954edab325b0c35b99813a8b567275))
 - apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
 
-
-
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@3.14.0/packages/gatsby-link) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

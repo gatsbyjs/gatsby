@@ -40,8 +40,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Properly set the pathPrefix and assetPrefix in the pluginData fix [#33667](https://github.com/gatsbyjs/gatsby/issues/33667) fix [#33702](https://github.com/gatsbyjs/gatsby/issues/33702) ([6bfd0f1](https://github.com/gatsbyjs/gatsby/commit/6bfd0f17dcf1bda2dab426d3a5aa0dcaa2d0d661))
 
-
-
 ## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@3.2.0/packages/gatsby-plugin-gatsby-cloud) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

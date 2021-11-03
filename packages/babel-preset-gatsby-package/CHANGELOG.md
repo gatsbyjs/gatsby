@@ -21,8 +21,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - adjust tests after the bump [#33171](https://github.com/gatsbyjs/gatsby/issues/33171) ([4712acc](https://github.com/gatsbyjs/gatsby/commit/4712acc619c19cd23a1b2e94e7253ddd624aa927))
 
-
-
 ## [1.14.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby-package@1.14.0/packages/babel-preset-gatsby-package) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

@@ -51,8 +51,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - only load the necessary logger [#33463](https://github.com/gatsbyjs/gatsby/issues/33463) [#33518](https://github.com/gatsbyjs/gatsby/issues/33518) ([33a5ec7](https://github.com/gatsbyjs/gatsby/commit/33a5ec769eb043db839f598d5b36399225a44843))
 
-
-
 ### [3.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@3.14.1/packages/gatsby-cli) (2021-10-06)
 
 #### Features

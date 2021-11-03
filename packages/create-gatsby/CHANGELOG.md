@@ -23,8 +23,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update typescript [#33001](https://github.com/gatsbyjs/gatsby/issues/33001) ([6cd70f6](https://github.com/gatsbyjs/gatsby/commit/6cd70f62ecae4aeee8ece38866661be9239062cb))
 
-
-
 ## [1.14.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.14.0/packages/create-gatsby) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
