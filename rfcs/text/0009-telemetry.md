@@ -46,7 +46,7 @@ We will record the following types of events:
 - BUILD*ERROR*[STAGE] when a gatsby build command throws an error
 - CLI*ERROR*[ERROR_TYPE] when a gatsby cli runs into an unexpected error
 
-Depending on the event, we will record the following information:
+Depending on the event, we will record following information:
 
 - A Gatsby machine ID, a randomly generated UUID and stored at ~/.config/gatsby. This does not allow us to track individual users but does enable us to accurately measure user counts vs. event counts.
 - A Gatsby repo ID, that is a one-way hash of the repository path
@@ -72,6 +72,6 @@ We do have somewhat detailed (albeit spotty) ways of getting some information ab
 
 There aren't really any alternatives — without directly sending information about usage, we only have proxy telemetry which are incomplete and often misleading (hello NPM downloads count).
 
-We could do opt-in instead of opt-out but that would mean most people wouldn't even know to opt-in and our data collection would be probably useless as we'd only see a small % of user activity and never be sure what % it is of the real total.
+We could do opt-in instead of opt-out but that would mean most people wouldn't ever know to opt-in and our data collection would be probably useless as we'd only see a small % of user activity and never be sure what % it is of the real total.
 
 Given the information is valuable to the community as a whole and completely private, we're confident this is the right choice.
