@@ -36,8 +36,11 @@ export const componentsReducer = (
     case `QUERY_EXTRACTED`: {
       action.payload.componentPath = normalize(action.payload.componentPath)
       const component = state.get(action.payload.componentPath)!
-      component.query = action.payload.query
-      state.set(action.payload.componentPath, component)
+      console.log(`QUERY_EXTRACTED`, component, action)
+      if (component) {
+        component.query = action.payload.query
+        state.set(action.payload.componentPath, component)
+      }
       return state
     }
     case `REMOVE_STATIC_QUERIES_BY_TEMPLATE`: {
