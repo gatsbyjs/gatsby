@@ -3,7 +3,7 @@
 import fs from "fs-extra"
 import Bluebird from "bluebird"
 import * as path from "path"
-import { generateHtmlPath, fixedPagePath } from "gatsby-core-utils"
+import { generateHtmlPath } from "gatsby-core-utils"
 import { truncate } from "lodash"
 
 import {
