@@ -266,6 +266,10 @@ You can no longer use `gatsby-admin` (activated with environment variable `GATSB
 
 This environment variable was internally used by `gatsby-preset-gatsby`. If you're using it you now must pass the `stage` as an option to the preset.
 
+### Windows-specific: No support for WSL1
+
+With the introduction of `lmdb-store` instances running [WSL1](https://docs.microsoft.com/en-us/windows/wsl/about) sadly won't work anymore. You'll see errors like `Error: MDB_BAD_RSLOT: Invalid reuse of reader locktable slot` or similar. This is an [upstream issue](https://github.com/microsoft/WSL/issues/3451) that we can't fix and we recommend updating to WSL2 ([Comparison of WSL1 & WSL2](https://docs.microsoft.com/en-us/windows/wsl/compare-versions)).
+
 ### Gatsby related packages
 
 Breaking Changes in plugins that we own and maintain.
@@ -367,8 +371,45 @@ const count = await totalCount()
 ```
 
 If you don't pass `limit` and `skip`, `findAll` returns all nodes in `{ entries }` iterable.
-Check out the [source code of GatsbyIterable](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/datastore/common/iterable.ts)
+Check out the [source code of `GatsbyIterable`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/datastore/common/iterable.ts)
 for usage.
+
+The `GatsbyIterable` has some convenience methods similar to arrays, namely: `concat`, `map`, `filter`, `slice`, `deduplicate`, `forEach`, `mergeSorted`, `intersectSorted`, and `deduplicateSorted`. You can use these instead of first creating an array from `entries` (with `Array.from(entries)`) which should be faster for larger datasets.
+
+Furthermore, you can directly return `entries` in GraphQL resolvers.
+
+```js
+// Example: Directly return `entries`
+resolve: async (source, args, context, info) => {
+  const { entries } = await context.nodeModel.findAll({
+    query: {
+      filter: {
+        frontmatter: {
+          author: { eq: source.email },
+          date: { gt: "2019-01-01" },
+        },
+      },
+    },
+    type: "MarkdownRemark",
+  })
+  return entries
+}
+
+// Example: Use .filter on the iterable
+resolve: async (source, args, context, info) => {
+  const { entries } = await context.nodeModel.findAll({ type: `BlogPost` })
+  return entries.filter(post => post.publishedAt > Date.UTC(2018, 0, 1))
+}
+
+// Example: Convert to array to use methods not available on iterable
+resolve: async (source, args, context, info) => {
+  const { entries } = await context.nodeModel.findAll({
+    type: "MarkdownRemark",
+  })
+  const posts = entries.filter(post => post.frontmatter.author === source.email)
+  return Array.from(posts).length
+}
+```
 
 ### `nodeModel.getAllNodes` is deprecated
 
@@ -462,6 +503,16 @@ If your plugin supports both versions:
 }
 ```
 
+If you defined the `engines` key you'll also need to update the minimum version:
+
+```json:title=package.json
+{
+  "engines": {
+    "node": ">=14.15.0"
+  }
+}
+```
+
 You can also learn more about this in the [migration guide for source plugins](/docs/reference/release-notes/migrating-source-plugin-from-v3-to-v4/).
 
 ### Don't mutate nodes outside of expected APIs
@@ -493,6 +544,8 @@ Gatsby provides several actions available in `sourceNodes` and `onCreateNode` AP
 - [createNode](/docs/reference/config-files/actions/#createNode)
 - [deleteNode](/docs/reference/config-files/actions/#deleteNode)
 - [createNodeField](/docs/reference/config-files/actions/#createNodeField)
+
+You can use `createNodeField` and the `@link` directive to create the same schema shape. The [`@link` directive](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields) accepts a `from` argument that you can use to place your node to the old position (as `createNodeField` places everything under a `fields` key). See the [source plugin guide](/docs/how-to/plugins-and-themes/creating-a-source-plugin/#create-remote-file-node-from-a-url) for more information. Checkout [this PR](https://github.com/gatsbyjs/gatsby/pull/33715) for a real-world migration example.
 
 ### `___NODE` convention
 
