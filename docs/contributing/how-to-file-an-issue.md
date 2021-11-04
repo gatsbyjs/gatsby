@@ -2,21 +2,16 @@
 title: How to File an Issue
 ---
 
-The Gatsby GitHub [issue tracker](https://github.com/gatsbyjs/gatsby/issues) is the preferred channel for bug reports, documentation, feature requests and [submitting pull requests](/contributing/how-to-open-a-pull-request/).
+The Gatsby GitHub [issue tracker](https://github.com/gatsbyjs/gatsby/issues) is the preferred channel for bug reports, documentation requests, and [submitting pull requests](/contributing/how-to-open-a-pull-request/).
 
 To resolve your issue, please select the appropriate category:
 
-- Bug Reports
+- Bug Report
 - Documentation
-- Feature Requests
-- New [Translation](/contributing/translation#creating-a-new-translation) Requests
 
 For bug reports, include in your issue:
 
-- Gatsby version, Node.js version, OS version
-- The contents of your `gatsby-config.js` and `package.json` as well as your
-  `gatsby-node.js`, `gatsby-browser.js`, and `gatsby-ssr.js` files depending on
-  changes you've made there.
+- Follow the issue template prompting you for each entry
 - A [reproduction](/contributing/how-to-make-a-reproducible-test-case/) for debugging and taking action
 
 Please do not use the issue tracker for personal support requests. [Stack Overflow](https://stackoverflow.com/questions/ask?tags=gatsby) (**gatsby** tag) and the [Gatsby Discord](https://gatsby.dev/discord) are better places to get help.

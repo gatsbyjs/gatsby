@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.1.0/packages/gatsby-transformer-json) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-transformer-json
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.0.0/packages/gatsby-transformer-json) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
+#### Other Changes
+
+- Prefix `id` and only use createNodeId fix [#28942](https://github.com/gatsbyjs/gatsby/issues/28942) ([c20d6f6](https://github.com/gatsbyjs/gatsby/commit/c20d6f68c485467898ba82f79450c356b26f6ec1))
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@3.14.0/packages/gatsby-transformer-json) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

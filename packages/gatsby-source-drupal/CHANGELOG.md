@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.1.0/packages/gatsby-source-drupal) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+#### Bug Fixes
+
+- Add timeout in case of stalled API requests [#33668](https://github.com/gatsbyjs/gatsby/issues/33668) ([113ae43](https://github.com/gatsbyjs/gatsby/commit/113ae430033e782635e89300a1d64f1f5caf93eb))
+- cache backlink records [#33444](https://github.com/gatsbyjs/gatsby/issues/33444) [#33181](https://github.com/gatsbyjs/gatsby/issues/33181) [#33228](https://github.com/gatsbyjs/gatsby/issues/33228) ([0def3ac](https://github.com/gatsbyjs/gatsby/commit/0def3ac966ef16dda9405252aafc70a304855898))
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.0.0/packages/gatsby-source-drupal) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Features
+
+- port hot-fixes for Drupal/Gatsby customer to package fixes [#33419](https://github.com/gatsbyjs/gatsby/issues/33419) ([1777f08](https://github.com/gatsbyjs/gatsby/commit/1777f0851fc78262491faf4cc366353a937654d5))
+
+#### Bug Fixes
+
+- Add tests for meta.count support & fix bug with i18n fix [#33423](https://github.com/gatsbyjs/gatsby/issues/33423) ([22805bd](https://github.com/gatsbyjs/gatsby/commit/22805bdec89ee5101818a76ddc9c638b7c0150f4))
+- update dependency opentracing to ^0.14.5 for gatsby-source-drupal [#33365](https://github.com/gatsbyjs/gatsby/issues/33365) ([2d3a966](https://github.com/gatsbyjs/gatsby/commit/2d3a9668e863570ef4ad3f3a2f7d78a1e7cefcba))
+- Correctly update nodes with changed back references so queries are re-run [#33328](https://github.com/gatsbyjs/gatsby/issues/33328) ([5196e40](https://github.com/gatsbyjs/gatsby/commit/5196e40ef38660b6d8d621deb87fa719f124f1a4))
+- check relationships type exists on node before filtering [#33181](https://github.com/gatsbyjs/gatsby/issues/33181) ([d4f8355](https://github.com/gatsbyjs/gatsby/commit/d4f8355293876fb26371d4181db965d8ff0b3dcb))
+
+### [4.14.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@4.14.2/packages/gatsby-source-drupal) (2021-10-28)
+
+#### Bug Fixes
+
+- Add timeout in case of stalled API requests [#33668](https://github.com/gatsbyjs/gatsby/issues/33668) [#33705](https://github.com/gatsbyjs/gatsby/issues/33705) ([4722a0d](https://github.com/gatsbyjs/gatsby/commit/4722a0da1ca6fd88aa5060b14c1f21deadd68428))
+- cache backlink records [#33444](https://github.com/gatsbyjs/gatsby/issues/33444) [#33701](https://github.com/gatsbyjs/gatsby/issues/33701) [#33181](https://github.com/gatsbyjs/gatsby/issues/33181) [#33228](https://github.com/gatsbyjs/gatsby/issues/33228) ([26c51c0](https://github.com/gatsbyjs/gatsby/commit/26c51c0c4ecb28247c79ee787822a27bea899e0c))
+- Correctly update nodes with changed back references so queries are re-run [#33328](https://github.com/gatsbyjs/gatsby/issues/33328) [#33699](https://github.com/gatsbyjs/gatsby/issues/33699) ([b80c53a](https://github.com/gatsbyjs/gatsby/commit/b80c53a31348a6a6024fa36cee50a171b80f9632))
+
 ### [4.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@4.14.1/packages/gatsby-source-drupal) (2021-10-06)
 
 #### Features

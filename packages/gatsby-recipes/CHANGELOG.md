@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@1.1.0/packages/gatsby-recipes) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+#### Chores
+
+- update dependency graphql to ^15.6.1 [#32975](https://github.com/gatsbyjs/gatsby/issues/32975) ([bfe6fe1](https://github.com/gatsbyjs/gatsby/commit/bfe6fe1f83ac6454057791261d427833830efb03))
+
+## [1.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@1.0.0/packages/gatsby-recipes) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+**Note:** Version bump only for package gatsby-recipes
+
 ## [0.25.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@0.25.0/packages/gatsby-recipes) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

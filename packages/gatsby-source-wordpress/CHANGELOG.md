@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.1.0/packages/gatsby-source-wordpress) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+#### Features
+
+- Update supported-remote-plugin-versions.ts [#33801](https://github.com/gatsbyjs/gatsby/issues/33801) [#33816](https://github.com/gatsbyjs/gatsby/issues/33816) ([550d897](https://github.com/gatsbyjs/gatsby/commit/550d8975c77dd7830cda9c6ec306a633a7db2609))
+
+#### Chores
+
+- Fix typos Fix [#33639](https://github.com/gatsbyjs/gatsby/issues/33639) ([0b71664](https://github.com/gatsbyjs/gatsby/commit/0b7166483c8ee925a469ac2acae50a0dd7ef1f84))
+- Fix links to old tutorial docs Fix [#33605](https://github.com/gatsbyjs/gatsby/issues/33605) ([42bcb00](https://github.com/gatsbyjs/gatsby/commit/42bcb0065aacd61944eb927e094f2a18aefaf1d3))
+
+#### Other Changes
+
+- Update WP Content Sync docs [#33670](https://github.com/gatsbyjs/gatsby/issues/33670) ([c1488d6](https://github.com/gatsbyjs/gatsby/commit/c1488d6f2aebda9044f7837fc97df9d1b64a860b))
+
+## [6.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.0.0/packages/gatsby-source-wordpress) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Features
+
+- use cached version in PQR of remote schema [#33511](https://github.com/gatsbyjs/gatsby/issues/33511) ([803f936](https://github.com/gatsbyjs/gatsby/commit/803f936d74f0600f50a59638f67c2c26595221d4))
+- Add gatsby plugin image [#33138](https://github.com/gatsbyjs/gatsby/issues/33138) ([ef1681a](https://github.com/gatsbyjs/gatsby/commit/ef1681a692ab47f6ced462a7aca7e2ab287ee66f))
+- allow 401 option [#33237](https://github.com/gatsbyjs/gatsby/issues/33237) ([d55c633](https://github.com/gatsbyjs/gatsby/commit/d55c6339bb89c076220cde5b10b2f72b458f869d))
+
+#### Bug Fixes
+
+- Add steps for `refetch_ALL` [#33264](https://github.com/gatsbyjs/gatsby/issues/33264) ([4d8e40b](https://github.com/gatsbyjs/gatsby/commit/4d8e40b3bacd29aabbe37b0c725097e36b9c3d4e))
+- restore PQR support [#33590](https://github.com/gatsbyjs/gatsby/issues/33590) ([6cc964a](https://github.com/gatsbyjs/gatsby/commit/6cc964a7d7831580be6825ef9f0130d94f9795c5))
+- remove graphql-query-compress for DSG support [#33445](https://github.com/gatsbyjs/gatsby/issues/33445) ([88407f3](https://github.com/gatsbyjs/gatsby/commit/88407f3b753ec85935183dacdac09fb75edd45d5))
+- Use correct options schema ([9a2f660](https://github.com/gatsbyjs/gatsby/commit/9a2f660d3695042eee1b7057e8a0874e395fff5a))
+- fix refresh builds error fix [#33300](https://github.com/gatsbyjs/gatsby/issues/33300) ([492068b](https://github.com/gatsbyjs/gatsby/commit/492068b0d1a08e544c3c51fb2fc1360087437b99))
+
+#### Chores
+
+- update sharp [#33379](https://github.com/gatsbyjs/gatsby/issues/33379) ([eb70b46](https://github.com/gatsbyjs/gatsby/commit/eb70b46e2e4384f5649160d3d2206ea3d96b8a71))
+- refactor logic for supported node api names [#33296](https://github.com/gatsbyjs/gatsby/issues/33296) ([2cedfc5](https://github.com/gatsbyjs/gatsby/commit/2cedfc53e5689192a0cf765a6ed0dcdb28658b7b))
+- Fix tests for WordPress, Contentful & update CircleCI Fix [#33256](https://github.com/gatsbyjs/gatsby/issues/33256) ([1d8ebb2](https://github.com/gatsbyjs/gatsby/commit/1d8ebb2588e3549105305000dd5d6572396b1f0e))
+
+#### Other Changes
+
+- change gatsby-image references to gatsby-plugin-image [#31727](https://github.com/gatsbyjs/gatsby/issues/31727) ([9feb3b0](https://github.com/gatsbyjs/gatsby/commit/9feb3b09dd47892a8d64fa6fa1f0a89ce9de27c2))
+
+### [5.14.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.14.2/packages/gatsby-source-wordpress) (2021-11-02)
+
+#### Features
+
+- Update supported-remote-plugin-versions.ts [#33801](https://github.com/gatsbyjs/gatsby/issues/33801) [#33804](https://github.com/gatsbyjs/gatsby/issues/33804) ([c0d07e7](https://github.com/gatsbyjs/gatsby/commit/c0d07e7ac4c5c8d271424cf6296ca0c36b9f9d00))
+
 ### [5.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@5.14.1/packages/gatsby-source-wordpress) (2021-10-06)
 
 #### Chores

@@ -6,6 +6,7 @@ Object {
     "/Users/username/dev/site/src/templates/my-sweet-new-page.js" => Object {
       "componentChunkName": "component---users-username-dev-site-src-templates-my-sweet-new-page-js",
       "componentPath": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
+      "config": false,
       "isInBootstrap": true,
       "pages": Set {
         "/my-sweet-new-page/",
