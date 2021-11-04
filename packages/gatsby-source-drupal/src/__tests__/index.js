@@ -567,6 +567,10 @@ describe(`gatsby-source-drupal`, () => {
           nodes[createNodeId(`und.article-2`)].relationships
             .field_tertiary_image___NODE_image___NODE
         ).toBe(undefined)
+        expect(
+          nodes[createNodeId(`und.article-10`)].relationships.field_tags___NODE
+            .length
+        ).toBe(1)
       })
 
       it(`Back references`, () => {

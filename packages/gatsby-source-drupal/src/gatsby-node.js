@@ -16,6 +16,7 @@ const {
   storeRefsLookups,
   handleReferences,
   handleWebhookUpdate,
+  createNodeIfItDoesNotExist,
   handleDeletedNode,
 } = require(`./utils`)
 
@@ -234,6 +235,13 @@ ${JSON.stringify(webhookBody, null, 4)}`
         nodesToUpdate = [data]
       }
 
+      // First create all nodes that we haven't seen before. That
+      // way we can create relationships correctly next as the nodes
+      // will exist in Gatsby.
+      for (const nodeToUpdate of nodesToUpdate) {
+        createNodeIfItDoesNotExist(nodeToUpdate)
+      }
+
       for (const nodeToUpdate of nodesToUpdate) {
         await handleWebhookUpdate(
           {
@@ -345,6 +353,31 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
           // Process sync data from Drupal.
           const nodesToSync = res.body.entities
+
+          // First create all nodes that we haven't seen before. That
+          // way we can create relationships correctly next as the nodes
+          // will exist in Gatsby.
+          for (const nodeSyncData of nodesToSync) {
+            if (nodeSyncData.action === `delete`) {
+              continue
+            }
+
+            let nodesToUpdate = nodeSyncData.data
+            if (!Array.isArray(nodeSyncData.data)) {
+              nodesToUpdate = [nodeSyncData.data]
+            }
+            for (const nodeToUpdate of nodesToUpdate) {
+              createNodeIfItDoesNotExist({
+                nodeToUpdate,
+                actions,
+                createNodeId,
+                createContentDigest,
+                getNode,
+                reporter,
+              })
+            }
+          }
+
           for (const nodeSyncData of nodesToSync) {
             if (nodeSyncData.action === `delete`) {
               handleDeletedNode({
