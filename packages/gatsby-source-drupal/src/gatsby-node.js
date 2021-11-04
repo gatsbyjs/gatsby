@@ -12,8 +12,6 @@ const { setOptions, getOptions } = require(`./plugin-options`)
 
 const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
 const {
-  initRefsLookups,
-  storeRefsLookups,
   handleReferences,
   handleWebhookUpdate,
   createNodeIfItDoesNotExist,
@@ -178,8 +176,6 @@ exports.sourceNodes = async (
     unstable_createNodeManifest,
   } = actions
 
-  await initRefsLookups({ cache, getNode })
-
   // Update the concurrency limit from the plugin options
   requestQueue.concurrency = concurrentAPIRequests
 
@@ -223,6 +219,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
           const deletedNode = await handleDeletedNode({
             actions,
             getNode,
+            cache,
             node: nodeToDelete,
             createNodeId,
             createContentDigest,
@@ -232,7 +229,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
         }
 
         changesActivity.end()
-        await storeRefsLookups({ cache })
         return
       }
 
@@ -274,7 +270,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
       return
     }
     changesActivity.end()
-    await storeRefsLookups({ cache })
     return
   }
 
@@ -393,6 +388,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
               handleDeletedNode({
                 actions,
                 getNode,
+                cache,
                 node: nodeSyncData,
                 createNodeId,
                 createContentDigest,
@@ -434,7 +430,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
         drupalFetchIncrementalActivity.end()
         fastBuildsSpan.finish()
-        await storeRefsLookups({ cache })
         return
       }
 
@@ -445,7 +440,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
       initialSourcing = false
 
       if (!requireFullRebuild) {
-        await storeRefsLookups({ cache })
         return
       }
     }
@@ -659,14 +653,17 @@ ${JSON.stringify(webhookBody, null, 4)}`
   createNodesSpan.setTag(`sourceNodes.createNodes.count`, nodes.size)
 
   // second pass - handle relationships and back references
-  nodes.forEach(node => {
-    handleReferences(node, {
-      getNode: nodes.get.bind(nodes),
-      mutateNode: true,
-      createNodeId,
-      entityReferenceRevisions,
+  await Promise.all(
+    Array.from(nodes.values()).map(node => {
+      handleReferences(node, {
+        getNode: nodes.get.bind(nodes),
+        mutateNode: true,
+        createNodeId,
+        cache,
+        entityReferenceRevisions,
+      })
     })
-  })
+  )
 
   if (skipFileDownloads) {
     reporter.info(`Skipping remote file download from Drupal`)
@@ -715,7 +712,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
   initialSourcing = false
 
   createNodesSpan.finish()
-  await storeRefsLookups({ cache, getNodes })
   return
 }
 

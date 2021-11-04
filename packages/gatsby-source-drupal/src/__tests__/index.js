@@ -25,6 +25,7 @@ function makeCache() {
   return {
     get: async id => store.get(id),
     set: async (key, value) => store.set(key, value),
+    del: async key => store.delete(key),
     store,
   }
 }
