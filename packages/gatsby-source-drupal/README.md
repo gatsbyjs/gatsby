@@ -2,7 +2,7 @@
 
 Source plugin for pulling data (including images) into Gatsby from Drupal sites.
 
-It pulls data from Drupal 8 sites with the
+It pulls data from Drupal 8/9 sites with the
 [Drupal JSONAPI module](https://www.drupal.org/project/jsonapi) installed.
 
 An example site built with the headless Drupal distro

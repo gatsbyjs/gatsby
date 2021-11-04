@@ -36,7 +36,9 @@ export const componentsReducer = (
     case `QUERY_EXTRACTED`: {
       action.payload.componentPath = normalize(action.payload.componentPath)
       const component = state.get(action.payload.componentPath)!
+
       console.log(`QUERY_EXTRACTED`, component, action)
+
       if (component) {
         component.query = action.payload.query
         state.set(action.payload.componentPath, component)
