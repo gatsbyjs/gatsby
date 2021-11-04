@@ -27,6 +27,9 @@ export async function resetCache(nodeIds): void {
   await dataStore.clearNodeCache(nodeIds)
   // Reset the GraphQL Runner cache as this is a new run.
   getGraphqlRunner(true)
+
+  // Reset the queries Redux cache to prevent it endlessly growing.
+  store.dispatch({ type: `DELETE_QUERIES_CACHE` })
 }
 
 export async function saveQueriesDependencies(): Promise<void> {

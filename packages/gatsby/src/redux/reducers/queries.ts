@@ -65,6 +65,10 @@ export function queriesReducer(
     case `DELETE_CACHE`:
       return initialState()
 
+    case `DELETE_QUERIES_CACHE`:
+      console.log(`deleting query cache`)
+      return initialState()
+
     case `CREATE_PAGE`: {
       const { path, componentPath } = action.payload
       let query = state.trackedQueries.get(path)
