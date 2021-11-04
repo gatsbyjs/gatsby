@@ -1,4 +1,5 @@
 import type { ErrorId } from "gatsby-cli/lib/structured-errors/error-map"
+import { joinPath } from "gatsby-core-utils"
 import { getNode } from "./../datastore"
 import { IGatsbyPage, INodeManifest } from "./../redux/types"
 import reporter from "gatsby-cli/lib/reporter"
@@ -279,7 +280,7 @@ export async function processNodeManifest(
   const gatsbySiteDirectory = store.getState().program.directory
 
   // write out the manifest file
-  let manifestFilePath = path.join(
+  let manifestFilePath = joinPath(
     gatsbySiteDirectory,
     `public`,
     `__node-manifests`,
