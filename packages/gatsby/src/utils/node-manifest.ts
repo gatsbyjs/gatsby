@@ -279,13 +279,27 @@ export async function processNodeManifest(
   const gatsbySiteDirectory = store.getState().program.directory
 
   // write out the manifest file
-  const manifestFilePath = path.join(
+  let manifestFilePath = path.join(
     gatsbySiteDirectory,
     `public`,
     `__node-manifests`,
     inputManifest.pluginName,
     `${inputManifest.manifestId}.json`
   )
+
+  /**
+   * Commas are considered special characters on Windows and are not valid in file paths with the exception of
+   * the hard disk partition name at the beginning of a file path (i.e. C:).
+   *
+   * During local development, node manifests can be written to disk but are generally unused as they are only used
+   * for Content Sync which runs in Gatsby cloud. Gatsby cloud is a Linux environment in which colons are valid in
+   * filepaths. To avoid errors on Windows, we replace all ":" instances in the filepath (with the exception of the
+   * hard disk partition name) with "-" to ensure that local Windows development setups do not break when attempting
+   * to write one of these manifests to disk.
+   */
+  if (process.platform === `win32`) {
+    manifestFilePath = manifestFilePath.replace(/(?<!^[A-Za-z]):/g, `-`)
+  }
 
   const manifestFileDir = path.dirname(manifestFilePath)
 
