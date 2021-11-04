@@ -114,7 +114,7 @@ allMarkdownRemark {
 ### Collection Route Components
 
 Collection route components are passed two dynamic variables. The `id` of each page's node and the
-URL path as `param`. The param is passed to the component as `props.params` and the id as `props.pageContext.id`.
+URL path as `params`. The params is passed to the component as `props.params` and the id as `props.pageContext.id`.
 
 Both are also passed as variables to the component's GraphQL query so you can query fields from the node. Page querying, including the use of variables, is explained in more depth in [querying data in pages with GraphQL](/docs/how-to/querying-data/page-query/).
 
@@ -142,6 +142,8 @@ export const query = graphql`
   }
 `
 ```
+
+For the page `src/pages/{Product.name}/{Product.coupon}.js` you'd have `props.params.name` and `props.params.coupon` available inside `{Product.coupon}.js`.
 
 If you need to want to create pages for only some nodes in a collection (e.g. filtering out any product of type `"Food"`) or customize the variables passed to the query, you should use the [`createPages`](/docs/reference/config-files/gatsby-node#createPages) API instead as File System Route API doesn't support this at the moment.
 
@@ -240,6 +242,44 @@ function AppPage(props) {
   const splat = props.params[‘*’]
 }
 ```
+
+## `config` function
+
+Inside a File System Route template you can export an async function called `config`. You can use this function to:
+
+- Mark the page as deferred or not (see [Deferred Static Generation API reference](/docs/reference/rendering-options/deferred-static-generation/))
+
+Inside your template:
+
+```jsx:title=src/pages/{Product.name}.jsx
+import { graphql } from "gatsby"
+
+// The rest of your page, including imports, page component & page query etc.
+
+export async function config() {
+  const { data } = graphql`
+    {
+      # Your GraphQL query
+    }
+  `
+
+  return ({ params }) => {
+    return {
+      defer: params.name === data.someValue.name,
+    }
+  }
+}
+```
+
+When you export an async `config` function Gatsby will evaluate the returned object and optionally run any GraphQL queries defined inside the outer function. You can't run GraphQL queries inside the inner function.
+
+The `params` parameter is an object that contains the URL path, see [explanation above](#collection-route-components).
+
+The inner function of `config` can return an object with one key:
+
+- `defer`: Boolean of whether the page should be marked as deferred or not
+
+Read the [Deferred Static Generation guide](/docs/how-to/rendering-options/using-deferred-static-generation/) to see a real-world example.
 
 ## Example use cases
 

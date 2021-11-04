@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.1.0/packages/gatsby-link) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-link
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@4.0.0/packages/gatsby-link) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Features
+
+- add queue to prefetch [#33530](https://github.com/gatsbyjs/gatsby/issues/33530) ([2975c4d](https://github.com/gatsbyjs/gatsby/commit/2975c4d1271e3da52b531ad2f49261c362e5ae13))
+- handle search params in resource loader [#33209](https://github.com/gatsbyjs/gatsby/issues/33209) ([5c22948](https://github.com/gatsbyjs/gatsby/commit/5c22948094d98f3d4ea90253c80fc78d9f53cc20))
+
+#### Chores
+
+- update testing library (major) [#32656](https://github.com/gatsbyjs/gatsby/issues/32656) ([ab2902b](https://github.com/gatsbyjs/gatsby/commit/ab2902b06f954edab325b0c35b99813a8b567275))
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@3.14.0/packages/gatsby-link) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

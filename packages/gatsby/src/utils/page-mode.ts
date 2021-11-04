@@ -6,6 +6,14 @@ import {
   PageMode,
 } from "../redux/types"
 import { reportOnce } from "./report-once"
+import { ROUTES_DIRECTORY } from "../constants"
+import { Runner } from "../bootstrap/create-graphql-runner"
+
+type IPageConfigFn = (arg: { params: Record<string, unknown> }) => {
+  defer: boolean
+}
+
+const pageConfigMap = new Map<string, IPageConfigFn>()
 
 /**
  * In develop IGatsbyPage["mode"] can change at any time, so as a general rule we need to resolve it
@@ -17,33 +25,46 @@ export function getPageMode(page: IGatsbyPage, state?: IGatsbyState): PageMode {
   const { components } = state ?? store.getState()
 
   // assume SSG until components are actually extracted
-  const component = components.get(page.componentPath) ?? { serverData: false }
+  const component = components.get(page.componentPath) ?? {
+    serverData: false,
+    config: false,
+  }
 
-  // TODO: fs routes support:
-  //   if (component.config) {
-  //     const renderer = require(PAGE_RENDERER_PATH)
-  //     const componentInstance = await renderer.getPageChunk({ componentChunkName: page.componentChunkName })
-  //     return resolvePageMode(page, component, componentInstance)
-  //   }
   return resolvePageMode(page, component)
 }
 
 function resolvePageMode(
   page: IGatsbyPage,
-  component: { serverData: boolean }
-  // TODO:
-  //  componentInstance?: NodeModule
+  component: { serverData: boolean; config: boolean }
 ): PageMode {
-  let pageMode: PageMode
+  let pageMode: PageMode | undefined = undefined
   if (component.serverData) {
     pageMode = `SSR`
-  } else {
+  } else if (component.config) {
+    const pageConfigFn = pageConfigMap.get(page.componentChunkName)
+    if (!pageConfigFn) {
+      // This is possible in warm builds when `component.config` was persisted but
+      // `preparePageTemplateConfigs` hasn't been executed yet
+      // TODO: if we move `mode` away from page and persist it in the state separately,
+      //  we can just return the old `mode` that should be in sync with `component.config`
+      return `SSG`
+    }
+
+    const fsRouteParams = (
+      typeof page.context[`__params`] === `object`
+        ? page.context[`__params`]
+        : {}
+    ) as Record<string, unknown>
+
+    const pageConfig = pageConfigFn({ params: fsRouteParams })
+    if (typeof pageConfig.defer === `boolean`) {
+      pageMode = pageConfig.defer ? `DSG` : `SSG`
+    }
+  }
+
+  if (!pageMode) {
     pageMode = page.defer ? `DSG` : `SSG`
   }
-  // TODO: fs routes support, e.g.:
-  //   if (componentInstance) {
-  //     return componentInstance.config.defer(page) ? `DSG` : `SSG`
-  //   }
   if (
     pageMode !== `SSG` &&
     (page.path === `/404.html` || page.path === `/500.html`)
@@ -90,4 +111,33 @@ export async function materializePageMode(): Promise<void> {
       await new Promise(resolve => setImmediate(resolve))
     }
   }
+}
+
+export async function preparePageTemplateConfigs(
+  graphql: Runner
+): Promise<void> {
+  const { program } = store.getState()
+  const pageRendererPath = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
+
+  const pageRenderer = require(pageRendererPath)
+  global[`__gatsbyGraphql`] = graphql
+
+  await Promise.all(
+    Array.from(store.getState().components.values()).map(async component => {
+      if (component.config) {
+        const componentInstance = await pageRenderer.getPageChunk({
+          componentChunkName: component.componentChunkName,
+        })
+        const pageConfigFn = await componentInstance.config()
+        if (typeof pageConfigFn !== `function`) {
+          throw new Error(
+            `Unexpected result of config factory. Expected "function", got "${typeof pageConfigFn}".`
+          )
+        }
+
+        pageConfigMap.set(component.componentChunkName, pageConfigFn)
+      }
+    })
+  )
+  delete global[`__gatsbyGraphql`]
 }

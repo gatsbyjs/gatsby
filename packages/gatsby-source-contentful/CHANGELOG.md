@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@6.1.0/packages/gatsby-source-contentful) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+#### Bug Fixes
+
+- fix downloadLocal for LMDB fix [#33715](https://github.com/gatsbyjs/gatsby/issues/33715) ([a8745ea](https://github.com/gatsbyjs/gatsby/commit/a8745ea26624ef758080846adefff3d5d7784291))
+
+#### Other Changes
+
+- Link to knowledgebase doc for setup and quick deploy for gatsbyjs.com/contentful [#33726](https://github.com/gatsbyjs/gatsby/issues/33726) ([06d192d](https://github.com/gatsbyjs/gatsby/commit/06d192dd0c6b1eda9b6503652b0a9f1270b0a615))
+
+## [6.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@6.0.0/packages/gatsby-source-contentful) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Features
+
+- Add node manifest support for previews [#33297](https://github.com/gatsbyjs/gatsby/issues/33297) ([3a385a5](https://github.com/gatsbyjs/gatsby/commit/3a385a5fa18e3cce1f3455059eeb2fb667561382))
+- move types into createSchemaCustomization [#33207](https://github.com/gatsbyjs/gatsby/issues/33207) ([d01a373](https://github.com/gatsbyjs/gatsby/commit/d01a373f1d7887a2afe57834e13da738cca21b2e))
+
+#### Bug Fixes
+
+- createUrl now enforces https protocol [#33236](https://github.com/gatsbyjs/gatsby/issues/33236) ([e166cfc](https://github.com/gatsbyjs/gatsby/commit/e166cfc267de989e0c7744316924c4a3de605e5d))
+
+#### Chores
+
+- clean up code base and introduce es-module syntax [#33213](https://github.com/gatsbyjs/gatsby/issues/33213) ([86f6645](https://github.com/gatsbyjs/gatsby/commit/86f6645ef27a9ef753211c442a53d74127c1a6ff))
+- download assets via gatsby-core-utils [#33482](https://github.com/gatsbyjs/gatsby/issues/33482) ([3f2d581](https://github.com/gatsbyjs/gatsby/commit/3f2d581e63677711512cca11b220239e52532dfc))
+- Improve README on rich text ref [#33401](https://github.com/gatsbyjs/gatsby/issues/33401) ([9505cac](https://github.com/gatsbyjs/gatsby/commit/9505caca831047aff3a4d6c544b985a6e0b267b1))
+- Fix tests for WordPress, Contentful & update CircleCI Fix [#33256](https://github.com/gatsbyjs/gatsby/issues/33256) ([1d8ebb2](https://github.com/gatsbyjs/gatsby/commit/1d8ebb2588e3549105305000dd5d6572396b1f0e))
+- Fix RichText example Fix [#33261](https://github.com/gatsbyjs/gatsby/issues/33261) ([617e876](https://github.com/gatsbyjs/gatsby/commit/617e8766b645b15d3702bc4c1def2ebb6583b32c))
+
+### [5.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@5.14.1/packages/gatsby-source-contentful) (2021-10-16)
+
+#### Features
+
+- Add node manifest support for previews [#33297](https://github.com/gatsbyjs/gatsby/issues/33297) [#33531](https://github.com/gatsbyjs/gatsby/issues/33531) ([a220b7c](https://github.com/gatsbyjs/gatsby/commit/a220b7c0514d5bf4ff37be43a5de8b768a5841f0))
+
+#### Chores
+
+- Fix tests for WordPress, Contentful & update CircleCI Fix [#33256](https://github.com/gatsbyjs/gatsby/issues/33256) Fix [#33439](https://github.com/gatsbyjs/gatsby/issues/33439) ([1759c1c](https://github.com/gatsbyjs/gatsby/commit/1759c1c4f588d357572c0280ffd02b304d2408e0))
+
 ## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@5.14.0/packages/gatsby-source-contentful) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

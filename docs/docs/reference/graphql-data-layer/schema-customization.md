@@ -364,18 +364,6 @@ schema.buildObjectType({
 
 #### Foreign-key fields
 
-Gatsby's automatic type inference has one trick up its sleeve: for every field
-that ends in `___NODE` it will interpret the field value as an `id` and create a
-foreign-key relation.
-
-> Note: Before the introduction of the Schema Customization APIs in Gatsby v2.2,
-> there were two mechanisms to create links between node types: a plugin author would use the `___NODE`
-> fieldname convention (for plugins), and a user would define [mappings](/docs/reference/config-files/gatsby-config/#mapping-node-types) between fields in their `gatsby-config.js`. Both users and plugin authors can now use the `@link` extension described below.
-
-Creating foreign-key relations with the `createTypes` action,
-i.e. without relying on type inference and the `___NODE` field naming
-convention, requires a bit of manual setup.
-
 In the example project, the `frontmatter.author` field on
 `MarkdownRemark` nodes to expand the provided field value to a full `AuthorJson` node.
 For this to work, there has to be provided a custom field resolver. (see below for
@@ -477,11 +465,6 @@ In other words, you `link` **on** `from` **to** `by`. This makes `from` especial
 For the above example you can read `@link` this way: Use the value from the field `Frontmatter.reviewers` and match it by the field `AuthorJson.email`.
 
 Keep in mind that in the example above, the link of `posts` in `AuthorJson` works because `frontmatter` and `author` are both objects. If, for example, the `Frontmatter` type had a list of `authors` instead (`frontmatter.authors.email`), it wouldn't work since the `by` argument doesn't support arrays. In that case, you'd have to provide a custom resolver with [Gatsby Type Builders](/docs/reference/graphql-data-layer/schema-customization/#gatsby-type-builders) or [createResolvers API](/docs/reference/graphql-data-layer/schema-customization/#createresolvers-api).
-
-> Note that when using `createTypes` to fix type inference for a foreign-key field
-> created by a plugin, the underlying data will probably live on a field with
-> a `___NODE` suffix. Use the `from` argument to point the `link` extension to
-> the correct field name. For example: `author: [AuthorJson] @link(from: "author___NODE")`.
 
 #### Extensions and directives
 
