@@ -20,6 +20,15 @@ jest.mock(`gatsby-source-filesystem`, () => {
   }
 })
 
+function makeCache() {
+  const store = new Map()
+  return {
+    get: async id => store.get(id),
+    set: async (key, value) => store.set(key, value),
+    store,
+  }
+}
+
 const normalize = require(`../normalize`)
 const downloadFileSpy = jest.spyOn(normalize, `downloadFile`)
 
@@ -75,6 +84,7 @@ describe(`gatsby-source-drupal`, () => {
     store,
     getNode: id => nodes[id],
     getNodes,
+    cache: makeCache(),
   }
 
   beforeAll(async () => {

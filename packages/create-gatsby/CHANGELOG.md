@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.1.0/packages/create-gatsby) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+#### Other Changes
+
+- Update starters to Gatsby 4 [#33420](https://github.com/gatsbyjs/gatsby/issues/33420) [#33424](https://github.com/gatsbyjs/gatsby/issues/33424) [#33325](https://github.com/gatsbyjs/gatsby/issues/33325) ([b8d209c](https://github.com/gatsbyjs/gatsby/commit/b8d209c7a63f97f411f18ce95ef058331a677b8d))
+
+## [2.0.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.0.0/packages/create-gatsby) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Features
+
+- move away from old default uuid [#33275](https://github.com/gatsbyjs/gatsby/issues/33275) ([325fdf4](https://github.com/gatsbyjs/gatsby/commit/325fdf4a068acf755ed124cb522e133ea5c31157))
+
+#### Bug Fixes
+
+- update typescript [#33001](https://github.com/gatsbyjs/gatsby/issues/33001) ([6cd70f6](https://github.com/gatsbyjs/gatsby/commit/6cd70f62ecae4aeee8ece38866661be9239062cb))
+
 ## [1.14.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@1.14.0/packages/create-gatsby) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

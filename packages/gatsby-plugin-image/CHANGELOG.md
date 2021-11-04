@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.1.0/packages/gatsby-plugin-image) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+#### Bug Fixes
+
+- flickering when state changes [#33732](https://github.com/gatsbyjs/gatsby/issues/33732) ([0a04e38](https://github.com/gatsbyjs/gatsby/commit/0a04e38d857255fe675101bd96797c67d2d6e743))
+- GatsbyImage not displaying image in IE11 [#33416](https://github.com/gatsbyjs/gatsby/issues/33416) ([d708d91](https://github.com/gatsbyjs/gatsby/commit/d708d9142e69458f43d8302bf30c0c422c531798))
+
+## [2.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.0.0/packages/gatsby-plugin-image) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Features
+
+- support multiple sources using gatsby-plugin-image [#32544](https://github.com/gatsbyjs/gatsby/issues/32544) ([3bf4f10](https://github.com/gatsbyjs/gatsby/commit/3bf4f101d55df27859c0fbe7b7c1c399ce0f99e4))
+
+#### Bug Fixes
+
+- update typescript [#33387](https://github.com/gatsbyjs/gatsby/issues/33387) ([f2a8035](https://github.com/gatsbyjs/gatsby/commit/f2a8035644e650487abbca8b74a98b96c32d9cd2))
+- update typescript [#33001](https://github.com/gatsbyjs/gatsby/issues/33001) ([6cd70f6](https://github.com/gatsbyjs/gatsby/commit/6cd70f62ecae4aeee8ece38866661be9239062cb))
+
+### [1.14.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@1.14.2/packages/gatsby-plugin-image) (2021-11-02)
+
+#### Bug Fixes
+
+- GatsbyImage not displaying image in IE11 [#33416](https://github.com/gatsbyjs/gatsby/issues/33416) [#33806](https://github.com/gatsbyjs/gatsby/issues/33806) ([35b48f8](https://github.com/gatsbyjs/gatsby/commit/35b48f80f62668542aca3f69c6fef676f58f0679))
+- flickering when state changes [#33732](https://github.com/gatsbyjs/gatsby/issues/33732) [#33807](https://github.com/gatsbyjs/gatsby/issues/33807) ([880022e](https://github.com/gatsbyjs/gatsby/commit/880022e52dfb6c7a4cdd5cb4c6b77bfc793bbb29))
+
 ### [1.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@1.14.1/packages/gatsby-plugin-image) (2021-10-06)
 
 #### Features

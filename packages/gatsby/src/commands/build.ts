@@ -55,7 +55,11 @@ import {
 import { shouldGenerateEngines } from "../utils/engines-helpers"
 import reporter from "gatsby-cli/lib/reporter"
 import type webpack from "webpack"
-import { materializePageMode, getPageMode } from "../utils/page-mode"
+import {
+  materializePageMode,
+  getPageMode,
+  preparePageTemplateConfigs,
+} from "../utils/page-mode"
 import { validateEngines } from "../utils/validate-engines"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
@@ -86,7 +90,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   markWebpackStatusAsPending()
 
   const publicDir = path.join(program.directory, `public`)
-  initTracer(
+  await initTracer(
     process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
   )
   const buildActivity = report.phantomActivity(`build`)
@@ -104,6 +108,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const { gatsbyNodeGraphQLFunction, workerPool } = await bootstrap({
     program,
+    parentSpan: buildSpan,
+  })
+
+  await apiRunnerNode(`onPreBuild`, {
+    graphql: gatsbyNodeGraphQLFunction,
     parentSpan: buildSpan,
   })
 
@@ -203,6 +212,19 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildSSRBundleActivityProgress.end()
   }
 
+  // exec outer config function for each template
+  const pageConfigActivity = report.activityTimer(`Execute page configs`, {
+    parentSpan: buildSpan,
+  })
+  pageConfigActivity.start()
+  try {
+    await preparePageTemplateConfigs(gatsbyNodeGraphQLFunction)
+  } catch (err) {
+    reporter.panic(err)
+  } finally {
+    pageConfigActivity.end()
+  }
+
   if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
     const validateEnginesActivity = report.activityTimer(
       `Validating Rendering Engines`,
@@ -282,7 +304,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     })
   }
 
-  if (process.send) {
+  if (process.send && shouldGenerateEngines()) {
     process.send({
       type: `LOG_ACTION`,
       action: {
@@ -291,11 +313,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       },
     })
   }
-
-  await apiRunnerNode(`onPreBuild`, {
-    graphql: gatsbyNodeGraphQLFunction,
-    parentSpan: buildSpan,
-  })
 
   // Copy files from the static directory to
   // an equivalent static directory within public.
@@ -380,10 +397,28 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   await waitMaterializePageMode
   const waitWorkerPoolEnd = Promise.all(workerPool.end())
 
-  telemetry.addSiteMeasurement(`BUILD_END`, {
-    pagesCount: toRegenerate.length, // number of html files that will be written
-    totalPagesCount: store.getState().pages.size, // total number of pages
-  })
+  {
+    let SSGCount = 0
+    let DSGCount = 0
+    let SSRCount = 0
+    for (const page of store.getState().pages.values()) {
+      if (page.mode === `SSR`) {
+        SSRCount++
+      } else if (page.mode === `DSG`) {
+        DSGCount++
+      } else {
+        SSGCount++
+      }
+    }
+
+    telemetry.addSiteMeasurement(`BUILD_END`, {
+      pagesCount: toRegenerate.length, // number of html files that will be written
+      totalPagesCount: store.getState().pages.size, // total number of pages
+      SSRCount,
+      DSGCount,
+      SSGCount,
+    })
+  }
 
   const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {
     parentSpan: buildSpan,

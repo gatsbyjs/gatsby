@@ -94,7 +94,7 @@ Using Gatsby's data layer provides the following benefits:
 
 Working outside of the data layer also means foregoing the optimizations provided by transformer plugins, like:
 
-- [`gatsby-image`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image) (speedy optimized images),
+- [`gatsby-plugin-image`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image) (speedy optimized images),
 - [`gatsby-transformer-sharp`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp) (provides queryable fields for processing your images in a variety of ways including resizing, cropping, and creating responsive images),
 - ... the whole Gatsby ecosystem of official and community-created [transformer plugins](/plugins/?=transformer).
 

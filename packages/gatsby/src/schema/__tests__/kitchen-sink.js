@@ -201,6 +201,9 @@ describe(`Kitchen sink schema test`, () => {
               text
             }
           }
+          builtIntPage: sitePage(id: { eq: "SitePage /1685001452849004065/" }) {
+            pageContext
+          }
         }
       `)
     ).toMatchSnapshot()

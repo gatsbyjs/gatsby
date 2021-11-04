@@ -108,6 +108,9 @@ export interface ITelemetryTagsPayload {
     bundleStats?: unknown
     pageDataStats?: unknown
     queryStats?: unknown
+    SSRCount?: number
+    DSGCount?: number
+    SSGCount?: number
   }
   errorV2?: IStructuredErrorV2
   valueString?: string
