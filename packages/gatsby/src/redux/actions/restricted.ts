@@ -49,7 +49,7 @@ export const actions = {
   addThirdPartySchema: (
     { schema }: { schema: GraphQLSchema },
     plugin: IGatsbyPlugin,
-    { traceId }: { traceId?: string }
+    { traceId }: { traceId?: string } = {}
   ): IAddThirdPartySchema => {
     return {
       type: `ADD_THIRD_PARTY_SCHEMA`,
@@ -207,7 +207,7 @@ export const actions = {
       | GatsbyGraphQLType<any, any>
       | Array<string | GraphQLOutputType | GatsbyGraphQLType<any, any>>,
     plugin: IGatsbyPlugin,
-    { traceId }: { traceId?: string }
+    { traceId }: { traceId?: string } = {}
   ): ICreateTypes => {
     return {
       type: `CREATE_TYPES`,
@@ -264,7 +264,7 @@ export const actions = {
     (
       extension: GraphQLFieldExtensionDefinition,
       plugin: IGatsbyPlugin,
-      { traceId }: { traceId?: string }
+      { traceId }: { traceId?: string } = {}
     ): ThunkAction<
       void,
       IGatsbyState,
@@ -344,7 +344,7 @@ export const actions = {
       withFieldTypes?: boolean
     },
     plugin: IGatsbyPlugin,
-    { traceId }: { traceId?: string }
+    { traceId }: { traceId?: string } = {}
   ): IPrintTypeDefinitions => {
     return {
       type: `PRINT_SCHEMA_REQUESTED`,
@@ -393,7 +393,7 @@ export const actions = {
     (
       context: IGatsbyPluginContext,
       plugin: IGatsbyPlugin,
-      { traceId }: { traceId?: string }
+      { traceId }: { traceId?: string } = {}
     ): ThunkAction<
       void,
       IGatsbyState,
