@@ -134,3 +134,44 @@ on the OS reported number of physical CPUs. For builds that are run in virtual
 environments, you may need to adjust the number of worker parallelism with the
 `GATSBY_CPU_COUNT` environment variable. See [Multi-core
 builds](/docs/multi-core-builds/).
+
+## Troubleshooting
+
+### `process is not defined`
+
+A change to webpack means you need a polyfill for 
+
+You must first install the polyfill `process`
+
+```npm install process```
+
+or
+
+``` yarn add process```
+
+And then add the following to `gatsby-node.js`.
+
+```javascript:title=gatsby-node.js
+exports.onCreateWebpackConfig = ({ actions, stage, plugins }) => {
+  if (stage === "build-javascript" || stage === "develop") {
+    actions.setWebpackConfig({
+      plugins: [plugins.provide({ process: "process/browser" })],
+    })
+  }
+}
+
+```
+
+
+### Environment variables are undefined
+
+- If you are accessing the variables in the browser first check that you have prefixed the variable with `GATSBY_`.
+
+- You cannot use optional chaining or destructuring assignments to access an environment variable. The following will NOT work:
+
+```javascript
+
+process?.env?.GATSBY_MY_VAR;
+let { GATSBY_MY_VAR, GATSBY_MY_VAR2} = process.env;
+
+```
