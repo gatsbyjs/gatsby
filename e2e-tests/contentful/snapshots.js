@@ -57,6 +57,9 @@ module.exports = {
     "rich-text: Localized": {
       "1": "<div data-cy-id=\"english-rich-text-localized\">\n  <h2>Rich Text: Localized</h2>\n  <p>Rich Text in <strong data-cy-strong=\"true\">English</strong></p>\n  <hr>\n</div>",
       "2": "<div data-cy-id=\"german-rich-text-localized\">\n  <h2>Rich Text: Localized</h2>\n  <p>Reichhaltiger Text in <strong data-cy-strong=\"true\">deutscher\n      Sprache</strong></p>\n  <hr>\n</div>"
+    },
+    "rich-text: Tables": {
+      "1": "<div data-cy-id=\"rich-text-tables\">\n  <h2>Rich Text: Tables</h2>\n  <h1>Table test</h1>\n  <p></p>\n  <table>\n    <tr>\n      <th>\n        <p>Heading One</p>\n      </th>\n      <th>\n        <p>Heading Two</p>\n      </th>\n      <th>\n        <p>Heading Three</p>\n      </th>\n    </tr>\n    <tr>\n      <td>\n        <p></p>\n      </td>\n      <td>\n        <p><strong data-cy-strong=\"true\">This should be fat</strong></p>\n      </td>\n      <td>\n        <p>Baz</p>\n      </td>\n    </tr>\n  </table>\n  <p></p>\n  <hr>\n</div>"
     }
   },
   "text": {
