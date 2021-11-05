@@ -20,7 +20,11 @@ If the build for the preview fails or if no page is created that contains the co
 
 To get setup quickly with a new site and have Gatsby Cloud do the heavy lifting, [deploy a new Gatsby Contentful site with just a few clicks on gatsbyjs.com](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/contentful/starter-gatsby-blog).
 
-## How Content Sync finds the right page for Content Previews
+## How Content Sync Works
+
+![Diagram of Content Sync on Gatsby Cloud](../images/content-sync-diagram.png)
+
+### Finding the right page for Content Previews
 
 In the case that your content lives on multiple pages, for example a blog post page and a blog listing page, and you find you're being routed to the page you don't want to view your preview on, you can specify which node owns which page using the [`ownerNodeId` setting in the `createPage` api][createpage]. Set the `ownerNodeId` to the Gatsby node ID of the node you want to preview for the page.
 
