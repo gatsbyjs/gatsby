@@ -45,42 +45,54 @@ export class GraphQLEngine {
 
   private async _doGetRunner(): Promise<GraphQLRunner> {
     await tracerReadyPromise
-    // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
-    store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
 
-    // TODO: FLATTENED_PLUGINS needs to be merged with plugin options from gatsby-config
-    //  (as there might be non-serializable options, i.e. functions)
-    store.dispatch({
-      type: `SET_SITE_FLATTENED_PLUGINS`,
-      payload: flattenedPlugins,
-    })
+    const wrapActivity = reporter.phantomActivity(`Initializing GraphQL Engine`)
+    wrapActivity.start()
+    try {
+      // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
+      store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
 
-    for (const pluginName of Object.keys(gatsbyNodes)) {
-      setGatsbyPluginCache(
-        { name: pluginName, resolve: `` },
-        `gatsby-node`,
-        gatsbyNodes[pluginName]
-      )
+      // TODO: FLATTENED_PLUGINS needs to be merged with plugin options from gatsby-config
+      //  (as there might be non-serializable options, i.e. functions)
+      store.dispatch({
+        type: `SET_SITE_FLATTENED_PLUGINS`,
+        payload: flattenedPlugins,
+      })
+
+      for (const pluginName of Object.keys(gatsbyNodes)) {
+        setGatsbyPluginCache(
+          { name: pluginName, resolve: `` },
+          `gatsby-node`,
+          gatsbyNodes[pluginName]
+        )
+      }
+      for (const pluginName of Object.keys(gatsbyWorkers)) {
+        setGatsbyPluginCache(
+          { name: pluginName, resolve: `` },
+          `gatsby-worker`,
+          gatsbyWorkers[pluginName]
+        )
+      }
+
+      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+        await apiRunnerNode(`onPluginInit`, { parentSpan: wrapActivity.span })
+      } else {
+        await apiRunnerNode(`unstable_onPluginInit`, {
+          parentSpan: wrapActivity.span,
+        })
+      }
+      await apiRunnerNode(`createSchemaCustomization`, {
+        parentSpan: wrapActivity.span,
+      })
+
+      // Build runs
+      // Note: skipping inference metadata because we rely on schema snapshot
+      await build({ fullMetadataBuild: false, parentSpan: wrapActivity.span })
+
+      return new GraphQLRunner(store)
+    } finally {
+      wrapActivity.end()
     }
-    for (const pluginName of Object.keys(gatsbyWorkers)) {
-      setGatsbyPluginCache(
-        { name: pluginName, resolve: `` },
-        `gatsby-worker`,
-        gatsbyWorkers[pluginName]
-      )
-    }
-    if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-      await apiRunnerNode(`onPluginInit`)
-    } else {
-      await apiRunnerNode(`unstable_onPluginInit`)
-    }
-    await apiRunnerNode(`createSchemaCustomization`)
-
-    // Build runs
-    // Note: skipping inference metadata because we rely on schema snapshot
-    await build({ fullMetadataBuild: false })
-
-    return new GraphQLRunner(store)
   }
 
   private async getRunner(): Promise<GraphQLRunner> {
