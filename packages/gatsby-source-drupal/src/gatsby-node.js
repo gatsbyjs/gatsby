@@ -236,6 +236,17 @@ ${JSON.stringify(webhookBody, null, 4)}`
       }
 
       for (const nodeToUpdate of nodesToUpdate) {
+        await createNodeIfItDoesNotExist({
+          nodeToUpdate,
+          actions,
+          createNodeId,
+          createContentDigest,
+          getNode,
+          reporter,
+        })
+      }
+
+      for (const nodeToUpdate of nodesToUpdate) {
         await handleWebhookUpdate(
           {
             nodeToUpdate,

@@ -355,6 +355,26 @@ describe(`gatsby-source-drupal`, () => {
         })
       })
     })
+    describe(`multiple entities in webhook body`, () => {
+      let resp
+      beforeAll(async () => {
+        const webhookBody = require(`./fixtures/webhook-body-multiple-nodes.json`)
+        await sourceNodes(
+          {
+            ...args,
+            webhookBody,
+          },
+          { baseUrl }
+        )
+      })
+
+      it(`Relationships`, async () => {
+        expect(
+          nodes[createNodeId(`und.article-10`)].relationships.field_tags___NODE
+            .length
+        ).toBe(1)
+      })
+    })
 
     describe(`Insert content`, () => {
       it(`Node doesn't exist before webhook`, () => {
