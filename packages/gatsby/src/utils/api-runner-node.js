@@ -318,7 +318,7 @@ const runAPI = async (plugin, api, args, activity) => {
       { ...args, parentSpan: pluginSpan, activity }
     )
 
-    const { config, program } = store.getState()
+    const { config, program, tick } = store.getState()
 
     const pathPrefix = (program.prefixPaths && config.pathPrefix) || ``
 
@@ -407,6 +407,7 @@ const runAPI = async (plugin, api, args, activity) => {
         store,
         emitter,
         getCache,
+        tick,
         getNodes,
         getNode,
         getNodesByType,

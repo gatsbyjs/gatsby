@@ -1,7 +1,7 @@
 import report from "gatsby-cli/lib/reporter"
 import { Span } from "opentracing"
 import apiRunner from "./api-runner-node"
-import { store } from "../redux"
+import { store, emitter } from "../redux"
 import { getDataStore, getNode, getNodes } from "../datastore"
 import { actions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
@@ -87,6 +87,33 @@ function deleteStaleNodes(state: IGatsbyState, nodes: Array<Node>): void {
 
 let initialSourcing = true
 let sourcingCount = 0
+const changedNodes = {
+  deleted: new Map(),
+  created: new Map(),
+  updated: new Map(),
+}
+
+emitter.on(`DELETE_NODE`, action => {
+  if (action.payload?.id) {
+    changedNodes.deleted.set(action.payload.id, { node: action.payload })
+  }
+})
+
+emitter.on(`CREATE_NODE`, action => {
+  // If this node was deleted before being recreated, remove it from the deleted node
+  // list
+  changedNodes.deleted.delete(action.payload.id)
+
+  if (action.oldNode?.id) {
+    changedNodes.updated.set(action.payload.id, {
+      oldNode: action.oldNode,
+      node: action.payload,
+    })
+  } else {
+    changedNodes.created.set(action.payload.id, { node: action.payload })
+  }
+})
+
 export default async ({
   webhookBody,
   pluginName,
@@ -99,6 +126,11 @@ export default async ({
   deferNodeMutation?: boolean
 }): Promise<void> => {
   console.time(`sourceNodes`)
+  // Clear changedNodes maps
+  changedNodes.deleted.clear()
+  changedNodes.created.clear()
+  changedNodes.updated.clear()
+
   const traceId = initialSourcing
     ? `initial-sourceNodes`
     : `sourceNodes #${sourcingCount}`
@@ -119,6 +151,12 @@ export default async ({
   await getDataStore().ready()
   console.timeEnd(`sourceNodes: await dataStore`)
   console.log({ initialSourcing })
+
+  console.log(changedNodes)
+  store.dispatch({
+    type: `SET_CHANGED_NODES`,
+    payload: changedNodes,
+  })
 
   if (initialSourcing) {
     console.time(`sourceNodes: delete stale nodes`)

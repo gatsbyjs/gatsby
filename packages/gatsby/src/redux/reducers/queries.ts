@@ -115,7 +115,9 @@ export function queriesReducer(
       // TODO: use hash instead of a query text
       const { componentPath, query } = action.payload
       const component = registerComponent(state, componentPath)
-      console.log(`reducers/queries`, component, action)
+      if (!component) {
+        console.log(`reducers/queries`, component, action)
+      }
       if (component) {
         if (hasFlag(component.errors, FLAG_ERROR_EXTRACTION)) {
           return state

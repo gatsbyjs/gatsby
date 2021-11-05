@@ -37,7 +37,9 @@ export const componentsReducer = (
       action.payload.componentPath = normalize(action.payload.componentPath)
       const component = state.get(action.payload.componentPath)!
 
-      console.log(`QUERY_EXTRACTED`, component, action)
+      if (!component) {
+        console.log(`QUERY_EXTRACTED`, component, action)
+      }
 
       if (component) {
         component.query = action.payload.query

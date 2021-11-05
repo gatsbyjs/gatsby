@@ -11,6 +11,92 @@ import { watchCollectionBuilder } from "./watch-collection-builder"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { isValidCollectionPathImplementation } from "./is-valid-collection-path-implementation"
 import { CODES, prefixId } from "./error-utils"
+import { extractModel } from "./path-utils"
+
+const pluginInstances = new Map()
+
+function createPathFromNode({ filePath, node, reporter, slugifyOptions }) {
+  const { derivedPath, errors } = derivePath(
+    filePath,
+    node,
+    reporter,
+    slugifyOptions
+  )
+  return { path: createPath(derivedPath), errors }
+}
+
+export function createDeletePages({ tick, actions, reporter }, pluginOptions) {
+  // Loop over deleted/created nodes and delete nodes and create nodes
+  // we haven't seen before and then reset arrays.
+  const trackedTypes = pluginInstances.get(pluginOptions.path)
+
+  if (trackedTypes?.size > 0) {
+    console.log({
+      trackedTypes,
+      pluginInstances,
+      tick,
+    })
+
+    const nodeTypes = Array.from(trackedTypes.keys())
+    console.log({ nodeTypes })
+
+    // Loop through deleted nodes and delete any tracked pages
+    Array.from(tick.get(`changedNodes`).deleted.values()).forEach(
+      ({ node }) => {
+        if (nodeTypes.includes(node.internal.type)) {
+          const absolutePath = trackedTypes.get(node.internal.type).absolutePath
+          const { path, errors } = createPathFromNode({
+            filePath: absolutePath,
+            node,
+            reporter,
+            slugifyOptions: pluginOptions.slugifyOptions,
+          })
+          console.log(`deleting page`, { path, component: absolutePath })
+          actions.deletePage({ path, component: absolutePath })
+        }
+      }
+    )
+
+    // Loop through created nodes and create pages for them.
+    Array.from(tick.get(`changedNodes`).created.values()).forEach(
+      ({ node }) => {
+        if (nodeTypes.includes(node.internal.type)) {
+          const absolutePath = trackedTypes.get(node.internal.type).absolutePath
+          const { path, errors } = createPathFromNode({
+            filePath: absolutePath,
+            node,
+            reporter,
+            slugifyOptions: pluginOptions.slugifyOptions,
+          })
+
+          const params = getCollectionRouteParams(
+            createPath(absolutePath),
+            path
+          )
+          // nodeParams is fed to the graphql query for the component
+          const nodeParams = reverseLookupParams(node, absolutePath)
+
+          console.log(`creating page`, {
+            path: path,
+            component: trackedTypes.get(node.internal.type).absolutePath,
+            context: {
+              ...nodeParams,
+              __params: params,
+            },
+          })
+          actions.createPage({
+            path: path,
+            component: trackedTypes.get(node.internal.type).absolutePath,
+            context: {
+              ...nodeParams,
+              __params: params,
+            },
+          })
+        }
+      }
+    )
+  }
+}
 
 export async function createPagesFromCollectionBuilder(
   filePath: string,
@@ -18,7 +104,8 @@ export async function createPagesFromCollectionBuilder(
   actions: Actions,
   graphql: CreatePagesArgs["graphql"],
   reporter: Reporter,
-  slugifyOptions?: ISlugifyOptions
+  slugifyOptions?: ISlugifyOptions,
+  pagesPath
 ): Promise<void> {
   if (isValidCollectionPathImplementation(absolutePath, reporter) === false) {
     watchCollectionBuilder(absolutePath, ``, [], actions, reporter, () =>
@@ -28,7 +115,8 @@ export async function createPagesFromCollectionBuilder(
         actions,
         graphql,
         reporter,
-        slugifyOptions
+        slugifyOptions,
+        pagesPath
       )
     )
     return
@@ -46,7 +134,8 @@ export async function createPagesFromCollectionBuilder(
         actions,
         graphql,
         reporter,
-        slugifyOptions
+        slugifyOptions,
+        pagesPath
       )
     )
     return
@@ -82,7 +171,8 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
           actions,
           graphql,
           reporter,
-          slugifyOptions
+          slugifyOptions,
+          pagesPath
         )
     )
 
@@ -102,6 +192,22 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
       } from ${filePath}`
     )
   }
+
+  // Start listening for changes to this type
+  console.log({ pagesPath })
+  let trackedTypes = pluginInstances.get(pagesPath)
+  const nodeType = extractModel(absolutePath)
+  if (trackedTypes) {
+    trackedTypes.set(nodeType, { nodeType, absolutePath })
+  } else {
+    trackedTypes = new Map()
+    trackedTypes.set(nodeType, { nodeType, absolutePath })
+    pluginInstances.set(pagesPath, trackedTypes)
+  }
+
+  console.log(
+    `creating ${nodes.length} pages for ${extractModel(absolutePath)}`
+  )
 
   let derivePathErrors = 0
 
@@ -168,7 +274,8 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
         actions,
         graphql,
         reporter,
-        slugifyOptions
+        slugifyOptions,
+        pagesPath
       )
   )
 }

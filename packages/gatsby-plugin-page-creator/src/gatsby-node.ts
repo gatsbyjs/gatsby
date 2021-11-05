@@ -18,6 +18,7 @@ import {
 } from "gatsby-page-utils"
 import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
 import { createPage } from "./create-page-wrapper"
+import { createDeletePages } from "./create-pages-from-collection-builder"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { derivePath } from "./derive-path"
 import { validatePathQuery } from "./validate-path-query"
@@ -45,6 +46,10 @@ interface IOptions extends PluginOptions {
 
 const knownCollections = new Map()
 
+export function createPages({ actions, tick, reporter }, pluginOptions): void {
+  createDeletePages({ actions, tick, reporter }, pluginOptions)
+}
+
 // Path creator.
 // Auto-create pages.
 // algorithm is glob /pages directory for js/jsx/cjsx files *not*
@@ -68,6 +73,7 @@ export async function createPagesStatefully(
   doneCb: PluginCallback
 ): Promise<void> {
   try {
+    console.log(`in createPagesStatefully`)
     const { deletePage } = actions
     const { program } = store.getState()
 
@@ -111,7 +117,8 @@ Please pick a path to an existing directory.`,
         graphql,
         reporter,
         ignore,
-        slugifyOptions
+        slugifyOptions,
+        pagesPath
       )
     })
 
@@ -130,7 +137,8 @@ Please pick a path to an existing directory.`,
               graphql,
               reporter,
               ignore,
-              slugifyOptions
+              slugifyOptions,
+              pagesPath
             )
             knownFiles.add(addedPath)
           }

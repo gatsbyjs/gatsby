@@ -4,6 +4,7 @@ import { pagesReducer } from "./pages"
 import { redirectsReducer } from "./redirects"
 import { schemaReducer } from "./schema"
 import { definitionsReducer } from "./definitions"
+import { tickReducer } from "./tick"
 import { staticQueryComponentsReducer } from "./static-query-components"
 import { statusReducer } from "./status"
 import { webpackReducer } from "./webpack"
@@ -50,6 +51,7 @@ export {
   componentsReducer as components,
   staticQueryComponentsReducer as staticQueryComponents,
   jobsReducer as jobs,
+  tickReducer as tick,
   jobsV2Reducer as jobsV2,
   webpackReducer as webpack,
   webpackCompilationHashReducer as webpackCompilationHash,
