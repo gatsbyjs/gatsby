@@ -9,6 +9,7 @@ export const ImageFormatType = new GraphQLEnumType({
     JPG: { value: `jpg` },
     PNG: { value: `png` },
     WEBP: { value: `webp` },
+    AVIF: { value: `avif` },
   },
 })
 
