@@ -29,7 +29,7 @@ import {
 // Note that the same image might be requested multiple times in the same run
 
 // Supported Image Formats from https://www.contentful.com/developers/docs/references/images-api/#/reference/changing-formats/image-format
-const validImageFormats = new Set([`jpg`, `png`, `webp`, `gif`])
+const validImageFormats = new Set([`jpg`, `png`, `webp`, `gif`, `avif`])
 
 const mimeTypeExtensions = new Map([
   [`image/jpeg`, `.jpg`],
@@ -37,6 +37,7 @@ const mimeTypeExtensions = new Map([
   [`image/gif`, `.gif`],
   [`image/png`, `.png`],
   [`image/webp`, `.webp`],
+  [`image/avif`, `.avif`],
 ])
 
 exports.mimeTypeExtensions = mimeTypeExtensions
@@ -193,7 +194,7 @@ export const generateImageSource = (
 
   if (!validImageFormats.has(toFormat)) {
     console.warn(
-      `[gatsby-source-contentful] Invalid image format "${toFormat}". Supported types are jpg, png and webp"`
+      `[gatsby-source-contentful] Invalid image format "${toFormat}". Supported types are jpg, png, webp and avif"`
     )
     return undefined
   }
@@ -507,6 +508,40 @@ const fixedNodeType = ({ name, getTracedSVG, cache }) => {
             return fixed?.srcSet
           },
         },
+        srcAvif: {
+          type: GraphQLString,
+          resolve({ image, options }) {
+            if (
+              image?.file?.contentType === `image/avif` ||
+              options.toFormat === `avif`
+            ) {
+              return null
+            }
+
+            const fixed = resolveFixed(image, {
+              ...options,
+              toFormat: `avif`,
+            })
+            return fixed?.src
+          },
+        },
+        srcSetAvif: {
+          type: GraphQLString,
+          resolve({ image, options }) {
+            if (
+              image?.file?.contentType === `image/avif` ||
+              options.toFormat === `avif`
+            ) {
+              return null
+            }
+
+            const fixed = resolveFixed(image, {
+              ...options,
+              toFormat: `avif`,
+            })
+            return fixed?.srcSet
+          },
+        },
       },
     }),
     args: {
@@ -603,6 +638,40 @@ const fluidNodeType = ({ name, getTracedSVG, cache }) => {
             const fluid = resolveFluid(image, {
               ...options,
               toFormat: `webp`,
+            })
+            return fluid?.srcSet
+          },
+        },
+        srcAvif: {
+          type: GraphQLString,
+          resolve({ image, options }) {
+            if (
+              image?.file?.contentType === `image/avif` ||
+              options.toFormat === `avif`
+            ) {
+              return null
+            }
+
+            const fluid = resolveFluid(image, {
+              ...options,
+              toFormat: `avif`,
+            })
+            return fluid?.src
+          },
+        },
+        srcSetAvif: {
+          type: GraphQLString,
+          resolve({ image, options }) {
+            if (
+              image?.file?.contentType === `image/avif` ||
+              options.toFormat === `avif`
+            ) {
+              return null
+            }
+
+            const fluid = resolveFluid(image, {
+              ...options,
+              toFormat: `avif`,
             })
             return fluid?.srcSet
           },
@@ -877,7 +946,7 @@ export async function setFieldsOnGraphQLNodeType({ type, cache }) {
       formats: {
         type: GraphQLList(ImageFormatType),
         description: stripIndent`
-            The image formats to generate. Valid values are AUTO (meaning the same format as the source image), JPG, PNG, and WEBP.
+            The image formats to generate. Valid values are AUTO (meaning the same format as the source image), JPG, PNG, WEBP and AVIF.
             The default value is [AUTO, WEBP], and you should rarely need to change this. Take care if you specify JPG or PNG when you do
             not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying
             both PNG and JPG is not supported and will be ignored.
