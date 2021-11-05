@@ -25,6 +25,8 @@ interface IGlobPattern {
   rootPath: string
   /** The glob pattern **/
   globPattern: string
+  /** The glob ignore pattern */
+  ignorePattern: Array<string>
 }
 
 // During development, we lazily compile functions only when they're requested.
@@ -70,9 +72,23 @@ async function ensureFunctionIsCompiled(
 const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
   const globs: Array<IGlobPattern> = []
 
+  function globIgnorePatterns(
+    root: string,
+    pluginName?: string
+  ): Array<string> {
+    const nestedFolder = pluginName ? `/${pluginName}/**/` : `/**/`
+
+    return [
+      `${root}/src/api${nestedFolder}__tests__/**/*.+(js|ts)`, // Jest tests
+      `${root}/src/api${nestedFolder}+(*.)+(spec|test).+(js|ts)`,
+      `${root}/src/api${nestedFolder}+(*.)+(d).ts`, // .d.ts files
+    ]
+  }
+
   // Add the default site src/api directory.
   globs.push({
     globPattern: `${siteDirectoryPath}/src/api/**/*.{js,ts}`,
+    ignorePattern: globIgnorePatterns(siteDirectoryPath),
     rootPath: path.join(siteDirectoryPath, `src/api`),
     pluginName: `default-site-plugin`,
   })
@@ -99,6 +115,7 @@ const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
 
     const glob = {
       globPattern: `${plugin.resolve}/src/api/${plugin.name}/**/*.{js,ts}`,
+      ignorePattern: globIgnorePatterns(plugin.resolve, plugin.name),
       rootPath: path.join(plugin.resolve, `src/api`),
       pluginName: plugin.name,
     } as IGlobPattern
@@ -145,7 +162,9 @@ const createWebpackConfig = async ({
   const allFunctions = await Promise.all(
     globs.map(async (glob): Promise<Array<IGatsbyFunction>> => {
       const knownFunctions: Array<IGatsbyFunction> = []
-      const files = await globAsync(glob.globPattern)
+      const files = await globAsync(glob.globPattern, {
+        ignore: glob.ignorePattern,
+      })
       files.map(file => {
         const originalAbsoluteFilePath = file
         const originalRelativeFilePath = path.relative(glob.rootPath, file)

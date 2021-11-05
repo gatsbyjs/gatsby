@@ -1,7 +1,7 @@
 import { stripIndent } from "common-tags"
 import chalk from "chalk"
 import { trackError } from "gatsby-telemetry"
-import { globalTracer, Span } from "opentracing"
+import { globalTracer, Span, SpanContext } from "opentracing"
 
 import * as reduxReporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
@@ -27,7 +27,7 @@ let reporterActions = reduxReporterActions
 
 export interface IActivityArgs {
   id?: string
-  parentSpan?: Span
+  parentSpan?: Span | SpanContext
   tags?: { [key: string]: any }
 }
 

@@ -44,6 +44,12 @@
 npm install gatsby-source-contentful
 ```
 
+## Setup Instructions
+
+To get setup quickly with a new site and have Gatsby Cloud do the heavy lifting, [deploy a new Gatsby Contentful site with just a few clicks on gatsbyjs.com](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/contentful/starter-gatsby-blog).
+
+For more detailed instructions on manually configuring your Gatsby Contentful site for production builds and Preview builds visit [the Gatsby Cloud knowledgebase](https://support.gatsbyjs.com/hc/en-us/articles/360056047134-Add-the-Gatsby-Cloud-App-to-Contentful).
+
 ## How to use
 
 First, you need a way to pass environment variables to the build process, so secrets and other secured data aren't committed to source control. We recommend using [`dotenv`][dotenv] which will then expose environment variables. [Read more about `dotenv` and using environment variables here][envvars]. Then we can _use_ these environment variables and configure our plugin.

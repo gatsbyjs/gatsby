@@ -14,7 +14,7 @@ Check the GitHub repo for issues labeled with ["type: documentation" and "good f
 
 ## Options for contributing to the Gatsby docs
 
-When working on the Gatsby.js documentation, you can choose between two major styles of working:
+When working on the Gatsby documentation, you can choose between two major styles of working:
 
 - [Work directly in the GitHub UI](#modifying-markdown-files), using the "Edit this File" and commit capabilities without having to clone the repository. This is useful for quick documentation updates, typo fixes, and lightweight Markdown changes.
 - Clone the Gatsby.js repo and make changes to the Markdown files using your favorite text editor. Currently (as of March 2021), there is no way for community members to build the docs site locally. We are working internally to figure out a fix for this.

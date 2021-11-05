@@ -97,6 +97,18 @@ export async function createSchemaCustomization(
       fields: {
         contentful_id: { type: `String!` },
         id: { type: `ID!` },
+        ...(pluginConfig.get(`downloadLocal`)
+          ? {
+              localFile: {
+                type: `File`,
+                extensions: {
+                  link: {
+                    from: `fields.localFile`,
+                  },
+                },
+              },
+            }
+          : {}),
       },
       interfaces: [`ContentfulReference`, `Node`],
     }),

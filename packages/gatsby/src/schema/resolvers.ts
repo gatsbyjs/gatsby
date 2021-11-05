@@ -647,7 +647,11 @@ export function wrappingResolver<TSource, TArgs>(
   //       it does not return a promise and this makes a significant difference at scale.
   //       GraphQL will gracefully handle the resolver result of a promise or non-promise.
 
-  return function wrappedTracingResolver(
+  if (resolver[`isTracingResolver`]) {
+    return resolver
+  }
+
+  const wrappedTracingResolver = function wrappedTracingResolver(
     parent,
     args,
     context,
@@ -664,6 +668,7 @@ export function wrappingResolver<TSource, TArgs>(
     }
 
     let activity
+    let time
     if (context?.tracer) {
       activity = context.tracer.createResolverActivity(
         info.path,
@@ -671,13 +676,23 @@ export function wrappingResolver<TSource, TArgs>(
       )
       activity.start()
     }
+    if (context.telemetryResolverTimings) {
+      time = process.hrtime.bigint()
+    }
+
     const result = resolver(parent, args, context, info)
 
-    if (!activity) {
+    if (!activity && !time) {
       return result
     }
 
     const endActivity = (): void => {
+      if (context.telemetryResolverTimings) {
+        context.telemetryResolverTimings.push({
+          name: `${info.parentType}.${info.fieldName}`,
+          duration: Number(process.hrtime.bigint() - time) / 1000 / 1000,
+        })
+      }
       if (activity) {
         activity.end()
       }
@@ -689,6 +704,10 @@ export function wrappingResolver<TSource, TArgs>(
     }
     return result
   }
+
+  wrappedTracingResolver.isTracingResolver = true
+
+  return wrappedTracingResolver
 }
 
 export const defaultResolver = wrappingResolver(defaultFieldResolver)

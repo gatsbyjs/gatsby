@@ -149,9 +149,15 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
     )
   ) {
-    navigate(__BASE_PATH__ + pagePath + browserLoc.hash, {
-      replace: true,
-    })
+    navigate(
+      __BASE_PATH__ +
+        pagePath +
+        (!pagePath.includes(`?`) ? browserLoc.search : ``) +
+        browserLoc.hash,
+      {
+        replace: true,
+      }
+    )
   }
 
   publicLoader.loadPage(browserLoc.pathname + browserLoc.search).then(page => {

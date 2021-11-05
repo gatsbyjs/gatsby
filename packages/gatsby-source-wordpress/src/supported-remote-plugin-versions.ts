@@ -6,7 +6,7 @@ const supportedWpPluginVersions = {
     reason: null,
   },
   WPGatsby: {
-    version: `>=0.9.0 <2.0.0`,
+    version: `>=0.9.0 <3.0.0`,
     reason: null,
   },
 }
