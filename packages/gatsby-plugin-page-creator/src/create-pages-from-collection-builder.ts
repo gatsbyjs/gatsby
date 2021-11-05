@@ -107,6 +107,16 @@ export async function createPagesFromCollectionBuilder(
   slugifyOptions?: ISlugifyOptions,
   pagesPath
 ): Promise<void> {
+  // This is VERY hacky
+  // disable collection routes for PSU so they can create a subset of story
+  // pages in preview and then create the full set w/ fs routes
+  // for production publishing to get incremental goodness.
+  //
+  // To get them back on mainline, we'll need to add a way for a fs route
+  // to disable itself under certaiin conditions.
+  if (process.env.GATSBY_IS_PREVIEW === `true`) {
+    return
+  }
   if (isValidCollectionPathImplementation(absolutePath, reporter) === false) {
     watchCollectionBuilder(absolutePath, ``, [], actions, reporter, () =>
       createPagesFromCollectionBuilder(

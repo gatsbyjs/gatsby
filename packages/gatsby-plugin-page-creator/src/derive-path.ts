@@ -58,7 +58,9 @@ export function derivePath(
     }
 
     // 3.d  Safely slugify all values (to keep URL structures) and remove any trailing slash
-    const value = stripTrailingSlash(safeSlugify(nodeValue, slugifyOptions))
+    // const value = stripTrailingSlash(safeSlugify(nodeValue, slugifyOptions))
+    // Just don't slugify for PSU
+    const value = stripTrailingSlash(nodeValue)
 
     // 3.e  replace the part of the slug with the actual value
     modifiedPath = modifiedPath.replace(slugPart, value)
