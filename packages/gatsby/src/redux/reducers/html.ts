@@ -77,6 +77,11 @@ export function htmlReducer(
       const htmlFile = state.trackedHtmlFiles.get(path)
 
       if (!htmlFile) {
+        console.log(
+          { payload: action.payload },
+          state.trackedHtmlFiles.get(path.slice(0, -1)),
+          state.trackedHtmlFiles
+        )
         // invariant
         throw new Error(
           `[html reducer] how can I delete page that wasn't created (?)`

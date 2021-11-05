@@ -39,6 +39,7 @@ export function reverseLookupParams(
 
     extracted.forEach(extract => {
       if (extract === ``) return
+      if (extract === `path`) return
 
       const results = _.get(
         queryResults.nodes ? queryResults.nodes[0] : queryResults,

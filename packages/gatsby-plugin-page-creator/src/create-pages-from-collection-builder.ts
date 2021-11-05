@@ -22,6 +22,7 @@ function createPathFromNode({ filePath, node, reporter, slugifyOptions }) {
     reporter,
     slugifyOptions
   )
+  console.log({ derivedPath })
   return { path: createPath(derivedPath), errors }
 }
 
@@ -44,9 +45,12 @@ export function createDeletePages({ tick, actions, reporter }, pluginOptions) {
     Array.from(tick.get(`changedNodes`).deleted.values()).forEach(
       ({ node }) => {
         if (nodeTypes.includes(node.internal.type)) {
-          const absolutePath = trackedTypes.get(node.internal.type).absolutePath
+          console.log(`deleted node`, node)
+          const { absolutePath, filePath } = trackedTypes.get(
+            node.internal.type
+          )
           const { path, errors } = createPathFromNode({
-            filePath: absolutePath,
+            filePath,
             node,
             reporter,
             slugifyOptions: pluginOptions.slugifyOptions,
@@ -61,18 +65,17 @@ export function createDeletePages({ tick, actions, reporter }, pluginOptions) {
     Array.from(tick.get(`changedNodes`).created.values()).forEach(
       ({ node }) => {
         if (nodeTypes.includes(node.internal.type)) {
-          const absolutePath = trackedTypes.get(node.internal.type).absolutePath
+          const { absolutePath, filePath } = trackedTypes.get(
+            node.internal.type
+          )
           const { path, errors } = createPathFromNode({
-            filePath: absolutePath,
+            filePath,
             node,
             reporter,
             slugifyOptions: pluginOptions.slugifyOptions,
           })
 
-          const params = getCollectionRouteParams(
-            createPath(absolutePath),
-            path
-          )
+          const params = getCollectionRouteParams(createPath(filePath), path)
           // nodeParams is fed to the graphql query for the component
           const nodeParams = reverseLookupParams(node, absolutePath)
 
@@ -208,10 +211,10 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
   let trackedTypes = pluginInstances.get(pagesPath)
   const nodeType = extractModel(absolutePath)
   if (trackedTypes) {
-    trackedTypes.set(nodeType, { nodeType, absolutePath })
+    trackedTypes.set(nodeType, { nodeType, absolutePath, filePath })
   } else {
     trackedTypes = new Map()
-    trackedTypes.set(nodeType, { nodeType, absolutePath })
+    trackedTypes.set(nodeType, { nodeType, absolutePath, filePath })
     pluginInstances.set(pagesPath, trackedTypes)
   }
 
