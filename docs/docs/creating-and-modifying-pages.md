@@ -265,12 +265,12 @@ Page context is serialized before being passed to pages. This means it can't be 
 
 ### Optimizing pages for content sync
 
-If using the Preview UI Content Sync feature on Gatsby Cloud, an optional parameter, `ownerNodeId` can be passed to the `createPage` invocation to give you greater control over how content is previewed. By passing a value to `ownerNodeId`, you can ensure that the CMS content is properly mapped to the page you would like to preview it on. For example, the value of `ownerNodeId` can be set to `node.id` when pages are generated for each queried node.
+When using the [`Content Sync`](/docs/conceptual/content-sync/) feature on Gatsby Cloud, an optional parameter, `ownerNodeId`, can be passed to the `createPage` action to allow greater control over where content is previewed. By passing a value to `ownerNodeId`, you can ensure that Content Sync will redirect content authors to the page they intend to preview their content on. The value of `ownerNodeId` should be set to the id of the node that's the preferred node to preview for each page. This is typically the id of the node that's used to create the page path for each page.
 
 ```javascript:title=gatsby-node.js
 const posts = result.data.allContentfulBlogPost.nodes
 
-posts.forEach((post, index) => {
+posts.forEach((post) => {
   createPage({
     path: `/blog/${post.slug}/`,
     component: blogPost,
