@@ -235,13 +235,6 @@ ${JSON.stringify(webhookBody, null, 4)}`
         nodesToUpdate = [data]
       }
 
-      // First create all nodes that we haven't seen before. That
-      // way we can create relationships correctly next as the nodes
-      // will exist in Gatsby.
-      for (const nodeToUpdate of nodesToUpdate) {
-        createNodeIfItDoesNotExist(nodeToUpdate)
-      }
-
       for (const nodeToUpdate of nodesToUpdate) {
         await handleWebhookUpdate(
           {

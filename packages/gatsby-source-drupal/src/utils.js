@@ -240,17 +240,14 @@ const handleDeletedNode = async ({
   return deletedNode
 }
 
-function createNodeIfItDoesNotExist(
-  {
-    nodeToUpdate,
-    actions,
-    createNodeId,
-    createContentDigest,
-    getNode,
-    reporter,
-  },
-  pluginOptions = {}
-) {
+function createNodeIfItDoesNotExist({
+  nodeToUpdate,
+  actions,
+  createNodeId,
+  createContentDigest,
+  getNode,
+  reporter,
+}) {
   if (!nodeToUpdate) {
     reporter.warn(
       `The updated node was empty. The fact you're seeing this warning means there's probably a bug in how we're creating and processing updates from Drupal.
@@ -269,7 +266,7 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
       nodeToUpdate.type,
       getOptions().languageConfig ? nodeToUpdate.langcode : `und`,
       nodeToUpdate.meta?.target_version,
-      pluginOptions.entityReferenceRevisions
+      getOptions().entityReferenceRevisions
     )
   )
 
@@ -279,7 +276,7 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     const newNode = nodeFromData(
       nodeToUpdate,
       createNodeId,
-      pluginOptions.entityReferenceRevisions
+      getOptions().entityReferenceRevisions
     )
 
     newNode.internal.contentDigest = createContentDigest(newNode)
