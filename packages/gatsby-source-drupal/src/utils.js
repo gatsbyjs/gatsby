@@ -343,7 +343,7 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
   }
 }
 
-let hasLogs = false
+let hasLoggedContentSyncWarning = false
 /**
  * This fn creates node manifests which are used for Gatsby Cloud Previews via the Content Sync API/feature.
  * Content Sync routes a user from Drupal to a page created from the entry data they're interested in previewing.
@@ -367,8 +367,8 @@ function drupalCreateNodeManifest({
       manifestId,
       node: gatsbyNode,
     })
-  } else if (!hasLogs) {
-    hasLogs = true
+  } else if (!hasLoggedContentSyncWarning) {
+    hasLoggedContentSyncWarning = true
     console.warn(
       `Drupal: Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
     )
