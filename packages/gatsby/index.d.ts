@@ -1537,6 +1537,7 @@ export interface Page<TContext = Record<string, unknown>> {
   matchPath?: string
   component: string
   context: TContext
+  isCreatedByStatefulCreatePages: boolean
 }
 
 export interface IPluginRefObject {
