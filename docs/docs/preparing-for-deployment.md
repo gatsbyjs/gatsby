@@ -42,19 +42,20 @@ If you want a specific Path Prefix, for example `example.com/blog/` instead of `
 Additional actions may be required depending on which server you use.
 If you have a server from one of the following providers, you should read the individual subpages:
 
-- [AWS Amplify](/docs/how-to/previews-deploys-hosting/deploying-to-aws-amplify)
-- [S3/CloudFront](/docs/how-to/previews-deploys-hosting/deploying-to-s3-cloudfront)
+- [AWS Amplify](/docs/docs/how-to/previews-deploys-hosting/deploying-to-aws-amplify)
+- [S3/CloudFront](docs/docs/how-to/previews-deploys-hosting/deploying-to-s3-cloudfront.md)
 - [Aerobatic](/docs/deploying-to-aerobatic)
-- [Heroku](/docs/how-to/previews-deploys-hosting/deploying-to-heroku)
-- [Vercel](/docs/how-to/previews-deploys-hosting/deploying-to-vercel)
+- [Heroku](docs/docs/how-to/previews-deploys-hosting/deploying-to-heroku.md)
+- [Vercel](docs/docs/how-to/previews-deploys-hosting/deploying-to-vercel.md)
 - [Cloudflare Workers](/docs/deploying-to-cloudflare-workers)
 - [GitLab Pages](/docs/deploying-to-gitlab-pages)
-- [Netlify](/docs/how-to/previews-deploys-hosting/deploying-to-netlify)
+- [Netlify](docs/docs/how-to/previews-deploys-hosting/deploying-to-netlify.md)
 - [Render](/docs/deploying-to-render)
 - [Surge](/docs/deploying-to-surge)
-- [GitHub Pages](/docs/how-to/previews-deploys-hosting/how-gatsby-works-with-github-pages)
+- [GitHub Pages](docs/docs/how-to/previews-deploys-hosting/how-gatsby-works-with-github-pages.md)
 - [Microsoft Internet Information Server (IIS)](/docs/deploying-to-iis)
-- [Firebase Hosting](/docs/how-to/previews-deploys-hosting/deploying-to-firebase)
+- [Firebase Hosting](docs/docs/how-to/previews-deploys-hosting/deploying-to-firebase.md)
+- [Microsoft Azure](docs/docs/how-to/previews-deploys-hosting/deploying-to-azure.md)
 - [KintoHub](/docs/deploying-to-kintohub)
 - [21YunBox](/docs/how-to/previews-deploys-hosting/deploying-to-21yunbox)
 
