@@ -1247,9 +1247,7 @@ export interface Actions {
       | string
       | GraphQLOutputType
       | GatsbyGraphQLType
-      | string[]
-      | GraphQLOutputType[]
-      | GatsbyGraphQLType[],
+      | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
     plugin?: ActionPlugin,
     traceId?: string
   ): void
