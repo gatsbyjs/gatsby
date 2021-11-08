@@ -33,7 +33,7 @@ Content Sync uses the [`unstable_createNodeManifest`][createnodemanifest] API vi
 The hierarchy is as follows, from most specific to least specific:
 
 1. [The`ownerNodeId` property in the `createPage` action][createpage]. (This is set manually by the Gatsby site developer)
-2. Nodes associated with pages created from the [Filesystem route API][fsroutesapi]. (automatic)
+2. Nodes associated with pages created from the [File System Route API][fsroutesapi]. (automatic)
 3. An `id` property in the [page `context` passed to the `createPage` API][createpage] with a node id which matches the previewed node id. (automatic)
 4. The first matching node id found in Gatsby's [GraphQL query tracking][querytracking] which maps node id's to pages that query them. This allows nodes which have no direct top-level page correlated with them to be previewed throughout the site. (automatic)
 
