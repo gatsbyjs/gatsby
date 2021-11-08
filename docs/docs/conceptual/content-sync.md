@@ -39,7 +39,7 @@ The hierarchy is as follows, from most specific to least specific:
 
 ## Diagram
 
-![Diagram of Content Sync on Gatsby Cloud](../images/content-sync-diagram.png)
+![Diagram of Content Sync on Gatsby Cloud. When a user clicks "Open Preview" the manifest id is created from the CMS and sent to Gatsby Cloud. The Content Sync UI then displays a loading state while it checks for a matching manifest id in Gatsby build public directory. At the same time a request is send to the preview webhook and Gatsby Cloud starts a build. If it finds a matching manifest id created from the CMS Gatsby maps data to correct page for preview and adds the manifest file to the build public directory. Now the Gatsby Cloud Preview Runner detects a node manifest to preview and redirects to the preview itself.](../images/content-sync-diagram.png)
 
 [createnodemanifest]: https://www.gatsbyjs.com/docs/reference/config-files/actions/#unstable_createNodeManifest
 [createpage]: https://www.gatsbyjs.com/docs/reference/config-files/actions/#createPage
