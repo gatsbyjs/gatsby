@@ -1150,6 +1150,13 @@ export interface Actions {
     plugin?: ActionPlugin
   ): void
 
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#unstable_createNodeManifest */
+  unstable_createNodeManifest(
+    this: void, 
+    args: { manifestId: string, node: Node }, 
+    plugin?: ActionPlugin
+  ): void 
+
   /** @see https://www.gatsbyjs.org/docs/actions/#setWebpackConfig */
   setWebpackConfig(this: void, config: object, plugin?: ActionPlugin): void
 
