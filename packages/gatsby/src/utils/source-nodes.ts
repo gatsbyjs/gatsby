@@ -152,7 +152,10 @@ export default async ({
   console.timeEnd(`sourceNodes: await dataStore`)
   console.log({ initialSourcing })
 
-  console.log(changedNodes)
+  if (!initialSourcing) {
+    console.log(changedNodes)
+  }
+
   store.dispatch({
     type: `SET_CHANGED_NODES`,
     payload: changedNodes,
