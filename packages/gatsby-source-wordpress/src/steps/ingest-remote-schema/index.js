@@ -9,6 +9,14 @@ import { buildNodeQueries } from "./build-queries-from-introspection/build-node-
 import { cacheFetchedTypes } from "./cache-fetched-types"
 import { writeQueriesToDisk } from "./write-queries-to-disk"
 
+/**
+ * This fn is called during schema customization.
+ * It pulls in the remote WPGraphQL schema, caches it,
+ * then builds queries and stores a transformed object
+ * later used in schema customization.
+ *
+ * This fn must run in all PQR workers.
+ */
 const ingestRemoteSchema = async (helpers, pluginOptions) => {
   if (process.env.NODE_ENV === `development`) {
     // running this code block in production is problematic for PQR
@@ -50,10 +58,10 @@ const ingestRemoteSchema = async (helpers, pluginOptions) => {
       pluginOptions
     )
   } catch (e) {
-    helpers.reporter.panic(e)
+    activity.panic(e)
+  } finally {
+    activity.end()
   }
-
-  activity.end()
 }
 
 export { ingestRemoteSchema }

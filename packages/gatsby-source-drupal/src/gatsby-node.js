@@ -12,6 +12,8 @@ const { setOptions, getOptions } = require(`./plugin-options`)
 
 const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
 const {
+  initRefsLookups,
+  storeRefsLookups,
   handleReferences,
   handleWebhookUpdate,
   handleDeletedNode,
@@ -59,9 +61,28 @@ async function worker([url, options]) {
     }
   }
 
+  if (typeof options.searchParams === `object`) {
+    url = new URL(url)
+    const searchParams = new URLSearchParams(options.searchParams)
+    const searchKeys = Array.from(searchParams.keys())
+    searchKeys.forEach(searchKey => {
+      // Only add search params to url if it has not already been
+      // added.
+      if (!url.searchParams.has(searchKey)) {
+        url.searchParams.set(searchKey, searchParams.get(searchKey))
+      }
+    })
+    url = url.toString()
+  }
+  delete options.searchParams
+
   const response = await got(url, {
     agent,
     cache: false,
+    timeout: {
+      // Occasionally requests to Drupal stall. Set a 15s timeout to retry in this case.
+      request: 15000,
+    },
     // request: http2wrapper.auto,
     // http2: true,
     ...options,
@@ -150,6 +171,8 @@ exports.sourceNodes = async (
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
 
+  await initRefsLookups({ cache, getNode })
+
   // Update the concurrency limit from the plugin options
   requestQueue.concurrency = concurrentAPIRequests
 
@@ -202,6 +225,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
         }
 
         changesActivity.end()
+        await storeRefsLookups({ cache })
         return
       }
 
@@ -232,6 +256,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
       return
     }
     changesActivity.end()
+    await storeRefsLookups({ cache })
     return
   }
 
@@ -253,7 +278,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
     // lastFetched isn't set so do a full rebuild.
     if (!lastFetched) {
-      setPluginStatus({ lastFetched: new Date().getTime() })
+      setPluginStatus({ lastFetched: Math.floor(new Date().getTime() / 1000) })
       requireFullRebuild = true
     } else {
       const drupalFetchIncrementalActivity = reporter.activityTimer(
@@ -266,7 +291,11 @@ ${JSON.stringify(webhookBody, null, 4)}`
       try {
         // Hit fastbuilds endpoint with the lastFetched date.
         const res = await requestQueue.push([
-          urlJoin(baseUrl, `gatsby-fastbuilds/sync/`, lastFetched.toString()),
+          urlJoin(
+            baseUrl,
+            `gatsby-fastbuilds/sync/`,
+            Math.floor(lastFetched).toString()
+          ),
           {
             username: basicAuth.username,
             password: basicAuth.password,
@@ -362,6 +391,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
         drupalFetchIncrementalActivity.end()
         fastBuildsSpan.finish()
+        await storeRefsLookups({ cache })
         return
       }
 
@@ -372,6 +402,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
       initialSourcing = false
 
       if (!requireFullRebuild) {
+        await storeRefsLookups({ cache })
         return
       }
     }
@@ -451,6 +482,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
                 username: basicAuth.username,
                 password: basicAuth.password,
                 headers,
+                searchParams: params,
                 responseType: `json`,
                 parentSpan: fullFetchSpan,
               },
@@ -635,6 +667,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
   initialSourcing = false
 
   createNodesSpan.finish()
+  await storeRefsLookups({ cache, getNodes })
   return
 }
 

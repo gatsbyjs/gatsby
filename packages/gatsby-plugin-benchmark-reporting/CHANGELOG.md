@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.1.0/packages/gatsby-plugin-benchmark-reporting) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+## [2.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@2.0.0/packages/gatsby-plugin-benchmark-reporting) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Features
+
+- move away from old default uuid [#33275](https://github.com/gatsbyjs/gatsby/issues/33275) ([325fdf4](https://github.com/gatsbyjs/gatsby/commit/325fdf4a068acf755ed124cb522e133ea5c31157))
+
+#### Bug Fixes
+
+- update dependency node-fetch to ^2.6.5 for gatsby-plugin-benchmark-reporting [#33361](https://github.com/gatsbyjs/gatsby/issues/33361) ([914e59d](https://github.com/gatsbyjs/gatsby/commit/914e59d2275130a91d6b3f2c62d9d7629cef2258))
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [1.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-benchmark-reporting@1.14.0/packages/gatsby-plugin-benchmark-reporting) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

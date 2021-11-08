@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-feed@4.1.0/packages/gatsby-plugin-feed) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-plugin-feed
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-feed@4.0.0/packages/gatsby-plugin-feed) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
+#### Other Changes
+
+- gatsby-plugin-feed: Make `feeds` & `serialize` required [#33287](https://github.com/gatsbyjs/gatsby/issues/33287) ([445d088](https://github.com/gatsbyjs/gatsby/commit/445d088b5303eda66d84b1f4372b5c6941ea6e5e))
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-feed@3.14.0/packages/gatsby-plugin-feed) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

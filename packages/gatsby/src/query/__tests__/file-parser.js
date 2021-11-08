@@ -252,6 +252,26 @@ module.exports = () => {
   const data = gatsby.useStaticQuery(graphql\`query StaticQueryNameNoDestructuring { foo }\`);
   return <div>{data.doo}</div>;
 }`,
+    "page-with-config.js": `import { graphql } from 'gatsby'
+export const query = graphql\`
+query PageQuery {
+  foo
+}
+\`
+export async function config() {
+  const query = graphql\`query ConfigQuery { __typename }\`
+}
+`,
+    "page-with-config-no-name.js": `import { graphql } from 'gatsby'
+export const query = graphql\`
+query PageQuery {
+  foo
+}
+\`
+export const config = async () => {
+  const query = graphql\`{ __typename }\`
+}
+`,
   }
 
   const parser = new FileParser()
@@ -295,14 +315,14 @@ module.exports = () => {
     const nameNode = ast[0].doc.definitions[0].name
     expect(nameNode).toEqual({
       kind: `Name`,
-      value: `zhADollarpercentandJs1125018085`,
+      value: `staticZhADollarpercentandJs1125018085`,
     })
 
     const ast2 = await parser.parseFile(`static-${specialChars}.js`, jest.fn())
     const nameNode2 = ast2[0].doc.definitions[0].name
     expect(nameNode2).toEqual({
       kind: `Name`,
-      value: `staticZhADollarpercentandJs1125018085`,
+      value: `staticStaticZhADollarpercentandJs1125018085`,
     })
   })
 })

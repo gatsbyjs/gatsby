@@ -59,7 +59,7 @@ Alternatively, you can prevent your layout component from unmounting by using [g
 
 ## Other resources
 
-- [Creating nested layout components in Gatsby](/docs/tutorial/part-three/)
+- [Creating nested layout components in Gatsby](/docs/tutorial/part-3/)
 - [Life after layouts in Gatsby V2](/blog/2018-06-08-life-after-layouts/)
 - [Migrating from v1 to v2](/docs/reference/release-notes/migrating-from-v1-to-v2/#remove-or-refactor-layout-components)
 - [gatsby-plugin-layout](/plugins/gatsby-plugin-layout/)

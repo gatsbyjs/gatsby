@@ -3,6 +3,161 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.1.0/packages/gatsby) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+#### Features
+
+- Add JSX Runtime options to `gatsby-config.js` [#33050](https://github.com/gatsbyjs/gatsby/issues/33050) ([c2e181d](https://github.com/gatsbyjs/gatsby/commit/c2e181d4233ee5daba68eb688a2f208f46e276b1))
+- DSG support for FS routes [#33697](https://github.com/gatsbyjs/gatsby/issues/33697) ([dd46c64](https://github.com/gatsbyjs/gatsby/commit/dd46c640fc02ea0b3dfa8788ca4a3d21e7783fe4))
+- enable simple resolver timings in queries [#33707](https://github.com/gatsbyjs/gatsby/issues/33707) ([55f9f1b](https://github.com/gatsbyjs/gatsby/commit/55f9f1b174bad10ecee481120a86bcc1bb8db3d4))
+- opentracing plumbing [#33329](https://github.com/gatsbyjs/gatsby/issues/33329) ([a6a04c6](https://github.com/gatsbyjs/gatsby/commit/a6a04c664cb20592c7192b5a40ccf6bbc722fb46))
+- Cache query-engine & page-ssr [#33665](https://github.com/gatsbyjs/gatsby/issues/33665) ([ee0967a](https://github.com/gatsbyjs/gatsby/commit/ee0967ab73bf8c5819ee0cee494d02efda948361))
+- pass page context to getServerData [#33626](https://github.com/gatsbyjs/gatsby/issues/33626) ([e0fcf38](https://github.com/gatsbyjs/gatsby/commit/e0fcf387b54c390eb019bc1a1d6a0b875a4cde8f))
+
+#### Bug Fixes
+
+- Don't warn about `config` in ESLint [#33795](https://github.com/gatsbyjs/gatsby/issues/33795) [#33813](https://github.com/gatsbyjs/gatsby/issues/33813) ([7427c84](https://github.com/gatsbyjs/gatsby/commit/7427c845e481fff60af17b3e1fb7ebaadc4969f3))
+- only add tracing resolver once [#33706](https://github.com/gatsbyjs/gatsby/issues/33706) ([42c4e10](https://github.com/gatsbyjs/gatsby/commit/42c4e108d692e48ef0c00f981230807053ef0f5f))
+- only send ipc of ENGINES_READY when needed [#33716](https://github.com/gatsbyjs/gatsby/issues/33716) ([109cf74](https://github.com/gatsbyjs/gatsby/commit/109cf749c25cdb9c8f4c7320de1f408f29007376))
+- single page node manifest accuracy [#33642](https://github.com/gatsbyjs/gatsby/issues/33642) ([4b6d04b](https://github.com/gatsbyjs/gatsby/commit/4b6d04b9b8b9c68d651a78f1cb42a18eca846fa5))
+- reset jobs cache when its outdated [#33617](https://github.com/gatsbyjs/gatsby/issues/33617) ([8292957](https://github.com/gatsbyjs/gatsby/commit/829295737449b62df010a568362aea46dca08a0d))
+- pageContext should proxy to page.context [#33627](https://github.com/gatsbyjs/gatsby/issues/33627) ([2eae769](https://github.com/gatsbyjs/gatsby/commit/2eae7699834fbf32aa6891ad6a7f88ac95769c3e))
+
+#### Chores
+
+- Fix index.d.ts file Fix [#33805](https://github.com/gatsbyjs/gatsby/issues/33805) Fix [#33817](https://github.com/gatsbyjs/gatsby/issues/33817) ([05bc7a2](https://github.com/gatsbyjs/gatsby/commit/05bc7a2e45cf0196fc6235071301a28d2d2e8d05))
+- correct flow typing file-parser [#33584](https://github.com/gatsbyjs/gatsby/issues/33584) ([89bf9f2](https://github.com/gatsbyjs/gatsby/commit/89bf9f2de61cbb184637c0cc97ded3915dad3258))
+- NodeModel.findAll returns a Promise [#33653](https://github.com/gatsbyjs/gatsby/issues/33653) ([9a23c01](https://github.com/gatsbyjs/gatsby/commit/9a23c01357ddaa0f3b698e3b9679633789e9be15))
+- Update `api-ssr-docs` [#33580](https://github.com/gatsbyjs/gatsby/issues/33580) ([c7d166a](https://github.com/gatsbyjs/gatsby/commit/c7d166a54d39f4b1224887859217a2b2aa19a268))
+- Correct Gatsby SSR APIs types [#33581](https://github.com/gatsbyjs/gatsby/issues/33581) ([7088b48](https://github.com/gatsbyjs/gatsby/commit/7088b480d38b9923e7cdf3ddc6f88f6c0a1be408))
+- v4 changes [#33614](https://github.com/gatsbyjs/gatsby/issues/33614) ([bce5b92](https://github.com/gatsbyjs/gatsby/commit/bce5b92f4921d048b8ed1ccfd74f97f8e267ae89))
+- Update README [#33615](https://github.com/gatsbyjs/gatsby/issues/33615) ([5a5bc2b](https://github.com/gatsbyjs/gatsby/commit/5a5bc2bdd7fb05ccc36c2dbe3b8de17fe5d3587f))
+- Change comment format in actions/public [#33592](https://github.com/gatsbyjs/gatsby/issues/33592) ([26748f2](https://github.com/gatsbyjs/gatsby/commit/26748f222610ed644a6c288a74d0cc7834e7a089))
+
+### [4.0.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.0.2/packages/gatsby) (2021-10-28)
+
+#### Bug Fixes
+
+- only send ipc of ENGINES_READY when needed [#33716](https://github.com/gatsbyjs/gatsby/issues/33716) [#33722](https://github.com/gatsbyjs/gatsby/issues/33722) ([03efe4d](https://github.com/gatsbyjs/gatsby/commit/03efe4dc156888b8c47d2d51ba1053e29842595e))
+
+### [4.0.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.0.1/packages/gatsby) (2021-10-25)
+
+#### Bug Fixes
+
+- reset jobs cache when its outdated [#33617](https://github.com/gatsbyjs/gatsby/issues/33617) [#33660](https://github.com/gatsbyjs/gatsby/issues/33660) ([42358ee](https://github.com/gatsbyjs/gatsby/commit/42358ee71bb88fb6c6d0a721a3e0fe54f9a60fd5))
+- pageContext should proxy to page.context [#33627](https://github.com/gatsbyjs/gatsby/issues/33627) [#33661](https://github.com/gatsbyjs/gatsby/issues/33661) ([8c99000](https://github.com/gatsbyjs/gatsby/commit/8c99000646b29688b235408b4400d9e54c9d3f5f))
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.0.0/packages/gatsby) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Features
+
+- capture number of ssg,dsg,ssr pages in telemetry [#33337](https://github.com/gatsbyjs/gatsby/issues/33337) ([7d66a23](https://github.com/gatsbyjs/gatsby/commit/7d66a23cb811189060c44a5296e9e89c19e67128))
+- add queue to prefetch [#33530](https://github.com/gatsbyjs/gatsby/issues/33530) ([2975c4d](https://github.com/gatsbyjs/gatsby/commit/2975c4d1271e3da52b531ad2f49261c362e5ae13))
+- track jobs per query in engines [#33503](https://github.com/gatsbyjs/gatsby/issues/33503) ([8908dca](https://github.com/gatsbyjs/gatsby/commit/8908dcaee6b7a3e76c8e3668c9c9910ff6849a02))
+- add support for 500.html [#33488](https://github.com/gatsbyjs/gatsby/issues/33488) ([451bf78](https://github.com/gatsbyjs/gatsby/commit/451bf786be4c002192f8e95cd84efbb76515abf0))
+- support named splats in functions [#33301](https://github.com/gatsbyjs/gatsby/issues/33301) ([018c041](https://github.com/gatsbyjs/gatsby/commit/018c041154818e7d85a722b0e18b6a63414fcb96))
+- hot-reload page rendering mode [#33455](https://github.com/gatsbyjs/gatsby/issues/33455) ([1dd00b7](https://github.com/gatsbyjs/gatsby/commit/1dd00b75ea24143ed1e4cbc6c540dd8a8d329ae4))
+- Update `context.nodeModel` methods [#33489](https://github.com/gatsbyjs/gatsby/issues/33489) ([787dc23](https://github.com/gatsbyjs/gatsby/commit/787dc237c4c6fe4a25751208d40ef0bff00bcdb4))
+- Error overlay for `getServerData` [#33475](https://github.com/gatsbyjs/gatsby/issues/33475) ([d897016](https://github.com/gatsbyjs/gatsby/commit/d897016530b5ffd9ec561f53b3bfc5c287ef1276))
+- validate engines during the build [#33413](https://github.com/gatsbyjs/gatsby/issues/33413) ([664af4d](https://github.com/gatsbyjs/gatsby/commit/664af4d7b945f824ac80f17de53c5f61e1fc8932))
+- hot reload getServerData [#33398](https://github.com/gatsbyjs/gatsby/issues/33398) ([4734415](https://github.com/gatsbyjs/gatsby/commit/47344156c3b8eb0a19a9c6ddc9512dc94f69b1ac))
+- disable inference for internal types [#33341](https://github.com/gatsbyjs/gatsby/issues/33341) ([95fd79f](https://github.com/gatsbyjs/gatsby/commit/95fd79f462876cee6016ca1c3a18ea4785458728))
+- handle search params in resource loader [#33209](https://github.com/gatsbyjs/gatsby/issues/33209) ([5c22948](https://github.com/gatsbyjs/gatsby/commit/5c22948094d98f3d4ea90253c80fc78d9f53cc20))
+- Don't crash the build process when in preview mode [#33184](https://github.com/gatsbyjs/gatsby/issues/33184) ([c2d42ec](https://github.com/gatsbyjs/gatsby/commit/c2d42ecc2dccc0862a4a0c796e2db9dec57fcb16))
+- engines activity [#33273](https://github.com/gatsbyjs/gatsby/issues/33273) ([29298f6](https://github.com/gatsbyjs/gatsby/commit/29298f6eafec75b6ef514384cab63f5c5b5e5a1b))
+- remove gatsby-admin [#33278](https://github.com/gatsbyjs/gatsby/issues/33278) ([edb8ffc](https://github.com/gatsbyjs/gatsby/commit/edb8ffcd7726f3a18f8981963d1926a912c55fda))
+- drop SitePage inference and schema update [#33319](https://github.com/gatsbyjs/gatsby/issues/33319) ([17a3f9f](https://github.com/gatsbyjs/gatsby/commit/17a3f9f69ae2710f4aeef27603226281f2713281))
+- move away from old default uuid [#33275](https://github.com/gatsbyjs/gatsby/issues/33275) ([325fdf4](https://github.com/gatsbyjs/gatsby/commit/325fdf4a068acf755ed124cb522e133ea5c31157))
+- add webpack-logging plugin to Gatsby for debugging [#33214](https://github.com/gatsbyjs/gatsby/issues/33214) ([d3a8736](https://github.com/gatsbyjs/gatsby/commit/d3a8736c8f7c39c943a36c2b8a6d59042b31179e))
+- don't infer pageContext [#33268](https://github.com/gatsbyjs/gatsby/issues/33268) ([98da58a](https://github.com/gatsbyjs/gatsby/commit/98da58a34b53681b885a242bce9c8dde4c8aecf5))
+- provide fetch in ssr bundle by default [#33155](https://github.com/gatsbyjs/gatsby/issues/33155) ([89a30e8](https://github.com/gatsbyjs/gatsby/commit/89a30e84f5f35c83a58a6a7277479ed70aef6d72))
+- print message pointing to pqr feedback if running queries throws [#33187](https://github.com/gatsbyjs/gatsby/issues/33187) ([25378f1](https://github.com/gatsbyjs/gatsby/commit/25378f15fdc1908b61db42ead3610db77a8976ed))
+- add fetch mutex for PQR [#33161](https://github.com/gatsbyjs/gatsby/issues/33161) ([aa050d7](https://github.com/gatsbyjs/gatsby/commit/aa050d7bb7857a98a4b3b9be92058bff8c4400f0))
+- split page-renderer per route [#33054](https://github.com/gatsbyjs/gatsby/issues/33054) ([8b32cb9](https://github.com/gatsbyjs/gatsby/commit/8b32cb99411191daa4e1c395eb9d106eb3dfce20))
+
+#### Bug Fixes
+
+- use lmdb.removeSync so getNode can't return deleted nodes [#33554](https://github.com/gatsbyjs/gatsby/issues/33554) ([98a843c](https://github.com/gatsbyjs/gatsby/commit/98a843c0ba1db325bde2cbc8ac6906348ffe2dc3))
+- restore onPreBuild to being called right after bootstrap finishes [#33591](https://github.com/gatsbyjs/gatsby/issues/33591) ([4761dc3](https://github.com/gatsbyjs/gatsby/commit/4761dc329f8da4815563704b6b16c05c5826be40))
+- fix page-tree in ink-cli fix [#33579](https://github.com/gatsbyjs/gatsby/issues/33579) ([7d6a0aa](https://github.com/gatsbyjs/gatsby/commit/7d6a0aa47b37f39aafd7c7b1debfe2cc88c5d540))
+- temporary workaround for stale jobs cache [#33586](https://github.com/gatsbyjs/gatsby/issues/33586) ([68fe836](https://github.com/gatsbyjs/gatsby/commit/68fe836576e69b1e38f4bd0f994319143c701c3f))
+- Update internal usage of .runQuery [#33571](https://github.com/gatsbyjs/gatsby/issues/33571) ([a800d9d](https://github.com/gatsbyjs/gatsby/commit/a800d9d45ecf94ea58fa783be7dac464986e8fef))
+- only remove unused code when apis got removed [#33527](https://github.com/gatsbyjs/gatsby/issues/33527) ([ccca4b3](https://github.com/gatsbyjs/gatsby/commit/ccca4b3fa190ccfa22d420cdf89d829c2dad74c0))
+- assign correct parentSpans to PQR activities [#33568](https://github.com/gatsbyjs/gatsby/issues/33568) ([8dbf550](https://github.com/gatsbyjs/gatsby/commit/8dbf5509b6df03ac3d44077d7094a48714ce6112))
+- emit file nodes after source updates [#33548](https://github.com/gatsbyjs/gatsby/issues/33548) ([5110074](https://github.com/gatsbyjs/gatsby/commit/5110074bd3866c70b92fa4ff6bce941a4ae9c5eb))
+- make sure 404 and 500 page inherit stateful status from original page [#33544](https://github.com/gatsbyjs/gatsby/issues/33544) ([d2329df](https://github.com/gatsbyjs/gatsby/commit/d2329df1422c08b3c588cb1d9fc9a379a7ca4584))
+- Warn about nodeModel changes once [#33534](https://github.com/gatsbyjs/gatsby/issues/33534) ([0d7179e](https://github.com/gatsbyjs/gatsby/commit/0d7179e39f30a50f2a4bee3626d0c4acab1822ca))
+- warnOnce => reportOnce for verbose support [#33529](https://github.com/gatsbyjs/gatsby/issues/33529) ([eb7fb9a](https://github.com/gatsbyjs/gatsby/commit/eb7fb9afaa52be3679a08dfc04ff2959392946ec))
+- Remove `GATSBY_BUILD_STAGE` & warn against `___NODE` [#33501](https://github.com/gatsbyjs/gatsby/issues/33501) ([775289f](https://github.com/gatsbyjs/gatsby/commit/775289fa78042ed6a07e7c0b78938ff59f5bf4fa))
+- Filtering page queries [#33515](https://github.com/gatsbyjs/gatsby/issues/33515) ([6379534](https://github.com/gatsbyjs/gatsby/commit/6379534509d7c20e00fe0bf7162dcf968287c62f))
+- update dependency eslint-plugin-flowtype to ^5.10.0 [#33384](https://github.com/gatsbyjs/gatsby/issues/33384) ([4e78c61](https://github.com/gatsbyjs/gatsby/commit/4e78c61f5b4196d54041df248276f3a927c54be4))
+- update minor and patch dependencies for gatsby [#32594](https://github.com/gatsbyjs/gatsby/issues/32594) ([dacff72](https://github.com/gatsbyjs/gatsby/commit/dacff7207b344aa6a342d84a95ea187757b32fd7))
+- remove unused vars in remove api plugin [#33476](https://github.com/gatsbyjs/gatsby/issues/33476) ([3002d65](https://github.com/gatsbyjs/gatsby/commit/3002d652abd6b59791b73a21c188fd042a86f4a7))
+- ensure os paths when validating engines [#33490](https://github.com/gatsbyjs/gatsby/issues/33490) ([bb39ab3](https://github.com/gatsbyjs/gatsby/commit/bb39ab3cb7c960e51204c93eb5b32d4e14433173))
+- also include default-site-plugin [#33472](https://github.com/gatsbyjs/gatsby/issues/33472) ([785b04b](https://github.com/gatsbyjs/gatsby/commit/785b04bb71d274eba94995c7339bee3af7d02b4e))
+- Some functions cleanup [#33469](https://github.com/gatsbyjs/gatsby/issues/33469) ([c72fa1e](https://github.com/gatsbyjs/gatsby/commit/c72fa1e6df6d5d375bd574af6e9392c43afe30cd))
+- handle SSR index page in develop [#33483](https://github.com/gatsbyjs/gatsby/issues/33483) ([87bd10a](https://github.com/gatsbyjs/gatsby/commit/87bd10a16f108246aa1312bfcd1e01b5c4282db4))
+- throw on query runtime errors in engines [#33464](https://github.com/gatsbyjs/gatsby/issues/33464) ([1eaa3e8](https://github.com/gatsbyjs/gatsby/commit/1eaa3e894380c8c744c8347adea2aa4b417796f5))
+- Remove `@nodeInterface` functionality [#33453](https://github.com/gatsbyjs/gatsby/issues/33453) ([886a65a](https://github.com/gatsbyjs/gatsby/commit/886a65a7d71e15f091519a26dc44a6f402b3e4ef))
+- replace checks for .cache/json with checks for .cache/caches-lmdb [#33431](https://github.com/gatsbyjs/gatsby/issues/33431) ([751cc43](https://github.com/gatsbyjs/gatsby/commit/751cc43193edec3e3320f399e0cc895318959fe4))
+- update dependency eslint-plugin-react to ^7.26.1 [#33385](https://github.com/gatsbyjs/gatsby/issues/33385) ([f5f8e6d](https://github.com/gatsbyjs/gatsby/commit/f5f8e6dd47bd11d49a7e836defa4e3e4b52f05af))
+- update typescript [#33387](https://github.com/gatsbyjs/gatsby/issues/33387) ([f2a8035](https://github.com/gatsbyjs/gatsby/commit/f2a8035644e650487abbca8b74a98b96c32d9cd2))
+- update minor and patch dependencies for gatsby-cli [#32595](https://github.com/gatsbyjs/gatsby/issues/32595) ([09416ca](https://github.com/gatsbyjs/gatsby/commit/09416ca6d3fbd1eb7814feb1bb730da818ebed7b))
+- postcss-svgo - remove plugin removeAttrs [#33266](https://github.com/gatsbyjs/gatsby/issues/33266) ([a1f35ca](https://github.com/gatsbyjs/gatsby/commit/a1f35ca37aed1b076f057f1522b56b75a3bdf223))
+- don't re-write chunk-map.json and webpack.stats.json without changes [#33396](https://github.com/gatsbyjs/gatsby/issues/33396) ([64c4b70](https://github.com/gatsbyjs/gatsby/commit/64c4b701de9a6dc5e41c4b6a71bbcc8a38bbb55f))
+- remove DEV_SSR from FAST_DEV [#33343](https://github.com/gatsbyjs/gatsby/issues/33343) ([2cda529](https://github.com/gatsbyjs/gatsby/commit/2cda5291dafa0e0425176e371e4a8d5cd5b9b906))
+- unblock event loop when running queries [#33338](https://github.com/gatsbyjs/gatsby/issues/33338) ([91fde1c](https://github.com/gatsbyjs/gatsby/commit/91fde1c5a9f4d16971bb8418e7a634686d146c4e))
+- update typescript [#33001](https://github.com/gatsbyjs/gatsby/issues/33001) ([6cd70f6](https://github.com/gatsbyjs/gatsby/commit/6cd70f62ecae4aeee8ece38866661be9239062cb))
+- correct the definition for getNode [#33259](https://github.com/gatsbyjs/gatsby/issues/33259) [#L17-L18](https://github.com/gatsbyjs/gatsby/issues/L17-L18) ([029db52](https://github.com/gatsbyjs/gatsby/commit/029db522b238150fa1a435b1a6de5fa8b57937e5))
+- allow null plugin option values on build [#33227](https://github.com/gatsbyjs/gatsby/issues/33227) ([0eba911](https://github.com/gatsbyjs/gatsby/commit/0eba91161c900466a136f3ca47065fa4a0567a89))
+- fix pagetree global cli fix [#33200](https://github.com/gatsbyjs/gatsby/issues/33200) ([d515044](https://github.com/gatsbyjs/gatsby/commit/d515044895e3d9cc5e08a58d04755d11098abbf5))
+- fix hydration flicker on initial render of ssr page (final this time!) fix [#33196](https://github.com/gatsbyjs/gatsby/issues/33196) ([c146750](https://github.com/gatsbyjs/gatsby/commit/c146750b0202d02403ca9b3bfa17eb6212ca1918))
+- don't warn about getServerData exports [#33193](https://github.com/gatsbyjs/gatsby/issues/33193) ([e2263e8](https://github.com/gatsbyjs/gatsby/commit/e2263e88acb6f6ff7e5a26c66afd1f026067c0b2))
+- make sure we emit ENGINES_READY after build-ssr [#33180](https://github.com/gatsbyjs/gatsby/issues/33180) ([3c1f285](https://github.com/gatsbyjs/gatsby/commit/3c1f285f41ab98ee3286f4af60eeef889505ccd5))
+- implement shouldGenerateEngines [#33175](https://github.com/gatsbyjs/gatsby/issues/33175) ([b622b22](https://github.com/gatsbyjs/gatsby/commit/b622b22e3a32dc63a3f3fdeba312b0ebfcd1273e))
+- only show peerdep warnings outside of workers [#33173](https://github.com/gatsbyjs/gatsby/issues/33173) ([2b06d36](https://github.com/gatsbyjs/gatsby/commit/2b06d36b004f4b52458a5e31c8a94fe234747c60))
+
+#### Chores
+
+- Update README [#33615](https://github.com/gatsbyjs/gatsby/issues/33615) ([0790895](https://github.com/gatsbyjs/gatsby/commit/079089523b9cb4bf4c112deb71b7ef1d175ab1c6))
+- Change comment format in actions/public [#33592](https://github.com/gatsbyjs/gatsby/issues/33592) ([06760d7](https://github.com/gatsbyjs/gatsby/commit/06760d7801d1b1da4cfdb4925ff33bd086a75c0c))
+- Add `assetPrefix` to `IGatsbyConfig` [#33575](https://github.com/gatsbyjs/gatsby/issues/33575) ([3993819](https://github.com/gatsbyjs/gatsby/commit/399381900d1f87c0009b0584e917c51fcd0ec067))
+- add some comments about fs-provider import order importance [#33523](https://github.com/gatsbyjs/gatsby/issues/33523) ([e31edb9](https://github.com/gatsbyjs/gatsby/commit/e31edb9779d737fb97bbe35410377eab64552886))
+- update formatting & linting [#33378](https://github.com/gatsbyjs/gatsby/issues/33378) ([d5634a4](https://github.com/gatsbyjs/gatsby/commit/d5634a48611456bbedb8c2a2eb3a45a54a0d5db4))
+- Fix static query types, document useStaticQuery Fix [#33322](https://github.com/gatsbyjs/gatsby/issues/33322) ([7adef55](https://github.com/gatsbyjs/gatsby/commit/7adef559190aa9f785666b1c0ce7f9937230f171))
+- upgrade lmbd to 1.6.8 [#33244](https://github.com/gatsbyjs/gatsby/issues/33244) ([56fbc6d](https://github.com/gatsbyjs/gatsby/commit/56fbc6d3e56e3060dd44a0e0ed0cccee651f08a6))
+- move to DSG instead of DSR [#33189](https://github.com/gatsbyjs/gatsby/issues/33189) ([497d507](https://github.com/gatsbyjs/gatsby/commit/497d507037f601127254bde5d18584c226a38662))
+
+#### Other Changes
+
+- Remove deprecation warnings for touchNode/deleteNode [#33286](https://github.com/gatsbyjs/gatsby/issues/33286) ([aec9981](https://github.com/gatsbyjs/gatsby/commit/aec998198e87ae055abbdae7da15a2a7d22ca813))
+- handle edge cases introduced with 404 for not existing pages [#33288](https://github.com/gatsbyjs/gatsby/issues/33288) ([30e88fb](https://github.com/gatsbyjs/gatsby/commit/30e88fb6b998a12877bd0cf6b6d89c4f9563bade))
+- fix functions integration tests fix [#33258](https://github.com/gatsbyjs/gatsby/issues/33258) ([c6baf6d](https://github.com/gatsbyjs/gatsby/commit/c6baf6df9c72b87512e14a7da9b42a0b185f76c9))
+- adjust for v4 [#33234](https://github.com/gatsbyjs/gatsby/issues/33234) ([f41101c](https://github.com/gatsbyjs/gatsby/commit/f41101cadec18a9c399ee96350d010e3701d62b7))
+- adjust tests after the bump [#33171](https://github.com/gatsbyjs/gatsby/issues/33171) ([4712acc](https://github.com/gatsbyjs/gatsby/commit/4712acc619c19cd23a1b2e94e7253ddd624aa927))
+
+### [3.14.5](https://github.com/gatsbyjs/gatsby/commits/gatsby@3.14.5/packages/gatsby) (2021-10-28)
+
+#### Bug Fixes
+
+- single page node manifest accuracy [#33642](https://github.com/gatsbyjs/gatsby/issues/33642) [#33698](https://github.com/gatsbyjs/gatsby/issues/33698) ([857a628](https://github.com/gatsbyjs/gatsby/commit/857a6283ed976046c4b76aa2615cc5b51bd1046d))
+
+### [3.14.4](https://github.com/gatsbyjs/gatsby/commits/gatsby@3.14.4/packages/gatsby) (2021-10-23)
+
+#### Bug Fixes
+
+- use lmdb.removeSync so getNode can't return deleted nodes [#33554](https://github.com/gatsbyjs/gatsby/issues/33554) [#33633](https://github.com/gatsbyjs/gatsby/issues/33633) ([d4cf891](https://github.com/gatsbyjs/gatsby/commit/d4cf891a09c24bde800f390ccf491d472e5a5d8f))
+
+### [3.14.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@3.14.3/packages/gatsby) (2021-10-16)
+
+#### Features
+
+- support named splats in functions [#33301](https://github.com/gatsbyjs/gatsby/issues/33301) [#33516](https://github.com/gatsbyjs/gatsby/issues/33516) ([c9bb766](https://github.com/gatsbyjs/gatsby/commit/c9bb76693ced0ca5b7225b7d0978853236ec8d18))
+
 ### [3.14.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@3.14.2/packages/gatsby) (2021-10-06)
 
 #### Features

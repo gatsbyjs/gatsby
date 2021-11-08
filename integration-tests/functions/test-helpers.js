@@ -7,62 +7,78 @@ const FormData = require("form-data")
 
 export function runTests(env, host) {
   describe(env, () => {
-    describe(`routing`, () => {
-      test(`top-level API`, async () => {
-        const result = await fetch(`${host}/api/top-level`).then(res =>
-          res.text()
-        )
+    test(`top-level API`, async () => {
+      const result = await fetch(`${host}/api/top-level`).then(res =>
+        res.text()
+      )
+
+      expect(result).toMatchSnapshot()
+    })
+    test(`secondary-level API`, async () => {
+      const result = await fetch(`${host}/api/a-directory/function`).then(res =>
+        res.text()
+      )
+
+      expect(result).toMatchSnapshot()
+    })
+    test(`secondary-level API with index.js`, async () => {
+      const result = await fetch(`${host}/api/a-directory`).then(res =>
+        res.text()
+      )
+
+      expect(result).toMatchSnapshot()
+    })
+    test(`secondary-level API`, async () => {
+      const result = await fetch(`${host}/api/dir/function`).then(res =>
+        res.text()
+      )
+
+      expect(result).toMatchSnapshot()
+    })
+
+    test(`routes with special characters`, async () => {
+      const routes = [
+        `${host}/api/I-Am-Capitalized`,
+        `${host}/api/some whitespace`,
+        `${host}/api/with-äöü-umlaut`,
+        `${host}/api/some-àè-french`,
+        encodeURI(`${host}/api/some-אודות`),
+      ]
+
+      for (const route of routes) {
+        const result = await fetch(route).then(res => res.text())
 
         expect(result).toMatchSnapshot()
-      })
-      test(`secondary-level API`, async () => {
-        const result = await fetch(
-          `${host}/api/a-directory/function`
-        ).then(res => res.text())
+      }
+    })
 
-        expect(result).toMatchSnapshot()
-      })
-      test(`secondary-level API with index.js`, async () => {
-        const result = await fetch(`${host}/api/a-directory`).then(res =>
-          res.text()
-        )
-
-        expect(result).toMatchSnapshot()
-      })
-      test(`secondary-level API`, async () => {
-        const result = await fetch(`${host}/api/dir/function`).then(res =>
-          res.text()
-        )
-
-        expect(result).toMatchSnapshot()
-      })
-      test(`routes with special characters`, async () => {
-        const routes = [
-          `${host}/api/I-Am-Capitalized`,
-          `${host}/api/some whitespace`,
-          `${host}/api/with-äöü-umlaut`,
-          `${host}/api/some-àè-french`,
-          encodeURI(`${host}/api/some-אודות`),
-        ]
-
-        for (const route of routes) {
-          const result = await fetch(route).then(res => res.text())
-
-          expect(result).toMatchSnapshot()
-        }
-      })
-
-      test(`dynamic routes`, async () => {
-        const routes = [
-          `${host}/api/users/23/additional`,
-          `${host}/api/dir/super`,
-        ]
+    describe(`dynamic routes`, () => {
+      test(`param routes`, async () => {
+        const routes = [`${host}/api/users/23/additional`]
 
         for (const route of routes) {
           const result = await fetch(route).then(res => res.json())
 
           expect(result).toMatchSnapshot()
         }
+      })
+      test(`unnamed wildcard routes`, async () => {
+        const routes = [`${host}/api/dir/super`]
+        for (const route of routes) {
+          const result = await fetch(route).then(res => res.json())
+
+          expect(result).toMatchSnapshot()
+        }
+      })
+      test(`named wildcard routes`, async () => {
+        const route = `${host}/api/named-wildcard/super`
+        const result = await fetch(route).then(res => res.json())
+
+        expect(result).toMatchInlineSnapshot(`
+          Object {
+            "foo": "super",
+          }
+        `)
       })
     })
 
@@ -263,6 +279,39 @@ export function runTests(env, host) {
           res.text()
         )
         expect(result).toEqual(`hi`)
+      })
+    })
+
+    describe(`ignores files that match the pattern`, () => {
+      test(`dotfile`, async () => {
+        const result = await fetch(
+          `${host}/api/ignore/.config`
+        )
+        expect(result.status).toEqual(404)
+      })
+      test(`.d.ts file`, async () => {
+        const result = await fetch(
+          `${host}/api/ignore/foo.d`
+        )
+        expect(result.status).toEqual(404)
+      })
+      test(`test file`, async () => {
+        const result = await fetch(
+          `${host}/api/ignore/hello.test`
+        )
+        expect(result.status).toEqual(404)
+      })
+      test(`test directory`, async () => {
+        const result = await fetch(
+          `${host}/api/ignore/__tests__/hello`
+        )
+        expect(result.status).toEqual(404)
+      })
+      test(`test file in plugin`, async () => {
+        const result = await fetch(
+          `${host}/api/gatsby-plugin-cool/shadowed.test`
+        )
+        expect(result.status).toEqual(404)
       })
     })
 

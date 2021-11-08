@@ -52,6 +52,12 @@ const errors = {
     level: Level.ERROR,
     docsUrl: `https://gatsby.dev/debug-html`,
   },
+  "95315": {
+    text: (context): string =>
+      `Error in getServerData in ${context.pagePath} / "${context.potentialPagePath}".`,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
   "98001": {
     text: (): string =>
       `Built Rendering Engines failed validation failed validation.\n\nPlease open an issue with a reproduction at https://github.com/gatsbyjs/gatsby/issues/new for more help`,
@@ -316,6 +322,13 @@ const errors = {
     text: (): string =>
       `An error occurred during parallel query running.\nGo here for troubleshooting tips: https://gatsby.dev/pqr-feedback`,
     level: Level.ERROR,
+  },
+  "85929": {
+    text: (context): string =>
+      `The "${context.exportName}" export must be async when using it with graphql:\n\n${context.codeFrame}`,
+    type: Type.GRAPHQL,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
   },
   // Config errors
   "10122": {

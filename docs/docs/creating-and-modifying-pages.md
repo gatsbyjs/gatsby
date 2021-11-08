@@ -263,6 +263,23 @@ export default Page
 
 Page context is serialized before being passed to pages. This means it can't be used to pass functions into components and `Date` objects will be serialized into strings.
 
+## Optimizing pages for Content Sync
+
+When using the Content Sync feature on Gatsby Cloud, an optional parameter, `ownerNodeId`, can be passed to the `createPage` action to allow greater control over where content is previewed. By passing a value to `ownerNodeId`, you can ensure that Content Sync will redirect content authors to the page they intend to preview their content on. The value of `ownerNodeId` should be set to the id of the node that's the preferred node to preview for each page. This is typically the id of the node that's used to create the page path for each page.
+
+```javascript:title=gatsby-node.js
+const posts = result.data.allPosts.nodes
+
+posts.forEach((post) => {
+  createPage({
+    path: `/blog/${post.slug}/`,
+    component: blogPost,
+    context: {},
+    ownerNodeId: post.id, // highlight-line
+  })
+})
+```
+
 ## Creating client-only routes
 
 In specific cases, you might want to create a site with client-only portions that are gated by authentication. For more on how to achieve this, refer to [client-only routes & user authentication](/docs/how-to/routing/client-only-routes-and-user-authentication/).

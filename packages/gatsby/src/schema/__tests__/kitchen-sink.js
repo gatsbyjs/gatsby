@@ -201,6 +201,9 @@ describe(`Kitchen sink schema test`, () => {
               text
             }
           }
+          builtIntPage: sitePage(id: { eq: "SitePage /1685001452849004065/" }) {
+            pageContext
+          }
         }
       `)
     ).toMatchSnapshot()
@@ -342,9 +345,11 @@ const mockCreateResolvers = ({ createResolvers }) => {
       likedEnough: {
         type: `[PostsJson]`,
         async resolve(parent, args, context) {
-          const result = await context.nodeModel.runQuery({
+          const { entries } = await context.nodeModel.findAll({
             type: `PostsJson`,
             query: {
+              limit: 2,
+              skip: 0,
               filter: {
                 likes: {
                   ne: null,
@@ -356,9 +361,8 @@ const mockCreateResolvers = ({ createResolvers }) => {
                 order: [`DESC`],
               },
             },
-            firstOnly: false,
           })
-          return result.slice(0, 2)
+          return entries
         },
       },
     },

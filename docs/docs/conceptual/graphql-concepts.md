@@ -118,7 +118,7 @@ When starting out with GraphQL, we recommend the following two tutorials:
 - https://www.howtographql.com/
 - https://graphql.org/learn/
 
-[The official Gatsby tutorial](/docs/tutorial/part-four/) also includes an introduction to using GraphQL specifically with Gatsby.
+[The official Gatsby tutorial](/docs/tutorial/part-4/) also includes an introduction to using GraphQL specifically with Gatsby.
 
 ## How do GraphQL and Gatsby work together?
 
@@ -194,20 +194,20 @@ markdownRemark {
 
 Gatsby has rich support for processing images. Responsive images are a big part of the modern web and typically involve creating 5+ sized thumbnails per photo. With Gatsby's [`gatsby-transformer-sharp`](/plugins/gatsby-transformer-sharp/), you can _query_ your images for responsive versions. The query automatically creates all the needed responsive thumbnails and returns `src` and `srcSet` fields to add to your image element.
 
-Combined with a special Gatsby image component, [gatsby-image](/plugins/gatsby-image/), you have a very powerful set of primitives for building sites with images.
+Combined with a special Gatsby image component, [gatsby-plugin-image](/plugins/gatsby-plugin-image/), you have a very powerful set of primitives for building sites with images.
 
-This is what a component using `gatsby-image` looks like:
+This is what a component using `gatsby-plugin-image` looks like:
 
 ```jsx
 import React from "react"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 import { graphql } from "gatsby"
 
 export default function Page({ data }) {
   return (
     <div>
-      <h1>Hello gatsby-image</h1>
-      <Img fixed={data.file.childImageSharp.fixed} />
+      <h1>Hello gatsby-plugin-image</h1>
+      <GatsbyImage image={data.file.childImageSharp.gatsbyImageData} />
     </div>
   )
 }
@@ -218,9 +218,7 @@ export const query = graphql`
       childImageSharp {
         # Specify the image processing specifications right in the query.
         # Makes it trivial to update as your page's design changes.
-        fixed(width: 125, height: 125) {
-          ...GatsbyImageSharpFixed
-        }
+        gatsbyImageData(width: 125, height: 125, layout: FIXED)
       }
     }
   }

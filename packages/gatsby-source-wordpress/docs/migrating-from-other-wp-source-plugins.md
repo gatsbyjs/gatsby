@@ -62,9 +62,9 @@ So your query would change to look like this:
 
 Any inline fragments will need to be updated since type names have changed. Use Gatsby's [Graphiql](https://www.gatsbyjs.org/docs/running-queries-with-graphiql/) at `http://localhost:8000/___graphiql` with `gatsby develop` running to determine how your inline fragment typenames should be modified.
 
-### `gatsby-source-graphql` and `gatsby-image`
+### `gatsby-source-graphql` and `gatsby-plugin-image`
 
-If you're using any plugins or additional schema customization code to enable the use of `gatsby-image`, you can delete that code and uninstall those plugins. `gatsby-source-wordpress@v4` handles that for you out of the box!
+If you're using any plugins or additional schema customization code to enable the use of `gatsby-plugin-image`, you can delete that code and uninstall those plugins. `gatsby-source-wordpress@v4` handles that for you out of the box!
 
 ### `gatsby-source-graphql` and WPGraphQL input arguments
 

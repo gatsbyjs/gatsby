@@ -153,7 +153,7 @@ export default function Home() {
 
 ### Additional resources
 
-- Create a layout component in [tutorial part three](/docs/tutorial/part-three/#your-first-layout-component)
+- Create a layout component in [tutorial part three](/docs/tutorial/part-3/#your-first-layout-component)
 - Styling with [Layout Components](/docs/how-to/routing/layout-components/)
 
 ## Creating pages programmatically with createPage
@@ -244,6 +244,6 @@ export default function DogTemplate({ pageContext: { dog } }) {
 
 ### Additional resources
 
-- Tutorial section on [programmatically creating pages from data](/docs/tutorial/part-seven/)
+- Tutorial section on [programmatically creating pages from data](/docs/tutorial/part-7/)
 - Reference guide on [using Gatsby without GraphQL](/docs/how-to/querying-data/using-gatsby-without-graphql/)
 - [Example repo](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-createPage) for this recipe

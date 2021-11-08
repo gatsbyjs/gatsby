@@ -7,7 +7,6 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
-const { scheduleJob } = require(`./scheduler`)
 const { createArgsDigest } = require(`./process-file`)
 const { reportError } = require(`./report-error`)
 const {
@@ -138,14 +137,7 @@ function createJob(job, { reporter }) {
   // in resolve / reject handlers). If we would use async/await
   // entire closure would keep duplicate job in memory until
   // initial job finish.
-  let promise = null
-  if (actions.createJobV2) {
-    promise = actions.createJobV2(job)
-  } else {
-    promise = scheduleJob(job, actions, reporter)
-  }
-
-  promise.catch(err => {
+  const promise = actions.createJobV2(job).catch(err => {
     reporter.panic(`error converting image`, err)
   })
 
