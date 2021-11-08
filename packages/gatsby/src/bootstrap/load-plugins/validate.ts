@@ -266,7 +266,7 @@ async function validatePluginsOptions(
 
                   return value
                 })
-              })
+              }, `Gatsby specific subplugin validation`)
               .default([]),
             args: (schema: any, args: any): any => {
               if (
@@ -296,7 +296,6 @@ async function validatePluginsOptions(
           // All plugins have "plugins: []"" added to their options in load.ts, even if they
           // do not have subplugins. We add plugins to the schema if it does not exist already
           // to make sure they pass validation.
-          // console.log(`adding our own plugins`)
           optionsSchema = optionsSchema.append({
             plugins: Joi.array().length(0),
           })
