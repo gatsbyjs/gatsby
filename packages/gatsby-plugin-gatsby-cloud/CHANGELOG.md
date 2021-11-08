@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.1.0/packages/gatsby-plugin-gatsby-cloud) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+#### Bug Fixes
+
+- update dependency date-fns to ^2.25.0 for gatsby-plugin-gatsby-cloud [#33383](https://github.com/gatsbyjs/gatsby/issues/33383) ([79494f5](https://github.com/gatsbyjs/gatsby/commit/79494f55746bca353e71d2ae62aa402946eac019))
+- Styling & indicators [#33538](https://github.com/gatsbyjs/gatsby/issues/33538) ([5adc7ac](https://github.com/gatsbyjs/gatsby/commit/5adc7ac7483221a82cfe7c12522260fdb93b5b55))
+
+#### Other Changes
+
+- Properly set the pathPrefix and assetPrefix in the pluginData fix [#33667](https://github.com/gatsbyjs/gatsby/issues/33667) ([168351e](https://github.com/gatsbyjs/gatsby/commit/168351ef9b02bc51c0db7bc1233969c7b278c435))
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.0.0/packages/gatsby-plugin-gatsby-cloud) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Features
+
+- Use match path when emitting routes [#33521](https://github.com/gatsbyjs/gatsby/issues/33521) ([2cfa10a](https://github.com/gatsbyjs/gatsby/commit/2cfa10a93428828d4c9ab46f4483f10a59e2fc0f))
+
+#### Bug Fixes
+
+- emit file nodes after source updates [#33548](https://github.com/gatsbyjs/gatsby/issues/33548) ([5110074](https://github.com/gatsbyjs/gatsby/commit/5110074bd3866c70b92fa4ff6bce941a4ae9c5eb))
+
+#### Chores
+
+- update testing library (major) [#32656](https://github.com/gatsbyjs/gatsby/issues/32656) ([ab2902b](https://github.com/gatsbyjs/gatsby/commit/ab2902b06f954edab325b0c35b99813a8b567275))
+- update dependency node-fetch to ^2.6.5 for gatsby-plugin-gatsby-cloud [#33355](https://github.com/gatsbyjs/gatsby/issues/33355) ([324947a](https://github.com/gatsbyjs/gatsby/commit/324947a106022d2f9d455f5bd5f829f51ab030b8))
+- move to DSG instead of DSR [#33189](https://github.com/gatsbyjs/gatsby/issues/33189) ([497d507](https://github.com/gatsbyjs/gatsby/commit/497d507037f601127254bde5d18584c226a38662))
+
+### [3.2.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@3.2.1/packages/gatsby-plugin-gatsby-cloud) (2021-10-28)
+
+#### Other Changes
+
+- Properly set the pathPrefix and assetPrefix in the pluginData fix [#33667](https://github.com/gatsbyjs/gatsby/issues/33667) fix [#33702](https://github.com/gatsbyjs/gatsby/issues/33702) ([6bfd0f1](https://github.com/gatsbyjs/gatsby/commit/6bfd0f17dcf1bda2dab426d3a5aa0dcaa2d0d661))
+
 ## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@3.2.0/packages/gatsby-plugin-gatsby-cloud) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

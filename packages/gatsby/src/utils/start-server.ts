@@ -348,6 +348,12 @@ export async function startServer(
                 throw result
               }
 
+              if (result.headers) {
+                for (const [name, value] of Object.entries(result.headers)) {
+                  res.setHeader(name, value)
+                }
+              }
+
               pageData.result.serverData = result.props
               pageData.getServerDataError = null
             } catch (error) {

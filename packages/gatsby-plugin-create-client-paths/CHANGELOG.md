@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-create-client-paths@4.1.0/packages/gatsby-plugin-create-client-paths) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-plugin-create-client-paths
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-create-client-paths@4.0.0/packages/gatsby-plugin-create-client-paths) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- Recommend FS Routes [#33535](https://github.com/gatsbyjs/gatsby/issues/33535) ([bdb8503](https://github.com/gatsbyjs/gatsby/commit/bdb8503e367c1df5c88bd1499d64c4435cd3e593))
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-create-client-paths@3.14.0/packages/gatsby-plugin-create-client-paths) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

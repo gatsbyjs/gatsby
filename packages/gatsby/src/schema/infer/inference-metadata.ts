@@ -75,7 +75,7 @@ export interface ITypeInfoString extends ITypeInfo {
 }
 
 export interface ITypeInfoDate extends ITypeInfo {
-  example: string
+  example: string | Date
 }
 
 export interface ITypeInfoNumber extends ITypeInfo {

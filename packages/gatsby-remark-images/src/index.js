@@ -106,6 +106,9 @@ module.exports = (
               }
               break
             case `alt`:
+              if (node.alt === EMPTY_ALT || overWrites.alt === EMPTY_ALT) {
+                return ``
+              }
               if (overWrites.alt) {
                 return overWrites.alt
               }
