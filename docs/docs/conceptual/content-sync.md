@@ -18,7 +18,7 @@ Content Sync will route users to the correct page even when pressing "Open Previ
 
 If the build for the preview fails or if no page is created that contains the content being previewed, Content Sync UI will display an error message.
 
-![Screenshot of Gatsbyjs.com Content Sync UI error state](../images/content-sync-error.png)
+![Screenshot of Gatsbyjs.com Content Sync UI error state. Now the center of the screen says "Oh no! We've run into an error previewing your site". You can click a "View Error Logs" link below that text.](../images/content-sync-error.png)
 
 ## Finding the right page for Content Previews
 
