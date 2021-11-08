@@ -554,7 +554,7 @@ describe(`Load plugins`, () => {
             {
               resolve: `gatsby-plugin-parent`,
               options: {
-                p: [
+                testSubplugins: [
                   `gatsby-plugin-child-no-main`,
                   `gatsby-plugin-child-with-main`,
                 ],
@@ -569,7 +569,7 @@ describe(`Load plugins`, () => {
       // for tests purposes (so we can assert "module" field on subplugins items)
       expect(
         plugins.find(plugin => plugin.name === `gatsby-plugin-parent`)
-          ?.pluginOptions?.p
+          ?.pluginOptions?.testSubplugins
       ).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
