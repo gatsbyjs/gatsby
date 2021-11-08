@@ -100,7 +100,6 @@ aliases:
         ignore:
           - master
           - /docs.+/
-          - /blog.+/
     requires:
       - lint
       - typecheck
@@ -230,29 +229,16 @@ jobs:
       - run: yarn check-repo-fields
 
   unit_tests_node14:
+    # GATSBY_EXPERIMENTAL_LMDB_INDEXES is not activated yet
     executor:
       name: node
       image: "14.18.1"
     <<: *test_template
 
-  unit_tests_node14_lmdb_store:
-    executor:
-      name: node
-      image: "14.17.0"
-    environment:
-      GATSBY_EXPERIMENTAL_LMDB_STORE: 1
-      GATSBY_EXPERIMENTAL_LMDB_INDEXES: 1
-      GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING: 1
-    <<: *test_template
-
-  unit_tests_node16_lmdb_store:
+  unit_tests_node16:
     executor:
       name: node
       image: "16.13.0"
-    environment:
-      GATSBY_EXPERIMENTAL_LMDB_STORE: 1
-      GATSBY_EXPERIMENTAL_LMDB_INDEXES: 1
-      GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING: 1
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
@@ -641,10 +627,8 @@ workflows:
             - lint
             - typecheck
             - bootstrap
-      - unit_tests_node14_lmdb_store:
+      - unit_tests_node16:
           <<: *ignore_docs
-          # rebuild to get correct version of lmdb-store (compiled for node14 not node12)
-          npm_rebuild: true
           requires:
             - lint
             - typecheck
