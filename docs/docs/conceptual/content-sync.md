@@ -14,7 +14,7 @@ When content authors press "Open Preview" in their CMS, Content Sync routes cont
 
 Content Sync will route users to the correct page even when pressing "Open Preview" from within a nested node which has no associated top-level page.
 
-![Screenshot of Gatsbyjs.com Content Sync UI loading state](../images/content-sync-loading.png)
+![Screenshot of Gatsbyjs.com Content Sync UI loading state. On the very left vertically centered is a widget with three icons: Gatsby Icon, a Link Icon, and an Information Icon. In the center of the screen a loading indicator says "Polishing your site".](../images/content-sync-loading.png)
 
 If the build for the preview fails or if no page is created that contains the content being previewed, Content Sync UI will display an error message.
 
