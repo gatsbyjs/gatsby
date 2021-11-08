@@ -1421,9 +1421,9 @@ actions.createServerVisitedPage = (chunkName: string) => {
  * Creates an individual node manifest.
  * This is used to tie the unique revision state within a data source at the current point in time to a page generated from the provided node when it's node manifest is processed.
  *
- * @param {Object} manifest a page object
+ * @param {Object} manifest Manifest data
  * @param {string} manifest.manifestId An id which ties the revision unique state of this manifest to the unique revision state of a data source.
- * @param {string} manifest.node The Gatsyby node to tie the manifestId to
+ * @param {Object} manifest.node The Gatsyby node to tie the manifestId to. See the "createNode" action for more information about the node object details.
  * @example
  * unstable_createNodeManifest({
  *   manifestId: `post-id-1--updated-53154315`,
@@ -1433,15 +1433,7 @@ actions.createServerVisitedPage = (chunkName: string) => {
  * })
  */
 actions.unstable_createNodeManifest = (
-  {
-    manifestId,
-    node,
-  }: {
-    manifestId: string,
-    node: {
-      id: string,
-    },
-  },
+  { manifestId, node },
   plugin: Plugin
 ) => {
   return {
