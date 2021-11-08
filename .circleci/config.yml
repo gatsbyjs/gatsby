@@ -235,12 +235,6 @@ jobs:
       image: "14.18.1"
     <<: *test_template
 
-  unit_tests_node16:
-    executor:
-      name: node
-      image: "16.13.0"
-    <<: *test_template
-
   integration_tests_gatsby_source_wordpress:
     machine:
       image: "ubuntu-2004:202107-02"
@@ -622,12 +616,6 @@ workflows:
             - lint
             - bootstrap
       - unit_tests_node14:
-          <<: *ignore_docs
-          requires:
-            - lint
-            - typecheck
-            - bootstrap
-      - unit_tests_node16:
           <<: *ignore_docs
           requires:
             - lint
