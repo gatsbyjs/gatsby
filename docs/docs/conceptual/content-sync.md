@@ -8,9 +8,9 @@ To get setup quickly with a new site and have Gatsby Cloud do the heavy lifting,
 
 ## What is Content Sync?
 
-Content Sync is a Gatsby Cloud feature for improving the Preview experience for content creators.
+Content Sync is a Gatsby Cloud feature for improving the Preview experience for content authors.
 
-When content authors press "Open Preview" in their CMS, Content Sync routes content editors to the correct URL. It helps them understand the status of previews, so they know when their content is ready to view and otherwise if there were any build errors. It does this by displaying a loading state while the content preview builds. Once the build is complete, the editor is redirected to the correct page on the frontend of the Gatsby Preview site automatically.
+When content authors press "Open Preview" in their CMS, Content Sync routes them to the correct URL. It helps them understand the status of previews, so they know when their content is ready to view and otherwise if there were any build errors. It does this by redirecting to a "waiting room" page which displays a loading state while the content preview builds. Once the build is complete, the author is redirected to the correct page on the frontend of the Gatsby Preview site automatically.
 
 Content Sync will route users to the correct page even when pressing "Open Preview" from within a nested node which has no associated top-level page.
 
