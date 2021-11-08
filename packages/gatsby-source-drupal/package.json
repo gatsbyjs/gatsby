@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-drupal",
   "description": "Gatsby source plugin for building websites using the Drupal CMS as a data source",
-  "version": "5.2.0-next.0",
+  "version": "5.2.0-next.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -13,7 +13,7 @@
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "fastq": "^1.13.0",
-    "gatsby-source-filesystem": "^4.2.0-next.0",
+    "gatsby-source-filesystem": "^4.2.0-next.1",
     "got": "^11.8.2",
     "http2-wrapper": "^2.1.9",
     "lodash": "^4.17.21",
