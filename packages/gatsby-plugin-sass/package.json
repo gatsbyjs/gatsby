@@ -1,23 +1,23 @@
 {
   "name": "gatsby-plugin-sass",
   "description": "Gatsby plugin to handle SCSS/Sass files",
-  "version": "4.8.0-next.0",
+  "version": "5.2.0-next.1",
   "author": "Daniel Farrell <daniel@mobelux.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.14.0",
+    "@babel/runtime": "^7.15.4",
     "resolve-url-loader": "^3.1.2",
     "sass-loader": "^10.1.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.3",
-    "@babel/core": "^7.14.3",
-    "autoprefixer": "^10.2.5",
-    "babel-preset-gatsby-package": "^1.8.0-next.0",
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "autoprefixer": "^10.3.6",
+    "babel-preset-gatsby-package": "^2.2.0-next.0",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-utils": "^1.8.0-next.0"
+    "gatsby-plugin-utils": "^2.2.0-next.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sass#readme",
   "keywords": [
@@ -29,7 +29,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^3.0.0-next.0",
+    "gatsby": "^4.0.0-next",
     "sass": "^1.30.0"
   },
   "repository": {
@@ -43,6 +43,6 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=12.13.0"
+    "node": ">=14.15.0"
   }
 }

@@ -212,18 +212,18 @@ module.exports = {
       options: {
         defaults: {
           formats: [`auto`, `webp`],
-          placeholder: `dominantColor`
-          quality: 50
-          breakpoints: [750, 1080, 1366, 1920]
-          backgroundColor: `transparent`
-          tracedSVGOptions: {}
-          blurredOptions: {}
-          jpgOptions: {}
-          pngOptions: {}
-          webpOptions: {}
-          avifOptions: {}
-        }
-      }
+          placeholder: `dominantColor`,
+          quality: 50,
+          breakpoints: [750, 1080, 1366, 1920],
+          backgroundColor: `transparent`,
+          tracedSVGOptions: {},
+          blurredOptions: {},
+          jpgOptions: {},
+          pngOptions: {},
+          webpOptions: {},
+          avifOptions: {},
+        },
+      },
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-image`,
@@ -376,11 +376,11 @@ For StaticImage:
 
 Inspect the element on your page. Does it include a `div` with `gatsby-image-wrapper`? How about an internal `source` element?
 
-If not, double check the component usage. Did you use `src`? Is the relative path correct?
+If not, double-check the component usage. Did you use `src`? Is the relative path correct?
 
 For GatsbyImage:
 
-Trying using `console.log` to check the the object you're passing as the `image` prop. Is it there?
+Trying using `console.log` to check the object you're passing as the `image` prop. Is it there?
 
 If not, make sure you're using the same object you saw return from your query.
 

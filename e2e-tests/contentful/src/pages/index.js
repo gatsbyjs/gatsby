@@ -14,6 +14,9 @@ const IndexPage = () => (
       <li>
         <Link to="/gatsby-plugin-image">/gatsby-plugin-image</Link>
       </li>
+      <li>
+        <Link to="/download-local">/download-local</Link>
+      </li>
     </ul>
     <h2>Content Rendering</h2>
     <ul>
@@ -43,6 +46,12 @@ const IndexPage = () => (
       </li>
       <li>
         <Link to="/text">/text</Link>
+      </li>
+    </ul>
+    <h2>Metadata</h2>
+    <ul>
+      <li>
+        <Link to="/tags">/tags</Link>
       </li>
     </ul>
   </Layout>

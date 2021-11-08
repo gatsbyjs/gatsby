@@ -2,7 +2,7 @@
 
 Source plugin for pulling data (including images) into Gatsby from Drupal sites.
 
-Pulls data from Drupal 8 sites with the
+It pulls data from Drupal 8 sites with the
 [Drupal JSONAPI module](https://www.drupal.org/project/jsonapi) installed.
 
 An example site built with the headless Drupal distro
@@ -33,6 +33,12 @@ module.exports = {
   ],
 }
 ```
+
+On the Drupal side, we highly recommend installing [JSON:API
+Extras](https://www.drupal.org/project/jsonapi_extras) and enabling "Include
+count in collection queries" `/admin/config/services/jsonapi/extras` as that
+[speeds up fetching data from Drupal by around
+4x](https://github.com/gatsbyjs/gatsby/pull/32883).
 
 ### Filters
 
@@ -150,7 +156,7 @@ module.exports = {
 }
 ```
 
-## GET Params
+## GET Search Params
 
 You can append optional GET request params to the request url using `params` option.
 
@@ -194,6 +200,27 @@ module.exports = {
 }
 ```
 
+You can also filter out temporary files. This will help to avoid Gatsby throwing an error when a 404 is returned from a file that does not exist:
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`,
+        filters: {
+          // collection : filter
+          "file--file": "filter[status][value]=1",
+        },
+      },
+    },
+  ],
+}
+```
+
 ## Concurrent File Requests
 
 You can use the `concurrentFileRequests` option to change how many simultaneous file requests are made to the server/service. This benefits build speed, however too many concurrent file request could cause memory exhaustion depending on the server's memory size so change with caution.
@@ -214,9 +241,13 @@ module.exports = {
 }
 ```
 
+## Concurrent API Requests
+
+You can use the `concurrentAPIRequests` option to change how many simultaneous API requests are made to the server/service. 20 is the default and seems to be the fastest for most sites.
+
 ## Disallowed Link Types
 
-You can use the `disallowedLinkTypes` option to skip link types found in JSON:API documents. By default it skips the `self` and `describedby` links, which do not provide data that can be sourced. You may override the setting to add additional link types to be skipped.
+You can use the `disallowedLinkTypes` option to skip link types found in JSON:API documents. By default it skips the `self`, `describedby`, `contact_message--feedback`, and `contact_message--pesonal` links, which do not provide data that can be sourced. You may override the setting to add additional link types to be skipped.
 
 ```javascript
 // In your gatsby-config.js
@@ -227,7 +258,12 @@ module.exports = {
       options: {
         baseUrl: `https://live-contentacms.pantheonsite.io/`,
         // skip the action--action resource type.
-        disallowedLinkTypes: [`self`, `describedby`, `action--action`],
+        disallowedLinkTypes: [
+          `self`,
+          `describedby`,
+          `contact_message--feedback`,
+          `contact_message--personal`,
+        ],
       },
     },
   ],
@@ -308,12 +344,15 @@ module.exports = {
           defaultLanguage: `en`,
           enabledLanguages: [`en`, `fil`],
           translatableEntities: [`node--article`],
+          nonTranslatableEntities: [`file--file`],
         },
       },
     },
   ],
 }
 ```
+
+Some entities are not translatable like Drupal files and will return null result when language code from parent entity doesn't match up. These items can be specified as nonTranslatableEntities and receive the defaultLanguage as fallback.
 
 ## Gatsby Preview (experimental)
 

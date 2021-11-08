@@ -12,6 +12,18 @@ describe(`pluginOptionsSchema`, () => {
     expect(errors).toEqual(expectedErrors)
   })
 
+  it(`should provide error for deprecated "exclude" option`, async () => {
+    const expectedErrors = [
+      `As of v4 the \`exclude\` option was renamed to \`excludes\``,
+    ]
+
+    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
+      exclude: [`test`],
+    })
+
+    expect(errors).toEqual(expectedErrors)
+  })
+
   it(`creates correct defaults`, async () => {
     const pluginOptions = await pluginOptionsSchema({ Joi }).validateAsync({})
 

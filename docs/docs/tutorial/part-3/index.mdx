@@ -1,33 +1,11 @@
 ---
-title: Add Features with Plugins
+title: "Part 3: Add Features with Plugins"
 tableOfContentsDepth: 2
 ---
 
-import { Announcement, Notification } from 'gatsby-interface'
+import { Announcement, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
-import { MdInfo } from 'react-icons/md'
-
-<Notification
-  Icon={MdInfo}
-  tone="WARNING"
-  variant="SECONDARY"
-  content={
-    <div>
-      <p>
-        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
-        The first few parts of the new Tutorial have been released here, and subsequent parts
-        will be added as we finish them.
-      </p>
-      <p style={{ marginBottom: 0 }}>
-        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
-        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
-          <strong>Gatsby v2 Tutorial</strong>
-        </a>
-        .
-      </p>
-    </div>
-  }
-/>
+import { MdArrowForward } from 'react-icons/md'
 
 ## Introduction
 
@@ -40,6 +18,18 @@ By the end of this part of the Tutorial, you will be able to:
 * Use the [Gatsby Plugin Library](/plugins) to browse all the available plugins.
 * Add a plugin to your Gatsby site.
 * Configure your plugins in your `gatsby-config.js` file.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Prefer a video?**
+
+If you'd rather follow along with a video, here's a recording of a livestream that covers all the material for Part 3.
+
+You can catch the stream live on Wednesdays at 10AM Pacific Time / 5PM UTC on the [Gatsby Twitch channel](https://www.twitch.tv/gatsbyjs).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/C8YxdGGjvOg?start=228" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</Announcement>
 
 ## What is a plugin?
 
@@ -126,7 +116,7 @@ The specifics of this step will be different based on what the plugin does. Some
 
 ![The general process for using a plugin: Install with npm, configure in your gatsby-config.js file, and use in your site (when needed).](./plugin-process.png)
 
-The next few sections will walk you through the process of adding a plugin to your site. You'll use the `gatsby-plugin-image` to add performant images to your site.
+The next few sections will walk you through the process of adding a plugin to your site. You'll use the `gatsby-plugin-image` plugin to add performant images to your site.
 
 ### Task: Use `gatsby-plugin-image` to add a static image to your home page
 
@@ -159,7 +149,6 @@ module.exports = {
     title: "My First Gatsby Site",
   },
   plugins: [
-    "gatsby-plugin-gatsby-cloud",
     // highlight-start
     "gatsby-plugin-image",
     "gatsby-plugin-sharp",
@@ -204,6 +193,8 @@ const IndexPage = () => {
     </Layout>
   )
 }
+
+export default IndexPage
 ```
 
 4. In your web browser, go to `localhost:8000` to see your home page. There should now be a photo at the bottom of the page:
@@ -246,10 +237,18 @@ const IndexPage = () => {
     </Layout>
   )
 }
+
+export default IndexPage
 ```
 3. In your web browser, go to `localhost:8000`. Your image should still appear on the home page.
 
 ![The home page of your site, which includes a different picture of a dog.](./index-page-with-static-image-from-filesystem.png)
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Want to see how it all fits together?** Check out the commit history in the [GitHub repo for the finished example site](https://github.com/gatsbyjs/tutorial-example).
+
+</Announcement>
 
 ## Summary
 
@@ -268,11 +267,11 @@ First, run the following commands in a terminal to push your changes to your Git
 
 ```shell
 git add .
-git commit -m "Finished Gatsby Tutorial Part 2"
+git commit -m "Finished Gatsby Tutorial Part 3"
 git push
 ```
 
-Once your changes have been pushed to GitHub, Gatsby Cloud should notice the update and rebuild and deploy the latest version of your site. (It may take a few minutes for your changes to be reflected on the live site. Watch your build's progress from your [Gatsby Cloud dashboard](/dashboard/?utm_campaign=tutorial).)
+Once your changes have been pushed to GitHub, Gatsby Cloud should notice the update and rebuild and deploy the latest version of your site. (It may take a few minutes for your changes to be reflected on the live site. Watch your build's progress from your [Gatsby Cloud dashboard](/dashboard/).)
 
 </Announcement>
 
@@ -297,24 +296,10 @@ Use the "Was this doc helpful to you?" form at the bottom of this page to let us
 
 In Part 4, you'll learn about a specific category of plugins that let you pull data into your site: source plugins.
 
-<Notification
-  Icon={MdInfo}
-  tone="WARNING"
+<LinkButton
+  to="/docs/tutorial/part-4/"
+  rightIcon={<MdArrowForward />}
   variant="SECONDARY"
-  content={
-    <div>
-      <p>
-        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
-        You've reached the end of the new content we've released so far. Subsequent parts
-        will be added as we finish them.
-      </p>
-      <p style={{ marginBottom: 0 }}>
-        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
-        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
-          <strong>Gatsby v2 Tutorial</strong>
-        </a>
-        .
-      </p>
-    </div>
-  }
-/>
+>
+  Continue to Part 4
+</LinkButton>

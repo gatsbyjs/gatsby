@@ -14,7 +14,8 @@ const joi = require(`joi`)
 // const { inspect } = require(`util`)
 
 // https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
-const ISO8601 = /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i
+const ISO8601 =
+  /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i
 
 jest.setTimeout(100000)
 
@@ -33,6 +34,11 @@ const collectEventsForDevelop = (events, env = {}) => {
     },
   })
 
+  let startedPromiseResolve = () => {}
+  const startedPromise = new Promise(resolve => {
+    startedPromiseResolve = resolve
+  })
+
   const finishedPromise = new Promise((resolve, reject) => {
     let listening = true
 
@@ -40,6 +46,7 @@ const collectEventsForDevelop = (events, env = {}) => {
       if (!listening) {
         return
       }
+      startedPromiseResolve()
 
       events.push(msg)
       // we are ready for tests
@@ -51,8 +58,7 @@ const collectEventsForDevelop = (events, env = {}) => {
         setTimeout(() => {
           listening = false
           gatsbyProcess.kill()
-
-          setTimeout(resolve, 1000)
+          waitChildProcessExit(gatsbyProcess.pid, resolve, reject)
         }, 5000)
       }
     })
@@ -60,6 +66,7 @@ const collectEventsForDevelop = (events, env = {}) => {
 
   return {
     finishedPromise,
+    startedPromise,
     gatsbyProcess,
   }
 }
@@ -76,7 +83,8 @@ const toMatchSchema = (received, schema) => {
     }
   } else {
     return {
-      message: () => validationResult.error,
+      message: () =>
+        `${validationResult.error}\n\n${JSON.stringify(received, null, 2)}`,
       pass: false,
     }
   }
@@ -121,7 +129,18 @@ const commonAssertions = events => {
           // Should this be here or one level up?
           timestamp: joi.string().required(),
         })
-        .required()
+        .required(),
+
+      joi.object({
+        type: joi.string().required().valid(`ENGINES_READY`),
+        timestamp: joi.string().required(),
+      }),
+
+      joi.object({
+        type: joi.string().required().valid(`RENDER_PAGE_TREE`),
+        payload: joi.object(),
+        timestamp: joi.string().required(),
+      })
     )
 
     const eventSchema = joi.object({
@@ -292,21 +311,18 @@ describe(`develop`, () => {
       let events = []
 
       beforeAll(done => {
-        const { finishedPromise, gatsbyProcess } = collectEventsForDevelop(
-          events
-        )
+        const { startedPromise, gatsbyProcess } =
+          collectEventsForDevelop(events)
 
-        setTimeout(() => {
+        startedPromise.then(() => {
           gatsbyProcess.kill(`SIGTERM`)
-          setTimeout(() => {
-            done()
-          }, 5000)
-        }, 5000)
-
-        finishedPromise.then(done)
+          waitChildProcessExit(gatsbyProcess.pid, done, done.fail)
+        })
       })
 
       commonAssertionsForFailure(events)
+
+      // Note: this will fail on windows because it doesn't support POSIX signals (i.e. SIGTERM)
       it(`emit final SET_STATUS with INTERRUPTED - last message`, () => {
         const event = last(events)
         expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
@@ -353,7 +369,7 @@ describe(`develop`, () => {
 
     afterAll(done => {
       gatsbyProcess.kill()
-      setTimeout(done, 1000)
+      waitChildProcessExit(gatsbyProcess.pid, done, done.fail)
     })
 
     describe(`code change`, () => {
@@ -626,18 +642,19 @@ describe(`build`, () => {
           },
         })
 
-        await new Promise(resolve => {
+        await new Promise((resolve, reject) => {
+          let killing = false
           gatsbyProcess.on(`message`, msg => {
             events.push(msg)
-          })
 
-          gatsbyProcess.on(`exit`, exitCode => {
-            resolve()
+            if (!killing) {
+              killing = true
+              setTimeout(() => {
+                gatsbyProcess.kill(`SIGTERM`)
+                waitChildProcessExit(gatsbyProcess.pid, resolve, reject)
+              }, 2000)
+            }
           })
-
-          setTimeout(() => {
-            gatsbyProcess.kill(`SIGTERM`)
-          }, 1000)
         })
       })
       commonAssertionsForFailure(events)
@@ -649,5 +666,20 @@ describe(`build`, () => {
     })
   })
 })
+
+function waitChildProcessExit(pid, resolve, reject, attempt = 0) {
+  try {
+    process.kill(pid, 0) // check if process is still running
+    if (attempt > 15) {
+      reject(new Error("Gatsby process hasn't exited in 15 seconds"))
+      return
+    }
+    setTimeout(() => {
+      waitChildProcessExit(pid, resolve, reject, attempt + 1)
+    }, 1000)
+  } catch (e) {
+    resolve()
+  }
+}
 
 //TO-DO: add api running activity

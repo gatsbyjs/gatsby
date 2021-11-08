@@ -294,7 +294,7 @@ test should still function properly.
 
 This is a good example of the benefits of keeping components "pure", meaning
 they always generate the same output if given the same inputs and have no
-side-effects apart from their return value. This means you can be sure the tests
+side effects apart from their return value. This means you can be sure the tests
 are always reproducible and don't fail if, for example, the network is down or
 the data source changes. In this example, `Header` is impure as it makes a
 query, so the output depends on something apart from its props. `PureHeader` is

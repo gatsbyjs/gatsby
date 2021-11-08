@@ -5,7 +5,7 @@ examples:
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-css-modules"
 ---
 
-Component-scoped CSS allows you to write traditional, portable CSS with minimal side-effects: gone are the worries of selector name collisions or affecting other components' styles.
+Component-scoped CSS allows you to write traditional, portable CSS with minimal side effects: gone are the worries of selector name collisions or affecting other components' styles.
 
 Gatsby works out of the box with [CSS Modules](https://github.com/css-modules/css-modules), a popular solution for writing component-scoped CSS. Here is an [example site that uses CSS Modules](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-css-modules).
 
@@ -71,4 +71,4 @@ performance benefits like only bundling referenced code.
 
 ## How to build a page using CSS Modules
 
-Visit the [CSS Modules section of the tutorial](/docs/tutorial/part-two/#css-modules) for a guided tour of building a page with CSS Modules.
+Visit the [CSS Modules section of the tutorial](/docs/tutorial/part-2/#css-modules) for a guided tour of building a page with CSS Modules.

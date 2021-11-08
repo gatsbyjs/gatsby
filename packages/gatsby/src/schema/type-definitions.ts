@@ -10,6 +10,7 @@ export interface IGatsbyResolverContext<TSource, TArgs> {
   nodeModel: any
   stats: IGraphQLRunnerStats | null
   tracer: IGraphQLSpanTracer | null
+  telemetryResolverTimings?: Array<IGraphQLTelemetryRecord>
   [key: string]: any
 }
 
@@ -26,7 +27,7 @@ export type GatsbyResolver<TSource, TArgs = { [argName: string]: any }> = (
 ) => any
 
 export interface IGatsbyConnection<NodeType> {
-  totalCount: number
+  totalCount: () => Promise<number>
   edges: Array<IGatsbyEdge<NodeType>>
   nodes: Array<NodeType>
   pageInfo: IGatsbyPageInfo
@@ -43,12 +44,17 @@ export interface IGatsbyPageInfo {
   hasPreviousPage: boolean
   hasNextPage: boolean
   itemCount: number
-  pageCount: number
+  pageCount: () => Promise<number>
   perPage: number | undefined
-  totalCount: number
+  totalCount: () => Promise<number>
 }
 
 export interface IGraphQLSpanTracer {
   getParentActivity(): IPhantomReporter
   createResolverActivity(path: Path, name: string): IPhantomReporter
+}
+
+export interface IGraphQLTelemetryRecord {
+  name: string
+  duration: number
 }

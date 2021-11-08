@@ -1,7 +1,6 @@
+require("dotenv").config()
+
 module.exports = {
-  flags: {
-    FUNCTIONS: true,
-  },
   siteMetadata: {
     title: "Google Sheets",
   },

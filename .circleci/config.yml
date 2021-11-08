@@ -7,15 +7,18 @@ executors:
     parameters:
       image:
         type: string
-        # First 10.x LTS release, but old Yarn
-        default: "12.13.0"
+        default: "14.17.0"
     docker:
       - image: cimg/node:<< parameters.image >>
+    environment:
+      GATSBY_CPU_COUNT: 2
 
 aliases:
   e2e-executor: &e2e-executor
     docker:
-      - image: cypress/browsers:node12.18.3-chrome87-ff82
+      - image: cypress/browsers:node14.15.0-chrome86-ff82
+    environment:
+      GATSBY_CPU_COUNT: 2
 
   restore_cache: &restore_cache
     restore_cache:
@@ -36,7 +39,7 @@ aliases:
   validate_renovate: &validate_renovate
     run:
       name: Validate renovate-config
-      command: (node scripts/renovate-config-generator.js && (git status --porcelain renovate.json5 | grep "M renovate.json5")) && exit 1 || npx -p renovate renovate-config-validator .
+      command: (node scripts/renovate-config-generator.js && (git status --porcelain renovate.json5 | grep "M renovate.json5")) && (echo "Please run \"node scripts/renovate-config-generator.js\" to update renovate.json5" && exit 1) || npx -p renovate renovate-config-validator .
 
   persist_cache: &persist_cache
     save_cache:
@@ -63,6 +66,7 @@ aliases:
           - /blog.+/
 
   test_template: &test_template
+    parallelism: 4
     parameters:
       npm_rebuild:
         type: boolean
@@ -75,12 +79,17 @@ aliases:
           condition: << parameters.npm_rebuild >>
           steps:
             - run: npm rebuild
-      - run: yarn list react
-      - run: yarn why lmdb-store
       - run:
-          command: node --max-old-space-size=2048 ./node_modules/.bin/jest -w 1 --ci
+          name: Step debug info
+          command: |
+            yarn list react
+            yarn why lmdb-store
+      - run:
+          name: Run tests
+          command: yarn jest --ci --runInBand  $(yarn -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
           environment:
-            GENERATE_JEST_REPORT: true
+            NODE_OPTIONS: --max-old-space-size=2048
+            GENERATE_JEST_REPORT: "true"
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
       - store_test_results:
@@ -96,7 +105,7 @@ aliases:
     requires:
       - lint
       - typecheck
-      - unit_tests_node12
+      - unit_tests_node14
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
     <<: *e2e-executor
@@ -128,22 +137,6 @@ aliases:
       - notify-status:
           condition: << parameters.nightly >>
 
-  e2e_tests_gatsby-image_alias: &e2e_tests_gatsby-image_alias
-    <<: *e2e-executor
-    parameters:
-      nightly:
-        type: boolean
-        default: false
-    environment:
-      CYPRESS_PROJECT_ID: ave32k
-      CYPRESS_RECORD_KEY: fb3cb6e0-a0f9-48b2-aa9a-95e8ef150a85
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/gatsby-image
-          skip_file_change_test: << parameters.nightly >>
-      - notify-status:
-          condition: << parameters.nightly >>
-
 commands:
   notify-status:
     parameters:
@@ -155,7 +148,7 @@ commands:
           condition: << parameters.condition >>
           steps:
             - slack/status:
-              channel: eng-react-integration-status
+                channel: eng-react-integration-status
 
   e2e-test:
     parameters:
@@ -198,7 +191,7 @@ jobs:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
       # python 2 is not built in and node-gyp needs it to build lmdb
-      - run: apt-get update && apt-get install python -y
+      - run: sudo apt-get update && sudo apt-get install python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *check_lockfile
@@ -209,7 +202,8 @@ jobs:
       - persist_to_workspace:
           root: ./
           paths:
-            - "*"
+            - "packages/"
+            - "node_modules/"
 
   lint:
     executor: node
@@ -236,11 +230,6 @@ jobs:
       - run: yarn typecheck
       - run: yarn check-repo-fields
 
-  unit_tests_node12:
-    executor:
-      name: node
-    <<: *test_template
-
   unit_tests_node14:
     executor:
       name: node
@@ -253,19 +242,22 @@ jobs:
       image: "14.17.0"
     environment:
       GATSBY_EXPERIMENTAL_LMDB_STORE: 1
+      GATSBY_EXPERIMENTAL_LMDB_INDEXES: 1
+      GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING: 1
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
-    machine: true
+    machine:
+      image: "ubuntu-2004:202107-02"
     steps:
       - run:
           command: |
             echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
             echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-      - run: nvm install v12
-      - run: nvm alias default v12
-      - run: nvm use v12
-      - run: npm i -g yarn@1.22.10
+      - run: nvm install v14
+      - run: nvm alias default v14
+      - run: nvm use v14
+      - run: npm i -g yarn@1.22.11
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
@@ -361,6 +353,15 @@ jobs:
       - run: # Quick upgrade to the v2 (any version, we just need the real set version)
           command: yarn policies set-version berry
           working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Explicitly set nodeLinker to avoid Yarn selecting node_modules due to the Yarn 1.x lockfile
+          command: yarn config set nodeLinker pnp
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Allow installs to change the lockfile
+          command: yarn config set enableImmutableInstalls false
+          working_directory: /tmp/e2e-tests/gatsby-pnp
+      - run: # Don't allow any fallback to root dependencies
+          command: yarn config set pnpFallbackMode none
+          working_directory: /tmp/e2e-tests/gatsby-pnp
       - run: # Forces to use the local packages
           command: yarn link --all --private ~/project
           working_directory: /tmp/e2e-tests/gatsby-pnp
@@ -376,15 +377,6 @@ jobs:
       - run:
           command: 'DEBUG=start-server-and-test yarn start-server-and-test "yarn develop 2>&1 | tee log.txt" :8000 "! cat log.txt | grep -E ''ERROR #|Require stack:''"'
           working_directory: /tmp/e2e-tests/gatsby-pnp
-
-  e2e_tests_gatsby-image:
-    <<: *e2e_tests_gatsby-image_alias
-
-  e2e_tests_gatsby-image_with_experimental_react:
-    <<: *e2e_tests_gatsby-image_alias
-
-  e2e_tests_gatsby-image_with_next_react:
-    <<: *e2e_tests_gatsby-image_alias
 
   e2e_tests_development_runtime:
     <<: *e2e_tests_development_runtime_alias
@@ -483,13 +475,25 @@ jobs:
     executor: node
     steps:
       - checkout
+      # jq is helpful for parsing json & python required for node-gyp to build lmdb
+      - run: sudo apt-get update && sudo apt-get install jq python -y
       - <<: *restore_cache
       - <<: *install_node_modules
       - run: yarn markdown
-      - run: sudo apt-get update && sudo apt-get install jq # jq is helpful for parsing json
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: sh ./scripts/publish-starters.sh "starters/*"
+
+  update_changelogs:
+    executor: node
+    steps:
+      - checkout
+      - run: sudo apt-get update && sudo apt-get install jq python -y
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - run: git config --global user.name "GatsbyJS Bot"
+      - run: git config --global user.email "core-team@gatsbyjs.com"
+      - run: node scripts/gatsby-changelog-generator/update-and-open-pr.js
 
   update_i18n_source:
     executor: node
@@ -518,6 +522,7 @@ jobs:
           working_directory: ~/project/scripts/i18n
 
   windows_unit_tests:
+    parallelism: 4
     executor:
       name: win/default
       shell: powershell.exe
@@ -531,28 +536,30 @@ jobs:
       #     keys:
       #       - yarn-packages-v2-{{ checksum "yarn.lock" }}
       #       - yarn-packages-v2-
+
+      - <<: *attach_to_bootstrap
       - run:
-          name: Install node 12.13
+          name: Install node 14.17 and yarn
           command: |
-            nvm install 12.13.0
-            nvm alias default 12.13.0
-            nvm use 12.13.0
+            nvm install 14.17.0
+            nvm alias default 14.17.0
+            nvm use 14.17.0
             choco install yarn
       - run:
-          name: Set yarn timeout
-          command: yarn config set network-timeout 300000
+          name: Rebuild packages for windows
+          command: |
+            Remove-Item -Recurse -Force -Path "node_modules/sharp/"
+            yarn
       - run:
-          name: Install node modules
-          command: yarn --frozen-lockfile
-      # Caching is slow, so disabling
-      # - save_cache:
-      #     paths:
-      #       - C:\Users\circleci\AppData\Local\Yarn\Cache
-      #     key: yarn-packages-v2-{{ checksum "yarn.lock" }}
-      - run: yarn npm-run-all -s check-versions "lerna-prepare --concurrency=4 --stream"
-      - run:
-          name: "Run Tests"
-          command: yarn jest -w 1 --ci
+          name: Run tests
+          command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split --split-by=timings)
+          environment:
+            NODE_OPTIONS: --max-old-space-size=2048
+            GENERATE_JEST_REPORT: "true"
+            JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
+            JEST_JUNIT_OUTPUT_NAME: results.xml
+      - store_test_results:
+          path: ./test-results/jest-node/
 
   bootstrap-with-experimental-react:
     executor: node
@@ -562,6 +569,8 @@ jobs:
         default: "next"
     steps:
       - checkout
+      # python 2 is not built in and node-gyp needs it to build lmdb
+      - run: sudo apt-get update && sudo apt-get install python -y
       - run:
           name: "Update React to prerelease"
           command: "REACT_CHANNEL=<< parameters.version >> node ./scripts/upgrade-react"
@@ -598,10 +607,6 @@ workflows:
     jobs:
       - bootstrap-with-experimental-react:
           version: "next"
-      - e2e_tests_gatsby-image_with_next_react:
-          nightly: true
-          requires:
-            - bootstrap-with-experimental-react
       - e2e_tests_development_runtime_with_next_react:
           nightly: true
           requires:
@@ -621,10 +626,6 @@ workflows:
     jobs:
       - bootstrap-with-experimental-react:
           version: "experimental"
-      - e2e_tests_gatsby-image_with_experimental_react:
-          nightly: true
-          requires:
-            - bootstrap-with-experimental-react
       - e2e_tests_development_runtime_with_experimental_react:
           nightly: true
           requires:
@@ -633,6 +634,22 @@ workflows:
           nightly: true
           requires:
             - bootstrap-with-experimental-react
+
+  # Ideally, we should trigger this when any new release is created, sadly there is no easy way to do it:
+  # - Can't rely on tags: GitHub won't send webhook to CircleCI when there are more than 3 tags in one push
+  #   See: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#push
+  # - Can't rely on pushes to "release/*" branches because we have "Only build pull requests" option enabled
+  #   (so pushes without pull requests are ignored by CircleCI)
+  nightly-update-changelogs:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 1,2,3,4,5"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - update_changelogs
 
   build-test:
     jobs:
@@ -645,11 +662,6 @@ workflows:
           <<: *ignore_docs
           requires:
             - lint
-      - unit_tests_node12:
-          <<: *ignore_docs
-          requires:
-            - lint
-            - typecheck
             - bootstrap
       - unit_tests_node14:
           <<: *ignore_docs
@@ -691,8 +703,6 @@ workflows:
       - e2e_tests_pnp:
           <<: *e2e-test-workflow
       - e2e_tests_path-prefix:
-          <<: *e2e-test-workflow
-      - e2e_tests_gatsby-image:
           <<: *e2e-test-workflow
       - e2e_tests_gatsby-static-image:
           <<: *e2e-test-workflow

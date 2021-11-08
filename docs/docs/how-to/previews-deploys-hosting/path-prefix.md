@@ -28,10 +28,14 @@ module.exports = {
 
 ## Build
 
-The final step is to build your application with the `--prefix-paths` flag, like so:
+The final step is to build your application with either the `--prefix-paths` flag or `PREFIX_PATHS` environment variable, like so:
 
 ```shell
 gatsby build --prefix-paths
+```
+
+```shell
+PREFIX_PATHS=true gatsby build
 ```
 
 If this flag is not passed, Gatsby will ignore your `pathPrefix` and build the site as if hosted from the root domain.

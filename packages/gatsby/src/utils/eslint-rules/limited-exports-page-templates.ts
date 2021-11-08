@@ -11,11 +11,40 @@ import {
   VariableDeclarator,
   ObjectPattern,
   AssignmentProperty,
+  ExportNamedDeclaration,
 } from "estree"
 import { store } from "../../redux"
 import { isPageTemplate } from "../eslint-rules-helpers"
 
 const DEFAULT_GRAPHQL_TAG_NAME = `graphql`
+
+function isApiExport(node: ExportNamedDeclaration, name: string): boolean {
+  // check for
+  // export function name() {}
+  // export async function name() {}
+  if (
+    node.declaration?.type === `FunctionDeclaration` &&
+    node.declaration.id?.name === name
+  ) {
+    return true
+  }
+
+  // check for
+  // export const name = () => {}
+  if (node.declaration?.type === `VariableDeclaration`) {
+    for (const declaration of node.declaration.declarations) {
+      if (
+        declaration.type === `VariableDeclarator` &&
+        declaration.id.type === `Identifier` &&
+        declaration.id.name === name
+      ) {
+        return true
+      }
+    }
+  }
+
+  return false
+}
 
 function hasOneValidNamedDeclaration(
   node: Node,
@@ -84,7 +113,7 @@ const limitedExports: Rule.RuleModule = {
   meta: {
     type: `problem`,
     messages: {
-      limitedExportsPageTemplates: `In page templates only a default export of a valid React component and the named export of a page query is allowed.
+      limitedExportsPageTemplates: `In page templates only a default export of a valid React component and the named exports of a page query, getServerData or config are allowed.
         All other named exports will cause Fast Refresh to not preserve local component state and do a full refresh.
 
         Please move your other named exports to another file. Also make sure that you only export page queries that use the "graphql" tag from "gatsby".
@@ -104,38 +133,40 @@ const limitedExports: Rule.RuleModule = {
       // const { graphql } = require('gatsby')
       VariableDeclaration: (node): void => {
         // Check if require('gatsby')
-        const requiredFromGatsby = (node as VariableDeclaration).declarations.find(
-          el => {
-            // Handle require(`gatsby`)
-            if (
-              (el.init as CallExpression)?.arguments?.[0]?.type ===
-              `TemplateLiteral`
-            ) {
-              return (
-                ((el.init as CallExpression).arguments[0] as TemplateLiteral)
-                  ?.quasis[0].value.raw === `gatsby`
-              )
-            }
-
+        const requiredFromGatsby = (
+          node as VariableDeclaration
+        ).declarations.find(el => {
+          // Handle require(`gatsby`)
+          if (
+            (el.init as CallExpression)?.arguments?.[0]?.type ===
+            `TemplateLiteral`
+          ) {
             return (
-              ((el.init as CallExpression)?.arguments?.[0] as Literal)
-                ?.value === `gatsby`
+              ((el.init as CallExpression).arguments[0] as TemplateLiteral)
+                ?.quasis[0].value.raw === `gatsby`
             )
           }
-        )
+
+          return (
+            ((el.init as CallExpression)?.arguments?.[0] as Literal)?.value ===
+            `gatsby`
+          )
+        })
 
         if (requiredFromGatsby) {
           // Search for "graphql" in a const { graphql, Link } = require('gatsby')
-          const graphqlTagSpecifier = ((requiredFromGatsby as VariableDeclarator)
-            .id as ObjectPattern)?.properties.find(
+          const graphqlTagSpecifier = (
+            (requiredFromGatsby as VariableDeclarator).id as ObjectPattern
+          )?.properties.find(
             el =>
               ((el as AssignmentProperty).key as Identifier).name ===
               DEFAULT_GRAPHQL_TAG_NAME
           )
 
           if (graphqlTagSpecifier) {
-            graphqlTagName = ((graphqlTagSpecifier as AssignmentProperty)
-              .value as Identifier).name
+            graphqlTagName = (
+              (graphqlTagSpecifier as AssignmentProperty).value as Identifier
+            ).name
           }
         }
 
@@ -145,22 +176,22 @@ const limitedExports: Rule.RuleModule = {
       ImportDeclaration: (node): void => {
         // Make sure that the specifier is imported from "gatsby"
         if ((node as ImportDeclaration).source.value === `gatsby`) {
-          const graphqlTagSpecifier = (node as ImportDeclaration).specifiers.find(
-            el => {
-              // We only want import { graphql } from "gatsby"
-              // Not import graphql from "gatsby"
-              if (el.type === `ImportSpecifier`) {
-                // Only get the specifier with the original name of "graphql"
-                return el.imported.name === DEFAULT_GRAPHQL_TAG_NAME
-              }
-              // import * as Gatsby from "gatsby"
-              if (el.type === `ImportNamespaceSpecifier`) {
-                namespaceSpecifierName = el.local.name
-                return false
-              }
+          const graphqlTagSpecifier = (
+            node as ImportDeclaration
+          ).specifiers.find(el => {
+            // We only want import { graphql } from "gatsby"
+            // Not import graphql from "gatsby"
+            if (el.type === `ImportSpecifier`) {
+              // Only get the specifier with the original name of "graphql"
+              return el.imported.name === DEFAULT_GRAPHQL_TAG_NAME
+            }
+            // import * as Gatsby from "gatsby"
+            if (el.type === `ImportNamespaceSpecifier`) {
+              namespaceSpecifierName = el.local.name
               return false
             }
-          )
+            return false
+          })
           if (graphqlTagSpecifier) {
             // The local.name handles the case for import { graphql as otherName }
             // For normal import { graphql } the imported & local name are the same
@@ -191,6 +222,14 @@ const limitedExports: Rule.RuleModule = {
         }
 
         if (isTemplateQuery(node, graphqlTagName, namespaceSpecifierName)) {
+          return undefined
+        }
+
+        if (isApiExport(node, `getServerData`)) {
+          return undefined
+        }
+
+        if (isApiExport(node, `config`)) {
           return undefined
         }
 

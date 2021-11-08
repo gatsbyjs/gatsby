@@ -5,3 +5,7 @@ jest.setTimeout(35000)
 export const itWhenLMDB = process.env.GATSBY_EXPERIMENTAL_LMDB_STORE
   ? it
   : it.skip
+
+export const describeWhenLMDB = process.env.GATSBY_EXPERIMENTAL_LMDB_STORE
+  ? describe
+  : describe.skip

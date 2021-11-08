@@ -3,8 +3,10 @@ import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import { DocumentNode, GraphQLSchema, DefinitionNode } from "graphql"
 import { SchemaComposer } from "graphql-compose"
 import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
-import { InternalJob, JobResultInterface } from "../utils/jobs-manager"
+import { ThunkAction } from "redux-thunk"
+import { InternalJob, JobResultInterface } from "../utils/jobs/manager"
 import { ITypeMetadata } from "../schema/infer/inference-metadata"
+import { Span } from "opentracing"
 
 type SystemPath = string
 type Identifier = string
@@ -24,6 +26,8 @@ export enum ProgramStatus {
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
 }
 
+export type PageMode = "SSG" | "DSG" | "SSR"
+
 export interface IGatsbyPage {
   internalComponentName: string
   path: string
@@ -38,6 +42,16 @@ export interface IGatsbyPage {
   pluginCreatorId: Identifier
   componentPath: SystemPath
   ownerNodeId: Identifier
+  defer?: boolean
+  /**
+   * INTERNAL. Do not use `page.mode`, it can be removed at any time
+   * `page.mode` is currently reliable only in engines and `onPostBuild` hook
+   * (in develop it is dynamic and can change at any time)
+   * TODO: remove, see comments in utils/page-mode:materializePageMode
+   *
+   * @internal
+   */
+  mode: PageMode
 }
 
 export interface IGatsbyFunction {
@@ -78,7 +92,10 @@ export interface IGatsbyConfig {
   developMiddleware?: any
   proxy?: any
   pathPrefix?: string
+  assetPrefix?: string
   mapping?: Record<string, string>
+  jsxRuntime?: "classic" | "automatic"
+  jsxImportSource?: string
 }
 
 export interface IGatsbyNode {
@@ -124,6 +141,8 @@ export interface IGatsbyPageComponent {
   query: string
   pages: Set<string>
   isInBootstrap: boolean
+  serverData: boolean
+  config: boolean
 }
 
 export interface IDefinitionMeta {
@@ -143,7 +162,6 @@ type GatsbyNodes = Map<string, IGatsbyNode>
 
 export interface IGatsbyIncompleteJobV2 {
   job: InternalJob
-  plugin: IGatsbyPlugin
 }
 
 export interface IGatsbyIncompleteJob {
@@ -179,6 +197,7 @@ type BabelStageKeys =
 
 export interface IStateProgram extends IProgram {
   extensions: Array<string>
+  browserslist: Array<string>
 }
 
 export interface IQueryState {
@@ -241,6 +260,8 @@ export interface IGatsbyState {
     >
     ssrAPIs: Array<"onRenderBody" | "onPreRenderHTML">
     pluginFilepath: SystemPath
+    subPluginPaths?: Array<string>
+    modulePath?: string
   }>
   config: IGatsbyConfig
   functions: Array<IGatsbyFunction>
@@ -278,6 +299,7 @@ export interface IGatsbyState {
   jobsV2: {
     incomplete: Map<Identifier, IGatsbyIncompleteJobV2>
     complete: Map<Identifier, IGatsbyCompleteJobV2>
+    jobsByRequest: Map<string, Set<Identifier>>
   }
   webpack: any // TODO This should be the output from ./utils/webpack.config.js
   webpackCompilationHash: string
@@ -319,6 +341,8 @@ export interface IGatsbyState {
     unsafeBuiltinWasUsedInSSR: boolean
   }
 }
+
+export type GatsbyStateKeys = keyof IGatsbyState
 
 export interface ICachedReduxState {
   nodes?: IGatsbyState["nodes"]
@@ -399,6 +423,21 @@ export type ActionsUnion =
   | IGeneratedHtml
   | IMarkHtmlDirty
   | ISSRUsedUnsafeBuiltin
+  | ISetSiteConfig
+  | IMergeWorkerQueryState
+  | ISetComponentFeatures
+  | IMaterializePageMode
+  | ISetJobV2Context
+  | IClearJobV2Context
+
+export interface ISetComponentFeatures {
+  type: `SET_COMPONENT_FEATURES`
+  payload: {
+    componentPath: string
+    serverData: boolean
+    config: boolean
+  }
+}
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -438,8 +477,8 @@ export interface ICreateJobV2Action {
   type: `CREATE_JOB_V2`
   payload: {
     job: IGatsbyIncompleteJobV2["job"]
-    plugin: IGatsbyIncompleteJobV2["plugin"]
   }
+  plugin: { name: string }
 }
 
 export interface IEndJobV2Action {
@@ -448,6 +487,7 @@ export interface IEndJobV2Action {
     jobContentDigest: string
     result: JobResultInterface
   }
+  plugin: { name: string }
 }
 
 export interface IRemoveStaleJobV2Action {
@@ -456,6 +496,13 @@ export interface IRemoveStaleJobV2Action {
     contentDigest: string
   }
 }
+
+export type ICreateJobV2FromInternalAction = ThunkAction<
+  Promise<Record<string, unknown>>,
+  IGatsbyState,
+  void,
+  ActionsUnion
+>
 
 interface ICreateJobAction {
   type: `CREATE_JOB`
@@ -772,6 +819,9 @@ export interface ICreateNodeAction {
   type: `CREATE_NODE`
   payload: IGatsbyNode
   oldNode?: IGatsbyNode
+  traceId: string
+  parentSpan: Span
+  followsSpan: Span
 }
 
 export interface IAddFieldToNodeAction {
@@ -891,5 +941,36 @@ export interface INodeManifest {
   pluginName: string
   node: {
     id: string
+  }
+}
+
+export interface IMergeWorkerQueryState {
+  type: `MERGE_WORKER_QUERY_STATE`
+  payload: {
+    workerId: number
+    queryStateChunk: IGatsbyState["queries"]
+  }
+}
+
+export interface IMaterializePageMode {
+  type: `MATERIALIZE_PAGE_MODE`
+  payload: {
+    path: string
+    pageMode: PageMode
+  }
+}
+
+export interface ISetJobV2Context {
+  type: `SET_JOB_V2_CONTEXT`
+  payload: {
+    job: IGatsbyIncompleteJobV2["job"]
+    requestId: string
+  }
+}
+
+export interface IClearJobV2Context {
+  type: `CLEAR_JOB_V2_CONTEXT`
+  payload: {
+    requestId: string
   }
 }

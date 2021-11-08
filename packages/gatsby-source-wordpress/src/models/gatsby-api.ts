@@ -4,6 +4,7 @@ import { createLocalFileNode } from "~/steps/source-nodes/create-nodes/create-lo
 import { menuBeforeChangeNode } from "~/steps/source-nodes/before-change-node/menu"
 import { cloneDeep } from "lodash"
 import { inPreviewMode } from "~/steps/preview"
+import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 
 export interface IPluginOptionsPreset {
   presetName: string
@@ -22,23 +23,32 @@ export const previewOptimizationPreset: IPluginOptionsPreset = {
       useGatsbyImage: false,
       createStaticFiles: false,
     },
-    type: {
-      __all: {
-        limit: 50,
-      },
-      Comment: {
-        limit: 0,
-      },
-      Menu: {
-        limit: null,
-      },
-      MenuItem: {
-        limit: null,
-      },
-      User: {
-        limit: null,
-      },
-    },
+
+    type:
+      // in Gatsby v4+ we can't fetch nodes in resolvers.
+      // This means if we apply the following settings in v4+
+      // the site will have a lot of missing data when connection
+      // fields reference node's which werent fetched due to the limit option.
+      // so only apply the following settings before Gatsby v4
+      !usingGatsbyV4OrGreater
+        ? {
+            __all: {
+              limit: 50,
+            },
+            Comment: {
+              limit: 0,
+            },
+            Menu: {
+              limit: null,
+            },
+            MenuItem: {
+              limit: null,
+            },
+            User: {
+              limit: null,
+            },
+          }
+        : {},
   },
 }
 export interface IPluginOptions {
@@ -69,6 +79,7 @@ export interface IPluginOptions {
   production?: {
     hardCacheMediaFiles?: boolean
     allow404Images?: boolean
+    allow401Images?: boolean
   }
   auth?: {
     htaccess: {
@@ -88,6 +99,7 @@ export interface IPluginOptions {
   excludeFieldNames?: []
   html?: {
     useGatsbyImage?: boolean
+    gatsbyImageOptions?: Record<string, unknown>
     imageMaxWidth?: number
     fallbackImageMaxWidth?: number
     imageQuality?: number
@@ -105,6 +117,7 @@ export interface IPluginOptions {
       beforeChangeNode?: (any) => Promise<any>
       nodeInterface?: boolean
       lazyNodes?: boolean
+      createFileNodes?: boolean
       localFile?: {
         excludeByMimeTypes?: Array<string>
         maxFileSizeBytes?: number
@@ -142,6 +155,7 @@ const defaultPluginOptions: IPluginOptions = {
   production: {
     hardCacheMediaFiles: false,
     allow404Images: false,
+    allow401Images: false,
   },
   auth: {
     htaccess: {
@@ -174,6 +188,9 @@ const defaultPluginOptions: IPluginOptions = {
     // Transforms anchor links, video src's, and audio src's (that point to wp-content files) into local file static links
     // Also fetches those files if they don't already exist
     createStaticFiles: true,
+    //
+    // this adds image options to images in HTML fields when html.useGatsbyImage is also set
+    gatsbyImageOptions: {},
   },
   presets: [previewOptimizationPreset],
   type: {
@@ -210,6 +227,7 @@ const defaultPluginOptions: IPluginOptions = {
     },
     MediaItem: {
       lazyNodes: false,
+      createFileNodes: true,
       localFile: {
         excludeByMimeTypes: [],
         maxFileSizeBytes: 15728640, // 15Mb
@@ -222,8 +240,12 @@ const defaultPluginOptions: IPluginOptions = {
         // @todo type this
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       }): Promise<any> => {
-        // we fetch lazy nodes files in resolvers, no need to fetch them here.
-        if (typeSettings.lazyNodes) {
+        if (
+          // we fetch lazy nodes files in resolvers, no need to fetch them here.
+          typeSettings.lazyNodes ||
+          // or if the user doesn't want us to create file nodes, don't do anything.
+          !typeSettings.createFileNodes
+        ) {
           return {
             remoteNode,
           }
@@ -338,10 +360,9 @@ const gatsbyApi = {
        * applied based on a `useIf` function (which returns a boolean)
        * If it returns true, that preset is used.
        */
-      const optionsPresets = [
-        ...defaultPresets,
-        ...userPresets,
-      ]?.filter(preset => preset.useIf(payload.helpers, payload.pluginOptions))
+      const optionsPresets = [...defaultPresets, ...userPresets]?.filter(
+        preset => preset.useIf(payload.helpers, payload.pluginOptions)
+      )
 
       if (optionsPresets?.length) {
         state.activePluginOptionsPresets = optionsPresets

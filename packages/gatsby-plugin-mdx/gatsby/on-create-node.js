@@ -124,26 +124,23 @@ async function onCreateNodeLessBabel(
 ) {
   const { createNode, createParentChildLink } = actions
 
-  const {
-    mdxNode,
-    scopeIdentifiers,
-    scopeImports,
-  } = await createMdxNodeLessBabel({
-    id: createNodeId(`${node.id} >>> Mdx`),
-    node,
-    content,
-    getNode,
-    getNodes,
-    getNodesByType,
-    reporter,
-    cache,
-    pathPrefix,
-    options,
-    loadNodeContent,
-    actions,
-    createNodeId,
-    ...helpers,
-  })
+  const { mdxNode, scopeIdentifiers, scopeImports } =
+    await createMdxNodeLessBabel({
+      id: createNodeId(`${node.id} >>> Mdx`),
+      node,
+      content,
+      getNode,
+      getNodes,
+      getNodesByType,
+      reporter,
+      cache,
+      pathPrefix,
+      options,
+      loadNodeContent,
+      actions,
+      createNodeId,
+      ...helpers,
+    })
 
   createNode(mdxNode)
   createParentChildLink({ parent: node, child: mdxNode })

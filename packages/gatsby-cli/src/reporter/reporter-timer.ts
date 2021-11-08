@@ -2,7 +2,7 @@
  * This module is used when calling reporter.
  * these logs
  */
-import * as reporterActions from "./redux/actions"
+import * as reporterActionsForTypes from "./redux/actions"
 import { ActivityStatuses, ActivityTypes } from "./constants"
 import { Span } from "opentracing"
 import { reporter as gatsbyReporter } from "./reporter"
@@ -14,6 +14,7 @@ interface ICreateTimerReporterArguments {
   id: string
   span: Span
   reporter: typeof gatsbyReporter
+  reporterActions: typeof reporterActionsForTypes
 }
 
 export interface ITimerReporter {
@@ -33,6 +34,7 @@ export const createTimerReporter = ({
   id,
   span,
   reporter,
+  reporterActions,
 }: ICreateTimerReporterArguments): ITimerReporter => {
   return {
     start(): void {

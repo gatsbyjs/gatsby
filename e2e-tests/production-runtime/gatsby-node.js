@@ -130,6 +130,22 @@ exports.createPages = ({ actions: { createPage, createRedirect } }) => {
     component: path.resolve(`./.cache/static-page-from-cache.js`),
   })
 
+  {
+    const searchParamComponent = path.resolve(
+      `src/templates/search-param-render.js`
+    )
+
+    createPage({
+      path: `/slashes/no-trailing`,
+      component: searchParamComponent,
+    })
+
+    createPage({
+      path: `/slashes/with-trailing/`,
+      component: searchParamComponent,
+    })
+  }
+
   createRedirect({
     fromPath: "/pagina-larga",
     toPath: "/long-page",
@@ -144,6 +160,13 @@ exports.createPages = ({ actions: { createPage, createRedirect } }) => {
     isPermanent: true,
     redirectInBrowser: true,
     ignoreCase: true,
+  })
+
+  createRedirect({
+    fromPath: `/redirect-two`,
+    toPath: `/redirect-search-hash`,
+    isPermanent: true,
+    redirectInBrowser: true,
   })
 }
 

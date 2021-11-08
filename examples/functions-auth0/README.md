@@ -12,7 +12,7 @@ To test this Example locally you'll need to:
 
 1. Create an application in [Auth0](https://auth0.com/) of type "Single Page Application" and configure `http://localhost:8000` as the Allowed Callback URL, Allowed Logout URL, Allowed Web Origins and Allowed CORS.
 2. Create an API in Auth0 (e.g. with the name of `tv-shows` and identifier of `https://api/tv-shows`) and create a permission for that API (e.g. `read:shows`)
-3. Rename the `.env-template` file to `.env.development` and update all of the settings there with the domain and clientId from the appplication you made in Auth0.
+3. Rename the `.env-template` file to `.env.development` and update all of the settings there with the domain and clientId from the application you made in Auth0.
 4. Run `yarn run start` which will run the Gatsby application and the Gatsby functions.
 
 ## How does example this work?
@@ -27,7 +27,7 @@ The `access_token` is then provided to our Functions to authenticate the request
 
 In the Gatsby Functions we use [@serverless-jwt/jwt-verifier](https://github.com/sandrinodimattia/serverless-jwt/tree/master/packages/jwt-verifier) to secure our functions.
 
-The `JwtVerifier` serves as a way to verify your token. If the token is not valid, the we return an error to the client. If it is valid, it will expose all of the claims to the current function and you'll have the guarantee that the request is authenticated.
+The `JwtVerifier` serves as a way to verify your token. If the token is not valid, then we return an error to the client. If it is valid, it will expose all of the claims to the current function and you'll have the guarantee that the request is authenticated.
 
 ```js
 const {

@@ -26,18 +26,18 @@
 
     - Generate a new spreadsheet via [Google Sheets](https://docs.google.com/spreadsheets)
     - Grant owner access to the spreadsheet to your service account email address.
-    - You will need the Sheet ID to propertly run the example. Sheet ID can be found in the URL of a Google spreadsheet. For example, you can find it via" `https://docs.google.com/spreadsheets/d/<GOOGLE_SHEET_ID>/`. Add this to your `.env.development` file as well.
+    - You will need the Sheet ID to properly run the example. Sheet ID can be found in the URL of a Google spreadsheet. For example, you can find it via `https://docs.google.com/spreadsheets/d/<GOOGLE_SHEET_ID>/`. Add this to your `.env.development` file as well.
 
 3.  **Start developing.**
 
-    To get started, run `yarn` to add all necessary packages.
+    To get started, run `npm install` to add all necessary packages.
 
-    When developing locally, you'll want to include the ENV variables in your `.env.development`. Read more about how Gatsby handles `.env` files and environment variables in the [Gatbsy Docs](https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/)
+    When developing locally, you'll want to include the ENV variables in your `.env.development`. Read more about how Gatsby handles `.env` files and environment variables in the [Gatsby Docs](https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/)
 
     ```shell
-    cd google-sheets
-    yarn
-    yarn run develop
+    cd examples/functions-google-sheets
+    npm install
+    npm run develop
     ```
 
 4.  **Open the code and start customizing!**
@@ -49,16 +49,3 @@
 5.  **Deploy**
 
 You can deploy this example on Gatsby Cloud by copying the example into a new repo and [connecting that to Gatsby Cloud](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/deploying-to-gatsby-cloud/#set-up-an-existing-gatsby-site).
-
-<!--- Working on improving deploy now to use subdirectories
-
-5.  **Deploy**
-    You can directly deploy this example by using the Deploy button below and select the directory for the Google Sheets example. Otherwise, fork this repo and create your own repo and [connect that to Gatsby Cloud](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/deploying-to-gatsby-cloud/#set-up-an-existing-gatsby-site).
-
-    [<img src="https://www.gatsbyjs.com/deploynow.svg">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-functions-beta/)
-
-
-
-    [<img src="https://www.gatsbyjs.com/deploynow.svg">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/google-auth)
-
--->

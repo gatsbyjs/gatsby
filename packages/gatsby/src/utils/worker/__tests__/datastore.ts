@@ -7,6 +7,18 @@ import { store } from "../../../redux"
 import { actions } from "../../../redux/actions"
 import { getDataStore } from "../../../datastore"
 
+jest.mock(`gatsby-telemetry`, () => {
+  return {
+    decorateEvent: jest.fn(),
+    trackError: jest.fn(),
+    trackCli: jest.fn(),
+  }
+})
+
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {}
+})
+
 let worker: GatsbyTestWorkerPool | undefined
 
 beforeEach(() => {
@@ -26,7 +38,7 @@ itWhenLMDB(`worker can access node created in main process`, async () => {
   const testNodeId = `shared-node`
 
   expect(getDataStore().getNode(testNodeId)).toBeFalsy()
-  expect(await worker.getNodeFromWorker(testNodeId)).toBeFalsy()
+  expect(await worker.single.getNodeFromWorker(testNodeId)).toBeFalsy()
 
   const node = {
     id: testNodeId,
@@ -39,7 +51,9 @@ itWhenLMDB(`worker can access node created in main process`, async () => {
   await getDataStore().ready()
 
   const nodeStoredInMainProcess = getDataStore().getNode(testNodeId)
-  const nodeStoredInWorkerProcess = await worker.getNodeFromWorker(testNodeId)
+  const nodeStoredInWorkerProcess = await worker.single.getNodeFromWorker(
+    testNodeId
+  )
 
   expect(nodeStoredInWorkerProcess).toMatchInlineSnapshot(`
     Object {

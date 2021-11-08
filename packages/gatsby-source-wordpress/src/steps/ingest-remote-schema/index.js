@@ -9,20 +9,35 @@ import { buildNodeQueries } from "./build-queries-from-introspection/build-node-
 import { cacheFetchedTypes } from "./cache-fetched-types"
 import { writeQueriesToDisk } from "./write-queries-to-disk"
 
+/**
+ * This fn is called during schema customization.
+ * It pulls in the remote WPGraphQL schema, caches it,
+ * then builds queries and stores a transformed object
+ * later used in schema customization.
+ *
+ * This fn must run in all PQR workers.
+ */
 const ingestRemoteSchema = async (helpers, pluginOptions) => {
-  const schemaTimeKey = `lastIngestRemoteSchemaTime`
-  const lastIngestRemoteSchemaTime = await helpers.cache.get(schemaTimeKey)
+  if (process.env.NODE_ENV === `development`) {
+    // running this code block in production is problematic for PQR
+    // since this fn will run once for each worker and we need the result in each
+    // we'll return early in most workers when it checks the cache here
+    // Since PQR doesn't run in development and this code block was only meant for dev
+    // it should be ok to wrap it in this if statement
+    const schemaTimeKey = `lastIngestRemoteSchemaTime`
+    const lastIngestRemoteSchemaTime = await helpers.cache.get(schemaTimeKey)
 
-  const ingestedSchemaInLastTenSeconds =
-    Date.now() - lastIngestRemoteSchemaTime <= 10000
+    const ingestedSchemaInLastTenSeconds =
+      Date.now() - lastIngestRemoteSchemaTime <= 10000
 
-  if (lastIngestRemoteSchemaTime && ingestedSchemaInLastTenSeconds) {
-    // only allow this to run once every ten seconds
-    // this prevents thrashing when many webhooks are received at once
-    return
+    if (lastIngestRemoteSchemaTime && ingestedSchemaInLastTenSeconds) {
+      // only allow this to run once every ten seconds
+      // this prevents thrashing when many webhooks are received at once
+      return
+    }
+
+    await helpers.cache.set(schemaTimeKey, Date.now())
   }
-
-  await helpers.cache.set(schemaTimeKey, Date.now())
 
   const activity = helpers.reporter.activityTimer(
     formatLogMessage(`ingest WPGraphQL schema`)
@@ -43,10 +58,10 @@ const ingestRemoteSchema = async (helpers, pluginOptions) => {
       pluginOptions
     )
   } catch (e) {
-    helpers.reporter.panic(e)
+    activity.panic(e)
+  } finally {
+    activity.end()
   }
-
-  activity.end()
 }
 
 export { ingestRemoteSchema }

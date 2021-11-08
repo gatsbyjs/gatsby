@@ -1,25 +1,31 @@
-import Worker from "jest-worker"
-import type { CreateWorkerPoolType } from "../../types"
+import { WorkerPool } from "gatsby-worker"
+import { initJobsMessagingInMainProcess } from "../../../jobs/worker-messaging"
+import { initReporterMessagingInMainProcess } from "../../reporter"
+import type { MessagesFromChild, MessagesFromParent } from "../../messaging"
 
-export type GatsbyTestWorkerPool = CreateWorkerPoolType<
-  typeof import("./child-for-tests")
+export type GatsbyTestWorkerPool = WorkerPool<
+  typeof import("./child-for-tests"),
+  MessagesFromParent,
+  MessagesFromChild
 >
 
-export function createTestWorker(): GatsbyTestWorkerPool {
-  // all child processes of this worker pool would have JEST_WORKER_ID set to 1
-  // but running jest tests would create processes with possibly other IDs
-  // this will let child processes use same database ID as parent process (one that executes test)
-  process.env.FORCE_TEST_DATABASE_ID = process.env.JEST_WORKER_ID
-  process.env.GATSBY_WORKER_POOL_WORKER = `true`
+export function createTestWorker(numWorkers = 1): GatsbyTestWorkerPool {
+  const worker: GatsbyTestWorkerPool = new WorkerPool(
+    require.resolve(`./child-for-tests`),
+    {
+      numWorkers,
+      env: {
+        // We are using JEST_WORKER_ID env so that worker use same test database as
+        // jest runner process
+        FORCE_TEST_DATABASE_ID: process.env.JEST_WORKER_ID,
+        GATSBY_WORKER_POOL_WORKER: `true`,
+        NODE_OPTIONS: `--require ${require.resolve(`./ts-register`)}`,
+      },
+    }
+  )
 
-  const worker = new Worker(require.resolve(`./wrapper-for-tests`), {
-    numWorkers: 1,
-    forkOptions: {
-      silent: false,
-    },
-    maxRetries: 1,
-  }) as GatsbyTestWorkerPool
-  delete process.env.GATSBY_WORKER_POOL_WORKER
+  initJobsMessagingInMainProcess(worker)
+  initReporterMessagingInMainProcess(worker)
 
   return worker
 }

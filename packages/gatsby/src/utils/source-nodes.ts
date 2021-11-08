@@ -93,8 +93,8 @@ export default async ({
 }: {
   webhookBody: unknown
   pluginName?: string
-  parentSpan: Span
-  deferNodeMutation: boolean
+  parentSpan?: Span
+  deferNodeMutation?: boolean
 }): Promise<void> => {
   await apiRunner(`sourceNodes`, {
     traceId: `initial-sourceNodes`,
@@ -112,4 +112,6 @@ export default async ({
   warnForPluginsWithoutNodes(state, nodes)
 
   deleteStaleNodes(state, nodes)
+
+  store.dispatch(actions.apiFinished({ apiName: `sourceNodes` }))
 }

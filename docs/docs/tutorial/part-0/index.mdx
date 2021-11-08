@@ -1,33 +1,11 @@
 ---
-title: Set Up Your Development Environment
+title: "Part 0: Set Up Your Development Environment"
 tableOfContentsDepth: 2
 ---
 
-import { Announcement, Notification, LinkButton } from 'gatsby-interface'
+import { Announcement, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
-import { MdInfo, MdArrowForward } from 'react-icons/md'
-
-<Notification
-  Icon={MdInfo}
-  tone="WARNING"
-  variant="SECONDARY"
-  content={
-    <div>
-      <p>
-        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
-        The first few parts of the new Tutorial have been released here, and subsequent parts
-        will be added as we finish them.
-      </p>
-      <p style={{ marginBottom: 0 }}>
-        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
-        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
-          <strong>Gatsby v2 Tutorial</strong>
-        </a>
-        .
-      </p>
-    </div>
-  }
-/>
+import { MdArrowForward } from 'react-icons/md'
 
 ## Introduction
 
@@ -75,14 +53,14 @@ In addition to the ones listed above, Gatsby uses a few more technologies under 
 
 The rest of this part of the Tutorial walks you through how to install the following tools:
 
-* [Node.js](#nodejs) (v12.13 or newer)
+* [Node.js](#nodejs) (v14.15 or newer)
 * [Git](#git)
 * [Gatsby command line interface (CLI)](#gatsby-cli) (v3 or newer)
 * [Visual Studio Code](#vs-code)
 
 ### Node.js
 
-[Node.js](https://nodejs.dev/learn) is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have Node.js version 12.13 (or newer) installed on your computer.
+[Node.js](https://nodejs.dev/learn) is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have Node.js version 14.15 (or newer) installed on your computer.
 
 [npm](https://docs.npmjs.com/getting-started/what-is-npm) is a package manager that comes bundled with Node.js. You'll use the npm command line interface to add packages to your site (like Gatsby plugins) and to run command line tasks (like starting up your site).
 
@@ -284,7 +262,7 @@ The Gatsby command line interface (CLI) is a tool that lets you quickly create n
 
 The CLI is a published npm package, which means you can install it using npm.
 
-Install the Gatsby CLI globally by running:
+Install the Gatsby CLI globally by running the command below. (Have an older version of the Gatsby CLI installed? This command will also update you to the latest version.)
 
 ```shell
 npm install -g gatsby-cli
@@ -295,6 +273,12 @@ npm install -g gatsby-cli
 **Note:** When you install Gatsby and run it for the first time, you'll see a short message notifying you about anonymous usage data that is being collected for Gatsby commands. You can read more about how that data is pulled out and used in the [telemetry doc](/docs/telemetry).
 
 </Announcement>
+
+Check that you have the correct version installed by running the command below. You should be on v3 or newer.
+
+```shell
+gatsby --version
+```
 
 See the available commands:
 
@@ -316,16 +300,16 @@ If you are unable to successfully run the Gatsby CLI due to a permissions issue,
 
 Visual Studio Code (also called VS Code, for short) is a popular code editor that you can use to write code for your project. If you don't have a preferred code editor yet, visit the [VS Code site](https://code.visualstudio.com/#alt-downloads) and download the version appropriate for your platform.
 
-It doesn't matter what code editor you choose to use. Your site will end up looking the same, no matter what tool you use to write it. But the Gatsby documentation sometimes includes screenshots that were taken in VS Code, so using VS Code will make sure that your screen looks like the screenshots in the tutorial and docs. 
+It doesn't matter what code editor you choose to use. Your site will end up looking the same, no matter what tool you use to write it. But the Gatsby documentation sometimes includes screenshots that were taken in VS Code, so using VS Code will make sure that your screen looks like the screenshots in the tutorial and docs.
 
 ## Account Creation
 
-The final step in this part of the tutorial is to create accounts for the online platforms you will need to deploy your site online for others to see.
+The final step in this part of the Tutorial is to create accounts for the online platforms you will need to deploy your site online for others to see.
 
 In this Tutorial, you will deploy your site using Gatsby Cloud. To use Gatsby Cloud, you will need to set up a GitHub account and a Gatsby Cloud account. (Both accounts are free!)
 
 * [Create a GitHub account.](https://github.com/join) GitHub is a website for storing your Git codebases (also called Git repositories).
-* [Create a Gatsby Cloud account.](/dashboard/signup/?utm_campaign=tutorial) Gatsby Cloud is a platform designed to be the best way to build and deploy your Gatsby sites.
+* [Create a Gatsby Cloud account.](/dashboard/signup/) Gatsby Cloud is a platform designed to be the best way to build and deploy your Gatsby sites.
 
 ## Summary
 

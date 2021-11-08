@@ -1,24 +1,9 @@
-import type Worker from "jest-worker"
+import type { WorkerPool } from "gatsby-worker"
 
-type WrapReturnOfAFunctionInAPromise<
-  FunctionThatDoesNotReturnAPromise extends (...args: Array<any>) => any
-> = (
-  ...a: Parameters<FunctionThatDoesNotReturnAPromise>
-) => Promise<ReturnType<FunctionThatDoesNotReturnAPromise>>
+import type { MessagesFromChild, MessagesFromParent } from "./messaging"
 
-// jest-worker will make sync function async, so to keep proper types we need to adjust types so all functions
-// on worker pool are async
-type EnsureFunctionReturnsAPromise<MaybeFunction> = MaybeFunction extends (
-  ...args: Array<any>
-) => Promise<any>
-  ? MaybeFunction
-  : MaybeFunction extends (...args: Array<any>) => any
-  ? WrapReturnOfAFunctionInAPromise<MaybeFunction>
-  : never
-
-export type CreateWorkerPoolType<ExposedFunctions> = Worker &
-  {
-    [FunctionName in keyof ExposedFunctions]: EnsureFunctionReturnsAPromise<
-      ExposedFunctions[FunctionName]
-    >
-  }
+export type GatsbyWorkerPool = WorkerPool<
+  typeof import("./child"),
+  MessagesFromParent,
+  MessagesFromChild
+>

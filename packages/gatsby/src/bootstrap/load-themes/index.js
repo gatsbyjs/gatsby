@@ -31,7 +31,7 @@ const resolveTheme = async (
     // local themes with same name that do different things and name being
     // main identifier that Gatsby uses right now, it's safer not to support it for now.
     if (isMainConfig) {
-      pathToLocalTheme = path.join(path.resolve(`.`), `plugins`, themeName)
+      pathToLocalTheme = path.join(rootDir, `plugins`, themeName)
       // is a local plugin OR it doesn't exist
       try {
         const { resolve } = resolvePlugin(themeName, rootDir)

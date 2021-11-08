@@ -26,6 +26,7 @@ const { emitter, store } = require(`../redux`)
 const { getNodes, getNode, getNodesByType } = require(`../datastore`)
 const { getNodeAndSavePathDependency, loadNodeContent } = require(`./nodes`)
 const { getPublicPath } = require(`./get-public-path`)
+const { requireGatsbyPlugin } = require(`./require-gatsby-plugin`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 import errorParser from "./api-runner-error-parser"
@@ -86,23 +87,25 @@ const initAPICallTracing = parentSpan => {
   }
 }
 
-const deferredAction = type => (...args) => {
-  // Regular createNode returns a Promise, but when deferred we need
-  // to wrap it in another which we resolve when it's actually called
-  if (type === `createNode`) {
-    return new Promise(resolve => {
-      emitter.emit(`ENQUEUE_NODE_MUTATION`, {
-        type,
-        payload: args,
-        resolve,
+const deferredAction =
+  type =>
+  (...args) => {
+    // Regular createNode returns a Promise, but when deferred we need
+    // to wrap it in another which we resolve when it's actually called
+    if (type === `createNode`) {
+      return new Promise(resolve => {
+        emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+          type,
+          payload: args,
+          resolve,
+        })
       })
+    }
+    return emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+      type,
+      payload: args,
     })
   }
-  return emitter.emit(`ENQUEUE_NODE_MUTATION`, {
-    type,
-    payload: args,
-  })
-}
 
 const NODE_MUTATION_ACTIONS = [
   `createNode`,
@@ -240,19 +243,16 @@ const getUninitializedCache = plugin => {
     async set() {
       throw new Error(message)
     },
+    async del() {
+      throw new Error(message)
+    },
   }
 }
-
-const pluginNodeCache = new Map()
 
 const availableActionsCache = new Map()
 let publicPath
 const runAPI = async (plugin, api, args, activity) => {
-  let gatsbyNode = pluginNodeCache.get(plugin.name)
-  if (!gatsbyNode) {
-    gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
-    pluginNodeCache.set(plugin.name, gatsbyNode)
-  }
+  const gatsbyNode = requireGatsbyPlugin(plugin, `gatsby-node`)
 
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
@@ -375,6 +375,7 @@ const runAPI = async (plugin, api, args, activity) => {
     const apiCallArgs = [
       {
         ...args,
+        parentSpan: pluginSpan,
         basePath: pathPrefix,
         pathPrefix: publicPath,
         actions,
@@ -442,7 +443,7 @@ const apisRunningById = new Map()
 const apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
-module.exports = (api, args = {}, { pluginSource, activity } = {}) => {
+function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
   const plugins = store.getState().flattenedPlugins
 
   // Get the list of plugins that implement this API.
@@ -558,12 +559,7 @@ module.exports = (api, args = {}, { pluginSource, activity } = {}) => {
           return null
         }
 
-        let gatsbyNode = pluginNodeCache.get(plugin.name)
-        if (!gatsbyNode) {
-          gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
-          pluginNodeCache.set(plugin.name, gatsbyNode)
-        }
-
+        const gatsbyNode = requireGatsbyPlugin(plugin, `gatsby-node`)
         const pluginName =
           plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
@@ -681,3 +677,5 @@ module.exports = (api, args = {}, { pluginSource, activity } = {}) => {
     })
   })
 }
+
+module.exports = apiRunnerNode

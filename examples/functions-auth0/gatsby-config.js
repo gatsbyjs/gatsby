@@ -6,9 +6,6 @@ require("dotenv").config({
 })
 
 module.exports = {
-  flags: {
-    FUNCTIONS: true,
-  },
   plugins: [
     {
       resolve: "gatsby-plugin-create-client-paths",

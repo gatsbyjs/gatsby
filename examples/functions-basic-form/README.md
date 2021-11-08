@@ -4,12 +4,12 @@ This example shows how to build a form with [react-hook-form](https://react-hook
 
 1.  **Start developing.**
 
-    To get started clone this repo locally and run `yarn` to add all necessary packages.
+    To get started clone this repo locally and run `npm install` to add all necessary packages.
 
     ```shell
-    cd basic-form
-    yarn
-    yarn run develop
+    cd examples/functions-basic-form
+    npm install
+    npm run develop
     ```
 
 2.  **Open the code and start customizing!**

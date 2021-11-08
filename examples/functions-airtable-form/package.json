@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "airtable": "^0.10.1",
-    "gatsby": "^3.4.0",
-    "gatsby-plugin-gatsby-cloud": "^2.3.0",
+    "gatsby": "next",
+    "gatsby-plugin-gatsby-cloud": "next",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }

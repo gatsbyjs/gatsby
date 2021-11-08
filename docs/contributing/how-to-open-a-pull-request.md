@@ -79,7 +79,7 @@ To test changes locally against the Gatsby [site and project files](https://gith
 
 ### Documentation PRs
 
-The Gatsby.js docs site mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) and [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directories on GitHub, including docs and tutorial content. There are also some [examples in the Gatsby repo](https://github.com/gatsbyjs/gatsby/tree/master/examples) referenced in the docs.
+The Gatsby docs site lives in [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directories on GitHub, including docs and tutorial content. There are also some [examples in the Gatsby repo](https://github.com/gatsbyjs/gatsby/tree/master/examples) referenced in the docs.
 
 Additional docs PR steps:
 
@@ -157,4 +157,4 @@ For more information on working with upstream repos, [visit the GitHub docs](htt
 - [Feature Branching and Workflows](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows)
 - [Resolving merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github)
 - [Managing Pull Requests](/contributing/managing-pull-requests/) on the Gatsby core team
-- [Guide on Markdown Syntax](/docs/how-to/routing/mdx/markdown-syntax/)
+- [Guide on Markdown Syntax](/docs/reference/markdown-syntax/)

@@ -5,15 +5,7 @@ import { GraphQLRunner } from "../../query/graphql-runner"
 import { Store, AnyAction } from "redux"
 import { IGatsbyState } from "../../redux/types"
 import type { GatsbyWorkerPool } from "../../utils/worker/pool"
-export interface IGroupedQueryIds {
-  pageQueryIds: Array<string>
-  staticQueryIds: Array<string>
-}
 
-export interface IMutationAction {
-  type: string
-  payload: Array<unknown>
-}
 export interface IDataLayerContext {
   deferNodeMutation?: boolean
   nodesMutatedDuringQueryRun?: boolean

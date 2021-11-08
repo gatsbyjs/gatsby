@@ -10,12 +10,12 @@ const globalPackageRules = [
   {
     groupName: `babel monorepo`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    sourceUrlPrefixes: [`https://github.com/babel/babel`],
+    matchSourceUrlPrefixes: [`https://github.com/babel/babel`],
   },
   {
     groupName: `lodash monorepo`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    sourceUrlPrefixes: [`https://github.com/lodash`],
+    matchSourceUrlPrefixes: [`https://github.com/lodash`],
   },
   {
     groupName: `gatsby monorepo`,
@@ -25,6 +25,7 @@ const globalPackageRules = [
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
     commitMessageTopic: `dependencies for Gatsby monorepo`,
+    excludePackagePatterns: [`^@babel`],
   },
 
   // group eslint & prettier
@@ -32,8 +33,8 @@ const globalPackageRules = [
     groupName: `formatting & linting`,
     commitMessageTopic: `Formatting & linting`,
     matchPaths: [`+(package.json)`],
-    packageNames: [`eslint`, `prettier`],
-    packagePatterns: [`^eslint-`],
+    matchPackageNames: [`eslint`, `prettier`],
+    matchPackagePatterns: [`^eslint-`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
@@ -43,7 +44,7 @@ const globalPackageRules = [
   {
     groupName: `cross-env`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    packageNames: [`cross-env`],
+    matchPackageNames: [`cross-env`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
@@ -51,7 +52,7 @@ const globalPackageRules = [
   {
     groupName: `execa`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    packageNames: [`execa`],
+    matchPackageNames: [`execa`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
@@ -59,21 +60,21 @@ const globalPackageRules = [
   {
     groupName: `mini-css-extract-plugin`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    packageNames: [`mini-css-extract-plugin`],
+    matchPackageNames: [`mini-css-extract-plugin`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
   },
   {
     groupName: `sharp`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    packageNames: [`sharp`, `@types/sharp`],
+    matchPackageNames: [`sharp`, `@types/sharp`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
   },
   {
     groupName: `typescript`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    packageNames: [`typescript`],
+    matchPackageNames: [`typescript`],
     matchPackagePatterns: [`^@typescript-eslint/`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
@@ -82,7 +83,7 @@ const globalPackageRules = [
   {
     groupName: `chalk`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    packageNames: [`chalk`],
+    matchPackageNames: [`chalk`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
@@ -90,7 +91,7 @@ const globalPackageRules = [
   {
     groupName: `fs-extra`,
     matchPaths: [`+(package.json)`, `packages/**/package.json`],
-    packageNames: [`fs-extra`, `@types/fs-extra`],
+    matchPackageNames: [`fs-extra`, `@types/fs-extra`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
@@ -103,31 +104,68 @@ const globalPackageRules = [
     matchDepTypes: [`dependencies`, `devDependencies`],
     dependencyDashboardApproval: false,
   },
+  {
+    groupName: `cheerio`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackageNames: [`cheerio`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `semver`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackageNames: [`semver`, `@types/semver`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `core-js`,
+    matchPaths: [
+      `+(package.json)`,
+      `packages/!(gatsby-legacy-polyfills)/**/package.json`,
+    ],
+    matchPackageNames: [`core-js`, `core-js-compat`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
+  {
+    groupName: `chokidar`,
+    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPackageNames: [`chokidar`],
+    matchUpdateTypes: [`major`, `minor`, `patch`],
+    matchDepTypes: [`dependencies`, `devDependencies`],
+    dependencyDashboardApproval: false,
+  },
 ]
 
+// there is no excludeMatchSourceUrlPrefixes option so we force babel to be disabled
 const globalExcludePackages = []
-const globalExcludePackagePatterns = []
+const globalExcludePackagePatterns = [`^@babel`]
 globalPackageRules.forEach(group => {
   if (group.matchPackagePatterns) {
     globalExcludePackagePatterns.push(...group.matchPackagePatterns)
   }
-  if (group.packageNames) {
-    globalExcludePackages.push(...group.packageNames)
+  if (group.matchPackageNames) {
+    globalExcludePackages.push(...group.matchPackageNames)
   }
 })
 
 // our default rules
 const defaultPackageRules = [
-  // disable engine upgrades
+  // disable engine upgrades & types/node
   {
-    depTypeList: [`engines`],
+    matchDepTypes: [`engines`, `@types/node`],
     enabled: false,
   },
-  {
-    packageNames: [`gatsby-interface`],
-    // update internal packages immediately after publish instead of waiting 3 days
-    stabilityDays: 0,
-  },
+  // host-error on renovate :shrug:
+  // {
+  //   matchPackageNames: [`gatsby-interface`],
+  //   // update internal packages immediately after publish instead of waiting 3 days
+  //   stabilityDays: 0,
+  // },
 
   // update our examples and starters automatically
   {
@@ -188,6 +226,7 @@ monorepoPackages.forEach(pkg => {
 
     for (const dep in pkgJson.dependencies) {
       if (
+        !monorepoPackages.includes(dep) &&
         pkgJson.dependencies[dep] &&
         (pkgJson.dependencies[dep].startsWith(`~0.`) ||
           pkgJson.dependencies[dep].startsWith(`^0.`))
@@ -295,7 +334,7 @@ const renovateConfig = {
     dependencyDashboardApproval: true,
   },
   dependencyDashboard: true,
-  ignoreDeps: [`react`, `react-dom`, `uuid`],
+  ignoreDeps: [`react`, `react-dom`, `uuid`, `gatsby-interface`],
   rangeStrategy: `bump`,
   bumpVersion: null,
   prHourlyLimit: 0,
@@ -304,6 +343,7 @@ const renovateConfig = {
   postUpdateOptions: [`yarnDedupeHighest`],
   timezone: `GMT`,
   schedule: [`before 7am on the first day of the month`],
+  updateNotScheduled: false,
   packageRules: defaultPackageRules.concat(
     Array.from(packageRules.values()).flat()
   ),

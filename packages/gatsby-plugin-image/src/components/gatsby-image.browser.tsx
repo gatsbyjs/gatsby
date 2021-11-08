@@ -90,11 +90,12 @@ class GatsbyImageHydrator extends Component<
     }
 
     return import(`./lazy-hydrate`).then(({ lazyHydrate }) => {
+      const cacheKey = JSON.stringify(this.props.image.images)
       this.lazyHydrator = lazyHydrate(
         {
           image: props.image.images,
-          isLoading: state.isLoading,
-          isLoaded: state.isLoaded,
+          isLoading: state.isLoading || hasImageLoaded(cacheKey),
+          isLoaded: state.isLoaded || hasImageLoaded(cacheKey),
           toggleIsLoaded: () => {
             props.onLoad?.()
 
@@ -267,33 +268,32 @@ class GatsbyImageHydrator extends Component<
   }
 }
 
-export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyImage(
-  props
-) {
-  if (!props.image) {
-    if (process.env.NODE_ENV === `development`) {
-      console.warn(`[gatsby-plugin-image] Missing image prop`)
+export const GatsbyImage: FunctionComponent<GatsbyImageProps> =
+  function GatsbyImage(props) {
+    if (!props.image) {
+      if (process.env.NODE_ENV === `development`) {
+        console.warn(`[gatsby-plugin-image] Missing image prop`)
+      }
+      return null
     }
-    return null
-  }
 
-  if (!gatsbyImageIsInstalled()) {
-    console.error(
-      `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
-    )
+    if (!gatsbyImageIsInstalled() && process.env.NODE_ENV === `development`) {
+      console.warn(
+        `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
+      )
+    }
+    const { className, class: classSafe, backgroundColor, image } = props
+    const { width, height, layout } = image
+    const propsKey = JSON.stringify([
+      width,
+      height,
+      layout,
+      className,
+      classSafe,
+      backgroundColor,
+    ])
+    return <GatsbyImageHydrator key={propsKey} {...props} />
   }
-  const { className, class: classSafe, backgroundColor, image } = props
-  const { width, height, layout } = image
-  const propsKey = JSON.stringify([
-    width,
-    height,
-    layout,
-    className,
-    classSafe,
-    backgroundColor,
-  ])
-  return <GatsbyImageHydrator key={propsKey} {...props} />
-}
 
 GatsbyImage.propTypes = propTypes
 

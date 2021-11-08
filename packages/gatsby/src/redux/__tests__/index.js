@@ -1,8 +1,8 @@
 const _ = require(`lodash`)
 const path = require(`path`)
 const v8 = require(`v8`)
+const telemetry = require(`gatsby-telemetry`)
 const reporter = require(`gatsby-cli/lib/reporter`)
-
 const writeToCache = jest.spyOn(require(`../persist`), `writeToCache`)
 const v8Serialize = jest.spyOn(v8, `serialize`)
 const v8Deserialize = jest.spyOn(v8, `deserialize`)
@@ -10,17 +10,26 @@ const reporterInfo = jest.spyOn(reporter, `info`).mockImplementation(jest.fn)
 const reporterWarn = jest.spyOn(reporter, `warn`).mockImplementation(jest.fn)
 
 const { isLmdbStore } = require(`../../datastore`)
-const { saveState, store, readState } = require(`../index`)
+const {
+  saveState,
+  store,
+  readState,
+  savePartialStateToDisk,
+} = require(`../index`)
 
 const {
   actions: { createPage, createNode },
 } = require(`../actions`)
 
+const pageTemplatePath = `/Users/username/dev/site/src/templates/my-sweet-new-page.js`
 const mockWrittenContent = new Map()
 const mockCompatiblePath = path
 jest.mock(`fs-extra`, () => {
   return {
     writeFileSync: jest.fn((file, content) =>
+      mockWrittenContent.set(file, content)
+    ),
+    outputFileSync: jest.fn((file, content) =>
       mockWrittenContent.set(file, content)
     ),
     readFileSync: jest.fn(file => mockWrittenContent.get(file)),
@@ -123,7 +132,7 @@ describe(`redux db`, () => {
   const defaultPage = {
     path: `/my-sweet-new-page/`,
     // seems like jest serializer doesn't play nice with Maps on Windows
-    component: `/Users/username/dev/site/src/templates/my-sweet-new-page.js`,
+    component: pageTemplatePath,
     // The context is passed as props to the component as well
     // as into the component's GraphQL query.
     context: {
@@ -138,8 +147,29 @@ describe(`redux db`, () => {
     })
     writeToCache.mockClear()
     mockWrittenContent.clear()
+    mockWrittenContent.set(pageTemplatePath, `foo`)
     reporterWarn.mockClear()
     reporterInfo.mockClear()
+  })
+
+  it(`should have cache status telemetry event`, async () => {
+    jest.spyOn(telemetry, `trackCli`)
+
+    readState()
+
+    expect(telemetry.trackCli).toHaveBeenCalledWith(`CACHE_STATUS`, {
+      cacheStatus: `COLD`,
+    })
+
+    store.getState().nodes = getFakeNodes()
+
+    await saveState()
+
+    readState()
+
+    expect(telemetry.trackCli).toHaveBeenCalledWith(`CACHE_STATUS`, {
+      cacheStatus: `WARM`,
+    })
   })
 
   it(`should write redux cache to disk`, async () => {
@@ -492,5 +522,74 @@ describe(`redux db`, () => {
         `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
       )
     }
+  })
+
+  describe(`savePartialStateToDisk`, () => {
+    beforeEach(() => {
+      createPages(defaultPage)
+    })
+
+    it(`saves with correct filename (with defaults)`, () => {
+      savePartialStateToDisk([`pages`])
+
+      let basename
+      // get first non page template mocked fs write
+      for (const savedFile of mockWrittenContent.keys()) {
+        if (savedFile === pageTemplatePath) {
+          continue
+        }
+
+        basename = path.basename(savedFile)
+        break
+      }
+
+      expect(basename.startsWith(`redux.worker.slices__`)).toBe(true)
+    })
+
+    it(`saves correct slice of state`, () => {
+      savePartialStateToDisk([`pages`])
+
+      expect(writeToCache).toBeCalledWith(
+        { pages: expect.anything() },
+        [`pages`],
+        undefined
+      )
+    })
+
+    it(`respects optionalPrefix`, () => {
+      savePartialStateToDisk([`pages`], `custom-prefix`)
+
+      let basename
+      // get first non page template mocked fs write
+      for (const savedFile of mockWrittenContent.keys()) {
+        if (savedFile === pageTemplatePath) {
+          continue
+        }
+
+        basename = path.basename(savedFile)
+        break
+      }
+
+      expect(basename.startsWith(`redux.worker.slices_custom-prefix_`)).toBe(
+        true
+      )
+    })
+
+    it(`respects transformState`, () => {
+      const customTransform = state => {
+        return {
+          ...state,
+          hello: `world`,
+        }
+      }
+
+      savePartialStateToDisk([`pages`], undefined, customTransform)
+
+      expect(writeToCache).toBeCalledWith(
+        { pages: expect.anything(), hello: `world` },
+        [`pages`],
+        undefined
+      )
+    })
   })
 })

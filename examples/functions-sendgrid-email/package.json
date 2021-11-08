@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "@sendgrid/mail": "^7.4.2",
-    "gatsby": "^3.4.1",
-    "gatsby-plugin-gatsby-cloud": "^2.3.0",
+    "gatsby": "next",
+    "gatsby-plugin-gatsby-cloud": "next",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }

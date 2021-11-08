@@ -8,23 +8,23 @@ import { ExecutionResult, GraphQLError } from "graphql"
 import path from "path"
 import { store } from "../redux"
 import { actions } from "../redux/actions"
-import { getCodeFrame } from "./graphql-errors"
+import { getCodeFrame } from "./graphql-errors-codeframe"
 import errorParser from "./error-parser"
 
 import { GraphQLRunner } from "./graphql-runner"
 import { IExecutionResult, PageContext } from "./types"
-import { pageDataExists } from "../utils/page-data"
+import { pageDataExists, savePageQueryResult } from "../utils/page-data"
 
 const resultHashes = new Map()
 
-interface IQueryJob {
+export interface IQueryJob {
   id: string
   hash?: string
   query: string
   componentPath: string
   context: PageContext
   isPage: boolean
-  pluginCreatorId: string
+  pluginCreatorId?: string
 }
 
 function reportLongRunningQueryJob(queryJob): void {
@@ -157,6 +157,12 @@ export async function queryRunner(
     delete result.pageContext.componentPath
     delete result.pageContext.context
     delete result.pageContext.isCreatedByStatefulCreatePages
+
+    if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+      // we shouldn't add matchPath to pageContext but technically this is a breaking change so moving it ot v4
+      delete result.pageContext.matchPath
+      delete result.pageContext.mode
+    }
   }
 
   const resultJSON = JSON.stringify(result)
@@ -175,13 +181,7 @@ export async function queryRunner(
     if (queryJob.isPage) {
       // We need to save this temporarily in cache because
       // this might be incomplete at the moment
-      const resultPath = path.join(
-        program.directory,
-        `.cache`,
-        `json`,
-        `${queryJob.id.replace(/\//g, `_`)}.json`
-      )
-      await fs.outputFile(resultPath, resultJSON)
+      await savePageQueryResult(program.directory, queryJob.id, resultJSON)
       store.dispatch({
         type: `ADD_PENDING_PAGE_DATA_WRITE`,
         payload: {
