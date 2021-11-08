@@ -7,7 +7,7 @@ executors:
     parameters:
       image:
         type: string
-        default: "14.17.0"
+        default: "14.18.1"
     docker:
       - image: cimg/node:<< parameters.image >>
     environment:
@@ -63,7 +63,6 @@ aliases:
       branches:
         ignore:
           - /docs.+/
-          - /blog.+/
 
   test_template: &test_template
     parallelism: 4
@@ -233,13 +232,23 @@ jobs:
   unit_tests_node14:
     executor:
       name: node
-      image: "14.17.0"
+      image: "14.18.1"
     <<: *test_template
 
   unit_tests_node14_lmdb_store:
     executor:
       name: node
       image: "14.17.0"
+    environment:
+      GATSBY_EXPERIMENTAL_LMDB_STORE: 1
+      GATSBY_EXPERIMENTAL_LMDB_INDEXES: 1
+      GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING: 1
+    <<: *test_template
+
+  unit_tests_node16_lmdb_store:
+    executor:
+      name: node
+      image: "16.13.0"
     environment:
       GATSBY_EXPERIMENTAL_LMDB_STORE: 1
       GATSBY_EXPERIMENTAL_LMDB_INDEXES: 1
@@ -495,32 +504,6 @@ jobs:
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: node scripts/gatsby-changelog-generator/update-and-open-pr.js
 
-  update_i18n_source:
-    executor: node
-    steps:
-      - checkout
-      - run: git config --global user.name "GatsbyJS Bot"
-      - run: git config --global user.email "core-team@gatsbyjs.com"
-      - run:
-          command: yarn
-          working_directory: ~/project/scripts/i18n
-      - run:
-          command: yarn run update-source
-          working_directory: ~/project/scripts/i18n
-
-  sync_translation_repo:
-    executor: node
-    steps:
-      - checkout
-      - run: git config --global user.name "GatsbyJS Bot"
-      - run: git config --global user.email "core-team@gatsbyjs.com"
-      - run:
-          command: yarn
-          working_directory: ~/project/scripts/i18n
-      - run:
-          command: yarn run-all sync
-          working_directory: ~/project/scripts/i18n
-
   windows_unit_tests:
     parallelism: 4
     executor:
@@ -539,11 +522,11 @@ jobs:
 
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 14.17 and yarn
+          name: Install node 14.18 and yarn
           command: |
-            nvm install 14.17.0
-            nvm alias default 14.17.0
-            nvm use 14.17.0
+            nvm install 14.18.1
+            nvm alias default 14.18.1
+            nvm use 14.18.1
             choco install yarn
       - run:
           name: Rebuild packages for windows
@@ -584,17 +567,6 @@ jobs:
 
 workflows:
   version: 2
-
-  weekly-i18n-sync:
-    triggers:
-      - schedule:
-          cron: "0 1 * * 6"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - sync_translation_repo
 
   nightly-react-next:
     triggers:
@@ -723,11 +695,6 @@ workflows:
       - starters_validate:
           <<: *ignore_master
       - starters_publish:
-          filters:
-            branches:
-              only:
-                - master
-      - update_i18n_source:
           filters:
             branches:
               only:
