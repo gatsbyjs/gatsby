@@ -206,7 +206,7 @@ const createWebpackConfig = async ({
     JSON.stringify(knownFunctions, null, 4)
   )
 
-  // Load environment variables from process.env.GATSBY_* and .env.* files.
+  // Load environment variables from process.env.* and .env.* files.
   // Logic is shared with webpack.config.js
 
   // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
