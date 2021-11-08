@@ -235,29 +235,28 @@ async function validatePluginsOptions(
                     value.modulePath = modulePath
                     value.module = require(modulePath)
 
-                    const normalizedPath =
-                      helpers.state.path
-                        .map((key, index) => {
-                          // if subplugin is part of an array - swap concrete index key with `[]`
-                          if (
-                            typeof key === `number` &&
-                            Array.isArray(
-                              helpers.state.ancestors[
-                                helpers.state.path.length - index - 1
-                              ]
+                    const normalizedPath = helpers.state.path
+                      .map((key, index) => {
+                        // if subplugin is part of an array - swap concrete index key with `[]`
+                        if (
+                          typeof key === `number` &&
+                          Array.isArray(
+                            helpers.state.ancestors[
+                              helpers.state.path.length - index - 1
+                            ]
+                          )
+                        ) {
+                          if (index !== helpers.state.path.length - 1) {
+                            throw new Error(
+                              `No support for arrays not at the end of path`
                             )
-                          ) {
-                            if (index !== helpers.state.path.length - 1) {
-                              throw new Error(
-                                `No support for arrays not at the end of path`
-                              )
-                            }
-                            return `[]`
                           }
+                          return `[]`
+                        }
 
-                          return key
-                        })
-                        .join(`.`) + `.[]`
+                        return key
+                      })
+                      .join(`.`)
 
                     subPluginPaths.add(normalizedPath)
                   } catch (err) {
@@ -314,7 +313,7 @@ async function validatePluginsOptions(
             )
           plugin.options.plugins = subPlugins
           if (subPlugins.length > 0) {
-            subPluginPaths.add(`plugins.[]`)
+            subPluginPaths.add(`plugins`)
           }
           errors += subErrors
         }
