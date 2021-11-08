@@ -80,7 +80,7 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .unknown(true)
       .default({})
       .description(`Set the layout components for MDX source types`),
-    gatsbyRemarkPlugins: Joi.subPlugins({ entry: `index` }).description(
+    gatsbyRemarkPlugins: Joi.subPlugins().description(
       `Use Gatsby-specific remark plugins`
     ),
     lessBabel: Joi.boolean()
@@ -122,8 +122,6 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       ),
     commonmark: Joi.boolean()
       .default(false)
-      .description(
-        "MDX will be parsed using CommonMark."
-      ),
+      .description("MDX will be parsed using CommonMark."),
   })
 }
