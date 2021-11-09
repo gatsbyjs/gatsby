@@ -4,7 +4,7 @@ title: Gatsby Framework Version Support
 
 ## Introduction
 
-This page illustrates the support plans for the major versionf of Gastby. This allows you to effectively plan their Gatsby framework upgrades.
+This page illustrates the support plans for the major versions of Gatsby. This allows you to effectively plan your Gatsby framework upgrades.
 
 Generally, you can expect **1 major version per calendar year**. Although, there may be more than 1 major per year when a necessary evolution of Gatsby requires significant breaking change.
 
