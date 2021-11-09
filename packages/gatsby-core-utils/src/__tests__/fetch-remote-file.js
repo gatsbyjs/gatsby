@@ -572,22 +572,15 @@ Fetch details:
 "Unable to fetch:
 http://external.com/network-error.svg
 ---
-Reason: Exceeded maximum retry attempts (3) (Response code 503 (Service Unavailable))
+Reason: ECONNREFUSED
 ---
 Fetch details:
 {
-  \\"attempts\\": 3,
+  \\"attempt\\": 3,
   \\"method\\": \\"GET\\",
-  \\"responseStatusCode\\": 503,
-  \\"responseStatusMessage\\": \\"Service Unavailable\\",
   \\"requestHeaders\\": {
     \\"user-agent\\": \\"got (https://github.com/sindresorhus/got)\\",
     \\"accept-encoding\\": \\"gzip, deflate, br\\"
-  },
-  \\"responseHeaders\\": {
-    \\"x-powered-by\\": \\"msw\\",
-    \\"content-length\\": \\"12\\",
-    \\"content-type\\": \\"text/html\\"
   }
 }
 ---"

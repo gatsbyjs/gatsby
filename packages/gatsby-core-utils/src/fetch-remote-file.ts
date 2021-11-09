@@ -59,17 +59,16 @@ function range(start: number, end: number): Array<number> {
 
 // Based on the defaults of https://github.com/JustinBeckwith/retry-axios
 const STATUS_CODES_TO_RETRY = [...range(100, 200), 429, ...range(500, 600)]
-// @todo these are not implemented yet
-// const ERROR_CODES_TO_RETRY = [
-//   `ETIMEDOUT`,
-//   `ECONNRESET`,
-//   `EADDRINUSE`,
-//   `ECONNREFUSED`,
-//   `EPIPE`,
-//   `ENOTFOUND`,
-//   `ENETUNREACH`,
-//   `EAI_AGAIN`,
-// ]
+const ERROR_CODES_TO_RETRY = [
+  `ETIMEDOUT`,
+  `ECONNRESET`,
+  `EADDRINUSE`,
+  `ECONNREFUSED`,
+  `EPIPE`,
+  `ENOTFOUND`,
+  `ENETUNREACH`,
+  `EAI_AGAIN`,
+]
 
 let fetchCache = new Map()
 let latestBuildId = ``
@@ -385,20 +384,25 @@ function requestRemoteNode(
       fsWriteStream.close()
       fs.removeSync(tmpFilename)
 
+      if (!(error instanceof RequestError)) {
+        return reject(error)
+      }
+
       // This is a replacement for the stream retry logic of got
       // till we can update all got instances to v12
       // https://github.com/sindresorhus/got/blob/main/documentation/7-retry.md
       // https://github.com/sindresorhus/got/blob/main/documentation/3-streams.md#retry
+      const statusCode = error.response?.statusCode
+      const errorCode = error.code || error.message // got gives error.code, but msw/node returns the error codes in the message only
+
       if (
         // HTTP STATUS CODE ERRORS
-        error instanceof RequestError &&
-        error.response?.statusCode &&
-        STATUS_CODES_TO_RETRY.includes(error.response.statusCode)
-        // ||
+        (statusCode && STATUS_CODES_TO_RETRY.includes(statusCode)) ||
         // GENERAL NETWORK ERRORS
-        // (error.code && ERROR_CODES_TO_RETRY.includes(error.code))
+        (errorCode && ERROR_CODES_TO_RETRY.includes(errorCode))
       ) {
         if (attempt < INCOMPLETE_RETRY_LIMIT) {
+          console.log(`Retrying:`, { url, attempt })
           setTimeout(() => {
             resolve(
               requestRemoteNode(
@@ -412,42 +416,36 @@ function requestRemoteNode(
           }, BACKOFF_TIME * attempt)
 
           return undefined
-        } else {
-          if (!(error instanceof RequestError)) {
-            return reject(error)
-          }
+        }
+        // Throw user friendly error
+        error.message = [
+          `Unable to fetch:`,
+          url,
+          `---`,
+          `Reason: ${error.message}`,
+          `---`,
+        ].join(`\n`)
 
-          // Throw user friendly error
+        // Gather details about what went wrong from the error object and the request
+        const details = Object.entries({
+          attempt,
+          method: error.options?.method,
+          errorCode: error.code,
+          responseStatusCode: error.response?.statusCode,
+          responseStatusMessage: error.response?.statusMessage,
+          requestHeaders: error.options?.headers,
+          responseHeaders: error.response?.headers,
+        })
+          // Remove undefined values from the details to keep it clean
+          .reduce((a, [k, v]) => (v === undefined ? a : ((a[k] = v), a)), {})
+
+        if (Object.keys(details).length) {
           error.message = [
-            `Unable to fetch:`,
-            url,
-            `---`,
-            `Reason: ${error.message}`,
+            error.message,
+            `Fetch details:`,
+            JSON.stringify(details, null, 2),
             `---`,
           ].join(`\n`)
-
-          // Gather details about what went wrong from the error object and the request
-          const details = Object.entries({
-            attempt,
-            method: error.options?.method,
-            errorCode: error.code,
-            responseStatusCode: error.response?.statusCode,
-            responseStatusMessage: error.response?.statusMessage,
-            requestHeaders: error.options?.headers,
-            responseHeaders: error.response?.headers,
-          })
-            // Remove undefined values from the details to keep it clean
-            .reduce((a, [k, v]) => (v === undefined ? a : ((a[k] = v), a)), {})
-
-          if (Object.keys(details).length) {
-            error.message = [
-              error.message,
-              `Fetch details:`,
-              JSON.stringify(details, null, 2),
-              `---`,
-            ].join(`\n`)
-          }
-          return reject(error)
         }
       }
 
