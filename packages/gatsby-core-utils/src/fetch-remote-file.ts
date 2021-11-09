@@ -8,7 +8,6 @@ import {
   getRemoteFileExtension,
   createFilePath,
 } from "./filename-utils"
-import { range } from "lodash"
 import type { IncomingMessage } from "http"
 import type { GatsbyCache } from "gatsby"
 
@@ -49,19 +48,25 @@ const INCOMPLETE_RETRY_LIMIT = process.env.GATSBY_INCOMPLETE_RETRY_LIMIT
   ? parseInt(process.env.GATSBY_INCOMPLETE_RETRY_LIMIT, 10)
   : 3
 
+function range(start: number, end: number): Array<number> {
+  return Array(end - start)
+    .fill(null)
+    .map((_, i) => start + i)
+}
+
 // Based on the defaults of https://github.com/JustinBeckwith/retry-axios
 const STATUS_CODES_TO_RETRY = [...range(100, 200), 429, ...range(500, 600)]
 // @todo these are not implemented yet
-const ERROR_CODES_TO_RETRY = [
-  `ETIMEDOUT`,
-  `ECONNRESET`,
-  `EADDRINUSE`,
-  `ECONNREFUSED`,
-  `EPIPE`,
-  `ENOTFOUND`,
-  `ENETUNREACH`,
-  `EAI_AGAIN`,
-]
+// const ERROR_CODES_TO_RETRY = [
+//   `ETIMEDOUT`,
+//   `ECONNRESET`,
+//   `EADDRINUSE`,
+//   `ECONNREFUSED`,
+//   `EPIPE`,
+//   `ENOTFOUND`,
+//   `ENETUNREACH`,
+//   `EAI_AGAIN`,
+// ]
 
 let fetchCache = new Map()
 let latestBuildId = ``
@@ -350,6 +355,9 @@ function requestRemoteNode(
     // Fixes a bug in latest got where progress.total gets reset when stream ends, even if it wasn't complete.
     let totalSize: number | null = null
     responseStream.on(`downloadProgress`, progress => {
+      // reset the timeout on each progress event to make sure large files don't timeout
+      resetTimeout()
+
       if (
         progress.total != null &&
         (!totalSize || totalSize < progress.total)
@@ -389,8 +397,7 @@ function requestRemoteNode(
       ) {
         if (attempt < INCOMPLETE_RETRY_LIMIT) {
           // @todo The tests don't like the delay. I tried several ways and positions.
-          // new Promise(r => setTimeout(r, 1000 * attempt)).then(() =>
-          resolve(
+          new Promise(resolve => setTimeout(resolve, 1000 * attempt)).then(() =>
             requestRemoteNode(
               url,
               headers,
@@ -399,7 +406,6 @@ function requestRemoteNode(
               attempt + 1
             )
           )
-          // )
 
           return undefined
         } else {
