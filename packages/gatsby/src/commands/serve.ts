@@ -272,7 +272,6 @@ module.exports = async (program: IServeProgram): Promise<void> => {
               } else {
                 return void res.send(results)
               }
-
             } catch (e) {
               report.error(
                 `Generating page-data for "${requestedPagePath}" / "${potentialPagePath}" failed.`,
@@ -323,7 +322,6 @@ module.exports = async (program: IServeProgram): Promise<void> => {
               } else {
                 return void res.send(results)
               }
-              
             } catch (e) {
               report.error(
                 `Rendering html for "${potentialPagePath}" failed.`,
