@@ -267,7 +267,11 @@ module.exports = async (program: IServeProgram): Promise<void> => {
                 }
               }
 
-              return void res.send(results)
+              if (page.mode === `SSR` && data.serverDataStatus) {
+                return void res.status(data.serverDataStatus).send(results)
+              } else {
+                return void res.send(results)
+              }
             } catch (e) {
               report.error(
                 `Generating page-data for "${requestedPagePath}" / "${potentialPagePath}" failed.`,
@@ -313,7 +317,11 @@ module.exports = async (program: IServeProgram): Promise<void> => {
                 }
               }
 
-              return res.send(results)
+              if (page.mode === `SSR` && data.serverDataStatus) {
+                return void res.status(data.serverDataStatus).send(results)
+              } else {
+                return void res.send(results)
+              }
             } catch (e) {
               report.error(
                 `Rendering html for "${potentialPagePath}" failed.`,

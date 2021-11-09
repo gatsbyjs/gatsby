@@ -34,8 +34,9 @@ The `context` parameter is an object with the following keys:
 - `query`: An object representing the query string
 - `params`: If you use [File System Route API](/docs/reference/routing/file-system-route-api/) the URL path gets passed in as `params`. For example, if your page is at `src/pages/{Product.name}.js` the `params` will be an object like `{ name: 'value' }`.
 
-`getServerData` can return an object with two keys:
+`getServerData` can return an object with several possible keys:
 
+- `status` (optional): The HTTP status code that should be returned. Should be a [valid HTTP status](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) code.
 - `props` (optional): Object containing the data passed to `serverData` page prop. Should be a serializable object.
 - `headers` (optional): Object containing `headers` that are sent to the browser and caching proxies/CDNs (e.g., cache headers).
 
