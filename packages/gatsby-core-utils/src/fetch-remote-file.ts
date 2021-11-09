@@ -402,7 +402,6 @@ function requestRemoteNode(
         (errorCode && ERROR_CODES_TO_RETRY.includes(errorCode))
       ) {
         if (attempt < INCOMPLETE_RETRY_LIMIT) {
-          console.log(`Retrying:`, { url, attempt })
           setTimeout(() => {
             resolve(
               requestRemoteNode(
