@@ -48,6 +48,9 @@ const INCOMPLETE_RETRY_LIMIT = process.env.GATSBY_INCOMPLETE_RETRY_LIMIT
   ? parseInt(process.env.GATSBY_INCOMPLETE_RETRY_LIMIT, 10)
   : 3
 
+// jest doesn't allow us to run all timings infinitely, so we set it 0  in tests
+const BACKOFF_TIME = process.env.NODE_ENV === `test` ? 0 : 1000
+
 function range(start: number, end: number): Array<number> {
   return Array(end - start)
     .fill(null)
@@ -396,16 +399,17 @@ function requestRemoteNode(
         // (error.code && ERROR_CODES_TO_RETRY.includes(error.code))
       ) {
         if (attempt < INCOMPLETE_RETRY_LIMIT) {
-          // @todo The tests don't like the delay. I tried several ways and positions.
-          new Promise(resolve => setTimeout(resolve, 1000 * attempt)).then(() =>
-            requestRemoteNode(
-              url,
-              headers,
-              tmpFilename,
-              httpOptions,
-              attempt + 1
+          setTimeout(() => {
+            resolve(
+              requestRemoteNode(
+                url,
+                headers,
+                tmpFilename,
+                httpOptions,
+                attempt + 1
+              )
             )
-          )
+          }, BACKOFF_TIME * attempt)
 
           return undefined
         } else {

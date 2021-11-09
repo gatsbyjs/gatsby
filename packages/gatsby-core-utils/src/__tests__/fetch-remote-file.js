@@ -1,4 +1,5 @@
 // @ts-check
+
 import path from "path"
 import zlib from "zlib"
 import os from "os"
@@ -347,8 +348,6 @@ describe(`fetch-remote-file`, () => {
     jest.runAllTimers()
     await requests[0]
 
-    jest.useRealTimers()
-
     // we still expect 2 fetches because cache can't save fast enough
     expect(gotStream).toBeCalledTimes(2)
     expect(fsMove).toBeCalledTimes(1)
@@ -408,20 +407,12 @@ describe(`fetch-remote-file`, () => {
     jest.runAllTimers()
     await requests[0]
 
-    jest.useRealTimers()
-
     // we still expect 4 fetches because cache can't save fast enough
     expect(gotStream).toBeCalledTimes(4)
     expect(fsMove).toBeCalledTimes(2)
   })
 
   it(`doesn't keep lock when file download failed`, async () => {
-    jest.setTimeout(7000)
-
-    // we don't want to wait for polling to finish
-    jest.useFakeTimers()
-    jest.runAllTimers()
-
     const cacheInternals = new Map()
     const workerCache = {
       get(key) {
@@ -443,16 +434,12 @@ describe(`fetch-remote-file`, () => {
       })
     ).rejects.toThrow()
 
-    jest.runAllTimers()
-
     await expect(
       fetchRemoteFileInstanceTwo({
         url: `http://external.com/500.jpg`,
         cache: workerCache,
       })
     ).rejects.toThrow()
-
-    jest.useRealTimers()
 
     expect(gotStream).toBeCalledTimes(3)
     expect(fsMove).toBeCalledTimes(0)
@@ -468,8 +455,6 @@ describe(`fetch-remote-file`, () => {
   })
 
   it(`fails when 500 is triggered`, async () => {
-    jest.setTimeout(7000)
-
     await expect(
       fetchRemoteFile({
         url: `http://external.com/500.jpg`,
@@ -529,12 +514,12 @@ Fetch details:
     })
 
     it(`Retries when server returns 503 error till server returns 200`, async () => {
-      jest.setTimeout(7000)
-
-      const filePath = await fetchRemoteFile({
+      const fetchRemoteFileInstance = fetchRemoteFile({
         url: `http://external.com/503-twice.svg`,
         cache,
       })
+
+      const filePath = await fetchRemoteFileInstance
 
       expect(path.basename(filePath)).toBe(`503-twice.svg`)
       expect(getFileSize(filePath)).resolves.toBe(
@@ -544,8 +529,6 @@ Fetch details:
     })
 
     it(`Stops retry when maximum attempts is reached`, async () => {
-      jest.setTimeout(7000)
-
       await expect(
         fetchRemoteFile({
           url: `http://external.com/503-forever.svg`,
@@ -579,9 +562,7 @@ Fetch details:
       expect(gotStream).toBeCalledTimes(3)
     })
     // @todo retry on network errors
-    it.skip(`Retries on network errors`, async () => {
-      jest.setTimeout(7000)
-
+    it(`Retries on network errors`, async () => {
       await expect(
         fetchRemoteFile({
           url: `http://external.com/network-error.svg`,
