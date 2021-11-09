@@ -36,7 +36,9 @@ The `context` parameter is an object with the following keys:
 
 `getServerData` can return an object with two keys:
 
+- `status` (optional): The HTTP status code that should be returned. Should be a [valid HTTP status](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) code.  
 - `props` (optional): Object containing the data passed to `serverData` page prop. Should be a serializable object.
+object.
 - `headers` (optional): Object containing `headers` that are sent to the browser and caching proxies/CDNs (e.g., cache headers).
 
 ### Use `serverData` prop in React page component
