@@ -51,6 +51,7 @@ const flattenPlugins = (plugins: Array<IPluginInfo>): Array<IPluginInfo> => {
             roots = roots.map(root => root[segment])
           }
         }
+        roots = roots.flat()
 
         roots.forEach(subPlugin => {
           flattened.push(subPlugin)
