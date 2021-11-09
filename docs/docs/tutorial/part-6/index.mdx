@@ -14,6 +14,20 @@ So far, the way you've created new pages for your Gatsby site is by creating a n
 
 In this part of the Tutorial, you'll learn how to create new pages dynamically using Gatsby's Filesystem Route API.
 
+<Announcement style={{marginBottom: "1.5rem"}}>
+  
+**Want to create pages for files outside `src/pages` directory?**
+
+The below tutorial will only work for page components, i.e. files located in `src/pages` directory. However, you may want to put your content in a separte location from the source code folder, like `content/posts`. In `gatsby-node.js`, you'll need to query for MDX nodes, then call the `createPages` API on each result. Inside `createPages`, you will specify value for the following fields:
+
+- `path`: the path each post should be rendered to.
+- `component`: the component that will wrap your MDX content. It functions the same as the template file `{mdx.slug}.js` below, but it can be placed anywhere in your project, not resricted to `src/pages`.
+- `context`: a simple identifying piece of infomration about each MDX nodes.The most common fields to pass to `context` are `id` or `slug` because they are unique to each MDX Node.
+
+Please visit this [page](https://www.gatsbyjs.com/docs/mdx/programmatically-creating-pages) for step-by-step instruction.
+
+</Announcement>
+  
 By the end of this part of the Tutorial, you will be able to:
 
 - Use Gatsby's Filesystem Route API to dynamically create new pages for your blog posts.
