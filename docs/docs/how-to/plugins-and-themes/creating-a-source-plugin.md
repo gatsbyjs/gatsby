@@ -11,7 +11,15 @@ In this tutorial, you'll create your own source plugin that will gather data fro
 
 Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/reference/graphql-data-layer/node-interface/). This tutorial uses a demo API so that you can see how the data works on both the frontend and backend, but the same principles apply if you would like to source data from another API.
 
-For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/how-to/plugins-and-themes/creating-a-source-plugin/).
+At a high-level, a source plugin:
+
+- Ensures local data is synced with its source and is 100% accurate.
+- Creates [nodes](/docs/reference/graphql-data-layer/node-interface/) with accurate media types, human-readable types, and accurate
+  [contentDigests](/docs/reference/graphql-data-layer/node-interface/#contentdigest).
+- Links nodes & creates relationships between them.
+- Lets Gatsby know when nodes are finished sourcing so it can move on to processing them.
+
+A source plugin is a regular npm package. It has a `package.json` file, with optional dependencies, as well as a [`gatsby-node.js`](/docs/reference/config-files/gatsby-node/) file where you implement Gatsby's Node APIs. Read more about [files Gatsby looks for in a plugin](/docs/files-gatsby-looks-for-in-a-plugin/) or [creating a generic plugin](/docs/how-to/plugins-and-themes/creating-a-generic-plugin).
 
 ## Why create a source plugin?
 
@@ -19,7 +27,7 @@ Source plugins convert data from any source into a format that Gatsby can proces
 
 There may not be [an existing plugin](/plugins/?=gatsby-source) for your data source, so you can create your own.
 
-_**NOTE:** if your data is local i.e. on your file system and part of your site's repo, then you generally don't want to create a new source plugin. Instead you want to use [gatsby-source-filesystem](/plugins/gatsby-source-filesystem/) which handles reading and watching files for you. You can then use [transformer plugins](/plugins/?=gatsby-transformer) like [gatsby-transformer-yaml](/plugins/gatsby-transformer-yaml/) to make queryable data from files._
+**Please Note:** If your data is local i.e. on your file system and part of your site's repo, then you generally don't want to create a new source plugin. Instead you want to use [gatsby-source-filesystem](/plugins/gatsby-source-filesystem/) which handles reading and watching files for you. You can then use [transformer plugins](/plugins/?=gatsby-transformer) like [gatsby-transformer-yaml](/plugins/gatsby-transformer-yaml/) to make queryable data from files.
 
 ## How to create a source plugin
 
@@ -45,8 +53,6 @@ query {
 ```
 
 This data is an example of the data you will source with your plugin.
-
-_You can also see a running version of the GraphQL playground associated with a distinct API at [https://gatsby-source-plugin-api.glitch.me/](https://gatsby-source-plugin-api.glitch.me/), which is running the `api` folder in a Glitch project, like you would when you run `npm start` on your own computer._
 
 #### Plugin behavior
 
@@ -228,8 +234,6 @@ exports.onPostBuild = async ({ cache }) => {
 }
 ```
 
-> In addition to the cache, plugins can save metadata to the [internal Redux store](/docs/data-storage-redux/) with `setPluginStatus`.
-
 This can reduce the time it takes repeated data fetching operations to run if you are pulling in large amounts of data for your plugin. Existing plugins like [`gatsby-source-contentful`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-contentful/src/gatsby-node.js) generate a token that is sent with each request to only return new data.
 
 You can read more about the cache API, other types of plugins that leverage the cache, and example open source plugins that use the cache in the [build caching guide](/docs/build-caching).
@@ -307,7 +311,7 @@ exports.sourceNodes = async ({
 // ...
 ```
 
-You can read about each of the packages that are working together in [Apollo's docs](https://www.apollographql.com/docs/react/). The end result is creating a `client` that you can use to call methods like `query` to get data from the source it's configured to work with. In this case, that is `http://localhost:4000` where you should have the API running. If you can't configure the API to run locally, you can update the URLs for the client to use `gatsby-source-plugin-api.glitch.me` where a version of the API is deployed, instead of `http://localhost:4000`.
+You can read about each of the packages that are working together in [Apollo's docs](https://www.apollographql.com/docs/react/). The end result is creating a `client` that you can use to call methods like `query` to get data from the source it's configured to work with. In this case, that is `http://localhost:4000` where you should have the API running.
 
 #### Query data from the API
 
@@ -468,7 +472,7 @@ query {
 
 Each node created by the filesystem source plugin includes the raw content of the file and its _media type_.
 
-[A **media type**](https://en.wikipedia.org/wiki/Media_type) (also **MIME type** and **content type**) is an official way to identify the format of files/content that are transmitted via the internet, e.g. over HTTP or through email. You might be familiar with other media types such as `application/javascript`, `audio/mpeg`, `text/html`, etc.
+A [**media type**](https://en.wikipedia.org/wiki/Media_type) (also **MIME type** and **content type**) is an official way to identify the format of files/content that are transmitted via the internet, e.g. over HTTP or through email. You might be familiar with other media types such as `application/javascript`, `audio/mpeg`, `text/html`, etc.
 
 Each source plugin is responsible for setting the media type for the nodes it creates. This way, source and transformer plugins can work together easily.
 
@@ -482,13 +486,13 @@ This loose coupling between the data source and the transformer plugins allow Ga
 
 ### Optimize remote images
 
-Each node of post data has an `imgUrl` field with the URL of an image on Unsplash. You could use that URL to load images on your site, but they will be large and take a long time to load. You can optimize the images with your source plugin so that a site using your plugin already has data for `gatsby-image` ready to go!
+Each node of post data has an `imgUrl` field with the URL of an image on Unsplash. You could use that URL to load images on your site, but they will be large and take a long time to load. You can optimize the images with your source plugin so that a site using your plugin already has data for `gatsby-plugin-image` ready to go!
 
-You can read about [how to use Gatsby Image to prevent image bloat](/docs/how-to/images-and-media/using-gatsby-image/) if you are unfamiliar with it.
+You can read about [how to use the Gatsby Image plugin](/docs/how-to/images-and-media/using-gatsby-plugin-image/) if you are unfamiliar with it.
 
 #### Create remote file node from a URL
 
-To create optimized images from URLs, `File` nodes for image files need to be added to your site's data. Then, you can install `gatsby-plugin-sharp` and `gatsby-transformer-sharp` which will automatically find image files and add the data needed for `gatsby-image`.
+To create optimized images from URLs, `File` nodes for image files need to be added to your site's data. Then, you can install `gatsby-plugin-sharp` and `gatsby-transformer-sharp` which will automatically find image files and add the data needed for `gatsby-plugin-image`.
 
 Start by installing `gatsby-source-filesystem` in the `source-plugin` project:
 
@@ -572,7 +576,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-_**Note**: You can use [schema customization APIs](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields) to create these kinds of connections between nodes as well as sturdier and more strictly typed ones._
+**Note**: You can use [schema customization APIs](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields) to create these kinds of connections between nodes as well as sturdier and more strictly typed ones.
 
 You now can query the image like this:
 
@@ -594,12 +598,12 @@ At this point you have created local image files from the remote locations and a
 
 #### Transform `File` nodes with sharp plugins
 
-Sharp plugins make optimization of images possible at build time.
+sharp plugins make optimization of images possible at build time.
 
-Install `gatsby-plugin-sharp` and `gatsby-transformer-sharp` in the `example-site` (_not_ the plugin):
+Install `gatsby-plugin-sharp`, `gatsby-plugin-image`, and `gatsby-transformer-sharp` in the `example-site` (_not_ the plugin):
 
 ```shell:title=example-site
-npm install gatsby-plugin-sharp gatsby-transformer-sharp
+npm install gatsby-plugin-sharp gatsby-transformer-sharp gatsby-plugin-image
 ```
 
 Then include the plugins in your `gatsby-config`:
@@ -609,6 +613,7 @@ module.exports = {
   plugins: [
     require.resolve(`../source-plugin`),
     // highlight-start
+    `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
     // highlight-end
@@ -627,7 +632,7 @@ query {
       localFile {
         // highlight-start
         childImageSharp {
-          id
+          gatsbyImageData
         }
         // highlight-end
       }
@@ -636,7 +641,7 @@ query {
 }
 ```
 
-With data available, you can now query optimized images to use with the `gatsby-image` component in a site! You will need to install `gatsby-image` before you can use it.
+With data available, you can now query optimized images to use with the `gatsby-plugin-image` component in a site!
 
 ### Create foreign key relationships between data
 
@@ -694,12 +699,10 @@ In the `example-site`, you can now query data from pages.
 
 Add a file at `example-site/src/pages/index.js` and copy the following code into it:
 
-Ensure you have `gatsby-image` installed in the site by running `npm install gatsby-image`. It provides a component that can take the optimized image data and render it.
-
 ```jsx:title=example-site/src/pages/index.js
 import React from "react"
 import { graphql } from "gatsby"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 
 export default ({ data }) => (
   <>
@@ -723,8 +726,8 @@ export default ({ data }) => (
           <h2>{post.slug}</h2>
           <span>By: {post.author.name}</span>
           <p>{post.description}</p>
-          <Img
-            fluid={post.localFile?.childImageSharp?.fluid}
+          <GatsbyImage
+            image={post.localFile?.childImageSharp?.gatsbyImageData}
             alt={post.imgAlt}
           />
         </div>
@@ -746,12 +749,8 @@ export const query = graphql`
           name
         }
         localFile {
-          id
           childImageSharp {
-            id
-            fluid {
-              ...GatsbyImageSharpFluid
-            }
+            gatsbyImageData(formats: [AUTO, WEBP, AVIF])
           }
         }
       }
@@ -799,7 +798,7 @@ exports.sourceNodes = async (
 }
 ```
 
-Options can be a good way of providing conditional paths to logic that you as a plugin author want to provide or limit.
+Options can be a good way of providing conditional paths to logic that you as a plugin author want to provide or limit. Read the [Configuring Plugin usage with Plugin Options](/docs/how-to/plugins-and-themes/configuring-usage-with-plugin-options/) guide to learn how to add validation to your plugin options.
 
 ### Improve plugin developer experience by enabling faster sync
 
@@ -811,7 +810,7 @@ Some data sources keep event logs and are able to return a list of objects modif
 
 Don't publish this particular plugin to npm or the Gatsby Plugin Library, because it's just a sample plugin for the tutorial. However, if you've built a local plugin for your project, and want to share it with others, npm allows you to publish your plugins. Check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
 
-> **NOTE:** Once you have published your plugin on npm, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins/) (please do!), please [follow these steps](/docs/how-to/plugins-and-themes/submit-to-plugin-library/).
+**Please Note:** Once you have published your plugin on npm, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins/) (please do!), please [follow these steps](/docs/how-to/plugins-and-themes/submit-to-plugin-library/).
 
 ## Summary
 
