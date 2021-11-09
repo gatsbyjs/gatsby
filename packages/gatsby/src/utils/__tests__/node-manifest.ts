@@ -1,7 +1,6 @@
 import { foundPageByToLogIds } from "./../node-manifest"
 import path from "path"
 import fs from "fs-extra"
-import { joinPath } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../../redux"
 import { getNode } from "../../datastore"
@@ -316,7 +315,7 @@ describe(`processNodeManifests`, () => {
 
       expect(fs.writeJSON).toHaveBeenNthCalledWith(
         index + 1,
-        `${joinPath(
+        `${path.join(
           process.cwd(),
           `public`,
           `__node-manifests`,

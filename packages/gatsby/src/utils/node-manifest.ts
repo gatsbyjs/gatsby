@@ -1,5 +1,4 @@
 import type { ErrorId } from "gatsby-cli/lib/structured-errors/error-map"
-import { joinPath } from "gatsby-core-utils"
 import { getNode } from "./../datastore"
 import { IGatsbyPage, INodeManifest } from "./../redux/types"
 import reporter from "gatsby-cli/lib/reporter"
@@ -279,14 +278,7 @@ export async function processNodeManifest(
 
   const gatsbySiteDirectory = store.getState().program.directory
 
-  // write out the manifest file
-  let manifestFilePath = joinPath(
-    gatsbySiteDirectory,
-    `public`,
-    `__node-manifests`,
-    inputManifest.pluginName,
-    `${inputManifest.manifestId}.json`
-  )
+  let fileNameBase = inputManifest.manifestId
 
   /**
    * Windows has a handful of special/reserved characters that are not valid in a file path
@@ -303,11 +295,20 @@ export async function processNodeManifest(
    * to write one of these manifests to disk.
    */
   if (process.platform === `win32`) {
-    manifestFilePath = manifestFilePath.replace(
+    fileNameBase = fileNameBase.replace(
       /((?<!^[A-Za-z])):|\/|\*|\?|"|<|>|\|/g,
       `-`
     )
   }
+
+  // write out the manifest file
+  const manifestFilePath = path.join(
+    gatsbySiteDirectory,
+    `public`,
+    `__node-manifests`,
+    inputManifest.pluginName,
+    `${fileNameBase}.json`
+  )
 
   const manifestFileDir = path.dirname(manifestFilePath)
 
