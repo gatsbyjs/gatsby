@@ -20,7 +20,7 @@ Note: Future time ranges are listed when a specific target date is not yet deter
 
 ## Terminology
 
-- **Critical Patch** - A critical patche addresses an issue that prevents the Gatsby framework from delivering intended user value under typical conditions. Other items, such as minor bug fixes and new features are not considered "critical patches" to Gatsby.
+- **Critical Patch** - A critical patch addresses an issue that prevents the Gatsby framework from delivering intended user value under typical conditions. Other items, such as minor bug fixes and new features are not considered "critical patches" to Gatsby.
 
 - **Active Long-Term Support** - Receives priority attention from the core maintainers of Gatsby. New features to Gatsby are only available in the Active Long-Term Supported version.
 
