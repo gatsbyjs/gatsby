@@ -4,35 +4,29 @@ title: Gatsby Framework Version Support
 
 ## Introduction
 
-As we continue evolving the Gatsby framework, and as we move from one major version to the next, we will communicate the duration and types of support provided to the prior major version. This allows users to effectively plan their Gatsby framework upgrades.
+This page illustrates the support plans for the major versionf of Gastby. This allows you to effectively plan their Gatsby framework upgrades.
 
-Generally, we plan to release 1 major version per calendar year. There are times when we will break that rule when a necessary evolution of Gatsby requires significant breaking change.
+Generally, you can expect **1 major version per calendar year**. Although, there may be more than 1 major per year when a necessary evolution of Gatsby requires significant breaking change.
 
-## What is happening, when?
+## Release and support schedule
 
-### Gatsby 4 GA - October 21, 2021 
+Note: Future time ranges are listed when a specific target date is not yet determined.
 
-Starting on **January 1, 2022**:
+| Version | Status                        | As Of            | Until           |
+| ------- | ----------------------------- | ---------------- | --------------- |
+| 4       | Active                        | October 21, 2021 | Summer 2022     |
+| 3       | Maintenance Long-term support | October 21, 2021 | Summer 2022     |
+| 2       | Maintenance Long-term support | March 3, 2021    | January 1, 2022 |
 
-- Gatsby Version 4 will be considered the Active Long-Term Support version of Gatsby.
-  - This means that users will need to leverage Gatsby Version 3 in order to take advantage of new features and receive bug fixes.
-- Gatsby Version 3 will enter Maintenance Long-Term Support.
-  - This means that users of Version 3 will only receive critical patches
-  - The Maintenance Long-Term Support will continue until the release of Gatsby v4 (date TBD).
+## Terminology
 
-### Gatsby 3 GA - March 3, 2021
+- **Critical Patch** - A critical patche addresses an issue that prevents the Gatsby framework from delivering intended user value under typical conditions. Other items, such as minor bug fixes and new features are not considered "critical patches" to Gatsby.
 
- Starting on **June 8, 2021**:
+- **Active Long-Term Support** - Receives priority attention from the core maintainers of Gatsby. New features to Gatsby are only available in the Active Long-Term Supported version.
 
-- Gatsby Version 3 will be considered the Active Long-Term Support version of Gatsby.
-  - This means that users will need to leverage Gatsby Version 3 in order to take advantage of new features and receive bug fixes.
-- Gatsby Version 2.32 will enter Maintenance Long-Term Support.
-  - This means that users of Version 2.32 will only receive critical patches
-  - The Maintenance Long-Term Support will continue until the release of Gatsby v4 (date TBD).
+- **Maintenance Long-term Support** - Receives critical patches, but does not receive new features.
 
-## What are the characteristics of a "critical patch"?
-
-Critical patches address issues that prevent the Gatsby framework from delivering intended user value under typical conditions. Other items, such as minor bug fixes and new features are not considered "critical patches" to Gatsby.
+- **Unsupported** - This version of Gatsby no longer receives official support of any kind.
 
 ## What does this mean for users of the Gatsby framework?
 
@@ -42,4 +36,3 @@ Critical patches address issues that prevent the Gatsby framework from deliverin
 ## What does this mean for Gatsby Cloud?
 
 Your Gatsby-powered sites will continue to run as they do today in Gatsby Cloud. However, as enhancements are delivered within Gatsby Cloud and the Gatsby framework, you may need to upgrade your site(s) in order to take advantage of those features and performance enhancements.
-
