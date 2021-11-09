@@ -295,10 +295,7 @@ export async function processNodeManifest(
    * to write one of these manifests to disk.
    */
   if (process.platform === `win32`) {
-    fileNameBase = fileNameBase.replace(
-      /((?<!^[A-Za-z])):|\/|\*|\?|"|<|>|\|/g,
-      `-`
-    )
+    fileNameBase = fileNameBase.replace(/:|\/|\*|\?|"|<|>|\||\\/g, `-`)
   }
 
   // write out the manifest file
