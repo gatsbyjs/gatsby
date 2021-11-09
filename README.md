@@ -147,7 +147,7 @@ We welcome suggestions for improving our docs. See the [“how to contribute”]
 
 Wondering what we've shipped recently? Check out our [release notes](https://www.gatsbyjs.com/docs/reference/release-notes) for key highlights, performance improvements, new features, and notable bugfixes.
 
-Also, [see here](https://www.gatsbyjs.com/docs/reference/release-notes/gatsby-version-support/) to understand the version support plans for each version of Gatsby.
+Also, read our [documentation on version support](https://www.gatsbyjs.com/docs/reference/release-notes/gatsby-version-support/) to understand our plans for each version of Gatsby.
 
 ## 💼 Migration Guides
 
