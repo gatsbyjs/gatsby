@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.1.1/packages/gatsby) (2021-11-08)
+
+#### Bug Fixes
+
+- preserve query params on pages without trailing slashes [#33811](https://github.com/gatsbyjs/gatsby/issues/33811) [#33894](https://github.com/gatsbyjs/gatsby/issues/33894) ([e32b355](https://github.com/gatsbyjs/gatsby/commit/e32b355e094d22b83847fbd21e02a65d7ea37b84))
+
 ## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.1.0/packages/gatsby) (2021-11-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
