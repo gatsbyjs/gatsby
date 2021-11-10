@@ -30,7 +30,7 @@ Note: Future time ranges are listed when a specific target date is not yet deter
 
 ## What does this mean for users of the Gatsby framework?
 
-- To receive the newest enhancements and bug fixes, ensure that you've [migrated to Gatsby Version 4](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v3-to-v4/) by **January 1, 2022**
+- To receive the newest enhancements and bug fixes, ensure that you've [migrated to Gatsby Version 4](/docs/reference/release-notes/migrating-from-v3-to-v4/) by **January 1, 2022**
 - Continue reporting any issues as you typically would, either using [support](https://www.gatsbyjs.com/support/) on Gatsbyjs.com, or by [opening an issues](https://github.com/gatsbyjs/gatsby/issues/new/choose) in our GitHub repository.
 
 ## What does this mean for Gatsby Cloud?
