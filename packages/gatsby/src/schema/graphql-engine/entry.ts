@@ -4,6 +4,7 @@ import "../../utils/engines-fs-provider"
 
 import { ExecutionResult, Source } from "graphql"
 import { uuid } from "gatsby-core-utils"
+import { Reference } from "opentracing"
 import { build } from "../index"
 import { setupLmdbStore } from "../../datastore/lmdb/lmdb-datastore"
 import { store } from "../../redux"
@@ -23,15 +24,29 @@ import {
   flattenedPlugins,
   // @ts-ignore
 } from ".cache/query-engine-plugins"
-import { initTracer } from "../../utils/tracer"
+import {
+  initTracer,
+  setLongRunningParentSpan,
+  getLongRunningParentSpan,
+} from "../../utils/tracer"
 
 type MaybePhantomActivity =
   | ReturnType<typeof reporter.phantomActivity>
   | undefined
 
+const DEFAULT_REFERENCE_TYPE = ``
 const tracerReadyPromise = initTracer(
   process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``
-)
+).then(tracer => {
+  // create "long running" span, so that our global "Running jobs v2"
+  // span is assigned to it instead of wrongly assigning it with OpenTelemetry
+  // ActiveSpan in first requests that make jobs processing queue active
+  const longRunningSpan = tracer.startSpan(`Engine long running globals`)
+  setLongRunningParentSpan(longRunningSpan)
+  longRunningSpan.finish()
+})
+
+let initializeActivity: MaybePhantomActivity
 
 export class GraphQLEngine {
   // private schema: GraphQLSchema
@@ -39,6 +54,7 @@ export class GraphQLEngine {
 
   constructor({ dbPath }: { dbPath: string }) {
     setupLmdbStore({ dbPath })
+
     // start initializing runner ASAP
     this.getRunner()
   }
@@ -46,8 +62,11 @@ export class GraphQLEngine {
   private async _doGetRunner(): Promise<GraphQLRunner> {
     await tracerReadyPromise
 
-    const wrapActivity = reporter.phantomActivity(`Initializing GraphQL Engine`)
-    wrapActivity.start()
+    initializeActivity = reporter.phantomActivity(
+      `Initializing GraphQL Engine`,
+      { parentSpan: getLongRunningParentSpan() }
+    )
+    initializeActivity.start()
     try {
       // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
       store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
@@ -75,23 +94,28 @@ export class GraphQLEngine {
       }
 
       if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-        await apiRunnerNode(`onPluginInit`, { parentSpan: wrapActivity.span })
+        await apiRunnerNode(`onPluginInit`, {
+          parentSpan: initializeActivity.span,
+        })
       } else {
         await apiRunnerNode(`unstable_onPluginInit`, {
-          parentSpan: wrapActivity.span,
+          parentSpan: initializeActivity.span,
         })
       }
       await apiRunnerNode(`createSchemaCustomization`, {
-        parentSpan: wrapActivity.span,
+        parentSpan: initializeActivity.span,
       })
 
       // Build runs
       // Note: skipping inference metadata because we rely on schema snapshot
-      await build({ fullMetadataBuild: false, parentSpan: wrapActivity.span })
+      await build({
+        fullMetadataBuild: false,
+        parentSpan: initializeActivity.span,
+      })
 
       return new GraphQLRunner(store)
     } finally {
-      wrapActivity.end()
+      initializeActivity.end()
     }
   }
 
@@ -134,6 +158,14 @@ export class GraphQLEngine {
             `Waiting for graphql runner to init`,
             {
               parentSpan: opts.parentSpan,
+              references: initializeActivity
+                ? [
+                    new Reference(
+                      DEFAULT_REFERENCE_TYPE,
+                      initializeActivity.span.context()
+                    ),
+                  ]
+                : undefined,
             }
           )
           gettingRunnerActivity.start()

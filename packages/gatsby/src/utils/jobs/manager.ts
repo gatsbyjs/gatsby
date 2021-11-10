@@ -17,6 +17,7 @@ import {
   WorkerError,
 } from "./types"
 import { requireGatsbyPlugin } from "../require-gatsby-plugin"
+import { getLongRunningParentSpan } from "../tracer"
 
 type IncomingMessages = IJobCompletedMessage | IJobFailed | IJobNotWhitelisted
 
@@ -267,7 +268,9 @@ export async function enqueueJob(
   // Bump active jobs
   activeJobs++
   if (!activityForJobs) {
-    activityForJobs = reporter.phantomActivity(`Running jobs v2`)
+    activityForJobs = reporter.phantomActivity(`Running jobs v2`, {
+      parentSpan: getLongRunningParentSpan(),
+    })
     activityForJobs!.start()
   }
 

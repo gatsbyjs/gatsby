@@ -1,7 +1,7 @@
 import { stripIndent } from "common-tags"
 import chalk from "chalk"
 import { trackError } from "gatsby-telemetry"
-import { globalTracer, Span, SpanContext } from "opentracing"
+import { globalTracer, Span, SpanContext, Reference } from "opentracing"
 
 import * as reduxReporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
@@ -29,6 +29,7 @@ export interface IActivityArgs {
   id?: string
   parentSpan?: Span | SpanContext
   tags?: { [key: string]: any }
+  references?: Array<Reference>
 }
 
 let isVerbose = false
@@ -236,8 +237,10 @@ class Reporter {
     text: string,
     activityArgs: IActivityArgs = {}
   ): ITimerReporter => {
-    let { parentSpan, id, tags } = activityArgs
-    const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
+    let { parentSpan, id, tags, references } = activityArgs
+    const spanArgs = parentSpan
+      ? { childOf: parentSpan, tags, references }
+      : { tags, references }
     if (!id) {
       id = text
     }
@@ -267,8 +270,10 @@ class Reporter {
     text: string,
     activityArgs: IActivityArgs = {}
   ): IPhantomReporter => {
-    let { parentSpan, id, tags } = activityArgs
-    const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
+    let { parentSpan, id, tags, references } = activityArgs
+    const spanArgs = parentSpan
+      ? { childOf: parentSpan, tags, references }
+      : { tags, references }
     if (!id) {
       id = text
     }
@@ -287,8 +292,10 @@ class Reporter {
     start = 0,
     activityArgs: IActivityArgs = {}
   ): IProgressReporter => {
-    let { parentSpan, id, tags } = activityArgs
-    const spanArgs = parentSpan ? { childOf: parentSpan, tags } : { tags }
+    let { parentSpan, id, tags, references } = activityArgs
+    const spanArgs = parentSpan
+      ? { childOf: parentSpan, tags, references }
+      : { tags, references }
     if (!id) {
       id = text
     }

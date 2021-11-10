@@ -14,7 +14,11 @@ import { bootstrap } from "../bootstrap"
 import apiRunnerNode from "../utils/api-runner-node"
 import { GraphQLRunner } from "../query/graphql-runner"
 import { copyStaticDirs } from "../utils/get-static-dir"
-import { initTracer, stopTracer } from "../utils/tracer"
+import {
+  initTracer,
+  stopTracer,
+  setLongRunningParentSpan,
+} from "../utils/tracer"
 import * as db from "../redux/save-state"
 import { store } from "../redux"
 import * as appDataUtil from "../utils/app-data"
@@ -104,6 +108,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   })
 
   const buildSpan = buildActivity.span
+  setLongRunningParentSpan(buildSpan)
   buildSpan.setTag(`directory`, program.directory)
 
   const { gatsbyNodeGraphQLFunction, workerPool } = await bootstrap({

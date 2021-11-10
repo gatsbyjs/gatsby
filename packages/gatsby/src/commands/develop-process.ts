@@ -4,7 +4,7 @@ import telemetry from "gatsby-telemetry"
 import { isTruthy } from "gatsby-core-utils"
 import express from "express"
 import inspector from "inspector"
-import { initTracer } from "../utils/tracer"
+import { initTracer, setLongRunningParentSpan } from "../utils/tracer"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import onExit from "signal-exit"
 import {
@@ -145,6 +145,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
 
   const app = express()
   const parentSpan = tracer.startSpan(`bootstrap`)
+  setLongRunningParentSpan(parentSpan)
 
   const machine = developMachine.withContext({
     program,
