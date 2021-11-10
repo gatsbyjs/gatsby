@@ -169,8 +169,8 @@ async function createMockCache() {
   fs.ensureDir(tmpDir)
 
   return {
-    get: jest.fn(),
-    set: jest.fn(),
+    get: jest.fn(() => Promise.resolve(null)),
+    set: jest.fn(() => Promise.resolve(null)),
     directory: tmpDir,
   }
 }
@@ -448,7 +448,7 @@ describe(`fetch-remote-file`, () => {
 
     jest.useRealTimers()
 
-    expect(gotStream).toBeCalledTimes(2)
+    expect(gotStream).toBeCalledTimes(1)
     expect(fsMove).toBeCalledTimes(1)
   })
 
@@ -487,8 +487,8 @@ describe(`fetch-remote-file`, () => {
 
     expect(resultFromWorker).not.toBeUndefined()
     expect(resultFromMain).not.toBeUndefined()
-    expect(gotStream).toBeCalledTimes(2)
-    expect(fsMove).toBeCalledTimes(2)
+    expect(gotStream).toBeCalledTimes(1)
+    expect(fsMove).toBeCalledTimes(1)
   })
 
   it(`downloading a file in worker process after downloading it in another worker`, async () => {
