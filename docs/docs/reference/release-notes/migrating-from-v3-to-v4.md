@@ -254,7 +254,11 @@ in [this discussion](https://github.com/gatsbyjs/gatsby/discussions/32860#discus
 
 You can also learn more about this in the [migration guide for source plugins](/docs/reference/release-notes/migrating-source-plugin-from-v3-to-v4/#2-data-mutations-need-to-happen-during-sourcenodes-or-oncreatenode).
 
-### Field `SitePage.context` is no longer available in GraphQL queries
+### Changes to built-in types
+
+The built-in type `SitePage` now returns the `pageContext` key as `JSON` and won't infer any other information anymore. The `SitePlugin` type now has two new keys: `pluginOptions: JSON` and `packageJson: JSON`.
+
+#### Field `SitePage.context` is no longer available in GraphQL queries
 
 Before v4 you could query specific fields of the page context object:
 
@@ -262,7 +266,9 @@ Before v4 you could query specific fields of the page context object:
 {
   allSitePage {
     nodes {
-      context: { foo }
+      context {
+        foo
+      }
     }
   }
 }
@@ -298,10 +304,6 @@ exports.createSchemaCustomization = ({ actions }) => {
   `)
 }
 ```
-
-### Changes to built-in types
-
-The built-in type `SitePage` now returns the `pageContext` key as `JSON` and won't infer any other information anymore. The `SitePlugin` type now has two new keys: `pluginOptions: JSON` and `packageJson: JSON`.
 
 ### Removal of `gatsby-admin`
 
