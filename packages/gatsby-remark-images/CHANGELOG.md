@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [6.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@6.1.1/packages/gatsby-remark-images) (2021-11-09)
+
+**Note:** Version bump only for package gatsby-remark-images
+
 ## [6.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@6.1.0/packages/gatsby-remark-images) (2021-11-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
