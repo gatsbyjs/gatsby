@@ -3,7 +3,7 @@
 import fs from "fs-extra"
 import Bluebird from "bluebird"
 import * as path from "path"
-import { generateHtmlPath, fixedPagePath } from "gatsby-core-utils"
+import { generateHtmlPath } from "gatsby-core-utils"
 import { truncate } from "lodash"
 
 import {
@@ -11,7 +11,7 @@ import {
   getScriptsAndStylesForTemplate,
   clearCache as clearAssetsMappingCache,
 } from "../../client-assets-for-template"
-import type { IPageDataWithQueryResult } from "../../page-data"
+import { IPageDataWithQueryResult, readPageData } from "../../page-data"
 import type { IRenderHtmlResult } from "../../../commands/build-html"
 import {
   clearStaticQueryCaches,
@@ -51,21 +51,6 @@ function clearCaches(): void {
   inFlightResourcesForTemplate.clear()
 
   clearAssetsMappingCache()
-}
-
-async function readPageData(
-  publicDir: string,
-  pagePath: string
-): Promise<IPageDataWithQueryResult> {
-  const filePath = join(
-    publicDir,
-    `page-data`,
-    fixedPagePath(pagePath),
-    `page-data.json`
-  )
-  const rawPageData = await fs.readFile(filePath, `utf-8`)
-
-  return JSON.parse(rawPageData)
 }
 
 async function doGetResourcesForTemplate(

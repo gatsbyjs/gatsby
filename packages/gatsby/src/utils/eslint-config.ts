@@ -37,7 +37,7 @@ export const eslintRequiredConfig: ESLint.Options = {
 
 export const eslintConfig = (
   schema: GraphQLSchema,
-  usingJsxRuntime: boolean
+  usingAutomaticJsxRuntime: boolean
 ): ESLint.Options => {
   return {
     useEslintrc: false,
@@ -74,7 +74,8 @@ export const eslintConfig = (
         // versions of react we can make this always be `off`.
         // I would also assume that eslint-config-react-app will switch their flag to `off`
         // when jsx runtime is stable in all common versions of React.
-        "react/react-in-jsx-scope": usingJsxRuntime ? `off` : `error`, // Conditionally apply for reactRuntime?
+        "react/jsx-uses-react": usingAutomaticJsxRuntime ? `off` : `error`,
+        "react/react-in-jsx-scope": usingAutomaticJsxRuntime ? `off` : `error`,
         "import/no-webpack-loader-syntax": [0],
         "graphql/template-strings": [
           `error`,

@@ -10,11 +10,15 @@ executors:
         default: "14.17.0"
     docker:
       - image: cimg/node:<< parameters.image >>
+    environment:
+      GATSBY_CPU_COUNT: 2
 
 aliases:
   e2e-executor: &e2e-executor
     docker:
       - image: cypress/browsers:node14.15.0-chrome86-ff82
+    environment:
+      GATSBY_CPU_COUNT: 2
 
   restore_cache: &restore_cache
     restore_cache:
