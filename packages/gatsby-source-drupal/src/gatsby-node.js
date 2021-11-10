@@ -16,6 +16,7 @@ const {
   storeRefsLookups,
   handleReferences,
   handleWebhookUpdate,
+  createNodeIfItDoesNotExist,
   handleDeletedNode,
 } = require(`./utils`)
 
@@ -60,6 +61,21 @@ async function worker([url, options]) {
       )
     }
   }
+
+  if (typeof options.searchParams === `object`) {
+    url = new URL(url)
+    const searchParams = new URLSearchParams(options.searchParams)
+    const searchKeys = Array.from(searchParams.keys())
+    searchKeys.forEach(searchKey => {
+      // Only add search params to url if it has not already been
+      // added.
+      if (!url.searchParams.has(searchKey)) {
+        url.searchParams.set(searchKey, searchParams.get(searchKey))
+      }
+    })
+    url = url.toString()
+  }
+  delete options.searchParams
 
   const response = await got(url, {
     agent,
@@ -220,6 +236,17 @@ ${JSON.stringify(webhookBody, null, 4)}`
       }
 
       for (const nodeToUpdate of nodesToUpdate) {
+        await createNodeIfItDoesNotExist({
+          nodeToUpdate,
+          actions,
+          createNodeId,
+          createContentDigest,
+          getNode,
+          reporter,
+        })
+      }
+
+      for (const nodeToUpdate of nodesToUpdate) {
         await handleWebhookUpdate(
           {
             nodeToUpdate,
@@ -330,6 +357,31 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
           // Process sync data from Drupal.
           const nodesToSync = res.body.entities
+
+          // First create all nodes that we haven't seen before. That
+          // way we can create relationships correctly next as the nodes
+          // will exist in Gatsby.
+          for (const nodeSyncData of nodesToSync) {
+            if (nodeSyncData.action === `delete`) {
+              continue
+            }
+
+            let nodesToUpdate = nodeSyncData.data
+            if (!Array.isArray(nodeSyncData.data)) {
+              nodesToUpdate = [nodeSyncData.data]
+            }
+            for (const nodeToUpdate of nodesToUpdate) {
+              createNodeIfItDoesNotExist({
+                nodeToUpdate,
+                actions,
+                createNodeId,
+                createContentDigest,
+                getNode,
+                reporter,
+              })
+            }
+          }
+
           for (const nodeSyncData of nodesToSync) {
             if (nodeSyncData.action === `delete`) {
               handleDeletedNode({
@@ -467,6 +519,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
                 username: basicAuth.username,
                 password: basicAuth.password,
                 headers,
+                searchParams: params,
                 responseType: `json`,
                 parentSpan: fullFetchSpan,
               },

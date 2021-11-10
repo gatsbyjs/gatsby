@@ -37,6 +37,7 @@ export interface ISSRData {
   templateDetails: ITemplateDetails
   potentialPagePath: string
   serverDataHeaders?: Record<string, string>
+  serverDataStatus?: number
   searchString: string
 }
 
@@ -222,6 +223,7 @@ export async function getData({
       templateDetails,
       potentialPagePath,
       serverDataHeaders: serverData?.headers,
+      serverDataStatus: serverData?.status,
       searchString,
     }
   } finally {

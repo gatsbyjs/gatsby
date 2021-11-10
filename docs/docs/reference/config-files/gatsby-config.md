@@ -177,9 +177,9 @@ See more about [Browser Support](/docs/how-to/custom-configuration/browser-suppo
 
 ## Mapping node types
 
-Gatsby includes an advanced feature that lets you create "mappings" between node types.
+**Please note:** We strongly recommend using the [`@link` GraphQL directive](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields) instead. It supports more use cases and will be the preferred method for foreign-keys in the future.
 
-> Note: Gatsby v2.2 introduced a new way to create foreign-key relations between node types with [the `@link` GraphQL field extension](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields).
+Gatsby includes a feature that lets you create "mappings" between node types.
 
 For instance, imagine you have a multi-author markdown blog where you want to "link" from each blog post to the author information stored in a YAML file named `author.yaml`:
 
@@ -193,18 +193,18 @@ A treatise on the efficacy of bezoar for treating agricultural pesticide poisoni
 ```
 
 ```yaml:title=author.yaml
-- id: Kyle Mathews
+- name: Kyle Mathews
   bio: Founder @ GatsbyJS. Likes tech, reading/writing, founding things. Blogs at bricolage.io.
   twitter: "@kylemathews"
 ```
 
-You can map between the `author` field in `frontmatter` to the id in the `author.yaml` objects by adding to your `gatsby-config.js`:
+You can map between the `author` field in `frontmatter` to the `name` in the `author.yaml` objects by adding to your `gatsby-config.js`:
 
 ```javascript
 module.exports = {
   plugins: [...],
   mapping: {
-    "MarkdownRemark.frontmatter.author": `AuthorYaml`,
+    "MarkdownRemark.frontmatter.author": `AuthorYaml.name`,
   },
 }
 ```
@@ -224,7 +224,7 @@ query ($slug: String!) {
       title
       author {
         # This now links to the author object
-        id
+        name
         bio
         twitter
       }
@@ -233,8 +233,7 @@ query ($slug: String!) {
 }
 ```
 
-Mapping can also be used to map an array of ids to any other collection of data. For example, if you have two JSON files
-`experience.json` and `tech.json` as follows:
+Mapping can also be used to map an array of ids to any other collection of data. For example, if you have two JSON files `experience.json` and `tech.json` as follows:
 
 ```json:title=experience.json
 [
@@ -261,13 +260,13 @@ Mapping can also be used to map an array of ids to any other collection of data.
 ```json:title=tech.json
 [
   {
-    "id": "REACT",
+    "name": "REACT",
     "icon": "facebook",
     "color": "teal",
     "label": "React"
   },
   {
-    "id": "NODE",
+    "name": "NODE",
     "icon": "server",
     "color": "green",
     "label": "NodeJS"
@@ -281,16 +280,16 @@ And then add the following rule to your `gatsby-config.js`:
 module.exports = {
   plugins: [...],
   mapping: {
-    'ExperienceJson.items.tech': `TechJson`
+    'ExperienceJson.items.tech': `TechJson.name`
   },
 }
 ```
 
-You can query the `tech` object via the referred ids in `experience`:
+You can query the `tech` object via the referred items in `experience`:
 
 ```graphql
 query {
-  experience: allExperienceJson {
+  allExperienceJson {
     edges {
       node {
         company

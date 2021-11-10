@@ -1,4 +1,4 @@
-import got, { Headers, Options } from "got"
+import got, { Headers, Options, RequestError } from "got"
 import fileType from "file-type"
 import path from "path"
 import fs from "fs-extra"
@@ -8,7 +8,6 @@ import {
   getRemoteFileExtension,
   createFilePath,
 } from "./filename-utils"
-
 import type { IncomingMessage } from "http"
 import type { GatsbyCache } from "gatsby"
 
@@ -22,6 +21,7 @@ export interface IFetchRemoteFileOptions {
   httpHeaders?: Headers
   ext?: string
   name?: string
+  maxAttempts?: number
 }
 
 // copied from gatsby-worker
@@ -47,6 +47,28 @@ const CONNECTION_TIMEOUT = process.env.GATSBY_CONNECTION_TIMEOUT
 const INCOMPLETE_RETRY_LIMIT = process.env.GATSBY_INCOMPLETE_RETRY_LIMIT
   ? parseInt(process.env.GATSBY_INCOMPLETE_RETRY_LIMIT, 10)
   : 3
+
+// jest doesn't allow us to run all timings infinitely, so we set it 0  in tests
+const BACKOFF_TIME = process.env.NODE_ENV === `test` ? 0 : 1000
+
+function range(start: number, end: number): Array<number> {
+  return Array(end - start)
+    .fill(null)
+    .map((_, i) => start + i)
+}
+
+// Based on the defaults of https://github.com/JustinBeckwith/retry-axios
+const STATUS_CODES_TO_RETRY = [...range(100, 200), 429, ...range(500, 600)]
+const ERROR_CODES_TO_RETRY = [
+  `ETIMEDOUT`,
+  `ECONNRESET`,
+  `EADDRINUSE`,
+  `ECONNREFUSED`,
+  `EPIPE`,
+  `ENOTFOUND`,
+  `ENETUNREACH`,
+  `EAI_AGAIN`,
+]
 
 let fetchCache = new Map()
 let latestBuildId = ``
@@ -335,6 +357,9 @@ function requestRemoteNode(
     // Fixes a bug in latest got where progress.total gets reset when stream ends, even if it wasn't complete.
     let totalSize: number | null = null
     responseStream.on(`downloadProgress`, progress => {
+      // reset the timeout on each progress event to make sure large files don't timeout
+      resetTimeout()
+
       if (
         progress.total != null &&
         (!totalSize || totalSize < progress.total)
@@ -359,9 +384,71 @@ function requestRemoteNode(
       fsWriteStream.close()
       fs.removeSync(tmpFilename)
 
-      process.nextTick(() => {
-        reject(error)
-      })
+      if (!(error instanceof RequestError)) {
+        return reject(error)
+      }
+
+      // This is a replacement for the stream retry logic of got
+      // till we can update all got instances to v12
+      // https://github.com/sindresorhus/got/blob/main/documentation/7-retry.md
+      // https://github.com/sindresorhus/got/blob/main/documentation/3-streams.md#retry
+      const statusCode = error.response?.statusCode
+      const errorCode = error.code || error.message // got gives error.code, but msw/node returns the error codes in the message only
+
+      if (
+        // HTTP STATUS CODE ERRORS
+        (statusCode && STATUS_CODES_TO_RETRY.includes(statusCode)) ||
+        // GENERAL NETWORK ERRORS
+        (errorCode && ERROR_CODES_TO_RETRY.includes(errorCode))
+      ) {
+        if (attempt < INCOMPLETE_RETRY_LIMIT) {
+          setTimeout(() => {
+            resolve(
+              requestRemoteNode(
+                url,
+                headers,
+                tmpFilename,
+                httpOptions,
+                attempt + 1
+              )
+            )
+          }, BACKOFF_TIME * attempt)
+
+          return undefined
+        }
+        // Throw user friendly error
+        error.message = [
+          `Unable to fetch:`,
+          url,
+          `---`,
+          `Reason: ${error.message}`,
+          `---`,
+        ].join(`\n`)
+
+        // Gather details about what went wrong from the error object and the request
+        const details = Object.entries({
+          attempt,
+          method: error.options?.method,
+          errorCode: error.code,
+          responseStatusCode: error.response?.statusCode,
+          responseStatusMessage: error.response?.statusMessage,
+          requestHeaders: error.options?.headers,
+          responseHeaders: error.response?.headers,
+        })
+          // Remove undefined values from the details to keep it clean
+          .reduce((a, [k, v]) => (v === undefined ? a : ((a[k] = v), a)), {})
+
+        if (Object.keys(details).length) {
+          error.message = [
+            error.message,
+            `Fetch details:`,
+            JSON.stringify(details, null, 2),
+            `---`,
+          ].join(`\n`)
+        }
+      }
+
+      return reject(error)
     })
 
     responseStream.on(`response`, response => {
@@ -399,7 +486,6 @@ function requestRemoteNode(
             )
           }
         }
-
         return resolve(response)
       })
     })

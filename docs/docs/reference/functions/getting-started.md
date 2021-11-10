@@ -17,9 +17,9 @@ Gatsby Functions help you build [Express-like](https://expressjs.com/) backends 
 
 Functions are generally available in sites running Gatsby 3.7 and above.
 
-## Hello World
+## Introduction
 
-JavaScript and Typescript files in `src/api/*` are mapped to function routes like files in `src/pages/*` become pages. So `src/api` is a reserved directory for Gatsby.
+JavaScript and TypeScript files in `src/api/*` are mapped to function routes like files in `src/pages/*` become pages. So `src/api` is a reserved directory for Gatsby. Gatsby by default ignores test files (e.g. `hello-world.test.js`) and dotfiles (e.g. `.prettierrc.js`).
 
 For example, the following Function is run when you visit the URL `/api/hello-world`
 
