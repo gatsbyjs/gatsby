@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - allow not defining entry for subplugins [#33900](https://github.com/gatsbyjs/gatsby/issues/33900) [#33909](https://github.com/gatsbyjs/gatsby/issues/33909) ([4975ee2](https://github.com/gatsbyjs/gatsby/commit/4975ee26561a520daf8e2082479d21b2062a862e))
 
-
-
 ### [4.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.1.1/packages/gatsby) (2021-11-08)
 
 #### Bug Fixes
