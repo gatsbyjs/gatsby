@@ -413,6 +413,123 @@ describe(`fetch-remote-file`, () => {
     expect(fsMove).toBeCalledTimes(0)
   })
 
+  it(`downloading a file in main process after downloading it in worker`, async () => {
+    // we don't want to wait for polling to finish
+    jest.useFakeTimers()
+    jest.runAllTimers()
+
+    const cacheInternals = new Map()
+    const workerCache = {
+      get(key) {
+        return Promise.resolve(cacheInternals.get(key))
+      },
+      set(key, value) {
+        return Promise.resolve(cacheInternals.set(key, value))
+      },
+      directory: cache.directory,
+    }
+
+    const fetchRemoteFileInstanceOne = getFetchInWorkerContext(`1`)
+
+    const resultFromWorker = await fetchRemoteFileInstanceOne({
+      url: `http://external.com/logo.svg`,
+      cache: workerCache,
+    })
+
+    jest.runAllTimers()
+
+    const resultFromMain = await fetchRemoteFile({
+      url: `http://external.com/logo.svg`,
+      cache: workerCache,
+    })
+
+    expect(resultFromWorker).not.toBeUndefined()
+    expect(resultFromMain).not.toBeUndefined()
+
+    jest.useRealTimers()
+
+    expect(gotStream).toBeCalledTimes(2)
+    expect(fsMove).toBeCalledTimes(1)
+  })
+
+  it(`downloading a file in worker process after downloading it in main`, async () => {
+    // we don't want to wait for polling to finish
+    jest.useFakeTimers()
+    jest.runAllTimers()
+
+    const cacheInternals = new Map()
+    const workerCache = {
+      get(key) {
+        return Promise.resolve(cacheInternals.get(key))
+      },
+      set(key, value) {
+        return Promise.resolve(cacheInternals.set(key, value))
+      },
+      directory: cache.directory,
+    }
+
+    const fetchRemoteFileInstanceOne = getFetchInWorkerContext(`1`)
+
+    const resultFromMain = await fetchRemoteFile({
+      url: `http://external.com/logo.svg`,
+      cache: workerCache,
+    })
+
+    jest.runAllTimers()
+
+    const resultFromWorker = await fetchRemoteFileInstanceOne({
+      url: `http://external.com/logo.svg`,
+      cache: workerCache,
+    })
+
+    jest.runAllTimers()
+    jest.useRealTimers()
+
+    expect(resultFromWorker).not.toBeUndefined()
+    expect(resultFromMain).not.toBeUndefined()
+    expect(gotStream).toBeCalledTimes(2)
+    expect(fsMove).toBeCalledTimes(2)
+  })
+
+  it(`downloading a file in worker process after downloading it in another worker`, async () => {
+    // we don't want to wait for polling to finish
+    jest.useFakeTimers()
+    jest.runAllTimers()
+
+    const cacheInternals = new Map()
+    const workerCache = {
+      get(key) {
+        return Promise.resolve(cacheInternals.get(key))
+      },
+      set(key, value) {
+        return Promise.resolve(cacheInternals.set(key, value))
+      },
+      directory: cache.directory,
+    }
+
+    const fetchRemoteFileInstanceOne = getFetchInWorkerContext(`1`)
+    const fetchRemoteFileInstanceTwo = getFetchInWorkerContext(`2`)
+
+    const resultFromWorker1 = await fetchRemoteFileInstanceOne({
+      url: `http://external.com/logo.svg`,
+      cache: workerCache,
+    })
+    jest.runAllTimers()
+
+    const resultFromWorker2 = await fetchRemoteFileInstanceTwo({
+      url: `http://external.com/logo.svg`,
+      cache: workerCache,
+    })
+
+    jest.runAllTimers()
+    jest.useRealTimers()
+
+    expect(resultFromWorker1).not.toBeUndefined()
+    expect(resultFromWorker2).not.toBeUndefined()
+    expect(gotStream).toBeCalledTimes(1)
+    expect(fsMove).toBeCalledTimes(1)
+  })
+
   it(`fails when 404 is triggered`, async () => {
     await expect(
       fetchRemoteFile({
