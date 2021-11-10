@@ -11,7 +11,15 @@ In this tutorial, you'll create your own source plugin that will gather data fro
 
 Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/reference/graphql-data-layer/node-interface/). This tutorial uses a demo API so that you can see how the data works on both the frontend and backend, but the same principles apply if you would like to source data from another API.
 
-For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/how-to/plugins-and-themes/creating-a-source-plugin/).
+At a high-level, a source plugin:
+
+- Ensures local data is synced with its source and is 100% accurate.
+- Creates [nodes](/docs/reference/graphql-data-layer/node-interface/) with accurate media types, human-readable types, and accurate
+  [contentDigests](/docs/reference/graphql-data-layer/node-interface/#contentdigest).
+- Links nodes & creates relationships between them.
+- Lets Gatsby know when nodes are finished sourcing so it can move on to processing them.
+
+A source plugin is a regular npm package. It has a `package.json` file, with optional dependencies, as well as a [`gatsby-node.js`](/docs/reference/config-files/gatsby-node/) file where you implement Gatsby's Node APIs. Read more about [files Gatsby looks for in a plugin](/docs/files-gatsby-looks-for-in-a-plugin/) or [creating a generic plugin](/docs/how-to/plugins-and-themes/creating-a-generic-plugin).
 
 ## Why create a source plugin?
 
@@ -19,7 +27,7 @@ Source plugins convert data from any source into a format that Gatsby can proces
 
 There may not be [an existing plugin](/plugins/?=gatsby-source) for your data source, so you can create your own.
 
-_**NOTE:** if your data is local i.e. on your file system and part of your site's repo, then you generally don't want to create a new source plugin. Instead you want to use [gatsby-source-filesystem](/plugins/gatsby-source-filesystem/) which handles reading and watching files for you. You can then use [transformer plugins](/plugins/?=gatsby-transformer) like [gatsby-transformer-yaml](/plugins/gatsby-transformer-yaml/) to make queryable data from files._
+**Please Note:** If your data is local i.e. on your file system and part of your site's repo, then you generally don't want to create a new source plugin. Instead you want to use [gatsby-source-filesystem](/plugins/gatsby-source-filesystem/) which handles reading and watching files for you. You can then use [transformer plugins](/plugins/?=gatsby-transformer) like [gatsby-transformer-yaml](/plugins/gatsby-transformer-yaml/) to make queryable data from files.
 
 ## How to create a source plugin
 
@@ -45,8 +53,6 @@ query {
 ```
 
 This data is an example of the data you will source with your plugin.
-
-_You can also see a running version of the GraphQL playground associated with a distinct API at [https://gatsby-source-plugin-api.glitch.me/](https://gatsby-source-plugin-api.glitch.me/), which is running the `api` folder in a Glitch project, like you would when you run `npm start` on your own computer._
 
 #### Plugin behavior
 
@@ -194,6 +200,44 @@ query {
 
 The problem with this data is that it is _not coming from the API_, it is hardcoded into an array. The declaration of the `data` array needs to be updated to pull data from a different location.
 
+### Caching data between runs
+
+Some operations like fetching data from an endpoint can be performance heavy or time-intensive. In order to improve the experience of developing with your source plugin, you can leverage the Gatsby cache to store data between runs of `gatsby develop` or `gatsby build`.
+
+You access the `cache` in Gatsby Node APIs and use the `set` and `get` functions to store and retrieve data as JSON objects.
+
+```javascript:title=source-plugin/gatsby-node.js
+exports.onPostBuild = async ({ cache }) => {
+  await cache.set(`key`, `value`)
+  const cachedValue = await cache.get(`key`)
+  console.log(cachedValue) // logs `value`
+}
+```
+
+The above snippet shows a contrived example for the `cache`, but it can be used in more sophisticated cases to reduce the time it takes to run your plugin. For example, by caching a timestamp, you can use it to fetch solely the data that has been updated since the last time data was fetched from the source:
+
+```javascript:title=source-plugin/gatsby-node.js
+exports.sourceNodes = async ({ cache }) => {
+  // get the last timestamp from the cache
+  const lastFetched = await cache.get(`timestamp`)
+
+  // pull data from some remote source using cached data as an option in the request
+  const data = await fetch(
+    `https://remotedatasource.com/posts?lastUpdated=${lastFetched}`
+  )
+  // ...
+}
+
+exports.onPostBuild = async ({ cache }) => {
+  // set a timestamp at the end of the build
+  await cache.set(`timestamp`, Date.now())
+}
+```
+
+This can reduce the time it takes repeated data fetching operations to run if you are pulling in large amounts of data for your plugin. Existing plugins like [`gatsby-source-contentful`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-contentful/src/gatsby-node.js) generate a token that is sent with each request to only return new data.
+
+You can read more about the cache API, other types of plugins that leverage the cache, and example open source plugins that use the cache in the [build caching guide](/docs/build-caching).
+
 ### Querying and sourcing data from a remote location
 
 You can query data from any location to source at build time using functions and libraries like Node.js's built-in `http.get`, `axios`, or `node-fetch`. This tutorial uses a GraphQL client so that the source plugin can support GraphQL subscriptions when it fetches data from the demo API, and can proactively update your data in the site when information on the API changes.
@@ -267,7 +311,7 @@ exports.sourceNodes = async ({
 // ...
 ```
 
-You can read about each of the packages that are working together in [Apollo's docs](https://www.apollographql.com/docs/react/). The end result is creating a `client` that you can use to call methods like `query` to get data from the source it's configured to work with. In this case, that is `http://localhost:4000` where you should have the API running. If you can't configure the API to run locally, you can update the URLs for the client to use `gatsby-source-plugin-api.glitch.me` where a version of the API is deployed, instead of `http://localhost:4000`.
+You can read about each of the packages that are working together in [Apollo's docs](https://www.apollographql.com/docs/react/). The end result is creating a `client` that you can use to call methods like `query` to get data from the source it's configured to work with. In this case, that is `http://localhost:4000` where you should have the API running.
 
 #### Query data from the API
 
@@ -422,15 +466,33 @@ query {
 }
 ```
 
+### Working with data received from remote sources
+
+#### Setting media and MIME types
+
+Each node created by the filesystem source plugin includes the raw content of the file and its _media type_.
+
+A [**media type**](https://en.wikipedia.org/wiki/Media_type) (also **MIME type** and **content type**) is an official way to identify the format of files/content that are transmitted via the internet, e.g. over HTTP or through email. You might be familiar with other media types such as `application/javascript`, `audio/mpeg`, `text/html`, etc.
+
+Each source plugin is responsible for setting the media type for the nodes it creates. This way, source and transformer plugins can work together easily.
+
+This is not a required field -- if it's not provided, Gatsby will [infer](/docs/glossary#inference) the type from data that is sent -- but it's how source plugins indicate to transformers that there is "raw" data the transformer can further process.
+
+It also allows plugins to remain small and focused. Source plugins don't have to have opinions on how to transform their data: they can set the `mediaType` and push that responsibility to transformer plugins instead.
+
+For example, it's common for services to allow you to add content in Markdown format. If you pull that Markdown into Gatsby and create a new node, what then? How would a user of your source plugin convert that Markdown into HTML they can use in their site? You would create a node for the Markdown content and set its `mediaType` as `text/markdown` and the various Gatsby Markdown transformer plugins would see your node and transform it into HTML.
+
+This loose coupling between the data source and the transformer plugins allow Gatsby site builders to assemble complex data transformation pipelines with little work on their (and your (the source plugin author)) part.
+
 ### Optimize remote images
 
-Each node of post data has an `imgUrl` field with the URL of an image on Unsplash. You could use that URL to load images on your site, but they will be large and take a long time to load. You can optimize the images with your source plugin so that a site using your plugin already has data for `gatsby-image` ready to go!
+Each node of post data has an `imgUrl` field with the URL of an image on Unsplash. You could use that URL to load images on your site, but they will be large and take a long time to load. You can optimize the images with your source plugin so that a site using your plugin already has data for `gatsby-plugin-image` ready to go!
 
-You can read about [how to use Gatsby Image to prevent image bloat](/docs/how-to/images-and-media/using-gatsby-image/) if you are unfamiliar with it.
+You can read about [how to use the Gatsby Image plugin](/docs/how-to/images-and-media/using-gatsby-plugin-image/) if you are unfamiliar with it.
 
 #### Create remote file node from a URL
 
-To create optimized images from URLs, `File` nodes for image files need to be added to your site's data. Then, you can install `gatsby-plugin-sharp` and `gatsby-transformer-sharp` which will automatically find image files and add the data needed for `gatsby-image`.
+To create optimized images from URLs, `File` nodes for image files need to be added to your site's data. Then, you can install `gatsby-plugin-sharp` and `gatsby-transformer-sharp` which will automatically find image files and add the data needed for `gatsby-plugin-image`.
 
 Start by installing `gatsby-source-filesystem` in the `source-plugin` project:
 
@@ -514,7 +576,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-_**Note**: You can use [schema customization APIs](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields) to create these kinds of connections between nodes as well as sturdier and more strictly typed ones._
+**Note**: You can use [schema customization APIs](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields) to create these kinds of connections between nodes as well as sturdier and more strictly typed ones.
 
 You now can query the image like this:
 
@@ -536,12 +598,12 @@ At this point you have created local image files from the remote locations and a
 
 #### Transform `File` nodes with sharp plugins
 
-Sharp plugins make optimization of images possible at build time.
+sharp plugins make optimization of images possible at build time.
 
-Install `gatsby-plugin-sharp` and `gatsby-transformer-sharp` in the `example-site` (_not_ the plugin):
+Install `gatsby-plugin-sharp`, `gatsby-plugin-image`, and `gatsby-transformer-sharp` in the `example-site` (_not_ the plugin):
 
 ```shell:title=example-site
-npm install gatsby-plugin-sharp gatsby-transformer-sharp
+npm install gatsby-plugin-sharp gatsby-transformer-sharp gatsby-plugin-image
 ```
 
 Then include the plugins in your `gatsby-config`:
@@ -551,6 +613,7 @@ module.exports = {
   plugins: [
     require.resolve(`../source-plugin`),
     // highlight-start
+    `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
     // highlight-end
@@ -569,7 +632,7 @@ query {
       localFile {
         // highlight-start
         childImageSharp {
-          id
+          gatsbyImageData
         }
         // highlight-end
       }
@@ -578,7 +641,7 @@ query {
 }
 ```
 
-With data available, you can now query optimized images to use with the `gatsby-image` component in a site! You will need to install `gatsby-image` before you can use it.
+With data available, you can now query optimized images to use with the `gatsby-plugin-image` component in a site!
 
 ### Create foreign key relationships between data
 
@@ -636,12 +699,10 @@ In the `example-site`, you can now query data from pages.
 
 Add a file at `example-site/src/pages/index.js` and copy the following code into it:
 
-Ensure you have `gatsby-image` installed in the site by running `npm install gatsby-image`. It provides a component that can take the optimized image data and render it.
-
 ```jsx:title=example-site/src/pages/index.js
 import React from "react"
 import { graphql } from "gatsby"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 
 export default ({ data }) => (
   <>
@@ -665,8 +726,8 @@ export default ({ data }) => (
           <h2>{post.slug}</h2>
           <span>By: {post.author.name}</span>
           <p>{post.description}</p>
-          <Img
-            fluid={post.localFile?.childImageSharp?.fluid}
+          <GatsbyImage
+            image={post.localFile?.childImageSharp?.gatsbyImageData}
             alt={post.imgAlt}
           />
         </div>
@@ -688,12 +749,8 @@ export const query = graphql`
           name
         }
         localFile {
-          id
           childImageSharp {
-            id
-            fluid {
-              ...GatsbyImageSharpFluid
-            }
+            gatsbyImageData(formats: [AUTO, WEBP, AVIF])
           }
         }
       }
@@ -741,207 +798,19 @@ exports.sourceNodes = async (
 }
 ```
 
-Options can be a good way of providing conditional paths to logic that you as a plugin author want to provide or limit.
+Options can be a good way of providing conditional paths to logic that you as a plugin author want to provide or limit. Read the [Configuring Plugin usage with Plugin Options](/docs/how-to/plugins-and-themes/configuring-usage-with-plugin-options/) guide to learn how to add validation to your plugin options.
 
-### Proactively updating data with subscriptions
+### Improve plugin developer experience by enabling faster sync
 
-The data sourced for your site was fetched using Apollo Client, which supports subscriptions. GraphQL subscriptions _listen_ for changes in data and return changes to the GraphQL client. Your source plugin is able to listen—or subscribe—to the new data that is incoming. That means if a post has something on it updated, your source plugin can listen for that change and update the data in your site without having to restart your site, neat!
+One challenge when developing locally is that a developer might make modifications in a remote data source, like a CMS, and then want to see how it looks in the local environment. Typically they will have to restart the `gatsby develop` server to see changes. In order to improve the development experience of using a plugin, you can reduce the time it takes to sync between Gatsby and the data source by enabling faster synchronization of data changes. The best way to do this is by adding **event-based syncing**.
 
-The API you connect to needs to provide support for live changes to data in order for this to be possible. You can read about other options for live data updates in the [creating a source plugin guide](/docs/how-to/plugins-and-themes/creating-a-source-plugin/).
-
-You already set up your client to handle subscriptions by providing a websocket link (`ws://localhost:4000` or `ws://gatsby-source-plugin-api.glitch.me/`). Now you need to add some logic to your `sourceNodes` function to handle updating and deleting nodes, rather than just creating them. The first step will be touching nodes, to make sure that Gatsby doesn't discard the nodes that don't get updated when `sourceNodes` gets called.
-
-```javascript:title=source-plugin/gatsby-node.js
-exports.sourceNodes = async (
-  { actions, createContentDigest, createNodeId, getNodesByType },
-  pluginOptions
-) => {
-  const { createNode, touchNode, deleteNode } = actions
-
-  // highlight-start
-  // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node))
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node => touchNode(node))
-  // highlight-end
-
-  // rest of code that creates nodes
-}
-```
-
-You can use the `getNodesByType` function to gather up the post and author nodes, loop through each, and call `touchNode` on each node.
-
-Then, you can use the plugin option provided in the previous section for `previewMode` to only turn on subscriptions when it's set to `true`.
-
-```javascript:title=source-plugin/gatsby-node.js
-exports.sourceNodes = async (
-  { actions, createContentDigest, createNodeId, getNodesByType },
-  pluginOptions
-) => {
-  const { createNode, touchNode, deleteNode } = actions
-
-  // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node))
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node => touchNode(node))
-
-  // highlight-start
-  if (pluginOptions.previewMode) {
-    console.log("Subscribing to content updates...")
-  }
-  // highlight-end
-
-  // rest of code that creates nodes
-}
-```
-
-Using Apollo Client, you can create a subscription with almost all of the same fields as your query. Note this string of fields in the GraphQL subscription also includes a `status`. This status is returned by the subscriptions on the backend as a mechanism to allow Gatsby to know what to do with each piece of updated data.
-
-```javascript:title=source-plugin/gatsby-node.js
-exports.sourceNodes = async (
-  { actions, createContentDigest, createNodeId, getNodesByType },
-  pluginOptions
-) => {
-  const { createNode, touchNode, deleteNode } = actions
-
-  // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node))
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node => touchNode(node))
-
-  if (pluginOptions.previewMode) {
-    console.log("Subscribing to content updates...")
-    // highlight-start
-    const subscription = await client.subscribe({
-      query: gql`
-        subscription {
-          posts {
-            id
-            slug
-            description
-            imgUrl
-            imgAlt
-            author {
-              id
-              name
-            }
-            status
-          }
-        }
-      `,
-    })
-    // highlight-end
-  }
-
-  // rest of code that creates nodes
-}
-```
-
-Now you can write a function to subscribe to the data updates (like when a post is updated), and handle the new data coming in with a switch statement.
-
-```javascript:title=source-plugin/gatsby-node.js
-exports.sourceNodes = async (
-  { actions, createContentDigest, createNodeId, getNodesByType },
-  pluginOptions
-) => {
-  const { createNode, touchNode, deleteNode } = actions
-
-  // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node))
-  getNodesByType(AUTHOR_NODE_TYPE).forEach(node => touchNode(node))
-
-  if (pluginOptions.previewMode) {
-    console.log("Subscribing to content updates...")
-    const subscription = await client.subscribe({
-      query: gql`
-        subscription {
-          posts {
-            id
-            slug
-            description
-            imgUrl
-            imgAlt
-            author {
-              id
-              name
-            }
-            status
-          }
-        }
-      `,
-    })
-    // highlight-start
-    subscription.subscribe(({ data }) => {
-      console.log(`Subscription received:`)
-      console.log(data.posts)
-      data.posts.forEach(post => {
-        const nodeId = createNodeId(`${POST_NODE_TYPE}-${post.id}`)
-        switch (post.status) {
-          case "deleted":
-            deleteNode(getNode(nodeId))
-            break
-          case "created":
-          case "updated":
-          default:
-            // created and updated can be handled by the same code path
-            // the post's id is presumed to stay constant (or can be inferred)
-            createNode({
-              ...post,
-              id: createNodeId(`${POST_NODE_TYPE}-${post.id}`),
-              parent: null,
-              children: [],
-              internal: {
-                type: POST_NODE_TYPE,
-                content: JSON.stringify(post),
-                contentDigest: createContentDigest(post),
-              },
-            })
-            break
-        }
-      })
-    })
-    // highlight-end
-  }
-
-  // rest of code that creates nodes
-}
-```
-
-Posts that are changed on the backend while Gatsby is running will be created if they are new or updated, and deleted if they were deleted on the backend.
-
-You can test that this is working by running the site again and updating one of the posts. When you run the site this time you should see a message logged in the console: `Subscribing to content updates...`. Now, running an `updatePost` or `deletePost` mutation on the GraphQL server will send information to the subscription because it is now listening.
-
-Follow these steps to test it out:
-
-1. Open up your site at `http://localhost:8000` after you run `gatsby develop`
-2. Open up the GraphQL playground at `http://localhost:4000` (if you are running the `api` folder locally) or `https://gatsby-source-plugin-api.glitch.me/` and first run a query for posts:
-
-```graphql
-query {
-  posts {
-    id
-    description
-  }
-}
-```
-
-3. Copy the ID from the post that you would like to update
-4. Inside the GraphQL playground, run an update post mutation, replacing `<id>` with the ID you just copied
-
-```graphql
-mutation {
-  updatePost(id: "<id>", description: "These are my changes!") {
-    id
-  }
-}
-```
-
-5. When you run the mutation, the data will be updated on the backend, the subscription will recognize the change, Gatsby will update the node, and your page query will render the new data.
-
-It's so fast that it's a blink and you'll miss it kind of moment, so try running another mutation or even run a `deletePost` mutation to make it easier to see the changes!
+Some data sources keep event logs and are able to return a list of objects modified since a given time. If you're building a source plugin, you can store the last time you fetched data using the [cache](/docs/creating-a-source-plugin/#caching-data-between-runs) and then only sync down nodes that have been modified since that time. [`gatsby-source-contentful`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful) is an example of a source plugin that does this.
 
 ## Publishing a plugin
 
 Don't publish this particular plugin to npm or the Gatsby Plugin Library, because it's just a sample plugin for the tutorial. However, if you've built a local plugin for your project, and want to share it with others, npm allows you to publish your plugins. Check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
 
-> **NOTE:** Once you have published your plugin on npm, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins/) (please do!), please [follow these steps](/docs/how-to/plugins-and-themes/submit-to-plugin-library/).
+**Please Note:** Once you have published your plugin on npm, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins/) (please do!), please [follow these steps](/docs/how-to/plugins-and-themes/submit-to-plugin-library/).
 
 ## Summary
 
@@ -960,4 +829,3 @@ Congratulations!
 ## Additional resources
 
 - [Example repository](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins) with all of this code implemented
-- Creating a [first class source plugin for Gatsby Cloud](/docs/integration-guide/source-plugin/)
