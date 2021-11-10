@@ -254,6 +254,51 @@ in [this discussion](https://github.com/gatsbyjs/gatsby/discussions/32860#discus
 
 You can also learn more about this in the [migration guide for source plugins](/docs/reference/release-notes/migrating-source-plugin-from-v3-to-v4/#2-data-mutations-need-to-happen-during-sourcenodes-or-oncreatenode).
 
+### Field `SitePage.context` is no longer available in GraphQL queries
+
+Before v4 you could query specific fields of the page context object:
+
+```graphql
+{
+  allSitePage {
+    nodes {
+      context: { foo }
+    }
+  }
+}
+```
+
+Starting with v4, `context` field is replaced with `pageContext` of type `JSON`.
+It means you can't query individual fields of the context. The new query would look like this:
+
+```graphql
+{
+  allSitePage {
+    nodes {
+      pageContext # returns full JS object passed to `page.context` in `createPages`
+    }
+  }
+}
+```
+
+If you still need to query individual `context` fields - you can workaround it by providing
+a schema for `SitePage.context` manually:
+
+```js
+// Workaround for missing sitePage.context:
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  createTypes(`
+    type SitePage implements Node {
+      context: SitePageContext
+    }
+    type SitePageContext {
+      foo: String
+    }
+  `)
+}
+```
+
 ### Changes to built-in types
 
 The built-in type `SitePage` now returns the `pageContext` key as `JSON` and won't infer any other information anymore. The `SitePlugin` type now has two new keys: `pluginOptions: JSON` and `packageJson: JSON`.
