@@ -71,6 +71,7 @@ The cache is also invalidated by Gatsby in a few cases, specifically:
 - If `package.json` changes, for example a dependency is updated or added
 - If `gatsby-config.js` changes, for example a plugin is added or modified
 - If `gatsby-node.js` changes, for example if you invoke a new Node API, or change a `createPage` call
+- If the version or `pluginOptions` of any plugin changes
 
 ## Conclusion
 
