@@ -278,13 +278,9 @@ export async function resolveGatsbyImageData(
     jpgOptions: {},
     pngOptions: {},
     webpOptions: {},
-    // Note: Contentful does not support avif yet, but does support gif.
     gifOptions: {},
+    avifOptions: {},
     ...userDefaults,
-    quality: userDefaults?.quality || 50,
-    layout: userDefaults?.layout || `constrained`,
-    placeholder: userDefaults?.placeholder || `dominantColor`,
-    formats: userDefaults?.formats || [``, `webp`],
   }
 
   options = doMergeDefaults(options, defaults)
