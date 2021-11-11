@@ -240,6 +240,50 @@ const handleDeletedNode = async ({
   return deletedNode
 }
 
+function createNodeIfItDoesNotExist({
+  nodeToUpdate,
+  actions,
+  createNodeId,
+  createContentDigest,
+  getNode,
+  reporter,
+}) {
+  if (!nodeToUpdate) {
+    reporter.warn(
+      `The updated node was empty. The fact you're seeing this warning means there's probably a bug in how we're creating and processing updates from Drupal.
+
+${JSON.stringify(nodeToUpdate, null, 4)}
+      `
+    )
+
+    return
+  }
+
+  const { createNode } = actions
+  const newNodeId = createNodeId(
+    createNodeIdWithVersion(
+      nodeToUpdate.id,
+      nodeToUpdate.type,
+      getOptions().languageConfig ? nodeToUpdate.langcode : `und`,
+      nodeToUpdate.meta?.target_version,
+      getOptions().entityReferenceRevisions
+    )
+  )
+
+  const oldNode = getNode(newNodeId)
+  // Node doesn't yet exist so we'll create it now.
+  if (!oldNode) {
+    const newNode = nodeFromData(
+      nodeToUpdate,
+      createNodeId,
+      getOptions().entityReferenceRevisions
+    )
+
+    newNode.internal.contentDigest = createContentDigest(newNode)
+    createNode(newNode)
+  }
+}
+
 const handleWebhookUpdate = async (
   {
     nodeToUpdate,
@@ -409,3 +453,4 @@ function drupalCreateNodeManifest({
 
 exports.handleWebhookUpdate = handleWebhookUpdate
 exports.handleDeletedNode = handleDeletedNode
+exports.createNodeIfItDoesNotExist = createNodeIfItDoesNotExist

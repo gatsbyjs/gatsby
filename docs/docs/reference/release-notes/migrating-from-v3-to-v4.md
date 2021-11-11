@@ -258,6 +258,53 @@ You can also learn more about this in the [migration guide for source plugins](/
 
 The built-in type `SitePage` now returns the `pageContext` key as `JSON` and won't infer any other information anymore. The `SitePlugin` type now has two new keys: `pluginOptions: JSON` and `packageJson: JSON`.
 
+#### Field `SitePage.context` is no longer available in GraphQL queries
+
+Before v4 you could query specific fields of the page context object:
+
+```graphql
+{
+  allSitePage {
+    nodes {
+      context {
+        foo
+      }
+    }
+  }
+}
+```
+
+Starting with v4, `context` field is replaced with `pageContext` of type `JSON`.
+It means you can't query individual fields of the context. The new query would look like this:
+
+```graphql
+{
+  allSitePage {
+    nodes {
+      pageContext # returns full JS object passed to `page.context` in `createPages`
+    }
+  }
+}
+```
+
+If you still need to query individual `context` fields - you can workaround it by providing
+a schema for `SitePage.context` manually:
+
+```js
+// Workaround for missing sitePage.context:
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  createTypes(`
+    type SitePage implements Node {
+      context: SitePageContext
+    }
+    type SitePageContext {
+      foo: String
+    }
+  `)
+}
+```
+
 ### Removal of `gatsby-admin`
 
 You can no longer use `gatsby-admin` (activated with environment variable `GATSBY_EXPERIMENTAL_ENABLE_ADMIN`) as we removed this functionality from `gatsby` itself. We didn't see any major usage and don't plan on developing this further in the foreseeable future.
