@@ -238,22 +238,16 @@ async function fetchFile({
 
     return filename
   } catch (err) {
-    // enable multiple workers to continue when done
-    if (IS_WORKER) {
-      const cacheEntry = await cache.get(cacheIdForWorkers(url))
+    // enable multiple processes to continue when done
+    const cacheEntry = await cache.get(cacheIdForWorkers(url))
 
-      if (!cacheEntry || cacheEntry.workerId === WORKER_ID) {
-        await cache.set(cacheIdForWorkers(url), {
-          status: `failed`,
-          result: err.toString
-            ? err.toString()
-            : err.message
-            ? err.message
-            : err,
-          workerId: WORKER_ID,
-          buildId: BUILD_ID,
-        })
-      }
+    if (!cacheEntry || cacheEntry.workerId === WORKER_ID) {
+      await cache.set(cacheIdForWorkers(url), {
+        status: `failed`,
+        result: err.toString ? err.toString() : err.message ? err.message : err,
+        workerId: WORKER_ID,
+        buildId: BUILD_ID,
+      })
     }
 
     throw err
