@@ -280,7 +280,10 @@ export async function initialize({
   // plugins, the site's package.json, gatsby-config.js, and gatsby-node.js.
   // The last, gatsby-node.js, is important as many gatsby sites put important
   // logic in there e.g. generating slugs for custom pages.
-  const pluginVersions = flattenedPlugins.map(p => p.version)
+  const pluginsString = flattenedPlugins.map(({ version, pluginOptions }) => [
+    version,
+    pluginOptions,
+  ])
   const hashes: any = await Promise.all([
     md5File(`package.json`),
     md5File(`${program.directory}/gatsby-config.js`).catch(() => {}), // ignore as this file isn't required),
@@ -288,7 +291,7 @@ export async function initialize({
   ])
   const pluginsHash = crypto
     .createHash(`md5`)
-    .update(JSON.stringify(pluginVersions.concat(hashes)))
+    .update(JSON.stringify(pluginsString.concat(hashes)))
     .digest(`hex`)
   const state = store.getState()
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
