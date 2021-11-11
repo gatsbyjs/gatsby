@@ -105,11 +105,6 @@ function pollUntilComplete(
   buildId: string,
   cb: (err?: Error, result?: string) => void
 ): void {
-  if (!IS_WORKER) {
-    // We are not in a worker, so we shouldn't use the cache
-    return void cb()
-  }
-
   cache.get(cacheIdForWorkers(url)).then(entry => {
     if (!entry || entry.buildId !== buildId) {
       return void cb()
@@ -160,14 +155,12 @@ async function fetchFile({
     return result
   }
 
-  if (IS_WORKER) {
-    await cache.set(cacheIdForWorkers(url), {
-      status: `pending`,
-      result: null,
-      workerId: WORKER_ID,
-      buildId: BUILD_ID,
-    })
-  }
+  await cache.set(cacheIdForWorkers(url), {
+    status: `pending`,
+    result: null,
+    workerId: WORKER_ID,
+    buildId: BUILD_ID,
+  })
 
   // See if there's response headers for this url
   // from a previous request.
@@ -231,7 +224,7 @@ async function fetchFile({
       }
     }
 
-    // Multiple workers have started the fetch and we need another check to only let one complete
+    // Multiple processes have started the fetch and we need another check to only let one complete
     const cacheEntry = await cache.get(cacheIdForWorkers(url))
     if (cacheEntry && cacheEntry.workerId !== WORKER_ID) {
       return new Promise<string>((resolve, reject) => {
@@ -258,33 +251,25 @@ async function fetchFile({
       await fs.remove(tmpFilename)
     }
 
-    if (IS_WORKER) {
-      await cache.set(cacheIdForWorkers(url), {
-        status: `complete`,
-        result: filename,
-        workerId: WORKER_ID,
-        buildId: BUILD_ID,
-      })
-    }
+    await cache.set(cacheIdForWorkers(url), {
+      status: `complete`,
+      result: filename,
+      workerId: WORKER_ID,
+      buildId: BUILD_ID,
+    })
 
     return filename
   } catch (err) {
-    // enable multiple workers to continue when done
-    if (IS_WORKER) {
-      const cacheEntry = await cache.get(cacheIdForWorkers(url))
+    // enable multiple processes to continue when done
+    const cacheEntry = await cache.get(cacheIdForWorkers(url))
 
-      if (!cacheEntry || cacheEntry.workerId === WORKER_ID) {
-        await cache.set(cacheIdForWorkers(url), {
-          status: `failed`,
-          result: err.toString
-            ? err.toString()
-            : err.message
-            ? err.message
-            : err,
-          workerId: WORKER_ID,
-          buildId: BUILD_ID,
-        })
-      }
+    if (!cacheEntry || cacheEntry.workerId === WORKER_ID) {
+      await cache.set(cacheIdForWorkers(url), {
+        status: `failed`,
+        result: err.toString ? err.toString() : err.message ? err.message : err,
+        workerId: WORKER_ID,
+        buildId: BUILD_ID,
+      })
     }
 
     throw err
