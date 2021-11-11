@@ -483,6 +483,7 @@ jobs:
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: node scripts/gatsby-changelog-generator/update-and-open-pr.js
+      - run: yarn format:other
 
   windows_unit_tests:
     parallelism: 4
