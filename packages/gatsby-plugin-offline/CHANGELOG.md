@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.1.2/packages/gatsby-plugin-offline) (2021-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
 ### [5.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.1.1/packages/gatsby-plugin-offline) (2021-11-09)
 
 **Note:** Version bump only for package gatsby-plugin-offline

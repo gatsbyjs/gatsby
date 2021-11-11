@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.1.2/packages/gatsby-source-drupal) (2021-11-10)
+
+#### Bug Fixes
+
+- Ensure all new nodes are created before creating relationships [#33864](https://github.com/gatsbyjs/gatsby/issues/33864) [#33926](https://github.com/gatsbyjs/gatsby/issues/33926) ([cdeff78](https://github.com/gatsbyjs/gatsby/commit/cdeff78c6993abbe68b9c2a166ba780610f266df))
+
 ### [5.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.1.1/packages/gatsby-source-drupal) (2021-11-08)
 
 #### Other Changes
