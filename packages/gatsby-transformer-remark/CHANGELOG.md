@@ -7,8 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-transformer-remark
 
-
-
 ### [5.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@5.1.1/packages/gatsby-transformer-remark) (2021-11-09)
 
 #### Bug Fixes

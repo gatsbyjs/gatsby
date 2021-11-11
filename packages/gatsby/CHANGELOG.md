@@ -7,8 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby
 
-
-
 ### [4.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.1.2/packages/gatsby) (2021-11-09)
 
 #### Bug Fixes

@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Add retry on HTTP status codes to `fetchRemoteFile` [#33461](https://github.com/gatsbyjs/gatsby/issues/33461) [#33925](https://github.com/gatsbyjs/gatsby/issues/33925) ([62a5612](https://github.com/gatsbyjs/gatsby/commit/62a56128fcd9f7d743b532fc231cd0d26c1f3ec2))
 
-
-
 ## [3.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.1.0/packages/gatsby-core-utils) (2021-11-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
