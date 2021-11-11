@@ -7,7 +7,7 @@ executors:
     parameters:
       image:
         type: string
-        default: "14.18.1"
+        default: "14.15.0"
     docker:
       - image: cimg/node:<< parameters.image >>
     environment:
@@ -232,7 +232,7 @@ jobs:
     # GATSBY_EXPERIMENTAL_LMDB_INDEXES is not activated yet
     executor:
       name: node
-      image: "14.18.1"
+      image: "14.15.0"
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
@@ -502,11 +502,11 @@ jobs:
 
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 14.18 and yarn
+          name: Install node 14.15.0 and yarn
           command: |
-            nvm install 14.18.1
-            nvm alias default 14.18.1
-            nvm use 14.18.1
+            nvm install 14.15.0
+            nvm alias default 14.15.0
+            nvm use 14.15.0
             choco install yarn
       - run:
           name: Rebuild packages for windows
