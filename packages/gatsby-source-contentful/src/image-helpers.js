@@ -6,7 +6,7 @@ import { URLSearchParams } from "url"
 export const CONTENTFUL_IMAGE_MAX_SIZE = 4000
 
 // Supported Image Formats by the Contentful Image API (https://www.contentful.com/developers/docs/references/images-api/#/reference/changing-formats/image-format)
-export const validImageFormats = new Set([`jpg`, `png`, `webp`, `gif`])
+export const validImageFormats = new Set([`jpg`, `png`, `webp`, `gif`, `avif`])
 
 // Determine the proper file extension based on mime type
 export const mimeTypeExtensions = new Map([
@@ -15,6 +15,7 @@ export const mimeTypeExtensions = new Map([
   [`image/gif`, `.gif`],
   [`image/png`, `.png`],
   [`image/webp`, `.webp`],
+  [`image/avif`, `.avif`],
 ])
 
 // Check if Contentful asset is actually an image
