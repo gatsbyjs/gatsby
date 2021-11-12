@@ -280,6 +280,8 @@ export async function resolveGatsbyImageData(
     webpOptions: {},
     gifOptions: {},
     avifOptions: {},
+    quality: 50,
+    placeholder: `dominantColor`,
     ...userDefaults,
   }
 
