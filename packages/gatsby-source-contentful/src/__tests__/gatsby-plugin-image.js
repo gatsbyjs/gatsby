@@ -13,7 +13,7 @@ const FIXTURES = path.resolve(__dirname, `..`, `__fixtures__`)
 const createMockCache = () => {
   const actualCacheMap = new Map()
   return {
-    get: jest.fn(key => _.cloneDeep(actualCacheMap.get(key))),
+    get: jest.fn(key => Promise.resolve(_.cloneDeep(actualCacheMap.get(key)))),
     set: jest.fn((key, value) => actualCacheMap.set(key, value)),
     directory: __dirname,
     actualMap: actualCacheMap,
