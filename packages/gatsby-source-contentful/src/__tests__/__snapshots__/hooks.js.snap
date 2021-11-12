@@ -2,12 +2,14 @@
 
 exports[`useContentfulImage constrained: width and aspectRatio 1`] = `
 Object {
-  "height": 337.4578177727784,
+  "backgroundColor": undefined,
+  "height": 337,
   "images": Object {
     "fallback": Object {
       "sizes": "(min-width: 600px) 600px, 100vw",
       "src": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=600&h=337&fm=auto",
-      "srcSet": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=320&h=180&fm=auto 320w,
+      "srcSet": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=150&h=84&fm=auto 150w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=300&h=169&fm=auto 300w,
 https://images.ctfassets.net/foo/bar/baz/image.jpg?w=600&h=337&fm=auto 600w",
     },
     "sources": Array [],
@@ -19,12 +21,14 @@ https://images.ctfassets.net/foo/bar/baz/image.jpg?w=600&h=337&fm=auto 600w",
 
 exports[`useContentfulImage constrained: width and height 1`] = `
 Object {
+  "backgroundColor": undefined,
   "height": 480,
   "images": Object {
     "fallback": Object {
       "sizes": "(min-width: 600px) 600px, 100vw",
       "src": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=600&h=480&fm=auto",
-      "srcSet": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=320&h=256&fm=auto 320w,
+      "srcSet": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=150&h=120&fm=auto 150w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=300&h=240&fm=auto 300w,
 https://images.ctfassets.net/foo/bar/baz/image.jpg?w=600&h=480&fm=auto 600w",
     },
     "sources": Array [],
@@ -36,27 +40,29 @@ https://images.ctfassets.net/foo/bar/baz/image.jpg?w=600&h=480&fm=auto 600w",
 
 exports[`useContentfulImage fixed: width and height 1`] = `
 Object {
-  "height": 320,
+  "backgroundColor": undefined,
+  "height": 480,
   "images": Object {
     "fallback": Object {
-      "sizes": "400px",
-      "src": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=400&h=320&fm=auto",
-      "srcSet": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=400&h=320&fm=auto 400w",
+      "sizes": "600px",
+      "src": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=600&h=480&fm=auto",
+      "srcSet": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=600&h=480&fm=auto 600w",
     },
     "sources": Array [],
   },
   "layout": "fixed",
-  "width": 400,
+  "width": 600,
 }
 `;
 
 exports[`useContentfulImage fullWidth: aspect ratio 1`] = `
 Object {
-  "height": 0.562429696287964,
+  "backgroundColor": undefined,
+  "height": 0.5625,
   "images": Object {
     "fallback": Object {
       "sizes": "100vw",
-      "src": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=320&h=180&fm=auto",
+      "src": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=4096&h=2304&fm=auto",
       "srcSet": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=320&h=180&fm=auto 320w,
 https://images.ctfassets.net/foo/bar/baz/image.jpg?w=654&h=368&fm=auto 654w,
 https://images.ctfassets.net/foo/bar/baz/image.jpg?w=768&h=432&fm=auto 768w,
@@ -79,15 +85,24 @@ https://images.ctfassets.net/foo/bar/baz/image.jpg?w=4096&h=2304&fm=auto 4096w",
 
 exports[`useContentfulImage fullWidth: aspectRatio, maxWidth 1`] = `
 Object {
-  "height": 0.562429696287964,
+  "backgroundColor": undefined,
+  "height": 0.5625,
   "images": Object {
     "fallback": Object {
       "sizes": "100vw",
-      "src": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=320&h=180&fm=auto",
+      "src": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=4096&h=2304&fm=auto",
       "srcSet": "https://images.ctfassets.net/foo/bar/baz/image.jpg?w=320&h=180&fm=auto 320w,
 https://images.ctfassets.net/foo/bar/baz/image.jpg?w=654&h=368&fm=auto 654w,
 https://images.ctfassets.net/foo/bar/baz/image.jpg?w=768&h=432&fm=auto 768w,
-https://images.ctfassets.net/foo/bar/baz/image.jpg?w=1024&h=576&fm=auto 1024w",
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=1024&h=576&fm=auto 1024w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=1366&h=768&fm=auto 1366w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=1600&h=900&fm=auto 1600w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=1920&h=1080&fm=auto 1920w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=2048&h=1152&fm=auto 2048w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=2560&h=1440&fm=auto 2560w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=3440&h=1935&fm=auto 3440w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=3840&h=2160&fm=auto 3840w,
+https://images.ctfassets.net/foo/bar/baz/image.jpg?w=4096&h=2304&fm=auto 4096w",
     },
     "sources": Array [],
   },
@@ -98,6 +113,7 @@ https://images.ctfassets.net/foo/bar/baz/image.jpg?w=1024&h=576&fm=auto 1024w",
 
 exports[`useContentfulImage fullWidth: width, height & maxWidth 1`] = `
 Object {
+  "backgroundColor": undefined,
   "height": 0.75,
   "images": Object {
     "fallback": Object {
