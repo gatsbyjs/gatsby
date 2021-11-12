@@ -2,7 +2,8 @@ module.exports = (
   code = [],
   highlightLines = [],
   user = `root`,
-  host = `localhost`
+  host = `localhost`,
+  text = ``
 ) => {
   const generatePrompts = numberOfLines => {
     let prompts = ``
@@ -10,7 +11,12 @@ module.exports = (
       if (highlightLines.includes(i + 1)) {
         prompts += `<span></span>`
       } else {
-        prompts += `<span data-user=${user} data-host=${host}></span>`
+        if (text) {
+          let escapedText = text.replace('>', '&gt;')
+          prompts += `<span data-prompt="${escapedText}"></span>`
+        } else {
+          prompts += `<span data-user=${user} data-host=${host}></span>`
+        }
       }
     }
     return prompts

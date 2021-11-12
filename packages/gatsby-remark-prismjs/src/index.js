@@ -21,6 +21,7 @@ module.exports = (
     prompt = {
       user: `root`,
       host: `localhost`,
+      text: ``,
       global: false,
     },
     escapeEntities = {},
@@ -45,10 +46,12 @@ module.exports = (
       outputLines,
       promptUserLocal,
       promptHostLocal,
+      promptTextLocal,
     } = parseOptions(language)
     const showLineNumbers = showLineNumbersLocal || showLineNumbersGlobal
     const promptUser = promptUserLocal || prompt.user
     const promptHost = promptHostLocal || prompt.host
+    const promptText = promptTextLocal || prompt.text
     const match = splitLanguage
       ? splitLanguage.match(DIFF_HIGHLIGHT_SYNTAX)
       : null
@@ -115,18 +118,19 @@ module.exports = (
     }
 
     const useCommandLine =
-      [`bash`, `shell`].includes(languageName) &&
+      [`bash`, `shell`, `powershell`].includes(languageName) &&
       (prompt.global ||
         (outputLines && outputLines.length > 0) ||
         promptUserLocal ||
-        promptHostLocal)
+        promptHostLocal ||
+        promptTextLocal)
 
     // prettier-ignore
     node.value = ``
     + `<div class="${highlightClassName}" data-language="${languageName}">`
     +   `<pre${numLinesStyle} class="${className}${numLinesClass}">`
     +     `<code class="${className}">`
-    +       `${useCommandLine ? commandLine(node.value, outputLines, promptUser, promptHost) : ``}`
+    +       `${useCommandLine ? commandLine(node.value, outputLines, promptUser, promptHost, promptText) : ``}`
     +       `${highlightedCode}`
     +     `</code>`
     +     `${numLinesNumber}`
