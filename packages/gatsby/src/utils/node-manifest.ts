@@ -278,13 +278,33 @@ export async function processNodeManifest(
 
   const gatsbySiteDirectory = store.getState().program.directory
 
+  let fileNameBase = inputManifest.manifestId
+
+  /**
+   * Windows has a handful of special/reserved characters that are not valid in a file path
+   * @reference https://superuser.com/questions/358855/what-characters-are-safe-in-cross-platform-file-names-for-linux-windows-and-os
+   *
+   * The two exceptions to the list linked above are
+   * - the colon that is part of the hard disk partition name at the beginning of a file path (i.e. C:)
+   * - backslashes. We don't want to replace backslashes because those are used to delineate what the actual file path is
+   *
+   * During local development, node manifests can be written to disk but are generally unused as they are only used
+   * for Content Sync which runs in Gatsby Cloud. Gatsby cloud is a Linux environment in which these special chars are valid in
+   * filepaths. To avoid errors on Windows, we replace all instances of the special chars in the filepath (with the exception of the
+   * hard disk partition name) with "-" to ensure that local Windows development setups do not break when attempting
+   * to write one of these manifests to disk.
+   */
+  if (process.platform === `win32`) {
+    fileNameBase = fileNameBase.replace(/:|\/|\*|\?|"|<|>|\||\\/g, `-`)
+  }
+
   // write out the manifest file
   const manifestFilePath = path.join(
     gatsbySiteDirectory,
     `public`,
     `__node-manifests`,
     inputManifest.pluginName,
-    `${inputManifest.manifestId}.json`
+    `${fileNameBase}.json`
   )
 
   const manifestFileDir = path.dirname(manifestFilePath)
