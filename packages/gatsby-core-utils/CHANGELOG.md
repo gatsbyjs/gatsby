@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - fix fetchRemoteFile when called in main process after being called in worker fix [#33932](https://github.com/gatsbyjs/gatsby/issues/33932) fix [#33942](https://github.com/gatsbyjs/gatsby/issues/33942) ([26c7a3d](https://github.com/gatsbyjs/gatsby/commit/26c7a3d6c9d1f51ce59f8ebdf66db422c0320cbc))
 
-
-
 ### [3.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.1.1/packages/gatsby-core-utils) (2021-11-10)
 
 #### Features
