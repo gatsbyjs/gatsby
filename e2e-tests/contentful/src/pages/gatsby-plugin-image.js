@@ -1,12 +1,22 @@
 import { graphql } from "gatsby"
 import { GatsbyImage } from "gatsby-plugin-image"
 import * as React from "react"
+import { useContentfulImage } from "gatsby-source-contentful/hooks"
 
 import Layout from "../components/layout"
 import Grid from "../components/grid"
 import SvgImage from "../components/svg-image"
 
 const GatsbyPluginImagePage = ({ data }) => {
+  const dynamicImage = useContentfulImage({
+    image: {
+      url:
+        "//images.ctfassets.net/k8iqpp6u0ior/3BSI9CgDdAn1JchXmY5IJi/f97a2185b3395591b98008647ad6fd3c/camylla-battani-AoqgGAqrLpU-unsplash.jpg",
+      width: 2000,
+      height: 1000,
+    },
+  })
+
   return (
     <Layout>
       <h1>Test gatsby-plugin-image</h1>
@@ -205,6 +215,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           </div>
         ))}
       </Grid>
+
+      <h2>
+        gatsby-plugin-image: On the fly image generation via{" "}
+        <code>useContentfulImage</code>
+      </h2>
+      <Grid data-cy="hook">
+        <GatsbyImage image={dynamicImage} />
+      </Grid>
     </Layout>
   )
 }
@@ -232,6 +250,12 @@ export const pageQuery = graphql`
         file {
           fileName
           url
+          details {
+            image {
+              width
+              height
+            }
+          }
         }
         constrained: gatsbyImageData(width: 420)
         fullWidth: gatsbyImageData(width: 200, layout: FIXED)

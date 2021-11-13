@@ -8,7 +8,8 @@ export function useContentfulImage({ image, ...props }) {
     baseUrl: image.url,
     sourceWidth: image.width,
     sourceHeight: image.height,
-    urlBuilder: ({ baseUrl, width, height, options, format = `auto` }) =>
+    backgroundColor: null,
+    urlBuilder: ({ baseUrl, width, height, options, format }) =>
       createUrl(baseUrl, { ...options, height, width, toFormat: format }),
     pluginName: `gatsby-source-contentful`,
     ...props,

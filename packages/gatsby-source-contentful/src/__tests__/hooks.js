@@ -69,8 +69,3 @@ describe(`useContentfulImage`, () => {
     expect(result).toMatchSnapshot()
   })
 })
-
-// export type Fit = "cover" | "fill" | "inside" | "outside" | "contain"
-
-// export type Layout = "fixed" | "fullWidth" | "constrained"
-// export type ImageFormat = "jpg" | "png" | "webp" | "avif" | "auto" | ""
