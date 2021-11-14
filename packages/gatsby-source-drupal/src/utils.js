@@ -434,7 +434,9 @@ function drupalCreateNodeManifest({
       process.env.ENABLE_GATSBY_REFRESH_ENDPOINT) ||
     process.env.GATSBY_IS_PREVIEW === `true`
 
-  if (typeof unstable_createNodeManifest === `function` && isPreview) {
+  const supportsContentSync = typeof unstable_createNodeManifest === `function`
+
+  if (supportsContentSync && isPreview) {
     const manifestId = `${attributes.drupal_internal__nid}-${attributes.revision_timestamp}`
 
     console.info(`Drupal: Creating node manifest with id ${manifestId}`)
@@ -443,7 +445,7 @@ function drupalCreateNodeManifest({
       manifestId,
       node: gatsbyNode,
     })
-  } else if (!hasLoggedContentSyncWarning) {
+  } else if (!supportsContentSync && !hasLoggedContentSyncWarning) {
     hasLoggedContentSyncWarning = true
     console.warn(
       `Drupal: Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
