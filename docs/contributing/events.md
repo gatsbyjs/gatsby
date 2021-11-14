@@ -6,7 +6,7 @@ description: Learn about other events happening around the globe to connect with
 import Events from "@components/events/events"
 import EmailCaptureForm from "@components/email-capture-form"
 
-**IMPORTANT NOTE ON COMMUNITY EVENTS: Promotion and support of Gatsby community events is currently suspended due to COVID-19. Stay tuned for updates on when our community events program will resume.**
+**IMPORTANT NOTE ON COMMUNITY EVENTS: Promotion and support of Gatsby community events are currently suspended due to COVID-19. Stay tuned for updates on when our community events program will resume.**
 
 Interested in connecting with the Gatsby community in person? Take a look at the list below to see past community-organized Gatsby events.
 
