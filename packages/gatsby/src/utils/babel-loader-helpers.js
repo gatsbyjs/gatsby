@@ -85,6 +85,25 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
     )
   }
 
+  if (
+    _CFLAGS_.GATSBY_MAJOR === `4` &&
+    (stage === `build-html` || stage === `develop-html`)
+  ) {
+    requiredPlugins.push(
+      babel.createConfigItem(
+        [
+          resolve(`./babel/babel-plugin-env-vars`),
+          {
+            apis: [`getServerData`],
+          },
+        ],
+        {
+          type: `plugin`,
+        }
+      )
+    )
+  }
+
   if (stage === `develop`) {
     requiredPlugins.push(
       babel.createConfigItem([resolve(`react-refresh/babel`)], {

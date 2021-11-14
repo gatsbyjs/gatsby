@@ -123,6 +123,25 @@ const GatsbyPluginImagePage = ({ data }) => {
         ))}
       </Grid>
 
+      <h2>gatsby-plugin-image: Custom Image Formats (WebP & AVIF)</h2>
+      <Grid data-cy="customImageFormats">
+        {data.default.nodes.map(node => (
+          <div>
+            <p>
+              <strong>
+                {node.title} ({node.file.fileName.split(".").pop()})
+              </strong>
+            </p>
+            {node.description && <p>{node.description}</p>}
+            {node.customImageFormats ? (
+              <GatsbyImage image={node.customImageFormats} />
+            ) : (
+              <SvgImage src={node.file.url} />
+            )}
+          </div>
+        ))}
+      </Grid>
+
       <h2>gatsby-plugin-image: SQIP Placeholder</h2>
       <Grid data-cy="sqip">
         {data.default.nodes.map(node => (
@@ -232,6 +251,7 @@ export const pageQuery = graphql`
           layout: FIXED
           placeholder: BLURRED
         )
+        customImageFormats: gatsbyImageData(formats: [AVIF, WEBP, AUTO])
         sqip(numberOfPrimitives: 12, blur: 0, mode: 1) {
           dataURI
         }

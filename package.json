@@ -13,7 +13,7 @@
     "@types/cache-manager": "^2.10.3",
     "@types/common-tags": "^1.8.0",
     "@types/express": "^4.17.3",
-    "@types/fs-extra": "^9.0.12",
+    "@types/fs-extra": "^9.0.13",
     "@types/jaeger-client": "^3.18.0",
     "@types/jest": "^24.9.1",
     "@types/joi": "^14.3.4",
@@ -112,7 +112,7 @@
   "private": true,
   "resolutions": {
     "theme-ui": "0.4.0-rc.14",
-    "csstype": "2.6.17"
+    "csstype": "2.6.18"
   },
   "scripts": {
     "bootstrap": "cross-env COMPILER_OPTIONS=\"GATSBY_MAJOR=4\" npm-run-all -s check-versions \"lerna-prepare -- --{@}\" --",
