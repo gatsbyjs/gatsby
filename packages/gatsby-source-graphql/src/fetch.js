@@ -1,4 +1,4 @@
-const nodeFetch = require(`node-fetch`)
+const nodeFetch = require(`node-fetch`).default
 
 // this is passed to the Apollo Link
 // https://www.apollographql.com/docs/link/links/http/#fetch-polyfill
