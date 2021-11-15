@@ -2,31 +2,9 @@
 title: "Part 5: Transform Data to Use MDX"
 ---
 
-import { Announcement, Notification, LinkButton } from 'gatsby-interface'
+import { Announcement, LinkButton } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
-import { MdInfo } from 'react-icons/md'
-
-<Notification
-  Icon={MdInfo}
-  tone="WARNING"
-  variant="SECONDARY"
-  content={
-    <div>
-      <p>
-        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
-        The first few parts of the new Tutorial have been released here, and subsequent parts
-        will be added as we finish them.
-      </p>
-      <p style={{ marginBottom: 0 }}>
-        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
-        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
-          <strong>Gatsby v2 Tutorial</strong>
-        </a>
-        .
-      </p>
-    </div>
-  }
-/>
+import { MdArrowForward } from 'react-icons/md'
 
 ## Introduction
 
@@ -196,7 +174,6 @@ The `gatsby-plugin-mdx` package requires a few additional dependencies to run: `
         title: "My Super Cool Blog",
       },
       plugins: [
-        "gatsby-plugin-gatsby-cloud",
         "gatsby-plugin-image",
         "gatsby-plugin-sharp",
         {
@@ -437,9 +414,11 @@ query MyQuery {
 
 Now that your GraphQL query is all set up, it's time to replace the page query in your Blog page component.
 
-1. Start by swapping out the `allFile` page query in your Blog page for the one you just created using `allMdx`. (Don't forget to delete the query name!)
+1. Start by swapping out the `allFile` page query in your Blog page for the one you just created using `allMdx`. (Don't forget to delete the query name!) And if you haven't already from completing the [task in Part 4](/docs/tutorial/part-4/#task-use-a-page-query-to-pull-the-list-of-post-filenames-into-your-blog-page), you'll need to import the `graphql` tag from the `gatsby` package.
     ```js:title=src/pages/blog.js
-    // imports
+    import * as React from 'react'
+    import { graphql } from 'gatsby'
+    import Layout from '../components/layout'
 
     const BlogPage = ({ data }) => {
       return (
@@ -529,7 +508,7 @@ import Layout from '../components/layout'
 
 `MDXRenderer` is a component included in the `gatsby-plugin-mdx` plugin that you can use to render the contents of a `.mdx` file.
 
-The `MDXRenderer` uses the `children` prop, similar to the `Layout` component you created in [Part 2](/docs/tutorial/part-2/). It expects to receive compiled MDX between the its opening and closing tags. You can pass in the `body` field from an MDX node. 
+The `MDXRenderer` uses the `children` prop, similar to the `Layout` component you created in [Part 2](/docs/tutorial/part-2/). It expects to receive compiled MDX between its opening and closing tags. You can pass in the `body` field from an MDX node. 
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -600,6 +579,12 @@ export default BlogPage
     ![A screenshot of the Blog page in a web browser. Now, underneath the date for each post, the contents of the blog post are also being rendered.](./blog-page-with-full-posts.png)
 
 Nice work! Your site now has a blog page with actual content.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Want to see how it all fits together?** Check out the commit history in the [GitHub repo for the finished example site](https://github.com/gatsbyjs/tutorial-example).
+
+</Announcement>
 
 ## Summary
 

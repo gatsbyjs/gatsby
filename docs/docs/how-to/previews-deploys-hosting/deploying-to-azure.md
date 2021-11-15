@@ -42,7 +42,7 @@ Azure Static Web Apps service currently supports GitHub. In order to use the Azu
 
 3. Name your repository and click `Create repository`.
 
-4. Finally, add your GitHub repository as a remote and push. Type the following commands to accomplish that (replacing `<user>` with your GitHub user name):
+4. Finally, add your GitHub repository as a remote and push. Type the following commands to accomplish that (replacing `<user>` with your GitHub username):
 
    ```shell
    git remote add origin https://github.com/<user>/gatsby-app.git
@@ -92,7 +92,7 @@ Next, configure your new app and link it to your GitHub repository.
 
 Next, add configuration details specific to your Gatsby project.
 
-The `App location` is the location of your front end app code. If you have a frontend app and an API in different directories but in the same repository, you will need to point out under which sub directory your front end app lives. You can leave this blank if you have a Gatsby project at the root.
+The `App location` is the location of your front end app code. If you have a frontend app and an API in different directories but in the same repository, you will need to point out under which subdirectory your front end app lives. You can leave this blank if you have a Gatsby project at the root.
 
 The default value for `Api location` is `/api`. As we don't have an API in an `/api` directory we can leave this blank and the Static Web App Service will ignore it during build. If you wish you can add an API at a later stage. Refer to the links at the bottom of this doc that describes how to do that.
 

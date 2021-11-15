@@ -90,11 +90,12 @@ class GatsbyImageHydrator extends Component<
     }
 
     return import(`./lazy-hydrate`).then(({ lazyHydrate }) => {
+      const cacheKey = JSON.stringify(this.props.image.images)
       this.lazyHydrator = lazyHydrate(
         {
           image: props.image.images,
-          isLoading: state.isLoading,
-          isLoaded: state.isLoaded,
+          isLoading: state.isLoading || hasImageLoaded(cacheKey),
+          isLoaded: state.isLoaded || hasImageLoaded(cacheKey),
           toggleIsLoaded: () => {
             props.onLoad?.()
 
@@ -276,8 +277,8 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> =
       return null
     }
 
-    if (!gatsbyImageIsInstalled()) {
-      console.error(
+    if (!gatsbyImageIsInstalled() && process.env.NODE_ENV === `development`) {
+      console.warn(
         `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
       )
     }

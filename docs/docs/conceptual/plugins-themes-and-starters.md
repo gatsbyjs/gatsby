@@ -102,7 +102,7 @@ Themes are intended to abstract several plugins into one, by making a `gatsby-co
 
 #### Custom components
 
-Custom components are most traditionally distributed as packages in the React ecosystem. Components don't need to hook into the Gatsby build system, so if shipped with a plugin they don't need to be included in a `gatsby-config`'s plugin array. This is the case with `gatsby-image` which is a React component. It doesn't need to be included in the plugins array because it is merely a component.
+Custom components are most traditionally distributed as packages in the React ecosystem. Components don't need to hook into the Gatsby build system, so if shipped with a plugin they don't need to be included in a `gatsby-config`'s plugin array.
 
 Some plugins ship with components you can use in a Gatsby site. An example is the [`<OutboundLink />` component from `gatsby-plugin-google-analytics`](/plugins/gatsby-plugin-google-analytics/?=#outboundlink-component). Other plugins, like [`gatsby-plugin-react-helmet`](/plugins/gatsby-plugin-react-helmet), require you to install components from other libraries.
 

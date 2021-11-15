@@ -72,7 +72,11 @@ export function createSchemaCustomization(
     ownerType: `String!`,
     updatedAt: `Date!`,
     value: `String!`,
-    valueType: `String!`,
+    type: `String!`,
+    valueType: {
+      type: `String!`,
+      deprecationReason: `Shopify has deprecated this field`,
+    },
   }
 
   const metafieldInterface = schema.buildInterfaceType({

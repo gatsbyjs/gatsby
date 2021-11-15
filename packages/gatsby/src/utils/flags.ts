@@ -87,7 +87,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Enable all experiments aimed at improving develop server start time.`,
     includedFlags: [
-      `DEV_SSR`,
+      // `DEV_SSR`, - not working with serverdata atm
       `PRESERVE_FILE_DOWNLOAD_CACHE`,
       `DEV_WEBPACK_CACHE`,
     ],
@@ -102,6 +102,11 @@ const activeFlags: Array<IFlag> = [
     description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds. See umbrella issue for how to update custom webpack config.`,
     umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
     testFitness: (): fitnessEnum => {
+      // TODO Re-enable after gatsybcamp
+      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+        return false
+      }
+
       if (sampleSiteForExperiment(`DEV_SSR`, 20)) {
         return `OPT_IN`
       } else {
@@ -162,7 +167,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Enable webpack's persistent caching during development. Speeds up the start of the development server.`,
     umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => true,
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
   },
   {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
@@ -185,16 +190,6 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => true,
   },
   {
-    name: `FUNCTIONS`,
-    env: `GATSBY_EXPERIMENTAL_FUNCTIONS`,
-    command: `all`,
-    telemetryId: `Functions`,
-    experimental: false,
-    description: `Compile Serverless functions in your Gatsby project and write them to disk, ready to deploy to Gatsby Cloud`,
-    umbrellaIssue: `https://gatsby.dev/functions-feedback`,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-  },
-  {
     name: `LMDB_STORE`,
     env: `GATSBY_EXPERIMENTAL_LMDB_STORE`,
     command: `all`,
@@ -203,6 +198,10 @@ const activeFlags: Array<IFlag> = [
     umbrellaIssue: `https://gatsby.dev/lmdb-feedback`,
     description: `Store nodes in a persistent embedded database (vs in-memory). Lowers peak memory usage. Requires Node v14.10 or above.`,
     testFitness: (): fitnessEnum => {
+      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+        return `LOCKED_IN`
+      }
+
       const [major, minor] = process.versions.node.split(`.`)
       return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
     },
@@ -218,6 +217,10 @@ const activeFlags: Array<IFlag> = [
     description: `Parallelize running page queries in order to better saturate all available cores. Improves time it takes to run queries during gatsby build. Requires Node v14.10 or above.`,
     includedFlags: [`LMDB_STORE`],
     testFitness: (): fitnessEnum => {
+      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+        return `LOCKED_IN`
+      }
+
       const [major, minor] = process.versions.node.split(`.`)
       return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
     },

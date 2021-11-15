@@ -6,6 +6,8 @@ import { store } from "../redux/"
 import { internalActions } from "../redux/actions"
 import path from "path"
 import fs from "fs-extra"
+import { readPageData } from "./page-data"
+import { createContentDigest } from "gatsby-core-utils"
 
 interface INodeManifestPage {
   path?: string
@@ -20,6 +22,7 @@ interface INodeManifestOut {
     id: string
   }
   foundPageBy: FoundPageBy
+  pageDataDigest: string | null
 }
 
 type FoundPageBy =
@@ -67,9 +70,7 @@ async function findPageOwnedByNodeId({ nodeId }: { nodeId: string }): Promise<{
 
   let foundPageBy: FoundPageBy = pagePath ? `queryTracking` : `none`
 
-  // but if we have more than one page where this node shows up
-  // we need to try to be more specific
-  if (pagePathSetOrMap && pagePathSetOrMap.size > 1) {
+  if (pagePathSetOrMap) {
     let ownerPagePath: string | undefined
     let foundOwnerNodeId = false
 
@@ -203,6 +204,41 @@ export function warnAboutNodeManifestMappingProblems({
 }
 
 /**
+ * Retrieves the content digest of a page-data.json file for use in creating node manifest files.
+ */
+export async function getPageDataDigestForPagePath(
+  pagePath?: string,
+  directory?: string
+): Promise<string | null> {
+  if (
+    // if no page was created for the node we're creating a manifest for, there wont be a page path.
+    !pagePath ||
+    // we only add page data digests to node manifests in production because page-data.json may not exist in development.
+    (process.env.NODE_ENV !== `production` && process.env.NODE_ENV !== `test`)
+  ) {
+    return null
+  }
+
+  try {
+    const publicDirectory = path.join(
+      directory || store.getState().program.directory,
+      `public`
+    )
+    const pageData = await readPageData(publicDirectory, pagePath)
+
+    const pageDataDigest = createContentDigest(pageData)
+
+    return pageDataDigest
+  } catch (e) {
+    reporter.warn(
+      `No page-data.json found for ${pagePath} while processing node manifests.`
+    )
+
+    return null
+  }
+}
+
+/**
  * Prepares and then writes out an individual node manifest file to be used for routing to previews. Manifest files are added via the public unstable_createNodeManifest action
  */
 export async function processNodeManifest(
@@ -229,13 +265,38 @@ export async function processNodeManifest(
     foundPageBy,
   })
 
+  const pageDataDigest = await getPageDataDigestForPagePath(
+    nodeManifestPage.path
+  )
+
   const finalManifest: INodeManifestOut = {
     node: inputManifest.node,
     page: nodeManifestPage,
     foundPageBy,
+    pageDataDigest,
   }
 
   const gatsbySiteDirectory = store.getState().program.directory
+
+  let fileNameBase = inputManifest.manifestId
+
+  /**
+   * Windows has a handful of special/reserved characters that are not valid in a file path
+   * @reference https://superuser.com/questions/358855/what-characters-are-safe-in-cross-platform-file-names-for-linux-windows-and-os
+   *
+   * The two exceptions to the list linked above are
+   * - the colon that is part of the hard disk partition name at the beginning of a file path (i.e. C:)
+   * - backslashes. We don't want to replace backslashes because those are used to delineate what the actual file path is
+   *
+   * During local development, node manifests can be written to disk but are generally unused as they are only used
+   * for Content Sync which runs in Gatsby Cloud. Gatsby cloud is a Linux environment in which these special chars are valid in
+   * filepaths. To avoid errors on Windows, we replace all instances of the special chars in the filepath (with the exception of the
+   * hard disk partition name) with "-" to ensure that local Windows development setups do not break when attempting
+   * to write one of these manifests to disk.
+   */
+  if (process.platform === `win32`) {
+    fileNameBase = fileNameBase.replace(/:|\/|\*|\?|"|<|>|\||\\/g, `-`)
+  }
 
   // write out the manifest file
   const manifestFilePath = path.join(
@@ -243,7 +304,7 @@ export async function processNodeManifest(
     `public`,
     `__node-manifests`,
     inputManifest.pluginName,
-    `${inputManifest.manifestId}.json`
+    `${fileNameBase}.json`
   )
 
   const manifestFileDir = path.dirname(manifestFilePath)

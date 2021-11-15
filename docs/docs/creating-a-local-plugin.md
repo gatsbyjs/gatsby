@@ -71,7 +71,7 @@ You can use [`npm link`](https://docs.npmjs.com/cli/link.html) or [`yarn link`](
 
 By running `npm link ../path/to/my-plugin` in the root of your Gatsby site, your computer will create a symlink to your package.
 
-This is a similar process to setting up yarn workspaces for development with Gatsby themes (which is the recommended approach for developing themes). You can read how to setup a site in this manner in the [Building a Theme guide](/tutorial/building-a-theme/#set-up-yarn-workspaces).
+This is a similar process to setting up yarn workspaces for development with Gatsby themes (which is the recommended approach for developing themes). You can read how to set up a site in this manner in the [Building a Theme guide](/tutorial/building-a-theme/#set-up-yarn-workspaces).
 
 **Note**: See an example of using a local plugin from the plugins folder, with `require.resolve`, and `npm link` in [this example repository](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-multiple-local-plugins).
 

@@ -11,6 +11,7 @@ import url from "url"
 import { createHash } from "crypto"
 import { findPageByPath } from "./find-page-by-path"
 import { Server as SocketIO, Socket } from "socket.io"
+import { getPageMode } from "./page-mode"
 
 export interface IPageQueryResult {
   id: string
@@ -85,8 +86,15 @@ export class WebsocketManager {
             newActivePath,
             fallbackTo404
           )
+
           if (page) {
-            activePagePath = page.path
+            // when it's SSR we don't want to return the page path but the actualy url used,
+            // this is necessary when matchPaths are used.
+            if (getPageMode(page) === `SSR`) {
+              activePagePath = newActivePath
+            } else {
+              activePagePath = page.path
+            }
           }
         }
         clientInfo.activePath = activePagePath
@@ -239,6 +247,14 @@ export class WebsocketManager {
 
         return true
       }
+    }
+    return false
+  }
+
+  emitStaleServerData(): boolean {
+    if (this.websocket) {
+      this.websocket.send({ type: `staleServerData` })
+      return true
     }
     return false
   }

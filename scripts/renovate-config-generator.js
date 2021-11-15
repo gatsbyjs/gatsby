@@ -122,7 +122,10 @@ const globalPackageRules = [
   },
   {
     groupName: `core-js`,
-    matchPaths: [`+(package.json)`, `packages/**/package.json`],
+    matchPaths: [
+      `+(package.json)`,
+      `packages/!(gatsby-legacy-polyfills)/**/package.json`,
+    ],
     matchPackageNames: [`core-js`, `core-js-compat`],
     matchUpdateTypes: [`major`, `minor`, `patch`],
     matchDepTypes: [`dependencies`, `devDependencies`],
@@ -340,6 +343,7 @@ const renovateConfig = {
   postUpdateOptions: [`yarnDedupeHighest`],
   timezone: `GMT`,
   schedule: [`before 7am on the first day of the month`],
+  updateNotScheduled: false,
   packageRules: defaultPackageRules.concat(
     Array.from(packageRules.values()).flat()
   ),

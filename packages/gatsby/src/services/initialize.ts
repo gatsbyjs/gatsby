@@ -35,7 +35,10 @@ interface IPluginResolutionSSR extends IPluginResolution {
 if (
   process.env.gatsby_executing_command === `develop` &&
   process.env.GATSBY_EXPERIMENTAL_FAST_DEV &&
-  !isCI()
+  !isCI() &&
+  // skip FAST_DEV handling in workers, all env vars will be handle
+  // by main process already and passed to worker
+  !process.env.GATSBY_WORKER_POOL_WORKER
 ) {
   process.env.GATSBY_EXPERIMENTAL_DEV_SSR = `true`
   process.env.PRESERVE_FILE_DOWNLOAD_CACHE = `true`
@@ -156,7 +159,7 @@ export async function initialize({
     // enable loading indicator
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `true`
   }
-  detectLmdbStore()
+  const lmdbStoreIsUsed = detectLmdbStore()
 
   if (config && config.polyfill) {
     reporter.warn(
@@ -206,20 +209,29 @@ export async function initialize({
   await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
   activity.end()
 
+  const lmdbCacheDirectoryName = `caches-lmdb`
+
   const cacheDirectory = `${program.directory}/.cache`
   const publicDirectory = `${program.directory}/public`
   const workerCacheDirectory = `${program.directory}/.cache/worker`
+  const lmdbCacheDirectory = `${program.directory}/.cache/${lmdbCacheDirectoryName}`
 
   const cacheJsonDirExists = fs.existsSync(`${cacheDirectory}/json`)
   const publicDirExists = fs.existsSync(publicDirectory)
   const workerCacheDirExists = fs.existsSync(workerCacheDirectory)
+  const lmdbCacheDirExists = fs.existsSync(lmdbCacheDirectory)
+
+  // check the cache file that is used by the current configuration
+  const cacheDirExists = lmdbStoreIsUsed
+    ? lmdbCacheDirExists
+    : cacheJsonDirExists
 
   // For builds in case public dir exists, but cache doesn't, we need to clean up potentially stale
   // artifacts from previous builds (due to cache not being available, we can't rely on tracking of artifacts)
   if (
     process.env.NODE_ENV === `production` &&
     publicDirExists &&
-    !cacheJsonDirExists
+    !cacheDirExists
   ) {
     activity = reporter.activityTimer(
       `delete html and css files from previous builds`,
@@ -294,9 +306,8 @@ export async function initialize({
   }
 
   // .cache directory exists in develop at this point
-  // so checking for .cache/json as a heuristic (could be any expected file)
-  const cacheIsCorrupt = cacheJsonDirExists && !publicDirExists
-
+  // so checking for .cache/json or .cache/caches-lmdb as a heuristic (could be any expected file)
+  const cacheIsCorrupt = cacheDirExists && !publicDirExists
   if (cacheIsCorrupt) {
     reporter.info(reporter.stripIndent`
       We've detected that the Gatsby cache is incomplete (the .cache directory exists
@@ -423,7 +434,15 @@ export async function initialize({
   await fs.ensureDir(`${publicDirectory}/static`)
 
   // Init plugins once cache is initialized
-  await apiRunnerNode(`unstable_onPluginInit`)
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    await apiRunnerNode(`onPluginInit`, {
+      parentSpan: activity.span,
+    })
+  } else {
+    await apiRunnerNode(`unstable_onPluginInit`, {
+      parentSpan: activity.span,
+    })
+  }
 
   activity.end()
 
@@ -437,7 +456,11 @@ export async function initialize({
   try {
     await fs.copy(srcDir, siteDir)
     await fs.copy(tryRequire, `${siteDir}/test-require-error.js`)
-    await fs.ensureDirSync(`${cacheDirectory}/json`)
+    if (lmdbStoreIsUsed) {
+      await fs.ensureDirSync(`${cacheDirectory}/${lmdbCacheDirectoryName}`)
+    } else {
+      await fs.ensureDirSync(`${cacheDirectory}/json`)
+    }
 
     // Ensure .cache/fragments exists and is empty. We want fragments to be
     // added on every run in response to data as fragments can only be added if

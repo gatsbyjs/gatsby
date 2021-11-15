@@ -6,6 +6,7 @@ import { IGatsbyCLIState } from "gatsby-cli/src/reporter/redux/types"
 import { ThunkAction } from "redux-thunk"
 import { InternalJob, JobResultInterface } from "../utils/jobs/manager"
 import { ITypeMetadata } from "../schema/infer/inference-metadata"
+import { Span } from "opentracing"
 
 type SystemPath = string
 type Identifier = string
@@ -25,6 +26,8 @@ export enum ProgramStatus {
   BOOTSTRAP_QUERY_RUNNING_FINISHED = `BOOTSTRAP_QUERY_RUNNING_FINISHED`,
 }
 
+export type PageMode = "SSG" | "DSG" | "SSR"
+
 export interface IGatsbyPage {
   internalComponentName: string
   path: string
@@ -39,6 +42,16 @@ export interface IGatsbyPage {
   pluginCreatorId: Identifier
   componentPath: SystemPath
   ownerNodeId: Identifier
+  defer?: boolean
+  /**
+   * INTERNAL. Do not use `page.mode`, it can be removed at any time
+   * `page.mode` is currently reliable only in engines and `onPostBuild` hook
+   * (in develop it is dynamic and can change at any time)
+   * TODO: remove, see comments in utils/page-mode:materializePageMode
+   *
+   * @internal
+   */
+  mode: PageMode
 }
 
 export interface IGatsbyFunction {
@@ -79,7 +92,10 @@ export interface IGatsbyConfig {
   developMiddleware?: any
   proxy?: any
   pathPrefix?: string
+  assetPrefix?: string
   mapping?: Record<string, string>
+  jsxRuntime?: "classic" | "automatic"
+  jsxImportSource?: string
 }
 
 export interface IGatsbyNode {
@@ -125,6 +141,8 @@ export interface IGatsbyPageComponent {
   query: string
   pages: Set<string>
   isInBootstrap: boolean
+  serverData: boolean
+  config: boolean
 }
 
 export interface IDefinitionMeta {
@@ -242,6 +260,8 @@ export interface IGatsbyState {
     >
     ssrAPIs: Array<"onRenderBody" | "onPreRenderHTML">
     pluginFilepath: SystemPath
+    subPluginPaths?: Array<string>
+    modulePath?: string
   }>
   config: IGatsbyConfig
   functions: Array<IGatsbyFunction>
@@ -279,6 +299,7 @@ export interface IGatsbyState {
   jobsV2: {
     incomplete: Map<Identifier, IGatsbyIncompleteJobV2>
     complete: Map<Identifier, IGatsbyCompleteJobV2>
+    jobsByRequest: Map<string, Set<Identifier>>
   }
   webpack: any // TODO This should be the output from ./utils/webpack.config.js
   webpackCompilationHash: string
@@ -404,6 +425,19 @@ export type ActionsUnion =
   | ISSRUsedUnsafeBuiltin
   | ISetSiteConfig
   | IMergeWorkerQueryState
+  | ISetComponentFeatures
+  | IMaterializePageMode
+  | ISetJobV2Context
+  | IClearJobV2Context
+
+export interface ISetComponentFeatures {
+  type: `SET_COMPONENT_FEATURES`
+  payload: {
+    componentPath: string
+    serverData: boolean
+    config: boolean
+  }
+}
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -785,6 +819,9 @@ export interface ICreateNodeAction {
   type: `CREATE_NODE`
   payload: IGatsbyNode
   oldNode?: IGatsbyNode
+  traceId: string
+  parentSpan: Span
+  followsSpan: Span
 }
 
 export interface IAddFieldToNodeAction {
@@ -912,5 +949,28 @@ export interface IMergeWorkerQueryState {
   payload: {
     workerId: number
     queryStateChunk: IGatsbyState["queries"]
+  }
+}
+
+export interface IMaterializePageMode {
+  type: `MATERIALIZE_PAGE_MODE`
+  payload: {
+    path: string
+    pageMode: PageMode
+  }
+}
+
+export interface ISetJobV2Context {
+  type: `SET_JOB_V2_CONTEXT`
+  payload: {
+    job: IGatsbyIncompleteJobV2["job"]
+    requestId: string
+  }
+}
+
+export interface IClearJobV2Context {
+  type: `CLEAR_JOB_V2_CONTEXT`
+  payload: {
+    requestId: string
   }
 }

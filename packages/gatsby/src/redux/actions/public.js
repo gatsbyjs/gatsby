@@ -11,7 +11,7 @@ const { slash, createContentDigest } = require(`gatsby-core-utils`)
 const { hasNodeChanged } = require(`../../utils/nodes`)
 const { getNode } = require(`../../datastore`)
 const sanitizeNode = require(`../../utils/sanitize-node`)
-const { store } = require(`..`)
+const { store } = require(`../index`)
 const { validatePageComponent } = require(`../../utils/validate-page-component`)
 import { nodeSchema } from "../../joi-schemas/joi"
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
@@ -23,18 +23,19 @@ const {
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+const { getPageMode } = require(`../../utils/page-mode`)
+const normalizePath = require(`../../utils/normalize-path`).default
 import { createJobV2FromInternalJob } from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
+import { reportOnce } from "../../utils/report-once"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
 
-/**
- * Memoize function used to pick shadowed page components to avoid expensive I/O.
- * Ideally, we should invalidate memoized values if there are any FS operations
- * on files that are in shadowing chain, but webpack currently doesn't handle
- * shadowing changes during develop session, so no invalidation is not a deal breaker.
- */
+// Memoize function used to pick shadowed page components to avoid expensive I/O.
+// Ideally, we should invalidate memoized values if there are any FS operations
+// on files that are in shadowing chain, but webpack currently doesn't handle
+// shadowing changes during develop session, so no invalidation is not a deal breaker.
 const shadowCreatePagePath = _.memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 )
@@ -70,15 +71,6 @@ const findChildren = initialChildren => {
   return children
 }
 
-const displayedWarnings = new Set()
-const warnOnce = (message, key) => {
-  const messageId = key ?? message
-  if (!displayedWarnings.has(messageId)) {
-    displayedWarnings.add(messageId)
-    report.warn(message)
-  }
-}
-
 import type { Plugin } from "./types"
 
 type Job = {
@@ -97,7 +89,10 @@ type PageInput = {
   component: string,
   context?: Object,
   ownerNodeId?: string,
+  defer?: boolean,
 }
+
+type PageMode = "SSG" | "DSG" | "SSR"
 
 type Page = {
   path: string,
@@ -108,6 +103,7 @@ type Page = {
   componentChunkName: string,
   updatedAt: number,
   ownerNodeId?: string,
+  mode: PageMode,
 }
 
 type ActionOptions = {
@@ -164,6 +160,7 @@ const reservedFields = [
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pageContext` as well as to the graphql query
  * as graphql arguments.
+ * @param {boolean} page.defer When set to `true`, Gatsby will exclude the page from the build step and instead generate it during the first HTTP request. Default value is `false`. Also see docs on [Deferred Static Generation](/docs/reference/rendering-options/deferred-static-generation/).
  * @example
  * createPage({
  *   path: `/my-sweet-new-page/`,
@@ -277,9 +274,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.component = pageComponentPath
   }
 
+  const rootPath = store.getState().program.directory
   const { error, message, panicOnBuild } = validatePageComponent(
     page,
-    store.getState().program.directory,
+    rootPath,
     name
   )
 
@@ -317,10 +315,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         trueComponentPath = slash(trueCasePathSync(page.component))
       } catch (e) {
         // systems where user doesn't have access to /
-        const commonDir = getCommonDir(
-          store.getState().program.directory,
-          page.component
-        )
+        const commonDir = getCommonDir(rootPath, page.component)
 
         // using `path.win32` to force case insensitive relative path
         const relativePath = slash(
@@ -394,7 +389,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
-    component: page.component,
+    component: normalizePath(page.component),
+    componentPath: normalizePath(page.component),
     componentChunkName: generateComponentChunkName(page.component),
     isCreatedByStatefulCreatePages:
       actionOptions?.traceId === `initial-createPagesStatefully`,
@@ -405,6 +401,15 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     // Link page to its plugin.
     pluginCreator___NODE: plugin.id ?? ``,
     pluginCreatorId: plugin.id ?? ``,
+  }
+
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    if (page.defer) {
+      internalPage.defer = true
+    }
+    // Note: mode is updated in the end of the build after we get access to all page components,
+    // see materializePageMode in utils/page-mode.ts
+    internalPage.mode = getPageMode(internalPage)
   }
 
   if (page.ownerNodeId) {
@@ -509,26 +514,7 @@ const deleteNodeDeprecationWarningDisplayedMessages = new Set()
  * deleteNode(node)
  */
 actions.deleteNode = (node: any, plugin?: Plugin) => {
-  let id
-
-  // TODO(v4): Remove this deprecation warning and only allow deleteNode(node)
-  if (node && node.node) {
-    let msg =
-      `Calling "deleteNode" with {node} is deprecated. Please pass ` +
-      `the node directly to the function: deleteNode(node)`
-
-    if (plugin && plugin.name) {
-      msg = msg + ` "deleteNode" was called by ${plugin.name}`
-    }
-    if (!deleteNodeDeprecationWarningDisplayedMessages.has(msg)) {
-      report.warn(msg)
-      deleteNodeDeprecationWarningDisplayedMessages.add(msg)
-    }
-
-    id = node.node.id
-  } else {
-    id = node && node.id
-  }
+  const id = node && node.id
 
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
@@ -902,24 +888,6 @@ const touchNodeDeprecationWarningDisplayedMessages = new Set()
  * touchNode(node)
  */
 actions.touchNode = (node: any, plugin?: Plugin) => {
-  // TODO(v4): Remove this deprecation warning and only allow touchNode(node)
-  if (node && node.nodeId) {
-    let msg =
-      `Calling "touchNode" with an object containing the nodeId is deprecated. Please pass ` +
-      `the node directly to the function: touchNode(node)`
-
-    if (plugin && plugin.name) {
-      msg = msg + ` "touchNode" was called by ${plugin.name}`
-    }
-
-    if (!touchNodeDeprecationWarningDisplayedMessages.has(msg)) {
-      report.warn(msg)
-      touchNodeDeprecationWarningDisplayedMessages.add(msg)
-    }
-
-    node = getNode(node.nodeId)
-  }
-
   if (node && !typeOwners[node.internal.type]) {
     typeOwners[node.internal.type] = node.internal.owner
   }
@@ -1228,7 +1196,7 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `CREATE_JOB`,
@@ -1282,7 +1250,7 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `SET_JOB`,
@@ -1309,7 +1277,7 @@ actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `END_JOB`,
@@ -1453,9 +1421,9 @@ actions.createServerVisitedPage = (chunkName: string) => {
  * Creates an individual node manifest.
  * This is used to tie the unique revision state within a data source at the current point in time to a page generated from the provided node when it's node manifest is processed.
  *
- * @param {Object} manifest a page object
+ * @param {Object} manifest Manifest data
  * @param {string} manifest.manifestId An id which ties the revision unique state of this manifest to the unique revision state of a data source.
- * @param {string} manifest.node The Gatsyby node to tie the manifestId to
+ * @param {Object} manifest.node The Gatsyby node to tie the manifestId to. See the "createNode" action for more information about the node object details.
  * @example
  * unstable_createNodeManifest({
  *   manifestId: `post-id-1--updated-53154315`,
@@ -1465,15 +1433,7 @@ actions.createServerVisitedPage = (chunkName: string) => {
  * })
  */
 actions.unstable_createNodeManifest = (
-  {
-    manifestId,
-    node,
-  }: {
-    manifestId: string,
-    node: {
-      id: string,
-    },
-  },
+  { manifestId, node },
   plugin: Plugin
 ) => {
   return {

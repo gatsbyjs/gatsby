@@ -35,13 +35,8 @@ export async function startWebpackServer({
   if (!program || !app || !store) {
     report.panic(`Missing required params`)
   }
-  let {
-    compiler,
-    webpackActivity,
-    websocketManager,
-    cancelDevJSNotice,
-    webpackWatching,
-  } = await startServer(program, app, workerPool)
+  let { compiler, webpackActivity, websocketManager, webpackWatching } =
+    await startServer(program, app, workerPool)
 
   compiler.hooks.invalid.tap(`log compiling`, function () {
     if (!webpackActivity) {
@@ -75,10 +70,6 @@ export async function startWebpackServer({
       async function (stats, done) {
         if (isFirstCompile) {
           webpackWatching.suspend()
-        }
-
-        if (cancelDevJSNotice) {
-          cancelDevJSNotice()
         }
 
         const urls = prepareUrls(
