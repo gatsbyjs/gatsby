@@ -164,7 +164,8 @@ async function fetchFile({
 
   // See if there's response headers for this url
   // from a previous request.
-  const cachedHeaders = await cache.get(cacheIdForHeaders(url))
+  const { headers: cachedHeaders, digest: originalDigest } =
+    (await cache.get(cacheIdForHeaders(url))) ?? {}
   const headers = { ...httpHeaders }
   if (cachedHeaders && cachedHeaders.etag) {
     headers[`If-None-Match`] = cachedHeaders.etag
@@ -180,7 +181,6 @@ async function fetchFile({
 
   // Create the temp and permanent file names for the url.
   let digest = createContentDigest(url)
-  const originalDigest = digest
 
   // if worker id is present - we also append the worker id until we have a proper mutex
   if (IS_WORKER) {
@@ -207,7 +207,10 @@ async function fetchFile({
 
     if (response.statusCode === 200) {
       // Save the response headers for future requests.
-      await cache.set(cacheIdForHeaders(url), response.headers)
+      await cache.set(cacheIdForHeaders(url), {
+        headers: response.headers,
+        digest,
+      })
 
       // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
       if (!ext) {
@@ -240,7 +243,7 @@ async function fetchFile({
 
     // If the status code is 200, move the piped temp file to the real name.
     const filename = createFilePath(
-      path.join(pluginCacheDir, originalDigest),
+      path.join(pluginCacheDir, originalDigest ?? digest),
       name,
       ext as string
     )
