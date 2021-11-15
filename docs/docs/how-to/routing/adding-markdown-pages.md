@@ -139,7 +139,7 @@ export const pageQuery = graphql`
 
 Two things are important in the file above:
 
-1. A GraphQL query is made in the second half of the file to get the Markdown data. Gatsby has automagically given you all the Markdown metadata and HTML in this query's result.
+1. A GraphQL query is made in the second half of the file to get the Markdown data. Gatsby has automatically given you all the Markdown metadata and HTML in this query's result.
 
    **Note: To learn more about GraphQL, consider this [excellent resource](https://www.howtographql.com/)**
 
