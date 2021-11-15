@@ -14,7 +14,7 @@
     "html-webpack-skip-assets-plugin": "^1.0.3",
     "html-webpack-tags-plugin": "^3.0.2",
     "lodash": "^4.17.21",
-    "mini-css-extract-plugin": "1.6.2",
+    "mini-css-extract-plugin": "^2.4.4",
     "netlify-identity-widget": "^1.9.2"
   },
   "devDependencies": {
