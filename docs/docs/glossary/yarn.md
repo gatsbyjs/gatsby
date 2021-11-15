@@ -4,7 +4,7 @@ disableTableOfContents: true
 description: Learn what the Yarn package manager is, how to use it, and how it fits in to the Gatsby ecosystem.
 ---
 
-Learn what the _Yarn_ package manager is, how to use it, and how it fits in to the Gatsby ecosystem.
+Learn what the _Yarn_ package manager is, how to use it, and how it fits into the Gatsby ecosystem.
 
 ## What is Yarn?
 
@@ -14,7 +14,7 @@ Yarn is a package manager for the [Node.js](/docs/glossary/node) JavaScript runt
 
 Engineers from Facebook, Google, Exponent, and Tilde [launched Yarn](https://engineering.fb.com/web/yarn-a-new-package-manager-for-javascript/) in 2016 to improve package management for large-scale, monolithic repositories. A monolithic repository, or [_monorepo_](https://en.wikipedia.org/wiki/Monorepo), contains the code for many different projects in a single repository. Gatsby core uses a monorepo pattern for its code.
 
-As a monorepo adds projects and contributors, the number and size of its dependencies also increases. Yarn mitigates this in two ways.
+As a monorepo adds projects and contributors, the number and size of its dependencies also increase. Yarn mitigates this in two ways.
 
 1. It caches previously downloaded packages.
 2. It resolves duplicate dependencies so that a package is only downloaded once.
