@@ -684,7 +684,7 @@ query MyQuery {
   summary="Seeing more nodes than expected?"
 >
 
-If you're still using a `StaticImage` from an external URL (like `https://some-site/image.jpg`) on your home page, you'll see an extra node for that image show up in your GraphQL response. That's because `StaticImage` uses [`createRemoteFileNode`](https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/#createremotefilenode) under the hood which creates a `File` node for each image it downloads. If you're only using images from your filesystem, you won't see the extra ndoe.
+If you're still using a `StaticImage` from an external URL (like `https://some-site/image.jpg`) on your home page, you'll see an extra node for that image show up in your GraphQL response. That's because `StaticImage` uses [`createRemoteFileNode`](https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/#createremotefilenode) under the hood which creates a `File` node for each image it downloads. If you're only using images from your filesystem, you won't see the extra node.
 
 To get rid of it, you can update your GraphQL query to filter the File nodes using the `sourceInstanceName` field (which corresponds to the value of the `name` option you set for `gatsby-source-filesystem` in your `gatsby-config.js` file).
 

@@ -258,6 +258,53 @@ You can also learn more about this in the [migration guide for source plugins](/
 
 The built-in type `SitePage` now returns the `pageContext` key as `JSON` and won't infer any other information anymore. The `SitePlugin` type now has two new keys: `pluginOptions: JSON` and `packageJson: JSON`.
 
+#### Field `SitePage.context` is no longer available in GraphQL queries
+
+Before v4 you could query specific fields of the page context object:
+
+```graphql
+{
+  allSitePage {
+    nodes {
+      context {
+        foo
+      }
+    }
+  }
+}
+```
+
+Starting with v4, `context` field is replaced with `pageContext` of type `JSON`.
+It means you can't query individual fields of the context. The new query would look like this:
+
+```graphql
+{
+  allSitePage {
+    nodes {
+      pageContext # returns full JS object passed to `page.context` in `createPages`
+    }
+  }
+}
+```
+
+If you still need to query individual `context` fields - you can workaround it by providing
+a schema for `SitePage.context` manually:
+
+```js
+// Workaround for missing sitePage.context:
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  createTypes(`
+    type SitePage implements Node {
+      context: SitePageContext
+    }
+    type SitePageContext {
+      foo: String
+    }
+  `)
+}
+```
+
 ### Removal of `gatsby-admin`
 
 You can no longer use `gatsby-admin` (activated with environment variable `GATSBY_EXPERIMENTAL_ENABLE_ADMIN`) as we removed this functionality from `gatsby` itself. We didn't see any major usage and don't plan on developing this further in the foreseeable future.
@@ -544,6 +591,8 @@ Gatsby provides several actions available in `sourceNodes` and `onCreateNode` AP
 - [createNode](/docs/reference/config-files/actions/#createNode)
 - [deleteNode](/docs/reference/config-files/actions/#deleteNode)
 - [createNodeField](/docs/reference/config-files/actions/#createNodeField)
+
+You can use `createNodeField` and the `@link` directive to create the same schema shape. The [`@link` directive](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields) accepts a `from` argument that you can use to place your node to the old position (as `createNodeField` places everything under a `fields` key). See the [source plugin guide](/docs/how-to/plugins-and-themes/creating-a-source-plugin/#create-remote-file-node-from-a-url) for more information. Checkout [this PR](https://github.com/gatsbyjs/gatsby/pull/33715) for a real-world migration example.
 
 ### `___NODE` convention
 

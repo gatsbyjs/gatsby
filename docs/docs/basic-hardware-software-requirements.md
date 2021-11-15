@@ -18,7 +18,7 @@ This will be variable depending on the size of your site. Gatsby sites have been
 
 To develop with Gatsby, you'll need to install:
 
-- Node.js 10.13.0 (LTS) or higher
+- Node.js 14.15.0 (LTS) or higher
 - [npm](https://www.npmjs.com/) or [Yarn 1](https://classic.yarnpkg.com/lang/en/) package manager to install the [Gatsby CLI](/docs/reference/gatsby-cli/) and site dependencies.
   - npm is recommended for most developers.
   - Yarn is used for authoring Gatsby themes.

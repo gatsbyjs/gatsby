@@ -323,6 +323,13 @@ const errors = {
       `An error occurred during parallel query running.\nGo here for troubleshooting tips: https://gatsby.dev/pqr-feedback`,
     level: Level.ERROR,
   },
+  "85929": {
+    text: (context): string =>
+      `The "${context.exportName}" export must be async when using it with graphql:\n\n${context.codeFrame}`,
+    type: Type.GRAPHQL,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
   // Config errors
   "10122": {
     text: (context): string =>

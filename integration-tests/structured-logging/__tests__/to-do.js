@@ -315,10 +315,8 @@ describe(`develop`, () => {
           collectEventsForDevelop(events)
 
         startedPromise.then(() => {
-          setTimeout(() => {
-            gatsbyProcess.kill(`SIGTERM`)
-            waitChildProcessExit(gatsbyProcess.pid, done, done.fail)
-          }, 5000)
+          gatsbyProcess.kill(`SIGTERM`)
+          waitChildProcessExit(gatsbyProcess.pid, done, done.fail)
         })
       })
 

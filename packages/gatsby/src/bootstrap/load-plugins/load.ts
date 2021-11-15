@@ -226,6 +226,7 @@ export function loadPlugins(
               roots = roots.map(root => root[segment])
             }
           }
+          roots = roots.flat()
 
           const processed = roots.map(processPlugin)
           _.set(plugin.options, pathToSwap, processed)
