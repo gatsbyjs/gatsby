@@ -5,6 +5,8 @@ Plugin for connecting arbitrary GraphQL APIs to Gatsby's GraphQL. Remote schemas
 - [Example website](https://using-gatsby-source-graphql.netlify.app/)
 - [Example website source](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-source-graphql)
 
+This source plugin does _not_ support incremental builds or preview currently on Gatsby Cloud so be aware that build times will be signficantly slower than regular source plugins as the size of your site goes past a hundred or so pages.
+
 ## Install
 
 `npm install gatsby-source-graphql`
