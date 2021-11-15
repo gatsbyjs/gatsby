@@ -239,22 +239,11 @@ export const createWebpackUtils = (
         modules?: MiniCSSExtractLoaderModuleOptions
       } = {}
     ) => {
-      let moduleOptions: MiniCSSExtractLoaderModuleOptions = undefined
-
       const { modules, ...restOptions } = options
-
-      if (typeof modules === `boolean` && options.modules) {
-        moduleOptions = {
-          namedExport: true,
-        }
-      } else {
-        moduleOptions = modules
-      }
 
       return {
         loader: MiniCssExtractPlugin.loader,
         options: {
-          modules: moduleOptions,
           ...restOptions,
         },
       }

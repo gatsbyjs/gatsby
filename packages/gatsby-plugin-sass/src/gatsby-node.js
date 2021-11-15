@@ -43,6 +43,7 @@ exports.onCreateWebpackConfig = (
 
   const sassRuleModules = {
     test: sassRuleModulesTest || /\.module\.s(a|c)ss$/,
+    // TODO(v5): Remove obsolete modules option
     use: [
       !isSSR &&
         loaders.miniCssExtract({

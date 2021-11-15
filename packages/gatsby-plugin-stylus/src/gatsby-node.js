@@ -54,6 +54,7 @@ exports.onCreateWebpackConfig = (
 
   const stylusRuleModules = {
     test: /\.module\.styl$/,
+    // TODO(v5): Remove obsolete modules option
     use: [
       !isSSR &&
         loaders.miniCssExtract({

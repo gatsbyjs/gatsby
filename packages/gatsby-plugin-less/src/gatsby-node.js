@@ -34,6 +34,7 @@ exports.onCreateWebpackConfig = (
   }
   const lessRuleModules = {
     test: /\.module\.less$/,
+    // TODO(v5): Remove obsolete modules option
     use: [
       !isSSR &&
         loaders.miniCssExtract({
