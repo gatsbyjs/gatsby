@@ -165,7 +165,6 @@ async function fetchFile({
   // See if there's response headers for this url
   // from a previous request.
   const cachedHeaders = await cache.get(cacheIdForHeaders(url))
-
   const headers = { ...httpHeaders }
   if (cachedHeaders && cachedHeaders.etag) {
     headers[`If-None-Match`] = cachedHeaders.etag
@@ -181,6 +180,7 @@ async function fetchFile({
 
   // Create the temp and permanent file names for the url.
   let digest = createContentDigest(url)
+  const originalDigest = digest
 
   // if worker id is present - we also append the worker id until we have a proper mutex
   if (IS_WORKER) {
@@ -240,10 +240,11 @@ async function fetchFile({
 
     // If the status code is 200, move the piped temp file to the real name.
     const filename = createFilePath(
-      path.join(pluginCacheDir, digest),
+      path.join(pluginCacheDir, originalDigest),
       name,
       ext as string
     )
+
     if (response.statusCode === 200) {
       await fs.move(tmpFilename, filename, { overwrite: true })
       // Else if 304, remove the empty response.
