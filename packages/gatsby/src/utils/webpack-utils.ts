@@ -1,5 +1,5 @@
 import * as path from "path"
-import { RuleSetRule, WebpackPluginInstance } from "webpack"
+import { RuleSetRule, WebpackPluginInstance, Configuration } from "webpack"
 import { GraphQLSchema } from "graphql"
 import { Plugin as PostCSSPlugin } from "postcss"
 import autoprefixer from "autoprefixer"
@@ -65,12 +65,16 @@ type CSSModulesOptions =
       exportOnlyLocals?: boolean
     }
 
-type MiniCSSExtractLoaderModuleOptions =
-  | undefined
-  | boolean
-  | {
-      namedExport?: boolean
-    }
+interface IMiniCSSExtractLoaderModuleOptions {
+  filename?: Required<Configuration>["output"]["filename"] | undefined
+  chunkFilename?: Required<Configuration>["output"]["chunkFilename"] | undefined
+  experimentalUseImportModule?: boolean | undefined
+  ignoreOrder?: boolean | undefined
+  insert?: string | ((linkTag: any) => void) | undefined
+  attributes?: Record<string, string> | undefined
+  linkType?: string | false | "text/css" | undefined
+  runtime?: boolean | undefined
+}
 /**
  * Utils that produce webpack `loader` objects
  */
@@ -234,11 +238,8 @@ export const createWebpackUtils = (
       }
     },
 
-    miniCssExtract: (
-      options: {
-        modules?: MiniCSSExtractLoaderModuleOptions
-      } = {}
-    ) => {
+    miniCssExtract: (options: IMiniCSSExtractLoaderModuleOptions = {}) => {
+      // @ts-ignore - legacy modules
       const { modules, ...restOptions } = options
 
       return {
