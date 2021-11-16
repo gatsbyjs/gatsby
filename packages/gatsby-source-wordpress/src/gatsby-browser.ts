@@ -5,7 +5,7 @@ import ReactDOM from "react-dom"
 let hydrateRef
 let isFirstHydration = true
 export function onRouteUpdate(): void {
-  if (isFirstHydration) {
+  if (process.env.NODE_ENV === `production` && isFirstHydration) {
     isFirstHydration = false
     return
   }
@@ -31,6 +31,10 @@ function hydrateImages(): void {
   const inlineWPimages: Array<HTMLElement> = Array.from(
     doc.querySelectorAll(`[data-wp-inline-image]`)
   )
+
+  if (!inlineWPimages.length) {
+    return
+  }
 
   import(
     /* webpackChunkName: "gatsby-plugin-image" */ `gatsby-plugin-image`
