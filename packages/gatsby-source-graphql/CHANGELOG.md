@@ -7,8 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-source-graphql
 
-
-
 ### [4.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.1.2/packages/gatsby-source-graphql) (2021-11-11)
 
 **Note:** Version bump only for package gatsby-source-graphql

@@ -13,8 +13,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - ensure that writing node manifests to disk does not break on Windows [#33853](https://github.com/gatsbyjs/gatsby/issues/33853) [#33973](https://github.com/gatsbyjs/gatsby/issues/33973) ([740844c](https://github.com/gatsbyjs/gatsby/commit/740844c5998273b9dbf53cbf444098629b0c29a7))
 
-
-
 ### [4.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.1.4/packages/gatsby) (2021-11-11)
 
 **Note:** Version bump only for package gatsby

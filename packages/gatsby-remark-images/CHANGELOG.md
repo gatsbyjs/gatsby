@@ -7,8 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-remark-images
 
-
-
 ### [6.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@6.1.3/packages/gatsby-remark-images) (2021-11-11)
 
 **Note:** Version bump only for package gatsby-remark-images

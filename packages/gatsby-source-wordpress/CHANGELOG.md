@@ -7,8 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-source-wordpress
 
-
-
 ### [6.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.1.2/packages/gatsby-source-wordpress) (2021-11-11)
 
 **Note:** Version bump only for package gatsby-source-wordpress

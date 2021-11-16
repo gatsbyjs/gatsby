@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - handle 304 correctly between builds [#33975](https://github.com/gatsbyjs/gatsby/issues/33975) [#33980](https://github.com/gatsbyjs/gatsby/issues/33980) ([8c9b22a](https://github.com/gatsbyjs/gatsby/commit/8c9b22a6f22ddbccaabfee5fcec79bf7d0bd398f))
 
-
-
 ### [3.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.1.2/packages/gatsby-core-utils) (2021-11-11)
 
 #### Bug Fixes

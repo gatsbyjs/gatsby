@@ -7,8 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-plugin-preload-fonts
 
-
-
 ### [3.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preload-fonts@3.1.2/packages/gatsby-plugin-preload-fonts) (2021-11-11)
 
 **Note:** Version bump only for package gatsby-plugin-preload-fonts

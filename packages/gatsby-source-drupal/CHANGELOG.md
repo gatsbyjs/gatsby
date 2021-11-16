@@ -7,8 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-source-drupal
 
-
-
 ### [5.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.1.3/packages/gatsby-source-drupal) (2021-11-11)
 
 **Note:** Version bump only for package gatsby-source-drupal
