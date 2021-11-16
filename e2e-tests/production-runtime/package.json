@@ -59,8 +59,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby-starter-default"
-  },
-  "resolutions": {
-    "graphql-config": "3.3.0"
   }
 }
