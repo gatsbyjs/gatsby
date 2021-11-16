@@ -26,6 +26,10 @@ export function onRouteUpdate(): void {
   }
 }
 
+export function onInitialClientRender(): void {
+  onRouteUpdate()
+}
+
 function hydrateImages(): void {
   const doc = document
   const inlineWPimages: Array<HTMLElement> = Array.from(
