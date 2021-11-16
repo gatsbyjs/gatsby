@@ -8,7 +8,9 @@ Welcome to `gatsby@4.2.0` release (November 2021 #2)
 
 Key highlights of this release:
 
-- [TODO](#todo)
+- [`gatsby-source-contentful` v7](#gatsby-source-contentful-v7)
+- [`getServerData` improvements](#getserverdata-improvements)
+- [Framework Version Support](#framework-version-support)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -21,13 +23,46 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ---
 
-## TODO
+## `gatsby-source-contentful` v7
 
-TODO
+We're releasing a new major version of `gatsby-source-contentful` as the support for `gatsby-image` is dropped in favour fo the superior successor [`gatsby-plugin-image`](/docs/reference/built-in-components/gatsby-plugin-image/). Read the [Migrating from gatsby-image to gatsby-plugin-image](/docs/reference/release-notes/image-migration-guide/) guide to learn more. The [PR #33528](https://github.com/gatsbyjs/gatsby/pull/33528) implemented this change.
+
+You can also use `AVIF` images with Contentful now as the [PR #33903](https://github.com/gatsbyjs/gatsby/pull/33903) added support for this image format -- use the new `gatsby-plugin-image` to use it.
+
+## `getServerData` improvements
+
+A couple of improvements were made to the new [Server-Side Rendering API](/docs/reference/rendering-options/server-side-rendering/) inside Gatsby:
+
+- The response headers are now also applied during `gatsby develop`, via [PR #33810](https://github.com/gatsbyjs/gatsby/pull/33810)
+- You can (and should) use `process.env.*` environment variables inside `getServerData`, via [PR #33690](https://github.com/gatsbyjs/gatsby/pull/33690)
+- The status code returned by `getServerData` is respected now, via [PR #33914](https://github.com/gatsbyjs/gatsby/pull/33914). Please use this syntax (see [reference guide](/docs/reference/rendering-options/server-side-rendering/#creating-server-rendered-pages)):
+
+  ```js
+  export async function getServerData() {
+    return {
+      status: 200,
+      headers: {},
+      props: {},
+    }
+  }
+  ```
+
+## Framework Version Support
+
+You can find the support plans for the major versions of Gatsby on the newly created page [Gatsby Framework Version Support](/docs/reference/release-notes/gatsby-version-support/).
 
 ## Notable bugfixes & improvements
 
-TODO
+- A lot of internal dependency updates to each package, e.g. bumping `sharp` to `0.29.2`. You can check the `CHANGELOG.md` file in each package's folder for the details
+- `gatsby`: Test files inside the `src/api` (Gatsby Functions) directory are now excluded by default, via [PR #33834](https://github.com/gatsbyjs/gatsby/pull/33834)
+- `gatsby-source-wordpress`:
+  - Fix for `'createRoot' is not exported from 'react-dom' (imported as 'ReactDOM').` warning, via [PR #33991](https://github.com/gatsbyjs/gatsby/pull/33991)
+  - Hydrate images in develop on first occurence, via [PR #33989](https://github.com/gatsbyjs/gatsby/pull/33989)
+- `gatsby-core-utils`: Add retry on HTTP status codes to `fetchRemoteFile`, via [PR #33461](https://github.com/gatsbyjs/gatsby/pull/33461)
+- Content Sync:
+  - Content Sync is a Gatsby Cloud feature for improving the Preview experience for content authors. You can read more about it in the [conceptual guide](/docs/conceptual/content-sync/)
+  - `gatsby-source-drupal` is prepared for Content Sync, via [PR #33683](https://github.com/gatsbyjs/gatsby/pull/33683)
+  - Update the [Creating Pages documentation](/docs/creating-and-modifying-pages/#optimizing-pages-for-content-sync), via [PR #33848](https://github.com/gatsbyjs/gatsby/pull/33848)
 
 ## Contributors
 
