@@ -48,7 +48,7 @@
     "cookie": "^0.4.1",
     "core-js": "^3.17.2",
     "cors": "^2.8.5",
-    "css-loader": "^5.2.7",
+    "css-loader": "^6.5.1",
     "css-minimizer-webpack-plugin": "^2.0.0",
     "css.escape": "^1.5.1",
     "date-fns": "^2.25.0",
