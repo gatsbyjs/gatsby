@@ -68,4 +68,19 @@ You can find the support plans for the major versions of Gatsby on the newly cre
 
 A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@4.2.0-next.0...gatsby@4.2.0) to this release 💜
 
-TODO
+- [shreemaan-abhishek](https://github.com/shreemaan-abhishek): chore(docs): fix issues in 0009-telemetry RFC [PR #33829](https://github.com/gatsbyjs/gatsby/pull/33829)
+- [tonyhallett](https://github.com/tonyhallett)
+  - fix(gatsby): Reuse readPageData [PR #33595](https://github.com/gatsbyjs/gatsby/pull/33595)
+  - chore(gatsby): Update inference-metadata type [PR #33839](https://github.com/gatsbyjs/gatsby/pull/33839)
+  - fix(gatsby): TS type for `createTypes` action arrays [PR #33588](https://github.com/gatsbyjs/gatsby/pull/33588)
+  - chore(gatsby): Correct fromNode TS type [PR #33912](https://github.com/gatsbyjs/gatsby/pull/33912)
+- [jstramel](https://github.com/jstramel): searcParams missing from urls [PR #33861](https://github.com/gatsbyjs/gatsby/pull/33861)
+- [axe312ger](https://github.com/axe312ger)
+  - breaking(gatsby-source-contentful): remove gatsby-image support [PR #33528](https://github.com/gatsbyjs/gatsby/pull/33528)
+  - feat(gatsby-core-utils): Add retry on HTTP status codes to `fetchRemoteFile` [PR #33461](https://github.com/gatsbyjs/gatsby/pull/33461)
+- [labifrancis](https://github.com/labifrancis): chore(gatsby-plugin-gatsby-google-analytics): Highlight the plugin we recommend [PR #33901](https://github.com/gatsbyjs/gatsby/pull/33901)
+- [bytrangle](https://github.com/bytrangle): chore(docs): remove slug generation from MDX doc [PR #33915](https://github.com/gatsbyjs/gatsby/pull/33915)
+- [Swarleys](https://github.com/Swarleys): feat(contentful): modifying schemes to add support for AVIF images [PR #33903](https://github.com/gatsbyjs/gatsby/pull/33903)
+- [InfamousStarFox](https://github.com/InfamousStarFox): Fixes incorrect link "programmatically creating pages from data" [PR #33964](https://github.com/gatsbyjs/gatsby/pull/33964)
+- [SaloniThete](https://github.com/SaloniThete): chore: Typo in BUG_REPORT [PR #33971](https://github.com/gatsbyjs/gatsby/pull/33971)
+- [henryjw](https://github.com/henryjw): chore(docs): Update client-only doc [PR #33967](https://github.com/gatsbyjs/gatsby/pull/33967)
