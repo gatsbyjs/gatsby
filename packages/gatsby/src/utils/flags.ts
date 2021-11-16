@@ -226,6 +226,16 @@ const activeFlags: Array<IFlag> = [
     },
     requires: `Requires Node v14.10 or above.`,
   },
+  {
+    name: `DETECT_NODE_MUTATIONS`,
+    env: `GATSBY_EXPERIMENTAL_DETECT_NODE_MUTATIONS`,
+    command: `all`,
+    telemetryId: `DetectNodeMutations`,
+    // TODO: description
+    description: ``,
+    experimental: false,
+    testFitness: (): fitnessEnum => true,
+  },
 ]
 
 export default activeFlags
