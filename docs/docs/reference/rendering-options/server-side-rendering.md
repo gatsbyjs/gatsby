@@ -17,6 +17,7 @@ The main difference is that page component must export an async function called 
 ```js:title=src/pages/my-first-ssr-page.js
 export async function getServerData(context) {
   return {
+    status: 200, // The HTTP status code that should be returned
     props: {}, // Will be passed to the page component as "serverData" prop
     headers: {}, // HTTP response headers for this page
   }
