@@ -50,21 +50,22 @@ function hydrateImages(): void {
             hydrationData.innerHTML
           )
 
-          // @ts-ignore - createRoot is on ReactDOM
-          if (ReactDOM.createRoot) {
-            // @ts-ignore - createRoot is on ReactDOM
-            const root = ReactDOM.createRoot(image.parentNode.parentNode)
-            // @ts-ignore - not same as below, not sure why it's complaining
-            root.render(React.createElement(mod.default, imageProps), {
-              hydrate: true,
-            })
-          } else {
-            ReactDOM.hydrate(
-              // @ts-ignore - no idea why it complains
-              React.createElement(mod.GatsbyImage, imageProps),
-              image.parentNode.parentNode
-            )
-          }
+          //
+          // uncomment the following code once React 18 is stable
+          // if (`createRoot` in ReactDOM) {
+          //   // @ts-ignore - createRoot is on ReactDOM in React 18+
+          //   const root = ReactDOM .createRoot(image.parentNode.parentNode)
+          //   // @ts-ignore - not same as below, not sure why it's complaining
+          //   root.render(React.createElement(mod.default, imageProps), {
+          //     hydrate: true,
+          //   })
+          // } else {
+          ReactDOM.hydrate(
+            // @ts-ignore - no idea why it complains
+            React.createElement(mod.GatsbyImage, imageProps),
+            image.parentNode.parentNode
+          )
+          // }
         }
       }
     })
