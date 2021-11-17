@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.2.0/packages/gatsby-plugin-offline) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- update dependency glob to ^7.2.0 for gatsby-plugin-offline [#33761](https://github.com/gatsbyjs/gatsby/issues/33761) ([97eb351](https://github.com/gatsbyjs/gatsby/commit/97eb351f59190644a28f30a61be07224ce239a6e))
+
 ### [5.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.1.4/packages/gatsby-plugin-offline) (2021-11-15)
 
 **Note:** Version bump only for package gatsby-plugin-offline

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.2.0/packages/gatsby-core-utils) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Features
+
+- Add retry on HTTP status codes to `fetchRemoteFile` [#33461](https://github.com/gatsbyjs/gatsby/issues/33461) ([00dc589](https://github.com/gatsbyjs/gatsby/commit/00dc5896d2eb63f201d061c4be15093bbf162d56))
+
+#### Bug Fixes
+
+- handle 304 correctly between builds [#33975](https://github.com/gatsbyjs/gatsby/issues/33975) [#33981](https://github.com/gatsbyjs/gatsby/issues/33981) ([ab857d7](https://github.com/gatsbyjs/gatsby/commit/ab857d7442c3afb7a92305993f9c3c90a3068ef7))
+- fix fetchRemoteFile when called in main process after being called in worker fix [#33932](https://github.com/gatsbyjs/gatsby/issues/33932) ([189dea6](https://github.com/gatsbyjs/gatsby/commit/189dea69e9d6034088648dde65a3985059f3d8da))
+- update dependency node-object-hash to ^2.3.10 for gatsby-core-utils [#33364](https://github.com/gatsbyjs/gatsby/issues/33364) ([cecd522](https://github.com/gatsbyjs/gatsby/commit/cecd5229f40f7cd51fffe9f09c20305598a9e70f))
+
+#### Chores
+
+- update dependency typescript to ^4.4.4 [#33757](https://github.com/gatsbyjs/gatsby/issues/33757) ([7743561](https://github.com/gatsbyjs/gatsby/commit/7743561bbbe0a621d22030fecbba97dfc3e566d1))
+
 ### [3.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.1.3/packages/gatsby-core-utils) (2021-11-15)
 
 #### Bug Fixes

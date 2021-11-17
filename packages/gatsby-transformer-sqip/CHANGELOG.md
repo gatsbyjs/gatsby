@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.2.0/packages/gatsby-transformer-sqip) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- update dependency mini-svg-data-uri to ^1.4.3 for gatsby-transformer-sqip [#33781](https://github.com/gatsbyjs/gatsby/issues/33781) ([1e0228a](https://github.com/gatsbyjs/gatsby/commit/1e0228aef90a10604701a675ff325a0ca96e8fd6))
+
+#### Other Changes
+
+- remove gatsby-image support [#33528](https://github.com/gatsbyjs/gatsby/issues/33528) ([94ddb6b](https://github.com/gatsbyjs/gatsby/commit/94ddb6bade4f3042e3535cb063ca1d6dc4bf7431))
+
 ### [4.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.1.4/packages/gatsby-transformer-sqip) (2021-11-15)
 
 **Note:** Version bump only for package gatsby-transformer-sqip

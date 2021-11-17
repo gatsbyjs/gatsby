@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@1.2.0/packages/gatsby-recipes) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Chores
+
+- update dependency prettier to ^2.4.1 [#33377](https://github.com/gatsbyjs/gatsby/issues/33377) ([19e5459](https://github.com/gatsbyjs/gatsby/commit/19e545946cbb4bdbad091b5be556f7ccf2234468))
+- update dependency graphql to ^15.7.2 [#33774](https://github.com/gatsbyjs/gatsby/issues/33774) ([2a049e5](https://github.com/gatsbyjs/gatsby/commit/2a049e589dd039d2f3c9365551b215188fb0b159))
+
 ### [1.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@1.1.3/packages/gatsby-recipes) (2021-11-15)
 
 **Note:** Version bump only for package gatsby-recipes

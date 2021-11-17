@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.2.0/packages/gatsby-source-drupal) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Features
+
+- Add node manifest support for previews [#33683](https://github.com/gatsbyjs/gatsby/issues/33683) ([3dc7629](https://github.com/gatsbyjs/gatsby/commit/3dc7629a508dcc564a03b487be116b67d14082a1))
+
+#### Bug Fixes
+
+- Ensure all new nodes are created before creating relationships [#33864](https://github.com/gatsbyjs/gatsby/issues/33864) ([9cf4c05](https://github.com/gatsbyjs/gatsby/commit/9cf4c055bff04b8b9007a27e4746c0e7222efc7e))
+- update minor and patch dependencies for gatsby-source-drupal [#33783](https://github.com/gatsbyjs/gatsby/issues/33783) ([fb7cb81](https://github.com/gatsbyjs/gatsby/commit/fb7cb81a33dae790a3c0e58322bfea4631273cc5))
+
+#### Other Changes
+
+- searcParams missing from urls [#33861](https://github.com/gatsbyjs/gatsby/issues/33861) ([c9a35ed](https://github.com/gatsbyjs/gatsby/commit/c9a35ed030050cd957674de72da8c561ac40bea0))
+
 ### [5.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.1.4/packages/gatsby-source-drupal) (2021-11-15)
 
 **Note:** Version bump only for package gatsby-source-drupal

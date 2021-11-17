@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.2.0/packages/gatsby-plugin-gatsby-cloud) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- Preview UI tooltip [#33917](https://github.com/gatsbyjs/gatsby/issues/33917) ([651ab47](https://github.com/gatsbyjs/gatsby/commit/651ab4700cf5a81c5ea82416f79729b530c170c1))
+
+#### Chores
+
+- update dependency node-fetch to ^2.6.6 for gatsby-plugin-gatsby-cloud [#33755](https://github.com/gatsbyjs/gatsby/issues/33755) ([ef1fac6](https://github.com/gatsbyjs/gatsby/commit/ef1fac618fbab88cc39528dee3adef927532d27b))
+- update testing library [#33778](https://github.com/gatsbyjs/gatsby/issues/33778) ([93fabb5](https://github.com/gatsbyjs/gatsby/commit/93fabb5eb7d6f4ae6cb9cef05ecf2ab81c417d6a))
+
 ### [4.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.1.3/packages/gatsby-plugin-gatsby-cloud) (2021-11-15)
 
 **Note:** Version bump only for package gatsby-plugin-gatsby-cloud

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@6.2.0/packages/gatsby-remark-images) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- update dependency query-string to ^6.14.1 for gatsby-remark-images [#33367](https://github.com/gatsbyjs/gatsby/issues/33367) ([03b4381](https://github.com/gatsbyjs/gatsby/commit/03b4381c409ed3933f8ad876163b4b25865f0d4e))
+
 ### [6.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-images@6.1.4/packages/gatsby-remark-images) (2021-11-15)
 
 **Note:** Version bump only for package gatsby-remark-images
