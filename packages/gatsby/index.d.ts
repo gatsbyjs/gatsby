@@ -1039,6 +1039,13 @@ export interface NodePluginArgs {
   cache: GatsbyCache
 
   /**
+   * Get cache instance by name - this should only be used by plugins that accept subplugins.
+   * @param id id of the node
+   * @returns See [cache](https://www.gatsbyjs.com/docs/reference/config-files/node-api-helpers/#cache) section for reference.
+   */
+  getCache(this: void, id: string): GatsbyCache
+
+  /**
    * Utility function useful to generate globally unique and stable node IDs.
    * It will generate different IDs for different plugins if they use same
    * input.
