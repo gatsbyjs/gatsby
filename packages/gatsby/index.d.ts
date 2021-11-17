@@ -142,7 +142,7 @@ export type PageProps<
    *   ..
    */
   pageContext: PageContextType
-  /** The Data passed into the page via props object in the getServerData SSR function. */
+  /** Data passed into the page via the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) SSR function. */
   serverData: ServerDataType
 }
 
