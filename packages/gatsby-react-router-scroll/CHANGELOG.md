@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-react-router-scroll@5.2.0/packages/gatsby-react-router-scroll) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Chores
+
+- update dependency babel-plugin-dev-expression to ^0.2.3 for gatsby-react-router-scroll [#33753](https://github.com/gatsbyjs/gatsby/issues/33753) ([94fd5cc](https://github.com/gatsbyjs/gatsby/commit/94fd5cced79a26d9896a83bdad9051e04c2425b6))
+
 ## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-react-router-scroll@5.1.0/packages/gatsby-react-router-scroll) (2021-11-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)

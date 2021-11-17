@@ -12,6 +12,10 @@ import {
   processNodeManifests,
 } from "../node-manifest"
 
+function itWindows(name: string, fn: () => void): void {
+  return process.platform === `win32` ? it(name, fn) : xit(name, fn)
+}
+
 jest.mock(`fs-extra`, () => {
   return {
     ensureDir: jest.fn(),
@@ -341,5 +345,58 @@ describe(`processNodeManifests`, () => {
     process.env.NODE_ENV = `production`
     await testProcessNodeManifests()
     process.env.NODE_ENV = `test`
+  })
+
+  itWindows(`replaces reserved Windows characters with a dash`, async () => {
+    const nodes = [
+      { id: `1`, usePageContextId: true },
+      { id: `2`, useOwnerNodeId: true },
+      { id: `3`, useQueryTracking: true },
+    ]
+    mockGetNodes(
+      new Map(nodes.map(node => [`${node.id}`, { id: `${node.id}` }]))
+    )
+
+    store.getState.mockImplementation(() => {
+      return {
+        ...storeState,
+        pages: new Map([
+          [
+            `/test`,
+            {
+              path: `/test`,
+              context: { id: `1` },
+            },
+          ],
+          [
+            `/test-2`,
+            {
+              path: `/test-2`,
+              context: { id: `2` },
+            },
+          ],
+        ]),
+        nodeManifests: [
+          {
+            pluginName: `test`,
+            node: { id: `1` },
+            // A manifest id containing all of the reserved windows characters that we check
+            // for and replace
+            manifestId: `\\*"<>/:?|`,
+          },
+        ],
+        queries: {
+          byNode: new Map([
+            [`1`, new Set([`/test`, `/test-2`])],
+            [`2`, new Set([`/test`, `/test-2`])],
+          ]),
+        },
+      }
+    })
+
+    await processNodeManifests()
+    const nodeManifestFileName = path.basename(fs.writeJSON.mock.calls[0][0])
+
+    expect(nodeManifestFileName).toEqual(`---------.json`)
   })
 })
