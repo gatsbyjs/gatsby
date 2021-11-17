@@ -154,6 +154,7 @@ const makeManifest = async ({
   delete manifest.crossOrigin
   delete manifest.icon_options
   delete manifest.include_favicon
+  delete manifest.cacheDigest
 
   // If icons are not manually defined, use the default icon set.
   if (!manifest.icons) {
