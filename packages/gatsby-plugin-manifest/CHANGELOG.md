@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency sharp to ^0.29.2 [#33766](https://github.com/gatsbyjs/gatsby/issues/33766) ([0dfbc48](https://github.com/gatsbyjs/gatsby/commit/0dfbc48735e2b40b4fbcf4eccef2db38c34ce526))
 
-
-
 ### [4.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.1.4/packages/gatsby-plugin-manifest) (2021-11-15)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

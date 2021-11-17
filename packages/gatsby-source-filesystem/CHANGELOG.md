@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update minor and patch dependencies for gatsby-source-filesystem [#33771](https://github.com/gatsbyjs/gatsby/issues/33771) ([399942e](https://github.com/gatsbyjs/gatsby/commit/399942e53355fb93ccc33fbc1c8c0278e8c361c7))
 
-
-
 ### [4.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.1.3/packages/gatsby-source-filesystem) (2021-11-15)
 
 **Note:** Version bump only for package gatsby-source-filesystem

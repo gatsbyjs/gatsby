@@ -23,8 +23,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - remove gatsby-image support [#33528](https://github.com/gatsbyjs/gatsby/issues/33528) ([94ddb6b](https://github.com/gatsbyjs/gatsby/commit/94ddb6bade4f3042e3535cb063ca1d6dc4bf7431))
 
-
-
 ### [6.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@6.1.4/packages/gatsby-source-contentful) (2021-11-15)
 
 **Note:** Version bump only for package gatsby-source-contentful

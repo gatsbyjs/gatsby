@@ -20,8 +20,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - searcParams missing from urls [#33861](https://github.com/gatsbyjs/gatsby/issues/33861) ([c9a35ed](https://github.com/gatsbyjs/gatsby/commit/c9a35ed030050cd957674de72da8c561ac40bea0))
 
-
-
 ### [5.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.1.4/packages/gatsby-source-drupal) (2021-11-15)
 
 **Note:** Version bump only for package gatsby-source-drupal

@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-transformer-yaml
 
-
-
 ## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-yaml@4.1.0/packages/gatsby-transformer-yaml) (2021-11-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)

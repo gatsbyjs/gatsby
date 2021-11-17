@@ -22,8 +22,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency @types/semver to ^7.3.9 [#33752](https://github.com/gatsbyjs/gatsby/issues/33752) ([8ce96d2](https://github.com/gatsbyjs/gatsby/commit/8ce96d2c87610f91914d847645dd75707f270519))
 
-
-
 ### [6.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.1.3/packages/gatsby-source-wordpress) (2021-11-15)
 
 **Note:** Version bump only for package gatsby-source-wordpress

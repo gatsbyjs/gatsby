@@ -38,8 +38,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update dependency @types/semver to ^7.3.9 [#33752](https://github.com/gatsbyjs/gatsby/issues/33752) ([8ce96d2](https://github.com/gatsbyjs/gatsby/commit/8ce96d2c87610f91914d847645dd75707f270519))
 - update dependency typescript to ^4.4.4 [#33757](https://github.com/gatsbyjs/gatsby/issues/33757) ([7743561](https://github.com/gatsbyjs/gatsby/commit/7743561bbbe0a621d22030fecbba97dfc3e566d1))
 
-
-
 ### [4.1.6](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.1.6/packages/gatsby) (2021-11-15)
 
 **Note:** Version bump only for package gatsby

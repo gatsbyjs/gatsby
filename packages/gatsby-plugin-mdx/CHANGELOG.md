@@ -15,8 +15,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - initial [#33802](https://github.com/gatsbyjs/gatsby/issues/33802) ([a298106](https://github.com/gatsbyjs/gatsby/commit/a29810638179b3acfbb8b7e0fe87aa0b11576b94))
 
-
-
 ### [3.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.1.4/packages/gatsby-plugin-mdx) (2021-11-15)
 
 **Note:** Version bump only for package gatsby-plugin-mdx

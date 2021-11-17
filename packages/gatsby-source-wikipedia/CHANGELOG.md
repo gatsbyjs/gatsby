@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency node-fetch to ^2.6.6 for gatsby-source-wikipedia [#33764](https://github.com/gatsbyjs/gatsby/issues/33764) ([37675fa](https://github.com/gatsbyjs/gatsby/commit/37675fa7079c38e5f17f0cf0d3223218c495296e))
 
-
-
 ## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wikipedia@4.1.0/packages/gatsby-source-wikipedia) (2021-11-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)

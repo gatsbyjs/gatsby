@@ -15,8 +15,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency aws-sdk to ^2.1018.0 [#33772](https://github.com/gatsbyjs/gatsby/issues/33772) ([026fcc8](https://github.com/gatsbyjs/gatsby/commit/026fcc8045b0af839e5ce73eb012c924f85b98f1))
 
-
-
 ## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.1.0/packages/gatsby-transformer-screenshot) (2021-11-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
