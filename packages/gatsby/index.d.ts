@@ -80,7 +80,8 @@ export const prefetchPathname: (path: string) => void
 export type PageProps<
   DataType = object,
   PageContextType = object,
-  LocationState = WindowLocation["state"]
+  LocationState = WindowLocation["state"],
+  ServerDataType = object
 > = {
   /** The path for this current page */
   path: string
@@ -142,7 +143,7 @@ export type PageProps<
    */
   pageContext: PageContextType
   /** The Data passed into the page via props object in the getServerData SSR function. */
-  serverData: Record<string, string>
+  serverData: ServerDataType
 }
 
 export interface PageRendererProps {
