@@ -141,6 +141,8 @@ export type PageProps<
    *   ..
    */
   pageContext: PageContextType
+  /** The Data passed into the page via props object in the getServerData SSR function. */
+  serverData: Record<string, string>
 }
 
 export interface PageRendererProps {
