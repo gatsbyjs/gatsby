@@ -16,8 +16,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update [dev] minor and patch dependencies for gatsby-cli [#32558](https://github.com/gatsbyjs/gatsby/issues/32558) ([f7cb5af](https://github.com/gatsbyjs/gatsby/commit/f7cb5af1cb00062b2014c7948133913b88fae52b))
 - update dependency typescript to ^4.4.4 [#33757](https://github.com/gatsbyjs/gatsby/issues/33757) ([7743561](https://github.com/gatsbyjs/gatsby/commit/7743561bbbe0a621d22030fecbba97dfc3e566d1))
 
-
-
 ### [4.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.1.4/packages/gatsby-cli) (2021-11-15)
 
 **Note:** Version bump only for package gatsby-cli

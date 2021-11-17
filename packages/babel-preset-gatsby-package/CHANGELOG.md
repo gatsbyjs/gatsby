@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package babel-preset-gatsby-package
 
-
-
 ## [2.1.0](https://github.com/gatsbyjs/gatsby/commits/babel-preset-gatsby-package@2.1.0/packages/babel-preset-gatsby-package) (2021-11-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)

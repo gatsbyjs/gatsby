@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-plugin-feed
 
-
-
 ### [4.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-feed@4.1.1/packages/gatsby-plugin-feed) (2021-11-09)
 
 **Note:** Version bump only for package gatsby-plugin-feed

@@ -13,8 +13,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update dependency prettier to ^2.4.1 [#33377](https://github.com/gatsbyjs/gatsby/issues/33377) ([19e5459](https://github.com/gatsbyjs/gatsby/commit/19e545946cbb4bdbad091b5be556f7ccf2234468))
 - update [dev] minor and patch dependencies for create-gatsby [#33347](https://github.com/gatsbyjs/gatsby/issues/33347) ([a4b9cd9](https://github.com/gatsbyjs/gatsby/commit/a4b9cd929c8f4f50740cd2acf9783f9bbd29cff4))
 
-
-
 ### [2.1.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.1.1/packages/create-gatsby) (2021-11-09)
 
 **Note:** Version bump only for package create-gatsby

@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency coffeescript to ^2.6.1 for gatsby-plugin-coffeescript [#33380](https://github.com/gatsbyjs/gatsby/issues/33380) ([c0b5214](https://github.com/gatsbyjs/gatsby/commit/c0b5214393446c451cf74a2e703e493c4a741580))
 
-
-
 ## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-coffeescript@4.1.0/packages/gatsby-plugin-coffeescript) (2021-11-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
