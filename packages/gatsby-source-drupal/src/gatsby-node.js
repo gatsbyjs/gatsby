@@ -61,6 +61,21 @@ async function worker([url, options]) {
     }
   }
 
+  if (typeof options.searchParams === `object`) {
+    url = new URL(url)
+    const searchParams = new URLSearchParams(options.searchParams)
+    const searchKeys = Array.from(searchParams.keys())
+    searchKeys.forEach(searchKey => {
+      // Only add search params to url if it has not already been
+      // added.
+      if (!url.searchParams.has(searchKey)) {
+        url.searchParams.set(searchKey, searchParams.get(searchKey))
+      }
+    })
+    url = url.toString()
+  }
+  delete options.searchParams
+
   const response = await got(url, {
     agent,
     cache: false,
@@ -467,6 +482,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
                 username: basicAuth.username,
                 password: basicAuth.password,
                 headers,
+                searchParams: params,
                 responseType: `json`,
                 parentSpan: fullFetchSpan,
               },
