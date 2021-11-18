@@ -105,6 +105,12 @@ const translateFieldType = field => {
 }
 
 function generateAssetTypes({ createTypes }) {
+  // @todo can we avoid this subfield?
+  createTypes(`
+    type ContentfulAssetFields {
+      localFile: File
+    }
+  `)
   createTypes(`
     type ContentfulAsset implements ContentfulReference & Node {
       sys: ContentfulSys!
@@ -117,6 +123,7 @@ function generateAssetTypes({ createTypes }) {
       size: Int
       width: Int
       height: Int
+      fields: ContentfulAssetFields
     }
   `)
 }

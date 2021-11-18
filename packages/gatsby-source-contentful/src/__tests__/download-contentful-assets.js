@@ -12,6 +12,8 @@ jest.mock(`gatsby-source-filesystem`, () => {
 })
 
 const reporter = {
+  info: jest.fn(),
+  warn: jest.fn(),
   createProgress: jest.fn(() => {
     return {
       start: jest.fn(),
@@ -67,7 +69,14 @@ describe(`downloadContentfulAssets`, () => {
     }
     await downloadContentfulAssets({
       actions: { touchNode: jest.fn() },
-      getNodesByType: () => fixtures,
+      getNodesByType: () =>
+        fixtures.map(ctfAsset => {
+          return {
+            url: ctfAsset.file.url,
+            fileName: ctfAsset.file.fileName,
+            sys: ctfAsset.sys,
+          }
+        }),
       cache,
       assetDownloadWorkers: 50,
       reporter,

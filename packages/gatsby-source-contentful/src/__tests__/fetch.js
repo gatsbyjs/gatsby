@@ -206,21 +206,6 @@ describe(`Tags feature`, () => {
     })
 
     expect(reporter.panic).not.toBeCalled()
-    expect(mockClient.getTags).not.toBeCalled()
-  })
-  it(`calls contentful.getTags when enabled`, async () => {
-    await fetchContent({
-      pluginConfig: createPluginConfig({
-        accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
-        spaceId: `rocybtov1ozk`,
-        pageLimit: 50,
-        enableTags: true,
-      }),
-      reporter,
-      syncToken: null,
-    })
-
-    expect(reporter.panic).not.toBeCalled()
     expect(mockClient.getTags).toHaveBeenCalledWith({
       limit: 50,
       order: `sys.createdAt`,
