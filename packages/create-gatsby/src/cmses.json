@@ -1,7 +1,10 @@
 {
   "gatsby-source-wordpress": { "message": "WordPress" },
   "gatsby-source-contentful": { "message": "Contentful" },
-  "gatsby-source-graphcms": { "message": "GraphCMS" },
+  "gatsby-source-graphcms": {
+    "message": "GraphCMS",
+    "plugins": ["gatsby-plugin-image"]
+  },
   "gatsby-source-sanity": { "message": "Sanity" },
   "gatsby-source-datocms": { "message": "DatoCMS" },
   "gatsby-source-shopify": { "message": "Shopify" },
