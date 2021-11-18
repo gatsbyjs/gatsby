@@ -295,7 +295,7 @@ export async function processNodeManifest(
  * and then removes them from the store.
  * Manifest files are added via the public unstable_createNodeManifest action in sourceNodes
  */
-export async function processNodeManifests(): Promise<Record<string, unknown>> {
+export async function processNodeManifests(): Promise<Record<string, string>> {
   const startTime = Date.now()
   const { nodeManifests } = store.getState()
 
@@ -313,7 +313,6 @@ export async function processNodeManifests(): Promise<Record<string, unknown>> {
     nodeManifests.map(async manifest => {
       const processedManifest = await processNodeManifest(manifest)
 
-      console.log(`PROCESSEDMANIFEST`, processedManifest)
       if (processedManifest && processedManifest?.page?.path) {
         nodeManifestPagePathMap[processedManifest.page.path] =
           manifest.manifestId
@@ -323,8 +322,6 @@ export async function processNodeManifests(): Promise<Record<string, unknown>> {
       }
     })
   )
-
-  console.log(`NODEMANIFESTMAP`, nodeManifestPagePathMap)
 
   const pluralize = (length: number): string =>
     length > 1 || length === 0 ? `s` : ``

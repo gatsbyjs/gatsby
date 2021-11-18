@@ -174,10 +174,9 @@ export async function flush(parentSpan?: Span): Promise<void> {
   )
   writePageDataActivity.start()
 
-  // we process node manifests in this location because we need to make sure all page-data.json files are written for gatsby as well as inc-builds (both call builHTMLPagesAndDeleteStaleArtifacts). Node manifests include a digest of the corresponding page-data.json file and at this point we can be sure page-data has been written out for the latest updates in gatsby build AND inc builds.
+  // we process node manifests in this location because we need to add the manifestId to the page data.
+  // We use this manifestId to determine if the page data is up to date when routing. Here we create a map of "pagePath": "manifestId".
   const nodeManifestPagePathMap = await processNodeManifests()
-
-  console.log(`pagePaths`, pagePaths)
 
   const flushQueue = fastq(async (pagePath, cb) => {
     const page = pages.get(pagePath)
@@ -192,8 +191,6 @@ export async function flush(parentSpan?: Span): Promise<void> {
       if (page.path && nodeManifestPagePathMap[page.path]) {
         page.manifestId = nodeManifestPagePathMap[page.path]
       }
-      console.log(`pagehere`, page)
-      console.log(`nodemanifestpagepaths`, nodeManifestPagePathMap)
 
       if (!isBuild && process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
         // check if already did run query for this page
