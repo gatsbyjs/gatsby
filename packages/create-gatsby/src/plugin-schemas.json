@@ -304,5 +304,23 @@
         "keys": { "purpose": { "type": "string" } }
       }
     }
+  },
+  "gatsby-source-graphcms": {
+    "type": "object",
+    "keys": {
+      "endpoint": {
+        "type": "string",
+        "flags": {
+          "description": "The endpoint URL for the GraphCMS project. This can be found in the project settings UI.",
+          "presence": "required"
+        }
+      },
+      "token": {
+        "type": "string",
+        "flags": {
+          "description": "If your GraphCMS project is **not** publicly accessible, you will need to provide a Permanent Auth Token to correctly authorize with the API."
+        }
+      }
+    }
   }
 }
