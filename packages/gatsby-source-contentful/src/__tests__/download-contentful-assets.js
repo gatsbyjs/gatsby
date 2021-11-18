@@ -16,6 +16,8 @@ jest.mock(`gatsby-source-filesystem`, () => {
 })
 
 const reporter = {
+  info: jest.fn(),
+  warn: jest.fn(),
   createProgress: jest.fn(() => {
     return {
       start: jest.fn(),
