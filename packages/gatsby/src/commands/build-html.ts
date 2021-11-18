@@ -495,7 +495,6 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
 
     deletePageDataActivityTimer.end()
   }
-  debugger
 
   return { toRegenerate, toDelete }
 }

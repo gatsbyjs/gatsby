@@ -6,10 +6,6 @@ import { store } from "../redux/"
 import { internalActions } from "../redux/actions"
 import path from "path"
 import fs from "fs-extra"
-import { readPageData } from "./page-data"
-import { createContentDigest } from "gatsby-core-utils"
-import { program } from "../redux/reducers"
-import { warn } from "node:console"
 
 interface INodeManifestPage {
   path?: string
@@ -299,7 +295,7 @@ export async function processNodeManifest(
  * and then removes them from the store.
  * Manifest files are added via the public unstable_createNodeManifest action in sourceNodes
  */
-export async function processNodeManifests(): Promise<{}> {
+export async function processNodeManifests(): Promise<Record<string, unknown>> {
   const startTime = Date.now()
   const { nodeManifests } = store.getState()
 
