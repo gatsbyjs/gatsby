@@ -18,7 +18,7 @@ import {
 import { Span } from "opentracing"
 
 export { reverseFixedPagePath }
-
+import { processNodeManifests } from "../utils/node-manifest"
 import { IExecutionResult } from "../query/types"
 import { getPageMode } from "./page-mode"
 
@@ -174,6 +174,11 @@ export async function flush(parentSpan?: Span): Promise<void> {
   )
   writePageDataActivity.start()
 
+  // we process node manifests in this location because we need to make sure all page-data.json files are written for gatsby as well as inc-builds (both call builHTMLPagesAndDeleteStaleArtifacts). Node manifests include a digest of the corresponding page-data.json file and at this point we can be sure page-data has been written out for the latest updates in gatsby build AND inc builds.
+  const nodeManifestPagePathMap = await processNodeManifests()
+
+  console.log(`pagePaths`, pagePaths)
+
   const flushQueue = fastq(async (pagePath, cb) => {
     const page = pages.get(pagePath)
 
@@ -184,6 +189,12 @@ export async function flush(parentSpan?: Span): Promise<void> {
     // them, a page might not exist anymore щ（ﾟДﾟщ）
     // This is why we need this check
     if (page) {
+      if (page.path && nodeManifestPagePathMap[page.path]) {
+        page.manifestId = nodeManifestPagePathMap[page.path]
+      }
+      console.log(`pagehere`, page)
+      console.log(`nodemanifestpagepaths`, nodeManifestPagePathMap)
+
       if (!isBuild && process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
         // check if already did run query for this page
         // with query-on-demand we might have pending page-data write due to
