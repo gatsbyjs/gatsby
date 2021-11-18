@@ -11,7 +11,6 @@ import { makeId } from "../normalize"
 
 import startersBlogFixture from "../__fixtures__/starter-blog-data"
 import richTextFixture from "../__fixtures__/rich-text-data"
-import restrictedContentTypeFixture from "../__fixtures__/restricted-content-type"
 import unpublishedFieldDelivery from "../__fixtures__/unpublished-fields-delivery"
 import unpublishedFieldPreview from "../__fixtures__/unpublished-fields-preview"
 
@@ -160,6 +159,7 @@ describe(`gatsby-node`, () => {
         getCache,
         reporter,
         parentSpan,
+        schema,
       },
       pluginOptions
     )
@@ -1255,56 +1255,6 @@ describe(`gatsby-node`, () => {
       expect.objectContaining({
         context: {
           sourceMessage: `Please check if your contentTypeFilter is configured properly. Content types were filtered down to none.`,
-        },
-      })
-    )
-  })
-
-  it(`panics when response contains restricted content types`, async () => {
-    // @ts-ignore
-    fetchContent.mockImplementationOnce(
-      restrictedContentTypeFixture.initialSync
-    )
-    // @ts-ignore
-    fetchContentTypes.mockImplementationOnce(
-      restrictedContentTypeFixture.contentTypeItems
-    )
-
-    await simulateGatsbyBuild()
-
-    expect(reporter.panic).toBeCalledWith(
-      expect.objectContaining({
-        context: {
-          sourceMessage: `Restricted ContentType name found. The name "reference" is not allowed.`,
-        },
-      })
-    )
-  })
-
-  it(`panics when response contains content type Tag while enableTags is true`, async () => {
-    // @ts-ignore
-    fetchContent.mockImplementationOnce(
-      restrictedContentTypeFixture.initialSync
-    )
-    const contentTypesWithTag = () => {
-      const manipulatedContentTypeItems =
-        restrictedContentTypeFixture.contentTypeItems()
-      manipulatedContentTypeItems[0].name = `Tag`
-      return manipulatedContentTypeItems
-    }
-    // @ts-ignore
-    fetchContentTypes.mockImplementationOnce(contentTypesWithTag)
-
-    await simulateGatsbyBuild({
-      spaceId: `mocked`,
-      enableTags: true,
-      useNameForId: true,
-    })
-
-    expect(reporter.panic).toBeCalledWith(
-      expect.objectContaining({
-        context: {
-          sourceMessage: `Restricted ContentType name found. The name "tag" is not allowed.`,
         },
       })
     )

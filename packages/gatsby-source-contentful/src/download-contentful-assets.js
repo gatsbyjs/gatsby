@@ -57,9 +57,7 @@ export async function downloadContentfulAssets(gatsbyFunctions) {
       const cacheRemoteData = await cache.get(remoteDataCacheKey)
 
       if (!assetNode.url) {
-        reporter.warn(
-          `The asset with id: ${id} has a file but the file contains no url.`
-        )
+        reporter.warn(`The asset with id: ${id} has no url.`)
         return Promise.resolve()
       }
       const url = createUrl(assetNode.url)
