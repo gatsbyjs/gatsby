@@ -85,7 +85,7 @@ function deleteStaleNodes(state: IGatsbyState, nodes: Array<Node>): void {
   }
 }
 
-let initialSourcing = true
+let isInitialSourcing = true
 export default async ({
   webhookBody,
   pluginName,
