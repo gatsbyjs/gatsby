@@ -109,14 +109,14 @@ export default async ({
   await getDataStore().ready()
 
   // We only warn for plugins w/o nodes and delete stale nodes on the first sourcing.
-  if (initialSourcing) {
+  if (isInitialSourcing) {
     const state = store.getState()
     const nodes = getNodes()
 
     warnForPluginsWithoutNodes(state, nodes)
 
     deleteStaleNodes(state, nodes)
-    initialSourcing = false
+    isInitialSourcing = false
   } else {
     return
   }
