@@ -6,6 +6,9 @@ import { store } from "../redux/"
 import { internalActions } from "../redux/actions"
 import path from "path"
 import fs from "fs-extra"
+import fastq from "fastq"
+import { report } from "node:process"
+import { async } from "hasha"
 
 interface INodeManifestPage {
   path?: string
@@ -203,12 +206,16 @@ export function warnAboutNodeManifestMappingProblems({
 
 let warnOnceAboutNodeManifestMappingProblems
 let warnOnceAboutNoNode
-const verboseLogs = process.env.VERBOSE === `true`
+const verboseLogs =
+  process.env.VERBOSE === `true` ||
+  process.env.VERBOSE_CREATE_NODE_MANIFEST === `true`
 /**
  * Prepares and then writes out an individual node manifest file to be used for routing to previews. Manifest files are added via the public unstable_createNodeManifest action
  */
 export async function processNodeManifest(
-  inputManifest: INodeManifest
+  inputManifest: INodeManifest,
+  errorLogs: Array<string>,
+  nodeManifestPagePathMap: Map<string, string>
 ): Promise<null | INodeManifestOut> {
   const nodeId = inputManifest.node.id
   const fullNode = getNode(nodeId)
@@ -220,7 +227,7 @@ export async function processNodeManifest(
       )
     } else {
       if (!warnOnceAboutNoNode) {
-        reporter.warn(
+        errorLogs.push(
           `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest for a node which doesn't exist, use VERBOSE for more info`
         )
         warnOnceAboutNoNode = true
@@ -287,6 +294,16 @@ export async function processNodeManifest(
   await fs.ensureDir(manifestFileDir)
   await fs.writeJSON(manifestFilePath, finalManifest)
 
+  if (verboseLogs) {
+    reporter.info(
+      `Plugin ${inputManifest.pluginName} created a manifest with the id ${fileNameBase}`
+    )
+  }
+
+  if (nodeManifestPage.path) {
+    nodeManifestPagePathMap.set(nodeManifestPage.path, fileNameBase)
+  }
+
   return finalManifest
 }
 
@@ -295,33 +312,57 @@ export async function processNodeManifest(
  * and then removes them from the store.
  * Manifest files are added via the public unstable_createNodeManifest action in sourceNodes
  */
-export async function processNodeManifests(): Promise<Record<string, string>> {
+export async function processNodeManifests(): Promise<Map<
+  string,
+  string
+> | null> {
   const startTime = Date.now()
   const { nodeManifests } = store.getState()
 
   const totalManifests = nodeManifests.length
 
   if (totalManifests === 0) {
-    return {}
+    return null
   }
 
   let totalProcessedManifests = 0
   let totalFailedManifests = 0
-  const nodeManifestPagePathMap = {}
+  const nodeManifestPagePathMap: Map<string, string> = new Map()
+  const errorLogs = []
 
-  await Promise.all(
-    nodeManifests.map(async manifest => {
-      const processedManifest = await processNodeManifest(manifest)
+  async function processNodeManifestTask(
+    manifest: INodeManifest,
+    cb: fastq.done<any>
+  ): Promise<void> {
+    const processedManifest = await processNodeManifest(
+      manifest,
+      errorLogs,
+      nodeManifestPagePathMap
+    )
 
-      if (processedManifest && processedManifest?.page?.path) {
-        nodeManifestPagePathMap[processedManifest.page.path] =
-          manifest.manifestId
-        totalProcessedManifests++
-      } else {
-        totalFailedManifests++
-      }
+    if (processedManifest) {
+      totalProcessedManifests++
+    } else {
+      totalFailedManifests++
+    }
+
+    // `setImmediate` below is a workaround against stack overflow
+    // occurring when there are many manifests
+    setImmediate(() => cb(null, true))
+    return
+  }
+
+  const processNodeManifestQueue = fastq(processNodeManifestTask, 25)
+
+  for (const manifest of nodeManifests) {
+    processNodeManifestQueue.push(manifest, () => {})
+  }
+
+  if (!processNodeManifestQueue.idle()) {
+    await new Promise(resolve => {
+      processNodeManifestQueue.drain = resolve as () => unknown
     })
-  )
+  }
 
   const pluralize = (length: number): string =>
     length > 1 || length === 0 ? `s` : ``

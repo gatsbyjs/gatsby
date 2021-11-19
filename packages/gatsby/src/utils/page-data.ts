@@ -175,7 +175,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
   writePageDataActivity.start()
 
   // we process node manifests in this location because we need to add the manifestId to the page data.
-  // We use this manifestId to determine if the page data is up to date when routing. Here we create a map of "pagePath": "manifestId".
+  // We use this manifestId to determine if the page data is up to date when routing. Here we create a map of "pagePath": "manifestId" while processing and writing node manifest files.
   const nodeManifestPagePathMap = await processNodeManifests()
 
   const flushQueue = fastq(async (pagePath, cb) => {
@@ -188,8 +188,8 @@ export async function flush(parentSpan?: Span): Promise<void> {
     // them, a page might not exist anymore щ（ﾟДﾟщ）
     // This is why we need this check
     if (page) {
-      if (page.path && nodeManifestPagePathMap[page.path]) {
-        page.manifestId = nodeManifestPagePathMap[page.path]
+      if (page.path && nodeManifestPagePathMap) {
+        page.manifestId = nodeManifestPagePathMap.get(page.path)
       }
 
       if (!isBuild && process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {

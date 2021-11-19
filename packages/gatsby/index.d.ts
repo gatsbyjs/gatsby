@@ -1166,8 +1166,8 @@ export interface Actions {
     args: {
       manifestId: string
       node: Node
-      updatedAt?: string | number
-      daysSinceLastUpdate?: number
+      updatedAtUTC?: string | number
+      maxDaysOld?: number
     },
     plugin?: ActionPlugin
   ): void

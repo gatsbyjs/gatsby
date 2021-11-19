@@ -930,8 +930,8 @@ export interface ICreateNodeManifest {
     manifestId: string
     node: IGatsbyNode
     pluginName: string
-    updatedAt?: string | number
-    daysSinceLastUpdate?: number
+    updatedAtUTC?: string | number
+    maxDaysOld?: number
   }
 }
 

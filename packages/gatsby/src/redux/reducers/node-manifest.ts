@@ -6,6 +6,8 @@ import {
   IDeleteNodeManifests,
 } from "../types"
 
+const ONE_DAY = 1000 * 60 * 60 * 24 // ms * sec * min * hr
+
 export const nodeManifestReducer = (
   state: IGatsbyState["nodeManifests"] = [],
   action: ICreateNodeManifest | IDeleteNodeManifests
@@ -16,27 +18,25 @@ export const nodeManifestReducer = (
         manifestId,
         pluginName,
         node,
-        updatedAt,
-        daysSinceLastUpdate = 30,
+        updatedAtUTC,
+        maxDaysOld = 30,
       } = action.payload
 
-      const ONE_DAY = 1000 * 60 * 60 * 24 // ms * sec * min * hr
-
-      if (updatedAt) {
-        const nodeLastUpdatedAt: number = new Date(updatedAt).getTime()
+      if (updatedAtUTC) {
+        const nodeLastUpdatedAtUTC: number = new Date(updatedAtUTC).getTime()
         if (
-          (nodeLastUpdatedAt as any) instanceof Date &&
-          !isNaN(nodeLastUpdatedAt)
+          (nodeLastUpdatedAtUTC as any) instanceof Date &&
+          !isNaN(nodeLastUpdatedAtUTC)
         ) {
           reporter.warn(
-            `Plugin ${pluginName} called unstable_createNodeManifest with an updatedAt that isn't a proper value to instantiate a Date.`
+            `Plugin ${pluginName} called unstable_createNodeManifest with an updatedAtUTC that isn't a proper value to instantiate a Date.`
           )
 
           return state
         }
 
         const shouldCreateNodeManifest =
-          Date.now() - nodeLastUpdatedAt <= daysSinceLastUpdate * ONE_DAY
+          Date.now() - nodeLastUpdatedAtUTC <= maxDaysOld * ONE_DAY
 
         if (!shouldCreateNodeManifest) {
           return state
