@@ -1,5 +1,4 @@
 {
-  "___@todo": "move this files into fixtures directory",
   "currentSyncData": {
     "entries": [
       {
@@ -84,8 +83,7 @@
             "de": "Shop für Möbel, Bettwäsche, Bad, Staubsauger, Küchenprodukte und vieles mehr",
             "en-US": "Shop for furniture, bedding, bath, vacuums, kitchen products, and more"
           }
-        },
-        "metadata": { "tags": [] }
+        }
       },
       {
         "sys": {
@@ -191,8 +189,7 @@
             }
           },
           "jsonStringTest": { "en-US": ["test"] }
-        },
-        "metadata": { "tags": [] }
+        }
       },
       {
         "sys": {
@@ -232,8 +229,7 @@
           "content": {
             "en-US": "## Toys\n\n![Toys](//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png) \n\n## Chive\n\n![Chive logo](//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg) \n\n## Playsam Streamliner\n\n![Playsam Streamliner](//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg) \n\n## Whisk beaters\n\n![Whisk beaters](//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg) \n\n## SoSo Wall Clock\n\n![SoSo Wall Clock](//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg) \n\n## Hudson Wall Cup\n\n![Hudson Wall Cup ](//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg)"
           }
-        },
-        "metadata": { "tags": [] }
+        }
       },
       {
         "sys": {
@@ -506,8 +502,7 @@
           "quantity": { "en-US": 56 },
           "sku": { "en-US": "B001R6JUZ2" },
           "website": { "en-US": "http://www.amazon.com/dp/B001R6JUZ2/" }
-        },
-        "metadata": { "tags": [] }
+        }
       },
       {
         "sys": {
@@ -595,8 +590,7 @@
           "twitter": { "en-US": "https://twitter.com/NormannCPH" },
           "email": { "en-US": "normann@normann-copenhagen.com" },
           "phone": { "en-US": ["+45 35 55 44 59"] }
-        },
-        "metadata": { "tags": [] }
+        }
       },
       {
         "sys": {
@@ -867,8 +861,7 @@
           "quantity": { "en-US": 101 },
           "sku": { "en-US": "B00E82D7I8" },
           "website": { "en-US": "http://www.amazon.com/dp/B00E82D7I8/" }
-        },
-        "metadata": { "tags": [] }
+        }
       },
       {
         "sys": {
@@ -1147,8 +1140,7 @@
           "quantity": { "en-US": 89 },
           "sku": { "en-US": "B0081F2CCK" },
           "website": { "en-US": "http://www.amazon.com/dp/B0081F2CCK/" }
-        },
-        "metadata": { "tags": [] }
+        }
       },
       {
         "sys": {
@@ -1426,8 +1418,7 @@
           "quantity": { "en-US": 3 },
           "sku": { "en-US": "B00MG4ULK2" },
           "website": { "en-US": "http://store.dwell.com/soso-wall-clock.html" }
-        },
-        "metadata": { "tags": [] }
+        }
       },
       {
         "sys": {
@@ -1514,8 +1505,7 @@
           "website": { "en-US": "http://www.lemnos.jp/en/" },
           "email": { "en-US": "info@acgears.com" },
           "phone": { "en-US": ["+1 212 260 2269"] }
-        },
-        "metadata": { "tags": [] }
+        }
       },
       {
         "sys": {
@@ -1600,8 +1590,7 @@
             "en-US": "Playsam is the leading Scandinavian design company for executive wooden toy gift. Scandinavian design playful creativity, integrity and sophistication are Playsam. Scandinavian design and wooden toy makes Playsam gift lovely to the world of design since 1984."
           },
           "website": { "en-US": "http://playsam.com/" }
-        },
-        "metadata": { "tags": [] }
+        }
       },
       {
         "sys": {
@@ -1685,8 +1674,7 @@
             "de": "Spielzeugladen, Spiele, Lernhilfen",
             "en-US": "Shop for toys, games, educational aids"
           }
-        },
-        "metadata": { "tags": [] }
+        }
       }
     ],
     "assets": [

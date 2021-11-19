@@ -1,7 +1,7 @@
 import React from "react"
 
-export const ContentfulContentTypeLocation = ({ location }) => (
+export const ContentfulLocation = ({ location }) => (
   <p data-cy-id="location">
-    [ContentfulContentTypeLocation] Lat: {location.lat}, Long: {location.lon}
+    [ContentfulLocation] Lat: {location.lat}, Long: {location.lon}
   </p>
 )

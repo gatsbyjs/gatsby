@@ -51,23 +51,24 @@ const TagsPage = ({ data }) => {
     </Layout>
   )
 }
+
 export default TagsPage
 
 export const pageQuery = graphql`
   query TagsQuery {
-    tags: allContentfulTag(sort: { fields: id }) {
+    tags: allContentfulTag(sort: { fields: contentful_id }) {
       nodes {
         name
         contentful_id
       }
     }
-    integers: allContentfulContentTypeNumber(
-      sort: { fields: sys___id }
+    integers: allContentfulNumber(
+      sort: { fields: contentful_id }
       filter: {
         metadata: {
           tags: { elemMatch: { contentful_id: { eq: "numberInteger" } } }
         }
-        sys: { locale: { eq: "en-US" } }
+        node_locale: { eq: "en-US" }
       }
     ) {
       nodes {
@@ -75,13 +76,13 @@ export const pageQuery = graphql`
         integer
       }
     }
-    decimals: allContentfulContentTypeNumber(
-      sort: { fields: sys___id }
+    decimals: allContentfulNumber(
+      sort: { fields: contentful_id }
       filter: {
         metadata: {
           tags: { elemMatch: { contentful_id: { eq: "numberDecimal" } } }
         }
-        sys: { locale: { eq: "en-US" } }
+        node_locale: { eq: "en-US" }
       }
     ) {
       nodes {

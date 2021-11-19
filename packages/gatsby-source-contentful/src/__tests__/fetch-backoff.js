@@ -83,12 +83,6 @@ describe(`fetch-backoff`, () => {
         `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=444`
       )
       .reply(200, { items: [] })
-      // Tags
-      .get(
-        `/spaces/${options.spaceId}/environments/master/tags?skip=0&limit=1000&order=sys.createdAt`
-      )
-      .reply(200, { items: [] })
-
     await fetchContent({ pluginConfig, reporter, syncToken: null })
 
     expect(reporter.panic).not.toBeCalled()
@@ -124,11 +118,6 @@ describe(`fetch-backoff`, () => {
       // Sync with 1000 (no limit exceeded)
       .get(
         `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=1000`
-      )
-      .reply(200, { items: [] })
-      // Tags
-      .get(
-        `/spaces/${options.spaceId}/environments/master/tags?skip=0&limit=1000&order=sys.createdAt`
       )
       .reply(200, { items: [] })
 

@@ -298,7 +298,6 @@ exports.initialSync = () => {
             publishDate: { "en-US": `2017-05-12T00:00+02:00` },
             tags: { "en-US": [`javascript`] },
           },
-          metadata: { tags: [] },
         },
         {
           sys: {
@@ -364,7 +363,6 @@ exports.initialSync = () => {
             publishDate: { "en-US": `2017-05-15T00:00+02:00` },
             tags: { "en-US": [`general`] },
           },
-          metadata: { tags: [] },
         },
         {
           sys: {
@@ -430,7 +428,6 @@ exports.initialSync = () => {
             publishDate: { "en-US": `2017-05-16T00:00+02:00` },
             tags: { "en-US": [`javascript`, `static-sites`] },
           },
-          metadata: { tags: [] },
         },
         {
           sys: {
@@ -487,7 +484,6 @@ exports.initialSync = () => {
               },
             },
           },
-          metadata: { tags: [] },
         },
       ],
       assets: [
@@ -770,7 +766,6 @@ exports.createBlogPost = () => {
             },
             publishDate: { "en-US": `2020-04-01T00:00+02:00` },
           },
-          metadata: { tags: [] },
         },
       ],
       assets: [
@@ -930,7 +925,6 @@ exports.updateBlogPost = () => {
             },
             publishDate: { "en-US": `2020-05-15T00:00+02:00` },
           },
-          metadata: { tags: [] },
         },
       ],
       assets: [],

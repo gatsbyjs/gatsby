@@ -7,8 +7,14 @@ import { makeId } from "../normalize"
 
 import startersBlogFixture from "../__fixtures__/starter-blog-data"
 import richTextFixture from "../__fixtures__/rich-text-data"
+import restrictedContentTypeFixture from "../__fixtures__/restricted-content-type"
 
 jest.mock(`../fetch`)
+jest.mock(`gatsby-core-utils`, () => {
+  return {
+    createContentDigest: () => `contentDigest`,
+  }
+})
 
 const defaultPluginOptions = { spaceId: `testSpaceId` }
 
@@ -75,7 +81,6 @@ describe(`gatsby-node`, () => {
         getCache,
         reporter,
         parentSpan,
-        schema,
       },
       pluginOptions
     )
@@ -249,8 +254,6 @@ describe(`gatsby-node`, () => {
           })
         )
 
-        const file = getFieldValue(asset.fields.file, locale, defaultLocale)
-
         // check if asset exists
         expect(getNode(assetId)).toMatchObject({
           title: getFieldValue(asset.fields.title, locale, defaultLocale),
@@ -259,12 +262,7 @@ describe(`gatsby-node`, () => {
             locale,
             defaultLocale
           ),
-          contentType: file.contentType,
-          fileName: file.fileName,
-          url: file.url,
-          size: file.details.size,
-          width: file.details?.image?.width || null,
-          height: file.details?.image?.height || null,
+          file: getFieldValue(asset.fields.file, locale, defaultLocale),
         })
       })
     })
@@ -582,7 +580,7 @@ describe(`gatsby-node`, () => {
     )
   })
 
-  it(`stores rich text as JSON`, async () => {
+  it(`stores rich text as raw with references attached`, async () => {
     // @ts-ignore
     fetchContent.mockImplementationOnce(richTextFixture.initialSync)
     // @ts-ignore
@@ -594,11 +592,14 @@ describe(`gatsby-node`, () => {
     const initNodes = getNodes()
 
     const homeNodes = initNodes.filter(
-      ({ sys: { id } }) => id === `6KpLS2NZyB3KAvDzWf4Ukh`
+      ({ contentful_id: id }) => id === `6KpLS2NZyB3KAvDzWf4Ukh`
     )
     expect(homeNodes).toHaveLength(2)
     homeNodes.forEach(homeNode => {
-      expect(homeNode.content).toMatchSnapshot()
+      expect(homeNode.content.references___NODE).toStrictEqual([
+        ...new Set(homeNode.content.references___NODE),
+      ])
+      expect(homeNode.content.references___NODE).toMatchSnapshot()
     })
   })
 
@@ -618,6 +619,27 @@ describe(`gatsby-node`, () => {
           sourceMessage: `Please check if your localeFilter is configured properly. Locales '${locales.join(
             `,`
           )}' were found but were filtered down to none.`,
+        },
+      })
+    )
+  })
+
+  it(`panics when response contains restricted content types`, async () => {
+    // @ts-ignore
+    fetchContent.mockImplementationOnce(
+      restrictedContentTypeFixture.initialSync
+    )
+    // @ts-ignore
+    fetchContentTypes.mockImplementationOnce(
+      restrictedContentTypeFixture.contentTypeItems
+    )
+
+    await simulateGatsbyBuild()
+
+    expect(reporter.panic).toBeCalledWith(
+      expect.objectContaining({
+        context: {
+          sourceMessage: `Restricted ContentType name found. The name "reference" is not allowed.`,
         },
       })
     )

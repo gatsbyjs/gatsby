@@ -10,22 +10,24 @@ const MediaReferencePage = ({ data }) => {
   const germanEntries = data.german.nodes
   return (
     <Layout>
-      {defaultEntries.map(({ sys: { id }, title, one, many }) => {
+      {defaultEntries.map(({ contentful_id, title, one, many }) => {
         const slug = slugify(title, { strict: true, lower: true })
 
         let content = null
         if (many) {
           content = many.map(imageData => (
-            <img src={imageData.url} style={{ width: 200 }} alt={title} />
+            <img src={imageData.file.url} style={{ width: 200 }} alt={title} />
           ))
         }
 
         if (one) {
-          content = <img src={one.url} style={{ width: 200 }} alt={title} />
+          content = (
+            <img src={one.file.url} style={{ width: 200 }} alt={title} />
+          )
         }
 
         return (
-          <div data-cy-id={slug} key={id}>
+          <div data-cy-id={slug} key={contentful_id}>
             <h2>{title}</h2>
             {content}
           </div>
@@ -33,34 +35,48 @@ const MediaReferencePage = ({ data }) => {
       })}
       <h1>English Locale</h1>
       {englishEntries.map(
-        ({ sys: { id }, title, one, oneLocalized, many, manyLocalized }) => {
+        ({ contentful_id, title, one, oneLocalized, many, manyLocalized }) => {
           const slug = slugify(title, { strict: true, lower: true })
 
           let content = null
           if (manyLocalized) {
             content = manyLocalized.map(imageData => (
-              <img src={imageData.url} style={{ width: 200 }} alt={title} />
+              <img
+                src={imageData.file.url}
+                style={{ width: 200 }}
+                alt={title}
+              />
             ))
           }
 
           if (oneLocalized) {
             content = (
-              <img src={oneLocalized.url} style={{ width: 200 }} alt={title} />
+              <img
+                src={oneLocalized.file.url}
+                style={{ width: 200 }}
+                alt={title}
+              />
             )
           }
 
           if (many) {
             content = many.map(imageData => (
-              <img src={imageData.url} style={{ width: 200 }} alt={title} />
+              <img
+                src={imageData.file.url}
+                style={{ width: 200 }}
+                alt={title}
+              />
             ))
           }
 
           if (one) {
-            content = <img src={one.url} style={{ width: 200 }} alt={title} />
+            content = (
+              <img src={one.file.url} style={{ width: 200 }} alt={title} />
+            )
           }
 
           return (
-            <div data-cy-id={`english-${slug}`} key={id}>
+            <div data-cy-id={`english-${slug}`} key={contentful_id}>
               <h2>{title}</h2>
               {content}
             </div>
@@ -70,34 +86,48 @@ const MediaReferencePage = ({ data }) => {
 
       <h1>German Locale</h1>
       {germanEntries.map(
-        ({ sys: { id }, title, one, oneLocalized, many, manyLocalized }) => {
+        ({ contentful_id, title, one, oneLocalized, many, manyLocalized }) => {
           const slug = slugify(title, { strict: true, lower: true })
 
           let content = null
           if (manyLocalized) {
             content = manyLocalized.map(imageData => (
-              <img src={imageData.url} style={{ width: 200 }} alt={title} />
+              <img
+                src={imageData.file.url}
+                style={{ width: 200 }}
+                alt={title}
+              />
             ))
           }
 
           if (oneLocalized) {
             content = (
-              <img src={oneLocalized.url} style={{ width: 200 }} alt={title} />
+              <img
+                src={oneLocalized.file.url}
+                style={{ width: 200 }}
+                alt={title}
+              />
             )
           }
 
           if (many) {
             content = many.map(imageData => (
-              <img src={imageData.url} style={{ width: 200 }} alt={title} />
+              <img
+                src={imageData.file.url}
+                style={{ width: 200 }}
+                alt={title}
+              />
             ))
           }
 
           if (one) {
-            content = <img src={one.url} style={{ width: 200 }} alt={title} />
+            content = (
+              <img src={one.file.url} style={{ width: 200 }} alt={title} />
+            )
           }
 
           return (
-            <div data-cy-id={`german-${slug}`} key={id}>
+            <div data-cy-id={`german-${slug}`} key={contentful_id}>
               <h2>{title}</h2>
               {content}
             </div>
@@ -112,75 +142,80 @@ export default MediaReferencePage
 
 export const pageQuery = graphql`
   query MediaReferenceQuery {
-    default: allContentfulContentTypeMediaReference(
+    default: allContentfulMediaReference(
       sort: { fields: title }
-      filter: {
-        title: { glob: "!*Localized*" }
-        sys: { locale: { eq: "en-US" } }
-      }
+      filter: { title: { glob: "!*Localized*" }, node_locale: { eq: "en-US" } }
     ) {
       nodes {
         title
-        sys {
-          id
-        }
+        contentful_id
         one {
-          url
+          file {
+            url
+          }
         }
         many {
-          url
+          file {
+            url
+          }
         }
       }
     }
-    english: allContentfulContentTypeMediaReference(
+    english: allContentfulMediaReference(
       sort: { fields: title }
-      filter: {
-        title: { glob: "*Localized*" }
-        sys: { locale: { eq: "en-US" } }
-      }
+      filter: { title: { glob: "*Localized*" }, node_locale: { eq: "en-US" } }
     ) {
       nodes {
         title
-        sys {
-          id
-        }
+        contentful_id
         one {
-          url
+          file {
+            url
+          }
         }
         many {
-          url
+          file {
+            url
+          }
         }
         oneLocalized {
-          url
+          file {
+            url
+          }
         }
         manyLocalized {
-          url
+          file {
+            url
+          }
         }
       }
     }
-    german: allContentfulContentTypeMediaReference(
+    german: allContentfulMediaReference(
       sort: { fields: title }
-      filter: {
-        title: { glob: "*Localized*" }
-        sys: { locale: { eq: "de-DE" } }
-      }
+      filter: { title: { glob: "*Localized*" }, node_locale: { eq: "de-DE" } }
     ) {
       nodes {
         title
-        sys {
-          id
-        }
+        contentful_id
         one {
-          url
+          file {
+            url
+          }
         }
         many {
-          url
+          file {
+            url
+          }
         }
         oneLocalized {
-          url
+          file {
+            url
+          }
         }
         manyLocalized {
-          url
+          file {
+            url
+          }
         }
       }
     }

@@ -53,12 +53,9 @@ export default NumberPage
 
 export const pageQuery = graphql`
   query NumberQuery {
-    default: allContentfulContentTypeNumber(
-      sort: { fields: sys___id }
-      filter: {
-        title: { glob: "!*Localized*" }
-        sys: { locale: { eq: "en-US" } }
-      }
+    default: allContentfulNumber(
+      sort: { fields: contentful_id }
+      filter: { title: { glob: "!*Localized*" }, node_locale: { eq: "en-US" } }
     ) {
       nodes {
         title
@@ -66,12 +63,9 @@ export const pageQuery = graphql`
         decimal
       }
     }
-    english: allContentfulContentTypeNumber(
-      sort: { fields: sys___id }
-      filter: {
-        title: { glob: "*Localized*" }
-        sys: { locale: { eq: "en-US" } }
-      }
+    english: allContentfulNumber(
+      sort: { fields: contentful_id }
+      filter: { title: { glob: "*Localized*" }, node_locale: { eq: "en-US" } }
     ) {
       nodes {
         title
@@ -79,12 +73,9 @@ export const pageQuery = graphql`
         decimalLocalized
       }
     }
-    german: allContentfulContentTypeNumber(
-      sort: { fields: sys___id }
-      filter: {
-        title: { glob: "*Localized*" }
-        sys: { locale: { eq: "de-DE" } }
-      }
+    german: allContentfulNumber(
+      sort: { fields: contentful_id }
+      filter: { title: { glob: "*Localized*" }, node_locale: { eq: "de-DE" } }
     ) {
       nodes {
         title

@@ -31,7 +31,7 @@ const JSONPage = ({ data }) => {
             <p>Name: {actor.name}</p>
             <p>Photo: {actor.photo}</p>
             <p>Birthdate: {actor.Birthdate}</p>
-            <p>Born at: {actor["Born At"]}</p>
+            <p>Born at: {actor.Born_At}</p>
             <p>Weight: {actor.weight}</p>
             <p>Age: {actor.age}</p>
             <p>Wife: {actor.wife}</p>
@@ -61,27 +61,50 @@ export default JSONPage
 
 export const pageQuery = graphql`
   query JSONQuery {
-    simple: contentfulContentTypeJson(
-      sys: { id: { eq: "2r6tNjP8brkyy5yLR39hhh" } }
-    ) {
-      json
+    simple: contentfulJson(contentful_id: { eq: "2r6tNjP8brkyy5yLR39hhh" }) {
+      json {
+        name
+        city
+        age
+      }
     }
-    complex: contentfulContentTypeJson(
-      sys: { id: { eq: "2y71nV0cpW9vzTmJybq571" } }
-    ) {
-      json
+    complex: contentfulJson(contentful_id: { eq: "2y71nV0cpW9vzTmJybq571" }) {
+      json {
+        Actors {
+          name
+          photo
+          Birthdate
+          Born_At
+          weight
+          age
+          wife
+          children
+          hasChildren
+          hasGreyHair
+        }
+      }
     }
-    english: contentfulContentTypeJson(
-      sys: { id: { eq: "7DvTBEPg5P6TRC7dI9zXuO" }, locale: { eq: "en-US" } }
+    english: contentfulJson(
+      node_locale: { eq: "en-US" }
+      jsonLocalized: { id: { ne: null } }
     ) {
       title
-      jsonLocalized
+      jsonLocalized {
+        age
+        city
+        name
+      }
     }
-    german: contentfulContentTypeJson(
-      sys: { id: { eq: "7DvTBEPg5P6TRC7dI9zXuO" }, locale: { eq: "de-DE" } }
+    german: contentfulJson(
+      node_locale: { eq: "de-DE" }
+      jsonLocalized: { id: { ne: null } }
     ) {
       title
-      jsonLocalized
+      jsonLocalized {
+        age
+        city
+        name
+      }
     }
   }
 `

@@ -33,7 +33,7 @@ const TextPage = ({ data }) => {
       </div>
       <h2>Long (Plain):</h2>
       <div data-cy-id="long-plain">
-        <p data-cy-value>{longPlain.longPlain.raw}</p>
+        <p data-cy-value>{longPlain.longPlain.longPlain}</p>
       </div>
       <h2>Markdown (Simple):</h2>
       <div
@@ -57,7 +57,7 @@ const TextPage = ({ data }) => {
       </div>
       <h2>Long (Plain):</h2>
       <div data-cy-id="english-long">
-        <p data-cy-value>{longEnglish.longLocalized.raw}</p>
+        <p data-cy-value>{longEnglish.longLocalized.longLocalized}</p>
       </div>
 
       <h1>German Locale</h1>
@@ -67,7 +67,7 @@ const TextPage = ({ data }) => {
       </div>
       <h2>Long (Plain):</h2>
       <div data-cy-id="german-long">
-        <p data-cy-value>{longGerman.longLocalized.raw}</p>
+        <p data-cy-value>{longGerman.longLocalized.longLocalized}</p>
       </div>
     </Layout>
   )
@@ -77,25 +77,29 @@ export default TextPage
 
 export const pageQuery = graphql`
   query TextQuery {
-    short: contentfulContentTypeText(
-      sys: { id: { eq: "5ZtcN1o7KpN7J7xgiTyaXo" }, locale: { eq: "en-US" } }
+    short: contentfulText(
+      node_locale: { eq: "en-US" }
+      contentful_id: { eq: "5ZtcN1o7KpN7J7xgiTyaXo" }
     ) {
       short
     }
-    shortList: contentfulContentTypeText(
-      sys: { id: { eq: "7b5U927WTFcQXO2Gewwa2k" }, locale: { eq: "en-US" } }
+    shortList: contentfulText(
+      node_locale: { eq: "en-US" }
+      contentful_id: { eq: "7b5U927WTFcQXO2Gewwa2k" }
     ) {
       shortList
     }
-    longPlain: contentfulContentTypeText(
-      sys: { id: { eq: "6ru8cSC9hZi3Ekvtw7P77S" }, locale: { eq: "en-US" } }
+    longPlain: contentfulText(
+      node_locale: { eq: "en-US" }
+      contentful_id: { eq: "6ru8cSC9hZi3Ekvtw7P77S" }
     ) {
       longPlain {
-        raw
+        longPlain
       }
     }
-    longMarkdownSimple: contentfulContentTypeText(
-      sys: { id: { eq: "NyPJw0mcSuCwY2gV0zYny" }, locale: { eq: "en-US" } }
+    longMarkdownSimple: contentfulText(
+      node_locale: { eq: "en-US" }
+      contentful_id: { eq: "NyPJw0mcSuCwY2gV0zYny" }
     ) {
       longMarkdown {
         childMarkdownRemark {
@@ -103,8 +107,9 @@ export const pageQuery = graphql`
         }
       }
     }
-    longMarkdownComplex: contentfulContentTypeText(
-      sys: { id: { eq: "3pwKS9UWsYmOguo4UdE1EB" }, locale: { eq: "en-US" } }
+    longMarkdownComplex: contentfulText(
+      node_locale: { eq: "en-US" }
+      contentful_id: { eq: "3pwKS9UWsYmOguo4UdE1EB" }
     ) {
       longMarkdown {
         childMarkdownRemark {
@@ -112,28 +117,32 @@ export const pageQuery = graphql`
         }
       }
     }
-    shortEnglish: contentfulContentTypeText(
-      sys: { id: { eq: "2sQRyOLUexvWZj9nkzS3nN" }, locale: { eq: "en-US" } }
+    shortEnglish: contentfulText(
+      node_locale: { eq: "en-US" }
+      contentful_id: { eq: "2sQRyOLUexvWZj9nkzS3nN" }
     ) {
       shortLocalized
     }
-    shortGerman: contentfulContentTypeText(
-      sys: { id: { eq: "2sQRyOLUexvWZj9nkzS3nN" }, locale: { eq: "de-DE" } }
+    shortGerman: contentfulText(
+      node_locale: { eq: "de-DE" }
+      contentful_id: { eq: "2sQRyOLUexvWZj9nkzS3nN" }
     ) {
       shortLocalized
     }
-    longEnglish: contentfulContentTypeText(
-      sys: { id: { eq: "5csovkwdDBqTKwSblAOHvd" }, locale: { eq: "en-US" } }
+    longEnglish: contentfulText(
+      node_locale: { eq: "en-US" }
+      contentful_id: { eq: "5csovkwdDBqTKwSblAOHvd" }
     ) {
       longLocalized {
-        raw
+        longLocalized
       }
     }
-    longGerman: contentfulContentTypeText(
-      sys: { id: { eq: "5csovkwdDBqTKwSblAOHvd" }, locale: { eq: "de-DE" } }
+    longGerman: contentfulText(
+      node_locale: { eq: "de-DE" }
+      contentful_id: { eq: "5csovkwdDBqTKwSblAOHvd" }
     ) {
       longLocalized {
-        raw
+        longLocalized
       }
     }
   }

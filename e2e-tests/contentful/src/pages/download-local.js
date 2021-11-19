@@ -20,13 +20,13 @@ export default DownloadLocalPage
 
 export const pageQuery = graphql`
   query DownloadLocalQuery {
-    contentfulAsset(sys: { id: { eq: "3BSI9CgDdAn1JchXmY5IJi" } }) {
-      fields {
-        localFile {
-          absolutePath
-          childImageSharp {
-            gatsbyImageData
-          }
+    contentfulAsset(contentful_id: { eq: "3BSI9CgDdAn1JchXmY5IJi" }) {
+      contentful_id
+      title
+      localFile {
+        absolutePath
+        childImageSharp {
+          gatsbyImageData
         }
       }
     }
