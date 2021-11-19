@@ -117,7 +117,5 @@ export default async ({
 
     deleteStaleNodes(state, nodes)
     isInitialSourcing = false
-  } else {
-    return
   }
 }
