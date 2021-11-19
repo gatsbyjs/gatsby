@@ -1,0 +1,48 @@
+export function productVariantTypeBuilder(prefix: String) {
+    return `
+      type ${prefix}ProductVariant implements Node @dontInfer {
+        availableForSale: Boolean!
+        barcode: String
+        compareAtPrice: Float
+        createdAt: Date!
+        displayName: String!
+        id: ID!
+        image: ${prefix}Image
+        inventoryPolicy: ${prefix}ProductVariantInventoryPolicy!
+        inventoryQuantity: Int
+        legacyResourceId: String!
+        metafields: [${prefix}Metafield!]! @link(from: "metafields___NODE", by: "id")
+        position: Int!
+        presentmentPrices: [${prefix}ProductVariantPricePair!]!
+        price: Float!
+        product: ${prefix}Product! @link(from: "product.id", by: "shopifyId")
+        requiresShipping: Boolean! @deprecated(reason: "Use \`InventoryItem.requiresShipping\` instead.")
+        selectedOptions: [${prefix}SelectedOption!]!
+        sellingPlanGroupCount: Int!
+        sku: String
+        shopifyId: String!
+        storefrontId: String!
+        taxCode: String
+        taxable: Boolean!
+        title: String!
+        updatedAt: Date!
+        weight: Float
+        weightUnit: ${prefix}WeightUnit!
+      }
+
+      enum ${prefix}ProductVariantInventoryPolicy {
+        DENY
+        CONTINUE
+      }
+
+      type ${prefix}ProductVariantPricePair {
+        compareAtPrice: ${prefix}MoneyV2
+        price: ${prefix}MoneyV2!
+      }
+
+      type ${prefix}SelectedOption {
+        name: String!
+        value: String!
+      }
+    `;
+}
