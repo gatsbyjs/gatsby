@@ -129,14 +129,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.customImageFormats ? (
               <GatsbyImage image={node.customImageFormats} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
