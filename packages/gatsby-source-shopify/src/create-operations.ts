@@ -1,17 +1,15 @@
-import { NodeInput, SourceNodesArgs } from "gatsby"
+import { SourceNodesArgs } from "gatsby"
 import { shiftLeft } from "shift-left"
-import { createClient } from "./client"
+
+import { createGraphqlClient } from "./clients"
+import { getLastBuildTime } from "./helpers"
+import { OperationError } from "./errors"
+
 import { ProductsQuery } from "./query-builders/products-query"
 import { ProductVariantsQuery } from "./query-builders/product-variants-query"
 import { CollectionsQuery } from "./query-builders/collections-query"
 import { OrdersQuery } from "./query-builders/orders-query"
 import { LocationsQuery } from "./query-builders/locations-query"
-import {
-  collectionsProcessor,
-  incrementalProductsProcessor,
-  productVariantsProcessor,
-} from "./processors"
-import { OperationError } from "./errors"
 
 import {
   OPERATION_STATUS_QUERY,
@@ -19,28 +17,12 @@ import {
   CANCEL_OPERATION,
 } from "./static-queries"
 
-export interface IShopifyBulkOperation {
-  execute: () => Promise<BulkOperationRunQueryResponse>
-  name: string
-  process: (
-    objects: BulkResults,
-    nodeBuilder: NodeBuilder,
-    _gatsbyApi: SourceNodesArgs,
-    _pluginOptions: ShopifyPluginOptions
-  ) => Array<Promise<NodeInput>>
-}
-
-interface IOperations {
-  incrementalProducts: (date: Date) => IShopifyBulkOperation
-  incrementalProductVariants: (date: Date) => IShopifyBulkOperation
-  incrementalOrders: (date: Date) => IShopifyBulkOperation
-  incrementalCollections: (date: Date) => IShopifyBulkOperation
-  incrementalLocations: (date: Date) => IShopifyBulkOperation
-  createProductsOperation: IShopifyBulkOperation
-  createProductVariantsOperation: IShopifyBulkOperation
-  createOrdersOperation: IShopifyBulkOperation
-  createCollectionsOperation: IShopifyBulkOperation
-  createLocationsOperation: IShopifyBulkOperation
+interface Operations {
+  productsOperation: ShopifyBulkOperation
+  productVariantsOperation: ShopifyBulkOperation
+  ordersOperation: ShopifyBulkOperation
+  collectionsOperation: ShopifyBulkOperation
+  locationsOperation: ShopifyBulkOperation
   cancelOperationInProgress: () => Promise<void>
   cancelOperation: (id: string) => Promise<BulkOperationCancelResponse>
   finishLastOperation: () => Promise<void>
@@ -53,40 +35,33 @@ interface IOperations {
 const finishedStatuses = [`COMPLETED`, `FAILED`, `CANCELED`, `EXPIRED`]
 const failedStatuses = [`FAILED`, `CANCELED`]
 
-function defaultProcessor(
-  objects: BulkResults,
-  builder: NodeBuilder
-): Array<Promise<NodeInput>> {
-  return objects.map(builder.buildNode)
-}
-
 export function createOperations(
-  options: ShopifyPluginOptions,
-  { reporter }: SourceNodesArgs
-): IOperations {
-  const client = createClient(options)
-
-  function currentOperation(): Promise<CurrentBulkOperationResponse> {
-    return client.request(OPERATION_STATUS_QUERY)
-  }
+  gatsbyApi: SourceNodesArgs,
+  pluginOptions: ShopifyPluginOptions
+): Operations {
+  const graphqlClient = createGraphqlClient(pluginOptions)
+  const lastBuildTime = getLastBuildTime(gatsbyApi, pluginOptions)
+  const operationNamePrefix = lastBuildTime ? 'INCREMENTAL_' : ''
 
   function createOperation(
     operationQuery: string,
-    name: string,
-    process?: IShopifyBulkOperation["process"]
-  ): IShopifyBulkOperation {
+    name: string
+  ): ShopifyBulkOperation {
     return {
       execute: (): Promise<BulkOperationRunQueryResponse> =>
-        client.request<BulkOperationRunQueryResponse>(operationQuery),
-      name,
-      process: process || defaultProcessor,
+        graphqlClient.request<BulkOperationRunQueryResponse>(operationQuery),
+      name: `${operationNamePrefix}${name}`,
     }
+  }
+
+  function currentOperation(): Promise<CurrentBulkOperationResponse> {
+    return graphqlClient.request(OPERATION_STATUS_QUERY)
   }
 
   async function finishLastOperation(): Promise<void> {
     let { currentBulkOperation } = await currentOperation()
     if (currentBulkOperation && currentBulkOperation.id) {
-      const timer = reporter.activityTimer(
+      const timer = gatsbyApi.reporter.activityTimer(
         `Waiting for operation ${currentBulkOperation.id} : ${currentBulkOperation.status}`
       )
       timer.start()
@@ -106,7 +81,7 @@ export function createOperations(
   async function cancelOperation(
     id: string
   ): Promise<BulkOperationCancelResponse> {
-    return client.request<BulkOperationCancelResponse>(CANCEL_OPERATION, {
+    return graphqlClient.request<BulkOperationCancelResponse>(CANCEL_OPERATION, {
       id,
     })
   }
@@ -117,7 +92,7 @@ export function createOperations(
       return
     }
 
-    const cancelTimer = reporter.activityTimer(
+    const cancelTimer = gatsbyApi.reporter.activityTimer(
       `Canceling previous operation: ${bulkOperation.id}`
     )
 
@@ -169,13 +144,13 @@ export function createOperations(
     operationId: string,
     interval = 1000
   ): Promise<{ node: BulkOperationNode }> {
-    let operation = await client.request<{
+    let operation = await graphqlClient.request<{
       node: BulkOperationNode
     }>(OPERATION_BY_ID, {
       id: operationId,
     })
 
-    const completedTimer = reporter.activityTimer(
+    const completedTimer = gatsbyApi.reporter.activityTimer(
       `Waiting for bulk operation to complete`
     )
 
@@ -198,7 +173,7 @@ export function createOperations(
 
       await new Promise(resolve => setTimeout(resolve, interval))
 
-      operation = await client.request<{
+      operation = await graphqlClient.request<{
         node: BulkOperationNode
       }>(OPERATION_BY_ID, {
         id: operationId,
@@ -215,68 +190,28 @@ export function createOperations(
   }
 
   return {
-    incrementalProducts(date: Date): IShopifyBulkOperation {
-      return createOperation(
-        new ProductsQuery(options).query(date),
-        `INCREMENTAL_PRODUCTS`,
-        incrementalProductsProcessor
-      )
-    },
-
-    incrementalProductVariants(date: Date): IShopifyBulkOperation {
-      return createOperation(
-        new ProductVariantsQuery(options).query(date),
-        `INCREMENTAL_PRODUCT_VARIANTS`,
-        productVariantsProcessor
-      )
-    },
-
-    incrementalOrders(date: Date): IShopifyBulkOperation {
-      return createOperation(
-        new OrdersQuery(options).query(date),
-        `INCREMENTAL_ORDERS`
-      )
-    },
-
-    incrementalCollections(date: Date): IShopifyBulkOperation {
-      return createOperation(
-        new CollectionsQuery(options).query(date),
-        `INCREMENTAL_COLLECTIONS`,
-        collectionsProcessor
-      )
-    },
-
-    incrementalLocations(date: Date): IShopifyBulkOperation {
-      return createOperation(
-        new LocationsQuery(options).query(date),
-        `INCREMENTAL_LOCATIONS`
-      )
-    },
-
-    createProductsOperation: createOperation(
-      new ProductsQuery(options).query(),
+    productsOperation: createOperation(
+      new ProductsQuery(pluginOptions).query(),
       `PRODUCTS`
     ),
 
-    createProductVariantsOperation: createOperation(
-      new ProductVariantsQuery(options).query(),
+    productVariantsOperation: createOperation(
+      new ProductVariantsQuery(pluginOptions).query(),
       `PRODUCT_VARIANTS`,
-      productVariantsProcessor
     ),
 
-    createOrdersOperation: createOperation(
-      new OrdersQuery(options).query(),
+    ordersOperation: createOperation(
+      new OrdersQuery(pluginOptions).query(),
       `ORDERS`
     ),
 
-    createCollectionsOperation: createOperation(
-      new CollectionsQuery(options).query(),
-      `COLLECTIONS`,
-      collectionsProcessor
+    collectionsOperation: createOperation(
+      new CollectionsQuery(pluginOptions).query(),
+      `COLLECTIONS`
     ),
 
-    createLocationsOperation: createOperation(
-      new LocationsQuery(options).query(),
+    locationsOperation: createOperation(
+      new LocationsQuery(pluginOptions).query(),
       `LOCATIONS`
     ),
 

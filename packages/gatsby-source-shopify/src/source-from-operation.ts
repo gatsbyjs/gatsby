@@ -3,13 +3,14 @@ import { SourceNodesArgs } from "gatsby"
 import { createInterface } from "readline"
 import { shiftLeft } from "shift-left"
 
-import { nodeBuilder } from "./node-builder"
-import { IShopifyBulkOperation } from "./operations"
+import { processBulkResults } from "./process-bulk-results"
 import {
   OperationError,
   HttpError,
   pluginErrorCodes as errorCodes,
 } from "./errors"
+
+
 
 export function makeSourceFromOperation(
   finishLastOperation: () => Promise<void>,
@@ -19,12 +20,12 @@ export function makeSourceFromOperation(
   pluginOptions: ShopifyPluginOptions
 ) {
   return async function sourceFromOperation(
-    op: IShopifyBulkOperation,
+    op: ShopifyBulkOperation,
     // A build on the main branch && a production build
     isPriorityBuild = process.env.GATSBY_IS_PR_BUILD !== `true` &&
       process.env.GATSBY_IS_PREVIEW !== `true`
   ): Promise<void> {
-    const { reporter, actions } = gatsbyApi
+    const { reporter } = gatsbyApi
 
     const operationTimer = reporter.activityTimer(
       `Source from bulk operation ${op.name}`
@@ -75,37 +76,26 @@ export function makeSourceFromOperation(
         `Fetching ${resp.node.objectCount} results for ${op.name}: ${bulkOperation.id}`
       )
 
-      const results = await fetch(resp.node.url)
+      const { body: jsonLines } = await fetch(resp.node.url)
 
       operationTimer.setStatus(
         `Processing ${resp.node.objectCount} results for ${op.name}: ${bulkOperation.id}`
       )
+
       const rl = createInterface({
-        input: results.body,
+        input: jsonLines,
         crlfDelay: Infinity,
       })
 
       reporter.info(`Creating nodes from bulk operation ${op.name}`)
 
-      const objects: BulkResults = []
+      const results: BulkResults = []
 
       for await (const line of rl) {
-        objects.push(JSON.parse(line))
+        results.push(JSON.parse(line))
       }
 
-      await Promise.all(
-        op
-          .process(
-            objects,
-            nodeBuilder(gatsbyApi, pluginOptions),
-            gatsbyApi,
-            pluginOptions
-          )
-          .map(async promise => {
-            const node = await promise
-            actions.createNode(node)
-          })
-      )
+      await processBulkResults(gatsbyApi, pluginOptions, results);
 
       operationTimer.end()
     } catch (e) {
