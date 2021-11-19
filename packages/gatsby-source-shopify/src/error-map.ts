@@ -1,9 +1,9 @@
 import { shiftLeft } from "shift-left"
 import { pluginErrorCodes as errorCodes } from "./errors"
 
-const getErrorText = (context: IErrorContext): string => context.sourceMessage
+const getErrorText = (context: ErrorContext): string => context.sourceMessage
 
-export const ERROR_MAP: IErrorMap = {
+export const ERROR_MAP: ErrorMap = {
   [errorCodes.bulkOperationFailed]: {
     text: getErrorText,
     level: `ERROR`,

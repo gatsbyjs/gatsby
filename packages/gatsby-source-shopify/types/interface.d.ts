@@ -1,15 +1,9 @@
-interface ShopifyPluginOptions {
-  password: string
-  storeUrl: string
-  downloadImages?: boolean
-  shopifyConnections?: string[]
-  typePrefix?: string
-  salesChannel?: string
+interface BulkObject {
+  id: string
+  [key: string]: any
 }
 
-interface NodeBuilder {
-  buildNode: (obj: Record<string, any>) => Promise<NodeInput>
-}
+type BulkObjects = BulkObject[]
 
 type BulkResult = Record<string, any>
 type BulkResults = BulkResult[]
@@ -62,7 +56,7 @@ interface BulkOperationCancelResponse {
   }
 }
 
-interface IErrorContext {
+interface ErrorContext {
   sourceMessage: string
 }
 
@@ -86,8 +80,8 @@ enum ErrorCategory {
   THIRD_PARTY = `THIRD_PARTY`,
 }
 
-interface IErrorMapEntry {
-  text: (context: IErrorContext) => string
+interface ErrorMapEntry {
+  text: (context: ErrorContext) => string
   // keyof typeof is used for these enums so that the public facing API (e.g. used by setErrorMap) doesn't rely on enum but gives an union
   level: keyof typeof Level
   type?: keyof typeof Type
@@ -95,6 +89,46 @@ interface IErrorMapEntry {
   docsUrl?: string
 }
 
-interface IErrorMap {
-  [code: string]: IErrorMapEntry
+interface ErrorMap {
+  [code: string]: ErrorMapEntry
+}
+
+interface GetShopifyImageArgs
+  extends Omit<
+    IGetImageDataArgs,
+    "urlBuilder" | "baseUrl" | "formats" | "sourceWidth" | "sourceHeight"
+  > {
+  image: ShopifyImage
+}
+
+interface ShopifyBulkOperation {
+  execute: () => Promise<BulkOperationRunQueryResponse>
+  name: string
+}
+
+interface ImageData {
+  id: string
+  originalSrc: string
+  localFile___NODE: string | undefined
+}
+
+interface ShopifyImage {
+  width: number
+  height: number
+  originalSrc: string
+}
+
+interface ShopifyNode {
+  id: string
+  shopifyId: string
+  [key: string]: any
+}
+
+interface ShopifyPluginOptions {
+  password: string
+  storeUrl: string
+  downloadImages?: boolean
+  shopifyConnections?: string[]
+  typePrefix?: string
+  salesChannel?: string
 }

@@ -1,23 +1,7 @@
-import {
-  IUrlBuilderArgs,
-  IGetImageDataArgs,
-  getImageData,
-  IGatsbyImageData,
-} from "gatsby-plugin-image"
+import { IUrlBuilderArgs, getImageData, IGatsbyImageData } from "gatsby-plugin-image"
+
 const validFormats = new Set([`jpg`, `png`, `webp`, `auto`])
 
-export interface IShopifyImage {
-  width: number
-  height: number
-  originalSrc: string
-}
-export interface IGetShopifyImageArgs
-  extends Omit<
-    IGetImageDataArgs,
-    "urlBuilder" | "baseUrl" | "formats" | "sourceWidth" | "sourceHeight"
-  > {
-  image: IShopifyImage
-}
 export function urlBuilder({
   width,
   height,
@@ -54,7 +38,7 @@ export function urlBuilder({
 export function getShopifyImage({
   image,
   ...args
-}: IGetShopifyImageArgs): IGatsbyImageData {
+}: GetShopifyImageArgs): IGatsbyImageData {
   const {
     originalSrc: baseUrl,
     width: sourceWidth,

@@ -8,8 +8,8 @@ import {
   ImageFormat,
 } from "gatsby-plugin-image"
 import { IGatsbyImageFieldArgs } from "gatsby-plugin-image/graphql-utils"
+import { urlBuilder } from "./get-shopify-image"
 import { readFileSync } from "fs"
-import { IShopifyImage, urlBuilder } from "./get-shopify-image"
 
 type IImageWithPlaceholder = IImage & {
   placeholder: string
@@ -42,7 +42,7 @@ function getBase64DataURI({ imageBase64 }: { imageBase64: string }): string {
 
 export function makeResolveGatsbyImageData(cache: any) {
   return async function resolveGatsbyImageData(
-    image: Node & IShopifyImage,
+    image: Node & ShopifyImage,
     {
       formats = [`auto`],
       layout = `constrained`,
