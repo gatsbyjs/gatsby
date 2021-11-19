@@ -194,9 +194,7 @@ async function sqipContentful({ type, cache, store }) {
           mimeTypeExtensions,
         } = require(`gatsby-source-contentful/image-helpers`)
 
-        const {
-          file: { contentType, url: imgUrl, fileName },
-        } = asset
+        const { contentType, url: imgUrl, fileName } = asset
 
         if (!contentType.includes(`image/`)) {
           return null
