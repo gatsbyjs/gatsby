@@ -3,7 +3,7 @@
   "gatsby-source-contentful": { "message": "Contentful" },
   "gatsby-source-graphcms": {
     "message": "GraphCMS",
-    "plugins": ["gatsby-plugin-image"]
+    "dependencies": ["gatsby-plugin-image"]
   },
   "gatsby-source-sanity": { "message": "Sanity" },
   "gatsby-source-datocms": { "message": "DatoCMS" },

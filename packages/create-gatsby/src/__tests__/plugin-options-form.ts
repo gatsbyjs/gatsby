@@ -135,6 +135,19 @@ describe(`plugin-options-form`, () => {
           },
         ],
       },
+      {
+        type: `forminput`,
+        name: `gatsby-source-graphcms`,
+        multiple: true,
+        message: `Configure the GraphCMS plugin.\nSee \u001b[94mhttps://www.gatsbyjs.com/plugins/gatsby-source-graphcms/\u001b[39m for help.`,
+        choices: [
+          {
+            name: `endpoint`,
+            message: `endpoint`,
+            hint: `The endpoint URL for the GraphCMS project. This can be found in the project settings UI.`,
+          },
+        ],
+      },
     ])
   })
 })
