@@ -17,6 +17,7 @@ const ConnectedCLI: React.FC = (): React.ReactElement => {
       showStatusBar={Boolean(showStatusBar)}
       showPageTree={Boolean(showPageTree)}
       logs={state.logs}
+      messages={state.messages}
     />
   )
 }
