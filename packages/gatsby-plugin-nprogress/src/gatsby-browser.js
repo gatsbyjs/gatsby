@@ -1,4 +1,4 @@
-import NProgress from "nprogress"
+import NProgress from "accessible-nprogress"
 
 const defaultOptions = { color: `#29d` }
 

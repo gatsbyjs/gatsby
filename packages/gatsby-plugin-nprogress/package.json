@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "nprogress": "^0.2.0"
+    "accessible-nprogress": "^2.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
