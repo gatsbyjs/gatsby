@@ -217,7 +217,7 @@ export function generateImageSource(
 
   if (!validImageFormats.has(toFormat)) {
     console.warn(
-      `[gatsby-source-contentful] Invalid image format "${toFormat}". Supported types are jpg, png and webp"`
+      `[gatsby-source-contentful] Invalid image format "${toFormat}". Supported types are jpg, png, webp and avif"`
     )
     return undefined
   }

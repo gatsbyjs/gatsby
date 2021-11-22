@@ -21,7 +21,7 @@ export default function IndicatorButtonTooltip({
         overrideShowTooltip || showTooltip
       }`}
       data-testid={`${testId}-tooltip`}
-      style={{ top: `${elmOffsetTop}px` }}
+      style={{ top: `${elmOffsetTop()}px` }}
     >
       {tooltipContent}
     </div>

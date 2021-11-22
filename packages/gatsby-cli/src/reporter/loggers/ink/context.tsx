@@ -1,22 +1,43 @@
 import React, { useState, useLayoutEffect, createContext } from "react"
 import { getStore, onLogAction } from "../../redux"
-import { IGatsbyCLIState } from "../../redux/types"
+import { IGatsbyCLIState, ActionsUnion, ILog } from "../../redux/types"
 import { IRenderPageArgs } from "../../types"
+import { Actions } from "../../constants"
 
-const StoreStateContext = createContext<{
+interface IStoreStateContext {
   logs: IGatsbyCLIState
+  messages: Array<ILog>
   pageTree: IRenderPageArgs | null
-}>(getStore().getState())
+}
+
+const StoreStateContext = createContext<IStoreStateContext>({
+  ...getStore().getState(),
+  messages: [],
+})
 
 export const StoreStateProvider: React.FC = ({
   children,
 }): React.ReactElement => {
-  const [state, setState] = useState(getStore().getState())
+  const [state, setState] = useState<IStoreStateContext>({
+    ...getStore().getState(),
+    messages: [],
+  })
 
   useLayoutEffect(
     () =>
-      onLogAction(() => {
-        setState(getStore().getState())
+      onLogAction((action: ActionsUnion) => {
+        if (action.type === Actions.Log) {
+          setState(state => {
+            return {
+              ...state,
+              messages: [...state.messages, action.payload],
+            }
+          })
+        } else {
+          setState(state => {
+            return { ...getStore().getState(), messages: state.messages }
+          })
+        }
       }),
     []
   )
