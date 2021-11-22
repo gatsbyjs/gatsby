@@ -4,8 +4,8 @@ import { createRemoteFileNode } from "gatsby-source-filesystem"
 import { shopifyTypes } from "./shopify-types"
 import { createNodeId, isShopifyId, parseShopifyId } from "./helpers"
 
-interface BulkResultChildren {
-  [key: string]: (string | BulkResult)[]
+interface IBulkResultChildren {
+  [key: string]: Array<string | BulkResult>
 }
 
 export async function processShopifyImages(
@@ -23,7 +23,9 @@ export async function processShopifyImages(
 
   if (imageFields) {
     for (const fieldPath of imageFields) {
-      const image = fieldPath.split('.').reduce((acc, value) => acc[value], node)
+      const image = fieldPath
+        .split(`.`)
+        .reduce((acc, value) => acc[value], node)
 
       if (image) {
         const fileNode = await createRemoteFileNode({
@@ -46,37 +48,47 @@ export async function processBulkResults(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: ShopifyPluginOptions,
   results: BulkResults
-) {
-  const promises: Promise<void>[] = []
-  const children: BulkResultChildren = {}
+): Promise<void> {
+  const promises: Array<Promise<void>> = []
+  const children: IBulkResultChildren = {}
 
   for (let i = results.length - 1; i >= 0; i -= 1) {
-    let result = { ...results[i] }
-    const resultIsNode = result.id && JSON.stringify(Object.keys(result)) !== `["id","__parentId"]`
+    const result = { ...results[i] }
+    const resultIsNode =
+      result.id && JSON.stringify(Object.keys(result)) !== `["id","__parentId"]`
 
     if (resultIsNode) {
       const type = parseShopifyId(result.id)[1]
-      const referenceFields = shopifyTypes[type].fields
       const imageFields = shopifyTypes[type].imageFields
+      const referenceFields = shopifyTypes[type].referenceFields
 
       // Attach reference fields
       if (referenceFields) {
-        result = Object.assign(result, referenceFields)
+        for (const referenceField of referenceFields) {
+          result[referenceField] = []
+        }
       }
 
       // Attach children references / objects
       if (children[result.id]) {
         for (const child of children[result.id]) {
-          const childType = typeof child === 'string' ? parseShopifyId(child)[1] : child.__typename
+          const childType =
+            typeof child === `string`
+              ? parseShopifyId(child)[1]
+              : child.__typename
           const field = shopifyTypes[childType].key
 
           if (field) {
             result[field] = [
-              typeof child === 'string' ? createNodeId(child, gatsbyApi, pluginOptions) : child,
+              typeof child === `string`
+                ? createNodeId(child, gatsbyApi, pluginOptions)
+                : child,
               ...(result[field] || []),
             ]
           } else {
-            throw new Error(`There is no shopifyType for child type: ${childType}`)
+            throw new Error(
+              `There is no shopifyType for child type: ${childType}`
+            )
           }
         }
       }
@@ -98,7 +110,11 @@ export async function processBulkResults(
       }
 
       if (pluginOptions.downloadImages && imageFields) {
-        promises.push(processShopifyImages(gatsbyApi, node).then(() => gatsbyApi.actions.createNode(node)))
+        promises.push(
+          processShopifyImages(gatsbyApi, node).then(() =>
+            gatsbyApi.actions.createNode(node)
+          )
+        )
       } else {
         gatsbyApi.actions.createNode(node)
       }
