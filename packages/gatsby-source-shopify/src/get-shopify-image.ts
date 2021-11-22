@@ -1,4 +1,8 @@
-import { IUrlBuilderArgs, getImageData, IGatsbyImageData } from "gatsby-plugin-image"
+import {
+  IUrlBuilderArgs,
+  getImageData,
+  IGatsbyImageData,
+} from "gatsby-plugin-image"
 
 const validFormats = new Set([`jpg`, `png`, `webp`, `auto`])
 

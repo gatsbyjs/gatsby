@@ -3,15 +3,17 @@ import { HttpError } from "./errors"
 
 const MAX_BACKOFF_MILLISECONDS = 60000
 
-interface GraphQLClient {
+interface IGraphQLClient {
   request: <T>(query: string, variables?: Record<string, any>) => Promise<T>
 }
 
-interface RestClient {
+interface IRestClient {
   request: (path: string) => Promise<Response>
 }
 
-export function createGraphqlClient(options: ShopifyPluginOptions): GraphQLClient {
+export function createGraphqlClient(
+  options: ShopifyPluginOptions
+): IGraphQLClient {
   const url = `https://${options.storeUrl}/admin/api/2021-07/graphql.json`
 
   async function graphqlFetch<T>(
@@ -48,7 +50,7 @@ export function createGraphqlClient(options: ShopifyPluginOptions): GraphQLClien
   return { request: graphqlFetch }
 }
 
-export function createRestClient(options: ShopifyPluginOptions): RestClient {
+export function createRestClient(options: ShopifyPluginOptions): IRestClient {
   const baseUrl = `https://${options.storeUrl}/admin/api/2021-01`
 
   async function shopifyFetch(
@@ -87,5 +89,7 @@ export function createRestClient(options: ShopifyPluginOptions): RestClient {
     return resp
   }
 
-  return { request: async (path: string): Promise<Response> => shopifyFetch(path) }
+  return {
+    request: async (path: string): Promise<Response> => shopifyFetch(path),
+  }
 }

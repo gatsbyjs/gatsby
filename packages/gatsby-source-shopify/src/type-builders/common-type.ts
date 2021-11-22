@@ -1,5 +1,5 @@
-export function commonTypeBuilder(prefix: String) {
-    return `
+export function commonTypeBuilder(prefix: string): string {
+  return `
       type ${prefix}App {
         id: ID!
       }
@@ -512,5 +512,5 @@ export function commonTypeBuilder(prefix: String) {
         POUNDS
         OUNCES
       }
-    `;
+    `
 }

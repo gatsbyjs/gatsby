@@ -1,5 +1,5 @@
-export function productTypeBuilder(prefix: String) {
-    return `
+export function productTypeBuilder(prefix: string): string {
+  return `
       type ${prefix}Product implements Node @dontInfer {
         createdAt: Date!
         description: String!
@@ -63,5 +63,5 @@ export function productTypeBuilder(prefix: String) {
         ARCHIVED
         DRAFT
       }
-    `;
+    `
 }

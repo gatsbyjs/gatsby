@@ -10,8 +10,6 @@ import {
   pluginErrorCodes as errorCodes,
 } from "./errors"
 
-
-
 export function makeSourceFromOperation(
   finishLastOperation: () => Promise<void>,
   completedOperation: (id: string) => Promise<{ node: BulkOperationNode }>,
@@ -95,7 +93,7 @@ export function makeSourceFromOperation(
         results.push(JSON.parse(line))
       }
 
-      await processBulkResults(gatsbyApi, pluginOptions, results);
+      await processBulkResults(gatsbyApi, pluginOptions, results)
 
       operationTimer.end()
     } catch (e) {

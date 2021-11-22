@@ -1,5 +1,5 @@
-export function collectionTypeBuilder(prefix: String) {
-    return `
+export function collectionTypeBuilder(prefix: string): string {
+  return `
       type ${prefix}Collection implements Node @dontInfer {
         description: String!
         descriptionHtml: String!
@@ -72,5 +72,5 @@ export function collectionTypeBuilder(prefix: String) {
       extend type ${prefix}Product {
         collections: [${prefix}Collection!]! @link(from: "collections___NODE", by: "id")
       }
-    `;
+    `
 }

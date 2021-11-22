@@ -1,5 +1,5 @@
-export function locationTypeBuilder(prefix: String) {
-    return `
+export function locationTypeBuilder(prefix: string): string {
+  return `
       type ${prefix}FulfillmentService {
         callbackUrl: String
         fulfillmentOrdersOptIn: Boolean!
@@ -87,5 +87,5 @@ export function locationTypeBuilder(prefix: String) {
       extend type ${prefix}ProductVariant {
         inventoryItem: ${prefix}InventoryItem!
       }
-    `;
+    `
 }

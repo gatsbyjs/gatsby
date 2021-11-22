@@ -1,5 +1,5 @@
-export function productVariantTypeBuilder(prefix: String) {
-    return `
+export function productVariantTypeBuilder(prefix: string): string {
+  return `
       type ${prefix}ProductVariant implements Node @dontInfer {
         availableForSale: Boolean!
         barcode: String
@@ -44,5 +44,5 @@ export function productVariantTypeBuilder(prefix: String) {
         name: String!
         value: String!
       }
-    `;
+    `
 }

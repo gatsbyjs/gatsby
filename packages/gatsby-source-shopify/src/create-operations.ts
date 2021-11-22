@@ -17,7 +17,7 @@ import {
   CANCEL_OPERATION,
 } from "./static-queries"
 
-interface Operations {
+interface IOperations {
   productsOperation: ShopifyBulkOperation
   productVariantsOperation: ShopifyBulkOperation
   ordersOperation: ShopifyBulkOperation
@@ -38,10 +38,10 @@ const failedStatuses = [`FAILED`, `CANCELED`]
 export function createOperations(
   gatsbyApi: SourceNodesArgs,
   pluginOptions: ShopifyPluginOptions
-): Operations {
+): IOperations {
   const graphqlClient = createGraphqlClient(pluginOptions)
   const lastBuildTime = getLastBuildTime(gatsbyApi, pluginOptions)
-  const operationNamePrefix = lastBuildTime ? 'INCREMENTAL_' : ''
+  const operationNamePrefix = lastBuildTime ? `INCREMENTAL_` : ``
 
   function createOperation(
     operationQuery: string,
@@ -81,9 +81,12 @@ export function createOperations(
   async function cancelOperation(
     id: string
   ): Promise<BulkOperationCancelResponse> {
-    return graphqlClient.request<BulkOperationCancelResponse>(CANCEL_OPERATION, {
-      id,
-    })
+    return graphqlClient.request<BulkOperationCancelResponse>(
+      CANCEL_OPERATION,
+      {
+        id,
+      }
+    )
   }
 
   async function cancelOperationInProgress(): Promise<void> {
@@ -197,7 +200,7 @@ export function createOperations(
 
     productVariantsOperation: createOperation(
       new ProductVariantsQuery(pluginOptions).query(),
-      `PRODUCT_VARIANTS`,
+      `PRODUCT_VARIANTS`
     ),
 
     ordersOperation: createOperation(

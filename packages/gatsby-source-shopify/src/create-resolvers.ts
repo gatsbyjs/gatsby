@@ -5,10 +5,7 @@ import { makeResolveGatsbyImageData } from "./resolve-gatsby-image-data"
 
 export function createResolvers(
   { createResolvers, cache }: CreateResolversArgs,
-  {
-    downloadImages,
-    typePrefix = ``,
-  }: ShopifyPluginOptions
+  { downloadImages, typePrefix = `` }: ShopifyPluginOptions
 ): void {
   if (!downloadImages) {
     createResolvers({
@@ -17,6 +14,6 @@ export function createResolvers(
           makeResolveGatsbyImageData(cache)
         ),
       },
-    });
+    })
   }
 }

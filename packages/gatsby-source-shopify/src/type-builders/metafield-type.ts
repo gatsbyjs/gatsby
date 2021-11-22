@@ -1,5 +1,5 @@
-export function metafieldTypeBuilder(prefix: String) {
-    return `
+export function metafieldTypeBuilder(prefix: string): string {
+  return `
       type ${prefix}Metafield implements Node @dontInfer {
         createdAt: Date!
         description: String
@@ -28,5 +28,5 @@ export function metafieldTypeBuilder(prefix: String) {
         PRODUCTVARIANT
         SHOP
       }
-    `;
+    `
 }

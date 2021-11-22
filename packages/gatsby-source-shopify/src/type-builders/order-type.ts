@@ -1,5 +1,5 @@
-export function orderTypeBuilder(prefix: String) {
-    return `
+export function orderTypeBuilder(prefix: string): string {
+  return `
       type ${prefix}LineItem implements Node @dontInfer {
         id: ID!
         product: ${prefix}Product @link(from: "product.id", by: "shopifyId")
@@ -20,5 +20,5 @@ export function orderTypeBuilder(prefix: String) {
         createdAt: Date
         id: ID!
       }
-    `;
+    `
 }

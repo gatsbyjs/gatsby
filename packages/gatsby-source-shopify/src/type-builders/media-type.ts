@@ -1,5 +1,5 @@
-export function mediaTypeBuilder(prefix: String) {
-    return `
+export function mediaTypeBuilder(prefix: string): string {
+  return `
       type ${prefix}ExternalVideo implements Node & ${prefix}Media @dontInfer {
         alt: String
         embeddedUrl: String!
@@ -147,5 +147,5 @@ export function mediaTypeBuilder(prefix: String) {
         url: String!
         width: Int!
       }
-    `;
+    `
 }

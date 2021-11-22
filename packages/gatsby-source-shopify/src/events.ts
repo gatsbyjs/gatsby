@@ -1,17 +1,17 @@
 import { createRestClient } from "./clients"
 
-interface Event {
+interface IEvent {
   subject_id: number
   subject_type: string
 }
 
 export function eventsApi(options: ShopifyPluginOptions): {
-  fetchDestroyEventsSince: (date: Date) => Promise<Array<Event>>
+  fetchDestroyEventsSince: (date: Date) => Promise<Array<IEvent>>
 } {
   const restClient = createRestClient(options)
 
   return {
-    async fetchDestroyEventsSince(date): Promise<Array<Event>> {
+    async fetchDestroyEventsSince(date): Promise<Array<IEvent>> {
       let resp = await restClient.request(
         `/events.json?limit=250&verb=destroy&created_at_min=${date.toISOString()}`
       )
