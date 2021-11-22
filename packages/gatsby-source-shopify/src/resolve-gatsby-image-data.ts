@@ -42,7 +42,7 @@ function getBase64DataURI({ imageBase64 }: { imageBase64: string }): string {
 
 export function makeResolveGatsbyImageData(cache: any) {
   return async function resolveGatsbyImageData(
-    image: Node & ShopifyImage,
+    image: Node & IShopifyImage,
     {
       formats = [`auto`],
       layout = `constrained`,

@@ -12,13 +12,13 @@ import {
 
 export function makeSourceFromOperation(
   finishLastOperation: () => Promise<void>,
-  completedOperation: (id: string) => Promise<{ node: BulkOperationNode }>,
+  completedOperation: (id: string) => Promise<{ node: IBulkOperationNode }>,
   cancelOperationInProgress: () => Promise<void>,
   gatsbyApi: SourceNodesArgs,
-  pluginOptions: ShopifyPluginOptions
+  pluginOptions: IShopifyPluginOptions
 ) {
   return async function sourceFromOperation(
-    op: ShopifyBulkOperation,
+    op: IShopifyBulkOperation,
     // A build on the main branch && a production build
     isPriorityBuild = process.env.GATSBY_IS_PR_BUILD !== `true` &&
       process.env.GATSBY_IS_PREVIEW !== `true`

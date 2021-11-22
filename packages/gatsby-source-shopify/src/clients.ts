@@ -12,7 +12,7 @@ interface IRestClient {
 }
 
 export function createGraphqlClient(
-  options: ShopifyPluginOptions
+  options: IShopifyPluginOptions
 ): IGraphQLClient {
   const url = `https://${options.storeUrl}/admin/api/2021-07/graphql.json`
 
@@ -50,7 +50,7 @@ export function createGraphqlClient(
   return { request: graphqlFetch }
 }
 
-export function createRestClient(options: ShopifyPluginOptions): IRestClient {
+export function createRestClient(options: IShopifyPluginOptions): IRestClient {
   const baseUrl = `https://${options.storeUrl}/admin/api/2021-01`
 
   async function shopifyFetch(

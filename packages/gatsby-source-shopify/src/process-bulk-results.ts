@@ -16,7 +16,7 @@ export async function processShopifyImages(
     store,
     reporter,
   }: SourceNodesArgs,
-  node: ShopifyNode
+  node: IShopifyNode
 ): Promise<void> {
   const type = parseShopifyId(node.shopifyId)[1]
   const imageFields = shopifyTypes[type].imageFields
@@ -46,7 +46,7 @@ export async function processShopifyImages(
 
 export async function processBulkResults(
   gatsbyApi: SourceNodesArgs,
-  pluginOptions: ShopifyPluginOptions,
+  pluginOptions: IShopifyPluginOptions,
   results: BulkResults
 ): Promise<void> {
   const promises: Array<Promise<void>> = []

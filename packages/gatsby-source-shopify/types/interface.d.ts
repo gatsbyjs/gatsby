@@ -1,9 +1,9 @@
-interface BulkObject {
+interface IBulkObject {
   id: string
   [key: string]: any
 }
 
-type BulkObjects = BulkObject[]
+type BulkObjects = IBulkObject[]
 
 type BulkResult = Record<string, any>
 type BulkResults = BulkResult[]
@@ -17,7 +17,7 @@ type BulkOperationStatus =
   | "FAILED"
   | "RUNNING"
 
-interface BulkOperationNode {
+interface IBulkOperationNode {
   status: BulkOperationStatus
   /**
    * FIXME: The docs say objectCount is a number, but it's a string. Let's
@@ -30,33 +30,33 @@ interface BulkOperationNode {
   query: string
 }
 
-interface CurrentBulkOperationResponse {
+interface ICurrentBulkOperationResponse {
   currentBulkOperation: {
     id: string
     status: BulkOperationStatus
   }
 }
 
-interface UserError {
+interface IUserError {
   field?: string[]
   message: string
 }
 
-interface BulkOperationRunQueryResponse {
+interface IBulkOperationRunQueryResponse {
   bulkOperationRunQuery: {
-    userErrors: UserError[]
-    bulkOperation: BulkOperationNode
+    userErrors: IUserError[]
+    bulkOperation: IBulkOperationNode
   }
 }
 
-interface BulkOperationCancelResponse {
+interface IBulkOperationCancelResponse {
   bulkOperationCancel: {
-    bulkOperation: BulkOperationNode
+    bulkOperation: IBulkOperationNode
     userErrors: UserError[]
   }
 }
 
-interface ErrorContext {
+interface IErrorContext {
   sourceMessage: string
 }
 
@@ -80,8 +80,8 @@ enum ErrorCategory {
   THIRD_PARTY = `THIRD_PARTY`,
 }
 
-interface ErrorMapEntry {
-  text: (context: ErrorContext) => string
+interface IErrorMapEntry {
+  text: (context: IErrorContext) => string
   // keyof typeof is used for these enums so that the public facing API (e.g. used by setErrorMap) doesn't rely on enum but gives an union
   level: keyof typeof Level
   type?: keyof typeof Type
@@ -89,42 +89,42 @@ interface ErrorMapEntry {
   docsUrl?: string
 }
 
-interface ErrorMap {
-  [code: string]: ErrorMapEntry
+interface IErrorMap {
+  [code: string]: IErrorMapEntry
 }
 
-interface GetShopifyImageArgs
+interface IGetShopifyImageArgs
   extends Omit<
     IGetImageDataArgs,
     "urlBuilder" | "baseUrl" | "formats" | "sourceWidth" | "sourceHeight"
   > {
-  image: ShopifyImage
+  image: IShopifyImage
 }
 
-interface ShopifyBulkOperation {
-  execute: () => Promise<BulkOperationRunQueryResponse>
+interface IShopifyBulkOperation {
+  execute: () => Promise<IBulkOperationRunQueryResponse>
   name: string
 }
 
-interface ImageData {
+interface IImageData {
   id: string
   originalSrc: string
   localFile___NODE: string | undefined
 }
 
-interface ShopifyImage {
+interface IShopifyImage {
   width: number
   height: number
   originalSrc: string
 }
 
-interface ShopifyNode {
+interface IShopifyNode {
   id: string
   shopifyId: string
   [key: string]: any
 }
 
-interface ShopifyPluginOptions {
+interface IShopifyPluginOptions {
   password: string
   storeUrl: string
   downloadImages?: boolean

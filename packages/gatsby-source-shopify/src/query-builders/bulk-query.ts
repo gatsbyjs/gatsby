@@ -1,7 +1,7 @@
 export abstract class BulkQuery {
-  pluginOptions: ShopifyPluginOptions
+  pluginOptions: IShopifyPluginOptions
 
-  constructor(pluginOptions: ShopifyPluginOptions) {
+  constructor(pluginOptions: IShopifyPluginOptions) {
     this.pluginOptions = pluginOptions
   }
 

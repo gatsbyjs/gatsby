@@ -18,18 +18,18 @@ import {
 } from "./static-queries"
 
 interface IOperations {
-  productsOperation: ShopifyBulkOperation
-  productVariantsOperation: ShopifyBulkOperation
-  ordersOperation: ShopifyBulkOperation
-  collectionsOperation: ShopifyBulkOperation
-  locationsOperation: ShopifyBulkOperation
+  productsOperation: IShopifyBulkOperation
+  productVariantsOperation: IShopifyBulkOperation
+  ordersOperation: IShopifyBulkOperation
+  collectionsOperation: IShopifyBulkOperation
+  locationsOperation: IShopifyBulkOperation
   cancelOperationInProgress: () => Promise<void>
-  cancelOperation: (id: string) => Promise<BulkOperationCancelResponse>
+  cancelOperation: (id: string) => Promise<IBulkOperationCancelResponse>
   finishLastOperation: () => Promise<void>
   completedOperation: (
     operationId: string,
     interval?: number
-  ) => Promise<{ node: BulkOperationNode }>
+  ) => Promise<{ node: IBulkOperationNode }>
 }
 
 const finishedStatuses = [`COMPLETED`, `FAILED`, `CANCELED`, `EXPIRED`]
@@ -37,7 +37,7 @@ const failedStatuses = [`FAILED`, `CANCELED`]
 
 export function createOperations(
   gatsbyApi: SourceNodesArgs,
-  pluginOptions: ShopifyPluginOptions
+  pluginOptions: IShopifyPluginOptions
 ): IOperations {
   const graphqlClient = createGraphqlClient(pluginOptions)
   const lastBuildTime = getLastBuildTime(gatsbyApi, pluginOptions)
@@ -46,15 +46,15 @@ export function createOperations(
   function createOperation(
     operationQuery: string,
     name: string
-  ): ShopifyBulkOperation {
+  ): IShopifyBulkOperation {
     return {
-      execute: (): Promise<BulkOperationRunQueryResponse> =>
-        graphqlClient.request<BulkOperationRunQueryResponse>(operationQuery),
+      execute: (): Promise<IBulkOperationRunQueryResponse> =>
+        graphqlClient.request<IBulkOperationRunQueryResponse>(operationQuery),
       name: `${operationNamePrefix}${name}`,
     }
   }
 
-  function currentOperation(): Promise<CurrentBulkOperationResponse> {
+  function currentOperation(): Promise<ICurrentBulkOperationResponse> {
     return graphqlClient.request(OPERATION_STATUS_QUERY)
   }
 
@@ -80,8 +80,8 @@ export function createOperations(
 
   async function cancelOperation(
     id: string
-  ): Promise<BulkOperationCancelResponse> {
-    return graphqlClient.request<BulkOperationCancelResponse>(
+  ): Promise<IBulkOperationCancelResponse> {
+    return graphqlClient.request<IBulkOperationCancelResponse>(
       CANCEL_OPERATION,
       {
         id,
@@ -146,9 +146,9 @@ export function createOperations(
   async function completedOperation(
     operationId: string,
     interval = 1000
-  ): Promise<{ node: BulkOperationNode }> {
+  ): Promise<{ node: IBulkOperationNode }> {
     let operation = await graphqlClient.request<{
-      node: BulkOperationNode
+      node: IBulkOperationNode
     }>(OPERATION_BY_ID, {
       id: operationId,
     })
@@ -177,7 +177,7 @@ export function createOperations(
       await new Promise(resolve => setTimeout(resolve, interval))
 
       operation = await graphqlClient.request<{
-        node: BulkOperationNode
+        node: IBulkOperationNode
       }>(OPERATION_BY_ID, {
         id: operationId,
       })

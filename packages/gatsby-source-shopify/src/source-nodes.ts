@@ -12,7 +12,7 @@ import {
 } from "./helpers"
 
 interface INodeMap {
-  [key: string]: ShopifyNode
+  [key: string]: IShopifyNode
 }
 
 function getNodesToDelete(
@@ -56,7 +56,7 @@ function getNodesToDelete(
 
 export async function sourceNodes(
   gatsbyApi: SourceNodesArgs,
-  pluginOptions: ShopifyPluginOptions
+  pluginOptions: IShopifyPluginOptions
 ): Promise<void> {
   const { typePrefix = ``, shopifyConnections: connections = [] } =
     pluginOptions

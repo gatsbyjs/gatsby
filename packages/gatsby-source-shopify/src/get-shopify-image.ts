@@ -42,7 +42,7 @@ export function urlBuilder({
 export function getShopifyImage({
   image,
   ...args
-}: GetShopifyImageArgs): IGatsbyImageData {
+}: IGetShopifyImageArgs): IGatsbyImageData {
   const {
     originalSrc: baseUrl,
     width: sourceWidth,
