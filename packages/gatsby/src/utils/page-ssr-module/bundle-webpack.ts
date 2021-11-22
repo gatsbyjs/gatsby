@@ -73,7 +73,7 @@ export async function createPageSSRBundle({
 
   const compiler = webpack({
     name: `Page Engine`,
-    mode: `development`,
+    mode: `none`,
     entry: path.join(__dirname, `entry.js`),
     output: {
       path: outputDir,
