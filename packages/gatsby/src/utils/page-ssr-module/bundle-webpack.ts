@@ -73,7 +73,7 @@ export async function createPageSSRBundle({
 
   const compiler = webpack({
     name: `Page Engine`,
-    mode: `none`,
+    mode: `development`,
     entry: path.join(__dirname, `entry.js`),
     output: {
       path: outputDir,
@@ -106,6 +106,7 @@ export async function createPageSSRBundle({
         return acc
       }, {}),
     ],
+    devtool: false,
     module: {
       rules: [
         {
@@ -141,11 +142,15 @@ export async function createPageSSRBundle({
       extensions,
       alias: {
         ".cache": `${rootDir}/.cache/`,
+        [require.resolve(`gatsby-cli/lib/reporter/loggers/ink/index.js`)]:
+          false,
+        inquirer: false,
       },
     },
     plugins: [
       new webpack.DefinePlugin({
         INLINED_TEMPLATE_TO_DETAILS: JSON.stringify(toInline),
+        "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
       }),
       process.env.GATSBY_WEBPACK_LOGGING?.includes(`page-engine`)
         ? new WebpackLoggingPlugin(rootDir, reporter, isVerbose)
