@@ -128,7 +128,7 @@ export const createLog = ({
     type: Actions.Log,
     payload: {
       level,
-      text,
+      text: !text ? `\u2800` : text,
       statusText,
       duration,
       group,
