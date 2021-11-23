@@ -608,6 +608,8 @@ This is just a theoretical problem that might arise in v4. Most source plugins a
 
 In order for DSG & SSR to work Gatsby creates bundles with all the contents of the site, plugins, and data. When a plugin (or your own `gatsby-node.js`) requires an external file via `fs` module (e.g. `fs.readFile`) the engine won't be able to include the file. As a result you might see an error (when trying to run DSG) like `ENOENT: no such file or directory` in the CLI.
 
+This limitation applies to these lifecycle APIs: `setFieldsOnGraphQLNodeType`, `createSchemaCustomization`, and `createResolvers`.
+
 Instead you should move the contents to a JS/TS file and import the file as this way the bundler will be able to include the contents.
 
 ## Known Issues
