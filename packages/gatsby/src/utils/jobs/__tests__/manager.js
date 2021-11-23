@@ -12,6 +12,7 @@ jest.mock(`p-defer`, () =>
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     phantomActivity: jest.fn(),
+    createProgress: jest.fn(),
     warn: jest.fn(),
   }
 })
@@ -87,6 +88,13 @@ describe(`Jobs manager`, () => {
       return {
         start: jest.fn(),
         end: endActivity,
+      }
+    })
+    reporter.createProgress.mockImplementation(() => {
+      return {
+        start: jest.fn(),
+        tick: jest.fn(),
+        end: jest.fn(),
       }
     })
 
