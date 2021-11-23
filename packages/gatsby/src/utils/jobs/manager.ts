@@ -332,17 +332,17 @@ export function removeInProgressJob(contentDigest: string): void {
  * Wait for all processing jobs to have finished
  */
 export async function waitUntilAllJobsComplete(): Promise<void> {
-  await hasActiveJobs ? hasActiveJobs.promise : Promise.resolve()
+  ;(await hasActiveJobs) ? hasActiveJobs.promise : Promise.resolve()
   if (activityForJobsProgress) {
     activityForJobsProgress.end()
     activityForJobsProgress = null
-  }  
+  }
 }
 
 /**
  * Wait for specific jobs for engines
  */
- export async function waitJobs(jobDigests: Set<string>): Promise<void> {
+export async function waitJobs(jobDigests: Set<string>): Promise<void> {
   const promises: Array<Promise<any>> = []
   for (const [digest, job] of jobsInProcess) {
     if (jobDigests.has(digest)) {
