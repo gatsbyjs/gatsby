@@ -11,6 +11,8 @@ import { IGatsbyImageFieldArgs } from "gatsby-plugin-image/graphql-utils"
 import { urlBuilder } from "./get-shopify-image"
 import { readFileSync } from "fs"
 
+import { parseImageExtension } from "./helpers"
+
 type IImageWithPlaceholder = IImage & {
   placeholder: string
 }
@@ -48,16 +50,12 @@ export function makeResolveGatsbyImageData(cache: any) {
       layout = `constrained`,
       ...options
     }: IGatsbyImageFieldArgs
-  ): Promise<IGatsbyImageData> {
+  ): Promise<IGatsbyImageData | null> {
     const remainingOptions = options as Record<string, any>
-    let [basename] = image.originalSrc.split(`?`)
+    const ext = parseImageExtension(image.originalSrc)
 
-    const dot = basename.lastIndexOf(`.`)
-    let ext = ``
-    if (dot !== -1) {
-      ext = basename.slice(dot + 1)
-      basename = basename.slice(0, dot)
-    }
+    // Sharp cannot optimize GIFs so we must return null in that case
+    if (ext === `gif`) return null
 
     const generateImageSource: IGatsbyImageHelperArgs["generateImageSource"] = (
       filename,

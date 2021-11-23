@@ -475,9 +475,9 @@ export function commonTypeBuilder(prefix: string): string {
         altText: String
         height: Int
         id: ID
-        originalSrc: String! @deprecated(reason: "Use \`url\` instead")
-        src: String! @deprecated(reason: "Use \`url\` instead")
-        transformedSrc: String! @deprecated(reason: "Use \`url(transform:)\` instead")
+        originalSrc: String!
+        src: String!
+        transformedSrc: String!
         width: Int
       }
 

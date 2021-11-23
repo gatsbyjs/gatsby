@@ -10,9 +10,10 @@ export function createResolvers(
   if (!downloadImages) {
     createResolvers({
       [`${typePrefix}ShopifyImage`]: {
-        gatsbyImageData: getGatsbyImageFieldConfig(
-          makeResolveGatsbyImageData(cache)
-        ),
+        gatsbyImageData: {
+          ...getGatsbyImageFieldConfig(makeResolveGatsbyImageData(cache)),
+          type: `JSON`, // Because gatsbyImageData will be undefined for GIFs it must be optional
+        },
       },
     })
   }

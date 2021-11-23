@@ -2,7 +2,12 @@ import { SourceNodesArgs } from "gatsby"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 
 import { shopifyTypes } from "./shopify-types"
-import { createNodeId, isShopifyId, parseShopifyId } from "./helpers"
+import {
+  createNodeId,
+  isShopifyId,
+  parseShopifyId,
+  parseImageExtension,
+} from "./helpers"
 
 interface IBulkResultChildren {
   [key: string]: Array<string | BulkResult>
@@ -27,7 +32,7 @@ export async function processShopifyImages(
         .split(`.`)
         .reduce((acc, value) => acc[value], node)
 
-      if (image) {
+      if (image && parseImageExtension(image.originalSrc) !== `gif`) {
         const fileNode = await createRemoteFileNode({
           url: image.originalSrc,
           cache,

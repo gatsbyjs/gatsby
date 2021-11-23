@@ -49,3 +49,16 @@ export function isShopifyId(shopifyId: string): boolean {
 export function parseShopifyId(shopifyId: string): Array<string> {
   return shopifyId.match(pattern) || []
 }
+
+export function parseImageExtension(url: string): string {
+  const basename = url.split(`?`)[0]
+  const dot = basename.lastIndexOf(`.`)
+
+  if (dot !== -1) {
+    return basename.slice(dot + 1)
+  } else {
+    throw new Error(
+      `Could not parse file extension from Shopify image URL: ${url}`
+    )
+  }
+}
