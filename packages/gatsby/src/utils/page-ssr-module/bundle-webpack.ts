@@ -150,6 +150,7 @@ export async function createPageSSRBundle({
     plugins: [
       new webpack.DefinePlugin({
         INLINED_TEMPLATE_TO_DETAILS: JSON.stringify(toInline),
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
       }),
       process.env.GATSBY_WEBPACK_LOGGING?.includes(`page-engine`)
