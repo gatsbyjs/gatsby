@@ -332,7 +332,7 @@ export function removeInProgressJob(contentDigest: string): void {
  * Wait for all processing jobs to have finished
  */
 export async function waitUntilAllJobsComplete(): Promise<void> {
-  ;(await hasActiveJobs) ? hasActiveJobs.promise : Promise.resolve()
+  await (hasActiveJobs ? hasActiveJobs.promise : Promise.resolve())
   if (activityForJobsProgress) {
     activityForJobsProgress.end()
     activityForJobsProgress = null
