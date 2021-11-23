@@ -8,7 +8,7 @@ export function orderTypeBuilder(prefix: string): string {
 
       type ${prefix}Order implements Node @dontInfer {
         closed: Boolean!
-        closedAt: Date
+        closedAt: Date @dateformat
         edited: Boolean!
         id: ID!
         lineItems: [${prefix}LineItem!]! @link(from: "lineItems___NODE", by: "id")
@@ -17,7 +17,7 @@ export function orderTypeBuilder(prefix: string): string {
       }
 
       type ${prefix}Refund {
-        createdAt: Date
+        createdAt: Date @dateformat
         id: ID!
       }
     `

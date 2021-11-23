@@ -1,7 +1,7 @@
 export function productTypeBuilder(prefix: string): string {
   return `
       type ${prefix}Product implements Node @dontInfer {
-        createdAt: Date!
+        createdAt: Date! @dateformat
         description: String!
         descriptionHtml: String!
         featuredImage: ${prefix}Image
@@ -23,7 +23,7 @@ export function productTypeBuilder(prefix: string): string {
         priceRange: ${prefix}ProductPriceRange! @deprecated(reason: "Deprecated in API version 2020-10. Use \`priceRangeV2\` instead.")
         priceRangeV2: ${prefix}ProductPriceRangeV2!
         productType: String!
-        publishedAt: Date
+        publishedAt: Date @dateformat
         requiresSellingPlan: Boolean!
         sellingPlanGroupCount: Int!
         seo: ${prefix}SEO!
@@ -36,7 +36,7 @@ export function productTypeBuilder(prefix: string): string {
         totalInventory: Int!
         totalVariants: Int!
         tracksInventory: Boolean!
-        updatedAt: Date!
+        updatedAt: Date! @dateformat
         variants: [${prefix}ProductVariant!]! @link(from: "variants___NODE", by: "id")
         vendor: String!
       }

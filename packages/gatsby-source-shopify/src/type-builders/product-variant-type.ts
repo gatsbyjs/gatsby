@@ -4,7 +4,7 @@ export function productVariantTypeBuilder(prefix: string): string {
         availableForSale: Boolean!
         barcode: String
         compareAtPrice: Float
-        createdAt: Date!
+        createdAt: Date! @dateformat
         displayName: String!
         id: ID!
         image: ${prefix}Image
@@ -25,7 +25,7 @@ export function productVariantTypeBuilder(prefix: string): string {
         taxCode: String
         taxable: Boolean!
         title: String!
-        updatedAt: Date!
+        updatedAt: Date! @dateformat
         weight: Float
         weightUnit: ${prefix}WeightUnit!
       }

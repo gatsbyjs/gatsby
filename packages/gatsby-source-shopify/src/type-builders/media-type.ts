@@ -75,7 +75,7 @@ export function mediaTypeBuilder(prefix: string): string {
 
       type ${prefix}MediaImage implements Node & ${prefix}Media @dontInfer {
         alt: String
-        createdAt: Date!
+        createdAt: Date! @dateformat
         fileErrors: [${prefix}FileError!]!
         fileStatus: ${prefix}FileStatus!
         id: ID!

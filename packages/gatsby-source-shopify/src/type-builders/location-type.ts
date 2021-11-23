@@ -20,7 +20,7 @@ export function locationTypeBuilder(prefix: string): string {
 
       type ${prefix}InventoryItem {
         countryCodeOfOrigin: ${prefix}CountryCode
-        createdAt: Date!
+        createdAt: Date! @dateformat
         duplicateSkuCount: Int!
         harmonizedSystemCode: String
         id: ID!
@@ -34,7 +34,7 @@ export function locationTypeBuilder(prefix: string): string {
         tracked: Boolean!
         trackedEditable: ${prefix}EditableProperty!
         unitCost: ${prefix}MoneyV2
-        updatedAt: Date!
+        updatedAt: Date! @dateformat
         variant: ${prefix}ProductVariantConnection!
       }
 

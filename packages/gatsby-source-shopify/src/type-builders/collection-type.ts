@@ -18,7 +18,7 @@ export function collectionTypeBuilder(prefix: string): string {
         storefrontId: String!
         templateSuffix: String
         title: String!
-        updatedAt: Date!
+        updatedAt: Date! @dateformat
       }
 
       type ${prefix}CollectionRule {
