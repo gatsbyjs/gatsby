@@ -221,7 +221,7 @@ export async function processNodeManifest(
 
   if (!fullNode) {
     if (verboseLogs) {
-      reporter.warn({
+      reporter.error({
         id: noNodeWarningId,
         context: {
           pluginName: inputManifest.pluginName,
