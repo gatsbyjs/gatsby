@@ -110,10 +110,6 @@
     "*.svg": "svgo --pretty --indent=2 --config=svgo.yml --multipass"
   },
   "private": true,
-  "resolutions": {
-    "theme-ui": "0.4.0-rc.14",
-    "csstype": "2.6.18"
-  },
   "scripts": {
     "bootstrap": "cross-env COMPILER_OPTIONS=\"GATSBY_MAJOR=4\" npm-run-all -s check-versions \"lerna-prepare -- --{@}\" --",
     "check-repo-fields": "node scripts/check-repo-fields.js",
