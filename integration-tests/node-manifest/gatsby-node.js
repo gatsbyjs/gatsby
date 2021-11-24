@@ -63,7 +63,7 @@ exports.sourceNodes = ({ actions }) => {
   actions.unstable_createNodeManifest({
     manifestId: createManifestId(nodeUpdated1.id),
     node: nodeUpdated1,
-    updatedAt: nodeUpdated1.updatedAt,
+    updatedAtUTC: nodeUpdated1.updatedAt,
   })
 
   actions.unstable_createNodeManifest({
