@@ -217,14 +217,19 @@ export async function processNodeManifest(
 ): Promise<null | INodeManifestOut> {
   const nodeId = inputManifest.node.id
   const fullNode = getNode(nodeId)
+  const noNodeWarningId = `11804`
 
   if (!fullNode) {
     if (verboseLogs) {
-      reporter.warn(
-        `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest for a node which doesn't exist with an id of ${nodeId}.`
-      )
-    } else if (!listOfUniqueErrorIds.has(`11804`)) {
-      listOfUniqueErrorIds.add(`11804`)
+      reporter.warn({
+        id: noNodeWarningId,
+        context: {
+          pluginName: inputManifest.pluginName,
+          nodeId,
+        },
+      })
+    } else if (!listOfUniqueErrorIds.has(noNodeWarningId)) {
+      listOfUniqueErrorIds.add(noNodeWarningId)
     }
 
     return null
@@ -390,7 +395,7 @@ export async function processNodeManifests(): Promise<Map<
     (!verboseLogs
       ? `unstable_createNodeManifest produced warnings [${[
           ...listOfUniqueErrorIds,
-        ].join(", ")}].`
+        ].join(`, `)}].`
       : ``) +
       ` Visit https://gatsby.dev/nodemanifest for more info on Node Manifests`
   )
