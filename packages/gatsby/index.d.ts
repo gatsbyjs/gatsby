@@ -30,7 +30,7 @@ export const useScrollRestoration: (key: string) => {
   onScroll(): void
 }
 
-class StaticQueryDocument {
+export class StaticQueryDocument {
   /** Prevents structural type widening. */
   #kind: "StaticQueryDocument"
 
@@ -80,7 +80,8 @@ export const prefetchPathname: (path: string) => void
 export type PageProps<
   DataType = object,
   PageContextType = object,
-  LocationState = WindowLocation["state"]
+  LocationState = WindowLocation["state"],
+  ServerDataType = object
 > = {
   /** The path for this current page */
   path: string
@@ -141,6 +142,8 @@ export type PageProps<
    *   ..
    */
   pageContext: PageContextType
+  /** Data passed into the page via the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) SSR function. */
+  serverData: ServerDataType
 }
 
 export interface PageRendererProps {
@@ -207,6 +210,8 @@ export interface GatsbyConfig {
   /** Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.*/
   polyfill?: boolean
   mapping?: Record<string, string>
+  jsxRuntime?: "automatic" | "classic"
+  jsxImportSource?: string
   /**
    * Setting the proxy config option will tell the develop server to proxy any unknown requests to your specified server.
    * @see https://www.gatsbyjs.org/docs/api-proxy/
@@ -685,7 +690,10 @@ export interface GatsbySSR<
    *   replaceBodyHTMLString(inlinedHTML)
    * }
    */
-  replaceRenderer?(args: ReplaceRendererArgs, options: PluginOptions): void | Promise<void>
+  replaceRenderer?(
+    args: ReplaceRendererArgs,
+    options: PluginOptions
+  ): void | Promise<void>
 
   /**
    * Allow a plugin to wrap the page element.
@@ -1034,6 +1042,13 @@ export interface NodePluginArgs {
   cache: GatsbyCache
 
   /**
+   * Get cache instance by name - this should only be used by plugins that accept subplugins.
+   * @param id id of the node
+   * @returns See [cache](https://www.gatsbyjs.com/docs/reference/config-files/node-api-helpers/#cache) section for reference.
+   */
+  getCache(this: void, id: string): GatsbyCache
+
+  /**
    * Utility function useful to generate globally unique and stable node IDs.
    * It will generate different IDs for different plugins if they use same
    * input.
@@ -1145,6 +1160,13 @@ export interface Actions {
     plugin?: ActionPlugin
   ): void
 
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#unstable_createNodeManifest */
+  unstable_createNodeManifest(
+    this: void, 
+    args: { manifestId: string, node: Node }, 
+    plugin?: ActionPlugin
+  ): void 
+
   /** @see https://www.gatsbyjs.org/docs/actions/#setWebpackConfig */
   setWebpackConfig(this: void, config: object, plugin?: ActionPlugin): void
 
@@ -1235,9 +1257,7 @@ export interface Actions {
       | string
       | GraphQLOutputType
       | GatsbyGraphQLType
-      | string[]
-      | GraphQLOutputType[]
-      | GatsbyGraphQLType[],
+      | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
     plugin?: ActionPlugin,
     traceId?: string
   ): void

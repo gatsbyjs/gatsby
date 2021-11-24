@@ -208,67 +208,75 @@ async function validatePluginsOptions(
       )({
         Joi: Joi.extend(joi => {
           return {
-            base: joi.any(),
             type: `subPlugins`,
-            args: (_, args: any): any => {
-              const entry = args?.entry ?? `index`
-
-              return joi
-                .array()
-                .items(
-                  joi
-                    .alternatives(
-                      joi.string(),
-                      joi.object({
-                        resolve: Joi.string(),
-                        options: Joi.object({}).unknown(true),
-                      })
-                    )
-                    .custom((value, helpers) => {
-                      if (typeof value === `string`) {
-                        value = { resolve: value }
-                      }
-
-                      try {
-                        const resolvedPlugin = resolvePlugin(value, rootDir)
-                        const modulePath = require.resolve(
-                          `${resolvedPlugin.resolve}/${entry}`
-                        )
-                        value.modulePath = modulePath
-                        value.module = require(modulePath)
-
-                        const normalizedPath = helpers.state.path
-                          .map((key, index) => {
-                            // if subplugin is part of an array - swap concrete index key with `[]`
-                            if (
-                              typeof key === `number` &&
-                              Array.isArray(
-                                helpers.state.ancestors[
-                                  helpers.state.path.length - index - 1
-                                ]
-                              )
-                            ) {
-                              if (index !== helpers.state.path.length - 1) {
-                                throw new Error(
-                                  `No support for arrays not at the end of path`
-                                )
-                              }
-                              return `[]`
-                            }
-
-                            return key
-                          })
-                          .join(`.`)
-
-                        subPluginPaths.add(normalizedPath)
-                      } catch (err) {
-                        console.log(err)
-                      }
-
-                      return value
-                    }, `Gatsby specific subplugin validation`)
+            base: joi
+              .array()
+              .items(
+                joi.alternatives(
+                  joi.string(),
+                  joi.object({
+                    resolve: Joi.string(),
+                    options: Joi.object({}).unknown(true),
+                  })
                 )
-                .default([])
+              )
+              .custom((arrayValue, helpers) => {
+                const entry = helpers.schema._flags.entry
+                return arrayValue.map(value => {
+                  if (typeof value === `string`) {
+                    value = { resolve: value }
+                  }
+
+                  try {
+                    const resolvedPlugin = resolvePlugin(value, rootDir)
+                    const modulePath = require.resolve(
+                      `${resolvedPlugin.resolve}${entry ? `/${entry}` : ``}`
+                    )
+                    value.modulePath = modulePath
+                    value.module = require(modulePath)
+
+                    const normalizedPath = helpers.state.path
+                      .map((key, index) => {
+                        // if subplugin is part of an array - swap concrete index key with `[]`
+                        if (
+                          typeof key === `number` &&
+                          Array.isArray(
+                            helpers.state.ancestors[
+                              helpers.state.path.length - index - 1
+                            ]
+                          )
+                        ) {
+                          if (index !== helpers.state.path.length - 1) {
+                            throw new Error(
+                              `No support for arrays not at the end of path`
+                            )
+                          }
+                          return `[]`
+                        }
+
+                        return key
+                      })
+                      .join(`.`)
+
+                    subPluginPaths.add(normalizedPath)
+                  } catch (err) {
+                    console.log(err)
+                  }
+
+                  return value
+                })
+              }, `Gatsby specific subplugin validation`)
+              .default([]),
+            args: (schema: any, args: any): any => {
+              if (
+                args?.entry &&
+                schema &&
+                typeof schema === `object` &&
+                schema.$_setFlag
+              ) {
+                return schema.$_setFlag(`entry`, args.entry, { clone: true })
+              }
+              return schema
             },
           }
         }),
@@ -305,7 +313,7 @@ async function validatePluginsOptions(
             )
           plugin.options.plugins = subPlugins
           if (subPlugins.length > 0) {
-            subPluginPaths.add(`plugins.[]`)
+            subPluginPaths.add(`plugins`)
           }
           errors += subErrors
         }

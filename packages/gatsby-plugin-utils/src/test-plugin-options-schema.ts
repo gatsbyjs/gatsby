@@ -15,29 +15,30 @@ export async function testPluginOptionsSchema(
   const pluginSchema = pluginSchemaFunction({
     Joi: Joi.extend(joi => {
       return {
-        base: joi.any(),
         type: `subPlugins`,
-        args: (): any =>
-          joi
-            .array()
-            .items(
-              joi
-                .alternatives(
-                  joi.string(),
-                  joi.object({
-                    resolve: Joi.string(),
-                    options: Joi.object({}).unknown(true),
-                  })
-                )
-                .custom(value => {
-                  if (typeof value === `string`) {
-                    value = { resolve: value }
-                  }
-
-                  return value
-                }, `Gatsby specific subplugin validation`)
+        base: joi
+          .array()
+          .items(
+            joi.alternatives(
+              joi.string(),
+              joi.object({
+                resolve: Joi.string(),
+                options: Joi.object({}).unknown(true),
+              })
             )
-            .default([]),
+          )
+          .custom(
+            arrayValue =>
+              arrayValue.map(value => {
+                if (typeof value === `string`) {
+                  value = { resolve: value }
+                }
+
+                return value
+              }),
+            `Gatsby specific subplugin validation`
+          )
+          .default([]),
       }
     }),
   })

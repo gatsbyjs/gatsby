@@ -1,0 +1,15 @@
+name: Format Stale output
+description: Format the output of actions/stale into something you can pass to pullreminders/slack-action as blocks
+inputs:
+  staled-issues-prs:
+    description: List of all staled issues and pull requests.
+    required: true
+  closed-issues-prs:
+    description: List of all closed issues and pull requests.
+    required: true
+outputs:
+  blocks:
+    description: Contents you can pass into "blocks" of slack-action
+runs:
+  using: "node12"
+  main: "dist/index.js"
