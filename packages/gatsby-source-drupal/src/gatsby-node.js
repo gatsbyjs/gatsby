@@ -16,6 +16,7 @@ const {
   storeRefsLookups,
   handleReferences,
   handleWebhookUpdate,
+  createNodeIfItDoesNotExist,
   handleDeletedNode,
 } = require(`./utils`)
 
@@ -80,8 +81,8 @@ async function worker([url, options]) {
     agent,
     cache: false,
     timeout: {
-      // Occasionally requests to Drupal stall. Set a 15s timeout to retry in this case.
-      request: 15000,
+      // Occasionally requests to Drupal stall. Set a 30s timeout to retry in this case.
+      request: 30000,
     },
     // request: http2wrapper.auto,
     // http2: true,
@@ -235,6 +236,17 @@ ${JSON.stringify(webhookBody, null, 4)}`
       }
 
       for (const nodeToUpdate of nodesToUpdate) {
+        await createNodeIfItDoesNotExist({
+          nodeToUpdate,
+          actions,
+          createNodeId,
+          createContentDigest,
+          getNode,
+          reporter,
+        })
+      }
+
+      for (const nodeToUpdate of nodesToUpdate) {
         await handleWebhookUpdate(
           {
             nodeToUpdate,
@@ -345,6 +357,31 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
           // Process sync data from Drupal.
           const nodesToSync = res.body.entities
+
+          // First create all nodes that we haven't seen before. That
+          // way we can create relationships correctly next as the nodes
+          // will exist in Gatsby.
+          for (const nodeSyncData of nodesToSync) {
+            if (nodeSyncData.action === `delete`) {
+              continue
+            }
+
+            let nodesToUpdate = nodeSyncData.data
+            if (!Array.isArray(nodeSyncData.data)) {
+              nodesToUpdate = [nodeSyncData.data]
+            }
+            for (const nodeToUpdate of nodesToUpdate) {
+              createNodeIfItDoesNotExist({
+                nodeToUpdate,
+                actions,
+                createNodeId,
+                createContentDigest,
+                getNode,
+                reporter,
+              })
+            }
+          }
+
           for (const nodeSyncData of nodesToSync) {
             if (nodeSyncData.action === `delete`) {
               handleDeletedNode({

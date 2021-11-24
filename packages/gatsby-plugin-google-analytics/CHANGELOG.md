@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@4.2.0/packages/gatsby-plugin-google-analytics) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Chores
+
+- Highlight the plugin we recommend [#33901](https://github.com/gatsbyjs/gatsby/issues/33901) ([79aee20](https://github.com/gatsbyjs/gatsby/commit/79aee20caf199961174a1ca385907a4be3360181))
+
 ## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-google-analytics@4.1.0/packages/gatsby-plugin-google-analytics) (2021-11-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)

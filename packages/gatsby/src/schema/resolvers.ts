@@ -316,7 +316,7 @@ export function link<TSource, TArgs>(
     by: string
     type?: GraphQLType
     from?: string
-    fromNode?: string
+    fromNode?: boolean
   } = {
     by: `id`,
   },
@@ -454,7 +454,7 @@ export function link<TSource, TArgs>(
 export function fileByPath<TSource, TArgs>(
   options: {
     from?: string
-    fromNode?: string
+    fromNode?: boolean
   } = {},
   fieldConfig
 ): GatsbyResolver<TSource, TArgs> {

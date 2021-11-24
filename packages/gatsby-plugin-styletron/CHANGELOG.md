@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.2.0/packages/gatsby-plugin-styletron) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Chores
+
+- update dependency styletron-react to ^6.0.2 for gatsby-plugin-styletron [#33756](https://github.com/gatsbyjs/gatsby/issues/33756) ([754e9af](https://github.com/gatsbyjs/gatsby/commit/754e9af3c8d728ba1c41010352e432b83deb5018))
+
 ## [7.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-styletron@7.1.0/packages/gatsby-plugin-styletron) (2021-11-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)

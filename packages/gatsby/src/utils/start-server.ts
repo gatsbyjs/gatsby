@@ -340,6 +340,7 @@ export async function startServer(
             )
           }
 
+          let statusCode = 200
           if (pageMode === `SSR`) {
             try {
               const result = await serverDataPromise
@@ -352,6 +353,10 @@ export async function startServer(
                 for (const [name, value] of Object.entries(result.headers)) {
                   res.setHeader(name, value)
                 }
+              }
+
+              if (result.status) {
+                statusCode = result.status
               }
 
               pageData.result.serverData = result.props
@@ -378,7 +383,7 @@ export async function startServer(
             pageData.result.serverData = null
           }
 
-          res.status(200).send(pageData)
+          res.status(statusCode).send(pageData)
           return
         } catch (e) {
           report.error(
