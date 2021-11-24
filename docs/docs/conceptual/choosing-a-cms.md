@@ -12,15 +12,19 @@ If you're looking for a primary CMS (general-purpose, flexible content modelling
 
 ### 1) Popular, first-class Gatsby integrations
 
-**First**, when possible, we recommend you focus on **top-flight general-purpose CMSs** with **first-class Gatsby integrations** and **high popularity** among Gatsby users. A ["first-class integration"](https://support.gatsbyjs.com/hc/en-us/articles/360052503494-Developing-a-first-class-CMS-integration-for-Gatsby-Cloud) means it supports the main Cloud functionality of Gatsby -- previews and incremental builds.
+**First**, when possible, we recommend you focus on **top-flight general-purpose CMSs** with **first-class Gatsby integrations** and **high popularity** among Gatsby users.
 
-In terms of popularity, you can see [top integrations listed by monthly downloads here](/plugins?=gatsby-source). There are currently (January 2021) eight CMSs used by over 1% of Gatsby users. These are:
+A ["first-class integration"](https://support.gatsbyjs.com/hc/en-us/articles/360052503494-Developing-a-first-class-CMS-integration-for-Gatsby-Cloud) means it supports the main Cloud functionality of Gatsby -- previews and incremental builds and is known to the Gatsby team to be high-quality.
 
-- **five general-purpose headless CMSs:** Contentful, DatoCMS, Prismic, Sanity and Strapi
+For popularity, you can see [top integrations listed by monthly downloads here](/plugins?=gatsby-source).
+
+There are currently (November 2021) eight CMSs with first-class integrations used by over 1% of Gatsby users. These are:
+
+- **six general-purpose headless CMSs:** Contentful, DatoCMS, Prismic, Contentstack, Sanity and Strapi
 
 - **two general-purpose full-stack CMSs** running in "headless" mode: Drupal and WordPress
 
-- **one specialized CMS**: Shopify
+- **one e-commerce platform**: Shopify
 
 ### 2) The right price point
 
@@ -44,7 +48,7 @@ Users choosing other CMSs typically have a specific reason for their choice. Som
 - **DatoCMS** if they will run into Contentful's model limits and want a lower-priced alternative
 - **Drupal** if open-source, configurability, or custom code are important.
 - **Prismic** if they like the content editing UI
-- **Sanity** or **Strapi** for the developer-friendliness or if they need something on-premise. In addition, Sanity tends to have significantly better build times, which can be a key usability consideration, especially for larger sites (we [benchmark build times by CMS here](https://willit.build/)).
+- **Sanity** or **Strapi** for the developer-friendliness or if they need something on-premise. In addition, Sanity tends to have significantly better build times, which can be a key usability consideration, especially for larger sites.
 - **WordPress** when the client or content team is already familiar with the WordPress UI
 
 ## Using multiple CMS systems together
