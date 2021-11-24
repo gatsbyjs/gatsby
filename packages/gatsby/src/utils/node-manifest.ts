@@ -228,7 +228,7 @@ export async function processNodeManifest(
           nodeId,
         },
       })
-    } else if (!listOfUniqueErrorIds.has(noNodeWarningId)) {
+    } else {
       listOfUniqueErrorIds.add(noNodeWarningId)
     }
 
