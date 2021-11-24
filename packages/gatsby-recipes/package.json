@@ -50,7 +50,7 @@
     "pkg-dir": "^4.2.0",
     "prettier": "^2.4.1",
     "prop-types": "^15.6.1",
-    "remark-mdx": "^2.0.0-next.4",
+    "remark-mdx": "2.0.0-next.7",
     "remark-mdxjs": "^2.0.0-next.4",
     "remark-parse": "^6.0.3",
     "remark-stringify": "^8.1.0",
@@ -119,7 +119,7 @@
     "@mdx-js/runtime": "^2.0.0-next.4",
     "graphql": "^15.7.2",
     "property-information": "5.6.0",
-    "remark-mdx": "^2.0.0-next.4",
+    "remark-mdx": "2.0.0-next.7",
     "remark-mdxjs": "^2.0.0-next.4"
   },
   "scripts": {
