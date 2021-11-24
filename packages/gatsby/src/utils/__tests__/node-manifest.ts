@@ -478,12 +478,13 @@ describe(`processNodeManifests`, () => {
     await processNodeManifests()
 
     if (process.env.gatsby_log_level === `verbose`) {
-      expect(reporter.warn).toBeCalled()
-      expect(reporter.warn).toBeCalledWith(
-        `Plugin test called unstable_createNodeManifest for a node which doesn't exist with an id of 4.`
-      )
+      expect(reporter.error).toBeCalled()
+      expect(reporter.error).toBeCalledWith({
+        context: { nodeId: `4`, pluginName: `test` },
+        id: `11804`,
+      })
     } else {
-      expect(reporter.warn).not.toBeCalled()
+      expect(reporter.error).not.toBeCalled()
       expect(reporter.info).toBeCalledWith(expect.stringContaining(`11804`))
     }
 
