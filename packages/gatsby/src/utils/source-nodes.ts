@@ -118,4 +118,6 @@ export default async ({
     deleteStaleNodes(state, nodes)
     isInitialSourcing = false
   }
+  
+  store.dispatch(actions.apiFinished({ apiName: `sourceNodes` }))
 }
