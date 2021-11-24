@@ -165,10 +165,12 @@ export function warnAboutNodeManifestMappingProblems({
   inputManifest,
   pagePath,
   foundPageBy,
+  verbose,
 }: {
   inputManifest: INodeManifest
   pagePath?: string
   foundPageBy: FoundPageBy
+  verbose: boolean
 }): { logId: string } {
   let logId: ErrorId | `success`
 
@@ -177,13 +179,15 @@ export function warnAboutNodeManifestMappingProblems({
     case `context.id`:
     case `queryTracking`: {
       logId = foundPageByToLogIds[foundPageBy]
-      reporter.error({
-        id: logId,
-        context: {
-          inputManifest,
-          pagePath,
-        },
-      })
+      if (verbose) {
+        reporter.error({
+          id: logId,
+          context: {
+            inputManifest,
+            pagePath,
+          },
+        })
+      }
       break
     }
 
@@ -202,18 +206,14 @@ export function warnAboutNodeManifestMappingProblems({
   }
 }
 
-let warnOnceAboutNodeManifestMappingProblems
-let warnOnceAboutNoNode
-const verboseLogs =
-  process.env.VERBOSE === `true` ||
-  process.env.VERBOSE_CREATE_NODE_MANIFEST === `true`
 /**
  * Prepares and then writes out an individual node manifest file to be used for routing to previews. Manifest files are added via the public unstable_createNodeManifest action
  */
 export async function processNodeManifest(
   inputManifest: INodeManifest,
-  errorLogs: Array<string>,
-  nodeManifestPagePathMap: Map<string, string>
+  listOfUniqueErrorIds: Set<string>,
+  nodeManifestPagePathMap: Map<string, string>,
+  verboseLogs: boolean
 ): Promise<null | INodeManifestOut> {
   const nodeId = inputManifest.node.id
   const fullNode = getNode(nodeId)
@@ -223,13 +223,8 @@ export async function processNodeManifest(
       reporter.warn(
         `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest for a node which doesn't exist with an id of ${nodeId}.`
       )
-    } else {
-      if (!warnOnceAboutNoNode) {
-        errorLogs.push(
-          `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest for a node which doesn't exist, use VERBOSE for more info`
-        )
-        warnOnceAboutNoNode = true
-      }
+    } else if (!listOfUniqueErrorIds.has(`11804`)) {
+      listOfUniqueErrorIds.add(`11804`)
     }
 
     return null
@@ -240,14 +235,23 @@ export async function processNodeManifest(
     nodeId,
   })
 
-  if (verboseLogs || !warnOnceAboutNodeManifestMappingProblems) {
-    warnAboutNodeManifestMappingProblems({
-      inputManifest,
-      pagePath: nodeManifestPage.path,
-      foundPageBy,
-    })
+  const nodeManifestMappingProblemsContext = {
+    inputManifest,
+    pagePath: nodeManifestPage.path,
+    foundPageBy,
+    verbose: verboseLogs,
+  }
 
-    warnOnceAboutNodeManifestMappingProblems = true
+  if (verboseLogs) {
+    warnAboutNodeManifestMappingProblems(nodeManifestMappingProblemsContext)
+  } else {
+    const { logId } = warnAboutNodeManifestMappingProblems(
+      nodeManifestMappingProblemsContext
+    )
+
+    if (logId !== `success`) {
+      listOfUniqueErrorIds.add(logId)
+    }
   }
 
   const finalManifest: INodeManifestOut = {
@@ -314,6 +318,8 @@ export async function processNodeManifests(): Promise<Map<
   string,
   string
 > | null> {
+  const verboseLogs = process.env.gatsby_log_level === `verbose`
+
   const startTime = Date.now()
   const { nodeManifests } = store.getState()
 
@@ -326,7 +332,7 @@ export async function processNodeManifests(): Promise<Map<
   let totalProcessedManifests = 0
   let totalFailedManifests = 0
   const nodeManifestPagePathMap: Map<string, string> = new Map()
-  const errorLogs = []
+  const listOfUniqueErrorIds: Set<string> = new Set()
 
   async function processNodeManifestTask(
     manifest: INodeManifest,
@@ -334,8 +340,9 @@ export async function processNodeManifests(): Promise<Map<
   ): Promise<void> {
     const processedManifest = await processNodeManifest(
       manifest,
-      errorLogs,
-      nodeManifestPagePathMap
+      listOfUniqueErrorIds,
+      nodeManifestPagePathMap,
+      verboseLogs
     )
 
     if (processedManifest) {
@@ -377,6 +384,15 @@ export async function processNodeManifests(): Promise<Map<
           )} couldn't be processed.`
         : ``
     }`
+  )
+
+  reporter.info(
+    (!verboseLogs
+      ? `unstable_createNodeManifest produced warnings [${[
+          ...listOfUniqueErrorIds,
+        ].join(", ")}].`
+      : ``) +
+      ` Visit https://gatsby.dev/nodemanifest for more info on Node Manifests`
   )
 
   // clean up all pending manifests from the store

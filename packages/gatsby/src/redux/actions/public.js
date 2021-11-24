@@ -1425,7 +1425,7 @@ actions.createServerVisitedPage = (chunkName: string) => {
  * @param {string} manifest.manifestId An id which ties the revision unique state of this manifest to the unique revision state of a data source.
  * @param {Object} manifest.node The Gatsyby node to tie the manifestId to. See the "createNode" action for more information about the node object details.
  * @param {string} manifest.updatedAtUTC (optional) The time in which the node was last updated
- * @param {number} manifest.maxDaysOld (optional) Choose the days since a node was last updated (ie create manifests for nodes that were last updated up to 30 days)
+ * @param {number} manifest.maxDaysOld (optional) Choose the days since a node was last updated (e.g. create manifests for nodes that were last updated up to 30 days)
  * @example
  * unstable_createNodeManifest({
  *   manifestId: `post-id-1--updated-53154315`,
