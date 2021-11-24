@@ -382,7 +382,16 @@ describe(`processNodeManifests`, () => {
     ]
     const { store } = jest.requireActual(`../../redux`)
 
-    const createPayload = (id, updatedAtUTC, maxDaysOld = 30) => {
+    const createPayload = (
+      id,
+      updatedAtUTC,
+      maxDaysOld = 30
+    ): {
+      manifestId: string
+      node: { id: string }
+      updatedAtUTC: string
+      maxDaysOld: number
+    } => {
       return {
         manifestId: `${id}-${updatedAtUTC}`,
         node: {
