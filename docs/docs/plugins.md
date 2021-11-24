@@ -1,13 +1,21 @@
 ---
-title: Plugins
+title: What is a plugin?
 ---
 
-Gatsby plugins are Node.js packages that implement Gatsby APIs. For larger, more complex sites, plugins let you modularize your site customizations into site-specific plugins.
+Gatsby's plugin layer includes a wide variety of common website functionality that you can drop in to your website. There are many types of Gatsby plugins, including:
 
-There are many types of Gatsby plugins, including [data sourcing](/plugins/?=gatsby-source), [SEO](/plugins/?=seo), [responsive images](/plugins/gatsby-plugin-image/?=gatsby-plugin-image), [offline support](/plugins/gatsby-plugin-offline/), [Sass support](/plugins/gatsby-plugin-sass/), [sitemaps](/plugins/gatsby-plugin-sitemap/), [RSS feeds](/plugins/gatsby-plugin-feed/), [TypeScript](/plugins/gatsby-plugin-typescript/), [Google Analytics](/plugins/gatsby-plugin-google-analytics/), and more. You can also [make your own plugins](/docs/creating-plugins/)!
+- **Integrations, or "source plugins".** These plugins pull data into Gatsby's GraphQL layer and make it available to query from your React components. Gatsby has source plugins for a wide range of headless CMSs, databases and spreadsheets, as well as the local filesystem. Here is a [guide on sourcing data](https://www.gatsbyjs.com/docs/how-to/sourcing-data/).
 
-Gatsby themes are a type of plugin that include a `gatsby-config.js` file and add **pre-configured** functionality, data sourcing, and/or UI code to Gatsby sites. To learn more about theme use cases and APIs, check out the [themes section of the docs](/docs/themes/). To learn about how plugins differ from themes and starters refer to the [Plugins, Themes, & Starters conceptual guide](/docs/conceptual/plugins-themes-and-starters/).
+- **[Progressive images](/plugins/gatsby-plugin-image/?=gatsby-plugin-image)**
 
-Here are the guides in the Plugins section of the docs:
+- **Dropping in analytics libraries** like [Google Analytics](/plugins/gatsby-plugin-google-analytics/), [Google Tag Manager](/plugins/gatsby-plugin-google-tagmanager), [Segment](plugins/gatsby-plugin-segment-js), [Hotjar](/plugins/gatsby-plugin-hotjar/), and others.
 
-<GuideList slug={props.slug} />
+- **Performance enhancements while using CSS libraries**, like [Sass](/plugins/gatsby-plugin-sass/?=sass), [styled-components](/plugins/gatsby-plugin-styled-components/?=styled-comp) and [emotion](plugins/gatsby-plugin-styled-components/?=emotion). These plugins are _not required_ to use these libraries but do make it easier and faster for the browser to parse styles.
+
+- **Other website functionality**, like [SEO](/plugins/?=seo),, [offline support](/plugins/gatsby-plugin-offline/), [sitemaps](/plugins/gatsby-plugin-sitemap/), and [RSS feeds](/plugins/gatsby-plugin-feed/).
+
+One point of confusion people sometimes have is "when don't I need a plugin?" The answer is "most things"! As a general rule, any npm package you might use while working on another JavaScript or React application can also be used with a Gatsby application. Even when plugins are helpful, they are always optional.
+
+Feel free to browse and search plugins at Gatsby's [Plugin Library](/plugins/) or read the documentation on [how to add a plugin](/docs/how-to/plugins-and-themes/using-a-plugin-in-your-site/).
+
+Advanced use-cases include [making your own plugins](/docs/creating-plugins/) and either distribute them for fellow Gatsby developers to use or [install them locally](/docs/loading-plugins-from-your-local-plugins-folder/).
