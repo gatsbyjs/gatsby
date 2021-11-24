@@ -1,5 +1,6 @@
 const commandName = process.env.NODE_ENV === `development` ? `develop` : `build`
 const DEFAULT_MAX_DAYS_OLD = 30
+const createManifestId = nodeId => `${commandName}-${nodeId}`
 
 exports.sourceNodes = ({ actions }) => {
   // template nodes
@@ -15,7 +16,7 @@ exports.sourceNodes = ({ actions }) => {
     actions.createNode(node)
 
     actions.unstable_createNodeManifest({
-      manifestId: `${commandName}-${id}`,
+      manifestId: createManifestId(id),
       node,
     })
   }
@@ -31,7 +32,7 @@ exports.sourceNodes = ({ actions }) => {
 
   actions.createNode(node)
   actions.unstable_createNodeManifest({
-    manifestId: `${commandName}-filesystem-1`,
+    manifestId: createManifestId(node.id),
     node,
   })
   const today = new Date()
@@ -60,13 +61,13 @@ exports.sourceNodes = ({ actions }) => {
   actions.createNode(nodeUpdated1)
   actions.createNode(nodeUpdated2)
   actions.unstable_createNodeManifest({
-    manifestId: `${commandName}-${nodeUpdated1.id}`,
+    manifestId: createManifestId(nodeUpdated1.id),
     node: nodeUpdated1,
     updatedAt: nodeUpdated1.updatedAt,
   })
 
   actions.unstable_createNodeManifest({
-    manifestId: `${commandName}-${nodeUpdated2.id}`,
+    manifestId: createManifestId(nodeUpdated2.id),
     node: nodeUpdated2,
     updatedAtUTC: nodeUpdated2.updatedAt,
   })
