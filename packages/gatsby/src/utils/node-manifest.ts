@@ -395,9 +395,9 @@ export async function processNodeManifests(): Promise<Map<
     (!verboseLogs
       ? `unstable_createNodeManifest produced warnings [${[
           ...listOfUniqueErrorIds,
-        ].join(`, `)}].`
+        ].join(`, `)}]. `
       : ``) +
-      ` Visit https://gatsby.dev/nodemanifest for more info on Node Manifests`
+      `Visit https://gatsby.dev/nodemanifest for more info on Node Manifests`
   )
 
   // clean up all pending manifests from the store
