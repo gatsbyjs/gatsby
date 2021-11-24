@@ -16,6 +16,8 @@ const findBestMatchingPage = (
   pages: Map<string, IGatsbyPage>,
   path: string
 ): IGatsbyPage | null => {
+  // Pick only routes with matchPath for better performance.
+  // Exact match should have already been checked
   const pagesByMatchPath: Record<string, IGatsbyPage> = {}
   for (const page of pages.values()) {
     const matchPath = page.matchPath
@@ -28,7 +30,7 @@ const findBestMatchingPage = (
     return { path }
   })
 
-  // picks best matching route
+  // picks best matching route with reach router's algorithm
   const picked = pick(routes, path)
 
   if (picked) {
