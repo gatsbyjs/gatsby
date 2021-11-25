@@ -3,7 +3,7 @@ import report from "gatsby-cli/lib/reporter"
 import signalExit from "signal-exit"
 import fs from "fs-extra"
 import telemetry from "gatsby-telemetry"
-import { updateSiteMetadata, isTruthy, uuid } from "gatsby-core-utils"
+import { updateInternalSiteMetadata, isTruthy, uuid } from "gatsby-core-utils"
 import {
   buildRenderer,
   buildHTMLPagesAndDeleteStaleArtifacts,
@@ -80,7 +80,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     )
   }
 
-  await updateSiteMetadata({
+  await updateInternalSiteMetadata({
     name: program.sitePackageJson.name,
     sitePath: program.directory,
     lastRun: Date.now(),
