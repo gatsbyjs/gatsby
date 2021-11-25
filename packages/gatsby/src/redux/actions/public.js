@@ -1316,7 +1316,7 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
 
 /**
  * Create a redirect from one page to another. Redirects work out of the box with Gatsby Cloud. Read more about
- * [working with redirects on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/1500003051241-Working-with-Redirects). 
+ * [working with redirects on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/1500003051241-Working-with-Redirects).
  * If you are hosting somewhere other than Gatsby Cloud, you will need a plugin to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
  * plugin](/plugins/gatsby-plugin-netlify/), or the [Amazon S3
