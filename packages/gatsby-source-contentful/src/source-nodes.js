@@ -294,6 +294,8 @@ export async function sourceNodes(
   )
   existingNodes.forEach(n => touchNode(n))
 
+  // console.log("existingNodes", existingNodes.length)
+
   reporter.verbose(`Building Contentful reference map`)
 
   // Create map of resolvable ids so we can check links against them while creating
@@ -302,7 +304,10 @@ export async function sourceNodes(
     existingNodes,
     entryList,
     assets,
+    space,
   })
+
+  // console.log({ resolvable })
 
   // Build foreign reference map before starting to insert any nodes
   const foreignReferenceMap = buildForeignReferenceMap({
@@ -319,7 +324,7 @@ export async function sourceNodes(
   const newOrUpdatedEntries = new Set()
   entryList.forEach(entries => {
     entries.forEach(entry => {
-      newOrUpdatedEntries.add(generateReferenceId(entry))
+      newOrUpdatedEntries.add(generateReferenceId(space, entry))
     })
   })
 
@@ -332,37 +337,45 @@ export async function sourceNodes(
   // links added.
   existingNodes
     .filter(
-      n => n?.sys?.type && newOrUpdatedEntries.has(generateReferenceId(n))
+      n =>
+        n?.sys?.type && newOrUpdatedEntries.has(generateReferenceId(space, n))
     )
     .forEach(n => {
-      const id = generateReferenceId(n)
+      const id = generateReferenceId(space, n)
+
       if (foreignReferenceMap[id]) {
-        foreignReferenceMap[id].forEach(foreignReference => {
-          const nodeId = makeId({
-            ...foreignReference,
-            defaultLocale,
-            currentLocale: n.sys.locale,
-          })
+        foreignReferenceMap[id].forEach(({ name, node, space }) => {
+          const referenceId = generateReferenceId(space, node)
 
           // Add reverse links
-          if (!n[foreignReference.name]) {
-            n[foreignReference.name] = [nodeId]
+
+          // Create reference when none exists
+          if (!n[name]) {
+            // If is one foreign reference, there can always be many.
+            // Best to be safe and put it in an array to start with.
+            n[name] = [generateReferenceId(space, node)]
             return
           }
 
+          // Add non existing references to existing references
+          if (n[name] && !n[name].includes(referenceId)) {
+            n[name].push(referenceId)
+          }
+
           // Very ugly way to remove links to deleted entries
-          n[foreignReference.name].forEach((id, index) => {
+          n[name].forEach((id, index) => {
             deletedIds.forEach(deletedId => {
               if (id.indexOf(deletedId) !== -1) {
-                n[foreignReference.name].splice(index, 1)
+                n[name].splice(index, 1)
               }
             })
           })
-
-          // Link entries if not linked yet
-          if (!n[foreignReference.name].includes(nodeId)) {
-            n[foreignReference.name].push(nodeId)
-          }
+        })
+        console.log(`existing node`, {
+          n,
+          id,
+          mapRes: foreignReferenceMap[id],
+          foreignReferenceMap,
         })
       }
     })

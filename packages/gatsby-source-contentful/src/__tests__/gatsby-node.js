@@ -318,7 +318,7 @@ describe(`gatsby-node`, () => {
     cache.set.mockClear()
   })
 
-  it(`should create nodes from initial payload`, async () => {
+  it.only(`should create nodes from initial payload`, async () => {
     // @ts-ignore
     fetchContent.mockImplementationOnce(startersBlogFixture.initialSync)
     const locales = [`en-US`, `nl`]
@@ -381,7 +381,7 @@ describe(`gatsby-node`, () => {
     `)
   })
 
-  it(`should add a new blogpost and update linkedNodes`, async () => {
+  it.only(`should add a new blogpost and update linkedNodes`, async () => {
     const locales = [`en-US`, `nl`]
 
     fetchContent

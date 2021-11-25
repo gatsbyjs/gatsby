@@ -43,6 +43,7 @@ describe(`Process contentful data (by name)`, () => {
     resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      space,
     })
     expect(resolvable).toMatchSnapshot()
   })
@@ -118,6 +119,7 @@ describe(`Skip existing nodes in warm build`, () => {
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      space,
     })
 
     const foreignReferenceMap = buildForeignReferenceMap({
@@ -202,6 +204,7 @@ describe(`Process existing mutated nodes in warm build`, () => {
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      space,
     })
 
     const foreignReferenceMap = buildForeignReferenceMap({
@@ -295,6 +298,7 @@ describe(`Process contentful data (by id)`, () => {
     resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
+      space,
     })
     expect(resolvable).toMatchSnapshot()
   })

@@ -42,7 +42,8 @@ const makeGetLocalizedField =
   field =>
     getLocalizedField({ field, locale, localesFallback })
 
-export const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
+export const makeId = (space, nodeOrLink) => {
+  const type = nodeOrLink.sys.linkType || nodeOrLink.sys.type
   const normalizedType = type.startsWith(`Deleted`)
     ? type.substring(`Deleted`.length)
     : type
@@ -51,14 +52,25 @@ export const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
     : `${spaceId}___${id}___${normalizedType}___${currentLocale}`
 }
 
-const makeMakeId =
-  ({ currentLocale, defaultLocale, createNodeId }) =>
-  (spaceId, id, type) =>
-    createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
+// export const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
+//   const normalizedType = type.startsWith(`Deleted`)
+//     ? type.substring(`Deleted`.length)
+//     : type
+//   return currentLocale === defaultLocale
+//     ? `${spaceId}___${id}___${normalizedType}`
+//     : `${spaceId}___${id}___${normalizedType}___${currentLocale}`
+// }
+
+// const makeMakeId =
+//   ({ currentLocale, defaultLocale, createNodeId }) =>
+//   (spaceId, id, type) =>
+//     createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
 // Generates an unique id per space for reference resolving
-export const generateReferenceId = nodeOrLink =>
-  `${nodeOrLink.sys.id}___${nodeOrLink.sys.linkType || nodeOrLink.sys.type}`
+// export const generateReferenceId = (space, nodeOrLink) =>
+//   `${space.sys.id}___${nodeOrLink.sys.id}___${
+//     nodeOrLink.sys.linkType || nodeOrLink.sys.type
+//   }___${}`
 
 export const buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
@@ -80,21 +92,24 @@ export const buildResolvableSet = ({
   entryList,
   existingNodes = [],
   assets = [],
+  space,
 }) => {
   const resolvable = new Set()
   existingNodes.forEach(node => {
     if (node.internal.owner === `gatsby-source-contentful` && node?.sys?.id) {
       // We need to add only root level resolvable (assets and entries)
       // Derived nodes (markdown or JSON) will be recreated if needed.
-      resolvable.add(generateReferenceId(node))
+      resolvable.add(generateReferenceId(space, node))
     }
   })
 
   entryList.forEach(entries => {
-    entries.forEach(entry => resolvable.add(generateReferenceId(entry)))
+    entries.forEach(entry => resolvable.add(generateReferenceId(space, entry)))
   })
 
-  assets.forEach(assetItem => resolvable.add(generateReferenceId(assetItem)))
+  assets.forEach(assetItem =>
+    resolvable.add(generateReferenceId(space, assetItem))
+  )
 
   return resolvable
 }
@@ -135,7 +150,7 @@ export const buildForeignReferenceMap = ({
               entryItemFieldValue[0].sys.id
             ) {
               entryItemFieldValue.forEach(v => {
-                const key = generateReferenceId(v)
+                const key = generateReferenceId(space, v)
                 // Don't create link to an unresolvable field.
                 if (!resolvable.has(key)) {
                   return
@@ -146,9 +161,8 @@ export const buildForeignReferenceMap = ({
                 }
                 foreignReferenceMap[key].push({
                   name: `${contentTypeItemId}___NODE`,
-                  id: entryItem.sys.id,
-                  spaceId: space.sys.id,
-                  type: entryItem.sys.type,
+                  node: entryItem,
+                  space,
                 })
               })
             }
@@ -156,7 +170,7 @@ export const buildForeignReferenceMap = ({
             entryItemFieldValue?.sys?.type &&
             entryItemFieldValue.sys.id
           ) {
-            const key = generateReferenceId(entryItemFieldValue)
+            const key = generateReferenceId(space, entryItemFieldValue)
             // Don't create link to an unresolvable field.
             if (!resolvable.has(key)) {
               return
@@ -167,9 +181,8 @@ export const buildForeignReferenceMap = ({
             }
             foreignReferenceMap[key].push({
               name: `${contentTypeItemId}___NODE`,
-              id: entryItem.sys.id,
-              spaceId: space.sys.id,
-              type: entryItem.sys.type,
+              node: entryItem,
+              space,
             })
           }
         }
@@ -375,7 +388,7 @@ export const createNodesForContentType = ({
                 // creating an empty node field in case when original key field value
                 // is empty due to links to missing entities
                 const resolvableEntryItemFieldValue = entryItemFieldValue
-                  .filter(v => resolvable.has(generateReferenceId(v)))
+                  .filter(v => resolvable.has(generateReferenceId(space, v)))
                   .map(function (v) {
                     return mId(
                       space.sys.id,
@@ -396,7 +409,9 @@ export const createNodesForContentType = ({
               entryItemFieldValue.sys.type &&
               entryItemFieldValue.sys.id
             ) {
-              if (resolvable.has(generateReferenceId(entryItemFieldValue))) {
+              if (
+                resolvable.has(generateReferenceId(space, entryItemFieldValue))
+              ) {
                 entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
                   space.sys.id,
                   entryItemFieldValue.sys.id,
@@ -411,33 +426,21 @@ export const createNodesForContentType = ({
 
         // Add reverse linkages if there are any for this node
         const foreignReferences =
-          foreignReferenceMap[generateReferenceId(entryItem)]
+          foreignReferenceMap[generateReferenceId(space, entryItem)]
         if (foreignReferences) {
-          foreignReferences.forEach(foreignReference => {
-            const existingReference = entryItemFields[foreignReference.name]
+          foreignReferences.forEach(({ name, node, space }) => {
+            const existingReference = entryItemFields[name]
             if (existingReference) {
               // If the existing reference is a string, we're dealing with a
               // many-to-one reference which has already been recorded, so we can
               // skip it. However, if it is an array, add it:
               if (Array.isArray(existingReference)) {
-                entryItemFields[foreignReference.name].push(
-                  mId(
-                    foreignReference.spaceId,
-                    foreignReference.id,
-                    foreignReference.type
-                  )
-                )
+                entryItemFields[name].push(generateReferenceId(space, node))
               }
             } else {
               // If there is one foreign reference, there can be many.
               // Best to be safe and put it in an array to start with.
-              entryItemFields[foreignReference.name] = [
-                mId(
-                  foreignReference.spaceId,
-                  foreignReference.id,
-                  foreignReference.type
-                ),
-              ]
+              entryItemFields[name] = [generateReferenceId(space, node)]
             }
           })
         }

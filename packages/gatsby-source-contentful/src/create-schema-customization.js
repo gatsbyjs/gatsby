@@ -19,6 +19,8 @@ async function getContentTypesFromContentFul({
   const CACHE_CONTENT_TYPES = `contentful-content-types-${sourceId}`
   await cache.set(CACHE_CONTENT_TYPES, contentTypeItems)
 
+  console.log(JSON.stringify(contentTypeItems, null, 2))
+
   return contentTypeItems
 }
 
