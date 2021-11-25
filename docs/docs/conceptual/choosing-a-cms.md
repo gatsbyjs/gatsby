@@ -32,7 +32,7 @@ There are currently (November 2021) eight CMSs with first-class integrations use
 
 - If you're working on a personal project or prototype, a few of these have a generous free tier (Contentful, DatoCMS, Prismic, Sanity, Strapi).
 
-- If you're looking more at "Team", "Pro", or "Business" price points (e.g. $29, $99, or \$299 per month), the above CMSs are all good options, plus Drupal and WordPress.
+- If you're looking more at "Team", "Pro", or "Business" price points (e.g. 50, 100, or 250 dollars per month), the above CMSs are all good options, plus Drupal and WordPress.
 
 - If you're looking more at an "enterprise" project in the four digits per month and up, your main options are Contentful, Contentstack, Sanity, and Strapi.
 
