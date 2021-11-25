@@ -12,7 +12,7 @@ Gatsby's plugin layer includes a wide variety of common website functionality th
 
 - **Performance enhancements while using CSS libraries**, like [Sass](/plugins/gatsby-plugin-sass/?=sass), [styled-components](/plugins/gatsby-plugin-styled-components/?=styled-comp) and [emotion](plugins/gatsby-plugin-styled-components/?=emotion). These plugins are _not required_ to use these libraries but do make it easier and faster for the browser to parse styles.
 
-- **Other website functionality**, like [SEO](/plugins/?=seo),, [offline support](/plugins/gatsby-plugin-offline/), [sitemaps](/plugins/gatsby-plugin-sitemap/), and [RSS feeds](/plugins/gatsby-plugin-feed/).
+- **Other website functionality**, like [SEO](/plugins/?=seo), [offline support](/plugins/gatsby-plugin-offline/), [sitemaps](/plugins/gatsby-plugin-sitemap/), and [RSS feeds](/plugins/gatsby-plugin-feed/).
 
 One point of confusion people sometimes have is "when don't I need a plugin?" The answer is "most things"! As a general rule, any npm package you might use while working on another JavaScript or React application can also be used with a Gatsby application. Even when plugins are helpful, they are always optional.
 
