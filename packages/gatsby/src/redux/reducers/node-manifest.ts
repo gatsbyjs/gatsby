@@ -6,7 +6,7 @@ import {
   IDeleteNodeManifests,
 } from "../types"
 
-const ONE_DAY = 1000 * 60 * 60 * 24 // ms * sec * min * hr
+const ONE_DAY = 1000 * 60 * 60 * 24 // ms * sec * min * hr.
 
 export const nodeManifestReducer = (
   state: IGatsbyState["nodeManifests"] = [],
