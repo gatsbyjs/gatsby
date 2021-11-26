@@ -75,7 +75,6 @@ describe(`gatsby-node`, () => {
         getCache,
         reporter,
         parentSpan,
-        schema,
       },
       pluginOptions
     )
@@ -103,15 +102,7 @@ describe(`gatsby-node`, () => {
           contentType => contentType.sys.id === entry.sys.contentType.sys.id
         )
 
-        const nodeId = createNodeId(
-          makeId({
-            spaceId: entry.sys.space.sys.id,
-            defaultLocale: defaultLocale,
-            currentLocale: locale,
-            id: entry.sys.id,
-            type: entry.sys.type,
-          })
-        )
+        const nodeId = createNodeId(makeId(entry.sys.space, entry, locale))
 
         const matchedObject = {}
         Object.keys(entry.fields).forEach(field => {
@@ -127,13 +118,7 @@ describe(`gatsby-node`, () => {
           switch (fieldDefinition.type) {
             case `Link`: {
               const linkId = createNodeId(
-                makeId({
-                  spaceId: entry.sys.space.sys.id,
-                  defaultLocale: defaultLocale,
-                  currentLocale: locale,
-                  id: value.sys.id,
-                  type: value.sys.linkType || value.sys.type,
-                })
+                makeId(entry.sys.space, value, locale)
               )
               matchedObject[`${field}___NODE`] = linkId
 
@@ -195,15 +180,7 @@ describe(`gatsby-node`, () => {
 
     locales.forEach(locale => {
       deletedEntries.forEach(entry => {
-        const nodeId = createNodeId(
-          makeId({
-            spaceId: entry.sys.space.sys.id,
-            defaultLocale: defaultLocale,
-            currentLocale: locale,
-            id: entry.sys.id,
-            type: entry.sys.type,
-          })
-        )
+        const nodeId = createNodeId(makeId(entry.sys.space, entry, locale))
 
         // check if all deleted nodes are gone
         expect(getNode(nodeId)).toBeUndefined()
@@ -224,15 +201,7 @@ describe(`gatsby-node`, () => {
     const defaultLocale = locales[0]
     locales.forEach(locale => {
       assets.forEach(asset => {
-        const assetId = createNodeId(
-          makeId({
-            spaceId: asset.sys.space.sys.id,
-            defaultLocale: defaultLocale,
-            currentLocale: locale,
-            id: asset.sys.id,
-            type: asset.sys.type,
-          })
-        )
+        const assetId = createNodeId(makeId(asset.sys.space, asset, locale))
 
         // check if asset exists
         expect(getNode(assetId)).toBeDefined()
@@ -244,15 +213,7 @@ describe(`gatsby-node`, () => {
     const defaultLocale = locales[0]
     locales.forEach(locale => {
       assets.forEach(asset => {
-        const assetId = createNodeId(
-          makeId({
-            spaceId: asset.sys.space.sys.id,
-            defaultLocale: defaultLocale,
-            currentLocale: locale,
-            id: asset.sys.id,
-            type: asset.sys.type,
-          })
-        )
+        const assetId = createNodeId(makeId(asset.sys.space, asset, locale))
 
         const file = getFieldValue(asset.fields.file, locale, defaultLocale)
 
@@ -280,15 +241,7 @@ describe(`gatsby-node`, () => {
 
     locales.forEach(locale => {
       deletedAssets.forEach(asset => {
-        const assetId = createNodeId(
-          makeId({
-            spaceId: asset.sys.space.sys.id,
-            defaultLocale: defaultLocale,
-            currentLocale: locale,
-            id: asset.sys.id,
-            type: asset.sys.type,
-          })
-        )
+        const assetId = createNodeId(makeId(asset.sys.space, asset, locale))
 
         // check if asset got removed
         expect(getNode(assetId)).toBeUndefined()
@@ -392,13 +345,7 @@ describe(`gatsby-node`, () => {
     const createdBlogEntry =
       startersBlogFixture.createBlogPost().currentSyncData.entries[0]
     const createdBlogEntryIds = locales.map(locale =>
-      makeId({
-        spaceId: createdBlogEntry.sys.space.sys.id,
-        currentLocale: locale,
-        defaultLocale: locales[0],
-        id: createdBlogEntry.sys.id,
-        type: createdBlogEntry.sys.type,
-      })
+      makeId(createdBlogEntry.sys.space, createdBlogEntry, locale)
     )
 
     // initial sync
@@ -441,13 +388,7 @@ describe(`gatsby-node`, () => {
     const updatedBlogEntry =
       startersBlogFixture.updateBlogPost().currentSyncData.entries[0]
     const updatedBlogEntryIds = locales.map(locale =>
-      makeId({
-        spaceId: updatedBlogEntry.sys.space.sys.id,
-        currentLocale: locale,
-        defaultLocale: locales[0],
-        id: updatedBlogEntry.sys.id,
-        type: updatedBlogEntry.sys.type,
-      })
+      makeId(updatedBlogEntry.sys.space, updatedBlogEntry, locale)
     )
 
     // initial sync
@@ -496,13 +437,7 @@ describe(`gatsby-node`, () => {
       ? removedBlogEntry.sys.type.substring(`Deleted`.length)
       : removedBlogEntry.sys.type
     const removedBlogEntryIds = locales.map(locale =>
-      makeId({
-        spaceId: removedBlogEntry.sys.space.sys.id,
-        currentLocale: locale,
-        defaultLocale: locales[0],
-        id: removedBlogEntry.sys.id,
-        type: normalizedType,
-      })
+      makeId(removedBlogEntry.sys.space, removedBlogEntry, locale)
     )
 
     // initial sync
@@ -546,13 +481,7 @@ describe(`gatsby-node`, () => {
     const removedAssetEntry =
       startersBlogFixture.createBlogPost().currentSyncData.entries[0]
     const removedAssetEntryIds = locales.map(locale =>
-      makeId({
-        spaceId: removedAssetEntry.sys.space.sys.id,
-        currentLocale: locale,
-        defaultLocale: locales[0],
-        id: removedAssetEntry.sys.id,
-        type: removedAssetEntry.sys.type,
-      })
+      makeId(removedAssetEntry.sys.space, removedAssetEntry, locale)
     )
 
     // initial sync

@@ -305,6 +305,7 @@ export async function sourceNodes(
     entryList,
     assets,
     space,
+    locales,
   })
 
   // console.log({ resolvable })
@@ -324,7 +325,7 @@ export async function sourceNodes(
   const newOrUpdatedEntries = new Set()
   entryList.forEach(entries => {
     entries.forEach(entry => {
-      newOrUpdatedEntries.add(generateReferenceId(space, entry))
+      newOrUpdatedEntries.add(makeId(space, entry))
     })
   })
 
@@ -338,22 +339,19 @@ export async function sourceNodes(
   existingNodes
     .filter(
       n =>
-        n?.sys?.type && newOrUpdatedEntries.has(generateReferenceId(space, n))
+        n?.sys?.type && newOrUpdatedEntries.has(makeId(space, n, n.sys.locale))
     )
     .forEach(n => {
-      const id = generateReferenceId(space, n)
+      const id = makeId(space, n, n.sys.locale)
 
       if (foreignReferenceMap[id]) {
+        // Add reverse links
         foreignReferenceMap[id].forEach(({ name, node, space }) => {
           const referenceId = generateReferenceId(space, node)
 
-          // Add reverse links
-
           // Create reference when none exists
           if (!n[name]) {
-            // If is one foreign reference, there can always be many.
-            // Best to be safe and put it in an array to start with.
-            n[name] = [generateReferenceId(space, node)]
+            n[name] = [makeId(space, node)]
             return
           }
 
@@ -371,12 +369,12 @@ export async function sourceNodes(
             })
           })
         })
-        console.log(`existing node`, {
-          n,
-          id,
-          mapRes: foreignReferenceMap[id],
-          foreignReferenceMap,
-        })
+        // console.log(`existing node`, {
+        //   n,
+        //   id,
+        //   mapRes: foreignReferenceMap[id],
+        //   foreignReferenceMap,
+        // })
       }
     })
 
@@ -388,13 +386,14 @@ export async function sourceNodes(
     const localizedNodes = locales
       .map(locale => {
         const nodeId = createNodeId(
-          makeId({
-            spaceId: space.sys.id,
-            id: node.sys.id,
-            type: normalizedType,
-            currentLocale: locale.code,
-            defaultLocale,
-          })
+          // makeId({
+          //   spaceId: space.sys.id,
+          //   id: node.sys.id,
+          //   type: normalizedType,
+          //   currentLocale: locale.code,
+          //   defaultLocale,
+          // })
+          makeId(space, node, locale)
         )
         return getNode(nodeId)
       })
