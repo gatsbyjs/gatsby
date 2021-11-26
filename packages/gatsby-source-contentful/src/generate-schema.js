@@ -111,43 +111,66 @@ export function generateSchema({
   contentTypeItems,
 }) {
   // Generic Types
-  createTypes(`
-    interface ContentfulReference implements Node {
-      id: ID!
-      sys: ContentfulSys!
-    }
-  `)
+  createTypes(
+    schema.buildInterfaceType({
+      name: `ContentfulReference`,
+      fields: {
+        id: { type: `ID!` },
+        sys: { type: `ContentfulSys!` },
+      },
+      interfaces: [`Node`],
+    })
+  )
 
-  createTypes(`
-    type ContentfulContentType implements Node {
-      id: ID!
-      name: String!
-      displayField: String!
-      description: String!
-    }
-  `)
+  createTypes(
+    schema.buildInterfaceType({
+      name: `ContentfulEntry`,
+      fields: {
+        id: { type: `ID!` },
+        sys: { type: `ContentfulSys!` },
+        metadata: { type: `ContentfulMetadata!` },
+      },
+      interfaces: [`ContentfulReference`, `Node`],
+    })
+  )
 
-  createTypes(`
-    type ContentfulSys @dontInfer {
-      type: String!
-      id: String!
-      spaceId: String!
-      environmentId: String!
-      contentType: ContentfulContentType @link(by: "id", from: "contentType___NODE")
-      firstPublishedAt: Date!
-      publishedAt: Date!
-      publishedVersion: Int!
-      locale: String!
-    }
-  `)
+  createTypes(
+    schema.buildObjectType({
+      name: `ContentfulContentType`,
+      fields: {
+        id: { type: `ID!` },
+        name: { type: `String!` },
+        displayField: { type: `String!` },
+        description: { type: `String!` },
+      },
+      interfaces: [`Node`],
+      extensions: { dontInfer: {} },
+    })
+  )
 
-  createTypes(`
-    interface ContentfulEntry implements ContentfulReference & Node @dontInfer {
-      id: ID!
-      sys: ContentfulSys!
-      metadata: ContentfulMetadata!
-    }
-  `)
+  createTypes(
+    schema.buildObjectType({
+      name: `ContentfulSys`,
+      fields: {
+        id: { type: ` String!` },
+        type: { type: ` String!` },
+        spaceId: { type: ` String!` },
+        environmentId: { type: ` String!` },
+        contentType: {
+          type: `ContentfulContentType`,
+          extensions: {
+            link: { by: `id`, from: `contentType___NODE` },
+          },
+        },
+        firstPublishedAt: { type: ` Date!` },
+        publishedAt: { type: ` Date!` },
+        publishedVersion: { type: ` Int!` },
+        locale: { type: ` String!` },
+      },
+      interfaces: [`Node`],
+      extensions: { dontInfer: {} },
+    })
+  )
 
   createTypes(
     schema.buildObjectType({
@@ -194,21 +217,26 @@ export function generateSchema({
       extensions: { dontInfer: {} },
     })
   )
-  createTypes(`
-    type ContentfulAsset implements ContentfulReference & Node {
-      sys: ContentfulSys!
-      id: ID!
-      title: String
-      description: String
-      contentType: String
-      fileName: String
-      url: String
-      size: Int
-      width: Int
-      height: Int
-      fields: ContentfulAssetFields
-    }
-  `)
+  createTypes(
+    schema.buildObjectType({
+      name: `ContentfulAsset`,
+      fields: {
+        id: { type: `ID!` },
+        sys: { type: `ContentfulSys!` },
+        title: { type: `String` },
+        description: { type: `String` },
+        contentType: { type: `String` },
+        fileName: { type: `String` },
+        url: { type: `String` },
+        size: { type: `Int` },
+        width: { type: `Int` },
+        height: { type: `Int` },
+        fields: { type: `ContentfulAssetFields` },
+      },
+      interfaces: [`ContentfulReference`, `Node`],
+      extensions: { dontInfer: {} },
+    })
+  )
 
   // Rich Text
   const makeRichTextLinksResolver =
