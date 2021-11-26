@@ -1,3 +1,5 @@
+/*pleas add some comment reduce the complexsity of code*/
+
 const path = require(`path`)
 const glob = require(`glob`)
 const fs = require(`fs`)
