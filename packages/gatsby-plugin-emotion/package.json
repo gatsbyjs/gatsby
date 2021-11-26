@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "@emotion/babel-preset-css-prop": "^11.2.0"
+    "@emotion/babel-preset-css-prop": "^11.2.0",
+    "@emotion/babel-plugin": "^11.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
