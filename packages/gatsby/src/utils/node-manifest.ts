@@ -6,8 +6,7 @@ import { store } from "../redux/"
 import { internalActions } from "../redux/actions"
 import path from "path"
 import fs from "fs-extra"
-import { readPageData } from "./page-data"
-import { createContentDigest } from "gatsby-core-utils"
+import fastq from "fastq"
 
 interface INodeManifestPage {
   path?: string
@@ -22,7 +21,6 @@ interface INodeManifestOut {
     id: string
   }
   foundPageBy: FoundPageBy
-  pageDataDigest: string | null
 }
 
 type FoundPageBy =
@@ -66,6 +64,7 @@ async function findPageOwnedByNodeId({ nodeId }: { nodeId: string }): Promise<{
 
   // the default page path is the first page found in
   // node id to page query tracking
+
   let pagePath = byNode?.get(nodeId)?.values()?.next()?.value
 
   let foundPageBy: FoundPageBy = pagePath ? `queryTracking` : `none`
@@ -166,10 +165,12 @@ export function warnAboutNodeManifestMappingProblems({
   inputManifest,
   pagePath,
   foundPageBy,
+  verbose,
 }: {
   inputManifest: INodeManifest
   pagePath?: string
   foundPageBy: FoundPageBy
+  verbose: boolean
 }): { logId: string } {
   let logId: ErrorId | `success`
 
@@ -178,13 +179,15 @@ export function warnAboutNodeManifestMappingProblems({
     case `context.id`:
     case `queryTracking`: {
       logId = foundPageByToLogIds[foundPageBy]
-      reporter.error({
-        id: logId,
-        context: {
-          inputManifest,
-          pagePath,
-        },
-      })
+      if (verbose) {
+        reporter.error({
+          id: logId,
+          context: {
+            inputManifest,
+            pagePath,
+          },
+        })
+      }
       break
     }
 
@@ -204,53 +207,31 @@ export function warnAboutNodeManifestMappingProblems({
 }
 
 /**
- * Retrieves the content digest of a page-data.json file for use in creating node manifest files.
- */
-export async function getPageDataDigestForPagePath(
-  pagePath?: string,
-  directory?: string
-): Promise<string | null> {
-  if (
-    // if no page was created for the node we're creating a manifest for, there wont be a page path.
-    !pagePath ||
-    // we only add page data digests to node manifests in production because page-data.json may not exist in development.
-    (process.env.NODE_ENV !== `production` && process.env.NODE_ENV !== `test`)
-  ) {
-    return null
-  }
-
-  try {
-    const publicDirectory = path.join(
-      directory || store.getState().program.directory,
-      `public`
-    )
-    const pageData = await readPageData(publicDirectory, pagePath)
-
-    const pageDataDigest = createContentDigest(pageData)
-
-    return pageDataDigest
-  } catch (e) {
-    reporter.warn(
-      `No page-data.json found for ${pagePath} while processing node manifests.`
-    )
-
-    return null
-  }
-}
-
-/**
  * Prepares and then writes out an individual node manifest file to be used for routing to previews. Manifest files are added via the public unstable_createNodeManifest action
  */
 export async function processNodeManifest(
-  inputManifest: INodeManifest
+  inputManifest: INodeManifest,
+  listOfUniqueErrorIds: Set<string>,
+  nodeManifestPagePathMap: Map<string, string>,
+  verboseLogs: boolean
 ): Promise<null | INodeManifestOut> {
   const nodeId = inputManifest.node.id
   const fullNode = getNode(nodeId)
+  const noNodeWarningId = `11804`
 
   if (!fullNode) {
-    reporter.warn(
-      `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest for a node which doesn't exist with an id of ${nodeId}.`
-    )
+    if (verboseLogs) {
+      reporter.error({
+        id: noNodeWarningId,
+        context: {
+          pluginName: inputManifest.pluginName,
+          nodeId,
+        },
+      })
+    } else {
+      listOfUniqueErrorIds.add(noNodeWarningId)
+    }
+
     return null
   }
 
@@ -259,21 +240,29 @@ export async function processNodeManifest(
     nodeId,
   })
 
-  warnAboutNodeManifestMappingProblems({
+  const nodeManifestMappingProblemsContext = {
     inputManifest,
     pagePath: nodeManifestPage.path,
     foundPageBy,
-  })
+    verbose: verboseLogs,
+  }
 
-  const pageDataDigest = await getPageDataDigestForPagePath(
-    nodeManifestPage.path
-  )
+  if (verboseLogs) {
+    warnAboutNodeManifestMappingProblems(nodeManifestMappingProblemsContext)
+  } else {
+    const { logId } = warnAboutNodeManifestMappingProblems(
+      nodeManifestMappingProblemsContext
+    )
+
+    if (logId !== `success`) {
+      listOfUniqueErrorIds.add(logId)
+    }
+  }
 
   const finalManifest: INodeManifestOut = {
     node: inputManifest.node,
     page: nodeManifestPage,
     foundPageBy,
-    pageDataDigest,
   }
 
   const gatsbySiteDirectory = store.getState().program.directory
@@ -312,6 +301,16 @@ export async function processNodeManifest(
   await fs.ensureDir(manifestFileDir)
   await fs.writeJSON(manifestFilePath, finalManifest)
 
+  if (verboseLogs) {
+    reporter.info(
+      `Plugin ${inputManifest.pluginName} created a manifest with the id ${fileNameBase}`
+    )
+  }
+
+  if (nodeManifestPage.path) {
+    nodeManifestPagePathMap.set(nodeManifestPage.path, fileNameBase)
+  }
+
   return finalManifest
 }
 
@@ -320,37 +319,70 @@ export async function processNodeManifest(
  * and then removes them from the store.
  * Manifest files are added via the public unstable_createNodeManifest action in sourceNodes
  */
-export async function processNodeManifests(): Promise<void> {
+export async function processNodeManifests(): Promise<Map<
+  string,
+  string
+> | null> {
+  const verboseLogs = process.env.gatsby_log_level === `verbose`
+
+  const startTime = Date.now()
   const { nodeManifests } = store.getState()
 
   const totalManifests = nodeManifests.length
 
   if (totalManifests === 0) {
-    return
+    return null
   }
-
-  const processedManifests = await Promise.all(
-    nodeManifests.map(manifest => processNodeManifest(manifest))
-  )
 
   let totalProcessedManifests = 0
   let totalFailedManifests = 0
+  const nodeManifestPagePathMap: Map<string, string> = new Map()
+  const listOfUniqueErrorIds: Set<string> = new Set()
 
-  processedManifests.forEach(manifest => {
-    if (manifest) {
+  async function processNodeManifestTask(
+    manifest: INodeManifest,
+    cb: fastq.done<any>
+  ): Promise<void> {
+    const processedManifest = await processNodeManifest(
+      manifest,
+      listOfUniqueErrorIds,
+      nodeManifestPagePathMap,
+      verboseLogs
+    )
+
+    if (processedManifest) {
       totalProcessedManifests++
     } else {
       totalFailedManifests++
     }
-  })
+
+    // `setImmediate` below is a workaround against stack overflow
+    // occurring when there are many manifests
+    setImmediate(() => cb(null, true))
+    return
+  }
+
+  const processNodeManifestQueue = fastq(processNodeManifestTask, 25)
+
+  for (const manifest of nodeManifests) {
+    processNodeManifestQueue.push(manifest, () => {})
+  }
+
+  if (!processNodeManifestQueue.idle()) {
+    await new Promise(resolve => {
+      processNodeManifestQueue.drain = resolve as () => unknown
+    })
+  }
 
   const pluralize = (length: number): string =>
     length > 1 || length === 0 ? `s` : ``
 
+  const endTime = Date.now()
+
   reporter.info(
     `Wrote out ${totalProcessedManifests} node page manifest file${pluralize(
       totalProcessedManifests
-    )}${
+    )} in ${endTime - startTime} ms. ${
       totalFailedManifests > 0
         ? `. ${totalFailedManifests} manifest${pluralize(
             totalFailedManifests
@@ -359,6 +391,16 @@ export async function processNodeManifests(): Promise<void> {
     }`
   )
 
+  reporter.info(
+    (!verboseLogs
+      ? `unstable_createNodeManifest produced warnings [${[
+          ...listOfUniqueErrorIds,
+        ].join(`, `)}]. `
+      : ``) +
+      `Visit https://gatsby.dev/nodemanifest for more info on Node Manifests`
+  )
+
   // clean up all pending manifests from the store
   store.dispatch(internalActions.deleteNodeManifests())
+  return nodeManifestPagePathMap
 }

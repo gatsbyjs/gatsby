@@ -1,13 +1,14 @@
+// Must run `gatsby-dev --packages gatsby to get latest gatsby changes before running the tests
 jest.setTimeout(100000)
+const DEFAULT_MAX_DAYS_OLD = 30
 
 const { spawnGatsbyProcess } = require(`../utils/get-gatsby-process`)
 const urling = require(`urling`)
 const rimraf = require(`rimraf`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
-const {
-  getPageDataDigestForPagePath,
-} = require(`gatsby/dist/utils/node-manifest`)
+
+const gatsbyCommandName = process.env.GATSBY_COMMAND_NAME || `develop`
 
 const manifestDir = path.join(
   process.cwd(),
@@ -16,15 +17,20 @@ const manifestDir = path.join(
   `default-site-plugin`
 )
 
+const pageDataDir = path.join(process.cwd(), `public`, `page-data`)
+
+const createManifestId = nodeId => `${gatsbyCommandName}-${nodeId}`
+
 const cleanNodeManifests = async () => {
   console.log(`removing any lingering node manifest files at ${manifestDir}`)
   return new Promise(resolve => rimraf(manifestDir, resolve))
 }
 
-const gatsbyCommandName = process.env.GATSBY_COMMAND_NAME || `develop`
+const getManifestContents = async nodeId =>
+  await fs.readJSON(path.join(manifestDir, `${createManifestId(nodeId)}.json`))
 
-const getManifestContents = async id =>
-  await fs.readJSON(path.join(manifestDir, `${gatsbyCommandName}-${id}.json`))
+const pageDataContents = async pagePath =>
+  await fs.readJSON(path.join(pageDataDir, pagePath, `page-data.json`))
 
 let gatsbyProcess
 
@@ -80,14 +86,12 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
     })
 
     // this doesn't work in gatsby develop since page-data.json files aren't written out
-    it(`Adds a correct page-data.json digest to the manifest`, async () => {
-      const pageDataDigest = await getPageDataDigestForPagePath(
-        `/one`,
-        process.cwd()
-      )
-      const manifest = await getManifestContents(`1`)
+    it(`Adds the correct manifestId to the pageData.json digest`, async () => {
+      const nodeId = `1`
+      const path = `one`
+      const pageData = await pageDataContents(path)
 
-      expect(pageDataDigest).toEqual(manifest.pageDataDigest)
+      expect(pageData.manifestId).toEqual(createManifestId(nodeId))
     })
   }
 
@@ -105,5 +109,23 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
     expect(manifestFileContents.node.id).toBe(`filesystem-1`)
     expect(manifestFileContents.page.path).toBe(`/filesystem-1/`)
     expect(manifestFileContents.foundPageBy).toBe(`filesystem-route-api`)
+  })
+
+  it(`Creates a manifest for the node when updatedAt is included and is within ${DEFAULT_MAX_DAYS_OLD} days`, async () => {
+    const recentlyUpdatedNodeId = `updatedAt-1`
+    const staleNodeId = `updatedAt-2`
+    const recentlyUpdatedNodeManifest = await getManifestContents(
+      recentlyUpdatedNodeId
+    )
+
+    try {
+      await getManifestContents(staleNodeId)
+      throw new Error()
+    } catch (e) {
+      expect(e.message).toContain(`no such file or directory`)
+      expect(e.message).toContain(createManifestId(staleNodeId))
+    }
+
+    expect(recentlyUpdatedNodeManifest.node.id).toBe(recentlyUpdatedNodeId)
   })
 })
