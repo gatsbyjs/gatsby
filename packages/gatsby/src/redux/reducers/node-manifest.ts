@@ -7,6 +7,7 @@ import {
 } from "../types"
 
 const ONE_DAY = 1000 * 60 * 60 * 24 // ms * sec * min * hr.
+const DEFAULT_MAX_DAYS_OLD = 30
 
 export const nodeManifestReducer = (
   state: IGatsbyState["nodeManifests"] = [],
@@ -14,13 +15,10 @@ export const nodeManifestReducer = (
 ): IGatsbyState["nodeManifests"] => {
   switch (action.type) {
     case `CREATE_NODE_MANIFEST`: {
-      const {
-        manifestId,
-        pluginName,
-        node,
-        updatedAtUTC,
-        maxDaysOld = 30,
-      } = action.payload
+      const { manifestId, pluginName, node, updatedAtUTC } = action.payload
+
+      const maxDaysOld =
+        Number(process.env.NODE_MANIFEST_MAX_DAYS_OLD) || DEFAULT_MAX_DAYS_OLD
 
       if (updatedAtUTC) {
         const nodeLastUpdatedAtUTC: number = new Date(updatedAtUTC).getTime()

@@ -384,13 +384,11 @@ describe(`processNodeManifests`, () => {
 
     const createPayload = (
       id,
-      updatedAtUTC,
-      maxDaysOld = 30
+      updatedAtUTC
     ): {
       manifestId: string
       node: { id: string }
       updatedAtUTC: string
-      maxDaysOld: number
     } => {
       return {
         manifestId: `${id}-${updatedAtUTC}`,
@@ -398,7 +396,6 @@ describe(`processNodeManifests`, () => {
           id,
         },
         updatedAtUTC,
-        maxDaysOld,
       }
     }
 

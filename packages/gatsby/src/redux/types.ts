@@ -931,7 +931,6 @@ export interface ICreateNodeManifest {
     node: IGatsbyNode
     pluginName: string
     updatedAtUTC?: string | number
-    maxDaysOld?: number
   }
 }
 

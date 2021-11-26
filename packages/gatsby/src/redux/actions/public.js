@@ -1425,19 +1425,17 @@ actions.createServerVisitedPage = (chunkName: string) => {
  * @param {string} manifest.manifestId An id which ties the revision unique state of this manifest to the unique revision state of a data source.
  * @param {Object} manifest.node The Gatsyby node to tie the manifestId to. See the "createNode" action for more information about the node object details.
  * @param {string} manifest.updatedAtUTC (optional) The time in which the node was last updated
- * @param {number} manifest.maxDaysOld (optional) Choose the days since a node was last updated (e.g. create manifests for nodes that were last updated up to 30 days)
  * @example
  * unstable_createNodeManifest({
  *   manifestId: `post-id-1--updated-53154315`,
  *   updatedAtUTC: `2021-07-08T21:52:28.791+01:00`,
- *   maxDaysOld: 60,
  *   node: {
  *      id: `post-id-1`
  *   },
  * })
  */
 actions.unstable_createNodeManifest = (
-  { manifestId, node, updatedAtUTC, maxDaysOld },
+  { manifestId, node, updatedAtUTC },
   plugin: Plugin
 ) => {
   return {
@@ -1447,7 +1445,6 @@ actions.unstable_createNodeManifest = (
       node,
       pluginName: plugin.name,
       updatedAtUTC,
-      maxDaysOld,
     },
   }
 }
