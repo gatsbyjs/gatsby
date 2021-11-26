@@ -29,7 +29,7 @@ export const getBase64Image = (imageProps, cache) => {
 
   // Keep aspect ratio, image format and other transform options
   const { aspectRatio } = imageProps
-  const originalFormat = imageProps.image.file.contentType.split(`/`)[1]
+  const originalFormat = imageProps.image.contentType.split(`/`)[1]
   const toFormat = imageProps.options.toFormat
   const imageOptions = {
     ...imageProps.options,
@@ -53,9 +53,7 @@ export const getBase64Image = (imageProps, cache) => {
   }
 
   const loadImage = async () => {
-    const {
-      file: { contentType },
-    } = imageProps.image
+    const { contentType } = imageProps.image
 
     const extension = mimeTypeExtensions.get(contentType)
 
@@ -124,9 +122,7 @@ const getDominantColor = async ({ image, options, cache }) => {
   }
 
   try {
-    const {
-      file: { contentType, url: imgUrl, fileName },
-    } = image
+    const { contentType, url: imgUrl, fileName } = image
 
     if (contentType.indexOf(`image/`) !== 0) {
       return null
