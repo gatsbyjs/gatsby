@@ -411,9 +411,11 @@ describe(`processNodeManifests`, () => {
 
     const { nodeManifests } = store.getState()
 
+    process.env.NODE_MANIFEST_MAX_DAYS_OLD = `32`
+
     // Processes all three manifests
     nodes.forEach(node => {
-      const payload = createPayload(node.id, node.updatedAt, 32)
+      const payload = createPayload(node.id, node.updatedAt)
       store.dispatch(
         actions.unstable_createNodeManifest(payload, {
           name: `gatsby-source-test`,
