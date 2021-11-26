@@ -392,7 +392,7 @@ export async function processNodeManifests(): Promise<Map<
   )
 
   reporter.info(
-    (!verboseLogs
+    (!verboseLogs && listOfUniqueErrorIds.size > 0
       ? `unstable_createNodeManifest produced warnings [${[
           ...listOfUniqueErrorIds,
         ].join(`, `)}]. `
