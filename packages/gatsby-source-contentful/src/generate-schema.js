@@ -104,30 +104,6 @@ const translateFieldType = field => {
   return fieldType
 }
 
-function generateAssetTypes({ createTypes }) {
-  // @todo can we avoid this subfield?
-  createTypes(`
-    type ContentfulAssetFields {
-      localFile: File
-    }
-  `)
-  createTypes(`
-    type ContentfulAsset implements ContentfulReference & Node {
-      sys: ContentfulSys!
-      id: ID!
-      title: String
-      description: String
-      contentType: String
-      fileName: String
-      url: String
-      size: Int
-      width: Int
-      height: Int
-      fields: ContentfulAssetFields
-    }
-  `)
-}
-
 export function generateSchema({
   createTypes,
   schema,
@@ -202,7 +178,37 @@ export function generateSchema({
   )
 
   // Assets
-  generateAssetTypes({ createTypes })
+  createTypes(
+    schema.buildObjectType({
+      name: `ContentfulAssetFields`,
+      fields: {
+        localFile: {
+          type: `File`,
+          extensions: {
+            link: {
+              by: `id`,
+            },
+          },
+        },
+      },
+      extensions: { dontInfer: {} },
+    })
+  )
+  createTypes(`
+    type ContentfulAsset implements ContentfulReference & Node {
+      sys: ContentfulSys!
+      id: ID!
+      title: String
+      description: String
+      contentType: String
+      fileName: String
+      url: String
+      size: Int
+      width: Int
+      height: Int
+      fields: ContentfulAssetFields
+    }
+  `)
 
   // Rich Text
   const makeRichTextLinksResolver =
