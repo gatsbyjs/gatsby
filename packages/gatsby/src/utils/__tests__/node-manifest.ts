@@ -423,6 +423,8 @@ describe(`processNodeManifests`, () => {
       )
     })
 
+    process.env.NODE_MANIFEST_MAX_DAYS_OLD = null
+
     expect(nodeManifests.length).toBe(5)
   }
 
