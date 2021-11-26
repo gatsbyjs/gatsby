@@ -10,7 +10,9 @@ const DownloadLocalPage = ({ data }) => {
       <h1>Test downloadLocal feature</h1>
       <GatsbyImage
         id="gatsby-plugin-image-download-local"
-        image={data.contentfulAsset.localFile.childImageSharp.gatsbyImageData}
+        image={
+          data.contentfulAsset.fields.localFile.childImageSharp.gatsbyImageData
+        }
       />
     </Layout>
   )
