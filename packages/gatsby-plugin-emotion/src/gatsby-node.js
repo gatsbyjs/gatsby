@@ -1,5 +1,5 @@
 export const onCreateBabelConfig = ({ actions, store }, pluginOptions) => {
-  if (store.getState().config.jsxRuntime === 'automatic') {
+  if (store.getState().config.jsxRuntime === `automatic`) {
     actions.setBabelPlugin({
       name: require.resolve(`@emotion/babel-plugin`),
       options: {
