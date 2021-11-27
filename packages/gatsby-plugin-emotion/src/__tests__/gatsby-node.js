@@ -5,8 +5,13 @@ describe(`gatsby-plugin-emotion`, () => {
   describe(`onCreateBabelConfig`, () => {
     it(`sets the correct babel preset`, () => {
       const actions = { setBabelPreset: jest.fn() }
+      const store = {
+        getState: () => {
+          return { config: {} }
+        },
+      }
 
-      onCreateBabelConfig({ actions }, null)
+      onCreateBabelConfig({ actions, store }, null)
 
       expect(actions.setBabelPreset).toHaveBeenCalledTimes(1)
       expect(actions.setBabelPreset).toHaveBeenCalledWith({
@@ -43,8 +48,13 @@ describe(`gatsby-plugin-emotion`, () => {
     it(`passes additional options on to the preset`, () => {
       const actions = { setBabelPreset: jest.fn() }
       const pluginOptions = { useBuiltIns: true }
+      const store = {
+        getState: () => {
+          return { config: {} }
+        },
+      }
 
-      onCreateBabelConfig({ actions }, pluginOptions)
+      onCreateBabelConfig({ actions, store }, pluginOptions)
 
       expect(actions.setBabelPreset).toHaveBeenCalledTimes(1)
       expect(actions.setBabelPreset).toHaveBeenCalledWith({
@@ -95,8 +105,13 @@ describe(`gatsby-plugin-emotion`, () => {
 
       it(`sets the correct babel preset`, () => {
         const actions = { setBabelPreset: jest.fn() }
+        const store = {
+          getState: () => {
+            return { config: {} }
+          },
+        }
 
-        onCreateBabelConfig({ actions }, null)
+        onCreateBabelConfig({ actions, store }, null)
 
         expect(actions.setBabelPreset).toHaveBeenCalledTimes(1)
         expect(actions.setBabelPreset).toHaveBeenCalledWith({
