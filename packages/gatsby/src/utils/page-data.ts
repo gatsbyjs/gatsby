@@ -174,9 +174,14 @@ export async function flush(parentSpan?: Span): Promise<void> {
   )
   writePageDataActivity.start()
 
-  // we process node manifests in this location because we need to add the manifestId to the page data.
-  // We use this manifestId to determine if the page data is up to date when routing. Here we create a map of "pagePath": "manifestId" while processing and writing node manifest files.
-  const nodeManifestPagePathMap = await processNodeManifests()
+  let nodeManifestPagePathMap
+
+  if (pagePaths.size > 0) {
+    // we process node manifests in this location because we need to add the manifestId to the page data.
+    // We use this manifestId to determine if the page data is up to date when routing. Here we create a map of "pagePath": "manifestId" while processing and writing node manifest files.
+    // We only do this when there are pending page-data writes because otherwise we could flush pending createNodeManifest calls before page-data.json files are written. Which means those page-data files wouldn't have the corresponding manifest id's written to them.
+    nodeManifestPagePathMap = await processNodeManifests()
+  }
 
   const flushQueue = fastq(async (pagePath, cb) => {
     const page = pages.get(pagePath)
