@@ -1377,6 +1377,7 @@ describe(`Build schema`, () => {
           sharedField: String
         }
       `)
+      // implicit assertion is that building schema doesn't throw in the process
       const schema = await buildSchema()
       expect(printType(schema.getType(`CustomInterface`)))
         .toMatchInlineSnapshot(`
