@@ -1,13 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`gatsby-node stores rich text as raw with references attached 1`] = `
-Array [
-  "ahntqop9oi7x___7oHxo6bs0us9wIkq27qdyK___Entry",
-  "ahntqop9oi7x___6KpLS2NZyB3KAvDzWf4Ukh___Entry",
-  "ahntqop9oi7x___4ZQrqcrTunWiuNaavhGYNT___Asset",
-]
-`;
-
 exports[`gatsby-node stores rich text as JSON 2`] = `
 Object {
   "content": Array [
@@ -406,4 +398,12 @@ Object {
   "data": Object {},
   "nodeType": "document",
 }
+`;
+
+exports[`gatsby-node stores rich text as raw with references attached 1`] = `
+Array [
+  "ahntqop9oi7x___7oHxo6bs0us9wIkq27qdyK___Entry",
+  "ahntqop9oi7x___6KpLS2NZyB3KAvDzWf4Ukh___Entry",
+  "ahntqop9oi7x___4ZQrqcrTunWiuNaavhGYNT___Asset",
+]
 `;

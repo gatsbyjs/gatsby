@@ -38,19 +38,15 @@ const createMockCache = () => {
 const cache = createMockCache()
 
 const exampleImage = {
-  defaultLocale: `en-US`,
-  file: {
-    url: `//images.ctfassets.net:443/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png`,
-    fileName: `347966-contentful-logo-wordmark-dark (1)-4cd185-original-1582664935 (1).png`,
-    contentType: `image/png`,
-    details: {
-      size: 123456,
-      image: {
-        width: `1646`,
-        height: `338`,
-      },
-    },
+  sys: {
+    locale: `en-US`,
   },
+  url: `https://images.ctfassets.net:443/k8iqpp6u0ior/3ljGfnpegOnBTFGhV07iC1/94257340bda15ad4ca8462da3a8afa07/347966-contentful-logo-wordmark-dark__1_-4cd185-original-1582664935__1_.png`,
+  fileName: `347966-contentful-logo-wordmark-dark (1)-4cd185-original-1582664935 (1).png`,
+  contentType: `image/png`,
+  size: 123456,
+  width: `1646`,
+  height: `338`,
   internal: {
     contentDigest: `unique`,
   },
