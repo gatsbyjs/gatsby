@@ -390,16 +390,11 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     command: `plugin <cmd> [plugins...]`,
     describe: `Useful commands relating to Gatsby plugins`,
     builder: yargs =>
-      yargs
-        .positional(`cmd`, {
-          choices: [`docs`, `ls`],
-          describe: "Valid commands include `docs`, `ls`.",
-          type: `string`,
-        })
-        .positional(`plugins`, {
-          describe: `The plugin names`,
-          type: `string`,
-        }),
+      yargs.positional(`cmd`, {
+        choices: [`docs`, `ls`],
+        describe: "Valid commands include `docs`, `ls`.",
+        type: `string`,
+      }),
     handler: async ({
       cmd,
     }: yargs.Arguments<{
