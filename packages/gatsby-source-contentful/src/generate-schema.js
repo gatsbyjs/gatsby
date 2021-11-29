@@ -70,7 +70,64 @@ const ContentfulDataTypes = new Map([
   ],
 ])
 
-const getLinkFieldType = (linkType, field) => {
+const unionsNameSet = new Set()
+
+const getLinkFieldType = (linkType, field, schema, createTypes) => {
+  // Check for validations
+  const validations =
+    field.type === `Array` ? field.items?.validations : field?.validations
+
+  if (validations) {
+    // We only handle content type validations
+    const linkContentTypeValidation = validations.find(
+      ({ linkContentType }) => !!linkContentType
+    )
+    if (linkContentTypeValidation) {
+      const { linkContentType } = linkContentTypeValidation
+      const contentTypes = Array.isArray(linkContentType)
+        ? linkContentType
+        : [linkContentType]
+
+      // Full type names for union members, shorter variant for the union type name
+      const translatedTypeNames = contentTypes.map(typeName =>
+        makeTypeName(typeName)
+      )
+      const shortTypeNames = contentTypes.map(typeName =>
+        makeTypeName(typeName, ``)
+      )
+
+      // Single content type
+      if (translatedTypeNames.length === 1) {
+        return {
+          type: translatedTypeNames.shift(),
+          extensions: {
+            link: { by: `id`, from: `${field.id}___NODE` },
+          },
+        }
+      }
+
+      // Multiple content types
+      const unionName = [`UnionContentful`, ...shortTypeNames].join(``)
+
+      if (!unionsNameSet.has(unionName)) {
+        unionsNameSet.add(unionName)
+        createTypes(
+          schema.buildUnionType({
+            name: unionName,
+            types: translatedTypeNames,
+          })
+        )
+      }
+
+      return {
+        type: unionName,
+        extensions: {
+          link: { by: `id`, from: `${field.id}___NODE` },
+        },
+      }
+    }
+  }
+
   return {
     type: `Contentful${linkType}`,
     extensions: {
@@ -79,19 +136,19 @@ const getLinkFieldType = (linkType, field) => {
   }
 }
 
-const translateFieldType = field => {
+const translateFieldType = (field, schema, createTypes) => {
   let fieldType
   if (field.type === `Array`) {
     // Arrays of Contentful Links or primitive types
     const fieldData =
       field.items.type === `Link`
-        ? getLinkFieldType(field.items.linkType, field)
-        : translateFieldType(field.items)
+        ? getLinkFieldType(field.items.linkType, field, schema, createTypes)
+        : translateFieldType(field.items, schema, createTypes)
 
     fieldType = { ...fieldData, type: `[${fieldData.type}]` }
   } else if (field.type === `Link`) {
     // Contentful Link (reference) field types
-    fieldType = getLinkFieldType(field.linkType, field)
+    fieldType = getLinkFieldType(field.linkType, field, schema, createTypes)
   } else {
     // Primitive field types
     fieldType = ContentfulDataTypes.get(field.type)(field)
@@ -371,7 +428,7 @@ export function generateSchema({
         if (field.disabled || field.omitted) {
           return
         }
-        fields[field.id] = translateFieldType(field)
+        fields[field.id] = translateFieldType(field, schema, createTypes)
       })
 
       const type = pluginConfig.get(`useNameForId`)
