@@ -1,6 +1,6 @@
-import * as path from "path"
 import * as fs from "fs-extra"
 import { createServiceLock, getService } from "./service-lock"
+import { readConfigFile, getConfigPath } from "./utils"
 import { lock } from "./lock"
 
 export interface ISiteMetadata {
@@ -32,37 +32,18 @@ export async function updateInternalSiteMetadata(
   )
 }
 
-function getConfigPath(root: string): string {
-  return path.join(root, `gatsby-config.js`)
-}
-
-async function readConfigFile(root: string): Promise<string> {
-  let src
-  try {
-    src = await fs.readFile(getConfigPath(root), `utf8`)
-  } catch (e) {
-    if (e.code === `ENOENT`) {
-      src = `
-module.exports = {
-  siteMetadata: {
-    siteUrl: \`https://www.yourdomain.tld\`,
-  },
-  plugins: [],
-}
-`
-    } else {
-      throw e
-    }
-  }
-
-  return src
-}
-
+/**
+ * Does a string replace by searching for beginning of "siteMetadata"
+ * Then it adds the name + value as the next key of that object
+ */
 function addField(
   src: string,
   { name, value }: { name: string; value: string }
 ): string {
-  // TODO Use simple string replace or something
+  const FIND = `  siteMetadata: {\n`
+  const REPLACE = `  siteMetadata: {\n      ${name}: \`${value}\`,\n`
+  const modifiedConfig = src.replace(FIND, REPLACE)
+  return modifiedConfig
 }
 
 export async function addFieldToMinimalSiteMetadata(
