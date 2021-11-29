@@ -2,6 +2,8 @@
 import stringify from "json-stringify-safe"
 import _ from "lodash"
 
+import { reportOnce } from "gatsby-core-utils"
+
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
@@ -223,6 +225,8 @@ function prepareJSONNode(id, node, key, content) {
 let numberOfContentSyncDebugLogs = 0
 const maxContentSyncDebugLogTimes = 50
 
+let warnOnceForNoSupport = false
+
 /**
  * This fn creates node manifests which are used for Gatsby Cloud Previews via the Content Sync API/feature.
  * Content Sync routes a user from Contentful to a page created from the entry data they're interested in previewing.
@@ -242,28 +246,11 @@ function contentfulCreateNodeManifest({
 
   const cacheExists = !!syncToken
 
-  const shouldCreateNodeManifest =
-    isPreview &&
-    createNodeManifestIsSupported &&
-    // and this is a delta update
-    (cacheExists ||
-      // or this entry/node was updated in the last 2 days.
-      // we don't want older nodes because we only want to create
-      // node manifests for recently updated/created content.
-      (entryItem.sys.updatedAt &&
-        Date.now() - new Date(entryItem.sys.updatedAt).getTime() <=
-          // milliseconds
-          1000 *
-            // seconds
-            60 *
-            // minutes
-            60 *
-            // hours
-            (Number(
-              process.env.CONTENT_SYNC_CONTENTFUL_HOURS_SINCE_ENTRY_UPDATE
-            ) || 48)))
+  const shouldCreateNodeManifest = isPreview && createNodeManifestIsSupported
 
-  const manifestId = `${space.sys.id}-${entryItem.sys.id}-${entryItem.sys.updatedAt}`
+  const updatedAt = entryItem.sys.updatedAt
+
+  const manifestId = `${space.sys.id}-${entryItem.sys.id}-${updatedAt}`
 
   if (
     process.env.CONTENTFUL_DEBUG_NODE_MANIFEST === `true` &&
@@ -278,22 +265,26 @@ function contentfulCreateNodeManifest({
         createNodeManifestIsSupported,
         shouldCreateNodeManifest,
         manifestId,
-        entryItemSysUpdatedAt: entryItem.sys.updatedAt,
+        entryItemSysUpdatedAt: updatedAt,
       })
     )
   }
 
   if (shouldCreateNodeManifest) {
-    console.info(`Contentful: Creating node manifest with id ${manifestId}`)
-
     unstable_createNodeManifest({
       manifestId,
       node: entryNode,
+      updatedAt,
     })
-  } else if (isPreview && !createNodeManifestIsSupported) {
+  } else if (
+    isPreview &&
+    !createNodeManifestIsSupported &&
+    warnOnceForNoSupport
+  ) {
     console.warn(
       `Contentful: Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
     )
+    warnOnceForNoSupport = true
   }
 }
 
