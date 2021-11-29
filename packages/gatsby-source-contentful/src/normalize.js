@@ -2,8 +2,6 @@
 import stringify from "json-stringify-safe"
 import _ from "lodash"
 
-import { reportOnce } from "gatsby-core-utils"
-
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
@@ -233,7 +231,6 @@ let warnOnceForNoSupport = false
  */
 function contentfulCreateNodeManifest({
   pluginConfig,
-  syncToken,
   entryItem,
   entryNode,
   space,
@@ -243,8 +240,6 @@ function contentfulCreateNodeManifest({
 
   const createNodeManifestIsSupported =
     typeof unstable_createNodeManifest === `function`
-
-  const cacheExists = !!syncToken
 
   const shouldCreateNodeManifest = isPreview && createNodeManifestIsSupported
 
@@ -260,7 +255,6 @@ function contentfulCreateNodeManifest({
 
     console.info(
       JSON.stringify({
-        cacheExists,
         isPreview,
         createNodeManifestIsSupported,
         shouldCreateNodeManifest,
@@ -279,7 +273,7 @@ function contentfulCreateNodeManifest({
   } else if (
     isPreview &&
     !createNodeManifestIsSupported &&
-    warnOnceForNoSupport
+    !warnOnceForNoSupport
   ) {
     console.warn(
       `Contentful: Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
@@ -491,7 +485,6 @@ export const createNodesForContentType = ({
 
         contentfulCreateNodeManifest({
           pluginConfig,
-          syncToken,
           entryItem,
           entryNode,
           space,
