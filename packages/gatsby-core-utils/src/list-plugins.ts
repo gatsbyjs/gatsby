@@ -5,7 +5,11 @@ export async function listPlugins({
 }): Promise<Array<string>> {
   const parsedPlugins: Array<
     string | { resolve: string; options: Record<string, any> }
-  > = require(`${root}/gatsby-config`).plugins
+  > = require(`${root}/gatsby-config`)?.plugins
+
+  if (!parsedPlugins) {
+    return []
+  }
 
   const plugins = parsedPlugins.map(plugin => {
     if (typeof plugin === `string`) {
