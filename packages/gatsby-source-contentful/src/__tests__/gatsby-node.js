@@ -148,9 +148,14 @@ describe(`gatsby-node`, () => {
                 const referenceKey = `${currentContentType.name.toLowerCase()}___NODE`
                 const reference = references.get(linkId)
                 const linkedNode = getNode(linkId)
-                reference[referenceKey] =
-                  reference[referenceKey] || linkedNode[referenceKey] || []
-                reference[referenceKey].push(nodeId)
+                reference[referenceKey] = [
+                  ...(reference[referenceKey] ||
+                    linkedNode[referenceKey] ||
+                    []),
+                ]
+                if (!reference[referenceKey].includes(nodeId)) {
+                  reference[referenceKey].push(nodeId)
+                }
                 references.set(linkId, reference)
               }
               break
