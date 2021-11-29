@@ -1,0 +1,843 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`create-schema-customization builds schema based on Contentful Content Model 1`] = `
+Array [
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "description": Object {
+          "type": "String!",
+        },
+        "displayField": Object {
+          "type": "String!",
+        },
+        "id": Object {
+          "type": "ID!",
+        },
+        "name": Object {
+          "type": "String!",
+        },
+      },
+      "interfaces": Array [
+        "Node",
+      ],
+      "name": "ContentfulContentType",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "contentType": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "contentType___NODE",
+            },
+          },
+          "type": "ContentfulContentType",
+        },
+        "environmentId": Object {
+          "type": " String!",
+        },
+        "firstPublishedAt": Object {
+          "type": " Date!",
+        },
+        "id": Object {
+          "type": " String!",
+        },
+        "locale": Object {
+          "type": " String!",
+        },
+        "publishedAt": Object {
+          "type": " Date!",
+        },
+        "publishedVersion": Object {
+          "type": " Int!",
+        },
+        "spaceId": Object {
+          "type": " String!",
+        },
+        "type": Object {
+          "type": " String!",
+        },
+      },
+      "interfaces": Array [
+        "Node",
+      ],
+      "name": "ContentfulSys",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "tags": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "tags___NODE",
+            },
+          },
+          "type": "[ContentfulTag]!",
+        },
+      },
+      "name": "ContentfulMetadata",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "contentful_id": Object {
+          "type": "String!",
+        },
+        "id": Object {
+          "type": "ID!",
+        },
+        "name": Object {
+          "type": "String!",
+        },
+      },
+      "interfaces": Array [
+        "Node",
+      ],
+      "name": "ContentfulTag",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "localFile": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+            },
+          },
+          "type": "File",
+        },
+      },
+      "name": "ContentfulAssetFields",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "contentType": Object {
+          "type": "String",
+        },
+        "description": Object {
+          "type": "String",
+        },
+        "fields": Object {
+          "type": "ContentfulAssetFields",
+        },
+        "fileName": Object {
+          "type": "String",
+        },
+        "height": Object {
+          "type": "Int",
+        },
+        "id": Object {
+          "type": "ID!",
+        },
+        "size": Object {
+          "type": "Int",
+        },
+        "sys": Object {
+          "type": "ContentfulSys!",
+        },
+        "title": Object {
+          "type": "String",
+        },
+        "url": Object {
+          "type": "String",
+        },
+        "width": Object {
+          "type": "Int",
+        },
+      },
+      "interfaces": Array [
+        "ContentfulReference",
+        "Node",
+      ],
+      "name": "ContentfulAsset",
+    },
+  ],
+  Array [
+    Object {
+      "fields": Object {
+        "block": Object {
+          "resolve": [Function],
+          "type": "[ContentfulAsset]!",
+        },
+        "hyperlink": Object {
+          "resolve": [Function],
+          "type": "[ContentfulAsset]!",
+        },
+      },
+      "name": "ContentfulRichTextAssets",
+    },
+  ],
+  Array [
+    Object {
+      "fields": Object {
+        "block": Object {
+          "resolve": [Function],
+          "type": "[ContentfulEntry]!",
+        },
+        "hyperlink": Object {
+          "resolve": [Function],
+          "type": "[ContentfulEntry]!",
+        },
+        "inline": Object {
+          "resolve": [Function],
+          "type": "[ContentfulEntry]!",
+        },
+      },
+      "name": "ContentfulRichTextEntries",
+    },
+  ],
+  Array [
+    Object {
+      "fields": Object {
+        "assets": Object {
+          "resolve": [Function],
+          "type": "ContentfulRichTextAssets",
+        },
+        "entries": Object {
+          "resolve": [Function],
+          "type": "ContentfulRichTextEntries",
+        },
+      },
+      "name": "ContentfulRichTextLinks",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "json": Object {
+          "resolve": [Function],
+          "type": "JSON",
+        },
+        "links": Object {
+          "resolve": [Function],
+          "type": "ContentfulRichTextLinks",
+        },
+      },
+      "name": "ContentfulRichText",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "lat": Object {
+          "type": "Float!",
+        },
+        "lon": Object {
+          "type": "Float!",
+        },
+      },
+      "name": "ContentfulLocation",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "raw": "String!",
+      },
+      "interfaces": Array [
+        "Node",
+      ],
+      "name": "ContentfulText",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "decimal": Object {
+          "type": "Float",
+        },
+        "decimalLocalized": Object {
+          "type": "Float",
+        },
+        "id": Object {
+          "type": "ID!",
+        },
+        "integer": Object {
+          "type": "Int",
+        },
+        "integerLocalized": Object {
+          "type": "Int",
+        },
+        "metadata": Object {
+          "type": "ContentfulMetadata!",
+        },
+        "sys": Object {
+          "type": "ContentfulSys!",
+        },
+        "title": Object {
+          "type": "String",
+        },
+      },
+      "interfaces": Array [
+        "ContentfulReference",
+        "ContentfulEntry",
+        "Node",
+      ],
+      "name": "ContentfulContentTypeNumber",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "id": Object {
+          "type": "ID!",
+        },
+        "longLocalized": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "longLocalized___NODE",
+            },
+          },
+          "type": "ContentfulText",
+        },
+        "longMarkdown": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "longMarkdown___NODE",
+            },
+          },
+          "type": "ContentfulText",
+        },
+        "longPlain": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "longPlain___NODE",
+            },
+          },
+          "type": "ContentfulText",
+        },
+        "metadata": Object {
+          "type": "ContentfulMetadata!",
+        },
+        "short": Object {
+          "type": "String",
+        },
+        "shortList": Object {
+          "type": "[String]",
+        },
+        "shortListLocalized": Object {
+          "type": "[String]",
+        },
+        "shortLocalized": Object {
+          "type": "String",
+        },
+        "sys": Object {
+          "type": "ContentfulSys!",
+        },
+        "title": Object {
+          "type": "String",
+        },
+      },
+      "interfaces": Array [
+        "ContentfulReference",
+        "ContentfulEntry",
+        "Node",
+      ],
+      "name": "ContentfulContentTypeText",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "id": Object {
+          "type": "ID!",
+        },
+        "many": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "many___NODE",
+            },
+          },
+          "type": "[ContentfulAsset]",
+        },
+        "manyLocalized": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "manyLocalized___NODE",
+            },
+          },
+          "type": "[ContentfulAsset]",
+        },
+        "metadata": Object {
+          "type": "ContentfulMetadata!",
+        },
+        "one": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "one___NODE",
+            },
+          },
+          "type": "ContentfulAsset",
+        },
+        "oneLocalized": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "oneLocalized___NODE",
+            },
+          },
+          "type": "ContentfulAsset",
+        },
+        "sys": Object {
+          "type": "ContentfulSys!",
+        },
+        "title": Object {
+          "type": "String",
+        },
+      },
+      "interfaces": Array [
+        "ContentfulReference",
+        "ContentfulEntry",
+        "Node",
+      ],
+      "name": "ContentfulContentTypeMediaReference",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "boolean": Object {
+          "type": "Boolean",
+        },
+        "booleanLocalized": Object {
+          "type": "Boolean",
+        },
+        "id": Object {
+          "type": "ID!",
+        },
+        "metadata": Object {
+          "type": "ContentfulMetadata!",
+        },
+        "sys": Object {
+          "type": "ContentfulSys!",
+        },
+        "title": Object {
+          "type": "String",
+        },
+      },
+      "interfaces": Array [
+        "ContentfulReference",
+        "ContentfulEntry",
+        "Node",
+      ],
+      "name": "ContentfulContentTypeBoolean",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "date": Object {
+          "extensions": Object {
+            "dateformat": Object {},
+          },
+          "type": "Date",
+        },
+        "dateLocalized": Object {
+          "extensions": Object {
+            "dateformat": Object {},
+          },
+          "type": "Date",
+        },
+        "dateTime": Object {
+          "extensions": Object {
+            "dateformat": Object {},
+          },
+          "type": "Date",
+        },
+        "dateTimeTimezone": Object {
+          "extensions": Object {
+            "dateformat": Object {},
+          },
+          "type": "Date",
+        },
+        "id": Object {
+          "type": "ID!",
+        },
+        "metadata": Object {
+          "type": "ContentfulMetadata!",
+        },
+        "sys": Object {
+          "type": "ContentfulSys!",
+        },
+        "title": Object {
+          "type": "String",
+        },
+      },
+      "interfaces": Array [
+        "ContentfulReference",
+        "ContentfulEntry",
+        "Node",
+      ],
+      "name": "ContentfulContentTypeDate",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "id": Object {
+          "type": "ID!",
+        },
+        "location": Object {
+          "type": "ContentfulLocation",
+        },
+        "locationLocalized": Object {
+          "type": "ContentfulLocation",
+        },
+        "metadata": Object {
+          "type": "ContentfulMetadata!",
+        },
+        "sys": Object {
+          "type": "ContentfulSys!",
+        },
+        "title": Object {
+          "type": "String",
+        },
+      },
+      "interfaces": Array [
+        "ContentfulReference",
+        "ContentfulEntry",
+        "Node",
+      ],
+      "name": "ContentfulContentTypeLocation",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "id": Object {
+          "type": "ID!",
+        },
+        "json": Object {
+          "type": "JSON",
+        },
+        "jsonLocalized": Object {
+          "type": "JSON",
+        },
+        "metadata": Object {
+          "type": "ContentfulMetadata!",
+        },
+        "sys": Object {
+          "type": "ContentfulSys!",
+        },
+        "title": Object {
+          "type": "String",
+        },
+      },
+      "interfaces": Array [
+        "ContentfulReference",
+        "ContentfulEntry",
+        "Node",
+      ],
+      "name": "ContentfulContentTypeJson",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "id": Object {
+          "type": "ID!",
+        },
+        "metadata": Object {
+          "type": "ContentfulMetadata!",
+        },
+        "richText": Object {
+          "type": "ContentfulRichText",
+        },
+        "richTextLocalized": Object {
+          "type": "ContentfulRichText",
+        },
+        "richTextValidated": Object {
+          "type": "ContentfulRichText",
+        },
+        "sys": Object {
+          "type": "ContentfulSys!",
+        },
+        "title": Object {
+          "type": "String",
+        },
+      },
+      "interfaces": Array [
+        "ContentfulReference",
+        "ContentfulEntry",
+        "Node",
+      ],
+      "name": "ContentfulContentTypeRichText",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "id": Object {
+          "type": "ID!",
+        },
+        "many": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "many___NODE",
+            },
+          },
+          "type": "[UnionContentfulContentReferenceNumberText]",
+        },
+        "manyLocalized": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "manyLocalized___NODE",
+            },
+          },
+          "type": "[ContentfulEntry]",
+        },
+        "metadata": Object {
+          "type": "ContentfulMetadata!",
+        },
+        "one": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "one___NODE",
+            },
+          },
+          "type": "ContentfulEntry",
+        },
+        "oneLocalized": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "oneLocalized___NODE",
+            },
+          },
+          "type": "ContentfulEntry",
+        },
+        "sys": Object {
+          "type": "ContentfulSys!",
+        },
+        "title": Object {
+          "type": "String",
+        },
+      },
+      "interfaces": Array [
+        "ContentfulReference",
+        "ContentfulEntry",
+        "Node",
+      ],
+      "name": "ContentfulContentTypeContentReference",
+    },
+  ],
+  Array [
+    Object {
+      "extensions": Object {
+        "dontInfer": Object {},
+      },
+      "fields": Object {
+        "id": Object {
+          "type": "ID!",
+        },
+        "metadata": Object {
+          "type": "ContentfulMetadata!",
+        },
+        "multipleItemsAllTypes": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "multipleItemsAllTypes___NODE",
+            },
+          },
+          "type": "[ContentfulEntry]",
+        },
+        "multipleItemsManyTypes": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "multipleItemsManyTypes___NODE",
+            },
+          },
+          "type": "[UnionContentfulNumberText]",
+        },
+        "multipleItemsSingleType": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "multipleItemsSingleType___NODE",
+            },
+          },
+          "type": "[ContentfulContentTypeText]",
+        },
+        "oneItemAllTypes": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "oneItemAllTypes___NODE",
+            },
+          },
+          "type": "ContentfulEntry",
+        },
+        "oneItemManyTypes": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "oneItemManyTypes___NODE",
+            },
+          },
+          "type": "UnionContentfulNumberText",
+        },
+        "oneItemSingleType": Object {
+          "extensions": Object {
+            "link": Object {
+              "by": "id",
+              "from": "oneItemSingleType___NODE",
+            },
+          },
+          "type": "ContentfulContentTypeText",
+        },
+        "sys": Object {
+          "type": "ContentfulSys!",
+        },
+        "title": Object {
+          "type": "String",
+        },
+      },
+      "interfaces": Array [
+        "ContentfulReference",
+        "ContentfulEntry",
+        "Node",
+      ],
+      "name": "ContentfulContentTypeValidatedContentReference",
+    },
+  ],
+]
+`;
+
+exports[`create-schema-customization builds schema based on Contentful Content Model 2`] = `
+Array [
+  Array [
+    Object {
+      "fields": Object {
+        "id": Object {
+          "type": "ID!",
+        },
+        "sys": Object {
+          "type": "ContentfulSys!",
+        },
+      },
+      "interfaces": Array [
+        "Node",
+      ],
+      "name": "ContentfulReference",
+    },
+  ],
+  Array [
+    Object {
+      "fields": Object {
+        "id": Object {
+          "type": "ID!",
+        },
+        "metadata": Object {
+          "type": "ContentfulMetadata!",
+        },
+        "sys": Object {
+          "type": "ContentfulSys!",
+        },
+      },
+      "interfaces": Array [
+        "ContentfulReference",
+        "Node",
+      ],
+      "name": "ContentfulEntry",
+    },
+  ],
+]
+`;
+
+exports[`create-schema-customization builds schema based on Contentful Content Model 3`] = `
+Array [
+  Array [
+    Object {
+      "name": "UnionContentfulContentReferenceNumberText",
+      "types": Array [
+        "ContentfulContentTypeContentReference",
+        "ContentfulContentTypeNumber",
+        "ContentfulContentTypeText",
+      ],
+    },
+  ],
+  Array [
+    Object {
+      "name": "UnionContentfulNumberText",
+      "types": Array [
+        "ContentfulContentTypeNumber",
+        "ContentfulContentTypeText",
+      ],
+    },
+  ],
+]
+`;

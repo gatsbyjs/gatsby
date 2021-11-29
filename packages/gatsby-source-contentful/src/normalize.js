@@ -5,8 +5,7 @@ import { lt, prerelease } from "semver"
 
 import { restrictedNodeFields, conflictFieldPrefix } from "./config"
 
-const typePrefix = `ContentfulContentType`
-export const makeTypeName = type =>
+export const makeTypeName = (type, typePrefix = `ContentfulContentType`) =>
   _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
 const GATSBY_VERSION_MANIFEST_V2 = `4.3.0`

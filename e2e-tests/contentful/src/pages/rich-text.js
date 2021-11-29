@@ -50,10 +50,10 @@ const makeOptions = ({ assetBlockMap, entryBlockMap, entryInlineMap }) => ({
     },
     [INLINES.EMBEDDED_ENTRY]: node => {
       const entry = entryInlineMap.get(node?.data?.target?.sys.id)
-      if (entry.__typename === "ContentfulText") {
+      if (entry.__typename === "ContentfulContentTypeText") {
         return (
           <span data-cy-id="inline-text">
-            [Inline-ContentfulText] {entry.title}: {entry.short}
+            [Inline-ContentfulContentTypeText] {entry.short}
           </span>
         )
       }
@@ -156,8 +156,10 @@ export const pageQuery = graphql`
                   title
                   one {
                     __typename
-                    sys {
-                      id
+                    ... on ContentfulEntry {
+                      sys {
+                        id
+                      }
                     }
                     ... on ContentfulContentTypeText {
                       title
@@ -179,8 +181,10 @@ export const pageQuery = graphql`
                   }
                   many {
                     __typename
-                    sys {
-                      id
+                    ... on ContentfulEntry {
+                      sys {
+                        id
+                      }
                     }
                     ... on ContentfulContentTypeText {
                       title
@@ -211,6 +215,10 @@ export const pageQuery = graphql`
                 sys {
                   id
                   type
+                }
+                ... on ContentfulContentTypeText {
+                  title
+                  short
                 }
               }
             }
