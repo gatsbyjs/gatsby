@@ -324,6 +324,11 @@ export async function sourceNodes(
     })
   })
 
+  const deletedIds = [
+    ...currentSyncData.deletedAssets.map(n => n.sys.id),
+    ...currentSyncData.deletedEntries.map(n => n.sys.id),
+  ]
+
   // Update existing entry nodes that weren't updated but that need reverse
   // links added.
   existingNodes
@@ -334,15 +339,30 @@ export async function sourceNodes(
       const id = generateReferenceId(n)
       if (foreignReferenceMap[id]) {
         foreignReferenceMap[id].forEach(foreignReference => {
+          const nodeId = makeId({
+            ...foreignReference,
+            defaultLocale,
+            currentLocale: n.sys.locale,
+          })
+
           // Add reverse links
-          if (n[foreignReference.name]) {
-            n[foreignReference.name].push(foreignReference.id)
-            // It might already be there so we'll uniquify after pushing.
-            n[foreignReference.name] = _.uniq(n[foreignReference.name])
-          } else {
-            // If is one foreign reference, there can always be many.
-            // Best to be safe and put it in an array to start with.
-            n[foreignReference.name] = [foreignReference.id]
+          if (!n[foreignReference.name]) {
+            n[foreignReference.name] = [nodeId]
+            return
+          }
+
+          // Very ugly way to remove links to deleted entries
+          n[foreignReference.name].forEach((id, index) => {
+            deletedIds.forEach(deletedId => {
+              if (id.indexOf(deletedId) !== -1) {
+                n[foreignReference.name].splice(index, 1)
+              }
+            })
+          })
+
+          // Link entries if not linked yet
+          if (!n[foreignReference.name].includes(nodeId)) {
+            n[foreignReference.name].push(nodeId)
           }
         })
       }
