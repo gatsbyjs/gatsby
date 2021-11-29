@@ -95,7 +95,7 @@ describe(`contentful extend node type`, () => {
         spaceId: `k8iqpp6u0ior`,
         createdAt: `2021-03-22T10:10:34.647Z`,
         updatedAt: `2021-03-22T10:10:34.647Z`,
-        file: { contentType: `image/png` },
+        contentType: `image/png`,
         title: `Contentful Logo PNG`,
         description: ``,
         node_locale: `en-US`,
