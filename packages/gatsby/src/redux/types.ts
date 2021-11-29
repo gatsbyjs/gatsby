@@ -42,6 +42,16 @@ export interface IGatsbyPage {
   pluginCreatorId: Identifier
   componentPath: SystemPath
   ownerNodeId: Identifier
+  manifestId?: string
+  defer?: boolean
+  /**
+   * INTERNAL. Do not use `page.mode`, it can be removed at any time
+   * `page.mode` is currently reliable only in engines and `onPostBuild` hook
+   * (in develop it is dynamic and can change at any time)
+   * TODO: remove, see comments in utils/page-mode:materializePageMode
+   *
+   * @internal
+   */
   mode: PageMode
 }
 
@@ -83,7 +93,10 @@ export interface IGatsbyConfig {
   developMiddleware?: any
   proxy?: any
   pathPrefix?: string
+  assetPrefix?: string
   mapping?: Record<string, string>
+  jsxRuntime?: "classic" | "automatic"
+  jsxImportSource?: string
 }
 
 export interface IGatsbyNode {
@@ -129,6 +142,8 @@ export interface IGatsbyPageComponent {
   query: string
   pages: Set<string>
   isInBootstrap: boolean
+  serverData: boolean
+  config: boolean
 }
 
 export interface IDefinitionMeta {
@@ -285,6 +300,7 @@ export interface IGatsbyState {
   jobsV2: {
     incomplete: Map<Identifier, IGatsbyIncompleteJobV2>
     complete: Map<Identifier, IGatsbyCompleteJobV2>
+    jobsByRequest: Map<string, Set<Identifier>>
   }
   webpack: any // TODO This should be the output from ./utils/webpack.config.js
   webpackCompilationHash: string
@@ -410,6 +426,19 @@ export type ActionsUnion =
   | ISSRUsedUnsafeBuiltin
   | ISetSiteConfig
   | IMergeWorkerQueryState
+  | ISetComponentFeatures
+  | IMaterializePageMode
+  | ISetJobV2Context
+  | IClearJobV2Context
+
+export interface ISetComponentFeatures {
+  type: `SET_COMPONENT_FEATURES`
+  payload: {
+    componentPath: string
+    serverData: boolean
+    config: boolean
+  }
+}
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -901,6 +930,7 @@ export interface ICreateNodeManifest {
     manifestId: string
     node: IGatsbyNode
     pluginName: string
+    updatedAtUTC?: string | number
   }
 }
 
@@ -921,5 +951,28 @@ export interface IMergeWorkerQueryState {
   payload: {
     workerId: number
     queryStateChunk: IGatsbyState["queries"]
+  }
+}
+
+export interface IMaterializePageMode {
+  type: `MATERIALIZE_PAGE_MODE`
+  payload: {
+    path: string
+    pageMode: PageMode
+  }
+}
+
+export interface ISetJobV2Context {
+  type: `SET_JOB_V2_CONTEXT`
+  payload: {
+    job: IGatsbyIncompleteJobV2["job"]
+    requestId: string
+  }
+}
+
+export interface IClearJobV2Context {
+  type: `CLEAR_JOB_V2_CONTEXT`
+  payload: {
+    requestId: string
   }
 }

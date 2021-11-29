@@ -132,8 +132,6 @@ for more details.
 - `webpQuality` (int)
 - `srcSetBreakpoints` (array of int, default: [])
 - `background` (string, default: 'rgba(0,0,0,1)')
-- [deprecated] `sizeByPixelDensity` (bool, default: false)
-  - Pixel density is only used in vector images, which Gatsby’s implementation of Sharp doesn’t support. This option is currently a no-op and will be removed in the next major version of Gatsby.
 
 #### Returns
 

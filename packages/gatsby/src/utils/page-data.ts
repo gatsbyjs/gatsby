@@ -18,8 +18,9 @@ import {
 import { Span } from "opentracing"
 
 export { reverseFixedPagePath }
-
+import { processNodeManifests } from "../utils/node-manifest"
 import { IExecutionResult } from "../query/types"
+import { getPageMode } from "./page-mode"
 
 export interface IPageDataWithQueryResult extends IPageData {
   result: IExecutionResult
@@ -173,6 +174,15 @@ export async function flush(parentSpan?: Span): Promise<void> {
   )
   writePageDataActivity.start()
 
+  let nodeManifestPagePathMap
+
+  if (pagePaths.size > 0) {
+    // we process node manifests in this location because we need to add the manifestId to the page data.
+    // We use this manifestId to determine if the page data is up to date when routing. Here we create a map of "pagePath": "manifestId" while processing and writing node manifest files.
+    // We only do this when there are pending page-data writes because otherwise we could flush pending createNodeManifest calls before page-data.json files are written. Which means those page-data files wouldn't have the corresponding manifest id's written to them.
+    nodeManifestPagePathMap = await processNodeManifests()
+  }
+
   const flushQueue = fastq(async (pagePath, cb) => {
     const page = pages.get(pagePath)
 
@@ -183,6 +193,10 @@ export async function flush(parentSpan?: Span): Promise<void> {
     // them, a page might not exist anymore щ（ﾟДﾟщ）
     // This is why we need this check
     if (page) {
+      if (page.path && nodeManifestPagePathMap) {
+        page.manifestId = nodeManifestPagePathMap.get(page.path)
+      }
+
       if (!isBuild && process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
         // check if already did run query for this page
         // with query-on-demand we might have pending page-data write due to
@@ -198,7 +212,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
 
         if (hasFlag(query.dirty, FLAG_DIRTY_NEW_PAGE)) {
           // query results are not written yet
-          process.nextTick(() => cb(null, true))
+          setImmediate(() => cb(null, true))
           return
         }
       }
@@ -208,7 +222,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
       if (
         _CFLAGS_.GATSBY_MAJOR !== `4` ||
         !isBuild ||
-        (isBuild && page.mode === `SSG`)
+        (isBuild && getPageMode(page) === `SSG`)
       ) {
         const staticQueryHashes =
           staticQueriesByTemplate.get(page.componentPath) || []
@@ -239,9 +253,9 @@ export async function flush(parentSpan?: Span): Promise<void> {
       },
     })
 
-    // `process.nextTick` below is a workaround against stack overflow
+    // `setImmediate` below is a workaround against stack overflow
     // occurring when there are many non-SSG pages
-    process.nextTick(() => cb(null, true))
+    setImmediate(() => cb(null, true))
     return
   }, 25)
 

@@ -50,6 +50,7 @@ Map {
   "/hi/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
@@ -63,6 +64,7 @@ Map {
   "/hi/pizza/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/pizza/",
     "isCreatedByStatefulCreatePages": false,
@@ -82,6 +84,7 @@ Object {
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
@@ -105,6 +108,7 @@ Map {
   "/hi/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
@@ -124,6 +128,7 @@ Object {
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {
       "id": 123,
     },
@@ -149,6 +154,7 @@ Map {
   "/hi/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {
       "id": 123,
     },
@@ -170,6 +176,7 @@ Object {
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
@@ -193,6 +200,7 @@ Map {
   "/hi/" => Object {
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
+    "componentPath": "/whatever/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,
@@ -213,6 +221,7 @@ Map {
   "/hi/" => Object {
     "component": "/whatever2/index.js",
     "componentChunkName": "component---whatever-2-index-js",
+    "componentPath": "/whatever2/index.js",
     "context": Object {},
     "internalComponentName": "Component/hi/",
     "isCreatedByStatefulCreatePages": false,

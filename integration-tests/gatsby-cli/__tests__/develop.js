@@ -39,7 +39,6 @@ describe(`gatsby develop`, () => {
     logs.should.contain(`success createPages`)
     logs.should.contain(`success createPagesStatefully`)
     logs.should.contain(`success onPreExtractQueries`)
-    logs.should.contain(`success update schema`)
     logs.should.contain(`success extract queries from components`)
     logs.should.contain(`success write out requires`)
     logs.should.contain(`success write out redirect data`)

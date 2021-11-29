@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.2.0/packages/gatsby-source-graphql) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-graphql [#32981](https://github.com/gatsbyjs/gatsby/issues/32981) ([aceaba4](https://github.com/gatsbyjs/gatsby/commit/aceaba408ca5a0c23268fe485a83f545ac858ab2))
+
+### [4.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.1.3/packages/gatsby-source-graphql) (2021-11-15)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+### [4.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.1.2/packages/gatsby-source-graphql) (2021-11-11)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+### [4.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.1.1/packages/gatsby-source-graphql) (2021-11-10)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.1.0/packages/gatsby-source-graphql) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-source-graphql
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.0.0/packages/gatsby-source-graphql) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Features
+
+- move away from old default uuid [#33275](https://github.com/gatsbyjs/gatsby/issues/33275) ([325fdf4](https://github.com/gatsbyjs/gatsby/commit/325fdf4a068acf755ed124cb522e133ea5c31157))
+
+#### Bug Fixes
+
+- support Gatsby 4 [#33310](https://github.com/gatsbyjs/gatsby/issues/33310) ([98ae718](https://github.com/gatsbyjs/gatsby/commit/98ae718ae803f03546b5ad65f04ba3c09ec5993a))
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@3.14.0/packages/gatsby-source-graphql) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
