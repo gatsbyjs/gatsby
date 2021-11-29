@@ -226,6 +226,7 @@ export function loadPlugins(
               roots = roots.map(root => root[segment])
             }
           }
+          roots = roots.flat()
 
           const processed = roots.map(processPlugin)
           _.set(plugin.options, pathToSwap, processed)
@@ -268,7 +269,7 @@ export function loadPlugins(
     `../../internal-plugins/dev-404-page`,
     `../../internal-plugins/load-babel-config`,
     `../../internal-plugins/internal-data-bridge`,
-    `../../internal-plugins/prod-404`,
+    `../../internal-plugins/prod-404-500`,
     `../../internal-plugins/webpack-theme-component-shadowing`,
     `../../internal-plugins/bundle-optimisations`,
     `../../internal-plugins/functions`,

@@ -10,9 +10,7 @@ import { CreateDevServerArgs, ParentSpanPluginArgs } from "gatsby"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
 import chokidar from "chokidar"
-// We use an ancient version of path-to-regexp as it has breaking changes to express v4
-// see: https://github.com/pillarjs/path-to-regexp/tree/77df63869075cfa5feda1988642080162c584427#compatibility-with-express--4x
-import pathToRegexp from "path-to-regexp"
+import { match } from "@gatsbyjs/reach-router/lib/utils"
 import cookie from "cookie"
 import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
 import { internalActions } from "../../redux/actions"
@@ -27,14 +25,8 @@ interface IGlobPattern {
   rootPath: string
   /** The glob pattern **/
   globPattern: string
-}
-
-interface IPathToRegexpKey {
-  name: string | number
-  prefix: string
-  suffix: string
-  pattern: string
-  modifier: string
+  /** The glob ignore pattern */
+  ignorePattern: Array<string>
 }
 
 // During development, we lazily compile functions only when they're requested.
@@ -80,9 +72,23 @@ async function ensureFunctionIsCompiled(
 const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
   const globs: Array<IGlobPattern> = []
 
+  function globIgnorePatterns(
+    root: string,
+    pluginName?: string
+  ): Array<string> {
+    const nestedFolder = pluginName ? `/${pluginName}/**/` : `/**/`
+
+    return [
+      `${root}/src/api${nestedFolder}__tests__/**/*.+(js|ts)`, // Jest tests
+      `${root}/src/api${nestedFolder}+(*.)+(spec|test).+(js|ts)`,
+      `${root}/src/api${nestedFolder}+(*.)+(d).ts`, // .d.ts files
+    ]
+  }
+
   // Add the default site src/api directory.
   globs.push({
     globPattern: `${siteDirectoryPath}/src/api/**/*.{js,ts}`,
+    ignorePattern: globIgnorePatterns(siteDirectoryPath),
     rootPath: path.join(siteDirectoryPath, `src/api`),
     pluginName: `default-site-plugin`,
   })
@@ -109,6 +115,7 @@ const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
 
     const glob = {
       globPattern: `${plugin.resolve}/src/api/${plugin.name}/**/*.{js,ts}`,
+      ignorePattern: globIgnorePatterns(plugin.resolve, plugin.name),
       rootPath: path.join(plugin.resolve, `src/api`),
       pluginName: plugin.name,
     } as IGlobPattern
@@ -155,7 +162,9 @@ const createWebpackConfig = async ({
   const allFunctions = await Promise.all(
     globs.map(async (glob): Promise<Array<IGatsbyFunction>> => {
       const knownFunctions: Array<IGatsbyFunction> = []
-      const files = await globAsync(glob.globPattern)
+      const files = await globAsync(glob.globPattern, {
+        ignore: glob.ignorePattern,
+      })
       files.map(file => {
         const originalAbsoluteFilePath = file
         const originalRelativeFilePath = path.relative(glob.rootPath, file)
@@ -197,7 +206,7 @@ const createWebpackConfig = async ({
     JSON.stringify(knownFunctions, null, 4)
   )
 
-  // Load environment variables from process.env.GATSBY_* and .env.* files.
+  // Load environment variables from process.env.* and .env.* files.
   // Logic is shared with webpack.config.js
 
   // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
@@ -496,24 +505,22 @@ export async function onCreateDevServer({
         // Check if there's any matchPaths that match.
         // We loop until we find the first match.
         functions.some(f => {
-          let exp
-          const keys: Array<IPathToRegexpKey> = []
           if (f.matchPath) {
-            exp = pathToRegexp(f.matchPath, keys)
-          }
-          if (exp && exp.exec(pathFragment) !== null) {
-            functionObj = f
-            const matches = [...pathFragment.match(exp)].slice(1)
-            const newParams = {}
-            matches.forEach(
-              (match, index) => (newParams[keys[index].name] = match)
-            )
-            req.params = newParams
+            const matchResult = match(f.matchPath, pathFragment)
+            if (matchResult) {
+              req.params = matchResult.params
+              if (req.params[`*`]) {
+                // Backwards compatability for v3
+                // TODO remove in v5
+                req.params[`0`] = req.params[`*`]
+              }
+              functionObj = f
 
-            return true
-          } else {
-            return false
+              return true
+            }
           }
+
+          return false
         })
       }
 

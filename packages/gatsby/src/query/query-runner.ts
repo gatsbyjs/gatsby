@@ -8,7 +8,7 @@ import { ExecutionResult, GraphQLError } from "graphql"
 import path from "path"
 import { store } from "../redux"
 import { actions } from "../redux/actions"
-import { getCodeFrame } from "./graphql-errors"
+import { getCodeFrame } from "./graphql-errors-codeframe"
 import errorParser from "./error-parser"
 
 import { GraphQLRunner } from "./graphql-runner"

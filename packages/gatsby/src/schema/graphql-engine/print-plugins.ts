@@ -13,7 +13,7 @@ const schemaCustomizationAPIs = new Set([
   `createResolvers`,
 ])
 
-const excludePlugins = new Set([`internal-data-bridge`, `default-site-plugin`])
+const excludePlugins = new Set([`internal-data-bridge`])
 const includePlugins = new Set([`gatsby-plugin-sharp`])
 
 // Emit file that imports required node APIs
@@ -176,6 +176,7 @@ function getSubpluginsByPluginPath(
       roots = roots.map(root => root[segment])
     }
   }
+  roots = roots.flat()
 
   return roots
 }

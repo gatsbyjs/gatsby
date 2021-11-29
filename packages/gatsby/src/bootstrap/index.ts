@@ -11,7 +11,6 @@ import {
   extractQueries,
   writeOutRedirects,
   postBootstrap,
-  rebuildSchemaWithSitePage,
 } from "../services"
 import { Runner, createGraphQLRunner } from "./create-graphql-runner"
 import { globalTracer } from "opentracing"
@@ -69,8 +68,6 @@ export async function bootstrap(
   await createPages(context)
 
   await handleStalePageData(parentSpan)
-
-  await rebuildSchemaWithSitePage(context)
 
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
     savePartialStateToDisk([`inferenceMetadata`])

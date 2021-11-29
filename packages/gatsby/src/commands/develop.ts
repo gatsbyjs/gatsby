@@ -18,13 +18,13 @@ import {
   getService,
   updateSiteMetadata,
   UnlockFn,
+  uuid,
 } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { getSslCert } from "../utils/get-ssl-cert"
 import { IProxyControls, startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram, IDebugInfo } from "./types"
 import { flush as telemetryFlush } from "gatsby-telemetry"
-import uuidv4 from "uuid/v4"
 
 // Adapted from https://stackoverflow.com/a/16060619
 const requireUncached = (file: string): any => {
@@ -200,7 +200,7 @@ const REGEX_IP =
 
 module.exports = async (program: IProgram): Promise<void> => {
   global.__GATSBY = {
-    buildId: uuidv4(),
+    buildId: uuid.v4(),
     root: program.directory,
   }
 

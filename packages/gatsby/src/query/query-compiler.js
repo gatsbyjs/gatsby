@@ -204,6 +204,7 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
     doc,
     isHook,
     isStaticQuery,
+    isConfigQuery,
   } of parsedQueries) {
     const errors = validate(schema, doc, preValidationRules)
 
@@ -273,6 +274,7 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
         printedAst,
         isHook,
         isStaticQuery,
+        isConfigQuery,
         isFragment: def.kind === Kind.FRAGMENT_DEFINITION,
         hash: hash,
       })
@@ -304,7 +306,11 @@ const processDefinitions = ({
     const name = operation.name.value
     const originalDefinition = definitionsByName.get(name)
     const filePath = definitionsByName.get(name).filePath
-    if (processedQueries.has(filePath)) {
+
+    // Check for duplicate page/static queries in the same component.
+    // (config query is not a duplicate of page/static query in the component)
+    // TODO: make sure there is at most one query type per component (e.g. one config + one page)
+    if (processedQueries.has(filePath) && !originalDefinition.isConfigQuery) {
       const otherQuery = processedQueries.get(filePath)
 
       addError(
@@ -397,6 +403,7 @@ const processDefinitions = ({
       path: filePath,
       isHook: originalDefinition.isHook,
       isStaticQuery: originalDefinition.isStaticQuery,
+      isConfigQuery: originalDefinition.isConfigQuery,
       // ensure hash should be a string and not a number
       hash: String(originalDefinition.hash),
     }
@@ -420,7 +427,12 @@ const processDefinitions = ({
       )
     }
 
-    processedQueries.set(filePath, query)
+    // Our current code only supports single graphql query per file (page or static query per file)
+    // So, not adding config query because it can overwrite existing page query
+    // TODO: allow multiple queries in single file, while preserving limitation of a single page query per file
+    if (!query.isConfigQuery) {
+      processedQueries.set(filePath, query)
+    }
   }
 
   return processedQueries

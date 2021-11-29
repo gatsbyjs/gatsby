@@ -130,7 +130,7 @@ createFilePath({
 
 #### Example usage
 
-The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.org/tutorial/part-seven/) and is used to create URL slugs for markdown pages.
+The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.org/tutorial/part-7/) and is used to create URL slugs for markdown pages.
 
 ```javascript
 const { createFilePath } = require(`gatsby-source-filesystem`)

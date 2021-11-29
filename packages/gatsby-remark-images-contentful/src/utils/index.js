@@ -30,14 +30,10 @@ const buildResponsiveSizes = async (
   )
 
   const { width, height, density } = metadata
-  const { sizeByPixelDensity, maxWidth, sizes } = options
+  const { maxWidth, sizes } = options
   const aspectRatio = width / height
-  const pixelRatio =
-    sizeByPixelDensity && typeof density === `number` && density > 0
-      ? density / 72
-      : 1
 
-  const presentationWidth = Math.min(maxWidth, Math.round(width / pixelRatio))
+  const presentationWidth = Math.min(maxWidth, width)
   const presentationHeight = Math.round(presentationWidth * (height / width))
   const sizesQuery =
     sizes || `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`

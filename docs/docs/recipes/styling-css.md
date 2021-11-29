@@ -50,7 +50,7 @@ import "./src/styles/global.css"
 
 ### Directions
 
-You can add global styles to a [shared layout component](/docs/tutorial/part-three/#your-first-layout-component). This component is used for things that are common throughout the site, like a header or footer.
+You can add global styles to a [shared layout component](/docs/tutorial/part-3/#your-first-layout-component). This component is used for things that are common throughout the site, like a header or footer.
 
 1. If you don't already have one, create a new directory in your site at `/src/components`.
 
@@ -89,7 +89,7 @@ export default function Home() {
 ### Additional resources
 
 - [Standard Styling with Global CSS Files](/docs/how-to/styling/global-css/)
-- [More about layout components](/docs/tutorial/part-three)
+- [More about layout components](/docs/tutorial/part-3)
 
 ## Using Styled Components
 
@@ -213,7 +213,7 @@ Notice that the file extension is `.module.css` instead of `.css`, which tells G
 
 ### Additional resources
 
-- More on [Using CSS Modules](/docs/tutorial/part-two/#css-modules)
+- More on [Using CSS Modules](/docs/tutorial/part-2/#css-modules)
 - [Live example on Using CSS modules](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-css-modules)
 
 ## Using Sass/SCSS
