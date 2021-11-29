@@ -1,8 +1,4 @@
-export async function listPlugins({
-  root,
-}: {
-  root: string
-}): Promise<Array<string>> {
+export function listPlugins({ root }: { root: string }): Array<string> {
   const parsedPlugins: Array<
     string | { resolve: string; options: Record<string, any> }
   > = require(`${root}/gatsby-config`)?.plugins
