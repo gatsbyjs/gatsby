@@ -24,7 +24,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Content Sync Improvements
 
-## use-renderToPipeableStream-react-18-API
+## Use renderToPipeableStream React 18 API
 
 With React 18 beta, the new Server Side Rendering API is `renderToPipeableStream`. We have switched Gatsby to use it to be 100% compatible with react@beta and the latest react@alpha packages.
 
