@@ -24,6 +24,10 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Content Sync Improvements
 
+The createNodeManifest action gets a performance boost.
+
+We no longer hash page-data.json files and include that hash in node manifest files in order to determine if that page-data has deployed. Instead we include the manifest id passed to createNodeManifest within the page-data file as a more performant way to check if the corresponding data for a data update has deployed and become publicly available online. This allows us to create more node manifest files than before, making services such as Content Sync more reliable, in more situations.
+
 ## Use renderToPipeableStream React 18 API
 
 With React 18 beta, the new Server Side Rendering API is `renderToPipeableStream`. We have switched Gatsby to use it to be 100% compatible with react@beta and the latest react@alpha packages.
