@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 989:
+/***/ 473:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -28,7 +28,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.issue = exports.issueCommand = void 0;
 const os = __importStar(__nccwpck_require__(37));
-const utils_1 = __nccwpck_require__(91);
+const utils_1 = __nccwpck_require__(767);
 /**
  * Commands
  *
@@ -100,7 +100,7 @@ function escapeProperty(s) {
 
 /***/ }),
 
-/***/ 640:
+/***/ 406:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -135,12 +135,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getIDToken = exports.getState = exports.saveState = exports.group = exports.endGroup = exports.startGroup = exports.info = exports.notice = exports.warning = exports.error = exports.debug = exports.isDebug = exports.setFailed = exports.setCommandEcho = exports.setOutput = exports.getBooleanInput = exports.getMultilineInput = exports.getInput = exports.addPath = exports.setSecret = exports.exportVariable = exports.ExitCode = void 0;
-const command_1 = __nccwpck_require__(989);
-const file_command_1 = __nccwpck_require__(856);
-const utils_1 = __nccwpck_require__(91);
+const command_1 = __nccwpck_require__(473);
+const file_command_1 = __nccwpck_require__(230);
+const utils_1 = __nccwpck_require__(767);
 const os = __importStar(__nccwpck_require__(37));
 const path = __importStar(__nccwpck_require__(17));
-const oidc_utils_1 = __nccwpck_require__(766);
+const oidc_utils_1 = __nccwpck_require__(149);
 /**
  * The code to exit an action
  */
@@ -419,7 +419,7 @@ exports.getIDToken = getIDToken;
 
 /***/ }),
 
-/***/ 856:
+/***/ 230:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -450,7 +450,7 @@ exports.issueCommand = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const fs = __importStar(__nccwpck_require__(147));
 const os = __importStar(__nccwpck_require__(37));
-const utils_1 = __nccwpck_require__(91);
+const utils_1 = __nccwpck_require__(767);
 function issueCommand(command, message) {
     const filePath = process.env[`GITHUB_${command}`];
     if (!filePath) {
@@ -468,7 +468,7 @@ exports.issueCommand = issueCommand;
 
 /***/ }),
 
-/***/ 766:
+/***/ 149:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -484,9 +484,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.OidcClient = void 0;
-const http_client_1 = __nccwpck_require__(684);
-const auth_1 = __nccwpck_require__(490);
-const core_1 = __nccwpck_require__(640);
+const http_client_1 = __nccwpck_require__(277);
+const auth_1 = __nccwpck_require__(689);
+const core_1 = __nccwpck_require__(406);
 class OidcClient {
     static createHttpClient(allowRetry = true, maxRetry = 10) {
         const requestOptions = {
@@ -552,7 +552,7 @@ exports.OidcClient = OidcClient;
 
 /***/ }),
 
-/***/ 91:
+/***/ 767:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -599,7 +599,7 @@ exports.toCommandProperties = toCommandProperties;
 
 /***/ }),
 
-/***/ 490:
+/***/ 689:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -665,7 +665,7 @@ exports.PersonalAccessTokenCredentialHandler = PersonalAccessTokenCredentialHand
 
 /***/ }),
 
-/***/ 684:
+/***/ 277:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -673,7 +673,7 @@ exports.PersonalAccessTokenCredentialHandler = PersonalAccessTokenCredentialHand
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const http = __nccwpck_require__(685);
 const https = __nccwpck_require__(687);
-const pm = __nccwpck_require__(42);
+const pm = __nccwpck_require__(359);
 let tunnel;
 var HttpCodes;
 (function (HttpCodes) {
@@ -1092,7 +1092,7 @@ class HttpClient {
         if (useProxy) {
             // If using proxy, need tunnel
             if (!tunnel) {
-                tunnel = __nccwpck_require__(69);
+                tunnel = __nccwpck_require__(0);
             }
             const agentOptions = {
                 maxSockets: maxSockets,
@@ -1210,7 +1210,7 @@ exports.HttpClient = HttpClient;
 
 /***/ }),
 
-/***/ 42:
+/***/ 359:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -1275,15 +1275,15 @@ exports.checkBypass = checkBypass;
 
 /***/ }),
 
-/***/ 69:
+/***/ 0:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-module.exports = __nccwpck_require__(599);
+module.exports = __nccwpck_require__(531);
 
 
 /***/ }),
 
-/***/ 599:
+/***/ 531:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -1555,6 +1555,66 @@ exports.debug = debug; // for test
 
 /***/ }),
 
+/***/ 679:
+/***/ ((module) => {
+
+const messages = {
+  stale: {
+    found: "*_Issues were marked as stale_*",
+    empty: "No issues were marked as stale"
+  },
+  closed: {
+    found: "*_Issues were closed_*",
+    empty: "There are none! Great job!"
+  }
+}
+
+/**
+ * Format a list of issues to Slack's block kit
+ * @see https://api.slack.com/tools/block-kit-builder
+ * @param queue
+ * @param type - Which type of issue. stale | closed
+ */
+const slackMessage = (queue, type) => {
+  const report = []
+
+  report.push({
+    type: "divider",
+  })
+
+  report.push({
+    type: "section",
+    text: {
+      type: "mrkdwn",
+      text: `[${queue.length}] ${messages[type].found}`,
+    },
+  })
+
+  let text = ``
+
+  queue.map((issue, i) => {
+    text += `${i + 1 + `. `}<${issue.url}|${issue.title}>\n`
+  })
+
+  if (text === ``) {
+    text = messages[type].empty
+  }
+
+  report.push({
+    type: "section",
+    text: {
+      type: "mrkdwn",
+      text,
+    },
+  })
+
+  return report
+}
+
+module.exports = slackMessage
+
+/***/ }),
+
 /***/ 491:
 /***/ ((module) => {
 
@@ -1676,8 +1736,8 @@ module.exports = require("util");
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-const core = __nccwpck_require__(640)
-const slackMessage = "./slack-message"
+const core = __nccwpck_require__(406)
+const slackMessage = __nccwpck_require__(679)
 
 function formatIssues(issues) {
   const parsedIssues = JSON.parse(issues)
