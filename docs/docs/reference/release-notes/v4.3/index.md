@@ -32,7 +32,7 @@ We've also added a new updatedAtUTC argument to the action, passing a date here 
 
 ## Use renderToPipeableStream React 18 API
 
-With React 18 beta, the new Server Side Rendering API is `renderToPipeableStream`. We have switched Gatsby to use it to be 100% compatible with react@beta and the latest react@alpha packages.
+Gatsby switched to `renderToPipeableStream` instead of `pipeToNodeWritable` from older React 18 alpha versions. Now with React 18 beta and the new alphas `renderToPipeableStream` is the recommend API for Server Side Rendering.
 
 ## Notable bugfixes & improvements
 
