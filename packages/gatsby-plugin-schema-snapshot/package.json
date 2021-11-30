@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-schema-snapshot",
-  "version": "3.3.0-next.0",
+  "version": "3.4.0-next.0",
   "main": "index.js",
   "license": "MIT",
   "keywords": [
