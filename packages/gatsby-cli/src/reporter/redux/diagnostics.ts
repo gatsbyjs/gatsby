@@ -38,6 +38,32 @@ const FIVE_SECONDS = 1000 * 5
 const TEN_MINUTES = 1000 * 60 * 10
 const TEN_SECONDS = 1000 * 10
 
+export type AdditionalDiagnosticsOutputHandler = () => string
+const additionalDiagnosticOutputHandlers: Array<AdditionalDiagnosticsOutputHandler> =
+  []
+
+export function registerAdditionalDiagnosticOutputHandler(
+  handler: AdditionalDiagnosticsOutputHandler
+): void {
+  additionalDiagnosticOutputHandlers.push(handler)
+}
+
+function generateAdditionalOutput(): string {
+  const extraMessages: Array<string> = []
+
+  for (const handler of additionalDiagnosticOutputHandlers) {
+    const msg = handler()
+
+    if (msg) {
+      extraMessages.push(msg)
+    }
+  }
+
+  return extraMessages.length > 0
+    ? `\n\nAdditional debugging logs:\n\n${extraMessages.join(`\n\n`)}`
+    : ``
+}
+
 export function createStructuredLoggingDiagnosticsMiddleware(
   getStore: () => GatsbyCLIStore
 ): DiagnosticsMiddleware {
@@ -152,7 +178,7 @@ export function createStructuredLoggingDiagnosticsMiddleware(
                         1000
                       ).toFixed(3)} seconds if nothing will change.`
                     : ``
-                }`
+                }${generateAdditionalOutput()}`
               )
               displayingStuckStatusDiagnosticWarning = false
               displayedStuckStatusDiagnosticWarning = true
@@ -179,6 +205,7 @@ export function createStructuredLoggingDiagnosticsMiddleware(
                   stuckStatusDiagnosticMessage:
                     generateStuckStatusDiagnosticMessage(),
                   stuckStatusWatchdogTimeoutDelay,
+                  additionalOutput: generateAdditionalOutput(),
                 },
               })
             },

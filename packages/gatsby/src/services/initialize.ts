@@ -20,6 +20,7 @@ import { IGatsbyState, IStateProgram } from "../redux/types"
 import { IBuildContext } from "./types"
 import { detectLmdbStore } from "../datastore"
 import { loadConfigAndPlugins } from "../bootstrap/load-config-and-plugins"
+import type { InternalJob } from "../utils/jobs/types"
 
 interface IPluginResolution {
   resolve: string
@@ -99,6 +100,29 @@ export async function initialize({
    */
   if (args.setStore) {
     args.setStore(store)
+  }
+
+  if (reporter._registerAdditionalDiagnosticOutputHandler) {
+    reporter._registerAdditionalDiagnosticOutputHandler(
+      function logPendingJobs(): string {
+        const outputs: Array<InternalJob> = []
+
+        for (const [, { job }] of store.getState().jobsV2.incomplete) {
+          outputs.push(job)
+          if (outputs.length >= 5) {
+            // 5 not finished jobs should be enough to track down issues
+            // this is just limiting output "spam"
+            break
+          }
+        }
+
+        return outputs.length
+          ? `Unfinished jobs (showing ${outputs.length} of ${
+              store.getState().jobsV2.incomplete.size
+            } jobs total):\n\n` + JSON.stringify(outputs, null, 2)
+          : ``
+      }
+    )
   }
 
   const directory = slash(args.directory)
