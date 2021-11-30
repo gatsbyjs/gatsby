@@ -248,7 +248,10 @@ export function createInternalJob(
   return internalJob
 }
 
-let activityForJobsProgress
+const activitiesForJobTypes = new Map<
+  string,
+  ReturnType<typeof reporter.createProgress>
+>()
 
 /**
  * Creates a job
@@ -273,9 +276,18 @@ export async function enqueueJob(
     activityForJobs!.start()
   }
 
+  const jobType = `${job.plugin.name}.${job.name}`
+
+  let activityForJobsProgress = activitiesForJobTypes.get(jobType)
+
   if (!activityForJobsProgress) {
-    activityForJobsProgress = reporter.createProgress(`Running jobs`, 1, 0)
+    activityForJobsProgress = reporter.createProgress(
+      `Running ${jobType} jobs`,
+      1,
+      0
+    )
     activityForJobsProgress.start()
+    activitiesForJobTypes.set(jobType, activityForJobsProgress)
   } else {
     activityForJobsProgress.total++
   }
@@ -333,10 +345,10 @@ export function removeInProgressJob(contentDigest: string): void {
  */
 export async function waitUntilAllJobsComplete(): Promise<void> {
   await (hasActiveJobs ? hasActiveJobs.promise : Promise.resolve())
-  if (activityForJobsProgress) {
-    activityForJobsProgress.end()
-    activityForJobsProgress = null
+  for (const progressActivity of activitiesForJobTypes.values()) {
+    progressActivity.end()
   }
+  activitiesForJobTypes.clear()
 }
 
 /**
