@@ -4318,10 +4318,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.20.6.tgz#7b73cce37352936e628c5ba40326193443cfba25"
   integrity sha512-sRVq8d+ApGslmkE9e3i+D3gFGk7aZHAT+G4cIpIEdLJYPsWiSPwcAnJEjddLQQDqV3Ra2jOclX/Sv6YrvGYiWA==
 
-"@types/node@^14.10.2", "@types/node@^14.17.32":
-  version "14.17.32"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.32.tgz#2ca61c9ef8c77f6fa1733be9e623ceb0d372ad96"
-  integrity sha512-JcII3D5/OapPGx+eJ+Ik1SQGyt6WvuqdRfh9jUwL6/iHGjmyOriBDciBUu7lEIBTL2ijxwrR70WUnw5AEDmFvQ==
+"@types/node@^14.10.2", "@types/node@^14.17.32", "@types/node@^14.17.34":
+  version "14.17.34"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.34.tgz#fe4b38b3f07617c0fa31ae923fca9249641038f0"
+  integrity sha512-USUftMYpmuMzeWobskoPfzDi+vkpe0dvcOBRNOscFrGxVp4jomnRxWuVohgqBow2xyIPC0S3gjxV/5079jhmDg==
 
 "@types/node@^15.0.1":
   version "15.0.1"
@@ -7611,10 +7611,10 @@ common-path-prefix@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/common-path-prefix/-/common-path-prefix-1.0.0.tgz#cd52f6f0712e0baab97d6f9732874f22f47752c0"
 
-common-tags@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/common-tags/-/common-tags-1.8.0.tgz#8e3153e542d4a39e9b10554434afaaf98956a937"
-  integrity sha512-6P6g0uetGpW/sdyUy/iQQCbFF0kWVMSIVSyYz7Zgjcgh8mgw8PQzDNZeyZ5DQ2gM7LBoZPHmnjz8rUthkBG5tw==
+common-tags@^1.8.0, common-tags@^1.8.2:
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/common-tags/-/common-tags-1.8.2.tgz#94ebb3c076d26032745fd54face7f688ef5ac9c6"
+  integrity sha512-gk/Z852D2Wtb//0I+kRFNKKE9dIIVirjoqPoA1wJU+XePVXZfGeBpk45+A1rKO4Q43prqWBNY/MiIeRLbPWUaA==
 
 commondir@^1.0.1:
   version "1.0.1"
@@ -17118,10 +17118,10 @@ microbundle@^0.13.0:
     tslib "^2.0.3"
     typescript "^4.1.3"
 
-microbundle@^0.14.1:
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/microbundle/-/microbundle-0.14.1.tgz#a7de2dfa2efce01233dc494bd8dccb4570804aa4"
-  integrity sha512-/JAAPKWRyvBV0QjmmhgPU9NGuX3Tk1u8EXuMJ+6npFmnm+EtuL8IpJihxmljpUwaoHLyDy+b2ntfWoN6BkDQzA==
+microbundle@^0.14.1, microbundle@^0.14.2:
+  version "0.14.2"
+  resolved "https://registry.yarnpkg.com/microbundle/-/microbundle-0.14.2.tgz#2db869c8145bd159aa55058ead47223f58f93bf2"
+  integrity sha512-jODALfU3w7jnJAqw7Tou9uU8e8zH0GRVWzOd/V7eAvD1fsfb9pyMbmzhFZqnX6SCb54eP1EF5oRyNlSxBAxoag==
   dependencies:
     "@babel/core" "^7.12.10"
     "@babel/plugin-proposal-class-properties" "7.12.1"
