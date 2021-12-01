@@ -15,7 +15,7 @@
     "@types/common-tags": "^1.8.1",
     "better-opn": "^2.1.1",
     "boxen": "^5.1.2",
-    "chalk": "^4.1.2",
+    "chalk": "^5.0.0",
     "clipboardy": "^2.3.0",
     "common-tags": "^1.8.0",
     "configstore": "^5.0.1",

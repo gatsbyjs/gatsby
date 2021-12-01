@@ -29,7 +29,7 @@
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "babel-jest": "^24.9.0",
-    "chalk": "^4.1.2",
+    "chalk": "^5.0.0",
     "chokidar": "^3.5.2",
     "cross-env": "^7.0.3",
     "danger": "^10.6.4",
