@@ -26,7 +26,7 @@
     "common-tags": "^1.8.0",
     "enquirer": "^2.3.6",
     "eslint": "^7.32.0",
-    "execa": "^5.1.1",
+    "execa": "^6.0.0",
     "fs-extra": "^10.0.0",
     "gatsby-plugin-utils": "^2.4.0-next.0",
     "joi": "^17.4.2",
