@@ -81,8 +81,8 @@ async function worker([url, options]) {
     agent,
     cache: false,
     timeout: {
-      // Occasionally requests to Drupal stall. Set a 15s timeout to retry in this case.
-      request: 15000,
+      // Occasionally requests to Drupal stall. Set a 30s timeout to retry in this case.
+      request: 30000,
     },
     // request: http2wrapper.auto,
     // http2: true,

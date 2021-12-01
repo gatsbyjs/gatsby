@@ -1252,6 +1252,20 @@ const parseTypes = ({
       // handling the type name (requires cleanup after merging, see below)
       const parsedType = schemaComposer.typeMapper.makeSchemaDef(def)
 
+      // Merging types require implemented interfaces to already exist.
+      // Depending on type creation order, interface might have not been
+      // processed yet. We check if interface already exist and create
+      // placeholder for it, if it doesn't exist yet.
+      if (parsedType.getInterfaces) {
+        parsedType.getInterfaces().forEach(iface => {
+          const ifaceName = iface.getTypeName()
+          if (!schemaComposer.has(ifaceName)) {
+            const tmpComposer = schemaComposer.createInterfaceTC(ifaceName)
+            tmpComposer.setExtension(`isPlaceholder`, true)
+          }
+        })
+      }
+
       // Merge the parsed type with the original
       mergeTypes({
         schemaComposer,

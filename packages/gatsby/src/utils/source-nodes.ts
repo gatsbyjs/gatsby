@@ -85,6 +85,7 @@ function deleteStaleNodes(state: IGatsbyState, nodes: Array<Node>): void {
   }
 }
 
+let isInitialSourcing = true
 export default async ({
   webhookBody,
   pluginName,
@@ -104,14 +105,19 @@ export default async ({
     webhookBody: webhookBody || {},
     pluginName,
   })
+
   await getDataStore().ready()
 
-  const state = store.getState()
-  const nodes = getNodes()
+  // We only warn for plugins w/o nodes and delete stale nodes on the first sourcing.
+  if (isInitialSourcing) {
+    const state = store.getState()
+    const nodes = getNodes()
 
-  warnForPluginsWithoutNodes(state, nodes)
+    warnForPluginsWithoutNodes(state, nodes)
 
-  deleteStaleNodes(state, nodes)
+    deleteStaleNodes(state, nodes)
+    isInitialSourcing = false
+  }
 
   store.dispatch(actions.apiFinished({ apiName: `sourceNodes` }))
 }

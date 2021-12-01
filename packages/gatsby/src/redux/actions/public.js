@@ -155,7 +155,7 @@ const reservedFields = [
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
  * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
- * @param {string} page.ownerNodeId The id of the node that owns this page. This is used for routing users to previews via the unstable_createNodeManifest public action. Since multiple nodes can be queried on a single page, this allows the user to tell us which node is the main node for the page.
+ * @param {string} page.ownerNodeId The id of the node that owns this page. This is used for routing users to previews via the unstable_createNodeManifest public action. Since multiple nodes can be queried on a single page, this allows the user to tell us which node is the main node for the page. Note that the ownerNodeId must be for a node which is queried on this page via a GraphQL query.
  * @param {string} page.component The absolute path to the component for this page
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pageContext` as well as to the graphql query
@@ -1315,8 +1315,9 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
 }
 
 /**
- * Create a redirect from one page to another. Server redirects don't work out
- * of the box. You must have a plugin setup to integrate the redirect data with
+ * Create a redirect from one page to another. Redirects work out of the box with Gatsby Cloud. Read more about
+ * [working with redirects on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/1500003051241-Working-with-Redirects).
+ * If you are hosting somewhere other than Gatsby Cloud, you will need a plugin to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
  * plugin](/plugins/gatsby-plugin-netlify/), or the [Amazon S3
  * plugin](/plugins/gatsby-plugin-s3/). Alternatively, you can use
@@ -1424,16 +1425,18 @@ actions.createServerVisitedPage = (chunkName: string) => {
  * @param {Object} manifest Manifest data
  * @param {string} manifest.manifestId An id which ties the revision unique state of this manifest to the unique revision state of a data source.
  * @param {Object} manifest.node The Gatsyby node to tie the manifestId to. See the "createNode" action for more information about the node object details.
+ * @param {string} manifest.updatedAtUTC (optional) The time in which the node was last updated
  * @example
  * unstable_createNodeManifest({
  *   manifestId: `post-id-1--updated-53154315`,
+ *   updatedAtUTC: `2021-07-08T21:52:28.791+01:00`,
  *   node: {
  *      id: `post-id-1`
  *   },
  * })
  */
 actions.unstable_createNodeManifest = (
-  { manifestId, node },
+  { manifestId, node, updatedAtUTC },
   plugin: Plugin
 ) => {
   return {
@@ -1442,6 +1445,7 @@ actions.unstable_createNodeManifest = (
       manifestId,
       node,
       pluginName: plugin.name,
+      updatedAtUTC,
     },
   }
 }
