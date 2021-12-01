@@ -28,7 +28,7 @@ The createNodeManifest action gets a performance boost.
 
 We no longer hash page-data.json files and include that hash in node manifest files in order to determine if that page-data has deployed. Instead we include the manifest id passed to createNodeManifest within the page-data file as a more performant way to check if the corresponding data for a data update has deployed and become publicly available online. This allows us to create more node manifest files than before, making services such as Content Sync more reliable, in more situations.
 
-We've also added a new updatedAtUTC argument to the action, passing a date here allows Gatsby to determine wether or not the node manifest file should be created or not. If the date is older than 30 days (by default) the node manifest will not be created. Users can change this default by setting the `NODE_MANIFEST_MAX_DAYS_OLD` environment variable to any number of days. 
+We've also added a new updatedAtUTC argument to the action, passing a date here allows Gatsby to determine wether or not the node manifest file should be created or not. If the date is older than 30 days (by default) the node manifest will not be created. Users can change this default by setting the `NODE_MANIFEST_MAX_DAYS_OLD` environment variable to any number of days.
 
 ## Use renderToPipeableStream React 18 API
 
