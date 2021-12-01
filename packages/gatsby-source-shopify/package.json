@@ -24,14 +24,14 @@
     "gatsby-plugin-utils": "^2.4.0-next.0",
     "gatsby-source-filesystem": "^4.4.0-next.0",
     "node-fetch": "^2.6.6",
-    "sharp": "^0.29.2",
+    "sharp": "^0.29.3",
     "shift-left": "^0.1.5"
   },
   "devDependencies": {
     "@types/jest": "^26.0.24",
     "@types/node": "^14.17.32",
     "@types/node-fetch": "^2.5.12",
-    "@types/sharp": "^0.29.2",
+    "@types/sharp": "^0.29.4",
     "cross-env": "^7.0.3",
     "gatsby-plugin-image": "^2.4.0-next.0",
     "msw": "^0.35.0",
