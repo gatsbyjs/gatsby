@@ -1,9 +1,17 @@
 // @ts-check
 import stringify from "json-stringify-safe"
 import _ from "lodash"
+import { getGatsbyVersion } from "gatsby-core-utils"
+import { gte, prerelease } from "semver"
 
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
+
+const GATSBY_VERSION_MANIFEST_V2 = `4.3.0`
+const gatsbyVersion = getGatsbyVersion()
+const gatsbyVersionIsPrerelease = prerelease(gatsbyVersion)
+const shouldUpgradeGatsbyVersion =
+  gte(gatsbyVersion, GATSBY_VERSION_MANIFEST_V2) && !gatsbyVersionIsPrerelease
 
 export const getLocalizedField = ({ field, locale, localesFallback }) => {
   if (!_.isUndefined(field[locale.code])) {
@@ -224,11 +232,13 @@ let numberOfContentSyncDebugLogs = 0
 const maxContentSyncDebugLogTimes = 50
 
 let warnOnceForNoSupport = false
+let warnOnceToUpgradeGatsby = false
 
 /**
  * This fn creates node manifests which are used for Gatsby Cloud Previews via the Content Sync API/feature.
  * Content Sync routes a user from Contentful to a page created from the entry data they're interested in previewing.
  */
+
 function contentfulCreateNodeManifest({
   pluginConfig,
   entryItem,
@@ -265,6 +275,13 @@ function contentfulCreateNodeManifest({
   }
 
   if (shouldCreateNodeManifest) {
+    if (shouldUpgradeGatsbyVersion && !warnOnceToUpgradeGatsby) {
+      console.warn(
+        `Your site is doing more work than it needs to for Preview, upgrade to Gatsby ^${GATSBY_VERSION_MANIFEST_V2} for better performance`
+      )
+      warnOnceToUpgradeGatsby = true
+    }
+
     unstable_createNodeManifest({
       manifestId,
       node: entryNode,
