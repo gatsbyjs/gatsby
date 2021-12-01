@@ -19,8 +19,8 @@
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
-    "@testing-library/dom": "^8.10.1",
-    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/dom": "^8.11.1",
+    "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.5.0",
     "babel-preset-gatsby-package": "^2.4.0-next.0",
