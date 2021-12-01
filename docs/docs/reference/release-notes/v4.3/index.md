@@ -48,7 +48,7 @@ A big **Thank You** to [our community who contributed](https://github.com/gatsby
 - [SaloniThete](https://github.com/SaloniThete)
   - chore(docs): Typo in docs/processing-payments-with-square [PR #34001](https://github.com/gatsbyjs/gatsby/pull/34001)
   - chore(examples): Typo in creating-source-plugins [PR #34000](https://github.com/gatsbyjs/gatsby/pull/34000)
-  - chore(examples):Typo in  functions-google-oauth/README [PR #34005](https://github.com/gatsbyjs/gatsby/pull/34005)
+  - chore(examples):Typo in functions-google-oauth/README [PR #34005](https://github.com/gatsbyjs/gatsby/pull/34005)
 - [gabxyz](https://github.com/gabxyz): chore(gatsby): add `getCache` helper to `NodePluginArgs` [PR #33984](https://github.com/gatsbyjs/gatsby/pull/33984)
 - [ashhitch](https://github.com/ashhitch): chore(gatsby): Add `getServerData` to PageProps type [PR #34003](https://github.com/gatsbyjs/gatsby/pull/34003)
 - [buzinas](https://github.com/buzinas): fix(gatsby-plugin-manifest): Delete `cacheDigest` from generated webmanifest [PR #33966](https://github.com/gatsbyjs/gatsby/pull/33966)
