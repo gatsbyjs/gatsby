@@ -120,7 +120,7 @@
     "graphql": "^15.7.2",
     "property-information": "5.6.0",
     "remark-mdx": "2.0.0-next.7",
-    "remark-mdxjs": "^2.0.0-next.4"
+    "remark-mdxjs": "^2.0.0-next.8"
   },
   "scripts": {
     "build": "rollup -c",
