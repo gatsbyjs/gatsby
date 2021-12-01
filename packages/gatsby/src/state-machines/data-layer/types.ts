@@ -11,6 +11,7 @@ export interface IDataLayerContext {
   nodesMutatedDuringQueryRun?: boolean
   program?: IProgram
   store?: Store<IGatsbyState, AnyAction>
+  traceId: string
   parentSpan?: Span
   gatsbyNodeGraphQLFunction?: Runner
   graphqlRunner?: GraphQLRunner

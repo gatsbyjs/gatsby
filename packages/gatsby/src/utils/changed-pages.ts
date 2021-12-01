@@ -32,16 +32,24 @@ export function findChangedPages(
   currentPages: Map<string, IGatsbyPage>
 ): {
   changedPages: Array<string>
+  createdPages: Array<string>
+  updatedPages: Array<string>
   deletedPages: Array<string>
 } {
   const changedPages: Array<string> = []
+  const createdPages: Array<string> = []
+  const updatedPages: Array<string> = []
 
   const compareWithoutUpdated: IsEqualCustomizer = (_left, _right, key) =>
     key === `updatedAt` || undefined
 
   currentPages.forEach((newPage, path) => {
     const oldPage = oldPages.get(path)
-    if (!oldPage || !isEqualWith(newPage, oldPage, compareWithoutUpdated)) {
+    if (!oldPage) {
+      createdPages.push(path)
+      changedPages.push(path)
+    } else if (!isEqualWith(newPage, oldPage, compareWithoutUpdated)) {
+      updatedPages.push(path)
       changedPages.push(path)
     }
   })
@@ -52,5 +60,5 @@ export function findChangedPages(
     }
   })
 
-  return { changedPages, deletedPages }
+  return { changedPages, deletedPages, createdPages, updatedPages }
 }

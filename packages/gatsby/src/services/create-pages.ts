@@ -13,9 +13,12 @@ export async function createPages({
   store,
   deferNodeMutation,
   shouldRunCreatePagesStatefully,
+  traceId = `initial-createPages`,
 }: Partial<IDataLayerContext>): Promise<{
   deletedPages: Array<string>
   changedPages: Array<string>
+  createdPages: Array<string>
+  updatedPages: Array<string>
 }> {
   assertStore(store)
   const activity = reporter.activityTimer(`createPages`, {
@@ -48,7 +51,7 @@ export async function createPages({
     `createPages`,
     {
       graphql: wrappedGraphQL,
-      traceId: `initial-createPages`,
+      traceId,
       waitForCascadingActions: true,
       parentSpan: activity.span,
       deferNodeMutation,
@@ -66,7 +69,7 @@ export async function createPages({
       `createPagesStatefully`,
       {
         graphql: gatsbyNodeGraphQLFunction,
-        traceId: `initial-createPagesStatefully`,
+        traceId: `${traceId}Statefully`,
         waitForCascadingActions: true,
         parentSpan: activity.span,
         deferNodeMutation,
@@ -97,14 +100,16 @@ export async function createPages({
 
   reporter.verbose(`Checking for deleted pages`)
 
-  const deletedPages = deleteUntouchedPages(
+  const autoDeletedPages = deleteUntouchedPages(
     store.getState().pages,
     timestamp,
     !!shouldRunCreatePagesStatefully
   )
 
   reporter.verbose(
-    `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
+    `Deleted ${autoDeletedPages.length} page${
+      autoDeletedPages.length === 1 ? `` : `s`
+    }`
   )
 
   const tim = reporter.activityTimer(`Checking for changed pages`, {
@@ -112,10 +117,8 @@ export async function createPages({
   })
   tim.start()
 
-  const { changedPages } = findChangedPages(
-    currentPages,
-    store.getState().pages
-  )
+  const { changedPages, deletedPages, createdPages, updatedPages } =
+    findChangedPages(currentPages, store.getState().pages)
 
   reporter.verbose(
     `Found ${changedPages.length} changed page${
@@ -126,9 +129,19 @@ export async function createPages({
   tim.end()
 
   store.dispatch(actions.apiFinished({ apiName: `createPages` }))
+  store.dispatch({
+    type: `SET_CHANGED_PAGES`,
+    payload: {
+      deleted: deletedPages,
+      created: createdPages,
+      updated: updatedPages,
+    },
+  })
 
   return {
     changedPages,
     deletedPages,
+    createdPages,
+    updatedPages,
   }
 }
