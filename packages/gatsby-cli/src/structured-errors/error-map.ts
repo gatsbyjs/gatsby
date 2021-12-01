@@ -620,7 +620,7 @@ const errors = {
         3
       )} seconds. Activities preventing Gatsby from transitioning to idle state:\n\n${
         context.stuckStatusDiagnosticMessage
-      }`,
+      }${context.additionalOutput}`,
     level: Level.ERROR,
     docsUrl: `https://support.gatsbyjs.com/hc/en-us/articles/360056811354`,
   },
