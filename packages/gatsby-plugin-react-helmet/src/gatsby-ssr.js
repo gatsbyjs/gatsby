@@ -23,27 +23,3 @@ export const onRenderBody = ({
     helmet.base.toComponent(),
   ])
 }
-
-export const onPreRenderHTML = ({
-  getHeadComponents,
-  replaceHeadComponents,
-}) => {
-  const headComponents = getHeadComponents()
-
-  const groupedByType = headComponents.reduce((hash, obj) => {
-    if (obj.type === undefined) return hash
-    return Object.assign(hash, {
-      [obj.type]: (hash[obj.type] || []).concat(obj),
-    })
-  }, {})
-
-  replaceHeadComponents([
-    ...groupedByType.title,
-    ...groupedByType.base,
-    ...groupedByType.meta,
-    ...groupedByType.style,
-    ...groupedByType.link,
-    ...groupedByType.script,
-    ...groupedByType.noscript,
-  ])
-}
