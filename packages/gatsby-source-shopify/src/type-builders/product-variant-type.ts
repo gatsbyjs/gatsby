@@ -11,6 +11,7 @@ export function productVariantTypeBuilder(prefix: string): string {
         inventoryPolicy: ${prefix}ProductVariantInventoryPolicy!
         inventoryQuantity: Int
         legacyResourceId: String!
+        media: [${prefix}Media!]! @link(from: "media___NODE", by: "id")
         metafields: [${prefix}Metafield!]! @link(from: "metafields___NODE", by: "id")
         position: Int!
         presentmentPrices: [${prefix}ProductVariantPricePair!]!

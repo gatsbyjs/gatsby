@@ -52,7 +52,7 @@ export const shopifyTypes: IShopifyTypes = {
   },
   ProductVariant: {
     key: `variants___NODE`,
-    referenceFields: [`metafields___NODE`],
+    referenceFields: [`metafields___NODE`, `media___NODE`],
     imageFields: [`image`],
     coupledNodeFields: [`InventoryLevel`, `Metafield`],
   },

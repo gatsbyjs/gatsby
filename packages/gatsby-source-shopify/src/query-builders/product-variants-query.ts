@@ -77,6 +77,24 @@ export class ProductVariantsQuery extends BulkQuery {
               inventoryPolicy
               inventoryQuantity
               legacyResourceId
+              media {
+                edges {
+                  node {
+                    ... on ExternalVideo {
+                      id
+                    }
+                    ... on MediaImage {
+                      id
+                    }
+                    ... on Model3d {
+                      id
+                    }
+                    ... on Video {
+                      id
+                    }
+                  }
+                }
+              }
               position
               presentmentPrices {
                 edges {
