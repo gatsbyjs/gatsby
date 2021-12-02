@@ -8,7 +8,8 @@ const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
 const GATSBY_VERSION_MANIFEST_V2 = `4.3.0`
-const gatsbyVersion = getGatsbyVersion()
+const gatsbyVersion =
+  (typeof getGatsbyVersion === `function` && getGatsbyVersion()) || `0.0.0`
 const gatsbyVersionIsPrerelease = prerelease(gatsbyVersion)
 const shouldUpgradeGatsbyVersion =
   lt(gatsbyVersion, GATSBY_VERSION_MANIFEST_V2) && !gatsbyVersionIsPrerelease
