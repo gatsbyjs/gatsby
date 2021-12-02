@@ -43,3 +43,18 @@ Gatsby switched to `renderToPipeableStream` instead of `pipeToNodeWritable` from
 ## Contributors
 
 A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@4.3.0-next.0...gatsby@4.32.0) to this release 💜
+
+- [laurenskling](https://github.com/laurenskling): fix(gatsby-source-graphql): Use default export from node-fetch [PR #33977](https://github.com/gatsbyjs/gatsby/pull/33977)
+- [SaloniThete](https://github.com/SaloniThete)
+  - chore(docs): Typo in docs/processing-payments-with-square [PR #34001](https://github.com/gatsbyjs/gatsby/pull/34001)
+  - chore(examples): Typo in creating-source-plugins [PR #34000](https://github.com/gatsbyjs/gatsby/pull/34000)
+  - chore(examples):Typo in functions-google-oauth/README [PR #34005](https://github.com/gatsbyjs/gatsby/pull/34005)
+- [gabxyz](https://github.com/gabxyz): chore(gatsby): add `getCache` helper to `NodePluginArgs` [PR #33984](https://github.com/gatsbyjs/gatsby/pull/33984)
+- [ashhitch](https://github.com/ashhitch): chore(gatsby): Add `getServerData` to PageProps type [PR #34003](https://github.com/gatsbyjs/gatsby/pull/34003)
+- [buzinas](https://github.com/buzinas): fix(gatsby-plugin-manifest): Delete `cacheDigest` from generated webmanifest [PR #33966](https://github.com/gatsbyjs/gatsby/pull/33966)
+- [pranav0281999](https://github.com/pranav0281999): feat(gatsby-plugin-nprogress): Replace `nprogress` with `accessible-nprogress` [PR #34038](https://github.com/gatsbyjs/gatsby/pull/34038)
+- [apotheosistech](https://github.com/apotheosistech): Bump timeout from 15s to 30s [PR #34035](https://github.com/gatsbyjs/gatsby/pull/34035)
+- [obax](https://github.com/obax): chore(docs): Update webpack fs resolution [PR #34056](https://github.com/gatsbyjs/gatsby/pull/34056)
+- [axe312ger](https://github.com/axe312ger): chore(gatsby-source-contentful): Add note to Rich Text docs [PR #34083](https://github.com/gatsbyjs/gatsby/pull/34083)
+- [joernroeder](https://github.com/joernroeder): fix(gatsby-transformer-json): Fix high memory consumption [PR #34084](https://github.com/gatsbyjs/gatsby/pull/34084)
+- [arthuranteater](https://github.com/arthuranteater): chore(docs): Add missing permission for Shopify Admin API [PR #34091](https://github.com/gatsbyjs/gatsby/pull/34091)
