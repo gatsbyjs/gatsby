@@ -2,7 +2,7 @@
 import stringify from "json-stringify-safe"
 import _ from "lodash"
 import { getGatsbyVersion } from "gatsby-core-utils"
-import { gte, prerelease } from "semver"
+import { lt, prerelease } from "semver"
 
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
@@ -11,7 +11,7 @@ const GATSBY_VERSION_MANIFEST_V2 = `4.3.0`
 const gatsbyVersion = getGatsbyVersion()
 const gatsbyVersionIsPrerelease = prerelease(gatsbyVersion)
 const shouldUpgradeGatsbyVersion =
-  gte(gatsbyVersion, GATSBY_VERSION_MANIFEST_V2) && !gatsbyVersionIsPrerelease
+  lt(gatsbyVersion, GATSBY_VERSION_MANIFEST_V2) && !gatsbyVersionIsPrerelease
 
 export const getLocalizedField = ({ field, locale, localesFallback }) => {
   if (!_.isUndefined(field[locale.code])) {
