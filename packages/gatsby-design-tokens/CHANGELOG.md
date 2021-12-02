@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-design-tokens
 
-
-
 ## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.2.0/packages/gatsby-design-tokens) (2021-11-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
