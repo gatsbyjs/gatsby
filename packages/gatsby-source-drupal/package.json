@@ -18,6 +18,7 @@
     "http2-wrapper": "^2.1.9",
     "lodash": "^4.17.21",
     "opentracing": "^0.14.5",
+    "semver": "^7.3.5",
     "tiny-async-pool": "^1.2.0",
     "url-join": "^4.0.1"
   },
