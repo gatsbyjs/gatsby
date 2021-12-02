@@ -9,7 +9,9 @@ export function buildPrefixer(prefix, ...paths) {
 // shape of `static-entry.js`. With it, we can build headers that point to the correct
 // hashed filenames and ensure we pull in the componentChunkName.
 export default function makePluginData(store, assetsManifest, pathPrefix) {
-  const { program, pages, components } = store.getState()
+  const { program, pages, tick, components } = store.getState()
+  const changedPages = tick.get(`changedPages`)
+  console.log({ tick, changedPages })
   const publicFolder = buildPrefixer(program.directory, `public`)
   const functionsFolder = buildPrefixer(
     program.directory,
@@ -25,6 +27,7 @@ export default function makePluginData(store, assetsManifest, pathPrefix) {
 
   return {
     pages,
+    changedPages,
     components,
     manifest,
     program,

@@ -94,13 +94,20 @@ function headersPath(pathPrefix, path) {
   return `${pathPrefix}${path}`
 }
 
-function preloadHeadersByPage({ pages, manifest, pathPrefix, publicFolder }) {
+function preloadHeadersByPage({
+  changedPages,
+  pages,
+  manifest,
+  pathPrefix,
+  publicFolder,
+}) {
   const linksByPage = {}
 
   const appDataPath = publicFolder(PAGE_DATA_DIR, `app-data.json`)
   const hasAppData = existsSync(appDataPath)
-
-  pages.forEach(page => {
+  const changedPaths = [...changedPages.created, ...changedPages.updated]
+  changedPaths.forEach(path => {
+    const page = pages.get(path)
     const scripts = _.flatMap(COMMON_BUNDLES, file =>
       getScriptPath(file, manifest)
     )
@@ -216,7 +223,8 @@ const mapUserLinkAllPageHeaders =
       return headers
     }
 
-    const { pages, manifest, publicFolder, pathPrefix } = pluginData
+    const { pages, changedPages, manifest, publicFolder, pathPrefix } =
+      pluginData
 
     const headersList = _.map(
       allPageHeaders,
@@ -224,7 +232,9 @@ const mapUserLinkAllPageHeaders =
     )
 
     const duplicateHeadersByPage = {}
-    pages.forEach(page => {
+    const changedPaths = [...changedPages.created, ...changedPages.updated]
+    changedPaths.forEach(path => {
+      const page = pages.get(path)
       const pathKey = headersPath(pathPrefix, page.path)
       duplicateHeadersByPage[pathKey] = headersList
     })
@@ -239,9 +249,11 @@ const applyLinkHeaders =
       return headers
     }
 
-    const { pages, manifest, pathPrefix, publicFolder } = pluginData
+    const { pages, changedPages, manifest, pathPrefix, publicFolder } =
+      pluginData
     const perPageHeaders = preloadHeadersByPage({
       pages,
+      changedPages,
       manifest,
       pathPrefix,
       publicFolder,
@@ -317,38 +329,45 @@ const sendHeadersViaIPC = async headers => {
   await lastMessage
 }
 
-const writeHeadersFile = async (publicFolder, contents) =>
-  new Promise((resolve, reject) => {
-    const contentsStr = JSON.stringify(contents)
-    const writeStream = createWriteStream(publicFolder(HEADERS_FILENAME))
-    const chunkSize = 10000
-    const numChunks = Math.ceil(contentsStr.length / chunkSize)
-
-    for (let i = 0; i < numChunks; i++) {
-      writeStream.write(
-        contentsStr.slice(
-          i * chunkSize,
-          Math.min((i + 1) * chunkSize, contentsStr.length)
-        )
-      )
-    }
-
-    writeStream.end()
-    writeStream.on(`finish`, () => {
-      resolve()
+const writeHeadersFile = async (store, contents) =>
+  new Promise(resolve => {
+    console.log({ store })
+    console.log(`headers`, contents)
+    // Write back to tick
+    store.dispatch({
+      type: `SET_CHANGED_HEADERS`,
+      payload: contents,
     })
-    writeStream.on(`error`, reject)
+    resolve()
+    // const contentsStr = JSON.stringify(contents)
+    // const writeStream = createWriteStream(publicFolder(HEADERS_FILENAME))
+    // const chunkSize = 10000
+    // const numChunks = Math.ceil(contentsStr.length / chunkSize)
+
+    // for (let i = 0; i < numChunks; i++) {
+    // writeStream.write(
+    // contentsStr.slice(
+    // i * chunkSize,
+    // Math.min((i + 1) * chunkSize, contentsStr.length)
+    // )
+    // )
+    // }
+
+    // writeStream.end()
+    // writeStream.on(`finish`, () => {
+    // resolve()
+    // })
+    // writeStream.on(`error`, reject)
   })
 
-const saveHeaders =
-  ({ publicFolder }) =>
-  contents =>
-    Promise.all([
-      sendHeadersViaIPC(contents),
-      writeHeadersFile(publicFolder, contents),
-    ])
+const saveHeaders = store => contents =>
+  Promise.all([
+    // sendHeadersViaIPC(contents),
+    writeHeadersFile(store, contents),
+  ])
 
-export default function buildHeadersProgram(pluginData, pluginOptions) {
+export default function buildHeadersProgram(pluginData, pluginOptions, store) {
+  console.log({ store })
   return _.flow(
     mapUserLinkHeaders(pluginData),
     applySecurityHeaders(pluginOptions),
@@ -356,6 +375,6 @@ export default function buildHeadersProgram(pluginData, pluginOptions) {
     mapUserLinkAllPageHeaders(pluginData, pluginOptions),
     applyLinkHeaders(pluginData, pluginOptions),
     applyTransfromHeaders(pluginOptions),
-    saveHeaders(pluginData)
+    saveHeaders(store)
   )(pluginOptions.headers)
 }
