@@ -286,7 +286,7 @@ function contentfulCreateNodeManifest({
     unstable_createNodeManifest({
       manifestId,
       node: entryNode,
-      updatedAt,
+      updatedAtUTC: updatedAt,
     })
   } else if (
     isPreview &&
