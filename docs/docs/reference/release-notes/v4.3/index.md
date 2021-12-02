@@ -42,7 +42,7 @@ Gatsby switched to `renderToPipeableStream` instead of `pipeToNodeWritable` from
 
 ## Contributors
 
-A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@4.3.0-next.0...gatsby@4.32.0) to this release 💜
+A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@4.3.0-next.0...gatsby@4.3.0) to this release 💜
 
 - [laurenskling](https://github.com/laurenskling): fix(gatsby-source-graphql): Use default export from node-fetch [PR #33977](https://github.com/gatsbyjs/gatsby/pull/33977)
 - [SaloniThete](https://github.com/SaloniThete)
