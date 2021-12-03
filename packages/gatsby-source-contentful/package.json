@@ -25,7 +25,8 @@
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.1",
     "p-queue": "^6.6.2",
-    "retry-axios": "^2.6.0"
+    "retry-axios": "^2.6.0",
+    "semver": "^7.3.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
