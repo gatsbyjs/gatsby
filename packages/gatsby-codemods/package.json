@@ -30,7 +30,7 @@
     "@babel/plugin-syntax-typescript": "^7.14.0",
     "@babel/runtime": "^7.15.4",
     "execa": "^5.1.1",
-    "graphql": "^15.5.2",
+    "graphql": "^15.7.2",
     "jscodeshift": "^0.12.0",
     "recast": "^0.20.5"
   },
