@@ -67,7 +67,7 @@ const installPackages = async ({
           console.error(
             `Failed to parse "sanitized" output of "yarn workspaces info" command.\n\nSanitized string: "${jsonString}`
           )
-          // not exitting here, because we have general check for `workspacesLayout` being set below
+          // not exiting here, because we have general check for `workspacesLayout` being set below
         }
       }
     }
