@@ -71,7 +71,7 @@ describe(`gatsby-plugin-manifest`, () => {
     `)
   })
 
-  test(`changes href of manifest to add path prefix to a localized app`, () => {
+  test(`use correct localized manifest when path prefix is used`, () => {
     global.__PATH_PREFIX__ = `/test`
 
     const location = {
