@@ -1,6 +1,7 @@
 import { ValidationOptions } from "joi"
 import { ObjectSchema } from "./joi"
 import { IPluginInfoOptions } from "./types"
+// import type { warning } "./utils/plugin-options-schema-joi-type
 
 const validationOptions: ValidationOptions = {
   // Show all errors at once, rather than only the first one every time
@@ -10,6 +11,20 @@ const validationOptions: ValidationOptions = {
 
 interface IOptions {
   validateExternalRules?: boolean
+  returnWarnings?: boolean
+}
+
+interface IValidateAsyncResult {
+  value: IPluginInfoOptions
+  warning: {
+    message: string
+    details: {
+      message: string
+      path: Array<string>
+      type: string
+      context: Array<Record<string, unknown>>
+    }
+  }
 }
 
 export async function validateOptionsSchema(
@@ -17,14 +32,14 @@ export async function validateOptionsSchema(
   pluginOptions: IPluginInfoOptions,
   options: IOptions = {
     validateExternalRules: true,
+    returnWarnings: true,
   }
-): Promise<IPluginInfoOptions> {
-  const { validateExternalRules } = options
+): Promise<IValidateAsyncResult> {
+  const { validateExternalRules, returnWarnings } = options
 
-  const value = await pluginSchema.validateAsync(pluginOptions, {
+  return pluginSchema.validateAsync(pluginOptions, {
     ...validationOptions,
     externals: validateExternalRules,
-  })
-
-  return value
+    warnings: returnWarnings,
+  }) as Promise<IValidateAsyncResult>
 }
