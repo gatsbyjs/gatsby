@@ -648,7 +648,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
       if (!datum) return
       const node = nodeFromData(datum, createNodeId, entityReferenceRevisions)
       drupalCreateNodeManifest({
-        attributes: datum.attributes,
+        attributes: datum?.attributes,
         gatsbyNode: node,
         unstable_createNodeManifest,
       })

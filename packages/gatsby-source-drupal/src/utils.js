@@ -446,8 +446,8 @@ export function drupalCreateNodeManifest({
       process.env.ENABLE_GATSBY_REFRESH_ENDPOINT) ||
     process.env.GATSBY_IS_PREVIEW === `true`
 
-  const updatedAt = attributes.revision_timestamp
-  const id = attributes.drupal_internal__nid
+  const updatedAt = attributes?.revision_timestamp
+  const id = attributes?.drupal_internal__nid
 
   const supportsContentSync = typeof unstable_createNodeManifest === `function`
   const shouldCreateNodeManifest =
