@@ -18,12 +18,12 @@ interface IValidateAsyncResult {
   value: IPluginInfoOptions
   warning: {
     message: string
-    details: {
+    details: Array<{
       message: string
       path: Array<string>
       type: string
       context: Array<Record<string, unknown>>
-    }
+    }>
   }
 }
 

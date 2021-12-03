@@ -319,9 +319,8 @@ async function validatePluginsOptions(
 
         plugin.options = value
 
-        // console.log("warnings: ", validationWarnings);
         // Handle unknown key warnings
-        const validationWarnings = warning?.details || []
+        const validationWarnings = warning?.details
 
         if (validationWarnings?.length > 0) {
           reporter.warn(
