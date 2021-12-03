@@ -70,4 +70,23 @@ describe(`gatsby-plugin-manifest`, () => {
       </head>
     `)
   })
+
+  test(`changes href of manifest to add path prefix to a localized app`, () => {
+    global.__PATH_PREFIX__ = `/test`
+
+    const location = {
+      pathname: `/test/es/`,
+    }
+    // add default lang
+    pluginOptions.lang = `en`
+    onRouteUpdate({ location }, pluginOptions)
+    expect(document.head).toMatchInlineSnapshot(`
+      <head>
+        <link
+          href="/test/manifest_es.webmanifest"
+          rel="manifest"
+        />
+      </head>
+    `)
+  })
 })
