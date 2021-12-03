@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Pin `remark-mdx` to `2.0.0-next.7` [#34064](https://github.com/gatsbyjs/gatsby/issues/34064) ([c41bb5e](https://github.com/gatsbyjs/gatsby/commit/c41bb5e7b0647bd96841df8400f76266ff55675e))
 
-
-
 ## [1.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-recipes@1.2.0/packages/gatsby-recipes) (2021-11-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)

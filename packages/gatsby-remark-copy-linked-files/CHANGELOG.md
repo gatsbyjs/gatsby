@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-remark-copy-linked-files
 
-
-
 ## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-copy-linked-files@5.2.0/packages/gatsby-remark-copy-linked-files) (2021-11-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)

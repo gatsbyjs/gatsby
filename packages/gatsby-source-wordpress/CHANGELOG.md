@@ -12,8 +12,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - always hydrate in develop for images [#33989](https://github.com/gatsbyjs/gatsby/issues/33989) ([cce10f0](https://github.com/gatsbyjs/gatsby/commit/cce10f08afbc74680d04cbc2c1edbb71531016d3))
 - fixes createRoot not exists warning fixes [#33991](https://github.com/gatsbyjs/gatsby/issues/33991) ([85875c4](https://github.com/gatsbyjs/gatsby/commit/85875c4006eee40bbf9ea80758d53f1842dbf66a))
 
-
-
 ## [6.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.2.0/packages/gatsby-source-wordpress) (2021-11-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)

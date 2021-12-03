@@ -15,8 +15,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency @types/node to ^14.17.32 for gatsby-source-shopify [#33351](https://github.com/gatsbyjs/gatsby/issues/33351) ([f40f8ed](https://github.com/gatsbyjs/gatsby/commit/f40f8ed485ed1a56b9ac1634db324bedb3f99d15))
 
-
-
 ## [6.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@6.2.0/packages/gatsby-source-shopify) (2021-11-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)

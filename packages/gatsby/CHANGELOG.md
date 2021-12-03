@@ -26,16 +26,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 #### Chores
 
 - log pending jobs when build is stuck [#34102](https://github.com/gatsbyjs/gatsby/issues/34102) [#34107](https://github.com/gatsbyjs/gatsby/issues/34107) ([b90f394](https://github.com/gatsbyjs/gatsby/commit/b90f39461615b2131463b1c9396cd80e505755bf))
-- Fix lint issue  ([1522294](https://github.com/gatsbyjs/gatsby/commit/15222945ea8ad1e3e51e87132a175de76d0ca70c))
+- Fix lint issue ([1522294](https://github.com/gatsbyjs/gatsby/commit/15222945ea8ad1e3e51e87132a175de76d0ca70c))
 - Add `getServerData` to PageProps type [#34003](https://github.com/gatsbyjs/gatsby/issues/34003) ([2c9f67c](https://github.com/gatsbyjs/gatsby/commit/2c9f67cd6dcb2a0ea27371f6842ca00aee4ccaa0))
 - add `getCache` helper to `NodePluginArgs` [#33984](https://github.com/gatsbyjs/gatsby/issues/33984) ([8a1e1f0](https://github.com/gatsbyjs/gatsby/commit/8a1e1f0d12d5bf58ea4defca2a5b572a684f2f64))
 
 #### Other Changes
 
-- Update docs.  ([3ec17ab](https://github.com/gatsbyjs/gatsby/commit/3ec17ab248a8701c248e3ed03c97f8850a60cf5d))
+- Update docs. ([3ec17ab](https://github.com/gatsbyjs/gatsby/commit/3ec17ab248a8701c248e3ed03c97f8850a60cf5d))
 - Clarify that the node for ownerNodeId must be queried on the page [#34054](https://github.com/gatsbyjs/gatsby/issues/34054) ([640cce9](https://github.com/gatsbyjs/gatsby/commit/640cce98e902d6fcb0b363bec1c5a223f1625436))
-
-
 
 ## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.2.0/packages/gatsby) (2021-11-16)
 

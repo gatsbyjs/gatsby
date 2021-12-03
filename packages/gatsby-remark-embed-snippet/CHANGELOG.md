@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-remark-embed-snippet
 
-
-
 ## [7.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-embed-snippet@7.2.0/packages/gatsby-remark-embed-snippet) (2021-11-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)

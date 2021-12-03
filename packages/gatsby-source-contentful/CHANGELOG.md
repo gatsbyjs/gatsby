@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Add note to Rich Text docs [#34083](https://github.com/gatsbyjs/gatsby/issues/34083) ([19149ac](https://github.com/gatsbyjs/gatsby/commit/19149acd751977b74b785e3a431123d49add0e56))
 
-
-
 ## [7.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.0.0/packages/gatsby-source-contentful) (2021-11-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)

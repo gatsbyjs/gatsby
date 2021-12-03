@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Bump timeout from 15s to 30s [#34035](https://github.com/gatsbyjs/gatsby/issues/34035) ([0d683cd](https://github.com/gatsbyjs/gatsby/commit/0d683cd52ee4dbc470f24b23973c3aa261ff494f))
 
-
-
 ## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.2.0/packages/gatsby-source-drupal) (2021-11-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)

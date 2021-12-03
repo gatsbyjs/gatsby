@@ -15,8 +15,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - warn people that source-graphql is slow for larger sites [#33970](https://github.com/gatsbyjs/gatsby/issues/33970) ([e98e4e1](https://github.com/gatsbyjs/gatsby/commit/e98e4e1cc88f31fab8f0c7c19a4c933314fda6a5))
 
-
-
 ## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.2.0/packages/gatsby-source-graphql) (2021-11-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
