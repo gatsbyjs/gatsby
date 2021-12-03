@@ -1,5 +1,5 @@
 import { ValidationOptions } from "joi"
-import { ObjectSchema } from "./joi"
+import { ObjectSchema, Joi } from "./joi"
 import { IPluginInfoOptions } from "./types"
 // import type { warning } "./utils/plugin-options-schema-joi-type
 
@@ -37,7 +37,11 @@ export async function validateOptionsSchema(
 ): Promise<IValidateAsyncResult> {
   const { validateExternalRules, returnWarnings } = options
 
-  return pluginSchema.validateAsync(pluginOptions, {
+  const warnOnUnknownSchema = pluginSchema
+    .raw()
+    .pattern(/.*/, Joi.any().warning(`any.unknown`))
+
+  return warnOnUnknownSchema.validateAsync(pluginOptions, {
     ...validationOptions,
     externals: validateExternalRules,
     warnings: returnWarnings,

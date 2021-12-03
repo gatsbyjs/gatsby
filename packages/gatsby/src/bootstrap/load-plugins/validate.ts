@@ -308,10 +308,6 @@ async function validatePluginsOptions(
           })
         }
 
-        optionsSchema = optionsSchema
-          .raw()
-          .pattern(/.*/, Joi.any().warning(`any.unknown`))
-
         const { value, warning } = await validateOptionsSchema(
           optionsSchema,
           (plugin.options as IPluginInfoOptions) || {}

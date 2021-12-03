@@ -9,9 +9,9 @@ it(`validates a basic schema`, async () => {
   const validOptions = {
     str: `is a string`,
   }
-  expect(await validateOptionsSchema(pluginSchema, validOptions)).toEqual(
-    validOptions
-  )
+
+  const { value } = await validateOptionsSchema(pluginSchema, validOptions)
+  expect(value).toEqual(validOptions)
 
   const invalid = () =>
     validateOptionsSchema(pluginSchema, {
@@ -56,18 +56,15 @@ it(`does not validate async external validation rules when validateExternalRules
   expect(invalid).not.toThrowError()
 })
 
-it(`throws an error on unknown values`, async () => {
+it(`throws an warning on unknown values`, async () => {
   const schema = Joi.object({
     str: Joi.string(),
   })
 
-  const invalid = () =>
-    validateOptionsSchema(schema, {
-      str: `bla`,
-      notInSchema: true,
-    })
+  const { warning } = await validateOptionsSchema(schema, {
+    str: `bla`,
+    notInSchema: true,
+  })
 
-  expect(invalid()).rejects.toThrowErrorMatchingInlineSnapshot(
-    `"\\"notInSchema\\" is not allowed"`
-  )
+  expect(warning).toMatchSnapshot()
 })
