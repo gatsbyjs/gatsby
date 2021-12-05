@@ -89,7 +89,7 @@ function createProxyHandler({
       reporter.warn(
         `Node mutation detected\n\n${
           codeFrame ? `${codeFrame}\n\n` : ``
-        }${error.stack.replace(/^$Error:?\s*/, ``)}`
+        }${error.stack.replace(/^Error:?\s*/, ``)}`
       )
     }
     return true
