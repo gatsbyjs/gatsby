@@ -228,7 +228,7 @@ const activeFlags: Array<IFlag> = [
   },
   {
     name: `DETECT_NODE_MUTATIONS`,
-    env: `GATSBY_EXPERIMENTAL_DETECT_NODE_MUTATIONS`,
+    env: `GATSBY_DETECT_NODE_MUTATIONS`,
     command: `all`,
     telemetryId: `DetectNodeMutations`,
     // TODO: description
