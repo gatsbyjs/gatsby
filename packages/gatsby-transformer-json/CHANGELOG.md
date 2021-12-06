@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.3.0/packages/gatsby-transformer-json) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+#### Bug Fixes
+
+- Fix high memory consumption Fix [#34084](https://github.com/gatsbyjs/gatsby/issues/34084) ([2a94a48](https://github.com/gatsbyjs/gatsby/commit/2a94a48966c8baa2137252e178ba86b40006343d))
+
 ## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-json@4.2.0/packages/gatsby-transformer-json) (2021-11-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)

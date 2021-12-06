@@ -43,7 +43,7 @@ jobs:
           staled-issues-prs: ${{ steps.stale.outputs.staled-issues-prs }}
           closed-issues-prs: ${{ steps.stale.outputs.closed-issues-prs }}
       - name: Slack Report Closed Issues
-        uses: pullreminders/slack-action@v1.0.7
+        uses: pullreminders/slack-action@master
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
         with:

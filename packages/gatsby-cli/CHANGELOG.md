@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.3.0/packages/gatsby-cli) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+#### Features
+
+- Node manifest api v2 [#34024](https://github.com/gatsbyjs/gatsby/issues/34024) ([a7f3f85](https://github.com/gatsbyjs/gatsby/commit/a7f3f85dc64377ff6fadc865155aeb878c7cf97f))
+
+#### Bug Fixes
+
+- fix stuck warnings not showing all the in-progress activities fix [#34079](https://github.com/gatsbyjs/gatsby/issues/34079) ([a996b51](https://github.com/gatsbyjs/gatsby/commit/a996b5123aaf1d183504e0b85ea25d493b9972e5))
+
+#### Performance Improvements
+
+- dont retain logs in memory in non-ink loggers [#34045](https://github.com/gatsbyjs/gatsby/issues/34045) ([c30fbfc](https://github.com/gatsbyjs/gatsby/commit/c30fbfc7e85b28595522b75d53d439f767ab450e))
+
+#### Chores
+
+- log pending jobs when build is stuck [#34102](https://github.com/gatsbyjs/gatsby/issues/34102) [#34107](https://github.com/gatsbyjs/gatsby/issues/34107) ([b90f394](https://github.com/gatsbyjs/gatsby/commit/b90f39461615b2131463b1c9396cd80e505755bf))
+
 ## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.2.0/packages/gatsby-cli) (2021-11-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)

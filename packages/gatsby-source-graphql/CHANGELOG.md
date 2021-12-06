@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.3.0/packages/gatsby-source-graphql) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+#### Bug Fixes
+
+- Use default export from node-fetch [#33977](https://github.com/gatsbyjs/gatsby/issues/33977) ([82864cb](https://github.com/gatsbyjs/gatsby/commit/82864cb917ead6b11079b48dc4601b4fa3e3968c))
+
+#### Chores
+
+- warn people that source-graphql is slow for larger sites [#33970](https://github.com/gatsbyjs/gatsby/issues/33970) ([e98e4e1](https://github.com/gatsbyjs/gatsby/commit/e98e4e1cc88f31fab8f0c7c19a4c933314fda6a5))
+
 ## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-graphql@4.2.0/packages/gatsby-source-graphql) (2021-11-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
