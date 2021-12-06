@@ -32,7 +32,7 @@
     "joi": "^17.4.2",
     "microbundle": "^0.14.2",
     "node-fetch": "^2.6.6",
-    "prettier": "^2.4.1",
+    "prettier": "^2.5.1",
     "string-length": "^4.0.2",
     "terminal-link": "^2.1.1",
     "tiny-spin": "^1.0.2"
