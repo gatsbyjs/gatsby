@@ -64,8 +64,8 @@ import { validateEngines } from "../utils/validate-engines"
 
 module.exports = async function build(
   program: IBuildArgs,
-  // Let external systems running Gatsby to inject tracer attributes
-  externalTracerAttributes: Record<string, any>
+  // Let external systems running Gatsby to inject attributes
+  externalTelemetryAttributes: Record<string, any>
 ): Promise<void> {
   // global gatsby object to use without store
   global.__GATSBY = {
@@ -94,7 +94,7 @@ module.exports = async function build(
   markWebpackStatusAsPending()
 
   const publicDir = path.join(program.directory, `public`)
-  if (!externalTracerAttributes) {
+  if (!externalTelemetryAttributes) {
     await initTracer(
       process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ||
         program.openTracingConfigFile
@@ -115,8 +115,8 @@ module.exports = async function build(
   buildSpan.setTag(`directory`, program.directory)
 
   // Add external tags to buildSpan
-  if (externalTracerAttributes) {
-    Object.entries(externalTracerAttributes).forEach(([key, value]) => {
+  if (externalTelemetryAttributes) {
+    Object.entries(externalTelemetryAttributes).forEach(([key, value]) => {
       buildActivity.span.setTag(key, value)
     })
   }
@@ -469,7 +469,7 @@ module.exports = async function build(
   report.info(`Done building in ${process.uptime()} sec`)
 
   buildActivity.end()
-  if (!externalTracerAttributes) {
+  if (!externalTelemetryAttributes) {
     await stopTracer()
   }
 
