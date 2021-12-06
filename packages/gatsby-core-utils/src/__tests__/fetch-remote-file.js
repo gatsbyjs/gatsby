@@ -664,6 +664,7 @@ Fetch details:
 {
   \\"attempt\\": 3,
   \\"method\\": \\"GET\\",
+  \\"errorCode\\": \\"ERR_NON_2XX_3XX_RESPONSE\\",
   \\"responseStatusCode\\": 500,
   \\"responseStatusMessage\\": \\"Internal Server Error\\",
   \\"requestHeaders\\": {
@@ -680,7 +681,7 @@ Fetch details:
 `)
   })
 
-  describe(`retries the download`, () => {
+  describe.only(`retries the download`, () => {
     it(`Retries when gzip compression file is incomplete`, async () => {
       const filePath = await fetchRemoteFile({
         url: `http://external.com/logo-gzip.svg?attempts=1&maxBytes=300`,
@@ -738,6 +739,7 @@ Fetch details:
 {
   \\"attempt\\": 3,
   \\"method\\": \\"GET\\",
+  \\"errorCode\\": \\"ERR_NON_2XX_3XX_RESPONSE\\",
   \\"responseStatusCode\\": 503,
   \\"responseStatusMessage\\": \\"Service Unavailable\\",
   \\"requestHeaders\\": {
@@ -772,6 +774,7 @@ Fetch details:
 {
   \\"attempt\\": 3,
   \\"method\\": \\"GET\\",
+  \\"errorCode\\": \\"ERR_GOT_REQUEST_ERROR\\",
   \\"requestHeaders\\": {
     \\"user-agent\\": \\"got (https://github.com/sindresorhus/got)\\",
     \\"accept-encoding\\": \\"gzip, deflate, br\\"
