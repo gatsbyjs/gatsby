@@ -681,7 +681,7 @@ Fetch details:
 `)
   })
 
-  describe.only(`retries the download`, () => {
+  describe(`retries the download`, () => {
     it(`Retries when gzip compression file is incomplete`, async () => {
       const filePath = await fetchRemoteFile({
         url: `http://external.com/logo-gzip.svg?attempts=1&maxBytes=300`,
