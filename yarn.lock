@@ -6823,10 +6823,10 @@ cache-manager@^2.11.1:
     lodash.clonedeep "4.5.0"
     lru-cache "4.0.0"
 
-cache-manager@^3.4.4:
-  version "3.4.4"
-  resolved "https://registry.yarnpkg.com/cache-manager/-/cache-manager-3.4.4.tgz#c69814763d3f3031395ae0d3a9a9296a91602226"
-  integrity sha512-oayy7ukJqNlRUYNUfQBwGOLilL0X5q7GpuaF19Yqwo6qdx49OoTZKRIF5qbbr+Ru8mlTvOpvnMvVq6vw72pOPg==
+cache-manager@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/cache-manager/-/cache-manager-3.6.0.tgz#696392402bb80447fbab2c9af7a939ce3cd01809"
+  integrity sha512-D4GJZhyYgprYM30ZEPOn9kkdwdPUumX3ujbNbl7FYjcRViRvAgY53k6pO/82wNsm7c4aHVgXfR12/3huA47qnA==
   dependencies:
     async "3.2.0"
     lodash "^4.17.21"
