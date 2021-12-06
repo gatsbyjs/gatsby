@@ -14,7 +14,7 @@
     "body-parser": "^1.19.0",
     "fastq": "^1.13.0",
     "gatsby-source-filesystem": "^4.4.0-next.0",
-    "got": "^11.8.2",
+    "got": "^11.8.3",
     "http2-wrapper": "^2.1.9",
     "lodash": "^4.17.21",
     "opentracing": "^0.14.5",
