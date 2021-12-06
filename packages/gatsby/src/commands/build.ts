@@ -406,7 +406,7 @@ module.exports = async function build(
     await buildHTMLPagesAndDeleteStaleArtifacts({
       program,
       workerPool,
-      buildSpan,
+      parentSpan: buildSpan,
     })
 
   await waitMaterializePageMode
