@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "@soda/friendly-errors-webpack-plugin": "1.8.0",
+    "@soda/friendly-errors-webpack-plugin": "1.8.1",
     "copy-webpack-plugin": "^7.0.0",
     "html-webpack-plugin": "^5.3.2",
     "html-webpack-skip-assets-plugin": "^1.0.3",
