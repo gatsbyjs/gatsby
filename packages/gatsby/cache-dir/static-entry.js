@@ -443,22 +443,12 @@ export default async function staticPage({
 
     postBodyComponents.push(...bodyScripts)
 
-    const groupedByType = headComponents.reduce((hash, obj) => {
-      if (obj.type === undefined) return hash
-      return Object.assign(hash, {
-        [obj.type]: (hash[obj.type] || []).concat(obj),
-      })
-    }, {})
-
-    headComponents = [
-      ...groupedByType.title,
-      ...groupedByType.base,
-      ...groupedByType.meta,
-      ...groupedByType.style,
-      ...groupedByType.link,
-      ...groupedByType.script,
-      ...groupedByType.noscript,
-    ]
+    headComponents.sort((a, b) => {
+      if (a.type && a.type === `meta`) {
+        return -1
+      }
+      return 0
+    })
 
     apiRunner(`onPreRenderHTML`, {
       getHeadComponents,
