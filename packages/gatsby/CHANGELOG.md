@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.3.0/packages/gatsby) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+#### Features
+
+- Node manifest api v2 [#34024](https://github.com/gatsbyjs/gatsby/issues/34024) ([a7f3f85](https://github.com/gatsbyjs/gatsby/commit/a7f3f85dc64377ff6fadc865155aeb878c7cf97f))
+- Reduce cost of sourcing after the initial [#33692](https://github.com/gatsbyjs/gatsby/issues/33692) ([7922bd6](https://github.com/gatsbyjs/gatsby/commit/7922bd68cc740f38600135d0518b5d933cf90add))
+
+#### Bug Fixes
+
+- create placeholder interface if it doesn't exist yet when merging SDL type [#34089](https://github.com/gatsbyjs/gatsby/issues/34089) ([8650b53](https://github.com/gatsbyjs/gatsby/commit/8650b535c507a8425b9d75ed50449f954b6dab5d))
+- node manifests v2 inc builds [#34086](https://github.com/gatsbyjs/gatsby/issues/34086) ([63183e3](https://github.com/gatsbyjs/gatsby/commit/63183e392fa8b33551b4d1a18e637299635c4f76))
+- Pin `remark-mdx` to `2.0.0-next.7` [#34064](https://github.com/gatsbyjs/gatsby/issues/34064) ([c41bb5e](https://github.com/gatsbyjs/gatsby/commit/c41bb5e7b0647bd96841df8400f76266ff55675e))
+- use new `renderToPipeableStream` [#34031](https://github.com/gatsbyjs/gatsby/issues/34031) ([b0fb8ce](https://github.com/gatsbyjs/gatsby/commit/b0fb8ce79fe341b89a102ce86b6535e50ab4a6f7))
+
+#### Performance Improvements
+
+- remove unnecessary code from engines [#34048](https://github.com/gatsbyjs/gatsby/issues/34048) ([09253b0](https://github.com/gatsbyjs/gatsby/commit/09253b0aff1d545ba145508563e97499afd0b72a))
+
+#### Chores
+
+- log pending jobs when build is stuck [#34102](https://github.com/gatsbyjs/gatsby/issues/34102) [#34107](https://github.com/gatsbyjs/gatsby/issues/34107) ([b90f394](https://github.com/gatsbyjs/gatsby/commit/b90f39461615b2131463b1c9396cd80e505755bf))
+- Fix lint issue ([1522294](https://github.com/gatsbyjs/gatsby/commit/15222945ea8ad1e3e51e87132a175de76d0ca70c))
+- Add `getServerData` to PageProps type [#34003](https://github.com/gatsbyjs/gatsby/issues/34003) ([2c9f67c](https://github.com/gatsbyjs/gatsby/commit/2c9f67cd6dcb2a0ea27371f6842ca00aee4ccaa0))
+- add `getCache` helper to `NodePluginArgs` [#33984](https://github.com/gatsbyjs/gatsby/issues/33984) ([8a1e1f0](https://github.com/gatsbyjs/gatsby/commit/8a1e1f0d12d5bf58ea4defca2a5b572a684f2f64))
+
+#### Other Changes
+
+- Update docs. ([3ec17ab](https://github.com/gatsbyjs/gatsby/commit/3ec17ab248a8701c248e3ed03c97f8850a60cf5d))
+- Clarify that the node for ownerNodeId must be queried on the page [#34054](https://github.com/gatsbyjs/gatsby/issues/34054) ([640cce9](https://github.com/gatsbyjs/gatsby/commit/640cce98e902d6fcb0b363bec1c5a223f1625436))
+
 ## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.2.0/packages/gatsby) (2021-11-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.3.0/packages/create-gatsby) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+#### Bug Fixes
+
+- Order inputs alphabetically [#34057](https://github.com/gatsbyjs/gatsby/issues/34057) ([f8bbaf9](https://github.com/gatsbyjs/gatsby/commit/f8bbaf9c4f5f5048fa96437bdc78e9ab8c69b678))
+
 ## [2.2.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.2.0/packages/create-gatsby) (2021-11-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)

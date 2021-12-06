@@ -1423,9 +1423,9 @@ actions.createServerVisitedPage = (chunkName: string) => {
  * This is used to tie the unique revision state within a data source at the current point in time to a page generated from the provided node when it's node manifest is processed.
  *
  * @param {Object} manifest Manifest data
- * @param {string} manifest.manifestId An id which ties the revision unique state of this manifest to the unique revision state of a data source.
- * @param {Object} manifest.node The Gatsyby node to tie the manifestId to. See the "createNode" action for more information about the node object details.
- * @param {string} manifest.updatedAtUTC (optional) The time in which the node was last updated
+ * @param {string} manifest.manifestId An id which ties the unique revision state of this manifest to the unique revision state of a data source.
+ * @param {Object} manifest.node The Gatsby node to tie the manifestId to. See the "createNode" action for more information about the node object details.
+ * @param {string} manifest.updatedAtUTC (optional) The time in which the node was last updated. If this parameter is not included, a manifest is created for every node that gets called. By default, node manifests are created for content updated in the last 30 days. To change this, set a `NODE_MANIFEST_MAX_DAYS_OLD` environment variable.
  * @example
  * unstable_createNodeManifest({
  *   manifestId: `post-id-1--updated-53154315`,

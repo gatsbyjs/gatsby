@@ -1,5 +1,5 @@
 const core = require("@actions/core")
-const slackMessage = "./slack-message"
+const slackMessage = require("./slack-message")
 
 function formatIssues(issues) {
   const parsedIssues = JSON.parse(issues)

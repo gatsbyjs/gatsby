@@ -68,6 +68,8 @@ const ERROR_CODES_TO_RETRY = [
   `ENOTFOUND`,
   `ENETUNREACH`,
   `EAI_AGAIN`,
+  `ERR_NON_2XX_3XX_RESPONSE`,
+  `ERR_GOT_REQUEST_ERROR`,
 ]
 
 let fetchCache = new Map()
