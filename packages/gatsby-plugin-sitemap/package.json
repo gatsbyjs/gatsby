@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "common-tags": "^1.8.0",
+    "common-tags": "^1.8.2",
     "minimatch": "^3.0.4",
     "sitemap": "^7.0.0"
   },
