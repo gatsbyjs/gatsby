@@ -231,7 +231,7 @@ const activeFlags: Array<IFlag> = [
     env: `GATSBY_DETECT_NODE_MUTATIONS`,
     command: `all`,
     telemetryId: `DetectNodeMutations`,
-    description: `Diagnostic mode to log any attempts to mutate node directly. Helpful when debugging missing data problems. See http://gatsbyjs.org/docs/how-to/local-development/debugging-missing-data/ for more details.`,
+    description: `Diagnostic mode to log any attempts to mutate node directly. Helpful when debugging missing data problems. See https://gatsby.dev/debugging-missing-data for more details.`,
     experimental: false,
     testFitness: (): fitnessEnum => true,
   },
