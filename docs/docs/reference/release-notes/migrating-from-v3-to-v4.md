@@ -583,6 +583,8 @@ This was never an intended feature of Gatsby and is considered an anti-pattern (
 Starting with v4 Gatsby introduces a persisted storage for nodes and thus this pattern will no longer work
 because nodes are persisted after `createNode` call and all direct mutations after that will be lost.
 
+Gatsby provides diagnostic mode to detect those direct mutations, unfortunately it has noticeable performance overhead so we don't enable it by default. See [Debugging missing data](http://gatsbyjs.org/docs/how-to/local-development/debugging-missing-data/) for more details on it.
+
 Gatsby provides several actions available in `sourceNodes` and `onCreateNode` APIs to use instead:
 
 - [createNode](/docs/reference/config-files/actions/#createNode)
@@ -590,8 +592,6 @@ Gatsby provides several actions available in `sourceNodes` and `onCreateNode` AP
 - [createNodeField](/docs/reference/config-files/actions/#createNodeField)
 
 You can use `createNodeField` and the `@link` directive to create the same schema shape. The [`@link` directive](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields) accepts a `from` argument that you can use to place your node to the old position (as `createNodeField` places everything under a `fields` key). See the [source plugin guide](/docs/how-to/plugins-and-themes/creating-a-source-plugin/#create-remote-file-node-from-a-url) for more information. Checkout [this PR](https://github.com/gatsbyjs/gatsby/pull/33715) for a real-world migration example.
-
-Gatsby (starting with version `4.3.0`) can automatically detect those mutations but it introduces noticeable performance degradation and it's not enabled by default. To temporarily opt-in - set `DETECT_NODE_MUTATIONS: true` flag in `gatsby-config.js` or run Gatsby with `GATSBY_EXPERIMENTAL_DETECT_NODE_MUTATIONS=true` environment variable (please remember to disable it after you are done). It will log traces so it's easier to locate offending code.
 
 ### `___NODE` convention
 
