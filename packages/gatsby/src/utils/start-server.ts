@@ -13,13 +13,13 @@ import {
   GraphQLFormattedError,
   Kind,
 } from "graphql"
-import { isCI } from "gatsby-core-utils"
+import { slash, uuid } from "gatsby-core-utils"
 import http from "http"
 import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
 import { codeFrameColumns } from "@babel/code-frame"
-import uuidv4 from "uuid/v4"
+import * as fs from "fs-extra"
 
 import { withBasePath } from "../utils/path"
 import webpackConfig from "../utils/webpack.config"
@@ -30,10 +30,6 @@ import * as WorkerPool from "../utils/worker/pool"
 import { developStatic } from "../commands/develop-static"
 import withResolverContext from "../schema/context"
 import { websocketManager, WebsocketManager } from "../utils/websocket-manager"
-import {
-  showExperimentNoticeAfterTimeout,
-  CancelExperimentNoticeCallbackOrUndefined,
-} from "../utils/show-experiment-notice"
 import {
   reverseFixedPagePath,
   readPageData,
@@ -55,6 +51,7 @@ import {
 import { renderDevHTML } from "./dev-ssr/render-dev-html"
 import { getServerData, IServerData } from "./get-server-data"
 import { ROUTES_DIRECTORY } from "../constants"
+import { getPageMode } from "./page-mode"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -62,7 +59,6 @@ interface IServer {
   compiler: webpack.Compiler
   listener: http.Server
   webpackActivity: ActivityTracker
-  cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
   websocketManager: WebsocketManager
   workerPool: WorkerPool.GatsbyWorkerPool
   webpackWatching: IWebpackWatchingPauseResume
@@ -95,34 +91,12 @@ export async function startServer(
   // query on demand is enabled and loading indicator is not disabled
   writeVirtualLoadingIndicatorModule()
 
-  const THIRTY_SECONDS = 30 * 1000
-  let cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
-  if (
-    process.env.gatsby_executing_command === `develop` &&
-    !process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE &&
-    !isCI()
-  ) {
-    cancelDevJSNotice = showExperimentNoticeAfterTimeout(
-      `Preserve webpack's Cache`,
-      `https://github.com/gatsbyjs/gatsby/discussions/28331`,
-      `which changes Gatsby's cache clearing behavior to not clear webpack's
-cache unless you run "gatsby clean" or delete the .cache folder manually.
-Here's how to try it:
-
-module.exports = {
-  flags: { PRESERVE_WEBPACK_CACHE: true },
-  plugins: [...]
-}`,
-      THIRTY_SECONDS
-    )
-  }
-
   // Remove the following when merging GATSBY_EXPERIMENTAL_DEV_SSR
   const directoryPath = withBasePath(directory)
   const { buildRenderer, doBuildPages } = require(`../commands/build-html`)
   const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
     try {
-      const { rendererPath } = await buildRenderer(
+      const { rendererPath, close } = await buildRenderer(
         program,
         Stage.DevelopHTML,
         activity.span
@@ -134,6 +108,8 @@ module.exports = {
         workerPool,
         Stage.DevelopHTML
       )
+      // close the compiler
+      await close()
     } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
@@ -269,7 +245,7 @@ module.exports = {
     req: express.Request,
     pluginName?: string
   ): Promise<void> => {
-    global.__GATSBY.buildId = uuidv4()
+    global.__GATSBY.buildId = uuid.v4()
 
     emitter.emit(`WEBHOOK_RECEIVED`, {
       webhookBody: req.body,
@@ -330,9 +306,11 @@ module.exports = {
 
       if (page) {
         try {
-          let serverDataPromise: Promise<IServerData> = Promise.resolve({})
+          let serverDataPromise: Promise<IServerData> | Promise<Error> =
+            Promise.resolve({})
+          const pageMode = getPageMode(page)
 
-          if (page.mode === `SSR`) {
+          if (pageMode === `SSR`) {
             const renderer = require(PAGE_RENDERER_PATH)
             const componentInstance = await renderer.getPageChunk(page)
 
@@ -341,7 +319,7 @@ module.exports = {
               page,
               potentialPagePath,
               componentInstance
-            )
+            ).catch(error => error)
           }
 
           let pageData: IPageDataWithQueryResult
@@ -362,14 +340,50 @@ module.exports = {
             )
           }
 
-          if (page.mode === `SSR`) {
-            const { props } = await serverDataPromise
+          let statusCode = 200
+          if (pageMode === `SSR`) {
+            try {
+              const result = await serverDataPromise
 
-            pageData.result.serverData = props
-            pageData.path = `/${requestedPagePath}`
+              if (result instanceof Error) {
+                throw result
+              }
+
+              if (result.headers) {
+                for (const [name, value] of Object.entries(result.headers)) {
+                  res.setHeader(name, value)
+                }
+              }
+
+              if (result.status) {
+                statusCode = result.status
+              }
+
+              pageData.result.serverData = result.props
+              pageData.getServerDataError = null
+            } catch (error) {
+              const structuredError = report.panicOnBuild({
+                id: `95315`,
+                context: {
+                  sourceMessage: error.message,
+                  pagePath: requestedPagePath,
+                  potentialPagePath,
+                },
+                error,
+              })
+              // Use page-data.json file instead of emitting via websockets as this makes it easier
+              // to only display the relevant error + clearing of the error
+              // The query-result-store reacts to this
+              pageData.getServerDataError = structuredError
+            }
+            pageData.path = page.matchPath ? `/${potentialPagePath}` : page.path
+          } else {
+            // When user removes getServerData function, Gatsby browser runtime still has cached version of page-data.
+            // Send `null` to always reset cached serverData:
+            pageData.result.serverData = null
           }
 
-          res.status(200).send(pageData)
+          res.status(statusCode).send(pageData)
           return
         } catch (e) {
           report.error(
@@ -464,6 +478,41 @@ module.exports = {
       codeFrame,
       sourcePosition,
       sourceContent,
+    })
+  })
+
+  app.get(`/__file-code-frame`, async (req, res) => {
+    const emptyResponse = {
+      codeFrame: `No codeFrame could be generated`,
+      sourcePosition: null,
+      sourceContent: null,
+    }
+
+    const filePath = req?.query?.filePath
+    const lineNumber = parseInt(req.query.lineNumber, 10)
+    const columnNumber = parseInt(req.query.columnNumber, 10)
+
+    if (!filePath) {
+      res.json(emptyResponse)
+      return
+    }
+
+    const sourceContent = await fs.readFile(filePath, `utf-8`)
+
+    const codeFrame = codeFrameColumns(
+      sourceContent,
+      {
+        start: {
+          line: lineNumber,
+          column: columnNumber ?? 0,
+        },
+      },
+      {
+        highlightCode: true,
+      }
+    )
+    res.json({
+      codeFrame,
     })
   })
 
@@ -705,7 +754,7 @@ module.exports = {
           res.send(e).status(500)
         }
       } else {
-        const potentialPagePath = reverseFixedPagePath(req.path)
+        const potentialPagePath = reverseFixedPagePath(decodeURI(req.path))
         const page = findPageByPath(store.getState(), potentialPagePath, false)
 
         // When we can't find a page we send 404
@@ -735,7 +784,6 @@ module.exports = {
 
   if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const chokidar = require(`chokidar`)
-    const { slash } = require(`gatsby-core-utils`)
     // Register watcher that rebuilds index.html every time html.js changes.
     const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
       slash(directoryPath(path))
@@ -752,7 +800,6 @@ module.exports = {
     compiler,
     listener,
     webpackActivity,
-    cancelDevJSNotice,
     websocketManager,
     workerPool,
     webpackWatching: webpackDevMiddlewareInstance.context.watching,

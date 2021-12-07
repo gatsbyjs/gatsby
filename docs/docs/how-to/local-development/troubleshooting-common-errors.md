@@ -36,7 +36,7 @@ Here are some examples of plugins that require you to install more than just the
 - [gatsby-plugin-styled-components](/plugins/gatsby-plugin-styled-components/): `styled-components`, and `babel-plugin-styled-components`
 - [gatsby-plugin-sass](/plugins/gatsby-plugin-sass/): `node-sass`, or `sass`
 - [gatsby-plugin-material-ui](/plugins/gatsby-plugin-material-ui/): `@material-ui/styles`
-- [gatsby-image](/plugins/gatsby-image/): `gatsby-transformer-sharp`, and `gatsby-plugin-sharp`
+- [gatsby-plugin-image](/plugins/gatsby-plugin-image/): `gatsby-source-filesystem`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp`
 
 Rather than packaging up the other dependent libraries alongside these plugins, they can stay smaller in size when they are published and are able to rely on alternative implementations. One example is `gatsby-plugin-sass` that can use either the Node.js or Dart implementations of Sass.
 
@@ -76,9 +76,11 @@ Some packages, like Babel, bring `fs` along for the ride anyway. In order to pre
 ```javascript:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
-    node: {
-      fs: "empty", // highlight-line
-    },
+    resolve: {
+      fallback: {
+        fs: false // highlight-line
+      }
+    }
   })
 }
 ```
@@ -129,7 +131,7 @@ Comparing your GraphQL query to your site's schema in `http://localhost:8000/___
 
 - neither any source plugins you are using nor your own implementation of the [`sourceNodes` API](/docs/reference/config-files/gatsby-node/#sourceNodes) are misconfigured
 
-## Errors using gatsby-image and sharp
+## Errors using gatsby-plugin-image and sharp
 
 Gatsby's image processing is broken up into different packages which need to work together to source images and transform them into different optimized versions. You might run into these errors getting them to play together nicely.
 
@@ -158,9 +160,7 @@ allMdx {
     title
     image {
       childImageSharp {
-        fluid {
-          srcSet
-        }
+        gatsbyImageData
       }
     }
   }

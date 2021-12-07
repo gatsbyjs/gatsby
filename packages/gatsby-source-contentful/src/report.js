@@ -1,6 +1,7 @@
+// @ts-check
+
 export const CODES = {
   /* Fetch errors */
-
   LocalesMissing: `111001`,
   SelfSignedCertificate: `111002`,
   SyncError: `111003`,

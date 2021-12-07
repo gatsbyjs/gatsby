@@ -29,9 +29,9 @@ const Description: React.FC<BoxProps> = function Description(props) {
           <Text>(SSG) Generated at build time</Text>
         </Box>
         <Text>
-          D (DSG) Defered static generation - page generated at runtime
+          D (DSG) Deferred static generation - page generated at runtime
         </Text>
-        <Text>∞ (SSR) Server-side renders at runtime (uses getServerDate)</Text>
+        <Text>∞ (SSR) Server-side renders at runtime (uses getServerData)</Text>
         <Text>λ (Function) Gatsby function</Text>
       </Box>
       <Spacer />

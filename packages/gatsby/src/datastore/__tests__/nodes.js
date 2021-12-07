@@ -10,40 +10,6 @@ describe(`nodes db tests`, () => {
     store.dispatch({ type: `DELETE_CACHE` })
   })
 
-  it(`warns when using old touchNode signature `, () => {
-    store.dispatch(
-      actions.createNode(
-        {
-          id: `hi`,
-          children: [],
-          parent: `test`,
-          internal: {
-            contentDigest: `hasdfljds`,
-            type: `Test`,
-          },
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    expect(getNode(`hi`)).toMatchObject({ id: `hi` })
-    store.dispatch(
-      actions.touchNode(
-        { nodeId: `hi` },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    expect(getNode(`hi`)).toBeDefined()
-    const deprecationNotice =
-      `Calling "touchNode" with an object containing the nodeId is deprecated. Please pass ` +
-      `the node directly to the function: touchNode(node) ` +
-      `"touchNode" was called by tests`
-    expect(report.warn).toHaveBeenCalledWith(deprecationNotice)
-  })
-
   it(`deletes previously transformed children nodes when the parent node is updated`, async () => {
     store.dispatch(
       actions.createNode(
@@ -339,40 +305,6 @@ describe(`nodes db tests`, () => {
     )
     store.dispatch(actions.deleteNode(getNode(`hi`)))
     expect(getNode(`hi`)).toBeUndefined()
-  })
-
-  it(`warns when using old deleteNode signature `, () => {
-    store.dispatch(
-      actions.createNode(
-        {
-          id: `hi`,
-          children: [],
-          parent: `test`,
-          internal: {
-            contentDigest: `hasdfljds`,
-            type: `Test`,
-          },
-        },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    expect(getNode(`hi`)).toMatchObject({ id: `hi` })
-    store.dispatch(
-      actions.deleteNode(
-        { node: getNode(`hi`) },
-        {
-          name: `tests`,
-        }
-      )
-    )
-    expect(getNode(`hi`)).toBeUndefined()
-    const deprecationNotice =
-      `Calling "deleteNode" with {node} is deprecated. Please pass ` +
-      `the node directly to the function: deleteNode(node) ` +
-      `"deleteNode" was called by tests`
-    expect(report.warn).toHaveBeenCalledWith(deprecationNotice)
   })
 
   it(`throws an error when trying to delete a node of a type owned from another plugin`, () => {

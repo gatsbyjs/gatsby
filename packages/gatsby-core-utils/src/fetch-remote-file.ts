@@ -1,4 +1,4 @@
-import got, { Headers, Options } from "got"
+import got, { Headers, Options, RequestError } from "got"
 import fileType from "file-type"
 import path from "path"
 import fs from "fs-extra"
@@ -8,7 +8,6 @@ import {
   getRemoteFileExtension,
   createFilePath,
 } from "./filename-utils"
-
 import type { IncomingMessage } from "http"
 import type { GatsbyCache } from "gatsby"
 
@@ -22,6 +21,7 @@ export interface IFetchRemoteFileOptions {
   httpHeaders?: Headers
   ext?: string
   name?: string
+  maxAttempts?: number
 }
 
 // copied from gatsby-worker
@@ -47,6 +47,30 @@ const CONNECTION_TIMEOUT = process.env.GATSBY_CONNECTION_TIMEOUT
 const INCOMPLETE_RETRY_LIMIT = process.env.GATSBY_INCOMPLETE_RETRY_LIMIT
   ? parseInt(process.env.GATSBY_INCOMPLETE_RETRY_LIMIT, 10)
   : 3
+
+// jest doesn't allow us to run all timings infinitely, so we set it 0  in tests
+const BACKOFF_TIME = process.env.NODE_ENV === `test` ? 0 : 1000
+
+function range(start: number, end: number): Array<number> {
+  return Array(end - start)
+    .fill(null)
+    .map((_, i) => start + i)
+}
+
+// Based on the defaults of https://github.com/JustinBeckwith/retry-axios
+const STATUS_CODES_TO_RETRY = [...range(100, 200), 429, ...range(500, 600)]
+const ERROR_CODES_TO_RETRY = [
+  `ETIMEDOUT`,
+  `ECONNRESET`,
+  `EADDRINUSE`,
+  `ECONNREFUSED`,
+  `EPIPE`,
+  `ENOTFOUND`,
+  `ENETUNREACH`,
+  `EAI_AGAIN`,
+  `ERR_NON_2XX_3XX_RESPONSE`,
+  `ERR_GOT_REQUEST_ERROR`,
+]
 
 let fetchCache = new Map()
 let latestBuildId = ``
@@ -83,11 +107,6 @@ function pollUntilComplete(
   buildId: string,
   cb: (err?: Error, result?: string) => void
 ): void {
-  if (!IS_WORKER) {
-    // We are not in a worker, so we shouldn't use the cache
-    return void cb()
-  }
-
   cache.get(cacheIdForWorkers(url)).then(entry => {
     if (!entry || entry.buildId !== buildId) {
       return void cb()
@@ -138,19 +157,17 @@ async function fetchFile({
     return result
   }
 
-  if (IS_WORKER) {
-    await cache.set(cacheIdForWorkers(url), {
-      status: `pending`,
-      result: null,
-      workerId: WORKER_ID,
-      buildId: BUILD_ID,
-    })
-  }
+  await cache.set(cacheIdForWorkers(url), {
+    status: `pending`,
+    result: null,
+    workerId: WORKER_ID,
+    buildId: BUILD_ID,
+  })
 
   // See if there's response headers for this url
   // from a previous request.
-  const cachedHeaders = await cache.get(cacheIdForHeaders(url))
-
+  const { headers: cachedHeaders, digest: originalDigest } =
+    (await cache.get(cacheIdForHeaders(url))) ?? {}
   const headers = { ...httpHeaders }
   if (cachedHeaders && cachedHeaders.etag) {
     headers[`If-None-Match`] = cachedHeaders.etag
@@ -192,7 +209,10 @@ async function fetchFile({
 
     if (response.statusCode === 200) {
       // Save the response headers for future requests.
-      await cache.set(cacheIdForHeaders(url), response.headers)
+      await cache.set(cacheIdForHeaders(url), {
+        headers: response.headers,
+        digest,
+      })
 
       // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
       if (!ext) {
@@ -209,7 +229,7 @@ async function fetchFile({
       }
     }
 
-    // Multiple workers have started the fetch and we need another check to only let one complete
+    // Multiple processes have started the fetch and we need another check to only let one complete
     const cacheEntry = await cache.get(cacheIdForWorkers(url))
     if (cacheEntry && cacheEntry.workerId !== WORKER_ID) {
       return new Promise<string>((resolve, reject) => {
@@ -225,10 +245,11 @@ async function fetchFile({
 
     // If the status code is 200, move the piped temp file to the real name.
     const filename = createFilePath(
-      path.join(pluginCacheDir, digest),
+      path.join(pluginCacheDir, originalDigest ?? digest),
       name,
       ext as string
     )
+
     if (response.statusCode === 200) {
       await fs.move(tmpFilename, filename, { overwrite: true })
       // Else if 304, remove the empty response.
@@ -236,33 +257,25 @@ async function fetchFile({
       await fs.remove(tmpFilename)
     }
 
-    if (IS_WORKER) {
-      await cache.set(cacheIdForWorkers(url), {
-        status: `complete`,
-        result: filename,
-        workerId: WORKER_ID,
-        buildId: BUILD_ID,
-      })
-    }
+    await cache.set(cacheIdForWorkers(url), {
+      status: `complete`,
+      result: filename,
+      workerId: WORKER_ID,
+      buildId: BUILD_ID,
+    })
 
     return filename
   } catch (err) {
-    // enable multiple workers to continue when done
-    if (IS_WORKER) {
-      const cacheEntry = await cache.get(cacheIdForWorkers(url))
+    // enable multiple processes to continue when done
+    const cacheEntry = await cache.get(cacheIdForWorkers(url))
 
-      if (!cacheEntry || cacheEntry.workerId === WORKER_ID) {
-        await cache.set(cacheIdForWorkers(url), {
-          status: `failed`,
-          result: err.toString
-            ? err.toString()
-            : err.message
-            ? err.message
-            : err,
-          workerId: WORKER_ID,
-          buildId: BUILD_ID,
-        })
-      }
+    if (!cacheEntry || cacheEntry.workerId === WORKER_ID) {
+      await cache.set(cacheIdForWorkers(url), {
+        status: `failed`,
+        result: err.toString ? err.toString() : err.message ? err.message : err,
+        workerId: WORKER_ID,
+        buildId: BUILD_ID,
+      })
     }
 
     throw err
@@ -335,6 +348,9 @@ function requestRemoteNode(
     // Fixes a bug in latest got where progress.total gets reset when stream ends, even if it wasn't complete.
     let totalSize: number | null = null
     responseStream.on(`downloadProgress`, progress => {
+      // reset the timeout on each progress event to make sure large files don't timeout
+      resetTimeout()
+
       if (
         progress.total != null &&
         (!totalSize || totalSize < progress.total)
@@ -359,9 +375,71 @@ function requestRemoteNode(
       fsWriteStream.close()
       fs.removeSync(tmpFilename)
 
-      process.nextTick(() => {
-        reject(error)
-      })
+      if (!(error instanceof RequestError)) {
+        return reject(error)
+      }
+
+      // This is a replacement for the stream retry logic of got
+      // till we can update all got instances to v12
+      // https://github.com/sindresorhus/got/blob/main/documentation/7-retry.md
+      // https://github.com/sindresorhus/got/blob/main/documentation/3-streams.md#retry
+      const statusCode = error.response?.statusCode
+      const errorCode = error.code || error.message // got gives error.code, but msw/node returns the error codes in the message only
+
+      if (
+        // HTTP STATUS CODE ERRORS
+        (statusCode && STATUS_CODES_TO_RETRY.includes(statusCode)) ||
+        // GENERAL NETWORK ERRORS
+        (errorCode && ERROR_CODES_TO_RETRY.includes(errorCode))
+      ) {
+        if (attempt < INCOMPLETE_RETRY_LIMIT) {
+          setTimeout(() => {
+            resolve(
+              requestRemoteNode(
+                url,
+                headers,
+                tmpFilename,
+                httpOptions,
+                attempt + 1
+              )
+            )
+          }, BACKOFF_TIME * attempt)
+
+          return undefined
+        }
+        // Throw user friendly error
+        error.message = [
+          `Unable to fetch:`,
+          url,
+          `---`,
+          `Reason: ${error.message}`,
+          `---`,
+        ].join(`\n`)
+
+        // Gather details about what went wrong from the error object and the request
+        const details = Object.entries({
+          attempt,
+          method: error.options?.method,
+          errorCode: error.code,
+          responseStatusCode: error.response?.statusCode,
+          responseStatusMessage: error.response?.statusMessage,
+          requestHeaders: error.options?.headers,
+          responseHeaders: error.response?.headers,
+        })
+          // Remove undefined values from the details to keep it clean
+          .reduce((a, [k, v]) => (v === undefined ? a : ((a[k] = v), a)), {})
+
+        if (Object.keys(details).length) {
+          error.message = [
+            error.message,
+            `Fetch details:`,
+            JSON.stringify(details, null, 2),
+            `---`,
+          ].join(`\n`)
+        }
+      }
+
+      return reject(error)
     })
 
     responseStream.on(`response`, response => {
@@ -399,7 +477,6 @@ function requestRemoteNode(
             )
           }
         }
-
         return resolve(response)
       })
     })

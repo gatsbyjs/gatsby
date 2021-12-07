@@ -1,3 +1,4 @@
+import type { IStructuredError } from "gatsby-cli/src/structured-errors/types"
 import { IGatsbyPage } from "../redux/types"
 
 export interface IPageData {
@@ -5,6 +6,8 @@ export interface IPageData {
   matchPath?: IGatsbyPage["matchPath"]
   path: IGatsbyPage["path"]
   staticQueryHashes: Array<string>
+  getServerDataError?: IStructuredError | Array<IStructuredError> | null
+  manifestId?: string
 }
 
 export function constructPageDataString(
@@ -13,6 +16,7 @@ export function constructPageDataString(
     matchPath,
     path: pagePath,
     staticQueryHashes,
+    manifestId,
   }: IPageData,
   result: string | Buffer
 ): string {
@@ -25,6 +29,11 @@ export function constructPageDataString(
   if (matchPath) {
     body += `,
     "matchPath": "${matchPath}"`
+  }
+
+  if (manifestId) {
+    body += `,
+    "manifestId": "${manifestId}"`
   }
 
   body += `}`

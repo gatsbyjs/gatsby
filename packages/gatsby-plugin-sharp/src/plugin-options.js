@@ -26,7 +26,6 @@ const generalArgs = {
   pathPrefix: ``,
   toFormat: ``,
   toFormatBase64: ``,
-  sizeByPixelDensity: false,
   rotate: 0,
 }
 

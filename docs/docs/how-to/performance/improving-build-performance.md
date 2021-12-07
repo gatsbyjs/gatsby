@@ -32,6 +32,10 @@ many fields that aren't needed to create the pages. Most sites only need to quer
 
 Check how long `createPages` takes for your build. If it's longer than 10s, check if there's fields you can remove from the query.
 
+#### Query only need fields in page queries
+
+The more fields you query the longer each query will take to run. Gatsby's GraphQL schema gives you a rich array of filtering/sorting capabilities so you grab just the data you need. If you install [gatsby-plugin-perf-budgets](https://github.com/pieh/gatsby-plugin-perf-budgets), it will show you the amount of data you query for each page so you can audit larger ones.
+
 #### Make sure you're not clearing the cache between builds
 
 In the past, Gatsby's cache was less reliable than it is now. As a result, some sites started clearing the cache between builds. With improvements we've made, that should not be necessary anymore, so if your build script says something like "gatsby clean && gatsby build" you may want to change it to just run gatsby build.
@@ -54,7 +58,7 @@ If you have a lot of content you're not using in your Gatsby site, check the opt
 
 #### Check Your Headless CMS or other data source
 
-With similar amounts of pages and content, Gatsby builds work significantly faster with some headless CMSs than others (largely due to the way various source-plugins are implemented). To identify where your CMS is on the spectrum of build performance, [Will It Build](https://willit.build/) has good benchmark data; you may want to look at the "worst-case" scenario featured -- 32k page uncached builds -- since that will give a larger differential.
+With similar amounts of pages and content, Gatsby builds work significantly faster with some headless CMSs than others (largely due to the way various source-plugins are implemented).
 
 Note that generally popular and official source plugins have built in a number of optimizations that custom or less-used source plugins may not have, so if you're sourcing large amounts of data from other plugins, you may want to monitor the build performance of those plugins.
 

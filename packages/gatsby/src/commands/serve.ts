@@ -8,7 +8,6 @@ import { match as reachMatch } from "@gatsbyjs/reach-router/lib/utils"
 import onExit from "signal-exit"
 import report from "gatsby-cli/lib/reporter"
 import multer from "multer"
-import pathToRegexp from "path-to-regexp"
 import cookie from "cookie"
 import telemetry from "gatsby-telemetry"
 
@@ -19,18 +18,11 @@ import { IProgram } from "./types"
 import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
 import { IGatsbyFunction } from "../redux/types"
 import { reverseFixedPagePath } from "../utils/page-data"
+import { initTracer } from "../utils/tracer"
 
 interface IMatchPath {
   path: string
   matchPath: string
-}
-
-interface IPathToRegexpKey {
-  name: string | number
-  prefix: string
-  suffix: string
-  pattern: string
-  modifier: string
 }
 
 interface IServeProgram extends IProgram {
@@ -99,6 +91,9 @@ const matchPathRouter =
 module.exports = async (program: IServeProgram): Promise<void> => {
   telemetry.trackCli(`SERVE_START`)
   telemetry.startBackgroundUpdate()
+  await initTracer(
+    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
+  )
   let { prefixPaths, port, open, host } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
@@ -169,25 +164,22 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           // Check if there's any matchPaths that match.
           // We loop until we find the first match.
           functions.some(f => {
-            let exp
-            const keys: Array<IPathToRegexpKey> = []
             if (f.matchPath) {
-              exp = pathToRegexp(f.matchPath, keys)
-            }
-            if (exp && exp.exec(pathFragment) !== null) {
-              functionObj = f
-              // @ts-ignore - TS bug? https://stackoverflow.com/questions/50234481/typescript-2-8-3-type-must-have-a-symbol-iterator-method-that-returns-an-iterato
-              const matches = [...pathFragment.match(exp)].slice(1)
-              const newParams = {}
-              matches.forEach(
-                (match, index) => (newParams[keys[index].name] = match)
-              )
-              req.params = newParams
+              const matchResult = reachMatch(f.matchPath, pathFragment)
+              if (matchResult) {
+                req.params = matchResult.params
+                if (req.params[`*`]) {
+                  // Backwards compatability for v3
+                  // TODO remove in v5
+                  req.params[`0`] = req.params[`*`]
+                }
+                functionObj = f
 
-              return true
-            } else {
-              return false
+                return true
+              }
             }
+
+            return false
           })
         }
 
@@ -254,20 +246,44 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           const page = graphqlEngine.findPageByPath(potentialPagePath)
 
           if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
-            const data = await getData({
-              pathName: req.path,
-              graphqlEngine,
-              req,
-            })
-            const results = await renderPageData({ data })
-            if (page.mode === `SSR` && data.serverDataHeaders) {
-              for (const [name, value] of Object.entries(
-                data.serverDataHeaders
-              )) {
-                res.setHeader(name, value)
+            const requestActivity = report.phantomActivity(
+              `request for "${req.path}"`
+            )
+            requestActivity.start()
+            try {
+              const spanContext = requestActivity.span.context()
+              const data = await getData({
+                pathName: req.path,
+                graphqlEngine,
+                req,
+                spanContext,
+              })
+              const results = await renderPageData({ data, spanContext })
+              if (page.mode === `SSR` && data.serverDataHeaders) {
+                for (const [name, value] of Object.entries(
+                  data.serverDataHeaders
+                )) {
+                  res.setHeader(name, value)
+                }
               }
+
+              if (page.mode === `SSR` && data.serverDataStatus) {
+                return void res.status(data.serverDataStatus).send(results)
+              } else {
+                return void res.send(results)
+              }
+            } catch (e) {
+              report.error(
+                `Generating page-data for "${requestedPagePath}" / "${potentialPagePath}" failed.`,
+                e
+              )
+              return res
+                .status(500)
+                .contentType(`text/plain`)
+                .send(`Internal server error.`)
+            } finally {
+              requestActivity.end()
             }
-            return void res.send(results)
           }
 
           return void next()
@@ -278,25 +294,48 @@ module.exports = async (program: IServeProgram): Promise<void> => {
         if (req.accepts(`html`)) {
           const potentialPagePath = req.path
           const page = graphqlEngine.findPageByPath(potentialPagePath)
-
           if (page && (page.mode === `DSG` || page.mode === `SSR`)) {
-            const data = await getData({
-              pathName: potentialPagePath,
-              graphqlEngine,
-              req,
-            })
-            const results = await renderHTML({ data })
-            if (page.mode === `SSR` && data.serverDataHeaders) {
-              for (const [name, value] of Object.entries(
-                data.serverDataHeaders
-              )) {
-                res.setHeader(name, value)
-              }
-            }
-            return res.send(results)
-          }
+            const requestActivity = report.phantomActivity(
+              `request for "${req.path}"`
+            )
+            requestActivity.start()
 
-          return res.status(404).sendFile(`404.html`, { root })
+            try {
+              const spanContext = requestActivity.span.context()
+              const data = await getData({
+                pathName: potentialPagePath,
+                graphqlEngine,
+                req,
+                spanContext,
+              })
+              const results = await renderHTML({ data, spanContext })
+              if (page.mode === `SSR` && data.serverDataHeaders) {
+                for (const [name, value] of Object.entries(
+                  data.serverDataHeaders
+                )) {
+                  res.setHeader(name, value)
+                }
+              }
+
+              if (page.mode === `SSR` && data.serverDataStatus) {
+                return void res.status(data.serverDataStatus).send(results)
+              } else {
+                return void res.send(results)
+              }
+            } catch (e) {
+              report.error(
+                `Rendering html for "${potentialPagePath}" failed.`,
+                e
+              )
+              return res.status(500).sendFile(`500.html`, { root }, err => {
+                if (err) {
+                  res.contentType(`text/plain`).send(`Internal server error.`)
+                }
+              })
+            } finally {
+              requestActivity.end()
+            }
+          }
         }
         return next()
       })

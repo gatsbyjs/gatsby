@@ -4,7 +4,6 @@ import { ErrorCategory } from "../../structured-errors/error-map"
 import { IRenderPageArgs } from "../types"
 
 export interface IGatsbyCLIState {
-  messages: Array<ILog>
   activities: {
     [id: string]: IActivity
   }
@@ -37,7 +36,7 @@ export interface IActivity {
   errored?: boolean
 }
 
-interface ILog {
+export interface ILog {
   level: string
   text: string | undefined
   statusText: string | undefined

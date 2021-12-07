@@ -79,7 +79,7 @@ There are a number of places to put an inlined script, depending whether you nee
 - _Some deferring_: You can place the script in [onClientEntry](/docs/browser-apis/#onClientEntry) to have it execute after page load, but before the browser renders the page.
 - _More deferring_: You can place the script in [onInitialClientRender](/docs/browser-apis/#onInitialClientRender) to have it execute after the browser renders the page.
 
-Note that if you are using [html.js](/docs/custom-html/), you should modify that file to include your snippet instead of using `onPreRenderHTML`.
+Note that if you are already using [html.js](/docs/custom-html/), you should modify that file to include your snippet instead of using `onPreRenderHTML`. This will have the same behavior.
 
 ### Reduce your JavaScript bundle cost
 
@@ -125,7 +125,7 @@ For example, let's say you have a header that imports a JSON object in order to 
 
 There's a couple ways to detect this:
 
-- _Notice components and data that don't seem to be needed on every page._ If you're using v2 of Gatsby, certain methods of importing can cause code to get bundled on pages it doesn't belong on. Try replacing indirect import statements like `import { myIcon } from './icons/index.js'` with direct imports like `import { myIcon} from './icons/my-icon.js`.
+- _Notice components and data that don't seem to be needed on every page._ If you're using v2 of Gatsby, certain methods of importing can cause code to get bundled on pages it doesn't belong on. Try replacing indirect import statements like `import { myIcon } from './icons/index.js'` with direct imports like `import { myIcon } from './icons/my-icon.js'`.
 
 - _Watch for unexpectedly large data imports._ If you notice large JSON objects, and you do need the data (or some portion of it), there are a couple options.
 
@@ -192,13 +192,13 @@ Font optimizations are usually small, but easy performance wins.
 
 Media files are often the largest files on a site, and so can delay page load significantly while they are pulled over the network, especially if their location is not well-defined.
 
-[Gatsby Plugin Image](/docs/how-to/images-and-media/using-gatsby-image/) is our approach to optimizing image loading performance. It does three basic things:
+[Gatsby Plugin Image](/docs/how-to/images-and-media/using-gatsby-plugin-image/) is our approach to optimizing image loading performance. It does three basic things:
 
-1. It delays non-essential work for images not above the fold to avoid esource congestion.
+1. It delays non-essential work for images not above the fold to avoid resource congestion.
 2. It provides a placeholder during image fetch.
 3. It minimizes image file size to reduce request roundtrip time.
 
-The `gatsby-plugin-image` documentation is fairly exhaustive, ranging from [why image optimization is important](/docs/conceptual/using-gatsby-image/), or [how to implement Gatsby Plugin Image](/docs/how-to/images-and-media/using-gatsby-plugin-image/), to a [Gatsby Image reference](/docs/reference/built-in-components/gatsby-image/).
+The `gatsby-plugin-image` documentation is fairly exhaustive, ranging from [why image optimization is important](/docs/conceptual/using-gatsby-image/) to [how to implement Gatsby Plugin Image](/docs/how-to/images-and-media/using-gatsby-plugin-image/).
 
 Implementing Gatsby Image is typically the bulk of image- and media-related performance optimization.
 

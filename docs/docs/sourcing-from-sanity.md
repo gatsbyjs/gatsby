@@ -12,8 +12,6 @@ You can use Sanity as a headless CMS that lets your authors work in a user-frien
 
 Begin with setting up a Gatsby project. If you want to start from scratch, the [Quick Start guide](/docs/quick-start) is a good place to begin. Come back to this guide when you're set up.
 
-You can also check out [the company website example](https://github.com/sanity-io/example-company-website-gatsby-sanity-combo) we have set up. It contains both a configured Sanity Studio and a Gatsby frontend, which you can get up and running within minutes. It can be a useful reference for how to build a website using structured content. Follow the instructions in its README.md to get up and running.
-
 This guide will cover how configure and use the [`gatsby-source-sanity`](https://www.npmjs.com/package/gatsby-source-sanity) plugin.
 
 ## Basic usage
@@ -65,20 +63,20 @@ Gatsby cannot know about the types and fields without having documents of the gi
 
 ## Using images
 
-Image fields will have the image URL available under the `field.asset.url` key, but you can also use [gatsby-image](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-image) for a smooth experience. It's a React component that enables responsive images and advanced image loading techniques. It works great with this source plugin, without requiring any additional build steps.
+Image fields will have the image URL available under the `field.asset.url` key, but you can also use [gatsby-plugin-image](/plugins/gatsby-plugin-image/) for a smooth experience. It's a React component that enables responsive images and advanced image loading techniques. It works great with this source plugin, without requiring any additional build steps.
 
-There are two types of responsive images supported; _fixed_ and _fluid_. To decide between the two, ask yourself: "do I know the exact size this image will be?" If yes, you'll want to use _fixed_. If not and its width and/or height need to vary depending on the size of the screen, then you'll want to use _fluid_.
+There are three types of responsive images supported; _constrained_ (the default), _fixed_, and _full width_. To decide which one to use, ask yourself: "do I know the exact size this image will be?" If yes, you'll want to use _fixed_. If no and its width and/or height need to vary depending on the size of the screen, then you'll want to use _constrained_ or _full width_. (For more information, refer to the [`layout` option in the `gatsby-plugin-image` Reference Guide](/docs/reference/built-in-components/gatsby-plugin-image/#layout)).
 
-### Fluid
+### Constrained
 
 ```jsx
 import React from "react"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 
 const Person = ({ data }) => (
   <article>
     <h2>{data.sanityPerson.name}</h2>
-    <Img fluid={data.sanityPerson.profileImage.asset.fluid} />
+    <GatsbyImage image={data.sanityPerson.profileImage.asset.gatsbyImageData} />
   </article>
 )
 
@@ -90,9 +88,7 @@ export const query = graphql`
       name
       profileImage {
         asset {
-          fluid(maxWidth: 700) {
-            ...GatsbySanityImageFluid
-          }
+          gatsbyImageData(placeholder: BLURRED)
         }
       }
     }
@@ -104,12 +100,12 @@ export const query = graphql`
 
 ```jsx
 import React from "react"
-import Img from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 
 const Person = ({ data }) => (
   <article>
     <h2>{data.sanityPerson.name}</h2>
-    <Img fixed={data.sanityPerson.profileImage.asset.fixed} />
+    <GatsbyImage image={data.sanityPerson.profileImage.asset.gatsbyImageData} />
   </article>
 )
 
@@ -121,28 +117,13 @@ export const query = graphql`
       name
       profileImage {
         asset {
-          fixed(width: 400) {
-            ...GatsbySanityImageFixed
-          }
+          gatsbyImageData(layout: FIXED, placeholder: BLURRED, width: 400)
         }
       }
     }
   }
 `
 ```
-
-### Available fragments
-
-These are the fragments available on image assets, which allows lookup of the fields required by gatsby-image in various modes:
-
-- `GatsbySanityImageFixed`
-- `GatsbySanityImageFixed_noBase64`
-- `GatsbySanityImageFixed_withWebp`
-- `GatsbySanityImageFixed_withWebp_noBase64`
-- `GatsbySanityImageFluid`
-- `GatsbySanityImageFluid_noBase64`
-- `GatsbySanityImageFluid_withWebp`
-- `GatsbySanityImageFluid_withWebp_noBase64`
 
 ## Overlaying drafts
 

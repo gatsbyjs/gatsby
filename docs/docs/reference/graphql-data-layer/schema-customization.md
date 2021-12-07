@@ -364,18 +364,6 @@ schema.buildObjectType({
 
 #### Foreign-key fields
 
-Gatsby's automatic type inference has one trick up its sleeve: for every field
-that ends in `___NODE` it will interpret the field value as an `id` and create a
-foreign-key relation.
-
-> Note: Before the introduction of the Schema Customization APIs in Gatsby v2.2,
-> there were two mechanisms to create links between node types: a plugin author would use the `___NODE`
-> fieldname convention (for plugins), and a user would define [mappings](/docs/reference/config-files/gatsby-config/#mapping-node-types) between fields in their `gatsby-config.js`. Both users and plugin authors can now use the `@link` extension described below.
-
-Creating foreign-key relations with the `createTypes` action,
-i.e. without relying on type inference and the `___NODE` field naming
-convention, requires a bit of manual setup.
-
 In the example project, the `frontmatter.author` field on
 `MarkdownRemark` nodes to expand the provided field value to a full `AuthorJson` node.
 For this to work, there has to be provided a custom field resolver. (see below for
@@ -394,17 +382,22 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
           resolve: (source, args, context, info) => {
             // If you were linking by ID, you could use `getNodeById` to
             // find the correct author:
+            //
             // return context.nodeModel.getNodeById({
             //   id: source.author,
             //   type: "AuthorJson",
             // })
+            //
             // But since the example is using the author email as foreign key,
-            // you can use `runQuery`, or get all author nodes
-            // with `getAllNodes` and manually find the linked author
-            // node:
-            return context.nodeModel
-              .getAllNodes({ type: "AuthorJson" })
-              .find(author => author.email === source.author)
+            // you can use `nodeModel.findOne` to find the linked author node.
+            // Note: Instead of getting all nodes and then using Array.prototype.find()
+            // Use nodeModel.findOne instead where possible!
+            return context.nodeModel.findOne({
+              type: "AuthorJson",
+              query: {
+                filter: { email: { eq: source.author } }
+              }
+            })
           },
         },
       },
@@ -472,11 +465,6 @@ In other words, you `link` **on** `from` **to** `by`. This makes `from` especial
 For the above example you can read `@link` this way: Use the value from the field `Frontmatter.reviewers` and match it by the field `AuthorJson.email`.
 
 Keep in mind that in the example above, the link of `posts` in `AuthorJson` works because `frontmatter` and `author` are both objects. If, for example, the `Frontmatter` type had a list of `authors` instead (`frontmatter.authors.email`), it wouldn't work since the `by` argument doesn't support arrays. In that case, you'd have to provide a custom resolver with [Gatsby Type Builders](/docs/reference/graphql-data-layer/schema-customization/#gatsby-type-builders) or [createResolvers API](/docs/reference/graphql-data-layer/schema-customization/#createresolvers-api).
-
-> Note that when using `createTypes` to fix type inference for a foreign-key field
-> created by a plugin, the underlying data will probably live on a field with
-> a `___NODE` suffix. Use the `from` argument to point the `link` extension to
-> the correct field name. For example: `author: [AuthorJson] @link(from: "author___NODE")`.
 
 #### Extensions and directives
 
@@ -766,10 +754,9 @@ available to custom field resolvers on the `context.nodeModel` argument passed
 to every resolver. Accessing node(s) by `id` (and optional `type`) is possible
 with [`getNodeById`](/docs/reference/graphql-data-layer/node-model/#getNodeById) and
 [`getNodesByIds`](/docs/reference/graphql-data-layer/node-model/#getNodesByIds). To get all nodes, or all
-nodes of a certain type, use [`getAllNodes`](/docs/reference/graphql-data-layer/node-model/#getAllNodes).
+nodes of a certain type, use [`findAll`](/docs/reference/graphql-data-layer/node-model/#findAll).
 And running a query from inside your resolver functions can be accomplished
-with [`runQuery`](/docs/reference/graphql-data-layer/node-model/#runQuery), which accepts `filter` and `sort`
-query arguments.
+with `findAll` as well, which accepts `filter` and `sort` query arguments.
 
 You could for example add a field to the `AuthorJson` type that lists all recent
 posts by an author:
@@ -780,8 +767,8 @@ exports.createResolvers = ({ createResolvers }) => {
     AuthorJson: {
       recentPosts: {
         type: ["MarkdownRemark"],
-        resolve(source, args, context, info) {
-          return context.nodeModel.runQuery({
+        resolve: async (source, args, context, info) => {
+          const { entries } = await context.nodeModel.findAll({
             query: {
               filter: {
                 frontmatter: {
@@ -791,8 +778,8 @@ exports.createResolvers = ({ createResolvers }) => {
               },
             },
             type: "MarkdownRemark",
-            firstOnly: false,
           })
+          return entries
         },
       },
     },
@@ -801,13 +788,13 @@ exports.createResolvers = ({ createResolvers }) => {
 }
 ```
 
-When using `runQuery` to sort query results, be aware that both `sort.fields`
+When using `findAll` to sort query results, be aware that both `sort.fields`
 and `sort.order` are `GraphQLList` fields. Also, nested fields on `sort.fields`
 have to be provided in dot-notation (not separated by triple underscores).
 For example:
 
 ```js
-context.nodeModel.runQuery({
+context.nodeModel.findAll({
   query: {
     sort: {
       fields: ["frontmatter.publishedAt"],
@@ -833,16 +820,17 @@ exports.createResolvers = ({ createResolvers }) => {
     Query: {
       contributorsWithSwag: {
         type: ["ContributorJson"],
-        resolve(source, args, context, info) {
-          return context.nodeModel.runQuery({
+        resolve: async (source, args, context, info) => {
+          const { entries } = await context.nodeModel.findAll({
             query: {
               filter: {
                 receivedSwag: { eq: true },
               },
             },
             type: "ContributorJson",
-            firstOnly: false,
           })
+
+          return entries
         },
       },
     },
@@ -863,16 +851,17 @@ exports.createResolvers = ({ createResolvers }) => {
         args: {
           receivedSwag: "Boolean!",
         },
-        resolve(source, args, context, info) {
-          return context.nodeModel.runQuery({
+        resolve: async (source, args, context, info) => {
+          const { entries } = await context.nodeModel.findAll({
             query: {
               filter: {
                 receivedSwag: { eq: args.receivedSwag },
               },
             },
             type: "ContributorJson",
-            firstOnly: false,
           })
+
+          return entries
         },
       },
     },
@@ -896,28 +885,30 @@ exports.createResolvers = ({ createResolvers }) => {
         args: {
           postsCount: "input PostsCountInput { min: Int, max: Int }",
         },
-        resolve(source, args, context, info) {
+        resolve: async (source, args, context, info) => {
           const { max, min = 0 } = args.postsCount || {}
           const operator = max != null ? { lte: max } : { gte: min }
-          return context.nodeModel.runQuery({
+
+          const { entries } = await context.nodeModel.findAll({
             query: {
               filter: {
                 posts: operator,
               },
             },
             type: "ContributorJson",
-            firstOnly: false,
           })
+
+          return entries
         },
       },
     },
     ContributorJson: {
       posts: {
         type: `Int`,
-        resolve: (source, args, context, info) => {
-          return context.nodeModel
-            .getAllNodes({ type: "MarkdownRemark" })
-            .filter(post => post.frontmatter.author === source.email).length
+        resolve: async (source, args, context, info) => {
+          const { entries } = await context.nodeModel.findAll({ type: "MarkdownRemark" })
+          const posts = entries.filter(post => post.frontmatter.author === source.email)
+          return Array.from(posts).length
         },
       },
     },
@@ -932,15 +923,12 @@ When creating custom field resolvers, it is important to ensure that Gatsby
 knows about the data a page depends on for hot reloading to work properly. When
 you retrieve nodes from the store with [`context.nodeModel`](/docs/reference/graphql-data-layer/node-model/) methods,
 it is usually not necessary to do anything manually, because Gatsby will register
-dependencies for the query results automatically. The exception is `getAllNodes`
-which will _not_ register data dependencies by default. This is because
-requesting re-running of queries when any node of a certain type changes is
-potentially a very expensive operation. If you are sure you really need this,
+dependencies for the query results automatically. If you want to customize this,
 you can add a page data dependency either programmatically with
 [`context.nodeModel.trackPageDependencies`](/docs/reference/graphql-data-layer/node-model/#trackPageDependencies), or with:
 
 ```js
-context.nodeModel.getAllNodes(
+context.nodeModel.findAll(
   { type: "MarkdownRemark" },
   { connectionType: "MarkdownRemark" }
 )
@@ -995,8 +983,11 @@ exports.createResolvers = ({ createResolvers }) => {
     Query: {
       allTeamMembers: {
         type: ["TeamMember"],
-        resolve(source, args, context, info) {
-          return context.nodeModel.getAllNodes({ type: "TeamMember" })
+        resolve: async (source, args, context, info) => {
+          // Whenever possible, use `limit` and `skip` on findAll calls to increase performance
+          const { entries } = await context.nodeModel.findAll({ type: "TeamMember", query: { limit: args.limit, skip: args.skip } })
+
+          return entries
         },
       },
     },
