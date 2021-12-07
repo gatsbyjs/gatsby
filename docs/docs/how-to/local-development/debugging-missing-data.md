@@ -1,26 +1,26 @@
 ---
-title: Debugging missing or stale data fields on nodes
+title: Debugging Missing or Stale Data Fields on Nodes
 ---
 
 ## Overview of `LMDB` datastore behavior changes
 
-In Gatsby 3 we introduced new data store - `LMDB` (enabled with `LMDB_STORE` and/or `PARALLEL_QUERY_RUNNING` flags). In Gatsby 4 it became the default data store. It allows us to execute data layer related processing outside of main build process and enable us to run queries in multiple processes as well as support additional rendering strategies (DSG and SSR).
+In Gatsby 3 we introduced a new data store called `LMDB` (enabled with `LMDB_STORE` and/or `PARALLEL_QUERY_RUNNING` flags). In Gatsby 4 it became the default data store. It allows Gatsby to execute data layer related processing outside of the main build process and enables Gatsby to run queries in multiple processes as well as support additional rendering strategies ([DSG](/docs/reference/rendering-options/deferred-static-generation/) and [SSR](/docs/reference/rendering-options/server-side-rendering/)).
 
 In a lot of cases that change is completely invisible to users, but there are cases where things behave differently.
 
-Direct node mutations in various API lifecycles are not persisted anymore. In previous Gatsby versions it did work because source of truth for our data layer was directly in Node.js memory, so mutating node was in fact mutating source of truth. Now we edit data we received from database, so unless we explicitly upsert data to database after edits, those edits will not be persisted (even for same the same build).
+Direct node mutations in various API lifecycles are not persisted anymore. In previous Gatsby versions it did work because source of truth for the data layer was directly in Node.js memory, so mutating node was in fact mutating source of truth. Now Gatsby edits data it receives from the database, so unless it explicitly upserts data to this database after edits, those edits will not be persisted (even for same the same build).
 
-Common errors when doing swap to `LMDB` will be that some fields don't exist anymore or are `null`/`undefined` when trying to execute graphql queries.
+Common errors when doing swap to `LMDB` will be that some fields don't exist anymore or are `null`/`undefined` when trying to execute GraphQL queries.
 
 ## Diagnostic mode
 
-Gatsby (starting with version 4.4) can detect those node mutations. Unfortunately it adds measurable overhead so we don't enable it by default, and only let users to opt into it when they see data related issues (particularly when they didn't have this issue before using `LMDB`). To enable diagnostic mode:
+Gatsby (starting with version 4.4) can detect those node mutations. Unfortunately it adds measurable overhead so it isn't enabled by default. You can opt into it when you see data related issues (particularly when you didn't have this issue before using `LMDB`). To enable diagnostic mode:
 
-- use truthy environment variable `GATSBY_DETECT_NODE_MUTATIONS`:
+- Use truthy environment variable `GATSBY_DETECT_NODE_MUTATIONS`:
   ```
   GATSBY_DETECT_NODE_MUTATIONS=1 gatsby build
   ```
-- or use `DETECT_NODE_MUTATIONS` config flag:
+- Or use `DETECT_NODE_MUTATIONS` config flag:
   ```javascript:title=gatsby-config.js
   module.exports = {
     flags: {
@@ -49,34 +49,18 @@ Stack trace:
     at Promise.catch.decorateEvent.pluginName
 (<rootDir>/node_modules/gatsby/src/utils/api-runner-node.js:613:13)
     at Promise._execute
-(<rootDir>/node_modules/bluebird/js/release/debuggability.js:384:9)
-    at Promise._resolveFromExecutor
-(<rootDir>/node_modules/bluebird/js/release/promise.js:518:18)
-    at new Promise (<rootDir>/node_modules/bluebird/js/release/promise.js:103:10)
-    at <rootDir>/node_modules/gatsby/src/utils/api-runner-node.js:611:16
-    at tryCatcher (<rootDir>/node_modules/bluebird/js/release/util.js:16:23)
-    at Object.gotValue (<rootDir>/node_modules/bluebird/js/release/reduce.js:166:18)
-    at Object.gotAccum (<rootDir>/node_modules/bluebird/js/release/reduce.js:155:25)
-    at Object.tryCatcher (<rootDir>/node_modules/bluebird/js/release/util.js:16:23)
-    at Promise._settlePromiseFromHandler
-(<rootDir>/node_modules/bluebird/js/release/promise.js:547:31)
-    at Promise._settlePromise
-(<rootDir>/node_modules/bluebird/js/release/promise.js:604:18)
-    at Promise._settlePromiseCtx
-(<rootDir>/node_modules/bluebird/js/release/promise.js:641:10)
-    at _drainQueueStep (<rootDir>/node_modules/bluebird/js/release/async.js:97:12)
-    at _drainQueue (<rootDir>/node_modules/bluebird/js/release/async.js:86:9)
+    ... Rest of Stacktrace
 ```
 
-It will point to code that is trying to mutate nodes. Note that it might also point to installed plugins in which case plugin maintainer should be notified about it.
+It will point you to the code that is trying to mutate nodes. Note that it might also point to installed plugins in which case you should notify the plugin maintainer about it.
 
-Be sure to stop using this mode once you find and handle all problematic code paths as it will decrease performance.
+**Please Note:** Be sure to stop using this mode once you find and handle all problematic code paths as it will decrease performance.
 
 ## Migration
 
 ### Mutating a node in `onCreateNode`
 
-Instead of mutating node directly, `createNodeField` action should be used instead. This way we will update source of truth (actually update node in datastore). `createNodeField` will create that additional field under `fields.fieldName`. If you want to preserve schema shape, so that additional field is on the root of a node you can use schema customization.
+Instead of mutating nodes directly, `createNodeField` action should be used instead. This way Gatsby will update the source of truth (to actually update the node in the datastore). `createNodeField` will create that additional field under `fields.fieldName`. If you want to preserve schema shape, so that additional field is on the root of a node, you can use schema customization.
 
 ```diff
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
