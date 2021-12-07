@@ -31,7 +31,7 @@
     "jest-cli": "^24.9.0",
     "jest-junit": "^6.4.0",
     "rimraf": "^3.0.2",
-    "typescript": "^4.4.4"
+    "typescript": "^4.5.2"
   },
   "files": [
     "lib/",

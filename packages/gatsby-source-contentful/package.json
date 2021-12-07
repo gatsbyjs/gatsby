@@ -14,8 +14,8 @@
     "@vercel/fetch-retry": "^5.0.3",
     "axios": "^0.21.1",
     "chalk": "^4.1.2",
-    "common-tags": "^1.8.0",
-    "contentful": "^8.5.0",
+    "common-tags": "^1.8.2",
+    "contentful": "^8.5.8",
     "fs-extra": "^10.0.0",
     "gatsby-core-utils": "^3.4.0-next.0",
     "gatsby-plugin-utils": "^2.4.0-next.0",
@@ -23,7 +23,7 @@
     "is-online": "^8.5.1",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.21",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.6",
     "p-queue": "^6.6.2",
     "retry-axios": "^2.6.0",
     "semver": "^7.3.5"
@@ -33,7 +33,7 @@
     "@babel/core": "^7.15.5",
     "babel-preset-gatsby-package": "^2.4.0-next.0",
     "cross-env": "^7.0.3",
-    "nock": "^13.1.4"
+    "nock": "^13.2.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful#readme",
   "keywords": [
