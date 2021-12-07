@@ -17,10 +17,10 @@
     "execa": "^5.1.1",
     "find-yarn-workspace-root": "^2.0.0",
     "fs-extra": "^10.0.0",
-    "got": "^11.8.2",
+    "got": "^11.8.3",
     "is-absolute": "^1.0.0",
     "lodash": "^4.17.21",
-    "signal-exit": "^3.0.5",
+    "signal-exit": "^3.0.6",
     "verdaccio": "^4.12.2",
     "yargs": "^15.4.1"
   },

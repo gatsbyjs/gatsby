@@ -19,7 +19,7 @@
     "pretty-bytes": "^5.4.1",
     "progress": "^2.0.3",
     "valid-url": "^1.0.9",
-    "xstate": "^4.25.0"
+    "xstate": "^4.26.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",

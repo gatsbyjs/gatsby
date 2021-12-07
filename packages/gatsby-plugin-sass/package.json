@@ -14,7 +14,7 @@
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
-    "autoprefixer": "^10.3.6",
+    "autoprefixer": "^10.4.0",
     "babel-preset-gatsby-package": "^2.4.0-next.0",
     "cross-env": "^7.0.3",
     "gatsby-plugin-utils": "^2.4.0-next.0"

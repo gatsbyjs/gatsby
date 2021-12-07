@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.3.0/packages/gatsby-core-utils) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+#### Bug Fixes
+
+- handle 304 correctly between builds [#33975](https://github.com/gatsbyjs/gatsby/issues/33975) ([734ff16](https://github.com/gatsbyjs/gatsby/commit/734ff16a14bb150c1d68627623ebb3988c8ce1d0))
+
 ## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.2.0/packages/gatsby-core-utils) (2021-11-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)

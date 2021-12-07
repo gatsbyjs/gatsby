@@ -9,17 +9,17 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "bluebird": "^3.7.2",
-    "common-tags": "^1.8.0",
+    "common-tags": "^1.8.2",
     "fs-extra": "^10.0.0",
     "potrace": "^2.1.8",
     "probe-image-size": "^6.0.0",
     "semver": "^7.3.5",
-    "sharp": "^0.29.2"
+    "sharp": "^0.29.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
-    "@types/sharp": "^0.29.2",
+    "@types/sharp": "^0.29.4",
     "babel-preset-gatsby-package": "^2.4.0-next.0",
     "cross-env": "^7.0.3"
   },

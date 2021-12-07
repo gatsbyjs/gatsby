@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "cheerio": "^1.0.0-rc.10",
-    "common-tags": "^1.8.0",
+    "common-tags": "^1.8.2",
     "lodash": "^4.17.21",
     "unist-util-visit": "^2.0.3"
   },

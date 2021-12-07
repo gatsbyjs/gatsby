@@ -18,6 +18,7 @@ const {
   handleWebhookUpdate,
   createNodeIfItDoesNotExist,
   handleDeletedNode,
+  drupalCreateNodeManifest,
 } = require(`./utils`)
 
 const agent = {
@@ -170,7 +171,12 @@ exports.sourceNodes = async (
       nonTranslatableEntities: [],
     },
   } = pluginOptions
-  const { createNode, setPluginStatus, touchNode } = actions
+  const {
+    createNode,
+    setPluginStatus,
+    touchNode,
+    unstable_createNodeManifest,
+  } = actions
 
   await initRefsLookups({ cache, getNode })
 
@@ -641,6 +647,11 @@ ${JSON.stringify(webhookBody, null, 4)}`
     _.each(contentType.data, datum => {
       if (!datum) return
       const node = nodeFromData(datum, createNodeId, entityReferenceRevisions)
+      drupalCreateNodeManifest({
+        attributes: datum?.attributes,
+        gatsbyNode: node,
+        unstable_createNodeManifest,
+      })
       nodes.set(node.id, node)
     })
   })

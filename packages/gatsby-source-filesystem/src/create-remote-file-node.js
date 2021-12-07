@@ -46,7 +46,11 @@ let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
  * Queue Management *
  ********************/
 
-const queue = Queue(pushToQueue, process.env.GATSBY_CONCURRENT_DOWNLOAD || 200)
+const GATSBY_CONCURRENT_DOWNLOAD = process.env.GATSBY_CONCURRENT_DOWNLOAD
+  ? parseInt(process.env.GATSBY_CONCURRENT_DOWNLOAD, 10) || 0
+  : 200
+
+const queue = Queue(pushToQueue, GATSBY_CONCURRENT_DOWNLOAD)
 
 /**
  * @callback {Queue~queueCallback}

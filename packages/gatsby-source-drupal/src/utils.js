@@ -9,6 +9,9 @@ const {
 
 const { getOptions } = require(`./plugin-options`)
 
+import { getGatsbyVersion } from "gatsby-core-utils"
+import { lt, prerelease } from "semver"
+
 let backRefsNamesLookup = new Map()
 let referencedNodesLookup = new Map()
 
@@ -419,12 +422,21 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
   }
 }
 
-let hasLoggedContentSyncWarning = false
+const GATSBY_VERSION_MANIFEST_V2 = `4.3.0`
+const gatsbyVersion =
+  (typeof getGatsbyVersion === `function` && getGatsbyVersion()) || `0.0.0`
+const gatsbyVersionIsPrerelease = prerelease(gatsbyVersion)
+const shouldUpgradeGatsbyVersion =
+  lt(gatsbyVersion, GATSBY_VERSION_MANIFEST_V2) && !gatsbyVersionIsPrerelease
+
+let warnOnceForNoSupport = false
+let warnOnceToUpgradeGatsby = false
+
 /**
  * This fn creates node manifests which are used for Gatsby Cloud Previews via the Content Sync API/feature.
  * Content Sync routes a user from Drupal to a page created from the entry data they're interested in previewing.
  */
-function drupalCreateNodeManifest({
+export function drupalCreateNodeManifest({
   attributes,
   gatsbyNode,
   unstable_createNodeManifest,
@@ -434,17 +446,29 @@ function drupalCreateNodeManifest({
       process.env.ENABLE_GATSBY_REFRESH_ENDPOINT) ||
     process.env.GATSBY_IS_PREVIEW === `true`
 
-  if (typeof unstable_createNodeManifest === `function` && isPreview) {
-    const manifestId = `${attributes.drupal_internal__nid}-${attributes.revision_timestamp}`
+  const updatedAt = attributes?.revision_timestamp
+  const id = attributes?.drupal_internal__nid
 
-    console.info(`Drupal: Creating node manifest with id ${manifestId}`)
+  const supportsContentSync = typeof unstable_createNodeManifest === `function`
+  const shouldCreateNodeManifest =
+    id && updatedAt && supportsContentSync && isPreview
+
+  if (shouldCreateNodeManifest) {
+    if (shouldUpgradeGatsbyVersion && !warnOnceToUpgradeGatsby) {
+      console.warn(
+        `Your site is doing more work than it needs to for Preview, upgrade to Gatsby ^${GATSBY_VERSION_MANIFEST_V2} for better performance`
+      )
+      warnOnceToUpgradeGatsby = true
+    }
+    const manifestId = `${id}-${updatedAt}`
 
     unstable_createNodeManifest({
       manifestId,
       node: gatsbyNode,
+      updatedAtUTC: updatedAt,
     })
-  } else if (!hasLoggedContentSyncWarning) {
-    hasLoggedContentSyncWarning = true
+  } else if (!supportsContentSync && !warnOnceForNoSupport) {
+    warnOnceForNoSupport = true
     console.warn(
       `Drupal: Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
     )
