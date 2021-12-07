@@ -162,7 +162,7 @@ export async function initialize({
   }
   const lmdbStoreIsUsed = detectLmdbStore()
 
-  if (process.env.GATSBY_EXPERIMENTAL_DETECT_NODE_MUTATIONS) {
+  if (process.env.GATSBY_DETECT_NODE_MUTATIONS) {
     enableNodeMutationsDetection()
   }
 

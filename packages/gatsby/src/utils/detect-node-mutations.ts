@@ -130,8 +130,7 @@ function createProxyHandler({
   }
 }
 
-let shouldWrapNodesInProxies =
-  !!process.env.GATSBY_EXPERIMENTAL_DETECT_NODE_MUTATIONS
+let shouldWrapNodesInProxies = !!process.env.GATSBY_DETECT_NODE_MUTATIONS
 export function enableNodeMutationsDetection(): void {
   shouldWrapNodesInProxies = true
 
