@@ -2,6 +2,8 @@
 title: Debugging missing or stale data fields on nodes
 ---
 
+## Overview of `LMDB` datastore behavior changes
+
 In Gatsby 3 we introduced new data store - `LMDB` (enabled with `LMDB_STORE` and/or `PARALLEL_QUERY_RUNNING` flags). In Gatsby 4 it became the default data store. It allows us to execute data layer related processing outside of main build process and enable us to run queries in multiple processes as well as support additional rendering strategies (DSG and SSR).
 
 In a lot of cases that change is completely invisible to users, but there are cases where things behave differently.
@@ -9,6 +11,8 @@ In a lot of cases that change is completely invisible to users, but there are ca
 Direct node mutations in various API lifecycles are not persisted anymore. In previous Gatsby versions it did work because source of truth for our data layer was directly in Node.js memory, so mutating node was in fact mutating source of truth. Now we edit data we received from database, so unless we explicitly upsert data to database after edits, those edits will not be persisted (even for same the same build).
 
 Common errors when doing swap to `LMDB` will be that some fields don't exist anymore or are `null`/`undefined` when trying to execute graphql queries.
+
+## Diagnostic mode
 
 Gatsby (starting with version 4.4) can detect those node mutations. Unfortunately it adds measurable overhead so we don't enable it by default, and only let users to opt into it when they see data related issues (particularly when they didn't have this issue before using `LMDB`). To enable diagnostic mode:
 
@@ -71,3 +75,43 @@ Be sure to stop using this mode once you find and handle all problematic code pa
 ## Migration
 
 ### Mutating a node in `onCreateNode`
+
+Instead of mutating node directly, `createNodeField` action should be used instead. This way we will update source of truth (actually update node in datastore). `createNodeField` will create that additional field under `fields.fieldName`. If you want to preserve schema shape, so that additional field is on the root of a node you can use schema customization.
+
+```diff
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+
+exports.onCreateNode = async ({
+  node, // the node that was just created
+-  actions: { createNode },
++  actions: { createNode, createNodeField },
+  createNodeId,
+  getCache,
+}) => {
+  if (node.internal.type === `SomeNodeType`) {
+    const fileNode = await createRemoteFileNode({
+      // the url of the remote image to generate a node for
+      url: node.imgUrl,
+      parentNodeId: node.id,
+      createNode,
+      createNodeId,
+      getCache,
+    })
+
+    if (fileNode) {
+-      node.localFile___NODE = fileNode.id
++      createNodeField({ node, name: 'localFile', value: fileNode.id })
+    }
+  }
+}
++
++exports.createSchemaCustomization = ({ actions }) => {
++  const { createTypes } = actions
++
++  createTypes(`
++    type SomeNodeType implements Node {
++      localFile: File @link(from: "fields.localFile")
++    }
++  `)
++}
+```
