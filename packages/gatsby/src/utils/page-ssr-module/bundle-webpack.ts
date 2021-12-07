@@ -106,6 +106,7 @@ export async function createPageSSRBundle({
         return acc
       }, {}),
     ],
+    devtool: false,
     module: {
       rules: [
         {
@@ -141,11 +142,16 @@ export async function createPageSSRBundle({
       extensions,
       alias: {
         ".cache": `${rootDir}/.cache/`,
+        [require.resolve(`gatsby-cli/lib/reporter/loggers/ink/index.js`)]:
+          false,
+        inquirer: false,
       },
     },
     plugins: [
       new webpack.DefinePlugin({
         INLINED_TEMPLATE_TO_DETAILS: JSON.stringify(toInline),
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
       }),
       process.env.GATSBY_WEBPACK_LOGGING?.includes(`page-engine`)
         ? new WebpackLoggingPlugin(rootDir, reporter, isVerbose)

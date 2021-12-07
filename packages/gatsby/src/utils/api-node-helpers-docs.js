@@ -159,7 +159,7 @@ const GatsbyTracing = {
 /**
  * Get cache instance by name - this should only be used by plugins that
  * accept subplugins.
- * @param {string} id Test
+ * @param {string} id id of the node
  * @returns {GatsbyCache} See [`cache`](#cache) section for reference.
  */
 module.exports.getCache = true;

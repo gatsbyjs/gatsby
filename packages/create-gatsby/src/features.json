@@ -1,4 +1,7 @@
 {
+  "gatsby-plugin-google-analytics": {
+    "message": "Add the Google Analytics tracking script"
+  },
   "gatsby-plugin-image": {
     "message": "Add responsive images",
     "plugins": [
@@ -13,9 +16,6 @@
       }
     }
   },
-  "gatsby-plugin-google-analytics": {
-    "message": "Add the Google Analytics tracking script"
-  },
   "gatsby-plugin-react-helmet": {
     "message": "Add page meta tags with React Helmet",
     "dependencies": ["react-helmet"]
@@ -27,9 +27,10 @@
       "gatsby-plugin-manifest": { "icon": "src/images/icon.png" }
     }
   },
-  "gatsby-transformer-remark": {
-    "message": "Add Markdown support (without MDX)",
+  "gatsby-plugin-mdx": {
+    "message": "Add Markdown and MDX support",
     "plugins": ["gatsby-source-filesystem:pages"],
+    "dependencies": ["@mdx-js/react", "@mdx-js/mdx"],
     "options": {
       "gatsby-source-filesystem:pages": {
         "name": "pages",
@@ -37,10 +38,9 @@
       }
     }
   },
-  "gatsby-plugin-mdx": {
-    "message": "Add Markdown and MDX support",
+  "gatsby-transformer-remark": {
+    "message": "Add Markdown support (without MDX)",
     "plugins": ["gatsby-source-filesystem:pages"],
-    "dependencies": ["@mdx-js/react", "@mdx-js/mdx"],
     "options": {
       "gatsby-source-filesystem:pages": {
         "name": "pages",
