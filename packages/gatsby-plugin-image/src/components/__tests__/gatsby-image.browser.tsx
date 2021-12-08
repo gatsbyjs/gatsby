@@ -167,6 +167,8 @@ describe(`GatsbyImage browser`, () => {
 
     img?.dispatchEvent(new Event(`load`))
 
+    // Test for issue #33748
+    expect(console.error).toBeCalledTimes(0)
     expect(onStartLoadSpy).toBeCalledWith({ wasCached: false })
     expect(onLoadSpy).toBeCalled()
     expect(hooks.storeImageloaded).toBeCalledWith(

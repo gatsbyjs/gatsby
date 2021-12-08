@@ -49,6 +49,8 @@ const Image: FunctionComponent<ImageProps> = function Image({
   innerRef,
   ...props
 }) {
+  // @ts-ignore delete onStartLoad, more details -> issue#33748
+  if (props.onStartLoad) delete props.onStartLoad
   return (
     <img
       {...props}
