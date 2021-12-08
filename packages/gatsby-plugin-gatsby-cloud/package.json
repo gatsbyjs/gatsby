@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "date-fns": "^2.25.0",
+    "date-fns": "^2.27.0",
     "fs-extra": "^10.0.0",
     "gatsby-core-utils": "^3.4.0-next.0",
     "gatsby-telemetry": "^3.4.0-next.0",
