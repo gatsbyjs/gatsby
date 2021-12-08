@@ -25,7 +25,7 @@ describe(`gatsby-plugin-emotion`, () => {
       })
     })
 
-    it(`sets the correct babel plugin when use automatic jsxRuntime`, () => {
+    it(`sets the correct babel plugin when using automatic jsxRuntime`, () => {
       const actions = { setBabelPlugin: jest.fn() }
       const store = {
         getState: () => {
@@ -45,7 +45,7 @@ describe(`gatsby-plugin-emotion`, () => {
       })
     })
 
-    it(`passes additional options on to the preset`, () => {
+    it(`passes additional options to the preset`, () => {
       const actions = { setBabelPreset: jest.fn() }
       const pluginOptions = { useBuiltIns: true }
       const store = {
@@ -69,7 +69,7 @@ describe(`gatsby-plugin-emotion`, () => {
       })
     })
 
-    it(`passes additional options on to the plugin when use automatic jsxRuntime`, () => {
+    it(`passes additional options to the plugin when using automatic jsxRuntime`, () => {
       const actions = { setBabelPlugin: jest.fn() }
       const pluginOptions = { useBuiltIns: true }
       const store = {
