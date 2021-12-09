@@ -178,6 +178,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
           rootDir: program.directory,
           components: state.components,
           staticQueriesByTemplate: state.staticQueriesByTemplate,
+          webpackCompilationHash: webpackCompilationHash ?? ``,
           reporter: report,
           isVerbose: program.verbose,
         })

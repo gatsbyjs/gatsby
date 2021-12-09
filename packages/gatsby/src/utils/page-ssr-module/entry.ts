@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-namespace */
+
 // "engines-fs-provider" must be first import, as it sets up global
 // fs and this need to happen before anything else tries to import fs
 import "../engines-fs-provider"
@@ -41,15 +43,19 @@ export interface ISSRData {
   searchString: string
 }
 
+declare global {
+  namespace NodeJS {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    interface Global {
+      INLINED_TEMPLATE_TO_DETAILS: number // Record<string, ITemplateDetails>
+      WEBPACK_COMPILATION_HASH: string
+    }
+  }
+}
+
 const tracerReadyPromise = initTracer(
   process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``
 )
-
-const pageTemplateDetailsMap: Record<
-  string,
-  ITemplateDetails
-  // @ts-ignore INLINED_TEMPLATE_TO_DETAILS is being "inlined" by bundler
-> = INLINED_TEMPLATE_TO_DETAILS
 
 type MaybePhantomActivity =
   | ReturnType<typeof reporter.phantomActivity>
@@ -106,7 +112,7 @@ export async function getData({
       page = maybePage
 
       // 2. Lookup query used for a page (template)
-      templateDetails = pageTemplateDetailsMap[page.componentChunkName]
+      templateDetails = INLINED_TEMPLATE_TO_DETAILS[page.componentChunkName]
       if (!templateDetails) {
         throw new Error(
           `Page template details for "${page.componentChunkName}" not found`
@@ -354,6 +360,7 @@ export async function renderHTML({
         pagePath: getPath(data),
         pageData,
         staticQueryContext,
+        webpackCompilationHash: WEBPACK_COMPILATION_HASH,
         ...data.templateDetails.assets,
         inlinePageData: data.page.mode === `SSR` && data.results.serverData,
       })
