@@ -583,8 +583,7 @@ This was never an intended feature of Gatsby and is considered an anti-pattern (
 Starting with v4 Gatsby introduces a persisted storage for nodes and thus this pattern will no longer work
 because nodes are persisted after `createNode` call and all direct mutations after that will be lost.
 
-Unfortunately it is hard to detect it automatically (without sacrificing performance), so we recommend you to
-check your code to ensure you don't mutate nodes directly.
+Gatsby provides diagnostic mode to detect those direct mutations, unfortunately it has noticeable performance overhead so we don't enable it by default. See [Debugging missing data](/docs/how-to/local-development/debugging-missing-data/) for more details on it.
 
 Gatsby provides several actions available in `sourceNodes` and `onCreateNode` APIs to use instead:
 

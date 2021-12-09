@@ -28,6 +28,7 @@ const normalizePath = require(`../../utils/normalize-path`).default
 import { createJobV2FromInternalJob } from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
 import { reportOnce } from "../../utils/report-once"
+import { wrapNode } from "../../utils/detect-node-mutations"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
@@ -868,7 +869,7 @@ actions.createNode =
 
     const { payload: node, traceId, parentSpan } = createNodeAction
     return apiRunnerNode(`onCreateNode`, {
-      node,
+      node: wrapNode(node),
       traceId,
       parentSpan,
       traceTags: { nodeId: node.id, nodeType: node.internal.type },
