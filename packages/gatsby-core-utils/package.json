@@ -35,6 +35,7 @@
     "file-type": "^16.5.3",
     "fs-extra": "^10.0.0",
     "got": "^11.8.3",
+    "lock": "^1.1.0",
     "node-object-hash": "^2.3.10",
     "proper-lockfile": "^4.1.2",
     "tmp": "^0.2.1",
