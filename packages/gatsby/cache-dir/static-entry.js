@@ -111,6 +111,7 @@ export default async function staticPage({
   reversedStyles,
   reversedScripts,
   inlinePageData = false,
+  webpackCompilationHash,
 }) {
   // for this to work we need this function to be sync or at least ensure there is single execution of it at a time
   global.unsafeBuiltinUsage = []
@@ -388,7 +389,7 @@ export default async function staticPage({
     })
 
     // Add page metadata for the current page
-    const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";${
+    const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";window.___webpackCompilationHash="${webpackCompilationHash}";${
       inlinePageData ? `window.pageData=${JSON.stringify(pageData)};` : ``
     }/*]]>*/`
 

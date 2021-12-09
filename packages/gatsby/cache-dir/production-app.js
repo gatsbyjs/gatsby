@@ -174,8 +174,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       throw new Error(message)
     }
 
-    window.___webpackCompilationHash = page.page.webpackCompilationHash
-
     const SiteRoot = apiRunner(
       `wrapRootElement`,
       { element: <LocationHandler /> },
