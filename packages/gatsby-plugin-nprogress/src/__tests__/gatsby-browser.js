@@ -1,10 +1,9 @@
 /**
  * @jest-environment jsdom
  */
+jest.mock(`accessible-nprogress`)
 
-jest.mock(`nprogress`)
-
-import NProgress from "nprogress"
+import NProgress from "accessible-nprogress"
 import {
   onClientEntry,
   onRouteUpdateDelayed,

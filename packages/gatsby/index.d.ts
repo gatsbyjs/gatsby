@@ -30,7 +30,7 @@ export const useScrollRestoration: (key: string) => {
   onScroll(): void
 }
 
-class StaticQueryDocument {
+export class StaticQueryDocument {
   /** Prevents structural type widening. */
   #kind: "StaticQueryDocument"
 
@@ -80,7 +80,8 @@ export const prefetchPathname: (path: string) => void
 export type PageProps<
   DataType = object,
   PageContextType = object,
-  LocationState = WindowLocation["state"]
+  LocationState = WindowLocation["state"],
+  ServerDataType = object
 > = {
   /** The path for this current page */
   path: string
@@ -141,6 +142,8 @@ export type PageProps<
    *   ..
    */
   pageContext: PageContextType
+  /** Data passed into the page via the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) SSR function. */
+  serverData: ServerDataType
 }
 
 export interface PageRendererProps {
@@ -207,6 +210,8 @@ export interface GatsbyConfig {
   /** Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.*/
   polyfill?: boolean
   mapping?: Record<string, string>
+  jsxRuntime?: "automatic" | "classic"
+  jsxImportSource?: string
   /**
    * Setting the proxy config option will tell the develop server to proxy any unknown requests to your specified server.
    * @see https://www.gatsbyjs.org/docs/api-proxy/
@@ -685,7 +690,10 @@ export interface GatsbySSR<
    *   replaceBodyHTMLString(inlinedHTML)
    * }
    */
-  replaceRenderer?(args: ReplaceRendererArgs, options: PluginOptions): void | Promise<void>
+  replaceRenderer?(
+    args: ReplaceRendererArgs,
+    options: PluginOptions
+  ): void | Promise<void>
 
   /**
    * Allow a plugin to wrap the page element.
@@ -938,11 +946,22 @@ export interface ParentSpanPluginArgs extends NodePluginArgs {
 export interface NodePluginArgs {
   /**
    * Use to prefix resources URLs. `pathPrefix` will be either empty string or
-   * path that starts with slash and doesn't end with slash. Check
-   * [Adding a Path Prefix](https://www.gatsbyjs.org/docs/path-prefix/)
+   * path that starts with slash and doesn't end with slash. `pathPrefix` also
+   * becomes <assetPrefix>/<pathPrefix> when you pass both `assetPrefix` and
+   * `pathPrefix` in your `gatsby-config.js`.
+   *
+   * See [Adding a Path Prefix](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/path-prefix/)
    * page for details about path prefixing.
    */
   pathPrefix: string
+
+  /**
+   * This is the same as `pathPrefix` passed in `gatsby-config.js`.
+   * It's an empty string if you don't pass `pathPrefix`.
+   * When using assetPrefix, you can use this instead of pathPrefix to recieve the string you set in `gatsby-config.js`.
+   * It won't include the `assetPrefix`.
+   */
+  basePath: string
 
   /**
    * Collection of functions used to programmatically modify Gatsby’s internal state.
@@ -1032,6 +1051,13 @@ export interface NodePluginArgs {
    * tasks. All functions are async and return promises.
    */
   cache: GatsbyCache
+
+  /**
+   * Get cache instance by name - this should only be used by plugins that accept subplugins.
+   * @param id id of the node
+   * @returns See [cache](https://www.gatsbyjs.com/docs/reference/config-files/node-api-helpers/#cache) section for reference.
+   */
+  getCache(this: void, id: string): GatsbyCache
 
   /**
    * Utility function useful to generate globally unique and stable node IDs.
@@ -1145,6 +1171,17 @@ export interface Actions {
     plugin?: ActionPlugin
   ): void
 
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#unstable_createNodeManifest */
+  unstable_createNodeManifest(
+    this: void,
+    args: {
+      manifestId: string
+      node: Node
+      updatedAtUTC?: string | number
+    },
+    plugin?: ActionPlugin
+  ): void
+
   /** @see https://www.gatsbyjs.org/docs/actions/#setWebpackConfig */
   setWebpackConfig(this: void, config: object, plugin?: ActionPlugin): void
 
@@ -1235,9 +1272,7 @@ export interface Actions {
       | string
       | GraphQLOutputType
       | GatsbyGraphQLType
-      | string[]
-      | GraphQLOutputType[]
-      | GatsbyGraphQLType[],
+      | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
     plugin?: ActionPlugin,
     traceId?: string
   ): void

@@ -20,6 +20,15 @@ jest.mock(`gatsby-source-filesystem`, () => {
   }
 })
 
+function makeCache() {
+  const store = new Map()
+  return {
+    get: async id => store.get(id),
+    set: async (key, value) => store.set(key, value),
+    store,
+  }
+}
+
 const normalize = require(`../normalize`)
 const downloadFileSpy = jest.spyOn(normalize, `downloadFile`)
 
@@ -75,6 +84,7 @@ describe(`gatsby-source-drupal`, () => {
     store,
     getNode: id => nodes[id],
     getNodes,
+    cache: makeCache(),
   }
 
   beforeAll(async () => {
@@ -345,6 +355,26 @@ describe(`gatsby-source-drupal`, () => {
         })
       })
     })
+    describe(`multiple entities in webhook body`, () => {
+      let resp
+      beforeAll(async () => {
+        const webhookBody = require(`./fixtures/webhook-body-multiple-nodes.json`)
+        await sourceNodes(
+          {
+            ...args,
+            webhookBody,
+          },
+          { baseUrl }
+        )
+      })
+
+      it(`Relationships`, async () => {
+        expect(
+          nodes[createNodeId(`und.article-10`)].relationships.field_tags___NODE
+            .length
+        ).toBe(1)
+      })
+    })
 
     describe(`Insert content`, () => {
       it(`Node doesn't exist before webhook`, () => {
@@ -557,6 +587,10 @@ describe(`gatsby-source-drupal`, () => {
           nodes[createNodeId(`und.article-2`)].relationships
             .field_tertiary_image___NODE_image___NODE
         ).toBe(undefined)
+        expect(
+          nodes[createNodeId(`und.article-10`)].relationships.field_tags___NODE
+            .length
+        ).toBe(1)
       })
 
       it(`Back references`, () => {

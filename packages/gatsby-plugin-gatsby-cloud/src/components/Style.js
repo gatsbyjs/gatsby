@@ -64,6 +64,7 @@ const Style = () => (
 
         [data-gatsby-preview-indicator-hoverable="true"]:hover {
           background: #f3f3f3;
+          cursor: pointer;
         }
 
         [data-gatsby-preview-indicator-active-button="true"] {
@@ -84,33 +85,30 @@ const Style = () => (
           height: 28px;
         }
 
+        [data-gatsby-preview-indicator="tooltip"] {
+          position: fixed;
+          margin-left: 48px;
+          line-height: 12px;
+          background: black;
+          opacity: 1;
+          color: white;
+          display: inline;
+          padding: 10px 13px;
+          border-radius: 4px;
+          user-select: none;
+          white-space: nowrap;
+        }
+
         [data-gatsby-preview-indicator-visible="false"] {
           opacity: 0;
-          visibility: hidden;
           will-change: opacity;
           transition: all 0.2s ease-in-out;
         }
 
         [data-gatsby-preview-indicator-visible="true"] {
           opacity: 1;
-          visibility: visible;
           will-change: opacity;
           transition: all 0.2s ease-in-out;
-        }
-
-        [data-gatsby-preview-indicator="tooltip"] {
-          margin-left: 48px;
-          line-height: 12px;
-          background: black;
-          opacity: 1;
-          color: white;
-          position: fixed;
-          display: inline;
-          padding: 10px 13px;
-          margin-top: -4px;
-          border-radius: 4px;
-          user-select: none;
-          white-space: nowrap;
         }
 
         [data-gatsby-preview-indicator="tooltip-link"] {

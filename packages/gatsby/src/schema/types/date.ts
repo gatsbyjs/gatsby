@@ -3,7 +3,7 @@ import { GraphQLScalarType, Kind, GraphQLFieldConfig } from "graphql"
 import { oneLine } from "common-tags"
 
 interface IFormatDateArgs {
-  date?: Date
+  date: Date | string
   fromNow?: boolean
   formatString?: string
   difference?: unitOfTime.Diff
@@ -12,10 +12,10 @@ interface IFormatDateArgs {
 interface IDateResolverOption {
   locale?: string
   formatString?: string
-  fromNow?: string
+  fromNow?: boolean
   difference?: string
   from?: string
-  fromNode?: { type: string; defaultValue: boolean }
+  fromNode?: boolean
 }
 type DateResolverFieldConfig = GraphQLFieldConfig<any, any, any>
 type DateResolver = (

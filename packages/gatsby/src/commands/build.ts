@@ -55,10 +55,18 @@ import {
 import { shouldGenerateEngines } from "../utils/engines-helpers"
 import reporter from "gatsby-cli/lib/reporter"
 import type webpack from "webpack"
-import { materializePageMode, getPageMode } from "../utils/page-mode"
+import {
+  materializePageMode,
+  getPageMode,
+  preparePageTemplateConfigs,
+} from "../utils/page-mode"
 import { validateEngines } from "../utils/validate-engines"
 
-module.exports = async function build(program: IBuildArgs): Promise<void> {
+module.exports = async function build(
+  program: IBuildArgs,
+  // Let external systems running Gatsby to inject attributes
+  externalTelemetryAttributes: Record<string, any>
+): Promise<void> {
   // global gatsby object to use without store
   global.__GATSBY = {
     buildId: uuid.v4(),
@@ -86,9 +94,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   markWebpackStatusAsPending()
 
   const publicDir = path.join(program.directory, `public`)
-  initTracer(
-    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
-  )
+  if (!externalTelemetryAttributes) {
+    await initTracer(
+      process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ||
+        program.openTracingConfigFile
+    )
+  }
+
   const buildActivity = report.phantomActivity(`build`)
   buildActivity.start()
 
@@ -101,6 +113,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
+
+  // Add external tags to buildSpan
+  if (externalTelemetryAttributes) {
+    Object.entries(externalTelemetryAttributes).forEach(([key, value]) => {
+      buildActivity.span.setTag(key, value)
+    })
+  }
 
   const { gatsbyNodeGraphQLFunction, workerPool } = await bootstrap({
     program,
@@ -208,6 +227,19 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildSSRBundleActivityProgress.end()
   }
 
+  // exec outer config function for each template
+  const pageConfigActivity = report.activityTimer(`Execute page configs`, {
+    parentSpan: buildSpan,
+  })
+  pageConfigActivity.start()
+  try {
+    await preparePageTemplateConfigs(gatsbyNodeGraphQLFunction)
+  } catch (err) {
+    reporter.panic(err)
+  } finally {
+    pageConfigActivity.end()
+  }
+
   if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
     const validateEnginesActivity = report.activityTimer(
       `Validating Rendering Engines`,
@@ -287,7 +319,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     })
   }
 
-  if (process.send) {
+  if (process.send && shouldGenerateEngines()) {
     process.send({
       type: `LOG_ACTION`,
       action: {
@@ -374,7 +406,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     await buildHTMLPagesAndDeleteStaleArtifacts({
       program,
       workerPool,
-      buildSpan,
+      parentSpan: buildSpan,
     })
 
   await waitMaterializePageMode
@@ -436,9 +468,10 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   report.info(`Done building in ${process.uptime()} sec`)
 
-  buildSpan.finish()
-  await stopTracer()
   buildActivity.end()
+  if (!externalTelemetryAttributes) {
+    await stopTracer()
+  }
 
   if (program.logPages) {
     if (toRegenerate.length) {

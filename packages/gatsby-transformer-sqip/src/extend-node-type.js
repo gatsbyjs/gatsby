@@ -192,7 +192,7 @@ async function sqipContentful({ type, cache, store }) {
         const {
           createUrl,
           mimeTypeExtensions,
-        } = require(`gatsby-source-contentful/extend-node-type`)
+        } = require(`gatsby-source-contentful/image-helpers`)
 
         const {
           file: { contentType, url: imgUrl, fileName },

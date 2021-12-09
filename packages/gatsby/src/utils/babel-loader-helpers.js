@@ -31,7 +31,7 @@ const getCustomOptions = stage => {
 const configItemsMemoCache = new Map()
 
 const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
-  const { stage, reactRuntime } = options
+  const { stage, reactRuntime, reactImportSource } = options
 
   if (configItemsMemoCache.has(stage)) {
     return configItemsMemoCache.get(stage)
@@ -61,7 +61,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
         [
           resolve(`./babel/babel-plugin-remove-api`),
           {
-            apis: [`getServerData`],
+            apis: [`getServerData`, `config`],
           },
         ],
         {
@@ -85,6 +85,25 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
     )
   }
 
+  if (
+    _CFLAGS_.GATSBY_MAJOR === `4` &&
+    (stage === `build-html` || stage === `develop-html`)
+  ) {
+    requiredPlugins.push(
+      babel.createConfigItem(
+        [
+          resolve(`./babel/babel-plugin-env-vars`),
+          {
+            apis: [`getServerData`],
+          },
+        ],
+        {
+          type: `plugin`,
+        }
+      )
+    )
+  }
+
   if (stage === `develop`) {
     requiredPlugins.push(
       babel.createConfigItem([resolve(`react-refresh/babel`)], {
@@ -103,6 +122,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
         {
           stage,
           reactRuntime,
+          reactImportSource,
         },
       ],
       {

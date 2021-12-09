@@ -75,6 +75,7 @@ Array [
     },
     "filePath": "page-query.js",
     "hash": 3530286846,
+    "isConfigQuery": false,
     "isHook": false,
     "isStaticQuery": false,
     "templateLoc": SourceLocation {
@@ -149,6 +150,7 @@ Array [
     },
     "filePath": "page-query-indirect.js",
     "hash": 1314068098,
+    "isConfigQuery": false,
     "isHook": false,
     "isStaticQuery": false,
     "templateLoc": SourceLocation {
@@ -875,6 +877,7 @@ Array [
     },
     "filePath": "multiple-fragment-exports.js",
     "hash": 1171727280,
+    "isConfigQuery": false,
     "isHook": false,
     "isStaticQuery": false,
     "templateLoc": SourceLocation {
@@ -962,6 +965,7 @@ Array [
     },
     "filePath": "multiple-fragment-exports.js",
     "hash": 3923246124,
+    "isConfigQuery": false,
     "isHook": false,
     "isStaticQuery": false,
     "templateLoc": SourceLocation {
@@ -990,7 +994,7 @@ Array [
           },
           "name": Object {
             "kind": "Name",
-            "value": "fragmentShorthandJs3159585216",
+            "value": "staticFragmentShorthandJs3159585216",
           },
           "operation": "query",
           "selectionSet": Object {
@@ -1086,6 +1090,7 @@ Array [
     },
     "filePath": "fragment-shorthand.js",
     "hash": 3159585216,
+    "isConfigQuery": false,
     "isHook": false,
     "isStaticQuery": true,
     "templateLoc": SourceLocation {
@@ -1114,7 +1119,7 @@ Array [
           },
           "name": Object {
             "kind": "Name",
-            "value": "queryInSeparateVariableJs1528532020",
+            "value": "staticQueryInSeparateVariableJs1528532020",
           },
           "operation": "query",
           "selectionSet": Object {
@@ -1237,6 +1242,7 @@ Array [
     },
     "filePath": "query-in-separate-variable.js",
     "hash": 1528532020,
+    "isConfigQuery": false,
     "isHook": false,
     "isStaticQuery": true,
     "templateLoc": SourceLocation {
@@ -1265,7 +1271,7 @@ Array [
           },
           "name": Object {
             "kind": "Name",
-            "value": "queryInSeparateVariable2Js278713111",
+            "value": "staticQueryInSeparateVariable2Js278713111",
           },
           "operation": "query",
           "selectionSet": Object {
@@ -1388,6 +1394,7 @@ Array [
     },
     "filePath": "query-in-separate-variable-2.js",
     "hash": 278713111,
+    "isConfigQuery": false,
     "isHook": false,
     "isStaticQuery": true,
     "templateLoc": SourceLocation {
@@ -1462,6 +1469,7 @@ Array [
     },
     "filePath": "static-query-hooks.js",
     "hash": 2687344169,
+    "isConfigQuery": false,
     "isHook": true,
     "isStaticQuery": true,
     "templateLoc": SourceLocation {
@@ -1536,6 +1544,7 @@ Array [
     },
     "filePath": "static-query-hooks-with-other-export.js",
     "hash": 2687344169,
+    "isConfigQuery": false,
     "isHook": true,
     "isStaticQuery": true,
     "templateLoc": SourceLocation {
@@ -1610,6 +1619,7 @@ Array [
     },
     "filePath": "static-query-hooks-alternative-import.js",
     "hash": 2687344169,
+    "isConfigQuery": false,
     "isHook": true,
     "isStaticQuery": true,
     "templateLoc": SourceLocation {
@@ -1684,6 +1694,7 @@ Array [
     },
     "filePath": "static-query-hooks-with-type-parameter.ts",
     "hash": 2687344169,
+    "isConfigQuery": false,
     "isHook": true,
     "isStaticQuery": true,
     "templateLoc": SourceLocation {
@@ -1712,7 +1723,7 @@ Array [
           },
           "name": Object {
             "kind": "Name",
-            "value": "staticQueryHooksInSeparateVariableJs1528532020",
+            "value": "staticStaticQueryHooksInSeparateVariableJs1528532020",
           },
           "operation": "query",
           "selectionSet": Object {
@@ -1835,6 +1846,7 @@ Array [
     },
     "filePath": "static-query-hooks-in-separate-variable.js",
     "hash": 1528532020,
+    "isConfigQuery": false,
     "isHook": true,
     "isStaticQuery": true,
     "templateLoc": SourceLocation {
@@ -1973,8 +1985,80 @@ Array [
         "start": 0,
       },
     },
+    "filePath": "ж-ä-!@#$%^&*()_-=+:;'\\"?,~\`.js",
+    "hash": 1125018085,
+    "isConfigQuery": false,
+    "isHook": true,
+    "isStaticQuery": true,
+    "templateLoc": SourceLocation {
+      "end": Position {
+        "column": 51,
+        "line": 3,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 38,
+        "line": 3,
+      },
+    },
+    "text": "query{foo}",
+  },
+  "21": Object {
+    "doc": Object {
+      "definitions": Array [
+        Object {
+          "directives": Array [],
+          "kind": "OperationDefinition",
+          "loc": Object {
+            "end": 13,
+            "start": 0,
+          },
+          "name": Object {
+            "kind": "Name",
+            "value": "staticStaticZhADollarpercentandJs1125018085",
+          },
+          "operation": "query",
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 13,
+              "start": 6,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 11,
+                  "start": 8,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 11,
+                    "start": 8,
+                  },
+                  "value": "foo",
+                },
+                "selectionSet": undefined,
+              },
+            ],
+          },
+          "variableDefinitions": Array [],
+        },
+      ],
+      "kind": "Document",
+      "loc": Object {
+        "end": 13,
+        "start": 0,
+      },
+    },
     "filePath": "static-ж-ä-!@#$%^&*()_-=+:;'\\"?,~\`.js",
     "hash": 1125018085,
+    "isConfigQuery": false,
     "isHook": false,
     "isStaticQuery": true,
     "templateLoc": SourceLocation {
@@ -2049,6 +2133,7 @@ Array [
     },
     "filePath": "static-query-hooks-commonjs.js",
     "hash": 2687344169,
+    "isConfigQuery": false,
     "isHook": true,
     "isStaticQuery": true,
     "templateLoc": SourceLocation {
@@ -2123,6 +2208,7 @@ Array [
     },
     "filePath": "static-query-hooks-commonjs-no-destructuring.js",
     "hash": 2462364336,
+    "isConfigQuery": false,
     "isHook": true,
     "isStaticQuery": true,
     "templateLoc": SourceLocation {
@@ -2139,7 +2225,820 @@ Array [
     },
     "text": "query StaticQueryNameNoDestructuring{foo}",
   },
+<<<<<<< HEAD
 ]
+=======
+  "24": Object {
+    "doc": Object {
+      "definitions": Array [
+        Object {
+          "directives": Array [],
+          "kind": "OperationDefinition",
+          "loc": Object {
+            "end": 26,
+            "start": 1,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 16,
+              "start": 7,
+            },
+            "value": "PageQuery",
+          },
+          "operation": "query",
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 26,
+              "start": 17,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 24,
+                  "start": 21,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 24,
+                    "start": 21,
+                  },
+                  "value": "foo",
+                },
+                "selectionSet": undefined,
+              },
+            ],
+          },
+          "variableDefinitions": Array [],
+        },
+      ],
+      "kind": "Document",
+      "loc": Object {
+        "end": 27,
+        "start": 0,
+      },
+    },
+    "filePath": "page-with-config.js",
+    "hash": 3463071779,
+    "isConfigQuery": false,
+    "isHook": false,
+    "isStaticQuery": false,
+    "templateLoc": SourceLocation {
+      "end": Position {
+        "column": 0,
+        "line": 6,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 29,
+        "line": 2,
+      },
+    },
+    "text": "query PageQuery{foo}",
+  },
+  "25": Object {
+    "doc": Object {
+      "definitions": Array [
+        Object {
+          "directives": Array [],
+          "kind": "OperationDefinition",
+          "loc": Object {
+            "end": 32,
+            "start": 0,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 17,
+              "start": 6,
+            },
+            "value": "ConfigQuery",
+          },
+          "operation": "query",
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 32,
+              "start": 18,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 30,
+                  "start": 20,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 30,
+                    "start": 20,
+                  },
+                  "value": "__typename",
+                },
+                "selectionSet": undefined,
+              },
+            ],
+          },
+          "variableDefinitions": Array [],
+        },
+      ],
+      "kind": "Document",
+      "loc": Object {
+        "end": 32,
+        "start": 0,
+      },
+    },
+    "filePath": "page-with-config.js",
+    "hash": 3646331219,
+    "isConfigQuery": true,
+    "isHook": false,
+    "isStaticQuery": false,
+    "templateLoc": SourceLocation {
+      "end": Position {
+        "column": 56,
+        "line": 8,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 24,
+        "line": 8,
+      },
+    },
+    "text": "query ConfigQuery{__typename}",
+  },
+  "26": Object {
+    "doc": Object {
+      "definitions": Array [
+        Object {
+          "directives": Array [],
+          "kind": "OperationDefinition",
+          "loc": Object {
+            "end": 26,
+            "start": 1,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 16,
+              "start": 7,
+            },
+            "value": "PageQuery",
+          },
+          "operation": "query",
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 26,
+              "start": 17,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 24,
+                  "start": 21,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 24,
+                    "start": 21,
+                  },
+                  "value": "foo",
+                },
+                "selectionSet": undefined,
+              },
+            ],
+          },
+          "variableDefinitions": Array [],
+        },
+      ],
+      "kind": "Document",
+      "loc": Object {
+        "end": 27,
+        "start": 0,
+      },
+    },
+    "filePath": "page-with-config-no-name.js",
+    "hash": 3463071779,
+    "isConfigQuery": false,
+    "isHook": false,
+    "isStaticQuery": false,
+    "templateLoc": SourceLocation {
+      "end": Position {
+        "column": 0,
+        "line": 6,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 29,
+        "line": 2,
+      },
+    },
+    "text": "query PageQuery{foo}",
+  },
+  "27": Object {
+    "doc": Object {
+      "definitions": Array [
+        Object {
+          "directives": Array [],
+          "kind": "OperationDefinition",
+          "loc": Object {
+            "end": 14,
+            "start": 0,
+          },
+          "name": Object {
+            "kind": "Name",
+            "value": "configPageWithConfigNoNameJs4128538483",
+          },
+          "operation": "query",
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 14,
+              "start": 0,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 12,
+                  "start": 2,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 12,
+                    "start": 2,
+                  },
+                  "value": "__typename",
+                },
+                "selectionSet": undefined,
+              },
+            ],
+          },
+          "variableDefinitions": Array [],
+        },
+      ],
+      "kind": "Document",
+      "loc": Object {
+        "end": 14,
+        "start": 0,
+      },
+    },
+    "filePath": "page-with-config-no-name.js",
+    "hash": 4128538483,
+    "isConfigQuery": true,
+    "isHook": false,
+    "isStaticQuery": false,
+    "templateLoc": SourceLocation {
+      "end": Position {
+        "column": 38,
+        "line": 8,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 24,
+        "line": 8,
+      },
+    },
+    "text": "{__typename}",
+  },
+  "3": Object {
+    "doc": Object {
+      "definitions": Array [
+        Object {
+          "directives": Array [],
+          "kind": "OperationDefinition",
+          "loc": Object {
+            "end": 16,
+            "start": 1,
+          },
+          "name": Object {
+            "kind": "Name",
+            "value": "pagePageQueryNoNameJs1125018085",
+          },
+          "operation": "query",
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 16,
+              "start": 7,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 14,
+                  "start": 11,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 14,
+                    "start": 11,
+                  },
+                  "value": "foo",
+                },
+                "selectionSet": undefined,
+              },
+            ],
+          },
+          "variableDefinitions": Array [],
+        },
+      ],
+      "kind": "Document",
+      "loc": Object {
+        "end": 17,
+        "start": 0,
+      },
+    },
+    "filePath": "page-query-no-name.js",
+    "hash": 1125018085,
+    "isConfigQuery": false,
+    "isHook": false,
+    "isStaticQuery": false,
+    "templateLoc": SourceLocation {
+      "end": Position {
+        "column": 0,
+        "line": 6,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 31,
+        "line": 2,
+      },
+    },
+    "text": "query{foo}",
+  },
+  "4": Object {
+    "doc": Object {
+      "definitions": Array [
+        Object {
+          "directives": Array [],
+          "kind": "OperationDefinition",
+          "loc": Object {
+            "end": 29,
+            "start": 0,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 21,
+              "start": 6,
+            },
+            "value": "StaticQueryName",
+          },
+          "operation": "query",
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 29,
+              "start": 22,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 27,
+                  "start": 24,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 27,
+                    "start": 24,
+                  },
+                  "value": "foo",
+                },
+                "selectionSet": undefined,
+              },
+            ],
+          },
+          "variableDefinitions": Array [],
+        },
+      ],
+      "kind": "Document",
+      "loc": Object {
+        "end": 29,
+        "start": 0,
+      },
+    },
+    "filePath": "static-query.js",
+    "hash": 2687344169,
+    "isConfigQuery": false,
+    "isHook": false,
+    "isStaticQuery": true,
+    "templateLoc": SourceLocation {
+      "end": Position {
+        "column": 48,
+        "line": 4,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 19,
+        "line": 4,
+      },
+    },
+    "text": "query StaticQueryName{foo}",
+  },
+  "5": Object {
+    "doc": Object {
+      "definitions": Array [
+        Object {
+          "directives": Array [],
+          "kind": "OperationDefinition",
+          "loc": Object {
+            "end": 7,
+            "start": 0,
+          },
+          "name": Object {
+            "kind": "Name",
+            "value": "staticStaticQueryNoNameJs3221935794",
+          },
+          "operation": "query",
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 7,
+              "start": 0,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 5,
+                  "start": 2,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 5,
+                    "start": 2,
+                  },
+                  "value": "foo",
+                },
+                "selectionSet": undefined,
+              },
+            ],
+          },
+          "variableDefinitions": Array [],
+        },
+      ],
+      "kind": "Document",
+      "loc": Object {
+        "end": 7,
+        "start": 0,
+      },
+    },
+    "filePath": "static-query-no-name.js",
+    "hash": 3221935794,
+    "isConfigQuery": false,
+    "isHook": false,
+    "isStaticQuery": true,
+    "templateLoc": SourceLocation {
+      "end": Position {
+        "column": 26,
+        "line": 4,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 19,
+        "line": 4,
+      },
+    },
+    "text": "{foo}",
+  },
+  "6": Object {
+    "doc": Object {
+      "definitions": Array [
+        Object {
+          "directives": Array [],
+          "kind": "OperationDefinition",
+          "loc": Object {
+            "end": 29,
+            "start": 0,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 21,
+              "start": 6,
+            },
+            "value": "StaticQueryName",
+          },
+          "operation": "query",
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 29,
+              "start": 22,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 27,
+                  "start": 24,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 27,
+                    "start": 24,
+                  },
+                  "value": "foo",
+                },
+                "selectionSet": undefined,
+              },
+            ],
+          },
+          "variableDefinitions": Array [],
+        },
+      ],
+      "kind": "Document",
+      "loc": Object {
+        "end": 29,
+        "start": 0,
+      },
+    },
+    "filePath": "static-query-named-export.js",
+    "hash": 2687344169,
+    "isConfigQuery": false,
+    "isHook": false,
+    "isStaticQuery": true,
+    "templateLoc": SourceLocation {
+      "end": Position {
+        "column": 48,
+        "line": 4,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 19,
+        "line": 4,
+      },
+    },
+    "text": "query StaticQueryName{foo}",
+  },
+  "7": Object {
+    "doc": Object {
+      "definitions": Array [
+        Object {
+          "directives": Array [],
+          "kind": "OperationDefinition",
+          "loc": Object {
+            "end": 7,
+            "start": 0,
+          },
+          "name": Object {
+            "kind": "Name",
+            "value": "staticStaticQueryClosingTagJs3221935794",
+          },
+          "operation": "query",
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 7,
+              "start": 0,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 5,
+                  "start": 2,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 5,
+                    "start": 2,
+                  },
+                  "value": "foo",
+                },
+                "selectionSet": undefined,
+              },
+            ],
+          },
+          "variableDefinitions": Array [],
+        },
+      ],
+      "kind": "Document",
+      "loc": Object {
+        "end": 7,
+        "start": 0,
+      },
+    },
+    "filePath": "static-query-closing-tag.js",
+    "hash": 3221935794,
+    "isConfigQuery": false,
+    "isHook": false,
+    "isStaticQuery": true,
+    "templateLoc": SourceLocation {
+      "end": Position {
+        "column": 26,
+        "line": 4,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 19,
+        "line": 4,
+      },
+    },
+    "text": "{foo}",
+  },
+  "8": Object {
+    "doc": Object {
+      "definitions": Array [
+        Object {
+          "directives": Array [],
+          "kind": "OperationDefinition",
+          "loc": Object {
+            "end": 29,
+            "start": 0,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 21,
+              "start": 6,
+            },
+            "value": "StaticQueryName",
+          },
+          "operation": "query",
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 29,
+              "start": 22,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 27,
+                  "start": 24,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 27,
+                    "start": 24,
+                  },
+                  "value": "foo",
+                },
+                "selectionSet": undefined,
+              },
+            ],
+          },
+          "variableDefinitions": Array [],
+        },
+      ],
+      "kind": "Document",
+      "loc": Object {
+        "end": 29,
+        "start": 0,
+      },
+    },
+    "filePath": "page-query-and-static-query-named-export.js",
+    "hash": 2687344169,
+    "isConfigQuery": false,
+    "isHook": false,
+    "isStaticQuery": true,
+    "templateLoc": SourceLocation {
+      "end": Position {
+        "column": 48,
+        "line": 4,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 19,
+        "line": 4,
+      },
+    },
+    "text": "query StaticQueryName{foo}",
+  },
+  "9": Object {
+    "doc": Object {
+      "definitions": Array [
+        Object {
+          "directives": Array [],
+          "kind": "OperationDefinition",
+          "loc": Object {
+            "end": 27,
+            "start": 0,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 19,
+              "start": 6,
+            },
+            "value": "PageQueryName",
+          },
+          "operation": "query",
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 27,
+              "start": 20,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 25,
+                  "start": 22,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 25,
+                    "start": 22,
+                  },
+                  "value": "foo",
+                },
+                "selectionSet": undefined,
+              },
+            ],
+          },
+          "variableDefinitions": Array [],
+        },
+      ],
+      "kind": "Document",
+      "loc": Object {
+        "end": 27,
+        "start": 0,
+      },
+    },
+    "filePath": "page-query-and-static-query-named-export.js",
+    "hash": 3530286846,
+    "isConfigQuery": false,
+    "isHook": false,
+    "isStaticQuery": false,
+    "templateLoc": SourceLocation {
+      "end": Position {
+        "column": 60,
+        "line": 8,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 33,
+        "line": 8,
+      },
+    },
+    "text": "query PageQueryName{foo}",
+  },
+}
+>>>>>>> master
 `;
 
 exports[`File parser extracts query AST correctly from files: warn 1`] = `

@@ -10,12 +10,13 @@ export interface IGatsbyResolverContext<TSource, TArgs> {
   nodeModel: any
   stats: IGraphQLRunnerStats | null
   tracer: IGraphQLSpanTracer | null
+  telemetryResolverTimings?: Array<IGraphQLTelemetryRecord>
   [key: string]: any
 }
 
 export type GatsbyGraphQLResolveInfo = GraphQLResolveInfo & {
   from?: string
-  fromNode?: string
+  fromNode?: boolean
 }
 
 export type GatsbyResolver<TSource, TArgs = { [argName: string]: any }> = (
@@ -51,4 +52,9 @@ export interface IGatsbyPageInfo {
 export interface IGraphQLSpanTracer {
   getParentActivity(): IPhantomReporter
   createResolverActivity(path: Path, name: string): IPhantomReporter
+}
+
+export interface IGraphQLTelemetryRecord {
+  name: string
+  duration: number
 }

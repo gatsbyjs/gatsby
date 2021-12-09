@@ -9,12 +9,8 @@ import { setupLmdbStore } from "../../datastore/lmdb/lmdb-datastore"
 import { store } from "../../redux"
 import { actions } from "../../redux/actions"
 import reporter from "gatsby-cli/lib/reporter"
-import {
-  createGraphQLRunner,
-  Runner,
-} from "../../bootstrap/create-graphql-runner"
+import { GraphQLRunner, IQueryOptions } from "../../query/graphql-runner"
 import { waitJobsByRequest } from "../../utils/wait-until-jobs-complete"
-
 import { setGatsbyPluginCache } from "../../utils/require-gatsby-plugin"
 import apiRunnerNode from "../../utils/api-runner-node"
 import type { IGatsbyPage, IGatsbyState } from "../../redux/types"
@@ -27,10 +23,19 @@ import {
   flattenedPlugins,
   // @ts-ignore
 } from ".cache/query-engine-plugins"
+import { initTracer } from "../../utils/tracer"
+
+type MaybePhantomActivity =
+  | ReturnType<typeof reporter.phantomActivity>
+  | undefined
+
+const tracerReadyPromise = initTracer(
+  process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ?? ``
+)
 
 export class GraphQLEngine {
   // private schema: GraphQLSchema
-  private runnerPromise?: Promise<Runner>
+  private runnerPromise?: Promise<GraphQLRunner>
 
   constructor({ dbPath }: { dbPath: string }) {
     setupLmdbStore({ dbPath })
@@ -38,46 +43,59 @@ export class GraphQLEngine {
     this.getRunner()
   }
 
-  private async _doGetRunner(): Promise<Runner> {
-    // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
-    store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
+  private async _doGetRunner(): Promise<GraphQLRunner> {
+    await tracerReadyPromise
 
-    // TODO: FLATTENED_PLUGINS needs to be merged with plugin options from gatsby-config
-    //  (as there might be non-serializable options, i.e. functions)
-    store.dispatch({
-      type: `SET_SITE_FLATTENED_PLUGINS`,
-      payload: flattenedPlugins,
-    })
+    const wrapActivity = reporter.phantomActivity(`Initializing GraphQL Engine`)
+    wrapActivity.start()
+    try {
+      // @ts-ignore SCHEMA_SNAPSHOT is being "inlined" by bundler
+      store.dispatch(actions.createTypes(SCHEMA_SNAPSHOT))
 
-    for (const pluginName of Object.keys(gatsbyNodes)) {
-      setGatsbyPluginCache(
-        { name: pluginName, resolve: `` },
-        `gatsby-node`,
-        gatsbyNodes[pluginName]
-      )
+      // TODO: FLATTENED_PLUGINS needs to be merged with plugin options from gatsby-config
+      //  (as there might be non-serializable options, i.e. functions)
+      store.dispatch({
+        type: `SET_SITE_FLATTENED_PLUGINS`,
+        payload: flattenedPlugins,
+      })
+
+      for (const pluginName of Object.keys(gatsbyNodes)) {
+        setGatsbyPluginCache(
+          { name: pluginName, resolve: `` },
+          `gatsby-node`,
+          gatsbyNodes[pluginName]
+        )
+      }
+      for (const pluginName of Object.keys(gatsbyWorkers)) {
+        setGatsbyPluginCache(
+          { name: pluginName, resolve: `` },
+          `gatsby-worker`,
+          gatsbyWorkers[pluginName]
+        )
+      }
+
+      if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+        await apiRunnerNode(`onPluginInit`, { parentSpan: wrapActivity.span })
+      } else {
+        await apiRunnerNode(`unstable_onPluginInit`, {
+          parentSpan: wrapActivity.span,
+        })
+      }
+      await apiRunnerNode(`createSchemaCustomization`, {
+        parentSpan: wrapActivity.span,
+      })
+
+      // Build runs
+      // Note: skipping inference metadata because we rely on schema snapshot
+      await build({ fullMetadataBuild: false, parentSpan: wrapActivity.span })
+
+      return new GraphQLRunner(store)
+    } finally {
+      wrapActivity.end()
     }
-    for (const pluginName of Object.keys(gatsbyWorkers)) {
-      setGatsbyPluginCache(
-        { name: pluginName, resolve: `` },
-        `gatsby-worker`,
-        gatsbyWorkers[pluginName]
-      )
-    }
-    if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-      await apiRunnerNode(`onPluginInit`)
-    } else {
-      await apiRunnerNode(`unstable_onPluginInit`)
-    }
-    await apiRunnerNode(`createSchemaCustomization`)
-
-    // Build runs
-    // Note: skipping inference metadata because we rely on schema snapshot
-    await build({ fullMetadataBuild: false })
-
-    return createGraphQLRunner(store, reporter)
   }
 
-  private async getRunner(): Promise<Runner> {
+  private async getRunner(): Promise<GraphQLRunner> {
     if (!this.runnerPromise) {
       this.runnerPromise = this._doGetRunner()
     }
@@ -93,17 +111,61 @@ export class GraphQLEngine {
 
   public async runQuery(
     query: string | Source,
-    context: Record<string, any>
+    context: Record<string, any> = {},
+    opts?: IQueryOptions
   ): Promise<ExecutionResult> {
     const engineContext = {
       requestId: uuid.v4(),
     }
+
     const doRunQuery = async (): Promise<ExecutionResult> => {
-      const graphqlRunner = await this.getRunner()
-      const result = await graphqlRunner(query, context)
-      await waitJobsByRequest(engineContext.requestId)
+      if (!opts) {
+        opts = {
+          queryName: `GraphQL Engine query`,
+          parentSpan: undefined,
+        }
+      }
+
+      let gettingRunnerActivity: MaybePhantomActivity
+      let graphqlRunner: GraphQLRunner
+      try {
+        if (opts.parentSpan) {
+          gettingRunnerActivity = reporter.phantomActivity(
+            `Waiting for graphql runner to init`,
+            {
+              parentSpan: opts.parentSpan,
+            }
+          )
+          gettingRunnerActivity.start()
+        }
+        graphqlRunner = await this.getRunner()
+      } finally {
+        if (gettingRunnerActivity) {
+          gettingRunnerActivity.end()
+        }
+      }
+
+      // graphqlRunner creates it's own Span as long as we pass `parentSpan`
+      const result = await graphqlRunner.query(query, context, opts)
+
+      let waitingForJobsCreatedByCurrentRequestActivity: MaybePhantomActivity
+      try {
+        if (opts.parentSpan) {
+          waitingForJobsCreatedByCurrentRequestActivity =
+            reporter.phantomActivity(`Waiting for jobs to finish`, {
+              parentSpan: opts.parentSpan,
+            })
+          waitingForJobsCreatedByCurrentRequestActivity.start()
+        }
+        await waitJobsByRequest(engineContext.requestId)
+      } finally {
+        if (waitingForJobsCreatedByCurrentRequestActivity) {
+          waitingForJobsCreatedByCurrentRequestActivity.end()
+        }
+      }
       return result
     }
+
     try {
       return await runWithEngineContext(engineContext, doRunQuery)
     } finally {

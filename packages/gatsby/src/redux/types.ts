@@ -42,6 +42,7 @@ export interface IGatsbyPage {
   pluginCreatorId: Identifier
   componentPath: SystemPath
   ownerNodeId: Identifier
+  manifestId?: string
   defer?: boolean
   /**
    * INTERNAL. Do not use `page.mode`, it can be removed at any time
@@ -94,6 +95,8 @@ export interface IGatsbyConfig {
   pathPrefix?: string
   assetPrefix?: string
   mapping?: Record<string, string>
+  jsxRuntime?: "classic" | "automatic"
+  jsxImportSource?: string
 }
 
 export interface IGatsbyNode {
@@ -140,7 +143,7 @@ export interface IGatsbyPageComponent {
   pages: Set<string>
   isInBootstrap: boolean
   serverData: boolean
-  // TODO: config: boolean
+  config: boolean
 }
 
 export interface IDefinitionMeta {
@@ -433,7 +436,7 @@ export interface ISetComponentFeatures {
   payload: {
     componentPath: string
     serverData: boolean
-    // TODO: config: boolean
+    config: boolean
   }
 }
 
@@ -927,6 +930,7 @@ export interface ICreateNodeManifest {
     manifestId: string
     node: IGatsbyNode
     pluginName: string
+    updatedAtUTC?: string | number
   }
 }
 
