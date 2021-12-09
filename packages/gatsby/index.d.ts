@@ -946,11 +946,22 @@ export interface ParentSpanPluginArgs extends NodePluginArgs {
 export interface NodePluginArgs {
   /**
    * Use to prefix resources URLs. `pathPrefix` will be either empty string or
-   * path that starts with slash and doesn't end with slash. Check
-   * [Adding a Path Prefix](https://www.gatsbyjs.org/docs/path-prefix/)
+   * path that starts with slash and doesn't end with slash. `pathPrefix` also
+   * becomes <assetPrefix>/<pathPrefix> when you pass both `assetPrefix` and
+   * `pathPrefix` in your `gatsby-config.js`.
+   *
+   * See [Adding a Path Prefix](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/path-prefix/)
    * page for details about path prefixing.
    */
   pathPrefix: string
+
+  /**
+   * This is the same as `pathPrefix` passed in `gatsby-config.js`.
+   * It's an empty string if you don't pass `pathPrefix`.
+   * When using assetPrefix, you can use this instead of pathPrefix to recieve the string you set in `gatsby-config.js`.
+   * It won't include the `assetPrefix`.
+   */
+  basePath: string
 
   /**
    * Collection of functions used to programmatically modify Gatsby’s internal state.
