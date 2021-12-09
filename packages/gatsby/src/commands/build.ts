@@ -62,7 +62,11 @@ import {
 } from "../utils/page-mode"
 import { validateEngines } from "../utils/validate-engines"
 
-module.exports = async function build(program: IBuildArgs): Promise<void> {
+module.exports = async function build(
+  program: IBuildArgs,
+  // Let external systems running Gatsby to inject attributes
+  externalTelemetryAttributes: Record<string, any>
+): Promise<void> {
   // global gatsby object to use without store
   global.__GATSBY = {
     buildId: uuid.v4(),
@@ -90,9 +94,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   markWebpackStatusAsPending()
 
   const publicDir = path.join(program.directory, `public`)
-  await initTracer(
-    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
-  )
+  if (!externalTelemetryAttributes) {
+    await initTracer(
+      process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ||
+        program.openTracingConfigFile
+    )
+  }
+
   const buildActivity = report.phantomActivity(`build`)
   buildActivity.start()
 
@@ -105,6 +113,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
+
+  // Add external tags to buildSpan
+  if (externalTelemetryAttributes) {
+    Object.entries(externalTelemetryAttributes).forEach(([key, value]) => {
+      buildActivity.span.setTag(key, value)
+    })
+  }
 
   const { gatsbyNodeGraphQLFunction, workerPool } = await bootstrap({
     program,
@@ -391,7 +406,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     await buildHTMLPagesAndDeleteStaleArtifacts({
       program,
       workerPool,
-      buildSpan,
+      parentSpan: buildSpan,
     })
 
   await waitMaterializePageMode
@@ -453,9 +468,10 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   report.info(`Done building in ${process.uptime()} sec`)
 
-  buildSpan.finish()
-  await stopTracer()
   buildActivity.end()
+  if (!externalTelemetryAttributes) {
+    await stopTracer()
+  }
 
   if (program.logPages) {
     if (toRegenerate.length) {

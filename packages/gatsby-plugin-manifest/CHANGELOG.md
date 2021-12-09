@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.3.0/packages/gatsby-plugin-manifest) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+#### Bug Fixes
+
+- Delete `cacheDigest` from generated webmanifest [#33966](https://github.com/gatsbyjs/gatsby/issues/33966) ([27cf7e7](https://github.com/gatsbyjs/gatsby/commit/27cf7e7b0416f5559438ff296232afb2a7237654))
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.2.0/packages/gatsby-plugin-manifest) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- update dependency sharp to ^0.29.2 [#33766](https://github.com/gatsbyjs/gatsby/issues/33766) ([0dfbc48](https://github.com/gatsbyjs/gatsby/commit/0dfbc48735e2b40b4fbcf4eccef2db38c34ce526))
+
+### [4.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.1.4/packages/gatsby-plugin-manifest) (2021-11-15)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
 ### [4.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.1.3/packages/gatsby-plugin-manifest) (2021-11-11)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

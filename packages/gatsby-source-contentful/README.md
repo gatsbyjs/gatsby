@@ -430,6 +430,8 @@ query FilterByTagsQuery {
 
 Rich Text feature is supported in this source plugin, you can use the following query to get the JSON output:
 
+**Note:** In our example Content Model the field containing the Rich Text data is called `bodyRichText`. Make sure to use your field name within the Query instead of `bodyRichText`
+
 ### Query Rich Text content and references
 
 ```graphql
@@ -437,7 +439,7 @@ query pageQuery($id: String!) {
   contentfulBlogPost(id: { eq: $id }) {
     title
     slug
-    # This is the rich text field
+    # This is the rich text field, the name depends on your field configuration in Contentful
     bodyRichText {
       raw
       references {
