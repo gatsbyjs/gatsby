@@ -933,11 +933,9 @@ function attachTracingResolver({ schemaComposer }) {
     ) {
       typeComposer.getFieldNames().forEach(fieldName => {
         const field = typeComposer.getField(fieldName)
+        const resolver = wrappingResolver(field.resolve || defaultResolver)
         typeComposer.extendField(fieldName, {
-          resolve:
-            field.resolve && field.resolve !== defaultResolver
-              ? wrappingResolver(field.resolve)
-              : defaultResolver,
+          resolve: resolver,
         })
       })
     }
@@ -1253,6 +1251,20 @@ const parseTypes = ({
       // After this, the parsed type composer will be registered as the composer
       // handling the type name (requires cleanup after merging, see below)
       const parsedType = schemaComposer.typeMapper.makeSchemaDef(def)
+
+      // Merging types require implemented interfaces to already exist.
+      // Depending on type creation order, interface might have not been
+      // processed yet. We check if interface already exist and create
+      // placeholder for it, if it doesn't exist yet.
+      if (parsedType.getInterfaces) {
+        parsedType.getInterfaces().forEach(iface => {
+          const ifaceName = iface.getTypeName()
+          if (!schemaComposer.has(ifaceName)) {
+            const tmpComposer = schemaComposer.createInterfaceTC(ifaceName)
+            tmpComposer.setExtension(`isPlaceholder`, true)
+          }
+        })
+      }
 
       // Merge the parsed type with the original
       mergeTypes({

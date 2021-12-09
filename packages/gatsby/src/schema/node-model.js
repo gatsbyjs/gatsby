@@ -20,7 +20,9 @@ import {
   getNodesByType,
   getTypes,
 } from "../datastore"
-import { isIterable } from "../datastore/common/iterable"
+import { GatsbyIterable, isIterable } from "../datastore/common/iterable"
+import { reportOnce } from "../utils/report-once"
+import { wrapNode, wrapNodes } from "../utils/detect-node-mutations"
 
 type TypeOrTypeName = string | GraphQLOutputType
 
@@ -148,7 +150,7 @@ class LocalNodeModel {
       this.trackInlineObjectsInRootNode(node)
     }
 
-    return this.trackPageDependencies(result, pageDependencies)
+    return wrapNode(this.trackPageDependencies(result, pageDependencies))
   }
 
   /**
@@ -179,7 +181,7 @@ class LocalNodeModel {
       result.forEach(node => this.trackInlineObjectsInRootNode(node))
     }
 
-    return this.trackPageDependencies(result, pageDependencies)
+    return wrapNodes(this.trackPageDependencies(result, pageDependencies))
   }
 
   /**
@@ -194,7 +196,7 @@ class LocalNodeModel {
    */
   getAllNodes(args, pageDependencies = {}) {
     // TODO(v5): Remove API
-    reporter.warn(
+    reportOnce(
       `nodeModel.getAllNodes() is deprecated. Use nodeModel.findAll() with an empty query instead.`
     )
     const { type = `Node` } = args || {}
@@ -220,7 +222,7 @@ class LocalNodeModel {
         typeof type === `string` ? type : type.name
     }
 
-    return this.trackPageDependencies(result, pageDependencies)
+    return wrapNodes(this.trackPageDependencies(result, pageDependencies))
   }
 
   /**
@@ -236,7 +238,7 @@ class LocalNodeModel {
    */
   async runQuery(args, pageDependencies = {}) {
     // TODO(v5): Remove API
-    reporter.warn(
+    reportOnce(
       `nodeModel.runQuery() is deprecated. Use nodeModel.findAll() or nodeModel.findOne() instead.`
     )
     if (args.firstOnly) {
@@ -329,13 +331,13 @@ class LocalNodeModel {
 
   /**
    * Get all nodes in the store, or all nodes of a specified type (optionally with limit/skip).
-   * Returns slice of result as iterable.
+   * Returns slice of result as iterable and total count of nodes.
    *
    * @param {*} args
    * @param {Object} args.query Query arguments (e.g. `limit` and `skip`)
    * @param {(string|GraphQLOutputType)} args.type Type
    * @param {PageDependencies} [pageDependencies]
-   * @return {Object} Object containing `{ entries: GatsbyIterable, totalCount: () => Promise<number> }`
+   * @return {Promise<Object>} Object containing `{ entries: GatsbyIterable, totalCount: () => Promise<number> }`
    */
   async findAll(args, pageDependencies = {}) {
     const { gqlType, ...result } = await this._query(args, pageDependencies)
@@ -345,7 +347,10 @@ class LocalNodeModel {
       pageDependencies.connectionType = gqlType.name
     }
     this.trackPageDependencies(result.entries, pageDependencies)
-    return result
+    return {
+      entries: wrapNodes(result.entries),
+      totalCount: result.totalCount,
+    }
   }
 
   /**
@@ -382,7 +387,7 @@ class LocalNodeModel {
       //  the query whenever any node of this type changes.
       pageDependencies.connectionType = gqlType.name
     }
-    return this.trackPageDependencies(first, pageDependencies)
+    return wrapNode(this.trackPageDependencies(first, pageDependencies))
   }
 
   prepareNodes(type, queryFields, fieldsToResolve) {
@@ -783,7 +788,7 @@ async function resolveRecursive(
         )
       } else if (
         isCompositeType(gqlFieldType) &&
-        _.isArray(innerValue) &&
+        (_.isArray(innerValue) || innerValue instanceof GatsbyIterable) &&
         gqlNonNullType instanceof GraphQLList
       ) {
         innerValue = await Promise.all(

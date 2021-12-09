@@ -7,7 +7,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 import { isFile } from "./is-file"
 import { isDate } from "../types/date"
 import { addDerivedType } from "../types/derived-types"
-import { warnOnce } from "../../utils/warn-once"
+import { reportOnce } from "../../utils/report-once"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
 const { getDataStore } = require(`../../datastore`)
 
@@ -35,10 +35,11 @@ const addInferredFields = ({
   })
 
   if (deprecatedNodeKeys.size > 0) {
-    warnOnce(
+    reportOnce(
       `The ___NODE convention is deprecated. Please use the @link directive instead.\nType: ${typeComposer.getTypeName()}, Keys: ${Array.from(
         deprecatedNodeKeys
-      ).join(`, `)}\nMigration: https://gatsby.dev/node-convention-deprecation`
+      ).join(`, `)}\nMigration: https://gatsby.dev/node-convention-deprecation`,
+      `verbose`
     )
   }
 }

@@ -85,6 +85,8 @@ function deleteStaleNodes(state: IGatsbyState, nodes: Array<Node>): void {
   }
 }
 
+let isInitialSourcing = true
+let sourcingCount = 0
 export default async ({
   webhookBody,
   pluginName,
@@ -96,20 +98,32 @@ export default async ({
   parentSpan?: Span
   deferNodeMutation?: boolean
 }): Promise<void> => {
+  const traceId = isInitialSourcing
+    ? `initial-sourceNodes`
+    : `sourceNodes #${sourcingCount}`
   await apiRunner(`sourceNodes`, {
-    traceId: `initial-sourceNodes`,
+    traceId,
     waitForCascadingActions: true,
     deferNodeMutation,
     parentSpan,
     webhookBody: webhookBody || {},
     pluginName,
   })
+
   await getDataStore().ready()
 
-  const state = store.getState()
-  const nodes = getNodes()
+  // We only warn for plugins w/o nodes and delete stale nodes on the first sourcing.
+  if (isInitialSourcing) {
+    const state = store.getState()
+    const nodes = getNodes()
 
-  warnForPluginsWithoutNodes(state, nodes)
+    warnForPluginsWithoutNodes(state, nodes)
 
-  deleteStaleNodes(state, nodes)
+    deleteStaleNodes(state, nodes)
+    isInitialSourcing = false
+  }
+
+  store.dispatch(actions.apiFinished({ apiName: `sourceNodes` }))
+
+  sourcingCount += 1
 }

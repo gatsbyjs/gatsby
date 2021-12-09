@@ -176,6 +176,7 @@ function getSubpluginsByPluginPath(
       roots = roots.map(root => root[segment])
     }
   }
+  roots = roots.flat()
 
   return roots
 }

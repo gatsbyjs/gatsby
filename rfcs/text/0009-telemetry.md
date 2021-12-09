@@ -26,9 +26,9 @@ By collecting anonymous analytics, we’ll be able to prioritize fixes and featu
 For example:
 
 - We will be able to understand which plugins are used together, surface that information in the public plugin library, and, for example, build more relevant starters and tutorials.
-- We will be able to surface popularity of different starters in the starter showcase.
-- We will be able to surface error rates in each build stage, and focusing on driving these down over time. We want the experience to remain error free.
-- We will be able to surface reliability of different plugins and starters, and detect the ones which seen buggy to then improve these.
+- We will be able to surface the popularity of different starters in the starter showcase.
+- We will be able to surface error rates in each build stage, and focus on driving these down over time. We want the experience to remain error free.
+- We will be able to surface reliability of different plugins and starters, and detect the ones which seem buggy to then improve these.
 - We will be able to see timings for different build stages to guide us in where we should focus optimization work.
 
 ### Privacy
@@ -58,7 +58,7 @@ Depending on the event, we will record following information:
 ### Opting out
 
 Gatsby analytics helps us maintainers so we will appreciate leaving it on.
-If you want to opt out, however, you can run `gatsby analytics --disable` or edit the ~/.config/gatsby/config.json and add `"analytics": false`.
+If you want to opt-out, however, you can run `gatsby analytics --disable` or edit the ~/.config/gatsby/config.json and add `"analytics": false`.
 
 To opt back in, you can run `gatsby analytics --enable`.
 

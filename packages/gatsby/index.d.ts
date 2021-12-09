@@ -30,7 +30,7 @@ export const useScrollRestoration: (key: string) => {
   onScroll(): void
 }
 
-class StaticQueryDocument {
+export class StaticQueryDocument {
   /** Prevents structural type widening. */
   #kind: "StaticQueryDocument"
 
@@ -80,7 +80,8 @@ export const prefetchPathname: (path: string) => void
 export type PageProps<
   DataType = object,
   PageContextType = object,
-  LocationState = WindowLocation["state"]
+  LocationState = WindowLocation["state"],
+  ServerDataType = object
 > = {
   /** The path for this current page */
   path: string
@@ -141,6 +142,8 @@ export type PageProps<
    *   ..
    */
   pageContext: PageContextType
+  /** Data passed into the page via the [getServerData](https://www.gatsbyjs.com/docs/reference/rendering-options/server-side-rendering/) SSR function. */
+  serverData: ServerDataType
 }
 
 export interface PageRendererProps {
@@ -207,6 +210,8 @@ export interface GatsbyConfig {
   /** Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.*/
   polyfill?: boolean
   mapping?: Record<string, string>
+  jsxRuntime?: "automatic" | "classic"
+  jsxImportSource?: string
   /**
    * Setting the proxy config option will tell the develop server to proxy any unknown requests to your specified server.
    * @see https://www.gatsbyjs.org/docs/api-proxy/
@@ -685,7 +690,10 @@ export interface GatsbySSR<
    *   replaceBodyHTMLString(inlinedHTML)
    * }
    */
-  replaceRenderer?(args: ReplaceRendererArgs, options: PluginOptions): void
+  replaceRenderer?(
+    args: ReplaceRendererArgs,
+    options: PluginOptions
+  ): void | Promise<void>
 
   /**
    * Allow a plugin to wrap the page element.
@@ -882,20 +890,21 @@ export interface CreateSchemaCustomizationArgs extends ParentSpanPluginArgs {
   traceId: "initial-createSchemaCustomization"
 }
 
-export interface PreRenderHTMLArgs extends NodePluginArgs {
+export interface PreRenderHTMLArgs {
   getHeadComponents: () => React.ReactNode[]
   replaceHeadComponents: (comp: React.ReactNode[]) => void
   getPreBodyComponents: () => React.ReactNode[]
   replacePreBodyComponents: (comp: React.ReactNode[]) => void
   getPostBodyComponents: () => React.ReactNode[]
   replacePostBodyComponents: (comp: React.ReactNode[]) => void
+  pathname: string
 }
 
 type ReactProps<T extends Element> = React.DetailedHTMLProps<
   React.HTMLAttributes<T>,
   T
 >
-export interface RenderBodyArgs extends NodePluginArgs {
+export interface RenderBodyArgs {
   pathname: string
   setHeadComponents: (comp: React.ReactNode[]) => void
   setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void
@@ -905,7 +914,7 @@ export interface RenderBodyArgs extends NodePluginArgs {
   setBodyProps: Function
 }
 
-export interface ReplaceRendererArgs extends NodePluginArgs {
+export interface ReplaceRendererArgs {
   replaceBodyHTMLString: (str: string) => void
   bodyComponent: React.ReactNode
   setHeadComponents: (comp: React.ReactNode[]) => void
@@ -914,19 +923,20 @@ export interface ReplaceRendererArgs extends NodePluginArgs {
   setPreBodyComponents: (comp: React.ReactNode[]) => void
   setPostBodyComponents: (comp: React.ReactNode[]) => void
   setBodyProps: Function
+  pathname: string
 }
 
 export interface WrapPageElementNodeArgs<
   DataType = Record<string, unknown>,
   PageContextType = Record<string, unknown>
-> extends NodePluginArgs {
+> {
   element: React.ReactElement
   props: PageProps<DataType, PageContextType>
-  pathname: string
 }
 
-export interface WrapRootElementNodeArgs extends NodePluginArgs {
+export interface WrapRootElementNodeArgs {
   element: React.ReactElement
+  pathname: string
 }
 
 export interface ParentSpanPluginArgs extends NodePluginArgs {
@@ -1030,6 +1040,13 @@ export interface NodePluginArgs {
    * tasks. All functions are async and return promises.
    */
   cache: GatsbyCache
+
+  /**
+   * Get cache instance by name - this should only be used by plugins that accept subplugins.
+   * @param id id of the node
+   * @returns See [cache](https://www.gatsbyjs.com/docs/reference/config-files/node-api-helpers/#cache) section for reference.
+   */
+  getCache(this: void, id: string): GatsbyCache
 
   /**
    * Utility function useful to generate globally unique and stable node IDs.
@@ -1143,6 +1160,17 @@ export interface Actions {
     plugin?: ActionPlugin
   ): void
 
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#unstable_createNodeManifest */
+  unstable_createNodeManifest(
+    this: void,
+    args: {
+      manifestId: string
+      node: Node
+      updatedAtUTC?: string | number
+    },
+    plugin?: ActionPlugin
+  ): void
+
   /** @see https://www.gatsbyjs.org/docs/actions/#setWebpackConfig */
   setWebpackConfig(this: void, config: object, plugin?: ActionPlugin): void
 
@@ -1233,9 +1261,7 @@ export interface Actions {
       | string
       | GraphQLOutputType
       | GatsbyGraphQLType
-      | string[]
-      | GraphQLOutputType[]
-      | GatsbyGraphQLType[],
+      | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
     plugin?: ActionPlugin,
     traceId?: string
   ): void

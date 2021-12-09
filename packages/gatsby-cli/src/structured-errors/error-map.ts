@@ -323,6 +323,13 @@ const errors = {
       `An error occurred during parallel query running.\nGo here for troubleshooting tips: https://gatsby.dev/pqr-feedback`,
     level: Level.ERROR,
   },
+  "85929": {
+    text: (context): string =>
+      `The "${context.exportName}" export must be async when using it with graphql:\n\n${context.codeFrame}`,
+    type: Type.GRAPHQL,
+    level: Level.ERROR,
+    category: ErrorCategory.USER,
+  },
   // Config errors
   "10122": {
     text: (context): string =>
@@ -613,7 +620,7 @@ const errors = {
         3
       )} seconds. Activities preventing Gatsby from transitioning to idle state:\n\n${
         context.stuckStatusDiagnosticMessage
-      }`,
+      }${context.additionalOutput}`,
     level: Level.ERROR,
     docsUrl: `https://support.gatsbyjs.com/hc/en-us/articles/360056811354`,
   },
@@ -648,6 +655,13 @@ const errors = {
     level: Level.WARNING,
     category: ErrorCategory.USER,
   },
+  "11804": {
+    text: ({ pluginName, nodeId }): string =>
+      `Plugin ${pluginName} called unstable_createNodeManifest for a node which doesn't exist with an id of ${nodeId}`,
+    level: Level.WARNING,
+    category: ErrorCategory.USER,
+  },
+
   /** End Node Manifest warnings */
 }
 

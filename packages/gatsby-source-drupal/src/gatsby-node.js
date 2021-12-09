@@ -12,9 +12,13 @@ const { setOptions, getOptions } = require(`./plugin-options`)
 
 const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
 const {
+  initRefsLookups,
+  storeRefsLookups,
   handleReferences,
   handleWebhookUpdate,
+  createNodeIfItDoesNotExist,
   handleDeletedNode,
+  drupalCreateNodeManifest,
 } = require(`./utils`)
 
 const agent = {
@@ -59,9 +63,28 @@ async function worker([url, options]) {
     }
   }
 
+  if (typeof options.searchParams === `object`) {
+    url = new URL(url)
+    const searchParams = new URLSearchParams(options.searchParams)
+    const searchKeys = Array.from(searchParams.keys())
+    searchKeys.forEach(searchKey => {
+      // Only add search params to url if it has not already been
+      // added.
+      if (!url.searchParams.has(searchKey)) {
+        url.searchParams.set(searchKey, searchParams.get(searchKey))
+      }
+    })
+    url = url.toString()
+  }
+  delete options.searchParams
+
   const response = await got(url, {
     agent,
     cache: false,
+    timeout: {
+      // Occasionally requests to Drupal stall. Set a 30s timeout to retry in this case.
+      request: 30000,
+    },
     // request: http2wrapper.auto,
     // http2: true,
     ...options,
@@ -148,7 +171,14 @@ exports.sourceNodes = async (
       nonTranslatableEntities: [],
     },
   } = pluginOptions
-  const { createNode, setPluginStatus, touchNode } = actions
+  const {
+    createNode,
+    setPluginStatus,
+    touchNode,
+    unstable_createNodeManifest,
+  } = actions
+
+  await initRefsLookups({ cache, getNode })
 
   // Update the concurrency limit from the plugin options
   requestQueue.concurrency = concurrentAPIRequests
@@ -202,12 +232,24 @@ ${JSON.stringify(webhookBody, null, 4)}`
         }
 
         changesActivity.end()
+        await storeRefsLookups({ cache })
         return
       }
 
       let nodesToUpdate = data
       if (!Array.isArray(data)) {
         nodesToUpdate = [data]
+      }
+
+      for (const nodeToUpdate of nodesToUpdate) {
+        await createNodeIfItDoesNotExist({
+          nodeToUpdate,
+          actions,
+          createNodeId,
+          createContentDigest,
+          getNode,
+          reporter,
+        })
       }
 
       for (const nodeToUpdate of nodesToUpdate) {
@@ -232,6 +274,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
       return
     }
     changesActivity.end()
+    await storeRefsLookups({ cache })
     return
   }
 
@@ -253,7 +296,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
     // lastFetched isn't set so do a full rebuild.
     if (!lastFetched) {
-      setPluginStatus({ lastFetched: new Date().getTime() })
+      setPluginStatus({ lastFetched: Math.floor(new Date().getTime() / 1000) })
       requireFullRebuild = true
     } else {
       const drupalFetchIncrementalActivity = reporter.activityTimer(
@@ -266,7 +309,11 @@ ${JSON.stringify(webhookBody, null, 4)}`
       try {
         // Hit fastbuilds endpoint with the lastFetched date.
         const res = await requestQueue.push([
-          urlJoin(baseUrl, `gatsby-fastbuilds/sync/`, lastFetched.toString()),
+          urlJoin(
+            baseUrl,
+            `gatsby-fastbuilds/sync/`,
+            Math.floor(lastFetched).toString()
+          ),
           {
             username: basicAuth.username,
             password: basicAuth.password,
@@ -316,6 +363,31 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
           // Process sync data from Drupal.
           const nodesToSync = res.body.entities
+
+          // First create all nodes that we haven't seen before. That
+          // way we can create relationships correctly next as the nodes
+          // will exist in Gatsby.
+          for (const nodeSyncData of nodesToSync) {
+            if (nodeSyncData.action === `delete`) {
+              continue
+            }
+
+            let nodesToUpdate = nodeSyncData.data
+            if (!Array.isArray(nodeSyncData.data)) {
+              nodesToUpdate = [nodeSyncData.data]
+            }
+            for (const nodeToUpdate of nodesToUpdate) {
+              createNodeIfItDoesNotExist({
+                nodeToUpdate,
+                actions,
+                createNodeId,
+                createContentDigest,
+                getNode,
+                reporter,
+              })
+            }
+          }
+
           for (const nodeSyncData of nodesToSync) {
             if (nodeSyncData.action === `delete`) {
               handleDeletedNode({
@@ -362,6 +434,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
         drupalFetchIncrementalActivity.end()
         fastBuildsSpan.finish()
+        await storeRefsLookups({ cache })
         return
       }
 
@@ -372,6 +445,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
       initialSourcing = false
 
       if (!requireFullRebuild) {
+        await storeRefsLookups({ cache })
         return
       }
     }
@@ -451,6 +525,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
                 username: basicAuth.username,
                 password: basicAuth.password,
                 headers,
+                searchParams: params,
                 responseType: `json`,
                 parentSpan: fullFetchSpan,
               },
@@ -572,6 +647,11 @@ ${JSON.stringify(webhookBody, null, 4)}`
     _.each(contentType.data, datum => {
       if (!datum) return
       const node = nodeFromData(datum, createNodeId, entityReferenceRevisions)
+      drupalCreateNodeManifest({
+        attributes: datum?.attributes,
+        gatsbyNode: node,
+        unstable_createNodeManifest,
+      })
       nodes.set(node.id, node)
     })
   })
@@ -635,6 +715,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
   initialSourcing = false
 
   createNodesSpan.finish()
+  await storeRefsLookups({ cache, getNodes })
   return
 }
 

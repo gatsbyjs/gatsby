@@ -41,7 +41,7 @@ No [client-side](/docs/glossary#client-side) JavaScript (e.g jQuery etc.) is on 
 
 ### Development environment
 
-Gatsby generates websites and web applications for production through a compilation and build process, and it also has tools optimized for local development. To set up the Gatsby [CLI](/docs/glossary#cli) and development environment (if you haven't already) check out [Part Zero of the Gatsby tutorial](/docs/tutorial/part-zero/).
+Gatsby generates websites and web applications for production through a compilation and build process, and it also has tools optimized for local development. To set up the Gatsby [CLI](/docs/glossary#cli) and development environment (if you haven't already) check out [Part Zero of the Gatsby tutorial](/docs/tutorial/part-0/).
 
 ### Gatsby Project
 
