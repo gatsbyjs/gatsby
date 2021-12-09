@@ -387,45 +387,14 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
   })
 
   cli.command({
-    command: `recipes [recipe]`,
-    describe: `[EXPERIMENTAL] Run a recipe`,
-    builder: _ =>
-      _.option(`D`, {
-        alias: `develop`,
-        type: `boolean`,
-        default: false,
-        describe: `Start recipe in develop mode to live-develop your recipe (defaults to false)`,
-      }).option(`I`, {
-        alias: `install`,
-        type: `boolean`,
-        default: false,
-        describe: `Install recipe (defaults to plan mode)`,
-      }),
-    handler: handlerP(async ({ recipe, develop, install }: yargs.Arguments) => {
-      const { recipesHandler } = require(`./recipes`)
-      await recipesHandler(
-        siteInfo.directory,
-        recipe as string,
-        develop as boolean,
-        install as boolean
-      )
-    }),
-  })
-
-  cli.command({
     command: `plugin <cmd> [plugins...]`,
     describe: `Useful commands relating to Gatsby plugins`,
     builder: yargs =>
-      yargs
-        .positional(`cmd`, {
-          choices: [`docs`, `ls`],
-          describe: "Valid commands include `docs`, `ls`.",
-          type: `string`,
-        })
-        .positional(`plugins`, {
-          describe: `The plugin names`,
-          type: `string`,
-        }),
+      yargs.positional(`cmd`, {
+        choices: [`docs`, `ls`],
+        describe: "Valid commands include `docs`, `ls`.",
+        type: `string`,
+      }),
     handler: async ({
       cmd,
     }: yargs.Arguments<{
