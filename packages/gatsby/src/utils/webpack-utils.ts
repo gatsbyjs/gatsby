@@ -539,6 +539,9 @@ export const createWebpackUtils = (
     return {
       use: [loaders.url()],
       test: /\.(eot|otf|ttf|woff(2)?)(\?.*)?$/,
+      generator: {
+        filename: `${assetRelativeRoot}[name]-[hash].[ext]`,
+      },
     }
   }
 
@@ -550,6 +553,9 @@ export const createWebpackUtils = (
     return {
       use: [loaders.url()],
       test: /\.(ico|svg|jpg|jpeg|png|gif|webp|avif)(\?.*)?$/,
+      generator: {
+        filename: `${assetRelativeRoot}[name]-[hash].[ext]`,
+      },
     }
   }
 
@@ -561,6 +567,9 @@ export const createWebpackUtils = (
     return {
       use: [loaders.url()],
       test: /\.(mp4|webm|ogv|wav|mp3|m4a|aac|oga|flac)$/,
+      generator: {
+        filename: `${assetRelativeRoot}[name]-[hash].[ext]`,
+      },
     }
   }
 
