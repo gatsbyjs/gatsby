@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-cxs",
   "description": "Gatsby plugin to add SSR support for ctx",
-  "version": "4.4.0-next.1",
+  "version": "4.5.0-next.0",
   "author": "Chen-Tai Hou <ctxhou@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -12,10 +12,10 @@
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
-    "babel-preset-gatsby-package": "^2.4.0-next.0",
+    "babel-preset-gatsby-package": "^2.5.0-next.0",
     "cross-env": "^7.0.3",
     "cxs": "^6.2.0",
-    "gatsby-plugin-utils": "^2.4.0-next.1"
+    "gatsby-plugin-utils": "^2.5.0-next.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-cxs#readme",
   "keywords": [
