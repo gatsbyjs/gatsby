@@ -19,7 +19,6 @@ import { IProgram, Stage } from "./types"
 import { ROUTES_DIRECTORY } from "../constants"
 import { PackageJson } from "../.."
 import { IPageDataWithQueryResult } from "../utils/page-data"
-import { processNodeManifests } from "../utils/node-manifest"
 
 import type { GatsbyWorkerPool } from "../utils/worker/pool"
 type IActivity = any // TODO
@@ -124,9 +123,12 @@ const runWebpack = (
       )
       devssrWebpackCompiler = watcher
     } else {
-      build(compilerConfig).then(({ stats, close }) => {
-        resolve({ stats, close })
-      })
+      build(compilerConfig).then(
+        ({ stats, close }) => {
+          resolve({ stats, close })
+        },
+        err => reject(err)
+      )
     }
   })
 }
@@ -138,7 +140,9 @@ const doBuildRenderer = async (
 ): Promise<IBuildRendererResult> => {
   const { stats, close } = await runWebpack(webpackConfig, stage, directory)
   if (stats?.hasErrors()) {
-    reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
+    reporter.panicOnBuild(
+      structureWebpackErrors(stage, stats.compilation.errors)
+    )
   }
 
   // render-page.js is hard coded in webpack.config
@@ -408,11 +412,11 @@ export const buildHTML = async ({
 
 export async function buildHTMLPagesAndDeleteStaleArtifacts({
   workerPool,
-  buildSpan,
+  parentSpan,
   program,
 }: {
   workerPool: GatsbyWorkerPool
-  buildSpan?: Span
+  parentSpan?: Span
   program: IBuildArgs
 }): Promise<{
   toRegenerate: Array<string>
@@ -435,7 +439,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
       toRegenerate.length,
       0,
       {
-        parentSpan: buildSpan,
+        parentSpan,
       }
     )
     buildHTMLActivityProgress.start()
@@ -491,9 +495,6 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
 
     deletePageDataActivityTimer.end()
   }
-
-  // we process node manifests in this location because we need to make sure all page-data.json files are written for gatsby as well as inc-builds (both call builHTMLPagesAndDeleteStaleArtifacts). Node manifests include a digest of the corresponding page-data.json file and at this point we can be sure page-data has been written out for the latest updates in gatsby build AND inc builds.
-  await processNodeManifests()
 
   return { toRegenerate, toDelete }
 }

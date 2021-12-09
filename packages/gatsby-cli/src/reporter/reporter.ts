@@ -1,7 +1,7 @@
 import { stripIndent } from "common-tags"
 import chalk from "chalk"
 import { trackError } from "gatsby-telemetry"
-import { globalTracer, Span } from "opentracing"
+import { globalTracer, Span, SpanContext } from "opentracing"
 
 import * as reduxReporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
@@ -19,6 +19,10 @@ import {
   ILogIntent,
   IRenderPageArgs,
 } from "./types"
+import {
+  registerAdditionalDiagnosticOutputHandler,
+  AdditionalDiagnosticsOutputHandler,
+} from "./redux/diagnostics"
 
 const errorFormatter = getErrorFormatter()
 const tracer = globalTracer()
@@ -27,7 +31,7 @@ let reporterActions = reduxReporterActions
 
 export interface IActivityArgs {
   id?: string
-  parentSpan?: Span
+  parentSpan?: Span | SpanContext
   tags?: { [key: string]: any }
 }
 
@@ -350,6 +354,12 @@ class Reporter {
 
   _renderPageTree(args: IRenderPageArgs): void {
     reporterActions.renderPageTree(args)
+  }
+
+  _registerAdditionalDiagnosticOutputHandler(
+    handler: AdditionalDiagnosticsOutputHandler
+  ): void {
+    registerAdditionalDiagnosticOutputHandler(handler)
   }
 }
 export type { Reporter }

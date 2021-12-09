@@ -4,7 +4,7 @@ title: Creating Tags Pages for Blog Posts
 
 Creating tag pages for your blog post is a way to let visitors browse related content.
 
-To add tags to your blog posts, you will first want to have your site set up to turn your markdown pages into blog posts. To get your blog pages set up, see the [tutorial on Gatsby's data layer](/docs/tutorial/part-four/) and [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages/).
+To add tags to your blog posts, you will first want to have your site set up to turn your markdown pages into blog posts. To get your blog pages set up, see the [tutorial on Gatsby's data layer](/docs/tutorial/part-4/) and [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages/).
 
 The process will essentially look like this:
 

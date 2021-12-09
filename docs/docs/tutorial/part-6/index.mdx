@@ -509,7 +509,6 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering the 
       )
     }
 
-    // highlight-start
     export const query = graphql`
       query {
         allMdx(sort: {fields: frontmatter___date, order: DESC}) {
@@ -519,12 +518,11 @@ The last step of Part 6 is to clean up your Blog page. Instead of rendering the 
               title
             }
             id
-            slug
+            slug // highlight-line
           }
         }
       }
     `
-    // highlight-end
 
     export default BlogPage
     ```

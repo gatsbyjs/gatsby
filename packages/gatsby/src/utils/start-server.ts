@@ -19,6 +19,7 @@ import cors from "cors"
 import telemetry from "gatsby-telemetry"
 import launchEditor from "react-dev-utils/launchEditor"
 import { codeFrameColumns } from "@babel/code-frame"
+import * as fs from "fs-extra"
 
 import { withBasePath } from "../utils/path"
 import webpackConfig from "../utils/webpack.config"
@@ -50,6 +51,7 @@ import {
 import { renderDevHTML } from "./dev-ssr/render-dev-html"
 import { getServerData, IServerData } from "./get-server-data"
 import { ROUTES_DIRECTORY } from "../constants"
+import { getPageMode } from "./page-mode"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -304,9 +306,11 @@ export async function startServer(
 
       if (page) {
         try {
-          let serverDataPromise: Promise<IServerData> = Promise.resolve({})
+          let serverDataPromise: Promise<IServerData> | Promise<Error> =
+            Promise.resolve({})
+          const pageMode = getPageMode(page)
 
-          if (page.mode === `SSR`) {
+          if (pageMode === `SSR`) {
             const renderer = require(PAGE_RENDERER_PATH)
             const componentInstance = await renderer.getPageChunk(page)
 
@@ -315,7 +319,7 @@ export async function startServer(
               page,
               potentialPagePath,
               componentInstance
-            )
+            ).catch(error => error)
           }
 
           let pageData: IPageDataWithQueryResult
@@ -336,14 +340,50 @@ export async function startServer(
             )
           }
 
-          if (page.mode === `SSR`) {
-            const { props } = await serverDataPromise
+          let statusCode = 200
+          if (pageMode === `SSR`) {
+            try {
+              const result = await serverDataPromise
 
-            pageData.result.serverData = props
-            pageData.path = `/${requestedPagePath}`
+              if (result instanceof Error) {
+                throw result
+              }
+
+              if (result.headers) {
+                for (const [name, value] of Object.entries(result.headers)) {
+                  res.setHeader(name, value)
+                }
+              }
+
+              if (result.status) {
+                statusCode = result.status
+              }
+
+              pageData.result.serverData = result.props
+              pageData.getServerDataError = null
+            } catch (error) {
+              const structuredError = report.panicOnBuild({
+                id: `95315`,
+                context: {
+                  sourceMessage: error.message,
+                  pagePath: requestedPagePath,
+                  potentialPagePath,
+                },
+                error,
+              })
+              // Use page-data.json file instead of emitting via websockets as this makes it easier
+              // to only display the relevant error + clearing of the error
+              // The query-result-store reacts to this
+              pageData.getServerDataError = structuredError
+            }
+            pageData.path = page.matchPath ? `/${potentialPagePath}` : page.path
+          } else {
+            // When user removes getServerData function, Gatsby browser runtime still has cached version of page-data.
+            // Send `null` to always reset cached serverData:
+            pageData.result.serverData = null
           }
 
-          res.status(200).send(pageData)
+          res.status(statusCode).send(pageData)
           return
         } catch (e) {
           report.error(
@@ -438,6 +478,41 @@ export async function startServer(
       codeFrame,
       sourcePosition,
       sourceContent,
+    })
+  })
+
+  app.get(`/__file-code-frame`, async (req, res) => {
+    const emptyResponse = {
+      codeFrame: `No codeFrame could be generated`,
+      sourcePosition: null,
+      sourceContent: null,
+    }
+
+    const filePath = req?.query?.filePath
+    const lineNumber = parseInt(req.query.lineNumber, 10)
+    const columnNumber = parseInt(req.query.columnNumber, 10)
+
+    if (!filePath) {
+      res.json(emptyResponse)
+      return
+    }
+
+    const sourceContent = await fs.readFile(filePath, `utf-8`)
+
+    const codeFrame = codeFrameColumns(
+      sourceContent,
+      {
+        start: {
+          line: lineNumber,
+          column: columnNumber ?? 0,
+        },
+      },
+      {
+        highlightCode: true,
+      }
+    )
+    res.json({
+      codeFrame,
     })
   })
 

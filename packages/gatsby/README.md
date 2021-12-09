@@ -4,17 +4,19 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby v3
+  Gatsby v4
 </h1>
 
-<h3 align="center">
-  ⚛️ 📄 🚀
-</h3>
-<h3 align="center">
-  Fast in every way that matters
-</h3>
 <p align="center">
-  Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps
+  ⚛️ 📄 🚀
+</p>
+<p align="center">
+  <strong>
+    Static. That. Scales.
+  </strong>
+</p>
+<p align="center">
+  Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps. </br> It combines the control and scalability of dynamically rendered sites with the speed of static-site generation, creating a whole new web of possibilities.
 </p>
 <p align="center">
   <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
@@ -40,7 +42,7 @@
   </a>
 </p>
 
-<h3 align="center">
+<h2 align="center">
   <a href="https://www.gatsbyjs.com/docs/">Quickstart</a>
   <span> · </span>
   <a href="https://www.gatsbyjs.com/tutorial/">Tutorial</a>
@@ -56,13 +58,15 @@
   Support: <a href="https://twitter.com/AskGatsbyJS">Twitter</a>, <a href="https://github.com/gatsbyjs/gatsby/discussions">Discussions</a>
   <span> & </span>
   <a href="https://gatsby.dev/discord">Discord</a>
-</h3>
+</h2>
 
 Gatsby is a modern web framework for blazing fast websites.
 
 - **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
-  limitations. Gatsby sites are fully functional React apps so you can create high-quality,
+  limitations. Gatsby sites are fully functional React apps, so you can create high-quality,
   dynamic web apps, from blogs to e-commerce sites to user dashboards.
+
+- **Choose your Rendering Option.** You can choose alternative [rendering options](https://gatsbyjs.com/docs/conceptual/rendering-options/), namely Deferred Static Generation (DSG) and Server-Side Rendering (SSR), in addition to Static Site Generation (SSG) — on a per-page basis. This type of granular control allows you to optimize for performance and productivity without sacrificing one for the other.
 
 - **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are
   built using React and GraphQL. Build a uniform workflow for you and your team, regardless of
@@ -76,7 +80,7 @@ Gatsby is a modern web framework for blazing fast websites.
   splitting, image optimization, inlining critical styles, lazy-loading, prefetching resources,
   and more to ensure your site is fast — no manual tuning required.
 
-- **Host at Scale for Pennies.** Gatsby sites don’t require servers so you can host your entire
+- **Host at Scale for Pennies.** Gatsby sites don’t require servers, so you can host your entire
   site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be
   hosted entirely free on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/) and other similar services.
 
@@ -86,6 +90,7 @@ Gatsby is a modern web framework for blazing fast websites.
 
 - [Get Up and Running in 5 Minutes](#-get-up-and-running-in-5-minutes)
 - [Learning Gatsby](#-learning-gatsby)
+- [Release Notes](#-release-notes)
 - [Migration Guides](#-migration-guides)
 - [How to Contribute](#-how-to-contribute)
 - [License](#-license)
@@ -99,7 +104,6 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
    ```shell
    npm install -g gatsby-cli
-
    ```
 
 2. **Create a Gatsby site from a Gatsby starter.**
@@ -145,10 +149,10 @@ Wondering what we've shipped recently? Check out our [release notes](https://www
 
 ## 💼 Migration Guides
 
-Already have a Gatsby site? These handy guides will help you add the improvements of Gatsby v3 to your site without starting from scratch!
+Already have a Gatsby site? These handy guides will help you add the improvements of Gatsby v4 to your site without starting from scratch!
 
+- [Migrate from v3 to v4](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v3-to-v4/)
 - [Migrate from v2 to v3](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v2-to-v3/)
-- [Migrate from v1 to v2](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v1-to-v2/)
 
 ## ❗ Code of Conduct
 
@@ -156,7 +160,7 @@ Gatsby is dedicated to building a welcoming, diverse, safe community. We expect 
 
 ## 🤝 How to Contribute
 
-Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as part of the Gatsby community! :muscle::purple_heart:
+Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as part of the Gatsby community!
 
 Check out our [**Contributing Guide**](https://www.gatsbyjs.com/contributing/how-to-contribute/) for ideas on contributing and setup steps for getting our repositories up and running on your local machine.
 
@@ -164,9 +168,9 @@ Check out our [**Contributing Guide**](https://www.gatsbyjs.com/contributing/how
 
 This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) managed using [Lerna](https://github.com/lerna/lerna). This means there are [multiple packages](https://github.com/gatsbyjs/gatsby/tree/master/packages) managed in this codebase, even though we publish them to NPM as separate packages.
 
-### Contributing to Gatsby v2
+### Contributing to Gatsby v3
 
-We are only accepting critical security patches for Gatsby v2.
+We are only accepting critical security patches for Gatsby v3.
 
 ## 📝 License
 

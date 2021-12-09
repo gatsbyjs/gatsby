@@ -16,6 +16,7 @@ type Reporter = typeof reporter
 
 const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
 const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
+const cacheLocation = path.join(process.cwd(), `.cache`, `webpack`, `page-ssr`)
 
 export async function writeQueryContext({
   staticQueriesByTemplate,
@@ -83,6 +84,14 @@ export async function createPageSSRBundle({
     externalsPresets: {
       node: false,
     },
+    cache: {
+      type: `filesystem`,
+      name: `page-ssr`,
+      cacheLocation,
+      buildDependencies: {
+        config: [__filename],
+      },
+    },
     // those are required in some runtime paths, but we don't need them
     externals: [
       /^\.\/routes/,
@@ -97,6 +106,7 @@ export async function createPageSSRBundle({
         return acc
       }, {}),
     ],
+    devtool: false,
     module: {
       rules: [
         {
@@ -132,11 +142,16 @@ export async function createPageSSRBundle({
       extensions,
       alias: {
         ".cache": `${rootDir}/.cache/`,
+        [require.resolve(`gatsby-cli/lib/reporter/loggers/ink/index.js`)]:
+          false,
+        inquirer: false,
       },
     },
     plugins: [
       new webpack.DefinePlugin({
         INLINED_TEMPLATE_TO_DETAILS: JSON.stringify(toInline),
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
       }),
       process.env.GATSBY_WEBPACK_LOGGING?.includes(`page-engine`)
         ? new WebpackLoggingPlugin(rootDir, reporter, isVerbose)

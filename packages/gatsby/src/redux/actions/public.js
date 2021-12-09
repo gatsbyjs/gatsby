@@ -23,19 +23,20 @@ const {
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+const { getPageMode } = require(`../../utils/page-mode`)
+const normalizePath = require(`../../utils/normalize-path`).default
 import { createJobV2FromInternalJob } from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
-import fs from "fs-extra"
+import { reportOnce } from "../../utils/report-once"
+import { wrapNode } from "../../utils/detect-node-mutations"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
 
-/**
- * Memoize function used to pick shadowed page components to avoid expensive I/O.
- * Ideally, we should invalidate memoized values if there are any FS operations
- * on files that are in shadowing chain, but webpack currently doesn't handle
- * shadowing changes during develop session, so no invalidation is not a deal breaker.
- */
+// Memoize function used to pick shadowed page components to avoid expensive I/O.
+// Ideally, we should invalidate memoized values if there are any FS operations
+// on files that are in shadowing chain, but webpack currently doesn't handle
+// shadowing changes during develop session, so no invalidation is not a deal breaker.
 const shadowCreatePagePath = _.memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 )
@@ -69,15 +70,6 @@ const findChildren = initialChildren => {
     }
   }
   return children
-}
-
-const displayedWarnings = new Set()
-const warnOnce = (message, key) => {
-  const messageId = key ?? message
-  if (!displayedWarnings.has(messageId)) {
-    displayedWarnings.add(messageId)
-    report.warn(message)
-  }
 }
 
 import type { Plugin } from "./types"
@@ -164,11 +156,12 @@ const reservedFields = [
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
  * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
- * @param {string} page.ownerNodeId The id of the node that owns this page. This is used for routing users to previews via the unstable_createNodeManifest public action. Since multiple nodes can be queried on a single page, this allows the user to tell us which node is the main node for the page.
+ * @param {string} page.ownerNodeId The id of the node that owns this page. This is used for routing users to previews via the unstable_createNodeManifest public action. Since multiple nodes can be queried on a single page, this allows the user to tell us which node is the main node for the page. Note that the ownerNodeId must be for a node which is queried on this page via a GraphQL query.
  * @param {string} page.component The absolute path to the component for this page
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pageContext` as well as to the graphql query
  * as graphql arguments.
+ * @param {boolean} page.defer When set to `true`, Gatsby will exclude the page from the build step and instead generate it during the first HTTP request. Default value is `false`. Also see docs on [Deferred Static Generation](/docs/reference/rendering-options/deferred-static-generation/).
  * @example
  * createPage({
  *   path: `/my-sweet-new-page/`,
@@ -397,7 +390,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     internalComponentName,
     path: page.path,
     matchPath: page.matchPath,
-    component: page.component,
+    component: normalizePath(page.component),
+    componentPath: normalizePath(page.component),
     componentChunkName: generateComponentChunkName(page.component),
     isCreatedByStatefulCreatePages:
       actionOptions?.traceId === `initial-createPagesStatefully`,
@@ -411,23 +405,12 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    let pageMode: PageMode = `SSG`
     if (page.defer) {
-      pageMode = `DSG`
       internalPage.defer = true
     }
-
-    // TODO move to AST Check
-    const fileContent = fs.readFileSync(page.component).toString()
-    const isSSR =
-      fileContent.includes(`exports.getServerData`) ||
-      fileContent.includes(`export const getServerData`) ||
-      fileContent.includes(`export function getServerData`) ||
-      fileContent.includes(`export async function getServerData`)
-    if (isSSR) {
-      pageMode = `SSR`
-    }
-    internalPage.mode = pageMode
+    // Note: mode is updated in the end of the build after we get access to all page components,
+    // see materializePageMode in utils/page-mode.ts
+    internalPage.mode = getPageMode(internalPage)
   }
 
   if (page.ownerNodeId) {
@@ -886,7 +869,7 @@ actions.createNode =
 
     const { payload: node, traceId, parentSpan } = createNodeAction
     return apiRunnerNode(`onCreateNode`, {
-      node,
+      node: wrapNode(node),
       traceId,
       parentSpan,
       traceTags: { nodeId: node.id, nodeType: node.internal.type },
@@ -1214,7 +1197,7 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `CREATE_JOB`,
@@ -1268,7 +1251,7 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `SET_JOB`,
@@ -1295,7 +1278,7 @@ actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
   if (plugin?.name) {
     msg = msg + ` (called by ${plugin.name})`
   }
-  warnOnce(msg)
+  reportOnce(msg)
 
   return {
     type: `END_JOB`,
@@ -1333,8 +1316,9 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
 }
 
 /**
- * Create a redirect from one page to another. Server redirects don't work out
- * of the box. You must have a plugin setup to integrate the redirect data with
+ * Create a redirect from one page to another. Redirects work out of the box with Gatsby Cloud. Read more about
+ * [working with redirects on Gatsby Cloud](https://support.gatsbyjs.com/hc/en-us/articles/1500003051241-Working-with-Redirects).
+ * If you are hosting somewhere other than Gatsby Cloud, you will need a plugin to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
  * plugin](/plugins/gatsby-plugin-netlify/), or the [Amazon S3
  * plugin](/plugins/gatsby-plugin-s3/). Alternatively, you can use
@@ -1439,27 +1423,21 @@ actions.createServerVisitedPage = (chunkName: string) => {
  * Creates an individual node manifest.
  * This is used to tie the unique revision state within a data source at the current point in time to a page generated from the provided node when it's node manifest is processed.
  *
- * @param {Object} manifest a page object
- * @param {string} manifest.manifestId An id which ties the revision unique state of this manifest to the unique revision state of a data source.
- * @param {string} manifest.node The Gatsyby node to tie the manifestId to
+ * @param {Object} manifest Manifest data
+ * @param {string} manifest.manifestId An id which ties the unique revision state of this manifest to the unique revision state of a data source.
+ * @param {Object} manifest.node The Gatsby node to tie the manifestId to. See the "createNode" action for more information about the node object details.
+ * @param {string} manifest.updatedAtUTC (optional) The time in which the node was last updated. If this parameter is not included, a manifest is created for every node that gets called. By default, node manifests are created for content updated in the last 30 days. To change this, set a `NODE_MANIFEST_MAX_DAYS_OLD` environment variable.
  * @example
  * unstable_createNodeManifest({
  *   manifestId: `post-id-1--updated-53154315`,
+ *   updatedAtUTC: `2021-07-08T21:52:28.791+01:00`,
  *   node: {
  *      id: `post-id-1`
  *   },
  * })
  */
 actions.unstable_createNodeManifest = (
-  {
-    manifestId,
-    node,
-  }: {
-    manifestId: string,
-    node: {
-      id: string,
-    },
-  },
+  { manifestId, node, updatedAtUTC },
   plugin: Plugin
 ) => {
   return {
@@ -1468,6 +1446,7 @@ actions.unstable_createNodeManifest = (
       manifestId,
       node,
       pluginName: plugin.name,
+      updatedAtUTC,
     },
   }
 }

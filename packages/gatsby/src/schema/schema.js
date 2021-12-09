@@ -457,21 +457,6 @@ const addExtensions = ({
     typeComposer instanceof InterfaceTypeComposer &&
     isNodeInterface(typeComposer)
   ) {
-    // TODO: remove nodeInterface in Gatsby v4
-    if (typeComposer.hasExtension(`nodeInterface`)) {
-      report.warn(
-        `Deprecation warning: ` +
-          `\`@nodeInterface\` extension is deprecated and will be removed in Gatsby v4. ` +
-          `Use interface inheritance instead.\n` +
-          `To upgrade replace the old format:\n` +
-          `  interface \`${typeComposer.getTypeName()}\` @nodeInterface\n` +
-          `with the new one (in \`createTypes\` action of schema customization API):\n` +
-          `  interface \`${typeComposer.getTypeName()}\` implements Node\n` +
-          `Read more about schema customization here:\n` +
-          `https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/`
-      )
-    }
-
     const hasCorrectIdField =
       typeComposer.hasField(`id`) &&
       typeComposer.getFieldType(`id`).toString() === `ID!`
@@ -948,11 +933,9 @@ function attachTracingResolver({ schemaComposer }) {
     ) {
       typeComposer.getFieldNames().forEach(fieldName => {
         const field = typeComposer.getField(fieldName)
+        const resolver = wrappingResolver(field.resolve || defaultResolver)
         typeComposer.extendField(fieldName, {
-          resolve:
-            field.resolve && field.resolve !== defaultResolver
-              ? wrappingResolver(field.resolve)
-              : defaultResolver,
+          resolve: resolver,
         })
       })
     }
@@ -1027,8 +1010,7 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
       }
       if (type instanceof InterfaceTypeComposer && !isNodeInterface(type)) {
         report.error(
-          `The \`childOf\` extension can only be used on interface types that ` +
-            `have the \`@nodeInterface\` extension.\n` +
+          `The \`childOf\` extension can only be used on types that implement the \`Node\` interface.\n` +
             `Check the type definition of \`${type.getTypeName()}\`.`
         )
         return
@@ -1270,6 +1252,20 @@ const parseTypes = ({
       // handling the type name (requires cleanup after merging, see below)
       const parsedType = schemaComposer.typeMapper.makeSchemaDef(def)
 
+      // Merging types require implemented interfaces to already exist.
+      // Depending on type creation order, interface might have not been
+      // processed yet. We check if interface already exist and create
+      // placeholder for it, if it doesn't exist yet.
+      if (parsedType.getInterfaces) {
+        parsedType.getInterfaces().forEach(iface => {
+          const ifaceName = iface.getTypeName()
+          if (!schemaComposer.has(ifaceName)) {
+            const tmpComposer = schemaComposer.createInterfaceTC(ifaceName)
+            tmpComposer.setExtension(`isPlaceholder`, true)
+          }
+        })
+      }
+
       // Merge the parsed type with the original
       mergeTypes({
         schemaComposer,
@@ -1328,9 +1324,7 @@ const validate = (type, value) => {
   }
 }
 
-// TODO: remove nodeInterface in Gatsby v4
 const isNodeInterface = interfaceTypeComposer =>
-  interfaceTypeComposer.hasExtension(`nodeInterface`) ||
   interfaceTypeComposer.hasInterface(`Node`)
 
 const checkQueryableInterfaces = ({ schemaComposer }) => {

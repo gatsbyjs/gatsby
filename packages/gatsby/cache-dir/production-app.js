@@ -104,7 +104,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                 >
                   <RouteHandler
                     path={
-                      pageResources.page.path === `/404.html`
+                      pageResources.page.path === `/404.html` ||
+                      pageResources.page.path === `/500.html`
                         ? stripPrefix(location.pathname, __BASE_PATH__)
                         : encodeURI(
                             (
@@ -144,14 +145,19 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       browserLoc.pathname + (pagePath.includes(`?`) ? browserLoc.search : ``) &&
     !(
       loader.findMatchPath(stripPrefix(browserLoc.pathname, __BASE_PATH__)) ||
-      pagePath === `/404.html` ||
-      pagePath.match(/^\/404\/?$/) ||
+      pagePath.match(/^\/(404|500)(\/?|.html)$/) ||
       pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
     )
   ) {
-    navigate(__BASE_PATH__ + pagePath + browserLoc.hash, {
-      replace: true,
-    })
+    navigate(
+      __BASE_PATH__ +
+        pagePath +
+        (!pagePath.includes(`?`) ? browserLoc.search : ``) +
+        browserLoc.hash,
+      {
+        replace: true,
+      }
+    )
   }
 
   publicLoader.loadPage(browserLoc.pathname + browserLoc.search).then(page => {

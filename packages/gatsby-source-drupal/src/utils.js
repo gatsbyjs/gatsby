@@ -9,8 +9,41 @@ const {
 
 const { getOptions } = require(`./plugin-options`)
 
-const backRefsNamesLookup = new Map()
-const referencedNodesLookup = new Map()
+import { getGatsbyVersion } from "gatsby-core-utils"
+import { lt, prerelease } from "semver"
+
+let backRefsNamesLookup = new Map()
+let referencedNodesLookup = new Map()
+
+const initRefsLookups = async ({ cache }) => {
+  const backRefsNamesLookupStr = await cache.get(`backRefsNamesLookup`)
+  const referencedNodesLookupStr = await cache.get(`referencedNodesLookup`)
+
+  if (backRefsNamesLookupStr) {
+    backRefsNamesLookup = new Map(JSON.parse(backRefsNamesLookupStr))
+  }
+
+  if (referencedNodesLookupStr) {
+    referencedNodesLookup = new Map(JSON.parse(referencedNodesLookupStr))
+  }
+}
+
+exports.initRefsLookups = initRefsLookups
+
+const storeRefsLookups = async ({ cache }) => {
+  await Promise.all([
+    cache.set(
+      `backRefsNamesLookup`,
+      JSON.stringify(Array.from(backRefsNamesLookup.entries()))
+    ),
+    cache.set(
+      `referencedNodesLookup`,
+      JSON.stringify(Array.from(referencedNodesLookup.entries()))
+    ),
+  ])
+}
+
+exports.storeRefsLookups = storeRefsLookups
 
 const handleReferences = (
   node,
@@ -210,6 +243,50 @@ const handleDeletedNode = async ({
   return deletedNode
 }
 
+function createNodeIfItDoesNotExist({
+  nodeToUpdate,
+  actions,
+  createNodeId,
+  createContentDigest,
+  getNode,
+  reporter,
+}) {
+  if (!nodeToUpdate) {
+    reporter.warn(
+      `The updated node was empty. The fact you're seeing this warning means there's probably a bug in how we're creating and processing updates from Drupal.
+
+${JSON.stringify(nodeToUpdate, null, 4)}
+      `
+    )
+
+    return
+  }
+
+  const { createNode } = actions
+  const newNodeId = createNodeId(
+    createNodeIdWithVersion(
+      nodeToUpdate.id,
+      nodeToUpdate.type,
+      getOptions().languageConfig ? nodeToUpdate.langcode : `und`,
+      nodeToUpdate.meta?.target_version,
+      getOptions().entityReferenceRevisions
+    )
+  )
+
+  const oldNode = getNode(newNodeId)
+  // Node doesn't yet exist so we'll create it now.
+  if (!oldNode) {
+    const newNode = nodeFromData(
+      nodeToUpdate,
+      createNodeId,
+      getOptions().entityReferenceRevisions
+    )
+
+    newNode.internal.contentDigest = createContentDigest(newNode)
+    createNode(newNode)
+  }
+}
+
 const handleWebhookUpdate = async (
   {
     nodeToUpdate,
@@ -242,13 +319,19 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
 `
   )
 
-  const { createNode } = actions
+  const { createNode, unstable_createNodeManifest } = actions
 
   const newNode = nodeFromData(
     nodeToUpdate,
     createNodeId,
     pluginOptions.entityReferenceRevisions
   )
+
+  drupalCreateNodeManifest({
+    attributes: nodeToUpdate.attributes,
+    gatsbyNode: newNode,
+    unstable_createNodeManifest,
+  })
 
   const nodesToUpdate = [newNode]
 
@@ -333,9 +416,65 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
     }
     node.internal.contentDigest = createContentDigest(node)
     createNode(node)
-    reporter.log(`Updated Gatsby node: ${node.id}`)
+    reporter.log(
+      `Updated Gatsby node — id: ${node.id} type: ${node.internal.type}`
+    )
+  }
+}
+
+const GATSBY_VERSION_MANIFEST_V2 = `4.3.0`
+const gatsbyVersion =
+  (typeof getGatsbyVersion === `function` && getGatsbyVersion()) || `0.0.0`
+const gatsbyVersionIsPrerelease = prerelease(gatsbyVersion)
+const shouldUpgradeGatsbyVersion =
+  lt(gatsbyVersion, GATSBY_VERSION_MANIFEST_V2) && !gatsbyVersionIsPrerelease
+
+let warnOnceForNoSupport = false
+let warnOnceToUpgradeGatsby = false
+
+/**
+ * This fn creates node manifests which are used for Gatsby Cloud Previews via the Content Sync API/feature.
+ * Content Sync routes a user from Drupal to a page created from the entry data they're interested in previewing.
+ */
+export function drupalCreateNodeManifest({
+  attributes,
+  gatsbyNode,
+  unstable_createNodeManifest,
+}) {
+  const isPreview =
+    (process.env.NODE_ENV === `development` &&
+      process.env.ENABLE_GATSBY_REFRESH_ENDPOINT) ||
+    process.env.GATSBY_IS_PREVIEW === `true`
+
+  const updatedAt = attributes?.revision_timestamp
+  const id = attributes?.drupal_internal__nid
+
+  const supportsContentSync = typeof unstable_createNodeManifest === `function`
+  const shouldCreateNodeManifest =
+    id && updatedAt && supportsContentSync && isPreview
+
+  if (shouldCreateNodeManifest) {
+    if (shouldUpgradeGatsbyVersion && !warnOnceToUpgradeGatsby) {
+      console.warn(
+        `Your site is doing more work than it needs to for Preview, upgrade to Gatsby ^${GATSBY_VERSION_MANIFEST_V2} for better performance`
+      )
+      warnOnceToUpgradeGatsby = true
+    }
+    const manifestId = `${id}-${updatedAt}`
+
+    unstable_createNodeManifest({
+      manifestId,
+      node: gatsbyNode,
+      updatedAtUTC: updatedAt,
+    })
+  } else if (!supportsContentSync && !warnOnceForNoSupport) {
+    warnOnceForNoSupport = true
+    console.warn(
+      `Drupal: Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
+    )
   }
 }
 
 exports.handleWebhookUpdate = handleWebhookUpdate
 exports.handleDeletedNode = handleDeletedNode
+exports.createNodeIfItDoesNotExist = createNodeIfItDoesNotExist
