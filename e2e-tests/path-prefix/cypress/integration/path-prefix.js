@@ -75,7 +75,7 @@ describe(`Production pathPrefix`, () => {
     })
 
     it(`can load 404 page with interactive React rendering`, () => {
-      cy.visit(`${pathPrefix}/not-existing-page`, {
+      cy.visit(`/not-existing-page`, {
         failOnStatusCode: false,
       }).waitForRouteChange()
   
