@@ -11,14 +11,17 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min
 }
 
-const createMockCompilationHash = () =>
-  [...Array(20)]
+const createMockCompilationHash = () => {
+  const hash = [...Array(20)]
     .map(a => getRandomInt(0, 16))
     .map(k => k.toString(16))
     .join(``)
+  cy.log({ hash })
+  return hash
+}
 
 describe(`Webpack Compilation Hash tests`, () => {
-  it(`should render properly`, () => {
+  it.skip(`should render properly`, () => {
     cy.visit(`/`).waitForRouteChange()
   })
 
@@ -36,9 +39,9 @@ describe(`Webpack Compilation Hash tests`, () => {
   //
   // We simulate a rebuild by intercepting app-data request and responding with random hash
   it(`should reload page on navigation if build occurs in background`, () => {
-    cy.visit(`/`).waitForRouteChange()
-
     const mockHash = createMockCompilationHash()
+
+    cy.visit(`/`).waitForRouteChange()
 
     let didMock = false
     cy.intercept("/app-data.json", req => {
@@ -72,7 +75,7 @@ describe(`Webpack Compilation Hash tests`, () => {
   // and our data files (page-data and app-data) are for newer built.
   // We will mock both app-data (to change the hash) as well as example page-data
   // to simulate changes to static query hashes between builds.
-  it(`should force reload page if on initial load the html is not matching newest app/page-data`, () => {
+  it.skip(`should force reload page if on initial load the html is not matching newest app/page-data`, () => {
     const mockHash = createMockCompilationHash()
 
     // trying to intercept just `/` seems to intercept all routes
@@ -132,7 +135,7 @@ describe(`Webpack Compilation Hash tests`, () => {
     cy.get("@pageDataFetch.all").should("have.length", 2)
   })
 
-  it(`should not force reload indefinitely`, () => {
+  it.skip(`should not force reload indefinitely`, () => {
     const mockHash = createMockCompilationHash()
 
     // trying to intercept just `/` seems to intercept all routes

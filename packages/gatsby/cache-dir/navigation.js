@@ -112,6 +112,7 @@ const navigate = (to, options = {}) => {
           navigator.serviceWorker.controller !== null &&
           navigator.serviceWorker.controller.state === `activated`
         ) {
+          console.log(`sending clearPathResources message`)
           navigator.serviceWorker.controller.postMessage({
             gatsbyApi: `clearPathResources`,
           })

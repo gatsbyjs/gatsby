@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-namespace */
-
 // "engines-fs-provider" must be first import, as it sets up global
 // fs and this need to happen before anything else tries to import fs
 import "../engines-fs-provider"
