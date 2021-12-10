@@ -43,14 +43,11 @@ export interface ISSRData {
   searchString: string
 }
 
+// just letting TypeScript know about injected data
+// with DefinePlugin
 declare global {
-  namespace NodeJS {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    interface Global {
-      INLINED_TEMPLATE_TO_DETAILS: number // Record<string, ITemplateDetails>
-      WEBPACK_COMPILATION_HASH: string
-    }
-  }
+  const INLINED_TEMPLATE_TO_DETAILS: Record<string, ITemplateDetails>
+  const WEBPACK_COMPILATION_HASH: string
 }
 
 const tracerReadyPromise = initTracer(
