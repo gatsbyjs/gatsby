@@ -73,15 +73,5 @@ describe(`Production pathPrefix`, () => {
         withTrailingSlash(`${pathPrefix}/blogtest`)
       )
     })
-
-    it(`can load 404 page with interactive React rendering`, () => {
-      cy.visit(`/not-existing-page`, {
-        failOnStatusCode: false,
-      }).waitForRouteChange()
-  
-      cy.getTestElement(`page-404-click`).click()
-
-      cy.get(`h2`).contains(`gatsby`)
-    })
   })
 })
