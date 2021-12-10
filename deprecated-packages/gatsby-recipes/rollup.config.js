@@ -12,8 +12,8 @@ import path from "path"
 function excludeDevTools() {
   const re = /ink/
   return {
-    name: "ignoreDevTools",
-
+    name: `ignoreDevTools`,
+    // eslint-disable-next-line
     load(id) {
       if (id.match(re)) {
         if (path.parse(id).name === `devtools`) {
@@ -33,7 +33,7 @@ export default [
     output: {
       dir: `dist`,
       entryFileNames: `[name].js`,
-      format: "cjs",
+      format: `cjs`,
       sourcemap: true,
     },
     plugins: [
@@ -98,7 +98,7 @@ export default [
     output: {
       dir: `dist/web/`,
       entryFileNames: `[name].js`,
-      format: "es",
+      format: `es`,
       sourcemap: true,
     },
     plugins: [

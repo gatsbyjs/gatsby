@@ -9,7 +9,7 @@ import isValid from "is-valid-path"
 import sysPath from "path"
 import prompts from "prompts"
 import url from "url"
-import { updateSiteMetadata } from "gatsby-core-utils"
+import { updateInternalSiteMetadata } from "gatsby-core-utils"
 import report from "./reporter"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
 import reporter from "./reporter"
@@ -353,7 +353,7 @@ export async function initStarter(
       )
     })
 
-  await updateSiteMetadata(
+  await updateInternalSiteMetadata(
     {
       name: sitePackageJson?.name || rootPath,
       sitePath,

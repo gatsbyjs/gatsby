@@ -415,11 +415,11 @@ export const buildHTML = async ({
 
 export async function buildHTMLPagesAndDeleteStaleArtifacts({
   workerPool,
-  buildSpan,
+  parentSpan,
   program,
 }: {
   workerPool: GatsbyWorkerPool
-  buildSpan?: Span
+  parentSpan?: Span
   program: IBuildArgs
 }): Promise<{
   toRegenerate: Array<string>
@@ -442,7 +442,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
       toRegenerate.length,
       0,
       {
-        parentSpan: buildSpan,
+        parentSpan,
       }
     )
     buildHTMLActivityProgress.start()
