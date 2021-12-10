@@ -2,7 +2,7 @@ import * as React from "react"
 import Layout from "../components/layout"
 
 const NotFoundPage = () => {
-  const [company, setCompany ] = React.useState("iChenLei")
+  const [company, setCompany ] = React.useState("")
 
   return (
     <Layout>
