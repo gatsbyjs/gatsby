@@ -1,29 +1,17 @@
-import { Reporter } from "gatsby/reporter"
 import { formatLogMessage } from "~/utils/format-log-message"
-import { IPluginOptions } from "./gatsby-api"
 
-type ITimerReporter = ReturnType<Reporter["activityTimer"]>
+import { createModel } from "@rematch/core"
+import { RootModel } from "./index"
 
-export interface ILoggerState {
-  entityCount: number
-  typeCount: { [name: string]: number }
-  activityTimers: {
-    [name: string]: { count: number; activity: ITimerReporter }
-  }
-}
-
-const logger = {
+const logger = createModel<RootModel>()({
   state: {
     entityCount: 0,
     typeCount: {},
     activityTimers: {},
-  } as ILoggerState,
+  },
 
   reducers: {
-    incrementActivityTimer(
-      state: ILoggerState,
-      { typeName, by, action = `fetched` }
-    ): ILoggerState {
+    incrementActivityTimer(state, { typeName, by, action = `fetched` }) {
       const logger = state.activityTimers[typeName]
 
       if (!logger) {
@@ -40,10 +28,7 @@ const logger = {
       return state
     },
 
-    stopActivityTimer(
-      state: ILoggerState,
-      { typeName, action = `fetched` }: { typeName: string; action: string }
-    ): ILoggerState {
+    stopActivityTimer(state, { typeName, action = `fetched` }) {
       const logger = state.activityTimers[typeName]
 
       if (logger.count === 0) {
@@ -55,14 +40,7 @@ const logger = {
       return state
     },
 
-    createActivityTimer(
-      state: ILoggerState,
-      {
-        typeName,
-        reporter,
-        pluginOptions,
-      }: { typeName: string; reporter: Reporter; pluginOptions: IPluginOptions }
-    ): ILoggerState {
+    createActivityTimer(state, { typeName, reporter, pluginOptions }) {
       if (state.activityTimers[typeName]) {
         return state
       }
@@ -85,6 +63,6 @@ const logger = {
       return state
     },
   },
-}
+})
 
 export default logger

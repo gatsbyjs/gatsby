@@ -1,26 +1,23 @@
+import { createModel } from "@rematch/core"
+import { RootModel } from "./index"
+
 export enum StateKey {
   mimeTypeExcluded = `mimeTypeExcluded`,
   maxFileSizeBytesExceeded = `maxFileSizeBytesExceeded`,
 }
 
-interface IPostBuildWarningLogState {
-  [StateKey.mimeTypeExcluded]: number
-  [StateKey.maxFileSizeBytesExceeded]: number
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const incrementReducerCreator = stateKey => state => {
+  state[stateKey]++
+
+  return state
 }
 
-const incrementReducerCreator =
-  (stateKey: StateKey) =>
-  (state: IPostBuildWarningLogState): IPostBuildWarningLogState => {
-    state[stateKey]++
-
-    return state
-  }
-
-const postBuildWarningCounts = {
+const postBuildWarningCounts = createModel<RootModel>()({
   state: {
     mimeTypeExcluded: 0,
     maxFileSizeBytesExceeded: 0,
-  } as IPostBuildWarningLogState,
+  },
   reducers: {
     incrementMimeTypeExceeded: incrementReducerCreator(
       StateKey.mimeTypeExcluded
@@ -29,6 +26,6 @@ const postBuildWarningCounts = {
       StateKey.maxFileSizeBytesExceeded
     ),
   },
-}
+})
 
 export default postBuildWarningCounts

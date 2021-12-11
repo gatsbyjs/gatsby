@@ -1,14 +1,14 @@
-import { init } from "@rematch/core"
 import immerPlugin from "@rematch/immer"
-import models from "./models"
+import { init, RematchDispatch, RematchRootState } from "@rematch/core"
+import { models, RootModel } from "./models"
 
-// import type { RematchStore } from "@rematch/core"
-// @todo any used to be RematchStore<typeof models> but this isn't exactly right..
-// need to revisit this later. newer versions of rematch sorted TS out but
-// there are a lot of breaking changes for us it seems
-const store: any = init({
+const store = init<RootModel>({
   models,
   plugins: [immerPlugin()],
 })
 
 export default store
+
+export type Store = typeof store
+export type Dispatch = RematchDispatch<RootModel>
+export type RootState = RematchRootState<RootModel>

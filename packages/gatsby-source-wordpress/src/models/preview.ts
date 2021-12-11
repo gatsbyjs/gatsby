@@ -2,58 +2,10 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type OnPageCreatedCallback = (node: any) => Promise<void>
 
-export interface IStoredPage {
-  path: string
-  updatedAt: number
-}
+import { createModel } from "@rematch/core"
+import { RootModel } from "./index"
 
-export interface IPreviewState {
-  nodePageCreatedCallbacks: {
-    [nodeId: string]: OnPageCreatedCallback
-  }
-  nodeIdsToCreatedPages: {
-    [nodeId: string]: {
-      page: IStoredPage
-    }
-  }
-  pagePathToNodeDependencyId: {
-    [pageId: string]: {
-      nodeId: string
-    }
-  }
-}
-
-export interface IPreviewReducers {
-  subscribeToPagesCreatedFromNodeById: (
-    state: IPreviewState,
-    payload: {
-      nodeId: string
-      sendPreviewStatus: OnPageCreatedCallback
-      modified: string
-    }
-  ) => IPreviewState
-  unSubscribeToPagesCreatedFromNodeById: (
-    state: IPreviewState,
-    payload: {
-      nodeId: string
-    }
-  ) => IPreviewState
-  clearPreviewCallbacks: (state: IPreviewState) => IPreviewState
-  saveNodePageState: (
-    state: IPreviewState,
-    payload: {
-      nodeId: string
-      page: IStoredPage
-    }
-  ) => IPreviewState
-}
-
-export interface IPreviewStore {
-  state: IPreviewState
-  reducers: IPreviewReducers
-}
-
-const previewStore: IPreviewStore = {
+const previewStore = createModel<RootModel>()({
   state: {
     nodePageCreatedCallbacks: {},
     nodeIdsToCreatedPages: {},
@@ -95,7 +47,7 @@ const previewStore: IPreviewStore = {
 
       return state
     },
-  } as IPreviewReducers,
-}
+  },
+})
 
 export default previewStore

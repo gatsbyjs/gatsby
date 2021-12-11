@@ -1,3 +1,6 @@
+import { createModel } from "@rematch/core"
+import { RootModel } from "./index"
+
 export interface INodeFilter {
   name: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -5,29 +8,13 @@ export interface INodeFilter {
   priority?: number
 }
 
-export interface IWPHooksState {
-  nodeFilters: { [name: string]: Array<INodeFilter> }
-}
-
-export interface IWPHooksReducers {
-  addNodeFilter: (state: IWPHooksState, payload: INodeFilter) => IWPHooksState
-}
-
-export interface IWPHooksStore {
-  state: IWPHooksState
-  reducers: IWPHooksReducers
-}
-
-const wpHooks: IWPHooksStore = {
+const wpHooks = createModel<RootModel>()({
   state: {
     nodeFilters: {},
   },
 
   reducers: {
-    addNodeFilter(
-      state: IWPHooksState,
-      nodeFilter: INodeFilter
-    ): IWPHooksState {
+    addNodeFilter(state, nodeFilter) {
       const { name, filter, priority = 10 } = nodeFilter
 
       if (!name || typeof filter === `undefined`) {
@@ -46,6 +33,6 @@ const wpHooks: IWPHooksStore = {
       return state
     },
   },
-}
+})
 
 export default wpHooks

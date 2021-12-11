@@ -1,4 +1,3 @@
-import { GatsbyNodeApiHelpers } from "~/utils/gatsby-types"
 import merge from "lodash/merge"
 import { createLocalFileNode } from "~/steps/source-nodes/create-nodes/create-local-file-node"
 import { menuBeforeChangeNode } from "~/steps/source-nodes/before-change-node/menu"
@@ -6,16 +5,10 @@ import { cloneDeep } from "lodash"
 import { inPreviewMode } from "~/steps/preview"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 
-export interface IPluginOptionsPreset {
-  presetName: string
-  useIf: (
-    helpers: GatsbyNodeApiHelpers,
-    pluginOptions: IPluginOptions
-  ) => boolean
-  options: IPluginOptions
-}
+import { createModel } from "@rematch/core"
+import { RootModel } from "./index"
 
-export const previewOptimizationPreset: IPluginOptionsPreset = {
+export const previewOptimizationPreset = {
   presetName: `PREVIEW_OPTIMIZATION`,
   useIf: inPreviewMode,
   options: {
@@ -51,83 +44,8 @@ export const previewOptimizationPreset: IPluginOptionsPreset = {
         : {},
   },
 }
-export interface IPluginOptions {
-  url?: string
-  verbose?: boolean
-  debug?: {
-    throwRefetchErrors?: boolean
-    graphql?: {
-      showQueryOnError?: boolean
-      showQueryVarsOnError?: boolean
-      copyQueryOnError?: boolean
-      panicOnError?: boolean
-      onlyReportCriticalErrors?: boolean
-      copyNodeSourcingQueryAndExit?: boolean
-      writeQueriesToDisk?: boolean
-      copyHtmlResponseOnError?: boolean
-      printIntrospectionDiff?: boolean
-    }
-    timeBuildSteps?: Array<string> | boolean
-    disableCompatibilityCheck?: boolean
-    preview?: boolean
-  }
-  develop?: {
-    nodeUpdateInterval?: number
-    hardCacheMediaFiles?: boolean
-    hardCacheData?: boolean
-  }
-  production?: {
-    hardCacheMediaFiles?: boolean
-    allow404Images?: boolean
-    allow401Images?: boolean
-  }
-  auth?: {
-    htaccess: {
-      username: string | null
-      password: string | null
-    }
-  }
-  schema?: {
-    queryDepth: number
-    circularQueryLimit: number
-    typePrefix: string
-    timeout: number // 30 seconds
-    perPage: number
-    requestConcurrency?: number
-    previewRequestConcurrency?: number
-  }
-  excludeFieldNames?: []
-  html?: {
-    useGatsbyImage?: boolean
-    gatsbyImageOptions?: Record<string, unknown>
-    imageMaxWidth?: number
-    fallbackImageMaxWidth?: number
-    imageQuality?: number
-    createStaticFiles?: boolean
-  }
-  presets?: Array<IPluginOptionsPreset>
-  type?: {
-    [typename: string]: {
-      limit?: number
-      excludeFieldNames?: Array<string>
 
-      exclude?: boolean
-      // @todo type this
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      beforeChangeNode?: (any) => Promise<any>
-      nodeInterface?: boolean
-      lazyNodes?: boolean
-      createFileNodes?: boolean
-      localFile?: {
-        excludeByMimeTypes?: Array<string>
-        maxFileSizeBytes?: number
-        requestConcurrency?: number
-      }
-    }
-  }
-}
-
-const defaultPluginOptions: IPluginOptions = {
+const defaultPluginOptions = {
   url: null,
   verbose: true,
   debug: {
@@ -193,6 +111,7 @@ const defaultPluginOptions: IPluginOptions = {
     gatsbyImageOptions: {},
   },
   presets: [previewOptimizationPreset],
+  activePluginOptionsPresets: [],
   type: {
     __all: {
       // @todo make dateFields into a plugin option?? It's not currently
@@ -333,23 +252,14 @@ const defaultPluginOptions: IPluginOptions = {
   },
 }
 
-export interface IGatsbyApiState {
-  helpers: GatsbyNodeApiHelpers
-  pluginOptions: IPluginOptions
-  activePluginOptionsPresets?: Array<IPluginOptionsPreset>
-}
-
-const gatsbyApi = {
+const gatsbyApi = createModel<RootModel>()({
   state: {
     helpers: {},
     pluginOptions: defaultPluginOptions,
-  } as IGatsbyApiState,
+  },
 
   reducers: {
-    setState(
-      state: IGatsbyApiState,
-      payload: IGatsbyApiState
-    ): IGatsbyApiState {
+    setState(state, payload) {
       const stateCopy = cloneDeep(state)
 
       const defaultPresets = stateCopy.pluginOptions?.presets || []
@@ -382,6 +292,6 @@ const gatsbyApi = {
       return state
     },
   },
-}
+})
 
 export default gatsbyApi

@@ -1,61 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { findTypeName } from "~/steps/create-schema-customization/helpers"
 
-interface IRemoteSchemaState {
-  wpUrl: string
-  nodeQueries: any
-  nonNodeQuery: string
-  introspectionData: any
-  schemaWasChanged: boolean
-  typeMap: any
-  nodeListFilter: (field: { name: string }) => boolean
-  ingestibles: {
-    nodeListRootFields: any
-    nodeInterfaceTypes: any
-    nonNodeRootFields: Array<any>
-  }
-  allowRefreshSchemaUpdate: boolean
-  fetchedTypes: any
-  fieldBlacklist: Array<string>
-  fieldAliases: {
-    parent: string
-    children: string
-    internal: string
-    plugin: string
-    actionOptions: string
-    fields: string
-  }
-}
+import { createModel } from "@rematch/core"
+import { RootModel } from "./index"
 
-interface IRemoteSchemaReducers {
-  toggleAllowRefreshSchemaUpdate: (
-    state: IRemoteSchemaState
-  ) => IRemoteSchemaState
-
-  setSchemaWasChanged: (
-    state: IRemoteSchemaState,
-    payload: boolean
-  ) => IRemoteSchemaState
-
-  addFieldsToBlackList: (
-    state: IRemoteSchemaState,
-    payload: Array<string>
-  ) => IRemoteSchemaState
-
-  setState: (
-    state: IRemoteSchemaState,
-    payload: IRemoteSchemaState
-  ) => IRemoteSchemaState
-
-  addFetchedType: (state: IRemoteSchemaState, type: any) => IRemoteSchemaState
-}
-
-interface IRemoteSchemaStore {
-  state: IRemoteSchemaState
-  reducers: IRemoteSchemaReducers
-}
-
-const remoteSchema: IRemoteSchemaStore = {
+const remoteSchema = createModel<RootModel>()({
   state: {
     wpUrl: null,
     nodeQueries: {},
@@ -148,7 +97,7 @@ const remoteSchema: IRemoteSchemaStore = {
 
       return state
     },
-  } as IRemoteSchemaReducers,
-}
+  },
+})
 
 export default remoteSchema
