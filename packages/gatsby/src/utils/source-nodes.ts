@@ -4,9 +4,11 @@ import apiRunner from "./api-runner-node"
 import { store } from "../redux"
 import { getDataStore, getNode, getNodes } from "../datastore"
 import { actions } from "../redux/actions"
+import { getQueue } from "../redux/events"
 import { IGatsbyState } from "../redux/types"
 const { deleteNode } = actions
 import { Node } from "../../index"
+import { runEvent } from "../redux/events/index"
 
 /**
  * Finds the name of all plugins which implement Gatsby APIs that
@@ -98,9 +100,27 @@ export default async ({
   parentSpan?: Span
   deferNodeMutation?: boolean
 }): Promise<void> => {
+  if (process.env.GATSBY_EXPERIMENTAL_SOURCERER) {
+    const sourceEvents = (
+      await apiRunner(`registerSourceEvents`, {
+        parentSpan,
+      })
+    ).flat(Infinity)
+
+    // run events
+    const queue = getQueue<any, unknown>()
+    const waitUntilQueueIsIdle = new Promise<void>(resolve => {
+      queue.drain = (): void => resolve()
+    })
+    runEvent(sourceEvents, `SourceAll`, {})
+
+    await waitUntilQueueIsIdle
+  }
+
   const traceId = isInitialSourcing
     ? `initial-sourceNodes`
     : `sourceNodes #${sourcingCount}`
+
   await apiRunner(`sourceNodes`, {
     traceId,
     waitForCascadingActions: true,

@@ -612,60 +612,70 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
           resolve(
             runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity)
           )
-        }).catch(err => {
-          decorateEvent(`BUILD_PANIC`, {
-            pluginName: `${plugin.name}@${plugin.version}`,
-          })
-
-          const localReporter = getLocalReporter({ activity, reporter })
-
-          const file = stackTrace
-            .parse(err)
-            .find(file => /gatsby-node/.test(file.fileName))
-
-          let codeFrame = ``
-          const structuredError = errorParser({ err })
-
-          if (file) {
-            const { fileName, lineNumber: line, columnNumber: column } = file
-
-            try {
-              const code = fs.readFileSync(fileName, { encoding: `utf-8` })
-              codeFrame = codeFrameColumns(
-                code,
-                {
-                  start: {
-                    line,
-                    column,
-                  },
-                },
-                {
-                  highlightCode: true,
-                }
-              )
-            } catch (_e) {
-              // sometimes stack trace point to not existing file
-              // particularly when file is transpiled and path actually changes
-              // (like pointing to not existing `src` dir or original typescript file)
-            }
-
-            structuredError.location = {
-              start: { line: line, column: column },
-            }
-            structuredError.filePath = fileName
-          }
-
-          structuredError.context = {
-            ...structuredError.context,
-            pluginName,
-            api,
-            codeFrame,
-          }
-
-          localReporter.panicOnBuild(structuredError)
-
-          return null
         })
+          .then(result => {
+            if (api === `registerSourceEvents`) {
+              result.forEach(event => {
+                event.plugin = plugin
+              })
+            }
+
+            return result
+          })
+          .catch(err => {
+            decorateEvent(`BUILD_PANIC`, {
+              pluginName: `${plugin.name}@${plugin.version}`,
+            })
+
+            const localReporter = getLocalReporter({ activity, reporter })
+
+            const file = stackTrace
+              .parse(err)
+              .find(file => /gatsby-node/.test(file.fileName))
+
+            let codeFrame = ``
+            const structuredError = errorParser({ err })
+
+            if (file) {
+              const { fileName, lineNumber: line, columnNumber: column } = file
+
+              try {
+                const code = fs.readFileSync(fileName, { encoding: `utf-8` })
+                codeFrame = codeFrameColumns(
+                  code,
+                  {
+                    start: {
+                      line,
+                      column,
+                    },
+                  },
+                  {
+                    highlightCode: true,
+                  }
+                )
+              } catch (_e) {
+                // sometimes stack trace point to not existing file
+                // particularly when file is transpiled and path actually changes
+                // (like pointing to not existing `src` dir or original typescript file)
+              }
+
+              structuredError.location = {
+                start: { line: line, column: column },
+              }
+              structuredError.filePath = fileName
+            }
+
+            structuredError.context = {
+              ...structuredError.context,
+              pluginName,
+              api,
+              codeFrame,
+            }
+
+            localReporter.panicOnBuild(structuredError)
+
+            return null
+          })
       },
       apiRunPromiseOptions
     ).then(results => {
