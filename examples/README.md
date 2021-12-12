@@ -31,5 +31,6 @@ To execute this script, run the following commands from the terminal:
 cd examples
 ./build-all-examples.sh > build-results.txt
 ```
+//please add more briefly about the working schema 
 
 🚨 WARNING: This script takes a LONG time to run. (Hours.)
