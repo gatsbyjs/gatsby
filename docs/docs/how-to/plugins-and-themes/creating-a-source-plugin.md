@@ -822,19 +822,19 @@ exports.sourceNodes = async (
 
   nodes.forEach(node => {
     // highlight-start
+    const gatsbyNode = createNode(node)
+
     const nodeIsEntryNode = `some condition`
     if (nodeIsEntryNode) {
       createNodeManifest({
         pluginConfig,
-        entryItem,
-        entryNode: node,
+        entryItem: node,
+        entryNode: gatsbyNode,
         project,
         unstable_createNodeManifest,
       })
     }
-
     // highlight-end
-    createNode(entryNode)
   })
 }
 ```
