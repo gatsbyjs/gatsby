@@ -98,7 +98,6 @@ interface ILoaderUtils {
   }>
 
   file: LoaderResolver
-  url: LoaderResolver
   js: LoaderResolver
   json: LoaderResolver
   null: LoaderResolver
@@ -342,18 +341,6 @@ export const createWebpackUtils = (
       }
     },
 
-    url: (options = {}) => {
-      return {
-        loader: require.resolve(`url-loader`),
-        options: {
-          limit: 10000,
-          name: `${assetRelativeRoot}[name]-[hash].[ext]`,
-          fallback: require.resolve(`file-loader`),
-          ...options,
-        },
-      }
-    },
-
     js: options => {
       return {
         options: {
@@ -537,10 +524,10 @@ export const createWebpackUtils = (
    */
   rules.fonts = (): RuleSetRule => {
     return {
-      use: [loaders.url()],
       test: /\.(eot|otf|ttf|woff(2)?)(\?.*)?$/,
+      type: `asset/resource`,
       generator: {
-        filename: `${assetRelativeRoot}[name]-[hash].[ext]`,
+        filename: `${assetRelativeRoot}[name]-[hash][ext]`,
       },
     }
   }
@@ -551,10 +538,10 @@ export const createWebpackUtils = (
    */
   rules.images = (): RuleSetRule => {
     return {
-      use: [loaders.url()],
       test: /\.(ico|svg|jpg|jpeg|png|gif|webp|avif)(\?.*)?$/,
+      type: `asset/resource`,
       generator: {
-        filename: `${assetRelativeRoot}[name]-[hash].[ext]`,
+        filename: `${assetRelativeRoot}[name]-[hash][ext]`,
       },
     }
   }
@@ -565,10 +552,10 @@ export const createWebpackUtils = (
    */
   rules.media = (): RuleSetRule => {
     return {
-      use: [loaders.url()],
       test: /\.(mp4|webm|ogv|wav|mp3|m4a|aac|oga|flac)$/,
+      type: `asset/resource`,
       generator: {
-        filename: `${assetRelativeRoot}[name]-[hash].[ext]`,
+        filename: `${assetRelativeRoot}[name]-[hash][ext]`,
       },
     }
   }
