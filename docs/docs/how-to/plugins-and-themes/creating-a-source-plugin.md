@@ -806,6 +806,107 @@ One challenge when developing locally is that a developer might make modificatio
 
 Some data sources keep event logs and are able to return a list of objects modified since a given time. If you're building a source plugin, you can store the last time you fetched data using the [cache](/docs/creating-a-source-plugin/#caching-data-between-runs) and then only sync down nodes that have been modified since that time. [`gatsby-source-contentful`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful) is an example of a source plugin that does this.
 
+### Enabling Content Sync
+
+If you would like to add Content Sync to your source plugin here but aren't sure what it is [learn more about Content Sync here](https://www.gatsbyjs.com/docs/conceptual/content-sync/). To enable this feature in your source plugin you will need to make sure that your data source (or CMS) also works with Content Sync. The first thing you'll want to do is identify which nodes you'll want to create a node manifest for. These will typically be nodes that you can preview, entry nodes, top level nodes, etc. An example of this could be a blog post or an article, any node that can be the "owner" of a page. Once you've identified that you'll want to use the [unstable_createNodeManifest action](https://www.gatsbyjs.com/docs/reference/config-files/actions/#unstable_createNodeManifest) to create these manifests. A good place to call this action is before you call `createNode`.
+
+An easy way to keep track of your manifest logic is to parse it out into a different util function. Either inside the `createNodeManifest` util or before you call it you'll need to vet which nodes you'll want to create manifests for.
+
+```javascript:title=source-plugin/gatsby-node.js
+import { createNodeManifest } from "./utils.js"
+exports.sourceNodes = async (
+  { actions, createContentDigest, createNodeId, getNodesByType },
+  pluginOptions
+) => {
+  // sourcing data...
+
+  nodes.forEach(node => {
+    // highlight-start
+    const nodeIsEntryNode = `some condition`
+    if (nodeIsEntryNode) {
+      createNodeManifest({
+        pluginConfig,
+        entryItem,
+        entryNode: node,
+        project,
+        unstable_createNodeManifest,
+      })
+    }
+
+    // highlight-end
+    createNode(entryNode)
+  })
+}
+```
+
+There are a couple more checks we need to do inside the util. First, at the moment you'll only want to create node manifests for preview content, next we need to check if the Gatsby version supports `unstable_createNodeManifest`. Finally we'll want to parse out the time the content was updated and create a `manifestId` with all that information. The manifest id is the link between the data source and the Gatsby site. This manifest id will need to be created identically in the data source and here in your source plugin. Because of this we will use information given from the data source to build up the manifest id.
+
+```javascript:title=source-plugin/utils.js
+
+export function createNodeManifest({
+  pluginConfig,
+  entryItem, // the raw data source/cms content data
+  project,     // the cms project data
+  entryNode, // the Gatsby node
+  unstable_createNodeManifest,
+}) {
+  // highlight-start
+  // This env variable is provided automatically on Gatsby Cloud hosting
+  const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
+
+  const createNodeManifestIsSupported =
+    typeof unstable_createNodeManifest === `function`
+
+  const shouldCreateNodeManifest = isPreview && createNodeManifestIsSupported
+
+  const updatedAt = entryItem.updatedAt
+
+  const manifestId = `${project.id}-${entryItem.id}-${updatedAt}`
+  // highlight-end
+
+  if (shouldCreateNodeManifest) {
+    // create manifest...
+  }
+}
+```
+
+The last step will be to create the node manifest and give a warning if they're using an unsupported version of Gatsby
+
+```javascript:title=source-plugin/utils.js
+// highlight-start
+let warnOnceForNoSupport = false
+// highlight-end
+
+export function createNodeManifest({
+  pluginConfig,
+  entryItem, // the raw data source/cms content data
+  project,   // the cms project data
+  entryNode, // the Gatsby node
+  unstable_createNodeManifest,
+}) {
+  // initialize variables ...
+
+  if (shouldCreateNodeManifest) {
+    // highlight-start
+    unstable_createNodeManifest({
+      manifestId,
+      node: entryNode,
+      updatedAtUTC: updatedAt,
+    })
+  } else if (
+    // it's helpful to let users know if they're using an outdated Gatsby version so they'll upgrade for the best experience
+    isPreview && !createNodeManifestIsSupported && !warnOnceForNoSupport
+  ) {
+    console.warn(
+      `${sourcePluginName}: Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
+    )
+    // This is getting called for every entry node so we don't want the console logs to get cluttered
+    warnOnceForNoSupport = true
+    // highlight-end
+  }
+}
+```
+
 ## Publishing a plugin
 
 Don't publish this particular plugin to npm or the Gatsby Plugin Library, because it's just a sample plugin for the tutorial. However, if you've built a local plugin for your project, and want to share it with others, npm allows you to publish your plugins. Check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
