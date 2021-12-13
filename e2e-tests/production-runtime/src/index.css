@@ -21,6 +21,13 @@
   font-size: 18px;
 }
 
+.merriweather-300-italic {
+  font-family: "Merriweather";
+  font-weight: 300;
+  font-size: 18px;
+  font-style: italic;
+}
+
 .dog-background-flip {
   background: url("//localhost:9000/dog-thumbnail-flip.jpg");
   width: 640px;
