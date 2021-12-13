@@ -16,7 +16,7 @@ import {
   slash,
   createServiceLock,
   getService,
-  updateSiteMetadata,
+  updateInternalSiteMetadata,
   UnlockFn,
   uuid,
 } from "gatsby-core-utils"
@@ -338,7 +338,7 @@ module.exports = async (program: IProgram): Promise<void> => {
         port: telemetryServerPort,
       }
     )
-    await updateSiteMetadata({
+    await updateInternalSiteMetadata({
       name: program.sitePackageJson.name,
       sitePath: program.directory,
       pid: process.pid,
