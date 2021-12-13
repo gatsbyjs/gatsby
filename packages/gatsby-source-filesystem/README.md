@@ -162,8 +162,10 @@ When building source plugins for remote data sources such as headless CMSs, thei
 
 The `createRemoteFileNode` helper makes it easy to download remote files and add them to your site's GraphQL schema.
 
+Note: [special characters](https://stackoverflow.com/a/31976060) in file name are replaced with a hyphen "-", a hash is also added to keep files unique e.g `a:file.jpg` becomes `<FILE-HASH>-a-file.jpg`
+
 ```javascript
-createRemoteFileNode({
+createRemoteFileNode({`
   // The source url of the remote file
   url: `https://example.com/a-file.jpg`,
 
