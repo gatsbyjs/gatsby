@@ -303,7 +303,7 @@ module.exports.tracing = true;
 /**
  * Use to prefix resources URLs. `pathPrefix` will be either empty string or
  * path that starts with slash and doesn't end with slash. `pathPrefix` also
- * becomes <assetPrefix>/<pathPrefix> when you pass both `assetPrefix` and
+ * becomes `<assetPrefix>/<pathPrefix>` when you pass both `assetPrefix` and
  * `pathPrefix` in your `gatsby-config.js`.
  *
  * See [Adding a Path Prefix](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/path-prefix/)
