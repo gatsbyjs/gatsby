@@ -79,7 +79,7 @@ There are a number of places to put an inlined script, depending whether you nee
 - _Some deferring_: You can place the script in [onClientEntry](/docs/browser-apis/#onClientEntry) to have it execute after page load, but before the browser renders the page.
 - _More deferring_: You can place the script in [onInitialClientRender](/docs/browser-apis/#onInitialClientRender) to have it execute after the browser renders the page.
 
-Note that if you are using [html.js](/docs/custom-html/), you should modify that file to include your snippet instead of using `onPreRenderHTML`.
+Note that if you are already using [html.js](/docs/custom-html/), you should modify that file to include your snippet instead of using `onPreRenderHTML`. This will have the same behavior.
 
 ### Reduce your JavaScript bundle cost
 

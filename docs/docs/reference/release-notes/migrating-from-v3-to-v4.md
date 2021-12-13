@@ -583,8 +583,7 @@ This was never an intended feature of Gatsby and is considered an anti-pattern (
 Starting with v4 Gatsby introduces a persisted storage for nodes and thus this pattern will no longer work
 because nodes are persisted after `createNode` call and all direct mutations after that will be lost.
 
-Unfortunately it is hard to detect it automatically (without sacrificing performance), so we recommend you to
-check your code to ensure you don't mutate nodes directly.
+Gatsby provides diagnostic mode to detect those direct mutations, unfortunately it has noticeable performance overhead so we don't enable it by default. See [Debugging missing data](/docs/how-to/local-development/debugging-missing-data/) for more details on it.
 
 Gatsby provides several actions available in `sourceNodes` and `onCreateNode` APIs to use instead:
 
@@ -603,6 +602,14 @@ Please note that the [deprecation of the `___NODE` convention](#___node-conventi
 The current state persistence mechanism supported circular references in nodes. With Gatsby 4 and LMDB this is no longer supported.
 
 This is just a theoretical problem that might arise in v4. Most source plugins already avoid circular dependencies in data.
+
+### Bundling external files
+
+In order for DSG & SSR to work Gatsby creates bundles with all the contents of the site, plugins, and data. When a plugin (or your own `gatsby-node.js`) requires an external file via `fs` module (e.g. `fs.readFile`) the engine won't be able to include the file. As a result you might see an error (when trying to run DSG) like `ENOENT: no such file or directory` in the CLI.
+
+This limitation applies to these lifecycle APIs: `setFieldsOnGraphQLNodeType`, `createSchemaCustomization`, and `createResolvers`.
+
+Instead you should move the contents to a JS/TS file and import the file as this way the bundler will be able to include the contents.
 
 ## Known Issues
 

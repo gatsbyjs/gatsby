@@ -8,7 +8,7 @@ import { Message, IMessageProps } from "./components/messages"
 import { Error as ErrorComponent } from "./components/error"
 import Develop from "./components/develop"
 import PageTree from "./components/pageTree"
-import { IGatsbyCLIState, IActivity } from "../../redux/types"
+import { IGatsbyCLIState, IActivity, ILog } from "../../redux/types"
 import { ActivityLogLevels } from "../../constants"
 import { IStructuredError } from "../../../structured-errors/types"
 
@@ -16,6 +16,7 @@ const showProgress = isTTY()
 
 interface ICLIProps {
   logs: IGatsbyCLIState
+  messages: Array<ILog>
   showStatusBar: boolean
   showPageTree: boolean
 }
@@ -48,7 +49,8 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
 
   render(): React.ReactElement {
     const {
-      logs: { messages, activities },
+      logs: { activities },
+      messages,
       showStatusBar,
       showPageTree,
     } = this.props
