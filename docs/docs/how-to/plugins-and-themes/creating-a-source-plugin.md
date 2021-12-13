@@ -844,7 +844,7 @@ There are a couple more checks we need to do inside the util. First, at the mome
 
 export function createNodeManifest({
   entryItem, // the raw data source/cms content data
-  project,     // the cms project data
+  project,   // the cms project data
   entryNode, // the Gatsby node
   unstable_createNodeManifest,
 }) {
