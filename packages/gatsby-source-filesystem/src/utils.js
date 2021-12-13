@@ -39,16 +39,3 @@ export function getRemoteFileExtension(url) {
 export function getRemoteFileName(url) {
   return getParsedPath(url).name
 }
-
-/**
- * createFilePath
- * --
- *
- * @param  {String} directory
- * @param  {String} filename
- * @param  {String} ext
- * @return {String}
- */
-export function createFilePath(directory, filename, ext) {
-  return path.join(directory, `${filename}${ext}`)
-}
