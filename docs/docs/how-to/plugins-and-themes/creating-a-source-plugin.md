@@ -815,10 +815,10 @@ An easy way to keep track of your manifest logic is to parse it out into a diffe
 ```javascript:title=source-plugin/gatsby-node.js
 import { createNodeManifest } from "./utils.js"
 exports.sourceNodes = async (
-  { actions, createContentDigest, createNodeId, getNodesByType },
-  pluginOptions
+  { actions }
 ) => {
   // sourcing data...
+  const { unstable_createNodeManifest, createNode } = actions
 
   nodes.forEach(node => {
     // highlight-start
@@ -827,7 +827,6 @@ exports.sourceNodes = async (
     const nodeIsEntryNode = `some condition`
     if (nodeIsEntryNode) {
       createNodeManifest({
-        pluginConfig,
         entryItem: node,
         entryNode: gatsbyNode,
         project,
@@ -844,7 +843,6 @@ There are a couple more checks we need to do inside the util. First, at the mome
 ```javascript:title=source-plugin/utils.js
 
 export function createNodeManifest({
-  pluginConfig,
   entryItem, // the raw data source/cms content data
   project,     // the cms project data
   entryNode, // the Gatsby node
