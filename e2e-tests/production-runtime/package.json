@@ -36,6 +36,7 @@
     "format": "prettier --write '**/*.js' --ignore-path .gitignore",
     "serve": "gatsby serve",
     "start": "npm run develop",
+    "clean": "gatsby clean",
     "test": "npm run build && npm run start-server-and-test && npm run test-env-vars",
     "test:offline": "npm run build:offline && yarn start-server-and-test:offline && npm run test-env-vars",
     "test-env-vars": " node __tests__/env-vars.js",
