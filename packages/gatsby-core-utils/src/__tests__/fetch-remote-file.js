@@ -276,7 +276,11 @@ describe(`fetch-remote-file`, () => {
   })
   afterAll(() => {
     if (cache) {
-      fs.removeSync(cache.directory)
+      try {
+        fs.removeSync(cache.directory)
+      } catch (err) {
+        // ignore
+      }
     }
 
     // Clean up after all tests are done, preventing this
