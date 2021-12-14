@@ -43,3 +43,10 @@ With this release you're now able to detect node mutations and debug the aforeme
 ## Contributors
 
 A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@4.4.0-next.0...gatsby@4.4.0) to this release 💜
+
+- [sidharthachatterjee](https://github.com/sidharthachatterjee): fix(gatsby): Add back an activity for jobs [PR #34061](https://github.com/gatsbyjs/gatsby/pull/34061)
+- [pacahon](https://github.com/pacahon): fix(gatsby-source-filesystem): Ensure fastq concurrency parameter of the correct type [PR #34186](https://github.com/gatsbyjs/gatsby/pull/34186)
+- [ashhitch](https://github.com/ashhitch)
+  - Add missing Comma to Plugin Options page [PR #34208](https://github.com/gatsbyjs/gatsby/pull/34208)
+  - chore(docs): Add missing comma to code example [PR #34222](https://github.com/gatsbyjs/gatsby/pull/34222)
+- [iChenLei](https://github.com/iChenLei): feat(gatsby-plugin-emotion): Use correct babel preset with `jsxRuntime` [PR #34085](https://github.com/gatsbyjs/gatsby/pull/34085)
