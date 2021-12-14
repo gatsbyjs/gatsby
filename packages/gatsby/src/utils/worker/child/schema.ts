@@ -1,4 +1,8 @@
+import * as path from "path"
+import * as fs from "fs-extra"
+
 import { store } from "../../../redux"
+import { actions } from "../../../redux/actions"
 import { build } from "../../../schema"
 import apiRunnerNode from "../../api-runner-node"
 import { setState } from "./state"
@@ -16,6 +20,13 @@ export async function buildSchema(): Promise<void> {
       `Config loading didn't finish before attempting to build schema in worker`
     )
   }
+
+  const schemaSnapshot = await fs.readFile(
+    path.join(workerStore.program.directory, `.cache`, `schema.gql`),
+    `utf-8`
+  )
+
+  store.dispatch(actions.createTypes(schemaSnapshot))
 
   setInferenceMetadata()
 
