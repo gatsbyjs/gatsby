@@ -53,7 +53,6 @@ export function createFilePath(
   ext: string
 ): string {
   const purgedFileName = filename.replace(filenamePurgeRegex, `-`)
-
   const shouldAddHash = purgedFileName !== filename
 
   if (shouldAddHash) {
