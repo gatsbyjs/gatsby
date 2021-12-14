@@ -204,11 +204,11 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
         (args: yargs.Arguments, cmd: (args: yargs.Arguments) => unknown) => {
           process.env.NODE_ENV = process.env.NODE_ENV || `development`
 
-          if (args.hasOwnProperty(`inspect`)) {
+          if (Object.prototype.hasOwnProperty.call(args, `inspect`)) {
             args.inspect = args.inspect || 9229
           }
-          if (args.hasOwnProperty(`inspect-brk`)) {
-            args.inspect = args.inspect || 9229
+          if (Object.prototype.hasOwnProperty.call(args, `inspect-brk`)) {
+            args.inspectBrk = args[`inspect-brk`] || 9229
           }
 
           cmd(args)
