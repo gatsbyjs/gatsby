@@ -38,6 +38,7 @@ const sanitizeNode = (data, isNode = true, path = new Set()) => {
     })
 
     if (hasCustomLengthFiled) {
+      data[`length`] = sanitizeNode(rawLength, false, path)
       returnData[`length`] = sanitizeNode(rawLength, false, path)
       if (returnData[`length`] !== rawLength) {
         anyFieldChanged = true
