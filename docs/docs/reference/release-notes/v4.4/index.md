@@ -8,7 +8,7 @@ Welcome to `gatsby@4.4.0` release (December 2021 #1)
 
 Key highlights of this release:
 
-- todo
+- [Detect Node Mutations](#detect-node-mutations) - Opt-in Diagnostic Mode
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -38,6 +38,7 @@ With this release you're now able to detect node mutations and debug the aforeme
 - `gatsby`: Allow external systems to setup tracing for builds, via [PR #34204](https://github.com/gatsbyjs/gatsby/pull/34204)
 - `gatsby-source-filesystem`: Ensure that the `fastq` `concurrency` parameter is of the correct type, via [PR #34186](https://github.com/gatsbyjs/gatsby/pull/34186)
 - `gatsby-plugin-manifest`: Consider path prefix when getting localized manifest, via [PR #34174](https://github.com/gatsbyjs/gatsby/pull/34174)
+- `gatsby-cli`: Fix for `--inspect-brk`, via [PR #34242](https://github.com/gatsbyjs/gatsby/pull/34242)
 
 ## Contributors
 
