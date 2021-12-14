@@ -18,19 +18,19 @@ describe(`webpack assets`, () => {
         expect(req.response.url).to.match(/merriweather-latin-300italic-/i)
       })
     })
+    it(`should load image import`, () => {
+      cy.wait("@img-import").should(req => {
+        expect(req.response.statusCode).to.be.gte(200).and.lt(400)
+      })
+    })
+    it(`should load file import`, () => {
+      cy.getTestElement('assets-pdf-import').should('have.attr', 'href').and('match', /\/static\/pdf-example-.*\.pdf/i)
+    })
   }
 
   it(`should load static folder asset`, () => {
     cy.wait("@static-folder-image").should(req => {
       expect(req.response.statusCode).to.be.gte(200).and.lt(400)
     })
-  })
-  it(`should load image import`, () => {
-    cy.wait("@img-import").should(req => {
-      expect(req.response.statusCode).to.be.gte(200).and.lt(400)
-    })
-  })
-  it(`should load file import`, () => {
-    cy.getTestElement('assets-pdf-import').should('have.attr', 'href').and('match', /\/static\/pdf-example-.*\.pdf/i)
   })
 })
