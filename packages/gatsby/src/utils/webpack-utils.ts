@@ -98,6 +98,7 @@ interface ILoaderUtils {
   }>
 
   file: LoaderResolver
+  url: LoaderResolver
   js: LoaderResolver
   json: LoaderResolver
   null: LoaderResolver
@@ -336,6 +337,19 @@ export const createWebpackUtils = (
         loader: require.resolve(`file-loader`),
         options: {
           name: `${assetRelativeRoot}[name]-[hash].[ext]`,
+          ...options,
+        },
+      }
+    },
+
+    // TODO(v5): Consider removing this (as not used anymore internally)
+    url: (options = {}) => {
+      return {
+        loader: require.resolve(`url-loader`),
+        options: {
+          limit: 10000,
+          name: `${assetRelativeRoot}[name]-[hash].[ext]`,
+          fallback: require.resolve(`file-loader`),
           ...options,
         },
       }
