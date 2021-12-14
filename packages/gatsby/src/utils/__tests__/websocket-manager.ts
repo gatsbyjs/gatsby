@@ -610,8 +610,8 @@ describe(`websocket-manager`, () => {
           msg.payload?.message === `error-string`
         ) {
           clientSocket.off(`message`, handler)
-          expect(true).toBe(true)
           clientSocket.disconnect()
+          expect(true).toBe(true)
           done()
         }
       }
@@ -632,8 +632,8 @@ describe(`websocket-manager`, () => {
           msg.payload?.message === `error-string`
         ) {
           clientSocket.off(`message`, handler)
-          expect(true).toBe(true)
           clientSocket.disconnect()
+          expect(true).toBe(true)
           done()
         }
       }
@@ -656,6 +656,7 @@ describe(`websocket-manager`, () => {
             msg.payload.message === null
           ) {
             clientSocket.off(`message`, handler)
+            clientSocket.disconnect()
             expect(true).toBe(true)
             done()
           }
