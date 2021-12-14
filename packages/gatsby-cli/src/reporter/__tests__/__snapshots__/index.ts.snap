@@ -65,7 +65,7 @@ Object {
       "columnNumber": 7,
       "fileName": "<PROJECT_ROOT>/packages/gatsby-cli/src/reporter/__tests__/index.ts",
       "functionName": null,
-      "lineNumber": 102,
+      "lineNumber": 100,
     },
     Object {
       "columnNumber": 28,
@@ -86,12 +86,6 @@ Object {
       "lineNumber": 218,
     },
     Object {
-      "columnNumber": 5,
-      "fileName": "node:internal/process/task_queues",
-      "functionName": "processTicksAndRejections",
-      "lineNumber": 96,
-    },
-    Object {
       "columnNumber": 3,
       "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/run.js",
       "functionName": "_runTest",
@@ -108,6 +102,18 @@ Object {
       "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/run.js",
       "functionName": "_runTestsForDescribeBlock",
       "lineNumber": 60,
+    },
+    Object {
+      "columnNumber": 3,
+      "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/run.js",
+      "functionName": "run",
+      "lineNumber": 25,
+    },
+    Object {
+      "columnNumber": 21,
+      "fileName": "<PROJECT_ROOT>/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js",
+      "functionName": "runAndTransformResultsToJestFormat",
+      "lineNumber": 170,
     },
   ],
   "text": "Error string passed to reporter Message from new Error",
