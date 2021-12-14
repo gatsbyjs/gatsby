@@ -15,6 +15,8 @@ jest.mock(
       strs.join(``)
 )
 
+// test
+
 describe(`GatsbyImage browser`, () => {
   let beforeHydrationContent: HTMLDivElement
   let image: IGatsbyImageData
@@ -181,6 +183,10 @@ describe(`GatsbyImage browser`, () => {
   it(`relies on intersection observer when the SSR element is not resolved`, async () => {
     ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => true
     const onStartLoadSpy = jest.fn()
+    let GatsbyImage
+    jest.isolateModules(() => {
+      GatsbyImage = require(`../gatsby-image.browser`).GatsbyImage
+    })
 
     const { container } = render(
       <GatsbyImage
@@ -198,6 +204,10 @@ describe(`GatsbyImage browser`, () => {
   it(`relies on intersection observer when browser does not support lazy loading`, async () => {
     ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => false
     const onStartLoadSpy = jest.fn()
+    let GatsbyImage
+    jest.isolateModules(() => {
+      GatsbyImage = require(`../gatsby-image.browser`).GatsbyImage
+    })
 
     const { container } = render(
       <GatsbyImage
