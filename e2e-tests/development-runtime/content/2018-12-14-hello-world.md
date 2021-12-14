@@ -1,6 +1,7 @@
 ---
 title: Hello World
 date: 2018-12-14
+length: 81185414 # Regression for issue #26565
 ---
 
 This is a truly meaningful blog post
