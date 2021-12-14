@@ -14,6 +14,16 @@ const sanitizeNode = (data, isNode = true, path = new Set()) => {
     path.add(data)
 
     const returnData = isPlainObject ? {} : []
+    // Refer to https://github.com/gatsbyjs/gatsby/issues/26565
+    const hasCustomLengthFiled = isPlainObject
+      ? Object.prototype.hasOwnProperty.call(data, `length`)
+      : false
+    let rawLength
+    if (hasCustomLengthFiled) {
+      rawLength = data.length
+      delete data.length
+    }
+
     let anyFieldChanged = false
     _.each(data, (o, key) => {
       if (isNode && key === `internal`) {
@@ -26,6 +36,13 @@ const sanitizeNode = (data, isNode = true, path = new Set()) => {
         anyFieldChanged = true
       }
     })
+
+    if (hasCustomLengthFiled) {
+      returnData[`length`] = sanitizeNode(rawLength, false, path)
+      if (returnData[`length`] !== rawLength) {
+        anyFieldChanged = true
+      }
+    }
 
     if (anyFieldChanged) {
       data = omitUndefined(returnData)
