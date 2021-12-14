@@ -97,6 +97,7 @@ export interface IGatsbyConfig {
   mapping?: Record<string, string>
   jsxRuntime?: "classic" | "automatic"
   jsxImportSource?: string
+  trailingSlash?: "always" | "never" | "ignore"
 }
 
 export interface IGatsbyNode {

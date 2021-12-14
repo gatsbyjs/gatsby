@@ -205,6 +205,8 @@ export interface GatsbyConfig {
   flags?: Record<string, boolean>
   /** It’s common for sites to be hosted somewhere other than the root of their domain. Say we have a Gatsby site at `example.com/blog/`. In this case, we would need a prefix (`/blog`) added to all paths on the site. */
   pathPrefix?: string
+  /** `never` removes all trailing slashes, `always` adds it, and `ignore` doesn't automatically change anything and it's in user hands to keep things consistent. By default `always` is used. */
+  trailingSlash?: "always" | "never" | "ignore"
   /** In some circumstances you may want to deploy assets (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. `assetPrefix` allows you to use Gatsby with assets hosted from a separate domain */
   assetPrefix?: string
   /** Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.*/

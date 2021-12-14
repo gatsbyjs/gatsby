@@ -25,8 +25,9 @@ interface IGatsbyConfigInput {
     url: string
   }
   developMiddleware?(app: Express): void
-  jsxRuntime?: string
+  jsxRuntime?: "classic" | "automatic"
   jsxImportSource?: string
+  trailingSlash?: "always" | "never" | "ignore"
 }
 
 type ConfigKey = keyof IGatsbyConfigInput

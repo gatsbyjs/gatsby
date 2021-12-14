@@ -42,13 +42,16 @@ module.exports = {
 Options available to set within `gatsby-config.js` include:
 
 1. [siteMetadata](#sitemetadata) (object)
-2. [plugins](#plugins) (array)
-3. [flags](#flags) (object)
-4. [pathPrefix](#pathprefix) (string)
-5. [polyfill](#polyfill) (boolean)
-6. [mapping](#mapping-node-types) (object)
-7. [proxy](#proxy) (object)
-8. [developMiddleware](#advanced-proxying-with-developmiddleware) (function)
+1. [plugins](#plugins) (array)
+1. [flags](#flags) (object)
+1. [pathPrefix](#pathprefix) (string)
+1. [trailingSlash](#trailingslash) (string)
+1. [polyfill](#polyfill) (boolean)
+1. [mapping](#mapping-node-types) (object)
+1. [proxy](#proxy) (object)
+1. [developMiddleware](#advanced-proxying-with-developmiddleware) (function)
+1. [jsxRuntime](#jsxruntime) (string)
+1. [jsxImportSource](#jsximportsource) (string)
 
 ## siteMetadata
 
@@ -68,7 +71,7 @@ This way you can store it in one place, and pull it whenever you need it. If you
 
 See a full description and sample usage in [Gatsby.js Tutorial Part Four](/docs/tutorial/part-4/#data-in-gatsby).
 
-## Plugins
+## plugins
 
 Plugins are Node.js packages that implement Gatsby APIs. The config file accepts an array of plugins. Some plugins may need only to be listed by name, while others may take options (see the docs for individual plugins).
 
@@ -135,7 +138,7 @@ module.exports = {
 
 See more about [Plugins](/docs/plugins/) for more on utilizing plugins, and to see available official and community plugins.
 
-## Flags
+## flags
 
 Flags let sites enable experimental or upcoming changes that are still in testing or waiting for the next major release.
 
@@ -161,7 +164,15 @@ module.exports = {
 
 See more about [Adding a Path Prefix](/docs/how-to/previews-deploys-hosting/path-prefix/).
 
-## Polyfill
+## trailingSlash
+
+Configures the creation of URLs and whether to remove, append, or ignore trailing slashes.
+
+- `always`: Always add trailing slashes to each URL, e.g. `/x` to `/x/`. This is the **default** behavior.
+- `never`: Remove all trailing slashes on each URL, e.g. `/x/` to `/x`.
+- `ignore`: Don't automatically modify the URL
+
+## polyfill
 
 Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default.
 
