@@ -29,14 +29,16 @@ const isWarmCache = process.env.WARM_CACHE
 const testOnColdCacheOnly = isWarmCache ? test.skip : test
 
 describe(`[gatsby-source-wordpress] Build default options`, () => {
-  beforeAll(async done => {
-    await urling({ url: `http://localhost:8001/graphql`, retry: 100 })
+  beforeAll(done => {
+    ;(async () => {
+      await urling({ url: `http://localhost:8001/graphql`, retry: 100 })
 
-    if (isWarmCache) {
-      done()
-    } else {
-      gatsbyCleanBeforeAll(done)
-    }
+      if (isWarmCache) {
+        done()
+      } else {
+        gatsbyCleanBeforeAll(done)
+      }
+    })()
   })
 
   testOnColdCacheOnly(`Default options build succeeded`, async () => {
