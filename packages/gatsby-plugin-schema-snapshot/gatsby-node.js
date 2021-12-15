@@ -21,7 +21,11 @@ exports.createSchemaCustomization = ({ actions, reporter }, options = {}) => {
       createTypes(schema, { name: `default-site-plugin` })
 
       if (options.update) {
-        fs.unlinkSync(filePath)
+        // If this is the first time the plugin is run, we can expect there won't be a file to unlink.
+        // Adding the empty try catch to just continue, since the file not existing is what is expected.
+        try {
+          fs.unlinkSync(filePath)
+        } catch (error) {} 
         printTypeDefinitions(options)
       }
     } else {
