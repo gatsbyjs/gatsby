@@ -21,12 +21,16 @@ export async function buildSchema(): Promise<void> {
     )
   }
 
-  const schemaSnapshot = await fs.readFile(
-    path.join(workerStore.program.directory, `.cache`, `schema.gql`),
-    `utf-8`
+  const schemaSnapshotPath = path.join(
+    workerStore.program.directory,
+    `.cache`,
+    `schema.gql`
   )
 
-  store.dispatch(actions.createTypes(schemaSnapshot))
+  if (await fs.pathExists(schemaSnapshotPath)) {
+    const schemaSnapshot = await fs.readFile(schemaSnapshotPath, `utf-8`)
+    store.dispatch(actions.createTypes(schemaSnapshot))
+  }
 
   setInferenceMetadata()
 
