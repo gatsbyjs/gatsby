@@ -1,0 +1,19 @@
+{
+  "name": "source-events",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gatsby": "^4.4.0",
+    "gatsby-core-utils": "^3.4.0"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0"
+  }
+}
