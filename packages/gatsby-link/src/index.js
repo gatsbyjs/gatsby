@@ -2,7 +2,6 @@ import PropTypes from "prop-types"
 import React from "react"
 import { Link, Location } from "@gatsbyjs/reach-router"
 import { resolve } from "@gatsbyjs/reach-router/lib/utils"
-
 import { parsePath } from "./parse-path"
 
 export { parsePath }
@@ -38,6 +37,12 @@ const getGlobalBasePrefix = () =>
       ? __BASE_PATH__
       : undefined
     : __BASE_PATH__
+const getGlobalTrailingSlash = () =>
+  process.env.NODE_ENV !== `production`
+    ? typeof __TRAILING_SLASH__ !== `undefined`
+      ? __TRAILING_SLASH__
+      : undefined
+    : __TRAILING_SLASH__
 
 const isLocalLink = path =>
   path &&
@@ -64,6 +69,7 @@ const rewriteLinkPath = (path, relativeTo) => {
   if (!isLocalLink(path)) {
     return path
   }
+  // TODO
   return isAbsolutePath(path) ? withPrefix(path) : absolutify(path, relativeTo)
 }
 

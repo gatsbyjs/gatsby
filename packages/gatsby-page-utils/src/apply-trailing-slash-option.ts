@@ -1,3 +1,4 @@
+// TODO(v5): Remove legacy setting and default to "always"
 export type TrailingSlash = "always" | "never" | "ignore" | "legacy"
 
 export const applyTrailingSlashOption = (
