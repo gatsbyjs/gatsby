@@ -614,9 +614,12 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
           )
         })
           .then(result => {
-            if (api === `registerSourceEvents`) {
-              result.forEach(event => {
-                event.plugin = plugin
+            if (api === `defineSourceEvents`) {
+              result = result.map(createableEventDefinition => {
+                return {
+                  plugin,
+                  createableEventDefinition,
+                }
               })
             }
 

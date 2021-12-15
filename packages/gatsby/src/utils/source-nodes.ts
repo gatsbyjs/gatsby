@@ -4,11 +4,10 @@ import apiRunner from "./api-runner-node"
 import { store } from "../redux"
 import { getDataStore, getNode, getNodes } from "../datastore"
 import { actions } from "../redux/actions"
-import { getQueue } from "../redux/events"
 import { IGatsbyState } from "../redux/types"
 const { deleteNode } = actions
 import { Node } from "../../index"
-import { runEvent } from "../redux/events/index"
+import { rootSourceEventRunner } from "../services/source-events/root-event-runner"
 
 /**
  * Finds the name of all plugins which implement Gatsby APIs that
@@ -100,21 +99,20 @@ export default async ({
   parentSpan?: Span
   deferNodeMutation?: boolean
 }): Promise<void> => {
-  if (process.env.GATSBY_EXPERIMENTAL_SOURCERER) {
-    const sourceEvents = (
-      await apiRunner(`registerSourceEvents`, {
+  if (process.env.GATSBY_EXPERIMENTAL_SOURCE_EVENTS) {
+    const sourceEventDefinitions = (
+      await apiRunner(`defineSourceEvents`, {
         parentSpan,
       })
-    ).flat(Infinity)
+    )?.flat(Infinity)
 
-    // run events
-    const queue = getQueue<any, unknown>()
-    const waitUntilQueueIsIdle = new Promise<void>(resolve => {
-      queue.drain = (): void => resolve()
-    })
-    runEvent(sourceEvents, `SourceAll`, {})
-
-    await waitUntilQueueIsIdle
+    if (sourceEventDefinitions) {
+      // create root events for each implementing plugin
+      await rootSourceEventRunner({
+        eventType: isInitialSourcing ? `SourceAllNodes` : `SourceChangedNodes`,
+        sourceEventDefinitions,
+      })
+    }
   }
 
   const traceId = isInitialSourcing

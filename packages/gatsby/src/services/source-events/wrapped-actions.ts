@@ -1,4 +1,7 @@
-import { defineSourceEvent } from "./index"
+/**
+ * @todo this file isn't used anywhere
+ */
+import { defineSourceEvent } from "./define-event"
 import { createNodeId as namespacedCreateNodeId } from "../../utils/create-node-id"
 interface ICreateNodeArgs {
   id: string
@@ -9,14 +12,11 @@ interface ICreateNodeArgs {
 
 const createNode = defineSourceEvent({
   type: `CREATE_NODE`,
+  description: `Creates a Gatsby node.`,
   handler: (args: ICreateNodeArgs) => {
     console.log(`createNode`, args)
   },
 })
-createNode.plugin = {
-  id: `gatsby`,
-  name: `gatsby`,
-}
 
 export function createNodeId(
   plugin: string,
@@ -25,5 +25,4 @@ export function createNodeId(
   return namespacedCreateNodeId(id, plugin)
 }
 
-export { createContentDigest } from "gatsby-core-utils"
 export { createNode }
