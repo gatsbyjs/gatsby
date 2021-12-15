@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.4.0/packages/gatsby-cli) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Bug Fixes
+
+- make `--inspect-brk` work [#34242](https://github.com/gatsbyjs/gatsby/issues/34242) [#34254](https://github.com/gatsbyjs/gatsby/issues/34254) ([7a432a8](https://github.com/gatsbyjs/gatsby/commit/7a432a802b3bcc9842ba7cd06890553fd0b82de0))
+- update minor and patch dependencies for gatsby-cli [#34135](https://github.com/gatsbyjs/gatsby/issues/34135) ([d6e8d0a](https://github.com/gatsbyjs/gatsby/commit/d6e8d0ac2345a885883bfa63e664a57510fbea2c))
+- Add back an activity for jobs [#34061](https://github.com/gatsbyjs/gatsby/issues/34061) [#34095](https://github.com/gatsbyjs/gatsby/issues/34095) ([af39171](https://github.com/gatsbyjs/gatsby/commit/af39171c923a029211fd33dc3a1ef312bbcddd93))
+
+#### Chores
+
+- update dependency rollup to ^2.60.2 for gatsby-cli [#34143](https://github.com/gatsbyjs/gatsby/issues/34143) ([7ff1012](https://github.com/gatsbyjs/gatsby/commit/7ff101230b07b2e766d4ffdc718384fee66f2b85))
+- update dependency typescript to ^4.5.2 [#34144](https://github.com/gatsbyjs/gatsby/issues/34144) ([51bff91](https://github.com/gatsbyjs/gatsby/commit/51bff91246cbc48ba50c9650205b0488691fb82a))
+- log pending jobs when build is stuck [#34102](https://github.com/gatsbyjs/gatsby/issues/34102) ([1dae7f5](https://github.com/gatsbyjs/gatsby/commit/1dae7f52e095e352d531d13cdc480fb0d498e1ef))
+
 ## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.3.0/packages/gatsby-cli) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
