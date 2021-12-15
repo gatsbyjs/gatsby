@@ -168,11 +168,11 @@ See more about [Adding a Path Prefix](/docs/how-to/previews-deploys-hosting/path
 
 Configures the creation of URLs and whether to remove, append, or ignore trailing slashes.
 
-- `always`: Always add trailing slashes to each URL, e.g. `/x` to `/x/`. This is the **default** behavior.
+- `always`: Always add trailing slashes to each URL, e.g. `/x` to `/x/`.
 - `never`: Remove all trailing slashes on each URL, e.g. `/x/` to `/x`.
 - `ignore`: Don't automatically modify the URL
 
-With Gatsby v4 it'll be set to `legacy` by default, in Gatsby v5 the default mode will be `always`.
+Until Gatsby v4 it'll be set to `legacy` by default, in Gatsby v5 the default mode will be `always`.
 
 ## polyfill
 
