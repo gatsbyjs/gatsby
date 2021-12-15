@@ -27,6 +27,7 @@ export enum ProgramStatus {
 }
 
 export type PageMode = "SSG" | "DSG" | "SSR"
+export type TrailingSlash = "always" | "never" | "ignore"
 
 export interface IGatsbyPage {
   internalComponentName: string
@@ -97,7 +98,7 @@ export interface IGatsbyConfig {
   mapping?: Record<string, string>
   jsxRuntime?: "classic" | "automatic"
   jsxImportSource?: string
-  trailingSlash?: "always" | "never" | "ignore"
+  trailingSlash?: TrailingSlash
 }
 
 export interface IGatsbyNode {

@@ -29,6 +29,7 @@ export const eslintRequiredConfig: ESLint.Options = {
     globals: {
       graphql: true,
       __PATH_PREFIX__: true,
+      __TRAILING_SLASH__: true,
       __BASE_PATH__: true, // this will rarely, if ever, be used by consumers
     },
     extends: [eslintRequirePreset],
@@ -47,6 +48,7 @@ export const eslintConfig = (
       globals: {
         graphql: true,
         __PATH_PREFIX__: true,
+        __TRAILING_SLASH__: true,
         __BASE_PATH__: true, // this will rarely, if ever, be used by consumers
       },
       extends: [

@@ -1,5 +1,6 @@
 import _ from "lodash"
 import { Express } from "express"
+import type { TrailingSlash } from "../redux/types"
 // TODO export it in index.d.ts
 type PluginEntry =
   | string
@@ -27,7 +28,7 @@ interface IGatsbyConfigInput {
   developMiddleware?(app: Express): void
   jsxRuntime?: "classic" | "automatic"
   jsxImportSource?: string
-  trailingSlash?: "always" | "never" | "ignore"
+  trailingSlash?: TrailingSlash
 }
 
 type ConfigKey = keyof IGatsbyConfigInput
