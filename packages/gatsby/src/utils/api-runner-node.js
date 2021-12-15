@@ -487,6 +487,13 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
     plugin => plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource
   )
 
+  // remove all sourceNodes calls when defineSourceEvents exists
+  if (api === `sourceNodes` && process.env.GATSBY_EXPERIMENTAL_SOURCERER) {
+    implementingPlugins = implementingPlugins.filter(
+      plugin => !plugin.nodeAPIs.includes(`defineSourceEvents`)
+    )
+  }
+
   if (api === `sourceNodes` && args.pluginName) {
     implementingPlugins = implementingPlugins.filter(
       plugin => plugin.name === args.pluginName
@@ -614,7 +621,7 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
           )
         })
           .then(result => {
-            if (api === `registerSourceEvents`) {
+            if (api === `defineSourceEvents`) {
               result.forEach(event => {
                 event.plugin = plugin
               })

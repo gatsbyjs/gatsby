@@ -4,14 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "cross-env GATSBY_EXPERIMENTAL_SOURCERER=1 gatsby build",
+    "develop": "cross-env GATSBY_EXPERIMENTAL_SOURCERER=1 gatsby develop",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "gatsby": "^4.4.0",
-    "gatsby-core-utils": "^3.4.0"
+    "gatsby": "4.5.0-next.0-dev-1639580870659",
+    "gatsby-core-utils": "3.5.0-next.0-dev-1639580870659"
   },
   "devDependencies": {
     "dotenv": "^10.0.0"

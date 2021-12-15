@@ -1,6 +1,9 @@
 import { defineSourceEvent } from "./index"
 import { createNodeId as namespacedCreateNodeId } from "../../utils/create-node-id"
-interface ICreateNodeArgs {
+import { store } from "../../redux/index"
+import { actions } from "../../redux/actions"
+
+export interface ICreateNodeArgs {
   id: string
   type: string
   contentDigest: string
@@ -9,13 +12,31 @@ interface ICreateNodeArgs {
 
 const createNode = defineSourceEvent({
   type: `CREATE_NODE`,
-  handler: (args: ICreateNodeArgs) => {
-    console.log(`createNode`, args)
+  description: `Create a node`,
+  handler: async ({
+    plugin,
+    id,
+    fields,
+    type,
+    contentDigest,
+  }: ICreateNodeArgs & { plugin: { id: string; name: string } }) => {
+    await actions.createNode(
+      {
+        id,
+        ...fields,
+        internal: {
+          type,
+          contentDigest,
+        },
+      },
+      plugin
+    )(store.dispatch)
   },
 })
 createNode.plugin = {
   id: `gatsby`,
   name: `gatsby`,
+  pluginOptions: { plugins: [] },
 }
 
 export function createNodeId(

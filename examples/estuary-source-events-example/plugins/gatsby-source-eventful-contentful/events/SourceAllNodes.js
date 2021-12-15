@@ -1,6 +1,5 @@
-const _ = require("lodash")
 const { createClient } = require("../utils/contentful-client")
-const { defineSourceEvent } = require("gatsby/plugin")
+const { defineSourceEvent } = require("gatsby/sourceror")
 
 const { SourceContentType } = require("./SourceContentType")
 const { CreateContentfulNodes } = require("./CreateContentfulNodes")

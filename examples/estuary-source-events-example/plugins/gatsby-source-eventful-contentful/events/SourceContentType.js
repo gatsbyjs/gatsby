@@ -1,4 +1,4 @@
-const { defineSourceEvent } = require("gatsby/plugin")
+const { defineSourceEvent } = require("gatsby/sourceror")
 const { createClient } = require("../utils/contentful-client")
 const { CreateContentfulNodes } = require("./CreateContentfulNodes")
 

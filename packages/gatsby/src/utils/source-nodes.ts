@@ -100,9 +100,10 @@ export default async ({
   parentSpan?: Span
   deferNodeMutation?: boolean
 }): Promise<void> => {
+  console.log(`source-nodes`, process.env.GATSBY_EXPERIMENTAL_SOURCERER)
   if (process.env.GATSBY_EXPERIMENTAL_SOURCERER) {
     const sourceEvents = (
-      await apiRunner(`registerSourceEvents`, {
+      await apiRunner(`defineSourceEvents`, {
         parentSpan,
       })
     ).flat(Infinity)
@@ -112,7 +113,7 @@ export default async ({
     const waitUntilQueueIsIdle = new Promise<void>(resolve => {
       queue.drain = (): void => resolve()
     })
-    runEvent(sourceEvents, `SourceAll`, {})
+    runEvent(sourceEvents, `SourceAllNodes`, {})
 
     await waitUntilQueueIsIdle
   }
