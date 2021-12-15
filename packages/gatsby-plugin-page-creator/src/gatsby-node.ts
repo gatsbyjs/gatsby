@@ -69,7 +69,8 @@ export async function createPagesStatefully(
 ): Promise<void> {
   try {
     const { deletePage } = actions
-    const { program } = store.getState()
+    const { program, config } = store.getState()
+    const { trailingSlash = `legacy` } = config
 
     const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
@@ -111,7 +112,8 @@ Please pick a path to an existing directory.`,
         graphql,
         reporter,
         ignore,
-        slugifyOptions
+        slugifyOptions,
+        trailingSlash
       )
     })
 
@@ -130,7 +132,8 @@ Please pick a path to an existing directory.`,
               graphql,
               reporter,
               ignore,
-              slugifyOptions
+              slugifyOptions,
+              trailingSlash
             )
             knownFiles.add(addedPath)
           }
@@ -182,6 +185,7 @@ export function setFieldsOnGraphQLNodeType(
 ): Record<string, unknown> {
   try {
     const extensions = store.getState().program.extensions
+    const { trailingSlash = `legacy` } = store.getState().config
     const collectionQuery = _.camelCase(`all ${type.name}`)
     if (knownCollections.has(collectionQuery)) {
       return {
@@ -216,7 +220,7 @@ export function setFieldsOnGraphQLNodeType(
               slugifyOptions
             )
 
-            return createPath(derivedPath)
+            return createPath(derivedPath, trailingSlash)
           },
         },
       }

@@ -3,6 +3,7 @@ import { Actions, CreatePagesArgs } from "gatsby"
 import { createPath } from "gatsby-page-utils"
 import { Reporter } from "gatsby/reporter"
 import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
+import type { TrailingSlash } from "gatsby-page-utils"
 import { reverseLookupParams } from "./extract-query"
 import { getMatchPath } from "gatsby-core-utils"
 import { getCollectionRouteParams } from "./get-collection-route-params"
@@ -18,7 +19,8 @@ export async function createPagesFromCollectionBuilder(
   actions: Actions,
   graphql: CreatePagesArgs["graphql"],
   reporter: Reporter,
-  slugifyOptions?: ISlugifyOptions
+  slugifyOptions?: ISlugifyOptions,
+  trailingSlash: TrailingSlash
 ): Promise<void> {
   if (isValidCollectionPathImplementation(absolutePath, reporter) === false) {
     watchCollectionBuilder(absolutePath, ``, [], actions, reporter, () =>
@@ -28,7 +30,8 @@ export async function createPagesFromCollectionBuilder(
         actions,
         graphql,
         reporter,
-        slugifyOptions
+        slugifyOptions,
+        trailingSlash
       )
     )
     return
@@ -46,7 +49,8 @@ export async function createPagesFromCollectionBuilder(
         actions,
         graphql,
         reporter,
-        slugifyOptions
+        slugifyOptions,
+        trailingSlash
       )
     )
     return
@@ -82,7 +86,8 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
           actions,
           graphql,
           reporter,
-          slugifyOptions
+          slugifyOptions,
+          trailingSlash
         )
     )
 
@@ -118,7 +123,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
       reporter,
       slugifyOptions
     )
-    const path = createPath(derivedPath)
+    const path = createPath(derivedPath, trailingSlash)
     // We've already created a page with this path
     if (knownPagePaths.has(path)) {
       return
@@ -168,7 +173,8 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
         actions,
         graphql,
         reporter,
-        slugifyOptions
+        slugifyOptions,
+        trailingSlash
       )
   )
 }

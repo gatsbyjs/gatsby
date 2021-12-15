@@ -19,8 +19,8 @@ const {
   getCommonDir,
   truncatePath,
   tooLongSegmentsInPath,
-  applyTrailingSlashOption,
 } = require(`../../utils/path`)
+const { applyTrailingSlashOption } = require(`gatsby-page-utils`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)

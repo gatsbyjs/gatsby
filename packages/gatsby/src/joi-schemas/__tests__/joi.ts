@@ -108,13 +108,13 @@ describe(`gatsby config`, () => {
     )
   })
 
-  it(`returns "always" for trailingSlash when not set`, () => {
+  it(`returns "legacy" for trailingSlash when not set`, () => {
     const config = {}
 
     const result = gatsbyConfigSchema.validate(config)
     expect(result.value).toEqual(
       expect.objectContaining({
-        trailingSlash: `always`,
+        trailingSlash: `legacy`,
       })
     )
   })
@@ -126,7 +126,7 @@ describe(`gatsby config`, () => {
 
     const result = gatsbyConfigSchema.validate(config)
     expect(result.error).toMatchInlineSnapshot(
-      `[ValidationError: "trailingSlash" must be one of [always, never, ignore]]`
+      `[ValidationError: "trailingSlash" must be one of [always, never, ignore, legacy]]`
     )
   })
 
@@ -137,7 +137,7 @@ describe(`gatsby config`, () => {
 
     const result = gatsbyConfigSchema.validate(config)
     expect(result.error).toMatchInlineSnapshot(
-      `[ValidationError: "trailingSlash" must be one of [always, never, ignore]]`
+      `[ValidationError: "trailingSlash" must be one of [always, never, ignore, legacy]]`
     )
   })
 })

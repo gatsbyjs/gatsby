@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { Express } from "express"
-import type { TrailingSlash } from "../redux/types"
+import type { TrailingSlash } from "gatsby-page-utils"
 // TODO export it in index.d.ts
 type PluginEntry =
   | string

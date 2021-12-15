@@ -1,6 +1,5 @@
 import path from "path"
 import { joinPath, createContentDigest } from "gatsby-core-utils"
-import type { TrailingSlash } from "../redux/types"
 
 export const withBasePath =
   (basePath: string) =>
@@ -68,18 +67,3 @@ export const truncatePath = (path: string): string =>
     }
     return match
   })
-
-export const applyTrailingSlashOption = (
-  input: string,
-  option: TrailingSlash = `always`
-): string => {
-  if (input === `/`) return input
-  if (option === `always`) {
-    return input.endsWith(`/`) ? input : withTrailingSlash(input)
-  }
-  if (option === `never`) {
-    return input.endsWith(`/`) ? input.slice(0, -1) : input
-  }
-
-  return input
-}

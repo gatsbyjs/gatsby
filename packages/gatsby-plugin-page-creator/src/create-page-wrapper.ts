@@ -11,6 +11,7 @@ import { createPagesFromCollectionBuilder } from "./create-pages-from-collection
 import systemPath from "path"
 import { trackFeatureIsUsed } from "gatsby-telemetry"
 import { Reporter } from "gatsby/reporter"
+import type { TrailingSlash } from "gatsby-page-utils"
 
 function pathIsCollectionBuilder(path: string): boolean {
   return path.includes(`{`)
@@ -27,7 +28,8 @@ export function createPage(
   graphql: CreatePagesArgs["graphql"],
   reporter: Reporter,
   ignore?: IPathIgnoreOptions | string | Array<string> | null,
-  slugifyOptions?: ISlugifyOptions
+  slugifyOptions?: ISlugifyOptions,
+  trailingSlash: TrailingSlash
 ): void {
   // Filter out special components that shouldn't be made into
   // pages.
@@ -51,7 +53,8 @@ export function createPage(
       actions,
       graphql,
       reporter,
-      slugifyOptions
+      slugifyOptions,
+      trailingSlash
     )
     return
   }
@@ -59,12 +62,12 @@ export function createPage(
   // If the path includes a `[]` in it, then we create it as a client only route
   if (pathIsClientOnlyRoute(absolutePath)) {
     trackFeatureIsUsed(`UnifiedRoutes:client-page-builder`)
-    createClientOnlyPage(filePath, absolutePath, actions)
+    createClientOnlyPage(filePath, absolutePath, actions, trailingSlash)
     return
   }
 
   // Create page object
-  const createdPath = createPath(filePath)
+  const createdPath = createPath(filePath, trailingSlash)
   const page = {
     path: createdPath,
     component: absolutePath,
