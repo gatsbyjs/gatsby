@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency graphql to ^15.7.2 for gatsby-codemods [#33386](https://github.com/gatsbyjs/gatsby/issues/33386) ([0bfc91d](https://github.com/gatsbyjs/gatsby/commit/0bfc91da010ff5d25ab67ac822366dc422b4aded))
 
-
-
 ## [3.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-codemods@3.3.0/packages/gatsby-codemods) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
