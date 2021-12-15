@@ -91,9 +91,15 @@ describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
       process.exit(1)
     }
 
-    gatsbyDevelopProcess = spawnGatsbyProcess(`develop`)
-
-    await urling(`http://localhost:8000`, { retry: 100 })
+    return new Promise(resolve => {
+      gatsbyDevelopProcess = spawnGatsbyProcess(`develop`)
+      gatsbyDevelopProcess.stdout.on("data", data => {
+        process.stdout.write(data)
+        if (data.toString().includes("http://localhost:8000")) {
+          resolve()
+        }
+      })
+    })
   })
 
   require(`../test-fns/index`)
