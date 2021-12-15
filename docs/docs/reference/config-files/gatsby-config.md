@@ -172,6 +172,8 @@ Configures the creation of URLs and whether to remove, append, or ignore trailin
 - `never`: Remove all trailing slashes on each URL, e.g. `/x/` to `/x`.
 - `ignore`: Don't automatically modify the URL
 
+With Gatsby v4 it'll be set to `legacy` by default, in Gatsby v5 the default mode will be `always`.
+
 ## polyfill
 
 Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default.

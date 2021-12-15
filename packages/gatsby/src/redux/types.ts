@@ -1,3 +1,4 @@
+import type { TrailingSlash } from "gatsby-page-utils"
 import { IProgram } from "../commands/types"
 import { GraphQLFieldExtensionDefinition } from "../schema/extensions"
 import { DocumentNode, GraphQLSchema, DefinitionNode } from "graphql"
@@ -27,7 +28,6 @@ export enum ProgramStatus {
 }
 
 export type PageMode = "SSG" | "DSG" | "SSR"
-export type TrailingSlash = "always" | "never" | "ignore"
 
 export interface IGatsbyPage {
   internalComponentName: string
