@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency common-tags to ^1.8.2 for gatsby-transformer-react-docgen [#34126](https://github.com/gatsbyjs/gatsby/issues/34126) ([b81d162](https://github.com/gatsbyjs/gatsby/commit/b81d162a833f38c3ac1a230988a26d92f5811967))
 
-
-
 ## [7.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-react-docgen@7.3.0/packages/gatsby-transformer-react-docgen) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

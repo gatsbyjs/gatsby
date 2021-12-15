@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency got to ^11.8.3 for gatsby-source-npm-package-search [#34132](https://github.com/gatsbyjs/gatsby/issues/34132) ([a221d36](https://github.com/gatsbyjs/gatsby/commit/a221d366dcaeea4677cab6424925c5798965d8d7))
 
-
-
 ## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-npm-package-search@4.3.0/packages/gatsby-source-npm-package-search) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

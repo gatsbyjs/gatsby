@@ -30,8 +30,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update createNodeManifest action updatedAt description [#34166](https://github.com/gatsbyjs/gatsby/issues/34166) ([0614fce](https://github.com/gatsbyjs/gatsby/commit/0614fced8aa4a17d7e6ce7ba95cded268ba85aa1))
 - log pending jobs when build is stuck [#34102](https://github.com/gatsbyjs/gatsby/issues/34102) ([1dae7f5](https://github.com/gatsbyjs/gatsby/commit/1dae7f52e095e352d531d13cdc480fb0d498e1ef))
 
-
-
 ## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.3.0/packages/gatsby) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

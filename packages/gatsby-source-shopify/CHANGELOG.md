@@ -14,8 +14,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update dependency typescript to ^4.5.2 [#34144](https://github.com/gatsbyjs/gatsby/issues/34144) ([51bff91](https://github.com/gatsbyjs/gatsby/commit/51bff91246cbc48ba50c9650205b0488691fb82a))
 - update sharp [#34120](https://github.com/gatsbyjs/gatsby/issues/34120) ([df36406](https://github.com/gatsbyjs/gatsby/commit/df3640679b5e161c4fd285b87ed32bb1224928b8))
 
-
-
 ## [6.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@6.3.0/packages/gatsby-source-shopify) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

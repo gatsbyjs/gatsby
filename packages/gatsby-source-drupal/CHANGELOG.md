@@ -15,8 +15,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency got to ^11.8.3 for gatsby-source-drupal [#34131](https://github.com/gatsbyjs/gatsby/issues/34131) ([c5fdd39](https://github.com/gatsbyjs/gatsby/commit/c5fdd39fe7d63c30e455166fee4967389d3660dc))
 
-
-
 ## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@5.3.0/packages/gatsby-source-drupal) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

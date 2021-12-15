@@ -15,8 +15,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency remark-mdx to ^1.6.22 for gatsby-remark-responsive-iframe [#32568](https://github.com/gatsbyjs/gatsby/issues/32568) ([a2159f1](https://github.com/gatsbyjs/gatsby/commit/a2159f19b64536fa7ca895cf0257812b42d2d4a0))
 
-
-
 ## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-responsive-iframe@5.3.0/packages/gatsby-remark-responsive-iframe) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

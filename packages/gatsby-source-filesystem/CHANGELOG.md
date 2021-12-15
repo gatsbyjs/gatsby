@@ -12,8 +12,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Ensure fastq concurrency parameter of the correct type [#34186](https://github.com/gatsbyjs/gatsby/issues/34186) ([cada108](https://github.com/gatsbyjs/gatsby/commit/cada108ce0fb6cdb3344e37403194439e50f6492))
 - update dependency xstate to ^4.26.1 for gatsby-source-filesystem [#34134](https://github.com/gatsbyjs/gatsby/issues/34134) ([c3e9fd9](https://github.com/gatsbyjs/gatsby/commit/c3e9fd90f5ec515f9fe8e67608bc025693880922))
 
-
-
 ## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.3.0/packages/gatsby-source-filesystem) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

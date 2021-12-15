@@ -19,8 +19,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - remove log for manifests created [#34165](https://github.com/gatsbyjs/gatsby/issues/34165) ([58f0d50](https://github.com/gatsbyjs/gatsby/commit/58f0d50743b4e6689d05745071ddd71acddb00d6))
 
-
-
 ## [6.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.3.0/packages/gatsby-source-wordpress) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

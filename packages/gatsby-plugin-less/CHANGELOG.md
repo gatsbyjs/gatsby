@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-plugin-less
 
-
-
 ## [6.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-less@6.3.0/packages/gatsby-plugin-less) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

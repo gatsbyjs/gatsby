@@ -19,8 +19,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - update dependency nock to ^13.2.1 for gatsby-source-contentful [#34141](https://github.com/gatsbyjs/gatsby/issues/34141) ([eb69198](https://github.com/gatsbyjs/gatsby/commit/eb69198eb0425ebbdc1bc20bb74525088f3dba39))
 
-
-
 ## [7.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.1.0/packages/gatsby-source-contentful) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

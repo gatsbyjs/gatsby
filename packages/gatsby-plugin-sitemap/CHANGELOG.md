@@ -12,8 +12,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update dependency common-tags to ^1.8.2 for gatsby-plugin-sitemap [#34124](https://github.com/gatsbyjs/gatsby/issues/34124) ([3258946](https://github.com/gatsbyjs/gatsby/commit/3258946d25dfbf8b4a2fed29cc65ac9003f313d1))
 - fix pathPrefix handling fix [#34158](https://github.com/gatsbyjs/gatsby/issues/34158) ([2d1a880](https://github.com/gatsbyjs/gatsby/commit/2d1a880e792e49629a38c455d0e79db85c297dcc))
 
-
-
 ## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.3.0/packages/gatsby-plugin-sitemap) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
