@@ -9,6 +9,9 @@ export interface ICreateNodeArgs {
   contentDigest: string
   fields: Record<string, unknown>
 }
+export interface IDeleteNodeArgs {
+  id: string
+}
 
 const createNode = defineSourceEvent({
   type: `CREATE_NODE`,
@@ -39,6 +42,27 @@ createNode.plugin = {
   pluginOptions: { plugins: [] },
 }
 
+const deleteNode = defineSourceEvent({
+  type: `DELETE_NODE`,
+  description: `Delete a node`,
+  handler: async ({
+    plugin,
+    id,
+  }: ICreateNodeArgs & { plugin: { id: string; name: string } }) => {
+    await actions.deleteNode(
+      {
+        id,
+      },
+      plugin
+    )(store.dispatch)
+  },
+})
+deleteNode.plugin = {
+  id: `gatsby`,
+  name: `gatsby`,
+  pluginOptions: { plugins: [] },
+}
+
 export function createNodeId(
   plugin: string,
   id: string
@@ -47,4 +71,4 @@ export function createNodeId(
 }
 
 export { createContentDigest } from "gatsby-core-utils"
-export { createNode }
+export { createNode, deleteNode }

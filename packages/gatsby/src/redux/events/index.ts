@@ -2,6 +2,7 @@ import fastq from "fastq"
 import { AsyncLocalStorage } from "async_hooks"
 import {
   createNode,
+  deleteNode,
   createNodeId,
   createContentDigest,
   ICreateNodeArgs,
@@ -9,6 +10,7 @@ import {
 
 import type { IGatsbyPlugin } from "../types"
 import type { queue } from "fastq"
+import { uuid } from "gatsby-core-utils"
 
 type EventType = string
 type MaybePromise<T> = Promise<T> | T
@@ -16,6 +18,7 @@ type EventHandlerArg<T, U> = (
   context: U,
   actions: {
     createNode: (args: ICreateNodeArgs) => ReturnType<typeof createNode>
+    deleteNode: typeof deleteNode
     createContentDigest: typeof createContentDigest
     createNodeId: (id: string) => string
     pluginOptions: ITask<T, U>["plugin"]["pluginOptions"]
@@ -48,13 +51,14 @@ interface ITask<T, U> {
   type: EventHandler<T, U>["type"]
   handler: EventHandlerArg<T, U>
   args: U
+  parent: string | null
   plugin: EventHandler<T, U>["plugin"]
 }
 
 export type SourceEventQueue<T, U> = queue<ITask<T, U>, T | Awaited<T>>
 
 let eventSystemQueue: queue | null = null
-let asyncStorage: AsyncLocalStorage | null = null
+let asyncStorage: AsyncLocalStorage<string> | null = null
 
 export function getQueue<T, U>(): SourceEventQueue<T, U> {
   if (!eventSystemQueue) {
@@ -63,27 +67,34 @@ export function getQueue<T, U>(): SourceEventQueue<T, U> {
       ITask<T, U>,
       ReturnType<EventHandlerArg<T, U>>
     >(function ({ handler, args, type, plugin }, cb): void {
-      const result = handler(args, {
-        createNode: (args: ICreateNodeArgs) => createNode({ ...args, plugin }),
-        createContentDigest,
-        createNodeId: createNodeId.bind(null, plugin.name),
-        pluginOptions: plugin.pluginOptions,
-      })
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      asyncStorage!.run(`${type}-${uuid.v4()}`, () => {
+        setImmediate(() => {
+          const result = handler(args, {
+            createNode: (args: ICreateNodeArgs) =>
+              createNode({ ...args, plugin }),
+            deleteNode,
+            createContentDigest,
+            createNodeId: createNodeId.bind(null, plugin.name),
+            pluginOptions: plugin.pluginOptions,
+          })
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      if ((result as MaybePromise<T>)?.then) {
-        ;(result as unknown as Promise<T>).then(res => cb(null, res))
-      } else {
-        cb(null, result)
-      }
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          if ((result as MaybePromise<T>)?.then) {
+            ;(result as unknown as Promise<T>).then(res => cb(null, res))
+          } else {
+            cb(null, result)
+          }
+        })
+      })
     }, 1)
   }
 
   return eventSystemQueue as queue<ITask<Awaited<T>, U>>
 }
 
-function pushTaskToQueue<T, U>(
+async function pushTaskToQueue<T, U>(
   task: ITask<T, U>
 ): Promise<ReturnType<EventHandlerArg<T, U>>> {
   return new Promise((resolve, reject) => {
@@ -91,8 +102,6 @@ function pushTaskToQueue<T, U>(
       if (err) {
         return reject(err)
       }
-
-      console.log({ task })
 
       return resolve(result as ReturnType<EventHandlerArg<T, U>>)
     })
@@ -103,7 +112,7 @@ function wrapHandlerWithEventTracking<T, U>({
   type,
   handler,
 }: ISourceEventArgs<T, U>): EventHandler<T, U> {
-  function wrappedFunction(args: U): Promise<T> {
+  async function wrappedFunction(args: U): Promise<T> {
     if (!(wrappedFunction as unknown as EventHandler<T, U>).plugin) {
       throw new Error(`Please make sure you registered the function`)
     }
@@ -112,30 +121,11 @@ function wrapHandlerWithEventTracking<T, U>({
       asyncStorage = new AsyncLocalStorage()
     }
 
-    // TOOD still have to wire this in
-    // const nextLocalStorage = {
-    //   parentId: id,
-    //   gatsbyApi,
-    //   pluginOptions,
-    //   eventDefinitions,
-    //   onCreateEvent,
-    //   rootEventQueue,
-    // }
-
-    // asyncLocalStorage.run(nextLocalStorage, () => {
-    //   createEvent({
-    //     definition,
-    //     context,
-    //   })
-    // })
-
-    // return asyncLocalStorage(() => {
-
-    // })
     return pushTaskToQueue<T, U>({
       type,
       handler,
       args,
+      parent: asyncStorage.getStore() as string | null,
       plugin: (wrappedFunction as unknown as EventHandler<T, U>).plugin,
     })
   }
@@ -170,11 +160,11 @@ export function defineSourceEvent<T, U>(
   return wrapHandlerWithEventTracking<T, U>(definition)
 }
 
-export function runEvent<T, U>(
+export async function runEvent<T, U>(
   sourceEvents: Array<EventHandler<T, U>>,
   eventName: EventType,
   args: U
-): void {
+): Promise<void> {
   for (const event of sourceEvents) {
     if (event.type === eventName) {
       event(args)

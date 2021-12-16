@@ -100,7 +100,6 @@ export default async ({
   parentSpan?: Span
   deferNodeMutation?: boolean
 }): Promise<void> => {
-  console.log(`source-nodes`, process.env.GATSBY_EXPERIMENTAL_SOURCERER)
   if (process.env.GATSBY_EXPERIMENTAL_SOURCERER) {
     const sourceEvents = (
       await apiRunner(`defineSourceEvents`, {

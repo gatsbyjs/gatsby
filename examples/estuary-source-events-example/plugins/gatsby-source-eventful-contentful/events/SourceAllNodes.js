@@ -11,7 +11,7 @@ exports.SourceAllNodes = defineSourceEvent({
   handler: async ({}, { pluginOptions }) => {
     const response = await createClient({ pluginOptions }).getContentTypes()
 
-    CreateContentfulNodes({ response })
+    // CreateContentfulNodes({ response })
 
     response.items.forEach(({ sys: { id } }) => {
       SourceContentType({ contentTypeId: id })
