@@ -84,6 +84,26 @@ exports.onPostBuild = async ({ getNodes, store }) => {
     )
 
     const result = require(pageDataPath).result.data
+
+    // some normalization so order of fields in type queries is consistent
+    if (result) {
+      if (result.typeinfoParent && result.typeinfoParent.fields) {
+        result.typeinfoParent.fields = result.typeinfoParent.fields.sort(
+          (a, b) => {
+            return a.name.localeCompare(b.name)
+          }
+        )
+      }
+
+      if (result.typeinfoChild && result.typeinfoChild.fields) {
+        result.typeinfoChild.fields = result.typeinfoChild.fields.sort(
+          (a, b) => {
+            return a.name.localeCompare(b.name)
+          }
+        )
+      }
+    }
+
     _.set(queryResults, [scenarioName, type], result)
   })
 
