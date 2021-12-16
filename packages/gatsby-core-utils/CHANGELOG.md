@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.4.0/packages/gatsby-core-utils) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Bug Fixes
+
+- update dependency got to ^11.8.3 for gatsby-core-utils [#34129](https://github.com/gatsbyjs/gatsby/issues/34129) ([3700b21](https://github.com/gatsbyjs/gatsby/commit/3700b2161dcfc553b3429e45bae80f68b1be0252))
+- update dependency got to ^11.8.3 for gatsby-plugin-sharp [#34130](https://github.com/gatsbyjs/gatsby/issues/34130) ([80ef329](https://github.com/gatsbyjs/gatsby/commit/80ef329451902fe351cfd9f555c379b03929db20))
+
+#### Chores
+
+- update dependency typescript to ^4.5.2 [#34144](https://github.com/gatsbyjs/gatsby/issues/34144) ([51bff91](https://github.com/gatsbyjs/gatsby/commit/51bff91246cbc48ba50c9650205b0488691fb82a))
+
 ## [3.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.3.0/packages/gatsby-core-utils) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

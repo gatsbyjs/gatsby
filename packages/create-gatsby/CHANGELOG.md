@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.4.0/packages/create-gatsby) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Chores
+
+- update dependency prettier to ^2.5.1 [#34142](https://github.com/gatsbyjs/gatsby/issues/34142) ([c69ec70](https://github.com/gatsbyjs/gatsby/commit/c69ec70960c2a68b540a7317ec1f47d5a7c0d064))
+- update [dev] minor and patch dependencies for create-gatsby [#34109](https://github.com/gatsbyjs/gatsby/issues/34109) ([14e13b9](https://github.com/gatsbyjs/gatsby/commit/14e13b92a1c1a07c18acf6a69b71b09644b689b0))
+
 ## [2.3.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.3.0/packages/create-gatsby) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

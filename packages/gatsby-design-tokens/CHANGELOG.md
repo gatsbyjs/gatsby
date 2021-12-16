@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.4.0/packages/gatsby-design-tokens) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Chores
+
+- update dependency microbundle to ^0.14.2 for gatsby-design-tokens [#34115](https://github.com/gatsbyjs/gatsby/issues/34115) ([46a1398](https://github.com/gatsbyjs/gatsby/commit/46a1398ea6197f0da778ea4d83bfde85da801a19))
+
 ## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-design-tokens@4.3.0/packages/gatsby-design-tokens) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
