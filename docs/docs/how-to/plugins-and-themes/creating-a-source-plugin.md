@@ -875,7 +875,7 @@ export function createNodeManifest({
 
 ##### Call `unstable_createNodeManifest`
 
-Next we will build up the `manifestId` and call `unstable_createNodeManifest`. The `manifestId` needs to be created with information that comes from the data source NOT Gatsby, which is why we use the `entryItem` id as opposed to the `entryNode` id. This `manifestId` must be uniquely tied to a specific revision of specific content. We use the CMS project space (you may not need this), the id of the content, and finally the timestamp that it was updated at.
+Next we will build up the `manifestId` and call `unstable_createNodeManifest`. The `manifestId` needs to be created with information that comes from the CMS **NOT** Gatsby (the CMS will need to create the exact same manifest), which is why we use the `entryItem` id as opposed to the `entryNode` id. This `manifestId` must be uniquely tied to a specific revision of specific content. We use the CMS project space (you may not need this), the id of the content, and finally the timestamp that it was updated at.
 
 ```javascript:title=source-plugin/utils.js
 // highlight-start
@@ -934,16 +934,25 @@ export function createNodeManifest({
 
 #### Content Sync data source (or CMS) changes
 
-The CMS will need to send a webhook when content is changed
+The CMS will need to send a preview webhook to Gatsby Cloud when content is changed and open the Content Sync waiting room. Follow along to learn how to implement it on the CMS side.
 
-##### Using the gatsby preview extension
+##### Using the Gatsby preview extension
 
-This package is currently in the process of being open sourced and should be available shortly. For context, here is what the package provides, a button to handle opening the Content Sync waiting room. You will need to create a button similar to this for the time being.
+We are currently in process of creating an open source package to handle most of this functionality for you. In the meantime, you will need to create a button in your CMS that does the following...
+
+1. `POST` to the preview webhook url in Gatsby Cloud
+2. Open the Content Sync waiting room
+
+The button might look something like this:
 ![Open Preview Button Screenshot](https://user-images.githubusercontent.com/18426780/61498855-37e35a00-a982-11e9-8201-ab96be74f1f1.png)
 
 ##### Configuration
 
-You will need to store the Content Sync URL from a given Gatsby Cloud site. This will look something like `https://gatsbyjs.com/content-sync/<siteId>`. This is often done in the plugin extension or app extension configuration, this will differ from CMS to CMS depending on how they handle their plugin ecosystem.
+You will need to store the Content Sync URL from a given Gatsby Cloud site. This will look something like `https://gatsbyjs.com/content-sync/<siteId>`. This is often done in the CMS plugin extension configuration, this will differ from CMS to CMS depending on how they handle their plugin ecosystem.
+
+Depending on the CMS you will also need to store the preview webhook URL. This might also be stored in the plugin extension configuration, but often is stored in a separate webhooks configuration. [Find out how to get that webhook url here](https://support.gatsbyjs.com/hc/en-us/articles/360052324394-Build-and-Preview-Webhooks)
+
+NOTE: The Content Sync URL can be found in the same place as the webhook url.
 
 ##### Building up the manifest id
 
@@ -953,19 +962,29 @@ Recall that we need to create a matching manifest id in the CMS AND the Gatsby p
 const manifestId = `${project.id}-${entryItem.id}-${updatedAt}`
 ```
 
-In the CMS we should have access to the project id (if the CMS uses one) and the content id, the only thing we need to figure out how to grab is the timestamp that the content was updated at.
+In the CMS extension, we should have access to
+
+- the project id (if the CMS uses one)
+- the content id
+- the timestamp that the content was updated at (or some other piece of data that is tied to a very specific state of saved content)
+
+##### Starting the preview build (optional)
+
+If the CMS does not handle this part automatically we will need to tell Gatsby cloud to build a preview by `POST`ing to the Gatsby Cloud preview build webhook url.
 
 ##### Opening the Content Sync waiting room
 
-When we've built up the manifest id, when the "Open Preview" button is clicked, we need to open a new window to the Content Sync waiting room as follows `https://gatsbyjs.com/content-sync/<siteId>/<sourcePluginName>/<manifestId>`. This will ensure that this piece of content is linked to the corresponding content that was created in their Gatsby site.
+Once we've built a `manifestId` and `POST`ed to the preview build webhook url, we need to open a new tab/window with a modified version of the Content Sync URL. You get that by grabbing the Content Sync URL you stored in the CMS extension earlier and appending the Gatsby source plugin name and the content's `manifestId` that you just created, `https://gatsbyjs.com/content-sync/<siteId>/<sourcePluginName>/<manifestId>`.
 
 #### Useful Content Sync development tips
 
-There are a couple gotchas depending on how the CMS acts. Sometimes you will need to wait to make sure you have the correct `updatedAt` timestamp as some CMS may take a second to update their backend and then wait for the change to propagate to the frontend. While others will immediately update the frontend and then propagate that to the backend.
+Here are some things to keep in mind and some "gotchas" depending on how the CMS acts.
 
-Make sure that a preview webhook is being sent to Gatsby Cloud after the content is edited, whether it's before you press the "Open Preview" button or the "Open Preview" is the trigger that sends the webhook.
-
-While developing, you can set the Gatsby `VERBOSE` env variable to `"true"` to see additional logs that will help you debug what's happening in the source plugin. Ideally when you click the `Open Preview` button in the CMS the `manifestId` in the URL should match the `manifestId` that the source plugin creates from that revision.
+- Sometimes you will need to wait to make sure you have the correct `updatedAt` timestamp as some CMS may take a second to update their backend and then wait for the change to propagate to the frontend. While others will immediately update the frontend and then propagate that to the backend.
+- Make sure that a preview webhook is being sent to Gatsby Cloud after the content is edited, whether it's before you press the "Open Preview" button or the "Open Preview" is the trigger that sends the webhook.
+- While developing, you can set the Gatsby `VERBOSE` env variable to `"true"` to see additional logs that will help you debug what's happening in the source plugin.
+- When you click the "Open Preview" button in the CMS the `manifestId` in the URL should match the `manifestId` that the source plugin creates from that revision.
+- The node manifests get written out in the `public` dir of your gatsby site, so you can check to manifests on your local disk `/public/<sourcePluginName>/<manifestId>` or you can navigate directly to that piece of content `https://<your-domain>/<sourcePluginName>/<manifestId>`
 
 ## Publishing a plugin
 
