@@ -33,7 +33,7 @@ The general process for using DSG looks like this:
 
     return ({ params }) => {
       return {
-        defer: true
+        defer: true,
       }
     }
   }
