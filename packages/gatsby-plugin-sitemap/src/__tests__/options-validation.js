@@ -29,6 +29,7 @@ describe(`pluginOptionsSchema`, () => {
 
     expect(pluginOptions).toMatchInlineSnapshot(`
       Object {
+        "convertGzip": false,
         "createLinkInHead": true,
         "entryLimit": 45000,
         "excludes": Array [],
