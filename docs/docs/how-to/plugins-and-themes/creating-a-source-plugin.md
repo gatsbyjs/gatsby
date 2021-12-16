@@ -808,7 +808,15 @@ Some data sources keep event logs and are able to return a list of objects modif
 
 ### Enabling Content Sync
 
-If you would like to add Content Sync to your source plugin here but aren't sure what it is [learn more about Content Sync here](/docs/conceptual/content-sync/). To enable this feature in your source plugin you will need to make sure that your data source (or CMS) also works with Content Sync. The first thing you'll want to do is identify which nodes you'll want to create a node manifest for. These will typically be nodes that you can preview, entry nodes, top level nodes, etc. An example of this could be a blog post or an article, any node that can be the "owner" of a page. Once you've identified that you'll want to use the [unstable_createNodeManifest action](/docs/reference/config-files/actions/#unstable_createNodeManifest) to create these manifests. A good place to call this action is before you call `createNode`.
+If you would like to add Content Sync to your source plugin here but aren't sure what it is [learn more about Content Sync here](/docs/conceptual/content-sync/). To enable this feature in your source plugin you will need to make sure that your data source (or CMS) also works with Content Sync.
+
+#### Content Sync Source Plugin changes
+
+The source plugin needs to create node manifests using the [`unstable_createNodeManifest` action](/docs/reference/config-files/actions/#unstable_createNodeManifest).
+
+##### Identifying which nodes need manifests
+
+The first thing you'll want to do is identify which nodes you'll want to create a node manifest for. These will typically be nodes that you can preview, entry nodes, top level nodes, etc. An example of this could be a blog post or an article, any node that can be the "owner" of a page. A good place to call this action is whenever you call `createNode`.
 
 An easy way to keep track of your manifest logic is to parse it out into a different util function. Either inside the `createNodeManifest` util or before you call it you'll need to vet which nodes you'll want to create manifests for.
 
@@ -838,10 +846,11 @@ exports.sourceNodes = async (
 }
 ```
 
-There are a couple more checks we need to do inside the util. First, at the moment you'll only want to create node manifests for preview content, next we need to check if the Gatsby version supports `unstable_createNodeManifest`. Finally we'll want to parse out the time the content was updated and create a `manifestId` with all that information. The manifest id is the link between the data source and the Gatsby site. This manifest id will need to be created identically in the data source and here in your source plugin. Because of this we will use information given from the data source to build up the manifest id.
+##### Check for support
+
+At the moment you'll only want to create node manifests for preview content and because this is a newer API, we'll need to check if the Gatsby version supports [`unstable_createNodeManifest`](/docs/reference/config-files/actions/#unstable_createNodeManifest).
 
 ```javascript:title=source-plugin/utils.js
-
 export function createNodeManifest({
   entryItem, // the raw data source/cms content data
   project,   // the cms project data
@@ -856,10 +865,6 @@ export function createNodeManifest({
     typeof unstable_createNodeManifest === `function`
 
   const shouldCreateNodeManifest = isPreview && createNodeManifestIsSupported
-
-  const updatedAt = entryItem.updatedAt
-
-  const manifestId = `${project.id}-${entryItem.id}-${updatedAt}`
   // highlight-end
 
   if (shouldCreateNodeManifest) {
@@ -868,7 +873,9 @@ export function createNodeManifest({
 }
 ```
 
-The last step will be to create the node manifest and give a warning if they're using an unsupported version of Gatsby
+##### Call `unstable_createNodeManifest`
+
+Next we will build up the `manifestId` and call `unstable_createNodeManifest`. The `manifestId` needs to be created with information that comes from the data source NOT Gatsby, which is why we use the `entryItem` id as opposed to the `entryNode` id. This `manifestId` must be uniquely tied to a specific revision of specific content. We use the CMS project space (you may not need this), the id of the content, and finally the timestamp that it was updated at.
 
 ```javascript:title=source-plugin/utils.js
 // highlight-start
@@ -876,22 +883,42 @@ let warnOnceForNoSupport = false
 // highlight-end
 
 export function createNodeManifest({
-  pluginConfig,
-  entryItem, // the raw data source/cms content data
-  project,   // the cms project data
-  entryNode, // the Gatsby node
-  unstable_createNodeManifest,
+  // ...
 }) {
-  // initialize variables ...
+  // ...
 
   if (shouldCreateNodeManifest) {
     // highlight-start
+    const updatedAt = entryItem.updatedAt
+    const manifestId = `${project.id}-${entryItem.id}-${updatedAt}`
+
     unstable_createNodeManifest({
       manifestId,
       node: entryNode,
       updatedAtUTC: updatedAt,
     })
+  }
+}
+```
+
+##### Warn if no support
+
+Lastly we'll want to give our users a good experience and give a warning if they're using a version of Gatsby that does not support Content Sync
+
+```javascript:title=source-plugin/utils.js
+// highlight-start
+let warnOnceForNoSupport = false
+// highlight-end
+
+export function createNodeManifest({
+  // ...
+}) {
+  // ...
+
+  if (shouldCreateNodeManifest) {
+    // ...
   } else if (
+    // highlight-start
     // it's helpful to let users know if they're using an outdated Gatsby version so they'll upgrade for the best experience
     isPreview && !createNodeManifestIsSupported && !warnOnceForNoSupport
   ) {
@@ -904,6 +931,41 @@ export function createNodeManifest({
   }
 }
 ```
+
+#### Content Sync data source (or CMS) changes
+
+The CMS will need to send a webhook when content is changed
+
+##### Using the gatsby preview extension
+
+This package is currently in the process of being open sourced and should be available shortly. For context, here is what the package provides, a button to handle opening the Content Sync waiting room. You will need to create a button similar to this for the time being.
+![Open Preview Button Screenshot](https://user-images.githubusercontent.com/18426780/61498855-37e35a00-a982-11e9-8201-ab96be74f1f1.png)
+
+##### Configuration
+
+You will need to store the Content Sync URL from a given Gatsby Cloud site. This will look something like `https://gatsbyjs.com/content-sync/<siteId>`. This is often done in the plugin extension or app extension configuration, this will differ from CMS to CMS depending on how they handle their plugin ecosystem.
+
+##### Building up the manifest id
+
+Recall that we need to create a matching manifest id in the CMS AND the Gatsby plugin. Whenever content is saved we can build up a new manifest id that will look the same as the manifest id we created in the source plugin
+
+```javascript
+const manifestId = `${project.id}-${entryItem.id}-${updatedAt}`
+```
+
+In the CMS we should have access to the project id (if the CMS uses one) and the content id, the only thing we need to figure out how to grab is the timestamp that the content was updated at.
+
+##### Opening the Content Sync waiting room
+
+When we've built up the manifest id, when the "Open Preview" button is clicked, we need to open a new window to the Content Sync waiting room as follows `https://gatsbyjs.com/content-sync/<siteId>/<sourcePluginName>/<manifestId>`. This will ensure that this piece of content is linked to the corresponding content that was created in their Gatsby site.
+
+#### Useful Content Sync development tips
+
+There are a couple gotchas depending on how the CMS acts. Sometimes you will need to wait to make sure you have the correct `updatedAt` timestamp as some CMS may take a second to update their backend and then wait for the change to propagate to the frontend. While others will immediately update the frontend and then propagate that to the backend.
+
+Make sure that a preview webhook is being sent to Gatsby Cloud after the content is edited, whether it's before you press the "Open Preview" button or the "Open Preview" is the trigger that sends the webhook.
+
+While developing, you can set the Gatsby `VERBOSE` env variable to `"true"` to see additional logs that will help you debug what's happening in the source plugin. Ideally when you click the `Open Preview` button in the CMS the `manifestId` in the URL should match the `manifestId` that the source plugin creates from that revision.
 
 ## Publishing a plugin
 
