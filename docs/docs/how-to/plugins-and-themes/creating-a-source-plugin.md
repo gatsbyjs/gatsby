@@ -878,10 +878,6 @@ export function createNodeManifest({
 Next we will build up the `manifestId` and call `unstable_createNodeManifest`. The `manifestId` needs to be created with information that comes from the CMS **NOT** Gatsby (the CMS will need to create the exact same manifest), which is why we use the `entryItem` id as opposed to the `entryNode` id. This `manifestId` must be uniquely tied to a specific revision of specific content. We use the CMS project space (you may not need this), the id of the content, and finally the timestamp that it was updated at.
 
 ```javascript:title=source-plugin/utils.js
-// highlight-start
-let warnOnceForNoSupport = false
-// highlight-end
-
 export function createNodeManifest({
   // ...
 }) {
@@ -897,6 +893,7 @@ export function createNodeManifest({
       node: entryNode,
       updatedAtUTC: updatedAt,
     })
+    // highlight-end
   }
 }
 ```
