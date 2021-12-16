@@ -71,10 +71,8 @@ describe(`Webpack Compilation Hash tests`, () => {
 
       cy.waitForRouteChange()
 
-      if (!Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
-        // we expect reload to happen so our window property shouldn't be set anymore
-        cy.window().its(`notReloaded`).should(`not.equal`, true)
-      }
+      // we expect reload to happen so our window property shouldn't be set anymore
+      cy.window().its(`notReloaded`).should(`not.equal`, true)
 
       // let's make sure we actually see the content
       cy.contains(
