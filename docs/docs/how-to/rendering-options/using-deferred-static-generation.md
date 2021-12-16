@@ -33,7 +33,7 @@ The general process for using DSG looks like this:
 
     return ({ params }) => {
       return {
-        defer: true,
+        defer: true
       }
     }
   }
@@ -100,7 +100,9 @@ export async function config() {
   const oldPosts = new Set(data.oldPosts.nodes.map(n => n.frontmatter.slug))
 
   return ({ params }) => {
-    defer: oldPosts.has(params.frontmatter__slug)
+    return {
+      defer: oldPosts.has(params.frontmatter__slug)
+    }
   }
 }
 ```
