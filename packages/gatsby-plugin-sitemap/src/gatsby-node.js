@@ -17,6 +17,7 @@ exports.onPostBuild = async (
     resolvePages,
     filterPages,
     serialize,
+    convertGzip,
   }
 ) => {
   const { data: queryRecords, errors } = await graphql(query)
@@ -80,6 +81,7 @@ exports.onPostBuild = async (
 
   const sitemapWritePath = path.join(`public`, output)
   const sitemapPublicPath = path.posix.join(pathPrefix, output)
+  const gzip = convertGzip === true
 
   return simpleSitemapAndIndex({
     hostname: siteUrl,
@@ -87,6 +89,6 @@ exports.onPostBuild = async (
     destinationDir: sitemapWritePath,
     sourceData: serializedPages,
     limit: entryLimit,
-    gzip: false,
+    gzip,
   })
 }

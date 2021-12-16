@@ -67,6 +67,7 @@ The options are as follows:
 - [`resolvePages`](#resolvePagePath) (function) Takes the output of the data query and expects an array of page objects to be returned. Sync or async functions allowed.
 - [`filterPages`](#filterPages) (function) Takes the current page and a string (or other object) from the `exclude` array and expects a boolean to be returned. `true` excludes the path, `false` keeps it.
 - [`serialize`](#serialize) (function) Takes the output of `filterPages` and lets you return a sitemap entry. Sync or async functions allowed.
+- `convertGzip` (boolean = false) Whether to convert the sitemap to gzip.
 
 The following pages are **always** excluded: `/dev-404-page`,`/404` &`/offline-plugin-app-shell-fallback`, this cannot be changed even by customizing the [`filterPages`](#filterPages) function.
 

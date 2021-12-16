@@ -104,4 +104,7 @@ export const pluginOptionsSchema = ({ Joi }) =>
       .description(
         `Takes the output of \`filterPages\` and lets you return a sitemap entry.`
       ),
+    convertGzip: Joi.boolean()
+      .default(false)
+      .description(`Whether to convert the sitemap to gzip.`),
   })
