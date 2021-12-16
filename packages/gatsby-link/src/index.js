@@ -1,14 +1,11 @@
 import PropTypes from "prop-types"
 import React from "react"
 import { Link, Location } from "@gatsbyjs/reach-router"
-// Specific import to treeshake Node.js stuff
-import { applyTrailingSlashOption } from "gatsby-page-utils/apply-trailing-slash-option"
-import { resolve } from "@gatsbyjs/reach-router/lib/utils"
 import { parsePath } from "./parse-path"
+import { isLocalLink } from "./is-local-link"
+import { rewriteLinkPath } from "./rewrite-link-path"
 
 export { parsePath }
-
-const isAbsolutePath = path => path?.startsWith(`/`)
 
 export function withPrefix(path, prefix = getGlobalBasePrefix()) {
   if (!isLocalLink(path)) {
@@ -39,51 +36,9 @@ const getGlobalBasePrefix = () =>
       ? __BASE_PATH__
       : undefined
     : __BASE_PATH__
-const getGlobalTrailingSlash = () =>
-  process.env.NODE_ENV !== `production`
-    ? typeof __TRAILING_SLASH__ !== `undefined`
-      ? __TRAILING_SLASH__
-      : undefined
-    : __TRAILING_SLASH__
-
-const isLocalLink = path =>
-  path &&
-  !path.startsWith(`http://`) &&
-  !path.startsWith(`https://`) &&
-  !path.startsWith(`//`)
 
 export function withAssetPrefix(path) {
   return withPrefix(path, getGlobalPathPrefix())
-}
-
-function absolutify(path, current) {
-  // If it's already absolute, return as-is
-  if (isAbsolutePath(path)) {
-    return path
-  }
-  return resolve(path, current)
-}
-
-const rewriteLinkPath = (path, relativeTo) => {
-  const { pathname, search, hash } = parsePath(path)
-  const option = getGlobalTrailingSlash()
-  let adjustedPath = path
-
-  if (typeof path === `number`) {
-    return path
-  }
-  if (!isLocalLink(path)) {
-    return path
-  }
-
-  if (option === `always` || option === `never`) {
-    const output = applyTrailingSlashOption(pathname, option)
-    adjustedPath = `${output}${search}${hash}`
-  }
-
-  return isAbsolutePath(adjustedPath)
-    ? withPrefix(adjustedPath)
-    : absolutify(adjustedPath, relativeTo)
 }
 
 const NavLinkPropTypes = {
