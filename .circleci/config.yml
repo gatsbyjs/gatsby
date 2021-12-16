@@ -91,6 +91,8 @@ aliases:
             GENERATE_JEST_REPORT: "true"
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
+            GATSBY_EXPERIMENTAL_LMDB_STORE: 1
+            GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING: 1
       - store_test_results:
           path: ./test-results/jest-node/
 
