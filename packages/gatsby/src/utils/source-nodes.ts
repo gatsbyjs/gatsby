@@ -9,6 +9,7 @@ import { IGatsbyState } from "../redux/types"
 const { deleteNode } = actions
 import { Node } from "../../index"
 import { runEvent } from "../redux/events/index"
+import { EventManager } from "../services/sourceror/event-manager"
 
 /**
  * Finds the name of all plugins which implement Gatsby APIs that
@@ -108,13 +109,12 @@ export default async ({
     ).flat(Infinity)
 
     // run events
-    const queue = getQueue<any, unknown>()
-    const waitUntilQueueIsIdle = new Promise<void>(resolve => {
-      queue.drain = (): void => resolve()
+    const eventManager = new EventManager({
+      createNode: actions.createNode,
+      deleteNode: actions.deleteNode,
     })
-    runEvent(sourceEvents, `SourceAllNodes`, {})
 
-    await waitUntilQueueIsIdle
+    await eventManager.runEvents(sourceEvents, `SourceAllNodes`, {})
   }
 
   const traceId = isInitialSourcing
