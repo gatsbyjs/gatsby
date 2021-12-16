@@ -76,8 +76,8 @@ const rewriteLinkPath = (path, relativeTo) => {
     return path
   }
 
-  const output = applyTrailingSlashOption(pathname, option)
   if (option === `always` || option === `never`) {
+    const output = applyTrailingSlashOption(pathname, option)
     adjustedPath = `${output}${search}${hash}`
   }
 
