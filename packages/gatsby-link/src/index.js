@@ -1,6 +1,8 @@
 import PropTypes from "prop-types"
 import React from "react"
 import { Link, Location } from "@gatsbyjs/reach-router"
+// Specific import to treeshake Node.js stuff
+import { applyTrailingSlashOption } from "gatsby-page-utils/apply-trailing-slash-option"
 import { resolve } from "@gatsbyjs/reach-router/lib/utils"
 import { parsePath } from "./parse-path"
 
@@ -63,14 +65,25 @@ function absolutify(path, current) {
 }
 
 const rewriteLinkPath = (path, relativeTo) => {
+  const { pathname, search, hash } = parsePath(path)
+  const option = getGlobalTrailingSlash()
+  let adjustedPath = path
+
   if (typeof path === `number`) {
     return path
   }
   if (!isLocalLink(path)) {
     return path
   }
-  // TODO
-  return isAbsolutePath(path) ? withPrefix(path) : absolutify(path, relativeTo)
+
+  const output = applyTrailingSlashOption(pathname, option)
+  if (option === `always` || option === `never`) {
+    adjustedPath = `${output}${search}${hash}`
+  }
+
+  return isAbsolutePath(adjustedPath)
+    ? withPrefix(adjustedPath)
+    : absolutify(adjustedPath, relativeTo)
 }
 
 const NavLinkPropTypes = {

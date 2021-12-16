@@ -4,6 +4,10 @@
   "description": "Gatsby library that helps creating pages",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*.js"
+  },
   "scripts": {
     "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\"",
     "typegen": "rimraf \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/",
