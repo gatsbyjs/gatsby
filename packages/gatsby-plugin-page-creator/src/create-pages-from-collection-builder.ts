@@ -19,8 +19,8 @@ export async function createPagesFromCollectionBuilder(
   actions: Actions,
   graphql: CreatePagesArgs["graphql"],
   reporter: Reporter,
-  slugifyOptions?: ISlugifyOptions,
-  trailingSlash: TrailingSlash
+  trailingSlash: TrailingSlash,
+  slugifyOptions?: ISlugifyOptions
 ): Promise<void> {
   if (isValidCollectionPathImplementation(absolutePath, reporter) === false) {
     watchCollectionBuilder(absolutePath, ``, [], actions, reporter, () =>
@@ -30,8 +30,8 @@ export async function createPagesFromCollectionBuilder(
         actions,
         graphql,
         reporter,
-        slugifyOptions,
-        trailingSlash
+        trailingSlash,
+        slugifyOptions
       )
     )
     return
@@ -49,8 +49,8 @@ export async function createPagesFromCollectionBuilder(
         actions,
         graphql,
         reporter,
-        slugifyOptions,
-        trailingSlash
+        trailingSlash,
+        slugifyOptions
       )
     )
     return
@@ -86,8 +86,8 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
           actions,
           graphql,
           reporter,
-          slugifyOptions,
-          trailingSlash
+          trailingSlash,
+          slugifyOptions
         )
     )
 
@@ -173,8 +173,8 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
         actions,
         graphql,
         reporter,
-        slugifyOptions,
-        trailingSlash
+        trailingSlash,
+        slugifyOptions
       )
   )
 }

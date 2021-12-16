@@ -27,9 +27,9 @@ export function createPage(
   actions: Actions,
   graphql: CreatePagesArgs["graphql"],
   reporter: Reporter,
+  trailingSlash: TrailingSlash,
   ignore?: IPathIgnoreOptions | string | Array<string> | null,
-  slugifyOptions?: ISlugifyOptions,
-  trailingSlash: TrailingSlash
+  slugifyOptions?: ISlugifyOptions
 ): void {
   // Filter out special components that shouldn't be made into
   // pages.
@@ -53,8 +53,8 @@ export function createPage(
       actions,
       graphql,
       reporter,
-      slugifyOptions,
-      trailingSlash
+      trailingSlash,
+      slugifyOptions
     )
     return
   }

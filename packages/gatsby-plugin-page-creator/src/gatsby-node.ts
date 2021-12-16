@@ -111,9 +111,9 @@ Please pick a path to an existing directory.`,
         actions,
         graphql,
         reporter,
+        trailingSlash,
         ignore,
-        slugifyOptions,
-        trailingSlash
+        slugifyOptions
       )
     })
 
@@ -131,9 +131,9 @@ Please pick a path to an existing directory.`,
               actions,
               graphql,
               reporter,
+              trailingSlash,
               ignore,
-              slugifyOptions,
-              trailingSlash
+              slugifyOptions
             )
             knownFiles.add(addedPath)
           }
