@@ -198,6 +198,8 @@ const renderHTMLQueue = async (
 
   const sessionId = Date.now()
 
+  const { webpackCompilationHash } = store.getState()
+
   const renderHTML =
     stage === `build-html`
       ? workerPool.single.renderHTMLProd
@@ -212,6 +214,7 @@ const renderHTMLQueue = async (
         htmlComponentRendererPath,
         paths: pageSegment,
         sessionId,
+        webpackCompilationHash,
       })
 
       if (isPreview) {
