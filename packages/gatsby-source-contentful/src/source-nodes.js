@@ -437,11 +437,11 @@ export async function sourceNodes(
     reporter.info(`Creating ${assets.length} Contentful asset nodes`)
   }
 
-  let assetNodes = []
+  const assetNodes = []
   for (let i = 0; i < assets.length; i++) {
     // We wait for each asset to be process until handling the next one.
-    assetNodes = assetNodes.concat(
-      await Promise.all(
+    assetNodes.push(
+      ...(await Promise.all(
         createAssetNodes({
           assetItem: assets[i],
           createNode,
@@ -450,7 +450,7 @@ export async function sourceNodes(
           locales,
           space,
         })
-      )
+      ))
     )
   }
 
