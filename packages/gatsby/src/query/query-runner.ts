@@ -37,7 +37,7 @@ function reportLongRunningQueryJob(queryJob): void {
     const { path, context } = queryJob.context
     messageParts.push(`URL path: ${path}`)
 
-    if (!_.isEmpty(context)) {
+    if (!_.isEmpty(context) && !context.suppressFromLogs) {
       messageParts.push(`Context: ${JSON.stringify(context, null, 4)}`)
     }
   }
@@ -157,6 +157,7 @@ export async function queryRunner(
     delete result.pageContext.componentPath
     delete result.pageContext.context
     delete result.pageContext.isCreatedByStatefulCreatePages
+    delete result.pageContext.suppressFromLogs
 
     if (_CFLAGS_.GATSBY_MAJOR === `4`) {
       // we shouldn't add matchPath to pageContext but technically this is a breaking change so moving it ot v4
