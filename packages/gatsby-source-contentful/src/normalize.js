@@ -763,7 +763,7 @@ export const createAssetNodes = ({
     // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
     assetNode.internal.contentDigest = assetItem.sys.updatedAt
 
-    createNodePromises.push(createNode(assetNode))
+    createNodePromises.push(createNode(assetNode).then(() => assetNode))
   })
 
   return createNodePromises
