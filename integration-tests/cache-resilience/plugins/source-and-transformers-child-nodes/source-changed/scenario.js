@@ -155,46 +155,49 @@ const queriesTest = ({ typesDiff, dataDiff }) => {
         \\"typeinfoChild\\": Object {
           \\"fields\\": Array [
             Object {
+    -         \\"name\\": \\"children\\",
+    +         \\"name\\": \\"bar\\",
+            },
+            Object {
+    -         \\"name\\": \\"foo\\",
+    +         \\"name\\": \\"children\\",
+            },
+            Object {
               \\"name\\": \\"id\\",
-            },
-            Object {
-              \\"name\\": \\"parent\\",
-            },
-            Object {
-              \\"name\\": \\"children\\",
             },
             Object {
               \\"name\\": \\"internal\\",
             },
             Object {
-    -         \\"name\\": \\"foo\\",
-    +         \\"name\\": \\"bar\\",
+              \\"name\\": \\"parent\\",
             },
           ],
         },
         \\"typeinfoParent\\": Object {
           \\"fields\\": Array [
+    +       Object {
+    +         \\"name\\": \\"bar\\",
+    +       },
             Object {
-              \\"name\\": \\"id\\",
-            },
-            Object {
-              \\"name\\": \\"parent\\",
+              \\"name\\": \\"childChildOfParentParentChangeForTransformer\\",
             },
             Object {
               \\"name\\": \\"children\\",
             },
             Object {
+              \\"name\\": \\"childrenChildOfParentParentChangeForTransformer\\",
+    -       },
+    -       Object {
+    -         \\"name\\": \\"foo\\",
+            },
+            Object {
+              \\"name\\": \\"id\\",
+            },
+            Object {
               \\"name\\": \\"internal\\",
             },
             Object {
-    -         \\"name\\": \\"foo\\",
-    +         \\"name\\": \\"bar\\",
-            },
-            Object {
-              \\"name\\": \\"childrenChildOfParentParentChangeForTransformer\\",
-            },
-            Object {
-              \\"name\\": \\"childChildOfParentParentChangeForTransformer\\",
+              \\"name\\": \\"parent\\",
             },
           ],
         },

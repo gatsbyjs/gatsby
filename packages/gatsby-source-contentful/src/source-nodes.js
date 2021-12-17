@@ -44,7 +44,6 @@ export async function sourceNodes(
     actions,
     getNode,
     getNodes,
-    getNodesByType,
     createNodeId,
     store,
     cache,
@@ -438,17 +437,20 @@ export async function sourceNodes(
     reporter.info(`Creating ${assets.length} Contentful asset nodes`)
   }
 
+  const assetNodes = []
   for (let i = 0; i < assets.length; i++) {
     // We wait for each asset to be process until handling the next one.
-    await Promise.all(
-      createAssetNodes({
-        assetItem: assets[i],
-        createNode,
-        createNodeId,
-        defaultLocale,
-        locales,
-        space,
-      })
+    assetNodes.push(
+      ...(await Promise.all(
+        createAssetNodes({
+          assetItem: assets[i],
+          createNode,
+          createNodeId,
+          defaultLocale,
+          locales,
+          space,
+        })
+      ))
     )
   }
 
@@ -474,13 +476,13 @@ export async function sourceNodes(
   // Download asset files to local fs
   if (pluginConfig.get(`downloadLocal`)) {
     await downloadContentfulAssets({
+      assetNodes,
       actions,
       createNodeId,
       store,
       cache,
       getCache,
       getNode,
-      getNodesByType,
       reporter,
       assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),
     })
