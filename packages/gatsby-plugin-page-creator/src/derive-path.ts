@@ -67,11 +67,11 @@ export function derivePath(
   // 4.  Remove double forward slashes that could occur in the final URL
   modifiedPath = modifiedPath.replace(doubleForwardSlashes, `/`)
 
-  // 5.  Remove trailing slashes that could occur in the final URL
-  modifiedPath = stripTrailingSlash(modifiedPath)
+  // 5.a  Remove trailing slashes that could occur in the final URL
+  const testPath = stripTrailingSlash(modifiedPath)
 
-  // 6.  If the final URL appears to be an index path, use the "index" file naming convention
-  if (indexRoute.test(removeFileExtension(modifiedPath))) {
+  // 5.b  If the final URL appears to be an index path, use the "index" file naming convention
+  if (indexRoute.test(removeFileExtension(testPath))) {
     modifiedPath = `index${modifiedPath}`
   }
 
