@@ -453,6 +453,17 @@ jobs:
       - store_test_results:
           path: e2e-tests/contentful/cypress/results
 
+  e2e_tests_trailing-slash:
+    <<: *e2e-executor
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/trailing-slash
+          test_command: TODO
+      - store_artifacts:
+          path: e2e-tests/trailing-slash/__diff_output__
+      - store_test_results:
+          path: e2e-tests/trailing-slash/cypress/results
+
   starters_validate:
     executor: node
     steps:
@@ -654,6 +665,8 @@ workflows:
       - e2e_tests_visual-regression:
           <<: *e2e-test-workflow
       - e2e_tests_contentful:
+          <<: *e2e-test-workflow
+      - e2e_tests_trailing-slash:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime:
           <<: *e2e-test-workflow
