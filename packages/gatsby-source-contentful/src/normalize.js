@@ -315,7 +315,6 @@ export const createNodesForContentType = ({
   locales,
   space,
   useNameForId,
-  syncToken,
   pluginConfig,
 }) => {
   // Establish identifier for content type
@@ -769,6 +768,7 @@ export const createAssetNodes = ({
         return {
           contentful_id: assetItem.sys.id,
           node_locale: locale.code,
+          file: assetNode.file,
         }
       })
     )
