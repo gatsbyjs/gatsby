@@ -875,7 +875,7 @@ actions.createNode =
       traceTags: { nodeId: node.id, nodeType: node.internal.type },
     })
 
-    if (maybePromise) {
+    if (maybePromise?.then) {
       return maybePromise.then(res =>
         getDataStore()
           .ready()
