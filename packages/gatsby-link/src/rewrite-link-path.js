@@ -23,16 +23,16 @@ function absolutify(path, current) {
 }
 
 export const rewriteLinkPath = (path, relativeTo) => {
-  const { pathname, search, hash } = parsePath(path)
-  const option = getGlobalTrailingSlash()
-  let adjustedPath = path
-
   if (typeof path === `number`) {
     return path
   }
   if (!isLocalLink(path)) {
     return path
   }
+
+  const { pathname, search, hash } = parsePath(path)
+  const option = getGlobalTrailingSlash()
+  let adjustedPath = path
 
   if (option === `always` || option === `never`) {
     const output = applyTrailingSlashOption(pathname, option)
