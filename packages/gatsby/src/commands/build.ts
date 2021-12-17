@@ -193,6 +193,7 @@ module.exports = async function build(
           rootDir: program.directory,
           components: state.components,
           staticQueriesByTemplate: state.staticQueriesByTemplate,
+          webpackCompilationHash: webpackCompilationHash as string, // we set webpackCompilationHash above
           reporter: report,
           isVerbose: program.verbose,
         })
