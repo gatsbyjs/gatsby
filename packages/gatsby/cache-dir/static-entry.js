@@ -443,6 +443,16 @@ export default async function staticPage({
 
     postBodyComponents.push(...bodyScripts)
 
+    // Reorder headComponents so meta tags are always at the top and aren't missed by crawlers
+    // by being pushed down by large inline styles, etc.
+    // https://github.com/gatsbyjs/gatsby/issues/22206
+    headComponents.sort((a, b) => {
+      if (a.type && a.type === `meta`) {
+        return -1
+      }
+      return 0
+    })
+
     apiRunner(`onPreRenderHTML`, {
       getHeadComponents,
       replaceHeadComponents,
