@@ -4,6 +4,7 @@ import {
   validatePath,
   ignorePath,
   IPathIgnoreOptions,
+  applyTrailingSlashOption,
 } from "gatsby-page-utils"
 import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
 import { createClientOnlyPage } from "./create-client-only-page"
@@ -67,9 +68,10 @@ export function createPage(
   }
 
   // Create page object
-  const createdPath = createPath(filePath, trailingSlash)
+  const createdPath = createPath(filePath)
+  const modifiedPath = applyTrailingSlashOption(createdPath, trailingSlash)
   const page = {
-    path: createdPath,
+    path: modifiedPath,
     component: absolutePath,
     context: {},
   }

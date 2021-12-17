@@ -15,6 +15,7 @@ import {
   createPath,
   watchDirectory,
   IPathIgnoreOptions,
+  applyTrailingSlashOption,
 } from "gatsby-page-utils"
 import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
 import { createPage } from "./create-page-wrapper"
@@ -219,8 +220,10 @@ export function setFieldsOnGraphQLNodeType(
               reporter,
               slugifyOptions
             )
+            const path = createPath(derivedPath)
+            const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
 
-            return createPath(derivedPath, trailingSlash)
+            return modifiedPath
           },
         },
       }
