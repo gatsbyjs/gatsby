@@ -1,4 +1,4 @@
-import { handlers, parse, resolver } from "react-docgen"
+import { handlers, parse, resolver, importers } from "react-docgen"
 import { ERROR_MISSING_DEFINITION } from "react-docgen/dist/parse"
 import { codeFrameColumns } from "@babel/code-frame"
 import { createDisplayNameHandler } from "./displayname-handler"
@@ -45,6 +45,7 @@ export default function parseMetadata(content, node, options) {
       {
         ...parseOptions,
         filename: node.absolutePath,
+        importer: importers.makeFsImporter(),
       }
     )
   } catch (err) {
