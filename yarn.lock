@@ -20329,10 +20329,10 @@ react-devtools-core@^4.19.1:
     shell-quote "^1.6.1"
     ws "^7"
 
-react-docgen@^5.4.0:
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/react-docgen/-/react-docgen-5.4.0.tgz#2cd7236720ec2769252ef0421f23250b39a153a1"
-  integrity sha512-JBjVQ9cahmNlfjMGxWUxJg919xBBKAoy3hgDgKERbR+BcF4ANpDuzWAScC7j27hZfd8sJNmMPOLWo9+vB/XJEQ==
+react-docgen@^6.0.0-alpha.0:
+  version "6.0.0-alpha.0"
+  resolved "https://registry.npmjs.org/react-docgen/-/react-docgen-6.0.0-alpha.0.tgz#62bbedb63e5cf43e13957dc84cd9d7c3a4acb2ed"
+  integrity sha512-x04mIC8H6sLypv0bA87WW5hKmJXXM48aHaw5XD44LHcb+IqF3eL1Ev0YtXzxb7BXCoXV/WzpzCTuaqjUA39dyw==
   dependencies:
     "@babel/core" "^7.7.5"
     "@babel/generator" "^7.12.11"
@@ -20343,6 +20343,7 @@ react-docgen@^5.4.0:
     estree-to-babel "^3.1.0"
     neo-async "^2.6.1"
     node-dir "^0.1.10"
+    resolve "^1.17.0"
     strip-indent "^3.0.0"
 
 react-dom@^16.12.0:
