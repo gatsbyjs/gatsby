@@ -58,7 +58,7 @@ If you have a lot of content you're not using in your Gatsby site, check the opt
 
 #### Check Your Headless CMS or other data source
 
-With similar amounts of pages and content, Gatsby builds work significantly faster with some headless CMSs than others (largely due to the way various source-plugins are implemented). To identify where your CMS is on the spectrum of build performance, [Will It Build](https://willit.build/) has good benchmark data; you may want to look at the "worst-case" scenario featured -- 32k page uncached builds -- since that will give a larger differential.
+With similar amounts of pages and content, Gatsby builds work significantly faster with some headless CMSs than others (largely due to the way various source-plugins are implemented).
 
 Note that generally popular and official source plugins have built in a number of optimizations that custom or less-used source plugins may not have, so if you're sourcing large amounts of data from other plugins, you may want to monitor the build performance of those plugins.
 

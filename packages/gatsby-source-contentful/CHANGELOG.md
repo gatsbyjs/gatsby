@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.2.0/packages/gatsby-source-contentful) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Features
+
+- Update contenful nodemanifest api [#34100](https://github.com/gatsbyjs/gatsby/issues/34100) ([b167f65](https://github.com/gatsbyjs/gatsby/commit/b167f65888117cb981273d824b7c0bfb5f083451))
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-contentful [#34138](https://github.com/gatsbyjs/gatsby/issues/34138) ([395b432](https://github.com/gatsbyjs/gatsby/commit/395b4321379d117f1c64aeb9030e3b0714b8499f))
+
+#### Chores
+
+- update dependency nock to ^13.2.1 for gatsby-source-contentful [#34141](https://github.com/gatsbyjs/gatsby/issues/34141) ([eb69198](https://github.com/gatsbyjs/gatsby/commit/eb69198eb0425ebbdc1bc20bb74525088f3dba39))
+
+## [7.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.1.0/packages/gatsby-source-contentful) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+#### Chores
+
+- Add note to Rich Text docs [#34083](https://github.com/gatsbyjs/gatsby/issues/34083) ([19149ac](https://github.com/gatsbyjs/gatsby/commit/19149acd751977b74b785e3a431123d49add0e56))
+
+## [7.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.0.0/packages/gatsby-source-contentful) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Features
+
+- modifying schemes to add support for AVIF images [#33903](https://github.com/gatsbyjs/gatsby/issues/33903) ([8ff9cc3](https://github.com/gatsbyjs/gatsby/commit/8ff9cc30edd8db3fcbb3726cb3441a768299abbd))
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-contentful [#33000](https://github.com/gatsbyjs/gatsby/issues/33000) ([c1b2adf](https://github.com/gatsbyjs/gatsby/commit/c1b2adfe0cecf46179607d17e3d21cc22e3e0a34))
+
+#### Chores
+
+- update dependency nock to ^13.1.4 for gatsby-source-contentful [#33754](https://github.com/gatsbyjs/gatsby/issues/33754) ([c96bd1c](https://github.com/gatsbyjs/gatsby/commit/c96bd1c7fd6c82ef4b7a7a0d155559a7a19c794f))
+
+#### Other Changes
+
+- remove gatsby-image support [#33528](https://github.com/gatsbyjs/gatsby/issues/33528) ([94ddb6b](https://github.com/gatsbyjs/gatsby/commit/94ddb6bade4f3042e3535cb063ca1d6dc4bf7431))
+
+### [6.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@6.1.4/packages/gatsby-source-contentful) (2021-11-15)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 ### [6.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@6.1.3/packages/gatsby-source-contentful) (2021-11-11)
 
 **Note:** Version bump only for package gatsby-source-contentful

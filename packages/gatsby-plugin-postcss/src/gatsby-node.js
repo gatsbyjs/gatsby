@@ -50,6 +50,7 @@ exports.onCreateWebpackConfig = (
   }
   const postcssRuleModules = {
     test: MODULE_CSS_PATTERN,
+    // TODO(v5): Remove obsolete modules option from miniCssExtract
     use: [
       !isSSR &&
         loaders.miniCssExtract({

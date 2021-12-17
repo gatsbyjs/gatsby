@@ -118,9 +118,39 @@ const server = setupServer(
     )
 
     return res(
-      ctx.set(`Content-Type`, `image/svg+xml`),
+      ctx.set(`Content-Type`, `image/jpg`),
       ctx.set(`Content-Length`, contentLength),
       ctx.status(200),
+      ctx.body(content)
+    )
+  }),
+  rest.get(
+    `http://external.com/invalid:dog*name.jpg`,
+    async (req, res, ctx) => {
+      const { content, contentLength } = await getFileContent(
+        path.join(__dirname, `./fixtures/dog-thumbnail.jpg`),
+        req
+      )
+
+      return res(
+        ctx.set(`Content-Type`, `image/jpg`),
+        ctx.set(`Content-Length`, contentLength),
+        ctx.status(200),
+        ctx.body(content)
+      )
+    }
+  ),
+  rest.get(`http://external.com/dog-304.jpg`, async (req, res, ctx) => {
+    const { content, contentLength } = await getFileContent(
+      path.join(__dirname, `./fixtures/dog-thumbnail.jpg`),
+      req
+    )
+
+    return res(
+      ctx.set(`Content-Type`, `image/jpg`),
+      ctx.set(`Content-Length`, contentLength),
+      ctx.set(`etag`, `abcd`),
+      ctx.status(req.headers.get(`if-none-match`) === `abcd` ? 304 : 200),
       ctx.body(content)
     )
   }),
@@ -249,7 +279,7 @@ describe(`fetch-remote-file`, () => {
     jest.useRealTimers()
   })
 
-  it(`downloads and create a file`, async () => {
+  it(`downloads and create a svg file`, async () => {
     const filePath = await fetchRemoteFile({
       url: `http://external.com/logo.svg`,
       cache,
@@ -272,13 +302,26 @@ describe(`fetch-remote-file`, () => {
     expect(gotStream).toBeCalledTimes(1)
   })
 
-  it(`downloads and create a file`, async () => {
+  it(`downloads and create a jpg file`, async () => {
     const filePath = await fetchRemoteFile({
       url: `http://external.com/dog.jpg`,
       cache,
     })
 
     expect(path.basename(filePath)).toBe(`dog.jpg`)
+    expect(getFileSize(filePath)).resolves.toBe(
+      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
+    )
+    expect(gotStream).toBeCalledTimes(1)
+  })
+
+  it(`downloads and create a jpg file that has invalid characters`, async () => {
+    const filePath = await fetchRemoteFile({
+      url: `http://external.com/invalid:dog*name.jpg`,
+      cache,
+    })
+
+    expect(path.basename(filePath, `.js`)).toContain(`invalid-dog-name`)
     expect(getFileSize(filePath)).resolves.toBe(
       await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
     )
@@ -410,6 +453,35 @@ describe(`fetch-remote-file`, () => {
     // we still expect 4 fetches because cache can't save fast enough
     expect(gotStream).toBeCalledTimes(4)
     expect(fsMove).toBeCalledTimes(2)
+  })
+
+  it(`handles 304 responses correctly in different builds`, async () => {
+    const cacheInternals = new Map()
+    const workerCache = {
+      get(key) {
+        return Promise.resolve(cacheInternals.get(key))
+      },
+      set(key, value) {
+        return Promise.resolve(cacheInternals.set(key, value))
+      },
+      directory: cache.directory,
+    }
+
+    global.__GATSBY = { buildId: `1` }
+    const filePath = await fetchRemoteFile({
+      url: `http://external.com/dog-304.jpg`,
+      cache: workerCache,
+    })
+
+    global.__GATSBY = { buildId: `2` }
+    const filePathCached = await fetchRemoteFile({
+      url: `http://external.com/dog-304.jpg`,
+      cache: workerCache,
+    })
+
+    expect(filePathCached).toBe(filePath)
+    expect(fsMove).toBeCalledTimes(1)
+    expect(gotStream).toBeCalledTimes(2)
   })
 
   it(`doesn't keep lock when file download failed`, async () => {
@@ -562,6 +634,38 @@ describe(`fetch-remote-file`, () => {
     expect(fsMove).toBeCalledTimes(1)
   })
 
+  it(`handles 304 responses correctly in different builds and workers`, async () => {
+    const cacheInternals = new Map()
+    const workerCache = {
+      get(key) {
+        return Promise.resolve(cacheInternals.get(key))
+      },
+      set(key, value) {
+        return Promise.resolve(cacheInternals.set(key, value))
+      },
+      directory: cache.directory,
+    }
+
+    const fetchRemoteFileInstanceOne = getFetchInWorkerContext(`1`)
+    const fetchRemoteFileInstanceTwo = getFetchInWorkerContext(`2`)
+
+    global.__GATSBY = { buildId: `1` }
+    const filePath = await fetchRemoteFileInstanceOne({
+      url: `http://external.com/dog-304.jpg`,
+      cache: workerCache,
+    })
+
+    global.__GATSBY = { buildId: `2` }
+    const filePathCached = await fetchRemoteFileInstanceTwo({
+      url: `http://external.com/dog-304.jpg`,
+      cache: workerCache,
+    })
+
+    expect(filePathCached).toBe(filePath)
+    expect(fsMove).toBeCalledTimes(1)
+    expect(gotStream).toBeCalledTimes(2)
+  })
+
   it(`fails when 404 is triggered`, async () => {
     await expect(
       fetchRemoteFile({
@@ -587,6 +691,7 @@ Fetch details:
 {
   \\"attempt\\": 3,
   \\"method\\": \\"GET\\",
+  \\"errorCode\\": \\"ERR_NON_2XX_3XX_RESPONSE\\",
   \\"responseStatusCode\\": 500,
   \\"responseStatusMessage\\": \\"Internal Server Error\\",
   \\"requestHeaders\\": {
@@ -661,6 +766,7 @@ Fetch details:
 {
   \\"attempt\\": 3,
   \\"method\\": \\"GET\\",
+  \\"errorCode\\": \\"ERR_NON_2XX_3XX_RESPONSE\\",
   \\"responseStatusCode\\": 503,
   \\"responseStatusMessage\\": \\"Service Unavailable\\",
   \\"requestHeaders\\": {
@@ -695,6 +801,7 @@ Fetch details:
 {
   \\"attempt\\": 3,
   \\"method\\": \\"GET\\",
+  \\"errorCode\\": \\"ERR_GOT_REQUEST_ERROR\\",
   \\"requestHeaders\\": {
     \\"user-agent\\": \\"got (https://github.com/sindresorhus/got)\\",
     \\"accept-encoding\\": \\"gzip, deflate, br\\"

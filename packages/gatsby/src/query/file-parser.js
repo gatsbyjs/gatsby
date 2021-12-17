@@ -503,7 +503,8 @@ export default class FileParser {
     if (
       !text.includes(`graphql`) &&
       !text.includes(`gatsby-plugin-image`) &&
-      !text.includes(`getServerData`)
+      !text.includes(`getServerData`) &&
+      !text.includes(`config`)
     ) {
       return null
     }
