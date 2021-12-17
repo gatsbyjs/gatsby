@@ -75,14 +75,17 @@ describe(`Preview status indicator`, () => {
     route,
     action,
     testId,
+    renderIndicator = true,
   }) => {
     process.env.GATSBY_PREVIEW_API_URL = createUrl(route)
     process.env.GATSBY_TELEMETRY_API = `http://test.com/events`
     let component
 
-    act(() => {
-      render(<Indicator />)
-    })
+    if (renderIndicator) {
+      act(() => {
+        render(<Indicator />)
+      })
+    }
 
     await waitFor(() => {
       if (testId) {
@@ -115,7 +118,7 @@ describe(`Preview status indicator`, () => {
 
   beforeEach(() => {
     // it will disable setTimeout behaviour - only fetchData once
-    jest.useFakeTimers(`modern`)
+    jest.useFakeTimers()
     // reset all mocks
     jest.resetModules()
     global.fetch = require(`node-fetch`)
@@ -305,7 +308,7 @@ describe(`Preview status indicator`, () => {
         const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/999/sites/111/builds/123/details`
         const returnTo = encodeURIComponent(pathToBuildLogs)
 
-        await act(async () => {
+        act(() => {
           render(<Indicator />)
         })
 
@@ -321,9 +324,10 @@ describe(`Preview status indicator`, () => {
           `${pathToBuildLogs}?returnTo=${returnTo}`
         )
 
-        assertTrackEventGetsCalled({
+        await assertTrackEventGetsCalled({
           route: `error`,
           testId: `info-button`,
+          renderIndicator: false,
         })
       })
     })
