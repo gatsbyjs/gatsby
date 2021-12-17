@@ -868,16 +868,24 @@ actions.createNode =
     }
 
     const { payload: node, traceId, parentSpan } = createNodeAction
-    return apiRunnerNode(`onCreateNode`, {
+    const maybePromise = apiRunnerNode(`onCreateNode`, {
       node: wrapNode(node),
       traceId,
       parentSpan,
       traceTags: { nodeId: node.id, nodeType: node.internal.type },
-    }).then(res =>
-      getDataStore()
+    })
+
+    if (maybePromise) {
+      return maybePromise.then(res =>
+        getDataStore()
+          .ready()
+          .then(() => res)
+      )
+    } else {
+      return getDataStore()
         .ready()
-        .then(() => res)
-    )
+        .then(() => maybePromise)
+    }
   }
 
 const touchNodeDeprecationWarningDisplayedMessages = new Set()
