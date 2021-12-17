@@ -949,7 +949,9 @@ You will need to store the Content Sync URL from a given Gatsby Cloud site. This
 
 Depending on the CMS you will also need to store the preview webhook URL. This might also be stored in the plugin extension configuration, but often is stored in a separate webhooks configuration. [Find out how to get that webhook url here](https://support.gatsbyjs.com/hc/en-us/articles/360052324394-Build-and-Preview-Webhooks)
 
-NOTE: The Content Sync URL can be found in the same place as the webhook url.
+Both of these need to be user configurable in the CMS.
+
+NOTE: The Content Sync URL can be found in the same place as the webhook url in the Gatsby Cloud site settings.
 
 ##### Building up the manifest id
 
@@ -977,11 +979,11 @@ Once we've built a `manifestId` and `POST`ed to the preview build webhook url, w
 
 Here are some things to keep in mind and some "gotchas" depending on how the CMS acts.
 
-- Sometimes you will need to wait to make sure you have the correct `updatedAt` timestamp as some CMS may take a second to update their backend and then wait for the change to propagate to the frontend. While others will immediately update the frontend and then propagate that to the backend.
+- Inside the CMS, sometimes you will need to wait to make sure you have the correct `updatedAt` timestamp as some CMS may take a second to update their backend and then wait for the change to propagate to the frontend. While others will immediately update the frontend and then propagate that to the backend. You will need the _most_ up to date timestamp when opening the Content Sync UI waiting room.
 - Make sure that a preview webhook is being sent to Gatsby Cloud after the content is edited, whether it's before you press the "Open Preview" button or the "Open Preview" is the trigger that sends the webhook.
 - While developing, you can set the Gatsby `VERBOSE` env variable to `"true"` to see additional logs that will help you debug what's happening in the source plugin.
 - When you click the "Open Preview" button in the CMS the `manifestId` in the URL should match the `manifestId` that the source plugin creates from that revision.
-- The node manifests get written out in the `public` dir of your gatsby site, so you can check to manifests on your local disk `/public/<sourcePluginName>/<manifestId>` or you can navigate directly to that piece of content `https://<your-domain>/<sourcePluginName>/<manifestId>`
+- The node manifests get written out in the `public` dir of your gatsby site, so you can check to manifests on your local disk `/public/__node-manifests/<sourcePluginName>/<manifestId>.json` or you can navigate directly to that piece of content `https://<your-domain>/__node-manifests/<sourcePluginName>/<manifestId>`
 
 ## Publishing a plugin
 
