@@ -124,13 +124,27 @@ const server = setupServer(
       ctx.body(content)
     )
   }),
+  rest.get(
+    `http://external.com/invalid:dog*name.jpg`,
+    async (req, res, ctx) => {
+      const { content, contentLength } = await getFileContent(
+        path.join(__dirname, `./fixtures/dog-thumbnail.jpg`),
+        req
+      )
+
+      return res(
+        ctx.set(`Content-Type`, `image/jpg`),
+        ctx.set(`Content-Length`, contentLength),
+        ctx.status(200),
+        ctx.body(content)
+      )
+    }
+  ),
   rest.get(`http://external.com/dog-304.jpg`, async (req, res, ctx) => {
     const { content, contentLength } = await getFileContent(
       path.join(__dirname, `./fixtures/dog-thumbnail.jpg`),
       req
     )
-
-    // console.log(req.headers)
 
     return res(
       ctx.set(`Content-Type`, `image/jpg`),
@@ -295,6 +309,19 @@ describe(`fetch-remote-file`, () => {
     })
 
     expect(path.basename(filePath)).toBe(`dog.jpg`)
+    expect(getFileSize(filePath)).resolves.toBe(
+      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
+    )
+    expect(gotStream).toBeCalledTimes(1)
+  })
+
+  it(`downloads and create a jpg file that has invalid characters`, async () => {
+    const filePath = await fetchRemoteFile({
+      url: `http://external.com/invalid:dog*name.jpg`,
+      cache,
+    })
+
+    expect(path.basename(filePath, `.js`)).toContain(`invalid-dog-name`)
     expect(getFileSize(filePath)).resolves.toBe(
       await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
     )
