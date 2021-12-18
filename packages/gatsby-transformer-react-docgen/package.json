@@ -1,6 +1,6 @@
 {
-  "name": "gatsby-transformer-react-docgen",
-  "description": "Expose React component metadata and prop information as GraphQL types",
+  "name": "@hashbite/gatsby-transformer-react-docgen",
+  "description": "Expose React component metadata and prop information as GraphQL types - with react-docgen v6 and minimal other changes",
   "version": "7.5.0-next.0",
   "author": "Jason Quense <monastic.panic@gmail.com>",
   "bugs": {
