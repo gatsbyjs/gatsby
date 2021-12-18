@@ -835,9 +835,11 @@ const BlogPage = ({ data }) => { // highlight-line
       <ul>
       {
         data.allFile.nodes.map(node => (
-          <li key={node.name}>
+          return (
+            <li key={node.name}>
             {node.name}
-          </li>
+            </li>
+          )
         ))
       }
       </ul>
