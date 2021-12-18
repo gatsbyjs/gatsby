@@ -2,7 +2,7 @@
   "name": "gatsby-transformer-screenshot",
   "description": "Gatsby transformer plugin that uses AWS Lambda to take screenshots of websites",
   "version": "4.5.0-next.0",
-  "author": "David Beckley <beckl.ds@gmail.com>",
+  "author": "Cassandra Beckley <beckl.ds@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
