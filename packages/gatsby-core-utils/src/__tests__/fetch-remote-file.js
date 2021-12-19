@@ -9,8 +9,28 @@ import { Writable } from "stream"
 import got from "got"
 import fs from "fs-extra"
 
-const gotStream = jest.spyOn(got, `stream`)
-const fsMove = jest.spyOn(fs, `move`)
+jest.mock(`got`, () => {
+  const realGot = jest.requireActual(`got`)
+
+  return {
+    ...realGot,
+    default: {
+      ...realGot,
+      stream: jest.fn(realGot.stream),
+    },
+  }
+})
+const gotStream = got.stream
+jest.mock(`fs-extra`, () => {
+  const realFs = jest.requireActual(`fs-extra`)
+
+  return {
+    ...realFs,
+    move: jest.fn(realFs.move),
+  }
+})
+const fsMove = fs.move
+
 const urlCount = new Map()
 
 async function getFileSize(file) {
@@ -256,7 +276,11 @@ describe(`fetch-remote-file`, () => {
   })
   afterAll(() => {
     if (cache) {
-      fs.removeSync(cache.directory)
+      try {
+        fs.removeSync(cache.directory)
+      } catch (err) {
+        // ignore
+      }
     }
 
     // Clean up after all tests are done, preventing this

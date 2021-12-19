@@ -24,12 +24,8 @@
   "devDependencies": {
     "@babel/cli": "^7.15.4",
     "@babel/core": "^7.15.5",
-    "babel-jest": "^24.9.0",
     "babel-preset-gatsby-package": "^2.5.0-next.0",
     "cross-env": "^7.0.3",
-    "jest": "^24.9.0",
-    "jest-cli": "^24.9.0",
-    "jest-junit": "^6.4.0",
     "rimraf": "^3.0.2",
     "typescript": "^4.5.2"
   },
@@ -51,7 +47,6 @@
   "scripts": {
     "build": "babel src --out-dir lib --ignore \"**/__tests__\",\"**/__mocks__\" --extensions \".ts,.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
-    "jest": "jest",
     "postinstall": "node src/postinstall.js || true",
     "typegen": "rimraf \"lib/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir lib/",
     "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\",\"**/__mocks__\" --extensions \".ts,.js\""

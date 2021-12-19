@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 describe(`gatsby-plugin-manifest`, () => {
   const pluginOptions = {
     name: `My Website`,
