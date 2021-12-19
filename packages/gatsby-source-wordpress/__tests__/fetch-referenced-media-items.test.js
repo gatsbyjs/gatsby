@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 jest.mock(`../dist/utils/fetch-graphql`, () => jest.fn())
 
 import fetchGraphql from "../dist/utils/fetch-graphql"

@@ -7,7 +7,7 @@ import { store } from "../../redux"
 import { IGatsbyState } from "../../redux/types"
 import { requireGatsbyPlugin } from "../../utils/require-gatsby-plugin"
 
-const schemaCustomizationAPIs = new Set([
+export const schemaCustomizationAPIs = new Set([
   `setFieldsOnGraphQLNodeType`,
   `createSchemaCustomization`,
   `createResolvers`,
@@ -73,7 +73,7 @@ function render(
   const imports: Array<string> = [
     ...uniqGatsbyNode.map(
       (plugin, i) =>
-        `import * as pluginGatsbyNode${i} from "${relativePluginPath(
+        `import * as pluginGatsbyNode${i} from "gatsby/dist/schema/graphql-engine/webpack-remove-apis-loader!${relativePluginPath(
           plugin.resolve
         )}/gatsby-node"`
     ),

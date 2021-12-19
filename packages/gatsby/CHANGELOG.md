@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.4.0/packages/gatsby) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Features
+
+- detect node mutations (enabled by flag or env var) [#34006](https://github.com/gatsbyjs/gatsby/issues/34006) ([d8aec30](https://github.com/gatsbyjs/gatsby/commit/d8aec30c74741d6df9446a2e6bbd99b0af384121))
+- Allow external systems to setup tracing for builds [#34204](https://github.com/gatsbyjs/gatsby/issues/34204) ([d3aa933](https://github.com/gatsbyjs/gatsby/commit/d3aa933bc8d3fd73861ab2775ab9017d8c6b7562))
+
+#### Bug Fixes
+
+- update dependency eslint-plugin-jsx-a11y to ^6.5.1 [#34147](https://github.com/gatsbyjs/gatsby/issues/34147) ([99c538b](https://github.com/gatsbyjs/gatsby/commit/99c538b7fbca33f4c17dab4ad265983304b44631))
+- Update warning about long running queries [#34207](https://github.com/gatsbyjs/gatsby/issues/34207) ([6113cfc](https://github.com/gatsbyjs/gatsby/commit/6113cfc9555e0ba312e00da5a009bd1ead2b337b))
+- update dependency eslint-plugin-react-hooks to ^4.3.0 [#34149](https://github.com/gatsbyjs/gatsby/issues/34149) ([b37682a](https://github.com/gatsbyjs/gatsby/commit/b37682ab5c1d5d37be83f6f6bdf9b5d8e0681847))
+- update dependency eslint-plugin-import to ^2.25.3 [#34128](https://github.com/gatsbyjs/gatsby/issues/34128) ([f621cd4](https://github.com/gatsbyjs/gatsby/commit/f621cd4d8a719aedcef55467cbf0849521741c13))
+- update dependency eslint-webpack-plugin to ^2.6.0 [#34150](https://github.com/gatsbyjs/gatsby/issues/34150) ([d461f59](https://github.com/gatsbyjs/gatsby/commit/d461f591c119bfeb7f8da9d306e1da54f1decb02))
+- update dependency eslint-plugin-react to ^7.27.1 [#34148](https://github.com/gatsbyjs/gatsby/issues/34148) ([a21c48b](https://github.com/gatsbyjs/gatsby/commit/a21c48bbee22f50711fedf6c7b65fb57eea1ceaa))
+- Add back an activity for jobs [#34061](https://github.com/gatsbyjs/gatsby/issues/34061) [#34095](https://github.com/gatsbyjs/gatsby/issues/34095) ([af39171](https://github.com/gatsbyjs/gatsby/commit/af39171c923a029211fd33dc3a1ef312bbcddd93))
+
+#### Chores
+
+- Update documentation around pathPrefix and assetPrefix combination fix [#34226](https://github.com/gatsbyjs/gatsby/issues/34226) ([97d23ae](https://github.com/gatsbyjs/gatsby/commit/97d23ae9f2608b8ba085402a1447760690b5277b))
+- update dependency @types/eslint to v8 for gatsby [#34154](https://github.com/gatsbyjs/gatsby/issues/34154) ([81fd35a](https://github.com/gatsbyjs/gatsby/commit/81fd35a6ccb0c5b5b4514acf43e44b67fc3c1285))
+- update dependency typescript to ^4.5.2 [#34144](https://github.com/gatsbyjs/gatsby/issues/34144) ([51bff91](https://github.com/gatsbyjs/gatsby/commit/51bff91246cbc48ba50c9650205b0488691fb82a))
+- update createNodeManifest action updatedAt description [#34166](https://github.com/gatsbyjs/gatsby/issues/34166) ([0614fce](https://github.com/gatsbyjs/gatsby/commit/0614fced8aa4a17d7e6ce7ba95cded268ba85aa1))
+- log pending jobs when build is stuck [#34102](https://github.com/gatsbyjs/gatsby/issues/34102) ([1dae7f5](https://github.com/gatsbyjs/gatsby/commit/1dae7f52e095e352d531d13cdc480fb0d498e1ef))
+
 ## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.3.0/packages/gatsby) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

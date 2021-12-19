@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.4.0/packages/gatsby-plugin-netlify-cms) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Bug Fixes
+
+- update dependency @soda/friendly-errors-webpack-plugin to v1.8.1 for gatsby-plugin-netlify-cms [#34121](https://github.com/gatsbyjs/gatsby/issues/34121) ([a442b2d](https://github.com/gatsbyjs/gatsby/commit/a442b2d32c2fa72e1c9f84bffce2baf4c0ee7f17))
+
 ## [6.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-netlify-cms@6.3.0/packages/gatsby-plugin-netlify-cms) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

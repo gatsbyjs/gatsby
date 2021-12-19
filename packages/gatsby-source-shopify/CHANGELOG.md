@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@6.4.0/packages/gatsby-source-shopify) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Chores
+
+- update dependency prettier to ^2.5.1 [#34142](https://github.com/gatsbyjs/gatsby/issues/34142) ([c69ec70](https://github.com/gatsbyjs/gatsby/commit/c69ec70960c2a68b540a7317ec1f47d5a7c0d064))
+- update dependency @types/node to ^14.17.34 for gatsby-source-shopify [#34113](https://github.com/gatsbyjs/gatsby/issues/34113) ([ffb34d7](https://github.com/gatsbyjs/gatsby/commit/ffb34d7e3c23ee7c783e4fdfa11e5aafec7dc578))
+- update dependency typescript to ^4.5.2 [#34144](https://github.com/gatsbyjs/gatsby/issues/34144) ([51bff91](https://github.com/gatsbyjs/gatsby/commit/51bff91246cbc48ba50c9650205b0488691fb82a))
+- update sharp [#34120](https://github.com/gatsbyjs/gatsby/issues/34120) ([df36406](https://github.com/gatsbyjs/gatsby/commit/df3640679b5e161c4fd285b87ed32bb1224928b8))
+
 ## [6.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@6.3.0/packages/gatsby-source-shopify) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
