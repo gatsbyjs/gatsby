@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { parsePath, Path } from "history"
 import { SessionStorage } from "../session-storage"
 

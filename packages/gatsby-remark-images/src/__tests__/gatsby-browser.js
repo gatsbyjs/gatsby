@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 const {
   DEFAULT_OPTIONS,
   imageClass,

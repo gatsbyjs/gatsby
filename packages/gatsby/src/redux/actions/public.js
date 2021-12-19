@@ -9,7 +9,7 @@ const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
 const { slash, createContentDigest } = require(`gatsby-core-utils`)
 const { hasNodeChanged } = require(`../../utils/nodes`)
-const { getNode } = require(`../../datastore`)
+const { getNode, getDataStore } = require(`../../datastore`)
 const sanitizeNode = require(`../../utils/sanitize-node`)
 const { store } = require(`../index`)
 const { validatePageComponent } = require(`../../utils/validate-page-component`)
@@ -868,12 +868,24 @@ actions.createNode =
     }
 
     const { payload: node, traceId, parentSpan } = createNodeAction
-    return apiRunnerNode(`onCreateNode`, {
+    const maybePromise = apiRunnerNode(`onCreateNode`, {
       node: wrapNode(node),
       traceId,
       parentSpan,
       traceTags: { nodeId: node.id, nodeType: node.internal.type },
     })
+
+    if (maybePromise?.then) {
+      return maybePromise.then(res =>
+        getDataStore()
+          .ready()
+          .then(() => res)
+      )
+    } else {
+      return getDataStore()
+        .ready()
+        .then(() => maybePromise)
+    }
   }
 
 const touchNodeDeprecationWarningDisplayedMessages = new Set()

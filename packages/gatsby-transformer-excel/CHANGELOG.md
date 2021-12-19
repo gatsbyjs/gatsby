@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-excel@4.4.0/packages/gatsby-transformer-excel) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Bug Fixes
+
+- update dependency xlsx to ^0.17.4 for gatsby-transformer-excel [#34133](https://github.com/gatsbyjs/gatsby/issues/34133) ([1528d61](https://github.com/gatsbyjs/gatsby/commit/1528d6176b43cb86a48978e6739574cefbedabb8))
+
 ## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-excel@4.3.0/packages/gatsby-transformer-excel) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

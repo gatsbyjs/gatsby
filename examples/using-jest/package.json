@@ -35,7 +35,7 @@
     "babel-jest": "^24.9.0",
     "babel-preset-gatsby": "^0.5.10",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^24.9.0"
+    "jest": "^27.2.1"
   },
   "repository": {
     "type": "git",

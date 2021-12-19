@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.2.0/packages/gatsby-source-contentful) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Features
+
+- Update contenful nodemanifest api [#34100](https://github.com/gatsbyjs/gatsby/issues/34100) ([b167f65](https://github.com/gatsbyjs/gatsby/commit/b167f65888117cb981273d824b7c0bfb5f083451))
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-contentful [#34138](https://github.com/gatsbyjs/gatsby/issues/34138) ([395b432](https://github.com/gatsbyjs/gatsby/commit/395b4321379d117f1c64aeb9030e3b0714b8499f))
+
+#### Chores
+
+- update dependency nock to ^13.2.1 for gatsby-source-contentful [#34141](https://github.com/gatsbyjs/gatsby/issues/34141) ([eb69198](https://github.com/gatsbyjs/gatsby/commit/eb69198eb0425ebbdc1bc20bb74525088f3dba39))
+
 ## [7.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.1.0/packages/gatsby-source-contentful) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

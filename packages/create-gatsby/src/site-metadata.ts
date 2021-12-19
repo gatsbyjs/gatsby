@@ -4,11 +4,11 @@ export async function setSiteMetadata(
   value: string
 ): Promise<void> {
   try {
-    const recipesPath = require.resolve(`gatsby-recipes`, {
+    const coreUtilsPath = require.resolve(`gatsby-core-utils`, {
       paths: [root],
     })
-    const { GatsbySiteMetadata } = require(recipesPath)
-    await GatsbySiteMetadata?.create({ root }, { name, value })
+    const { addFieldToMinimalSiteMetadata } = require(coreUtilsPath)
+    await addFieldToMinimalSiteMetadata({ root }, { name, value })
   } catch (e) {
     // Silently fail, as it's fine if we don't add it to the config
   }
