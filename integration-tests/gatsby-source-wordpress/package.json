@@ -17,13 +17,14 @@
     "gatsby-source-filesystem": "next",
     "gatsby-source-wordpress": "next",
     "gatsby-transformer-sharp": "next",
+    "gatsby-plugin-image": "next",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
-    "jest": "^26.6.3",
+    "jest": "^27.2.1",
     "node-fetch": "^2.6.1",
     "rimraf": "^3.0.2",
     "urling": "^1.0.7"

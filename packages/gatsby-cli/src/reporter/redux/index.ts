@@ -16,9 +16,6 @@ let store: Store<{ logs: IGatsbyCLIState; pageTree: IRenderPageArgs }> =
     {}
   )
 
-const diagnosticsMiddleware =
-  createStructuredLoggingDiagnosticsMiddleware(store)
-
 export type GatsbyCLIStore = typeof store
 type StoreListener = (store: GatsbyCLIStore) => void
 type ActionLogListener = (action: ActionsUnion) => any
@@ -28,6 +25,9 @@ const storeSwapListeners: Array<StoreListener> = []
 const onLogActionListeners = new Set<ActionLogListener>()
 
 export const getStore = (): typeof store => store
+
+const diagnosticsMiddleware =
+  createStructuredLoggingDiagnosticsMiddleware(getStore)
 
 export const dispatch = (action: ActionsUnion | Thunk): void => {
   if (!action) {

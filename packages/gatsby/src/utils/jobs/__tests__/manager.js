@@ -1,6 +1,14 @@
 const path = require(`path`)
 const _ = require(`lodash`)
 const { slash } = require(`gatsby-core-utils`)
+const worker = require(`/node_modules/gatsby-plugin-test/gatsby-worker`)
+const reporter = require(`gatsby-cli/lib/reporter`)
+const hasha = require(`hasha`)
+const fs = require(`fs-extra`)
+const pDefer = require(`p-defer`)
+const { uuid } = require(`gatsby-core-utils`)
+const timers = require(`timers`)
+
 let WorkerError
 let jobManager = null
 
@@ -12,6 +20,7 @@ jest.mock(`p-defer`, () =>
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     phantomActivity: jest.fn(),
+    createProgress: jest.fn(),
     warn: jest.fn(),
   }
 })
@@ -36,16 +45,19 @@ jest.mock(
   { virtual: true }
 )
 
-jest.mock(`uuid/v4`, () =>
-  jest.fn().mockImplementation(jest.requireActual(`uuid/v4`))
-)
+jest.mock(`gatsby-core-utils`, () => {
+  const realCoreUtils = jest.requireActual(`gatsby-core-utils`)
 
-const worker = require(`/node_modules/gatsby-plugin-test/gatsby-worker`)
-const reporter = require(`gatsby-cli/lib/reporter`)
-const hasha = require(`hasha`)
-const fs = require(`fs-extra`)
-const pDefer = require(`p-defer`)
-const uuidv4 = require(`uuid/v4`)
+  return {
+    ...realCoreUtils,
+    uuid: {
+      ...realCoreUtils.uuid,
+      v4: jest.fn(realCoreUtils.uuid.v4),
+    },
+  }
+})
+
+jest.mock(`hasha`, () => jest.requireActual(`hasha`))
 
 fs.ensureDir = jest.fn().mockResolvedValue(true)
 
@@ -84,11 +96,18 @@ describe(`Jobs manager`, () => {
     worker.TEST_JOB.mockReset()
     endActivity.mockClear()
     pDefer.mockClear()
-    uuidv4.mockClear()
+    uuid.v4.mockClear()
     reporter.phantomActivity.mockImplementation(() => {
       return {
         start: jest.fn(),
         end: endActivity,
+      }
+    })
+    reporter.createProgress.mockImplementation(() => {
+      return {
+        start: jest.fn(),
+        tick: jest.fn(),
+        end: jest.fn(),
       }
     })
 
@@ -153,7 +172,7 @@ describe(`Jobs manager`, () => {
       const internalJob = createInternalJob(createMockJob(), plugin)
       createInternalJob(internalJob, plugin)
 
-      expect(uuidv4).toHaveBeenCalledTimes(1)
+      expect(uuid.v4).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -373,9 +392,6 @@ describe(`Jobs manager`, () => {
 
   describe(`IPC jobs`, () => {
     let listeners = []
-    beforeAll(() => {
-      jest.useFakeTimers()
-    })
 
     let originalProcessOn
     let originalSend
@@ -389,6 +405,11 @@ describe(`Jobs manager`, () => {
       }
 
       process.send = jest.fn()
+      jest.useFakeTimers()
+    })
+
+    afterEach(() => {
+      jest.runOnlyPendingTimers()
     })
 
     afterAll(() => {
@@ -469,10 +490,7 @@ describe(`Jobs manager`, () => {
       worker.TEST_JOB.mockReturnValue({ output: `myresult` })
       const { enqueueJob } = jobManager
       const jobArgs = createInternalMockJob()
-
       const promise = enqueueJob(jobArgs)
-
-      jest.runAllTimers()
 
       listeners[0]({
         type: `JOB_NOT_WHITELISTED`,
@@ -481,7 +499,12 @@ describe(`Jobs manager`, () => {
         },
       })
 
-      jest.runAllTimers()
+      // Make sure that all the promises get resolved
+      await new Promise(resolve => {
+        // If this gets flaky, maybe a waitFor?
+        timers.setTimeout(resolve, 500)
+      })
+      jest.runOnlyPendingTimers()
 
       await expect(promise).resolves.toStrictEqual({ output: `myresult` })
       expect(worker.TEST_JOB).toHaveBeenCalledTimes(1)
@@ -500,6 +523,7 @@ describe(`Jobs manager`, () => {
       await expect(enqueueJob(jobArgs)).resolves.toBeUndefined()
       expect(process.send).not.toHaveBeenCalled()
       expect(worker.TEST_JOB).toHaveBeenCalledTimes(1)
+      jest.useFakeTimers()
     })
 
     it(`shouldn't schedule a remote job when ipc is enabled and env variable is false`, async () => {
@@ -512,6 +536,7 @@ describe(`Jobs manager`, () => {
 
       expect(process.send).not.toHaveBeenCalled()
       expect(worker.TEST_JOB).toHaveBeenCalled()
+      jest.useFakeTimers()
     })
 
     it(`should warn when external jobs are enabled but ipc isn't used`, async () => {
@@ -529,6 +554,7 @@ describe(`Jobs manager`, () => {
 
       expect(reporter.warn).toHaveBeenCalledTimes(1)
       expect(worker.TEST_JOB).toHaveBeenCalled()
+      jest.useFakeTimers()
     })
   })
 })

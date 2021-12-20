@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.4.0/packages/gatsby-transformer-sqip) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Chores
+
+- update dependency debug to ^4.3.3 for gatsby-transformer-sqip [#34114](https://github.com/gatsbyjs/gatsby/issues/34114) ([27623b2](https://github.com/gatsbyjs/gatsby/commit/27623b2dff244c2f500d704a2ee0727e4845ecc6))
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.3.0/packages/gatsby-transformer-sqip) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.2.0/packages/gatsby-transformer-sqip) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- update dependency mini-svg-data-uri to ^1.4.3 for gatsby-transformer-sqip [#33781](https://github.com/gatsbyjs/gatsby/issues/33781) ([1e0228a](https://github.com/gatsbyjs/gatsby/commit/1e0228aef90a10604701a675ff325a0ca96e8fd6))
+
+#### Other Changes
+
+- remove gatsby-image support [#33528](https://github.com/gatsbyjs/gatsby/issues/33528) ([94ddb6b](https://github.com/gatsbyjs/gatsby/commit/94ddb6bade4f3042e3535cb063ca1d6dc4bf7431))
+
+### [4.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.1.4/packages/gatsby-transformer-sqip) (2021-11-15)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+### [4.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.1.3/packages/gatsby-transformer-sqip) (2021-11-11)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+### [4.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.1.2/packages/gatsby-transformer-sqip) (2021-11-10)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+### [4.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.1.1/packages/gatsby-transformer-sqip) (2021-11-09)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.1.0/packages/gatsby-transformer-sqip) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+### [4.0.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.0.1/packages/gatsby-transformer-sqip) (2021-10-27)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.0.0/packages/gatsby-transformer-sqip) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- download assets via gatsby-core-utils [#33482](https://github.com/gatsbyjs/gatsby/issues/33482) ([3f2d581](https://github.com/gatsbyjs/gatsby/commit/3f2d581e63677711512cca11b220239e52532dfc))
+
+### [3.14.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@3.14.3/packages/gatsby-transformer-sqip) (2021-11-02)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+### [3.14.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@3.14.2/packages/gatsby-transformer-sqip) (2021-10-28)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+### [3.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@3.14.1/packages/gatsby-transformer-sqip) (2021-10-06)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@3.14.0/packages/gatsby-transformer-sqip) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

@@ -21,6 +21,7 @@
 - [production](#production)
   - [production.hardCacheMediaFiles](#productionhardcachemediafiles)
   - [production.allow404Images](#productionallow404images)
+  - [production.allow401Images](#productionallow401images)
 - [develop](#develop)
   - [develop.nodeUpdateInterval](#developnodeupdateinterval)
   - [develop.hardCacheMediaFiles](#develophardcachemediafiles)
@@ -43,6 +44,7 @@
   - [searchAndReplace[].replace](#searchandreplacereplace)
 - [html](#html)
   - [html.useGatsbyImage](#htmlusegatsbyimage)
+  - [html.gatsbyImageOptions](#htmlgatsbyimageoptions)
   - [html.imageMaxWidth](#htmlimagemaxwidth)
   - [html.fallbackImageMaxWidth](#htmlfallbackimagemaxwidth)
   - [html.imageQuality](#htmlimagequality)
@@ -441,6 +443,26 @@ This option allows images url's that return a 404 to not fail production builds.
   options: {
     production: {
       allow404Images: true,
+    },
+  },
+}
+
+```
+
+### production.allow401Images
+
+This option allows images url's that return a 401 to not fail production builds. 401s are sometimes returned in place of 404's for protected content to hide whether the content exists.
+
+**Field type**: `Boolean`
+
+**Default value**: `false`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    production: {
+      allow401Images: true,
     },
   },
 }
@@ -876,6 +898,27 @@ Causes the source plugin to find/replace images in html with Gatsby images.
   options: {
     html: {
       useGatsbyImage: true,
+    },
+  },
+}
+
+```
+
+### html.gatsbyImageOptions
+
+Set custom options for your Gatsby Images.
+
+**Field type**: `Object`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    html: {
+      gatsbyImageOptions: {
+        [your - option - key]: "your-option-value",
+        [your - option - key - 2]: "your-option-value-2",
+      },
     },
   },
 }

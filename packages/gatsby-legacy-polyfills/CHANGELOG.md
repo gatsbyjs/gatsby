@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@2.4.0/packages/gatsby-legacy-polyfills) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Chores
+
+- update dependency microbundle to ^0.14.2 for gatsby-legacy-polyfills [#34116](https://github.com/gatsbyjs/gatsby/issues/34116) ([26c213e](https://github.com/gatsbyjs/gatsby/commit/26c213e92da3ea81acaa12275b2fe160535eea4a))
+
+## [2.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@2.3.0/packages/gatsby-legacy-polyfills) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
+## [2.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@2.2.0/packages/gatsby-legacy-polyfills) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Chores
+
+- update dependency microbundle to ^0.14.1 for gatsby-legacy-polyfills [#33777](https://github.com/gatsbyjs/gatsby/issues/33777) ([87a4c58](https://github.com/gatsbyjs/gatsby/commit/87a4c58a12b80c9d0a7251f1c7c3244f51a3c570))
+
+## [2.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@2.1.0/packages/gatsby-legacy-polyfills) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+#### Bug Fixes
+
+- fix eventTarget polyfill for IE11 fix [#33731](https://github.com/gatsbyjs/gatsby/issues/33731) ([dbea5f0](https://github.com/gatsbyjs/gatsby/commit/dbea5f02e3b0fca9ce730d1bac55bbcae75d864b))
+
+## [2.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@2.0.0/packages/gatsby-legacy-polyfills) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Features
+
+- add queue to prefetch [#33530](https://github.com/gatsbyjs/gatsby/issues/33530) ([2975c4d](https://github.com/gatsbyjs/gatsby/commit/2975c4d1271e3da52b531ad2f49261c362e5ae13))
+
 ## [1.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-legacy-polyfills@1.14.0/packages/gatsby-legacy-polyfills) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

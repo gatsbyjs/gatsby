@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.4.0/packages/gatsby-plugin-sitemap) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Bug Fixes
+
+- update dependency common-tags to ^1.8.2 for gatsby-plugin-sitemap [#34124](https://github.com/gatsbyjs/gatsby/issues/34124) ([3258946](https://github.com/gatsbyjs/gatsby/commit/3258946d25dfbf8b4a2fed29cc65ac9003f313d1))
+- fix pathPrefix handling fix [#34158](https://github.com/gatsbyjs/gatsby/issues/34158) ([2d1a880](https://github.com/gatsbyjs/gatsby/commit/2d1a880e792e49629a38c455d0e79db85c297dcc))
+
+## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.3.0/packages/gatsby-plugin-sitemap) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.2.0/packages/gatsby-plugin-sitemap) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+### [5.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.1.1/packages/gatsby-plugin-sitemap) (2021-11-09)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.1.0/packages/gatsby-plugin-sitemap) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@5.0.0/packages/gatsby-plugin-sitemap) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- Fix a typo Fix [#33467](https://github.com/gatsbyjs/gatsby/issues/33467) ([8966503](https://github.com/gatsbyjs/gatsby/commit/8966503904f345bbb14923c4cd36e84b8b0d11dc))
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [4.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sitemap@4.10.0/packages/gatsby-plugin-sitemap) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

@@ -1,7 +1,21 @@
 import { GatsbyNode } from "gatsby"
 import { getCacheDir } from "./node-apis/node-utils"
+import {
+  ImageFormatType,
+  ImageLayoutType,
+  ImagePlaceholderType,
+} from "./resolver-utils"
 
 export * from "./node-apis/preprocess-source"
+
+export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
+  ({ actions, schema }) => {
+    actions.createTypes([
+      schema.buildEnumType(ImageFormatType),
+      schema.buildEnumType(ImageLayoutType),
+      schema.buildEnumType(ImagePlaceholderType),
+    ])
+  }
 
 export const onCreateBabelConfig: GatsbyNode["onCreateBabelConfig"] = ({
   actions,

@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.4.0/packages/gatsby-source-filesystem) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Bug Fixes
+
+- Ensure fastq concurrency parameter of the correct type [#34186](https://github.com/gatsbyjs/gatsby/issues/34186) ([cada108](https://github.com/gatsbyjs/gatsby/commit/cada108ce0fb6cdb3344e37403194439e50f6492))
+- update dependency xstate to ^4.26.1 for gatsby-source-filesystem [#34134](https://github.com/gatsbyjs/gatsby/issues/34134) ([c3e9fd9](https://github.com/gatsbyjs/gatsby/commit/c3e9fd90f5ec515f9fe8e67608bc025693880922))
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.3.0/packages/gatsby-source-filesystem) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.2.0/packages/gatsby-source-filesystem) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-filesystem [#33771](https://github.com/gatsbyjs/gatsby/issues/33771) ([399942e](https://github.com/gatsbyjs/gatsby/commit/399942e53355fb93ccc33fbc1c8c0278e8c361c7))
+
+### [4.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.1.3/packages/gatsby-source-filesystem) (2021-11-15)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+### [4.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.1.2/packages/gatsby-source-filesystem) (2021-11-11)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+### [4.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.1.1/packages/gatsby-source-filesystem) (2021-11-10)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.1.0/packages/gatsby-source-filesystem) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+#### Chores
+
+- Fix links to old tutorial docs Fix [#33605](https://github.com/gatsbyjs/gatsby/issues/33605) ([42bcb00](https://github.com/gatsbyjs/gatsby/commit/42bcb0065aacd61944eb927e094f2a18aefaf1d3))
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.0.0/packages/gatsby-source-filesystem) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@3.14.0/packages/gatsby-source-filesystem) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

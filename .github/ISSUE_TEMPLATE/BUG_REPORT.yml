@@ -11,7 +11,7 @@ body:
         Please fill out each section below. This info allows Gatsby maintainers to diagnose (and fix!) your issue as quickly as possible. Otherwise we might need to close the issue without e.g. clear reproduction steps.
 
         Also please verify that your issue is present in `gatsby@next`, too. The `next` version is the latest beta version of Gatsby and has any pending changes that are in the next stable release.
-        Bug reports also shoulnd't be used for support requests about a specific problem in your site, please use GitHub Discussions for that.
+        Bug reports also shouldn't be used for support requests about a specific problem in your site, please use GitHub Discussions for that.
 
         Useful Links:
         - Documentation: https://www.gatsbyjs.com/docs/

@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.4.0/packages/gatsby-dev-cli) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-dev-cli [#34136](https://github.com/gatsbyjs/gatsby/issues/34136) ([9825955](https://github.com/gatsbyjs/gatsby/commit/9825955655e397f1bbdcbfdbff2b8ee96d34a0e8))
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.3.0/packages/gatsby-dev-cli) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.2.0/packages/gatsby-dev-cli) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.1.0/packages/gatsby-dev-cli) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@4.0.0/packages/gatsby-dev-cli) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Bug Fixes
+
+- resolve correct versions of packages with unpkg resolve [#33551](https://github.com/gatsbyjs/gatsby/issues/33551) ([31d5a5e](https://github.com/gatsbyjs/gatsby/commit/31d5a5e4d9e508eeeb41b630c3cd7d6f77333856))
+- update dependency signal-exit to ^3.0.5 for gatsby-dev-cli [#33369](https://github.com/gatsbyjs/gatsby/issues/33369) ([d9133d3](https://github.com/gatsbyjs/gatsby/commit/d9133d321c628ee53897e68c2a167724a8b23a6f))
+
+### [3.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@3.14.1/packages/gatsby-dev-cli) (2021-10-18)
+
+#### Bug Fixes
+
+- resolve correct versions of packages with unpkg resolve [#33551](https://github.com/gatsbyjs/gatsby/issues/33551) resolve [#33570](https://github.com/gatsbyjs/gatsby/issues/33570) ([016bab7](https://github.com/gatsbyjs/gatsby/commit/016bab788b4bc1cb859cee15f92ded287cbdf661))
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@3.14.0/packages/gatsby-dev-cli) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

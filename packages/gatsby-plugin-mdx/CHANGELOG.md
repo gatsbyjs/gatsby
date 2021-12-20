@@ -3,6 +3,80 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.4.0/packages/gatsby-plugin-mdx) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.3.0/packages/gatsby-plugin-mdx) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.2.0/packages/gatsby-plugin-mdx) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- allow not defining entry for subplugins [#33900](https://github.com/gatsbyjs/gatsby/issues/33900) ([f87164f](https://github.com/gatsbyjs/gatsby/commit/f87164f6af6285365ec2098d6233313a6b4c0982))
+
+#### Other Changes
+
+- initial [#33802](https://github.com/gatsbyjs/gatsby/issues/33802) ([a298106](https://github.com/gatsbyjs/gatsby/commit/a29810638179b3acfbb8b7e0fe87aa0b11576b94))
+
+### [3.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.1.4/packages/gatsby-plugin-mdx) (2021-11-15)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [3.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.1.3/packages/gatsby-plugin-mdx) (2021-11-11)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [3.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.1.2/packages/gatsby-plugin-mdx) (2021-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+### [3.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.1.1/packages/gatsby-plugin-mdx) (2021-11-09)
+
+#### Bug Fixes
+
+- allow not defining entry for subplugins [#33900](https://github.com/gatsbyjs/gatsby/issues/33900) [#33909](https://github.com/gatsbyjs/gatsby/issues/33909) ([4975ee2](https://github.com/gatsbyjs/gatsby/commit/4975ee26561a520daf8e2082479d21b2062a862e))
+
+## [3.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.1.0/packages/gatsby-plugin-mdx) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+#### Bug Fixes
+
+- mkdirp needs to be listed as a direct depende… [#33724](https://github.com/gatsbyjs/gatsby/issues/33724) ([b9e598d](https://github.com/gatsbyjs/gatsby/commit/b9e598dfb2aa2381a437c74ab98fe9f954e4aa6e))
+
+#### Chores
+
+- Fix grammar Fix [#33485](https://github.com/gatsbyjs/gatsby/issues/33485) ([9d8413c](https://github.com/gatsbyjs/gatsby/commit/9d8413c1dac7dbaa8446cfd0411344f356cd93b7))
+
+#### Other Changes
+
+- initial [#33802](https://github.com/gatsbyjs/gatsby/issues/33802) [#33818](https://github.com/gatsbyjs/gatsby/issues/33818) ([6d30b1f](https://github.com/gatsbyjs/gatsby/commit/6d30b1f785dec08f6953534b66c5dd37b765c305))
+
+## [3.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@3.0.0/packages/gatsby-plugin-mdx) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Bug Fixes
+
+- properly pass plugin options to subplugins [#33537](https://github.com/gatsbyjs/gatsby/issues/33537) ([83396a5](https://github.com/gatsbyjs/gatsby/commit/83396a5a91eb2f329d4b5e49ef5544106d0e380f))
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
+#### Other Changes
+
+- adjust tests after the bump [#33171](https://github.com/gatsbyjs/gatsby/issues/33171) ([4712acc](https://github.com/gatsbyjs/gatsby/commit/4712acc619c19cd23a1b2e94e7253ddd624aa927))
+
 ## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-mdx@2.14.0/packages/gatsby-plugin-mdx) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

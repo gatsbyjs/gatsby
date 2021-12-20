@@ -5,8 +5,9 @@
       "~/*": ["*"]
     },
     "lib": ["ESNext", "DOM"],
-    "target": "ES6",
+    "target": "ESNext",
     "moduleResolution": "node",
+    "module": "ESNext",
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true
   },

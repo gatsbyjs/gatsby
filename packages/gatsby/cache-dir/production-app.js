@@ -35,6 +35,8 @@ window.___loader = publicLoader
 
 navigationInit()
 
+const reloadStorageKey = `gatsby-reload-compilation-hash-match`
+
 apiRunnerAsync(`onClientEntry`).then(() => {
   // Let plugins register a service worker. The plugin just needs
   // to return true.
@@ -104,11 +106,14 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                 >
                   <RouteHandler
                     path={
-                      pageResources.page.path === `/404.html`
+                      pageResources.page.path === `/404.html` ||
+                      pageResources.page.path === `/500.html`
                         ? stripPrefix(location.pathname, __BASE_PATH__)
                         : encodeURI(
-                            pageResources.page.matchPath ||
+                            (
+                              pageResources.page.matchPath ||
                               pageResources.page.path
+                            ).split(`?`)[0]
                           )
                     }
                     {...this.props}
@@ -128,28 +133,69 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   const { pagePath, location: browserLoc } = window
 
   // Explicitly call navigate if the canonical path (window.pagePath)
-  // is different to the browser path (window.location.pathname). But
-  // only if NONE of the following conditions hold:
+  // is different to the browser path (window.location.pathname). SSR
+  // page paths might include search params, while SSG and DSG won't.
+  // If page path include search params we also compare query params.
+  // But only if NONE of the following conditions hold:
   //
   // - The url matches a client side route (page.matchPath)
   // - it's a 404 page
   // - it's the offline plugin shell (/offline-plugin-app-shell-fallback/)
   if (
     pagePath &&
-    __BASE_PATH__ + pagePath !== browserLoc.pathname &&
+    __BASE_PATH__ + pagePath !==
+      browserLoc.pathname + (pagePath.includes(`?`) ? browserLoc.search : ``) &&
     !(
       loader.findMatchPath(stripPrefix(browserLoc.pathname, __BASE_PATH__)) ||
-      pagePath === `/404.html` ||
-      pagePath.match(/^\/404\/?$/) ||
+      pagePath.match(/^\/(404|500)(\/?|.html)$/) ||
       pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
     )
   ) {
-    navigate(__BASE_PATH__ + pagePath + browserLoc.search + browserLoc.hash, {
-      replace: true,
-    })
+    navigate(
+      __BASE_PATH__ +
+        pagePath +
+        (!pagePath.includes(`?`) ? browserLoc.search : ``) +
+        browserLoc.hash,
+      {
+        replace: true,
+      }
+    )
   }
 
-  publicLoader.loadPage(browserLoc.pathname).then(page => {
+  publicLoader.loadPage(browserLoc.pathname + browserLoc.search).then(page => {
+    if (page.page.webpackCompilationHash !== window.___webpackCompilationHash) {
+      // Purge plugin-offline cache
+      if (
+        `serviceWorker` in navigator &&
+        navigator.serviceWorker.controller !== null &&
+        navigator.serviceWorker.controller.state === `activated`
+      ) {
+        navigator.serviceWorker.controller.postMessage({
+          gatsbyApi: `clearPathResources`,
+        })
+      }
+
+      // We have not matching html + js (inlined `window.___webpackCompilationHash`)
+      // with our data (coming from `app-data.json` file). This can cause issues such as
+      // errors trying to load static queries (as list of static queries is inside `page-data`
+      // which might not match to currently loaded `.js` scripts).
+      // We are making attempt to reload if hashes don't match, but we also have to handle case
+      // when reload doesn't fix it (possibly broken deploy) so we don't end up in infinite reload loop
+      if (sessionStorage) {
+        const isReloaded = sessionStorage.getItem(reloadStorageKey) === `1`
+
+        if (!isReloaded) {
+          sessionStorage.setItem(reloadStorageKey, `1`)
+          window.location.reload(true)
+          return
+        }
+      }
+    }
+
+    if (sessionStorage) {
+      sessionStorage.removeItem(reloadStorageKey)
+    }
+
     if (!page || page.status === PageResourceStatus.Error) {
       const message = `page resources for ${browserLoc.pathname} not found. Not rendering React`
 
@@ -162,8 +208,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
       throw new Error(message)
     }
-
-    window.___webpackCompilationHash = page.page.webpackCompilationHash
 
     const SiteRoot = apiRunner(
       `wrapRootElement`,

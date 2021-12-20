@@ -7,15 +7,22 @@ executors:
     parameters:
       image:
         type: string
-        # First 10.x LTS release, but old Yarn
-        default: "14.17.0"
+        default: "14.15.0"
     docker:
       - image: cimg/node:<< parameters.image >>
+    environment:
+      GATSBY_CPU_COUNT: 2
 
 aliases:
+  e2e-executor-env: &e2e-executor-env
+    GATSBY_CPU_COUNT: 2
+    VERBOSE: 1
+
   e2e-executor: &e2e-executor
     docker:
       - image: cypress/browsers:node14.15.0-chrome86-ff82
+    environment:
+      <<: *e2e-executor-env
 
   restore_cache: &restore_cache
     restore_cache:
@@ -60,7 +67,6 @@ aliases:
       branches:
         ignore:
           - /docs.+/
-          - /blog.+/
 
   test_template: &test_template
     parallelism: 4
@@ -86,9 +92,11 @@ aliases:
           command: yarn jest --ci --runInBand  $(yarn -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
-            GENERATE_JEST_REPORT: true
+            GENERATE_JEST_REPORT: "true"
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
+            GATSBY_EXPERIMENTAL_LMDB_STORE: 1
+            GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING: 1
       - store_test_results:
           path: ./test-results/jest-node/
 
@@ -98,7 +106,6 @@ aliases:
         ignore:
           - master
           - /docs.+/
-          - /blog.+/
     requires:
       - lint
       - typecheck
@@ -125,6 +132,7 @@ aliases:
         type: boolean
         default: false
     environment:
+      <<: *e2e-executor-env
       CYPRESS_PROJECT_ID: s3j3qj
       CYPRESS_RECORD_KEY: 3904ca0c-bc98-47d9-8371-b68c5e81fb9b
     steps:
@@ -145,7 +153,7 @@ commands:
           condition: << parameters.condition >>
           steps:
             - slack/status:
-              channel: eng-react-integration-status
+                channel: eng-react-integration-status
 
   e2e-test:
     parameters:
@@ -228,23 +236,15 @@ jobs:
       - run: yarn check-repo-fields
 
   unit_tests_node14:
+    # GATSBY_EXPERIMENTAL_LMDB_INDEXES is not activated yet
     executor:
       name: node
-      image: "14.17.0"
-    <<: *test_template
-
-  unit_tests_node14_lmdb_store:
-    executor:
-      name: node
-      image: "14.17.0"
-    environment:
-      GATSBY_EXPERIMENTAL_LMDB_STORE: 1
-      GATSBY_EXPERIMENTAL_LMDB_INDEXES: 1
-      GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING: 1
+      image: "14.15.0"
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
-    machine: true
+    machine:
+      image: "ubuntu-2004:202107-02"
     steps:
       - run:
           command: |
@@ -253,7 +253,7 @@ jobs:
       - run: nvm install v14
       - run: nvm alias default v14
       - run: nvm use v14
-      - run: npm i -g yarn@1.22.10
+      - run: npm i -g yarn@1.22.11
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
@@ -325,6 +325,7 @@ jobs:
   e2e_tests_path-prefix:
     <<: *e2e-executor
     environment:
+      <<: *e2e-executor-env
       CYPRESS_PROJECT_ID: pzj19c
       CYPRESS_RECORD_KEY: c9ea1b91-eed6-4bac-be41-eccd75a48969
     steps:
@@ -395,6 +396,7 @@ jobs:
   themes_e2e_tests_development_runtime:
     <<: *e2e-executor
     environment:
+      <<: *e2e-executor-env
       CYPRESS_PROJECT_ID: 9parq5
       CYPRESS_RECORD_KEY: 3fb49000-4143-4bd8-9ab4-219389060910
     steps:
@@ -405,6 +407,7 @@ jobs:
   themes_e2e_tests_production_runtime:
     <<: *e2e-executor
     environment:
+      <<: *e2e-executor-env
       CYPRESS_PROJECT_ID: c9rs27
       CYPRESS_RECORD_KEY: e4e7b3b8-e1e7-4a74-a0c9-9ac76585236b
     steps:
@@ -415,6 +418,7 @@ jobs:
   mdx_e2e_tests:
     <<: *e2e-executor
     environment:
+      <<: *e2e-executor-env
       CYPRESS_PROJECT_ID: spbj28
       CYPRESS_RECORD_KEY: af30ea46-121f-4fb7-97dd-f17ec224402e
     steps:
@@ -425,6 +429,7 @@ jobs:
   e2e_tests_gatsby-static-image:
     <<: *e2e-executor
     environment:
+      <<: *e2e-executor-env
       CYPRESS_PROJECT_ID: zstawi
       CYPRESS_RECORD_KEY: 389326a6-c0d2-4215-bc5e-3be29483ed13
     steps:
@@ -435,6 +440,7 @@ jobs:
   e2e_tests_visual-regression:
     <<: *e2e-executor
     environment:
+      <<: *e2e-executor-env
       CYPRESS_PROJECT_ID: nz99aw
       CYPRESS_RECORD_KEY: ed4b1af1-bd97-47d4-bb09-3cab2435a147
     steps:
@@ -449,6 +455,7 @@ jobs:
   e2e_tests_contentful:
     <<: *e2e-executor
     environment:
+      <<: *e2e-executor-env
       CYPRESS_PROJECT_ID: 2193cm
       CYPRESS_RECORD_KEY: 57e9563e-af49-494c-837c-5af53c2d6f76
     steps:
@@ -490,32 +497,7 @@ jobs:
       - run: git config --global user.name "GatsbyJS Bot"
       - run: git config --global user.email "core-team@gatsbyjs.com"
       - run: node scripts/gatsby-changelog-generator/update-and-open-pr.js
-
-  update_i18n_source:
-    executor: node
-    steps:
-      - checkout
-      - run: git config --global user.name "GatsbyJS Bot"
-      - run: git config --global user.email "core-team@gatsbyjs.com"
-      - run:
-          command: yarn
-          working_directory: ~/project/scripts/i18n
-      - run:
-          command: yarn run update-source
-          working_directory: ~/project/scripts/i18n
-
-  sync_translation_repo:
-    executor: node
-    steps:
-      - checkout
-      - run: git config --global user.name "GatsbyJS Bot"
-      - run: git config --global user.email "core-team@gatsbyjs.com"
-      - run:
-          command: yarn
-          working_directory: ~/project/scripts/i18n
-      - run:
-          command: yarn run-all sync
-          working_directory: ~/project/scripts/i18n
+      - run: yarn format:other
 
   windows_unit_tests:
     parallelism: 4
@@ -535,11 +517,11 @@ jobs:
 
       - <<: *attach_to_bootstrap
       - run:
-          name: Install node 14.17 and yarn
+          name: Install node 14.15.0 and yarn
           command: |
-            nvm install 14.17.0
-            nvm alias default 14.17.0
-            nvm use 14.17.0
+            nvm install 14.15.0
+            nvm alias default 14.15.0
+            nvm use 14.15.0
             choco install yarn
       - run:
           name: Rebuild packages for windows
@@ -551,7 +533,7 @@ jobs:
           command: yarn jest --ci --runInBand ((yarn jest --listTests) | Foreach-Object {$_ -replace '.*\\packages', 'packages'} | Foreach-Object {$_ -replace '\\', '/'} | circleci tests split --split-by=timings)
           environment:
             NODE_OPTIONS: --max-old-space-size=2048
-            GENERATE_JEST_REPORT: true
+            GENERATE_JEST_REPORT: "true"
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
             JEST_JUNIT_OUTPUT_NAME: results.xml
       - store_test_results:
@@ -580,17 +562,6 @@ jobs:
 
 workflows:
   version: 2
-
-  weekly-i18n-sync:
-    triggers:
-      - schedule:
-          cron: "0 1 * * 6"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - sync_translation_repo
 
   nightly-react-next:
     triggers:
@@ -665,14 +636,6 @@ workflows:
             - lint
             - typecheck
             - bootstrap
-      - unit_tests_node14_lmdb_store:
-          <<: *ignore_docs
-          # rebuild to get correct version of lmdb-store (compiled for node14 not node12)
-          npm_rebuild: true
-          requires:
-            - lint
-            - typecheck
-            - bootstrap
       - integration_tests_gatsby_source_wordpress:
           <<: *e2e-test-workflow
       - integration_tests_node_manifest:
@@ -719,11 +682,6 @@ workflows:
       - starters_validate:
           <<: *ignore_master
       - starters_publish:
-          filters:
-            branches:
-              only:
-                - master
-      - update_i18n_source:
           filters:
             branches:
               only:

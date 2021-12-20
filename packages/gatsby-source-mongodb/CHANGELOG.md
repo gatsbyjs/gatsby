@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-mongodb@4.4.0/packages/gatsby-source-mongodb) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-mongodb@4.3.0/packages/gatsby-source-mongodb) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-mongodb@4.2.0/packages/gatsby-source-mongodb) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- update dependency query-string to ^6.14.1 for gatsby-source-mongodb [#33368](https://github.com/gatsbyjs/gatsby/issues/33368) ([d65bf88](https://github.com/gatsbyjs/gatsby/commit/d65bf88fd1d5eb5b4966ab5aeb2d796dcaa9ca44))
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-mongodb@4.1.0/packages/gatsby-source-mongodb) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-source-mongodb
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-mongodb@4.0.0/packages/gatsby-source-mongodb) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-mongodb@3.14.0/packages/gatsby-source-mongodb) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

@@ -34,6 +34,11 @@ const collectEventsForDevelop = (events, env = {}) => {
     },
   })
 
+  let startedPromiseResolve = () => {}
+  const startedPromise = new Promise(resolve => {
+    startedPromiseResolve = resolve
+  })
+
   const finishedPromise = new Promise((resolve, reject) => {
     let listening = true
 
@@ -41,6 +46,7 @@ const collectEventsForDevelop = (events, env = {}) => {
       if (!listening) {
         return
       }
+      startedPromiseResolve()
 
       events.push(msg)
       // we are ready for tests
@@ -52,8 +58,7 @@ const collectEventsForDevelop = (events, env = {}) => {
         setTimeout(() => {
           listening = false
           gatsbyProcess.kill()
-
-          setTimeout(resolve, 1000)
+          waitChildProcessExit(gatsbyProcess.pid, resolve, reject)
         }, 5000)
       }
     })
@@ -61,6 +66,7 @@ const collectEventsForDevelop = (events, env = {}) => {
 
   return {
     finishedPromise,
+    startedPromise,
     gatsbyProcess,
   }
 }
@@ -305,20 +311,18 @@ describe(`develop`, () => {
       let events = []
 
       beforeAll(done => {
-        const { finishedPromise, gatsbyProcess } =
+        const { startedPromise, gatsbyProcess } =
           collectEventsForDevelop(events)
 
-        setTimeout(() => {
+        startedPromise.then(() => {
           gatsbyProcess.kill(`SIGTERM`)
-          setTimeout(() => {
-            done()
-          }, 5000)
-        }, 5000)
-
-        finishedPromise.then(done)
+          waitChildProcessExit(gatsbyProcess.pid, done, done.fail)
+        })
       })
 
       commonAssertionsForFailure(events)
+
+      // Note: this will fail on windows because it doesn't support POSIX signals (i.e. SIGTERM)
       it(`emit final SET_STATUS with INTERRUPTED - last message`, () => {
         const event = last(events)
         expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
@@ -335,7 +339,7 @@ describe(`develop`, () => {
     const clearEvents = () => {
       events.splice(0, events.length)
     }
-    beforeAll(async done => {
+    beforeAll(done => {
       gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {
         stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
         env: {
@@ -365,7 +369,7 @@ describe(`develop`, () => {
 
     afterAll(done => {
       gatsbyProcess.kill()
-      setTimeout(done, 1000)
+      waitChildProcessExit(gatsbyProcess.pid, done, done.fail)
     })
 
     describe(`code change`, () => {
@@ -380,7 +384,7 @@ describe(`develop`, () => {
       })
 
       describe(`invalid`, () => {
-        beforeAll(async done => {
+        beforeAll(done => {
           clearEvents()
 
           const codeWithError = `import React from "react"
@@ -408,10 +412,7 @@ describe(`develop`, () => {
       }
     \`
     `
-          await fs.writeFile(
-            require.resolve(`../src/pages/index.js`),
-            codeWithError
-          )
+          fs.writeFile(require.resolve(`../src/pages/index.js`), codeWithError)
 
           eventEmitter.once(`done`, () => {
             done()
@@ -421,10 +422,10 @@ describe(`develop`, () => {
         commonAssertionsForFailure(events)
       })
       describe(`valid`, () => {
-        beforeAll(async done => {
+        beforeAll(done => {
           clearEvents()
 
-          await cpy(
+          cpy(
             path.join(__dirname, "../original/index.js"),
             path.join(__dirname, "../src/pages/"),
             {
@@ -442,10 +443,10 @@ describe(`develop`, () => {
     })
     describe(`data change`, () => {
       describe(`via refresh webhook`, () => {
-        beforeAll(async done => {
+        beforeAll(done => {
           clearEvents()
 
-          await fetch(`http://localhost:8000/__refresh`, {
+          fetch(`http://localhost:8000/__refresh`, {
             method: `POST`,
             headers: {
               "Content-Type": `application/json`,
@@ -464,10 +465,10 @@ describe(`develop`, () => {
         commonAssertionsForSuccess(events)
       })
       describe(`with stateful plugin (i.e. Sanity)`, () => {
-        beforeAll(async done => {
+        beforeAll(done => {
           clearEvents()
 
-          await fetch(`http://localhost:8000/___statefulUpdate/`, {
+          fetch(`http://localhost:8000/___statefulUpdate/`, {
             method: `POST`,
             headers: {
               "Content-Type": `application/json`,
@@ -638,18 +639,19 @@ describe(`build`, () => {
           },
         })
 
-        await new Promise(resolve => {
+        await new Promise((resolve, reject) => {
+          let killing = false
           gatsbyProcess.on(`message`, msg => {
             events.push(msg)
-          })
 
-          gatsbyProcess.on(`exit`, exitCode => {
-            resolve()
+            if (!killing) {
+              killing = true
+              setTimeout(() => {
+                gatsbyProcess.kill(`SIGTERM`)
+                waitChildProcessExit(gatsbyProcess.pid, resolve, reject)
+              }, 2000)
+            }
           })
-
-          setTimeout(() => {
-            gatsbyProcess.kill(`SIGTERM`)
-          }, 1000)
         })
       })
       commonAssertionsForFailure(events)
@@ -661,5 +663,20 @@ describe(`build`, () => {
     })
   })
 })
+
+function waitChildProcessExit(pid, resolve, reject, attempt = 0) {
+  try {
+    process.kill(pid, 0) // check if process is still running
+    if (attempt > 15) {
+      reject(new Error("Gatsby process hasn't exited in 15 seconds"))
+      return
+    }
+    setTimeout(() => {
+      waitChildProcessExit(pid, resolve, reject, attempt + 1)
+    }, 1000)
+  } catch (e) {
+    resolve()
+  }
+}
 
 //TO-DO: add api running activity

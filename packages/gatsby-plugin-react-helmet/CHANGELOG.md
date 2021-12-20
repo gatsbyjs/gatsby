@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@5.4.0/packages/gatsby-plugin-react-helmet) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+**Note:** Version bump only for package gatsby-plugin-react-helmet
+
+## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@5.3.0/packages/gatsby-plugin-react-helmet) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-plugin-react-helmet
+
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@5.2.0/packages/gatsby-plugin-react-helmet) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+**Note:** Version bump only for package gatsby-plugin-react-helmet
+
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@5.1.0/packages/gatsby-plugin-react-helmet) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-plugin-react-helmet
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@5.0.0/packages/gatsby-plugin-react-helmet) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- Update Examples [#33552](https://github.com/gatsbyjs/gatsby/issues/33552) ([a8cab55](https://github.com/gatsbyjs/gatsby/commit/a8cab557fa690707780ee4a59fed5368b634c885))
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-react-helmet@4.14.0/packages/gatsby-plugin-react-helmet) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

@@ -3,6 +3,125 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.4.0/packages/gatsby-cli) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Bug Fixes
+
+- make `--inspect-brk` work [#34242](https://github.com/gatsbyjs/gatsby/issues/34242) [#34254](https://github.com/gatsbyjs/gatsby/issues/34254) ([7a432a8](https://github.com/gatsbyjs/gatsby/commit/7a432a802b3bcc9842ba7cd06890553fd0b82de0))
+- update minor and patch dependencies for gatsby-cli [#34135](https://github.com/gatsbyjs/gatsby/issues/34135) ([d6e8d0a](https://github.com/gatsbyjs/gatsby/commit/d6e8d0ac2345a885883bfa63e664a57510fbea2c))
+- Add back an activity for jobs [#34061](https://github.com/gatsbyjs/gatsby/issues/34061) [#34095](https://github.com/gatsbyjs/gatsby/issues/34095) ([af39171](https://github.com/gatsbyjs/gatsby/commit/af39171c923a029211fd33dc3a1ef312bbcddd93))
+
+#### Chores
+
+- update dependency rollup to ^2.60.2 for gatsby-cli [#34143](https://github.com/gatsbyjs/gatsby/issues/34143) ([7ff1012](https://github.com/gatsbyjs/gatsby/commit/7ff101230b07b2e766d4ffdc718384fee66f2b85))
+- update dependency typescript to ^4.5.2 [#34144](https://github.com/gatsbyjs/gatsby/issues/34144) ([51bff91](https://github.com/gatsbyjs/gatsby/commit/51bff91246cbc48ba50c9650205b0488691fb82a))
+- log pending jobs when build is stuck [#34102](https://github.com/gatsbyjs/gatsby/issues/34102) ([1dae7f5](https://github.com/gatsbyjs/gatsby/commit/1dae7f52e095e352d531d13cdc480fb0d498e1ef))
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.3.0/packages/gatsby-cli) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+#### Features
+
+- Node manifest api v2 [#34024](https://github.com/gatsbyjs/gatsby/issues/34024) ([a7f3f85](https://github.com/gatsbyjs/gatsby/commit/a7f3f85dc64377ff6fadc865155aeb878c7cf97f))
+
+#### Bug Fixes
+
+- fix stuck warnings not showing all the in-progress activities fix [#34079](https://github.com/gatsbyjs/gatsby/issues/34079) ([a996b51](https://github.com/gatsbyjs/gatsby/commit/a996b5123aaf1d183504e0b85ea25d493b9972e5))
+
+#### Performance Improvements
+
+- dont retain logs in memory in non-ink loggers [#34045](https://github.com/gatsbyjs/gatsby/issues/34045) ([c30fbfc](https://github.com/gatsbyjs/gatsby/commit/c30fbfc7e85b28595522b75d53d439f767ab450e))
+
+#### Chores
+
+- log pending jobs when build is stuck [#34102](https://github.com/gatsbyjs/gatsby/issues/34102) [#34107](https://github.com/gatsbyjs/gatsby/issues/34107) ([b90f394](https://github.com/gatsbyjs/gatsby/commit/b90f39461615b2131463b1c9396cd80e505755bf))
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.2.0/packages/gatsby-cli) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-cli [#33768](https://github.com/gatsbyjs/gatsby/issues/33768) ([e4f3c2b](https://github.com/gatsbyjs/gatsby/commit/e4f3c2b2a48c92889bf1ae84caf931dddb89dbfc))
+
+#### Chores
+
+- update [dev] minor and patch dependencies for gatsby-cli [#32558](https://github.com/gatsbyjs/gatsby/issues/32558) ([f7cb5af](https://github.com/gatsbyjs/gatsby/commit/f7cb5af1cb00062b2014c7948133913b88fae52b))
+- update dependency typescript to ^4.4.4 [#33757](https://github.com/gatsbyjs/gatsby/issues/33757) ([7743561](https://github.com/gatsbyjs/gatsby/commit/7743561bbbe0a621d22030fecbba97dfc3e566d1))
+
+### [4.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.1.4/packages/gatsby-cli) (2021-11-15)
+
+**Note:** Version bump only for package gatsby-cli
+
+### [4.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.1.3/packages/gatsby-cli) (2021-11-11)
+
+**Note:** Version bump only for package gatsby-cli
+
+### [4.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.1.2/packages/gatsby-cli) (2021-11-10)
+
+**Note:** Version bump only for package gatsby-cli
+
+### [4.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.1.1/packages/gatsby-cli) (2021-11-09)
+
+**Note:** Version bump only for package gatsby-cli
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.1.0/packages/gatsby-cli) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+#### Features
+
+- DSG support for FS routes [#33697](https://github.com/gatsbyjs/gatsby/issues/33697) ([dd46c64](https://github.com/gatsbyjs/gatsby/commit/dd46c640fc02ea0b3dfa8788ca4a3d21e7783fe4))
+- opentracing plumbing [#33329](https://github.com/gatsbyjs/gatsby/issues/33329) ([a6a04c6](https://github.com/gatsbyjs/gatsby/commit/a6a04c664cb20592c7192b5a40ccf6bbc722fb46))
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@4.0.0/packages/gatsby-cli) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Features
+
+- Error overlay for `getServerData` [#33475](https://github.com/gatsbyjs/gatsby/issues/33475) ([d897016](https://github.com/gatsbyjs/gatsby/commit/d897016530b5ffd9ec561f53b3bfc5c287ef1276))
+- validate engines during the build [#33413](https://github.com/gatsbyjs/gatsby/issues/33413) ([664af4d](https://github.com/gatsbyjs/gatsby/commit/664af4d7b945f824ac80f17de53c5f61e1fc8932))
+- Don't crash the build process when in preview mode [#33184](https://github.com/gatsbyjs/gatsby/issues/33184) ([c2d42ec](https://github.com/gatsbyjs/gatsby/commit/c2d42ecc2dccc0862a4a0c796e2db9dec57fcb16))
+- remove gatsby-admin [#33278](https://github.com/gatsbyjs/gatsby/issues/33278) ([edb8ffc](https://github.com/gatsbyjs/gatsby/commit/edb8ffcd7726f3a18f8981963d1926a912c55fda))
+- move away from old default uuid [#33275](https://github.com/gatsbyjs/gatsby/issues/33275) ([325fdf4](https://github.com/gatsbyjs/gatsby/commit/325fdf4a068acf755ed124cb522e133ea5c31157))
+- enable gatsby pages output [#33188](https://github.com/gatsbyjs/gatsby/issues/33188) ([e514f9a](https://github.com/gatsbyjs/gatsby/commit/e514f9ae62f80e9b60ff92cfc5c8ac8732bf1db0))
+- print message pointing to pqr feedback if running queries throws [#33187](https://github.com/gatsbyjs/gatsby/issues/33187) ([25378f1](https://github.com/gatsbyjs/gatsby/commit/25378f15fdc1908b61db42ead3610db77a8976ed))
+
+#### Bug Fixes
+
+- update typescript [#33387](https://github.com/gatsbyjs/gatsby/issues/33387) ([f2a8035](https://github.com/gatsbyjs/gatsby/commit/f2a8035644e650487abbca8b74a98b96c32d9cd2))
+- update minor and patch dependencies for gatsby-cli [#32595](https://github.com/gatsbyjs/gatsby/issues/32595) ([09416ca](https://github.com/gatsbyjs/gatsby/commit/09416ca6d3fbd1eb7814feb1bb730da818ebed7b))
+- update typescript [#33001](https://github.com/gatsbyjs/gatsby/issues/33001) ([6cd70f6](https://github.com/gatsbyjs/gatsby/commit/6cd70f62ecae4aeee8ece38866661be9239062cb))
+- fix codeframe generation for html errors fix [#33255](https://github.com/gatsbyjs/gatsby/issues/33255) ([4221f54](https://github.com/gatsbyjs/gatsby/commit/4221f547a59bc7341e04e2da92c5dca4c56bd882))
+- make sure to put all yurnalist logs in one log [#33202](https://github.com/gatsbyjs/gatsby/issues/33202) ([820e866](https://github.com/gatsbyjs/gatsby/commit/820e866eca2c0d679562e7b689a38674ed6e13db))
+- fix pagetree global cli fix [#33200](https://github.com/gatsbyjs/gatsby/issues/33200) ([d515044](https://github.com/gatsbyjs/gatsby/commit/d515044895e3d9cc5e08a58d04755d11098abbf5))
+
+#### Chores
+
+- only load the necessary logger [#33463](https://github.com/gatsbyjs/gatsby/issues/33463) ([934035d](https://github.com/gatsbyjs/gatsby/commit/934035d73bb14a08a0051acfd465325056187f4b))
+- Add a link to stuck status warning docs. [#33449](https://github.com/gatsbyjs/gatsby/issues/33449) ([20eb2e0](https://github.com/gatsbyjs/gatsby/commit/20eb2e0e77bbb4a6dd5cf97276258bf19a16f8fb))
+
+#### Other Changes
+
+- fix a couple of typos in the build cli output fix [#33331](https://github.com/gatsbyjs/gatsby/issues/33331) ([3f1fa78](https://github.com/gatsbyjs/gatsby/commit/3f1fa786e7d58990be00f88e9afbcd696f6ebf73))
+- adjust tests after the bump [#33171](https://github.com/gatsbyjs/gatsby/issues/33171) ([4712acc](https://github.com/gatsbyjs/gatsby/commit/4712acc619c19cd23a1b2e94e7253ddd624aa927))
+
+### [3.14.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@3.14.2/packages/gatsby-cli) (2021-10-16)
+
+#### Chores
+
+- only load the necessary logger [#33463](https://github.com/gatsbyjs/gatsby/issues/33463) [#33518](https://github.com/gatsbyjs/gatsby/issues/33518) ([33a5ec7](https://github.com/gatsbyjs/gatsby/commit/33a5ec769eb043db839f598d5b36399225a44843))
+
+### [3.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@3.14.1/packages/gatsby-cli) (2021-10-06)
+
+#### Features
+
+- Don't crash the build process when in preview mode [#33184](https://github.com/gatsbyjs/gatsby/issues/33184) [#33433](https://github.com/gatsbyjs/gatsby/issues/33433) ([1604efb](https://github.com/gatsbyjs/gatsby/commit/1604efbdde97c138b11626923875ae118f7b5e67))
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@3.14.0/packages/gatsby-cli) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

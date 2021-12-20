@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-emotion@7.4.0/packages/gatsby-plugin-emotion) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Features
+
+- Use correct babel preset with `jsxRuntime` [#34085](https://github.com/gatsbyjs/gatsby/issues/34085) ([01d7a79](https://github.com/gatsbyjs/gatsby/commit/01d7a79413f986fecbfbd7f710143b016fbc4927))
+
+## [7.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-emotion@7.3.0/packages/gatsby-plugin-emotion) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-plugin-emotion
+
+## [7.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-emotion@7.2.0/packages/gatsby-plugin-emotion) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+**Note:** Version bump only for package gatsby-plugin-emotion
+
+## [7.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-emotion@7.1.0/packages/gatsby-plugin-emotion) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-plugin-emotion
+
+## [7.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-emotion@7.0.0/packages/gatsby-plugin-emotion) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-emotion@6.14.0/packages/gatsby-plugin-emotion) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

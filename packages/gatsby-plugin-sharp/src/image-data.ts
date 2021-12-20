@@ -6,7 +6,11 @@ import fs from "fs-extra"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
 import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
 import sharp from "./safe-sharp"
-import { createTransformObject, mergeDefaults } from "./plugin-options"
+import {
+  createTransformObject,
+  getPluginOptions,
+  mergeDefaults,
+} from "./plugin-options"
 import { reportError } from "./report-error"
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
@@ -45,7 +49,7 @@ export async function getImageMetadata(
   }
 
   try {
-    const pipeline = sharp()
+    const pipeline = sharp({ failOnError: !!getPluginOptions().failOnError })
 
     fs.createReadStream(file.absolutePath).pipe(pipeline)
 

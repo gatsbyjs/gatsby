@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.4.0/packages/gatsby-plugin-sass) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Chores
+
+- update dependency autoprefixer to ^10.4.0 for gatsby-plugin-sass [#33507](https://github.com/gatsbyjs/gatsby/issues/33507) ([4e184d1](https://github.com/gatsbyjs/gatsby/commit/4e184d1a074fa749c568b394e438278c0e4e8543))
+
+## [5.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.3.0/packages/gatsby-plugin-sass) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [5.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.2.0/packages/gatsby-plugin-sass) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+### [5.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.1.1/packages/gatsby-plugin-sass) (2021-11-09)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [5.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.1.0/packages/gatsby-plugin-sass) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-plugin-sass
+
+## [5.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.0.0/packages/gatsby-plugin-sass) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- update dependency autoprefixer to ^10.3.6 for gatsby-plugin-sass [#33352](https://github.com/gatsbyjs/gatsby/issues/33352) ([97620ac](https://github.com/gatsbyjs/gatsby/commit/97620acc3e751e967a2884d3d0edc7791d5bc2f3))
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@4.14.0/packages/gatsby-plugin-sass) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

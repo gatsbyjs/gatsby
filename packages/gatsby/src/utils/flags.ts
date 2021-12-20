@@ -87,7 +87,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Enable all experiments aimed at improving develop server start time.`,
     includedFlags: [
-      `DEV_SSR`,
+      // `DEV_SSR`, - not working with serverdata atm
       `PRESERVE_FILE_DOWNLOAD_CACHE`,
       `DEV_WEBPACK_CACHE`,
     ],
@@ -190,16 +190,6 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => true,
   },
   {
-    name: `FUNCTIONS`,
-    env: `GATSBY_EXPERIMENTAL_FUNCTIONS`,
-    command: `all`,
-    telemetryId: `Functions`,
-    experimental: false,
-    description: `Compile Serverless functions in your Gatsby project and write them to disk, ready to deploy to Gatsby Cloud`,
-    umbrellaIssue: `https://gatsby.dev/functions-feedback`,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-  },
-  {
     name: `LMDB_STORE`,
     env: `GATSBY_EXPERIMENTAL_LMDB_STORE`,
     command: `all`,
@@ -235,6 +225,15 @@ const activeFlags: Array<IFlag> = [
       return (Number(major) === 14 && Number(minor) >= 10) || Number(major) > 14
     },
     requires: `Requires Node v14.10 or above.`,
+  },
+  {
+    name: `DETECT_NODE_MUTATIONS`,
+    env: `GATSBY_DETECT_NODE_MUTATIONS`,
+    command: `all`,
+    telemetryId: `DetectNodeMutations`,
+    description: `Diagnostic mode to log any attempts to mutate node directly. Helpful when debugging missing data problems. See https://gatsby.dev/debugging-missing-data for more details.`,
+    experimental: false,
+    testFitness: (): fitnessEnum => true,
   },
 ]
 

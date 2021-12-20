@@ -1,8 +1,8 @@
 import * as path from "path"
-import { store } from "../../redux"
 import webpack from "webpack"
 import mod from "module"
-
+import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
+import reporter from "gatsby-cli/lib/reporter"
 import type { ITemplateDetails } from "./entry"
 
 import {
@@ -10,26 +10,58 @@ import {
   readWebpackStats,
 } from "../client-assets-for-template"
 import { writeStaticQueryContext } from "../static-query-utils"
+import { IGatsbyState } from "../../redux/types"
+
+type Reporter = typeof reporter
 
 const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
 const outputDir = path.join(process.cwd(), `.cache`, `page-ssr`)
+const cacheLocation = path.join(process.cwd(), `.cache`, `webpack`, `page-ssr`)
 
-export async function createPageSSRBundle(): Promise<any> {
-  const { program, components } = store.getState()
-  const webpackStats = await readWebpackStats(
-    path.join(program.directory, `public`)
-  )
+export async function writeQueryContext({
+  staticQueriesByTemplate,
+  components,
+}: {
+  staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
+  components: IGatsbyState["components"]
+}): Promise<void> {
+  const waitingForWrites: Array<Promise<unknown>> = []
+  for (const pageTemplate of components.values()) {
+    const staticQueryHashes =
+      staticQueriesByTemplate.get(pageTemplate.componentPath) || []
+
+    waitingForWrites.push(
+      writeStaticQueryContext(
+        staticQueryHashes,
+        pageTemplate.componentChunkName
+      )
+    )
+  }
+
+  return Promise.all(waitingForWrites).then(() => {})
+}
+
+export async function createPageSSRBundle({
+  rootDir,
+  components,
+  staticQueriesByTemplate,
+  webpackCompilationHash,
+  reporter,
+  isVerbose = false,
+}: {
+  rootDir: string
+  components: IGatsbyState["components"]
+  staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
+  webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
+  reporter: Reporter
+  isVerbose?: boolean
+}): Promise<webpack.Compilation | undefined> {
+  const webpackStats = await readWebpackStats(path.join(rootDir, `public`))
 
   const toInline: Record<string, ITemplateDetails> = {}
   for (const pageTemplate of components.values()) {
     const staticQueryHashes =
-      store
-        .getState()
-        .staticQueriesByTemplate.get(pageTemplate.componentPath) || []
-    await writeStaticQueryContext(
-      staticQueryHashes,
-      pageTemplate.componentChunkName
-    )
+      staticQueriesByTemplate.get(pageTemplate.componentPath) || []
 
     toInline[pageTemplate.componentChunkName] = {
       query: pageTemplate.query,
@@ -40,7 +72,9 @@ export async function createPageSSRBundle(): Promise<any> {
       ),
     }
   }
+
   const compiler = webpack({
+    name: `Page Engine`,
     mode: `none`,
     entry: path.join(__dirname, `entry.js`),
     output: {
@@ -51,6 +85,14 @@ export async function createPageSSRBundle(): Promise<any> {
     target: `node`,
     externalsPresets: {
       node: false,
+    },
+    cache: {
+      type: `filesystem`,
+      name: `page-ssr`,
+      cacheLocation,
+      buildDependencies: {
+        config: [__filename],
+      },
     },
     // those are required in some runtime paths, but we don't need them
     externals: [
@@ -66,6 +108,7 @@ export async function createPageSSRBundle(): Promise<any> {
         return acc
       }, {}),
     ],
+    devtool: false,
     module: {
       rules: [
         {
@@ -100,14 +143,23 @@ export async function createPageSSRBundle(): Promise<any> {
     resolve: {
       extensions,
       alias: {
-        ".cache": `${program.directory}/.cache/`,
+        ".cache": `${rootDir}/.cache/`,
+        [require.resolve(`gatsby-cli/lib/reporter/loggers/ink/index.js`)]:
+          false,
+        inquirer: false,
       },
     },
     plugins: [
       new webpack.DefinePlugin({
         INLINED_TEMPLATE_TO_DETAILS: JSON.stringify(toInline),
+        WEBPACK_COMPILATION_HASH: JSON.stringify(webpackCompilationHash),
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
       }),
-    ],
+      process.env.GATSBY_WEBPACK_LOGGING?.includes(`page-engine`)
+        ? new WebpackLoggingPlugin(rootDir, reporter, isVerbose)
+        : false,
+    ].filter(Boolean) as Array<webpack.WebpackPluginInstance>,
   })
 
   return new Promise((resolve, reject) => {

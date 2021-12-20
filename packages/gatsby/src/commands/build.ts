@@ -3,7 +3,7 @@ import report from "gatsby-cli/lib/reporter"
 import signalExit from "signal-exit"
 import fs from "fs-extra"
 import telemetry from "gatsby-telemetry"
-import { updateSiteMetadata, isTruthy } from "gatsby-core-utils"
+import { updateInternalSiteMetadata, isTruthy, uuid } from "gatsby-core-utils"
 import {
   buildRenderer,
   buildHTMLPagesAndDeleteStaleArtifacts,
@@ -48,15 +48,28 @@ import {
   runQueriesInWorkersQueue,
 } from "../utils/worker/pool"
 import { createGraphqlEngineBundle } from "../schema/graphql-engine/bundle-webpack"
-import { createPageSSRBundle } from "../utils/page-ssr-module/bundle-webpack"
+import {
+  createPageSSRBundle,
+  writeQueryContext,
+} from "../utils/page-ssr-module/bundle-webpack"
 import { shouldGenerateEngines } from "../utils/engines-helpers"
-import uuidv4 from "uuid/v4"
 import reporter from "gatsby-cli/lib/reporter"
+import type webpack from "webpack"
+import {
+  materializePageMode,
+  getPageMode,
+  preparePageTemplateConfigs,
+} from "../utils/page-mode"
+import { validateEngines } from "../utils/validate-engines"
 
-module.exports = async function build(program: IBuildArgs): Promise<void> {
+module.exports = async function build(
+  program: IBuildArgs,
+  // Let external systems running Gatsby to inject attributes
+  externalTelemetryAttributes: Record<string, any>
+): Promise<void> {
   // global gatsby object to use without store
   global.__GATSBY = {
-    buildId: uuidv4(),
+    buildId: uuid.v4(),
     root: program!.directory,
   }
 
@@ -71,7 +84,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     )
   }
 
-  await updateSiteMetadata({
+  await updateInternalSiteMetadata({
     name: program.sitePackageJson.name,
     sitePath: program.directory,
     lastRun: Date.now(),
@@ -81,9 +94,13 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   markWebpackStatusAsPending()
 
   const publicDir = path.join(program.directory, `public`)
-  initTracer(
-    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
-  )
+  if (!externalTelemetryAttributes) {
+    await initTracer(
+      process.env.GATSBY_OPEN_TRACING_CONFIG_FILE ||
+        program.openTracingConfigFile
+    )
+  }
+
   const buildActivity = report.phantomActivity(`build`)
   buildActivity.start()
 
@@ -97,16 +114,161 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
 
+  // Add external tags to buildSpan
+  if (externalTelemetryAttributes) {
+    Object.entries(externalTelemetryAttributes).forEach(([key, value]) => {
+      buildActivity.span.setTag(key, value)
+    })
+  }
+
   const { gatsbyNodeGraphQLFunction, workerPool } = await bootstrap({
     program,
     parentSpan: buildSpan,
   })
 
+  await apiRunnerNode(`onPreBuild`, {
+    graphql: gatsbyNodeGraphQLFunction,
+    parentSpan: buildSpan,
+  })
+
+  // writes sync and async require files to disk
+  // used inside routing "html" + "javascript"
+  await writeOutRequires({
+    store,
+    parentSpan: buildSpan,
+  })
+
+  let closeJavascriptBundleCompilation: (() => Promise<void>) | undefined
+  let closeHTMLBundleCompilation: (() => Promise<void>) | undefined
+  let webpackAssets: Array<webpack.StatsAsset> | null = null
+  let webpackCompilationHash: string | null = null
+  let webpackSSRCompilationHash: string | null = null
+
   const engineBundlingPromises: Array<Promise<any>> = []
+  const buildActivityTimer = report.activityTimer(
+    `Building production JavaScript and CSS bundles`,
+    { parentSpan: buildSpan }
+  )
+  buildActivityTimer.start()
+
+  try {
+    const { stats, close } = await buildProductionBundle(
+      program,
+      buildActivityTimer.span
+    )
+    closeJavascriptBundleCompilation = close
+
+    if (stats.hasWarnings()) {
+      const rawMessages = stats.toJson({ all: false, warnings: true })
+      reportWebpackWarnings(rawMessages.warnings, report)
+    }
+
+    webpackAssets = stats.toJson({
+      all: false,
+      assets: true,
+      cachedAssets: true,
+    }).assets as Array<webpack.StatsAsset>
+    webpackCompilationHash = stats.hash as string
+  } catch (err) {
+    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildJavascript, err))
+  } finally {
+    buildActivityTimer.end()
+  }
 
   if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
-    // bundle graphql-engine
-    engineBundlingPromises.push(createGraphqlEngineBundle())
+    const state = store.getState()
+    const buildActivityTimer = report.activityTimer(
+      `Building Rendering Engines`,
+      { parentSpan: buildSpan }
+    )
+    try {
+      buildActivityTimer.start()
+      // bundle graphql-engine
+      engineBundlingPromises.push(
+        createGraphqlEngineBundle(program.directory, report, program.verbose)
+      )
+
+      engineBundlingPromises.push(
+        createPageSSRBundle({
+          rootDir: program.directory,
+          components: state.components,
+          staticQueriesByTemplate: state.staticQueriesByTemplate,
+          webpackCompilationHash: webpackCompilationHash as string, // we set webpackCompilationHash above
+          reporter: report,
+          isVerbose: program.verbose,
+        })
+      )
+      await Promise.all(engineBundlingPromises)
+    } catch (err) {
+      reporter.panic(err)
+    } finally {
+      buildActivityTimer.end()
+    }
+  }
+
+  const buildSSRBundleActivityProgress = report.activityTimer(
+    `Building HTML renderer`,
+    { parentSpan: buildSpan }
+  )
+  buildSSRBundleActivityProgress.start()
+  try {
+    const { close, stats } = await buildRenderer(
+      program,
+      Stage.BuildHTML,
+      buildSSRBundleActivityProgress.span
+    )
+
+    closeHTMLBundleCompilation = close
+    webpackSSRCompilationHash = stats.hash as string
+
+    await close()
+  } catch (err) {
+    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
+  } finally {
+    buildSSRBundleActivityProgress.end()
+  }
+
+  // exec outer config function for each template
+  const pageConfigActivity = report.activityTimer(`Execute page configs`, {
+    parentSpan: buildSpan,
+  })
+  pageConfigActivity.start()
+  try {
+    await preparePageTemplateConfigs(gatsbyNodeGraphQLFunction)
+  } catch (err) {
+    reporter.panic(err)
+  } finally {
+    pageConfigActivity.end()
+  }
+
+  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
+    const validateEnginesActivity = report.activityTimer(
+      `Validating Rendering Engines`,
+      {
+        parentSpan: buildSpan,
+      }
+    )
+    validateEnginesActivity.start()
+    try {
+      await validateEngines(store.getState().program.directory)
+    } catch (error) {
+      validateEnginesActivity.panic({ id: `98001`, context: {}, error })
+    } finally {
+      validateEnginesActivity.end()
+    }
+  }
+
+  const cacheActivity = report.activityTimer(`Caching Webpack compilations`, {
+    parentSpan: buildSpan,
+  })
+  try {
+    cacheActivity.start()
+    await Promise.all([
+      closeJavascriptBundleCompilation?.(),
+      closeHTMLBundleCompilation?.(),
+    ])
+  } finally {
+    cacheActivity.end()
   }
 
   const graphqlRunner = new GraphQLRunner(store, {
@@ -119,18 +281,20 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // Only run queries with mode SSG
   if (_CFLAGS_.GATSBY_MAJOR === `4`) {
     queryIds.pageQueryIds = queryIds.pageQueryIds.filter(
-      query => query.mode === `SSG`
+      query => getPageMode(query) === `SSG`
     )
   }
 
   let waitForWorkerPoolRestart = Promise.resolve()
   if (process.env.GATSBY_EXPERIMENTAL_PARALLEL_QUERY_RUNNING) {
-    await runQueriesInWorkersQueue(workerPool, queryIds)
+    await runQueriesInWorkersQueue(workerPool, queryIds, {
+      parentSpan: buildSpan,
+    })
     // Jobs still might be running even though query running finished
     await waitUntilAllJobsComplete()
     // Restart worker pool before merging state to lower memory pressure while merging state
     waitForWorkerPoolRestart = workerPool.restart()
-    await mergeWorkerState(workerPool)
+    await mergeWorkerState(workerPool, buildSpan)
   } else {
     await runStaticQueries({
       queryIds,
@@ -147,68 +311,60 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     })
   }
 
-  await writeOutRequires({
-    store,
-    parentSpan: buildSpan,
-  })
+  // create scope so we don't leak state object
+  {
+    const state = store.getState()
+    await writeQueryContext({
+      staticQueriesByTemplate: state.staticQueriesByTemplate,
+      components: state.components,
+    })
+  }
 
-  await apiRunnerNode(`onPreBuild`, {
-    graphql: gatsbyNodeGraphQLFunction,
-    parentSpan: buildSpan,
-  })
+  if (process.send && shouldGenerateEngines()) {
+    process.send({
+      type: `LOG_ACTION`,
+      action: {
+        type: `ENGINES_READY`,
+        timestamp: new Date().toJSON(),
+      },
+    })
+  }
 
   // Copy files from the static directory to
   // an equivalent static directory within public.
   copyStaticDirs()
 
-  const buildActivityTimer = report.activityTimer(
-    `Building production JavaScript and CSS bundles`,
-    { parentSpan: buildSpan }
-  )
-  buildActivityTimer.start()
-  let stats
-  let waitForCompilerClose
-  try {
-    const result = await buildProductionBundle(program, buildActivityTimer.span)
-    stats = result.stats
-    waitForCompilerClose = result.waitForCompilerClose
+  // create scope so we don't leak state object
+  {
+    const state = store.getState()
+    if (
+      webpackCompilationHash !== state.webpackCompilationHash ||
+      !appDataUtil.exists(publicDir)
+    ) {
+      store.dispatch({
+        type: `SET_WEBPACK_COMPILATION_HASH`,
+        payload: webpackCompilationHash,
+      })
 
-    if (stats.hasWarnings()) {
-      const rawMessages = stats.toJson({ moduleTrace: false })
-      reportWebpackWarnings(rawMessages.warnings, report)
+      const rewriteActivityTimer = report.activityTimer(
+        `Rewriting compilation hashes`,
+        {
+          parentSpan: buildSpan,
+        }
+      )
+      rewriteActivityTimer.start()
+
+      await appDataUtil.write(publicDir, webpackCompilationHash as string)
+
+      rewriteActivityTimer.end()
     }
-  } catch (err) {
-    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildJavascript, err))
-  } finally {
-    buildActivityTimer.end()
-  }
 
-  if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
-    // client bundle is produced so static query maps should be ready
-    engineBundlingPromises.push(createPageSSRBundle())
-  }
-
-  const webpackCompilationHash = stats.hash
-  if (
-    webpackCompilationHash !== store.getState().webpackCompilationHash ||
-    !appDataUtil.exists(publicDir)
-  ) {
-    store.dispatch({
-      type: `SET_WEBPACK_COMPILATION_HASH`,
-      payload: webpackCompilationHash,
-    })
-
-    const rewriteActivityTimer = report.activityTimer(
-      `Rewriting compilation hashes`,
-      {
-        parentSpan: buildSpan,
-      }
-    )
-    rewriteActivityTimer.start()
-
-    await appDataUtil.write(publicDir, webpackCompilationHash)
-
-    rewriteActivityTimer.end()
+    if (state.html.ssrCompilationHash !== webpackSSRCompilationHash) {
+      store.dispatch({
+        type: `SET_SSR_WEBPACK_COMPILATION_HASH`,
+        payload: webpackSSRCompilationHash,
+      })
+    }
   }
 
   await flushPendingPageDataWrites(buildSpan)
@@ -216,9 +372,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   if (telemetry.isTrackingEnabled()) {
     // transform asset size to kB (from bytes) to fit 64 bit to numbers
-    const bundleSizes = stats
-      .toJson({ assets: true })
-      .assets.filter(asset => asset.name.endsWith(`.js`))
+    const bundleSizes = (webpackAssets as Array<webpack.StatsAsset>)
+      .filter(asset => asset.name.endsWith(`.js`))
       .map(asset => asset.size / 1000)
     const pageDataSizes = [...store.getState().pageDataStats.values()]
 
@@ -238,39 +393,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // we need to save it again to make sure our latest state has been saved
   await db.saveState()
 
-  const buildSSRBundleActivityProgress = report.activityTimer(
-    `Building HTML renderer`,
-    { parentSpan: buildSpan }
-  )
-  buildSSRBundleActivityProgress.start()
-  let waitForCompilerCloseBuildHtml
-  try {
-    const result = await buildRenderer(
-      program,
-      Stage.BuildHTML,
-      buildSSRBundleActivityProgress.span
-    )
-    waitForCompilerCloseBuildHtml = result.waitForCompilerClose
-
-    if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
-      Promise.all(engineBundlingPromises).then(() => {
-        if (process.send) {
-          process.send({
-            type: `LOG_ACTION`,
-            action: {
-              type: `ENGINES_READY`,
-              timestamp: new Date().toJSON(),
-            },
-          })
-        }
-      })
-    }
-  } catch (err) {
-    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
-  } finally {
-    buildSSRBundleActivityProgress.end()
-  }
-
   if (_CFLAGS_.GATSBY_MAJOR === `4` && shouldGenerateEngines()) {
     // well, tbf we should just generate this in `.cache` and avoid deleting it :shrug:
     program.keepPageRenderer = true
@@ -278,19 +400,41 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   await waitForWorkerPoolRestart
 
+  // Start saving page.mode in the main process (while HTML is generated in workers in parallel)
+  const waitMaterializePageMode = materializePageMode()
+
   const { toRegenerate, toDelete } =
     await buildHTMLPagesAndDeleteStaleArtifacts({
       program,
       workerPool,
-      buildSpan,
+      parentSpan: buildSpan,
     })
 
+  await waitMaterializePageMode
   const waitWorkerPoolEnd = Promise.all(workerPool.end())
 
-  telemetry.addSiteMeasurement(`BUILD_END`, {
-    pagesCount: toRegenerate.length, // number of html files that will be written
-    totalPagesCount: store.getState().pages.size, // total number of pages
-  })
+  {
+    let SSGCount = 0
+    let DSGCount = 0
+    let SSRCount = 0
+    for (const page of store.getState().pages.values()) {
+      if (page.mode === `SSR`) {
+        SSRCount++
+      } else if (page.mode === `DSG`) {
+        DSGCount++
+      } else {
+        SSGCount++
+      }
+    }
+
+    telemetry.addSiteMeasurement(`BUILD_END`, {
+      pagesCount: toRegenerate.length, // number of html files that will be written
+      totalPagesCount: store.getState().pages.size, // total number of pages
+      SSRCount,
+      DSGCount,
+      SSGCount,
+    })
+  }
 
   const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {
     parentSpan: buildSpan,
@@ -315,8 +459,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // Make sure we saved the latest state so we have all jobs cached
   await db.saveState()
 
-  await Promise.all([waitForCompilerClose, waitForCompilerCloseBuildHtml])
-
   const state = store.getState()
   reporter._renderPageTree({
     components: state.components,
@@ -327,9 +469,10 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   report.info(`Done building in ${process.uptime()} sec`)
 
-  buildSpan.finish()
-  await stopTracer()
   buildActivity.end()
+  if (!externalTelemetryAttributes) {
+    await stopTracer()
+  }
 
   if (program.logPages) {
     if (toRegenerate.length) {
@@ -372,8 +515,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
     report.info(`.cache/deletedPages.txt created`)
   }
-
-  await Promise.all(engineBundlingPromises)
 
   showExperimentNotices()
 

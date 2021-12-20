@@ -3,6 +3,87 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.4.0/packages/gatsby-core-utils) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Bug Fixes
+
+- update dependency got to ^11.8.3 for gatsby-core-utils [#34129](https://github.com/gatsbyjs/gatsby/issues/34129) ([3700b21](https://github.com/gatsbyjs/gatsby/commit/3700b2161dcfc553b3429e45bae80f68b1be0252))
+- update dependency got to ^11.8.3 for gatsby-plugin-sharp [#34130](https://github.com/gatsbyjs/gatsby/issues/34130) ([80ef329](https://github.com/gatsbyjs/gatsby/commit/80ef329451902fe351cfd9f555c379b03929db20))
+
+#### Chores
+
+- update dependency typescript to ^4.5.2 [#34144](https://github.com/gatsbyjs/gatsby/issues/34144) ([51bff91](https://github.com/gatsbyjs/gatsby/commit/51bff91246cbc48ba50c9650205b0488691fb82a))
+
+## [3.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.3.0/packages/gatsby-core-utils) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+#### Bug Fixes
+
+- handle 304 correctly between builds [#33975](https://github.com/gatsbyjs/gatsby/issues/33975) ([734ff16](https://github.com/gatsbyjs/gatsby/commit/734ff16a14bb150c1d68627623ebb3988c8ce1d0))
+
+## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.2.0/packages/gatsby-core-utils) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Features
+
+- Add retry on HTTP status codes to `fetchRemoteFile` [#33461](https://github.com/gatsbyjs/gatsby/issues/33461) ([00dc589](https://github.com/gatsbyjs/gatsby/commit/00dc5896d2eb63f201d061c4be15093bbf162d56))
+
+#### Bug Fixes
+
+- handle 304 correctly between builds [#33975](https://github.com/gatsbyjs/gatsby/issues/33975) [#33981](https://github.com/gatsbyjs/gatsby/issues/33981) ([ab857d7](https://github.com/gatsbyjs/gatsby/commit/ab857d7442c3afb7a92305993f9c3c90a3068ef7))
+- fix fetchRemoteFile when called in main process after being called in worker fix [#33932](https://github.com/gatsbyjs/gatsby/issues/33932) ([189dea6](https://github.com/gatsbyjs/gatsby/commit/189dea69e9d6034088648dde65a3985059f3d8da))
+- update dependency node-object-hash to ^2.3.10 for gatsby-core-utils [#33364](https://github.com/gatsbyjs/gatsby/issues/33364) ([cecd522](https://github.com/gatsbyjs/gatsby/commit/cecd5229f40f7cd51fffe9f09c20305598a9e70f))
+
+#### Chores
+
+- update dependency typescript to ^4.4.4 [#33757](https://github.com/gatsbyjs/gatsby/issues/33757) ([7743561](https://github.com/gatsbyjs/gatsby/commit/7743561bbbe0a621d22030fecbba97dfc3e566d1))
+
+### [3.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.1.3/packages/gatsby-core-utils) (2021-11-15)
+
+#### Bug Fixes
+
+- handle 304 correctly between builds [#33975](https://github.com/gatsbyjs/gatsby/issues/33975) [#33980](https://github.com/gatsbyjs/gatsby/issues/33980) ([8c9b22a](https://github.com/gatsbyjs/gatsby/commit/8c9b22a6f22ddbccaabfee5fcec79bf7d0bd398f))
+
+### [3.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.1.2/packages/gatsby-core-utils) (2021-11-11)
+
+#### Bug Fixes
+
+- fix fetchRemoteFile when called in main process after being called in worker fix [#33932](https://github.com/gatsbyjs/gatsby/issues/33932) fix [#33942](https://github.com/gatsbyjs/gatsby/issues/33942) ([26c7a3d](https://github.com/gatsbyjs/gatsby/commit/26c7a3d6c9d1f51ce59f8ebdf66db422c0320cbc))
+
+### [3.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.1.1/packages/gatsby-core-utils) (2021-11-10)
+
+#### Features
+
+- Add retry on HTTP status codes to `fetchRemoteFile` [#33461](https://github.com/gatsbyjs/gatsby/issues/33461) [#33925](https://github.com/gatsbyjs/gatsby/issues/33925) ([62a5612](https://github.com/gatsbyjs/gatsby/commit/62a56128fcd9f7d743b532fc231cd0d26c1f3ec2))
+
+## [3.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.1.0/packages/gatsby-core-utils) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+## [3.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.0.0/packages/gatsby-core-utils) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Features
+
+- move away from old default uuid [#33275](https://github.com/gatsbyjs/gatsby/issues/33275) ([325fdf4](https://github.com/gatsbyjs/gatsby/commit/325fdf4a068acf755ed124cb522e133ea5c31157))
+- add fetch mutex for PQR [#33161](https://github.com/gatsbyjs/gatsby/issues/33161) ([aa050d7](https://github.com/gatsbyjs/gatsby/commit/aa050d7bb7857a98a4b3b9be92058bff8c4400f0))
+
+#### Bug Fixes
+
+- update typescript [#33387](https://github.com/gatsbyjs/gatsby/issues/33387) ([f2a8035](https://github.com/gatsbyjs/gatsby/commit/f2a8035644e650487abbca8b74a98b96c32d9cd2))
+- update typescript [#33001](https://github.com/gatsbyjs/gatsby/issues/33001) ([6cd70f6](https://github.com/gatsbyjs/gatsby/commit/6cd70f62ecae4aeee8ece38866661be9239062cb))
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@2.14.0/packages/gatsby-core-utils) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

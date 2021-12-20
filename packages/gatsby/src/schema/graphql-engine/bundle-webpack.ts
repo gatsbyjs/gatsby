@@ -5,19 +5,34 @@ import * as fs from "fs-extra"
 import webpack from "webpack"
 import { printQueryEnginePlugins } from "./print-plugins"
 import mod from "module"
+import { WebpackLoggingPlugin } from "../../utils/webpack/plugins/webpack-logging"
+import reporter from "gatsby-cli/lib/reporter"
+
+type Reporter = typeof reporter
 
 const extensions = [`.mjs`, `.js`, `.json`, `.node`, `.ts`, `.tsx`]
 
 const outputDir = path.join(process.cwd(), `.cache`, `query-engine`)
+const cacheLocation = path.join(
+  process.cwd(),
+  `.cache`,
+  `webpack`,
+  `query-engine`
+)
 
-export async function createGraphqlEngineBundle(): Promise<any> {
+export async function createGraphqlEngineBundle(
+  rootDir: string,
+  reporter: Reporter,
+  isVerbose?: boolean
+): Promise<webpack.Compilation | undefined> {
   const schemaSnapshotString = await fs.readFile(
-    process.cwd() + `/.cache/schema.gql`,
+    path.join(rootDir, `.cache`, `schema.gql`),
     `utf-8`
   )
   await printQueryEnginePlugins()
 
   const compiler = webpack({
+    name: `Query Engine`,
     // mode: `production`,
     mode: `none`,
     entry: path.join(__dirname, `entry.js`),
@@ -29,6 +44,14 @@ export async function createGraphqlEngineBundle(): Promise<any> {
     target: `node`,
     externalsPresets: {
       node: false,
+    },
+    cache: {
+      type: `filesystem`,
+      name: `graphql-engine`,
+      cacheLocation,
+      buildDependencies: {
+        config: [__filename],
+      },
     },
     // those are required in some runtime paths, but we don't need them
     externals: [
@@ -80,6 +103,10 @@ export async function createGraphqlEngineBundle(): Promise<any> {
       extensions,
       alias: {
         ".cache": process.cwd() + `/.cache/`,
+
+        [require.resolve(`gatsby-cli/lib/reporter/loggers/ink/index.js`)]:
+          false,
+        inquirer: false,
       },
     },
     plugins: [
@@ -88,8 +115,11 @@ export async function createGraphqlEngineBundle(): Promise<any> {
         "process.env.GATSBY_EXPERIMENTAL_LMDB_STORE": `true`,
         "process.env.GATSBY_SKIP_WRITING_SCHEMA_TO_FILE": `true`,
         SCHEMA_SNAPSHOT: JSON.stringify(schemaSnapshotString),
+        "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
       }),
-    ],
+      process.env.GATSBY_WEBPACK_LOGGING?.includes(`query-engine`) &&
+        new WebpackLoggingPlugin(rootDir, reporter, isVerbose),
+    ].filter(Boolean) as Array<webpack.WebpackPluginInstance>,
   })
 
   return new Promise((resolve, reject) => {

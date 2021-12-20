@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@2.4.0/packages/gatsby-plugin-utils) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Chores
+
+- update dependency typescript to ^4.5.2 [#34144](https://github.com/gatsbyjs/gatsby/issues/34144) ([51bff91](https://github.com/gatsbyjs/gatsby/commit/51bff91246cbc48ba50c9650205b0488691fb82a))
+
+## [2.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@2.3.0/packages/gatsby-plugin-utils) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [2.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@2.2.0/packages/gatsby-plugin-utils) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- allow not defining entry for subplugins [#33900](https://github.com/gatsbyjs/gatsby/issues/33900) ([f87164f](https://github.com/gatsbyjs/gatsby/commit/f87164f6af6285365ec2098d6233313a6b4c0982))
+
+#### Chores
+
+- update dependency typescript to ^4.4.4 [#33757](https://github.com/gatsbyjs/gatsby/issues/33757) ([7743561](https://github.com/gatsbyjs/gatsby/commit/7743561bbbe0a621d22030fecbba97dfc3e566d1))
+
+### [2.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@2.1.1/packages/gatsby-plugin-utils) (2021-11-09)
+
+#### Bug Fixes
+
+- allow not defining entry for subplugins [#33900](https://github.com/gatsbyjs/gatsby/issues/33900) [#33909](https://github.com/gatsbyjs/gatsby/issues/33909) ([4975ee2](https://github.com/gatsbyjs/gatsby/commit/4975ee26561a520daf8e2082479d21b2062a862e))
+
+## [2.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@2.1.0/packages/gatsby-plugin-utils) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+**Note:** Version bump only for package gatsby-plugin-utils
+
+## [2.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@2.0.0/packages/gatsby-plugin-utils) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Bug Fixes
+
+- update typescript [#33387](https://github.com/gatsbyjs/gatsby/issues/33387) ([f2a8035](https://github.com/gatsbyjs/gatsby/commit/f2a8035644e650487abbca8b74a98b96c32d9cd2))
+- update typescript [#33001](https://github.com/gatsbyjs/gatsby/issues/33001) ([6cd70f6](https://github.com/gatsbyjs/gatsby/commit/6cd70f62ecae4aeee8ece38866661be9239062cb))
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
+#### Other Changes
+
+- adjust tests after the bump [#33171](https://github.com/gatsbyjs/gatsby/issues/33171) ([4712acc](https://github.com/gatsbyjs/gatsby/commit/4712acc619c19cd23a1b2e94e7253ddd624aa927))
+
 ## [1.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@1.14.0/packages/gatsby-plugin-utils) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wikipedia@4.4.0/packages/gatsby-source-wikipedia) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+**Note:** Version bump only for package gatsby-source-wikipedia
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wikipedia@4.3.0/packages/gatsby-source-wikipedia) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-source-wikipedia
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wikipedia@4.2.0/packages/gatsby-source-wikipedia) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- update dependency node-fetch to ^2.6.6 for gatsby-source-wikipedia [#33764](https://github.com/gatsbyjs/gatsby/issues/33764) ([37675fa](https://github.com/gatsbyjs/gatsby/commit/37675fa7079c38e5f17f0cf0d3223218c495296e))
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wikipedia@4.1.0/packages/gatsby-source-wikipedia) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-wikipedia [#33371](https://github.com/gatsbyjs/gatsby/issues/33371) ([0d364f0](https://github.com/gatsbyjs/gatsby/commit/0d364f08e6f662c6a1226499a6d3a8a9fc29ae17))
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wikipedia@4.0.0/packages/gatsby-source-wikipedia) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wikipedia@3.14.0/packages/gatsby-source-wikipedia) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)

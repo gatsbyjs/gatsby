@@ -9,11 +9,11 @@ describe(`pluginOptionsSchema`, () => {
       `"linkImagesToOriginal" must be a boolean`,
       `"showCaptions" must be one of [boolean, array]`,
       `"markdownCaptions" must be a boolean`,
-      `"sizeByPixelDensity" must be a boolean`,
       `"wrapperStyle" must be one of [object, string]`,
       `"backgroundColor" must be a string`,
       `"quality" must be a number`,
       `"withWebp" must be one of [object, boolean]`,
+      `"withAvif" must be one of [object, boolean]`,
       `"tracedSVG" must be one of [boolean, object]`,
       `"loading" must be one of [lazy, eager, auto]`,
       `"decoding" must be one of [async, sync, auto]`,
@@ -27,11 +27,11 @@ describe(`pluginOptionsSchema`, () => {
       linkImagesToOriginal: `This should be a boolean`,
       showCaptions: `This should be a boolean`,
       markdownCaptions: `This should be a boolean`,
-      sizeByPixelDensity: `This should be a boolean`,
       wrapperStyle: true,
       backgroundColor: 123,
       quality: `This should be a number`,
       withWebp: `This should be a boolean or an object`,
+      withAvif: `This should be a boolean or an object`,
       tracedSVG: `This should be a boolean`,
       loading: `This should be lazy, eager or auto`,
       decoding: `This should be async, sync or auto`,
@@ -49,11 +49,11 @@ describe(`pluginOptionsSchema`, () => {
       linkImagesToOriginal: false,
       showCaptions: true,
       markdownCaptions: true,
-      sizeByPixelDensity: true,
       wrapperStyle: { marginTop: `1rem`, padding: `1.5rem`, color: `blue` },
       backgroundColor: `red`,
       quality: 77,
       withWebp: true,
+      withAvif: true,
       tracedSVG: true,
       loading: `eager`,
       decoding: `async`,
@@ -68,6 +68,14 @@ describe(`pluginOptionsSchema`, () => {
   it(`should validate the withWebp prop`, async () => {
     const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
       withWebp: { quality: 100 },
+    })
+
+    expect(isValid).toBe(true)
+  })
+
+  it(`should validate the withAvif prop`, async () => {
+    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
+      withAvif: { quality: 100 },
     })
 
     expect(isValid).toBe(true)

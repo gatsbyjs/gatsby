@@ -1,10 +1,11 @@
 import * as path from "path"
-import { RuleSetRule, WebpackPluginInstance } from "webpack"
+import { RuleSetRule, WebpackPluginInstance, Configuration } from "webpack"
 import { GraphQLSchema } from "graphql"
 import { Plugin as PostCSSPlugin } from "postcss"
 import autoprefixer from "autoprefixer"
 import flexbugs from "postcss-flexbugs-fixes"
 import TerserPlugin from "terser-webpack-plugin"
+import type { MinifyOptions as TerserOptions } from "terser"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
@@ -21,6 +22,7 @@ import {
 import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
 import { eslintConfig, eslintRequiredConfig } from "./eslint-config"
+import { store } from "../redux"
 
 type Loader = string | { loader: string; options?: { [name: string]: any } }
 type LoaderResolver<T = Record<string, unknown>> = (options?: T) => Loader
@@ -63,12 +65,16 @@ type CSSModulesOptions =
       exportOnlyLocals?: boolean
     }
 
-type MiniCSSExtractLoaderModuleOptions =
-  | undefined
-  | boolean
-  | {
-      namedExport?: boolean
-    }
+interface IMiniCSSExtractLoaderModuleOptions {
+  filename?: Required<Configuration>["output"]["filename"] | undefined
+  chunkFilename?: Required<Configuration>["output"]["chunkFilename"] | undefined
+  experimentalUseImportModule?: boolean | undefined
+  ignoreOrder?: boolean | undefined
+  insert?: string | ((linkTag: any) => void) | undefined
+  attributes?: Record<string, string> | undefined
+  linkType?: string | false | "text/css" | undefined
+  runtime?: boolean | undefined
+}
 /**
  * Utils that produce webpack `loader` objects
  */
@@ -179,8 +185,8 @@ export const createWebpackUtils = (
   const PRODUCTION = !stage.includes(`develop`)
 
   const isSSR = stage.includes(`html`)
+  const { config } = store.getState()
 
-  const jsxRuntimeExists = reactHasJsxRuntime()
   const makeExternalOnly =
     (original: RuleFactory) =>
     (options = {}): RuleSetRule => {
@@ -232,27 +238,13 @@ export const createWebpackUtils = (
       }
     },
 
-    miniCssExtract: (
-      options: {
-        modules?: MiniCSSExtractLoaderModuleOptions
-      } = {}
-    ) => {
-      let moduleOptions: MiniCSSExtractLoaderModuleOptions = undefined
-
+    miniCssExtract: (options: IMiniCSSExtractLoaderModuleOptions = {}) => {
+      // @ts-ignore - legacy modules
       const { modules, ...restOptions } = options
-
-      if (typeof modules === `boolean` && options.modules) {
-        moduleOptions = {
-          namedExport: true,
-        }
-      } else {
-        moduleOptions = modules
-      }
 
       return {
         loader: MiniCssExtractPlugin.loader,
         options: {
-          modules: moduleOptions,
           ...restOptions,
         },
       }
@@ -281,13 +273,15 @@ export const createWebpackUtils = (
         loader: require.resolve(`css-loader`),
         options: {
           // Absolute urls (https or //) are not send to this function. Only resolvable paths absolute or relative ones.
-          url: function (url: string): boolean {
-            // When an url starts with /
-            if (url.startsWith(`/`)) {
-              return false
-            }
+          url: {
+            filter: function (url: string): boolean {
+              // When an url starts with /
+              if (url.startsWith(`/`)) {
+                return false
+              }
 
-            return true
+              return true
+            },
           },
           sourceMap: !PRODUCTION,
           modules: modulesOptions,
@@ -348,6 +342,7 @@ export const createWebpackUtils = (
       }
     },
 
+    // TODO(v5): Consider removing this (as not used anymore internally)
     url: (options = {}) => {
       return {
         loader: require.resolve(`url-loader`),
@@ -364,7 +359,8 @@ export const createWebpackUtils = (
       return {
         options: {
           stage,
-          reactRuntime: jsxRuntimeExists ? `automatic` : `classic`,
+          reactRuntime: config.jsxRuntime,
+          reactImportSource: config.jsxImportSource,
           cacheDirectory: path.join(
             program.directory,
             `.cache`,
@@ -542,8 +538,11 @@ export const createWebpackUtils = (
    */
   rules.fonts = (): RuleSetRule => {
     return {
-      use: [loaders.url()],
       test: /\.(eot|otf|ttf|woff(2)?)(\?.*)?$/,
+      type: `asset/resource`,
+      generator: {
+        filename: `${assetRelativeRoot}[name]-[hash][ext]`,
+      },
     }
   }
 
@@ -553,8 +552,11 @@ export const createWebpackUtils = (
    */
   rules.images = (): RuleSetRule => {
     return {
-      use: [loaders.url()],
       test: /\.(ico|svg|jpg|jpeg|png|gif|webp|avif)(\?.*)?$/,
+      type: `asset/resource`,
+      generator: {
+        filename: `${assetRelativeRoot}[name]-[hash][ext]`,
+      },
     }
   }
 
@@ -564,8 +566,11 @@ export const createWebpackUtils = (
    */
   rules.media = (): RuleSetRule => {
     return {
-      use: [loaders.url()],
       test: /\.(mp4|webm|ogv|wav|mp3|m4a|aac|oga|flac)$/,
+      type: `asset/resource`,
+      generator: {
+        filename: `${assetRelativeRoot}[name]-[hash][ext]`,
+      },
     }
   }
 
@@ -644,7 +649,7 @@ export const createWebpackUtils = (
     terserOptions,
     ...options
   }: {
-    terserOptions?: TerserPlugin.TerserPluginOptions
+    terserOptions?: TerserOptions
   } = {}): WebpackPluginInstance =>
     new TerserPlugin({
       exclude: /\.min\.js/,
@@ -654,7 +659,7 @@ export const createWebpackUtils = (
           safari10: true,
         },
         parse: {
-          ecma: 8,
+          ecma: 5,
         },
         compress: {
           ecma: 5,
@@ -697,7 +702,6 @@ export const createWebpackUtils = (
                 `moveElemsAttrsToGroup`,
                 `moveGroupAttrsToElems`,
                 `prefixIds`, // Default: disabled
-                `removeAttrs`, // Default: disabled
                 `removeComments`,
                 `removeDesc`,
                 `removeDoctype`,
@@ -785,7 +789,7 @@ export const createWebpackUtils = (
         `/bower_components/`,
         VIRTUAL_MODULES_BASE_PATH,
       ],
-      ...eslintConfig(schema, jsxRuntimeExists),
+      ...eslintConfig(schema, config.jsxRuntime === `automatic`),
     }
     // @ts-ignore
     return new ESLintPlugin(options)
@@ -810,27 +814,4 @@ export const createWebpackUtils = (
     rules,
     plugins,
   }
-}
-
-export function reactHasJsxRuntime(): boolean {
-  // We've got some complains about the ecosystem not being ready for automatic so we disable it by default.
-  // People can use a custom babelrc file to support it
-  // try {
-  //   // React is shipping a new jsx runtime that is to be used with
-  //   // an option on @babel/preset-react called `runtime: automatic`
-  //   // Not every version of React has this jsx-runtime yet. Eventually,
-  //   // it will be backported to older versions of react and this check
-  //   // will become unnecessary.
-  //   // for now we also do the semver check until react 17 is more widely used
-  //   // const react = require(`react/package.json`)
-  //   // return (
-  //   //   !!require.resolve(`react/jsx-runtime.js`) &&
-  //   //   semver.major(react.version) >= 17
-  //   // )
-  // } catch (e) {
-  //   // If the require.resolve throws, that means this version of React
-  //   // does not support the jsx runtime.
-  // }
-
-  return false
 }

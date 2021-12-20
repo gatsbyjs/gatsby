@@ -7,13 +7,13 @@ import { store } from "../../redux"
 import { IGatsbyState } from "../../redux/types"
 import { requireGatsbyPlugin } from "../../utils/require-gatsby-plugin"
 
-const schemaCustomizationAPIs = new Set([
+export const schemaCustomizationAPIs = new Set([
   `setFieldsOnGraphQLNodeType`,
   `createSchemaCustomization`,
   `createResolvers`,
 ])
 
-const excludePlugins = new Set([`internal-data-bridge`, `default-site-plugin`])
+const excludePlugins = new Set([`internal-data-bridge`])
 const includePlugins = new Set([`gatsby-plugin-sharp`])
 
 // Emit file that imports required node APIs
@@ -73,7 +73,7 @@ function render(
   const imports: Array<string> = [
     ...uniqGatsbyNode.map(
       (plugin, i) =>
-        `import * as pluginGatsbyNode${i} from "${relativePluginPath(
+        `import * as pluginGatsbyNode${i} from "gatsby/dist/schema/graphql-engine/webpack-remove-apis-loader!${relativePluginPath(
           plugin.resolve
         )}/gatsby-node"`
     ),
@@ -176,6 +176,7 @@ function getSubpluginsByPluginPath(
       roots = roots.map(root => root[segment])
     }
   }
+  roots = roots.flat()
 
   return roots
 }

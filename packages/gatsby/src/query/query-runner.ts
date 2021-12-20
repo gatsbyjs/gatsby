@@ -8,7 +8,7 @@ import { ExecutionResult, GraphQLError } from "graphql"
 import path from "path"
 import { store } from "../redux"
 import { actions } from "../redux/actions"
-import { getCodeFrame } from "./graphql-errors"
+import { getCodeFrame } from "./graphql-errors-codeframe"
 import errorParser from "./error-parser"
 
 import { GraphQLRunner } from "./graphql-runner"
@@ -29,7 +29,7 @@ export interface IQueryJob {
 
 function reportLongRunningQueryJob(queryJob): void {
   const messageParts = [
-    `Query takes too long:`,
+    `This query took more than 15s to run — which is unusually long and might indicate you're querying too much or have some unoptimized code:`,
     `File path: ${queryJob.componentPath}`,
   ]
 

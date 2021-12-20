@@ -3,6 +3,92 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.4.0/packages/gatsby-plugin-sharp) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Bug Fixes
+
+- update dependency got to ^11.8.3 for gatsby-plugin-sharp [#34130](https://github.com/gatsbyjs/gatsby/issues/34130) ([80ef329](https://github.com/gatsbyjs/gatsby/commit/80ef329451902fe351cfd9f555c379b03929db20))
+
+#### Chores
+
+- update sharp [#34120](https://github.com/gatsbyjs/gatsby/issues/34120) ([df36406](https://github.com/gatsbyjs/gatsby/commit/df3640679b5e161c4fd285b87ed32bb1224928b8))
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.3.0/packages/gatsby-plugin-sharp) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.2.0/packages/gatsby-plugin-sharp) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-plugin-sharp [#33770](https://github.com/gatsbyjs/gatsby/issues/33770) ([e9f0f32](https://github.com/gatsbyjs/gatsby/commit/e9f0f32838c4868797d69408f7e97d671e76cf5f))
+- update dependency sharp to ^0.29.2 [#33766](https://github.com/gatsbyjs/gatsby/issues/33766) ([0dfbc48](https://github.com/gatsbyjs/gatsby/commit/0dfbc48735e2b40b4fbcf4eccef2db38c34ce526))
+
+### [4.1.4](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.1.4/packages/gatsby-plugin-sharp) (2021-11-15)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+### [4.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.1.3/packages/gatsby-plugin-sharp) (2021-11-11)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+### [4.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.1.2/packages/gatsby-plugin-sharp) (2021-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+### [4.1.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.1.1/packages/gatsby-plugin-sharp) (2021-11-09)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.1.0/packages/gatsby-plugin-sharp) (2021-11-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
+
+#### Bug Fixes
+
+- pass failOnError to sharp in getImageMetadata [#33547](https://github.com/gatsbyjs/gatsby/issues/33547) ([82cd584](https://github.com/gatsbyjs/gatsby/commit/82cd5843f0ac91ab0525e6bcf9f4f85ac0f62c84))
+- pass input buffer instead of readStream when processing image jobs [#33685](https://github.com/gatsbyjs/gatsby/issues/33685) ([b800559](https://github.com/gatsbyjs/gatsby/commit/b800559c033f083074351cbbe69dd54424552713))
+
+### [4.0.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.0.1/packages/gatsby-plugin-sharp) (2021-10-27)
+
+#### Bug Fixes
+
+- pass input buffer instead of readStream when processing image jobs [#33685](https://github.com/gatsbyjs/gatsby/issues/33685) [#33694](https://github.com/gatsbyjs/gatsby/issues/33694) ([9b3d44f](https://github.com/gatsbyjs/gatsby/commit/9b3d44fd50185bddd7b74b7c1bdfadd774b81db5))
+
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@4.0.0/packages/gatsby-plugin-sharp) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Bug Fixes
+
+- run sharp in 1 core when in gatsby worker [#33505](https://github.com/gatsbyjs/gatsby/issues/33505) ([4658b80](https://github.com/gatsbyjs/gatsby/commit/4658b80c37ece59c490fac0bebf8d68a21879fa5))
+
+#### Chores
+
+- update sharp [#33379](https://github.com/gatsbyjs/gatsby/issues/33379) ([eb70b46](https://github.com/gatsbyjs/gatsby/commit/eb70b46e2e4384f5649160d3d2206ea3d96b8a71))
+- remove old unused code [#33504](https://github.com/gatsbyjs/gatsby/issues/33504) ([31952b4](https://github.com/gatsbyjs/gatsby/commit/31952b4faf33abcb30e765abd160208e3b22e912))
+- Remove `sizeByPixelDensity` option [#33468](https://github.com/gatsbyjs/gatsby/issues/33468) ([d467372](https://github.com/gatsbyjs/gatsby/commit/d4673723a14cfbeb727bf6c2472e6693beeee817))
+
+### [3.14.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@3.14.3/packages/gatsby-plugin-sharp) (2021-11-02)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+### [3.14.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@3.14.2/packages/gatsby-plugin-sharp) (2021-10-28)
+
+#### Bug Fixes
+
+- pass input buffer instead of readStream when processing image jobs [#33685](https://github.com/gatsbyjs/gatsby/issues/33685) [#33703](https://github.com/gatsbyjs/gatsby/issues/33703) ([84053a2](https://github.com/gatsbyjs/gatsby/commit/84053a2e23cc0aac821b2ad4c4728c7701e1af8c))
+
+### [3.14.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@3.14.1/packages/gatsby-plugin-sharp) (2021-10-06)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
 ## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sharp@3.14.0/packages/gatsby-plugin-sharp) (2021-09-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
