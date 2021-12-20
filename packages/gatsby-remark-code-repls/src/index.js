@@ -22,8 +22,8 @@ const {
 
 function uuidv4() {
   return `xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx`.replace(/[xy]/g, function (c) {
-    var r = (Math.random() * 16) | 0,
-      v = c == `x` ? r : (r & 0x3) | 0x8
+    const r = (Math.random() * 16) | 0
+    const v = c == `x` ? r : (r & 0x3) | 0x8
     return v.toString(16)
   })
 }
@@ -209,7 +209,7 @@ module.exports = (
         )
         verifyMultipleFiles(filesPaths, PROTOCOL_STACKBLITZ)
 
-        let parameters = {
+        const parameters = {
           files: {},
           dependencies: stackblitz.dependencies.reduce((map, dependency) => {
             const { name, fetchSpec } = npa(dependency)
