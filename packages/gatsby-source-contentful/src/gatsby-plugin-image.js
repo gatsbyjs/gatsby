@@ -35,7 +35,7 @@ export const getBase64Image = (imageProps, cache) => {
     ...imageProps.options,
     toFormat,
     width: 20,
-    height: Math.floor(20 * aspectRatio),
+    height: Math.floor(20 / aspectRatio),
   }
 
   const requestUrl = createUrl(imageProps.baseUrl, imageOptions)
@@ -217,7 +217,7 @@ export function generateImageSource(
 
   if (!validImageFormats.has(toFormat)) {
     console.warn(
-      `[gatsby-source-contentful] Invalid image format "${toFormat}". Supported types are jpg, png and webp"`
+      `[gatsby-source-contentful] Invalid image format "${toFormat}". Supported types are jpg, png, webp and avif"`
     )
     return undefined
   }

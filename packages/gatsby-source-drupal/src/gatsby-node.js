@@ -18,6 +18,7 @@ const {
   handleWebhookUpdate,
   createNodeIfItDoesNotExist,
   handleDeletedNode,
+  drupalCreateNodeManifest,
 } = require(`./utils`)
 
 const agent = {
@@ -81,8 +82,8 @@ async function worker([url, options]) {
     agent,
     cache: false,
     timeout: {
-      // Occasionally requests to Drupal stall. Set a 15s timeout to retry in this case.
-      request: 15000,
+      // Occasionally requests to Drupal stall. Set a 30s timeout to retry in this case.
+      request: 30000,
     },
     // request: http2wrapper.auto,
     // http2: true,
@@ -170,7 +171,12 @@ exports.sourceNodes = async (
       nonTranslatableEntities: [],
     },
   } = pluginOptions
-  const { createNode, setPluginStatus, touchNode } = actions
+  const {
+    createNode,
+    setPluginStatus,
+    touchNode,
+    unstable_createNodeManifest,
+  } = actions
 
   await initRefsLookups({ cache, getNode })
 
@@ -641,6 +647,11 @@ ${JSON.stringify(webhookBody, null, 4)}`
     _.each(contentType.data, datum => {
       if (!datum) return
       const node = nodeFromData(datum, createNodeId, entityReferenceRevisions)
+      drupalCreateNodeManifest({
+        attributes: datum?.attributes,
+        gatsbyNode: node,
+        unstable_createNodeManifest,
+      })
       nodes.set(node.id, node)
     })
   })

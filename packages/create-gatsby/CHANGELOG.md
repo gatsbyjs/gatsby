@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.4.0/packages/create-gatsby) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Chores
+
+- update dependency prettier to ^2.5.1 [#34142](https://github.com/gatsbyjs/gatsby/issues/34142) ([c69ec70](https://github.com/gatsbyjs/gatsby/commit/c69ec70960c2a68b540a7317ec1f47d5a7c0d064))
+- update [dev] minor and patch dependencies for create-gatsby [#34109](https://github.com/gatsbyjs/gatsby/issues/34109) ([14e13b9](https://github.com/gatsbyjs/gatsby/commit/14e13b92a1c1a07c18acf6a69b71b09644b689b0))
+
+## [2.3.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.3.0/packages/create-gatsby) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+#### Bug Fixes
+
+- Order inputs alphabetically [#34057](https://github.com/gatsbyjs/gatsby/issues/34057) ([f8bbaf9](https://github.com/gatsbyjs/gatsby/commit/f8bbaf9c4f5f5048fa96437bdc78e9ab8c69b678))
+
+## [2.2.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.2.0/packages/create-gatsby) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Chores
+
+- update dependency @types/fs-extra to ^9.0.13 [#33350](https://github.com/gatsbyjs/gatsby/issues/33350) ([2574cce](https://github.com/gatsbyjs/gatsby/commit/2574cce054bf00718de40f6c7d789faeb871c710))
+- update dependency prettier to ^2.4.1 [#33377](https://github.com/gatsbyjs/gatsby/issues/33377) ([19e5459](https://github.com/gatsbyjs/gatsby/commit/19e545946cbb4bdbad091b5be556f7ccf2234468))
+- update [dev] minor and patch dependencies for create-gatsby [#33347](https://github.com/gatsbyjs/gatsby/issues/33347) ([a4b9cd9](https://github.com/gatsbyjs/gatsby/commit/a4b9cd929c8f4f50740cd2acf9783f9bbd29cff4))
+
+### [2.1.1](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.1.1/packages/create-gatsby) (2021-11-09)
+
+**Note:** Version bump only for package create-gatsby
+
 ## [2.1.0](https://github.com/gatsbyjs/gatsby/commits/create-gatsby@2.1.0/packages/create-gatsby) (2021-11-02)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)

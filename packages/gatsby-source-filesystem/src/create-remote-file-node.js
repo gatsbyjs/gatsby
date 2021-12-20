@@ -1,10 +1,14 @@
 const fs = require(`fs-extra`)
-const { createContentDigest, fetchRemoteFile } = require(`gatsby-core-utils`)
+const {
+  createContentDigest,
+  fetchRemoteFile,
+  createFilePath,
+} = require(`gatsby-core-utils`)
 const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
 const Queue = require(`fastq`)
 const { createFileNode } = require(`./create-file-node`)
-const { getRemoteFileExtension, createFilePath } = require(`./utils`)
+const { getRemoteFileExtension } = require(`./utils`)
 
 let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
 
@@ -46,7 +50,11 @@ let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
  * Queue Management *
  ********************/
 
-const queue = Queue(pushToQueue, process.env.GATSBY_CONCURRENT_DOWNLOAD || 200)
+const GATSBY_CONCURRENT_DOWNLOAD = process.env.GATSBY_CONCURRENT_DOWNLOAD
+  ? parseInt(process.env.GATSBY_CONCURRENT_DOWNLOAD, 10) || 0
+  : 200
+
+const queue = Queue(pushToQueue, GATSBY_CONCURRENT_DOWNLOAD)
 
 /**
  * @callback {Queue~queueCallback}

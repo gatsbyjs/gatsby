@@ -68,6 +68,8 @@ const ERROR_CODES_TO_RETRY = [
   `ENOTFOUND`,
   `ENETUNREACH`,
   `EAI_AGAIN`,
+  `ERR_NON_2XX_3XX_RESPONSE`,
+  `ERR_GOT_REQUEST_ERROR`,
 ]
 
 let fetchCache = new Map()
@@ -105,11 +107,6 @@ function pollUntilComplete(
   buildId: string,
   cb: (err?: Error, result?: string) => void
 ): void {
-  if (!IS_WORKER) {
-    // We are not in a worker, so we shouldn't use the cache
-    return void cb()
-  }
-
   cache.get(cacheIdForWorkers(url)).then(entry => {
     if (!entry || entry.buildId !== buildId) {
       return void cb()
@@ -160,19 +157,17 @@ async function fetchFile({
     return result
   }
 
-  if (IS_WORKER) {
-    await cache.set(cacheIdForWorkers(url), {
-      status: `pending`,
-      result: null,
-      workerId: WORKER_ID,
-      buildId: BUILD_ID,
-    })
-  }
+  await cache.set(cacheIdForWorkers(url), {
+    status: `pending`,
+    result: null,
+    workerId: WORKER_ID,
+    buildId: BUILD_ID,
+  })
 
   // See if there's response headers for this url
   // from a previous request.
-  const cachedHeaders = await cache.get(cacheIdForHeaders(url))
-
+  const { headers: cachedHeaders, digest: originalDigest } =
+    (await cache.get(cacheIdForHeaders(url))) ?? {}
   const headers = { ...httpHeaders }
   if (cachedHeaders && cachedHeaders.etag) {
     headers[`If-None-Match`] = cachedHeaders.etag
@@ -214,7 +209,10 @@ async function fetchFile({
 
     if (response.statusCode === 200) {
       // Save the response headers for future requests.
-      await cache.set(cacheIdForHeaders(url), response.headers)
+      await cache.set(cacheIdForHeaders(url), {
+        headers: response.headers,
+        digest,
+      })
 
       // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
       if (!ext) {
@@ -231,7 +229,7 @@ async function fetchFile({
       }
     }
 
-    // Multiple workers have started the fetch and we need another check to only let one complete
+    // Multiple processes have started the fetch and we need another check to only let one complete
     const cacheEntry = await cache.get(cacheIdForWorkers(url))
     if (cacheEntry && cacheEntry.workerId !== WORKER_ID) {
       return new Promise<string>((resolve, reject) => {
@@ -247,10 +245,11 @@ async function fetchFile({
 
     // If the status code is 200, move the piped temp file to the real name.
     const filename = createFilePath(
-      path.join(pluginCacheDir, digest),
+      path.join(pluginCacheDir, originalDigest ?? digest),
       name,
       ext as string
     )
+
     if (response.statusCode === 200) {
       await fs.move(tmpFilename, filename, { overwrite: true })
       // Else if 304, remove the empty response.
@@ -258,33 +257,25 @@ async function fetchFile({
       await fs.remove(tmpFilename)
     }
 
-    if (IS_WORKER) {
-      await cache.set(cacheIdForWorkers(url), {
-        status: `complete`,
-        result: filename,
-        workerId: WORKER_ID,
-        buildId: BUILD_ID,
-      })
-    }
+    await cache.set(cacheIdForWorkers(url), {
+      status: `complete`,
+      result: filename,
+      workerId: WORKER_ID,
+      buildId: BUILD_ID,
+    })
 
     return filename
   } catch (err) {
-    // enable multiple workers to continue when done
-    if (IS_WORKER) {
-      const cacheEntry = await cache.get(cacheIdForWorkers(url))
+    // enable multiple processes to continue when done
+    const cacheEntry = await cache.get(cacheIdForWorkers(url))
 
-      if (!cacheEntry || cacheEntry.workerId === WORKER_ID) {
-        await cache.set(cacheIdForWorkers(url), {
-          status: `failed`,
-          result: err.toString
-            ? err.toString()
-            : err.message
-            ? err.message
-            : err,
-          workerId: WORKER_ID,
-          buildId: BUILD_ID,
-        })
-      }
+    if (!cacheEntry || cacheEntry.workerId === WORKER_ID) {
+      await cache.set(cacheIdForWorkers(url), {
+        status: `failed`,
+        result: err.toString ? err.toString() : err.message ? err.message : err,
+        workerId: WORKER_ID,
+        buildId: BUILD_ID,
+      })
     }
 
     throw err
