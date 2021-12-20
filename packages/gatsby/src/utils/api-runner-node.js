@@ -631,7 +631,9 @@ function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
             const trimmedFileName = fileName.match(/^(async )?(.*)/)[2]
 
             try {
-              const code = fs.readFileSync(trimmedFileName, { encoding: `utf-8` })
+              const code = fs.readFileSync(trimmedFileName, {
+                encoding: `utf-8`,
+              })
               codeFrame = codeFrameColumns(
                 code,
                 {
