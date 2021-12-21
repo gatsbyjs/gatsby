@@ -7,6 +7,7 @@ import { ThunkAction } from "redux-thunk"
 import { InternalJob, JobResultInterface } from "../utils/jobs/manager"
 import { ITypeMetadata } from "../schema/infer/inference-metadata"
 import { Span } from "opentracing"
+import type { Configuration } from "webpack"
 
 type SystemPath = string
 type Identifier = string
@@ -302,7 +303,7 @@ export interface IGatsbyState {
     complete: Map<Identifier, IGatsbyCompleteJobV2>
     jobsByRequest: Map<string, Set<Identifier>>
   }
-  webpack: any // TODO This should be the output from ./utils/webpack.config.js
+  webpack: Configuration // TODO This should be the output from ./utils/webpack.config.js
   webpackCompilationHash: string
   redirects: Array<IRedirect>
   babelrc: {

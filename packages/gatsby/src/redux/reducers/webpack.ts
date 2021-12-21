@@ -11,7 +11,7 @@ export const webpackReducer = (
       delete nextConfig.entry
       delete nextConfig.output
       delete nextConfig.target
-      delete nextConfig.resolveLoaders
+      delete nextConfig.resolveLoader
 
       return merge(state, nextConfig)
     }

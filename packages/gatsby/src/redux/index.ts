@@ -76,6 +76,7 @@ export type GatsbyReduxStore = Store<IGatsbyState> & {
 }
 
 export const configureStore = (initialState: IGatsbyState): GatsbyReduxStore =>
+  // @ts-ignore ts will throw "recursivce too deep" after change config to `Webpack.Configuration`
   createStore(
     combineReducers<IGatsbyState>({ ...reducers }),
     initialState,

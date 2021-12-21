@@ -22,7 +22,7 @@ import { codeFrameColumns } from "@babel/code-frame"
 import * as fs from "fs-extra"
 
 import { withBasePath } from "../utils/path"
-import webpackConfig from "../utils/webpack.config"
+import { webpackConfig } from "./webpack.config"
 import { store, emitter } from "../redux"
 import report from "gatsby-cli/lib/reporter"
 import * as WorkerPool from "../utils/worker/pool"
@@ -285,7 +285,7 @@ export async function startServer(
   })
 
   const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
-    publicPath: devConfig.output.publicPath,
+    publicPath: devConfig.output!.publicPath,
     stats: `errors-only`,
     serverSideRender: true,
   })

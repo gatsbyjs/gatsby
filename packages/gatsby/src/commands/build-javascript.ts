@@ -1,7 +1,7 @@
 import { Span } from "opentracing"
-import webpackConfig from "../utils/webpack.config"
+import { webpackConfig } from "../utils/webpack.config"
 import { build } from "../utils/webpack/bundle"
-import type { IProgram } from "./types"
+import { IProgram, Stage } from "./types"
 
 export const buildProductionBundle = async (
   program: IProgram,
@@ -12,7 +12,7 @@ export const buildProductionBundle = async (
   const compilerConfig = await webpackConfig(
     program,
     directory,
-    `build-javascript`,
+    Stage.BuildJavascript,
     null,
     { parentSpan }
   )
