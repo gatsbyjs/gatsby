@@ -921,7 +921,7 @@ export async function webpackConfig(
     // when deciding which modules get fast-refresh HMR addition.
     const fastRefreshIncludes: Array<RegExp> = []
     const babelLoaderLoc = require.resolve(`./babel-loader`)
-    for (const rule of getConfig()!.module!.rules as Array<RuleSetRule>) {
+    for (const rule of getConfig()?.module?.rules as Array<RuleSetRule>) {
       if (!rule.use && !rule.loader) {
         continue
       }
