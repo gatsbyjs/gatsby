@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.4.0/packages/gatsby-plugin-manifest) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Bug Fixes
+
+- consider path prefix when getting localized manifest fix [#34174](https://github.com/gatsbyjs/gatsby/issues/34174) ([190b7b8](https://github.com/gatsbyjs/gatsby/commit/190b7b8f51db8e370f253b035add9dfaa526d81a))
+
+#### Chores
+
+- update sharp [#34120](https://github.com/gatsbyjs/gatsby/issues/34120) ([df36406](https://github.com/gatsbyjs/gatsby/commit/df3640679b5e161c4fd285b87ed32bb1224928b8))
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.3.0/packages/gatsby-plugin-manifest) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+#### Bug Fixes
+
+- Delete `cacheDigest` from generated webmanifest [#33966](https://github.com/gatsbyjs/gatsby/issues/33966) ([27cf7e7](https://github.com/gatsbyjs/gatsby/commit/27cf7e7b0416f5559438ff296232afb2a7237654))
+
 ## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.2.0/packages/gatsby-plugin-manifest) (2021-11-16)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)

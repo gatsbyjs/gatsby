@@ -75,7 +75,7 @@ describe(`highlighting lines`, () => {
       expect(output(getHighlighted(highlights))).toMatchSnapshot()
     })
     it(`does not highlight and warns if range is invalid`, () => {
-      spyOn(console, `warn`)
+      jest.spyOn(console, `warn`)
 
       const highlights = highlightLineRange(fixtures.highlightRangeInvalid)
       expect(output(getHighlighted(highlights))).toMatchSnapshot()

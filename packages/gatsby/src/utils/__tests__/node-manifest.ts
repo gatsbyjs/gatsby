@@ -3,6 +3,7 @@ import path from "path"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../../redux"
+import { actions } from "../../redux/actions"
 import { getNode } from "../../datastore"
 
 import { INodeManifest } from "./../../redux/types"
@@ -85,10 +86,67 @@ function mockGetNodes(nodeStore: Map<string, { id: string }>): void {
 
 beforeEach(() => {
   jest.clearAllMocks()
+  process.env.gatsby_log_level = null
 })
 
 describe(`processNodeManifests() warnings`, () => {
-  it(`warns about no page found for manifest node id`, async () => {
+  const useContextIdInsteadOfOwnerNodeId = {
+    pages: new Map([
+      [
+        `/test`,
+        {
+          path: `/test`,
+          context: { id: `1` },
+        },
+      ],
+      [
+        `/test-2`,
+        {
+          path: `/test-2`,
+          context: { id: `2` },
+        },
+      ],
+    ]),
+    nodeManifests: [
+      {
+        pluginName: `test`,
+        node: { id: `1` },
+        manifestId: `1`,
+      },
+    ],
+    queries: {
+      byNode: new Map([
+        [`1`, new Set([`/test`, `/test-2`])],
+        [`2`, new Set([`/test`, `/test-2`])],
+      ]),
+    },
+  }
+
+  const multipleMappingProblems = {
+    pages: new Map([
+      [
+        `/test`,
+        {
+          path: `/test`,
+          context: { id: `1` },
+        },
+      ],
+    ]),
+    nodeManifests: [
+      {
+        pluginName: `test`,
+        node: { id: `1` },
+        manifestId: `1`,
+      },
+      {
+        pluginName: `test`,
+        node: { id: `2` },
+        manifestId: `2`,
+      },
+    ],
+  }
+
+  it(`logs warning code for not finding page`, async () => {
     mockGetNodes(new Map([[`1`, { id: `1` }]]))
 
     store.getState.mockImplementation(() => {
@@ -106,13 +164,15 @@ describe(`processNodeManifests() warnings`, () => {
 
     await processNodeManifests()
 
-    expect(reporter.error).toBeCalled()
-    expect(reporter.error).toBeCalledWith(
-      expect.objectContaining({ id: foundPageByToLogIds.none })
+    expect(reporter.error).not.toBeCalled()
+    expect(reporter.info).toBeCalledWith(
+      expect.stringContaining(
+        `unstable_createNodeManifest produced warnings [${foundPageByToLogIds.none}]`
+      )
     )
   })
 
-  it(`warns about using context.id to map from node->page instead of ownerNodeId`, async () => {
+  it(`logs warning code for finding page with context.id instead of ownerNodeId`, async () => {
     mockGetNodes(
       new Map([
         [`1`, { id: `1` }],
@@ -122,35 +182,7 @@ describe(`processNodeManifests() warnings`, () => {
     store.getState.mockImplementation(() => {
       return {
         ...storeState,
-        pages: new Map([
-          [
-            `/test`,
-            {
-              path: `/test`,
-              context: { id: `1` },
-            },
-          ],
-          [
-            `/test-2`,
-            {
-              path: `/test-2`,
-              context: { id: `2` },
-            },
-          ],
-        ]),
-        nodeManifests: [
-          {
-            pluginName: `test`,
-            node: { id: `1` },
-            manifestId: `1`,
-          },
-        ],
-        queries: {
-          byNode: new Map([
-            [`1`, new Set([`/test`, `/test-2`])],
-            [`2`, new Set([`/test`, `/test-2`])],
-          ]),
-        },
+        ...useContextIdInsteadOfOwnerNodeId,
       }
     })
 
@@ -159,77 +191,165 @@ describe(`processNodeManifests() warnings`, () => {
 
     await processNodeManifests()
 
-    expect(reporter.error).toBeCalled()
-    expect(reporter.error).toBeCalledWith(
-      expect.objectContaining({
-        id: foundPageByToLogIds[`context.id`],
-      })
+    expect(reporter.error).not.toBeCalled()
+    expect(reporter.info).toBeCalledWith(
+      expect.stringContaining(
+        `unstable_createNodeManifest produced warnings [${
+          foundPageByToLogIds[`context.id`]
+        }]`
+      )
     )
-
-    // then as build
-    process.env.NODE_ENV = `production`
-
-    await processNodeManifests()
-
-    expect(reporter.error).toBeCalled()
-    expect(reporter.error).toBeCalledWith(
-      expect.objectContaining({
-        id: foundPageByToLogIds[`context.id`],
-      })
-    )
-    process.env.NODE_ENV = `test`
   })
 
-  it(`warns about using node->query tracking to map from node->page instead of using ownerNodeId`, async () => {
-    mockGetNodes(new Map([[`1`, { id: `1` }]]))
+  it(`logs out list of warning codes for multiple mapping errors`, async () => {
+    mockGetNodes(
+      new Map([
+        [`1`, { id: `1` }],
+        [`2`, { id: `2` }],
+      ])
+    )
     store.getState.mockImplementation(() => {
       return {
         ...storeState,
-        pages: new Map([
-          [
-            `/test`,
-            {
-              path: `/test`,
-              context: {},
-            },
-          ],
-        ]),
-        nodeManifests: [
-          {
-            pluginName: `test`,
-            node: { id: `1` },
-            manifestId: `1`,
-          },
-        ],
-        queries: {
-          byNode: new Map([[`1`, new Set([`/test`])]]),
-        },
+        ...multipleMappingProblems,
       }
     })
 
+    // first as develop
+    process.env.NODE_ENV = `development`
+
     await processNodeManifests()
 
-    expect(reporter.error).toBeCalled()
-    expect(reporter.error).toBeCalledWith(
-      expect.objectContaining({
-        id: foundPageByToLogIds.queryTracking,
-      })
+    expect(reporter.error).not.toBeCalled()
+    expect(reporter.info).toBeCalledWith(
+      expect.stringContaining(foundPageByToLogIds.none)
+    )
+    expect(reporter.info).toBeCalledWith(
+      expect.stringContaining(foundPageByToLogIds[`context.id`])
     )
   })
 
-  it(`doesn't warn when using the filesystem route api to map nodes->pages`, () => {
-    const { logId } = warnAboutNodeManifestMappingProblems({
-      inputManifest: {
-        pluginName: `test`,
-        node: { id: `1` },
-        manifestId: `1`,
-      },
-      pagePath: `/test`,
-      foundPageBy: `filesystem-route-api`,
+  describe(`Verbose mode`, () => {
+    beforeEach(() => {
+      process.env.gatsby_log_level = `verbose`
     })
 
-    expect(reporter.error).not.toBeCalled()
-    expect(logId).toEqual(foundPageByToLogIds[`filesystem-route-api`])
+    it(`warns about no page found for manifest node id`, async () => {
+      mockGetNodes(new Map([[`1`, { id: `1` }]]))
+
+      store.getState.mockImplementation(() => {
+        return {
+          ...storeState,
+          nodeManifests: [
+            {
+              pluginName: `test`,
+              node: { id: `1` },
+              manifestId: `1`,
+            },
+          ],
+        }
+      })
+
+      await processNodeManifests()
+
+      expect(reporter.error).toBeCalled()
+      expect(reporter.error).toBeCalledWith(
+        expect.objectContaining({ id: foundPageByToLogIds.none })
+      )
+    })
+
+    it(`warns about using context.id to map from node->page instead of ownerNodeId`, async () => {
+      mockGetNodes(
+        new Map([
+          [`1`, { id: `1` }],
+          [`2`, { id: `2` }],
+        ])
+      )
+      store.getState.mockImplementation(() => {
+        return {
+          ...storeState,
+          ...useContextIdInsteadOfOwnerNodeId,
+        }
+      })
+
+      // first as develop
+      process.env.NODE_ENV = `development`
+
+      await processNodeManifests()
+
+      expect(reporter.error).toBeCalled()
+      expect(reporter.error).toBeCalledWith(
+        expect.objectContaining({
+          id: foundPageByToLogIds[`context.id`],
+        })
+      )
+
+      // then as build
+      process.env.NODE_ENV = `production`
+
+      await processNodeManifests()
+
+      expect(reporter.error).toBeCalled()
+      expect(reporter.error).toBeCalledWith(
+        expect.objectContaining({
+          id: foundPageByToLogIds[`context.id`],
+        })
+      )
+      process.env.NODE_ENV = `test`
+    })
+
+    it(`warns about using node->query tracking to map from node->page instead of using ownerNodeId`, async () => {
+      mockGetNodes(new Map([[`1`, { id: `1` }]]))
+      store.getState.mockImplementation(() => {
+        return {
+          ...storeState,
+          pages: new Map([
+            [
+              `/test`,
+              {
+                path: `/test`,
+                context: {},
+              },
+            ],
+          ]),
+          nodeManifests: [
+            {
+              pluginName: `test`,
+              node: { id: `1` },
+              manifestId: `1`,
+            },
+          ],
+          queries: {
+            byNode: new Map([[`1`, new Set([`/test`])]]),
+          },
+        }
+      })
+
+      await processNodeManifests()
+
+      expect(reporter.error).toBeCalled()
+      expect(reporter.error).toBeCalledWith(
+        expect.objectContaining({
+          id: foundPageByToLogIds.queryTracking,
+        })
+      )
+    })
+
+    it(`doesn't warn when using the filesystem route api to map nodes->pages`, () => {
+      const { logId } = warnAboutNodeManifestMappingProblems({
+        inputManifest: {
+          pluginName: `test`,
+          node: { id: `1` },
+          manifestId: `1`,
+        },
+        pagePath: `/test`,
+        foundPageBy: `filesystem-route-api`,
+        verbose: process.env.gatsby_log_level === `verbose`,
+      })
+
+      expect(reporter.error).not.toBeCalled()
+      expect(logId).toEqual(foundPageByToLogIds[`filesystem-route-api`])
+    })
   })
 })
 
@@ -245,6 +365,68 @@ describe(`processNodeManifests`, () => {
     expect(reporter.error).not.toBeCalled()
     expect(store.dispatch).not.toBeCalled()
   })
+
+  const testProcessNodeManifestsWithUpdatedAt = async (): Promise<void> => {
+    const today = new Date()
+    const twentyNineDaysAgoString = new Date(
+      new Date().setDate(today.getDate() - 29)
+    ).toISOString()
+    const thirtyOneDaysAgoString = new Date(
+      new Date().setDate(today.getDate() - 31)
+    ).toISOString()
+
+    const nodes = [
+      { id: `1`, usePageContextId: true, updatedAt: today.toISOString() },
+      { id: `2`, useOwnerNodeId: true, updatedAt: twentyNineDaysAgoString },
+      { id: `3`, useQueryTracking: true, updatedAt: thirtyOneDaysAgoString },
+    ]
+    const { store } = jest.requireActual(`../../redux`)
+
+    const createPayload = (
+      id,
+      updatedAtUTC
+    ): {
+      manifestId: string
+      node: { id: string }
+      updatedAtUTC: string
+    } => {
+      return {
+        manifestId: `${id}-${updatedAtUTC}`,
+        node: {
+          id,
+        },
+        updatedAtUTC,
+      }
+    }
+
+    // Doesn't process manifest that is 31 days old
+    nodes.forEach(node => {
+      const payload = createPayload(node.id, node.updatedAt)
+      store.dispatch(
+        actions.unstable_createNodeManifest(payload, {
+          name: `gatsby-source-test`,
+        })
+      )
+    })
+
+    const { nodeManifests } = store.getState()
+
+    process.env.NODE_MANIFEST_MAX_DAYS_OLD = `32`
+
+    // Processes all three manifests
+    nodes.forEach(node => {
+      const payload = createPayload(node.id, node.updatedAt)
+      store.dispatch(
+        actions.unstable_createNodeManifest(payload, {
+          name: `gatsby-source-test`,
+        })
+      )
+    })
+
+    process.env.NODE_MANIFEST_MAX_DAYS_OLD = null
+
+    expect(nodeManifests.length).toBe(5)
+  }
 
   const testProcessNodeManifests = async (): Promise<void> => {
     const nodes = [
@@ -296,14 +478,25 @@ describe(`processNodeManifests`, () => {
 
     await processNodeManifests()
 
-    expect(reporter.warn).toBeCalled()
-    expect(reporter.warn).toBeCalledWith(
-      `Plugin test called unstable_createNodeManifest for a node which doesn't exist with an id of 4.`
-    )
+    if (process.env.gatsby_log_level === `verbose`) {
+      expect(reporter.error).toBeCalled()
+      expect(reporter.error).toBeCalledWith({
+        context: { nodeId: `4`, pluginName: `test` },
+        id: `11804`,
+      })
+    } else {
+      expect(reporter.error).not.toBeCalled()
+      expect(reporter.info).toBeCalledWith(expect.stringContaining(`11804`))
+    }
 
     expect(reporter.info).toBeCalled()
     expect(reporter.info).toBeCalledWith(
-      `Wrote out ${nodes.length} node page manifest files. 1 manifest couldn't be processed.`
+      expect.stringContaining(
+        `Wrote out ${nodes.length} node page manifest files`
+      )
+    )
+    expect(reporter.info).toBeCalledWith(
+      expect.stringContaining(`1 manifest couldn't be processed`)
     )
     expect(store.dispatch).toBeCalled()
 
@@ -343,10 +536,16 @@ describe(`processNodeManifests`, () => {
 
   it(`processes node manifests gatsby build`, async () => {
     process.env.NODE_ENV = `production`
+    process.env.gatsby_log_level = `verbose`
     await testProcessNodeManifests()
     process.env.NODE_ENV = `test`
   })
 
+  it(`creates manifests only for recently updated manifests`, async () => {
+    process.env.NODE_ENV = `production`
+    await testProcessNodeManifestsWithUpdatedAt()
+    process.env.NODE_ENV = `test`
+  })
   itWindows(`replaces reserved Windows characters with a dash`, async () => {
     const nodes = [
       { id: `1`, usePageContextId: true },

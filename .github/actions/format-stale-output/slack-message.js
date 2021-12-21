@@ -51,4 +51,4 @@ const slackMessage = (queue, type) => {
   return report
 }
 
-export default slackMessage
+module.exports = slackMessage

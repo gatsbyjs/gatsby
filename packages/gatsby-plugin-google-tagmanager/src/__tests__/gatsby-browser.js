@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { getLCP, getFID, getCLS } from "web-vitals/base"
 
 jest.mock(`web-vitals/base`, () => {

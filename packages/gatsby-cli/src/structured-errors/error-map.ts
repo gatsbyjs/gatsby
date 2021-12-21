@@ -620,7 +620,7 @@ const errors = {
         3
       )} seconds. Activities preventing Gatsby from transitioning to idle state:\n\n${
         context.stuckStatusDiagnosticMessage
-      }`,
+      }${context.additionalOutput}`,
     level: Level.ERROR,
     docsUrl: `https://support.gatsbyjs.com/hc/en-us/articles/360056811354`,
   },
@@ -655,6 +655,13 @@ const errors = {
     level: Level.WARNING,
     category: ErrorCategory.USER,
   },
+  "11804": {
+    text: ({ pluginName, nodeId }): string =>
+      `Plugin ${pluginName} called unstable_createNodeManifest for a node which doesn't exist with an id of ${nodeId}`,
+    level: Level.WARNING,
+    category: ErrorCategory.USER,
+  },
+
   /** End Node Manifest warnings */
 }
 

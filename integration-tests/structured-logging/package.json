@@ -10,7 +10,7 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "gatsby": "^3.0.0-next.0",
+    "gatsby": "next",
     "gray-percentage": "^2.0.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
@@ -18,8 +18,8 @@
   "devDependencies": {
     "babel-plugin-dynamic-import-node-sync": "^2.0.1",
     "cpy": "^8.1.2",
-    "fs-extra": "^9.0.1",
-    "jest": "^24.0.0",
+    "fs-extra": "^10.0.0",
+    "jest": "^27.2.1",
     "joi": "^17.4.0",
     "lodash": "^4.17.20",
     "node-fetch": "^2.6.1"

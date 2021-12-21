@@ -7,7 +7,7 @@ async function run() {
   const { join } = require(`path`)
   const fs = require(`fs-extra`)
   const fetch = require(`node-fetch`)
-  const diff = require(`jest-diff`)
+  const { diff } = require(`jest-diff`)
   const prettier = require(`prettier`)
   const cheerio = require(`cheerio`)
   const stripAnsi = require(`strip-ansi`)

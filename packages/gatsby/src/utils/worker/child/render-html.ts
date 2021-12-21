@@ -116,11 +116,13 @@ export const renderHTMLProd = async ({
   paths,
   envVars,
   sessionId,
+  webpackCompilationHash,
 }: {
   htmlComponentRendererPath: string
   paths: Array<string>
   envVars: Array<[string, string | undefined]>
   sessionId: number
+  webpackCompilationHash: string
 }): Promise<IRenderHtmlResult> => {
   const publicDir = join(process.cwd(), `public`)
   const isPreview = process.env.GATSBY_IS_PREVIEW === `true`
@@ -160,6 +162,7 @@ export const renderHTMLProd = async ({
           await htmlComponentRenderer.default({
             pagePath,
             pageData,
+            webpackCompilationHash,
             ...resourcesForTemplate,
           })
 
