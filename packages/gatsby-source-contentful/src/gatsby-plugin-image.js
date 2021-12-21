@@ -35,7 +35,7 @@ export const getBase64Image = (imageProps, cache) => {
     ...imageProps.options,
     toFormat,
     width: 20,
-    height: Math.floor(20 * aspectRatio),
+    height: Math.floor(20 / aspectRatio),
   }
 
   const requestUrl = createUrl(imageProps.baseUrl, imageOptions)

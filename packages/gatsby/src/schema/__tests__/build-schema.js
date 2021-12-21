@@ -20,6 +20,14 @@ import {
 } from "../types/type-builders"
 const withResolverContext = require(`../context`)
 
+/**
+ * Helper identity function to trigger syntax highlighting in code editors.
+ * (`gql` name serve as a hint)
+ */
+function gql(input) {
+  return input
+}
+
 const nodes = require(`./fixtures/node-model`)
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
@@ -1345,6 +1353,45 @@ describe(`Build schema`, () => {
         "type NestedNestedFoo {
           bar: Int
           baz: Int
+        }"
+      `)
+    })
+
+    it(`handles merging types when implemented interface wasn't defined yet`, async () => {
+      createTypes(gql`
+        # create initial type composer
+        type TypeThatWillImplementInterface {
+          sharedField: String
+          originalField: String
+        }
+
+        # adjust type to implement not yet defined interface
+        # this will trigger type merging
+        type TypeThatWillImplementInterface implements CustomInterface {
+          sharedField: String
+          newField: String
+        }
+
+        # actually define interface (last)
+        interface CustomInterface {
+          sharedField: String
+        }
+      `)
+      // implicit assertion is that building schema doesn't throw in the process
+      const schema = await buildSchema()
+      expect(printType(schema.getType(`CustomInterface`)))
+        .toMatchInlineSnapshot(`
+        "interface CustomInterface {
+          sharedField: String
+        }"
+      `)
+
+      expect(printType(schema.getType(`TypeThatWillImplementInterface`)))
+        .toMatchInlineSnapshot(`
+        "type TypeThatWillImplementInterface implements CustomInterface {
+          sharedField: String
+          originalField: String
+          newField: String
         }"
       `)
     })

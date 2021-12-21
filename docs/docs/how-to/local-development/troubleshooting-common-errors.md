@@ -76,9 +76,11 @@ Some packages, like Babel, bring `fs` along for the ride anyway. In order to pre
 ```javascript:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
-    node: {
-      fs: "empty", // highlight-line
-    },
+    resolve: {
+      fallback: {
+        fs: false // highlight-line
+      }
+    }
   })
 }
 ```

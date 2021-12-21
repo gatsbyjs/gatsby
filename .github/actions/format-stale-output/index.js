@@ -1,8 +1,14 @@
 const core = require("@actions/core")
-const slackMessage = "./slack-message"
+const slackMessage = require("./slack-message")
 
 function formatIssues(issues) {
-  return issues.map(entry => ({
+  const parsedIssues = JSON.parse(issues)
+
+  if (parsedIssues.length === 0) {
+    return []
+  }
+
+  return parsedIssues.map(entry => ({
     title: entry.title,
     url: `https://github.com/gatsbyjs/gatsby/issues/${entry.number}`
   }))

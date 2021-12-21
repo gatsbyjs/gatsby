@@ -9,8 +9,28 @@ import { Writable } from "stream"
 import got from "got"
 import fs from "fs-extra"
 
-const gotStream = jest.spyOn(got, `stream`)
-const fsMove = jest.spyOn(fs, `move`)
+jest.mock(`got`, () => {
+  const realGot = jest.requireActual(`got`)
+
+  return {
+    ...realGot,
+    default: {
+      ...realGot,
+      stream: jest.fn(realGot.stream),
+    },
+  }
+})
+const gotStream = got.stream
+jest.mock(`fs-extra`, () => {
+  const realFs = jest.requireActual(`fs-extra`)
+
+  return {
+    ...realFs,
+    move: jest.fn(realFs.move),
+  }
+})
+const fsMove = fs.move
+
 const urlCount = new Map()
 
 async function getFileSize(file) {
@@ -124,13 +144,27 @@ const server = setupServer(
       ctx.body(content)
     )
   }),
+  rest.get(
+    `http://external.com/invalid:dog*name.jpg`,
+    async (req, res, ctx) => {
+      const { content, contentLength } = await getFileContent(
+        path.join(__dirname, `./fixtures/dog-thumbnail.jpg`),
+        req
+      )
+
+      return res(
+        ctx.set(`Content-Type`, `image/jpg`),
+        ctx.set(`Content-Length`, contentLength),
+        ctx.status(200),
+        ctx.body(content)
+      )
+    }
+  ),
   rest.get(`http://external.com/dog-304.jpg`, async (req, res, ctx) => {
     const { content, contentLength } = await getFileContent(
       path.join(__dirname, `./fixtures/dog-thumbnail.jpg`),
       req
     )
-
-    // console.log(req.headers)
 
     return res(
       ctx.set(`Content-Type`, `image/jpg`),
@@ -242,7 +276,11 @@ describe(`fetch-remote-file`, () => {
   })
   afterAll(() => {
     if (cache) {
-      fs.removeSync(cache.directory)
+      try {
+        fs.removeSync(cache.directory)
+      } catch (err) {
+        // ignore
+      }
     }
 
     // Clean up after all tests are done, preventing this
@@ -295,6 +333,19 @@ describe(`fetch-remote-file`, () => {
     })
 
     expect(path.basename(filePath)).toBe(`dog.jpg`)
+    expect(getFileSize(filePath)).resolves.toBe(
+      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
+    )
+    expect(gotStream).toBeCalledTimes(1)
+  })
+
+  it(`downloads and create a jpg file that has invalid characters`, async () => {
+    const filePath = await fetchRemoteFile({
+      url: `http://external.com/invalid:dog*name.jpg`,
+      cache,
+    })
+
+    expect(path.basename(filePath, `.js`)).toContain(`invalid-dog-name`)
     expect(getFileSize(filePath)).resolves.toBe(
       await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
     )
@@ -664,6 +715,7 @@ Fetch details:
 {
   \\"attempt\\": 3,
   \\"method\\": \\"GET\\",
+  \\"errorCode\\": \\"ERR_NON_2XX_3XX_RESPONSE\\",
   \\"responseStatusCode\\": 500,
   \\"responseStatusMessage\\": \\"Internal Server Error\\",
   \\"requestHeaders\\": {
@@ -738,6 +790,7 @@ Fetch details:
 {
   \\"attempt\\": 3,
   \\"method\\": \\"GET\\",
+  \\"errorCode\\": \\"ERR_NON_2XX_3XX_RESPONSE\\",
   \\"responseStatusCode\\": 503,
   \\"responseStatusMessage\\": \\"Service Unavailable\\",
   \\"requestHeaders\\": {
@@ -772,6 +825,7 @@ Fetch details:
 {
   \\"attempt\\": 3,
   \\"method\\": \\"GET\\",
+  \\"errorCode\\": \\"ERR_GOT_REQUEST_ERROR\\",
   \\"requestHeaders\\": {
     \\"user-agent\\": \\"got (https://github.com/sindresorhus/got)\\",
     \\"accept-encoding\\": \\"gzip, deflate, br\\"
