@@ -21,7 +21,7 @@ jest.mock(`fs-extra`, () => {
 })
 const { DefinePlugin } = require(`webpack`)
 const { readFileSync } = require(`fs-extra`)
-const webpackConfig = require(`../webpack.config`)
+const { webpackConfig } = require(`../webpack.config`)
 const { store } = require(`../../redux`)
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
