@@ -8,6 +8,7 @@ export function collectionTypeBuilder(prefix: string): string {
         id: ID!
         image: ${prefix}Image
         legacyResourceId: String!
+        metafield(namespace: String! key: String!): ${prefix}Metafield
         metafields: [${prefix}Metafield!]! @link(from: "metafields___NODE", by: "id")
         products: [${prefix}Product!]! @link(from: "products___NODE", by: "id")
         productsCount: Int!

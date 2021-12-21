@@ -1,6 +1,7 @@
 import { CreateResolversArgs } from "gatsby"
 import { getGatsbyImageFieldConfig } from "gatsby-plugin-image/graphql-utils"
 
+import { shopifyTypes } from "./shopify-types"
 import { makeResolveGatsbyImageData } from "./resolve-gatsby-image-data"
 
 export function createResolvers(
@@ -16,5 +17,30 @@ export function createResolvers(
         },
       },
     })
+  }
+
+  // Attach the metafield resolver to all types with a metafields field
+  for (const type of Object.keys(shopifyTypes)) {
+    if (
+      shopifyTypes?.[type]?.coupledNodeFields?.includes(`metafields___NODE`)
+    ) {
+      createResolvers({
+        [`${typePrefix}${type}`]: {
+          metafield: {
+            resolve: async (source, args, context) =>
+              context.nodeModel.findOne({
+                type: `${typePrefix}ShopifyMetafield`,
+                query: {
+                  filter: {
+                    key: { eq: args.key },
+                    namespace: { eq: args.namespace },
+                    __parentId: { eq: source.shopifyId },
+                  },
+                },
+              }),
+          },
+        },
+      })
+    }
   }
 }

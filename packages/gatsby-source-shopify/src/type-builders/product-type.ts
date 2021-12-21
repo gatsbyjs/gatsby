@@ -16,6 +16,7 @@ export function productTypeBuilder(prefix: string): string {
         legacyResourceId: String!
         media: [${prefix}Media!]! @link(from: "media___NODE", by: "id")
         mediaCount: Int!
+        metafield(namespace: String! key: String!): ${prefix}Metafield
         metafields: [${prefix}Metafield!]! @link(from: "metafields___NODE", by: "id")
         onlineStorePreviewUrl: String
         onlineStoreUrl: String
