@@ -5,7 +5,7 @@ Object {
   "aspectRatio": 1,
   "height": 20,
   "originalName": "test.png",
-  "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABP0lEQVQ4y2P4r8ZANmKgvuZ/agy/VaHojyopmv+CNf/XQCCoCEHNf1VBqv+oM5yVY1giwbBakuG2AkjknzoW/eh2/tdgOCPHYM7OwMDAwAgiGFgYGMJ5GF4og43ApRmuk58JqpMJRjIwMBizMbxTZviPaj8ihCD6rThAStkgljJATWEHc3P5wT5SxdD8B2ztERmQIiYGdAAxSpaF4T2q5TDN4HCaLgZSxMyAE1yQgwY+Fs1zxQloviSPTTMktM7JgVzIiKEH4hElFoavKogAQgltiJA3F0gdOyPC58yw8GsUwhFgUMvVGR4oMqiwogQbhOHLxfBLDcVabIlEneGxEkMMLwMvTLc4M0OdEMN3VfRIxp48/6mDnPdCieGkHCiRflRh+K+JPXljz1IQJ0AzhjrRGQPZC5As+ZeuhQGRmgHU8mT34D0STQAAAABJRU5ErkJggg==",
+  "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABRElEQVQ4y7WUzUrDQBSFT37aij8UFFqFNmriZFy7s8/QF+iiz+ArCL6EGzeufBDBRVEQV67ciLgR3YgoyVju3IkxTaa2osNw4Yb57pmcOzP4jPHrib+HVYwkRiIopnPBBtjNZ2opMZnTIomPGKMuTts4W8ftFn1JJW1nGsyClwH2GwDgUIDvYLCMx4hKKBvM5ChA0yXGBTwddYa9Op5KfO4Qx94CLa2xaDbqOj1oUvWkDCda9rxjNCcGl+r4eC6KZ7Ag+LhFizxYx3VgzK+AT9o/wDebVTC7dRXQDp0Swz8S1vC6kxtUcFvpDveXtEPfSriZf0dr2jBha5XE3TYi35jEk2X7i3gXBdmqQyJxH2K4YrrtABseDlfxJqYeki9eSdreQ4iLLp2Zl8iYpGa5GCm3XWYXQ1Kq5rrPXMKG/dtjMCM8Br7rZPFvbj2AAAAAAElFTkSuQmCC",
   "width": 20,
 }
 `;
@@ -23,7 +23,7 @@ Object {
 exports[`gatsby-plugin-sharp duotone fixed 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAHNUN2pAAAAD1BMVEXugW5lZmbMemybcGl6aWdJY41OAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAVUlEQVQY062QUQ6AMAhD28L9z2w2RObEH+P7WJquK2TAgEh0SoVfF+GQPk9DC5kvxNLv+QYJ1eBVy0VGxJYJltFfkI/q+87T2mzxQo3pj8rmI6QPGx6CUQCaU8vWagAAAABJRU5ErkJggg==",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAHNUN2pAAAAD1BMVEXugW5lZmbMemx8amedcGlYuBxeAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAU0lEQVQY062PUQ6AMAhD28L9z2wEkWnYh4nvY2m6UjbghCh0SaXfF+mQFqdjhKwJsfU+PyChG6xruciM2LLBK/oLiurnm8N62eKNBtOGed/+9wsHgXkAl81w/nsAAAAASUVORK5CYII=",
   "height": 100,
   "originalName": "test.png",
   "src": "/static/1234/df2e1/test.png",
@@ -36,7 +36,7 @@ Object {
 exports[`gatsby-plugin-sharp duotone fluid 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAHNUN2pAAAAD1BMVEXugW5lZmbMemybcGl6aWdJY41OAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAVUlEQVQY062QUQ6AMAhD28L9z2w2RObEH+P7WJquK2TAgEh0SoVfF+GQPk9DC5kvxNLv+QYJ1eBVy0VGxJYJltFfkI/q+87T2mzxQo3pj8rmI6QPGx6CUQCaU8vWagAAAABJRU5ErkJggg==",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAHNUN2pAAAAD1BMVEXugW5lZmbMemx8amedcGlYuBxeAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAU0lEQVQY062PUQ6AMAhD28L9z2wEkWnYh4nvY2m6UjbghCh0SaXfF+mQFqdjhKwJsfU+PyChG6xruciM2LLBK/oLiurnm8N62eKNBtOGed/+9wsHgXkAl81w/nsAAAAASUVORK5CYII=",
   "density": 72,
   "originalImg": "/static/1234/df2e1/test.png",
   "originalName": "test.png",
@@ -1014,7 +1014,7 @@ exports[`gatsby-plugin-sharp fluid ensure maxWidth is in srcSet breakpoints 1`] 
 exports[`gatsby-plugin-sharp fluid includes responsive image properties, e.g. sizes, srcset, etc. 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABP0lEQVQ4y2P4r8ZANmKgvuZ/agy/VaHojyopmv+CNf/XQCCoCEHNf1VBqv+oM5yVY1giwbBakuG2AkjknzoW/eh2/tdgOCPHYM7OwMDAwAgiGFgYGMJ5GF4og43ApRmuk58JqpMJRjIwMBizMbxTZviPaj8ihCD6rThAStkgljJATWEHc3P5wT5SxdD8B2ztERmQIiYGdAAxSpaF4T2q5TDN4HCaLgZSxMyAE1yQgwY+Fs1zxQloviSPTTMktM7JgVzIiKEH4hElFoavKogAQgltiJA3F0gdOyPC58yw8GsUwhFgUMvVGR4oMqiwogQbhOHLxfBLDcVabIlEneGxEkMMLwMvTLc4M0OdEMN3VfRIxp48/6mDnPdCieGkHCiRflRh+K+JPXljz1IQJ0AzhjrRGQPZC5As+ZeuhQGRmgHU8mT34D0STQAAAABJRU5ErkJggg==",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABRElEQVQ4y7WUzUrDQBSFT37aij8UFFqFNmriZFy7s8/QF+iiz+ArCL6EGzeufBDBRVEQV67ciLgR3YgoyVju3IkxTaa2osNw4Yb57pmcOzP4jPHrib+HVYwkRiIopnPBBtjNZ2opMZnTIomPGKMuTts4W8ftFn1JJW1nGsyClwH2GwDgUIDvYLCMx4hKKBvM5ChA0yXGBTwddYa9Op5KfO4Qx94CLa2xaDbqOj1oUvWkDCda9rxjNCcGl+r4eC6KZ7Ag+LhFizxYx3VgzK+AT9o/wDebVTC7dRXQDp0Swz8S1vC6kxtUcFvpDveXtEPfSriZf0dr2jBha5XE3TYi35jEk2X7i3gXBdmqQyJxH2K4YrrtABseDlfxJqYeki9eSdreQ4iLLp2Zl8iYpGa5GCm3XWYXQ1Kq5rrPXMKG/dtjMCM8Br7rZPFvbj2AAAAAAElFTkSuQmCC",
   "density": 72,
   "originalImg": "/static/1234/7e516/test.png",
   "originalName": "test.png",

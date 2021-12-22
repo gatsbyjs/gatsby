@@ -26,7 +26,7 @@ The entry point to webpack (`production-app.js`) [references ./async-requires.js
 
 ## Chunk bundle naming
 
-Great! You've told webpack where you want to code split. But how will these be named on disk? webpack gives you the ability to customize this via the [chunkFilename](https://webpack.js.org/configuration/output/#output-chunkfilename) configuration in the [output](https://webpack.js.org/configuration/output/) section, which is set by Gatsby in [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L135) as:
+Great! You've told webpack where you want to code split. But how will these be named on disk? webpack gives you the ability to customize this via the [chunkFilename](https://webpack.js.org/configuration/output/#output-chunkfilename) configuration in the [output](https://webpack.js.org/configuration/output/) section, which is set by Gatsby in [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.ts#L135) as:
 
 ```text
 [name]-[contenthash].js
@@ -77,7 +77,7 @@ digraph {
 
 In the above graph, you can see 3 chunk groups: 2 pages and the core Gatsby app. The two pages share a bunch of libraries. webpack found these common dependencies and created chunks for them. These chunks are id 0 and 1. And you'll see that both page `chunkGroups` depend on them. Each page also depends on its own chunk which represents the page's core code (from its src code in the Gatsby site). These would be id 7 for `component---src-blog-1-js` and 8 for `component---src-blog-2-js`.
 
-You can also see the chunk group for `app`. It turns out that this shares no dependencies with the pages. But it does include the webpack runtime whose name is declared in [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L390).
+You can also see the chunk group for `app`. It turns out that this shares no dependencies with the pages. But it does include the webpack runtime whose name is declared in [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.ts#L390).
 
 Remember that the chunk group name was assigned by the `/* webpackChunkName: .../*` in the previous section.
 
@@ -113,7 +113,7 @@ It turns out that webpack provides a way to record the mapping. It provides a co
 
 #### chunk-map.json
 
-`webpack.stats.json` maps chunk groups (componentChunkNames) to the chunk asset names they depend on. Your [Gatsby webpack compiler hook](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L234) also outputs `chunk-map.json` which is a mapping from chunkGroup to the core chunk for the component, as opposed to the shared chunks (id0 and id1 in [primer diagram](/docs/how-code-splitting-works/#primer-on-chunkgroups-and-chunks)). This will render a single component chunk for JavaScript and CSS within each chunk group. E.g
+`webpack.stats.json` maps chunk groups (componentChunkNames) to the chunk asset names they depend on. Your [Gatsby webpack compiler hook](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.ts#L234) also outputs `chunk-map.json` which is a mapping from chunkGroup to the core chunk for the component, as opposed to the shared chunks (id0 and id1 in [primer diagram](/docs/how-code-splitting-works/#primer-on-chunkgroups-and-chunks)). This will render a single component chunk for JavaScript and CSS within each chunk group. E.g
 
 ```javascript
 {
@@ -133,7 +133,7 @@ These two files are loaded by [static-entry.js](https://github.com/gatsbyjs/gats
 
 As mentioned above, `static-entry.js` generates HTML, but also loads the Gatsby JavaScript runtime and the JavaScript for the page you're generating HTML for. These are added as a `link` tags in the `<head>` (see [link tag preloading](https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content)), and then referenced at the bottom of the body in `script` tags.
 
-The Gatsby runtime bundle is called `app` (output name from [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js#L169)). You [look up `assetsByChunkName`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L204) by `app` to get its chunk asset files. Then you do the same for the component by looking up the same collection by `componentChunkName` (e.g. `component---src-blog-2-js`). These two chunk asset arrays are merged together. For each chunk in it, you create the following link and add it to the [headComponents](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L259).
+The Gatsby runtime bundle is called `app` (output name from [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.ts#L169)). You [look up `assetsByChunkName`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L204) by `app` to get its chunk asset files. Then you do the same for the component by looking up the same collection by `componentChunkName` (e.g. `component---src-blog-2-js`). These two chunk asset arrays are merged together. For each chunk in it, you create the following link and add it to the [headComponents](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L259).
 
 ```html
 <link
