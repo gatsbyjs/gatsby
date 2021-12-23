@@ -47,7 +47,12 @@ In the `package.json` file in `gatsby-theme-events`, add the following:
   "name": "gatsby-theme-events",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "clean": "gatsby clean"
+  }
 }
 ```
 
