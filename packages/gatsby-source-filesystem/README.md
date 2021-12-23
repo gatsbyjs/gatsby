@@ -164,6 +164,8 @@ The `createRemoteFileNode` helper makes it easy to download remote files and add
 
 While downloading the assets, special characters (regex: `/:|\/|\*|\?|"|<|>|\||\\/g`) in filenames are replaced with a hyphen "-". When special characters are found a file hash is added to keep files unique e.g `a:file.jpg` becomes `a-file-73hd.jpg` (as otherwise `a:file.jpg` and `a*file.jpg` would overwrite themselves).
 
+**Warning**: Please make sure to pass in the `parentNodeId`. Otherwise if the parent of the created file node is loaded from the cache, the linked file node won't be recreated which means it will be garbage collected and your file is set to null.
+
 ```javascript
 createRemoteFileNode({
   // The source url of the remote file
@@ -263,83 +265,69 @@ When working with data that isn't already stored in a file, such as when queryin
 
 The `createFileNodeFromBuffer` helper accepts a `Buffer`, caches its contents to disk, and creates a file node that points to it.
 
-## Example usage
+**Warning**: Please make sure to pass in the `parentNodeId`. Otherwise if the parent of the created file node is loaded from the cache, the linked file node won't be recreated which means it will be garbage collected and your file is set to null.
 
-The following example is adapted from the source of [`gatsby-source-mysql`](https://github.com/malcolm-kee/gatsby-source-mysql):
+#### Example usage
+
+The following example is a common case where you want to create a sharing image dynamically, instead of loading an existing image.
 
 ```js
 // gatsby-node.js
-const createMySqlNodes = require(`./create-nodes`)
+exports.onCreateNode = async ({ node, actions, getCache, createNodeId }) => {
+  const { createNode, createNodeField } = actions
+  /**
+   * For every incoming Markdown node we want to generate a social card
+   * and attach it to the the node.
+   */
+  if (node.internal.type === "MarkdownRemark") {
+    const title = node.frontmatter.title
+    // we need the title in order to generate anything
+    if (!title) {
+      return
+    }
 
-exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
-  const { createNode } = actions
-  const { conn, queries } = config
-  const { db, results } = await query(conn, queries)
+    // this some function that generates your image as a buffer
+    // use `node-canvas` (https://www.npmjs.com/package/canvas) or similar.
+    const imageBuffer = await generateSomeImage(title)
 
-  try {
-    queries
-      .map((query, i) => ({ ...query, ___sql: results[i] }))
-      .forEach(result =>
-        createMySqlNodes(result, results, createNode, {
-          createNode,
-          createNodeId,
-          getCache,
-        })
-      )
-    db.end()
-  } catch (e) {
-    console.error(e)
-    db.end()
-  }
-}
+    const fileNode = await createFileNodeFromBuffer({
+      name: "social-card",
+      buffer: imageBuffer,
+      getCache,
+      createNode,
+      createNodeId,
+      // make sure to always pass in the parent node otherwise it's lost when loaded from cache
+      parentNodeId: node.id,
+    })
 
-// create-nodes.js
-const { createFileNodeFromBuffer } = require(`gatsby-source-filesystem`)
-const createNodeHelpers = require(`gatsby-node-helpers`).default
-
-const { createNodeFactory } = createNodeHelpers({ typePrefix: `mysql` })
-
-function attach(node, key, value, ctx) {
-  if (Buffer.isBuffer(value)) {
-    ctx.linkChildren.push(parentNodeId =>
-      createFileNodeFromBuffer({
-        buffer: value,
-        getCache: ctx.getCache,
-        createNode: ctx.createNode,
-        createNodeId: ctx.createNodeId,
+    if (fileNode) {
+      createNodeField({
+        node,
+        name: `socialCard`,
+        value: fileNode.id,
       })
-    )
-    value = `Buffer`
+    }
   }
-
-  node[key] = value
 }
 
-function createMySqlNodes({ name, __sql, idField, keys }, results, ctx) {
-  const MySqlNode = createNodeFactory(name)
-  ctx.linkChildren = []
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
+  const typeDefs = [
+    `type MarkdownRemark implements Node { 
+      socialCardFile: File @link(from: "fields.socialCard")
+    }`,
+  ]
 
-  return __sql.forEach(row => {
-    if (!keys) keys = Object.keys(row)
-
-    const node = { id: row[idField] }
-
-    for (const key of keys) {
-      attach(node, key, row[key], ctx)
-    }
-
-    node = ctx.createNode(node)
-
-    for (const link of ctx.linkChildren) {
-      link(node.id)
-    }
-  })
+  createTypes(typeDefs)
 }
-
-module.exports = createMySqlNodes
 ```
 
 ## Troubleshooting
+
+### File nodes are null after starting the server a second time
+
+In case you see yourself running `gatsby clean` frequently to files that are set to `null` you might might have forgotten to pass in `parentNodeId` to `createFileNodeFromBuffer` or `createRemoteFileNode`. Make sure you always provide a parent reference otherwise the files won't be recreated which means it will be garbage collected and show up as `null` in your queried data.
+
+### Spotty network
 
 In case that due to spotty network, or slow connection, some remote files fail to download. Even after multiple retries and adjusting concurrent downloads, you can adjust timeout and retry settings with these environment variables:
 
