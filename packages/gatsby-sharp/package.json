@@ -1,0 +1,40 @@
+{
+  "name": "gatsby-sharp",
+  "version": "0.0.1-next.0",
+  "sideEffects": false,
+  "keywords": [
+    "gatsby",
+    "sharp"
+  ],
+  "main": "dist/index.js",
+  "source": "src/index.ts",
+  "files": [
+    "dist/*"
+  ],
+  "types": "dist/index.d.ts",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-sharp#readme",
+  "dependencies": {
+    "@types/sharp": "^0.29.4",
+    "sharp": "^0.29.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.4",
+    "@babel/core": "^7.10.4",
+    "cross-env": "^7.0.2"
+  },
+  "engines": {
+    "node": ">=14.15.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-sharp"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src --out-file dist/index.js --ignore \"**/__tests__\" --extensions \".ts,.js\"",
+    "typegen": "tsc --emitDeclarationOnly --declaration --declarationDir dist/",
+    "prepare": "cross-env NODE_ENV=production npm-run-all -s build typegen",
+    "watch": "babel src --out-file dist/index.js --ignore \"**/__tests__\" --extensions \".ts,.js\""
+  }
+}
