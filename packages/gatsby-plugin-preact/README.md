@@ -10,7 +10,9 @@ React.
 
 ## Install
 
-`npm install gatsby-plugin-preact preact preact-render-to-string`
+`npm install gatsby-plugin-preact preact preact-render-to-string@5.1.6`
+
+**Important:** please don't use latest preact-render-to-string until issue[#34263](https://github.com/gatsbyjs/gatsby/issues/34263) be fixed!
 
 ## How to use
 
