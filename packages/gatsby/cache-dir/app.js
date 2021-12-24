@@ -123,6 +123,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           `If your site isn't behaving as expected, you might want to remove these.`,
           registrations
         )
+    }).catch(error => {
+      console.warn(
+        `Warning: failed getting existing service worker registration(s).`,
+        error
+      )
     })
   }
 
