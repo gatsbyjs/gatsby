@@ -25,7 +25,7 @@ export function createResolvers(
       shopifyTypes?.[type]?.coupledNodeFields?.includes(`metafields___NODE`)
     ) {
       createResolvers({
-        [`${typePrefix}${type}`]: {
+        [`${typePrefix}Shopify${type}`]: {
           metafield: {
             resolve: async (source, args, context) =>
               context.nodeModel.findOne({
@@ -34,7 +34,7 @@ export function createResolvers(
                   filter: {
                     key: { eq: args.key },
                     namespace: { eq: args.namespace },
-                    __parentId: { eq: source.shopifyId },
+                    id: { in: source.metafields___NODE },
                   },
                 },
               }),
