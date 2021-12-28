@@ -1,3 +1,4 @@
+const path = require(`path`)
 const { onCreateWebpackConfig, onCreateBabelConfig } = require(`../gatsby-node`)
 const PreactRefreshPlugin = require(`@prefresh/webpack`)
 const ReactRefreshWebpackPlugin = require(`@pmmmwh/react-refresh-webpack-plugin`)
@@ -28,13 +29,16 @@ describe(`gatsby-plugin-preact`, () => {
       plugins: expect.arrayContaining([expect.any(PreactRefreshPlugin)]),
       resolve: {
         alias: {
-          react: `preact/compat`,
-          "react-dom": `preact/compat`,
+          react: expect.stringContaining(path.join(`preact`, `compat`)),
+          "react-dom": expect.stringContaining(path.join(`preact`, `compat`)),
+          "react-dom/server": expect.stringContaining(
+            path.join(`preact`, `compat`, `server`)
+          ),
         },
       },
     })
 
-    expect(getConfig).toHaveBeenCalledTimes(2)
+    expect(getConfig).toHaveBeenCalledTimes(1)
     expect(actions.setBabelPlugin).toHaveBeenCalledTimes(1)
     expect(actions.setBabelPlugin).toHaveBeenCalledWith({
       name: `@prefresh/babel-plugin`,
@@ -93,8 +97,11 @@ describe(`gatsby-plugin-preact`, () => {
       plugins: [],
       resolve: {
         alias: {
-          react: `preact/compat`,
-          "react-dom": `preact/compat`,
+          react: expect.stringContaining(path.join(`preact`, `compat`)),
+          "react-dom": expect.stringContaining(path.join(`preact`, `compat`)),
+          "react-dom/server": expect.stringContaining(
+            path.join(`preact`, `compat`, `server`)
+          ),
         },
       },
     })
