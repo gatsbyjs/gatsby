@@ -157,7 +157,18 @@ try {
     originalConsoleError(msg, ...args)
     handleMessage(msg)
   }
-  sharp = require(`sharp`)
+  try {
+    sharp = require(`gatsby/sharp`)
+  } catch (e) {
+    sharp = () =>
+      Promise.resolve(() => {
+        const sharp = require(`sharp`)
+        sharp.simd()
+        sharp.concurrency(1)
+
+        return sharp
+      })
+  }
 } catch (e) {
   handleMessage(e.toString())
   throw e
