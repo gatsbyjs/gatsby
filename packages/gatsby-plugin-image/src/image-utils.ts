@@ -481,146 +481,146 @@ export function fixedImageSizes({
   }
 }
 
-// export function responsiveImageSizes({
-//   sourceMetadata: imgDimensions,
-//   width,
-//   height,
-//   fit = `cover`,
-//   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
-//   breakpoints,
-//   layout,
-// }: IImageSizeArgs): IImageSizes {
-//   let sizes
-//   let aspectRatio = imgDimensions.width / imgDimensions.height
-//   // Sort, dedupe and ensure there's a 1
-//   const densities = dedupeAndSortDensities(outputPixelDensities)
+export function responsiveImageSizes({
+  sourceMetadata: imgDimensions,
+  width,
+  height,
+  fit = `cover`,
+  outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
+  breakpoints,
+  layout,
+}: IImageSizeArgs): IImageSizes {
+  let sizes
+  let aspectRatio = imgDimensions.width / imgDimensions.height
+  // Sort, dedupe and ensure there's a 1
+  const densities = dedupeAndSortDensities(outputPixelDensities)
 
-//   // If both are provided then we need to check the fit
-//   if (width && height) {
-//     const calculated = getDimensionsAndAspectRatio(imgDimensions, {
-//       width,
-//       height,
-//       fit,
-//     })
-//     width = calculated.width
-//     height = calculated.height
-//     aspectRatio = calculated.aspectRatio
-//   }
+  // If both are provided then we need to check the fit
+  if (width && height) {
+    const calculated = getDimensionsAndAspectRatio(imgDimensions, {
+      width,
+      height,
+      fit,
+    })
+    width = calculated.width
+    height = calculated.height
+    aspectRatio = calculated.aspectRatio
+  }
 
-//   // Case 1: width of height were passed in, make sure it isn't larger than the actual image
-//   width = width && Math.min(width, imgDimensions.width)
-//   height = height && Math.min(height, imgDimensions.height)
+  // Case 1: width of height were passed in, make sure it isn't larger than the actual image
+  width = width && Math.min(width, imgDimensions.width)
+  height = height && Math.min(height, imgDimensions.height)
 
-//   // Case 2: neither width or height were passed in, use default size
-//   if (!width && !height) {
-//     width = Math.min(DEFAULT_FLUID_WIDTH, imgDimensions.width)
-//     height = width / aspectRatio
-//   }
+  // Case 2: neither width or height were passed in, use default size
+  if (!width && !height) {
+    width = Math.min(DEFAULT_FLUID_WIDTH, imgDimensions.width)
+    height = width / aspectRatio
+  }
 
-//   // if it still hasn't been found, calculate width from the derived height.
-//   // TS isn't smart enough to realise the type for height has been narrowed here
-//   if (!width) {
-//     width = (height as number) * aspectRatio
-//   }
+  // if it still hasn't been found, calculate width from the derived height.
+  // TS isn't smart enough to realise the type for height has been narrowed here
+  if (!width) {
+    width = (height as number) * aspectRatio
+  }
 
-//   const originalWidth = width
-//   const isTopSizeOverriden =
-//     imgDimensions.width < width || imgDimensions.height < (height as number)
-//   if (isTopSizeOverriden) {
-//     width = imgDimensions.width
-//     height = imgDimensions.height
-//   }
+  const originalWidth = width
+  const isTopSizeOverriden =
+    imgDimensions.width < width || imgDimensions.height < (height as number)
+  if (isTopSizeOverriden) {
+    width = imgDimensions.width
+    height = imgDimensions.height
+  }
 
-//   width = Math.round(width)
+  width = Math.round(width)
 
-//   if (breakpoints?.length > 0) {
-//     sizes = breakpoints.filter(size => size <= imgDimensions.width)
+  if (breakpoints?.length > 0) {
+    sizes = breakpoints.filter(size => size <= imgDimensions.width)
 
-//     // If a larger breakpoint has been filtered-out, add the actual image width instead
-//     if (
-//       sizes.length < breakpoints.length &&
-//       !sizes.includes(imgDimensions.width)
-//     ) {
-//       sizes.push(imgDimensions.width)
-//     }
-//   } else {
-//     sizes = densities.map(density => Math.round(density * (width as number)))
-//     sizes = sizes.filter(size => size <= imgDimensions.width)
-//   }
+    // If a larger breakpoint has been filtered-out, add the actual image width instead
+    if (
+      sizes.length < breakpoints.length &&
+      !sizes.includes(imgDimensions.width)
+    ) {
+      sizes.push(imgDimensions.width)
+    }
+  } else {
+    sizes = densities.map(density => Math.round(density * (width as number)))
+    sizes = sizes.filter(size => size <= imgDimensions.width)
+  }
 
-//   // ensure that the size passed in is included in the final output
-//   if (layout === `constrained` && !sizes.includes(width)) {
-//     sizes.push(width)
-//   }
-//   sizes = sizes.sort(sortNumeric)
-//   return {
-//     sizes,
-//     aspectRatio,
-//     presentationWidth: originalWidth,
-//     presentationHeight: Math.round(originalWidth / aspectRatio),
-//     unscaledWidth: width,
-//   }
-// }
+  // ensure that the size passed in is included in the final output
+  if (layout === `constrained` && !sizes.includes(width)) {
+    sizes.push(width)
+  }
+  sizes = sizes.sort(sortNumeric)
+  return {
+    sizes,
+    aspectRatio,
+    presentationWidth: originalWidth,
+    presentationHeight: Math.round(originalWidth / aspectRatio),
+    unscaledWidth: width,
+  }
+}
 
-// export function getDimensionsAndAspectRatio(
-//   dimensions,
-//   options
-// ): { width: number; height: number; aspectRatio: number } {
-//   // Calculate the eventual width/height of the image.
-//   const imageAspectRatio = dimensions.width / dimensions.height
+export function getDimensionsAndAspectRatio(
+  dimensions,
+  options
+): { width: number; height: number; aspectRatio: number } {
+  // Calculate the eventual width/height of the image.
+  const imageAspectRatio = dimensions.width / dimensions.height
 
-//   let width = options.width
-//   let height = options.height
+  let width = options.width
+  let height = options.height
 
-//   switch (options.fit) {
-//     case `fill`: {
-//       width = options.width ? options.width : dimensions.width
-//       height = options.height ? options.height : dimensions.height
-//       break
-//     }
-//     case `inside`: {
-//       const widthOption = options.width
-//         ? options.width
-//         : Number.MAX_SAFE_INTEGER
-//       const heightOption = options.height
-//         ? options.height
-//         : Number.MAX_SAFE_INTEGER
+  switch (options.fit) {
+    case `fill`: {
+      width = options.width ? options.width : dimensions.width
+      height = options.height ? options.height : dimensions.height
+      break
+    }
+    case `inside`: {
+      const widthOption = options.width
+        ? options.width
+        : Number.MAX_SAFE_INTEGER
+      const heightOption = options.height
+        ? options.height
+        : Number.MAX_SAFE_INTEGER
 
-//       width = Math.min(widthOption, Math.round(heightOption * imageAspectRatio))
-//       height = Math.min(
-//         heightOption,
-//         Math.round(widthOption / imageAspectRatio)
-//       )
-//       break
-//     }
-//     case `outside`: {
-//       const widthOption = options.width ? options.width : 0
-//       const heightOption = options.height ? options.height : 0
+      width = Math.min(widthOption, Math.round(heightOption * imageAspectRatio))
+      height = Math.min(
+        heightOption,
+        Math.round(widthOption / imageAspectRatio)
+      )
+      break
+    }
+    case `outside`: {
+      const widthOption = options.width ? options.width : 0
+      const heightOption = options.height ? options.height : 0
 
-//       width = Math.max(widthOption, Math.round(heightOption * imageAspectRatio))
-//       height = Math.max(
-//         heightOption,
-//         Math.round(widthOption / imageAspectRatio)
-//       )
-//       break
-//     }
+      width = Math.max(widthOption, Math.round(heightOption * imageAspectRatio))
+      height = Math.max(
+        heightOption,
+        Math.round(widthOption / imageAspectRatio)
+      )
+      break
+    }
 
-//     default: {
-//       if (options.width && !options.height) {
-//         width = options.width
-//         height = Math.round(options.width / imageAspectRatio)
-//       }
+    default: {
+      if (options.width && !options.height) {
+        width = options.width
+        height = Math.round(options.width / imageAspectRatio)
+      }
 
-//       if (options.height && !options.width) {
-//         width = Math.round(options.height * imageAspectRatio)
-//         height = options.height
-//       }
-//     }
-//   }
+      if (options.height && !options.width) {
+        width = Math.round(options.height * imageAspectRatio)
+        height = options.height
+      }
+    }
+  }
 
-//   return {
-//     width,
-//     height,
-//     aspectRatio: width / height,
-//   }
-// }
+  return {
+    width,
+    height,
+    aspectRatio: width / height,
+  }
+}
