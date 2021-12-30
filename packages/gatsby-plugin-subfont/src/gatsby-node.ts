@@ -3,6 +3,7 @@ import path from 'path';
 import subfont from 'subfont';
 
 export interface SubfontPluginOption extends PluginOptions {
+  output?: string;
   debug?: boolean;
   dryRun?: boolean;
   silent?: boolean;
@@ -28,7 +29,6 @@ const onPostBuild: GatsbyNode['onPostBuild'] = async ({ store, reporter }, optio
   await subfont(
     {
       root,
-      inputFiles: [path.join(root, `index.html`)],
       inPlace: true,
       inlineCss: true,
       ...options,
