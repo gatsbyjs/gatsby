@@ -1,11 +1,23 @@
-import { GatsbyNode } from "gatsby"
-import path from "path"
-import subfont from "subfont"
+import { GatsbyNode, PluginOptions } from "gatsby"
+import path from 'path';
+import subfont from 'subfont';
 
-const onPostBuild: GatsbyNode["onPostBuild"] = async (
-  { store, reporter },
-  options
-) => {
+export interface SubfontPluginOption extends PluginOptions {
+  debug?: boolean;
+  dryRun?: boolean;
+  silent?: boolean;
+  inlineCss?: boolean;
+  fontDisplay?: "auto" | "block" | "swap" | "fallback" | "optional";
+  formats: Array<"woff2" | "woff" | "truetype">;
+  inPlace?: boolean;
+  recursive?: boolean;
+  relativeUrls?: boolean;
+  fallbacks?: boolean;
+  dynamics?: boolean;
+  browsers?: string[];
+}
+
+const onPostBuild: GatsbyNode['onPostBuild'] = async ({ store, reporter }, options: SubfontPluginOption) => {
   const root = path.join(store.getState().program.directory, `public`)
   const subfontConsole = {
     log: reporter.info,
@@ -16,14 +28,13 @@ const onPostBuild: GatsbyNode["onPostBuild"] = async (
   await subfont(
     {
       root,
+      inputFiles: [path.join(root, `index.html`)],
       inPlace: true,
       inlineCss: true,
-      silent: true,
-      inputFiles: [path.join(root, `index.html`)],
       ...options,
     },
     subfontConsole
   )
 }
 
-export default { onPostBuild }
+export default { onPostBuild };
