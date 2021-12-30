@@ -1,7 +1,11 @@
-const path = require(`path`)
-const subfont = require(`subfont`)
+import { GatsbyNode } from "gatsby"
+import path from "path"
+import subfont from "subfont"
 
-exports.onPostBuild = async ({ store, reporter }, options) => {
+const onPostBuild: GatsbyNode["onPostBuild"] = async (
+  { store, reporter },
+  options
+) => {
   const root = path.join(store.getState().program.directory, `public`)
   const subfontConsole = {
     log: reporter.info,
@@ -21,3 +25,5 @@ exports.onPostBuild = async ({ store, reporter }, options) => {
     subfontConsole
   )
 }
+
+export default { onPostBuild }
