@@ -61,7 +61,7 @@
     "unified": "^8.4.2",
     "unist-util-remove": "^2.0.0",
     "unist-util-visit": "^2.0.2",
-    "uuid": "3.4.0",
+    "uuid": "^8.3.2",
     "ws": "^7.3.0",
     "xstate": "^4.9.1",
     "yoga-layout-prebuilt": "^1.9.6"
@@ -92,7 +92,7 @@
     "tmp-promise": "^2.1.0",
     "urql": "^1.9.7"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/main/packages/gatsby-recipes#readme",
   "jest": {
     "testPathIgnorePatterns": [
       "/.cache/",

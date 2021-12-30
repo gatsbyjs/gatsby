@@ -1,12 +1,12 @@
 const os = require(`os`)
 const path = require(`path`)
-const uuid = require(`uuid`)
+const { v4: uuidv4 } = require(`uuid`)
 const fs = require(`fs-extra`)
 
 const pkg = require(`./package`)
 const resourceTestHelper = require(`../resource-test-helper`)
 
-const root = path.join(os.tmpdir(), uuid.v4())
+const root = path.join(os.tmpdir(), uuidv4())
 fs.mkdirSync(root)
 const pkgResource = { name: `div` }
 
