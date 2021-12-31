@@ -8,22 +8,25 @@ exports.onRenderBody = (
   if (process.env.NODE_ENV !== `production` && process.env.NODE_ENV !== `test`)
     return null
 
+  const gtagConfig = pluginOptions.gtagConfig || {}
+  const pluginConfig = pluginOptions.pluginConfig || {}
+
+  const selfHostedOrigin =
+    pluginConfig.selfHostedOrigin || `https://www.googletagmanager.com`
+
   // Lighthouse recommends pre-connecting to google tag manager
   setHeadComponents([
     <link
       rel="preconnect"
       key="preconnect-google-gtag"
-      href="https://www.googletagmanager.com"
+      href={selfHostedOrigin}
     />,
     <link
       rel="dns-prefetch"
       key="dns-prefetch-google-gtag"
-      href="https://www.googletagmanager.com"
+      href={selfHostedOrigin}
     />,
   ])
-
-  const gtagConfig = pluginOptions.gtagConfig || {}
-  const pluginConfig = pluginOptions.pluginConfig || {}
 
   // Prevent duplicate or excluded pageview events being emitted on initial load of page by the `config` command
   // https://developers.google.com/analytics/devguides/collection/gtagjs/#disable_pageview_tracking
@@ -81,7 +84,7 @@ exports.onRenderBody = (
     <script
       key={`gatsby-plugin-google-gtag`}
       async
-      src={`https://www.googletagmanager.com/gtag/js?id=${firstTrackingId}`}
+      src={`${selfHostedOrigin}/gtag/js?id=${firstTrackingId}`}
     />,
     <script
       key={`gatsby-plugin-google-gtag-config`}
