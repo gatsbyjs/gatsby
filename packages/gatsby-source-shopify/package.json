@@ -28,8 +28,8 @@
     "shift-left": "^0.1.5"
   },
   "devDependencies": {
-    "@types/node": "^14.17.34",
-    "@types/node-fetch": "^2.5.12",
+    "@types/node": "^17.0.5",
+    "@types/node-fetch": "^3.0.2",
     "@types/sharp": "^0.29.4",
     "cross-env": "^7.0.3",
     "gatsby-plugin-image": "^2.5.0-next.2",
