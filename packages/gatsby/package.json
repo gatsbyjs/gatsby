@@ -64,7 +64,7 @@
     "eslint-plugin-graphql": "^4.0.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-webpack-plugin": "^2.6.0",
     "event-source-polyfill": "^1.0.25",
