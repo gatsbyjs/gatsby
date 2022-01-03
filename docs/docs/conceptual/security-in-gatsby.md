@@ -96,7 +96,7 @@ If you want to protect a page your server will provide an encrypted, hard to gue
 </form>
 ```
 
-When the form is sent, the server will compare the token received with the stored token and block the action if they are not the same. Make sure that malicious websites don't have access to the CSRF token by using [HTTP Access Control](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Access-Control-Allow-Origin).
+When the form is sent, the server will compare the token received with the stored token and block the action if they are not the same. Make sure that malicious websites don't have access to the CSRF token by using [HTTP Access Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin).
 
 #### Same-Site Cookies Attribute
 
@@ -107,7 +107,7 @@ Set-Cookie: example=1; SameSite=Strict
 ```
 
 Using the `SameSite` attribute allows the server to make sure that the cookies are not being sent by a **cross-site** domain request.
-Check out [MDN Docs](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Set-Cookie) for more information on configuring a cookie. You will also want to note current browser support which is available on the [Can I Use page](https://caniuse.com/#feat=same-site-cookie-attribute).
+Check out [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie) for more information on configuring a cookie. You will also want to note current browser support which is available on the [Can I Use page](https://caniuse.com/#feat=same-site-cookie-attribute).
 
 This cookie attribute is not a replacement for a CSRF Token (and vice-versa). They can work together as security layers in your website. Otherwise, a Cross-Site Scripting attack can be used to defeat these CSRF mitigation techniques. Check out [OWASP CSRF prevention cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute) for more information.
 

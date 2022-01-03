@@ -226,6 +226,15 @@ const activeFlags: Array<IFlag> = [
     },
     requires: `Requires Node v14.10 or above.`,
   },
+  {
+    name: `DETECT_NODE_MUTATIONS`,
+    env: `GATSBY_DETECT_NODE_MUTATIONS`,
+    command: `all`,
+    telemetryId: `DetectNodeMutations`,
+    description: `Diagnostic mode to log any attempts to mutate node directly. Helpful when debugging missing data problems. See https://gatsby.dev/debugging-missing-data for more details.`,
+    experimental: false,
+    testFitness: (): fitnessEnum => true,
+  },
 ]
 
 export default activeFlags

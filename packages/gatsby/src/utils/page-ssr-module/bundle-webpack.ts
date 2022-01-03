@@ -45,12 +45,14 @@ export async function createPageSSRBundle({
   rootDir,
   components,
   staticQueriesByTemplate,
+  webpackCompilationHash,
   reporter,
   isVerbose = false,
 }: {
   rootDir: string
   components: IGatsbyState["components"]
   staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
+  webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
   reporter: Reporter
   isVerbose?: boolean
 }): Promise<webpack.Compilation | undefined> {
@@ -150,6 +152,7 @@ export async function createPageSSRBundle({
     plugins: [
       new webpack.DefinePlugin({
         INLINED_TEMPLATE_TO_DETAILS: JSON.stringify(toInline),
+        WEBPACK_COMPILATION_HASH: JSON.stringify(webpackCompilationHash),
         // eslint-disable-next-line @typescript-eslint/naming-convention
         "process.env.GATSBY_LOGGER": JSON.stringify(`yurnalist`),
       }),

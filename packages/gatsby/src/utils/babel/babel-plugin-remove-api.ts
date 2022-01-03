@@ -81,7 +81,8 @@ export default declare(function removeApiCalls(
                 // if it's a module and all specifiers are removed, remove the full binding
                 if (
                   ref.kind === `module` &&
-                  !(ref.path.parent as t.ImportDeclaration).specifiers.length
+                  !(ref.path.parent as t.ImportDeclaration).specifiers.length &&
+                  ref.path.parentPath
                 ) {
                   ref.path.parentPath.remove()
                 }

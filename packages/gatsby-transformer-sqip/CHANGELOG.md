@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.4.0/packages/gatsby-transformer-sqip) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Chores
+
+- update dependency debug to ^4.3.3 for gatsby-transformer-sqip [#34114](https://github.com/gatsbyjs/gatsby/issues/34114) ([27623b2](https://github.com/gatsbyjs/gatsby/commit/27623b2dff244c2f500d704a2ee0727e4845ecc6))
+
 ## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sqip@4.3.0/packages/gatsby-transformer-sqip) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)

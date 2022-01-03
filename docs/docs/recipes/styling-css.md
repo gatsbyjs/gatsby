@@ -50,7 +50,7 @@ import "./src/styles/global.css"
 
 ### Directions
 
-You can add global styles to a [shared layout component](/docs/tutorial/part-3/#your-first-layout-component). This component is used for things that are common throughout the site, like a header or footer.
+You can add global styles to a [shared layout component](/docs/tutorial/part-2/#create-a-reusable-layout-component). This component is used for things that are common throughout the site, like a header or footer.
 
 1. If you don't already have one, create a new directory in your site at `/src/components`.
 

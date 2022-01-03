@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 const pathPrefix = `/blog`
 
 import { navigate } from "gatsby"
