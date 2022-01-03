@@ -89,7 +89,7 @@ export default function Home() {
 ### Additional resources
 
 - [Standard Styling with Global CSS Files](/docs/how-to/styling/global-css/)
-- [More about layout components](/docs/tutorial/part-3)
+- [More about layout components](/docs/tutorial/part-2/#create-a-reusable-layout-component)
 
 ## Using Styled Components
 
@@ -213,7 +213,7 @@ Notice that the file extension is `.module.css` instead of `.css`, which tells G
 
 ### Additional resources
 
-- More on [Using CSS Modules](/docs/tutorial/part-2/#css-modules)
+- More on [Using CSS Modules](/docs/tutorial/part-2/#style-components-with-css-modules)
 - [Live example on Using CSS modules](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-css-modules)
 
 ## Using Sass/SCSS
@@ -240,7 +240,7 @@ Sass will compile `.scss` and `.sass` files to `.css` files for you, so you can 
 plugins: [`gatsby-plugin-sass`],
 ```
 
-3. Write your stylesheets as `.sass` or `.scss` files and import them. If you don't know how to import styles, take a look at [Styling with CSS](/docs/recipes/#2-styling-with-css)
+3. Write your stylesheets as `.sass` or `.scss` files and import them. If you don't know how to import styles, take a look at [Styling with CSS](/docs/how-to/styling/built-in-css/)
 
 ```css:title=styles.scss
 $font-stack: Helvetica, sans-serif;
