@@ -55,6 +55,6 @@ This framework also has experimental support for the React suspense API and it s
 
 - [Gatsby i18n packages](https://www.gatsbyjs.com/plugins/gatsby-plugin-i18n/?=i18)
 
-- [Gatsby i18n articles](https://www.gatsbyjs.com/blog/tags/i18n/)
+- [Gatsby i18n articles](https://www.gatsbyjs.com/blog/tags/localization/)
 
 - [W3C's i18n resources](https://w3c.github.io/i18n-drafts/getting-started/contentdev.en#reference)
