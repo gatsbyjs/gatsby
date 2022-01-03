@@ -526,8 +526,9 @@ Then export a new function `onCreateNode`, and call `createRemoteFileNode` in it
 exports.onCreateNode = async ({
   node, // the node that was just created
   actions: { createNode, createNodeField },
+  store,
+  cache,
   createNodeId,
-  getCache,
 }) => {
   if (node.internal.type === POST_NODE_TYPE) {
     const fileNode = await createRemoteFileNode({
@@ -536,7 +537,8 @@ exports.onCreateNode = async ({
       parentNodeId: node.id,
       createNode,
       createNodeId,
-      getCache,
+      cache,
+      store,
     })
 
     if (fileNode) {
