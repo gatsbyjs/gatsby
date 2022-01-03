@@ -1,7 +1,15 @@
-import { observable, action, decorate } from "mobx"
+import { observable, action, makeObservable } from "mobx"
 
 class CounterModel {
   Count = 0
+
+  constructor() {
+    makeObservable(this, {
+      Count: observable,
+      Increment: action.bound,
+      Decrement: action.bound,
+    })
+  }
 
   Increment() {
     this.Count += 1
@@ -11,10 +19,6 @@ class CounterModel {
     this.Count -= 1
   }
 }
-decorate(CounterModel, {
-  Count: observable,
-  Increment: action,
-  Decrement: action,
-})
+
 const CounterStore = new CounterModel()
 export default CounterStore

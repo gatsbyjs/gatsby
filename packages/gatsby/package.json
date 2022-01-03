@@ -64,7 +64,7 @@
     "eslint-plugin-graphql": "^4.0.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-webpack-plugin": "^2.6.0",
     "event-source-polyfill": "^1.0.25",
@@ -182,7 +182,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "rimraf": "^3.0.2",
-    "typescript": "^4.5.2",
+    "typescript": "^4.5.4",
     "xhr-mock": "^2.5.1",
     "zipkin": "^0.22.0",
     "zipkin-javascript-opentracing": "^3.0.0",
@@ -232,7 +232,7 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "resolutions": {
-    "graphql": "^15.7.2",
+    "graphql": "^15.8.0",
     "@mdx-js/mdx": "^2.0.0-next.3",
     "@mdx-js/react": "^2.0.0-next.3",
     "@mdx-js/runtime": "^2.0.0-next.3",
