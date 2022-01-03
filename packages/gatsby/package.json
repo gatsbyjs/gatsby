@@ -108,7 +108,7 @@
     "memoizee": "^0.4.15",
     "micromatch": "^4.0.4",
     "mime": "^2.5.2",
-    "mini-css-extract-plugin": "^2.4.4",
+    "mini-css-extract-plugin": "^2.4.5",
     "mitt": "^1.2.0",
     "moment": "^2.29.1",
     "multer": "^1.4.3",
