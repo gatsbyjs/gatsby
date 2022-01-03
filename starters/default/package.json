@@ -14,13 +14,13 @@
     "gatsby-plugin-sharp": "^4.4.0",
     "gatsby-source-filesystem": "^4.4.0",
     "gatsby-transformer-sharp": "^4.4.0",
-    "prop-types": "^15.7.2",
+    "prop-types": "^15.8.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0"
   },
   "devDependencies": {
-    "prettier": "^2.4.1"
+    "prettier": "^2.5.1"
   },
   "keywords": [
     "gatsby"

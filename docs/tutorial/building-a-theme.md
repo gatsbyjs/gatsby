@@ -47,7 +47,12 @@ In the `package.json` file in `gatsby-theme-events`, add the following:
   "name": "gatsby-theme-events",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "clean": "gatsby clean"
+  }
 }
 ```
 
@@ -129,7 +134,7 @@ If you run `yarn workspaces info`, you'll be able to verify that the site is usi
 
 ### Add peer dependencies to `gatsby-theme-events`
 
-Targeting the `gatsby-theme-events` workspace, install `gatsby`, `react`, and `react-dom` as peer dependencies:
+Targeting the `gatsby-theme-events` workspace, install `gatsby`, `react`, and `react-dom` as peer and development dependencies:
 
 ```shell
 yarn workspace gatsby-theme-events add -P gatsby react react-dom
@@ -137,11 +142,23 @@ yarn workspace gatsby-theme-events add -P gatsby react react-dom
 
 > 💡 The `-P` flag is shorthand for installing peer dependencies.
 
+```shell
+yarn workspace gatsby-theme-events add -D gatsby react react-dom
+```
+
+> 💡 The `-D` flag is shorthand for installing development dependencies.
+
 The `gatsby-theme-events/package.json` file should now include the following:
 
 ```json:title=gatsby-theme-events/package.json
 {
   "peerDependencies": {
+    "gatsby": "^3.0.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
+  },
+  {
+  "devDependencies": {
     "gatsby": "^3.0.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
