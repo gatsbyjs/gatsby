@@ -1,0 +1,29 @@
+{
+  "presets": [[
+    "babel-preset-gatsby",
+    { "stage": "develop" }
+  ]
+  ],
+  "plugins": [
+    [
+      "babel-plugin-remove-graphql-queries",
+      { "stage": "develop", "staticQueryDir": "page-data/sq/d" }
+    ],
+    [
+      "../../../babel-plugin-remove-api",
+      {
+        "apis": [
+          "getServerData",
+          "config"
+        ]
+      }
+    ],
+    [
+      "react-refresh/babel",
+      {
+        "skipEnvCheck": "true"
+      }
+    ]
+  ]
+}
+
