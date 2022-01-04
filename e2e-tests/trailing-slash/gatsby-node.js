@@ -11,6 +11,12 @@ const posts = [
     title: `Without Trailing Slash`,
     content: `This is a test`,
   },
+  {
+    id: 3,
+    slug: `/`,
+    title: `Index page`,
+    content: `This is an index page`
+  }
 ]
 
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {

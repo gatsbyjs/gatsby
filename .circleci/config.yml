@@ -472,9 +472,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/trailing-slash
-          test_command: TODO
-      - store_artifacts:
-          path: e2e-tests/trailing-slash/__diff_output__
+          test_command: yarn test:always && yarn test:never && yarn test:ignore
       - store_test_results:
           path: e2e-tests/trailing-slash/cypress/results
 
