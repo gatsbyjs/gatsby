@@ -93,6 +93,7 @@ const Style = () => (
         }
 
         [data-gatsby-preview-indicator="tooltip-inner"] {
+          position: relative;
           line-height: 12px;
           background: black;
           opacity: 1;
@@ -103,6 +104,18 @@ const Style = () => (
           user-select: none;
           white-space: nowrap;
           cursor: default;
+        }
+        [data-gatsby-preview-indicator="tooltip-inner"]:before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: -6px;
+          width: 0;
+          height: 0;
+          transform: translateY(-50%);
+          border-style: solid;
+          border-width: 10px 10px 10px 0;
+          border-color: transparent black transparent transparent;
         }
 
         [data-gatsby-preview-indicator-visible="false"] {
@@ -139,6 +152,11 @@ const Style = () => (
           font-size: 0.8rem;
           display: inline;
           cursor: pointer;
+          text-decoration: none;
+        }
+
+        [data-gatsby-preview-indicator="tooltip-link-text"]:hover {
+          text-decoration: underline;
         }
 
         [data-gatsby-preview-indicator="tooltip-svg"] {
