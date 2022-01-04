@@ -5,7 +5,6 @@ import {
   extractFieldWithoutUnion,
   extractAllCollectionSegments,
   switchToPeriodDelimiters,
-  stripTrailingSlash,
   removeFileExtension,
 } from "./path-utils"
 
