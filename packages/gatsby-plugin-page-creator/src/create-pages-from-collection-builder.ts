@@ -1,5 +1,6 @@
 // Move this to gatsby-core-utils?
 import { Actions, CreatePagesArgs } from "gatsby"
+import { posix } from "path"
 import { createPath } from "gatsby-page-utils"
 import { Reporter } from "gatsby/reporter"
 import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
@@ -117,7 +118,6 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
   const paths: Array<string> = []
   nodes.forEach((node: Record<string, Record<string, unknown>>) => {
     // URL path for the component and node
-    console.log({ filePath })
     const { derivedPath, errors } = derivePath(
       filePath,
       node,
@@ -126,7 +126,6 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
     )
     const isLegacy = trailingSlash === `legacy`
     const path = createPath(derivedPath, isLegacy)
-    console.log({ path, derivedPath })
     // We've already created a page with this path
     if (knownPagePaths.has(path)) {
       return
@@ -139,8 +138,11 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
     // matchPath is an optional value. It's used if someone does a path like `{foo}/[bar].js`
     const matchPath = getMatchPath(path)
 
-    const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
-    console.log({ modifiedPath })
+    const legacyPathHandling = isLegacy ? path : posix.join(`/`, derivedPath)
+    const modifiedPath = applyTrailingSlashOption(
+      legacyPathHandling,
+      trailingSlash
+    )
 
     actions.createPage({
       path: modifiedPath,
