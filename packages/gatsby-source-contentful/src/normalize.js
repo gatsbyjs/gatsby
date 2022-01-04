@@ -763,7 +763,12 @@ export const createAssetNodes = ({
     // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
     assetNode.internal.contentDigest = assetItem.sys.updatedAt
 
-    createNodePromises.push(createNode(assetNode).then(() => assetNode))
+    // if the node hasn't changed, createNode may return `undefined` instead of a Promise on some versions of Gatsby
+    const maybePromise = createNode(assetNode)
+
+    createNodePromises.push(
+      maybePromise?.then ? maybePromise.then(() => assetNode) : assetNode
+    )
   })
 
   return createNodePromises
