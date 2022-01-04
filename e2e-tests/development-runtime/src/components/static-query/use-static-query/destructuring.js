@@ -12,7 +12,7 @@ function DestructuringQuery(props) {
   return (
     <ul {...props}>
       {plugins.map(plugin => (
-        <li key={plugin.name}>
+        <li key={plugin.id}>
           {plugin.name}: {plugin.version}
         </li>
       ))}
@@ -25,6 +25,7 @@ const variableQuery = graphql`
     allSitePlugin {
       edges {
         node {
+          id
           name
           version
           pluginFilepath

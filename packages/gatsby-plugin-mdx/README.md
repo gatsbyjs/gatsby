@@ -128,6 +128,7 @@ scope, and more.
 | [`rehypePlugins`](#rehype-plugins)                                        | `[]`                                   | Specify rehype plugins                                                |
 | [`mediaTypes`](#media-types)                                              | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                      |
 | [`shouldBlockNodeFromTransformation`](#shouldblocknodefromtransformation) | `(node) => false`                      | Disable MDX transformation for nodes where this function returns true |
+| [`commonmark`](#commonmark)                                               | `false`                                | Use CommonMark                                                        |
 
 #### Extensions
 
@@ -194,11 +195,11 @@ module.exports = {
 }
 ```
 
-MDX has the concept of a layout that is different than the Gatsby
-concept of a layout. MDX's layouts are written using the default
-export JavaScript syntax in a single MDX file. An MDX layout will wrap
-the MDX content in an additional component, so this can be a good
-place for page layout depending on how you are using MDX.
+MDX has a layout concept that is different from Gatsby's. MDX layouts
+are written using the default export JavaScript syntax in a single MDX
+file. An MDX layout will wrap the MDX content in an additional
+component, so this can be a good place for a page layout depending on
+how you are using MDX.
 
 ```javascript
 export default ({ children }) => (
@@ -228,7 +229,7 @@ some content
 Sometimes you don't want to include the layout in every file, so `gatsby-plugin-mdx`
 offers the option to set default layouts in the `gatsby-config.js` plugin
 config. Set the key to the `name` set in the `gatsby-source-filesystem` config.
-If no matching default layout is found, the `default` default layout is used.
+If no matching default layout is found, the default layout named `default` is used.
 
 You can also set `options.defaultLayouts.default` if you only want to
 use one layout for all MDX pages that don't already have a layout defined.
@@ -404,6 +405,7 @@ module.exports = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         rehypePlugins: [
+          // Generate heading ids for rehype-autolink-headings
           require("rehype-slug"),
           // To pass options, use a 2-element array with the
           // configuration in an object in the second element
@@ -465,6 +467,10 @@ module.exports = {
   ],
 }
 ```
+
+#### CommonMark
+
+MDX will be parsed using CommonMark.
 
 ### Components
 

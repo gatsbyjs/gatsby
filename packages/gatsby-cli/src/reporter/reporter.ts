@@ -1,30 +1,45 @@
 import { stripIndent } from "common-tags"
 import chalk from "chalk"
 import { trackError } from "gatsby-telemetry"
-import { globalTracer, Span } from "opentracing"
+import { globalTracer, Span, SpanContext } from "opentracing"
 
-import * as reporterActions from "./redux/actions"
+import * as reduxReporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
 import { getErrorFormatter } from "./errors"
 import constructError from "../structured-errors/construct-error"
 import { IErrorMapEntry, ErrorId } from "../structured-errors/error-map"
 import { prematureEnd } from "./catch-exit-signals"
-import { IStructuredError } from "../structured-errors/types"
+import { IConstructError, IStructuredError } from "../structured-errors/types"
 import { createTimerReporter, ITimerReporter } from "./reporter-timer"
 import { createPhantomReporter, IPhantomReporter } from "./reporter-phantom"
 import { createProgressReporter, IProgressReporter } from "./reporter-progress"
-import { ErrorMeta, CreateLogAction } from "./types"
+import {
+  ErrorMeta,
+  CreateLogAction,
+  ILogIntent,
+  IRenderPageArgs,
+} from "./types"
+import {
+  registerAdditionalDiagnosticOutputHandler,
+  AdditionalDiagnosticsOutputHandler,
+} from "./redux/diagnostics"
 
 const errorFormatter = getErrorFormatter()
 const tracer = globalTracer()
 
+let reporterActions = reduxReporterActions
+
 export interface IActivityArgs {
   id?: string
-  parentSpan?: Span
+  parentSpan?: Span | SpanContext
   tags?: { [key: string]: any }
 }
 
 let isVerbose = false
+
+function isLogIntentMessage(msg: any): msg is ILogIntent {
+  return msg && msg.type === `LOG_INTENT`
+}
 
 /**
  * Reporter module.
@@ -83,8 +98,12 @@ class Reporter {
   /**
    * Log arguments and exit process with status 1.
    */
-  panic = (errorMeta: ErrorMeta, error?: Error | Array<Error>): never => {
-    const reporterError = this.error(errorMeta, error)
+  panic = (
+    errorMeta: ErrorMeta,
+    error?: Error | Array<Error>,
+    pluginName?: string
+  ): never => {
+    const reporterError = this.error(errorMeta, error, pluginName)
     trackError(`GENERAL_PANIC`, { error: reporterError })
     prematureEnd()
     return process.exit(1)
@@ -92,9 +111,10 @@ class Reporter {
 
   panicOnBuild = (
     errorMeta: ErrorMeta,
-    error?: Error | Array<Error>
+    error?: Error | Array<Error>,
+    pluginName?: string
   ): IStructuredError | Array<IStructuredError> => {
-    const reporterError = this.error(errorMeta, error)
+    const reporterError = this.error(errorMeta, error, pluginName)
     trackError(`BUILD_PANIC`, { error: reporterError })
     if (process.env.gatsby_executing_command === `build`) {
       prematureEnd()
@@ -105,12 +125,10 @@ class Reporter {
 
   error = (
     errorMeta: ErrorMeta | Array<ErrorMeta>,
-    error?: Error | Array<Error>
+    error?: Error | Array<Error>,
+    pluginName?: string
   ): IStructuredError | Array<IStructuredError> => {
-    let details: {
-      error?: Error
-      context: {}
-    } = {
+    let details: IConstructError["details"] = {
       context: {},
     }
 
@@ -139,9 +157,9 @@ class Reporter {
       //    reporter.error([Error]);
     } else if (Array.isArray(errorMeta)) {
       // when we get an array of messages, call this function once for each error
-      return errorMeta.map(errorItem => this.error(errorItem)) as Array<
-        IStructuredError
-      >
+      return errorMeta.map(errorItem =>
+        this.error(errorItem)
+      ) as Array<IStructuredError>
       // 4.
       //    reporter.error(errorMeta);
     } else if (typeof errorMeta === `object`) {
@@ -151,6 +169,18 @@ class Reporter {
     } else if (typeof errorMeta === `string`) {
       details.context = {
         sourceMessage: errorMeta,
+      }
+    }
+
+    if (pluginName) {
+      details.pluginName = pluginName
+      const id = details?.id
+
+      if (id) {
+        const isPrefixed = id.includes(`${pluginName}_`)
+        if (!isPrefixed) {
+          details.id = `${pluginName}_${id}`
+        }
       }
     }
 
@@ -218,7 +248,13 @@ class Reporter {
 
     const span = tracer.startSpan(text, spanArgs)
 
-    return createTimerReporter({ text, id, span, reporter: this })
+    return createTimerReporter({
+      text,
+      id,
+      span,
+      reporter: this,
+      reporterActions,
+    })
   }
 
   /**
@@ -243,7 +279,7 @@ class Reporter {
 
     const span = tracer.startSpan(text, spanArgs)
 
-    return createPhantomReporter({ id, text, span })
+    return createPhantomReporter({ id, text, span, reporterActions })
   }
 
   /**
@@ -269,12 +305,62 @@ class Reporter {
       start,
       span,
       reporter: this,
+      reporterActions,
     })
   }
 
   // This method was called in older versions of gatsby, so we need to keep it to avoid
   // "reporter._setStage is not a function" error when gatsby@<2.16 is used with gatsby-cli@>=2.8
   _setStage = (): void => {}
+
+  // This method is called by core when initializing worker process, so it can communicate with main process
+  // and dispatch structured logs created by workers to parent process.
+  _initReporterMessagingInWorker(sendMessage: (msg: ILogIntent) => void): void {
+    const intentifiedActionCreators = {}
+    for (const actionCreatorName of Object.keys(reduxReporterActions) as Array<
+      keyof typeof reduxReporterActions
+    >) {
+      // swap each reporter action creator with function that send intent
+      // to main process
+      intentifiedActionCreators[actionCreatorName] = (...args): void => {
+        sendMessage({
+          type: `LOG_INTENT`,
+          payload: {
+            name: actionCreatorName,
+            args,
+          } as any,
+        })
+      }
+    }
+    reporterActions = intentifiedActionCreators as typeof reduxReporterActions
+  }
+
+  // This method is called by core when initializing worker pool, so main process can receive
+  // messages from workers and dispatch structured logs created by workers to parent process.
+  _initReporterMessagingInMain(
+    onMessage: (listener: (msg: ILogIntent | unknown) => void) => void
+  ): void {
+    onMessage(msg => {
+      if (isLogIntentMessage(msg)) {
+        reduxReporterActions[msg.payload.name].call(
+          reduxReporterActions,
+          // @ts-ignore Next line (`...msg.payload.args`) cause "A spread argument
+          // must either have a tuple type or be passed to a rest parameter"
+          ...msg.payload.args
+        )
+      }
+    })
+  }
+
+  _renderPageTree(args: IRenderPageArgs): void {
+    reporterActions.renderPageTree(args)
+  }
+
+  _registerAdditionalDiagnosticOutputHandler(
+    handler: AdditionalDiagnosticsOutputHandler
+  ): void {
+    registerAdditionalDiagnosticOutputHandler(handler)
+  }
 }
 export type { Reporter }
 export const reporter = new Reporter()

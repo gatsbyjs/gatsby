@@ -30,8 +30,7 @@ const {
 
 import { getGatsbyDependents } from "../utils/gatsby-dependents"
 const { store } = require(`../redux`)
-import * as actions from "../redux/actions/internal"
-import { boundActionCreators } from "../redux/actions"
+import { actions } from "../redux/actions"
 
 import { websocketManager } from "../utils/websocket-manager"
 const { default: FileParser } = require(`./file-parser`)
@@ -52,8 +51,7 @@ const overlayErrorID = `graphql-compiler`
 export default async function compile({ parentSpan } = {}): Promise<
   Map<string, RootQuery>
 > {
-  // TODO: swap plugins to themes
-  const { program, schema, themes, flattenedPlugins } = store.getState()
+  const { program, schema, flattenedPlugins } = store.getState()
 
   const activity = report.activityTimer(`extract queries from components`, {
     parentSpan,
@@ -67,23 +65,21 @@ export default async function compile({ parentSpan } = {}): Promise<
   const parsedQueries = await parseQueries({
     base: program.directory,
     additional: resolveThemes(
-      themes.themes
-        ? themes.themes
-        : flattenedPlugins.map(plugin => {
-            return {
-              themeDir: plugin.pluginFilepath,
-            }
-          })
+      flattenedPlugins.map(plugin => {
+        return {
+          themeDir: plugin.pluginFilepath,
+        }
+      })
     ),
     addError,
-    parentSpan,
+    parentSpan: activity.span,
   })
 
   const queries = processQueries({
     schema,
     parsedQueries,
     addError,
-    parentSpan,
+    parentSpan: activity.span,
   })
 
   if (errors.length !== 0) {
@@ -175,7 +171,7 @@ export const processQueries = ({
     parentSpan
   )
 
-  boundActionCreators.setGraphQLDefinitions(definitionsByName)
+  store.dispatch(actions.setGraphQLDefinitions(definitionsByName))
 
   return processDefinitions({
     schema,
@@ -208,6 +204,7 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
     doc,
     isHook,
     isStaticQuery,
+    isConfigQuery,
   } of parsedQueries) {
     const errors = validate(schema, doc, preValidationRules)
 
@@ -277,6 +274,7 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
         printedAst,
         isHook,
         isStaticQuery,
+        isConfigQuery,
         isFragment: def.kind === Kind.FRAGMENT_DEFINITION,
         hash: hash,
       })
@@ -308,7 +306,11 @@ const processDefinitions = ({
     const name = operation.name.value
     const originalDefinition = definitionsByName.get(name)
     const filePath = definitionsByName.get(name).filePath
-    if (processedQueries.has(filePath)) {
+
+    // Check for duplicate page/static queries in the same component.
+    // (config query is not a duplicate of page/static query in the component)
+    // TODO: make sure there is at most one query type per component (e.g. one config + one page)
+    if (processedQueries.has(filePath) && !originalDefinition.isConfigQuery) {
       const otherQuery = processedQueries.get(filePath)
 
       addError(
@@ -327,14 +329,12 @@ const processDefinitions = ({
       continue
     }
 
-    const {
-      usedFragments,
-      missingFragments,
-    } = determineUsedFragmentsForDefinition(
-      originalDefinition,
-      definitionsByName,
-      fragmentsUsedByFragment
-    )
+    const { usedFragments, missingFragments } =
+      determineUsedFragmentsForDefinition(
+        originalDefinition,
+        definitionsByName,
+        fragmentsUsedByFragment
+      )
 
     if (missingFragments.length > 0) {
       for (const { filePath, definition, node } of missingFragments) {
@@ -355,7 +355,7 @@ const processDefinitions = ({
       continue
     }
 
-    let document = {
+    const document = {
       kind: Kind.DOCUMENT,
       definitions: Array.from(usedFragments.values())
         .map(name => definitionsByName.get(name).def)
@@ -396,8 +396,6 @@ const processDefinitions = ({
       continue
     }
 
-    document = addExtraFields(document, schema)
-
     const query = {
       name,
       text: print(document),
@@ -405,6 +403,7 @@ const processDefinitions = ({
       path: filePath,
       isHook: originalDefinition.isHook,
       isStaticQuery: originalDefinition.isStaticQuery,
+      isConfigQuery: originalDefinition.isConfigQuery,
       // ensure hash should be a string and not a number
       hash: String(originalDefinition.hash),
     }
@@ -428,7 +427,12 @@ const processDefinitions = ({
       )
     }
 
-    processedQueries.set(filePath, query)
+    // Our current code only supports single graphql query per file (page or static query per file)
+    // So, not adding config query because it can overwrite existing page query
+    // TODO: allow multiple queries in single file, while preserving limitation of a single page query per file
+    if (!query.isConfigQuery) {
+      processedQueries.set(filePath, query)
+    }
   }
 
   return processedQueries
@@ -487,57 +491,4 @@ const determineUsedFragmentsForDefinition = (
     }
     return { usedFragments, missingFragments }
   }
-}
-
-/**
- * Automatically add:
- *   `__typename` field to abstract types (unions, interfaces)
- *   `id` field to all object/interface types having an id
- * TODO: Remove this in v3.0 as it is a legacy from Relay compiler
- */
-const addExtraFields = (document, schema) => {
-  const typeInfo = new TypeInfo(schema)
-  const contextStack = []
-
-  const transformer = visitWithTypeInfo(typeInfo, {
-    enter: {
-      [Kind.SELECTION_SET]: node => {
-        // Entering selection set:
-        //   selection sets can be nested, so keeping their metadata stacked
-        contextStack.push({ hasTypename: false })
-      },
-      [Kind.FIELD]: node => {
-        // Entering a field of the current selection-set:
-        //   mark which fields already exist in this selection set to avoid duplicates
-        const context = contextStack[contextStack.length - 1]
-        if (
-          node.name.value === `__typename` ||
-          node?.alias?.value === `__typename`
-        ) {
-          context.hasTypename = true
-        }
-      },
-    },
-    leave: {
-      [Kind.SELECTION_SET]: node => {
-        // Modify the selection-set AST on leave (add extra fields unless they already exist)
-        const context = contextStack.pop()
-        const parentType = typeInfo.getParentType()
-        const extraFields = []
-
-        // Adding __typename to unions and interfaces (if required)
-        if (!context.hasTypename && isAbstractType(parentType)) {
-          extraFields.push({
-            kind: Kind.FIELD,
-            name: { kind: Kind.NAME, value: `__typename` },
-          })
-        }
-        return extraFields.length > 0
-          ? { ...node, selections: [...extraFields, ...node.selections] }
-          : undefined
-      },
-    },
-  })
-
-  return visit(document, transformer)
 }

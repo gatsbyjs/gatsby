@@ -28,19 +28,27 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     transpileTemplateLiterals: Joi.boolean()
       .default(true)
       .description(`Transpile tagged template literals into optimized code.`),
+    topLevelImportPaths: Joi.array()
+      .default([])
+      .items(Joi.string())
+      .description(`Top level import paths allowed to identify library`),
     pure: Joi.boolean()
       .default(false)
       .description(
         `By default minifiers cannot properly perform dead code elimination on styled components because they are assumed to have side effects. This enables "pure annotations" to tell the compiler that they do not have side effects.`
       ),
+    disableVendorPrefixes: Joi.boolean()
+      .default(false)
+      .description(`Disables vendor prefixing`),
   })
 
 exports.onCreateBabelConfig = ({ stage, actions }, pluginOptions) => {
   const ssr = stage === `build-html` || stage === `build-javascript`
+  const { disableVendorPrefixes: _, ...babelOptions } = pluginOptions
 
   actions.setBabelPlugin({
     name: `babel-plugin-styled-components`,
     stage,
-    options: { ...pluginOptions, ssr },
+    options: { ...babelOptions, ssr },
   })
 }

@@ -3,7 +3,7 @@ title: Getting Started with MDX
 ---
 
 The fastest way to get started with Gatsby + MDX is to use the [MDX
-starter](https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic). This
+starter](https://github.com/gatsbyjs/gatsby-starter-mdx-basic). This
 allows you to write `.mdx` files in `src/pages` in order to create new pages on
 your site.
 
@@ -12,7 +12,7 @@ your site.
 1. **Initialize the MDX starter** with the Gatsby CLI
 
    ```shell
-   gatsby new my-mdx-starter https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic
+   gatsby new my-mdx-starter https://github.com/gatsbyjs/gatsby-starter-mdx-basic
    ```
 
 2. **Run the dev server** by changing directory to the scaffolded site and install dependencies
@@ -67,5 +67,5 @@ Alternatively, you may be looking to configure an existing blog site to use MDX.
 
 ## What's next?
 
-Go check out the [writing MDX guide](/docs/how-to/routing/mdx/writing-pages) to find out what else you can do
+Go check out the [writing MDX guide](/docs/mdx/writing-pages/) to find out what else you can do
 with Gatsby and MDX.

@@ -86,5 +86,5 @@ The WPGraphQL plugin is also undergoing significant changes. It has not yet hit 
 - [`gatsby-source-woocommerce`](/plugins/@pasdo501/gatsby-source-woocommerce/)
 - [`gatsby-theme-woocommerce`](/plugins/@ccerda0520/gatsby-theme-woocommerce/)
 - [`wp-graphql-woocommerce` plugin](https://github.com/wp-graphql/wp-graphql-woocommerce)
-- [experimental `gatsby-source-wordpress` starter](https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental)
+- [`gatsby-source-wordpress` starter](https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-wordpress-blog)
 - [Sourcing from WordPress](/docs/how-to/sourcing-data/sourcing-from-wordpress/)

@@ -1,45 +1,246 @@
-# Change Log
+# Changelog: `gatsby-transformer-screenshot`
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.10.0-next.0...gatsby-transformer-screenshot@2.11.0-next.0) (2021-01-28)
+## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.4.0/packages/gatsby-transformer-screenshot) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Chores
+
+- update dependency aws-sdk to ^2.1040.0 [#34139](https://github.com/gatsbyjs/gatsby/issues/34139) ([0cc6cc2](https://github.com/gatsbyjs/gatsby/commit/0cc6cc2ab64d8ad6402622f901a421a238ef8f11))
+
+## [4.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.3.0/packages/gatsby-transformer-screenshot) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
 
 **Note:** Version bump only for package gatsby-transformer-screenshot
 
-# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.9.0-next.1...gatsby-transformer-screenshot@2.10.0-next.0) (2021-01-18)
+## [4.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.2.0/packages/gatsby-transformer-screenshot) (2021-11-16)
 
-### Bug Fixes
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
 
-- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+#### Bug Fixes
 
-# [2.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.9.0-next.0...gatsby-transformer-screenshot@2.9.0-next.1) (2021-01-12)
+- update dependency fastq to ^1.13.0 for gatsby-transformer-screenshot [#33373](https://github.com/gatsbyjs/gatsby/issues/33373) ([fd79dc1](https://github.com/gatsbyjs/gatsby/commit/fd79dc14bc605376d9ddd457a25dc7c84b559c10))
 
-**Note:** Version bump only for package gatsby-transformer-screenshot
+#### Chores
 
-# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.8.0-next.0...gatsby-transformer-screenshot@2.9.0-next.0) (2020-12-29)
+- update dependency aws-sdk to ^2.1018.0 [#33772](https://github.com/gatsbyjs/gatsby/issues/33772) ([026fcc8](https://github.com/gatsbyjs/gatsby/commit/026fcc8045b0af839e5ce73eb012c924f85b98f1))
 
-**Note:** Version bump only for package gatsby-transformer-screenshot
+## [4.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.1.0/packages/gatsby-transformer-screenshot) (2021-11-02)
 
-# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.7.0-next.0...gatsby-transformer-screenshot@2.8.0-next.0) (2020-12-10)
-
-**Note:** Version bump only for package gatsby-transformer-screenshot
-
-# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.6.0-next.1...gatsby-transformer-screenshot@2.7.0-next.0) (2020-11-26)
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.1)
 
 **Note:** Version bump only for package gatsby-transformer-screenshot
 
-# [2.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.6.0-next.0...gatsby-transformer-screenshot@2.6.0-next.1) (2020-11-18)
+## [4.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@4.0.0/packages/gatsby-transformer-screenshot) (2021-10-21)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.0)
+
+#### Chores
+
+- update dependency aws-sdk to ^2.999.0 [#33375](https://github.com/gatsbyjs/gatsby/issues/33375) ([fc84b66](https://github.com/gatsbyjs/gatsby/commit/fc84b66b7329e8377d39c3910ef8e406738060d6))
+- apply patches for v4 [#33170](https://github.com/gatsbyjs/gatsby/issues/33170) ([f8c5141](https://github.com/gatsbyjs/gatsby/commit/f8c5141bf72108a53338fd01514522ae7a1b37bf))
+
+## [3.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.14.0/packages/gatsby-transformer-screenshot) (2021-09-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.14)
+
+#### Bug Fixes
+
+- update dependency gatsby-core-utils to ^2.13.0 [#32999](https://github.com/gatsbyjs/gatsby/issues/32999) ([7016128](https://github.com/gatsbyjs/gatsby/commit/7016128f388dfdc4e69a17ae44c43a10a618a776))
+
+#### Refactoring
+
+- replace better-queue with fastq [#32941](https://github.com/gatsbyjs/gatsby/issues/32941) ([b18703e](https://github.com/gatsbyjs/gatsby/commit/b18703eb395fe083bd12c9a5af26206b5317ac55))
+
+#### Chores
+
+- update babel monorepo [#32996](https://github.com/gatsbyjs/gatsby/issues/32996) ([048c7a7](https://github.com/gatsbyjs/gatsby/commit/048c7a727bbc6a9ad8e27afba72ee20e946c4aaa))
+- update dependency aws-sdk to ^2.980.0 [#32993](https://github.com/gatsbyjs/gatsby/issues/32993) ([3491a72](https://github.com/gatsbyjs/gatsby/commit/3491a72aad86c9b822b39f7ff4f385dfa0c334e5))
+- add missing `@babel/runtime` dependencies [#32954](https://github.com/gatsbyjs/gatsby/issues/32954) ([401b358](https://github.com/gatsbyjs/gatsby/commit/401b3589771135ec35ab8f68406a64de6b387d9d))
+
+## [3.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.13.0/packages/gatsby-transformer-screenshot) (2021-09-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.13)
+
+#### Chores
+
+- re-generate changelogs [#32886](https://github.com/gatsbyjs/gatsby/issues/32886) ([417df15](https://github.com/gatsbyjs/gatsby/commit/417df15230be368a9db91f2ad1a9bc0442733177))
+
+## [3.12.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.12.0/packages/gatsby-transformer-screenshot) (2021-08-18)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.12)
+
+#### Bug Fixes
+
+- update dependency gatsby-core-utils to ^2.10.0 [#32630](https://github.com/gatsbyjs/gatsby/issues/32630) ([4044994](https://github.com/gatsbyjs/gatsby/commit/4044994f32eeb1e16420f8d985c3aa8a94ad8379))
+
+#### Chores
+
+- update babel monorepo [#32564](https://github.com/gatsbyjs/gatsby/issues/32564) ([a554998](https://github.com/gatsbyjs/gatsby/commit/a554998b4f6765103b650813cf52dbfcc575fecf))
+- update dependency aws-sdk to ^2.958.0 [#32620](https://github.com/gatsbyjs/gatsby/issues/32620) ([25d62be](https://github.com/gatsbyjs/gatsby/commit/25d62be9af8ccac9f919f77ea0a9cd65267b78ac))
+
+## [3.11.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.11.0/packages/gatsby-transformer-screenshot) (2021-08-04)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.11)
 
 **Note:** Version bump only for package gatsby-transformer-screenshot
 
-# [2.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.5.0-next.0...gatsby-transformer-screenshot@2.6.0-next.0) (2020-11-18)
+## [3.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.10.0/packages/gatsby-transformer-screenshot) (2021-07-20)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.10)
+
+#### Bug Fixes
+
+- update dependency gatsby-core-utils to ^2.8.0 [#32230](https://github.com/gatsbyjs/gatsby/issues/32230) ([1ed479e](https://github.com/gatsbyjs/gatsby/commit/1ed479ec6896160438d7716bd7054a3d93c23e42))
+
+#### Chores
+
+- update babel monorepo [#32238](https://github.com/gatsbyjs/gatsby/issues/32238) ([466d4c0](https://github.com/gatsbyjs/gatsby/commit/466d4c087bbc96abb942a02c67243bcc9a4f2a0a))
+- update dependency aws-sdk to ^2.939.0 [#32226](https://github.com/gatsbyjs/gatsby/issues/32226) ([53e5991](https://github.com/gatsbyjs/gatsby/commit/53e5991c75e568934f402ae94420031d5f9f9102))
+
+## [3.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.9.0/packages/gatsby-transformer-screenshot) (2021-07-07)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.9)
 
 **Note:** Version bump only for package gatsby-transformer-screenshot
 
-# [2.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.4.0-next.0...gatsby-transformer-screenshot@2.4.0-next.1) (2020-11-10)
+## [3.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.8.0/packages/gatsby-transformer-screenshot) (2021-06-23)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.8)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) ([7d42e8d](https://github.com/gatsbyjs/gatsby/commit/7d42e8d866e46e9c39838d812d080d06433f7060))
+
+### [3.7.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.7.1/packages/gatsby-transformer-screenshot) (2021-06-10)
+
+#### Chores
+
+- bump babel minor [#31857](https://github.com/gatsbyjs/gatsby/issues/31857) [#31859](https://github.com/gatsbyjs/gatsby/issues/31859) ([8636025](https://github.com/gatsbyjs/gatsby/commit/863602567930a39142ed33d9d1f1813b7dec8686))
+
+## [3.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.7.0/packages/gatsby-transformer-screenshot) (2021-06-09)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.7)
+
+#### Chores
+
+- update minor and patch for gatsby-transformer-screenshot [#30678](https://github.com/gatsbyjs/gatsby/issues/30678) ([d180d49](https://github.com/gatsbyjs/gatsby/commit/d180d49db9ebc3e9660d0d76d0b82ddfef3c9636))
+- update babel monorepo [#31143](https://github.com/gatsbyjs/gatsby/issues/31143) ([701ab2f](https://github.com/gatsbyjs/gatsby/commit/701ab2f6690c3f1bbaf60cf572513ea566cc9ec9))
+
+## [3.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.6.0/packages/gatsby-transformer-screenshot) (2021-05-25)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.6)
 
 **Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [3.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.5.0/packages/gatsby-transformer-screenshot) (2021-05-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.5)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.4.0/packages/gatsby-transformer-screenshot) (2021-04-28)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.4)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [3.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.3.0/packages/gatsby-transformer-screenshot) (2021-04-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.3)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [3.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.2.0/packages/gatsby-transformer-screenshot) (2021-03-30)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.2)
+
+#### Chores
+
+- update minor and patch for gatsby-transformer-screenshot [#29851](https://github.com/gatsbyjs/gatsby/issues/29851) ([2b3e445](https://github.com/gatsbyjs/gatsby/commit/2b3e445af861ab0676901fbf3c20a8a9de627575))
+
+## [3.1.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.1.0/packages/gatsby-transformer-screenshot) (2021-03-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.1)
+
+#### Chores
+
+- fix spelling, grammar, links, whitespace and end of files fix [#30063](https://github.com/gatsbyjs/gatsby/issues/30063) ([542d945](https://github.com/gatsbyjs/gatsby/commit/542d94550caece4cb3fecf46ee50c1ac4dce3439))
+- update eslint to fix linting issues fix [#29988](https://github.com/gatsbyjs/gatsby/issues/29988) ([5636389](https://github.com/gatsbyjs/gatsby/commit/5636389e8fa626c644e90abc14589e9961d98c68))
+
+## [3.0.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@3.0.0/packages/gatsby-transformer-screenshot) (2021-03-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v3.0)
+
+#### Features
+
+- Remove old touchNode signature [#29245](https://github.com/gatsbyjs/gatsby/issues/29245) ([0927cb0](https://github.com/gatsbyjs/gatsby/commit/0927cb007d0774bed8cf5ead3130ff6b7c3393b7))
+
+#### Chores
+
+- update minor and patch for gatsby-transformer-screenshot [#29173](https://github.com/gatsbyjs/gatsby/issues/29173) ([919aa07](https://github.com/gatsbyjs/gatsby/commit/919aa075e51f2e762adfe2f39147bf26d8c150d5))
+
+## [2.10.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@2.10.0/packages/gatsby-transformer-screenshot) (2021-02-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.32)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [2.9.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@2.9.0/packages/gatsby-transformer-screenshot) (2021-01-20)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.31)
+
+#### Bug Fixes
+
+- update vulnerable packages, include React 17 in peerDeps [#28545](https://github.com/gatsbyjs/gatsby/issues/28545) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+#### Chores
+
+- update minor and patch for gatsby-transformer-screenshot [#28229](https://github.com/gatsbyjs/gatsby/issues/28229) ([e0f86b0](https://github.com/gatsbyjs/gatsby/commit/e0f86b0cef74b0b60cd639c24fb0333083a74c63))
+
+## [2.8.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@2.8.0/packages/gatsby-transformer-screenshot) (2021-01-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.30)
+
+**Note:** Version bump only for package gatsby-transformer-screenshot
+
+## [2.7.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@2.7.0/packages/gatsby-transformer-screenshot) (2020-12-15)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.29)
+
+#### Chores
+
+- update dependency cross-env to ^7.0.3 [#28505](https://github.com/gatsbyjs/gatsby/issues/28505) ([a819b9b](https://github.com/gatsbyjs/gatsby/commit/a819b9bfb663139f7b06c3ed7d6d6069a2382b2c))
+
+## [2.6.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@2.6.0/packages/gatsby-transformer-screenshot) (2020-12-02)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.28)
+
+#### Chores
+
+- update minor and patch for gatsby-transformer-screenshot [#28089](https://github.com/gatsbyjs/gatsby/issues/28089) ([e832f12](https://github.com/gatsbyjs/gatsby/commit/e832f12ffc120d1485cf407cc39aacc3560ac46c))
+
+## [2.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@2.5.0/packages/gatsby-transformer-screenshot) (2020-11-20)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.27)
+
+#### Chores
+
+- update babel monorepo [#27528](https://github.com/gatsbyjs/gatsby/issues/27528) ([539dbb0](https://github.com/gatsbyjs/gatsby/commit/539dbb09166e346a6cee568973d2de3d936e8ef3))
+
+## [2.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@2.4.0/packages/gatsby-transformer-screenshot) (2020-11-12)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v2.26)
+
+#### Chores
+
+- update minor and patch for gatsby-transformer-screenshot [#27899](https://github.com/gatsbyjs/gatsby/issues/27899) ([21c90db](https://github.com/gatsbyjs/gatsby/commit/21c90db310055ee2003d785c7f7193d4b00c56f3))
+
+<a name="before-release-process"></a>
 
 ## [2.3.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-screenshot@2.3.20...gatsby-transformer-screenshot@2.3.21) (2020-10-26)
 

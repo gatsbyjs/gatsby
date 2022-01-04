@@ -7,7 +7,6 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
-const { scheduleJob } = require(`./scheduler`)
 const { createArgsDigest } = require(`./process-file`)
 const { reportError } = require(`./report-error`)
 const {
@@ -66,14 +65,14 @@ const getImageSize = file => {
   }
 }
 
-// Bound action creators should be set when passed to onPreInit in gatsby-node.
+// Actions should be set when passed to onPreInit in gatsby-node.
 // ** It is NOT safe to just directly require the gatsby module **.
 // There is no guarantee that the module resolved is the module executing!
 // This can occur in mono repos depending on how dependencies have been hoisted.
 // The direct require has been left only to avoid breaking changes.
-let boundActionCreators
-exports.setBoundActionCreators = actions => {
-  boundActionCreators = actions
+let actions
+exports.setActions = _actions => {
+  actions = _actions
 }
 
 exports.generateImageData = generateImageData
@@ -125,7 +124,7 @@ function prepareQueue({ file, args }) {
 }
 
 function createJob(job, { reporter }) {
-  if (!boundActionCreators) {
+  if (!actions) {
     reporter.panic(
       `Gatsby-plugin-sharp wasn't setup correctly in gatsby-config.js. Make sure you add it to the plugins array.`
     )
@@ -138,14 +137,7 @@ function createJob(job, { reporter }) {
   // in resolve / reject handlers). If we would use async/await
   // entire closure would keep duplicate job in memory until
   // initial job finish.
-  let promise = null
-  if (boundActionCreators.createJobV2) {
-    promise = boundActionCreators.createJobV2(job)
-  } else {
-    promise = scheduleJob(job, boundActionCreators, reporter)
-  }
-
-  promise.catch(err => {
+  const promise = actions.createJobV2(job).catch(err => {
     reporter.panic(`error converting image`, err)
   })
 
@@ -165,15 +157,8 @@ function lazyJobsEnabled() {
 
 function queueImageResizing({ file, args = {}, reporter }) {
   const fullOptions = healOptions(getPluginOptions(), args, file.extension)
-  const {
-    src,
-    width,
-    height,
-    aspectRatio,
-    relativePath,
-    outputDir,
-    options,
-  } = prepareQueue({ file, args: createTransformObject(fullOptions) })
+  const { src, width, height, aspectRatio, relativePath, outputDir, options } =
+    prepareQueue({ file, args: createTransformObject(fullOptions) })
 
   // Create job and add it to the queue, the queue will be processed inside gatsby-node.js
   const finishedPromise = createJob(
@@ -274,13 +259,12 @@ async function generateBase64({ file, args = {}, reporter }) {
   })
   let pipeline
   try {
-    pipeline = !options.failOnError
-      ? sharp(file.absolutePath, { failOnError: false })
-      : sharp(file.absolutePath)
+    pipeline = !options.failOnError ? sharp({ failOnError: false }) : sharp()
 
     if (!options.rotate) {
       pipeline.rotate()
     }
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return null
@@ -420,7 +404,10 @@ async function getTracedSVG({ file, options, cache, reporter }) {
 async function stats({ file, reporter }) {
   let imgStats
   try {
-    imgStats = await sharp(file.absolutePath).stats()
+    const pipeline = sharp()
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
+
+    imgStats = await pipeline.stats()
   } catch (err) {
     reportError(
       `Failed to get stats for image ${file.absolutePath}`,
@@ -437,27 +424,13 @@ async function stats({ file, reporter }) {
 
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
-  if (options.sizeByPixelDensity) {
-    /*
-     * We learned that `sizeByPixelDensity` is only valid for vector images,
-     * and Gatsby’s implementation of Sharp doesn’t support vector images.
-     * This means we should remove this option in the next major version of
-     * Gatsby, but for now we can no-op and warn.
-     *
-     * See https://github.com/gatsbyjs/gatsby/issues/12743
-     *
-     * TODO: remove the sizeByPixelDensity option in the next breaking release
-     */
-    reporter.warn(
-      `the option sizeByPixelDensity is deprecated and should not be used. It will be removed in the next major release of Gatsby.`
-    )
-  }
 
-  // Account for images with a high pixel density. We assume that these types of
-  // images are intended to be displayed at their native resolution.
   let metadata
   try {
-    metadata = await sharp(file.absolutePath).metadata()
+    const pipeline = sharp()
+    fs.createReadStream(file.absolutePath).pipe(pipeline)
+
+    metadata = await pipeline.metadata()
   } catch (err) {
     reportError(
       `Failed to retrieve metadata from image ${file.absolutePath}`,
@@ -616,6 +589,9 @@ async function fluid({ file, args = {}, reporter, cache }) {
         break
       case `webp`:
         srcSetType = `image/webp`
+        break
+      case `avif`:
+        srcSetType = `image/avif`
         break
       case ``:
       case `no_change`:

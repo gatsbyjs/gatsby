@@ -11,39 +11,50 @@ function matchesSnapshot(query) {
     plugins: [plugin],
     filename: `src/components/test.js`,
   })
+
   expect(codeWithoutFileName).toMatchSnapshot()
   expect(codeWithFileName).toMatchSnapshot()
 }
 
-it.todo(
-  `Works correctly with the kitchen sink`
-  // , () => {
-  //   matchesSnapshot(`
-  //   import * as React from 'react'
-  //   import { graphql, useStaticQuery, StaticQuery } from 'gatsby'
+function transform(query, filename) {
+  const { code } = babel.transform(query, {
+    presets: [`@babel/preset-react`],
+    plugins: [plugin],
+    filename,
+  })
+  return code
+}
 
-  //   export default () => {
-  //     const query = graphql\`{site { siteMetadata { title }}}\`
-  //     const siteDescription = useStaticQuery(query)
+describe(`babel-plugin-remove-graphql-queries`, () => {
+  it.todo(
+    `Works correctly with the kitchen sink`
+    // , () => {
+    //   matchesSnapshot(`
+    //   import * as React from 'react'
+    //   import { graphql, useStaticQuery, StaticQuery } from 'gatsby'
 
-  //     return (
-  //       <StaticQuery
-  //         query={graphql\`{site { siteMetadata { title }}}\`}
-  //         render={data => (
-  //           <div>
-  //             <h1>{data.site.siteMetadata.title}</h1>
-  //             <p>{siteDescription.site.siteMetadata.description}</p>
-  //           </div>
-  //         )}
-  //       />
-  //     )
-  //   }
-  //   `)
-  // }
-)
+    //   export default () => {
+    //     const query = graphql\`{site { siteMetadata { title }}}\`
+    //     const siteDescription = useStaticQuery(query)
 
-it(`Transforms queries in useStaticQuery`, () => {
-  matchesSnapshot(`
+    //     return (
+    //       <StaticQuery
+    //         query={graphql\`{site { siteMetadata { title }}}\`}
+    //         render={data => (
+    //           <div>
+    //             <h1>{data.site.siteMetadata.title}</h1>
+    //             <p>{siteDescription.site.siteMetadata.description}</p>
+    //           </div>
+    //         )}
+    //       />
+    //     )
+    //   }
+    //   `)
+    // }
+  )
+
+  it(`Transforms queries in useStaticQuery`, () => {
+    matchesSnapshot(`
   import * as React from 'react'
   import { graphql, useStaticQuery } from 'gatsby'
 
@@ -55,10 +66,25 @@ it(`Transforms queries in useStaticQuery`, () => {
     )
   }
   `)
-})
+  })
 
-it(`Transforms exported queries in useStaticQuery`, () => {
-  matchesSnapshot(`
+  it(`Transforms queries in useStaticQuery that use commonjs`, () => {
+    matchesSnapshot(`
+  const React = require("react")
+  const { graphql, useStaticQuery } = require("gatsby")
+
+  module.exports = () => {
+    const siteTitle = useStaticQuery(graphql\`{site { siteMetadata { title }}}\`)
+
+    return (
+      <h1>{siteTitle.site.siteMetadata.title}</h1>
+    )
+  }
+  `)
+  })
+
+  it(`Transforms exported queries in useStaticQuery`, () => {
+    matchesSnapshot(`
   import * as React from 'react'
   import { graphql, useStaticQuery } from 'gatsby'
 
@@ -75,10 +101,10 @@ it(`Transforms exported queries in useStaticQuery`, () => {
 
   export const query = graphql\`{site { siteMetadata { title }}}\`
   `)
-})
+  })
 
-it(`Transforms queries defined in own variable in useStaticQuery`, () => {
-  matchesSnapshot(`
+  it(`Transforms queries defined in own variable in useStaticQuery`, () => {
+    matchesSnapshot(`
   import * as React from 'react'
   import { graphql, useStaticQuery } from 'gatsby'
 
@@ -91,10 +117,10 @@ it(`Transforms queries defined in own variable in useStaticQuery`, () => {
     )
   }
   `)
-})
+  })
 
-it(`Transforms queries and preserves destructuring in useStaticQuery`, () => {
-  matchesSnapshot(`
+  it(`Transforms queries and preserves destructuring in useStaticQuery`, () => {
+    matchesSnapshot(`
   import * as React from 'react'
   import { graphql, useStaticQuery } from 'gatsby'
 
@@ -107,10 +133,10 @@ it(`Transforms queries and preserves destructuring in useStaticQuery`, () => {
     )
   }
   `)
-})
+  })
 
-it(`Transforms queries and preserves variable type in useStaticQuery`, () => {
-  matchesSnapshot(`
+  it(`Transforms queries and preserves variable type in useStaticQuery`, () => {
+    matchesSnapshot(`
   import * as React from 'react'
   import { graphql, useStaticQuery } from 'gatsby'
 
@@ -123,10 +149,10 @@ it(`Transforms queries and preserves variable type in useStaticQuery`, () => {
     )
   }
   `)
-})
+  })
 
-it(`Transformation does not break custom hooks`, () => {
-  matchesSnapshot(`
+  it(`Transformation does not break custom hooks`, () => {
+    matchesSnapshot(`
   import React from "react"
   import { graphql, useStaticQuery } from "gatsby"
 
@@ -142,10 +168,10 @@ it(`Transformation does not break custom hooks`, () => {
   }
 
   `)
-})
+  })
 
-it(`Transforms only the call expression in useStaticQuery`, () => {
-  matchesSnapshot(`
+  it(`Transforms only the call expression in useStaticQuery`, () => {
+    matchesSnapshot(`
   import React from "react"
   import { graphql, useStaticQuery } from "gatsby"
 
@@ -161,10 +187,10 @@ it(`Transforms only the call expression in useStaticQuery`, () => {
     return <h1>{siteMetadata.title}</h1>
   }
   `)
-})
+  })
 
-it(`Only runs transforms if useStaticQuery is imported from gatsby`, () => {
-  matchesSnapshot(`
+  it(`Only runs transforms if useStaticQuery is imported from gatsby`, () => {
+    matchesSnapshot(`
   import * as React from 'react'
   import { graphql } from 'gatsby'
 
@@ -177,10 +203,10 @@ it(`Only runs transforms if useStaticQuery is imported from gatsby`, () => {
     )
   }
   `)
-})
+  })
 
-it(`Allow alternative import of useStaticQuery`, () => {
-  matchesSnapshot(`
+  it(`Allow alternative import of useStaticQuery`, () => {
+    matchesSnapshot(`
   import * as React from 'react'
   import * as Gatsby from 'gatsby'
 
@@ -193,10 +219,10 @@ it(`Allow alternative import of useStaticQuery`, () => {
     )
   }
   `)
-})
+  })
 
-it(`Transforms queries in <StaticQuery>`, () => {
-  matchesSnapshot(`
+  it(`Transforms queries in <StaticQuery>`, () => {
+    matchesSnapshot(`
   import * as React from 'react'
   import { graphql, StaticQuery } from 'gatsby'
 
@@ -207,10 +233,10 @@ it(`Transforms queries in <StaticQuery>`, () => {
     />
   )
   `)
-})
+  })
 
-it(`Transforms queries defined in own variable in <StaticQuery>`, () => {
-  matchesSnapshot(`
+  it(`Transforms queries defined in own variable in <StaticQuery>`, () => {
+    matchesSnapshot(`
   import * as React from 'react'
   import { graphql, StaticQuery } from 'gatsby'
 
@@ -223,10 +249,10 @@ it(`Transforms queries defined in own variable in <StaticQuery>`, () => {
     />
   )
   `)
-})
+  })
 
-it(`transforms exported variable queries in <StaticQuery>`, () => {
-  matchesSnapshot(`
+  it(`transforms exported variable queries in <StaticQuery>`, () => {
+    matchesSnapshot(`
   import * as React from 'react'
   import { graphql, StaticQuery } from 'gatsby'
 
@@ -239,10 +265,10 @@ it(`transforms exported variable queries in <StaticQuery>`, () => {
     />
   )
   `)
-})
+  })
 
-it(`Transforms queries in page components`, () => {
-  matchesSnapshot(`
+  it(`Transforms queries in page components`, () => {
+    matchesSnapshot(`
   import { graphql } from 'gatsby'
 
   export const query = graphql\`
@@ -251,23 +277,23 @@ it(`Transforms queries in page components`, () => {
      }
   \`
   `)
-})
+  })
 
-it(`allows the global tag`, () => {
-  matchesSnapshot(
-    `
+  it(`allows the global tag`, () => {
+    matchesSnapshot(
+      `
   export const query = graphql\`
      {
        site { siteMetadata { title }}
      }
   \`
   `
-  )
-})
+    )
+  })
 
-it(`distinguishes between the right tags`, () => {
-  matchesSnapshot(
-    `
+  it(`distinguishes between the right tags`, () => {
+    matchesSnapshot(
+      `
   const foo = styled('div')\`
      {
        $\{foo}
@@ -299,12 +325,12 @@ it(`distinguishes between the right tags`, () => {
      }
   \`
   `
-  )
-})
+    )
+  })
 
-it(`handles import aliasing`, () => {
-  matchesSnapshot(
-    `
+  it(`handles import aliasing`, () => {
+    matchesSnapshot(
+      `
   import { graphql as gql } from 'gatsby'
 
   export const query = gql\`
@@ -313,12 +339,12 @@ it(`handles import aliasing`, () => {
      }
   \`
   `
-  )
-})
+    )
+  })
 
-it(`handles require`, () => {
-  matchesSnapshot(
-    `
+  it(`handles require`, () => {
+    matchesSnapshot(
+      `
   const { graphql } = require('gatsby')
 
   export const query = graphql\`
@@ -327,12 +353,12 @@ it(`handles require`, () => {
      }
   \`
   `
-  )
-})
+    )
+  })
 
-it(`handles require namespace`, () => {
-  matchesSnapshot(
-    `
+  it(`handles require namespace`, () => {
+    matchesSnapshot(
+      `
   const Gatsby = require('gatsby')
 
   export const query = Gatsby.graphql\`
@@ -341,11 +367,11 @@ it(`handles require namespace`, () => {
      }
   \`
   `
-  )
-})
-it(`handles require alias`, () => {
-  matchesSnapshot(
-    `
+    )
+  })
+  it(`handles require alias`, () => {
+    matchesSnapshot(
+      `
   const { graphql: gql } = require('gatsby')
 
   export const query = gql\`
@@ -354,12 +380,12 @@ it(`handles require alias`, () => {
      }
   \`
   `
-  )
-})
+    )
+  })
 
-it(`Leaves other graphql tags alone`, () => {
-  matchesSnapshot(
-    `
+  it(`Leaves other graphql tags alone`, () => {
+    matchesSnapshot(
+      `
   import * as React from 'react'
   import { graphql } from 'relay'
 
@@ -373,12 +399,12 @@ it(`Leaves other graphql tags alone`, () => {
      }
   \`
   `
-  )
-})
+    )
+  })
 
-it(`Removes all gatsby queries`, () => {
-  matchesSnapshot(
-    `
+  it(`Removes all gatsby queries`, () => {
+    matchesSnapshot(
+      `
   import { graphql } from 'gatsby'
 
   export default () => (
@@ -401,11 +427,11 @@ it(`Removes all gatsby queries`, () => {
      }
   \`
   `
-  )
-})
+    )
+  })
 
-it(`Handles closing StaticQuery tag`, () => {
-  matchesSnapshot(`
+  it(`Handles closing StaticQuery tag`, () => {
+    matchesSnapshot(`
   import * as React from 'react'
   import { graphql, StaticQuery } from 'gatsby'
 
@@ -417,10 +443,10 @@ it(`Handles closing StaticQuery tag`, () => {
     </StaticQuery>
   )
   `)
-})
+  })
 
-it(`Doesn't add data import for non static queries`, () => {
-  matchesSnapshot(`
+  it(`Doesn't add data import for non static queries`, () => {
+    matchesSnapshot(`
   import * as React from 'react'
   import { StaticQuery, graphql } from "gatsby"
 
@@ -447,4 +473,55 @@ it(`Doesn't add data import for non static queries`, () => {
     }
   \`
   `)
+  })
+
+  it(`Replaces graphql query inside config with global call`, () => {
+    matchesSnapshot(`
+  import * as React from 'react'
+  import { graphql } from "gatsby"
+
+  const Test = () => (
+    <div></div>
+  )
+
+  export default Test
+
+  export async function config() {
+    const data = graphql\`{ __typename }\`
+
+    return () => {
+      return {
+        defer: true
+      }
+    }
+  }
+  `)
+  })
+
+  it(`validates that config export is async`, () => {
+    const run = () =>
+      transform(`
+  import * as React from 'react'
+  import { graphql } from "gatsby"
+
+  const Test = () => (
+    <div></div>
+  )
+
+  export default Test
+
+  export function config() {
+    const data = graphql\`{ __typename }\`
+
+    return () => {
+      return {
+        defer: true
+      }
+    }
+  }
+  `)
+    expect(run).toThrowErrorMatchingInlineSnapshot(
+      `"unknown: BabelPluginRemoveGraphQLQueries: the \\"config\\" export must be async when using it with graphql"`
+    )
+  })
 })

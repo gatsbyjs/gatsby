@@ -14,6 +14,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
+    verbose: jest.fn(),
     activityTimer: () => {
       return {
         start: jest.fn(),
@@ -79,7 +80,7 @@ describe(`GraphQL Input args`, () => {
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Field "foo" is not defined by type BarFilterInput.`
+      `Field "foo" is not defined by type "BarFilterInput".`
     )
   })
 
@@ -105,7 +106,7 @@ describe(`GraphQL Input args`, () => {
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Field "foo" is not defined by type BarFilterInput.`
+      `Field "foo" is not defined by type "BarFilterInput".`
     )
   })
 
@@ -131,7 +132,7 @@ describe(`GraphQL Input args`, () => {
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Field "foo" is not defined by type BarFilterInput.`
+      `Field "foo" is not defined by type "BarFilterInput".`
     )
   })
 
@@ -157,7 +158,7 @@ describe(`GraphQL Input args`, () => {
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Field "foo" is not defined by type BarFilterInput.`
+      `Field "foo" is not defined by type "BarFilterInput".`
     )
   })
 
@@ -188,7 +189,7 @@ describe(`GraphQL Input args`, () => {
     )
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
-      `Field "linked___NODE" is not defined by type BarFilterInput.`
+      `Field "linked___NODE" is not defined by type "BarFilterInput".`
     )
   })
 

@@ -62,7 +62,7 @@ const addGatsbyImport = (j, root) => {
 
   if (!gatsbyImport.length) {
     const [first] = getFirstNode(j, root)
-    let statement = j.importDeclaration(
+    const statement = j.importDeclaration(
       [j.importSpecifier(j.identifier(METHOD))],
       j.literal(MODULE_NAME)
     )
@@ -86,7 +86,7 @@ const addGatsbyRequire = (j, root, requires) => {
 
   if (!gatsbyRequire.length) {
     const [first] = getFirstNode(j, root)
-    let statement = j.template.statement([
+    const statement = j.template.statement([
       `const { ${METHOD} } = require('${MODULE_NAME}');\n`,
     ])
     first.insertAfter(statement)

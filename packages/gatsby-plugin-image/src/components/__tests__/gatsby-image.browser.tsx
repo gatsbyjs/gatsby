@@ -1,16 +1,21 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from "react"
 import { GatsbyImage, IGatsbyImageData } from "../gatsby-image.browser"
 import { render, waitFor } from "@testing-library/react"
 import * as hooks from "../hooks"
 
-type GlobalOverride = NodeJS.Global &
-  typeof global.globalThis & {
-    GATSBY___IMAGE: boolean
-    SERVER: boolean
-  }
-
 // Prevents terser for bailing because we're not in a babel plugin
-jest.mock(`../../../macros/terser.macro`, () => (strs): string => strs.join(``))
+jest.mock(
+  `../../../macros/terser.macro`,
+  () =>
+    (strs): string =>
+      strs.join(``)
+)
+
+// test
 
 describe(`GatsbyImage browser`, () => {
   let beforeHydrationContent: HTMLDivElement
@@ -18,8 +23,9 @@ describe(`GatsbyImage browser`, () => {
 
   beforeEach(() => {
     console.warn = jest.fn()
-    ;(global as GlobalOverride).SERVER = true
-    ;(global as GlobalOverride).GATSBY___IMAGE = true
+    console.error = jest.fn()
+    global.SERVER = true
+    global.GATSBY___IMAGE = true
   })
 
   beforeEach(() => {
@@ -72,12 +78,14 @@ describe(`GatsbyImage browser`, () => {
 
   afterEach(() => {
     jest.clearAllMocks()
-    ;(global as GlobalOverride).SERVER = undefined
-    ;(global as GlobalOverride).GATSBY___IMAGE = undefined
+    global.SERVER = undefined
+    global.GATSBY___IMAGE = undefined
+    process.env.NODE_ENV = `test`
   })
 
   it(`shows a suggestion to switch to the new gatsby-image API when available`, async () => {
-    ;(global as GlobalOverride).GATSBY___IMAGE = false
+    global.GATSBY___IMAGE = undefined
+    process.env.NODE_ENV = `development`
 
     const { container } = render(
       <GatsbyImage image={image} alt="Alt content" />
@@ -163,7 +171,7 @@ describe(`GatsbyImage browser`, () => {
       container.querySelector(`[data-main-image=""]`)
     )
 
-    img.dispatchEvent(new Event(`load`))
+    img?.dispatchEvent(new Event(`load`))
 
     expect(onStartLoadSpy).toBeCalledWith({ wasCached: false })
     expect(onLoadSpy).toBeCalled()
@@ -175,6 +183,10 @@ describe(`GatsbyImage browser`, () => {
   it(`relies on intersection observer when the SSR element is not resolved`, async () => {
     ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => true
     const onStartLoadSpy = jest.fn()
+    let GatsbyImage
+    jest.isolateModules(() => {
+      GatsbyImage = require(`../gatsby-image.browser`).GatsbyImage
+    })
 
     const { container } = render(
       <GatsbyImage
@@ -192,6 +204,10 @@ describe(`GatsbyImage browser`, () => {
   it(`relies on intersection observer when browser does not support lazy loading`, async () => {
     ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => false
     const onStartLoadSpy = jest.fn()
+    let GatsbyImage
+    jest.isolateModules(() => {
+      GatsbyImage = require(`../gatsby-image.browser`).GatsbyImage
+    })
 
     const { container } = render(
       <GatsbyImage

@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`gatsby config does not allow pathPrefix to be full URL 1`] = `"child \\"pathPrefix\\" fails because [\\"pathPrefix\\" must be a valid relative uri]"`;
-
-exports[`gatsby config throws when relative path used for both assetPrefix and pathPrefix 1`] = `"assetPrefix must be an absolute URI when used with pathPrefix"`;
-
-exports[`node schema doesn't allow unknown internal fields 1`] = `"child \\"internal\\" fails because [\\"customField\\" is not allowed]"`;
-
-exports[`node schema force id type 1`] = `"child \\"id\\" fails because [\\"id\\" must be a string]"`;

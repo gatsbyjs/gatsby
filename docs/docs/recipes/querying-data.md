@@ -145,7 +145,7 @@ export default NonPageComponent
 - [More on Static Query for querying data in components](/docs/how-to/querying-data/static-query/)
 - [The difference between a static query and a page query](/docs/how-to/querying-data/static-query/#how-staticquery-differs-from-page-query)
 - [More on the useStaticQuery hook](/docs/how-to/querying-data/use-static-query/)
-- [Visualize your data with GraphiQL](/docs/introducing-graphiql/)
+- [Visualize your data with GraphiQL](/docs/how-to/querying-data/running-queries-with-graphiql/)
 
 ## Limiting with GraphQL
 
@@ -429,7 +429,6 @@ Fragments can be nested inside other fragments, and multiple fragments can be us
 
 - [Example repo using fragments](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-fragments)
 - [Gatsby GraphQL reference for fragments](/docs/graphql-reference/#fragments)
-- [Gatsby image fragments](/docs/reference/built-in-components/gatsby-image/#image-query-fragments)
 - [Example repo with co-located data](https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram)
 
 ## Querying data client-side with `fetch`

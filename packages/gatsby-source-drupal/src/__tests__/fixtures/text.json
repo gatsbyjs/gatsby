@@ -1,0 +1,56 @@
+{
+  "jsonapi": {
+    "version": "1.0",
+    "meta": {
+      "links": {
+        "self": {
+          "href": "http:\/\/jsonapi.org\/format\/1.0\/"
+        }
+      }
+    }
+  },
+  "data": [
+    {
+      "type": "paragraph--text",
+      "id": "08d07c95-26ab-46b8-a56d-0a55567b2e31",
+      "links": {
+        "self": {
+          "href": "http:\/\/localhost:8080\/api\/jsonapi\/paragraph\/text\/08d07c95-26ab-46b8-a56d-0a55567b2e31"
+        }
+      },
+      "attributes": {
+        "drupal_internal__id": 14,
+        "drupal_internal__revision_id": 3,
+        "langcode": "en",
+        "status": true,
+        "created": "2020-09-18T07:28:27+00:00",
+        "parent_id": "5",
+        "parent_type": "node",
+        "parent_field_name": "content",
+        "behavior_settings": [],
+        "default_langcode": true,
+        "revision_translation_affected": true,
+        "body": {
+          "value": "Aliquam non varius libero, sit amet consequat ex",
+          "format": "plain_text",
+          "processed": "Aliquam non varius libero, sit amet consequat ex"
+        }
+      },
+      "relationships": {
+        "paragraph_type": {
+          "data": null,
+          "links": {
+            "self": {
+              "href": "http:\/\/localhost:8080\/api\/jsonapi\/paragraph\/text\/08d07c95-26ab-46b8-a56d-0a55567b2e31\/relationships\/paragraph_type"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "links": {
+    "self": {
+      "href": "http:\/\/localhost:8080\/api\/jsonapi\/paragraph\/text"
+    }
+  }
+}

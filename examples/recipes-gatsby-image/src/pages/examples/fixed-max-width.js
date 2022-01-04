@@ -7,7 +7,7 @@ import Layout from "../../components/layout"
 /*
   1. write a query for sourced images
   2. be sure to query for the fixed field
-  3. adad a style prop to the Img component 
+  3. add a style prop to the Img component
 */
 
 export default () => {

@@ -3,7 +3,7 @@ import { GraphQLScalarType, Kind, GraphQLFieldConfig } from "graphql"
 import { oneLine } from "common-tags"
 
 interface IFormatDateArgs {
-  date?: Date
+  date: Date | string
   fromNow?: boolean
   formatString?: string
   difference?: unitOfTime.Diff
@@ -12,10 +12,10 @@ interface IFormatDateArgs {
 interface IDateResolverOption {
   locale?: string
   formatString?: string
-  fromNow?: string
+  fromNow?: boolean
   difference?: string
   from?: string
-  fromNode?: { type: string; defaultValue: boolean }
+  fromNode?: boolean
 }
 type DateResolverFieldConfig = GraphQLFieldConfig<any, any, any>
 type DateResolver = (
@@ -114,7 +114,8 @@ export const GraphQLDate = new GraphQLScalarType({
   },
 })
 
-const momentFormattingTokens = /(\[[^[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g
+const momentFormattingTokens =
+  /(\[[^[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g
 const momentFormattingRegexes = {
   YYYY: `\\d{4}`,
   MM: `\\d{2}`,

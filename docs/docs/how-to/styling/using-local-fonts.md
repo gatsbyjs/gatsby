@@ -2,15 +2,15 @@
 title: Using Local Fonts
 ---
 
-If you have custom fonts hosted on your computer, Gatsby supports their use in your project. This guide covers how to add local fonts to your Gatsby site.
+This guide covers how to add local fonts to your Gatsby site.
 
 ## Prerequisites
 
-This guide uses the Gatsby [default starter](https://github.com/gatsbyjs/gatsby-starter-default) and a font file. Some common font file extensions are `.woff2`, `.ttf`, and `otf`.
+This guide uses the Gatsby [default starter](https://github.com/gatsbyjs/gatsby-starter-default) and a font file. Some common font file extensions are `.woff2` and `.woff`.
 
 ## Using local fonts in Gatsby
 
-Get started by using local fonts by adding them to your project. Copy the font file in your Gatsby project, for example, `src/fonts/fontname.woff2`.
+Get started by using local fonts by adding them to your project. Copy the font file into your Gatsby project, for example, `src/fonts/fontname.woff2`.
 
 **NOTE:** It’s recommended to limit custom font usage to only the essential needed for performance.
 

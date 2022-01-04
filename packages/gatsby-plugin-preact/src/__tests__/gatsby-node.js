@@ -1,3 +1,4 @@
+const path = require(`path`)
 const { onCreateWebpackConfig, onCreateBabelConfig } = require(`../gatsby-node`)
 const PreactRefreshPlugin = require(`@prefresh/webpack`)
 const ReactRefreshWebpackPlugin = require(`@pmmmwh/react-refresh-webpack-plugin`)
@@ -6,6 +7,9 @@ describe(`gatsby-plugin-preact`, () => {
   it(`sets the correct webpack config in development`, () => {
     const getConfig = jest.fn(() => {
       return {
+        entry: {
+          commons: [],
+        },
         plugins: [new ReactRefreshWebpackPlugin()],
       }
     })
@@ -22,38 +26,31 @@ describe(`gatsby-plugin-preact`, () => {
 
     expect(actions.setWebpackConfig).toHaveBeenCalledTimes(2)
     expect(actions.setWebpackConfig).toHaveBeenCalledWith({
-      plugins: [new PreactRefreshPlugin()],
+      plugins: expect.arrayContaining([expect.any(PreactRefreshPlugin)]),
       resolve: {
         alias: {
-          react: `preact/compat`,
-          "react-dom": `preact/compat`,
+          react: expect.stringContaining(path.join(`preact`, `compat`)),
+          "react-dom": expect.stringContaining(path.join(`preact`, `compat`)),
+          "react-dom/server": expect.stringContaining(
+            path.join(`preact`, `compat`, `server`)
+          ),
         },
       },
     })
 
-    expect(getConfig).toHaveBeenCalledTimes(1)
+    expect(getConfig).toHaveBeenCalledTimes(2)
     expect(actions.setBabelPlugin).toHaveBeenCalledTimes(1)
     expect(actions.setBabelPlugin).toHaveBeenCalledWith({
       name: `@prefresh/babel-plugin`,
       stage: `develop`,
     })
-    expect(actions.replaceWebpackConfig).toMatchInlineSnapshot(`
-      [MockFunction] {
-        "calls": Array [
-          Array [
-            Object {
-              "plugins": Array [],
-            },
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      }
-    `)
+    expect(actions.replaceWebpackConfig).toHaveBeenCalledTimes(2)
+    expect(actions.replaceWebpackConfig).toHaveBeenCalledWith({
+      plugins: [],
+      entry: {
+        commons: [`@gatsbyjs/webpack-hot-middleware/client`],
+      },
+    })
   })
 
   it(`sets the correct webpack config in production`, () => {
@@ -100,15 +97,18 @@ describe(`gatsby-plugin-preact`, () => {
       plugins: [],
       resolve: {
         alias: {
-          react: `preact/compat`,
-          "react-dom": `preact/compat`,
+          react: expect.stringContaining(path.join(`preact`, `compat`)),
+          "react-dom": expect.stringContaining(path.join(`preact`, `compat`)),
+          "react-dom/server": expect.stringContaining(
+            path.join(`preact`, `compat`, `server`)
+          ),
         },
       },
     })
 
-    expect(getConfig).toHaveBeenCalledTimes(1)
+    expect(getConfig).toHaveBeenCalledTimes(2)
     expect(actions.setBabelPlugin).toHaveBeenCalledTimes(0)
-    expect(actions.replaceWebpackConfig).toHaveBeenCalledTimes(1)
+    expect(actions.replaceWebpackConfig).toHaveBeenCalledTimes(2)
     expect(actions.replaceWebpackConfig).toMatchInlineSnapshot(`
       [MockFunction] {
         "calls": Array [
@@ -132,8 +132,32 @@ describe(`gatsby-plugin-preact`, () => {
               },
             },
           ],
+          Array [
+            Object {
+              "optimization": Object {
+                "splitChunks": Object {
+                  "cacheGroups": Object {
+                    "default": false,
+                    "framework": Object {
+                      "chunks": "all",
+                      "enforce": true,
+                      "name": "framework",
+                      "priority": 40,
+                      "test": /\\(\\?<!node_modules\\.\\*\\)\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\|prop-types\\)\\[\\\\\\\\/\\]/,
+                    },
+                    "vendors": false,
+                  },
+                  "chunks": "all",
+                },
+              },
+            },
+          ],
         ],
         "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
           Object {
             "type": "return",
             "value": undefined,

@@ -4,7 +4,7 @@ Easily add Google Analytics to your Gatsby site.
 
 ## Upgrade note
 
-This plugin uses Google's `analytics.js` file under the hood. Google has a [guide recommending users upgrade to `gtag.js` instead](https://developers.google.com/analytics/devguides/collection/upgrade/analyticsjs). There is another plugin [`gatsby-plugin-gtag`](https://gatsbyjs.com/plugins/gatsby-plugin-google-gtag/) which uses `gtag.js`.
+This plugin uses Google's `analytics.js` file under the hood. Google has a [guide recommending users upgrade to `gtag.js` instead](https://developers.google.com/analytics/devguides/collection/upgrade/analyticsjs). There is another plugin [`gatsby-plugin-gtag`](https://gatsbyjs.com/plugins/gatsby-plugin-google-gtag/) which uses `gtag.js` and we recommend it.
 
 ## Install
 
@@ -43,6 +43,8 @@ module.exports = {
         sampleRate: 5,
         siteSpeedSampleRate: 10,
         cookieDomain: "example.com",
+        // defaults to false
+        enableWebVitalsTracking: true,
       },
     },
   ],
@@ -132,6 +134,16 @@ If you need to set up SERVER_SIDE Google Optimize experiment, you can add the ex
 ### `variationId`
 
 Besides the experiment ID you also need the variation ID for SERVER_SIDE experiments in Google Optimize. Set 0 for original version.
+
+### `enableWebVitalsTracking`
+
+Optimizing for the quality of user experience is key to the long-term success of any site on the web. Capturing Real user metrics (RUM) helps you understand the experience of your user/customer. By setting `enableWebVitalsTracking` to `true`, Google Analytics will get ["core-web-vitals"](https://web.dev/vitals/) events with their values.
+
+We send three metrics:
+
+- **Largest Contentful Paint (LCP)**: measures loading performance. To provide a good user experience, LCP should occur within 2.5 seconds of when the page first starts loading.
+- **First Input Delay (FID)**: measures interactivity. To provide a good user experience, pages should have a FID of 100 milliseconds or less.
+- **Cumulative Layout Shift (CLS)**: measures visual stability. To provide a good user experience, pages should maintain a CLS of 1 or less.
 
 ## Optional Fields
 

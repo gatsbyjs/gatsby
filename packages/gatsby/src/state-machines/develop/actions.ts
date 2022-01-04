@@ -7,11 +7,12 @@ import {
   DoneEventObject,
 } from "xstate"
 import { IBuildContext } from "../../services"
-import { boundActionCreators } from "../../redux/actions"
+import { actions } from "../../redux/actions"
 import { listenForMutations } from "../../services/listen-for-mutations"
 import { DataLayerResult } from "../data-layer"
-import { saveState } from "../../db"
+import { saveState } from "../../redux/save-state"
 import reporter from "gatsby-cli/lib/reporter"
+import { store } from "../../redux"
 import { ProgramStatus } from "../../redux/types"
 import { createWebpackWatcher } from "../../services/listen-to-webpack"
 import { callRealApi } from "../../utils/call-deferred-api"
@@ -47,8 +48,8 @@ export const assignStoreAndWorkerPool = assign<IBuildContext, DoneEventObject>(
 )
 
 const setQueryRunningFinished = async (): Promise<void> => {
-  boundActionCreators.setProgramStatus(
-    ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
+  store.dispatch(
+    actions.setProgramStatus(ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED)
   )
 }
 
@@ -56,13 +57,28 @@ export const markQueryFilesDirty = assign<IBuildContext>({
   queryFilesDirty: true,
 })
 
-export const markSourceFilesDirty = assign<IBuildContext>({
-  sourceFilesDirty: true,
-})
+export const markSourceFilesDirty = assign<IBuildContext, AnyEventObject>(
+  (context, event) => {
+    const prev = context.changedSourceFiles ?? new Set()
+    return {
+      sourceFilesDirty: true,
+      changedSourceFiles: prev.add(event.payload ?? event.file),
+    }
+  }
+)
 
 export const markSourceFilesClean = assign<IBuildContext>({
   sourceFilesDirty: false,
+  changedSourceFiles: () => new Set(),
 })
+
+export const setRecompiledFiles = assign<IBuildContext, AnyEventObject>(
+  context => {
+    return {
+      recompiledFiles: context.changedSourceFiles,
+    }
+  }
+)
 
 export const markNodesDirty = assign<IBuildContext>({
   nodesMutatedDuringQueryRun: true,
@@ -98,6 +114,7 @@ export const assignServiceResult = assign<IBuildContext, DoneEventObject>(
  * This spawns the service that listens to the `emitter` for various mutation events
  */
 export const spawnMutationListener = assign<IBuildContext>({
+  // @ts-ignore - TODO: Fixing this seems more involved: https://xstate.js.org/docs/guides/typescript.html#troubleshooting & https://github.com/statelyai/xstate/issues/2664
   mutationListener: () => spawn(listenForMutations, `listen-for-mutations`),
 })
 
@@ -110,6 +127,7 @@ export const assignServers = assign<IBuildContext, AnyEventObject>(
 )
 
 export const spawnWebpackListener = assign<IBuildContext, AnyEventObject>({
+  // @ts-ignore - TODO: Fixing this seems more involved: https://xstate.js.org/docs/guides/typescript.html#troubleshooting & https://github.com/statelyai/xstate/issues/2664
   webpackListener: ({ compiler }) => {
     if (!compiler) {
       return undefined
@@ -153,8 +171,8 @@ export const panicBecauseOfInfiniteLoop: ActionFunction<
 > = () => {
   reporter.panic(
     reporter.stripIndent(`
-  Panicking because nodes appear to be being changed every time we run queries. This would cause the site to recompile infinitely. 
-  Check custom resolvers to see if they are unconditionally creating or mutating nodes on every query. 
+  Panicking because nodes appear to be being changed every time we run queries. This would cause the site to recompile infinitely.
+  Check custom resolvers to see if they are unconditionally creating or mutating nodes on every query.
   This may happen if they create nodes with a field that is different every time, such as a timestamp or unique id.`)
   )
 }
@@ -190,6 +208,7 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   spawnWebpackListener,
   markSourceFilesDirty,
   markSourceFilesClean,
+  setRecompiledFiles,
   markNodesClean,
   incrementRecompileCount,
   resetRecompileCount,

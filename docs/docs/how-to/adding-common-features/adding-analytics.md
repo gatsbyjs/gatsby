@@ -4,69 +4,24 @@ title: Adding Analytics
 
 ## Why use analytics?
 
-Once you have your site live you will start wanting to get an idea of how many visitors are coming to your site along with other metrics such as:
+Most professional website teams using Gatsby use one of three types of analytics services on their website:
 
-- What pages are most popular?
-- Where do my visitors come from?
-- When do people visit my site?
+- **Google Analytics** because the functionality is free and comprehensive.
+- **Third-party marketing analytics** like marketing automation (Hubspot, Marketo), session recording (FullStory, Heap), or hundreds of smaller vendors
+- **Google Tag Manager** or **Segment** in order to easily send data to these third-party services, or collect data with third-party scripts
 
-Google Analytics provides a way to collect this data and perform analytics on it answering the above questions among many others. The platform is free for 10 million hits per month per Tracking ID. There are other analytics options--see the "Other Gatsby analytics plugins" section at the bottom of this doc for ideas.
+Gatsby offers a plugin for most common services, making first-class integration of analytics a simple, speedy, and secure process.
 
-## Setting up Google Analytics
+When utilizing marketing analytics tools, one key tradeoff is that marketing analytics tools are often the culprit for poor website performance. As a result, tools that make it easier for marketers to add and remove analytics (via Google Tag Manager), can also make it easier for them to harm site performance without noticing.
 
-The first step is to set up a Google Analytics account. You can do that [here](https://analytics.google.com/) by signing in with your Google Account.
-
-Google also has a [get started page](https://support.google.com/analytics/answer/1008015?hl=en) for reference.
-
-Once you have an account, you will be prompted to set up a new property. This property will have a Tracking ID associated with it. In this case the property will be the website itself. Fill out the form with your website name and URL.
-
-The Tracking ID is what is used to identify data with your site's traffic. You would typically use a different Tracking ID for each website you are monitoring.
-
-You should now have a Tracking ID; take note of it, as your website will need to reference it when sending page views to Google Analytics. It should be in the format `UA-XXXXXXXXX-X`.
-
-You can find this tracking ID later by going to `Admin > Tracking Info > Tracking Code`.
-
-## Using `gatsby-plugin-google-gtag`
-
-Now, it's time to configure Gatsby to send page views to your Google Analytics account.
-
-We are going to use `gatsby-plugin-google-gtag`. For other analytics options (including Google Tag Manager), check [other Gatsby analytics plugins](#other-gatsby-analytics-plugins).
-
-```shell
-npm install gatsby-plugin-google-gtag
-```
-
-```js:title=gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-plugin-google-gtag`,
-      options: {
-        // You can add multiple tracking ids and a pageview event will be fired for all of them.
-        trackingIds: [
-          "GA-TRACKING_ID", // Google Analytics / GA
-          "AW-CONVERSION_ID", // Google Ads / Adwords / AW
-          "DC-FLOODIGHT_ID", // Marketing Platform advertising products (Display & Video 360, Search Ads 360, and Campaign Manager)
-        ],
-      },
-    },
-  ],
-}
-```
-
-> Note: Read more about [gatsby-config.js](/docs/reference/config-files/gatsby-config/)
-
-Full documentation for the plugin can be found [here](/plugins/gatsby-plugin-google-gtag/).
-
-There are a number of extra configuration options--both with the Gatsby plugin and also in your Google Analytics account--so you can tailor things to meet your website's needs.
-
-Once this is configured you can deploy your site to test! If you navigate to the homepage of Google Analytics, you should see a dashboard with different statistics.
-
-## Other Gatsby analytics plugins
+## Guides to common analytics tools
 
 - [Google Analytics](/plugins/gatsby-plugin-google-analytics/)
 - [Google Tag Manager](/plugins/gatsby-plugin-google-tagmanager/)
 - [Segment](/plugins/gatsby-plugin-segment-js)
+
+## Other Gatsby analytics plugins
+
 - [Amplitude Analytics](/plugins/gatsby-plugin-amplitude-analytics)
 - [Fathom](/plugins/gatsby-plugin-fathom/)
 - [Baidu](/plugins/gatsby-plugin-baidu-analytics/)

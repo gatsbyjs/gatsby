@@ -19,6 +19,11 @@ jest.mock(`fs-extra`, () => {
   }
 })
 
+// we mock it to make tests faster
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {}
+})
+
 const INTERVAL_TIMEOUT = 500
 const TEST_TIMEOUT = 30000
 
@@ -45,13 +50,54 @@ function waitUntil<T = any>(
   })
 }
 
+/**
+ * @see https://github.com/facebook/jest/issues/10529#issuecomment-904608475
+ */
+function itAsyncDone(
+  name: string,
+  cb: (done: jest.DoneCallback) => Promise<void>,
+  timeout?: number
+): void {
+  it(
+    name,
+    done => {
+      let doneCalled = false
+      const wrappedDone: jest.DoneCallback = (...args) => {
+        if (doneCalled) {
+          return
+        }
+
+        doneCalled = true
+        done(...args)
+      }
+
+      wrappedDone.fail = (err): void => {
+        if (doneCalled) {
+          return
+        }
+
+        doneCalled = true
+
+        done(err)
+      }
+
+      cb(wrappedDone).catch(wrappedDone)
+    },
+    timeout
+  )
+}
+
 describe(`websocket-manager`, () => {
   let websocketManager: WebsocketManager
   let httpServerAddr
 
-  async function getClientSocket(): Promise<typeof io.Socket> {
+  function getClientSocket(): typeof io.Socket {
+    return io.default(`http://127.0.0.1:${httpServerAddr.port}`)
+  }
+
+  function getClientSocketAndWaitForConnect(): Promise<typeof io.Socket> {
     return new Promise(resolve => {
-      const clientSocket = io.default(`http://127.0.0.1:${httpServerAddr.port}`)
+      const clientSocket = getClientSocket()
       clientSocket.on(`connect`, () => {
         resolve(clientSocket)
       })
@@ -149,7 +195,7 @@ describe(`websocket-manager`, () => {
     `Can connect`,
     async () => {
       expect.assertions(1)
-      const clientSocket = await getClientSocket()
+      const clientSocket = await getClientSocketAndWaitForConnect()
       expect(clientSocket.connected).toBe(true)
       clientSocket.disconnect()
     },
@@ -170,7 +216,7 @@ describe(`websocket-manager`, () => {
       async () => {
         expect.assertions(3)
 
-        const clientSocket = await getClientSocket()
+        const clientSocket = await getClientSocketAndWaitForConnect()
 
         expect(websocketManager.activePaths).toEqual(new Set())
 
@@ -202,8 +248,8 @@ describe(`websocket-manager`, () => {
       `track individual clients`,
       async () => {
         expect.assertions(5)
-        const clientSocket1 = await getClientSocket()
-        const clientSocket2 = await getClientSocket()
+        const clientSocket1 = await getClientSocketAndWaitForConnect()
+        const clientSocket2 = await getClientSocketAndWaitForConnect()
         expect(websocketManager.activePaths).toEqual(new Set())
 
         let activePathAdjustedPromise = waitUntil(done => {
@@ -261,7 +307,7 @@ describe(`websocket-manager`, () => {
       async function registerPathnameAndGetPath(
         pathname: string
       ): Promise<string> {
-        const clientSocket = await getClientSocket()
+        const clientSocket = await getClientSocketAndWaitForConnect()
 
         if (websocketManager.activePaths.size > 0) {
           throw new Error(`There was client connected already`)
@@ -386,6 +432,7 @@ describe(`websocket-manager`, () => {
             payload: {
               path: `/404.html`,
               component: `not-important`,
+              componentPath: `not-important`,
               context: {},
             },
             plugin: { name: `websocket-manager-test` },
@@ -395,6 +442,7 @@ describe(`websocket-manager`, () => {
             payload: {
               path: `/dev-404-page/`,
               component: `not-important`,
+              componentPath: `not-important`,
               context: {},
             },
             plugin: { name: `websocket-manager-test` },
@@ -465,7 +513,7 @@ describe(`websocket-manager`, () => {
         `Client can receive page query update`,
         async () => {
           expect.assertions(1)
-          const clientSocket = await getClientSocket()
+          const clientSocket = await getClientSocketAndWaitForConnect()
 
           const pageQueryId = `/blog/`
           const result = {
@@ -512,7 +560,7 @@ describe(`websocket-manager`, () => {
         `Client can receive static query update`,
         async () => {
           expect.assertions(1)
-          const clientSocket = await getClientSocket()
+          const clientSocket = await getClientSocketAndWaitForConnect()
 
           const staticQueryId = `12345`
           const result = {
@@ -550,10 +598,10 @@ describe(`websocket-manager`, () => {
   })
 
   describe(`Errors`, () => {
-    it(`Emits errors to display by clients`, async done => {
+    itAsyncDone(`Emits errors to display by clients`, async done => {
       expect.assertions(1)
 
-      const clientSocket = await getClientSocket()
+      const clientSocket = await getClientSocketAndWaitForConnect()
 
       function handler(msg): void {
         if (
@@ -562,8 +610,8 @@ describe(`websocket-manager`, () => {
           msg.payload?.message === `error-string`
         ) {
           clientSocket.off(`message`, handler)
-          expect(true).toBe(true)
           clientSocket.disconnect()
+          expect(true).toBe(true)
           done()
         }
       }
@@ -572,10 +620,10 @@ describe(`websocket-manager`, () => {
       websocketManager.emitError(`test`, `error-string`)
     })
 
-    it(`Emits stored errors to new clients`, async done => {
+    itAsyncDone(`Emits stored errors to new clients`, async done => {
       expect.assertions(1)
 
-      const clientSocket = await getClientSocket()
+      const clientSocket = getClientSocket()
 
       function handler(msg): void {
         if (
@@ -584,8 +632,8 @@ describe(`websocket-manager`, () => {
           msg.payload?.message === `error-string`
         ) {
           clientSocket.off(`message`, handler)
-          expect(true).toBe(true)
           clientSocket.disconnect()
+          expect(true).toBe(true)
           done()
         }
       }
@@ -594,25 +642,29 @@ describe(`websocket-manager`, () => {
       // we don't emit error here, instead rely on error we emitted in previous test
     })
 
-    it(`Can clear errors by emitting empty "overlayError" msg`, async done => {
-      expect.assertions(1)
+    itAsyncDone(
+      `Can clear errors by emitting empty "overlayError" msg`,
+      async done => {
+        expect.assertions(1)
 
-      const clientSocket = await getClientSocket()
+        const clientSocket = await getClientSocketAndWaitForConnect()
 
-      function handler(msg): void {
-        if (
-          msg.type === `overlayError` &&
-          msg.payload.id === `test` &&
-          msg.payload.message === null
-        ) {
-          clientSocket.off(`message`, handler)
-          expect(true).toBe(true)
-          done()
+        function handler(msg): void {
+          if (
+            msg.type === `overlayError` &&
+            msg.payload.id === `test` &&
+            msg.payload.message === null
+          ) {
+            clientSocket.off(`message`, handler)
+            clientSocket.disconnect()
+            expect(true).toBe(true)
+            done()
+          }
         }
-      }
 
-      clientSocket.on(`message`, handler)
-      websocketManager.emitError(`test`, null)
-    })
+        clientSocket.on(`message`, handler)
+        websocketManager.emitError(`test`, null)
+      }
+    )
   })
 })

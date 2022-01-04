@@ -108,6 +108,17 @@ test(`it leaves non-relative images alone`, async () => {
   expect(result).toEqual([])
 })
 
+test(`it leaves files with unsupported file extensions alone`, async () => {
+  const imagePath = `video/my-video.mp4`
+  const content = `
+![video](./${imagePath})
+  `.trim()
+
+  const result = await plugin(createPluginOptions(content, imagePath))
+
+  expect(result).toEqual([])
+})
+
 test(`it transforms images in markdown`, async () => {
   const imagePath = `images/my-image.jpeg`
   const content = `

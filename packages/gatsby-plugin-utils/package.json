@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-utils",
-  "version": "0.10.0-next.0",
+  "version": "2.5.0-next.0",
   "description": "Gatsby utils that help creating plugins",
   "main": "dist/index.js",
   "scripts": {
@@ -21,24 +21,25 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-utils#readme",
   "dependencies": {
-    "joi": "^17.2.1"
+    "@babel/runtime": "^7.15.4",
+    "joi": "^17.4.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^0.13.0-next.0",
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "babel-preset-gatsby-package": "^2.5.0-next.0",
     "cross-env": "^7.0.3",
     "rimraf": "^3.0.2",
-    "typescript": "^3.9.7"
+    "typescript": "^4.5.4"
   },
   "peerDependencies": {
-    "gatsby": "^2.24.79"
+    "gatsby": "^4.0.0-next"
   },
   "files": [
     "dist/",
     "src/"
   ],
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=14.15.0"
   }
 }

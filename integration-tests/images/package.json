@@ -6,7 +6,7 @@
     "develop": "gatsby develop",
     "build": "gatsby build",
     "build-and-test": "yarn build && yarn test",
-    "test": "jest --config=../jest.config.js images/",
+    "test": "jest",
     "serve": "gatsby serve"
   },
   "dependencies": {
@@ -15,12 +15,13 @@
     "gatsby-plugin-sharp": "next",
     "gatsby-source-filesystem": "next",
     "gatsby-transformer-sharp": "next",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "devDependencies": {
-    "jest": "^24.0.0",
-    "jest-cli": "^24.0.0",
+    "babel-preset-gatsby-package": "next",
+    "babel-jest": "^27.2.1",
+    "jest": "^27.2.1",
     "pixelmatch": "^5.2.1"
   }
 }

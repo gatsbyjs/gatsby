@@ -11,7 +11,7 @@ import time, { TimeUnit } from "@turist/time"
 
 const instance = new AnalyticsTracker()
 
-const flush = createFlush(instance.isTrackingEnabled())
+export const flush = createFlush(instance.isTrackingEnabled())
 
 process.on(`exit`, flush)
 
@@ -89,7 +89,10 @@ export function aggregateStats(data: Array<number>): IAggregateStats {
   return instance.aggregateStats(data)
 }
 
-export function addSiteMeasurement(event: string, obj): void {
+export function addSiteMeasurement(
+  event: string,
+  obj: ITelemetryTagsPayload["siteMeasurements"]
+): void {
   instance.addSiteMeasurement(event, obj)
 }
 
@@ -124,18 +127,20 @@ export {
 }
 
 module.exports = {
-  trackFeatureIsUsed,
-  trackCli,
-  trackError,
-  trackBuildError,
-  setDefaultTags,
+  addSiteMeasurement,
+  aggregateStats,
+  captureEvent,
   decorateEvent,
+  expressMiddleware,
+  flush,
+  isTrackingEnabled,
+  setDefaultComponentId,
+  setDefaultTags,
+  setGatsbyCliVersion,
   setTelemetryEnabled,
   startBackgroundUpdate,
-  isTrackingEnabled,
-  aggregateStats,
-  addSiteMeasurement,
-  expressMiddleware,
-  setDefaultComponentId,
-  setGatsbyCliVersion,
+  trackBuildError,
+  trackCli,
+  trackError,
+  trackFeatureIsUsed,
 }

@@ -8,6 +8,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
+    verbose: jest.fn(),
     activityTimer: () => {
       return {
         start: jest.fn(),
@@ -68,7 +69,7 @@ describe(`Filter input`, () => {
     const parentFilterInput = schema.getType(`ParentFilterInput`)
     const fields = parentFilterInput.getFields()
     expect(fields.id).toBeDefined()
-    expect(fields.nested).toBeUndefined()
+    expect(fields.nested).not.toBeDefined()
   })
 })
 

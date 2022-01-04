@@ -2,10 +2,10 @@ import report from "gatsby-cli/lib/reporter"
 import { Span } from "opentracing"
 import apiRunner from "./api-runner-node"
 import { store } from "../redux"
-import { getNode, getNodes } from "../redux/nodes"
-import { boundActionCreators } from "../redux/actions"
+import { getDataStore, getNode, getNodes } from "../datastore"
+import { actions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
-const { deleteNode } = boundActionCreators
+const { deleteNode } = actions
 import { Node } from "../../index"
 
 /**
@@ -81,10 +81,12 @@ function deleteStaleNodes(state: IGatsbyState, nodes: Array<Node>): void {
   const staleNodes = getStaleNodes(state, nodes)
 
   if (staleNodes.length > 0) {
-    staleNodes.forEach(node => deleteNode({ node }))
+    staleNodes.forEach(node => store.dispatch(deleteNode(node)))
   }
 }
 
+let isInitialSourcing = true
+let sourcingCount = 0
 export default async ({
   webhookBody,
   pluginName,
@@ -93,11 +95,14 @@ export default async ({
 }: {
   webhookBody: unknown
   pluginName?: string
-  parentSpan: Span
-  deferNodeMutation: boolean
+  parentSpan?: Span
+  deferNodeMutation?: boolean
 }): Promise<void> => {
+  const traceId = isInitialSourcing
+    ? `initial-sourceNodes`
+    : `sourceNodes #${sourcingCount}`
   await apiRunner(`sourceNodes`, {
-    traceId: `initial-sourceNodes`,
+    traceId,
     waitForCascadingActions: true,
     deferNodeMutation,
     parentSpan,
@@ -105,10 +110,20 @@ export default async ({
     pluginName,
   })
 
-  const state = store.getState()
-  const nodes = getNodes()
+  await getDataStore().ready()
 
-  warnForPluginsWithoutNodes(state, nodes)
+  // We only warn for plugins w/o nodes and delete stale nodes on the first sourcing.
+  if (isInitialSourcing) {
+    const state = store.getState()
+    const nodes = getNodes()
 
-  deleteStaleNodes(state, nodes)
+    warnForPluginsWithoutNodes(state, nodes)
+
+    deleteStaleNodes(state, nodes)
+    isInitialSourcing = false
+  }
+
+  store.dispatch(actions.apiFinished({ apiName: `sourceNodes` }))
+
+  sourcingCount += 1
 }

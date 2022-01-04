@@ -6,5 +6,5 @@ module.exports = {
     github: `sidharthachatterjee`,
     moreInfo: `Sid is amazing`,
   },
-  plugins: [],
+  plugins: [`gatsby-plugin-webpack-1`, `gatsby-plugin-webpack-2`],
 }

@@ -1,7 +1,7 @@
 import meant from "meant"
 
 export const KNOWN_CONFIG_KEYS = [
-  `__experimentalThemes`,
+  `flags`,
   `polyfill`,
   `assetPrefix`,
   `pathPrefix`,
@@ -10,6 +10,8 @@ export const KNOWN_CONFIG_KEYS = [
   `plugins`,
   `proxy`,
   `developMiddleware`,
+  `jsxRuntime`,
+  `jsxImportSource`,
 ]
 
 export function didYouMean(

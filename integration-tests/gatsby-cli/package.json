@@ -6,13 +6,20 @@
   },
   "license": "MIT",
   "scripts": {
-    "test": "jest --config=./jest.config.js gatsby-cli/"
+    "test": "jest --runInBand"
   },
   "devDependencies": {
+    "babel-jest": "^27.2.1",
+    "babel-preset-gatsby-package": "next",
     "del-cli": "^3.0.1",
     "execa": "^4.0.1",
     "fs-extra": "^9.0.0",
-    "jest": "^24.0.0"
+    "gatsby": "next",
+    "gatsby-cli": "next",
+    "gatsby-core-utils": "next",
+    "jest": "^27.2.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "repository": {
     "type": "git",

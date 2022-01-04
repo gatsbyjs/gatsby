@@ -35,7 +35,6 @@ exports.sourceNodes = async ({
   actions,
   getNode,
   createNodeId,
-  hasNodeChanged,
   createContentDigest,
 }) => {
   const { createNode } = actions
@@ -116,8 +115,7 @@ fragment commentsFragment on HackerNewsItem {
       }
     }
 
-    let kids
-    kids = _.pick(story, `kids`)
+    const kids = _.pick(story, `kids`)
     if (!kids.kids) {
       kids.kids = []
     }
@@ -154,8 +152,8 @@ fragment commentsFragment on HackerNewsItem {
         if (!comment.kids) {
           comment.kids = []
         }
-        let commentChildIds = comment.kids.map(k => createNodeId(k.id))
-        let commentNode = {
+        const commentChildIds = comment.kids.map(k => createNodeId(k.id))
+        const commentNode = {
           ..._.omit(comment, `kids`),
           id: createNodeId(comment.id),
           children: commentChildIds,

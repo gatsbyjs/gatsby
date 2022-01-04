@@ -12,15 +12,19 @@ If you're looking for a primary CMS (general-purpose, flexible content modelling
 
 ### 1) Popular, first-class Gatsby integrations
 
-**First**, when possible, we recommend you focus on **top-flight general-purpose CMSs** with **first-class Gatsby integrations** and **high popularity** among Gatsby users. A ["first-class integration"](https://support.gatsbyjs.com/hc/en-us/articles/360052503494-Developing-a-first-class-CMS-integration-for-Gatsby-Cloud) means it supports the main Cloud functionality of Gatsby -- previews and incremental builds.
+**First**, when possible, we recommend you focus on **top-flight general-purpose CMSs** with **first-class Gatsby integrations** and **high popularity** among Gatsby users.
 
-In terms of popularity, you can see [top integrations listed by monthly downloads here](https://www.gatsbyjs.com/plugins?=gatsby-source). There are currently (January 2021) eight CMSs used by over 1% of Gatsby users. These are:
+A ["first-class integration"](https://support.gatsbyjs.com/hc/en-us/articles/360052503494-Developing-a-first-class-CMS-integration-for-Gatsby-Cloud) means it supports the main Cloud functionality of Gatsby -- previews and incremental builds and is known to the Gatsby team to be high-quality.
 
-- **five general-purpose headless CMSs:** Contentful, DatoCMS, Prismic, Sanity and Strapi
+For popularity, you can see [top integrations listed by monthly downloads here](/plugins?=gatsby-source).
 
-- **two general-purpose full-stack CMSs** running in "headless" mode: Drupal and Wordpress
+There are currently (November 2021) eight CMSs with first-class integrations used by over 1% of Gatsby users. These are:
 
-- **one specialized CMS**: Shopify
+- **six general-purpose headless CMSs:** Contentful, DatoCMS, Prismic, Contentstack, Sanity and Strapi
+
+- **two general-purpose full-stack CMSs** running in "headless" mode: Drupal and WordPress
+
+- **one e-commerce platform**: Shopify
 
 ### 2) The right price point
 
@@ -28,7 +32,7 @@ In terms of popularity, you can see [top integrations listed by monthly download
 
 - If you're working on a personal project or prototype, a few of these have a generous free tier (Contentful, DatoCMS, Prismic, Sanity, Strapi).
 
-- If you're looking more at "Team", "Pro", or "Business" price points (eg $29, $99, or \$299 per month), the above CMSs are all good options, plus Drupal and Wordpress.
+- If you're looking more at "Team", "Pro", or "Business" price points (e.g. 50, 100, or 250 dollars per month), the above CMSs are all good options, plus Drupal and WordPress.
 
 - If you're looking more at an "enterprise" project in the four digits per month and up, your main options are Contentful, Contentstack, Sanity, and Strapi.
 
@@ -44,14 +48,14 @@ Users choosing other CMSs typically have a specific reason for their choice. Som
 - **DatoCMS** if they will run into Contentful's model limits and want a lower-priced alternative
 - **Drupal** if open-source, configurability, or custom code are important.
 - **Prismic** if they like the content editing UI
-- **Sanity** or **Strapi** for the developer-friendliness or if they need something on-premise. In addition, Sanity tends to have significantly better build times, which can be a key usability consideration, especially for larger sites (we [benchmark build times by CMS here](https://willit.build/)).
-- **Wordpress** when the client or content team is already familiar with the Wordpress UI
+- **Sanity** or **Strapi** for the developer-friendliness or if they need something on-premise. In addition, Sanity tends to have significantly better build times, which can be a key usability consideration, especially for larger sites.
+- **WordPress** when the client or content team is already familiar with the WordPress UI
 
 ## Using multiple CMS systems together
 
 There are instances where using only one CMS would feel awkward; for example, if a particular CMS works well for one section of the site but is less good for the rest of the site.
 
-Gatsby makes it easy to use different CMSs for different parts of the website, what is known as a ["content mesh" approach](https://www.gatsbyjs.com/blog/2018-10-04-journey-to-the-content-mesh/).
+Gatsby makes it easy to use different CMSs for different parts of the website, what is known as a ["content mesh" approach](/blog/2018-10-04-journey-to-the-content-mesh/).
 
 Typically, teams that use multiple CMSs use a specialized CMS for part of the website and a general-purpose CMS for the rest of the website. The two most common examples are:
 
@@ -61,17 +65,17 @@ Typically, teams that use multiple CMSs use a specialized CMS for part of the we
 - **Using WordPress as a blogging tool.**
   - WordPress is very familiar to content authors and has a best-in-class content composition experience
   - As a result, some teams move the blog portion of the website with Gatsby, and use a flexible content modelling CMS for the rest of the website.
-  - Apollo does this (source: [tweet from Apollo](https://twitter.com/apollographql/status/1250479066605662210)), as does the [Gatsby blog](gatsbyjs.com/blog).
+  - Apollo does this (source: [tweet from Apollo](https://twitter.com/apollographql/status/1250479066605662210)), as does the [Gatsby blog](/blog/).
 
 ### Considerations when using multiple CMSs
 
-One of the key considerations when using content in multiple systems is that - at some point - one content system often needs to "know about" another system. For example, a landing page with content in Contentful may need to embed information about a specific product SKU from Shopify or blog post in Wordpress.
+One of the key considerations when using content in multiple systems is that - at some point - one content system often needs to "know about" another system. For example, a landing page with content in Contentful may need to embed information about a specific product SKU from Shopify or blog post in WordPress.
 
 The easiest way to create relationship references across CMSs is through one CMS storing unique IDs of content living in another CMS.
 
-In this case, you'd store an array of Wordpress blog post IDs as a field of the relevant model in Contentful, then pull in the correct data via the appropriate queries in `gatsby-node.js.`
+In this case, you'd store an array of WordPress blog post IDs as a field of the relevant model in Contentful, then pull in the correct data via the appropriate queries in `gatsby-node.js.`
 
-To make that a bit more concrete, here's a screenshot of what this looks like currently (January 2020) in the Gatsbyjs.com Contentful setup for the [e-commerce use case page](https://www.gatsbyjs.com/use-cases/e-commerce); the model is called `Use Case Landing Page`, the field is called `Blog Posts`, and the items in the array are unique blog post IDs from Wordpress:
+To make that a bit more concrete, here's a screenshot of what this looks like currently (January 2020) in the Gatsbyjs.com Contentful setup for the [e-commerce use case page](/use-cases/e-commerce/); the model is called `Use Case Landing Page`, the field is called `Blog Posts`, and the items in the array are unique blog post IDs from WordPress:
 
 ![Screenshot of Gatsbyjs.com Contentful setup](../images/use-case-landing-page-screenshot.jpg)
 
@@ -83,6 +87,6 @@ Finally, there are several options for content composition and management that w
 
 - **JSON** or **YAML** is a common choice for hierarchical data (for example, a site navigation tree), especially when the underlying content is stored in Markdown.
 
-- **Web-based spreadsheets**, like **Airtable** or **Google Sheets**, are common use cases for tabular data. [Impossible Foods used Airtable to power their store locator](https://www.gatsbyjs.com/blog/2020-05-07-gatsby-delivers-impossible-burgers-map/), and [ProPublica used Google sheets as a database](https://www.gatsbyjs.com/blog/2019-03-29-interview-with-david-eads/) for interactive data journalism graphics.
+- **Web-based spreadsheets**, like **Airtable** or **Google Sheets**, are common use cases for tabular data. [Impossible Foods used Airtable to power their store locator](/blog/2020-05-07-gatsby-delivers-impossible-burgers-map/), and [ProPublica used Google sheets as a database](/blog/2019-03-29-interview-with-david-eads/) for interactive data journalism graphics.
 
 - Other domain-specific solutions for specific parts of the website (e.g., having a Careers page pull data from Greenhouse or Lever).

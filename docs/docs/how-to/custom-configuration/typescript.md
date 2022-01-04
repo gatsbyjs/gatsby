@@ -1,5 +1,8 @@
 ---
 title: TypeScript and Gatsby
+examples:
+  - label: Using Typescript
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-typescript"
 ---
 
 ## Introductory paragraph

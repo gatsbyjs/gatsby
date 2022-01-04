@@ -1,4 +1,16 @@
-const normalize = require(`../normalize`)
+// @ts-check
+import {
+  buildEntryList,
+  buildResolvableSet,
+  buildForeignReferenceMap,
+  createNodesForContentType,
+  createAssetNodes,
+  buildFallbackChain,
+  getLocalizedField,
+  makeId,
+} from "../normalize"
+import { createPluginConfig } from "../plugin-options"
+
 const {
   currentSyncData,
   contentTypeItems,
@@ -18,13 +30,15 @@ const restrictedNodeFields = [
   `internal`,
 ]
 
+const pluginConfig = createPluginConfig({})
+
 describe(`Process contentful data (by name)`, () => {
   let entryList
   let resolvable
   let foreignReferenceMap
 
   it(`builds entry list`, () => {
-    entryList = normalize.buildEntryList({
+    entryList = buildEntryList({
       mergedSyncData: currentSyncData,
       contentTypeItems,
     })
@@ -32,22 +46,19 @@ describe(`Process contentful data (by name)`, () => {
   })
 
   it(`builds list of resolvable data`, () => {
-    resolvable = normalize.buildResolvableSet({
+    resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
-      defaultLocale,
-      locales,
     })
     expect(resolvable).toMatchSnapshot()
   })
 
   it(`builds foreignReferenceMap`, () => {
-    foreignReferenceMap = normalize.buildForeignReferenceMap({
+    foreignReferenceMap = buildForeignReferenceMap({
       contentTypeItems,
       entryList,
       resolvable,
       defaultLocale,
-      locales,
       space,
       useNameForId: true,
     })
@@ -57,9 +68,9 @@ describe(`Process contentful data (by name)`, () => {
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
     const createNodeId = jest.fn(id => id)
-    const getNode = jest.fn(id => undefined) // All nodes are new
+    const getNode = jest.fn(() => undefined) // All nodes are new
     contentTypeItems.forEach((contentTypeItem, i) => {
-      normalize.createNodesForContentType({
+      createNodesForContentType({
         contentTypeItem,
         restrictedNodeFields,
         conflictFieldPrefix,
@@ -73,6 +84,7 @@ describe(`Process contentful data (by name)`, () => {
         locales,
         space,
         useNameForId: true,
+        pluginConfig,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -82,11 +94,11 @@ describe(`Process contentful data (by name)`, () => {
   })
 
   it(`creates nodes for each asset`, () => {
-    const createNode = jest.fn()
+    const createNode = jest.fn(() => Promise.resolve())
     const createNodeId = jest.fn(id => id)
     const assets = currentSyncData.assets
     assets.forEach(assetItem => {
-      normalize.createAssetNodes({
+      createAssetNodes({
         assetItem,
         createNode,
         createNodeId,
@@ -101,24 +113,21 @@ describe(`Process contentful data (by name)`, () => {
 
 describe(`Skip existing nodes in warm build`, () => {
   it(`creates nodes for each entry`, () => {
-    let entryList = normalize.buildEntryList({
+    const entryList = buildEntryList({
       mergedSyncData: currentSyncData,
       contentTypeItems,
     })
 
-    let resolvable = normalize.buildResolvableSet({
+    const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
-      defaultLocale,
-      locales,
     })
 
-    let foreignReferenceMap = normalize.buildForeignReferenceMap({
+    const foreignReferenceMap = buildForeignReferenceMap({
       contentTypeItems,
       entryList,
       resolvable,
       defaultLocale,
-      locales,
       space,
       useNameForId: true,
     })
@@ -141,7 +150,7 @@ describe(`Skip existing nodes in warm build`, () => {
       return undefined
     })
     contentTypeItems.forEach((contentTypeItem, i) => {
-      normalize.createNodesForContentType({
+      createNodesForContentType({
         contentTypeItem,
         restrictedNodeFields,
         conflictFieldPrefix,
@@ -155,6 +164,7 @@ describe(`Skip existing nodes in warm build`, () => {
         locales,
         space,
         useNameForId: true,
+        pluginConfig,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -165,11 +175,11 @@ describe(`Skip existing nodes in warm build`, () => {
   })
 
   it(`creates nodes for each asset`, () => {
-    const createNode = jest.fn()
+    const createNode = jest.fn(() => Promise.resolve())
     const createNodeId = jest.fn(id => id)
     const assets = currentSyncData.assets
     assets.forEach(assetItem => {
-      normalize.createAssetNodes({
+      createAssetNodes({
         assetItem,
         createNode,
         createNodeId,
@@ -184,24 +194,21 @@ describe(`Skip existing nodes in warm build`, () => {
 
 describe(`Process existing mutated nodes in warm build`, () => {
   it(`creates nodes for each entry`, () => {
-    let entryList = normalize.buildEntryList({
+    const entryList = buildEntryList({
       mergedSyncData: currentSyncData,
       contentTypeItems,
     })
 
-    let resolvable = normalize.buildResolvableSet({
+    const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
-      defaultLocale,
-      locales,
     })
 
-    let foreignReferenceMap = normalize.buildForeignReferenceMap({
+    const foreignReferenceMap = buildForeignReferenceMap({
       contentTypeItems,
       entryList,
       resolvable,
       defaultLocale,
-      locales,
       space,
       useNameForId: true,
     })
@@ -226,7 +233,7 @@ describe(`Process existing mutated nodes in warm build`, () => {
       return undefined
     })
     contentTypeItems.forEach((contentTypeItem, i) => {
-      normalize.createNodesForContentType({
+      createNodesForContentType({
         contentTypeItem,
         restrictedNodeFields,
         conflictFieldPrefix,
@@ -240,6 +247,7 @@ describe(`Process existing mutated nodes in warm build`, () => {
         locales,
         space,
         useNameForId: true,
+        pluginConfig,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -250,11 +258,11 @@ describe(`Process existing mutated nodes in warm build`, () => {
   })
 
   it(`creates nodes for each asset`, () => {
-    const createNode = jest.fn()
+    const createNode = jest.fn(() => Promise.resolve())
     const createNodeId = jest.fn(id => id)
     const assets = currentSyncData.assets
     assets.forEach(assetItem => {
-      normalize.createAssetNodes({
+      createAssetNodes({
         assetItem,
         createNode,
         createNodeId,
@@ -273,7 +281,7 @@ describe(`Process contentful data (by id)`, () => {
   let foreignReferenceMap
 
   it(`builds entry list`, () => {
-    entryList = normalize.buildEntryList({
+    entryList = buildEntryList({
       mergedSyncData: currentSyncData,
       contentTypeItems,
     })
@@ -281,22 +289,19 @@ describe(`Process contentful data (by id)`, () => {
   })
 
   it(`builds list of resolvable data`, () => {
-    resolvable = normalize.buildResolvableSet({
+    resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
-      defaultLocale,
-      locales,
     })
     expect(resolvable).toMatchSnapshot()
   })
 
   it(`builds foreignReferenceMap`, () => {
-    foreignReferenceMap = normalize.buildForeignReferenceMap({
+    foreignReferenceMap = buildForeignReferenceMap({
       contentTypeItems,
       entryList,
       resolvable,
       defaultLocale,
-      locales,
       space,
       useNameForId: false,
     })
@@ -306,9 +311,9 @@ describe(`Process contentful data (by id)`, () => {
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
     const createNodeId = jest.fn(id => id)
-    const getNode = jest.fn(id => undefined) // All nodes are new
+    const getNode = jest.fn(() => undefined) // All nodes are new
     contentTypeItems.forEach((contentTypeItem, i) => {
-      normalize.createNodesForContentType({
+      createNodesForContentType({
         contentTypeItem,
         restrictedNodeFields,
         conflictFieldPrefix,
@@ -322,17 +327,18 @@ describe(`Process contentful data (by id)`, () => {
         locales,
         space,
         useNameForId: false,
+        pluginConfig,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
   })
 
   it(`creates nodes for each asset`, () => {
-    const createNode = jest.fn()
+    const createNode = jest.fn(() => Promise.resolve())
     const createNodeId = jest.fn(id => id)
     const assets = currentSyncData.assets
     assets.forEach(assetItem => {
-      normalize.createAssetNodes({
+      createAssetNodes({
         assetItem,
         createNode,
         createNodeId,
@@ -355,10 +361,10 @@ describe(`Gets field value based on current locale`, () => {
     { code: `de`, fallbackCode: `en-US` },
     { code: `gsw_CH`, fallbackCode: `de` },
   ]
-  const localesFallback = normalize.buildFallbackChain(locales)
+  const localesFallback = buildFallbackChain(locales)
   it(`Gets the specified locale`, () => {
     expect(
-      normalize.getLocalizedField({
+      getLocalizedField({
         field,
         localesFallback,
         locale: {
@@ -367,7 +373,7 @@ describe(`Gets field value based on current locale`, () => {
       })
     ).toBe(field[`en-US`])
     expect(
-      normalize.getLocalizedField({
+      getLocalizedField({
         field,
         localesFallback,
         locale: {
@@ -382,7 +388,7 @@ describe(`Gets field value based on current locale`, () => {
       "en-US": false,
     }
     expect(
-      normalize.getLocalizedField({
+      getLocalizedField({
         field: falseyField,
         localesFallback,
         locale: {
@@ -392,7 +398,7 @@ describe(`Gets field value based on current locale`, () => {
     ).toBe(falseyField[`en-US`])
 
     expect(
-      normalize.getLocalizedField({
+      getLocalizedField({
         field: falseyField,
         localesFallback,
         locale: {
@@ -403,7 +409,7 @@ describe(`Gets field value based on current locale`, () => {
   })
   it(`falls back to the locale's fallback locale if passed a locale that doesn't have a localized field`, () => {
     expect(
-      normalize.getLocalizedField({
+      getLocalizedField({
         field,
         localesFallback,
         locale: {
@@ -414,7 +420,7 @@ describe(`Gets field value based on current locale`, () => {
   })
   it(`returns null if passed a locale that doesn't have a field on a localized field`, () => {
     expect(
-      normalize.getLocalizedField({
+      getLocalizedField({
         field,
         localesFallback: { "es-ES": null, de: null },
         locale: {
@@ -425,7 +431,7 @@ describe(`Gets field value based on current locale`, () => {
   })
   it(`returns null if passed a locale that doesn't have a field nor a fallbackCode`, () => {
     expect(
-      normalize.getLocalizedField({
+      getLocalizedField({
         field,
         localesFallback,
         locale: {
@@ -439,7 +445,7 @@ describe(`Gets field value based on current locale`, () => {
 describe(`Make IDs`, () => {
   it(`It doesn't postfix the spaceId and the id if its the default locale`, () => {
     expect(
-      normalize.makeId({
+      makeId({
         spaceId: `spaceId`,
         id: `id`,
         type: `type`,
@@ -450,7 +456,7 @@ describe(`Make IDs`, () => {
   })
   it(`It does postfix the spaceId and the id if its not the default locale`, () => {
     expect(
-      normalize.makeId({
+      makeId({
         spaceId: `spaceId`,
         id: `id`,
         type: `type`,

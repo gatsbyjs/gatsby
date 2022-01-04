@@ -23,18 +23,14 @@ import {
   buildScalarType,
 } from "../schema/types/type-builders"
 const { emitter, store } = require(`../redux`)
-const {
-  getNodes,
-  getNode,
-  getNodesByType,
-  hasNodeChanged,
-  getNodeAndSavePathDependency,
-} = require(`../redux/nodes`)
+const { getNodes, getNode, getNodesByType } = require(`../datastore`)
+const { getNodeAndSavePathDependency, loadNodeContent } = require(`./nodes`)
 const { getPublicPath } = require(`./get-public-path`)
+const { requireGatsbyPlugin } = require(`./require-gatsby-plugin`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 import errorParser from "./api-runner-error-parser"
-const { loadNodeContent } = require(`../db/nodes`)
+import { wrapNode, wrapNodes } from "./detect-node-mutations"
 
 if (!process.env.BLUEBIRD_DEBUG && !process.env.BLUEBIRD_LONG_STACK_TRACES) {
   // Unless specified - disable longStackTraces
@@ -43,6 +39,21 @@ if (!process.env.BLUEBIRD_DEBUG && !process.env.BLUEBIRD_LONG_STACK_TRACES) {
   // which cause bluebird to enable longStackTraces
   // `gatsby build` (with NODE_ENV=production) already doesn't enable longStackTraces
   Promise.config({ longStackTraces: false })
+}
+
+const nodeMutationsWrappers = {
+  getNode(id) {
+    return wrapNode(getNode(id))
+  },
+  getNodes() {
+    return wrapNodes(getNodes())
+  },
+  getNodesByType(type) {
+    return wrapNodes(getNodesByType(type))
+  },
+  getNodeAndSavePathDependency(id) {
+    return wrapNode(getNodeAndSavePathDependency(id))
+  },
 }
 
 // Bind action creators per plugin so we can auto-add
@@ -92,28 +103,29 @@ const initAPICallTracing = parentSpan => {
   }
 }
 
-const deferredAction = type => (...args) => {
-  // Regular createNode returns a Promise, but when deferred we need
-  // to wrap it in another which we resolve when it's actually called
-  if (type === `createNode`) {
-    return new Promise(resolve => {
-      emitter.emit(`ENQUEUE_NODE_MUTATION`, {
-        type,
-        payload: args,
-        resolve,
+const deferredAction =
+  type =>
+  (...args) => {
+    // Regular createNode returns a Promise, but when deferred we need
+    // to wrap it in another which we resolve when it's actually called
+    if (type === `createNode`) {
+      return new Promise(resolve => {
+        emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+          type,
+          payload: args,
+          resolve,
+        })
       })
+    }
+    return emitter.emit(`ENQUEUE_NODE_MUTATION`, {
+      type,
+      payload: args,
     })
   }
-  return emitter.emit(`ENQUEUE_NODE_MUTATION`, {
-    type,
-    payload: args,
-  })
-}
 
 const NODE_MUTATION_ACTIONS = [
   `createNode`,
   `deleteNode`,
-  `deleteNodes`,
   `touchNode`,
   `createParentChildLink`,
   `createNodeField`,
@@ -141,21 +153,6 @@ function getLocalReporter({ activity, reporter }) {
   return reporter
 }
 
-function extendErrorIdWithPluginName(pluginName, errorMeta) {
-  const id = errorMeta?.id
-  if (id) {
-    const isPrefixed = id.includes(`${pluginName}_`)
-    if (!isPrefixed) {
-      return {
-        ...errorMeta,
-        id: `${pluginName}_${id}`,
-      }
-    }
-  }
-
-  return errorMeta
-}
-
 function getErrorMapWithPluginName(pluginName, errorMap) {
   const entries = Object.entries(errorMap)
 
@@ -177,54 +174,20 @@ function extendLocalReporterToCatchPluginErrors({
   let panic = reporter.panic
   let panicOnBuild = reporter.panicOnBuild
 
-  const addPluginNameToErrorMeta = (errorMeta, pluginName) =>
-    typeof errorMeta === `string`
-      ? {
-          context: {
-            sourceMessage: errorMeta,
-          },
-          pluginName,
-        }
-      : {
-          ...errorMeta,
-          pluginName,
-        }
-
   if (pluginName && reporter?.setErrorMap) {
     setErrorMap = errorMap =>
       reporter.setErrorMap(getErrorMapWithPluginName(pluginName, errorMap))
 
     error = (errorMeta, error) => {
-      const errorMetaWithPluginName = addPluginNameToErrorMeta(
-        errorMeta,
-        pluginName
-      )
-      reporter.error(
-        extendErrorIdWithPluginName(pluginName, errorMetaWithPluginName),
-        error
-      )
+      reporter.error(errorMeta, error, pluginName)
     }
 
     panic = (errorMeta, error) => {
-      const errorMetaWithPluginName = addPluginNameToErrorMeta(
-        errorMeta,
-        pluginName
-      )
-      reporter.panic(
-        extendErrorIdWithPluginName(pluginName, errorMetaWithPluginName),
-        error
-      )
+      reporter.panic(errorMeta, error, pluginName)
     }
 
     panicOnBuild = (errorMeta, error) => {
-      const errorMetaWithPluginName = addPluginNameToErrorMeta(
-        errorMeta,
-        pluginName
-      )
-      reporter.panicOnBuild(
-        extendErrorIdWithPluginName(pluginName, errorMetaWithPluginName),
-        error
-      )
+      reporter.panicOnBuild(errorMeta, error, pluginName)
     }
   }
 
@@ -235,6 +198,7 @@ function extendLocalReporterToCatchPluginErrors({
     panic,
     panicOnBuild,
     activityTimer: (...args) => {
+      // eslint-disable-next-line prefer-spread
       const activity = reporter.activityTimer.apply(reporter, args)
 
       const originalStart = activity.start
@@ -254,6 +218,7 @@ function extendLocalReporterToCatchPluginErrors({
     },
 
     createProgress: (...args) => {
+      // eslint-disable-next-line prefer-spread
       const activity = reporter.createProgress.apply(reporter, args)
 
       const originalStart = activity.start
@@ -294,19 +259,16 @@ const getUninitializedCache = plugin => {
     async set() {
       throw new Error(message)
     },
+    async del() {
+      throw new Error(message)
+    },
   }
 }
-
-const pluginNodeCache = new Map()
 
 const availableActionsCache = new Map()
 let publicPath
 const runAPI = async (plugin, api, args, activity) => {
-  let gatsbyNode = pluginNodeCache.get(plugin.name)
-  if (!gatsbyNode) {
-    gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
-    pluginNodeCache.set(plugin.name, gatsbyNode)
-  }
+  const gatsbyNode = requireGatsbyPlugin(plugin, `gatsby-node`)
 
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
@@ -426,23 +388,38 @@ const runAPI = async (plugin, api, args, activity) => {
       runningActivities.forEach(activity => activity.end())
     }
 
+    const shouldDetectNodeMutations = [
+      `sourceNodes`,
+      `onCreateNode`,
+      `createResolvers`,
+      `createSchemaCustomization`,
+      `setFieldsOnGraphQLNodeType`,
+    ].includes(api)
+
     const apiCallArgs = [
       {
         ...args,
+        parentSpan: pluginSpan,
         basePath: pathPrefix,
         pathPrefix: publicPath,
-        boundActionCreators: actions,
         actions,
         loadNodeContent,
         store,
         emitter,
         getCache,
-        getNodes,
-        getNode,
-        getNodesByType,
-        hasNodeChanged,
+        getNodes: shouldDetectNodeMutations
+          ? nodeMutationsWrappers.getNodes
+          : getNodes,
+        getNode: shouldDetectNodeMutations
+          ? nodeMutationsWrappers.getNode
+          : getNode,
+        getNodesByType: shouldDetectNodeMutations
+          ? nodeMutationsWrappers.getNodesByType
+          : getNodesByType,
         reporter: extendedLocalReporter,
-        getNodeAndSavePathDependency,
+        getNodeAndSavePathDependency: shouldDetectNodeMutations
+          ? nodeMutationsWrappers.getNodeAndSavePathDependency
+          : getNodeAndSavePathDependency,
         cache,
         createNodeId: namespacedCreateNodeId,
         createContentDigest,
@@ -498,8 +475,30 @@ const apisRunningById = new Map()
 const apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
-module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
-  new Promise(resolve => {
+function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
+  const plugins = store.getState().flattenedPlugins
+
+  // Get the list of plugins that implement this API.
+  // Also: Break infinite loops. Sometimes a plugin will implement an API and
+  // call an action which will trigger the same API being called.
+  // `onCreatePage` is the only example right now. In these cases, we should
+  // avoid calling the originating plugin again.
+  let implementingPlugins = plugins.filter(
+    plugin => plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource
+  )
+
+  if (api === `sourceNodes` && args.pluginName) {
+    implementingPlugins = implementingPlugins.filter(
+      plugin => plugin.name === args.pluginName
+    )
+  }
+
+  // If there's no implementing plugins, return early.
+  if (implementingPlugins.length === 0) {
+    return null
+  }
+
+  return new Promise(resolve => {
     const { parentSpan, traceId, traceTags, waitForCascadingActions } = args
     const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
     const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
@@ -508,23 +507,6 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
     _.forEach(traceTags, (value, key) => {
       apiSpan.setTag(key, value)
     })
-
-    const plugins = store.getState().flattenedPlugins
-
-    // Get the list of plugins that implement this API.
-    // Also: Break infinite loops. Sometimes a plugin will implement an API and
-    // call an action which will trigger the same API being called.
-    // `onCreatePage` is the only example right now. In these cases, we should
-    // avoid calling the originating plugin again.
-    let implementingPlugins = plugins.filter(
-      plugin => plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource
-    )
-
-    if (api === `sourceNodes` && args.pluginName) {
-      implementingPlugins = implementingPlugins.filter(
-        plugin => plugin.name === args.pluginName
-      )
-    }
 
     const apiRunInstance = {
       api,
@@ -609,12 +591,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
           return null
         }
 
-        let gatsbyNode = pluginNodeCache.get(plugin.name)
-        if (!gatsbyNode) {
-          gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
-          pluginNodeCache.set(plugin.name, gatsbyNode)
-        }
-
+        const gatsbyNode = requireGatsbyPlugin(plugin, `gatsby-node`)
         const pluginName =
           plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
@@ -731,3 +708,6 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       return
     })
   })
+}
+
+module.exports = apiRunnerNode

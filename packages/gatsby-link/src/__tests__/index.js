@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from "react"
 import { render, cleanup } from "@testing-library/react"
 import {
@@ -5,7 +9,7 @@ import {
   createHistory,
   LocationProvider,
 } from "@reach/router"
-import Link, { navigate, push, replace, withPrefix, withAssetPrefix } from "../"
+import Link, { navigate, withPrefix, withAssetPrefix } from "../"
 
 beforeEach(() => {
   global.__BASE_PATH__ = ``
@@ -24,16 +28,6 @@ const getNavigate = () => {
   return navigate
 }
 
-const getPush = () => {
-  global.___push = jest.fn()
-  return push
-}
-
-const getReplace = () => {
-  global.___replace = jest.fn()
-  return replace
-}
-
 const getWithPrefix = (pathPrefix = ``) => {
   global.__BASE_PATH__ = pathPrefix
   return withPrefix
@@ -45,10 +39,10 @@ const getWithAssetPrefix = (prefix = ``) => {
 }
 
 const setup = ({ sourcePath = `/`, linkProps, pathPrefix = `` } = {}) => {
-  let intersectionInstances = new WeakMap()
+  const intersectionInstances = new WeakMap()
   // mock intersectionObserver
   global.IntersectionObserver = jest.fn(cb => {
-    let instance = {
+    const instance = {
       observe: ref => {
         intersectionInstances.set(ref, instance)
       },
@@ -243,16 +237,6 @@ describe(`<Link />`, () => {
     })
   })
 
-  it(`push is called with correct args`, () => {
-    getPush()(`/some-path`)
-    expect(global.___push).toHaveBeenCalledWith(`/some-path`)
-  })
-
-  it(`replace is called with correct args`, () => {
-    getReplace()(`/some-path`)
-    expect(global.___replace).toHaveBeenCalledWith(`/some-path`)
-  })
-
   describe(`uses push or replace adequately`, () => {
     it(`respects force disabling replace`, () => {
       const to = `/`
@@ -260,9 +244,10 @@ describe(`<Link />`, () => {
       const { link } = setup({ linkProps: { to, replace: false } })
       link.click()
 
-      expect(
-        global.___navigate
-      ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { replace: false })
+      expect(global.___navigate).toHaveBeenCalledWith(
+        `${global.__BASE_PATH__}${to}`,
+        { replace: false }
+      )
     })
 
     it(`respects force enabling replace`, () => {
@@ -271,9 +256,10 @@ describe(`<Link />`, () => {
       const { link } = setup({ linkProps: { to, replace: true } })
       link.click()
 
-      expect(
-        global.___navigate
-      ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { replace: true })
+      expect(global.___navigate).toHaveBeenCalledWith(
+        `${global.__BASE_PATH__}${to}`,
+        { replace: true }
+      )
     })
 
     it(`does not replace history when navigating away`, () => {
@@ -294,9 +280,10 @@ describe(`<Link />`, () => {
       const { link } = setup({ linkProps: { to } })
       link.click()
 
-      expect(
-        global.___navigate
-      ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { replace: true })
+      expect(global.___navigate).toHaveBeenCalledWith(
+        `${global.__BASE_PATH__}${to}`,
+        { replace: true }
+      )
     })
   })
 })

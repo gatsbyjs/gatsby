@@ -90,22 +90,40 @@ type SiteSiteMetadata {
   description: String
 }
 
+type SiteFunction implements Node @dontInfer {
+  functionRoute: String!
+  pluginName: String!
+  originalAbsoluteFilePath: String!
+  originalRelativeFilePath: String!
+  relativeCompiledFilePath: String!
+  absoluteCompiledFilePath: String!
+  matchPath: String
+}
+
 type SitePage implements Node @dontInfer {
   path: String!
   component: String!
   internalComponentName: String!
   componentChunkName: String!
   matchPath: String
+  pageContext: JSON @proxy(from: \\"context\\", fromNode: false)
+  pluginCreator: SitePlugin @link(by: \\"id\\", from: \\"pluginCreatorId\\")
 }
 
-type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
-  first: Inline
-  second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
+type SitePlugin implements Node @dontInfer {
+  resolve: String
+  name: String
+  version: String
+  nodeAPIs: [String]
+  browserAPIs: [String]
+  ssrAPIs: [String]
+  pluginFilepath: String
+  pluginOptions: JSON
+  packageJson: JSON
 }
 
-interface ITest @nodeInterface {
-  id: ID!
-  date: Date @dateformat(formatString: \\"YYYY\\")
+type SiteBuildMetadata implements Node @dontInfer {
+  buildTime: Date @dateformat
 }
 
 type Inline {
@@ -120,16 +138,26 @@ input Baz {
   qux: Boolean
 }
 
-type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
-  bar: String
+type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
+  first: Inline
+  second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
 }
 
-type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+interface ITest implements Node {
+  id: ID!
+  date: Date @dateformat(formatString: \\"YYYY\\")
+}
+
+type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
   bar: String
 }
 
 type Test implements Node @dontInfer {
   foo: Int
+}
+
+type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
 }"
 `;
 
@@ -141,7 +169,7 @@ type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @do
   second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
 }
 
-interface ITest @nodeInterface {
+interface ITest implements Node {
   id: ID!
   date: Date @dateformat(formatString: \\"YYYY\\")
 }
@@ -244,12 +272,40 @@ type SiteSiteMetadata {
   description: String
 }
 
+type SiteFunction implements Node @dontInfer {
+  functionRoute: String!
+  pluginName: String!
+  originalAbsoluteFilePath: String!
+  originalRelativeFilePath: String!
+  relativeCompiledFilePath: String!
+  absoluteCompiledFilePath: String!
+  matchPath: String
+}
+
 type SitePage implements Node @dontInfer {
   path: String!
   component: String!
   internalComponentName: String!
   componentChunkName: String!
   matchPath: String
+  pageContext: JSON @proxy(from: \\"context\\", fromNode: false)
+  pluginCreator: SitePlugin @link(by: \\"id\\", from: \\"pluginCreatorId\\")
+}
+
+type SitePlugin implements Node @dontInfer {
+  resolve: String
+  name: String
+  version: String
+  nodeAPIs: [String]
+  browserAPIs: [String]
+  ssrAPIs: [String]
+  pluginFilepath: String
+  pluginOptions: JSON
+  packageJson: JSON
+}
+
+type SiteBuildMetadata implements Node @dontInfer {
+  buildTime: Date @dateformat
 }
 
 type AnotherTest implements Node & ITest @dontInfer {
@@ -258,7 +314,7 @@ type AnotherTest implements Node & ITest @dontInfer {
   hello(planet: String = \\"world\\", language: [Language!]!): String!
 }
 
-interface ITest @nodeInterface {
+interface ITest implements Node {
   id: ID!
   date: Date @dateformat(formatString: \\"YYYY\\")
 }
@@ -276,18 +332,31 @@ type OneMoreTest implements Node @dontInfer {
   bar: Boolean
 }
 
+interface ITest2 implements Node {
+  id: ID!
+  date: Date @dateformat(formatString: \\"YYYY\\")
+}
+
 union ThisOrThat = AnotherTest | OneMoreTest
+
+type Inline {
+  foo: Nested
+}
+
+input Baz {
+  qux: Boolean
+}
 
 type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
   bar: String
 }
 
-type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
-  bar: String
-}
-
 type Test implements Node @dontInfer {
   foo: Int
+}
+
+type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
 }"
 `;
 
@@ -300,7 +369,7 @@ type AnotherTest implements Node & ITest @dontInfer {
   hello(planet: String = \\"world\\", language: [Language!]!): String!
 }
 
-interface ITest @nodeInterface {
+interface ITest implements Node {
   id: ID!
   date: Date @dateformat(formatString: \\"YYYY\\")
 }
@@ -396,12 +465,40 @@ type SiteSiteMetadata {
   description: String
 }
 
+type SiteFunction implements Node @dontInfer {
+  functionRoute: String!
+  pluginName: String!
+  originalAbsoluteFilePath: String!
+  originalRelativeFilePath: String!
+  relativeCompiledFilePath: String!
+  absoluteCompiledFilePath: String!
+  matchPath: String
+}
+
 type SitePage implements Node @dontInfer {
   path: String!
   component: String!
   internalComponentName: String!
   componentChunkName: String!
   matchPath: String
+  pageContext: JSON @proxy(from: \\"context\\", fromNode: false)
+  pluginCreator: SitePlugin @link(by: \\"id\\", from: \\"pluginCreatorId\\")
+}
+
+type SitePlugin implements Node @dontInfer {
+  resolve: String
+  name: String
+  version: String
+  nodeAPIs: [String]
+  browserAPIs: [String]
+  ssrAPIs: [String]
+  pluginFilepath: String
+  pluginOptions: JSON
+  packageJson: JSON
+}
+
+type SiteBuildMetadata implements Node @dontInfer {
+  buildTime: Date @dateformat
 }
 
 type AnotherTest implements Node & ITest @dontInfer {
@@ -410,7 +507,7 @@ type AnotherTest implements Node & ITest @dontInfer {
   hello(planet: String = \\"world\\", language: [Language!]!): String!
 }
 
-interface ITest @nodeInterface {
+interface ITest implements Node {
   id: ID!
   date: Date @dateformat(formatString: \\"YYYY\\")
 }
@@ -428,12 +525,12 @@ type OneMoreTest implements Node @dontInfer {
   bar: Boolean
 }
 
-union ThisOrThat = AnotherTest | OneMoreTest
-
-type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
-  first: Inline
-  second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
+interface ITest2 implements Node {
+  id: ID!
+  date: Date @dateformat(formatString: \\"YYYY\\")
 }
+
+union ThisOrThat = AnotherTest | OneMoreTest
 
 type Inline {
   foo: Nested
@@ -443,15 +540,20 @@ input Baz {
   qux: Boolean
 }
 
-type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
-  bar: String
+type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
+  first: Inline
+  second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
 }
 
-type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
   bar: String
 }
 
 type Test implements Node @dontInfer {
   foo: Int
+}
+
+type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
 }"
 `;

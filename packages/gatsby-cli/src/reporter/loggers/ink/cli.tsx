@@ -7,7 +7,8 @@ import { ProgressBar } from "./components/progress-bar"
 import { Message, IMessageProps } from "./components/messages"
 import { Error as ErrorComponent } from "./components/error"
 import Develop from "./components/develop"
-import { IGatsbyCLIState, IActivity } from "../../redux/types"
+import PageTree from "./components/pageTree"
+import { IGatsbyCLIState, IActivity, ILog } from "../../redux/types"
 import { ActivityLogLevels } from "../../constants"
 import { IStructuredError } from "../../../structured-errors/types"
 
@@ -15,7 +16,9 @@ const showProgress = isTTY()
 
 interface ICLIProps {
   logs: IGatsbyCLIState
+  messages: Array<ILog>
   showStatusBar: boolean
+  showPageTree: boolean
 }
 
 interface ICLIState {
@@ -46,8 +49,10 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
 
   render(): React.ReactElement {
     const {
-      logs: { messages, activities },
+      logs: { activities },
+      messages,
       showStatusBar,
+      showPageTree,
     } = this.props
 
     const { hasError, error } = this.state
@@ -99,6 +104,7 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
               )
             }
           </Static>
+          {showPageTree && <PageTree />}
 
           {spinners.map(activity => (
             <Spinner key={activity.id} {...activity} />
@@ -114,6 +120,7 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
             />
           ))}
         </Box>
+
         {showStatusBar && <Develop />}
       </Box>
     )

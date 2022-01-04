@@ -8,7 +8,7 @@ title: "WordPress Source Plugin Tutorial"
 
 The version of `gatsby-source-wordpress` that this tutorial uses will soon be deprecated and replaced with a complete rewrite in the next major version (v4). The reason for this is that we've adopted the use of WPGraphQL to support Preview and incremental builds as well as to make the schema generally more stable and consistent.
 
-Please follow the tutorial on [creating a new site with `gatsby-source-wordpress-experimental`](https://github.com/gatsbyjs/gatsby-source-wordpress-experimental/blob/master/docs/tutorials/building-a-new-site-wordpress-and-gatsby.md) instead, as that package is a beta of the next major version of `gatsby-source-wordpress`.
+Please follow the tutorial on [creating a new site with `gatsby-source-wordpress`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/tutorials/building-a-new-site-wordpress-and-gatsby.md) instead, as that package is a beta of the next major version of `gatsby-source-wordpress`.
 
 ### What this tutorial covers:
 
@@ -215,7 +215,7 @@ To do this, you need to:
 1. Create pages for each blog post
 2. Link up the title on the index page with the post page.
 
-If you haven't already, please read through [Part 7](/docs/tutorial/part-seven/) of the foundational tutorial, as it goes through the concept and examples of this process with Markdown instead of WordPress.
+If you haven't already, please read through [Part 7](/docs/tutorial/part-7/) of the foundational tutorial, as it goes through the concept and examples of this process with Markdown instead of WordPress.
 
 ### Creating pages for each blog post
 
@@ -247,7 +247,7 @@ exports.createPages = ({ graphql, actions }) => {
 }
 ```
 
-Next, [stop and restart](/docs/tutorial/part-zero/#view-your-site-locally) the `gatsby develop` environment. As you watch the terminal you should see two Post objects log to the terminal:
+Next, [stop and restart](/docs/tutorial/part-0/#view-your-site-locally) the `gatsby develop` environment. As you watch the terminal you should see two Post objects log to the terminal:
 
 ![Two posts logged to the terminal](./images/wordpress-source-plugin-log.jpg)
 

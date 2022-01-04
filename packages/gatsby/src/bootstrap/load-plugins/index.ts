@@ -1,6 +1,7 @@
 import _ from "lodash"
 
 import { store } from "../../redux"
+import { IGatsbyState } from "../../redux/types"
 import * as nodeAPIs from "../../utils/api-node-docs"
 import * as browserAPIs from "../../utils/api-browser-docs"
 import ssrAPIs from "../../../cache-dir/api-ssr-docs"
@@ -21,9 +22,9 @@ import {
 } from "./types"
 import { IPluginRefObject, PluginRef } from "gatsby-plugin-utils/dist/types"
 
-const getAPI = (
-  api: { [exportType in ExportType]: { [api: string]: boolean } }
-): ICurrentAPIs =>
+const getAPI = (api: {
+  [exportType in ExportType]: { [api: string]: boolean }
+}): ICurrentAPIs =>
   _.keys(api).reduce<Partial<ICurrentAPIs>>((merged, key) => {
     merged[key] = _.keys(api[key])
     return merged
@@ -35,11 +36,28 @@ const getAPI = (
 const flattenPlugins = (plugins: Array<IPluginInfo>): Array<IPluginInfo> => {
   const flattened: Array<IPluginInfo> = []
   const extractPlugins = (plugin: IPluginInfo): void => {
-    if (plugin.pluginOptions && plugin.pluginOptions.plugins) {
-      plugin.pluginOptions.plugins.forEach(subPlugin => {
-        flattened.push(subPlugin)
-        extractPlugins(subPlugin)
-      })
+    if (plugin.subPluginPaths) {
+      for (const subPluginPath of plugin.subPluginPaths) {
+        // @pieh:
+        // subPluginPath can look like someOption.randomFieldThatIsMarkedAsSubplugins
+        // Reason for doing stringified path with . separator was that it was just easier to prevent duplicates
+        // in subPluginPaths array (as each subplugin in the gatsby-config would add subplugin path).
+        const segments = subPluginPath.split(`.`)
+        let roots: Array<any> = [plugin.pluginOptions]
+        for (const segment of segments) {
+          if (segment === `[]`) {
+            roots = roots.flat()
+          } else {
+            roots = roots.map(root => root[segment])
+          }
+        }
+        roots = roots.flat()
+
+        roots.forEach(subPlugin => {
+          flattened.push(subPlugin)
+          extractPlugins(subPlugin)
+        })
+      }
     }
   }
 
@@ -82,7 +100,7 @@ const normalizeConfig = (config: IRawSiteConfig = {}): ISiteConfig => {
 
 export async function loadPlugins(
   rawConfig: IRawSiteConfig = {},
-  rootDir: string | null = null
+  rootDir: string
 ): Promise<Array<IFlattenedPlugin>> {
   // Turn all strings in plugins: [`...`] into the { resolve: ``, options: {} } form
   const config = normalizeConfig(rawConfig)
@@ -121,7 +139,7 @@ export async function loadPlugins(
   // If we get this far, everything looks good. Update the store
   store.dispatch({
     type: `SET_SITE_FLATTENED_PLUGINS`,
-    payload: flattenedPlugins,
+    payload: flattenedPlugins as IGatsbyState["flattenedPlugins"],
   })
 
   return flattenedPlugins

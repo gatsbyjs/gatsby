@@ -19,7 +19,7 @@ Dealing with images on the web has always been a problem as unoptimized images c
 Cloudinary provides a couple of amazing solutions to this problem, namely:
 
 - Remote storage and delivery of images via CDN
-- Offers a wider range of transformations than [gatsby-image](/docs/how-to/images-and-media/using-gatsby-image/).
+- Offers a wider range of transformations than [gatsby-plugin-image](/docs/how-to/images-and-media/using-gatsby-plugin-image/).
 - [Digital Asset Management](https://cloudinary.com/documentation/digital_asset_management_overview) for enterprise assets
 
 ## Gatsby-source-cloudinary
@@ -77,7 +77,7 @@ module.exports = {
 
 Note that `gatsby-source-cloudinary` takes the following options:
 
-- **`cloudName`** , **`apiKey`** , and **`apiSecret`** **:** These are credentials from your Cloudinary console, stored as three separate environment variables for security.
+- **`cloudName`**, **`apiKey`**, and **`apiSecret`** **:** These are credentials from your Cloudinary console, stored as three separate environment variables for security.
 - **`resourceType`** **:** This is the resource type of the media assets - either an image or a video.
 - **`prefix`** **:** This is the folder (in your Cloudinary account) in which the files reside. In the example above, the folder is called `gatsby-source-cloudinary`. Assign a name of your choice.
   Other optional options are `type`, `tags`, and `maxResult`.

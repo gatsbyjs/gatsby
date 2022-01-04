@@ -1,28 +1,28 @@
 {
   "name": "gatsby-plugin-offline",
   "description": "Gatsby plugin which sets up a site to be able to run offline",
-  "version": "3.11.0-next.0",
+  "version": "5.5.0-next.3",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
-    "cheerio": "^1.0.0-rc.3",
-    "gatsby-core-utils": "^1.11.0-next.0",
-    "glob": "^7.1.6",
+    "@babel/runtime": "^7.15.4",
+    "cheerio": "^1.0.0-rc.10",
+    "gatsby-core-utils": "^3.5.0-next.2",
+    "glob": "^7.2.0",
     "idb-keyval": "^3.2.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "workbox-build": "^4.3.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^0.13.0-next.0",
-    "cpx": "^1.5.0",
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "babel-preset-gatsby-package": "^2.5.0-next.0",
+    "cpy-cli": "^3.1.1",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-utils": "^0.10.0-next.0",
-    "rewire": "^5.0.0"
+    "gatsby-plugin-utils": "^2.5.0-next.0",
+    "rewire": "^6.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline#readme",
   "keywords": [
@@ -35,7 +35,9 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.4.0"
+    "gatsby": "^4.0.0-next",
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
   },
   "repository": {
     "type": "git",
@@ -45,11 +47,11 @@
   "scripts": {
     "build": "npm run build:src && npm run build:sw-append",
     "build:src": "babel src --out-dir . --ignore \"**/__tests__,src/sw-append.js\"",
-    "build:sw-append": "cpx -v src/sw-append.js .",
+    "build:sw-append": "cpy src/sw-append.js .",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "npm run build:sw-append -- --watch & npm run build:src -- --watch"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=14.15.0"
   }
 }

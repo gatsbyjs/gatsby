@@ -1,5 +1,5 @@
 const {
-  setBoundActionCreators,
+  setActions,
   // queue: jobQueue,
   // reportError,
   _unstable_createJob,
@@ -7,29 +7,41 @@ const {
 } = require(`./index`)
 const { pathExists } = require(`fs-extra`)
 const { slash } = require(`gatsby-core-utils`)
-const { getProgressBar, createOrGetProgressBar } = require(`./utils`)
 
 const { setPluginOptions } = require(`./plugin-options`)
 const path = require(`path`)
 
-// create the progressbar once and it will be killed in another lifecycle
-const finishProgressBar = () => {
-  const progressBar = getProgressBar()
-  if (progressBar) {
-    progressBar.done()
+let coreSupportsOnPluginInit
+try {
+  const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(`onPluginInit`)
+  } else {
+    coreSupportsOnPluginInit = isGatsbyNodeLifecycleSupported(
+      `unstable_onPluginInit`
+    )
   }
+} catch (e) {
+  coreSupportsOnPluginInit = false
 }
 
-exports.onPostBuild = () => finishProgressBar()
+function removeCachedValue(cache, key) {
+  if (cache?.del) {
+    // if cache expose ".del" method directly on public interface
+    return cache.del(key)
+  } else if (cache?.cache?.del) {
+    // legacy - using internal cache instance and calling ".del" on it directly
+    return cache.cache.del(key)
+  }
+  return Promise.reject(
+    new Error(`Cache instance doesn't expose ".del" function`)
+  )
+}
 
 exports.onCreateDevServer = async ({ app, cache, reporter }) => {
   if (!_lazyJobsEnabled()) {
-    finishProgressBar()
     return
   }
-
-  createOrGetProgressBar()
-  finishProgressBar()
 
   app.use(async (req, res, next) => {
     const decodedURI = decodeURIComponent(req.path)
@@ -52,20 +64,18 @@ exports.onCreateDevServer = async ({ app, cache, reporter }) => {
     // and postpone all other operations
     // This speeds up the loading of lazy images in the browser and
     // also helps to free up the browser connection queue earlier.
-    const {
-      matchingJob,
-      jobWithRemainingOperations,
-    } = splitOperationsByRequestedFile(cacheResult, pathOnDisk)
+    const { matchingJob, jobWithRemainingOperations } =
+      splitOperationsByRequestedFile(cacheResult, pathOnDisk)
 
     await _unstable_createJob(matchingJob, { reporter })
-    await cache.cache.del(decodedURI)
+    await removeCachedValue(cache, decodedURI)
 
     if (jobWithRemainingOperations.args.operations.length > 0) {
       // There are still some operations pending for this job - replace the cached job
-      await cache.cache.set(jobContentDigest, jobWithRemainingOperations)
+      await cache.set(jobContentDigest, jobWithRemainingOperations)
     } else {
       // No operations left to process - purge the cache
-      await cache.cache.del(jobContentDigest)
+      await removeCachedValue(cache, jobContentDigest)
     }
 
     return res.sendFile(pathOnDisk)
@@ -112,18 +122,30 @@ exports.onPostBootstrap = async ({ reporter, cache, store }) => {
       const job = await cache.get(contentDigest)
 
       if (job) {
-        // we dont have to await, gatsby does this for us
+        // we don't have to await, gatsby does this for us
         _unstable_createJob(job, { reporter })
       }
     }
   }
 }
 
-exports.onPreBootstrap = async (
-  { actions, emitter, reporter, cache, store },
-  pluginOptions
-) => {
-  setBoundActionCreators(actions)
+if (coreSupportsOnPluginInit) {
+  // to properly initialize plugin in worker (`onPreBootstrap` won't run in workers)
+  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
+    exports.onPluginInit = async ({ actions }, pluginOptions) => {
+      setActions(actions)
+      setPluginOptions(pluginOptions)
+    }
+  } else {
+    exports.unstable_onPluginInit = async ({ actions }, pluginOptions) => {
+      setActions(actions)
+      setPluginOptions(pluginOptions)
+    }
+  }
+}
+
+exports.onPreBootstrap = async ({ actions, emitter, cache }, pluginOptions) => {
+  setActions(actions)
   setPluginOptions(pluginOptions)
 
   // below is a hack / hot fix for confusing progress bar behaviour
@@ -174,8 +196,6 @@ exports.onPreBootstrap = async (
         const job = action.payload.job
         const imageCount = job.args.operations.length
         imageCountInJobsMap.set(job.contentDigest, imageCount)
-        const progress = createOrGetProgressBar(reporter)
-        progress.addImageToProcess(imageCount)
       }
     })
 
@@ -188,9 +208,6 @@ exports.onPreBootstrap = async (
           return
         }
 
-        const imageCount = imageCountInJobsMap.get(jobContentDigest)
-        const progress = createOrGetProgressBar(reporter)
-        progress.tick(imageCount)
         imageCountInJobsMap.delete(jobContentDigest)
       }
     })

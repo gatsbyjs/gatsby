@@ -1,9 +1,16 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from "react"
 import EnsureResources from "../ensure-resources"
 import { render, getNodeText, cleanup } from "@testing-library/react"
 
 jest.mock(`../loader`, () => {
   return {
+    PageResourceStatus: {
+      Error: `error`,
+    },
     loadPageSync(path: string): { loadPageSync: boolean; path: string } {
       return { loadPageSync: true, path }
     },
@@ -19,6 +26,7 @@ describe(`EnsureResources`, () => {
   it(`loads pages synchronously`, () => {
     const location = {
       pathname: `/`,
+      search: ``,
     }
     const { container } = render(
       <EnsureResources location={location}>
