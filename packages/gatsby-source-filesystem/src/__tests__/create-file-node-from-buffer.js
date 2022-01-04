@@ -83,7 +83,7 @@ describe(`create-file-node-from-buffer`, () => {
       })
 
       const buffer = createMockBuffer(`buffer-content`)
-      await setup({ buffer })
+      await setup({ buffer, hash: `some-hash` })
 
       expect(ensureDir).toBeCalledTimes(1)
       expect(bufferEq(buffer, output)).toBe(true)
@@ -125,6 +125,8 @@ describe(`create-file-node-from-buffer`, () => {
       expect(() => {
         createFileNodeFromBuffer({
           ...defaultArgs,
+          buffer: createMockBuffer(`some binary content`),
+          hash: `some-hash`,
           createNode: undefined,
         })
       }).toThrowErrorMatchingInlineSnapshot(
@@ -136,6 +138,8 @@ describe(`create-file-node-from-buffer`, () => {
       expect(() => {
         createFileNodeFromBuffer({
           ...defaultArgs,
+          buffer: createMockBuffer(`some binary content`),
+          hash: `some-hash`,
           createNodeId: undefined,
         })
       }).toThrowErrorMatchingInlineSnapshot(
@@ -147,6 +151,8 @@ describe(`create-file-node-from-buffer`, () => {
       expect(() => {
         createFileNodeFromBuffer({
           ...defaultArgs,
+          buffer: createMockBuffer(`some binary content`),
+          hash: `some-hash`,
           cache: undefined,
           getCache: undefined,
         })
@@ -159,6 +165,8 @@ describe(`create-file-node-from-buffer`, () => {
       expect(() => {
         createFileNodeFromBuffer({
           ...defaultArgs,
+          buffer: createMockBuffer(`some binary content`),
+          hash: `some-hash`,
           getCache: () => createMockCache(),
         })
       }).not.toThrow()
@@ -168,6 +176,8 @@ describe(`create-file-node-from-buffer`, () => {
       expect(() => {
         createFileNodeFromBuffer({
           ...defaultArgs,
+          buffer: createMockBuffer(`some binary content`),
+          hash: `some-hash`,
           cache: createMockCache(),
         })
       }).not.toThrow()

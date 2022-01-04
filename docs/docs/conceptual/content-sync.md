@@ -22,7 +22,7 @@ If the build for the preview fails or if no page is created that contains the co
 
 ## Finding the right page for Content Previews
 
-In the case that your content lives on multiple pages, for example a blog post page and a blog listing page, and you find you're being routed to the page you don't want to view your preview on, you can specify which node owns which page using the [`ownerNodeId` setting in the `createPage` API][createpage]. Set the `ownerNodeId` to the Gatsby `node.id` of the node you want to preview for the page.
+In the case that your content lives on multiple pages, for example a blog post page and a blog listing page, and you find you're being routed to the page you don't want to view your preview on, you can specify which node owns which page using the [`ownerNodeId` setting in the `createPage` API][createpage]. Set the `ownerNodeId` to the Gatsby `node.id` of the node you want to preview for the page. Note that the `ownerNodeId` must correspond to the `node.id` of a node which is queried on that page via a GraphQL query.
 
 You will not need to do this if you're building pages using the [File System Route API][fsroutesapi], or if your page context includes a matching `id` property. See the next section for more info on this.
 

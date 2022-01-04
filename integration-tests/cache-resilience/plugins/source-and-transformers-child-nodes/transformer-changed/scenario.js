@@ -139,22 +139,24 @@ const queriesTest = ({ typesDiff, dataDiff }) => {
         \\"typeinfoChild\\": Object {
           \\"fields\\": Array [
             Object {
-              \\"name\\": \\"id\\",
-            },
-            Object {
-              \\"name\\": \\"parent\\",
-            },
-            Object {
               \\"name\\": \\"children\\",
+            },
+            Object {
+    -         \\"name\\": \\"first\\",
+    -       },
+    -       Object {
+              \\"name\\": \\"foo\\",
+            },
+            Object {
+              \\"name\\": \\"id\\",
             },
             Object {
               \\"name\\": \\"internal\\",
             },
             Object {
-              \\"name\\": \\"foo\\",
-            },
-            Object {
-    -         \\"name\\": \\"first\\",
+              \\"name\\": \\"parent\\",
+    +       },
+    +       Object {
     +         \\"name\\": \\"second\\",
             },
           ],
@@ -162,25 +164,25 @@ const queriesTest = ({ typesDiff, dataDiff }) => {
         \\"typeinfoParent\\": Object {
           \\"fields\\": Array [
             Object {
-              \\"name\\": \\"id\\",
-            },
-            Object {
-              \\"name\\": \\"parent\\",
+              \\"name\\": \\"childChildOfParentChildChangeForTransformer\\",
             },
             Object {
               \\"name\\": \\"children\\",
             },
             Object {
-              \\"name\\": \\"internal\\",
+              \\"name\\": \\"childrenChildOfParentChildChangeForTransformer\\",
             },
             Object {
               \\"name\\": \\"foo\\",
             },
             Object {
-              \\"name\\": \\"childrenChildOfParentChildChangeForTransformer\\",
+              \\"name\\": \\"id\\",
             },
             Object {
-              \\"name\\": \\"childChildOfParentChildChangeForTransformer\\",
+              \\"name\\": \\"internal\\",
+            },
+            Object {
+              \\"name\\": \\"parent\\",
             },
           ],
         },

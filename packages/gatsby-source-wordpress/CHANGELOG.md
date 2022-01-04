@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.4.0/packages/gatsby-source-wordpress) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-wordpress [#34152](https://github.com/gatsbyjs/gatsby/issues/34152) ([e4daf5e](https://github.com/gatsbyjs/gatsby/commit/e4daf5e02c6dac3f350facd0cd0ac0ba081478d0))
+
+#### Chores
+
+- update sharp [#34120](https://github.com/gatsbyjs/gatsby/issues/34120) ([df36406](https://github.com/gatsbyjs/gatsby/commit/df3640679b5e161c4fd285b87ed32bb1224928b8))
+
+#### Other Changes
+
+- remove log for manifests created [#34165](https://github.com/gatsbyjs/gatsby/issues/34165) ([58f0d50](https://github.com/gatsbyjs/gatsby/commit/58f0d50743b4e6689d05745071ddd71acddb00d6))
+
+## [6.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.3.0/packages/gatsby-source-wordpress) (2021-12-01)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
+
+#### Bug Fixes
+
+- always hydrate in develop for images [#33989](https://github.com/gatsbyjs/gatsby/issues/33989) ([cce10f0](https://github.com/gatsbyjs/gatsby/commit/cce10f08afbc74680d04cbc2c1edbb71531016d3))
+- fixes createRoot not exists warning fixes [#33991](https://github.com/gatsbyjs/gatsby/issues/33991) ([85875c4](https://github.com/gatsbyjs/gatsby/commit/85875c4006eee40bbf9ea80758d53f1842dbf66a))
+
+## [6.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.2.0/packages/gatsby-source-wordpress) (2021-11-16)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.2)
+
+#### Features
+
+- Update supported-remote-plugin-versions.ts [#33801](https://github.com/gatsbyjs/gatsby/issues/33801) ([144daaa](https://github.com/gatsbyjs/gatsby/commit/144daaa946ad0a6447c3da14ad522fb397cc381d))
+
+#### Bug Fixes
+
+- fixes createRoot not exists warning fixes [#33991](https://github.com/gatsbyjs/gatsby/issues/33991) fixes [#33993](https://github.com/gatsbyjs/gatsby/issues/33993) ([993cc60](https://github.com/gatsbyjs/gatsby/commit/993cc60927bba6555ad675bea5493eaed1f47fe5))
+- always hydrate in develop for images [#33989](https://github.com/gatsbyjs/gatsby/issues/33989) [#33992](https://github.com/gatsbyjs/gatsby/issues/33992) ([9bcfb19](https://github.com/gatsbyjs/gatsby/commit/9bcfb19f163e74aa04f4fc423b7772d9a4f3b057))
+- update minor and patch dependencies for gatsby-source-wordpress [#33372](https://github.com/gatsbyjs/gatsby/issues/33372) ([33b57ed](https://github.com/gatsbyjs/gatsby/commit/33b57edfa3006d5d7ad22278168854478e854383))
+- update dependency sharp to ^0.29.2 [#33766](https://github.com/gatsbyjs/gatsby/issues/33766) ([0dfbc48](https://github.com/gatsbyjs/gatsby/commit/0dfbc48735e2b40b4fbcf4eccef2db38c34ce526))
+
+#### Chores
+
+- update dependency @types/semver to ^7.3.9 [#33752](https://github.com/gatsbyjs/gatsby/issues/33752) ([8ce96d2](https://github.com/gatsbyjs/gatsby/commit/8ce96d2c87610f91914d847645dd75707f270519))
+
+### [6.1.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.1.3/packages/gatsby-source-wordpress) (2021-11-15)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 ### [6.1.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@6.1.2/packages/gatsby-source-wordpress) (2021-11-11)
 
 **Note:** Version bump only for package gatsby-source-wordpress

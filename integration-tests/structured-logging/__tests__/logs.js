@@ -9,7 +9,7 @@ describe(`Activities`, () => {
   let gatsbyProcess
   let events = []
 
-  beforeAll(async done => {
+  beforeAll(done => {
     gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {
       stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
       env: {
@@ -34,7 +34,7 @@ describe(`Activities`, () => {
     })
   })
 
-  afterAll(async () => {
+  afterAll(() => {
     gatsbyProcess.kill()
   })
 

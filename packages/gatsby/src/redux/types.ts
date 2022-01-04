@@ -42,6 +42,7 @@ export interface IGatsbyPage {
   pluginCreatorId: Identifier
   componentPath: SystemPath
   ownerNodeId: Identifier
+  manifestId?: string
   defer?: boolean
   /**
    * INTERNAL. Do not use `page.mode`, it can be removed at any time
@@ -929,6 +930,7 @@ export interface ICreateNodeManifest {
     manifestId: string
     node: IGatsbyNode
     pluginName: string
+    updatedAtUTC?: string | number
   }
 }
 

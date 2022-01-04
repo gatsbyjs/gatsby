@@ -298,16 +298,6 @@ export const sourcePreview = async ({
         node,
       })
     })
-
-    reporter.info(
-      formatLogMessage(
-        `Creating node manifests for ${
-          node.id
-        } with manifestIds: [${previewData.manifestIds
-          .map(id => `"${id}"`)
-          .join(`, `)}]`
-      )
-    )
   }
 }
 

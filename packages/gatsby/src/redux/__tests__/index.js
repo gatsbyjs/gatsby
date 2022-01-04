@@ -219,14 +219,15 @@ describe(`redux db`, () => {
   })
 
   describe(`Sharding`, () => {
-    afterAll(() => {
-      v8Serialize.mockRestore()
-      v8Deserialize.mockRestore()
-    })
     if (isLmdbStore()) {
       // Nodes are stored in LMDB, those tests are irrelevant
       return
     }
+
+    afterAll(() => {
+      v8Serialize.mockRestore()
+      v8Deserialize.mockRestore()
+    })
 
     // we set limit to 1.5 * 1024 * 1024 * 1024 per shard
     // simulating size for page and nodes will allow us to see if we create expected amount of shards
