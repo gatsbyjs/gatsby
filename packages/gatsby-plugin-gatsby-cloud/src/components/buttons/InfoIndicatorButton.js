@@ -1,42 +1,16 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { formatDistance } from "date-fns"
 import { FeedbackTooltipContent } from "../tooltips"
 import trackEvent from "../../utils/trackEvent"
 
 import IndicatorButton from "./IndicatorButton"
-import { infoIcon } from "../icons"
-
-const getButtonProps = props => {
-  const { createdAt, buildStatus, askForFeedback } = props
-  switch (buildStatus) {
-    case `UPTODATE`: {
-      if (askForFeedback) {
-        return {
-          tooltipContent: <FeedbackTooltipContent />,
-          active: true,
-        }
-      }
-      return {
-        tooltipContent: `Preview updated ${formatDistance(
-          Date.now(),
-          new Date(createdAt),
-          { includeSeconds: true }
-        )} ago`,
-        active: true,
-      }
-    }
-    case `SUCCESS`:
-    case `ERROR`:
-    case `BUILDING`:
-    default: {
-      return {}
-    }
-  }
-}
+import { infoIcon, infoAlertIcon } from "../icons"
 
 export default function InfoIndicatorButton(props) {
-  const { orgId, siteId, buildId } = props
-  const buttonProps = getButtonProps(props)
+  const { orgId, siteId, buildId, createdAt, buildStatus, askForFeedback } =
+    props
+  const [buttonProps, setButtonProps] = useState()
+
   const trackHover = () => {
     trackEvent({
       eventType: `PREVIEW_INDICATOR_HOVER`,
@@ -47,10 +21,47 @@ export default function InfoIndicatorButton(props) {
     })
   }
 
+  useEffect(() => {
+    const buildStatusActions = {
+      [`UPTODATE`]: () => {
+        if (askForFeedback) {
+          setButtonProps({
+            tooltipContent: <FeedbackTooltipContent />,
+            active: true,
+            overrideShowTooltip: true,
+            highlighted: true,
+            tooltipClosable: true,
+            onTooltipCloseClick: () => {
+              setButtonProps({ ...buildStatus, overrideShowTooltip: false })
+            },
+          })
+        } else {
+          setButtonProps({
+            tooltipContent: `Preview updated ${formatDistance(
+              Date.now(),
+              new Date(createdAt),
+              { includeSeconds: true }
+            )} ago`,
+            active: true,
+          })
+        }
+      },
+      [`SUCCESS`]: null,
+      [`ERROR`]: null,
+      [`BUILDING`]: null,
+    }
+    const buildStatusAction = buildStatusActions[buildStatus]
+    if (buildStatusAction) {
+      buildStatusAction()
+    } else {
+      setButtonProps({})
+    }
+  }, [props])
+
   return (
     <IndicatorButton
       testId="info"
-      iconSvg={infoIcon}
+      iconSvg={askForFeedback ? infoAlertIcon : infoIcon}
       onMouseEnter={buttonProps?.active && trackHover}
       buttonIndex={props.buttonIndex}
       hoverable={true}

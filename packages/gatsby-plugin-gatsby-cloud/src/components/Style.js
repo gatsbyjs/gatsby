@@ -17,6 +17,7 @@ const Style = () => (
           --gatsby: var(--purple-60);
           --purple-40: #b17acc;
           --purple-20: #f1defa;
+          --purple-10: #f6edfa;
           --dimmedWhite: rgba(255, 255, 255, 0.8);
           --white: #ffffff;
           --black: #000000;
@@ -73,6 +74,10 @@ const Style = () => (
           transition: all 0.3s ease-in-out;
         }
 
+        [data-gatsby-preview-indicator-highlighted-button="true"] {
+          background: var(--purple-10);
+        }
+
         [data-gatsby-preview-indicator-active-button="false"] {
           opacity: 0.3;
           transition: all 0.3s ease-in-out;
@@ -98,7 +103,8 @@ const Style = () => (
           background: black;
           opacity: 1;
           color: white;
-          display: inline;
+          display: flex;
+          align-items: center;
           padding: 10px 13px;
           border-radius: 4px;
           user-select: none;
@@ -157,6 +163,29 @@ const Style = () => (
 
         [data-gatsby-preview-indicator="tooltip-link-text"]:hover {
           text-decoration: underline;
+        }
+
+        [data-gatsby-preview-indicator="tooltip-close-btn"] {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: none;
+          border: none;
+          padding: 0;
+          margin-left: 0.8rem;
+          cursor: pointer;
+        }
+
+        [data-gatsby-preview-indicator="tooltip-close-btn"] svg {
+          color: white;
+          opacity: 0.6;
+          transition-property: color, opacity;
+          transition-duration: 0.3s;
+          transition-easing-function: ease-in-out;
+        }
+
+        [data-gatsby-preview-indicator="tooltip-close-btn"]:hover svg {
+          opacity: 1;
         }
 
         [data-gatsby-preview-indicator="tooltip-svg"] {

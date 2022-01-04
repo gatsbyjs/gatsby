@@ -1,10 +1,11 @@
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 import { IndicatorButtonTooltip } from "../tooltips"
 import { spinnerIcon } from "../icons"
 
 export default function IndicatorButton({
   buttonIndex,
   tooltipContent,
+  tooltipClosable,
   overrideShowTooltip = false,
   iconSvg,
   onClick,
@@ -13,6 +14,7 @@ export default function IndicatorButton({
   testId,
   onMouseEnter,
   hoverable,
+  highlighted,
 }) {
   const [showTooltip, setShowTooltip] = useState(false)
   const isFirstButton = buttonIndex === 0
@@ -32,8 +34,9 @@ export default function IndicatorButton({
         data-gatsby-preview-indicator="button"
         data-gatsby-preview-indicator-active-button={`${active}`}
         data-gatsby-preview-indicator-hoverable={
-          active && hoverable ? `true` : `false`
+          active && hoverable && !highlighted ? `true` : `false`
         }
+        data-gatsby-preview-indicator-highlighted-button={`${highlighted}`}
         style={{ marginTop: marginTop }}
         onMouseEnter={() => {
           setShowTooltip(true)
@@ -56,6 +59,7 @@ export default function IndicatorButton({
             tooltipContent={tooltipContent}
             overrideShowTooltip={overrideShowTooltip}
             showTooltip={showTooltip}
+            canClose={tooltipClosable}
             testId={testId}
           />
         )}

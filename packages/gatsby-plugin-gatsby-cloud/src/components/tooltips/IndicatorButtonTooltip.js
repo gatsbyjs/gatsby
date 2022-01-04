@@ -1,13 +1,22 @@
 import React, { useEffect, useRef, useState } from "react"
+import { closeIcon } from "../icons"
 
 export default function IndicatorButtonTooltip({
   tooltipContent,
   overrideShowTooltip,
   showTooltip,
   testId,
+  canClose,
+  onClose,
 }) {
   const tooltipRef = useRef(null)
   const [visible, setVisible] = useState(overrideShowTooltip || showTooltip)
+  const onCloseClick = event => {
+    event.preventDefault()
+    if (onClose) {
+      onClose()
+    }
+  }
   useEffect(() => {
     if (overrideShowTooltip || showTooltip) {
       setVisible(true)
@@ -39,7 +48,17 @@ export default function IndicatorButtonTooltip({
       data-testid={`${testId}-tooltip`}
       ref={tooltipRef}
     >
-      <div data-gatsby-preview-indicator="tooltip-inner">{tooltipContent}</div>
+      <div data-gatsby-preview-indicator="tooltip-inner">
+        {tooltipContent}
+        {canClose && (
+          <button
+            data-gatsby-preview-indicator="tooltip-close-btn"
+            onClick={onCloseClick}
+          >
+            {closeIcon}
+          </button>
+        )}
+      </div>
     </div>
   )
 }
