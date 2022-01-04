@@ -736,7 +736,7 @@ exports[`babel-plugin-remove-graphql-queries transforms exported variable querie
 var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
 
 exports.__esModule = true;
-exports.default = exports.query = void 0;
+exports.query = exports.default = void 0;
 
 var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
 
