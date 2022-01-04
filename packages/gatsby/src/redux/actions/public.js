@@ -9,7 +9,7 @@ const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
 const { slash, createContentDigest } = require(`gatsby-core-utils`)
 const { hasNodeChanged } = require(`../../utils/nodes`)
-const { getNode } = require(`../../datastore`)
+const { getNode, getDataStore } = require(`../../datastore`)
 const sanitizeNode = require(`../../utils/sanitize-node`)
 const { store } = require(`../index`)
 const { validatePageComponent } = require(`../../utils/validate-page-component`)
@@ -28,6 +28,7 @@ const normalizePath = require(`../../utils/normalize-path`).default
 import { createJobV2FromInternalJob } from "./internal"
 import { maybeSendJobToMainProcess } from "../../utils/jobs/worker-messaging"
 import { reportOnce } from "../../utils/report-once"
+import { wrapNode } from "../../utils/detect-node-mutations"
 
 const isNotTestEnv = process.env.NODE_ENV !== `test`
 const isTestEnv = process.env.NODE_ENV === `test`
@@ -867,12 +868,24 @@ actions.createNode =
     }
 
     const { payload: node, traceId, parentSpan } = createNodeAction
-    return apiRunnerNode(`onCreateNode`, {
-      node,
+    const maybePromise = apiRunnerNode(`onCreateNode`, {
+      node: wrapNode(node),
       traceId,
       parentSpan,
       traceTags: { nodeId: node.id, nodeType: node.internal.type },
     })
+
+    if (maybePromise?.then) {
+      return maybePromise.then(res =>
+        getDataStore()
+          .ready()
+          .then(() => res)
+      )
+    } else {
+      return getDataStore()
+        .ready()
+        .then(() => maybePromise)
+    }
   }
 
 const touchNodeDeprecationWarningDisplayedMessages = new Set()

@@ -198,6 +198,8 @@ const renderHTMLQueue = async (
 
   const sessionId = Date.now()
 
+  const { webpackCompilationHash } = store.getState()
+
   const renderHTML =
     stage === `build-html`
       ? workerPool.single.renderHTMLProd
@@ -212,6 +214,7 @@ const renderHTMLQueue = async (
         htmlComponentRendererPath,
         paths: pageSegment,
         sessionId,
+        webpackCompilationHash,
       })
 
       if (isPreview) {
@@ -412,11 +415,11 @@ export const buildHTML = async ({
 
 export async function buildHTMLPagesAndDeleteStaleArtifacts({
   workerPool,
-  buildSpan,
+  parentSpan,
   program,
 }: {
   workerPool: GatsbyWorkerPool
-  buildSpan?: Span
+  parentSpan?: Span
   program: IBuildArgs
 }): Promise<{
   toRegenerate: Array<string>
@@ -439,7 +442,7 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
       toRegenerate.length,
       0,
       {
-        parentSpan: buildSpan,
+        parentSpan,
       }
     )
     buildHTMLActivityProgress.start()

@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 jest.mock(`accessible-nprogress`)
 
 import NProgress from "accessible-nprogress"

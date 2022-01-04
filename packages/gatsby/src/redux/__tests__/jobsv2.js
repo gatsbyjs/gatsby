@@ -1,9 +1,6 @@
 import { jobsV2Reducer as jobsReducer } from "../reducers/jobsv2"
 import * as jobsManager from "../../utils/jobs/manager"
 
-jest.spyOn(jobsManager, `enqueueJob`)
-jest.spyOn(jobsManager, `removeInProgressJob`)
-
 jest.mock(`gatsby-core-utils`, () => {
   return {
     ...jest.requireActual(`gatsby-core-utils`),
@@ -11,6 +8,16 @@ jest.mock(`gatsby-core-utils`, () => {
     uuid: {
       v4: jest.fn(() => `1234`),
     },
+  }
+})
+
+jest.mock(`../../utils/jobs/manager`, () => {
+  const realJobsManager = jest.requireActual(`../../utils/jobs/manager`)
+
+  return {
+    ...realJobsManager,
+    enqueueJob: jest.fn(realJobsManager.enqueueJob),
+    removeInProgressJob: jest.fn(realJobsManager.removeInProgressJob),
   }
 })
 

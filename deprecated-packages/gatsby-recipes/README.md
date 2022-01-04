@@ -1,5 +1,7 @@
 # Gatsby Recipes
 
+**Please Note: Gatsby Recipes has been removed from `gatsby` with v4.5.0. If you want to use it you can install `gatsby-cli@4.4.0` to use it.**
+
 Recipes is an “infrastructure as code” system that lets users automatically manage and provision the technology stack for their Gatsby site/app through code rather than manual processes.
 
 It’s powered by React & MDX and a useful analogy is “React Native for Infrastructure”.

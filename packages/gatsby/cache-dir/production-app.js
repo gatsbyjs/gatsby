@@ -35,6 +35,8 @@ window.___loader = publicLoader
 
 navigationInit()
 
+const reloadStorageKey = `gatsby-reload-compilation-hash-match`
+
 apiRunnerAsync(`onClientEntry`).then(() => {
   // Let plugins register a service worker. The plugin just needs
   // to return true.
@@ -161,6 +163,39 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   publicLoader.loadPage(browserLoc.pathname + browserLoc.search).then(page => {
+    if (page.page.webpackCompilationHash !== window.___webpackCompilationHash) {
+      // Purge plugin-offline cache
+      if (
+        `serviceWorker` in navigator &&
+        navigator.serviceWorker.controller !== null &&
+        navigator.serviceWorker.controller.state === `activated`
+      ) {
+        navigator.serviceWorker.controller.postMessage({
+          gatsbyApi: `clearPathResources`,
+        })
+      }
+
+      // We have not matching html + js (inlined `window.___webpackCompilationHash`)
+      // with our data (coming from `app-data.json` file). This can cause issues such as
+      // errors trying to load static queries (as list of static queries is inside `page-data`
+      // which might not match to currently loaded `.js` scripts).
+      // We are making attempt to reload if hashes don't match, but we also have to handle case
+      // when reload doesn't fix it (possibly broken deploy) so we don't end up in infinite reload loop
+      if (sessionStorage) {
+        const isReloaded = sessionStorage.getItem(reloadStorageKey) === `1`
+
+        if (!isReloaded) {
+          sessionStorage.setItem(reloadStorageKey, `1`)
+          window.location.reload(true)
+          return
+        }
+      }
+    }
+
+    if (sessionStorage) {
+      sessionStorage.removeItem(reloadStorageKey)
+    }
+
     if (!page || page.status === PageResourceStatus.Error) {
       const message = `page resources for ${browserLoc.pathname} not found. Not rendering React`
 
@@ -173,8 +208,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
       throw new Error(message)
     }
-
-    window.___webpackCompilationHash = page.page.webpackCompilationHash
 
     const SiteRoot = apiRunner(
       `wrapRootElement`,

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.4.0/packages/gatsby-plugin-image) (2021-12-14)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
+
+#### Bug Fixes
+
+- update dependency common-tags to ^1.8.2 for gatsby-plugin-image [#34123](https://github.com/gatsbyjs/gatsby/issues/34123) ([2f61ce3](https://github.com/gatsbyjs/gatsby/commit/2f61ce36c746c25b684bee834c1ed788fe3892f4))
+
+#### Chores
+
+- update dependency typescript to ^4.5.2 [#34144](https://github.com/gatsbyjs/gatsby/issues/34144) ([51bff91](https://github.com/gatsbyjs/gatsby/commit/51bff91246cbc48ba50c9650205b0488691fb82a))
+
 ## [2.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-image@2.3.0/packages/gatsby-plugin-image) (2021-12-01)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.3)
