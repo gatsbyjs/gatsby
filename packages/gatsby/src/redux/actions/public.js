@@ -864,7 +864,7 @@ actions.createNode =
     ).find(action => action.type === `CREATE_NODE`)
 
     if (!createNodeAction) {
-      return undefined
+      return Promise.resolve(undefined)
     }
 
     const { payload: node, traceId, parentSpan } = createNodeAction
