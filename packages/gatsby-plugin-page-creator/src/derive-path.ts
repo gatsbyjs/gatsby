@@ -27,7 +27,7 @@ export function derivePath(
   let errors = 0
 
   // 1.  Incoming path can optionally be stripped of file extension (but not mandatory)
-  let modifiedPath = path
+  let modifiedPath = removeFileExtension(path)
 
   // 2.  Pull out the slug parts that are within { } brackets.
   const slugParts = extractAllCollectionSegments(path)
@@ -57,8 +57,8 @@ export function derivePath(
       return
     }
 
-    // 3.d  Safely slugify all values (to keep URL structures) and remove any trailing slash
-    const value = stripTrailingSlash(safeSlugify(nodeValue, slugifyOptions))
+    // 3.d  Safely slugify all values (to keep URL structures)
+    const value = safeSlugify(nodeValue, slugifyOptions)
 
     // 3.e  replace the part of the slug with the actual value
     modifiedPath = modifiedPath.replace(slugPart, value)
@@ -67,12 +67,9 @@ export function derivePath(
   // 4.  Remove double forward slashes that could occur in the final URL
   modifiedPath = modifiedPath.replace(doubleForwardSlashes, `/`)
 
-  // 5.a  Remove trailing slashes that could occur in the final URL
-  const testPath = stripTrailingSlash(modifiedPath)
-
-  // 5.b  If the final URL appears to be an index path, use the "index" file naming convention
-  if (indexRoute.test(removeFileExtension(testPath))) {
-    modifiedPath = `index${modifiedPath}`
+  // 5.a  If the final URL appears to be an index path, use the "index" file naming convention
+  if (indexRoute.test(modifiedPath)) {
+    modifiedPath = `index`
   }
 
   const derivedPath = modifiedPath

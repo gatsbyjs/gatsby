@@ -1,5 +1,3 @@
-console.log('env var', process.env.TRAILING_SLASH)
-
 module.exports = {
   trailingSlash: process.env.TRAILING_SLASH || `legacy`,
   siteMetadata: {
