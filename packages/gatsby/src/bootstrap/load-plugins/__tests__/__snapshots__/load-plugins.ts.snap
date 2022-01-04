@@ -91,8 +91,8 @@ Array [
     "id": "",
     "name": "functions",
     "nodeAPIs": Array [
-      "onPreBootstrap",
       "onCreateDevServer",
+      "onPreBootstrap",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -398,8 +398,8 @@ Array [
     "id": "",
     "name": "functions",
     "nodeAPIs": Array [
-      "onPreBootstrap",
       "onCreateDevServer",
+      "onPreBootstrap",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -738,8 +738,8 @@ Array [
     "id": "",
     "name": "functions",
     "nodeAPIs": Array [
-      "onPreBootstrap",
       "onCreateDevServer",
+      "onPreBootstrap",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
