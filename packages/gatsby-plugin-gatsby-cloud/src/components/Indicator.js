@@ -132,7 +132,7 @@ export default function Indicator() {
     <PreviewIndicator>
       <GatsbyIndicatorButton {...buttonProps} />
       <LinkIndicatorButton {...buttonProps} />
-      <InfoIndicatorButton {...buttonProps} />
+      <InfoIndicatorButton askForFeedback {...buttonProps} />
     </PreviewIndicator>
   )
 }

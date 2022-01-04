@@ -15,50 +15,51 @@ export default function IndicatorButton({
   hoverable,
 }) {
   const [showTooltip, setShowTooltip] = useState(false)
-  const buttonRef = useRef(null)
   const isFirstButton = buttonIndex === 0
   const marginTop = isFirstButton ? `0px` : `8px`
 
   const onMouseLeave = () => setShowTooltip(false)
+  const onButtonClick = event => {
+    event.stopPropagation()
+    if (active && onClick) {
+      onClick()
+    }
+  }
 
   return (
     <>
       <button
-        ref={buttonRef}
         data-gatsby-preview-indicator="button"
         data-gatsby-preview-indicator-active-button={`${active}`}
         data-gatsby-preview-indicator-hoverable={
           active && hoverable ? `true` : `false`
         }
         style={{ marginTop: marginTop }}
-      >
-        <div
-          data-testid={`${testId}-button`}
-          onMouseEnter={() => {
-            setShowTooltip(true)
+        onMouseEnter={() => {
+          setShowTooltip(true)
 
-            if (onMouseEnter) {
-              onMouseEnter()
-            }
-          }}
-          onMouseLeave={onMouseLeave}
-          onClick={active ? onClick : null}
-        >
+          if (onMouseEnter) {
+            onMouseEnter()
+          }
+        }}
+        onMouseLeave={onMouseLeave}
+        onClick={onButtonClick}
+      >
+        <div data-testid={`${testId}-button`}>
           {iconSvg}
           {showSpinner && (
             <div data-gatsby-preview-indicator="spinner">{spinnerIcon}</div>
           )}
         </div>
+        {tooltipContent && (
+          <IndicatorButtonTooltip
+            tooltipContent={tooltipContent}
+            overrideShowTooltip={overrideShowTooltip}
+            showTooltip={showTooltip}
+            testId={testId}
+          />
+        )}
       </button>
-      {tooltipContent && (
-        <IndicatorButtonTooltip
-          tooltipContent={tooltipContent}
-          overrideShowTooltip={overrideShowTooltip}
-          showTooltip={showTooltip}
-          elementRef={buttonRef}
-          testId={testId}
-        />
-      )}
     </>
   )
 }

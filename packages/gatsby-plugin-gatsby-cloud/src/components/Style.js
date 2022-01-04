@@ -53,6 +53,7 @@ const Style = () => (
         }
 
         [data-gatsby-preview-indicator="button"] {
+          position: relative;
           width: 32px;
           height: 32px;
           padding: 4px;
@@ -84,10 +85,14 @@ const Style = () => (
           animation: spin 1s linear infinite;
           height: 28px;
         }
-
         [data-gatsby-preview-indicator="tooltip"] {
-          position: fixed;
-          margin-left: 48px;
+          position: absolute;
+          padding-left: 35px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+
+        [data-gatsby-preview-indicator="tooltip-inner"] {
           line-height: 12px;
           background: black;
           opacity: 1;
@@ -97,6 +102,7 @@ const Style = () => (
           border-radius: 4px;
           user-select: none;
           white-space: nowrap;
+          cursor: default;
         }
 
         [data-gatsby-preview-indicator-visible="false"] {
@@ -109,6 +115,13 @@ const Style = () => (
           opacity: 1;
           will-change: opacity;
           transition: all 0.2s ease-in-out;
+        }
+
+        [data-gatsby-preview-indicator-removed="false"] {
+          display: inline;
+        }
+        [data-gatsby-preview-indicator-removed="true"] {
+          display: none;
         }
 
         [data-gatsby-preview-indicator="tooltip-link"] {

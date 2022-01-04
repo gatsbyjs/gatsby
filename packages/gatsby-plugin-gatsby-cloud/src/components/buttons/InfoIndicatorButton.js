@@ -1,14 +1,21 @@
 import React from "react"
 import { formatDistance } from "date-fns"
+import { FeedbackTooltipContent } from "../tooltips"
 import trackEvent from "../../utils/trackEvent"
 
 import IndicatorButton from "./IndicatorButton"
 import { infoIcon } from "../icons"
 
 const getButtonProps = props => {
-  const { createdAt, buildStatus } = props
+  const { createdAt, buildStatus, askForFeedback } = props
   switch (buildStatus) {
     case `UPTODATE`: {
+      if (askForFeedback) {
+        return {
+          tooltipContent: <FeedbackTooltipContent />,
+          active: true,
+        }
+      }
       return {
         tooltipContent: `Preview updated ${formatDistance(
           Date.now(),
