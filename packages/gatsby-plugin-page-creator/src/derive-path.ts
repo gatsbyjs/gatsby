@@ -25,7 +25,7 @@ export function derivePath(
   // 0. Since this function will be called for every path times count of nodes the errors will be counted and then the calling function will throw the error once
   let errors = 0
 
-  // 1.  Incoming path can optionally be stripped of file extension (but not mandatory)
+  // 1.  Incoming path can optionally contain file extension
   let modifiedPath = removeFileExtension(path)
 
   // 2.  Pull out the slug parts that are within { } brackets.

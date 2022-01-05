@@ -262,6 +262,24 @@ describe(`derive-path`, () => {
         reporter
       ).derivedPath
     ).toEqual(`foo/dolores/[...name]`)
+    expect(
+      derivePath(
+        `{Model.name}/[...name]`,
+        {
+          name: `dolores`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`dolores/[...name]`)
+    expect(
+      derivePath(
+        `{Model.name}/[name]`,
+        {
+          name: `dolores`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`dolores/[name]`)
   })
 
   it(`supports index paths`, () => {

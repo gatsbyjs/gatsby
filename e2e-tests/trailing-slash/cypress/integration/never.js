@@ -32,6 +32,22 @@ describe(`never`, () => {
   cy.waitForRouteChange()
     .assertRoute(`/fs-api/without`)
  })
+ it(`fs-api-simple with slash`, () => {
+  cy.getTestElement(`fs-api-simple-with`).click()
+  cy.waitForRouteChange()
+    .assertRoute(`/fs-api-simple/with`)
+ })
+ it(`fs-api-simple without slash`, () => {
+  cy.getTestElement(`fs-api-simple-without`).click()
+  cy.waitForRouteChange()
+    .assertRoute(`/fs-api-simple/without`)
+ })
+ it(`gatsbyPath works`, () => {
+  cy.getTestElement(`gatsby-path-1`)
+    .should('have.attr', 'href', '/fs-api-simple/with')
+  cy.getTestElement(`gatsby-path-2`)
+    .should('have.attr', 'href', '/fs-api-simple/without')
+ })
  it(`hash`, () => {
   cy.getTestElement(`hash`).click()
   cy.waitForRouteChange()

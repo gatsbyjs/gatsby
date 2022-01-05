@@ -1,7 +1,8 @@
 import * as React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 
-const IndexPage = () => {
+const IndexPage = ({ data }) => {
+  const { allPost: { nodes: posts } } = data
   return (
     <main>
       <h1>Trailing Slash Testing</h1>
@@ -37,6 +38,16 @@ const IndexPage = () => {
           </Link>
         </li>
         <li>
+          <Link to="/fs-api-simple/with/" data-testid="fs-api-simple-with">
+            FS API Simple With Trailing Slash
+          </Link>
+        </li>
+        <li>
+          <Link to="/fs-api-simple/without" data-testid="fs-api-simple-without">
+            FS API Simple Without Trailing Slash
+          </Link>
+        </li>
+        <li>
           <Link to="/page-2#anchor" data-testid="hash">
             Go to page-2 with hash
           </Link>
@@ -54,9 +65,28 @@ const IndexPage = () => {
             Go to page-2 with query param and hash
           </Link>
         </li>
+        {posts.map(post => (
+          <li key={post._id}>
+            <Link to={post.gatsbyPath} data-testid={`gatsby-path-${post._id}`}>
+              Go to {post.slug} from gatsbyPath
+            </Link>
+          </li>
+        ))}
       </ul>
     </main>
   )
 }
 
 export default IndexPage
+
+export const query = graphql`
+  {
+    allPost {
+      nodes {
+        _id
+        slug
+        gatsbyPath(filePath: "/fs-api-simple/{Post.slug}")
+      }
+    }
+  }
+`

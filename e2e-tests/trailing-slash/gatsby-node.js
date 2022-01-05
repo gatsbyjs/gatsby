@@ -3,13 +3,13 @@ const posts = [
     id: 1,
     slug: `/with/`,
     title: `With Trailing Slash`,
-    content: `This is a test`,
+    content: `With Trailing Slash`,
   },
   {
     id: 2,
     slug: `/without`,
     title: `Without Trailing Slash`,
-    content: `This is a test`,
+    content: `Without Trailing Slash`,
   },
   {
     id: 3,
@@ -26,6 +26,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     createNode({
       ...post,
       id: createNodeId(`post-${post.id}`),
+      _id: post.id,
       parent: null,
       children: [],
       internal: {

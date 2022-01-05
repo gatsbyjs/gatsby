@@ -124,8 +124,10 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
       reporter,
       slugifyOptions
     )
+    // TODO(v5): Remove legacy handling
     const isLegacy = trailingSlash === `legacy`
-    const path = createPath(derivedPath, isLegacy)
+    const hasTrailingSlash = derivedPath.endsWith(`/`)
+    const path = createPath(derivedPath, isLegacy || hasTrailingSlash, true)
     // We've already created a page with this path
     if (knownPagePaths.has(path)) {
       return
@@ -138,11 +140,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
     // matchPath is an optional value. It's used if someone does a path like `{foo}/[bar].js`
     const matchPath = getMatchPath(path)
 
-    const legacyPathHandling = isLegacy ? path : posix.join(`/`, derivedPath)
-    const modifiedPath = applyTrailingSlashOption(
-      legacyPathHandling,
-      trailingSlash
-    )
+    const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
 
     actions.createPage({
       path: modifiedPath,
