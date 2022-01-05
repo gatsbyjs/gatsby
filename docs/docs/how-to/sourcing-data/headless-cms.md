@@ -20,18 +20,18 @@ We've included setup guides, and links to the integration documentation as well 
 
 The following CMSs have high popularity among Gatsby users and support key functionality like content previews and incremental builds. If you're choosing between CMSs, we recommend reading the [Choosing Your CMS(s)](https://www.gatsbyjs.com/docs/conceptual/choosing-a-cms/) documentation.
 
-| CMS                                           | Guides                                                         | Plugin Docs                                 | Official Starter                                                   |
-| --------------------------------------------- | -------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------ |
-| [Contentful](https://www.contentful.com/)     | [guide](/docs/how-to/sourcing-data/sourcing-from-contentful/)  | [docs](/plugins/gatsby-source-contentful)   | [starter](/starters/contentful/starter-gatsby-blog/)               |
-| [WordPress](https://www.wordpress.com/)       | [guide](/docs/how-to/sourcing-data/sourcing-from-wordpress/)   | [docs](/plugins/gatsby-source-wordpress)    | [starter](/starters/gatsbyjs/gatsby-starter-wordpress-blog)        |
-| [Shopify](https://www.shopify.com/)           | [guide](/docs/building-an-ecommerce-site-with-shopify/)        | [docs](/plugins/gatsby-source-shopify)      | [starter](/starters/gatsbyjs/gatsby-starter-shopify/)              |
-| [Sanity](https://www.sanity.io/)              | [guide](/docs/sourcing-from-sanity)                            | [docs](/plugins/gatsby-source-sanity/)      |
-| [Strapi](https://strapi.io/)                  | [guide](/blog/2018-1-18-strapi-and-gatsby/)                    | [docs](/plugins/gatsby-source-strapi)       |                                                                    |
+| CMS                                           | Guides                                                         | Plugin Docs                                 | Official Starter                                                         |
+| --------------------------------------------- | -------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------ |
+| [Contentful](https://www.contentful.com/)     | [guide](/docs/how-to/sourcing-data/sourcing-from-contentful/)  | [docs](/plugins/gatsby-source-contentful)   | [starter](/starters/contentful/starter-gatsby-blog/)                     |
+| [WordPress](https://www.wordpress.com/)       | [guide](/docs/how-to/sourcing-data/sourcing-from-wordpress/)   | [docs](/plugins/gatsby-source-wordpress)    | [starter](/starters/gatsbyjs/gatsby-starter-wordpress-blog)              |
+| [Shopify](https://www.shopify.com/)           | [guide](/docs/building-an-ecommerce-site-with-shopify/)        | [docs](/plugins/gatsby-source-shopify)      | [starter](/starters/gatsbyjs/gatsby-starter-shopify/)                    |
+| [Sanity](https://www.sanity.io/)              | [guide](/docs/sourcing-from-sanity)                            | [docs](/plugins/gatsby-source-sanity/)      | [starter](https://github.com/sanity-io/sanity-template-gatsby-portfolio) |
+| [Strapi](https://strapi.io/)                  | [guide](/guides/strapi/)                                       | [docs](/plugins/gatsby-source-strapi)       |                                                                          |
 | [Contentstack](https://www.contentstack.com/) | [guide](/docs/sourcing-from-contentstack)                      | [docs](/plugins/gatsby-source-contentstack) |
-| [DatoCMS](https://www.datocms.com/)           | [guide](https://www.gatsbyjs.com/guides/datocms/)              | [docs](/plugins/gatsby-source-datocms)      | [starter](/starters/datocms/gatsby-blog-demo/)                     |
-| [Drupal](https://www.drupal.com/)             | [guide](/docs/how-to/sourcing-data/sourcing-from-drupal/)      | [docs](/plugins/gatsby-source-drupal)       |                                                                    |
-| [Prismic](https://www.prismic.io/)            | [guide](/docs/how-to/sourcing-data/sourcing-from-prismic/)     | [docs](/plugins/gatsby-source-prismic)      | [starter](https://github.com/prismicio/gatsby-blog)                |
-| [NetlifyCMS](https://www.netlifycms.org/)     | [guide](/docs/how-to/sourcing-data/sourcing-from-netlify-cms/) | [docs](/plugins/gatsby-plugin-netlify-cms)  | [starter](/starters/netlify-templates/gatsby-starter-netlify-cms/) |
+| [DatoCMS](https://www.datocms.com/)           | [guide](https://www.gatsbyjs.com/guides/datocms/)              | [docs](/plugins/gatsby-source-datocms)      | [starter](/starters/datocms/gatsby-blog-demo/)                           |
+| [Drupal](https://www.drupal.com/)             | [guide](/docs/how-to/sourcing-data/sourcing-from-drupal/)      | [docs](/plugins/gatsby-source-drupal)       |                                                                          |
+| [Prismic](https://www.prismic.io/)            | [guide](/docs/how-to/sourcing-data/sourcing-from-prismic/)     | [docs](/plugins/gatsby-source-prismic)      | [starter](https://github.com/prismicio/gatsby-blog)                      |
+| [NetlifyCMS](https://www.netlifycms.org/)     | [guide](/docs/how-to/sourcing-data/sourcing-from-netlify-cms/) | [docs](/plugins/gatsby-plugin-netlify-cms)  | [starter](/starters/netlify-templates/gatsby-starter-netlify-cms/)       |
 
 ## Other CMSs
 
