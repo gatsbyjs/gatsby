@@ -1,6 +1,5 @@
 // Move this to gatsby-core-utils?
 import { Actions, CreatePagesArgs } from "gatsby"
-import { posix } from "path"
 import { createPath } from "gatsby-page-utils"
 import { Reporter } from "gatsby/reporter"
 import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
