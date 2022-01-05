@@ -472,7 +472,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: e2e-tests/trailing-slash
-          test_command: yarn test:always && yarn test:never && yarn test:ignore
+          test_command: yarn test
       - store_test_results:
           path: e2e-tests/trailing-slash/cypress/results
 

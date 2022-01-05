@@ -5,7 +5,7 @@
   "author": "LekoArts",
   "dependencies": {
     "cypress": "^9.1.1",
-    "gatsby": "next",
+    "gatsby": "4.5.0-next.3-dev-1641299239226",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
@@ -24,15 +24,17 @@
     "cy:build:option": "cross-env-shell cypress run --browser chrome --config testFiles=$OPTION.js,baseUrl=http://localhost:9000 --env IS_BUILD=y",
     "develop:option": "cross-env-shell CYPRESS_SUPPORT=y TRAILING_SLASH=$OPTION gatsby develop",
     "build:option": "cross-env-shell CYPRESS_SUPPORT=y TRAILING_SLASH=$OPTION gatsby build",
-    "test:option:develop": "cross-env-shell OPTION=$OPTION start-server-and-test develop:option http://localhost:8000 cy:develop:option",
-    "test:option:build": "cross-env-shell OPTION=$OPTION start-server-and-test serve http://localhost:9000 cy:build:option",
-    "test:always": "cross-env OPTION=always npm run build:option && cross-env OPTION=always npm run test:option:build && cross-env OPTION=always npm run test:option:develop",
-    "test:never": "cross-env OPTION=never npm run build:option && cross-env OPTION=never npm run test:option:build && cross-env OPTION=never npm run test:option:develop",
-    "test:ignore": "cross-env OPTION=ignore npm run build:option && cross-env OPTION=ignore npm run test:option:build && cross-env OPTION=ignore npm run test:option:develop"
+    "t:opt:develop": "cross-env-shell OPTION=$OPTION start-server-and-test develop:option http://localhost:8000 cy:develop:option",
+    "t:opt:build": "cross-env-shell OPTION=$OPTION start-server-and-test serve http://localhost:9000 cy:build:option",
+    "test:always": "cross-env OPTION=always npm run build:option && cross-env OPTION=always npm run t:opt:build && cross-env OPTION=always npm run t:opt:develop",
+    "test:never": "cross-env OPTION=never npm run build:option && cross-env OPTION=never npm run t:opt:build && cross-env OPTION=never npm run t:opt:develop",
+    "test:ignore": "cross-env OPTION=ignore npm run build:option && cross-env OPTION=ignore npm run t:opt:build && cross-env OPTION=ignore npm run t:opt:develop",
+    "test": "npm-run-all -c -s test:always test:never test:ignore"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
     "gatsby-cypress": "^2.4.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1",
     "start-server-and-test": "^1.14.0"
   }
