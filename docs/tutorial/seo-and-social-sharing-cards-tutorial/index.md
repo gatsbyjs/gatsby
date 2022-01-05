@@ -197,15 +197,15 @@ function SEO({ description, lang, meta, image: metaImage, title }) {
           content: site.siteMetadata.keywords.join(","),
         },
         {
-          property: `og:title`,
+          name: `og:title`,
           content: title,
         },
         {
-          property: `og:description`,
+          name: `og:description`,
           content: metaDescription,
         },
         {
-          property: `og:type`,
+          name: `og:type`,
           content: `website`,
         },
         {
@@ -353,15 +353,15 @@ function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
           content: site.siteMetadata.keywords.join(","),
         },
         {
-          property: `og:title`,
+          name: `og:title`,
           content: title,
         },
         {
-          property: `og:description`,
+          name: `og:description`,
           content: metaDescription,
         },
         {
-          property: `og:type`,
+          name: `og:type`,
           content: `website`,
         },
         {
@@ -381,15 +381,15 @@ function SEO({ description, lang, meta, image: metaImage, title, pathname }) {
           metaImage
             ? [
                 {
-                  property: "og:image",
+                  name: "og:image",
                   content: image,
                 },
                 {
-                  property: "og:image:width",
+                  name: "og:image:width",
                   content: metaImage.width,
                 },
                 {
-                  property: "og:image:height",
+                  name: "og:image:height",
                   content: metaImage.height,
                 },
                 {
