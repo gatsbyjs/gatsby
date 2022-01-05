@@ -6,7 +6,11 @@ import getManifestForPathname from "./get-manifest-pathname"
 if (__MANIFEST_PLUGIN_HAS_LOCALISATION__) {
   exports.onRouteUpdate = function ({ location }, pluginOptions) {
     const { localize } = pluginOptions
-    const manifestFilename = getManifestForPathname(location.pathname, localize)
+    const manifestFilename = getManifestForPathname(
+      location.pathname,
+      localize,
+      true
+    )
 
     const manifestEl = document.head.querySelector(`link[rel="manifest"]`)
     if (manifestEl) {

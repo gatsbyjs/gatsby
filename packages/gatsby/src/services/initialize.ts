@@ -21,6 +21,7 @@ import { IBuildContext } from "./types"
 import { detectLmdbStore } from "../datastore"
 import { loadConfigAndPlugins } from "../bootstrap/load-config-and-plugins"
 import type { InternalJob } from "../utils/jobs/types"
+import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
 
 interface IPluginResolution {
   resolve: string
@@ -184,6 +185,10 @@ export async function initialize({
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `true`
   }
   const lmdbStoreIsUsed = detectLmdbStore()
+
+  if (process.env.GATSBY_DETECT_NODE_MUTATIONS) {
+    enableNodeMutationsDetection()
+  }
 
   if (config && config.polyfill) {
     reporter.warn(
