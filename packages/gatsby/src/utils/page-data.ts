@@ -175,7 +175,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
     // We use this manifestId to determine if the page data is up to date when routing. Here we create a map of "pagePath": "manifestId" while processing and writing node manifest files.
     // We only do this when there are pending page-data writes because otherwise we could flush pending createNodeManifest calls before page-data.json files are written. Which means those page-data files wouldn't have the corresponding manifest id's written to them.
     nodeManifestPagePathMap = await processNodeManifests()
-    
+
     writePageDataActivity = reporter.createProgress(
       `Writing page-data.json files to public directory`,
       pagePaths.size,
@@ -271,7 +271,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
     })
   }
   if (writePageDataActivity) {
-    writePageDataActivity.end() 
+    writePageDataActivity.end()
   }
 
   isFlushing = false
