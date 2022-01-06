@@ -63,6 +63,34 @@ describe(`always`, () => {
   cy.waitForRouteChange()
     .assertRoute(`/page-2/?query_param=hello#anchor`)
  })
+ it(`client-only-simple without slash`, () => {
+  cy.getTestElement(`client-only-simple-without`).click()
+  cy.waitForRouteChange()
+    .assertRoute(`/client-only/without/`)
+  cy.getTestElement(`title`)
+    .should(`have.text`, `without`)
+ })
+ it(`client-only-simple with slash`, () => {
+  cy.getTestElement(`client-only-simple-with`).click()
+  cy.waitForRouteChange()
+    .assertRoute(`/client-only/with/`)
+  cy.getTestElement(`title`)
+    .should(`have.text`, `with`)
+ })
+ it(`client-only without slash`, () => {
+  cy.getTestElement(`client-only-without`).click()
+  cy.waitForRouteChange()
+    .assertRoute(`/fs-api/without/without/`)
+  cy.getTestElement(`title`)
+    .should(`have.text`, `without`)
+ })
+ it(`client-only with slash`, () => {
+  cy.getTestElement(`client-only-with`).click()
+  cy.waitForRouteChange()
+    .assertRoute(`/fs-api/with/with/`)
+  cy.getTestElement(`title`)
+    .should(`have.text`, `with`)
+ })
 })
 
 if (Cypress.env(`IS_BUILD`)) {
@@ -77,11 +105,23 @@ if (Cypress.env(`IS_BUILD`)) {
       cy.visit(`/create-page/without`).waitForRouteChange()
         .assertRoute(`/create-page/without/`)
     })
-    it(`fs-api`, () => {
-      cy.visit(`/fs-api/with/`).waitForRouteChange()
-        .assertRoute(`/fs-api/with/`)
-      cy.visit(`/fs-api/without`).waitForRouteChange()
-        .assertRoute(`/fs-api/without/`)
+    it(`fs-api-simple`, () => {
+      cy.visit(`/fs-api-simple/with/`).waitForRouteChange()
+        .assertRoute(`/fs-api-simple/with/`)
+      cy.visit(`/fs-api-simple/without`).waitForRouteChange()
+        .assertRoute(`/fs-api-simple/without/`)
+    })
+    it(`client-only-simple`, () => {
+      cy.visit(`/client-only/with/`).waitForRouteChange()
+        .assertRoute(`/client-only/with/`)
+      cy.visit(`/client-only/without`).waitForRouteChange()
+        .assertRoute(`/client-only/without/`)
+    })
+    it(`client-only`, () => {
+      cy.visit(`/fs-api/with/with/`).waitForRouteChange()
+        .assertRoute(`/fs-api/with/with/`)
+      cy.visit(`/fs-api/without/without`).waitForRouteChange()
+        .assertRoute(`/fs-api/without/without/`)
     })
   })
 }
