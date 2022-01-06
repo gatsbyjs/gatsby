@@ -220,7 +220,14 @@ export function setFieldsOnGraphQLNodeType(
               reporter,
               slugifyOptions
             )
-            const path = createPath(derivedPath)
+            // TODO(v5): Remove legacy handling
+            const isLegacy = trailingSlash === `legacy`
+            const hasTrailingSlash = derivedPath.endsWith(`/`)
+            const path = createPath(
+              derivedPath,
+              isLegacy || hasTrailingSlash,
+              true
+            )
             const modifiedPath = applyTrailingSlashOption(path, trailingSlash)
 
             return modifiedPath
