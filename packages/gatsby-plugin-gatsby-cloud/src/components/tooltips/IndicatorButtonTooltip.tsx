@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { FC, useEffect, useRef, useState, MouseEvent } from "react"
+import { IIndicatorButtonTooltipProps } from "../../models/components"
 import { closeIcon } from "../icons"
 
-export default function IndicatorButtonTooltip({
+const IndicatorButtonTooltip: FC<IIndicatorButtonTooltipProps> = ({
   content,
   overrideShow,
   show,
@@ -10,10 +11,10 @@ export default function IndicatorButtonTooltip({
   onClose,
   onAppear,
   onDisappear,
-}) {
-  const tooltipRef = useRef(null)
+}) => {
+  const tooltipRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(overrideShow || show)
-  const onCloseClick = event => {
+  const onCloseClick = (event: MouseEvent<HTMLSpanElement>): void => {
     event.preventDefault()
     if (onClose) {
       onClose()
@@ -25,27 +26,27 @@ export default function IndicatorButtonTooltip({
     }
   }, [overrideShow, show])
   useEffect(() => {
-    const onTransitionEnd = ({ propertyName }) => {
-      if (window && propertyName === `opacity`) {
-        const opacity = window
-          .getComputedStyle(tooltipRef.current)
-          .getPropertyValue(`opacity`)
-        if (opacity === `0`) {
-          if (onDisappear) {
-            onDisappear()
-          }
-          setVisible(false)
-        } else {
-          if (onAppear) {
-            onAppear()
+    const onTransitionEnd = ({ propertyName }: TransitionEvent): void => {
+      if (tooltipRef.current) {
+        if (window && propertyName === `opacity`) {
+          const opacity = window
+            .getComputedStyle(tooltipRef.current)
+            .getPropertyValue(`opacity`)
+          if (opacity === `0`) {
+            if (onDisappear) {
+              onDisappear()
+            }
+            setVisible(false)
+          } else {
+            if (onAppear) {
+              onAppear()
+            }
           }
         }
+        tooltipRef.current.addEventListener(`transitionend`, onTransitionEnd)
       }
     }
-    if (tooltipRef.current) {
-      tooltipRef.current.addEventListener(`transitionend`, onTransitionEnd)
-    }
-    return () => {
+    return (): void => {
       if (tooltipRef.current) {
         tooltipRef.current.removeEventListener(`transitionend`, onTransitionEnd)
       }
@@ -73,3 +74,5 @@ export default function IndicatorButtonTooltip({
     </div>
   )
 }
+
+export default IndicatorButtonTooltip

@@ -1,7 +1,16 @@
-import React from "react"
+import React, { FC } from "react"
 import trackEvent from "../../utils/trackEvent"
 
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms || 50))
+interface IBuildSuccessTooltipContent {
+  siteId: string
+  orgId: string
+  buildId: string
+  sitePrefix: string
+  isOnPrettyUrl: boolean
+}
+
+const delay = (ms: number): Promise<number> =>
+  new Promise(resolve => setTimeout(resolve, ms || 50))
 
 const newPreviewAvailableClick = async ({
   isOnPrettyUrl,
@@ -9,7 +18,7 @@ const newPreviewAvailableClick = async ({
   orgId,
   siteId,
   buildId,
-}) => {
+}: IBuildSuccessTooltipContent): Promise<void> => {
   trackEvent({
     eventType: `PREVIEW_INDICATOR_CLICK`,
     orgId,
@@ -37,30 +46,30 @@ const newPreviewAvailableClick = async ({
   }
 }
 
-export default function BuildSuccessTooltipContent({
+const BuildSuccessTooltipContent: FC<IBuildSuccessTooltipContent> = ({
   isOnPrettyUrl,
   sitePrefix,
   orgId,
   siteId,
   buildId,
-}) {
-  return (
-    <>
-      {`New preview available`}
-      <button
-        onClick={() => {
-          newPreviewAvailableClick({
-            isOnPrettyUrl,
-            sitePrefix,
-            orgId,
-            siteId,
-            buildId,
-          })
-        }}
-        data-gatsby-preview-indicator="tooltip-link"
-      >
-        <p data-gatsby-preview-indicator="tooltip-link-text">{`Click to view`}</p>
-      </button>
-    </>
-  )
-}
+}) => (
+  <>
+    {`New preview available`}
+    <button
+      onClick={(): void => {
+        newPreviewAvailableClick({
+          isOnPrettyUrl,
+          sitePrefix,
+          orgId,
+          siteId,
+          buildId,
+        })
+      }}
+      data-gatsby-preview-indicator="tooltip-link"
+    >
+      <p data-gatsby-preview-indicator="tooltip-link-text">{`Click to view`}</p>
+    </button>
+  </>
+)
+
+export default BuildSuccessTooltipContent

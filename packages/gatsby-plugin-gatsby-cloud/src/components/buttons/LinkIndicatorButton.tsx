@@ -19,7 +19,6 @@ const getBaseButtonProps = ({
     iconSvg: linkIcon,
   }
   const activeProps = {
-    ...baseProps,
     active: true,
     tooltip: {
       content: `Copy Link`,
@@ -31,9 +30,11 @@ const getBaseButtonProps = ({
     [BuildStatus.SUCCESS]: null,
     [BuildStatus.ERROR]: null,
   }
-  const buttonProps = buildStatusProps[buildStatus]
-  console.log(buttonProps)
-  return buttonProps || baseProps
+  const props = buildStatusProps[buildStatus]
+  if (props) {
+    return { ...baseProps, ...props }
+  }
+  return baseProps
 }
 
 const copySuccessTooltip = (
