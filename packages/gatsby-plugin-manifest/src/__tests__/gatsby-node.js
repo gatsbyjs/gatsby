@@ -532,12 +532,11 @@ describe(`Test plugin manifest options`, () => {
 
 describe(`pluginOptionsSchema`, () => {
   it(`validates options correctly`, async () => {
-    expect(await testPluginOptionsSchema(pluginOptionsSchema, manifestOptions))
-      .toMatchInlineSnapshot(`
-      Object {
-        "errors": Array [],
-        "isValid": true,
-      }
-    `)
+    const { isValid } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      manifestOptions
+    )
+
+    expect(isValid).toBe(true)
   })
 })
