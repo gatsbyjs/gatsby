@@ -1,8 +1,10 @@
 yarn.lock
-/*.js
+/**/*.js
 /**/*.map
+!/src/**/*.js
 !index.js
 
 /components/
+/models/
 assets/
 utils/

@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../src/models/enums/build-status.ts"],"names":["BuildStatus"],"mappings":";;;;IAAYA,W;;;WAAAA,W;AAAAA,EAAAA,W;AAAAA,EAAAA,W;AAAAA,EAAAA,W;AAAAA,EAAAA,W;GAAAA,W,2BAAAA,W","sourcesContent":["export enum BuildStatus {\n  SUCCESS = `SUCCESS`,\n  UPTODATE = `UPTODATE`,\n  ERROR = `ERROR`,\n  BUILDING = `BUILDING`,\n}\n"],"file":"build-status.js"}
