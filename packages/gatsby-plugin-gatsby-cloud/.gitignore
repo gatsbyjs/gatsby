@@ -1,5 +1,6 @@
 yarn.lock
 /*.js
+/*.map
 !index.js
 
 /components/

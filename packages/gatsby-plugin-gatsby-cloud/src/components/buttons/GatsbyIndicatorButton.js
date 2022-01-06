@@ -18,37 +18,43 @@ const getButtonProps = ({
   switch (buildStatus) {
     case `SUCCESS`: {
       return {
-        tooltipContent: (
-          <BuildSuccessTooltipContent
-            isOnPrettyUrl={isOnPrettyUrl}
-            sitePrefix={sitePrefix}
-            buildId={buildId}
-            siteId={siteId}
-            orgId={orgId}
-          />
-        ),
-        overrideShowTooltip: true,
+        tooltip: {
+          content: (
+            <BuildSuccessTooltipContent
+              isOnPrettyUrl={isOnPrettyUrl}
+              sitePrefix={sitePrefix}
+              buildId={buildId}
+              siteId={siteId}
+              orgId={orgId}
+            />
+          ),
+          overrideShow: true,
+        },
         active: true,
       }
     }
     case `ERROR`: {
       return {
-        tooltipContent: (
-          <BuildErrorTooltipContent
-            siteId={siteId}
-            orgId={orgId}
-            buildId={erroredBuildId}
-          />
-        ),
-        overrideShowTooltip: true,
+        tooltip: {
+          content: (
+            <BuildErrorTooltipContent
+              siteId={siteId}
+              orgId={orgId}
+              buildId={erroredBuildId}
+            />
+          ),
+          overrideShow: true,
+        },
         active: true,
       }
     }
     case `BUILDING`: {
       return {
-        tooltipContent: `Building a new preview`,
+        tooltip: {
+          content: `Building a new preview`,
+          overrideShow: true,
+        },
         showSpinner: true,
-        overrideShowTooltip: true,
       }
     }
     case `UPTODATE`: {

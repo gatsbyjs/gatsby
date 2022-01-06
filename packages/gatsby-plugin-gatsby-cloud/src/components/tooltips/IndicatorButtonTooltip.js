@@ -2,15 +2,17 @@ import React, { useEffect, useRef, useState } from "react"
 import { closeIcon } from "../icons"
 
 export default function IndicatorButtonTooltip({
-  tooltipContent,
-  overrideShowTooltip,
-  showTooltip,
+  content,
+  overrideShow,
+  show,
   testId,
-  canClose,
+  closable,
   onClose,
+  onAppear,
+  onDisappear,
 }) {
   const tooltipRef = useRef(null)
-  const [visible, setVisible] = useState(overrideShowTooltip || showTooltip)
+  const [visible, setVisible] = useState(overrideShow || show)
   const onCloseClick = event => {
     event.preventDefault()
     if (onClose) {
@@ -18,10 +20,10 @@ export default function IndicatorButtonTooltip({
     }
   }
   useEffect(() => {
-    if (overrideShowTooltip || showTooltip) {
+    if (overrideShow || show) {
       setVisible(true)
     }
-  }, [overrideShowTooltip, showTooltip])
+  }, [overrideShow, show])
   useEffect(() => {
     const onTransitionEnd = ({ propertyName }) => {
       if (propertyName === `opacity`) {
@@ -29,34 +31,41 @@ export default function IndicatorButtonTooltip({
           .getComputedStyle(tooltipRef.current)
           .getPropertyValue(`opacity`)
         if (opacity === `0`) {
+          if (onDisappear) {
+            onDisappear()
+          }
           setVisible(false)
+        } else {
+          if (onAppear) {
+            onAppear()
+          }
         }
       }
     }
     tooltipRef.current.addEventListener(`transitionend`, onTransitionEnd)
     return () => {
-      tooltipRef.current.removeEventListener(`transitionEnd`, onTransitionEnd)
+      if (tooltipRef.current) {
+        tooltipRef.current.removeEventListener(`transitionEnd`, onTransitionEnd)
+      }
     }
   }, [])
   return (
     <div
       data-gatsby-preview-indicator="tooltip"
-      data-gatsby-preview-indicator-visible={`${
-        overrideShowTooltip || showTooltip
-      }`}
+      data-gatsby-preview-indicator-visible={`${overrideShow || show}`}
       data-gatsby-preview-indicator-removed={`${!visible}`}
       data-testid={`${testId}-tooltip`}
       ref={tooltipRef}
     >
       <div data-gatsby-preview-indicator="tooltip-inner">
-        {tooltipContent}
-        {canClose && (
-          <button
+        {content}
+        {closable && (
+          <span
             data-gatsby-preview-indicator="tooltip-close-btn"
             onClick={onCloseClick}
           >
             {closeIcon}
-          </button>
+          </span>
         )}
       </div>
     </div>
