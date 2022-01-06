@@ -3,11 +3,8 @@ import { formatDistance } from "date-fns"
 import trackEvent from "../../utils/trackEvent"
 
 import IndicatorButton from "./IndicatorButton"
-import { exitIcon, infoIcon, infoIconActive } from "../icons"
-import {
-  BuildErrorTooltipContent,
-  BuildSuccessTooltipContent,
-} from "../tooltips"
+import { infoIcon, infoIconActive } from "../icons"
+import { BuildSuccessTooltipContent } from "../tooltips"
 
 const getButtonProps = props => {
   const {
