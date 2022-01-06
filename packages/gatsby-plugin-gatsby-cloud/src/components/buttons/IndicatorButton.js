@@ -13,13 +13,12 @@ export default function IndicatorButton({
   testId,
   onMouseEnter,
   hoverable,
+  clickable,
   exitButton,
 }) {
   const [showTooltip, setShowTooltip] = useState(false)
   const isFirstButton = buttonIndex === 0
   const marginTop = isFirstButton ? `0px` : `8px`
-
-  const onMouseLeave = () => setShowTooltip(false)
 
   return (
     <>
@@ -33,9 +32,13 @@ export default function IndicatorButton({
       >
         <div
           data-testid={`${testId}-button`}
-          onClick={() => {
-            setShowTooltip(!showTooltip)
-          }}
+          onClick={
+            hoverable
+              ? onClick
+              : () => {
+                  setShowTooltip(!showTooltip)
+                }
+          }
           onMouseEnter={() => {
             if (hoverable) {
               setShowTooltip(true)
@@ -61,7 +64,6 @@ export default function IndicatorButton({
         <IndicatorButtonTooltip
           tooltipContent={tooltipContent}
           iconExit={
-            !hoverable &&
             exitButton && (
               <button
                 onClick={() => {

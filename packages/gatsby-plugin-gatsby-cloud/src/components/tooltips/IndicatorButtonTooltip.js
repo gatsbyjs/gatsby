@@ -21,7 +21,8 @@ export default function IndicatorButtonTooltip({
       }`}
       data-testid={`${testId}-tooltip`}
     >
-      {tooltipContent} {iconExit}
+      {tooltipContent}
+      {iconExit}
     </div>
   )
 }

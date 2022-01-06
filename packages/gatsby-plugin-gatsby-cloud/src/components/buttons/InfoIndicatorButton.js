@@ -4,12 +4,16 @@ import trackEvent from "../../utils/trackEvent"
 
 import IndicatorButton from "./IndicatorButton"
 import { infoIcon, infoIconActive } from "../icons"
-import { BuildSuccessTooltipContent } from "../tooltips"
+import {
+  BuildErrorTooltipContent,
+  BuildSuccessTooltipContent,
+} from "../tooltips"
 
 const getButtonProps = props => {
   const {
     createdAt,
     buildStatus,
+    erroredBuildId,
     isOnPrettyUrl,
     sitePrefix,
     siteId,
@@ -41,14 +45,26 @@ const getButtonProps = props => {
             orgId={orgId}
           />
         ),
-        overrideShowTooltip: false,
+        active: true,
+        showInfo: true,
+        exitButton: true,
+      }
+    }
+    case `ERROR`: {
+      return {
+        tooltipContent: (
+          <BuildErrorTooltipContent
+            siteId={siteId}
+            orgId={orgId}
+            buildId={erroredBuildId}
+          />
+        ),
         active: true,
         showInfo: true,
         exitButton: true,
       }
     }
     case `BUILDING`:
-    case `ERROR`:
     default: {
       return {
         active: true,

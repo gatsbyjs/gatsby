@@ -61,6 +61,7 @@ export default function LinkIndicatorButton(props) {
     }, 2400)
 
     if (window) {
+      console.log(`copied`)
       navigator.clipboard.writeText(window.location.href)
     }
   }
