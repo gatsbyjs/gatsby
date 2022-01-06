@@ -12,8 +12,11 @@ import {
 } from "./types"
 
 interface IWorkerOptions {
+  // number of workers to spawn, defaults to 1
   numWorkers?: number
+  // environmental variables specific to the worker(s)
   env?: Record<string, string>
+  // whether or not output should be ignored
   silent?: boolean
 }
 
