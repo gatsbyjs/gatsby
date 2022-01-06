@@ -194,7 +194,10 @@ const renderHTMLQueue = async (
     [`gatsby_log_level`, process.env.gatsby_log_level],
   ]
 
-  const segments = chunk(pages, 50)
+  const segments = chunk(
+    pages,
+    Number(process.env.GATSBY_PAGE_GROUP_SIZE) || 50
+  )
 
   const sessionId = Date.now()
 
@@ -428,8 +431,11 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   const pageRenderer = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
   buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged()
 
-  const { toRegenerate, toDelete, toCleanupFromTrackedState } =
-    buildUtils.calcDirtyHtmlFiles(store.getState())
+  const {
+    toRegenerate,
+    toDelete,
+    toCleanupFromTrackedState,
+  } = buildUtils.calcDirtyHtmlFiles(store.getState())
 
   store.dispatch({
     type: `HTML_TRACKED_PAGES_CLEANUP`,

@@ -101,4 +101,6 @@ Page HTML does not depend on other pages. So we can perform this step in paralle
 
 The workers iterate over each page in their partition, and call the `render-page.js` with the page. It then saves the HTML for the page's path in `/public`.
 
+If you get the error "WebpackError: Worker exited before finishing task" you can try to reduce the page group size by setting the optional environment variable, `GATSBY_PAGE_GROUP_SIZE` to something lower than the default (50).
+
 Once all workers have finished, we're done!
