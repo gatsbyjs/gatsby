@@ -191,10 +191,14 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       // Important: mark source files as clean when recompiling starts
       // Doing this `onDone` will wipe all file change events that occur **during** recompilation
       // See https://github.com/gatsbyjs/gatsby/issues/27609
-      entry: [`setRecompiledFiles`, `markSourceFilesClean`],
+      //
+      // Marking clean on recompilation start causes JavaScript bundle failure when a file is deleted.
+      // TODO Explore more nuanced solutions (likely in the wait state machine).
+      entry: [`setRecompiledFiles`],
       invoke: {
         src: `recompile`,
         onDone: {
+          actions: `markSourceFilesClean`,
           target: `waiting`,
         },
         onError: {

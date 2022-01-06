@@ -134,11 +134,14 @@ const watch = async (rootDir: string): Promise<void> => {
     return slash(path.join(module.path, pathRegex))
   })
 
+  // If we watch only JS and TS files with a glob pattern, deleting a
+  // directory with a file in it is not caught here and pollutes async-requires.
+  // Subsequent changes then causes a JavaScript bundle failure.
+  // TODO Explore better solutions and the memory implications of this change
   watcher = chokidar
-    .watch(
-      [slash(path.join(rootDir, `/src/**/*.{js,jsx,ts,tsx}`)), ...packagePaths],
-      { ignoreInitial: true }
-    )
+    .watch([slash(path.join(rootDir, `/src`)), ...packagePaths], {
+      ignoreInitial: true,
+    })
     .on(`change`, path => {
       emitter.emit(`SOURCE_FILE_CHANGED`, path)
     })
@@ -146,6 +149,9 @@ const watch = async (rootDir: string): Promise<void> => {
       emitter.emit(`SOURCE_FILE_CHANGED`, path)
     })
     .on(`unlink`, path => {
+      emitter.emit(`SOURCE_FILE_CHANGED`, path)
+    })
+    .on(`unlinkDir`, path => {
       emitter.emit(`SOURCE_FILE_CHANGED`, path)
     })
 
