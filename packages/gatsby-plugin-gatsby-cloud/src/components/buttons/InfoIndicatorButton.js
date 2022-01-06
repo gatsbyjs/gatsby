@@ -48,6 +48,7 @@ const getButtonProps = props => {
         active: true,
         showInfo: true,
         exitButton: true,
+        hoverable: false,
       }
     }
     case `ERROR`: {
@@ -62,12 +63,14 @@ const getButtonProps = props => {
         active: true,
         showInfo: true,
         exitButton: true,
+        hoverable: false,
       }
     }
     case `BUILDING`:
     default: {
       return {
         active: true,
+        hoverable: false,
       }
     }
   }
@@ -85,14 +88,12 @@ export default function InfoIndicatorButton(props) {
       name: `info hover`,
     })
   }
-
   return (
     <IndicatorButton
       testId="info"
       iconSvg={buttonProps?.showInfo ? infoIconActive : infoIcon}
       onClick={buttonProps?.active && trackHover}
       buttonIndex={props.buttonIndex}
-      hoverable={false}
       {...buttonProps}
     />
   )
