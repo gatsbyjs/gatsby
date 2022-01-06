@@ -6,7 +6,6 @@ const {
 } = require(`gatsby-core-utils`)
 const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
-const Queue = require(`fastq`)
 const { createFileNode } = require(`./create-file-node`)
 const { getRemoteFileExtension } = require(`./utils`)
 
@@ -45,41 +44,6 @@ let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
  * @param  {Auth} [options.auth]
  * @param  {Reporter} [options.reporter]
  */
-
-/********************
- * Queue Management *
- ********************/
-
-const GATSBY_CONCURRENT_DOWNLOAD = process.env.GATSBY_CONCURRENT_DOWNLOAD
-  ? parseInt(process.env.GATSBY_CONCURRENT_DOWNLOAD, 10) || 0
-  : 200
-
-const queue = Queue(pushToQueue, GATSBY_CONCURRENT_DOWNLOAD)
-
-/**
- * @callback {Queue~queueCallback}
- * @param {*} error
- * @param {*} result
- */
-
-/**
- * pushToQueue
- * --
- * Handle tasks that are pushed in to the Queue
- *
- *
- * @param  {CreateRemoteFileNodePayload}          task
- * @param  {Queue~queueCallback}  cb
- * @return {Promise<null>}
- */
-async function pushToQueue(task, cb) {
-  try {
-    const node = await processRemoteNode(task)
-    return cb(null, node)
-  } catch (e) {
-    return cb(e)
-  }
-}
 
 /******************
  * Core Functions *
@@ -155,25 +119,6 @@ async function fetchPlaceholder({ fromPath, url, cache, ext, name }) {
  * Index of promises resolving to File node from remote url
  */
 const processingCache = {}
-/**
- * pushTask
- * --
- * pushes a task in to the Queue and the processing cache
- *
- * Promisfy a task in queue
- * @param {CreateRemoteFileNodePayload} task
- * @return {Promise<Object>}
- */
-const pushTask = task =>
-  new Promise((resolve, reject) => {
-    queue.push(task, (err, node) => {
-      if (!err) {
-        resolve(node)
-      } else {
-        reject(`failed to process ${task.url}\n${err}`)
-      }
-    })
-  })
 
 /***************
  * Entry Point *
@@ -245,11 +190,13 @@ module.exports = function createRemoteFileNode({
 
   if (!url || isWebUri(url) === undefined) {
     return Promise.reject(
-      `url passed to createRemoteFileNode is either missing or not a proper web uri: ${url}`
+      new Error(
+        `url passed to createRemoteFileNode is either missing or not a proper web uri: ${url}`
+      )
     )
   }
 
-  const fileDownloadPromise = pushTask({
+  const fileDownloadPromise = processRemoteNode({
     url,
     cache,
     createNode,
