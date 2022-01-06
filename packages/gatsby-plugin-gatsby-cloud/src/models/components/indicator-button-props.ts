@@ -1,3 +1,5 @@
+import { IIndicatorButtonTooltipProps } from "."
+
 export default interface IIndicatorButtonProps {
   buttonIndex: number
   testId: string

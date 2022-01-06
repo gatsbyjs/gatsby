@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback, useRef } from "react"
+import React, { FC, useState, useEffect, useCallback, useRef } from "react"
+import { BuildStatus } from "../models/enums"
 import getBuildInfo from "../utils/getBuildInfo"
 import trackEvent from "../utils/trackEvent"
 import {
@@ -8,31 +9,37 @@ import {
 } from "./buttons"
 import Style from "./Style"
 
-const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL || 3000
-
-export function PreviewIndicator({ children }) {
-  return (
-    <>
-      <Style />
-      <div
-        data-testid="preview-status-indicator"
-        data-gatsby-preview-indicator="root"
-        aria-live="assertive"
-      >
-        {React.Children.map(children, (child, i) =>
-          React.cloneElement(child, { ...child.props, buttonIndex: i })
-        )}
-      </div>
-    </>
-  )
+interface IBuildInfo {
+  currentBuild: any
+  latestBuild: any
+  siteInfo: any
+  isOnPrettyUrl?: boolean
+  buildStatus: BuildStatus
 }
 
-let buildId
+const POLLING_INTERVAL: number = process.env.GATSBY_PREVIEW_POLL_INTERVAL
+  ? parseInt(process.env.GATSBY_PREVIEW_POLL_INTERVAL)
+  : 3000
 
-export default function Indicator() {
-  const [buildInfo, setBuildInfo] = useState()
+const PreviewIndicator: FC = ({ children }) => (
+  <>
+    <Style />
+    <div
+      data-testid="preview-status-indicator"
+      data-gatsby-preview-indicator="root"
+      aria-live="assertive"
+    >
+      {children}
+    </div>
+  </>
+)
 
-  const timeoutRef = useRef()
+let buildId = ``
+
+const Indicator: FC = () => {
+  const [buildInfo, setBuildInfo] = useState<IBuildInfo>()
+
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const shouldPoll = useRef(false)
   const trackedInitialLoad = useRef(false)
 
@@ -71,18 +78,18 @@ export default function Indicator() {
       isOnPrettyUrl,
     }
 
-    if (currentBuild?.buildStatus === `BUILDING`) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: `BUILDING` })
-    } else if (currentBuild?.buildStatus === `ERROR`) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: `ERROR` })
+    if (currentBuild?.buildStatus === BuildStatus.BUILDING) {
+      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.BUILDING })
+    } else if (currentBuild?.buildStatus === BuildStatus.ERROR) {
+      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.ERROR })
     } else if (buildId && buildId === newBuildInfo?.currentBuild?.id) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: `UPTODATE` })
+      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.UPTODATE })
     } else if (
       buildId &&
       buildId !== newBuildInfo?.latestBuild?.id &&
-      currentBuild?.buildStatus === `SUCCESS`
+      currentBuild?.buildStatus === BuildStatus.SUCCESS
     ) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
+      setBuildInfo({ ...newBuildInfo, buildStatus: BuildStatus.SUCCESS })
     }
 
     if (shouldPoll.current) {
@@ -107,7 +114,7 @@ export default function Indicator() {
     shouldPoll.current = true
     pollData()
 
-    return function cleanup() {
+    return (): void => {
       shouldPoll.current = false
 
       if (timeoutRef.current) {
@@ -130,9 +137,12 @@ export default function Indicator() {
 
   return (
     <PreviewIndicator>
-      <GatsbyIndicatorButton {...buttonProps} />
-      <LinkIndicatorButton {...buttonProps} />
-      <InfoIndicatorButton askForFeedback {...buttonProps} />
+      <GatsbyIndicatorButton buttonIndex={1} {...buttonProps} />
+      <LinkIndicatorButton buttonIndex={2} {...buttonProps} />
+      <InfoIndicatorButton buttonIndex={3} {...buttonProps} />
     </PreviewIndicator>
   )
 }
+
+export { PreviewIndicator }
+export default Indicator

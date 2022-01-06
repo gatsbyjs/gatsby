@@ -12,7 +12,7 @@ import {
 import { BuildStatus } from "../../models/enums"
 
 interface IGatsbyIndicatorButtonProps extends IBaseButtonProps {
-  isOnPrettyUrl: boolean
+  isOnPrettyUrl?: boolean
   sitePrefix: string
   erroredBuildId: string
 }
@@ -36,6 +36,7 @@ const getButtonProps = ({
   const propsByBuildStatus = {
     [BuildStatus.SUCCESS]: {
       tooltip: {
+        testId: baseProps.testId,
         content: (
           <BuildSuccessTooltipContent
             isOnPrettyUrl={isOnPrettyUrl}
@@ -51,6 +52,7 @@ const getButtonProps = ({
     },
     [BuildStatus.ERROR]: {
       tooltip: {
+        testId: baseProps.testId,
         content: (
           <BuildErrorTooltipContent
             siteId={siteId}
@@ -64,6 +66,7 @@ const getButtonProps = ({
     },
     [BuildStatus.BUILDING]: {
       tooltip: {
+        testId: baseProps.testId,
         content: `Building a new preview`,
         overrideShow: true,
       },
@@ -73,7 +76,7 @@ const getButtonProps = ({
       active: true,
     },
   }
-  const props = propsByBuildStatus[buildStatus]
+  const props = buildStatus ? propsByBuildStatus[buildStatus] : null
   if (props) {
     return { ...baseProps, ...props }
   }

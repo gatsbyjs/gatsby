@@ -6,7 +6,7 @@ interface IBuildSuccessTooltipContent {
   orgId: string
   buildId: string
   sitePrefix: string
-  isOnPrettyUrl: boolean
+  isOnPrettyUrl?: boolean
 }
 
 const delay = (ms: number): Promise<number> =>

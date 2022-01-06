@@ -1,9 +1,9 @@
 export default interface IIndicatorButtonTooltipProps {
   content?: React.ReactNode | string
   closable?: boolean
-  show: boolean
+  show?: boolean
   overrideShow?: boolean
-  testId: string
+  testId?: string
   onClose?: () => void
   onAppear?: () => void
   onDisappear?: () => void

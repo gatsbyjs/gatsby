@@ -6,5 +6,5 @@ export default interface IBaseButtonProps {
   siteId: string
   buildId: string
   createdAt: Date
-  buildStatus: BuildStatus
+  buildStatus?: BuildStatus
 }

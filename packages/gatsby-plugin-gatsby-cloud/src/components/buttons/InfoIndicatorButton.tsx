@@ -11,7 +11,7 @@ import {
 } from "../../models/components"
 
 interface IInfoIndicatorButtonProps extends IBaseButtonProps {
-  askForFeedback: boolean
+  askForFeedback?: boolean
 }
 
 const InfoIndicatorButton: FC<IInfoIndicatorButtonProps> = ({
@@ -43,7 +43,7 @@ const InfoIndicatorButton: FC<IInfoIndicatorButtonProps> = ({
   const closeInfoTooltip = (): void => {
     setButtonProps({
       ...buttonProps,
-      tooltip: { overrideShow: false, show: false },
+      tooltip: { testId: buttonProps.testId, overrideShow: false, show: false },
     })
   }
 
@@ -55,6 +55,7 @@ const InfoIndicatorButton: FC<IInfoIndicatorButtonProps> = ({
           setButtonProps({
             ...buttonProps,
             tooltip: {
+              testId: buttonProps.testId,
               content: (
                 <FeedbackTooltipContent
                   url={url}
@@ -74,6 +75,7 @@ const InfoIndicatorButton: FC<IInfoIndicatorButtonProps> = ({
           setButtonProps({
             ...buttonProps,
             tooltip: {
+              testId: buttonProps.testId,
               content: `Preview updated ${formatDistance(
                 Date.now(),
                 new Date(createdAt),
@@ -88,7 +90,9 @@ const InfoIndicatorButton: FC<IInfoIndicatorButtonProps> = ({
       [BuildStatus.ERROR]: null,
       [BuildStatus.BUILDING]: null,
     }
-    const buildStatusAction = buildStatusActions[buildStatus]
+    const buildStatusAction = buildStatus
+      ? buildStatusActions[buildStatus]
+      : null
     if (buildStatusAction) {
       buildStatusAction()
     } else {

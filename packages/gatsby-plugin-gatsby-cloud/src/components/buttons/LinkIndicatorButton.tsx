@@ -21,6 +21,7 @@ const getBaseButtonProps = ({
   const activeProps = {
     active: true,
     tooltip: {
+      testId: baseProps.testId,
       content: `Copy Link`,
     },
   }
@@ -30,7 +31,7 @@ const getBaseButtonProps = ({
     [BuildStatus.SUCCESS]: null,
     [BuildStatus.ERROR]: null,
   }
-  const props = buildStatusProps[buildStatus]
+  const props = buildStatus ? buildStatusProps[buildStatus] : null
   if (props) {
     return { ...baseProps, ...props }
   }
