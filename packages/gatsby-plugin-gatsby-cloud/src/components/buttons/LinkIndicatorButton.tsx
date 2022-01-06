@@ -17,18 +17,12 @@ const getBaseButtonProps = ({
     testId: `link`,
     hoverable: true,
     iconSvg: linkIcon,
-    tooltip: {
-      onDisappear: (): void => {
-        console.log(`MHMM`)
-      },
-    },
   }
   const activeProps = {
     ...baseProps,
     active: true,
     tooltip: {
-      ...baseProps.tooltip,
-      content: `Copy link`,
+      content: `Copy Link`,
     },
   }
   const buildStatusProps = {
@@ -38,6 +32,7 @@ const getBaseButtonProps = ({
     [BuildStatus.ERROR]: null,
   }
   const buttonProps = buildStatusProps[buildStatus]
+  console.log(buttonProps)
   return buttonProps || baseProps
 }
 
@@ -49,10 +44,13 @@ const copySuccessTooltip = (
 )
 
 const LinkIndicatorButton: FC<IBaseButtonProps> = props => {
-  const { orgId, siteId, buildId } = props
-  const [buttonProps, setButtonProps] = useState<IIndicatorButtonProps>(
-    getBaseButtonProps(props)
-  )
+  const { orgId, siteId, buildId, buttonIndex } = props
+  const [buttonProps, setButtonProps] = useState<IIndicatorButtonProps>({
+    buttonIndex,
+    testId: `link`,
+    hoverable: true,
+    iconSvg: linkIcon,
+  })
 
   const copyLinkClick = (): void => {
     trackEvent({
@@ -63,37 +61,32 @@ const LinkIndicatorButton: FC<IBaseButtonProps> = props => {
       name: `copy link`,
     })
 
-    console.log(buttonProps)
-
-    setButtonProps({
-      ...buttonProps,
-      tooltip: {
-        ...buttonProps.tooltip,
-        content: copySuccessTooltip,
-        overrideShow: true,
-      },
-    })
-
-    setTimeout(() => {
-      setButtonProps({
-        ...buttonProps,
+    setButtonProps(btnProps => {
+      return {
+        ...btnProps,
         tooltip: {
           ...buttonProps.tooltip,
           content: copySuccessTooltip,
-          overrideShow: false,
+          overrideShow: true,
         },
+        hoverable: false,
+      }
+    })
+
+    setTimeout(() => {
+      setButtonProps(btnProps => {
+        return {
+          ...btnProps,
+          tooltip: {
+            ...btnProps.tooltip,
+            overrideShow: false,
+            show: false,
+          },
+          hoverable: true,
+        }
       })
       // We want the tooltip to linger for two seconds to let the user know it has been copied
     }, 2000)
-
-    setTimeout(() => {
-      setButtonProps({
-        ...buttonProps,
-        tooltip: { ...buttonProps.tooltip, content: `Copy Link` },
-      })
-      // The tooltips fade out, in order to make sure that the text does not change
-      // while it is fading out we need to wait a bit longer than the time used above.
-    }, 2400)
 
     if (window) {
       navigator.clipboard.writeText(window.location.href)
@@ -112,11 +105,26 @@ const LinkIndicatorButton: FC<IBaseButtonProps> = props => {
 
   useEffect(() => {
     const baseButtonProps = getBaseButtonProps(props)
-    setButtonProps({
-      ...baseButtonProps,
-      onClick: copyLinkClick,
+    const onDisappear = (): void => {
+      setButtonProps(btnProps => {
+        return {
+          ...btnProps,
+          tooltip: { ...buttonProps.tooltip, content: `Copy Link` },
+        }
+      })
+    }
+    setButtonProps(btnProps => {
+      return {
+        ...btnProps,
+        ...baseButtonProps,
+        onClick: copyLinkClick,
+        tooltip: {
+          ...baseButtonProps.tooltip,
+          onDisappear,
+        },
+      }
     })
-  }, [props])
+  }, [props.buildStatus])
 
   return (
     <IndicatorButton

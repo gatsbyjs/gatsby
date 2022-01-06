@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useState } from "react"
+import React, { FC, MouseEvent, useEffect, useState } from "react"
 import { IndicatorButtonTooltip } from "../tooltips"
 import { spinnerIcon } from "../icons"
 import { IIndicatorButtonProps } from "../../models/components"
@@ -15,17 +15,30 @@ const IndicatorButton: FC<IIndicatorButtonProps> = ({
   hoverable,
   highlighted,
 }) => {
-  const [showTooltip, setShowTooltip] = useState(false)
+  const [showTooltip, setShowTooltip] = useState(tooltip?.show)
   const isFirstButton = buttonIndex === 0
   const marginTop = isFirstButton ? `0px` : `8px`
 
+  const onButtonMouseEnter = (): void => {
+    if (active) {
+      setShowTooltip(true)
+
+      if (onMouseEnter) {
+        onMouseEnter()
+      }
+    }
+  }
   const onMouseLeave = (): void => setShowTooltip(false)
   const onButtonClick = (event: MouseEvent<HTMLButtonElement>): void => {
     event.stopPropagation()
-    if (active && onClick) {
+    if (active && hoverable && onClick) {
       onClick()
     }
   }
+
+  useEffect(() => {
+    setShowTooltip(tooltip?.show)
+  }, [tooltip?.show])
 
   return (
     <>
@@ -37,13 +50,7 @@ const IndicatorButton: FC<IIndicatorButtonProps> = ({
         }
         data-gatsby-preview-indicator-highlighted-button={`${highlighted}`}
         style={{ marginTop: marginTop }}
-        onMouseEnter={(): void => {
-          setShowTooltip(true)
-
-          if (onMouseEnter) {
-            onMouseEnter()
-          }
-        }}
+        onMouseEnter={onButtonMouseEnter}
         onMouseLeave={onMouseLeave}
         onClick={onButtonClick}
       >

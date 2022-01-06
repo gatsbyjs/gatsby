@@ -26,7 +26,7 @@ export default function IndicatorButtonTooltip({
   }, [overrideShow, show])
   useEffect(() => {
     const onTransitionEnd = ({ propertyName }) => {
-      if (propertyName === `opacity`) {
+      if (window && propertyName === `opacity`) {
         const opacity = window
           .getComputedStyle(tooltipRef.current)
           .getPropertyValue(`opacity`)
@@ -42,10 +42,12 @@ export default function IndicatorButtonTooltip({
         }
       }
     }
-    tooltipRef.current.addEventListener(`transitionend`, onTransitionEnd)
+    if (tooltipRef.current) {
+      tooltipRef.current.addEventListener(`transitionend`, onTransitionEnd)
+    }
     return () => {
       if (tooltipRef.current) {
-        tooltipRef.current.removeEventListener(`transitionEnd`, onTransitionEnd)
+        tooltipRef.current.removeEventListener(`transitionend`, onTransitionEnd)
       }
     }
   }, [])
