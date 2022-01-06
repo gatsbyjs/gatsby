@@ -53,6 +53,11 @@ const IndexPage = ({ data }) => {
           </Link>
         </li>
         <li>
+          <Link to="/page-2/#anchor" data-testid="hash-trailing">
+            Go to page-2 with hash With Trailing Slash
+          </Link>
+        </li>
+        <li>
           <Link to="/page-2?query_param=hello" data-testid="query-param">
             Go to page-2 with query param
           </Link>
@@ -63,6 +68,26 @@ const IndexPage = ({ data }) => {
             data-testid="query-param-hash"
           >
             Go to page-2 with query param and hash
+          </Link>
+        </li>
+        <li>
+          <Link to="/client-only/without" data-testid="client-only-simple-without">
+            Client-Only Simple Without Trailing Slash
+          </Link>
+        </li>
+        <li>
+          <Link to="/client-only/with/" data-testid="client-only-simple-with">
+            Client-Only Simple With Trailing Slash
+          </Link>
+        </li>
+        <li>
+          <Link to="/fs-api/without/without" data-testid="client-only-without">
+            Client-Only Without Trailing Slash
+          </Link>
+        </li>
+        <li>
+          <Link to="/fs-api/with/with/" data-testid="client-only-with">
+            Client-Only With Trailing Slash
           </Link>
         </li>
         {posts.map(post => (
