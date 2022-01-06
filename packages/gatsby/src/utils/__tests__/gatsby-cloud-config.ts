@@ -7,7 +7,7 @@ describe(`constructConfigObject`, () => {
       pathPrefix: ``,
     })
   })
-  it(`should work`, () => {
+  it(`should pass defined keys to output`, () => {
     expect(
       conststructConfigObject({
         trailingSlash: `always`,
