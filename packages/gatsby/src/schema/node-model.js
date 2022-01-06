@@ -81,9 +81,8 @@ class LocalNodeModel {
     this.schema = schema
     this.schemaComposer = schemaComposer
     this.createPageDependencyActionCreator = createPageDependency
-
-    this._rootNodeMap = _rootNodeMap
-    this._trackedRootNodes = _trackedRootNodes
+    this._rootNodeMap = _rootNodeMap || new WeakMap()
+    this._trackedRootNodes = _trackedRootNodes || new WeakSet()
     this._prepareNodesQueues = {}
     this._prepareNodesPromises = {}
     this._preparedNodesCache = new Map()
