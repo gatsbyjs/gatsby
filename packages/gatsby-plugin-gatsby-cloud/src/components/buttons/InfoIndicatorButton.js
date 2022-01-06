@@ -17,7 +17,6 @@ const getButtonProps = props => {
     orgId,
   } = props
 
-  const foo = `SUCCESS`
   switch (buildStatus) {
     case `UPTODATE`: {
       return {
@@ -51,6 +50,9 @@ const getButtonProps = props => {
     case `BUILDING`:
     case `ERROR`:
     default: {
+      return {
+        active: true,
+      }
     }
   }
 }
