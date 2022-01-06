@@ -1,7 +1,6 @@
 import { ValidationOptions } from "joi"
 import { ObjectSchema, Joi } from "./joi"
 import { IPluginInfoOptions } from "./types"
-// import type { warning } "./utils/plugin-options-schema-joi-type
 
 const validationOptions: ValidationOptions = {
   // Show all errors at once, rather than only the first one every time
@@ -37,13 +36,14 @@ export async function validateOptionsSchema(
 ): Promise<IValidateAsyncResult> {
   const { validateExternalRules, returnWarnings } = options
 
-  const warnOnUnknownSchema = pluginSchema
-    .raw()
-    .pattern(/.*/, Joi.any().warning(`any.unknown`))
+  const warnOnUnknownSchema = pluginSchema.pattern(
+    /.*/,
+    Joi.any().warning(`any.unknown`)
+  )
 
-  return warnOnUnknownSchema.validateAsync(pluginOptions, {
+  return (await warnOnUnknownSchema.validateAsync(pluginOptions, {
     ...validationOptions,
     externals: validateExternalRules,
     warnings: returnWarnings,
-  }) as Promise<IValidateAsyncResult>
+  })) as Promise<IValidateAsyncResult>
 }

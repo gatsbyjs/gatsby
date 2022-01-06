@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { validateOptionsSchema, Joi } from "../"
+import { testPluginOptionsSchema } from "../test-plugin-options-schema"
 
 it(`validates a basic schema`, async () => {
   const pluginSchema = Joi.object({
@@ -61,10 +62,33 @@ it(`throws an warning on unknown values`, async () => {
     str: Joi.string(),
   })
 
-  const { warning } = await validateOptionsSchema(schema, {
-    str: `bla`,
-    notInSchema: true,
+  const validWarnings = [`"notInSchema" is not allowed`]
+
+  const { hasWarnings, warnings } = await testPluginOptionsSchema(
+    () => schema,
+    {
+      str: `bla`,
+      notInSchema: true,
+    }
+  )
+
+  expect(hasWarnings).toBe(true)
+  expect(warnings).toEqual(validWarnings)
+})
+
+it(`populates default values`, async () => {
+  const pluginSchema = Joi.object({
+    str: Joi.string(),
+    default: Joi.string().default(`default`),
   })
 
-  expect(warning).toMatchSnapshot()
+  const validOptions = {
+    str: `is a string`,
+  }
+
+  const { value } = await validateOptionsSchema(pluginSchema, validOptions)
+  expect(value).toEqual({
+    ...validOptions,
+    default: `default`,
+  })
 })
