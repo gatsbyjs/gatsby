@@ -14,6 +14,7 @@ import {
 interface IWorkerOptions {
   numWorkers?: number
   env?: Record<string, string>
+  silent?: boolean
 }
 
 type WrapReturnOfAFunctionInAPromise<
@@ -176,6 +177,7 @@ export class WorkerPool<
         },
         // Suppress --debug / --inspect flags while preserving others (like --harmony).
         execArgv: process.execArgv.filter(v => !/^--(debug|inspect)/.test(v)),
+        silent: options && options.silent,
       })
 
       const workerInfo: IWorkerInfo<keyof WorkerModuleExports> = {
