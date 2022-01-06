@@ -431,11 +431,8 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
   const pageRenderer = `${program.directory}/${ROUTES_DIRECTORY}render-page.js`
   buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged()
 
-  const {
-    toRegenerate,
-    toDelete,
-    toCleanupFromTrackedState,
-  } = buildUtils.calcDirtyHtmlFiles(store.getState())
+  const { toRegenerate, toDelete, toCleanupFromTrackedState } =
+    buildUtils.calcDirtyHtmlFiles(store.getState())
 
   store.dispatch({
     type: `HTML_TRACKED_PAGES_CLEANUP`,
