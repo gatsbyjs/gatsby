@@ -3,10 +3,24 @@ import { formatDistance } from "date-fns"
 import trackEvent from "../../utils/trackEvent"
 
 import IndicatorButton from "./IndicatorButton"
-import { infoIcon } from "../icons"
+import { exitIcon, infoIcon, infoIconActive } from "../icons"
+import {
+  BuildErrorTooltipContent,
+  BuildSuccessTooltipContent,
+} from "../tooltips"
 
 const getButtonProps = props => {
-  const { createdAt, buildStatus } = props
+  const {
+    createdAt,
+    buildStatus,
+    isOnPrettyUrl,
+    sitePrefix,
+    siteId,
+    buildId,
+    orgId,
+  } = props
+
+  const foo = `SUCCESS`
   switch (buildStatus) {
     case `UPTODATE`: {
       return {
@@ -16,13 +30,30 @@ const getButtonProps = props => {
           { includeSeconds: true }
         )} ago`,
         active: true,
+        exitButton: false,
+        hoverable: true,
       }
     }
-    case `SUCCESS`:
-    case `ERROR`:
+    case `SUCCESS`: {
+      return {
+        tooltipContent: (
+          <BuildSuccessTooltipContent
+            isOnPrettyUrl={isOnPrettyUrl}
+            sitePrefix={sitePrefix}
+            buildId={buildId}
+            siteId={siteId}
+            orgId={orgId}
+          />
+        ),
+        overrideShowTooltip: false,
+        active: true,
+        showInfo: true,
+        exitButton: true,
+      }
+    }
     case `BUILDING`:
+    case `ERROR`:
     default: {
-      return {}
     }
   }
 }
@@ -43,10 +74,10 @@ export default function InfoIndicatorButton(props) {
   return (
     <IndicatorButton
       testId="info"
-      iconSvg={infoIcon}
-      onMouseEnter={buttonProps?.active && trackHover}
+      iconSvg={buttonProps?.showInfo ? infoIconActive : infoIcon}
+      onClick={buttonProps?.active && trackHover}
       buttonIndex={props.buttonIndex}
-      hoverable={true}
+      hoverable={false}
       {...buttonProps}
     />
   )

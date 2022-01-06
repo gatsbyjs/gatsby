@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { IndicatorButtonTooltip } from "../tooltips"
-import { spinnerIcon } from "../icons"
+import { spinnerIcon, exitIcon } from "../icons"
 
 export default function IndicatorButton({
   buttonIndex,
@@ -13,6 +13,7 @@ export default function IndicatorButton({
   testId,
   onMouseEnter,
   hoverable,
+  exitButton,
 }) {
   const [showTooltip, setShowTooltip] = useState(false)
   const isFirstButton = buttonIndex === 0
@@ -32,15 +33,23 @@ export default function IndicatorButton({
       >
         <div
           data-testid={`${testId}-button`}
+          onClick={() => {
+            setShowTooltip(!showTooltip)
+          }}
           onMouseEnter={() => {
-            setShowTooltip(true)
+            if (hoverable) {
+              setShowTooltip(true)
 
-            if (onMouseEnter) {
-              onMouseEnter()
+              if (onMouseEnter) {
+                onMouseEnter()
+              }
             }
           }}
-          onMouseLeave={onMouseLeave}
-          onClick={active ? onClick : null}
+          onMouseLeave={() => {
+            if (hoverable) {
+              setShowTooltip(false)
+            }
+          }}
         >
           {iconSvg}
           {showSpinner && (
@@ -51,6 +60,19 @@ export default function IndicatorButton({
       {tooltipContent && (
         <IndicatorButtonTooltip
           tooltipContent={tooltipContent}
+          iconExit={
+            !hoverable &&
+            exitButton && (
+              <button
+                onClick={() => {
+                  setShowTooltip(false)
+                }}
+                data-gatsby-preview-indicator="tooltip-link"
+              >
+                {exitIcon}
+              </button>
+            )
+          }
           overrideShowTooltip={overrideShowTooltip}
           showTooltip={showTooltip}
           buttonIndex={buttonIndex}
