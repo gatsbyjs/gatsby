@@ -53,6 +53,11 @@ describe(`always`, () => {
   cy.waitForRouteChange()
     .assertRoute(`/page-2/#anchor`)
  })
+ it(`hash trailing`, () => {
+  cy.getTestElement(`hash-trailing`).click()
+  cy.waitForRouteChange()
+    .assertRoute(`/page-2/#anchor`)
+ })
  it(`query-param`, () => {
   cy.getTestElement(`query-param`).click()
   cy.waitForRouteChange()

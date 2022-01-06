@@ -5,7 +5,7 @@ describe(`ignore`, () => {
  it(`page-creator without slash`, () => {
   cy.getTestElement(`page-creator-without`).click()
   cy.waitForRouteChange()
-    .assertRoute(`/page-2/`)
+    .assertRoute(`/page-2`)
  })
  it(`page-creator with slash`, () => {
   cy.getTestElement(`page-creator-with`).click()
@@ -51,17 +51,22 @@ describe(`ignore`, () => {
  it(`hash`, () => {
   cy.getTestElement(`hash`).click()
   cy.waitForRouteChange()
+    .assertRoute(`/page-2#anchor`)
+ })
+ it(`hash trailing`, () => {
+  cy.getTestElement(`hash-trailing`).click()
+  cy.waitForRouteChange()
     .assertRoute(`/page-2/#anchor`)
  })
  it(`query-param`, () => {
   cy.getTestElement(`query-param`).click()
   cy.waitForRouteChange()
-    .assertRoute(`/page-2/?query_param=hello`)
+    .assertRoute(`/page-2?query_param=hello`)
  })
  it(`query-param-hash`, () => {
   cy.getTestElement(`query-param-hash`).click()
   cy.waitForRouteChange()
-    .assertRoute(`/page-2/?query_param=hello#anchor`)
+    .assertRoute(`/page-2?query_param=hello#anchor`)
  })
 })
 
@@ -77,11 +82,23 @@ if (Cypress.env(`IS_BUILD`)) {
       cy.visit(`/create-page/without`).waitForRouteChange()
         .assertRoute(`/create-page/without`)
     })
-    it(`fs-api`, () => {
-      cy.visit(`/fs-api/with/`).waitForRouteChange()
-        .assertRoute(`/fs-api/with/`)
-      cy.visit(`/fs-api/without`).waitForRouteChange()
-        .assertRoute(`/fs-api/without`)
+    it(`fs-api-simple`, () => {
+      cy.visit(`/fs-api-simple/with/`).waitForRouteChange()
+        .assertRoute(`/fs-api-simple/with/`)
+      cy.visit(`/fs-api-simple/without`).waitForRouteChange()
+        .assertRoute(`/fs-api-simple/without`)
+    })
+    it(`client-only-simple`, () => {
+      cy.visit(`/client-only/with/`).waitForRouteChange()
+        .assertRoute(`/client-only/with/`)
+      cy.visit(`/client-only/without`).waitForRouteChange()
+        .assertRoute(`/client-only/without`)
+    })
+    it(`client-only`, () => {
+      cy.visit(`/fs-api/with/with/`).waitForRouteChange()
+        .assertRoute(`/fs-api/with/with/`)
+      cy.visit(`/fs-api/without/without`).waitForRouteChange()
+        .assertRoute(`/fs-api/without/without`)
     })
   })
 }
