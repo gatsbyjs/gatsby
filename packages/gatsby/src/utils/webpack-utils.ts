@@ -234,6 +234,7 @@ export const createWebpackUtils = (
       }
     },
 
+    // TODO(v5): Re-Apply https://github.com/gatsbyjs/gatsby/pull/33979 with breaking change in inline loader syntax
     miniCssExtract: (
       options: {
         modules?: MiniCSSExtractLoaderModuleOptions
