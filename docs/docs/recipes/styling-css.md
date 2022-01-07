@@ -242,7 +242,11 @@ plugins: [`gatsby-plugin-sass`],
 
 3. Write your stylesheets as `.sass` or `.scss` files and import them. If you don't know how to import styles, take a look at [Styling with CSS](/docs/how-to/styling/built-in-css/)
 
-```css:title=styles.scss
+_Note: You can use Sass/SCSS files as modules too, like mentioned in the previous recipe about CSS modules, with the difference that instead of `.css` the extensions have to be `.scss` or `.sass`_
+
+Using `.scss`:
+
+```scss:title=styles.scss
 $font-stack: Helvetica, sans-serif;
 $primary-color: #333;
 
@@ -252,7 +256,13 @@ body {
 }
 ```
 
-```css:title=styles.sass
+```javascript
+import "./styles.scss"
+```
+
+Using `.sass`:
+
+```scss:title=styles.sass
 $font-stack:    Helvetica, sans-serif
 $primary-color: #333
 
@@ -262,11 +272,8 @@ body
 ```
 
 ```javascript
-import "./styles.scss"
 import "./styles.sass"
 ```
-
-_Note: You can use Sass/SCSS files as modules too, like mentioned in the previous recipe about CSS modules, with the difference that instead of `.css` the extensions have to be `.scss` or `.sass`_
 
 ### Additional resources
 
