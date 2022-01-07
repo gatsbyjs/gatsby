@@ -22,7 +22,7 @@ const getBaseButtonProps = ({
     active: true,
     tooltip: {
       testId: baseProps.testId,
-      content: `Copy Link`,
+      content: `Copy link`,
     },
   }
   const buildStatusProps = {
@@ -111,7 +111,7 @@ const LinkIndicatorButton: FC<IBaseButtonProps> = props => {
       setButtonProps(btnProps => {
         return {
           ...btnProps,
-          tooltip: { ...buttonProps.tooltip, content: `Copy Link` },
+          tooltip: { ...buttonProps.tooltip, content: `Copy link` },
         }
       })
     }
