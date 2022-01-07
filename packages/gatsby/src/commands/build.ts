@@ -472,8 +472,9 @@ module.exports = async function build(
     const gatsbyCloudConfig = conststructConfigObject(state.config)
 
     process.send({
-      type: `GATSBY_CONFIG_KEYS`,
+      type: `LOG_ACTION`,
       action: {
+        type: `GATSBY_CONFIG_KEYS`,
         payload: gatsbyCloudConfig,
       },
     })
