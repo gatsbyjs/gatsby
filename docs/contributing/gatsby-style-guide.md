@@ -42,8 +42,8 @@ If the content is already somewhere else on the .org site, feel free to copy and
 
 Possible sources of great research materials:
 
-- blogposts (on gatsbyjs.org and other sites)
-- docs (on gatsbyjs.org and other sites)
+- blogposts (on gatsbyjs.com and other sites)
+- docs (on gatsbyjs.com and other sites)
 - video tutorials
 - Discord or Twitter conversations
 - search engine results
@@ -495,7 +495,7 @@ Attributes:
 
 - intermediate to advanced at React
 - frontend developer
-- prefer using a search engine and/or `ctrl + f` to find things on the gatsbyjs.org site
+- prefer using a search engine and/or `ctrl + f` to find things on the gatsbyjs.com site
 
 Looking for:
 

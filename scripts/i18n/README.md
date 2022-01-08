@@ -79,4 +79,4 @@ Usage:
 yarn run-all [script name]
 ```
 
-The `run-all` script runs the script provided in the argument across all languages for which there are translations of gatbyjs.org, listed in /www/src/i18n.json.
+The `run-all` script runs the script provided in the argument across all languages for which there are translations of gatsbyjs.com, listed in /www/src/i18n.json.
