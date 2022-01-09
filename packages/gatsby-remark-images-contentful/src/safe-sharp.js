@@ -160,14 +160,14 @@ try {
   try {
     sharp = require(`gatsby/sharp`)
   } catch (e) {
-    sharp = () =>
-      Promise.resolve(() => {
-        const sharp = require(`sharp`)
-        sharp.simd()
-        sharp.concurrency(1)
+    sharp = () => {
+      const sharp = require(`sharp`)
 
-        return sharp
-      })
+      sharp.simd()
+      sharp.concurrency(1)
+
+      return Promise.resolve(sharp)
+    }
   }
 } catch (e) {
   handleMessage(e.toString())
