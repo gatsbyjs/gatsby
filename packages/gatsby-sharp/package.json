@@ -14,14 +14,14 @@
   "types": "dist/index.d.ts",
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-sharp#readme",
   "dependencies": {
-    "@types/sharp": "^0.29.4",
+    "@types/sharp": "^0.29.5",
     "sharp": "^0.29.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.4",
-    "@babel/core": "^7.10.4",
+    "@babel/cli": "^7.15.5",
+    "@babel/core": "^7.15.5",
     "babel-plugin-replace-ts-export-assignment": "^0.0.2",
-    "cross-env": "^7.0.2"
+    "cross-env": "^7.0.3"
   },
   "engines": {
     "node": ">=14.15.0"
