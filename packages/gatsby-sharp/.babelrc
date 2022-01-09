@@ -1,3 +1,4 @@
 {
-  "presets": [["babel-preset-gatsby-package"]]
+  "presets": [["babel-preset-gatsby-package"]],
+  "plugins": ["babel-plugin-replace-ts-export-assignment"]
 }

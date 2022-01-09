@@ -1,9 +1,9 @@
 const { exec } = require(`child_process`)
 const { createRequire } = require(`module`)
 
-module.exports = async function getSharpInstance(): Promise<
-  typeof import("sharp")
-> {
+let sharpInstance: typeof import("sharp")
+
+export = async function getSharpInstance(): Promise<typeof import("sharp")> {
   try {
     return importSharp()
   } catch (err) {
@@ -15,14 +15,18 @@ module.exports = async function getSharpInstance(): Promise<
 }
 
 function importSharp(): typeof import("sharp") {
-  const cleanRequire = createRequire(__filename)
-  const sharp = cleanRequire(`sharp`)
+  if (!sharpInstance) {
+    const cleanRequire = createRequire(__filename)
+    const sharp = cleanRequire(`sharp`)
 
-  sharp.simd(true)
-  // Concurrency is handled by gatsby
-  sharp.concurrency(1)
+    sharp.simd(true)
+    // Concurrency is handled by gatsby
+    sharp.concurrency(1)
 
-  return sharp
+    sharpInstance = sharp
+  }
+
+  return sharpInstance
 }
 
 function rebuildSharp(): Promise<string> {
