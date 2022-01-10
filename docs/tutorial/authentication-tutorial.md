@@ -150,7 +150,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 }
 ```
 
-> Note: There is a convenient plugin that already does this work for you: [gatsby-plugin-create-client-paths](/plugins/gatsby-plugin-create-client-paths)
+> Note: You can also use the [File System Route API](/docs/reference/routing/file-system-route-api/#creating-client-only-routes) to create client-only routes.
 
 Now, you must create a generic page that will have the task to generate the restricted content:
 
