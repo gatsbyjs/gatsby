@@ -29,7 +29,7 @@
     "test:always": "cross-env OPTION=always npm run build:option && cross-env OPTION=always npm run t:opt:build && cross-env OPTION=always npm run t:opt:develop",
     "test:never": "cross-env OPTION=never npm run build:option && cross-env OPTION=never npm run t:opt:build && cross-env OPTION=never npm run t:opt:develop",
     "test:ignore": "cross-env OPTION=ignore npm run build:option && cross-env OPTION=ignore npm run t:opt:build && cross-env OPTION=ignore npm run t:opt:develop",
-    "test": "npm-run-all -c -s test:always test:never test:ignore"
+    "test": "npm-run-all -c -s test:always clean test:never clean test:ignore"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
