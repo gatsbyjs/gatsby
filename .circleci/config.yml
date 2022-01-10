@@ -469,6 +469,10 @@ jobs:
 
   e2e_tests_trailing-slash:
     <<: *e2e-executor
+    environment:
+      <<: *e2e-executor-env
+      CYPRESS_PROJECT_ID: ofxgw8
+      CYPRESS_RECORD_KEY: 29c32742-6b85-40e0-9b45-a4c722749d52
     steps:
       - e2e-test:
           test_path: e2e-tests/trailing-slash

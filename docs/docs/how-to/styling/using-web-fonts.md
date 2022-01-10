@@ -18,7 +18,7 @@ Some examples of web font services include [Google Fonts](https://fonts.google.c
 
 ### How to use Web Font Loader with Typekit
 
-You can add Typekit Web Fonts to your project by using the [gatsby-plugin-web-font-loader](https://www.gatsbyjs.org/packages/gatsby-plugin-web-font-loader/?=font) and your [Adobe Fonts project id](https://fonts.adobe.com/my_fonts#web_projects-section). For example, this is how you can add Futura to your project.
+You can add Typekit Web Fonts to your project by using the [gatsby-plugin-web-font-loader](/plugins/gatsby-plugin-web-font-loader/?=font) and your [Adobe Fonts project id](https://fonts.adobe.com/my_fonts#web_projects-section). For example, this is how you can add Futura to your project.
 
 First, install the Gatsby plugin with npm:
 
