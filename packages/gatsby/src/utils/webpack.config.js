@@ -112,7 +112,9 @@ module.exports = async (
         return acc
       },
       {
-        "process.env": `({})`,
+        // we need to keep thing below for browser bundle, but we can't use it for `build-html` or `develop-html`, otherwise
+        // process.env.VAR will be ({}).VAR and this was always be undefined
+        // "process.env": `({})`,
       }
     )
   }
@@ -843,6 +845,10 @@ module.exports = async (
       `webpack`,
       `stage-` + stage
     )
+
+    // generate env var cache key version:
+    // - if cold build - use version 1
+    // - if warm build - compare stored (used) env vars to env vars objects with regenerated values - if object is different - we need new version if cache key
 
     const cacheConfig = {
       type: `filesystem`,
