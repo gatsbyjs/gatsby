@@ -61,6 +61,14 @@ export async function getServerData(
 }
 ```
 
+If you're using an anonymous function, you can also use the shorthand `GetServerData` type like this:
+
+```tsx
+const getServerData: GetServerData<ServerDataProps> = async props => {
+  // your function body
+}
+```
+
 ## Deprecation of `gatsby-recipes`
 
 In early 2020 we've [introduced Gatsby Recipes](/blog/2020-04-15-announcing-gatsby-recipes/) to automate common site building tasks. Since then our priorities and plans on that front for Gatsby have shifted, thus `gatsby-recipes` itself didn't ever go from alpha status to general availability. We're deprecating `gatsby-recipes` now to signal that we'll no longer will continue work on this specific package and to also remove some heavy dependencies from `gatsby-cli`. Some deprecation warnings or audit messages about packages from `gatsby-recipes` should be gone now.
@@ -71,7 +79,8 @@ If you've liked the features in `gatsby-recipes` and would like to have somethin
 
 ## Notable Bugfixes & Improvements
 
-- A lot of internal dependency updates to some packages. You can check the `CHANGELOG.md` file in each package’s folder for the details
+- A lot of internal dependency updates to some packages. You can check the `CHANGELOG.md` file in each package’s folder for the details.
+- If you want to know how to enable [Content Sync](/docs/conceptual/content-sync/) in your source plugin, you can read the [updated guide](/docs/how-to/plugins-and-themes/creating-a-source-plugin/#enabling-content-sync) now.
 - `gatsby`
   - When using the File System Route API and SSR rendering mode, the routing between individual pages and a catch-all splat route was not correctly resolved. The `findPageByPath` function was updated to use another algorithm to find the correct page, via [PR #34070](https://github.com/gatsbyjs/gatsby/pull/34070)
   - Remove unused exports from query engine, via [PR #33484](https://github.com/gatsbyjs/gatsby/pull/33484)
