@@ -106,7 +106,7 @@ describe(`selfHostedOrigin`, () => {
   })
 
   it(`should set selfHostedOrigin`, () => {
-    const selfHostedOrigin = `YOUR_SELF_HOSTED_ORIGIN`
+    const origin = `YOUR_SELF_HOSTED_ORIGIN`
     const mocks = {
       setHeadComponents: jest.fn(),
       setPostBodyComponents: jest.fn(),
@@ -114,7 +114,7 @@ describe(`selfHostedOrigin`, () => {
     const pluginOptions = {
       trackingIds: [`GA_TRACKING_ID`],
       pluginConfig: {
-        selfHostedOrigin: selfHostedOrigin,
+        origin: origin,
       },
     }
 
@@ -122,8 +122,8 @@ describe(`selfHostedOrigin`, () => {
     const [bodyConfig] = mocks.setPostBodyComponents.mock.calls[0][0]
     const headConfig = mocks.setHeadComponents.mock.calls[0][0]
 
-    expect(bodyConfig.props.src).toContain(selfHostedOrigin)
-    expect(headConfig[0].props.href).toContain(selfHostedOrigin)
-    expect(headConfig[1].props.href).toContain(selfHostedOrigin)
+    expect(bodyConfig.props.src).toContain(origin)
+    expect(headConfig[0].props.href).toContain(origin)
+    expect(headConfig[1].props.href).toContain(origin)
   })
 })
