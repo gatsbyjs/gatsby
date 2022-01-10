@@ -43,8 +43,10 @@ const IndicatorButtonTooltip: FC<IIndicatorButtonTooltipProps> = ({
             }
           }
         }
-        tooltipRef.current.addEventListener(`transitionend`, onTransitionEnd)
       }
+    }
+    if (tooltipRef.current) {
+      tooltipRef.current.addEventListener(`transitionend`, onTransitionEnd)
     }
     return (): void => {
       if (tooltipRef.current) {

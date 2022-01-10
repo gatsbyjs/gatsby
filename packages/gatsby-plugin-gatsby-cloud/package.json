@@ -37,9 +37,9 @@
     "http/2-server-push",
     "gatsby-cloud"
   ],
-  "types": "./dist/index.d.ts",
+  "types": "./index.d.ts",
   "license": "MIT",
-  "main": "./dist/components/index.js",
+  "main": "index.js",
   "peerDependencies": {
     "gatsby": "^4.0.0-next",
     "webpack": "*"
@@ -51,11 +51,11 @@
   },
   "sideEffects": false,
   "scripts": {
-    "build": "rimraf dist && babel src --out-dir dist --ignore \"**/__tests__\" --extensions \".tsx,.ts,.js\" --source-maps && npm run clean && npm run copy-type-declarations",
-    "clean": "del-cli ./dist/components/index.d.ts",
-    "copy-type-declarations": "cpy src/components/index.d.ts dist/",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\" --extensions \".tsx,.ts,.js\" --source-maps && npm run clean && npm run copy-type-declarations",
+    "clean": "del-cli ./components/index.d.ts",
+    "copy-type-declarations": "cpy src/components/index.d.ts components",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".tsx,.ts,.js\" --source-maps"
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".tsx,.ts,.js\" --source-maps"
   },
   "engines": {
     "node": ">=14.15.0"
