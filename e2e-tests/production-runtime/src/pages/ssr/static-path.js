@@ -22,30 +22,44 @@ export default function StaticPath({ serverData }) {
         heading="process.env.EXISTING_VAR"
         envVar={process.env.EXISTING_VAR}
       />
-      <UseEnv
+       <UseEnv
         heading="process.env.NOT_EXISTING_VAR"
         envVar={process.env.NOT_EXISTING_VAR}
       />
-      <UseEnv
-        heading="serverData.envVars"
-        envVar={serverData?.envVars}
+
+       <UseEnv
+        heading="process.env.FROM_COMMAND_LINE"
+        envVar={process.env.FROM_COMMAND_LINE}
       />
-      <h2>Debug</h2>
-      <pre>{JSON.stringify({ serverData }, null, 2)}</pre>
+      <UseEnv
+        heading="serverData.envVars.VERY_SECRET_VAR"
+        envVar={serverData?.envVars.VERY_SECRET_VAR}
+      />
+     
+       <UseEnv
+        heading="serverData.envVars.EXISTING_VAR"
+        envVar={serverData?.envVars.EXISTING_VAR}
+      />
+        <UseEnv
+        heading="serverData.envVars.FROM_COMMAND_LINE"
+        envVar={serverData?.envVars.FROM_COMMAND_LINE}
+      />
     </div>
   )
 }
 
 export async function getServerData(arg) {
-  const INSIDE_PRIVATE_ENV_VAR = process.env.VERY_SECRET_VAR
-  const INSIDE_PUBLIC_ENV_VAR = process.env.EXISTING_VAR
+  const VERY_SECRET_VAR = process.env.VERY_SECRET_VAR
+  const EXISTING_VAR = process.env.EXISTING_VAR
+  const FROM_COMMAND_LINE = process.env.FROM_COMMAND_LINE
 
   return {
     props: {
       arg,
       envVars: {
-        INSIDE_PRIVATE_ENV_VAR,
-        INSIDE_PUBLIC_ENV_VAR,
+        VERY_SECRET_VAR,
+        EXISTING_VAR,
+        FROM_COMMAND_LINE
       }
     },
   }
