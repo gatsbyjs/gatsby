@@ -41,8 +41,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^3.1.0-next.0",
-    "webpack": "*"
+    "gatsby": "^3.0.0-next.0"
   },
   "repository": {
     "type": "git",
