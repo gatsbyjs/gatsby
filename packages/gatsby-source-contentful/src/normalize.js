@@ -716,6 +716,7 @@ export const createAssetNodes = ({
   assetItem,
   createNode,
   createNodeId,
+  createContentDigest,
   defaultLocale,
   locales,
   space,
@@ -733,6 +734,7 @@ export const createAssetNodes = ({
       localesFallback,
     })
 
+    const file = assetItem.fields.file ? getField(assetItem.fields.file) : null
     const assetNode = {
       contentful_id: assetItem.sys.id,
       spaceId: space.sys.id,
@@ -741,7 +743,10 @@ export const createAssetNodes = ({
       updatedAt: assetItem.sys.updatedAt,
       parent: null,
       children: [],
-      file: assetItem.fields.file ? getField(assetItem.fields.file) : null,
+      file: {
+        ...file,
+        url: `https:` + file.url,
+      },
       title: assetItem.fields.title ? getField(assetItem.fields.title) : ``,
       description: assetItem.fields.description
         ? getField(assetItem.fields.description)
@@ -753,6 +758,11 @@ export const createAssetNodes = ({
       sys: {
         type: assetItem.sys.type,
       },
+      url: `https:` + file.url,
+      contentType: file.contentType,
+      filename: file.fileName,
+      width: file.details?.image?.width,
+      height: file.details?.image?.height,
     }
 
     // Revision applies to entries, assets, and content types
@@ -761,7 +771,9 @@ export const createAssetNodes = ({
     }
 
     // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
-    assetNode.internal.contentDigest = assetItem.sys.updatedAt
+    assetNode.internal.contentDigest = createContentDigest(
+      assetItem.sys.updatedAt
+    )
 
     // if the node hasn't changed, createNode may return `undefined` instead of a Promise on some versions of Gatsby
     const maybePromise = createNode(assetNode)

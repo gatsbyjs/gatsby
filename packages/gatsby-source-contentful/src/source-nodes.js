@@ -50,6 +50,7 @@ export async function sourceNodes(
     getCache,
     reporter,
     parentSpan,
+    createContentDigest,
   },
   pluginOptions
 ) {
@@ -449,6 +450,7 @@ export async function sourceNodes(
           defaultLocale,
           locales,
           space,
+          createContentDigest,
         })
       ))
     )

@@ -3,6 +3,7 @@ import _ from "lodash"
 import { fetchContentTypes } from "./fetch"
 import { createPluginConfig } from "./plugin-options"
 import { CODES } from "./report"
+import { addRemoteFilePolyfillInterface } from "gatsby-plugin-utils/polyfill-remote-file"
 
 async function getContentTypesFromContentFul({
   cache,
@@ -52,7 +53,7 @@ async function getContentTypesFromContentFul({
 }
 
 export async function createSchemaCustomization(
-  { schema, actions, reporter, cache },
+  { schema, actions, reporter, cache, store },
   pluginOptions
 ) {
   const { createTypes } = actions
@@ -92,26 +93,32 @@ export async function createSchemaCustomization(
       },
       extensions: { infer: false },
     }),
-    schema.buildObjectType({
-      name: `ContentfulAsset`,
-      fields: {
-        contentful_id: { type: `String!` },
-        id: { type: `ID!` },
-        ...(pluginConfig.get(`downloadLocal`)
-          ? {
-              localFile: {
-                type: `File`,
-                extensions: {
-                  link: {
-                    from: `fields.localFile`,
+    addRemoteFilePolyfillInterface(
+      schema.buildObjectType({
+        name: `ContentfulAsset`,
+        fields: {
+          contentful_id: { type: `String!` },
+          id: { type: `ID!` },
+          ...(pluginConfig.get(`downloadLocal`)
+            ? {
+                localFile: {
+                  type: `File`,
+                  extensions: {
+                    link: {
+                      from: `fields.localFile`,
+                    },
                   },
                 },
-              },
-            }
-          : {}),
-      },
-      interfaces: [`ContentfulReference`, `Node`],
-    }),
+              }
+            : {}),
+        },
+        interfaces: [`ContentfulReference`, `Node`],
+      }),
+      {
+        schema,
+        store,
+      }
+    ),
   ]
 
   // Create types for each content type
@@ -147,7 +154,7 @@ export async function createSchemaCustomization(
           id: { type: `ID!` },
         },
         interfaces: [`Node`],
-        extensions: { dontInfer: {} },
+        extensions: { infer: false },
       })
     )
   }
