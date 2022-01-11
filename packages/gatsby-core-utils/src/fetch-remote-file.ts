@@ -83,16 +83,16 @@ const GATSBY_CONCURRENT_DOWNLOAD = process.env.GATSBY_CONCURRENT_DOWNLOAD
   : 50
 
 const q: queue<IFetchRemoteFileOptions> = Queue(
-  pushToQueue,
+  fetchWorker,
   GATSBY_CONCURRENT_DOWNLOAD
 )
 
 /**
- * pushToQueue
+ * fetchWorker
  * --
- * Handle tasks that are pushed in to the Queue
+ * Handle fetch requests that are pushed in to the Queue
  */
-async function pushToQueue(
+async function fetchWorker(
   task: IFetchRemoteFileOptions,
   cb: done
 ): Promise<unknown> {
