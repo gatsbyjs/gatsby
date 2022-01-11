@@ -100,7 +100,7 @@ export const exitIcon = (
     <path
       d="M11.6667 1.175L10.4917 0L5.83333 4.65833L1.175 0L0 1.175L4.65833 5.83333L0 10.4917L1.175 11.6667L5.83333 7.00833L10.4917 11.6667L11.6667 10.4917L7.00833 5.83333L11.6667 1.175Z"
       fill="white"
-      fill-opacity="0.6"
+      fillOpacity="0.6"
     />
   </svg>
 )
@@ -136,9 +136,9 @@ export const infoIconActive = (
         width="88"
         height="168"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
           type="matrix"
