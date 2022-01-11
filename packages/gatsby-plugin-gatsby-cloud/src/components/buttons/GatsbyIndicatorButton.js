@@ -3,10 +3,7 @@ import IndicatorButton from "./IndicatorButton"
 import { gatsbyIcon } from "../icons"
 import { BuildStatus } from "../../models/enums"
 
-const getButtonProps = ({
-  buildStatus,
-  buttonIndex,
-}) => {
+const getButtonProps = ({ buildStatus, buttonIndex }) => {
   const baseProps = {
     testId: `gatsby`,
     buttonIndex,

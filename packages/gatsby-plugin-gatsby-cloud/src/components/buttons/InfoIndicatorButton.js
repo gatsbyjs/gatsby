@@ -3,7 +3,11 @@ import Cookies from "js-cookie"
 import { formatDistance, differenceInDays } from "date-fns"
 import IndicatorButton from "./IndicatorButton"
 import { infoIcon, infoAlertIcon } from "../icons"
-import { FeedbackTooltipContent } from "../tooltips"
+import {
+  FeedbackTooltipContent,
+  BuildErrorTooltipContent,
+  BuildSuccessTooltipContent,
+} from "../tooltips"
 import trackEvent from "../../utils/trackEvent"
 import { BuildStatus } from "../../models/enums"
 
@@ -13,6 +17,9 @@ const InfoIndicatorButton = ({
   buttonIndex,
   orgId,
   siteId,
+  erroredBuildId,
+  isOnPrettyUrl,
+  sitePrefix,
   buildId,
   createdAt,
   buildStatus,
@@ -57,8 +64,7 @@ const InfoIndicatorButton = ({
     })
   }
 
-  const closeInfoTooltip = () => {
-  }
+  const closeInfoTooltip = () => {}
 
   const closeFeedbackTooltip = () => {
     const now = new Date()
@@ -148,10 +154,10 @@ const InfoIndicatorButton = ({
               />
             ),
             closable: true,
-            onClose: closeInfoTooltip
+            onClose: closeInfoTooltip,
           },
           active: true,
-          hoverable: true
+          hoverable: true,
         })
       },
       [BuildStatus.ERROR]: () => {
@@ -167,17 +173,17 @@ const InfoIndicatorButton = ({
               />
             ),
             closable: true,
-            onClose: closeInfoTooltip
+            onClose: closeInfoTooltip,
           },
           active: true,
-          hoverable: true
+          hoverable: true,
         })
       },
       [BuildStatus.BUILDING]: () => {
         setButtonProps({
           tooltip: {
             content: `Building a new preview`,
-            overrideShow: true
+            overrideShow: true,
           },
           hoverable: true,
           showSpinner: true,
