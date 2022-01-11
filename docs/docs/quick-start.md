@@ -6,7 +6,7 @@ This quick start is intended for intermediate to advanced developers. For a gent
 
 ## Getting started with Gatsby
 
-1. Create a new site:
+1. Create a new site
 
 ```shell
 npm init gatsby
