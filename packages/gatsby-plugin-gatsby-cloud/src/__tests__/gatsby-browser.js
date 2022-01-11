@@ -17,7 +17,7 @@ const copyLinkMessage = `Copy link`
 const copyLinkSuccessMessage = `Link copied`
 const infoButtonMessage = `Preview updated`
 const errorLogMessage = `View logs`
-const newPreviewMessage = `New preview available`
+const newPreviewMessage = `This page has been updated.`
 const initialStateMessage = `Fetching preview info...`
 const buildingPreviewMessage = `Building a new preview`
 
@@ -268,26 +268,10 @@ describe(`Preview status indicator`, () => {
     })
 
     describe(`Gatsby Button`, () => {
-      it(`should show a more recent succesful build when available`, async () => {
-        await assertTooltipText({
-          route: `success`,
-          text: newPreviewMessage,
-          matcherType: `get`,
-        })
-      })
-
       it(`should show an error message when most recent build fails`, async () => {
         await assertTooltipText({
           route: `error`,
           text: errorLogMessage,
-          matcherType: `get`,
-        })
-      })
-
-      it(`should show a preview building message when most recent build is building`, async () => {
-        await assertTooltipText({
-          route: `building`,
-          text: buildingPreviewMessage,
           matcherType: `get`,
         })
       })
@@ -407,6 +391,22 @@ describe(`Preview status indicator`, () => {
     })
 
     describe(`Info Button`, () => {
+      it(`should show a more recent succesful build when available`, async () => {
+        await assertTooltipText({
+          route: `success`,
+          text: newPreviewMessage,
+          matcherType: `get`,
+        })
+      })
+
+      it(`should show a preview building message when most recent build is building`, async () => {
+        await assertTooltipText({
+          route: `building`,
+          text: buildingPreviewMessage,
+          matcherType: `get`,
+        })
+      })
+
       it(`should have no tooltip when successful`, async () => {
         await assertTooltipText({
           route: `success`,

@@ -64,7 +64,15 @@ const getButtonProps = props => {
         hoverable: false,
       }
     }
-    case `BUILDING`:
+    case `BUILDING`: {
+      return {
+        tooltipContent: `Building a new preview`,
+        showSpinner: true,
+        overrideShowTooltip: true,
+        showInfo: false,
+        hoverable: true,
+      }
+    }
     default: {
       return {
         active: true,
@@ -101,7 +109,7 @@ export default function InfoIndicatorButton(props) {
       testId="info"
       iconSvg={buttonProps?.showInfo ? infoIconActive : infoIcon}
       onClick={buttonProps?.active && trackClick}
-      onHover={!buttonProps?.showInfo && trackHover}
+      onMouseEnter={buttonProps?.active && trackHover}
       buttonIndex={props.buttonIndex}
       {...buttonProps}
     />
