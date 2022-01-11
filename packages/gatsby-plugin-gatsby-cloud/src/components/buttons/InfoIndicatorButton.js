@@ -49,7 +49,15 @@ const InfoIndicatorButton = ({
 
   const closeInfoTooltip = () => {
     const now = new Date()
-    Cookies.set(feedbackCookieName, now.toISOString())
+    const rootDomain = location.hostname
+      .split(`.`)
+      .reverse()
+      .splice(0, 2)
+      .reverse()
+      .join(`.`)
+    Cookies.set(feedbackCookieName, now.toISOString(), {
+      domain: rootDomain,
+    })
     setButtonProps(btnProps => {
       return {
         ...btnProps,
