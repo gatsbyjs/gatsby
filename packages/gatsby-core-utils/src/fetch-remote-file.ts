@@ -80,7 +80,7 @@ const ERROR_CODES_TO_RETRY = [
 
 const GATSBY_CONCURRENT_DOWNLOAD = process.env.GATSBY_CONCURRENT_DOWNLOAD
   ? parseInt(process.env.GATSBY_CONCURRENT_DOWNLOAD, 10) || 0
-  : 200
+  : 50
 
 const q: queue<IFetchRemoteFileOptions> = Queue(
   pushToQueue,
