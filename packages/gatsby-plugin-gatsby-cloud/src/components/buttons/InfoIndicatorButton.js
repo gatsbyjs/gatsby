@@ -37,6 +37,16 @@ const InfoIndicatorButton = ({
     }
   }, [])
 
+  const trackClick = () => {
+    trackEvent({
+      eventType: `PREVIEW_INDICATOR_CLICK`,
+      orgId,
+      siteId,
+      buildId,
+      name: `info click`,
+    })
+  }
+
   const trackHover = () => {
     trackEvent({
       eventType: `PREVIEW_INDICATOR_HOVER`,
@@ -48,6 +58,9 @@ const InfoIndicatorButton = ({
   }
 
   const closeInfoTooltip = () => {
+  }
+
+  const closeFeedbackTooltip = () => {
     const now = new Date()
     const rootDomain = location.hostname
       .split(`.`)
@@ -92,13 +105,13 @@ const InfoIndicatorButton = ({
                 <FeedbackTooltipContent
                   url={url}
                   onOpened={() => {
-                    closeInfoTooltip()
+                    closeFeedbackTooltip()
                   }}
                 />
               ),
               overrideShow: true,
               closable: true,
-              onClose: closeInfoTooltip,
+              onClose: closeFeedbackTooltip,
             },
             active: true,
             highlighted: true,
@@ -120,9 +133,56 @@ const InfoIndicatorButton = ({
           })
         }
       },
-      [BuildStatus.SUCCESS]: null,
-      [BuildStatus.ERROR]: null,
-      [BuildStatus.BUILDING]: null,
+      [BuildStatus.SUCCESS]: () => {
+        setButtonProps({
+          ...buttonProps,
+          tooltip: {
+            testId: buttonProps.testId,
+            content: (
+              <BuildSuccessTooltipContent
+                isOnPrettyUrl={isOnPrettyUrl}
+                sitePrefix={sitePrefix}
+                buildId={buildId}
+                siteId={siteId}
+                orgId={orgId}
+              />
+            ),
+            closable: true,
+            onClose: closeInfoTooltip
+          },
+          active: true,
+          hoverable: true
+        })
+      },
+      [BuildStatus.ERROR]: () => {
+        setButtonProps({
+          ...buttonProps,
+          tooltip: {
+            testId: buttonProps.testId,
+            content: (
+              <BuildErrorTooltipContent
+                siteId={siteId}
+                orgId={orgId}
+                buildId={erroredBuildId}
+              />
+            ),
+            closable: true,
+            onClose: closeInfoTooltip
+          },
+          active: true,
+          hoverable: true
+        })
+      },
+      [BuildStatus.BUILDING]: () => {
+        setButtonProps({
+          tooltip: {
+            content: `Building a new preview`,
+            overrideShow: true
+          },
+          hoverable: true,
+          showSpinner: true,
+        })
+      },
     }
     const buildStatusAction = buildStatus
       ? buildStatusActions[buildStatus]
@@ -130,13 +190,14 @@ const InfoIndicatorButton = ({
     if (buildStatusAction) {
       buildStatusAction()
     } else {
-      setButtonProps({ ...buttonProps, active: false })
+      setButtonProps({ ...buttonProps, active: true, hoverable: true })
     }
   }, [askForFeedback.current, buildStatus])
 
   return (
     <IndicatorButton
       {...buttonProps}
+      onClick={buttonProps?.active ? trackClick : undefined}
       onMouseEnter={buttonProps?.active ? trackHover : undefined}
       iconSvg={askForFeedback.current ? infoAlertIcon : infoIcon}
     />

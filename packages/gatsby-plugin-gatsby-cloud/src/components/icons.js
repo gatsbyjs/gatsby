@@ -89,6 +89,96 @@ export const successIcon = (
   </svg>
 )
 
+export const exitIcon = (
+  <svg
+    width="10"
+    height="10"
+    viewBox="0 0 12 12"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M11.6667 1.175L10.4917 0L5.83333 4.65833L1.175 0L0 1.175L4.65833 5.83333L0 10.4917L1.175 11.6667L5.83333 7.00833L10.4917 11.6667L11.6667 10.4917L7.00833 5.83333L11.6667 1.175Z"
+      fill="white"
+      fillOpacity="0.6"
+    />
+  </svg>
+)
+
+export const infoIconActive = (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect width="20" height="20" fill="#E5E5E5" />
+    <rect
+      width="1026"
+      height="1515"
+      transform="translate(-553 -459)"
+      fill="white"
+    />
+    <g filter="url(#filter0_d_1456_1573)">
+      <rect x="-14" y="-54" width="48" height="128" rx="5" fill="white" />
+    </g>
+    <path
+      d="M9 5H11L11 7H9L9 5ZM9 9H11V15H9V9ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z"
+      fill="#232129"
+    />
+    <circle cx="17" cy="4" r="3.5" fill="#EC1818" stroke="white" />
+    <defs>
+      <filter
+        id="filter0_d_1456_1573"
+        x="-34"
+        y="-70"
+        width="88"
+        height="168"
+        filterUnits="userSpaceOnUse"
+        colorInterpolationFilters="sRGB"
+      >
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+        <feColorMatrix
+          in="SourceAlpha"
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          result="hardAlpha"
+        />
+        <feOffset dy="4" />
+        <feGaussianBlur stdDeviation="10" />
+        <feColorMatrix
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"
+        />
+        <feBlend
+          mode="normal"
+          in2="BackgroundImageFix"
+          result="effect1_dropShadow_1456_1573"
+        />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="effect1_dropShadow_1456_1573"
+          result="shape"
+        />
+      </filter>
+    </defs>
+  </svg>
+)
+
+export const notificationIcon = (
+  <svg
+    width="38"
+    height="28"
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="5" cy="0" r="3.5" fill="#EC1818" stroke="white" />
+  </svg>
+)
+
 export const spinnerIcon = (
   <svg
     width="28"

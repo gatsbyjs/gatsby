@@ -57,4 +57,4 @@ This framework also has experimental support for the React suspense API and it s
 
 - [Gatsby i18n articles](https://www.gatsbyjs.com/blog/tags/localization/)
 
-- [W3C's i18n resources](https://w3c.github.io/i18n-drafts/getting-started/contentdev.en#reference)
+- [W3C's i18n resources](https://www.w3.org/International/i18n-drafts/nav/contentdev#reference)

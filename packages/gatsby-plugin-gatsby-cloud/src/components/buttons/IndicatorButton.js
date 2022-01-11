@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { IndicatorButtonTooltip } from "../tooltips"
-import { spinnerIcon } from "../icons"
+import { spinnerIcon, exitIcon } from "../icons"
 
 const IndicatorButton = ({
   buttonIndex,
