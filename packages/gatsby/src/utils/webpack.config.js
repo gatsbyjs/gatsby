@@ -77,13 +77,16 @@ module.exports = async (
       }
     }
 
+    const target =
+      stage === `build-html` || stage === `develop-html` ? `node` : `web`
+
     const envObject = Object.keys(parsed).reduce((acc, key) => {
       acc[key] = JSON.stringify(parsed[key])
       return acc
     }, {})
 
     const gatsbyVarObject = Object.keys(process.env).reduce((acc, key) => {
-      if (key.match(/^GATSBY_/)) {
+      if (target === `node` || key.match(/^GATSBY_/)) {
         acc[key] = JSON.stringify(process.env[key])
       }
       return acc
@@ -112,9 +115,7 @@ module.exports = async (
         return acc
       },
       {
-        // we need to keep thing below for browser bundle, but we can't use it for `build-html` or `develop-html`, otherwise
-        // process.env.VAR will be ({}).VAR and this was always be undefined
-        // "process.env": `({})`,
+        "process.env": `({})`,
       }
     )
   }
@@ -845,10 +846,6 @@ module.exports = async (
       `webpack`,
       `stage-` + stage
     )
-
-    // generate env var cache key version:
-    // - if cold build - use version 1
-    // - if warm build - compare stored (used) env vars to env vars objects with regenerated values - if object is different - we need new version if cache key
 
     const cacheConfig = {
       type: `filesystem`,

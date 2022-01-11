@@ -2,8 +2,6 @@
 // fs and this need to happen before anything else tries to import fs
 import "../engines-fs-provider"
 
-// import * as dotenv from "dotenv"
-
 // just types - those should not be bundled
 import type { GraphQLEngine } from "../../schema/graphql-engine/entry"
 import type { IExecutionResult } from "../../query/types"
@@ -27,16 +25,6 @@ import { getServerData, IServerData } from "../get-server-data"
 import reporter from "gatsby-cli/lib/reporter"
 import { initTracer } from "../tracer"
 import { getCodeFrame } from "../../query/graphql-errors-codeframe"
-
-// dotenv.config({ path: `./routes/.env` })
-
-const envVars = fs.readJsonSync(__dirname + `/routes/.env`)
-
-console.log(`loading env vars`, envVars)
-for (const [varName, value] of Object.entries(envVars)) {
-  // @ts-ignore process.env doesn't allow random keys
-  process.env[varName] = value
-}
 
 export interface ITemplateDetails {
   query: string
