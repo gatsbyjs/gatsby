@@ -3,50 +3,34 @@ import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import fastq from "fastq"
 import path from "path"
-import { createContentDigest } from "gatsby-core-utils"
-import { IGatsbyPage } from "../redux/types"
+import { createContentDigest, generatePageDataPath } from "gatsby-core-utils"
 import { websocketManager } from "./websocket-manager"
 import { isWebpackStatusPending } from "./webpack-status"
 import { store } from "../redux"
 import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
 import { isLmdbStore } from "../datastore"
 import type GatsbyCacheLmdb from "./cache-lmdb"
+import {
+  constructPageDataString,
+  reverseFixedPagePath,
+  IPageData,
+} from "./page-data-helpers"
+import { Span } from "opentracing"
 
+export { reverseFixedPagePath }
+import { processNodeManifests } from "../utils/node-manifest"
 import { IExecutionResult } from "../query/types"
-
-interface IPageData {
-  componentChunkName: IGatsbyPage["componentChunkName"]
-  matchPath?: IGatsbyPage["matchPath"]
-  path: IGatsbyPage["path"]
-  staticQueryHashes: Array<string>
-}
+import { getPageMode } from "./page-mode"
 
 export interface IPageDataWithQueryResult extends IPageData {
   result: IExecutionResult
-}
-
-export function fixedPagePath(pagePath: string): string {
-  return pagePath === `/` ? `index` : pagePath
-}
-
-export function reverseFixedPagePath(pageDataRequestPath: string): string {
-  return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
-}
-
-function getFilePath(publicDir: string, pagePath: string): string {
-  return path.join(
-    publicDir,
-    `page-data`,
-    fixedPagePath(pagePath),
-    `page-data.json`
-  )
 }
 
 export async function readPageData(
   publicDir: string,
   pagePath: string
 ): Promise<IPageDataWithQueryResult> {
-  const filePath = getFilePath(publicDir, pagePath)
+  const filePath = generatePageDataPath(publicDir, pagePath)
   const rawPageData = await fs.readFile(filePath, `utf-8`)
 
   return JSON.parse(rawPageData)
@@ -56,7 +40,7 @@ export async function removePageData(
   publicDir: string,
   pagePath: string
 ): Promise<void> {
-  const filePath = getFilePath(publicDir, pagePath)
+  const filePath = generatePageDataPath(publicDir, pagePath)
 
   if (fs.existsSync(filePath)) {
     return await fs.remove(filePath)
@@ -66,7 +50,7 @@ export async function removePageData(
 }
 
 export function pageDataExists(publicDir: string, pagePath: string): boolean {
-  return fs.existsSync(getFilePath(publicDir, pagePath))
+  return fs.existsSync(generatePageDataPath(publicDir, pagePath))
 }
 
 let lmdbPageQueryResultsCache: GatsbyCacheLmdb
@@ -111,7 +95,7 @@ export async function savePageQueryResult(
 export async function readPageQueryResult(
   publicDir: string,
   pagePath: string
-): Promise<any> {
+): Promise<string | Buffer> {
   if (isLmdbStore()) {
     const stringifiedResult = await getLMDBPageQueryResultsCache().get(pagePath)
     if (typeof stringifiedResult === `string`) {
@@ -132,28 +116,13 @@ export async function readPageQueryResult(
 
 export async function writePageData(
   publicDir: string,
-  {
-    componentChunkName,
-    matchPath,
-    path: pagePath,
-    staticQueryHashes,
-  }: IPageData
+  pageData: IPageData
 ): Promise<string> {
-  const result = await readPageQueryResult(publicDir, pagePath)
+  const result = await readPageQueryResult(publicDir, pageData.path)
 
-  const outputFilePath = getFilePath(publicDir, pagePath)
-  let body = `{
-    "componentChunkName": "${componentChunkName}",
-    "path": "${pagePath}",
-    "result": ${result},
-    "staticQueryHashes": ${JSON.stringify(staticQueryHashes)}`
+  const outputFilePath = generatePageDataPath(publicDir, pageData.path)
 
-  if (matchPath) {
-    body += `,
-    "matchPath": "${matchPath}"`
-  }
-
-  body += `}`
+  const body = constructPageDataString(pageData, result)
 
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
   const pageDataSize = Buffer.byteLength(body) / 1000
@@ -161,7 +130,7 @@ export async function writePageData(
   store.dispatch({
     type: `ADD_PAGE_DATA_STATS`,
     payload: {
-      pagePath,
+      pagePath: pageData.path,
       filePath: outputFilePath,
       size: pageDataSize,
       pageDataHash: createContentDigest(body),
@@ -179,7 +148,7 @@ export function isFlushEnqueued(): boolean {
   return isFlushPending
 }
 
-export async function flush(): Promise<void> {
+export async function flush(parentSpan?: Span): Promise<void> {
   if (isFlushing) {
     // We're already in the middle of a flush
     return
@@ -194,15 +163,27 @@ export async function flush(): Promise<void> {
     staticQueriesByTemplate,
     queries,
   } = store.getState()
+  const isBuild = program?._?.[0] !== `develop`
 
   const { pagePaths } = pendingPageDataWrites
+  let writePageDataActivity
 
-  const writePageDataActivity = reporter.createProgress(
-    `Writing page-data.json files to public directory`,
-    pagePaths.size,
-    0
-  )
-  writePageDataActivity.start()
+  let nodeManifestPagePathMap
+
+  if (pagePaths.size > 0) {
+    // we process node manifests in this location because we need to add the manifestId to the page data.
+    // We use this manifestId to determine if the page data is up to date when routing. Here we create a map of "pagePath": "manifestId" while processing and writing node manifest files.
+    // We only do this when there are pending page-data writes because otherwise we could flush pending createNodeManifest calls before page-data.json files are written. Which means those page-data files wouldn't have the corresponding manifest id's written to them.
+    nodeManifestPagePathMap = await processNodeManifests()
+
+    writePageDataActivity = reporter.createProgress(
+      `Writing page-data.json files to public directory`,
+      pagePaths.size,
+      0,
+      { id: `write-page-data-public-directory`, parentSpan }
+    )
+    writePageDataActivity.start()
+  }
 
   const flushQueue = fastq(async (pagePath, cb) => {
     const page = pages.get(pagePath)
@@ -214,11 +195,11 @@ export async function flush(): Promise<void> {
     // them, a page might not exist anymore щ（ﾟДﾟщ）
     // This is why we need this check
     if (page) {
-      if (
-        (program?._?.[0] === `develop` &&
-          process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) ||
-        (_CFLAGS_.GATSBY_MAJOR === `4` ? page.mode !== `SSG` : false)
-      ) {
+      if (page.path && nodeManifestPagePathMap) {
+        page.manifestId = nodeManifestPagePathMap.get(page.path)
+      }
+
+      if (!isBuild && process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
         // check if already did run query for this page
         // with query-on-demand we might have pending page-data write due to
         // changes in static queries assigned to page template, but we might not
@@ -233,28 +214,37 @@ export async function flush(): Promise<void> {
 
         if (hasFlag(query.dirty, FLAG_DIRTY_NEW_PAGE)) {
           // query results are not written yet
-          return cb(null, true)
+          setImmediate(() => cb(null, true))
+          return
         }
       }
 
-      const staticQueryHashes =
-        staticQueriesByTemplate.get(page.componentPath) || []
+      // In develop we rely on QUERY_ON_DEMAND so we just go through
+      // In build we only build these page-json for SSG pages
+      if (
+        _CFLAGS_.GATSBY_MAJOR !== `4` ||
+        !isBuild ||
+        (isBuild && getPageMode(page) === `SSG`)
+      ) {
+        const staticQueryHashes =
+          staticQueriesByTemplate.get(page.componentPath) || []
 
-      const result = await writePageData(
-        path.join(program.directory, `public`),
-        {
-          ...page,
-          staticQueryHashes,
+        const result = await writePageData(
+          path.join(program.directory, `public`),
+          {
+            ...page,
+            staticQueryHashes,
+          }
+        )
+
+        writePageDataActivity.tick()
+
+        if (!isBuild) {
+          websocketManager.emitPageData({
+            id: pagePath,
+            result: JSON.parse(result) as IPageDataWithQueryResult,
+          })
         }
-      )
-
-      writePageDataActivity.tick()
-
-      if (program?._?.[0] === `develop`) {
-        websocketManager.emitPageData({
-          id: pagePath,
-          result: JSON.parse(result) as IPageDataWithQueryResult,
-        })
       }
     }
 
@@ -265,7 +255,10 @@ export async function flush(): Promise<void> {
       },
     })
 
-    return cb(null, true)
+    // `setImmediate` below is a workaround against stack overflow
+    // occurring when there are many non-SSG pages
+    setImmediate(() => cb(null, true))
+    return
   }, 25)
 
   for (const pagePath of pagePaths) {
@@ -277,22 +270,24 @@ export async function flush(): Promise<void> {
       flushQueue.drain = resolve as () => unknown
     })
   }
+  if (writePageDataActivity) {
+    writePageDataActivity.end()
+  }
 
-  writePageDataActivity.end()
   isFlushing = false
 
   return
 }
 
-export function enqueueFlush(): void {
+export function enqueueFlush(parentSpan?: Span): void {
   if (isWebpackStatusPending()) {
     isFlushPending = true
   } else {
-    flush()
+    flush(parentSpan)
   }
 }
 
-export async function handleStalePageData(): Promise<void> {
+export async function handleStalePageData(parentSpan: Span): Promise<void> {
   if (!(await fs.pathExists(`public/page-data`))) {
     return
   }
@@ -301,7 +296,9 @@ export async function handleStalePageData(): Promise<void> {
   // we get the list of those and compare against expected page-data files
   // and remove ones that shouldn't be there anymore
 
-  const activity = reporter.activityTimer(`Cleaning up stale page-data`)
+  const activity = reporter.activityTimer(`Cleaning up stale page-data`, {
+    parentSpan,
+  })
   activity.start()
 
   const pageDataFilesFromPreviousBuilds = await new Promise<Set<string>>(
@@ -326,7 +323,7 @@ export async function handleStalePageData(): Promise<void> {
 
   const expectedPageDataFiles = new Set<string>()
   store.getState().pages.forEach(page => {
-    expectedPageDataFiles.add(getFilePath(`public`, page.path))
+    expectedPageDataFiles.add(generatePageDataPath(`public`, page.path))
   })
 
   const deletionPromises: Array<Promise<void>> = []

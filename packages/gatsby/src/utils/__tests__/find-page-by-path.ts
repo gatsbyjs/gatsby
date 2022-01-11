@@ -41,7 +41,22 @@ const commonPages = [
     path: `/app/`,
     matchPath: `/app/*`,
   },
+  {
+    path: `/app/p1/page/`,
+    matchPath: `/app/:p1/page`,
+  },
+  {
+    path: `/app/p1/p2/`,
+    matchPath: `/app/:p1/:p2`,
+  },
+  {
+    path: `/app/p1/page2/`,
+    // this is very similar to `/app/:p1/page`, point of adding 2 of those is to make sure order of pages in state
+    // doesn't impact deterministic page selection
+    matchPath: `/app/:p1/page2`,
+  },
   `/app/static/`,
+  `/app/static/page/`,
 ]
 
 const state = generatePagesState([...commonPages])
@@ -121,6 +136,38 @@ describe(`findPageByPath`, () => {
       expect(page?.path).toEqual(`/app/`)
     })
 
+    it(`Picks most specific matchPath`, () => {
+      {
+        const page = findPageByPath(state, `/app/foo`)
+        expect(page).toBeDefined()
+        expect(page?.path).toEqual(`/app/`)
+      }
+
+      {
+        const page = findPageByPath(state, `/app/foo/bar/baz`)
+        expect(page).toBeDefined()
+        expect(page?.path).toEqual(`/app/`)
+      }
+
+      {
+        const page = findPageByPath(state, `/app/foo/bar`)
+        expect(page).toBeDefined()
+        expect(page?.path).toEqual(`/app/p1/p2/`)
+      }
+
+      {
+        const page = findPageByPath(state, `/app/foo/page`)
+        expect(page).toBeDefined()
+        expect(page?.path).toEqual(`/app/p1/page/`)
+      }
+
+      {
+        const page = findPageByPath(state, `/app/foo/page2`)
+        expect(page).toBeDefined()
+        expect(page?.path).toEqual(`/app/p1/page2/`)
+      }
+    })
+
     it(`Can match client-only path by static`, () => {
       const page = findPageByPath(state, `/app`)
       expect(page).toBeDefined()
@@ -128,9 +175,17 @@ describe(`findPageByPath`, () => {
     })
 
     it(`Will prefer static page over client-only in case both match`, () => {
-      const page = findPageByPath(state, `/app/static`)
-      expect(page).toBeDefined()
-      expect(page?.path).toEqual(`/app/static/`)
+      {
+        const page = findPageByPath(state, `/app/static`)
+        expect(page).toBeDefined()
+        expect(page?.path).toEqual(`/app/static/`)
+      }
+
+      {
+        const page = findPageByPath(state, `/app/static/page`)
+        expect(page).toBeDefined()
+        expect(page?.path).toEqual(`/app/static/page/`)
+      }
     })
   })
 

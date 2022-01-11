@@ -1,4 +1,4 @@
-import uuidv4 from "uuid"
+import { uuid } from "gatsby-core-utils"
 import { trackCli } from "gatsby-telemetry"
 import signalExit from "signal-exit"
 import { Dispatch } from "redux"
@@ -21,6 +21,7 @@ import {
   IActivityErrored,
   IGatsbyCLIState,
   ISetLogs,
+  IRenderPageTree,
 } from "./types"
 import {
   delayedCall,
@@ -30,6 +31,7 @@ import {
 } from "./utils"
 import { IStructuredError } from "../../structured-errors/types"
 import { ErrorCategory } from "../../structured-errors/error-map"
+import { IRenderPageArgs } from "../types"
 
 const ActivityStatusToLogLevel = {
   [ActivityStatuses.Interrupted]: ActivityLogLevels.Interrupted,
@@ -126,7 +128,7 @@ export const createLog = ({
     type: Actions.Log,
     payload: {
       level,
-      text,
+      text: !text ? `\u2800` : text,
       statusText,
       duration,
       group,
@@ -197,7 +199,7 @@ export const startActivity = ({
       type: Actions.StartActivity,
       payload: {
         id,
-        uuid: uuidv4(),
+        uuid: uuid.v4(),
         text,
         type,
         status,
@@ -377,5 +379,12 @@ export const setLogs = (logs: IGatsbyCLIState): ISetLogs => {
   return {
     type: Actions.SetLogs,
     payload: logs,
+  }
+}
+
+export const renderPageTree = (payload: IRenderPageArgs): IRenderPageTree => {
+  return {
+    type: Actions.RenderPageTree,
+    payload,
   }
 }

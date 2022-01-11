@@ -44,6 +44,14 @@ jest.mock(`chokidar`, () => {
   return chokidar
 })
 
+jest.mock(`gatsby-telemetry`, () => {
+  return {
+    decorateEvent: jest.fn(),
+    trackError: jest.fn(),
+    trackCli: jest.fn(),
+  }
+})
+
 const dummyKeys = `a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z`.split(
   `,`
 )
@@ -290,7 +298,7 @@ describeWhenLMDB(`worker (queries)`, () => {
     const spy = jest.spyOn(worker.single, `runQueries`)
 
     // @ts-ignore - worker is defined
-    await runQueriesInWorkersQueue(worker, queryIdsBig, 10)
+    await runQueriesInWorkersQueue(worker, queryIdsBig, { chunkSize: 10 })
     const stateFromWorker = await worker.single.getState()
 
     // Called the complete ABC so we can test _a

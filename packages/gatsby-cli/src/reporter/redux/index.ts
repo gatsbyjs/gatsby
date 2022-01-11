@@ -1,19 +1,20 @@
 import { createStore, combineReducers, Store } from "redux"
-import { reducer } from "./reducer"
+import { reducer as logsReducer } from "./reducers/logs"
+import { reducer as pageTreeReducer } from "./reducers/page-tree"
 import { ActionsUnion, ISetLogs, IGatsbyCLIState } from "./types"
 import { isInternalAction } from "./utils"
 import { createStructuredLoggingDiagnosticsMiddleware } from "./diagnostics"
 import { Actions } from "../constants"
+import { IRenderPageArgs } from "../../reporter/types"
 
-let store: Store<{ logs: IGatsbyCLIState }> = createStore(
-  combineReducers({
-    logs: reducer,
-  }),
-  {}
-)
-
-const diagnosticsMiddleware =
-  createStructuredLoggingDiagnosticsMiddleware(store)
+let store: Store<{ logs: IGatsbyCLIState; pageTree: IRenderPageArgs }> =
+  createStore(
+    combineReducers({
+      logs: logsReducer,
+      pageTree: pageTreeReducer,
+    }),
+    {}
+  )
 
 export type GatsbyCLIStore = typeof store
 type StoreListener = (store: GatsbyCLIStore) => void
@@ -24,6 +25,9 @@ const storeSwapListeners: Array<StoreListener> = []
 const onLogActionListeners = new Set<ActionLogListener>()
 
 export const getStore = (): typeof store => store
+
+const diagnosticsMiddleware =
+  createStructuredLoggingDiagnosticsMiddleware(getStore)
 
 export const dispatch = (action: ActionsUnion | Thunk): void => {
   if (!action) {

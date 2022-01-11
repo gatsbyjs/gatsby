@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import { IndicatorButtonTooltip } from "../tooltips"
 import { spinnerIcon, exitIcon } from "../icons"
 
@@ -16,12 +16,14 @@ export default function IndicatorButton({
   showInfo = false,
 }) {
   const [showTooltip, setShowTooltip] = useState(false)
+  const buttonRef = useRef(null)
   const isFirstButton = buttonIndex === 0
   const marginTop = isFirstButton ? `0px` : `8px`
 
   return (
     <>
       <button
+        ref={buttonRef}
         data-gatsby-preview-indicator="button"
         data-gatsby-preview-indicator-active-button={`${active}`}
         data-gatsby-preview-indicator-hoverable={
@@ -76,7 +78,7 @@ export default function IndicatorButton({
           }
           overrideShowTooltip={overrideShowTooltip}
           showTooltip={showTooltip}
-          buttonIndex={buttonIndex}
+          elementRef={buttonRef}
           testId={testId}
         />
       )}

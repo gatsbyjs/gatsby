@@ -7,20 +7,26 @@ import {
   SourceNodesArgs,
 } from "gatsby"
 import { makeResolveGatsbyImageData } from "./resolve-gatsby-image-data"
-import {
-  getGatsbyImageResolver,
-  IGatsbyGraphQLResolverArgumentConfig,
-} from "gatsby-plugin-image/graphql-utils"
-import { shiftLeft } from "shift-left"
-import { pluginErrorCodes as errorCodes } from "./errors"
+import { getGatsbyImageFieldConfig } from "gatsby-plugin-image/graphql-utils"
 import { makeSourceFromOperation } from "./make-source-from-operation"
 export { createSchemaCustomization } from "./create-schema-customization"
 import { createNodeId } from "./node-builder"
-import { JoiObject } from "joi"
+import { ERROR_MAP } from "./error-map"
 
-export function pluginOptionsSchema({
-  Joi,
-}: PluginOptionsSchemaArgs): JoiObject {
+let coreSupportsOnPluginInit: `unstable` | `stable` | undefined
+
+try {
+  const { isGatsbyNodeLifecycleSupported } = require(`gatsby-plugin-utils`)
+  if (isGatsbyNodeLifecycleSupported(`onPluginInit`)) {
+    coreSupportsOnPluginInit = `stable`
+  } else if (isGatsbyNodeLifecycleSupported(`unstable_onPluginInit`)) {
+    coreSupportsOnPluginInit = `unstable`
+  }
+} catch (e) {
+  console.error(`Could not check if Gatsby supports onPluginInit lifecycle`)
+}
+
+export function pluginOptionsSchema({ Joi }: PluginOptionsSchemaArgs): any {
   // @ts-ignore TODO: When Gatsby updates Joi version, update type
   // Vague type error that we're not able to figure out related to isJoi missing
   // Probably related to Joi being outdated
@@ -231,13 +237,6 @@ export function createResolvers(
   }: ShopifyPluginOptions
 ): void {
   if (!downloadImages) {
-    const args = {
-      placeholder: {
-        description: `Low resolution version of the image`,
-        type: `String`,
-        defaultValue: null,
-      } as IGatsbyGraphQLResolverArgumentConfig,
-    }
     const imageNodeTypes = [
       `ShopifyProductImage`,
       `ShopifyProductVariantImage`,
@@ -253,9 +252,8 @@ export function createResolvers(
       return {
         ...r,
         [`${typePrefix}${nodeType}`]: {
-          gatsbyImageData: getGatsbyImageResolver(
-            makeResolveGatsbyImageData(cache),
-            args
+          gatsbyImageData: getGatsbyImageFieldConfig(
+            makeResolveGatsbyImageData(cache)
           ),
         },
       }
@@ -265,46 +263,15 @@ export function createResolvers(
   }
 }
 
-interface IErrorContext {
-  sourceMessage: string
+const initializePlugin = ({ reporter }: NodePluginArgs): void => {
+  reporter.setErrorMap(ERROR_MAP)
 }
 
-const getErrorText = (context: IErrorContext): string => context.sourceMessage
-
-export function onPreInit({ reporter }: NodePluginArgs): void {
-  reporter.setErrorMap({
-    [errorCodes.bulkOperationFailed]: {
-      text: getErrorText,
-      level: `ERROR`,
-      category: `USER`,
-    },
-    [errorCodes.apiConflict]: {
-      text: (): string => shiftLeft`
-        Your operation was canceled. You might have another production site for this Shopify store.
-
-        Shopify only allows one bulk operation at a time for a given shop, so we recommend that you
-        avoid having two production sites that point to the same Shopify store.
-
-        If the duplication is intentional, please wait for the other operation to finish before trying
-        again. Otherwise, consider deleting the other site or pointing it to a test store instead.
-      `,
-      level: `ERROR`,
-      category: `USER`,
-    },
-    /**
-     * If we don't know what it is, we haven't done our due
-     * diligence to handle it explicitly. That means it's our
-     * fault, so THIRD_PARTY indicates us, the plugin authors.
-     */
-    [errorCodes.unknownSourcingFailure]: {
-      text: getErrorText,
-      level: `ERROR`,
-      category: `THIRD_PARTY`,
-    },
-    [errorCodes.unknownApiError]: {
-      text: getErrorText,
-      level: `ERROR`,
-      category: `THIRD_PARTY`,
-    },
-  })
+if (coreSupportsOnPluginInit === `unstable`) {
+  // need to conditionally export otherwise it throws an error for older versions
+  exports.unstable_onPluginInit = initializePlugin
+} else if (coreSupportsOnPluginInit === `stable`) {
+  exports.onPluginInit = initializePlugin
+} else {
+  exports.onPreInit = initializePlugin
 }

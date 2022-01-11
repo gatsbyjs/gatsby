@@ -27,13 +27,13 @@ describe(`SSR`, () => {
   test(`dev & build outputs match`, async () => {
     const childProcess = await execa(`yarn`, [`test-output`])
 
-    expect(childProcess.code).toEqual(0)
+    expect(childProcess.exitCode).toEqual(0)
 
     // Additional sanity-check
     expect(String(childProcess.stdout)).toContain(
       `testing these paths for differences between dev & prod outputs`
     )
-  }, 15000)
+  }, 30000)
 
   test(`it generates an error page correctly`, async () => {
     const src = path.join(__dirname, `/fixtures/bad-page.js`)

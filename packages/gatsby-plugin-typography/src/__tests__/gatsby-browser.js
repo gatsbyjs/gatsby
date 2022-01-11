@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from "react"
 
 jest.mock(`react-typography`, () => {

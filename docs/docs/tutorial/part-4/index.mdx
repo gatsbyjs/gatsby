@@ -483,7 +483,7 @@ const Layout = ({ pageTitle, children }) => {
         <h1 className={heading}>{pageTitle}</h1>
         {children}
       </main>
-    </main>
+    </div>
   )
 }
 
@@ -618,7 +618,6 @@ module.exports = {
     title: "My First Gatsby Site",
   },
   plugins: [
-    "gatsby-plugin-gatsby-cloud",
     "gatsby-plugin-image",
     "gatsby-plugin-sharp",
     // highlight-start
@@ -680,6 +679,28 @@ query MyQuery {
   "extensions": {}
 }
 ```
+
+<Collapsible
+  summary="Seeing more nodes than expected?"
+>
+
+If you're still using a `StaticImage` from an external URL (like `https://some-site/image.jpg`) on your home page, you'll see an extra node for that image show up in your GraphQL response. That's because `StaticImage` uses [`createRemoteFileNode`](https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/#createremotefilenode) under the hood which creates a `File` node for each image it downloads. If you're only using images from your filesystem, you won't see the extra node.
+
+To get rid of it, you can update your GraphQL query to filter the File nodes using the `sourceInstanceName` field (which corresponds to the value of the `name` option you set for `gatsby-source-filesystem` in your `gatsby-config.js` file).
+
+```graphql:title=src/pages/blog.js
+query {
+  allFile(filter: {sourceInstanceName: {eq: "blog"}}) {
+    nodes {
+      name
+    }
+  }
+}
+```
+
+`filter` is an **argument** that gets passed into the `allFile` field. Some fields take arguments, which you can use to change the way that nodes get returned in your final GraphQL response.
+
+</Collapsible>
 
 ### Task: Use a page query to pull the list of post filenames into your blog page
 
@@ -845,6 +866,12 @@ export default BlogPage
 Good job! You've finished the first step of your new blog page.
 
 You won't be able to render the contents of your posts just yet, since your site doesn't know how to process MDX. You'll fix that in the next part of the Tutorial!
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Want to see how it all fits together?** Check out the commit history in the [GitHub repo for the finished example site](https://github.com/gatsbyjs/tutorial-example).
+
+</Announcement>
 
 ## Summary
 

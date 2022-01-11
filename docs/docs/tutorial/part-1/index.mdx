@@ -10,7 +10,7 @@ import { MdArrowForward } from 'react-icons/md'
 
 Now that you've set up your computer with all the tools you'll need, it's time to get started!
 
-Over the course of this Tutorial, you'll build and deploy your first Gatsby site: a blog site with support for images and MDX! (If that doesn't mean anything to you now, that's okay! It will by the time you reach the end.) Here's a [finished example](https://introworkshopexamplesitev3.gatsbyjs.io/) of the site you'll build.
+Over the course of this Tutorial, you'll build and deploy your first Gatsby site: a blog site with support for images and MDX! (If that doesn't mean anything to you now, that's okay! It will by the time you reach the end.) Here's a [finished example](https://gatsbytutorialexample.gatsbyjs.io/) of the site you'll build. You can also follow along with the [GitHub repository for the finished example](https://github.com/gatsbyjs/tutorial-example).
 
 In this part of the Tutorial, you will go through the process of creating the template for your blog site and deploying it online for everyone to see.
 
@@ -115,16 +115,18 @@ But in this first site, you'll set things up manually to learn about how Gatsby'
 · No (or I'll add it later)
 ```
 
-7. When the prompt asks, **"Would you like to install additional features with other plugins?"** use the arrow and Space keys to select **"Build and host for free on Gatsby Cloud"**, then use the arrow and Enter keys to select **"Done"**.
+7. When the prompt asks, **"Would you like to install additional features with other plugins?"** use the arrow and Enter keys to select **"Done"**.
 
-    This tells `gatsby new` to add a plugin called `gatsby-plugin-gatsby-cloud` to your site. Don't worry about the details of this just yet. You'll learn about plugins later on in the Tutorial. For now, all you need to know is that this plugin will help your site work better when you deploy it with Gatsby Cloud.
+```shell
+✔ Would you like to install additional features with other plugins?
+· Done
+```
 
 8. The prompt will show you a summary of what `gatsby new` will do. It should look something like the output below.
 ```shell
 Thanks! Here's what we'll now do:
 
     🛠  Create a new Gatsby site in the folder my-first-gatsby-site
-    🔌 Install gatsby-plugin-gatsby-cloud
 
 
 ? Shall we do this? (Y/n) › Yes
@@ -234,9 +236,9 @@ GitHub is a website that many developers use to back up and share their code onl
 
 **Using GitHub for the first time?**
 
-If you get an error about permissions when you try to push your code to GitHub for the first time, you might need to set up an SSH key for your GitHub account. This lets GitHub know that your computer has permission to push code changes to your remote repos.
+If you get an error about permissions when you try to push your code to GitHub for the first time, you might need to set up a **personal access token** for your GitHub account. This lets GitHub know that your computer has permission to push code changes to your remote repos.
 
-For instructions on how to set up an SSH key, follow GitHub's guide: [Connecting to GitHub with SSH](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh).
+For instructions on how to set up a personal access token, follow GitHub's guide: [Creating a personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token). Your personal access token will need the **repo** scope to be able to push changes to your repository.
 
 </Announcement>
 
@@ -261,6 +263,12 @@ To connect your code on GitHub to your Gatsby Cloud account, do the following:
    ![The "Git provider" tab of the "Add a site" screen. It lists two options: GitHub or GitLab.](./03-select-a-git-provider.png)
 
 1. If this is your first time connecting GitHub to Gatsby Cloud, you'll need to give Gatsby Cloud permission to access your GitHub account. When asked, **"Where should we host this new project?"** click the **"Select destination"** button.
+
+  <Announcement style={{marginBottom: "1.5rem"}}>
+
+  **Note:** If you are part of more than one GitHub organization, you will need to first select the organization with which the repository resides at this step before selecting the repository itself.
+
+  </Announcement>
 
     ![The "Repository" tab of the "Add a site" screen.](./04-select-destination.png)
 
@@ -315,6 +323,13 @@ First, you write the code for your Gatsby site from your computer. When you're r
 1. Gatsby Cloud hosts the finished version of your site at a unique URL, which users can use to access the latest version of your site.
 
 </Collapsible>
+
+### Key takeaways
+
+* To create a new Gatsby site from the command line, you can run the `gatsby new` command.
+* To run your site locally, use the `gatsby develop` command. You can view your site in a web browser at `localhost:8000`.
+* Gatsby Cloud is an infrastructure platform specifically optimized for building, deploying, and hosting Gatsby sites.
+    * When you push a new commit to the `main` branch of the GitHub repository for your site, Gatsby Cloud will detect the changes, rebuild a new version of your site, and then redeploy it.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 

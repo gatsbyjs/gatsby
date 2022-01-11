@@ -1,9 +1,9 @@
 import { Actions, ActivityStatuses, ActivityTypes } from "../constants"
 import { IStructuredError } from "../../structured-errors/types"
 import { ErrorCategory } from "../../structured-errors/error-map"
+import { IRenderPageArgs } from "../types"
 
 export interface IGatsbyCLIState {
-  messages: Array<ILog>
   activities: {
     [id: string]: IActivity
   }
@@ -20,6 +20,7 @@ export type ActionsUnion =
   | IUpdateActivity
   | IActivityErrored
   | ISetLogs
+  | IRenderPageTree
 
 export interface IActivity {
   startTime?: [number, number]
@@ -35,7 +36,7 @@ export interface IActivity {
   errored?: boolean
 }
 
-interface ILog {
+export interface ILog {
   level: string
   text: string | undefined
   statusText: string | undefined
@@ -124,4 +125,9 @@ export interface IActivityErrored {
 export interface ISetLogs {
   type: Actions.SetLogs
   payload: IGatsbyCLIState
+}
+
+export interface IRenderPageTree {
+  type: Actions.RenderPageTree
+  payload: IRenderPageArgs
 }

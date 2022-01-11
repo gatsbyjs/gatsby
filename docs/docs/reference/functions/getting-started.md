@@ -17,9 +17,9 @@ Gatsby Functions help you build [Express-like](https://expressjs.com/) backends 
 
 Functions are generally available in sites running Gatsby 3.7 and above.
 
-## Hello World
+## Introduction
 
-JavaScript and Typescript files in `src/api/*` are mapped to function routes like files in `src/pages/*` become pages. So `src/api` is a reserved directory for Gatsby.
+JavaScript and TypeScript files in `src/api/*` are mapped to function routes like files in `src/pages/*` become pages. So `src/api` is a reserved directory for Gatsby. Gatsby by default ignores test files (e.g. `hello-world.test.js`) and dotfiles (e.g. `.prettierrc.js`).
 
 For example, the following Function is run when you visit the URL `/api/hello-world`
 
@@ -33,6 +33,13 @@ A Function file must export a single function that takes two parameters:
 
 - `req`: Node's [http request object](https://nodejs.org/api/http.html#http_class_http_incomingmessage) with some [automatically parsed data](/docs/reference/functions/getting-started/#common-data-formats-are-automatically-parsed)
 - `res`: Node's [http response object](https://nodejs.org/api/http.html#http_class_http_serverresponse) with some [extra helper functions](/docs/reference/functions/middleware-and-helpers/#res-helpers)
+
+Dynamic routing is supported for creating REST-ful APIs and other uses cases
+
+- `/api/users` => `src/api/users/index.js`
+- `/api/users/23` => `src/api/users/[id].js`
+
+[Learn more about dynamic routes.](/docs/reference/functions/routing#dynamic-routing)
 
 ## Typescript
 
@@ -190,7 +197,16 @@ export default function FormPage() {
 }
 ```
 
+## Functions in plugins and themes
+
+Plugins and themes can ship functions! This is powerful as it lets you pair frontend code with backend code. For example, if you built a plugin for an authorization service that includes a login component, you could ship alongside the component, a serverless function the component can use to connect to the remote API.
+
+### Namespacing
+
+Plugin/theme functions work exactly the same as normal functions except their routes must be created under the plugin's namespace e.g. `${PLUGIN_ROOT}/src/api/{pluginName}/my-plugin-function.js`.
+
+Shadowing with functions works similar to how shadowing works in general. You can shadow a plugin/theme function by copying the file from the plugin/theme's `src` tree into your site's `src` tree. For example, to shadow the `/gatsby-plugin-cool/do-something` function from the `gatsby-plugin-cool` plugin, you'd copy `node_modules/gatsby-plugin-cool/src/api/gatsby-plugin-cool/do-something.js` to `src/api/gatsby-plugin-cool/do-something.js`. From there, you can overwrite the implementation of the `/do-something` function as you normally would.
+
 ## Limitations
 
-- Gatsby Functions do not support dynamic routes in Gatsby Cloud at the moment
 - Bundling in native dependencies is not supported at the moment

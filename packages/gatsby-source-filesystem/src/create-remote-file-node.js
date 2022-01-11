@@ -1,11 +1,14 @@
 const fs = require(`fs-extra`)
-const { createContentDigest } = require(`gatsby-core-utils`)
+const {
+  createContentDigest,
+  fetchRemoteFile,
+  createFilePath,
+} = require(`gatsby-core-utils`)
 const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
-const Queue = require(`better-queue`)
-const { fetchRemoteFile } = require(`gatsby-core-utils`)
+const Queue = require(`fastq`)
 const { createFileNode } = require(`./create-file-node`)
-const { getRemoteFileExtension, createFilePath } = require(`./utils`)
+const { getRemoteFileExtension } = require(`./utils`)
 
 let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
 
@@ -47,17 +50,11 @@ let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
  * Queue Management *
  ********************/
 
-/**
- * Queue
- * Use the task's url as the id
- * When pushing a task with a similar id, prefer the original task
- * as it's already in the processing cache
- */
-const queue = new Queue(pushToQueue, {
-  id: `url`,
-  merge: (old, _, cb) => cb(old),
-  concurrent: process.env.GATSBY_CONCURRENT_DOWNLOAD || 200,
-})
+const GATSBY_CONCURRENT_DOWNLOAD = process.env.GATSBY_CONCURRENT_DOWNLOAD
+  ? parseInt(process.env.GATSBY_CONCURRENT_DOWNLOAD, 10) || 0
+  : 200
+
+const queue = Queue(pushToQueue, GATSBY_CONCURRENT_DOWNLOAD)
 
 /**
  * @callback {Queue~queueCallback}
@@ -169,14 +166,13 @@ const processingCache = {}
  */
 const pushTask = task =>
   new Promise((resolve, reject) => {
-    queue
-      .push(task)
-      .on(`finish`, task => {
-        resolve(task)
-      })
-      .on(`failed`, err => {
+    queue.push(task, (err, node) => {
+      if (!err) {
+        resolve(node)
+      } else {
         reject(`failed to process ${task.url}\n${err}`)
-      })
+      }
+    })
   })
 
 /***************

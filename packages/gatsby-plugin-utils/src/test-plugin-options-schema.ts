@@ -12,7 +12,36 @@ export async function testPluginOptionsSchema(
   pluginSchemaFunction: Exclude<GatsbyNode["pluginOptionsSchema"], undefined>,
   pluginOptions: IPluginInfoOptions
 ): Promise<ITestPluginOptionsSchemaReturnType> {
-  const pluginSchema = pluginSchemaFunction({ Joi })
+  const pluginSchema = pluginSchemaFunction({
+    Joi: Joi.extend(joi => {
+      return {
+        type: `subPlugins`,
+        base: joi
+          .array()
+          .items(
+            joi.alternatives(
+              joi.string(),
+              joi.object({
+                resolve: Joi.string(),
+                options: Joi.object({}).unknown(true),
+              })
+            )
+          )
+          .custom(
+            arrayValue =>
+              arrayValue.map(value => {
+                if (typeof value === `string`) {
+                  value = { resolve: value }
+                }
+
+                return value
+              }),
+            `Gatsby specific subplugin validation`
+          )
+          .default([]),
+      }
+    }),
+  })
 
   try {
     await validateOptionsSchema(pluginSchema, pluginOptions)

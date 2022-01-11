@@ -4,11 +4,15 @@ function preset(context, options = {}) {
   const {
     browser = false,
     debug = false,
-    nodeVersion = `12.13.0`,
+    nodeVersion = `14.15.0`,
     esm = false,
     availableCompilerFlags = [`GATSBY_MAJOR`],
   } = options
-  const { NODE_ENV, BABEL_ENV, COMPILER_OPTIONS } = process.env
+  const {
+    NODE_ENV,
+    BABEL_ENV,
+    COMPILER_OPTIONS = `GATSBY_MAJOR=4`,
+  } = process.env
 
   const IS_TEST = (BABEL_ENV || NODE_ENV) === `test`
 

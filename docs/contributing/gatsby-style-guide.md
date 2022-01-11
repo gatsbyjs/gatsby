@@ -42,8 +42,8 @@ If the content is already somewhere else on the .org site, feel free to copy and
 
 Possible sources of great research materials:
 
-- blogposts (on gatsbyjs.org and other sites)
-- docs (on gatsbyjs.org and other sites)
+- blogposts (on gatsbyjs.com and other sites)
+- docs (on gatsbyjs.com and other sites)
 - video tutorials
 - Discord or Twitter conversations
 - search engine results
@@ -479,7 +479,7 @@ When there are multiple ways to complete a task, the docs should explain the fol
 4. The best practice and why is it the best (if different than 3)
 5. Any tips on how to pick an option
 
-For example, `gatsby-image` is a component that includes Gatsby best practices for handling images, yet there are more fundamental and common ways of handling them. Documentation ought to make the best practice clear in addition to the most common and fundamental ways.
+For example, `gatsby-plugin-image` is a component that includes Gatsby best practices for handling images, yet there are more fundamental and common ways of handling them. Documentation ought to make the best practice clear in addition to the most common and fundamental ways.
 
 ## Docs
 
@@ -495,7 +495,7 @@ Attributes:
 
 - intermediate to advanced at React
 - frontend developer
-- prefer using a search engine and/or `ctrl + f` to find things on the gatsbyjs.org site
+- prefer using a search engine and/or `ctrl + f` to find things on the gatsbyjs.com site
 
 Looking for:
 

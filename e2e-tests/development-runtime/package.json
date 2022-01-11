@@ -57,6 +57,7 @@
     "cross-env": "^5.2.0",
     "cypress": "6.1.0",
     "fs-extra": "^7.0.1",
+    "gatsby-core-utils": "^2.12.0",
     "gatsby-cypress": "^0.1.7",
     "is-ci": "^2.0.0",
     "prettier": "2.0.4",

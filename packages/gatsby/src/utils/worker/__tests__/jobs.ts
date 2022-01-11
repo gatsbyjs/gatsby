@@ -6,6 +6,15 @@ import { waitUntilAllJobsComplete } from "../../jobs/manager"
 import type { MessagesFromChild, MessagesFromParent } from "../messaging"
 import { getReduxJobs, getJobsMeta } from "./test-helpers/child-for-tests"
 
+jest.mock(`gatsby-telemetry`, () => {
+  return {
+    decorateEvent: jest.fn(),
+    trackCli: jest.fn(),
+  }
+})
+
+// jest.mock(`gatsby-cli/lib/reporter`, () => jest.fn())
+
 let worker: GatsbyTestWorkerPool | undefined
 
 describe(`worker (jobs)`, () => {

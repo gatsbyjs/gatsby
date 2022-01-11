@@ -1,10 +1,20 @@
-const _ = require(`lodash`)
-const stringify = require(`json-stringify-safe`)
+// @ts-check
+import stringify from "json-stringify-safe"
+import _ from "lodash"
+import { getGatsbyVersion } from "gatsby-core-utils"
+import { lt, prerelease } from "semver"
 
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
-const getLocalizedField = ({ field, locale, localesFallback }) => {
+const GATSBY_VERSION_MANIFEST_V2 = `4.3.0`
+const gatsbyVersion =
+  (typeof getGatsbyVersion === `function` && getGatsbyVersion()) || `0.0.0`
+const gatsbyVersionIsPrerelease = prerelease(gatsbyVersion)
+const shouldUpgradeGatsbyVersion =
+  lt(gatsbyVersion, GATSBY_VERSION_MANIFEST_V2) && !gatsbyVersionIsPrerelease
+
+export const getLocalizedField = ({ field, locale, localesFallback }) => {
   if (!_.isUndefined(field[locale.code])) {
     return field[locale.code]
   } else if (
@@ -20,7 +30,7 @@ const getLocalizedField = ({ field, locale, localesFallback }) => {
     return null
   }
 }
-const buildFallbackChain = locales => {
+export const buildFallbackChain = locales => {
   const localesFallback = {}
   _.each(
     locales,
@@ -33,10 +43,7 @@ const makeGetLocalizedField =
   field =>
     getLocalizedField({ field, locale, localesFallback })
 
-exports.getLocalizedField = getLocalizedField
-exports.buildFallbackChain = buildFallbackChain
-
-const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
+export const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
   const normalizedType = type.startsWith(`Deleted`)
     ? type.substring(`Deleted`.length)
     : type
@@ -45,14 +52,12 @@ const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
     : `${spaceId}___${id}___${normalizedType}___${currentLocale}`
 }
 
-exports.makeId = makeId
-
 const makeMakeId =
   ({ currentLocale, defaultLocale, createNodeId }) =>
   (spaceId, id, type) =>
     createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
 
-exports.buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
+export const buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
   const map = new Map(
     contentTypeItems.map(contentType => [contentType.sys.id, []])
@@ -68,12 +73,10 @@ exports.buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
   return contentTypeItems.map(contentType => map.get(contentType.sys.id))
 }
 
-exports.buildResolvableSet = ({
+export const buildResolvableSet = ({
   entryList,
   existingNodes = [],
   assets = [],
-  locales,
-  defaultLocale,
 }) => {
   const resolvable = new Set()
   existingNodes.forEach(node => {
@@ -95,12 +98,11 @@ exports.buildResolvableSet = ({
   return resolvable
 }
 
-exports.buildForeignReferenceMap = ({
+export const buildForeignReferenceMap = ({
   contentTypeItems,
   entryList,
   resolvable,
   defaultLocale,
-  locales,
   space,
   useNameForId,
 }) => {
@@ -227,11 +229,83 @@ function prepareJSONNode(id, node, key, content) {
   return JSONNode
 }
 
-exports.createNodesForContentType = ({
+let numberOfContentSyncDebugLogs = 0
+const maxContentSyncDebugLogTimes = 50
+
+let warnOnceForNoSupport = false
+let warnOnceToUpgradeGatsby = false
+
+/**
+ * This fn creates node manifests which are used for Gatsby Cloud Previews via the Content Sync API/feature.
+ * Content Sync routes a user from Contentful to a page created from the entry data they're interested in previewing.
+ */
+
+function contentfulCreateNodeManifest({
+  pluginConfig,
+  entryItem,
+  entryNode,
+  space,
+  unstable_createNodeManifest,
+}) {
+  const isPreview = pluginConfig.get(`host`) === `preview.contentful.com`
+
+  const createNodeManifestIsSupported =
+    typeof unstable_createNodeManifest === `function`
+
+  const shouldCreateNodeManifest = isPreview && createNodeManifestIsSupported
+
+  const updatedAt = entryItem.sys.updatedAt
+
+  const manifestId = `${space.sys.id}-${entryItem.sys.id}-${updatedAt}`
+
+  if (
+    process.env.CONTENTFUL_DEBUG_NODE_MANIFEST === `true` &&
+    numberOfContentSyncDebugLogs <= maxContentSyncDebugLogTimes
+  ) {
+    numberOfContentSyncDebugLogs++
+
+    console.info(
+      JSON.stringify({
+        isPreview,
+        createNodeManifestIsSupported,
+        shouldCreateNodeManifest,
+        manifestId,
+        entryItemSysUpdatedAt: updatedAt,
+      })
+    )
+  }
+
+  if (shouldCreateNodeManifest) {
+    if (shouldUpgradeGatsbyVersion && !warnOnceToUpgradeGatsby) {
+      console.warn(
+        `Your site is doing more work than it needs to for Preview, upgrade to Gatsby ^${GATSBY_VERSION_MANIFEST_V2} for better performance`
+      )
+      warnOnceToUpgradeGatsby = true
+    }
+
+    unstable_createNodeManifest({
+      manifestId,
+      node: entryNode,
+      updatedAtUTC: updatedAt,
+    })
+  } else if (
+    isPreview &&
+    !createNodeManifestIsSupported &&
+    !warnOnceForNoSupport
+  ) {
+    console.warn(
+      `Contentful: Your version of Gatsby core doesn't support Content Sync (via the unstable_createNodeManifest action). Please upgrade to the latest version to use Content Sync in your site.`
+    )
+    warnOnceForNoSupport = true
+  }
+}
+
+export const createNodesForContentType = ({
   contentTypeItem,
   restrictedNodeFields,
   conflictFieldPrefix,
   entries,
+  unstable_createNodeManifest,
   createNode,
   createNodeId,
   getNode,
@@ -426,6 +500,14 @@ exports.createNodesForContentType = ({
           },
         }
 
+        contentfulCreateNodeManifest({
+          pluginConfig,
+          entryItem,
+          entryNode,
+          space,
+          unstable_createNodeManifest,
+        })
+
         // Revision applies to entries, assets, and content types
         if (entryItem.sys.revision) {
           entryNode.sys.revision = entryItem.sys.revision
@@ -467,8 +549,7 @@ exports.createNodesForContentType = ({
                 textNodeId,
                 entryNode,
                 entryItemFieldKey,
-                entryItemFields[entryItemFieldKey],
-                createNodeId
+                entryItemFields[entryItemFieldKey]
               )
 
               childrenNodes.push(textNode)
@@ -486,6 +567,7 @@ exports.createNodesForContentType = ({
 
             // Locate all Contentful Links within the rich text data
             const traverse = obj => {
+              // eslint-disable-next-line guard-for-in
               for (const k in obj) {
                 const v = obj[k]
                 if (v && v.sys && v.sys.type === `Link`) {
@@ -535,8 +617,7 @@ exports.createNodesForContentType = ({
                 jsonNodeId,
                 entryNode,
                 entryItemFieldKey,
-                entryItemFields[entryItemFieldKey],
-                createNodeId
+                entryItemFields[entryItemFieldKey]
               )
               childrenNodes.push(jsonNode)
             }
@@ -566,9 +647,7 @@ exports.createNodesForContentType = ({
                   jsonNodeId,
                   entryNode,
                   entryItemFieldKey,
-                  obj,
-                  createNodeId,
-                  i
+                  obj
                 )
                 childrenNodes.push(jsonNode)
               }
@@ -633,7 +712,7 @@ exports.createNodesForContentType = ({
   return createNodePromises
 }
 
-exports.createAssetNodes = ({
+export const createAssetNodes = ({
   assetItem,
   createNode,
   createNodeId,
@@ -684,7 +763,12 @@ exports.createAssetNodes = ({
     // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
     assetNode.internal.contentDigest = assetItem.sys.updatedAt
 
-    createNodePromises.push(createNode(assetNode))
+    // if the node hasn't changed, createNode may return `undefined` instead of a Promise on some versions of Gatsby
+    const maybePromise = createNode(assetNode)
+
+    createNodePromises.push(
+      maybePromise?.then ? maybePromise.then(() => assetNode) : assetNode
+    )
   })
 
   return createNodePromises

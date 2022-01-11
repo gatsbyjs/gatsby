@@ -1,8 +1,8 @@
 const _ = require(`lodash`)
 const path = require(`path`)
 const v8 = require(`v8`)
+const telemetry = require(`gatsby-telemetry`)
 const reporter = require(`gatsby-cli/lib/reporter`)
-
 const writeToCache = jest.spyOn(require(`../persist`), `writeToCache`)
 const v8Serialize = jest.spyOn(v8, `serialize`)
 const v8Deserialize = jest.spyOn(v8, `deserialize`)
@@ -21,6 +21,7 @@ const {
   actions: { createPage, createNode },
 } = require(`../actions`)
 
+const pageTemplatePath = `/Users/username/dev/site/src/templates/my-sweet-new-page.js`
 const mockWrittenContent = new Map()
 const mockCompatiblePath = path
 jest.mock(`fs-extra`, () => {
@@ -131,7 +132,7 @@ describe(`redux db`, () => {
   const defaultPage = {
     path: `/my-sweet-new-page/`,
     // seems like jest serializer doesn't play nice with Maps on Windows
-    component: `/Users/username/dev/site/src/templates/my-sweet-new-page.js`,
+    component: pageTemplatePath,
     // The context is passed as props to the component as well
     // as into the component's GraphQL query.
     context: {
@@ -146,8 +147,29 @@ describe(`redux db`, () => {
     })
     writeToCache.mockClear()
     mockWrittenContent.clear()
+    mockWrittenContent.set(pageTemplatePath, `foo`)
     reporterWarn.mockClear()
     reporterInfo.mockClear()
+  })
+
+  it(`should have cache status telemetry event`, async () => {
+    jest.spyOn(telemetry, `trackCli`)
+
+    readState()
+
+    expect(telemetry.trackCli).toHaveBeenCalledWith(`CACHE_STATUS`, {
+      cacheStatus: `COLD`,
+    })
+
+    store.getState().nodes = getFakeNodes()
+
+    await saveState()
+
+    readState()
+
+    expect(telemetry.trackCli).toHaveBeenCalledWith(`CACHE_STATUS`, {
+      cacheStatus: `WARM`,
+    })
   })
 
   it(`should write redux cache to disk`, async () => {
@@ -197,14 +219,15 @@ describe(`redux db`, () => {
   })
 
   describe(`Sharding`, () => {
-    afterAll(() => {
-      v8Serialize.mockRestore()
-      v8Deserialize.mockRestore()
-    })
     if (isLmdbStore()) {
       // Nodes are stored in LMDB, those tests are irrelevant
       return
     }
+
+    afterAll(() => {
+      v8Serialize.mockRestore()
+      v8Deserialize.mockRestore()
+    })
 
     // we set limit to 1.5 * 1024 * 1024 * 1024 per shard
     // simulating size for page and nodes will allow us to see if we create expected amount of shards
@@ -510,8 +533,16 @@ describe(`redux db`, () => {
     it(`saves with correct filename (with defaults)`, () => {
       savePartialStateToDisk([`pages`])
 
-      const savedFile = mockWrittenContent.keys().next().value
-      const basename = path.basename(savedFile)
+      let basename
+      // get first non page template mocked fs write
+      for (const savedFile of mockWrittenContent.keys()) {
+        if (savedFile === pageTemplatePath) {
+          continue
+        }
+
+        basename = path.basename(savedFile)
+        break
+      }
 
       expect(basename.startsWith(`redux.worker.slices__`)).toBe(true)
     })
@@ -529,8 +560,16 @@ describe(`redux db`, () => {
     it(`respects optionalPrefix`, () => {
       savePartialStateToDisk([`pages`], `custom-prefix`)
 
-      const savedFile = mockWrittenContent.keys().next().value
-      const basename = path.basename(savedFile)
+      let basename
+      // get first non page template mocked fs write
+      for (const savedFile of mockWrittenContent.keys()) {
+        if (savedFile === pageTemplatePath) {
+          continue
+        }
+
+        basename = path.basename(savedFile)
+        break
+      }
 
       expect(basename.startsWith(`redux.worker.slices_custom-prefix_`)).toBe(
         true

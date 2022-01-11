@@ -11,7 +11,7 @@ There are two hard parts of internationalization:
 
 - **Content storage and workflow.** Coordinating with internal or external translators to translate both existing and new content into required languages can be time-consuming. In addition, adding another approver into the content publishing process can slow things down without careful workflow design.
 
-- **Display, templating, and routing.** At minimum, internationalization means users must be redirected, either to a subdomain (eg fr.example.com/blog) or path prefix (eg example.com/fr/blog). In addition, internationalization efforts also come with logic around sections or pages that should be present in some languages but not others.
+- **Display, templating, and routing.** At minimum, internationalization means users must be redirected, either to a subdomain (eg `fr.example.com/blog`) or path prefix (eg `example.com/fr/blog`). In addition, internationalization efforts also come with logic around sections or pages that should be present in some languages but not others.
 
 This guide is a brief look at the options that exist for enhancing your Gatsby project for internationalization.
 
@@ -55,6 +55,6 @@ This framework also has experimental support for the React suspense API and it s
 
 - [Gatsby i18n packages](https://www.gatsbyjs.com/plugins/gatsby-plugin-i18n/?=i18)
 
-- [Gatsby i18n articles](https://www.gatsbyjs.com/blog/tags/i18n/)
+- [Gatsby i18n articles](https://www.gatsbyjs.com/blog/tags/localization/)
 
-- [W3C's i18n resources](https://w3c.github.io/i18n-drafts/getting-started/contentdev.en#reference)
+- [W3C's i18n resources](https://www.w3.org/International/i18n-drafts/nav/contentdev#reference)

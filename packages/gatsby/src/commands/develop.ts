@@ -16,8 +16,9 @@ import {
   slash,
   createServiceLock,
   getService,
-  updateSiteMetadata,
+  updateInternalSiteMetadata,
   UnlockFn,
+  uuid,
 } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { getSslCert } from "../utils/get-ssl-cert"
@@ -113,7 +114,10 @@ class ControllableScript {
     }
 
     this.process = execa.node(tmpFileName, args, {
-      env: process.env,
+      env: {
+        ...process.env,
+        GATSBY_NODE_GLOBALS: JSON.stringify(global.__GATSBY ?? {}),
+      },
       stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
     })
   }
@@ -195,6 +199,11 @@ const REGEX_IP =
   /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
 
 module.exports = async (program: IProgram): Promise<void> => {
+  global.__GATSBY = {
+    buildId: uuid.v4(),
+    root: program.directory,
+  }
+
   // In some cases, port can actually be a string. But our codebase is expecting it to be a number.
   // So we want to early just force it to a number to ensure we always act on a correct type.
   program.port = parseInt(program.port + ``, 10)
@@ -329,7 +338,7 @@ module.exports = async (program: IProgram): Promise<void> => {
         port: telemetryServerPort,
       }
     )
-    await updateSiteMetadata({
+    await updateInternalSiteMetadata({
       name: program.sitePackageJson.name,
       sitePath: program.directory,
       pid: process.pid,

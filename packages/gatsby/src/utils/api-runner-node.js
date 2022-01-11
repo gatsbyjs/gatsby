@@ -26,9 +26,11 @@ const { emitter, store } = require(`../redux`)
 const { getNodes, getNode, getNodesByType } = require(`../datastore`)
 const { getNodeAndSavePathDependency, loadNodeContent } = require(`./nodes`)
 const { getPublicPath } = require(`./get-public-path`)
+const { requireGatsbyPlugin } = require(`./require-gatsby-plugin`)
 const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 import errorParser from "./api-runner-error-parser"
+import { wrapNode, wrapNodes } from "./detect-node-mutations"
 
 if (!process.env.BLUEBIRD_DEBUG && !process.env.BLUEBIRD_LONG_STACK_TRACES) {
   // Unless specified - disable longStackTraces
@@ -37,6 +39,21 @@ if (!process.env.BLUEBIRD_DEBUG && !process.env.BLUEBIRD_LONG_STACK_TRACES) {
   // which cause bluebird to enable longStackTraces
   // `gatsby build` (with NODE_ENV=production) already doesn't enable longStackTraces
   Promise.config({ longStackTraces: false })
+}
+
+const nodeMutationsWrappers = {
+  getNode(id) {
+    return wrapNode(getNode(id))
+  },
+  getNodes() {
+    return wrapNodes(getNodes())
+  },
+  getNodesByType(type) {
+    return wrapNodes(getNodesByType(type))
+  },
+  getNodeAndSavePathDependency(id) {
+    return wrapNode(getNodeAndSavePathDependency(id))
+  },
 }
 
 // Bind action creators per plugin so we can auto-add
@@ -248,16 +265,10 @@ const getUninitializedCache = plugin => {
   }
 }
 
-const pluginNodeCache = new Map()
-
 const availableActionsCache = new Map()
 let publicPath
 const runAPI = async (plugin, api, args, activity) => {
-  let gatsbyNode = pluginNodeCache.get(plugin.name)
-  if (!gatsbyNode) {
-    gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
-    pluginNodeCache.set(plugin.name, gatsbyNode)
-  }
+  const gatsbyNode = requireGatsbyPlugin(plugin, `gatsby-node`)
 
   if (gatsbyNode[api]) {
     const parentSpan = args && args.parentSpan
@@ -377,9 +388,18 @@ const runAPI = async (plugin, api, args, activity) => {
       runningActivities.forEach(activity => activity.end())
     }
 
+    const shouldDetectNodeMutations = [
+      `sourceNodes`,
+      `onCreateNode`,
+      `createResolvers`,
+      `createSchemaCustomization`,
+      `setFieldsOnGraphQLNodeType`,
+    ].includes(api)
+
     const apiCallArgs = [
       {
         ...args,
+        parentSpan: pluginSpan,
         basePath: pathPrefix,
         pathPrefix: publicPath,
         actions,
@@ -387,11 +407,19 @@ const runAPI = async (plugin, api, args, activity) => {
         store,
         emitter,
         getCache,
-        getNodes,
-        getNode,
-        getNodesByType,
+        getNodes: shouldDetectNodeMutations
+          ? nodeMutationsWrappers.getNodes
+          : getNodes,
+        getNode: shouldDetectNodeMutations
+          ? nodeMutationsWrappers.getNode
+          : getNode,
+        getNodesByType: shouldDetectNodeMutations
+          ? nodeMutationsWrappers.getNodesByType
+          : getNodesByType,
         reporter: extendedLocalReporter,
-        getNodeAndSavePathDependency,
+        getNodeAndSavePathDependency: shouldDetectNodeMutations
+          ? nodeMutationsWrappers.getNodeAndSavePathDependency
+          : getNodeAndSavePathDependency,
         cache,
         createNodeId: namespacedCreateNodeId,
         createContentDigest,
@@ -447,7 +475,7 @@ const apisRunningById = new Map()
 const apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
-module.exports = (api, args = {}, { pluginSource, activity } = {}) => {
+function apiRunnerNode(api, args = {}, { pluginSource, activity } = {}) {
   const plugins = store.getState().flattenedPlugins
 
   // Get the list of plugins that implement this API.
@@ -563,12 +591,7 @@ module.exports = (api, args = {}, { pluginSource, activity } = {}) => {
           return null
         }
 
-        let gatsbyNode = pluginNodeCache.get(plugin.name)
-        if (!gatsbyNode) {
-          gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
-          pluginNodeCache.set(plugin.name, gatsbyNode)
-        }
-
+        const gatsbyNode = requireGatsbyPlugin(plugin, `gatsby-node`)
         const pluginName =
           plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
@@ -686,3 +709,5 @@ module.exports = (api, args = {}, { pluginSource, activity } = {}) => {
     })
   })
 }
+
+module.exports = apiRunnerNode

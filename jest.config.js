@@ -43,6 +43,9 @@ module.exports = {
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
     "^@reach/router(.*)": `<rootDir>/node_modules/@gatsbyjs/reach-router$1`,
+    "^weak-lru-cache$": `<rootDir>/node_modules/weak-lru-cache/dist/index.cjs`,
+    "^ordered-binary$": `<rootDir>/node_modules/ordered-binary/dist/index.cjs`,
+    "^msgpackr$": `<rootDir>/node_modules/msgpackr/dist/node.cjs`,
   },
   snapshotSerializers: [`jest-serializer-path`],
   collectCoverageFrom: coverageDirs,
@@ -51,7 +54,6 @@ module.exports = {
         useCoverage ? `jest-junit` : []
       )
     : [`default`].concat(useCoverage ? `jest-junit` : []),
-  testEnvironment: `jest-environment-jsdom-fourteen`,
   moduleFileExtensions: [`js`, `jsx`, `ts`, `tsx`, `json`],
   setupFiles: [`<rootDir>/.jestSetup.js`],
   setupFilesAfterEnv: [`jest-extended`],

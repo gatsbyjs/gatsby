@@ -15,6 +15,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
+    verbose: jest.fn(),
     activityTimer: () => {
       return {
         start: jest.fn(),
@@ -56,12 +57,11 @@ describe(`Query schema`, () => {
               [`frontmatter.authorNames`]: {
                 type: `[String!]!`,
                 async resolve(source, args, context, info) {
-                  const authors = await context.nodeModel.runQuery({
+                  const { entries } = await context.nodeModel.findAll({
                     type: `Author`,
                     query: { filter: { email: { in: source.authors } } },
-                    firstOnly: false,
                   })
-                  return authors.map(author => author.name)
+                  return entries.map(author => author.name)
                 },
               },
               [`frontmatter.anotherField`]: {
@@ -102,17 +102,8 @@ describe(`Query schema`, () => {
             },
             Author: {
               posts: {
-                resolve(source, args, context, info) {
-                  // NOTE: One of the differences between using `runQuery` and
-                  // `getAllNodes` is that the latter will always get the nodes
-                  // which will be queried directly from the store, while `runQuery`
-                  // will first try to call field resolvers, e.g. to expand
-                  // foreign-key fields to full nodes. Here for example we can
-                  // query `authors.email`.
-                  // Another thing to note is that we don't have to use the
-                  // `$elemMatch` operator when querying arrays of objects
-                  // (although we could).
-                  return context.nodeModel.runQuery({
+                async resolve(source, args, context, info) {
+                  const { entries } = await context.nodeModel.findAll({
                     type: `Markdown`,
                     query: {
                       filter: {
@@ -124,8 +115,8 @@ describe(`Query schema`, () => {
                         },
                       },
                     },
-                    firstOnly: false,
                   })
+                  return entries
                 },
               },
             },
@@ -861,6 +852,87 @@ describe(`Query schema`, () => {
         expect(results.data).toEqual(expected)
       })
 
+      it(`recursively groups query results`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              group(field: frontmatter___title) {
+                fieldValue
+                group(field: frontmatter___authors___name) {
+                  fieldValue
+                  edges {
+                    node {
+                      frontmatter {
+                        title
+                        date(formatString: "YYYY-MM-DD")
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `
+        const results = await runQuery(query)
+        const expected = {
+          allMarkdown: {
+            group: [
+              {
+                fieldValue: `Markdown File 1`,
+                group: [
+                  {
+                    fieldValue: `Author 1`,
+                    edges: [
+                      {
+                        node: {
+                          frontmatter: {
+                            title: `Markdown File 1`,
+                            date: `2019-01-01`,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    fieldValue: `Author 2`,
+                    edges: [
+                      {
+                        node: {
+                          frontmatter: {
+                            title: `Markdown File 1`,
+                            date: `2019-01-01`,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                fieldValue: `Markdown File 2`,
+                group: [
+                  {
+                    fieldValue: `Author 1`,
+                    edges: [
+                      {
+                        node: {
+                          frontmatter: {
+                            title: `Markdown File 2`,
+                            date: null,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        }
+        expect(results.errors).toBeUndefined()
+        expect(results.data).toEqual(expected)
+      })
+
       it(`handles groups added in fragment`, async () => {
         const query = `
           fragment GroupTest on MarkdownConnection {
@@ -1321,6 +1393,53 @@ describe(`Query schema`, () => {
       const results = await runQuery(query)
       expect(results.errors).toBeUndefined()
       expect(results.data.allMarkdown.sum).toBeNull()
+    })
+
+    it(`calculates aggregation in recursively grouped query results`, async () => {
+      const query = `
+        {
+          allMarkdown {
+            group(field: frontmatter___authors___name) {
+              fieldValue
+              group(field: frontmatter___title) {
+                fieldValue
+                max(field: frontmatter___price)
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        allMarkdown: {
+          group: [
+            {
+              fieldValue: `Author 1`,
+              group: [
+                {
+                  fieldValue: `Markdown File 1`,
+                  max: 1.99,
+                },
+                {
+                  fieldValue: `Markdown File 2`,
+                  max: 3.99,
+                },
+              ],
+            },
+            {
+              fieldValue: `Author 2`,
+              group: [
+                {
+                  fieldValue: `Markdown File 1`,
+                  max: 1.99,
+                },
+              ],
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
     })
   })
 

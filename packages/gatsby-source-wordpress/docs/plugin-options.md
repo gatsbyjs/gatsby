@@ -21,6 +21,7 @@
 - [production](#production)
   - [production.hardCacheMediaFiles](#productionhardcachemediafiles)
   - [production.allow404Images](#productionallow404images)
+  - [production.allow401Images](#productionallow401images)
 - [develop](#develop)
   - [develop.nodeUpdateInterval](#developnodeupdateinterval)
   - [develop.hardCacheMediaFiles](#develophardcachemediafiles)
@@ -43,6 +44,7 @@
   - [searchAndReplace[].replace](#searchandreplacereplace)
 - [html](#html)
   - [html.useGatsbyImage](#htmlusegatsbyimage)
+  - [html.gatsbyImageOptions](#htmlgatsbyimageoptions)
   - [html.imageMaxWidth](#htmlimagemaxwidth)
   - [html.fallbackImageMaxWidth](#htmlfallbackimagemaxwidth)
   - [html.imageQuality](#htmlimagequality)
@@ -58,6 +60,7 @@
     - [type.\_\_all.beforeChangeNode](#type__allbeforechangenode)
   - [type.RootQuery](#typerootquery)
   - [type.MediaItem](#typemediaitem)
+    - [type.MediaItem.createFileNodes](#typemediaitemcreatefilenodes)
     - [type.MediaItem.lazyNodes](#typemediaitemlazynodes)
     - [type.MediaItem.localFile](#typemediaitemlocalfile)
       - [type.MediaItem.localFile.excludeByMimeTypes](#typemediaitemlocalfileexcludebymimetypes)
@@ -440,6 +443,26 @@ This option allows images url's that return a 404 to not fail production builds.
   options: {
     production: {
       allow404Images: true,
+    },
+  },
+}
+
+```
+
+### production.allow401Images
+
+This option allows images url's that return a 401 to not fail production builds. 401s are sometimes returned in place of 404's for protected content to hide whether the content exists.
+
+**Field type**: `Boolean`
+
+**Default value**: `false`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    production: {
+      allow401Images: true,
     },
   },
 }
@@ -881,6 +904,27 @@ Causes the source plugin to find/replace images in html with Gatsby images.
 
 ```
 
+### html.gatsbyImageOptions
+
+Set custom options for your Gatsby Images.
+
+**Field type**: `Object`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    html: {
+      gatsbyImageOptions: {
+        [your - option - key]: "your-option-value",
+        [your - option - key - 2]: "your-option-value-2",
+      },
+    },
+  },
+}
+
+```
+
 ### html.imageMaxWidth
 
 Adds a limit to the max width an image can be. If the image size selected in WP is smaller or the image file width is smaller than this those values will be used instead.
@@ -1107,9 +1151,9 @@ Determines whether or not this type will be treated as an interface comprised en
 
 #### type.\_\_all.beforeChangeNode
 
-A function which is invoked before a node is created, updated, or deleted. This is a hook in point to modify the node or perform side-effects related to it.
+A function which is invoked before a node is created, updated, or deleted. This is a hook in point to modify the node or perform side-effects related to it. This option should be a path to a JS file where the default export is the beforeChangeNode function. The path can be relative to your gatsby-node.js or absolute. Currently you can inline a function by writing it out directly in this option but starting from Gatsby v4 only a path to a function file will work.
 
-**Field type**: `Function`
+**Field type**: `String | Function`
 
 ### type.RootQuery
 
@@ -1135,9 +1179,19 @@ A special type which is applied to any non-node root fields that are ingested an
 
 **Field type**: `Object`
 
+#### type.MediaItem.createFileNodes
+
+This option controls whether or not a File node will be automatically created for each MediaItem node (available on MediaItem.localFile). Set this to false if you don't want Gatsby to download the corresponding file for each media item.
+
+**Field type**: `Boolean`
+
+**Default value**: `true`
+
 #### type.MediaItem.lazyNodes
 
 Enables a different media item sourcing strategy. Instead of fetching Media Items that are referenced by other nodes, Media Items will be fetched in connection resolvers from other nodes. This may be desirable if you're not using all of the connected images in your WP instance. This is not currently recommended because it messes up cli output and can be slow due to query running concurrency.
+
+This option no longer works starting in Gatsby v4+. If you want to prevent this plugin from creating File nodes for each MediaItem node, set the type.MediaItem.createFileNodes option to false instead.
 
 **Field type**: `Boolean`
 

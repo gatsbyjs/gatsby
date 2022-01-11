@@ -3,6 +3,7 @@ const v8 = require(`v8`)
 const glob = require(`glob`)
 const path = require(`path`)
 const _ = require(`lodash`)
+const { open } = require(`lmdb-store`)
 
 const { saveState } = require(`gatsby/dist/redux/save-state`)
 
@@ -16,17 +17,30 @@ const getDiskCacheSnapshot = () => {
   const plugins = getAllPlugins()
 
   const snapshot = {}
-  plugins.forEach(pluginName => {
-    const cacheDirectory = path.join(__dirname, `.cache`, `caches`, pluginName)
-
-    const files = glob.sync(path.join(cacheDirectory, `**`), {
-      nodir: true,
+  let store
+  try {
+    store = open({
+      name: `root`,
+      path: path.join(process.cwd(), `.cache/caches-lmdb`),
+      compression: true,
+      maxDbs: 200,
     })
+    plugins.forEach(pluginName => {
+      const pluginDb = store.openDB({
+        name: pluginName,
+        encoding: `json`,
+      })
 
-    snapshot[pluginName] = files.map(absolutePath =>
-      path.relative(cacheDirectory, absolutePath)
-    )
-  })
+      snapshot[pluginName] = Array.from(pluginDb.getKeys({ snapshot: false }))
+    })
+  } catch (e) {
+    console.error(e)
+  } finally {
+    if (store) {
+      store.close()
+    }
+  }
+
   return snapshot
 }
 
@@ -70,6 +84,26 @@ exports.onPostBuild = async ({ getNodes, store }) => {
     )
 
     const result = require(pageDataPath).result.data
+
+    // some normalization so order of fields in type queries is consistent
+    if (result) {
+      if (result.typeinfoParent && result.typeinfoParent.fields) {
+        result.typeinfoParent.fields = result.typeinfoParent.fields.sort(
+          (a, b) => {
+            return a.name.localeCompare(b.name)
+          }
+        )
+      }
+
+      if (result.typeinfoChild && result.typeinfoChild.fields) {
+        result.typeinfoChild.fields = result.typeinfoChild.fields.sort(
+          (a, b) => {
+            return a.name.localeCompare(b.name)
+          }
+        )
+      }
+    }
+
     _.set(queryResults, [scenarioName, type], result)
   })
 

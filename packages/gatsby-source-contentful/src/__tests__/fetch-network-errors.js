@@ -1,9 +1,10 @@
 /**
  * @jest-environment node
  */
+// @ts-check
 
 import nock from "nock"
-import fetchData from "../fetch"
+import { fetchContent } from "../fetch"
 import { createPluginConfig } from "../plugin-options"
 
 nock.disableNetConnect()
@@ -65,13 +66,8 @@ describe(`fetch-retry`, () => {
         `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=1000`
       )
       .reply(200, { items: [] })
-      // Content types
-      .get(
-        `/spaces/${options.spaceId}/environments/master/content_types?skip=0&limit=1000&order=sys.createdAt`
-      )
-      .reply(200, { items: [] })
 
-    await fetchData({ pluginConfig, reporter })
+    await fetchContent({ pluginConfig, reporter, syncToken: null })
 
     expect(reporter.panic).not.toBeCalled()
     expect(scope.isDone()).toBeTruthy()
@@ -106,8 +102,8 @@ describe(`fetch-retry`, () => {
       )
 
     try {
-      await fetchData({ pluginConfig, reporter })
-      jest.fail()
+      await fetchContent({ pluginConfig, reporter, syncToken: null })
+      throw new Error(`fetchContent should throw an error`)
     } catch (e) {
       const msg = expect(e.context.sourceMessage)
       msg.toEqual(
@@ -132,14 +128,15 @@ describe(`fetch-network-errors`, () => {
       .get(`/spaces/${options.spaceId}/`)
       .replyWithError({ code: `ECONNRESET` })
     try {
-      await fetchData({
+      await fetchContent({
         pluginConfig: createPluginConfig({
           ...options,
           contentfulClientConfig: { retryOnError: false },
         }),
         reporter,
+        syncToken: null,
       })
-      jest.fail()
+      throw new Error(`fetchContent should throw an error`)
     } catch (e) {
       expect(e.context.sourceMessage).toEqual(
         expect.stringContaining(
@@ -159,14 +156,15 @@ describe(`fetch-network-errors`, () => {
       .reply(502, `Bad Gateway`)
 
     try {
-      await fetchData({
+      await fetchContent({
         pluginConfig: createPluginConfig({
           ...options,
           contentfulClientConfig: { retryOnError: false },
         }),
         reporter,
+        syncToken: null,
       })
-      jest.fail()
+      throw new Error(`fetchContent should throw an error`)
     } catch (e) {
       expect(e.context.sourceMessage).toEqual(
         expect.stringContaining(
@@ -193,14 +191,15 @@ describe(`fetch-network-errors`, () => {
       })
 
     try {
-      await fetchData({
+      await fetchContent({
         pluginConfig: createPluginConfig({
           ...options,
           contentfulClientConfig: { retryOnError: false },
         }),
         reporter,
+        syncToken: null,
       })
-      jest.fail()
+      throw new Error(`fetchContent should throw an error`)
     } catch (e) {
       const msg = expect(e.context.sourceMessage)
 

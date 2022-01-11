@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 describe(`gatsby-plugin-manifest`, () => {
   const pluginOptions = {
     name: `My Website`,
@@ -65,6 +69,25 @@ describe(`gatsby-plugin-manifest`, () => {
       <head>
         <link
           href="/manifest.webmanifest"
+          rel="manifest"
+        />
+      </head>
+    `)
+  })
+
+  test(`use correct localized manifest when path prefix is used`, () => {
+    global.__PATH_PREFIX__ = `/test`
+
+    const location = {
+      pathname: `/test/es/`,
+    }
+    // add default lang
+    pluginOptions.lang = `en`
+    onRouteUpdate({ location }, pluginOptions)
+    expect(document.head).toMatchInlineSnapshot(`
+      <head>
+        <link
+          href="/test/manifest_es.webmanifest"
           rel="manifest"
         />
       </head>

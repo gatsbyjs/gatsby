@@ -22,9 +22,9 @@ import {
 } from "./types"
 import { IPluginRefObject, PluginRef } from "gatsby-plugin-utils/dist/types"
 
-const getAPI = (
-  api: { [exportType in ExportType]: { [api: string]: boolean } }
-): ICurrentAPIs =>
+const getAPI = (api: {
+  [exportType in ExportType]: { [api: string]: boolean }
+}): ICurrentAPIs =>
   _.keys(api).reduce<Partial<ICurrentAPIs>>((merged, key) => {
     merged[key] = _.keys(api[key])
     return merged
@@ -36,11 +36,28 @@ const getAPI = (
 const flattenPlugins = (plugins: Array<IPluginInfo>): Array<IPluginInfo> => {
   const flattened: Array<IPluginInfo> = []
   const extractPlugins = (plugin: IPluginInfo): void => {
-    if (plugin.pluginOptions && plugin.pluginOptions.plugins) {
-      plugin.pluginOptions.plugins.forEach(subPlugin => {
-        flattened.push(subPlugin)
-        extractPlugins(subPlugin)
-      })
+    if (plugin.subPluginPaths) {
+      for (const subPluginPath of plugin.subPluginPaths) {
+        // @pieh:
+        // subPluginPath can look like someOption.randomFieldThatIsMarkedAsSubplugins
+        // Reason for doing stringified path with . separator was that it was just easier to prevent duplicates
+        // in subPluginPaths array (as each subplugin in the gatsby-config would add subplugin path).
+        const segments = subPluginPath.split(`.`)
+        let roots: Array<any> = [plugin.pluginOptions]
+        for (const segment of segments) {
+          if (segment === `[]`) {
+            roots = roots.flat()
+          } else {
+            roots = roots.map(root => root[segment])
+          }
+        }
+        roots = roots.flat()
+
+        roots.forEach(subPlugin => {
+          flattened.push(subPlugin)
+          extractPlugins(subPlugin)
+        })
+      }
     }
   }
 

@@ -1,13 +1,18 @@
+import { readJSON } from "fs-extra"
 import WebpackAssetsManifest from "webpack-assets-manifest"
+import {
+  generatePageDataPath,
+  joinPath,
+  generateHtmlPath,
+} from "gatsby-core-utils"
 import { captureEvent } from "gatsby-telemetry"
 import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
 import copyFunctionsManifest from "./copy-functions-manifest"
 import createRedirects from "./create-redirects"
 import createSiteConfig from "./create-site-config"
-import { readJSON } from "fs-extra"
-import { joinPath } from "gatsby-core-utils"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
+import { emitRoutes, emitFileNodes } from "./ipc"
 
 const assetsManifest = {}
 
@@ -30,14 +35,35 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
   })
 }
 
-exports.onPostBuild = async (
-  { store, pathPrefix, reporter },
-  userPluginOptions
-) => {
-  const pluginData = makePluginData(store, assetsManifest, pathPrefix)
+exports.onPostBuild = async ({ store, getNodesByType }, userPluginOptions) => {
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
-  const { redirects, pageDataStats, nodes } = store.getState()
+  const { redirects, pageDataStats, nodes, pages } = store.getState()
+
+  const pluginData = makePluginData(store, assetsManifest)
+
+  /**
+   * Emit via IPC routes for which pages are non SSG
+   */
+  let index = 0
+  let batch = {}
+  for (const [pathname, page] of pages) {
+    if (page.mode && page.mode !== `SSG`) {
+      index++
+
+      const fullPathName = page.matchPath ? page.matchPath : pathname
+      batch[generateHtmlPath(``, fullPathName)] = page.mode
+      batch[generatePageDataPath(``, fullPathName)] = page.mode
+
+      if (index % 1000 === 0) {
+        await emitRoutes(batch)
+        batch = {}
+      }
+    }
+  }
+  if (Object.keys(batch).length > 0) {
+    await emitRoutes(batch)
+  }
 
   let nodesCount
 
@@ -54,12 +80,16 @@ exports.onPostBuild = async (
 
   const pagesCount = pageDataStats && pageDataStats.size
 
-  captureEvent(`GATSBY_CLOUD_METADATA`, {
-    siteMeasurements: {
-      pagesCount,
-      nodesCount,
-    },
-  })
+  try {
+    captureEvent(`GATSBY_CLOUD_METADATA`, {
+      siteMeasurements: {
+        pagesCount,
+        nodesCount,
+      },
+    })
+  } catch (e) {
+    console.error(e)
+  }
 
   let rewrites = []
   if (pluginOptions.generateMatchPathRewrites) {
@@ -80,7 +110,8 @@ exports.onPostBuild = async (
   }
 
   await Promise.all([
-    buildHeadersProgram(pluginData, pluginOptions, reporter),
+    ensureEmittingFileNodesFinished,
+    buildHeadersProgram(pluginData, pluginOptions),
     createSiteConfig(pluginData, pluginOptions),
     createRedirects(pluginData, redirects, rewrites),
     copyFunctionsManifest(pluginData),
@@ -115,7 +146,36 @@ const pluginOptionsSchema = function ({ Joi }) {
     generateMatchPathRewrites: Joi.boolean().description(
       `When set to false, turns off automatic creation of redirect rules for client only paths`
     ),
+    disablePreviewUI: Joi.boolean().description(
+      `When set to true, turns off Gatsby Preview if enabled`
+    ),
   })
 }
 
 exports.pluginOptionsSchema = pluginOptionsSchema
+
+/**
+ * We emit File Nodes via IPC and we need to make sure build doesn't finish before all of
+ * messages were sent.
+ */
+let ensureEmittingFileNodesFinished
+exports.onPreBootstrap = ({ emitter, getNodesByType }) => {
+  emitter.on(`API_FINISHED`, action => {
+    if (action.payload.apiName !== `sourceNodes`) {
+      return
+    }
+
+    async function doEmitFileNodes() {
+      const fileNodes = getNodesByType(`File`)
+
+      // TODO: This is missing the cacheLocations .cache/caches + .cache/caches-lmdb
+      for (const file of fileNodes) {
+        await emitFileNodes({
+          path: file.absolutePath,
+        })
+      }
+    }
+
+    ensureEmittingFileNodesFinished = doEmitFileNodes()
+  })
+}

@@ -11,7 +11,6 @@ import {
 } from "../utils/websocket-manager"
 import { GraphQLRunner } from "./graphql-runner"
 import { IGroupedQueryIds } from "../services"
-import { processNodeManifests } from "../utils/node-manifest"
 
 if (process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) {
   console.info(
@@ -97,7 +96,7 @@ function createQueue<QueryIDType>({
   function worker(queryId: QueryIDType, cb): void {
     const job = createJobFn(state, queryId)
     if (!job) {
-      cb(null, undefined)
+      setImmediate(() => cb(null, undefined))
       return
     }
     queryRunner(graphqlRunner, job, activity?.span)
@@ -105,7 +104,9 @@ function createQueue<QueryIDType>({
         if (activity.tick) {
           activity.tick()
         }
-        cb(null, { job, result })
+        // Note: we need setImmediate to ensure garbage collection has a chance
+        //  to get started during query running
+        setImmediate(() => cb(null, { job, result }))
       })
       .catch(error => {
         cb(error)
@@ -238,13 +239,6 @@ export async function processPageQueries(
     graphqlTracing,
   })
 
-  if (process.env.NODE_ENV !== `development`) {
-    /**
-     * only process node manifests here when not in develop. for gatsby develop we process node manifests in src/query/query-watcher.ts everytime queries are re-run. Because we process node manifests in this location for gatsby build we have all the information needed to create the manifests. In query-watcher during gatsby build we might not have all information about created pages and queries.
-     */
-    await processNodeManifests()
-  }
-
   return processedQueries
 }
 
@@ -259,12 +253,6 @@ function createPageQueryJob(
   }
 
   const { path, componentPath, context } = page
-  if (_CFLAGS_.GATSBY_MAJOR === `4`) {
-    const { mode } = page
-    if (mode !== `SSG`) {
-      return undefined
-    }
-  }
   const { query } = component
 
   return {

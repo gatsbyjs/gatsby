@@ -24,13 +24,14 @@
       - [Duplicated entries](#duplicated-entries)
     - [Query for Assets in ContentType nodes](#query-for-assets-in-contenttype-nodes)
     - [More on Queries with Contentful and Gatsby](#more-on-queries-with-contentful-and-gatsby)
-  - [Using the new Gatsby image plugin](#using-the-new-gatsby-image-plugin)
+  - [Displaying responsive image with gatsby-plugin-image](#displaying-responsive-image-with-gatsby-plugin-image)
   - [Contentful Tags](#contentful-tags)
     - [List available tags](#list-available-tags)
     - [Filter content by tags](#filter-content-by-tags)
   - [Contentful Rich Text](#contentful-rich-text)
     - [Query Rich Text content and references](#query-rich-text-content-and-references)
     - [Rendering](#rendering)
+    - [Embedding an image in a Rich Text field](#embedding-an-image-in-a-rich-text-field)
   - [Download assets for static distribution](#download-assets-for-static-distribution)
     - [Enable the feature with the `downloadLocal: true` option.](#enable-the-feature-with-the-downloadlocal-true-option)
     - [Updating Queries for downloadLocal](#updating-queries-for-downloadlocal)
@@ -43,6 +44,12 @@
 ```shell
 npm install gatsby-source-contentful
 ```
+
+## Setup Instructions
+
+To get setup quickly with a new site and have Gatsby Cloud do the heavy lifting, [deploy a new Gatsby Contentful site with just a few clicks on gatsbyjs.com](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/contentful/starter-gatsby-blog).
+
+For more detailed instructions on manually configuring your Gatsby Contentful site for production builds and Preview builds visit [the Gatsby Cloud knowledgebase](https://support.gatsbyjs.com/hc/en-us/articles/360056047134-Add-the-Gatsby-Cloud-App-to-Contentful).
 
 ## How to use
 
@@ -190,13 +197,10 @@ You might query for **all** of a type of node:
 ```graphql
 {
   allContentfulAsset {
-    edges {
-      node {
-        id
-        file {
-          url
-        }
-      }
+    nodes {
+      contentful_id
+      title
+      description
     }
   }
 }
@@ -211,13 +215,20 @@ To query for a single `image` asset with the title `'foo'` and a width of 1600px
 ```javascript
 export const assetQuery = graphql`
   {
-    contentfulAsset(filter: { title: { eq: 'foo' } }) {
-      image {
-        resolutions(width: 1600) {
-          width
-          height
-          src
-          srcSet
+    contentfulAsset(title: { eq: "foo" }) {
+      contentful_id
+      title
+      description
+      file {
+        fileName
+        url
+        contentType
+        details {
+          size
+          image {
+            height
+            width
+          }
         }
       }
     }
@@ -235,8 +246,6 @@ To query for a single `CaseStudy` node with the short text properties `title` an
     }
   }
 ```
-
-> Note the use of [GraphQL arguments](https://graphql.org/learn/queries/#arguments) on the `contentfulAsset` and `resolutions` fields. See [Gatsby's GraphQL reference docs for more info](https://www.gatsbyjs.org/docs/graphql-reference/).
 
 You might query for a **single** node inside a component in your `src/components` folder, using [Gatsby's `StaticQuery` component](https://www.gatsbyjs.org/docs/static-query/).
 
@@ -320,12 +329,10 @@ To get **all** the `CaseStudy` nodes with `ShortText` fields `id`, `slug`, `titl
           body
         }
         heroImage {
-          fixed(width: 1600) {
-            width
-            height
-            src
-            srcSet
-          }
+          title
+          description
+          gatsbyImageData(layout: CONSTRAINED)
+          # Further below in this doc you can learn how to use these response images
         }
       }
     }
@@ -333,20 +340,16 @@ To get **all** the `CaseStudy` nodes with `ShortText` fields `id`, `slug`, `titl
 }
 ```
 
-When querying images you can use the `fixed`, `fluid` or `resize` nodes to get different sizes for the image (for example for using [`gatsby-image`](https://www.gatsbyjs.org/packages/gatsby-image/)). Their usage is documented at the [`gatsby-plugin-sharp`](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/) package. The only difference is that `gatsby-source-contentful` also allows setting only the `width` parameter for these node types, the height will then automatically be calculated according to the aspect ratio.
-
 ### More on Queries with Contentful and Gatsby
 
 It is strongly recommended that you take a look at how data flows in a real Contentful and Gatsby application to fully understand how the queries, Node.js functions and React components all come together. Check out the example site at
 [using-contentful.gatsbyjs.org](https://using-contentful.gatsbyjs.org/).
 
-## Using the new Gatsby image plugin
-
-You can now use the beta [gatsby-plugin-image](https://gatsbyjs.com/plugins/gatsby-plugin-image/) to display high-performance, responsive images from Contentful. This plugin is the replacement for gatsby-image, and is currently in beta, but can help deliver improved performance, with a cleaner API. Support in gatsby-source-contentful is still experimental.
+## Displaying responsive image with gatsby-plugin-image
 
 To use it:
 
-1.  Install the plugins:
+1.  Install the required plugins:
 
 ```shell
 npm install gatsby-plugin-image gatsby-plugin-sharp
@@ -377,6 +380,10 @@ module.exports = {
   }
 }
 ```
+
+4. Your query will return a dynamic image. Check the [documentation of gatsby-plugin-image](https://www.gatsbyjs.com/plugins/gatsby-plugin-image/#dynamic-images) to learn how to render it on your website.
+
+Check the [Reference Guide of gatsby-plugin-image](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/) to get a deeper insight on how this works.
 
 ## [Contentful Tags](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/content-tags)
 
@@ -423,6 +430,8 @@ query FilterByTagsQuery {
 
 Rich Text feature is supported in this source plugin, you can use the following query to get the JSON output:
 
+**Note:** In our example Content Model the field containing the Rich Text data is called `bodyRichText`. Make sure to use your field name within the Query instead of `bodyRichText`
+
 ### Query Rich Text content and references
 
 ```graphql
@@ -430,11 +439,12 @@ query pageQuery($id: String!) {
   contentfulBlogPost(id: { eq: $id }) {
     title
     slug
-    # This is the rich text field
+    # This is the rich text field, the name depends on your field configuration in Contentful
     bodyRichText {
       raw
       references {
         ... on ContentfulAsset {
+          # You'll need to query contentful_id in each reference
           contentful_id
           __typename
           fixed(width: 1600) {
@@ -487,9 +497,11 @@ const options = {
 function BlogPostTemplate({ data }) {
   const { bodyRichText } = data.contentfulBlogPost
 
-  return <div>{bodyRichText && renderRichText(richTextField, options)}</div>
+  return <div>{bodyRichText && renderRichText(bodyRichText, options)}</div>
 }
 ```
+
+**Note:** The `contentful_id` field must be queried on rich-text references in order for the `renderNode` to receive the correct data.
 
 ### Embedding an image in a Rich Text field
 

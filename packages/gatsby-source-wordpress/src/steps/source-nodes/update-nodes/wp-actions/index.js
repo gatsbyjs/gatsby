@@ -6,6 +6,7 @@ import { paginatedWpNodeFetch } from "~/steps/source-nodes/fetch-nodes/fetch-nod
 
 import fetchAndCreateNonNodeRootFields from "~/steps/source-nodes/create-nodes/fetch-and-create-non-node-root-fields"
 import { setHardCachedNodes } from "~/utils/cache"
+import { sourceNodes } from "~/steps/source-nodes"
 
 /**
  * getWpActions
@@ -60,6 +61,9 @@ export const handleWpActions = async api => {
       break
     case `NON_NODE_ROOT_FIELDS`:
       await fetchAndCreateNonNodeRootFields()
+      break
+    case `REFETCH_ALL`:
+      await sourceNodes({ ...helpers, refetchAll: true }, {})
   }
 
   await setHardCachedNodes({ helpers })
