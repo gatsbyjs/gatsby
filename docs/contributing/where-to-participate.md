@@ -7,7 +7,7 @@ We want contributing to Gatsby to be fun, enjoyable, and educational for anyone 
 - Blogging, speaking about, or creating tutorials about one of Gatsby's many features. Mention [@gatsbyjs on Twitter](https://twitter.com/gatsbyjs) and/or email `devrel [at] gatsbyjs [dot] com` so we can give pointers and tips (if you want them 😄) and help you spread the word. Please add your blog posts and videos of talks to our [Awesome Gatsby](/docs/awesome-gatsby-resources/) page.
 - Presenting at meetups and conferences about your Gatsby projects. Your unique challenges and successes in building things with Gatsby can provide great speaking material. We'd love to review your talk abstract/CFP, so get in touch with us if you'd like some help!
 - [Submitting new feature ideas through an RFC](/blog/2018-04-06-introducing-gatsby-rfc-process/)
-- Submitting new documentation; titles in the side navigation on [docs](/docs) which are lighter in color on gatsbyjs.org are stubs and need contributions
+- Submitting new documentation; titles in the side navigation on [docs](/docs) which are lighter in color on gatsbyjs.com are stubs and need contributions
 - Tweeting about things you [#buildwithgatsby](https://twitter.com/search?q=%23buildwithgatsby) (make sure to use the hashtag and/or @ mention us!)
 - Submitting documentation updates, enhancements, designs, or bug fixes
 - Submitting spelling or grammar fixes

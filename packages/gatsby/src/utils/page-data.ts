@@ -166,13 +166,7 @@ export async function flush(parentSpan?: Span): Promise<void> {
   const isBuild = program?._?.[0] !== `develop`
 
   const { pagePaths } = pendingPageDataWrites
-  const writePageDataActivity = reporter.createProgress(
-    `Writing page-data.json files to public directory`,
-    pagePaths.size,
-    0,
-    { id: `write-page-data-public-directory`, parentSpan }
-  )
-  writePageDataActivity.start()
+  let writePageDataActivity
 
   let nodeManifestPagePathMap
 
@@ -181,6 +175,14 @@ export async function flush(parentSpan?: Span): Promise<void> {
     // We use this manifestId to determine if the page data is up to date when routing. Here we create a map of "pagePath": "manifestId" while processing and writing node manifest files.
     // We only do this when there are pending page-data writes because otherwise we could flush pending createNodeManifest calls before page-data.json files are written. Which means those page-data files wouldn't have the corresponding manifest id's written to them.
     nodeManifestPagePathMap = await processNodeManifests()
+
+    writePageDataActivity = reporter.createProgress(
+      `Writing page-data.json files to public directory`,
+      pagePaths.size,
+      0,
+      { id: `write-page-data-public-directory`, parentSpan }
+    )
+    writePageDataActivity.start()
   }
 
   const flushQueue = fastq(async (pagePath, cb) => {
@@ -268,8 +270,9 @@ export async function flush(parentSpan?: Span): Promise<void> {
       flushQueue.drain = resolve as () => unknown
     })
   }
-
-  writePageDataActivity.end()
+  if (writePageDataActivity) {
+    writePageDataActivity.end()
+  }
 
   isFlushing = false
 
