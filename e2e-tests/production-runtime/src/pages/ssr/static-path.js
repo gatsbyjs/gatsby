@@ -16,31 +16,34 @@ export default function StaticPath({ serverData }) {
       <pre data-testid="query">{JSON.stringify(serverData?.arg?.query)}</pre>
       <h2>Params</h2>
       <pre data-testid="params">{JSON.stringify(serverData?.arg?.params)}</pre>
-      <h2>Using env vars</h2>
+      <h2>Using env vars (react template)</h2>
       <UseEnv heading="process.env" envVar={process.env} />
       <UseEnv
         heading="process.env.EXISTING_VAR"
         envVar={process.env.EXISTING_VAR}
       />
-       <UseEnv
+      <UseEnv
         heading="process.env.NOT_EXISTING_VAR"
         envVar={process.env.NOT_EXISTING_VAR}
       />
-
-       <UseEnv
+      <UseEnv
         heading="process.env.FROM_COMMAND_LINE"
         envVar={process.env.FROM_COMMAND_LINE}
       />
+      <h2>Using env vars (getServerData)</h2>
       <UseEnv
-        heading="serverData.envVars.VERY_SECRET_VAR"
-        envVar={serverData?.envVars.VERY_SECRET_VAR}
+        heading="serverData.envVars.VERY_SECRET_ALIAS_VAR"
+        envVar={serverData?.envVars?.VERY_SECRET_ALIAS_VAR}
       />
-     
-       <UseEnv
+      <UseEnv
         heading="serverData.envVars.EXISTING_VAR"
-        envVar={serverData?.envVars.EXISTING_VAR}
+        envVar={serverData?.envVars?.EXISTING_VAR}
       />
-        <UseEnv
+      <UseEnv
+        heading="serverData.envVars.NOT_EXISTING_VAR"
+        envVar={serverData?.envVars?.NOT_EXISTING_VAR}
+      />
+      <UseEnv
         heading="serverData.envVars.FROM_COMMAND_LINE"
         envVar={serverData?.envVars.FROM_COMMAND_LINE}
       />
@@ -49,7 +52,7 @@ export default function StaticPath({ serverData }) {
 }
 
 export async function getServerData(arg) {
-  const VERY_SECRET_VAR = process.env.VERY_SECRET_VAR
+  const VERY_SECRET_ALIAS_VAR = process.env.VERY_SECRET_VAR
   const EXISTING_VAR = process.env.EXISTING_VAR
   const FROM_COMMAND_LINE = process.env.FROM_COMMAND_LINE
 
@@ -57,10 +60,10 @@ export async function getServerData(arg) {
     props: {
       arg,
       envVars: {
-        VERY_SECRET_VAR,
+        VERY_SECRET_ALIAS_VAR,
         EXISTING_VAR,
-        FROM_COMMAND_LINE
-      }
+        FROM_COMMAND_LINE,
+      },
     },
   }
 }
