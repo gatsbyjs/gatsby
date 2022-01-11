@@ -476,6 +476,7 @@ module.exports = async function build(
       action: {
         type: `GATSBY_CONFIG_KEYS`,
         payload: gatsbyCloudConfig,
+        timestamp: new Date().toJSON(),
       },
     })
   }
