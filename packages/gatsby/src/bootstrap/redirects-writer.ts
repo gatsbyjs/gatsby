@@ -47,7 +47,7 @@ export const writeRedirects = async (): Promise<void> => {
 
   if (redirectMatchingPageWarnings.length > 0) {
     reporter.warn(
-      `There are routes that match both page and redirect. Pages take precendence over redirects so the redirect will not work:\n${redirectMatchingPageWarnings.join(
+      `There are routes that match both page and redirect. Pages take precedence over redirects so the redirect will not work:\n${redirectMatchingPageWarnings.join(
         `\n`
       )}`
     )
