@@ -78,20 +78,20 @@ const getButtonProps = props => {
 export default function InfoIndicatorButton(props) {
   const { orgId, siteId, buildId } = props
   const buttonProps = getButtonProps(props)
-  const trackHover = () => {
+  const trackClick = () => {
     trackEvent({
-      eventType: `PREVIEW_INDICATOR_HOVER`,
+      eventType: `PREVIEW_INDICATOR_CLICK`,
       orgId,
       siteId,
       buildId,
-      name: `info hover`,
+      name: `info click`,
     })
   }
   return (
     <IndicatorButton
       testId="info"
       iconSvg={buttonProps?.showInfo ? infoIconActive : infoIcon}
-      onClick={buttonProps?.active && trackHover}
+      onClick={buttonProps?.active && trackClick}
       buttonIndex={props.buttonIndex}
       {...buttonProps}
     />
