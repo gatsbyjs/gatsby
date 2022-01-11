@@ -50,11 +50,21 @@ const InfoIndicatorButton = ({
   const closeInfoTooltip = () => {
     const now = new Date()
     Cookies.set(feedbackCookieName, now.toISOString())
-    askForFeedback.current = false
-    setButtonProps({
-      ...buttonProps,
-      tooltip: { testId: buttonProps.testId, overrideShow: false, show: false },
+    setButtonProps(btnProps => {
+      return {
+        ...btnProps,
+        tooltip: {
+          ...btnProps.tooltip,
+          overrideShow: false,
+          show: false,
+        },
+        highlighted: false,
+      }
     })
+    // remove the tooltip before updating the state to prevent flickering
+    setTimeout(() => {
+      askForFeedback.current = false
+    }, 200)
   }
 
   useEffect(() => {
@@ -95,6 +105,8 @@ const InfoIndicatorButton = ({
                 new Date(createdAt),
                 { includeSeconds: true }
               )} ago`,
+              overrideShow: false,
+              show: false,
             },
             active: true,
           })
@@ -116,9 +128,9 @@ const InfoIndicatorButton = ({
 
   return (
     <IndicatorButton
+      {...buttonProps}
       onMouseEnter={buttonProps?.active ? trackHover : undefined}
       iconSvg={askForFeedback.current ? infoAlertIcon : infoIcon}
-      {...buttonProps}
     />
   )
 }
