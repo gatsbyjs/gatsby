@@ -26,6 +26,10 @@ const { addNodeInterfaceFields } = require(`./types/node-interface`)
 const { overridableBuiltInTypeNames } = require(`./types/built-in-types`)
 const { addInferredTypes } = require(`./infer`)
 const {
+  addRemoteFileInterfaceFields,
+} = require(`./types/remote-file-interface`)
+
+const {
   findOne,
   findManyPaginated,
   wrappingResolver,
@@ -202,8 +206,13 @@ const processTypeComposer = async ({
     })
 
     if (typeComposer.hasInterface(`Node`)) {
-      await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
+      await addNodeInterfaceFields({ schemaComposer, typeComposer })
     }
+
+    if (typeComposer.hasInterface(`RemoteFile`)) {
+      addRemoteFileInterfaceFields(schemaComposer, typeComposer)
+    }
+
     await determineSearchableFields({
       schemaComposer,
       typeComposer,
@@ -247,6 +256,7 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
     if (typeof typeOrTypeDef === `string`) {
       typeOrTypeDef = parseTypeDef(typeOrTypeDef)
     }
+
     if (isASTDocument(typeOrTypeDef)) {
       let parsedTypes
       const createdFrom = `sdl`

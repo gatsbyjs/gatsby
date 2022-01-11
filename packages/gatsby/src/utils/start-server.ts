@@ -52,6 +52,7 @@ import { renderDevHTML } from "./dev-ssr/render-dev-html"
 import { getServerData, IServerData } from "./get-server-data"
 import { ROUTES_DIRECTORY } from "../constants"
 import { getPageMode } from "./page-mode"
+import { resize } from "./image-handler"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -398,6 +399,55 @@ export async function startServer(
       })
     }
   )
+
+  // TODO create persistent cache
+  const remoteFileCache = new Map()
+  app.get(`/_gatsby/file/:url`, (req, res) => {
+    got.stream(Buffer.from(req.params.url, `base64`).toString()).pipe(res)
+  })
+
+  app.get(`/_gatsby/image/:url/:params`, async (req, res) => {
+    const { url, params } = req.params
+
+    const searchParams = new URLSearchParams(
+      Buffer.from(params, `base64`).toString()
+    )
+
+    const resizeParams: { width: number; height: number; format: string } = {
+      width: 0,
+      height: 0,
+      format: ``,
+    }
+    for (const [key, value] of searchParams) {
+      switch (key) {
+        case `w`: {
+          resizeParams.width = Number(value)
+          break
+        }
+        case `h`: {
+          resizeParams.height = Number(value)
+          break
+        }
+        case `fm`: {
+          resizeParams.format = value
+          break
+        }
+      }
+    }
+
+    const remoteUrl = Buffer.from(url, `base64`).toString()
+    let buffer: Buffer
+    if (remoteFileCache.has(remoteUrl)) {
+      buffer = remoteFileCache.get(remoteUrl)
+    } else {
+      buffer = await got(Buffer.from(url, `base64`).toString()).buffer()
+      remoteFileCache.set(remoteUrl, buffer)
+    }
+
+    res.setHeader(`content-type`, `image/${resizeParams.format}`)
+
+    res.send(await resize(buffer, resizeParams))
+  })
 
   app.get(`/__original-stack-frame`, async (req, res) => {
     const compilation = res.locals?.webpack?.devMiddleware?.stats?.compilation
