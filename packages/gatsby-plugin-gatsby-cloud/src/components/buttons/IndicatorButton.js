@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react"
 import { IndicatorButtonTooltip } from "../tooltips"
-import { spinnerIcon } from "../icons"
+import { spinnerIcon, exitIcon } from "../icons"
 
 export default function IndicatorButton({
   buttonIndex,
@@ -13,13 +13,12 @@ export default function IndicatorButton({
   testId,
   onMouseEnter,
   hoverable,
+  showInfo = false,
 }) {
   const [showTooltip, setShowTooltip] = useState(false)
   const buttonRef = useRef(null)
   const isFirstButton = buttonIndex === 0
   const marginTop = isFirstButton ? `0px` : `8px`
-
-  const onMouseLeave = () => setShowTooltip(false)
 
   return (
     <>
@@ -34,15 +33,27 @@ export default function IndicatorButton({
       >
         <div
           data-testid={`${testId}-button`}
+          onClick={
+            hoverable
+              ? onClick
+              : () => {
+                  setShowTooltip(!showTooltip)
+                }
+          }
           onMouseEnter={() => {
-            setShowTooltip(true)
+            if (hoverable) {
+              setShowTooltip(true)
 
-            if (onMouseEnter) {
-              onMouseEnter()
+              if (onMouseEnter) {
+                onMouseEnter()
+              }
             }
           }}
-          onMouseLeave={onMouseLeave}
-          onClick={active ? onClick : null}
+          onMouseLeave={() => {
+            if (hoverable) {
+              setShowTooltip(false)
+            }
+          }}
         >
           {iconSvg}
           {showSpinner && (
@@ -53,6 +64,18 @@ export default function IndicatorButton({
       {tooltipContent && (
         <IndicatorButtonTooltip
           tooltipContent={tooltipContent}
+          iconExit={
+            showInfo && (
+              <button
+                onClick={() => {
+                  setShowTooltip(false)
+                }}
+                data-gatsby-preview-indicator="tooltip-link"
+              >
+                {exitIcon}
+              </button>
+            )
+          }
           overrideShowTooltip={overrideShowTooltip}
           showTooltip={showTooltip}
           elementRef={buttonRef}

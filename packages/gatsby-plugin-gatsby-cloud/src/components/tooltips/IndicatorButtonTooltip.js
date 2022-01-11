@@ -5,6 +5,7 @@ export default function IndicatorButtonTooltip({
   overrideShowTooltip,
   showTooltip,
   testId,
+  iconExit,
   elementRef,
 }) {
   const elmOffsetTop = () => {
@@ -24,6 +25,7 @@ export default function IndicatorButtonTooltip({
       style={{ top: `${elmOffsetTop()}px` }}
     >
       {tooltipContent}
+      {iconExit}
     </div>
   )
 }
