@@ -61,6 +61,7 @@ import {
   preparePageTemplateConfigs,
 } from "../utils/page-mode"
 import { validateEngines } from "../utils/validate-engines"
+import { conststructConfigObject } from "../utils/gatsby-cloud-config"
 
 module.exports = async function build(
   program: IBuildArgs,
@@ -466,6 +467,19 @@ module.exports = async function build(
     pages: state.pages,
     root: state.program.directory,
   })
+
+  if (process.send) {
+    const gatsbyCloudConfig = conststructConfigObject(state.config)
+
+    process.send({
+      type: `LOG_ACTION`,
+      action: {
+        type: `GATSBY_CONFIG_KEYS`,
+        payload: gatsbyCloudConfig,
+        timestamp: new Date().toJSON(),
+      },
+    })
+  }
 
   report.info(`Done building in ${process.uptime()} sec`)
 
