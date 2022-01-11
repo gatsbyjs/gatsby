@@ -85,10 +85,13 @@ const Style = () => (
 
         [data-gatsby-preview-indicator="spinner"] {
           position: absolute;
-          top: 10px;
-          left: 10px;
-          animation: spin 1s linear infinite;
+          top: 50%;
+          left: 50%;
+          transform: translateX(-50%) translateY(-50%);
           height: 28px;
+        }
+        [data-gatsby-preview-indicator="spinner"] svg {
+          animation: spin 1s linear infinite;
         }
         [data-gatsby-preview-indicator="tooltip"] {
           position: absolute;

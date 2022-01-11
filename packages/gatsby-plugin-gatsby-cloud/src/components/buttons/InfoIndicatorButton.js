@@ -64,7 +64,18 @@ const InfoIndicatorButton = ({
     })
   }
 
-  const closeInfoTooltip = () => {}
+  const closeInfoTooltip = () => {
+    trackClick()
+    setButtonProps(btnProps => {
+      return {
+        ...btnProps,
+        tooltip: {
+          ...btnProps.tooltip,
+          show: false,
+        },
+      }
+    })
+  }
 
   const closeFeedbackTooltip = () => {
     const now = new Date()
@@ -99,94 +110,108 @@ const InfoIndicatorButton = ({
   }, [])
 
   useEffect(() => {
+    console.log(buildStatus)
     const buildStatusActions = {
       [BuildStatus.UPTODATE]: () => {
         if (askForFeedback.current) {
           const url = `https://gatsby.dev/zrx`
-          setButtonProps({
-            ...buttonProps,
-            tooltip: {
-              testId: buttonProps.testId,
-              content: (
-                <FeedbackTooltipContent
-                  url={url}
-                  onOpened={() => {
-                    closeFeedbackTooltip()
-                  }}
-                />
-              ),
-              overrideShow: true,
-              closable: true,
-              onClose: closeFeedbackTooltip,
-            },
-            active: true,
-            highlighted: true,
+          setButtonProps(btnProps => {
+            return {
+              ...btnProps,
+              tooltip: {
+                testId: btnProps.testId,
+                content: (
+                  <FeedbackTooltipContent
+                    url={url}
+                    onOpened={() => {
+                      closeFeedbackTooltip()
+                    }}
+                  />
+                ),
+                overrideShow: true,
+                closable: true,
+                onClose: closeFeedbackTooltip,
+              },
+              active: true,
+              highlighted: true,
+            }
           })
         } else {
-          setButtonProps({
-            ...buttonProps,
-            tooltip: {
-              testId: buttonProps.testId,
-              content: `Preview updated ${formatDistance(
-                Date.now(),
-                new Date(createdAt),
-                { includeSeconds: true }
-              )} ago`,
-              overrideShow: false,
-              show: false,
-            },
-            active: true,
+          setButtonProps(btnProps => {
+            return {
+              ...btnProps,
+              tooltip: {
+                testId: btnProps.testId,
+                content: `Preview updated ${formatDistance(
+                  Date.now(),
+                  new Date(createdAt),
+                  { includeSeconds: true }
+                )} ago`,
+                overrideShow: false,
+                show: false,
+              },
+              active: true,
+            }
           })
         }
       },
       [BuildStatus.SUCCESS]: () => {
-        setButtonProps({
-          ...buttonProps,
-          tooltip: {
-            testId: buttonProps.testId,
-            content: (
-              <BuildSuccessTooltipContent
-                isOnPrettyUrl={isOnPrettyUrl}
-                sitePrefix={sitePrefix}
-                buildId={buildId}
-                siteId={siteId}
-                orgId={orgId}
-              />
-            ),
-            closable: true,
-            onClose: closeInfoTooltip,
-          },
-          active: true,
-          hoverable: true,
+        setButtonProps(btnProps => {
+          return {
+            ...btnProps,
+            tooltip: {
+              testId: btnProps.testId,
+              content: (
+                <BuildSuccessTooltipContent
+                  isOnPrettyUrl={isOnPrettyUrl}
+                  sitePrefix={sitePrefix}
+                  buildId={buildId}
+                  siteId={siteId}
+                  orgId={orgId}
+                />
+              ),
+              closable: true,
+              onClose: closeInfoTooltip,
+            },
+            active: true,
+            hoverable: true,
+          }
         })
       },
       [BuildStatus.ERROR]: () => {
-        setButtonProps({
-          ...buttonProps,
-          tooltip: {
-            testId: buttonProps.testId,
-            content: (
-              <BuildErrorTooltipContent
-                siteId={siteId}
-                orgId={orgId}
-                buildId={erroredBuildId}
-              />
-            ),
-            closable: true,
-            onClose: closeInfoTooltip,
-          },
-          active: true,
-          hoverable: true,
+        setButtonProps(btnProps => {
+          return {
+            ...btnProps,
+            tooltip: {
+              testId: btnProps.testId,
+              content: (
+                <BuildErrorTooltipContent
+                  siteId={siteId}
+                  orgId={orgId}
+                  buildId={erroredBuildId}
+                />
+              ),
+              closable: true,
+              onClose: closeInfoTooltip,
+            },
+            active: true,
+            hoverable: true,
+          }
         })
       },
       [BuildStatus.BUILDING]: () => {
-        setButtonProps({
-          tooltip: {
-            content: `Building a new preview`,
-            overrideShow: true,
-          },
-          hoverable: true,
-          showSpinner: true,
+        setButtonProps(btnProps => {
+          return {
+            ...btnProps,
+            tooltip: {
+              testId: btnProps.testId,
+              content: `Building a new preview`,
+              overrideShow: true,
+            },
+            active: false,
+            hoverable: true,
+            showSpinner: true,
+          }
         })
       },
     }

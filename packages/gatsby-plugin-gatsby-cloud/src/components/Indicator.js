@@ -128,9 +128,9 @@ const Indicator = () => {
 
   return (
     <PreviewIndicator>
-      <GatsbyIndicatorButton buttonIndex={1} {...buttonProps} />
-      <InfoIndicatorButton buttonIndex={3} {...buttonProps} />
-      <LinkIndicatorButton buttonIndex={2} {...buttonProps} />
+      <GatsbyIndicatorButton {...buttonProps} buttonIndex={1} />
+      <InfoIndicatorButton {...buttonProps} buttonIndex={2} />
+      <LinkIndicatorButton {...buttonProps} buttonIndex={3} />
     </PreviewIndicator>
   )
 }
