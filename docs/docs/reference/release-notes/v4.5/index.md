@@ -8,9 +8,9 @@ Welcome to `gatsby@4.5.0` release (January 2022 #1)
 
 Key highlights of this release:
 
-- [Gracefully Handling Browser Cache Issues](#todo)
-- [TypeScript Types for `getServerData`](#todo)
-- [Deprecation of `gatsby-recipes`](#todo)
+- [Gracefully Handling Browser Cache Issues](#gracefully-handling-browser-cache-issues)
+- [TypeScript Types for `getServerData`](#typescript-types-for-getserverdata)
+- [Deprecation of `gatsby-recipes`](#deprecation-of-gatsby-recipes)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
