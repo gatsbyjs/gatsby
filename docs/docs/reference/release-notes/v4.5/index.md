@@ -97,6 +97,22 @@ If you've liked the features in `gatsby-recipes` and would like to have somethin
 
 A big **Thank You** to [our community who contributed][full-changelog] to this release 💜
 
-TODO
+- [iChenLei](https://github.com/iChenLei)
+  - fix(gatsby-cli): make `--inspect-brk` work [PR #34242](https://github.com/gatsbyjs/gatsby/pull/34242)
+  - docs: use en-US version mdn links [PR #34318](https://github.com/gatsbyjs/gatsby/pull/34318)
+  - chore(examples): use mobx v6 in using-mobx example [PR #34351](https://github.com/gatsbyjs/gatsby/pull/34351)
+- [axe312ger](https://github.com/axe312ger): fix(gatsby-source-contentful): fix base64 aspect ratio [PR #33533](https://github.com/gatsbyjs/gatsby/pull/33533)
+- [cassiebeckley](https://github.com/cassiebeckley): chore(gatsby-transformer-screenshot): Update old name [PR #34285](https://github.com/gatsbyjs/gatsby/pull/34285)
+- [ollybenson](https://github.com/ollybenson): docs: fix typo in gatsby-image [PR #34300](https://github.com/gatsbyjs/gatsby/pull/34300)
+- [fagiani](https://github.com/fagiani): docs: Match egghead.io video instructions [PR #34315](https://github.com/gatsbyjs/gatsby/pull/34315)
+- [AnilSeervi](https://github.com/AnilSeervi)
+  - docs: change gastby to gatsby [PR #34341](https://github.com/gatsbyjs/gatsby/pull/34341)
+  - docs(gatsby-remark-prismjs): Update http links to use https [PR #34340](https://github.com/gatsbyjs/gatsby/pull/34340)
+  - docs: Add shell code block & remove starter link for sass [PR #34322](https://github.com/gatsbyjs/gatsby/pull/34322)
+  - docs: fix typo gatby-node.js -> gatsby-node.js [PR #34347](https://github.com/gatsbyjs/gatsby/pull/34347)
+- [varghesejose2020](https://github.com/varghesejose2020): chore(docs): Update localization doc [PR #34378](https://github.com/gatsbyjs/gatsby/pull/34378)
+- [SMony-L](https://github.com/SMony-L): chore: Fix typo [PR #34349](https://github.com/gatsbyjs/gatsby/pull/34349)
+- [seanparmelee](https://github.com/seanparmelee): chore(docs): Fix links to shared layout component [PR #34330](https://github.com/gatsbyjs/gatsby/pull/34330)
+- [tlgimenes](https://github.com/tlgimenes): fix(gatsby): Wrong route resolved by findPageByPath function [PR #34070](https://github.com/gatsbyjs/gatsby/pull/34070)
 
 [full-changelog]: https://github.com/gatsbyjs/gatsby/compare/gatsby@4.5.0-next.0...gatsby@4.5.0
