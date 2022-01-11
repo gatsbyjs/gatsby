@@ -30,7 +30,7 @@ const getButtonProps = props => {
           { includeSeconds: true }
         )} ago`,
         active: true,
-        exitButton: false,
+        showInfo: false,
         hoverable: true,
       }
     }
@@ -47,7 +47,6 @@ const getButtonProps = props => {
         ),
         active: true,
         showInfo: true,
-        exitButton: true,
         hoverable: false,
       }
     }
@@ -62,7 +61,6 @@ const getButtonProps = props => {
         ),
         active: true,
         showInfo: true,
-        exitButton: true,
         hoverable: false,
       }
     }
@@ -70,6 +68,7 @@ const getButtonProps = props => {
     default: {
       return {
         active: true,
+        showInfo: false,
         hoverable: false,
       }
     }

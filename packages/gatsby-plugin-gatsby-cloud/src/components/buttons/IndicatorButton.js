@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { IndicatorButtonTooltip } from "../tooltips"
 import { spinnerIcon, exitIcon } from "../icons"
-import { props } from "bluebird"
 
 export default function IndicatorButton({
   buttonIndex,
@@ -14,7 +13,7 @@ export default function IndicatorButton({
   testId,
   onMouseEnter,
   hoverable,
-  exitButton,
+  showInfo = false,
 }) {
   const [showTooltip, setShowTooltip] = useState(false)
   const isFirstButton = buttonIndex === 0
@@ -64,7 +63,7 @@ export default function IndicatorButton({
         <IndicatorButtonTooltip
           tooltipContent={tooltipContent}
           iconExit={
-            exitButton && (
+            showInfo && (
               <button
                 onClick={() => {
                   setShowTooltip(false)
