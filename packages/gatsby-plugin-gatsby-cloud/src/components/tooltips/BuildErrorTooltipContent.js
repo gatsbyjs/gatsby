@@ -1,18 +1,8 @@
-import React, { FC } from "react"
+import React from "react"
 import { logsIcon, failedIcon } from "../icons"
 import trackEvent from "../../utils/trackEvent"
 
-interface IBuildErrorTooltipContentProps {
-  siteId: string
-  orgId: string
-  buildId: string
-}
-
-const generateBuildLogUrl = ({
-  orgId,
-  siteId,
-  buildId,
-}: IBuildErrorTooltipContentProps): string => {
+const generateBuildLogUrl = ({ orgId, siteId, buildId }) => {
   let pathToBuildLogs = ``
 
   if (!buildId) {
@@ -26,11 +16,7 @@ const generateBuildLogUrl = ({
   return `${pathToBuildLogs}?returnTo=${returnTo}`
 }
 
-const BuildErrorTooltipContent: FC<IBuildErrorTooltipContentProps> = ({
-  siteId,
-  orgId,
-  buildId,
-}) => (
+const BuildErrorTooltipContent = ({ siteId, orgId, buildId }) => (
   <>
     {failedIcon}
     {`Unable to build preview`}
@@ -38,7 +24,7 @@ const BuildErrorTooltipContent: FC<IBuildErrorTooltipContentProps> = ({
       href={generateBuildLogUrl({ orgId, siteId, buildId })}
       target="_blank"
       rel="noreferrer"
-      onClick={(): void => {
+      onClick={() => {
         trackEvent({
           eventType: `PREVIEW_INDICATOR_CLICK`,
           orgId,

@@ -1,9 +1,8 @@
-import React, { FC, MouseEvent, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { IndicatorButtonTooltip } from "../tooltips"
 import { spinnerIcon } from "../icons"
-import { IIndicatorButtonProps } from "../../models/components"
 
-const IndicatorButton: FC<IIndicatorButtonProps> = ({
+const IndicatorButton = ({
   buttonIndex,
   tooltip,
   iconSvg,
@@ -19,7 +18,7 @@ const IndicatorButton: FC<IIndicatorButtonProps> = ({
   const isFirstButton = buttonIndex === 0
   const marginTop = isFirstButton ? `0px` : `8px`
 
-  const onButtonMouseEnter = (): void => {
+  const onButtonMouseEnter = () => {
     if (active) {
       setShowTooltip(true)
 
@@ -28,8 +27,8 @@ const IndicatorButton: FC<IIndicatorButtonProps> = ({
       }
     }
   }
-  const onMouseLeave = (): void => setShowTooltip(false)
-  const onButtonClick = (event: MouseEvent<HTMLButtonElement>): void => {
+  const onMouseLeave = () => setShowTooltip(false)
+  const onButtonClick = event => {
     event.stopPropagation()
     if (active && hoverable && onClick) {
       onClick()

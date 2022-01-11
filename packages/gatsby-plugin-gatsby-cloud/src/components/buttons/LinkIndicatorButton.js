@@ -1,17 +1,10 @@
-import React, { FC, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import trackEvent from "../../utils/trackEvent"
 import IndicatorButton from "./IndicatorButton"
 import { linkIcon, successIcon } from "../icons"
 import { BuildStatus } from "../../models/enums"
-import {
-  IBaseButtonProps,
-  IIndicatorButtonProps,
-} from "../../models/components"
 
-const getBaseButtonProps = ({
-  buttonIndex,
-  buildStatus,
-}: IBaseButtonProps): IIndicatorButtonProps => {
+const getBaseButtonProps = ({ buttonIndex, buildStatus }) => {
   const baseProps = {
     buttonIndex,
     testId: `link`,
@@ -45,16 +38,16 @@ const copySuccessTooltip = (
   </>
 )
 
-const LinkIndicatorButton: FC<IBaseButtonProps> = props => {
+const LinkIndicatorButton = props => {
   const { orgId, siteId, buildId, buttonIndex } = props
-  const [buttonProps, setButtonProps] = useState<IIndicatorButtonProps>({
+  const [buttonProps, setButtonProps] = useState({
     buttonIndex,
     testId: `link`,
     hoverable: true,
     iconSvg: linkIcon,
   })
 
-  const copyLinkClick = (): void => {
+  const copyLinkClick = () => {
     trackEvent({
       eventType: `PREVIEW_INDICATOR_CLICK`,
       orgId,
@@ -95,7 +88,7 @@ const LinkIndicatorButton: FC<IBaseButtonProps> = props => {
     }
   }
 
-  const trackHover = (): void => {
+  const trackHover = () => {
     trackEvent({
       eventType: `PREVIEW_INDICATOR_HOVER`,
       orgId,
@@ -107,7 +100,7 @@ const LinkIndicatorButton: FC<IBaseButtonProps> = props => {
 
   useEffect(() => {
     const baseButtonProps = getBaseButtonProps(props)
-    const onDisappear = (): void => {
+    const onDisappear = () => {
       setButtonProps(btnProps => {
         return {
           ...btnProps,

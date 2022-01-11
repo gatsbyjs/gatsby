@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useCallback, useRef } from "react"
+import React, { useState, useEffect, useCallback, useRef } from "react"
 import { BuildStatus } from "../models/enums"
 import getBuildInfo from "../utils/getBuildInfo"
 import trackEvent from "../utils/trackEvent"
@@ -9,19 +9,11 @@ import {
 } from "./buttons"
 import Style from "./Style"
 
-interface IBuildInfo {
-  currentBuild: any
-  latestBuild: any
-  siteInfo: any
-  isOnPrettyUrl?: boolean
-  buildStatus: BuildStatus
-}
-
-const POLLING_INTERVAL: number = process.env.GATSBY_PREVIEW_POLL_INTERVAL
+const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL
   ? parseInt(process.env.GATSBY_PREVIEW_POLL_INTERVAL)
   : 3000
 
-const PreviewIndicator: FC = ({ children }) => (
+const PreviewIndicator = ({ children }) => (
   <>
     <Style />
     <div
@@ -36,10 +28,9 @@ const PreviewIndicator: FC = ({ children }) => (
 
 let buildId = ``
 
-const Indicator: FC = () => {
-  const [buildInfo, setBuildInfo] = useState<IBuildInfo>()
-
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+const Indicator = () => {
+  const [buildInfo, setBuildInfo] = useState()
+  const timeoutRef = useRef(null)
   const shouldPoll = useRef(false)
   const trackedInitialLoad = useRef(false)
 
@@ -114,7 +105,7 @@ const Indicator: FC = () => {
     shouldPoll.current = true
     pollData()
 
-    return (): void => {
+    return () => {
       shouldPoll.current = false
 
       if (timeoutRef.current) {

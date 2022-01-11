@@ -1,16 +1,7 @@
-import React, { FC } from "react"
+import React from "react"
 import trackEvent from "../../utils/trackEvent"
 
-interface IBuildSuccessTooltipContent {
-  siteId: string
-  orgId: string
-  buildId: string
-  sitePrefix: string
-  isOnPrettyUrl?: boolean
-}
-
-const delay = (ms: number): Promise<number> =>
-  new Promise(resolve => setTimeout(resolve, ms || 50))
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms || 50))
 
 const newPreviewAvailableClick = async ({
   isOnPrettyUrl,
@@ -18,7 +9,7 @@ const newPreviewAvailableClick = async ({
   orgId,
   siteId,
   buildId,
-}: IBuildSuccessTooltipContent): Promise<void> => {
+}) => {
   trackEvent({
     eventType: `PREVIEW_INDICATOR_CLICK`,
     orgId,
@@ -46,7 +37,7 @@ const newPreviewAvailableClick = async ({
   }
 }
 
-const BuildSuccessTooltipContent: FC<IBuildSuccessTooltipContent> = ({
+const BuildSuccessTooltipContent = ({
   isOnPrettyUrl,
   sitePrefix,
   orgId,
@@ -56,7 +47,7 @@ const BuildSuccessTooltipContent: FC<IBuildSuccessTooltipContent> = ({
   <>
     {`New preview available`}
     <button
-      onClick={(): void => {
+      onClick={() => {
         newPreviewAvailableClick({
           isOnPrettyUrl,
           sitePrefix,

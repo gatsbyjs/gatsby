@@ -1,15 +1,7 @@
-import React, { FC } from "react"
+import React from "react"
 
-interface IFeedbackTooltipContentProps {
-  url: string
-  onOpened?: () => void
-}
-
-const FeedbackTooltipContent: FC<IFeedbackTooltipContentProps> = ({
-  url,
-  onOpened,
-}) => {
-  const openFeedbackPage = (): void => {
+const FeedbackTooltipContent = ({ url, onOpened }) => {
+  const openFeedbackPage = () => {
     if (onOpened) {
       onOpened()
     }

@@ -1,21 +1,11 @@
-import React, { FC } from "react"
+import React from "react"
 import IndicatorButton from "./IndicatorButton"
 import {
   BuildErrorTooltipContent,
   BuildSuccessTooltipContent,
 } from "../tooltips"
 import { gatsbyIcon } from "../icons"
-import {
-  IBaseButtonProps,
-  IIndicatorButtonProps,
-} from "../../models/components"
 import { BuildStatus } from "../../models/enums"
-
-interface IGatsbyIndicatorButtonProps extends IBaseButtonProps {
-  isOnPrettyUrl?: boolean
-  sitePrefix: string
-  erroredBuildId: string
-}
 
 const getButtonProps = ({
   buildStatus,
@@ -26,8 +16,8 @@ const getButtonProps = ({
   sitePrefix,
   erroredBuildId,
   buttonIndex,
-}: IGatsbyIndicatorButtonProps): IIndicatorButtonProps => {
-  const baseProps: IIndicatorButtonProps = {
+}) => {
+  const baseProps = {
     testId: `gatsby`,
     buttonIndex,
     iconSvg: gatsbyIcon,
@@ -83,7 +73,7 @@ const getButtonProps = ({
   return baseProps
 }
 
-const GatsbyIndicatorButton: FC<IGatsbyIndicatorButtonProps> = props => (
+const GatsbyIndicatorButton = props => (
   <IndicatorButton {...getButtonProps(props)} />
 )
 

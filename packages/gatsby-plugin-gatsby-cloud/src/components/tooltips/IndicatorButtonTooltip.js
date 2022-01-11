@@ -1,8 +1,7 @@
-import React, { FC, useEffect, useRef, useState, MouseEvent } from "react"
-import { IIndicatorButtonTooltipProps } from "../../models/components"
+import React, { useEffect, useRef, useState } from "react"
 import { closeIcon } from "../icons"
 
-const IndicatorButtonTooltip: FC<IIndicatorButtonTooltipProps> = ({
+const IndicatorButtonTooltip = ({
   content,
   overrideShow,
   show,
@@ -12,9 +11,9 @@ const IndicatorButtonTooltip: FC<IIndicatorButtonTooltipProps> = ({
   onAppear,
   onDisappear,
 }) => {
-  const tooltipRef = useRef<HTMLDivElement>(null)
+  const tooltipRef = useRef(null)
   const [visible, setVisible] = useState(overrideShow || show)
-  const onCloseClick = (event: MouseEvent<HTMLSpanElement>): void => {
+  const onCloseClick = event => {
     event.preventDefault()
     if (onClose) {
       onClose()
@@ -26,7 +25,7 @@ const IndicatorButtonTooltip: FC<IIndicatorButtonTooltipProps> = ({
     }
   }, [overrideShow, show])
   useEffect(() => {
-    const onTransitionEnd = ({ propertyName }: TransitionEvent): void => {
+    const onTransitionEnd = ({ propertyName }) => {
       if (tooltipRef.current) {
         if (window && propertyName === `opacity`) {
           const opacity = window
@@ -48,7 +47,7 @@ const IndicatorButtonTooltip: FC<IIndicatorButtonTooltipProps> = ({
     if (tooltipRef.current) {
       tooltipRef.current.addEventListener(`transitionend`, onTransitionEnd)
     }
-    return (): void => {
+    return () => {
       if (tooltipRef.current) {
         tooltipRef.current.removeEventListener(`transitionend`, onTransitionEnd)
       }

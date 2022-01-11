@@ -1,36 +1,43 @@
-import React, { FC, useEffect, useState } from "react"
-import { formatDistance } from "date-fns"
+import React, { useEffect, useCallback, useState, useRef } from "react"
+import Cookies from "js-cookie"
+import { formatDistance, differenceInDays } from "date-fns"
 import IndicatorButton from "./IndicatorButton"
 import { infoIcon, infoAlertIcon } from "../icons"
 import { FeedbackTooltipContent } from "../tooltips"
 import trackEvent from "../../utils/trackEvent"
 import { BuildStatus } from "../../models/enums"
-import {
-  IBaseButtonProps,
-  IIndicatorButtonProps,
-} from "../../models/components"
 
-interface IInfoIndicatorButtonProps extends IBaseButtonProps {
-  askForFeedback?: boolean
-}
+const feedbackCookieName = `last_feedback`
 
-const InfoIndicatorButton: FC<IInfoIndicatorButtonProps> = ({
+const InfoIndicatorButton = ({
   buttonIndex,
   orgId,
   siteId,
   buildId,
   createdAt,
   buildStatus,
-  askForFeedback,
 }) => {
-  const [buttonProps, setButtonProps] = useState<IIndicatorButtonProps>({
+  const askForFeedback = useRef(false)
+  const [buttonProps, setButtonProps] = useState({
     buttonIndex,
     testId: `info`,
     hoverable: true,
-    iconSvg: askForFeedback ? infoAlertIcon : infoIcon,
   })
 
-  const trackHover = (): void => {
+  const checkForFeedback = useCallback(() => {
+    const lastFeedback = Cookies.get(feedbackCookieName)
+    if (lastFeedback) {
+      const lastFeedbackDate = new Date(lastFeedback)
+      console.log(lastFeedbackDate)
+      const now = new Date()
+      const diffInDays = differenceInDays(now, lastFeedbackDate)
+      askForFeedback.current = diffInDays >= 30
+    } else {
+      askForFeedback.current = true
+    }
+  }, [])
+
+  const trackHover = () => {
     trackEvent({
       eventType: `PREVIEW_INDICATOR_HOVER`,
       orgId,
@@ -40,7 +47,10 @@ const InfoIndicatorButton: FC<IInfoIndicatorButtonProps> = ({
     })
   }
 
-  const closeInfoTooltip = (): void => {
+  const closeInfoTooltip = () => {
+    const now = new Date()
+    Cookies.set(feedbackCookieName, now.toISOString())
+    askForFeedback.current = false
     setButtonProps({
       ...buttonProps,
       tooltip: { testId: buttonProps.testId, overrideShow: false, show: false },
@@ -48,9 +58,13 @@ const InfoIndicatorButton: FC<IInfoIndicatorButtonProps> = ({
   }
 
   useEffect(() => {
+    checkForFeedback()
+  }, [])
+
+  useEffect(() => {
     const buildStatusActions = {
-      [BuildStatus.UPTODATE]: (): void => {
-        if (askForFeedback) {
+      [BuildStatus.UPTODATE]: () => {
+        if (askForFeedback.current) {
           const url = `https://gatsby.dev/zrx`
           setButtonProps({
             ...buttonProps,
@@ -59,7 +73,7 @@ const InfoIndicatorButton: FC<IInfoIndicatorButtonProps> = ({
               content: (
                 <FeedbackTooltipContent
                   url={url}
-                  onOpened={(): void => {
+                  onOpened={() => {
                     closeInfoTooltip()
                   }}
                 />
@@ -98,11 +112,12 @@ const InfoIndicatorButton: FC<IInfoIndicatorButtonProps> = ({
     } else {
       setButtonProps({ ...buttonProps, active: false })
     }
-  }, [askForFeedback, buildStatus])
+  }, [askForFeedback.current, buildStatus])
 
   return (
     <IndicatorButton
       onMouseEnter={buttonProps?.active ? trackHover : undefined}
+      iconSvg={askForFeedback.current ? infoAlertIcon : infoIcon}
       {...buttonProps}
     />
   )
