@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
-import trackEvent from "../../utils/trackEvent"
 import IndicatorButton from "./IndicatorButton"
+import { useTrackEvent } from "../../utils"
 import { linkIcon, successIcon } from "../icons"
 import { BuildStatus } from "../../models/enums"
 
@@ -46,9 +46,10 @@ const LinkIndicatorButton = props => {
     hoverable: true,
     iconSvg: linkIcon,
   })
+  const { track } = useTrackEvent()
 
   const copyLinkClick = () => {
-    trackEvent({
+    track({
       eventType: `PREVIEW_INDICATOR_CLICK`,
       orgId,
       siteId,
@@ -89,7 +90,7 @@ const LinkIndicatorButton = props => {
   }
 
   const trackHover = () => {
-    trackEvent({
+    track({
       eventType: `PREVIEW_INDICATOR_HOVER`,
       orgId,
       siteId,

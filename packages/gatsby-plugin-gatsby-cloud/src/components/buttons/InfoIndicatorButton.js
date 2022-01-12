@@ -1,5 +1,4 @@
-import React, { useEffect, useCallback, useState, useRef } from "react"
-import Cookies from "js-cookie"
+import React, { useEffect, useCallback, useState, useRef, useMemo } from "react"
 import { formatDistance, differenceInDays } from "date-fns"
 import IndicatorButton from "./IndicatorButton"
 import { infoIcon, infoAlertIcon } from "../icons"
@@ -8,10 +7,12 @@ import {
   BuildErrorTooltipContent,
   BuildSuccessTooltipContent,
 } from "../tooltips"
-import trackEvent from "../../utils/trackEvent"
+import { useTrackEvent, useCookie } from "../../utils"
+import {
+  feedbackCookieName,
+  interactionCountCookieName,
+} from "../../constants/cookie"
 import { BuildStatus } from "../../models/enums"
-
-const feedbackCookieName = `last_feedback`
 
 const InfoIndicatorButton = ({
   buttonIndex,
@@ -30,12 +31,19 @@ const InfoIndicatorButton = ({
     testId: `info`,
     hoverable: true,
   })
+  const { cookies, setCookie, getCookie } = useCookie()
+  const { track } = useTrackEvent()
+  const shouldShowFeedback = useMemo(() => {
+    const interactionCount = cookies[interactionCountCookieName]
+      ? parseInt(cookies[interactionCountCookieName])
+      : 0
+    return askForFeedback.current && interactionCount > 3
+  }, [askForFeedback.current, cookies[interactionCountCookieName]])
 
   const checkForFeedback = useCallback(() => {
-    const lastFeedback = Cookies.get(feedbackCookieName)
+    const lastFeedback = getCookie(feedbackCookieName)
     if (lastFeedback) {
       const lastFeedbackDate = new Date(lastFeedback)
-      console.log(lastFeedbackDate)
       const now = new Date()
       const diffInDays = differenceInDays(now, lastFeedbackDate)
       askForFeedback.current = diffInDays >= 30
@@ -45,7 +53,7 @@ const InfoIndicatorButton = ({
   }, [])
 
   const trackClick = () => {
-    trackEvent({
+    track({
       eventType: `PREVIEW_INDICATOR_CLICK`,
       orgId,
       siteId,
@@ -55,7 +63,7 @@ const InfoIndicatorButton = ({
   }
 
   const trackHover = () => {
-    trackEvent({
+    track({
       eventType: `PREVIEW_INDICATOR_HOVER`,
       orgId,
       siteId,
@@ -85,7 +93,7 @@ const InfoIndicatorButton = ({
       .splice(0, 2)
       .reverse()
       .join(`.`)
-    Cookies.set(feedbackCookieName, now.toISOString(), {
+    setCookie(feedbackCookieName, now.toISOString(), {
       domain: rootDomain,
     })
     setButtonProps(btnProps => {
@@ -110,10 +118,13 @@ const InfoIndicatorButton = ({
   }, [])
 
   useEffect(() => {
-    console.log(buildStatus)
+    console.log(cookies[interactionCountCookieName])
+  }, [cookies.interaction_count])
+
+  useEffect(() => {
     const buildStatusActions = {
       [BuildStatus.UPTODATE]: () => {
-        if (askForFeedback.current) {
+        if (shouldShowFeedback) {
           const url = `https://gatsby.dev/zrx`
           setButtonProps(btnProps => {
             return {
@@ -223,14 +234,14 @@ const InfoIndicatorButton = ({
     } else {
       setButtonProps({ ...buttonProps, active: true, hoverable: true })
     }
-  }, [askForFeedback.current, buildStatus])
+  }, [shouldShowFeedback, buildStatus])
 
   return (
     <IndicatorButton
       {...buttonProps}
       onClick={buttonProps?.active ? trackClick : undefined}
       onMouseEnter={buttonProps?.active ? trackHover : undefined}
-      iconSvg={askForFeedback.current ? infoAlertIcon : infoIcon}
+      iconSvg={shouldShowFeedback ? infoAlertIcon : infoIcon}
     />
   )
 }

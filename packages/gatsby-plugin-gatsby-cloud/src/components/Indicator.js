@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react"
 import { BuildStatus } from "../models/enums"
-import getBuildInfo from "../utils/getBuildInfo"
-import trackEvent from "../utils/trackEvent"
+import { useTrackEvent, getBuildInfo } from "../utils"
 import {
   LinkIndicatorButton,
   InfoIndicatorButton,
@@ -33,6 +32,7 @@ const Indicator = () => {
   const timeoutRef = useRef(null)
   const shouldPoll = useRef(false)
   const trackedInitialLoad = useRef(false)
+  const { track } = useTrackEvent()
 
   const { siteInfo, currentBuild } = buildInfo || {
     siteInfo: {},
@@ -90,7 +90,7 @@ const Indicator = () => {
 
   useEffect(() => {
     if (buildInfo?.siteInfo && !trackedInitialLoad.current) {
-      trackEvent({
+      track({
         eventType: `PREVIEW_INDICATOR_LOADED`,
         buildId,
         orgId,
