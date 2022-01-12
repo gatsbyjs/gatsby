@@ -46,7 +46,7 @@ export default function BuildSuccessTooltipContent({
 }) {
   return (
     <>
-      {`New preview available`}
+      {`This page has been updated. `}
       <button
         onClick={() => {
           newPreviewAvailableClick({
@@ -59,7 +59,9 @@ export default function BuildSuccessTooltipContent({
         }}
         data-gatsby-preview-indicator="tooltip-link"
       >
-        <p data-gatsby-preview-indicator="tooltip-link-text">{`Click to view`}</p>
+        <p data-gatsby-preview-indicator="tooltip-link-text">
+          {`View Changes `}
+        </p>
       </button>
     </>
   )
