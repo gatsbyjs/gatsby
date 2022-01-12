@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.5.0/packages/gatsby-plugin-sass) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Bug Fixes
+
+- update dependency resolve-url-loader to ^3.1.4 for gatsby-plugin-sass [#34361](https://github.com/gatsbyjs/gatsby/issues/34361) ([8a7788d](https://github.com/gatsbyjs/gatsby/commit/8a7788d16ad03bdebac34ac3bf0bfeaeb515b212))
+- Update mini-css-extract-plugin to fix inc builds issue fix [#33979](https://github.com/gatsbyjs/gatsby/issues/33979) [#33982](https://github.com/gatsbyjs/gatsby/issues/33982) ([725dc36](https://github.com/gatsbyjs/gatsby/commit/725dc3609a85728e3dbcbd77e740b5fed488c515))
+
+#### Chores
+
+- update dependency autoprefixer to ^10.4.1 for gatsby-plugin-sass [#34357](https://github.com/gatsbyjs/gatsby/issues/34357) ([fc3e7b7](https://github.com/gatsbyjs/gatsby/commit/fc3e7b73fe456622ec3a5d3903086db4614b50b2))
+
+#### Other Changes
+
+- Revert "fix(gatsby): Update mini-css-extract-plugin to fix inc builds issue (#33979)" fix [#33979](https://github.com/gatsbyjs/gatsby/issues/33979) fix [#34413](https://github.com/gatsbyjs/gatsby/issues/34413) ([26a94f2](https://github.com/gatsbyjs/gatsby/commit/26a94f218f3a8dbd2581ddb2cf4a6788fc48eaf1))
+
 ## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@5.4.0/packages/gatsby-plugin-sass) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
