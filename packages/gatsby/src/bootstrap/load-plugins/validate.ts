@@ -326,7 +326,7 @@ async function validatePluginsOptions(
             }: ${validationWarnings
               .map(error => error.path.join(`.`))
               .join(`, `)}
-        Please open an issue at ghub.io/${
+        Please open an issue at https://ghub.io/${
           plugin.resolve
         } if you believe this option is valid.
       `)
