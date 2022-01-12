@@ -30,6 +30,11 @@ export default function StaticPath({ serverData }) {
         heading="process.env.FROM_COMMAND_LINE"
         envVar={process.env.FROM_COMMAND_LINE}
       />
+       <UseEnv
+        heading="process.env.GATSBY_PREFIXED_FROM_COMMAND_LINE"
+        envVar={process.env.GATSBY_PREFIXED_FROM_COMMAND_LINE}
+      />
+
       <h2>Using env vars (getServerData)</h2>
       <UseEnv
         heading="serverData.envVars.VERY_SECRET_ALIAS_VAR"
@@ -51,11 +56,6 @@ export default function StaticPath({ serverData }) {
        <UseEnv
         heading="serverData.envVars.GATSBY_PREFIXED_FROM_COMMAND_LINE"
         envVar={serverData?.envVars.GATSBY_PREFIXED_FROM_COMMAND_LINE}
-      />
-
-       <UseEnv
-        heading="process.env.GATSBY_PREFIXED_FROM_COMMAND_LINE"
-        envVar={process.env.GATSBY_PREFIXED_FROM_COMMAND_LINE}
       />
       
     </div>
