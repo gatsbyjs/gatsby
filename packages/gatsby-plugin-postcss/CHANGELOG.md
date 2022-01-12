@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-postcss@5.5.0/packages/gatsby-plugin-postcss) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Bug Fixes
+
+- Update mini-css-extract-plugin to fix inc builds issue fix [#33979](https://github.com/gatsbyjs/gatsby/issues/33979) [#33982](https://github.com/gatsbyjs/gatsby/issues/33982) ([725dc36](https://github.com/gatsbyjs/gatsby/commit/725dc3609a85728e3dbcbd77e740b5fed488c515))
+
+#### Other Changes
+
+- Revert "fix(gatsby): Update mini-css-extract-plugin to fix inc builds issue (#33979)" fix [#33979](https://github.com/gatsbyjs/gatsby/issues/33979) fix [#34413](https://github.com/gatsbyjs/gatsby/issues/34413) ([26a94f2](https://github.com/gatsbyjs/gatsby/commit/26a94f218f3a8dbd2581ddb2cf4a6788fc48eaf1))
+
 ## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-postcss@5.4.0/packages/gatsby-plugin-postcss) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

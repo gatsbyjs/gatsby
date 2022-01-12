@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.3.0/packages/gatsby-source-contentful) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Bug Fixes
+
+- createNode return promise [#34399](https://github.com/gatsbyjs/gatsby/issues/34399) ([8a9b023](https://github.com/gatsbyjs/gatsby/commit/8a9b023510650e71f00f8c5c3d841e199f5b3ad0))
+- fix base64 aspect ratio fix [#33533](https://github.com/gatsbyjs/gatsby/issues/33533) ([d24268f](https://github.com/gatsbyjs/gatsby/commit/d24268f2f0565cf97903b05dafd63ffa8815985f))
+- don't rely on getNodesByType [#34276](https://github.com/gatsbyjs/gatsby/issues/34276) ([faa5c8c](https://github.com/gatsbyjs/gatsby/commit/faa5c8c7c28ee1c3a53275fe8005740e2ee745c5))
+
+#### Chores
+
+- upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
+
 ## [7.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@7.2.0/packages/gatsby-source-contentful) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
