@@ -320,3 +320,11 @@ module.exports.pathPrefix = true;
  * @type {string}
  */
 module.exports.basePath = true;
+
+/**
+ * Check if a specific gatsby feature is enabled or disabled.
+ *
+ * @param {string} feature Feature to check.
+ * @returns {boolean} True if feature is enabled.
+ */
+module.exports.isFeatureEnabled = true;
