@@ -224,8 +224,9 @@ export interface IStaticQueryResultState {
   staticQueryResultHash: string
 }
 
+// @ts-ignore @typescript-eslint/no-empty-interface
 export interface IFeaturesState {
-  imageService: boolean
+  // imageService: boolean
 }
 
 export type GatsbyNodeAPI =
