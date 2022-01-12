@@ -66,6 +66,7 @@ export async function getServerData(arg) {
   const VERY_SECRET_ALIAS_VAR = process.env.VERY_SECRET_VAR
   const EXISTING_VAR = process.env.EXISTING_VAR
   const FROM_COMMAND_LINE = process.env.FROM_COMMAND_LINE
+  const GATSBY_PREFIXED_FROM_COMMAND_LINE = process.env.GATSBY_PREFIXED_FROM_COMMAND_LINE
 
   return {
     props: {
@@ -74,6 +75,7 @@ export async function getServerData(arg) {
         VERY_SECRET_ALIAS_VAR,
         EXISTING_VAR,
         FROM_COMMAND_LINE,
+        GATSBY_PREFIXED_FROM_COMMAND_LINE
       },
     },
   }
