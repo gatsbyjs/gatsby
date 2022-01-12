@@ -37,7 +37,7 @@ export default function BuildErrorTooltipContent({ siteId, orgId, buildId }) {
         data-gatsby-preview-indicator="tooltip-link"
       >
         <p data-gatsby-preview-indicator="tooltip-link-text">{`View logs`}</p>
-        <div data-gatsby-preview-indicator="tooltip-svg">{logsIcon}</div>
+        <div data-gatsby-preview-indicator="tooltip-svg">{logsIcon} </div>
       </a>
     </>
   )

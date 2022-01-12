@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.5.0/packages/gatsby-source-filesystem) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Bug Fixes
+
+- Replace special filename characters [#34249](https://github.com/gatsbyjs/gatsby/issues/34249) ([fa77ceb](https://github.com/gatsbyjs/gatsby/commit/fa77ceb2b4d729ed3f64a81ad6fad8dfe556dc60))
+
 ## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.4.0/packages/gatsby-source-filesystem) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
