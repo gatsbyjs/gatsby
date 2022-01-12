@@ -1,5 +1,5 @@
-import React, { useEffect, useCallback, useState, useRef, useMemo } from "react"
-import { formatDistance, differenceInDays } from "date-fns"
+import React, { useEffect, useState } from "react"
+import { formatDistance } from "date-fns"
 import IndicatorButton from "./IndicatorButton"
 import { infoIcon, infoAlertIcon } from "../icons"
 import {
@@ -7,11 +7,8 @@ import {
   BuildErrorTooltipContent,
   BuildSuccessTooltipContent,
 } from "../tooltips"
-import { useTrackEvent, useCookie } from "../../utils"
-import {
-  feedbackCookieName,
-  interactionCountCookieName,
-} from "../../constants/cookie"
+import { useTrackEvent, useCookie, useFeedback } from "../../utils"
+import { FEEDBACK_COOKIE_NAME, INTERACTION_COOKIE_NAME } from "../../constants"
 import { BuildStatus } from "../../models/enums"
 
 const InfoIndicatorButton = ({
@@ -25,32 +22,14 @@ const InfoIndicatorButton = ({
   createdAt,
   buildStatus,
 }) => {
-  const askForFeedback = useRef(false)
   const [buttonProps, setButtonProps] = useState({
     buttonIndex,
     testId: `info`,
     hoverable: true,
   })
-  const { cookies, setCookie, getCookie } = useCookie()
+  const { setCookie } = useCookie()
+  const { shouldShowFeedback } = useFeedback()
   const { track } = useTrackEvent()
-  const shouldShowFeedback = useMemo(() => {
-    const interactionCount = cookies[interactionCountCookieName]
-      ? parseInt(cookies[interactionCountCookieName])
-      : 0
-    return askForFeedback.current && interactionCount > 3
-  }, [askForFeedback.current, cookies[interactionCountCookieName]])
-
-  const checkForFeedback = useCallback(() => {
-    const lastFeedback = getCookie(feedbackCookieName)
-    if (lastFeedback) {
-      const lastFeedbackDate = new Date(lastFeedback)
-      const now = new Date()
-      const diffInDays = differenceInDays(now, lastFeedbackDate)
-      askForFeedback.current = diffInDays >= 30
-    } else {
-      askForFeedback.current = true
-    }
-  }, [])
 
   const trackClick = () => {
     track({
@@ -86,16 +65,6 @@ const InfoIndicatorButton = ({
   }
 
   const closeFeedbackTooltip = () => {
-    const now = new Date()
-    const rootDomain = location.hostname
-      .split(`.`)
-      .reverse()
-      .splice(0, 2)
-      .reverse()
-      .join(`.`)
-    setCookie(feedbackCookieName, now.toISOString(), {
-      domain: rootDomain,
-    })
     setButtonProps(btnProps => {
       return {
         ...btnProps,
@@ -107,19 +76,25 @@ const InfoIndicatorButton = ({
         highlighted: false,
       }
     })
-    // remove the tooltip before updating the state to prevent flickering
-    setTimeout(() => {
-      askForFeedback.current = false
-    }, 200)
   }
 
-  useEffect(() => {
-    checkForFeedback()
-  }, [])
-
-  useEffect(() => {
-    console.log(cookies[interactionCountCookieName])
-  }, [cookies.interaction_count])
+  const onFeedbackTooltipDisappear = () => {
+    console.log(`yahs`)
+    const now = new Date()
+    setCookie(FEEDBACK_COOKIE_NAME, now.toISOString())
+    setCookie(INTERACTION_COOKIE_NAME, 0)
+    setButtonProps(btnProps => {
+      return {
+        ...btnProps,
+        tooltip: {
+          ...btnProps.tooltip,
+          overrideShow: false,
+          show: false,
+        },
+        highlighted: false,
+      }
+    })
+  }
 
   useEffect(() => {
     const buildStatusActions = {
@@ -142,6 +117,7 @@ const InfoIndicatorButton = ({
                 overrideShow: true,
                 closable: true,
                 onClose: closeFeedbackTooltip,
+                onDisappear: onFeedbackTooltipDisappear,
               },
               active: true,
               highlighted: true,

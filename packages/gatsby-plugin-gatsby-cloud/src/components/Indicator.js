@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react"
+import IndicatorProvider from "../context/indicatorProvider"
 import { BuildStatus } from "../models/enums"
 import { useTrackEvent, getBuildInfo } from "../utils"
 import {
@@ -127,11 +128,13 @@ const Indicator = () => {
   }
 
   return (
-    <PreviewIndicator>
-      <GatsbyIndicatorButton {...buttonProps} buttonIndex={1} />
-      <InfoIndicatorButton {...buttonProps} buttonIndex={2} />
-      <LinkIndicatorButton {...buttonProps} buttonIndex={3} />
-    </PreviewIndicator>
+    <IndicatorProvider>
+      <PreviewIndicator>
+        <GatsbyIndicatorButton {...buttonProps} buttonIndex={1} />
+        <InfoIndicatorButton {...buttonProps} buttonIndex={2} />
+        <LinkIndicatorButton {...buttonProps} buttonIndex={3} />
+      </PreviewIndicator>
+    </IndicatorProvider>
   )
 }
 

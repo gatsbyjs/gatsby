@@ -25,6 +25,7 @@ const IndicatorButtonTooltip = ({
     }
   }, [overrideShow, show])
   useEffect(() => {
+    // check to make sure that tootip fades out before setting it to 'display: none'
     const onTransitionEnd = ({ propertyName }) => {
       if (tooltipRef.current) {
         if (window && propertyName === `opacity`) {

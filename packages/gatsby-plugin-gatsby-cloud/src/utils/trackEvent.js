@@ -1,14 +1,20 @@
-import { useCookie } from "."
+import { useCookie, useFeedback } from "."
 import { interactionCountCookieName } from "../constants/cookie"
 import pkgJSON from "../package.json"
 
 const useTrackEvent = () => {
   const { setCookie, getCookie } = useCookie()
+  const { shouldAskForFeedback, checkForFeedback } = useFeedback()
   const track = async ({ eventType, orgId, siteId, buildId, name }) => {
-    const interactions = isNaN(parseInt(getCookie(interactionCountCookieName)))
-      ? 0
-      : parseInt(getCookie(interactionCountCookieName))
-    setCookie(interactionCountCookieName, interactions + 1)
+    checkForFeedback()
+    if (shouldAskForFeedback) {
+      const interactions = isNaN(
+        parseInt(getCookie(interactionCountCookieName))
+      )
+        ? 0
+        : parseInt(getCookie(interactionCountCookieName))
+      setCookie(interactionCountCookieName, interactions + 1)
+    }
     if (process.env.GATSBY_TELEMETRY_API) {
       try {
         const body = {
