@@ -48,7 +48,6 @@ export async function testPluginOptionsSchema(
   try {
     const { warning } = await validateOptionsSchema(pluginSchema, pluginOptions)
 
-    console.log(`warning`, warning)
     const warnings = warning?.details?.map(detail => detail.message) ?? []
 
     if (warnings?.length > 0) {
