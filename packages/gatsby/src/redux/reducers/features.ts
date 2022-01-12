@@ -1,7 +1,7 @@
 import { IToggleFeatureAction, IGatsbyState } from "../types"
 
 export const initialState: IGatsbyState["features"] = {
-  imageService: false,
+  // imageService: false,
 }
 
 export const featuresReducer = (
