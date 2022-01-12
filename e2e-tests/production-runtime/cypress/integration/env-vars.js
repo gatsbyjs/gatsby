@@ -37,5 +37,9 @@ describe(`Uses env vars correctly`, () => {
     // but it is available to getServerData
     cy.getTestElement(`process.env.FROM_COMMAND_LINE`).should(`be.empty`)
     cy.getTestElement(`serverData.envVars.FROM_COMMAND_LINE`).contains(`"YES"`)
+
+    //prefix env should be available in `process.env` and getServerData
+    cy.getTestElement(`process.env.GATSBY_PREFIXED_FROM_COMMAND_LINE`).contains(`"YES"`)
+    cy.getTestElement(`serverData.envVars.GATSBY_PREFIXED_FROM_COMMAND_LINE`).contains(`"YES"`)
   })
 })

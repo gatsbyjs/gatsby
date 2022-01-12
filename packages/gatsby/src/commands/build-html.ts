@@ -125,11 +125,6 @@ const runWebpack = (
     } else {
       build(compilerConfig).then(
         ({ stats, close }) => {
-          fs.outputJsonSync(
-            `${directory}/${ROUTES_DIRECTORY}/.env`,
-            process.env
-          )
-
           resolve({ stats, close })
         },
         err => reject(err)
