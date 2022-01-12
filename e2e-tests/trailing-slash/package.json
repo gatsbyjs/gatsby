@@ -5,7 +5,7 @@
   "author": "LekoArts",
   "dependencies": {
     "cypress": "^9.1.1",
-    "gatsby": "4.5.0-next.3-dev-1641299239226",
+    "gatsby": "4.6.0-next.1-dev-1641997628992",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
@@ -25,7 +25,7 @@
     "develop:option": "cross-env-shell CYPRESS_SUPPORT=y TRAILING_SLASH=$OPTION gatsby develop",
     "build:option": "cross-env-shell CYPRESS_SUPPORT=y TRAILING_SLASH=$OPTION gatsby build",
     "t:opt:develop": "cross-env-shell OPTION=$OPTION start-server-and-test develop:option http://localhost:8000 cy:develop:option",
-    "t:opt:build": "cross-env-shell OPTION=$OPTION start-server-and-test serve http://localhost:9000 cy:build:option",
+    "t:opt:build": "cross-env-shell OPTION=$OPTION TRAILING_SLASH=$OPTION start-server-and-test serve http://localhost:9000 cy:build:option",
     "test:always": "cross-env OPTION=always npm run build:option && cross-env OPTION=always npm run t:opt:build && cross-env OPTION=always npm run t:opt:develop",
     "test:never": "cross-env OPTION=never npm run build:option && cross-env OPTION=never npm run t:opt:build && cross-env OPTION=never npm run t:opt:develop",
     "test:ignore": "cross-env OPTION=ignore npm run build:option && cross-env OPTION=ignore npm run t:opt:build && cross-env OPTION=ignore npm run t:opt:develop",
