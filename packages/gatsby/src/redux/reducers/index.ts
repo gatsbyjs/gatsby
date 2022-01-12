@@ -30,6 +30,7 @@ import { htmlReducer } from "./html"
 import { functionsReducer } from "./functions"
 import { nodeManifestReducer } from "./node-manifest"
 import { reducer as pageTreeReducer } from "gatsby-cli/lib/reporter/redux/reducers/page-tree"
+import { featuresReducer } from "./features"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -67,4 +68,5 @@ export {
   functionsReducer as functions,
   nodeManifestReducer as nodeManifests,
   pageTreeReducer as pageTree,
+  featuresReducer as features,
 }

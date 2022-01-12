@@ -224,6 +224,10 @@ export interface IStaticQueryResultState {
   staticQueryResultHash: string
 }
 
+export interface IFeaturesState {
+  imageService: boolean
+}
+
 export type GatsbyNodeAPI =
   | "onPreBoostrap"
   | "onPostBoostrap"
@@ -266,6 +270,7 @@ export interface IGatsbyState {
   }>
   config: IGatsbyConfig
   functions: Array<IGatsbyFunction>
+  features: IFeaturesState
   pages: Map<string, IGatsbyPage>
   schema: GraphQLSchema
   definitions: Map<string, IDefinitionMeta>
@@ -430,6 +435,7 @@ export type ActionsUnion =
   | IMaterializePageMode
   | ISetJobV2Context
   | IClearJobV2Context
+  | IToggleFeatureAction
 
 export interface ISetComponentFeatures {
   type: `SET_COMPONENT_FEATURES`
@@ -814,6 +820,14 @@ export interface ISetSiteConfig {
 export interface ISetSiteFunctions {
   type: `SET_SITE_FUNCTIONS`
   payload: IGatsbyState["functions"]
+}
+
+export interface IToggleFeatureAction {
+  type: `TOGGLE_FEATURE`
+  payload: {
+    name: keyof IFeaturesState
+    value: boolean
+  }
 }
 
 export interface ICreateNodeAction {
