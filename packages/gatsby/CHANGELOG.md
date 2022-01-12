@@ -41,8 +41,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - Revert "fix(gatsby): Update mini-css-extract-plugin to fix inc builds issue (#33979)" fix [#33979](https://github.com/gatsbyjs/gatsby/issues/33979) fix [#34413](https://github.com/gatsbyjs/gatsby/issues/34413) ([26a94f2](https://github.com/gatsbyjs/gatsby/commit/26a94f218f3a8dbd2581ddb2cf4a6788fc48eaf1))
 - Add backticks to inline code comments [#34235](https://github.com/gatsbyjs/gatsby/issues/34235) ([728ac09](https://github.com/gatsbyjs/gatsby/commit/728ac09cc8b4dac32da24676904d1587bb773cb4))
 
-
-
 ## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.4.0/packages/gatsby) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

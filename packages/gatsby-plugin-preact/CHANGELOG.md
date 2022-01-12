@@ -11,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - fix exports resolution webpack fix [#34337](https://github.com/gatsbyjs/gatsby/issues/34337) ([5e47ecf](https://github.com/gatsbyjs/gatsby/commit/5e47ecf26ad5728d4f2cbbabaa20af7170a36cf3))
 
-
-
 ## [6.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-preact@6.4.0/packages/gatsby-plugin-preact) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

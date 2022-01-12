@@ -15,8 +15,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Update http links to use https [#34340](https://github.com/gatsbyjs/gatsby/issues/34340) ([45a3f76](https://github.com/gatsbyjs/gatsby/commit/45a3f767d0baa2755aca4cd2e26e23abae6d9015))
 
-
-
 ## [6.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-prismjs@6.4.0/packages/gatsby-remark-prismjs) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

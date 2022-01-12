@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-graphiql-explorer
 
-
-
 ## [2.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-graphiql-explorer@2.4.0/packages/gatsby-graphiql-explorer) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

@@ -17,8 +17,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update dependency @testing-library/jest-dom to ^5.16.1 [#34364](https://github.com/gatsbyjs/gatsby/issues/34364) ([5410274](https://github.com/gatsbyjs/gatsby/commit/5410274dfe21c09f94dabc6a17e2d2c3c3144ce6))
 - upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
 
-
-
 ## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.4.0/packages/gatsby-plugin-gatsby-cloud) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

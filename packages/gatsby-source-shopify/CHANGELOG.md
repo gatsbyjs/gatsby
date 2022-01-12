@@ -13,8 +13,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update dependency @types/sharp to ^0.29.5 [#34356](https://github.com/gatsbyjs/gatsby/issues/34356) ([79186ab](https://github.com/gatsbyjs/gatsby/commit/79186abdac525f6e16779015ae48c5cea5eec14a))
 - upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
 
-
-
 ## [6.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@6.4.0/packages/gatsby-source-shopify) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

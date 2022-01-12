@@ -21,8 +21,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - update dependency msw to ^0.36.3 for gatsby-core-utils [#34367](https://github.com/gatsbyjs/gatsby/issues/34367) ([42c7d64](https://github.com/gatsbyjs/gatsby/commit/42c7d64169b1383310d1a422d6964a0cca3c4972))
 - upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
 
-
-
 ## [3.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-core-utils@3.4.0/packages/gatsby-core-utils) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

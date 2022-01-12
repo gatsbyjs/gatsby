@@ -17,8 +17,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
 - Replace cpx with cpy-cli [#34229](https://github.com/gatsbyjs/gatsby/issues/34229) ([af6632b](https://github.com/gatsbyjs/gatsby/commit/af6632b08e7867d5304cfb13448c2086fb622543))
 
-
-
 ## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.4.0/packages/gatsby-plugin-offline) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
