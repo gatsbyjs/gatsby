@@ -1,6 +1,7 @@
 import { declare } from "@babel/helper-plugin-utils"
 import * as t from "@babel/types"
-import type { PluginObj, ConfigAPI } from "@babel/core"
+import { PluginObj, ConfigAPI } from "@babel/core"
+import { RemoveNamedExportPropertiesVisitor } from "./babel-module-export-visitors"
 
 export default declare(function removeApiCalls(
   api: ConfigAPI,
@@ -134,6 +135,11 @@ export default declare(function removeApiCalls(
           state.apiRemoved = true
           path.remove()
         }
+
+        path.traverse(RemoveNamedExportPropertiesVisitor, {
+          path,
+          propertiesToRemove: apisToRemove,
+        })
       },
 
       // remove exports
