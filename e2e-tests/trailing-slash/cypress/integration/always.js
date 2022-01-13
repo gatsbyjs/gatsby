@@ -1,4 +1,4 @@
-describe(`always`, () => {
+describe.skip(`always`, () => {
   beforeEach(() => {
     cy.visit(`/`).waitForRouteChange()
   })
@@ -98,35 +98,33 @@ describe(`always`, () => {
  })
 })
 
-if (Cypress.env(`IS_BUILD`)) {
-  describe(`always (direct visits)`, () => {
-    it(`page-creator`, () => {
-      cy.visit(`/page-2`).waitForRouteChange()
-        .assertRoute(`/page-2/`)
-    })
-    it(`create-page`, () => {
-      cy.visit(`/create-page/with/`).waitForRouteChange()
-        .assertRoute(`/create-page/with/`)
-      cy.visit(`/create-page/without`).waitForRouteChange()
-        .assertRoute(`/create-page/without/`)
-    })
-    it(`fs-api-simple`, () => {
-      cy.visit(`/fs-api-simple/with/`).waitForRouteChange()
-        .assertRoute(`/fs-api-simple/with/`)
-      cy.visit(`/fs-api-simple/without`).waitForRouteChange()
-        .assertRoute(`/fs-api-simple/without/`)
-    })
-    it(`client-only-simple`, () => {
-      cy.visit(`/client-only/with/`).waitForRouteChange()
-        .assertRoute(`/client-only/with/`)
-      cy.visit(`/client-only/without`).waitForRouteChange()
-        .assertRoute(`/client-only/without/`)
-    })
-    it(`client-only`, () => {
-      cy.visit(`/fs-api/with/with/`).waitForRouteChange()
-        .assertRoute(`/fs-api/with/with/`)
-      cy.visit(`/fs-api/without/without`).waitForRouteChange()
-        .assertRoute(`/fs-api/without/without/`)
-    })
+describe(`always (direct visits)`, () => {
+  it(`page-creator`, () => {
+    cy.visit(`/page-2`).waitForRouteChange()
+      .assertRoute(`/page-2/`)
   })
-}
+  it(`create-page`, () => {
+    cy.visit(`/create-page/with/`).waitForRouteChange()
+      .assertRoute(`/create-page/with/`)
+    cy.visit(`/create-page/without`).waitForRouteChange()
+      .assertRoute(`/create-page/without/`)
+  })
+  it(`fs-api-simple`, () => {
+    cy.visit(`/fs-api-simple/with/`).waitForRouteChange()
+      .assertRoute(`/fs-api-simple/with/`)
+    cy.visit(`/fs-api-simple/without`).waitForRouteChange()
+      .assertRoute(`/fs-api-simple/without/`)
+  })
+  it(`client-only-simple`, () => {
+    cy.visit(`/client-only/with/`).waitForRouteChange()
+      .assertRoute(`/client-only/with/`)
+    cy.visit(`/client-only/without`).waitForRouteChange()
+      .assertRoute(`/client-only/without/`)
+  })
+  it(`client-only`, () => {
+    cy.visit(`/fs-api/with/with/`).waitForRouteChange()
+      .assertRoute(`/fs-api/with/with/`)
+    cy.visit(`/fs-api/without/without`).waitForRouteChange()
+      .assertRoute(`/fs-api/without/without/`)
+  })
+})

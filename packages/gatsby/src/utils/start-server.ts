@@ -69,6 +69,32 @@ export interface IWebpackWatchingPauseResume {
   resume: () => void
 }
 
+const forceTrailingSlash = (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+): void => {
+  const method = req.method.toLocaleLowerCase()
+  if (![`get`, `head`].includes(method)) {
+    next()
+    return
+  }
+
+  if (req?.path.split(`/`)?.pop()?.includes(`.`)) {
+    // Path has an extension. Do not add slash.
+    next()
+    return
+  }
+
+  if (req.path.length > 1 && req.path.substr(-1) !== `/`) {
+    const query = req.url.slice(req.path.length)
+    res.redirect(301, `${req.path}/${query}`)
+    return
+  }
+
+  next()
+}
+
 export async function startServer(
   program: IProgram,
   app: Express,
@@ -173,6 +199,7 @@ export async function startServer(
    */
   const graphqlEndpoint = `/_+graphi?ql`
 
+  // TODO(v5): Remove GraphQL Playground (GraphiQL will be more future-proof)
   if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
     app.get(
       graphqlEndpoint,
@@ -529,8 +556,13 @@ export async function startServer(
   // We serve by default an empty index.html that sets up the dev environment.
   app.use(developStatic(`public`, { index: false }))
 
+  const { proxy, trailingSlash } = store.getState().config
+
+  if (trailingSlash === `always`) {
+    app.use(forceTrailingSlash)
+  }
+
   // Set up API proxy.
-  const { proxy } = store.getState().config
   if (proxy) {
     proxy.forEach(({ prefix, url }) => {
       app.use(`${prefix}/*`, (req, res) => {
