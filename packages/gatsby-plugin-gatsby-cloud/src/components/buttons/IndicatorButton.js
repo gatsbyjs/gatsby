@@ -13,6 +13,7 @@ const IndicatorButton = ({
   onMouseEnter,
   hoverable,
   highlighted,
+  onTooltipToogle,
 }) => {
   const [showTooltip, setShowTooltip] = useState(tooltip?.show)
   const isFirstButton = buttonIndex === 0
@@ -25,9 +26,17 @@ const IndicatorButton = ({
       if (typeof onMouseEnter === `function`) {
         onMouseEnter()
       }
+      if (typeof onTooltipToogle === `function`) {
+        onTooltipToogle(true)
+      }
     }
   }
-  const onMouseLeave = () => setShowTooltip(false)
+  const onMouseLeave = () => {
+    setShowTooltip(false)
+    if (typeof onTooltipToogle === `function`) {
+      onTooltipToogle(false)
+    }
+  }
   const onButtonClick = event => {
     event.stopPropagation()
     if (active && hoverable && typeof onClick === `function`) {

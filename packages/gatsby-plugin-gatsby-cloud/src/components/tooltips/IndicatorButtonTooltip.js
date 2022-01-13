@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState, useMemo } from "react"
 import { closeIcon } from "../icons"
 
 const IndicatorButtonTooltip = ({
@@ -13,20 +13,26 @@ const IndicatorButtonTooltip = ({
 }) => {
   const tooltipRef = useRef(null)
   const [visible, setVisible] = useState(overrideShow || show)
+  const shouldShow = useMemo(() => overrideShow || show, [overrideShow, show])
   const onCloseClick = event => {
     event.preventDefault()
     if (onClose) {
+      console.log(`asjfgajhsf`)
       onClose()
     }
   }
   useEffect(() => {
-    if (overrideShow || show) {
+    if (shouldShow) {
       setVisible(true)
     }
-  }, [overrideShow, show])
+  }, [shouldShow])
   useEffect(() => {
     // check to make sure that tootip fades out before setting it to 'display: none'
-    const onTransitionEnd = ({ propertyName }) => {
+    const onTransitionEnd = event => {
+      const { propertyName, target } = event
+      if (target !== tooltipRef.current) {
+        return
+      }
       if (tooltipRef.current) {
         if (window && propertyName === `opacity`) {
           const opacity = window

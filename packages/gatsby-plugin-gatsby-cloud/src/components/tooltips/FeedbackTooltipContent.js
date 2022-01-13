@@ -1,4 +1,5 @@
 import React from "react"
+import { logsIcon } from "../icons"
 
 const FeedbackTooltipContent = ({ url, onOpened }) => {
   const openFeedbackPage = () => {
@@ -10,12 +11,13 @@ const FeedbackTooltipContent = ({ url, onOpened }) => {
   return (
     <>
       <span style={{ marginRight: `5px` }}>How are we doing?</span>
-      <span
+      <div
         data-gatsby-preview-indicator="tooltip-link-text"
         onClick={openFeedbackPage}
       >
         Share feedback
-      </span>
+        <span data-gatsby-preview-indicator="tooltip-svg">{logsIcon}</span>
+      </div>
     </>
   )
 }

@@ -52,6 +52,18 @@ const InfoIndicatorButton = ({
     })
   }
 
+  const updateTootipVisibility = visible => {
+    setButtonProps(btnProps => {
+      return {
+        ...btnProps,
+        tooltip: {
+          ...btnProps.tooltip,
+          show: visible,
+        },
+      }
+    })
+  }
+
   const closeInfoTooltip = () => {
     trackClick()
     setButtonProps(btnProps => {
@@ -60,6 +72,7 @@ const InfoIndicatorButton = ({
         tooltip: {
           ...btnProps.tooltip,
           show: false,
+          overrideShow: false,
         },
       }
     })
@@ -77,6 +90,11 @@ const InfoIndicatorButton = ({
         highlighted: false,
       }
     })
+    // setTimeout(() => {
+    //   const now = new Date()
+    //   setCookie(FEEDBACK_COOKIE_NAME, now.toISOString())
+    //   setCookie(INTERACTION_COOKIE_NAME, 0)
+    // }, 500)
   }
 
   const onFeedbackTooltipDisappear = () => {
@@ -86,8 +104,10 @@ const InfoIndicatorButton = ({
   }
 
   useEffect(() => {
+    console.log(`uhh2`)
     const buildStatusActions = {
       [BuildStatus.UPTODATE]: () => {
+        console.log(`uhh1`)
         if (shouldShowFeedback && buildStatus === BuildStatus.UPTODATE) {
           const url = FEEDBACK_URL
           setButtonProps({
@@ -203,6 +223,7 @@ const InfoIndicatorButton = ({
       {...buttonProps}
       onClick={buttonProps?.active ? trackClick : undefined}
       onMouseEnter={buttonProps?.active ? trackHover : undefined}
+      onTooltipToogle={updateTootipVisibility}
       iconSvg={shouldShowFeedback ? infoAlertIcon : infoIcon}
     />
   )
