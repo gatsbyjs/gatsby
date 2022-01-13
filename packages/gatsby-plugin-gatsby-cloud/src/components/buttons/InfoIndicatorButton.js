@@ -90,17 +90,12 @@ const InfoIndicatorButton = ({
         highlighted: false,
       }
     })
-    // setTimeout(() => {
-    //   const now = new Date()
-    //   setCookie(FEEDBACK_COOKIE_NAME, now.toISOString())
-    //   setCookie(INTERACTION_COOKIE_NAME, 0)
-    // }, 500)
-  }
-
-  const onFeedbackTooltipDisappear = () => {
-    const now = new Date()
-    setCookie(FEEDBACK_COOKIE_NAME, now.toISOString())
-    setCookie(INTERACTION_COOKIE_NAME, 0)
+    // added settimeout until reveist to refactor code
+    setTimeout(() => {
+      const now = new Date()
+      setCookie(FEEDBACK_COOKIE_NAME, now.toISOString())
+      setCookie(INTERACTION_COOKIE_NAME, 0)
+    }, 500)
   }
 
   useEffect(() => {
@@ -123,7 +118,6 @@ const InfoIndicatorButton = ({
               overrideShow: true,
               closable: true,
               onClose: closeFeedbackTooltip,
-              onDisappear: onFeedbackTooltipDisappear,
             },
             active: true,
             highlighted: true,
