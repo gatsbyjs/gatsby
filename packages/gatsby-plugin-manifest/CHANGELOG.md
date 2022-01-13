@@ -7,8 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-plugin-manifest
 
-
-
 ## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-manifest@4.5.0/packages/gatsby-plugin-manifest) (2022-01-11)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)

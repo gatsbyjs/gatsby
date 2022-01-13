@@ -13,8 +13,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Revert #33786 [#33786](https://github.com/gatsbyjs/gatsby/issues/33786) [#34458](https://github.com/gatsbyjs/gatsby/issues/34458) [#34459](https://github.com/gatsbyjs/gatsby/issues/34459) ([96f435a](https://github.com/gatsbyjs/gatsby/commit/96f435ac846a3555de994a04e1cec2211d440d35))
 
-
-
 ## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.5.0/packages/gatsby) (2022-01-11)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
