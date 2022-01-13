@@ -19,6 +19,7 @@ import { IPreparedUrls, prepareUrls } from "../utils/prepare-urls"
 import { IGatsbyConfig, IGatsbyFunction } from "../redux/types"
 import { reverseFixedPagePath } from "../utils/page-data"
 import { initTracer } from "../utils/tracer"
+import { configureTrailingSlash } from "../utils/express-middlewares"
 
 interface IMatchPath {
   path: string
@@ -88,32 +89,6 @@ const matchPathRouter =
     return next()
   }
 
-const forceTrailingSlash = (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-): void => {
-  const method = req.method.toLocaleLowerCase()
-  if (![`get`, `head`].includes(method)) {
-    next()
-    return
-  }
-
-  if (req?.path.split(`/`)?.pop()?.includes(`.`)) {
-    // Path has an extension. Do not add slash.
-    next()
-    return
-  }
-
-  if (req.path.length > 1 && req.path.substr(-1) !== `/`) {
-    const query = req.url.slice(req.path.length)
-    res.redirect(301, `${req.path}/${query}`)
-    return
-  }
-
-  next()
-}
-
 module.exports = async (program: IServeProgram): Promise<void> => {
   telemetry.trackCli(`SERVE_START`)
   telemetry.startBackgroundUpdate()
@@ -144,9 +119,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   router.use(compression())
   router.use(express.static(`public`, { dotfiles: `allow` }))
 
-  if (trailingSlash === `always`) {
-    router.use(forceTrailingSlash)
-  }
+  router.use(configureTrailingSlash(trailingSlash))
 
   const compiledFunctionsDir = path.join(
     program.directory,

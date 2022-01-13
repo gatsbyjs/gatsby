@@ -52,6 +52,7 @@ import { renderDevHTML } from "./dev-ssr/render-dev-html"
 import { getServerData, IServerData } from "./get-server-data"
 import { ROUTES_DIRECTORY } from "../constants"
 import { getPageMode } from "./page-mode"
+import { configureTrailingSlash } from "./express-middlewares"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -67,32 +68,6 @@ interface IServer {
 export interface IWebpackWatchingPauseResume {
   suspend: () => void
   resume: () => void
-}
-
-const forceTrailingSlash = (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-): void => {
-  const method = req.method.toLocaleLowerCase()
-  if (![`get`, `head`].includes(method)) {
-    next()
-    return
-  }
-
-  if (req?.path.split(`/`)?.pop()?.includes(`.`)) {
-    // Path has an extension. Do not add slash.
-    next()
-    return
-  }
-
-  if (req.path.length > 1 && req.path.substr(-1) !== `/`) {
-    const query = req.url.slice(req.path.length)
-    res.redirect(301, `${req.path}/${query}`)
-    return
-  }
-
-  next()
 }
 
 export async function startServer(
@@ -558,9 +533,7 @@ export async function startServer(
 
   const { proxy, trailingSlash } = store.getState().config
 
-  if (trailingSlash === `always`) {
-    app.use(forceTrailingSlash)
-  }
+  app.use(configureTrailingSlash(trailingSlash))
 
   // Set up API proxy.
   if (proxy) {
