@@ -1,4 +1,4 @@
-describe.skip(`never`, () => {
+describe(`never`, () => {
   beforeEach(() => {
     cy.visit(`/`).waitForRouteChange()
   })
