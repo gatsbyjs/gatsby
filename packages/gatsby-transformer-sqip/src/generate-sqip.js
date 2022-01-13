@@ -1,15 +1,15 @@
-const { resolve, parse } = require(`path`)
+import { resolve, parse } from "path"
 
-const Debug = require(`debug`)
-const { exists, readFile, writeFile } = require(`fs-extra`)
-const { default: PQueue } = require(`p-queue`)
-const { sqip } = require(`sqip`)
-const { createContentDigest } = require(`gatsby-core-utils`)
+import Debug from "debug"
+import { exists, readFile, writeFile } from "fs-extra"
+import PQueue from "p-queue"
+import { sqip } from "sqip"
+import { createContentDigest } from "gatsby-core-utils"
 
 const queue = new PQueue({ concurrency: 1 })
 const debug = Debug(`gatsby-transformer-sqip`)
 
-module.exports = async function generateSqip(options) {
+export default async function generateSqip(options) {
   const {
     cache,
     absolutePath,

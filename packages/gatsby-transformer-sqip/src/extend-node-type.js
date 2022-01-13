@@ -1,30 +1,30 @@
-const path = require(`path`)
+import path from "path"
 
-const Debug = require(`debug`)
-const fs = require(`fs-extra`)
-const sharp = require(`sharp`)
-const md5File = require(`md5-file`)
+import Debug from "debug"
+import fs from "fs-extra"
+import sharp from "sharp"
+import md5File from "md5-file"
 
-const {
+import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
   GraphQLBoolean,
   GraphQLJSON,
-} = require(`gatsby/graphql`)
-const { queueImageResizing } = require(`gatsby-plugin-sharp`)
-const { fetchRemoteFile } = require(`gatsby-core-utils/fetch-remote-file`)
-const {
+} from "gatsby/graphql"
+import { queueImageResizing } from "gatsby-plugin-sharp"
+import { fetchRemoteFile } from "gatsby-core-utils"
+import {
   DuotoneGradientType,
   ImageCropFocusType,
-} = require(`gatsby-transformer-sharp/types`)
+} from "gatsby-transformer-sharp/types"
 
-const generateSqip = require(`./generate-sqip`)
+import generateSqip from "./generate-sqip"
 
 const debug = Debug(`gatsby-transformer-sqip`)
 const SUPPORTED_NODES = [`ImageSharp`, `ContentfulAsset`]
 
-module.exports = async args => {
+export default async args => {
   const {
     type: { name },
   } = args

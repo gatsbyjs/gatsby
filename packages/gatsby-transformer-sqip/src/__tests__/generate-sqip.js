@@ -1,9 +1,9 @@
-const { resolve } = require(`path`)
+import { resolve } from "path"
 
-const { exists, readFile, writeFile } = require(`fs-extra`)
-const { sqip } = require(`sqip`)
+import { exists, readFile, writeFile } from "fs-extra"
+import { sqip } from "sqip"
 
-const generateSqip = require(`../generate-sqip.js`)
+import generateSqip from "../generate-sqip.js"
 
 jest.mock(`sqip`, () => {
   return {
