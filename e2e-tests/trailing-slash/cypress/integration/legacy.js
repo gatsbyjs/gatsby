@@ -79,7 +79,7 @@ describe(`ignore (direct visits)`, () => {
     cy.visit(`/create-page/with/`).waitForRouteChange()
       .assertRoute(`/create-page/with/`)
     cy.visit(`/create-page/without`).waitForRouteChange()
-      .assertRoute(`/create-page/without`)
+      .assertRoute(`/create-page/without/`)
   })
   it(`fs-api-simple`, () => {
     cy.visit(`/fs-api-simple/with/`).waitForRouteChange()
