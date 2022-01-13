@@ -104,10 +104,8 @@ const InfoIndicatorButton = ({
   }
 
   useEffect(() => {
-    console.log(`uhh2`)
     const buildStatusActions = {
       [BuildStatus.UPTODATE]: () => {
-        console.log(`uhh1`)
         if (shouldShowFeedback && buildStatus === BuildStatus.UPTODATE) {
           const url = FEEDBACK_URL
           setButtonProps({
