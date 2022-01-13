@@ -33,12 +33,12 @@ const IndicatorButtonTooltip = ({
             .getComputedStyle(tooltipRef.current)
             .getPropertyValue(`opacity`)
           if (opacity === `0`) {
-            if (onDisappear) {
+            if (typeof onDisappear === `function`) {
               onDisappear()
             }
             setVisible(false)
           } else {
-            if (onAppear) {
+            if (typeof onAppear === `function`) {
               onAppear()
             }
           }

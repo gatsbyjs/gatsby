@@ -8,7 +8,11 @@ import {
   BuildSuccessTooltipContent,
 } from "../tooltips"
 import { useTrackEvent, useCookie, useFeedback } from "../../utils"
-import { FEEDBACK_COOKIE_NAME, INTERACTION_COOKIE_NAME } from "../../constants"
+import {
+  FEEDBACK_COOKIE_NAME,
+  FEEDBACK_URL,
+  INTERACTION_COOKIE_NAME,
+} from "../../constants"
 import { BuildStatus } from "../../models/enums"
 
 const InfoIndicatorButton = ({
@@ -22,11 +26,8 @@ const InfoIndicatorButton = ({
   createdAt,
   buildStatus,
 }) => {
-  const [buttonProps, setButtonProps] = useState({
-    buttonIndex,
-    testId: `info`,
-    hoverable: true,
-  })
+  const initialButtonProps = { buttonIndex, testId: `info`, hoverable: true }
+  const [buttonProps, setButtonProps] = useState(initialButtonProps)
   const { setCookie } = useCookie()
   const { shouldShowFeedback } = useFeedback()
   const { track } = useTrackEvent()
@@ -79,49 +80,35 @@ const InfoIndicatorButton = ({
   }
 
   const onFeedbackTooltipDisappear = () => {
-    console.log(`yahs`)
     const now = new Date()
     setCookie(FEEDBACK_COOKIE_NAME, now.toISOString())
     setCookie(INTERACTION_COOKIE_NAME, 0)
-    setButtonProps(btnProps => {
-      return {
-        ...btnProps,
-        tooltip: {
-          ...btnProps.tooltip,
-          overrideShow: false,
-          show: false,
-        },
-        highlighted: false,
-      }
-    })
   }
 
   useEffect(() => {
     const buildStatusActions = {
       [BuildStatus.UPTODATE]: () => {
-        if (shouldShowFeedback) {
-          const url = `https://gatsby.dev/zrx`
-          setButtonProps(btnProps => {
-            return {
-              ...btnProps,
-              tooltip: {
-                testId: btnProps.testId,
-                content: (
-                  <FeedbackTooltipContent
-                    url={url}
-                    onOpened={() => {
-                      closeFeedbackTooltip()
-                    }}
-                  />
-                ),
-                overrideShow: true,
-                closable: true,
-                onClose: closeFeedbackTooltip,
-                onDisappear: onFeedbackTooltipDisappear,
-              },
-              active: true,
-              highlighted: true,
-            }
+        if (shouldShowFeedback && buildStatus === BuildStatus.UPTODATE) {
+          const url = FEEDBACK_URL
+          setButtonProps({
+            ...initialButtonProps,
+            tooltip: {
+              testId: initialButtonProps.testId,
+              content: (
+                <FeedbackTooltipContent
+                  url={url}
+                  onOpened={() => {
+                    closeFeedbackTooltip()
+                  }}
+                />
+              ),
+              overrideShow: true,
+              closable: true,
+              onClose: closeFeedbackTooltip,
+              onDisappear: onFeedbackTooltipDisappear,
+            },
+            active: true,
+            highlighted: true,
           })
         } else {
           setButtonProps(btnProps => {
@@ -202,15 +189,14 @@ const InfoIndicatorButton = ({
         })
       },
     }
-    const buildStatusAction = buildStatus
-      ? buildStatusActions[buildStatus]
-      : null
-    if (buildStatusAction) {
+
+    const buildStatusAction = buildStatusActions[buildStatus]
+    if (typeof buildStatusAction === `function`) {
       buildStatusAction()
     } else {
       setButtonProps({ ...buttonProps, active: true, hoverable: true })
     }
-  }, [shouldShowFeedback, buildStatus])
+  }, [buildStatus, shouldShowFeedback])
 
   return (
     <IndicatorButton
