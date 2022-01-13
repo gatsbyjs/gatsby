@@ -31,7 +31,31 @@ let buildId
 
 export default function Indicator() {
   const [buildInfo, setBuildInfo] = useState()
+  const [pageData, setPageData] = useState()
+  const [latestCheckedBuild, setLatestcheckedBuild] = useState()
 
+  async function fetchPageData() {
+    const pathAdjustment =
+      window.location.pathname === `/` ? `/index` : window.location.pathname
+
+    const resp = await fetch(`/page-data${pathAdjustment}/page-data.json`)
+    const jsonData = await resp.text()
+    setPageData(jsonData)
+  }
+
+  useEffect(() => {
+    fetchPageData()
+  }, [])
+
+  const hasPageDataChanged = () => {
+    if (buildId !== latestCheckedBuild || !pageData) {
+      const loadedPageData = pageData
+      fetchPageData()
+      setLatestcheckedBuild(buildId)
+      return loadedPageData !== pageData
+    }
+    return false
+  }
   const timeoutRef = useRef()
   const shouldPoll = useRef(false)
   const trackedInitialLoad = useRef(false)
@@ -82,7 +106,13 @@ export default function Indicator() {
       buildId !== newBuildInfo?.latestBuild?.id &&
       currentBuild?.buildStatus === `SUCCESS`
     ) {
-      setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
+      if (hasPageDataChanged(buildId)) {
+        // Build updated, data changed!
+        setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
+      } else {
+        // Build updated, data NOT changed!"
+        setBuildInfo({ ...newBuildInfo, buildStatus: `UPTODATE` })
+      }
     }
 
     if (shouldPoll.current) {
