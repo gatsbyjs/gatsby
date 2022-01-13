@@ -220,11 +220,9 @@ const makeManifest = async ({
     async function processIconSet(iconSet) {
       // if cacheBusting is being done via url query icons must be generated before cache busting runs
       if (cacheMode === `query`) {
-        await Promise.all(
-          iconSet.map(dstIcon =>
-            checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
-          )
-        )
+        for (const dstIcon of iconSet) {
+          await checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+        }
       }
 
       if (cacheMode !== `none`) {
@@ -237,11 +235,9 @@ const makeManifest = async ({
 
       // if file names are being modified by cacheBusting icons must be generated after cache busting runs
       if (cacheMode !== `query`) {
-        await Promise.all(
-          iconSet.map(dstIcon =>
-            checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
-          )
-        )
+        for (const dstIcon of iconSet) {
+          await checkCache(cache, dstIcon, icon, iconDigest, generateIcon)
+        }
       }
 
       return iconSet

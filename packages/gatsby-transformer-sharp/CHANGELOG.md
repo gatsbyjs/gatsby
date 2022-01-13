@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@4.5.0/packages/gatsby-transformer-sharp) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Chores
+
+- update dependency @types/sharp to ^0.29.5 [#34356](https://github.com/gatsbyjs/gatsby/issues/34356) ([79186ab](https://github.com/gatsbyjs/gatsby/commit/79186abdac525f6e16779015ae48c5cea5eec14a))
+
 ## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-sharp@4.4.0/packages/gatsby-transformer-sharp) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
