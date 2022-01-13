@@ -17,7 +17,6 @@ const IndicatorButtonTooltip = ({
   const onCloseClick = event => {
     event.preventDefault()
     if (onClose) {
-      console.log(`asjfgajhsf`)
       onClose()
     }
   }
