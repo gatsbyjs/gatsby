@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-graphql-config@1.5.0/packages/gatsby-plugin-graphql-config) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+**Note:** Version bump only for package gatsby-plugin-graphql-config
+
 ## [1.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-graphql-config@1.4.0/packages/gatsby-plugin-graphql-config) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)
