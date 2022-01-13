@@ -8,15 +8,14 @@ const getButtonProps = ({ buildStatus, buttonIndex }) => {
     testId: `gatsby`,
     buttonIndex,
     iconSvg: gatsbyIcon,
+    active: true,
   }
 
   const propsByBuildStatus = {
     [BuildStatus.SUCCESS]: null,
     [BuildStatus.ERROR]: null,
     [BuildStatus.BUILDING]: null,
-    [BuildStatus.UPTODATE]: {
-      active: true,
-    },
+    [BuildStatus.UPTODATE]: null,
   }
   const props = buildStatus ? propsByBuildStatus[buildStatus] : null
   if (props) {
