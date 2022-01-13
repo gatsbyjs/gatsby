@@ -20,4 +20,3 @@ exports.useFeedback = _useFeedback.default;
 var _getBuildInfo = _interopRequireDefault(require("./getBuildInfo"));
 
 exports.getBuildInfo = _getBuildInfo.default;
-//# sourceMappingURL=index.js.map
