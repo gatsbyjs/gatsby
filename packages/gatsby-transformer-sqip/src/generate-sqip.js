@@ -38,7 +38,7 @@ module.exports = async function generateSqip(options) {
   const optionsHash = createContentDigest(sqipOptions)
 
   const cacheKey = `${contentDigest}-${optionsHash}`
-  const cachePath = resolve(cacheDir, `${contentDigest}-${optionsHash}.svg`)
+  const cachePath = resolve(cacheDir, `${contentDigest}-${optionsHash}.json`)
 
   debug(
     `Request preview generation for ${name} (${contentDigest}-${optionsHash})`
@@ -58,8 +58,8 @@ module.exports = async function generateSqip(options) {
           debug(
             `Primitive result file already exists for ${name} (${contentDigest}-${optionsHash})`
           )
-          const svgBuffer = await readFile(cachePath)
-          svg = JSON.parse(svgBuffer.toString())
+          const cacheBuffer = await readFile(cachePath)
+          svg = JSON.parse(cacheBuffer.toString())
         } else {
           debug(
             `Generate primitive result file of ${name} (${contentDigest}-${optionsHash})`
