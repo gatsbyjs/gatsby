@@ -19,6 +19,11 @@ const posts = [
   }
 ]
 
+exports.onPreInit = () => {
+  const trailingSlash = process.env.TRAILING_SLASH || `legacy`
+  console.info(`Running with trailingSlash: ${trailingSlash}`)
+}
+
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const { createNode } = actions
 
