@@ -436,7 +436,7 @@ export type ActionsUnion =
   | IMaterializePageMode
   | ISetJobV2Context
   | IClearJobV2Context
-  | IToggleFeatureAction
+  | ISetFeatureEnabledAction
 
 export interface ISetComponentFeatures {
   type: `SET_COMPONENT_FEATURES`
@@ -823,8 +823,8 @@ export interface ISetSiteFunctions {
   payload: IGatsbyState["functions"]
 }
 
-export interface IToggleFeatureAction {
-  type: `TOGGLE_FEATURE`
+export interface ISetFeatureEnabledAction {
+  type: `ENABLE_FEATURE`
   payload: {
     name: keyof IFeaturesState
     value: boolean
