@@ -77,13 +77,16 @@ module.exports = async (
       }
     }
 
+    const target =
+      stage === `build-html` || stage === `develop-html` ? `node` : `web`
+
     const envObject = Object.keys(parsed).reduce((acc, key) => {
       acc[key] = JSON.stringify(parsed[key])
       return acc
     }, {})
 
     const gatsbyVarObject = Object.keys(process.env).reduce((acc, key) => {
-      if (key.match(/^GATSBY_/)) {
+      if (target === `node` || key.match(/^GATSBY_/)) {
         acc[key] = JSON.stringify(process.env[key])
       }
       return acc

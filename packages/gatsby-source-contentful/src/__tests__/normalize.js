@@ -105,6 +105,7 @@ describe(`Process contentful data (by name)`, () => {
         defaultLocale,
         locales,
         space,
+        pluginConfig,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -186,6 +187,7 @@ describe(`Skip existing nodes in warm build`, () => {
         defaultLocale,
         locales,
         space,
+        pluginConfig,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -269,6 +271,7 @@ describe(`Process existing mutated nodes in warm build`, () => {
         defaultLocale,
         locales,
         space,
+        pluginConfig,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -345,6 +348,7 @@ describe(`Process contentful data (by id)`, () => {
         defaultLocale,
         locales,
         space,
+        pluginConfig,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
