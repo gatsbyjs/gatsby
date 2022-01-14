@@ -28,11 +28,11 @@ export function PreviewIndicator({ children }) {
 }
 
 let buildId
+let pageData
+let latestCheckedBuild
 
 export default function Indicator() {
   const [buildInfo, setBuildInfo] = useState()
-  const [pageData, setPageData] = useState()
-  const [latestCheckedBuild, setLatestcheckedBuild] = useState()
 
   async function fetchPageData() {
     const urlHostString = window.location.origin
@@ -40,21 +40,36 @@ export default function Indicator() {
       window.location.pathname === `/` ? `/index` : window.location.pathname
 
     const url = `${urlHostString}/page-data${pathAdjustment}/page-data.json`
+
     const resp = await fetch(url)
-    const jsonData = await resp.text()
-    setPageData(jsonData)
+    const data = await resp.text()
+
+    return data
   }
 
   useEffect(() => {
-    fetchPageData()
+    // declare the data fetching function
+    const fetchData = async () => {
+      const data = await fetchPageData()
+      console.log(`USEEFFECT`, data)
+      pageData = data
+    }
+
+    // call the function
+    fetchData()
+      // make sure to catch any error
+      .catch(console.error)
   }, [])
 
-  const hasPageDataChanged = () => {
+  const hasPageDataChanged = async () => {
     if (buildId !== latestCheckedBuild || !pageData) {
       const loadedPageData = pageData
-      fetchPageData()
-      setLatestcheckedBuild(buildId)
-      return loadedPageData !== pageData
+      const newData = await fetchPageData()
+      console.log(`PAGE DATA COMPARISON:`, pageData, newData)
+
+      latestCheckedBuild = buildId
+      pageData = newData
+      return loadedPageData !== newData
     }
     return false
   }
@@ -108,7 +123,7 @@ export default function Indicator() {
       buildId !== newBuildInfo?.latestBuild?.id &&
       currentBuild?.buildStatus === `SUCCESS`
     ) {
-      if (hasPageDataChanged(buildId)) {
+      if (await hasPageDataChanged(buildId)) {
         // Build updated, data changed!
         setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
       } else {
