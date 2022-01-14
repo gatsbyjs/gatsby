@@ -35,10 +35,12 @@ export default function Indicator() {
   const [latestCheckedBuild, setLatestcheckedBuild] = useState()
 
   async function fetchPageData() {
+    const urlHostString = window.location.origin
     const pathAdjustment =
       window.location.pathname === `/` ? `/index` : window.location.pathname
 
-    const resp = await fetch(`/page-data${pathAdjustment}/page-data.json`)
+    const url = `${urlHostString}/page-data${pathAdjustment}/page-data.json`
+    const resp = await fetch(url)
     const jsonData = await resp.text()
     setPageData(jsonData)
   }
