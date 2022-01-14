@@ -91,7 +91,6 @@ async function update() {
     }
   } else if(args.copy) {
     const copyFileContent = await fs.readFile(args.copy)
-    console.log(copyFileContent)
     await fs.writeFile(filePath, copyFileContent)
   } else {
     const contents = replacements.reduce((replaced, pair) => {
