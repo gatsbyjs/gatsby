@@ -1,5 +1,5 @@
 import { useCookie, useFeedback } from "."
-import { interactionCountCookieName } from "../constants/cookie"
+import { INTERACTION_COOKIE_NAME } from "../constants"
 import pkgJSON from "../package.json"
 
 const useTrackEvent = () => {
@@ -8,12 +8,10 @@ const useTrackEvent = () => {
   const track = async ({ eventType, orgId, siteId, buildId, name }) => {
     checkForFeedback()
     if (shouldAskForFeedback) {
-      const interactions = isNaN(
-        parseInt(getCookie(interactionCountCookieName))
-      )
+      const interactions = isNaN(parseInt(getCookie(INTERACTION_COOKIE_NAME)))
         ? 0
-        : parseInt(getCookie(interactionCountCookieName))
-      setCookie(interactionCountCookieName, interactions + 1)
+        : parseInt(getCookie(INTERACTION_COOKIE_NAME))
+      setCookie(INTERACTION_COOKIE_NAME, interactions + 1)
     }
     if (process.env.GATSBY_TELEMETRY_API) {
       try {
