@@ -177,6 +177,7 @@ const InfoIndicatorButton = ({
                   buildId={erroredBuildId}
                 />
               ),
+              overrideShow: true,
               closable: true,
               onClose: closeInfoTooltip,
             },
