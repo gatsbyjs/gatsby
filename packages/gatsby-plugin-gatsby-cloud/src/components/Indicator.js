@@ -51,7 +51,6 @@ export default function Indicator() {
     // declare the data fetching function
     const fetchData = async () => {
       const data = await fetchPageData()
-      console.log(`USEEFFECT`, data)
       pageData = data
     }
 
@@ -65,7 +64,6 @@ export default function Indicator() {
     if (buildId !== latestCheckedBuild || !pageData) {
       const loadedPageData = pageData
       const newData = await fetchPageData()
-      console.log(`PAGE DATA COMPARISON:`, pageData, newData)
 
       latestCheckedBuild = buildId
       pageData = newData
@@ -127,7 +125,7 @@ export default function Indicator() {
         // Build updated, data changed!
         setBuildInfo({ ...newBuildInfo, buildStatus: `SUCCESS` })
       } else {
-        // Build updated, data NOT changed!"
+        // Build updated, data NOT changed!
         setBuildInfo({ ...newBuildInfo, buildStatus: `UPTODATE` })
       }
     }

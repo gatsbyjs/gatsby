@@ -104,10 +104,10 @@ describe(`Preview status indicator`, () => {
     await waitFor(() => {
       if (action) {
         // Initial poll fetch, initial load trackEvent, and trackEvent after action
-        expect(window.fetch).toBeCalledTimes(3)
+        expect(window.fetch).toBeCalledTimes(4)
       } else {
         // Initial poll fetch for build data and then trackEvent fetch call
-        expect(window.fetch).toBeCalledTimes(2)
+        expect(window.fetch).toBeCalledTimes(3)
       }
     })
   }
@@ -133,6 +133,8 @@ describe(`Preview status indicator`, () => {
       value: {
         href: `https://build-123.gtsb.io`,
         hostname: `https://build-123.gtsb.io`,
+        origin: `https://build-123-changed.gtsb.io`,
+        pathname: "/index",
       },
     })
   })
@@ -283,37 +285,6 @@ describe(`Preview status indicator`, () => {
           matcherType: `query`,
         })
       })
-
-      it(`should open a new window to build logs when tooltip is clicked on error`, async () => {
-        process.env.GATSBY_PREVIEW_API_URL = createUrl(`error`)
-        window.open = jest.fn()
-
-        let gatsbyButtonTooltipLink
-        const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/999/sites/111/builds/123/details`
-        const returnTo = encodeURIComponent(pathToBuildLogs)
-
-        act(() => {
-          render(<Indicator />)
-        })
-
-        await waitFor(() => {
-          gatsbyButtonTooltipLink = screen
-            .getByText(errorLogMessage, {
-              exact: false,
-            })
-            .closest(`a`)
-        })
-
-        expect(gatsbyButtonTooltipLink.getAttribute(`href`)).toContain(
-          `${pathToBuildLogs}?returnTo=${returnTo}`
-        )
-
-        await assertTrackEventGetsCalled({
-          route: `error`,
-          testId: `info-button`,
-          renderIndicator: false,
-        })
-      })
     })
 
     describe(`Link Button`, () => {
@@ -444,6 +415,37 @@ describe(`Preview status indicator`, () => {
           route: `uptodate`,
           text: infoButtonMessage,
           matcherType: `get`,
+        })
+      })
+
+      it(`should open a new window to build logs when tooltip is clicked on error`, async () => {
+        process.env.GATSBY_PREVIEW_API_URL = createUrl(`error`)
+        window.open = jest.fn()
+
+        let gatsbyButtonTooltipLink
+        const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/999/sites/111/builds/123/details`
+        const returnTo = encodeURIComponent(pathToBuildLogs)
+
+        act(() => {
+          render(<Indicator />)
+        })
+
+        await waitFor(() => {
+          gatsbyButtonTooltipLink = screen
+            .getByText(errorLogMessage, {
+              exact: false,
+            })
+            .closest(`a`)
+        })
+
+        expect(gatsbyButtonTooltipLink.getAttribute(`href`)).toContain(
+          `${pathToBuildLogs}?returnTo=${returnTo}`
+        )
+
+        await assertTrackEventGetsCalled({
+          route: `error`,
+          testId: `info-button`,
+          renderIndicator: false,
         })
       })
     })
