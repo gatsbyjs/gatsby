@@ -120,7 +120,7 @@ type SiteBuildMetadata implements Node @dontInfer {
   buildTime: Date @dateformat
 }
 
-interface ContentfulReference implements Node {
+interface ContentfulEntity implements Node {
   id: ID!
   sys: ContentfulSys!
 }
@@ -142,7 +142,7 @@ type ContentfulContentType implements Node @dontInfer {
   description: String!
 }
 
-interface ContentfulEntry implements ContentfulReference & Node {
+interface ContentfulEntry implements ContentfulEntity & Node {
   id: ID!
   sys: ContentfulSys!
   metadata: ContentfulMetadata!
@@ -161,7 +161,7 @@ type ContentfulAssetFields @dontInfer {
   localFile: File @link(by: "id")
 }
 
-type ContentfulAsset implements ContentfulReference & Node @dontInfer {
+type ContentfulAsset implements ContentfulEntity & Node @dontInfer {
   sys: ContentfulSys!
   title: String
   description: String
@@ -204,7 +204,8 @@ type ContentfulText implements Node @dontInfer {
   raw: String!
 }
 
-type ContentfulContentTypeNumber implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+type ContentfulContentTypeNumber implements ContentfulEntity & ContentfulEntry & Node
+  @dontInfer {
   sys: ContentfulSys!
   metadata: ContentfulMetadata!
   title: String
@@ -214,7 +215,8 @@ type ContentfulContentTypeNumber implements ContentfulReference & ContentfulEntr
   decimalLocalized: Float
 }
 
-type ContentfulContentTypeText implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+type ContentfulContentTypeText implements ContentfulEntity & ContentfulEntry & Node
+  @dontInfer {
   sys: ContentfulSys!
   metadata: ContentfulMetadata!
   title: String
@@ -227,7 +229,8 @@ type ContentfulContentTypeText implements ContentfulReference & ContentfulEntry 
   longLocalized: ContentfulText @link(by: "id", from: "longLocalized___NODE")
 }
 
-type ContentfulContentTypeMediaReference implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+type ContentfulContentTypeMediaReference implements ContentfulEntity & ContentfulEntry & Node
+  @dontInfer {
   sys: ContentfulSys!
   metadata: ContentfulMetadata!
   title: String
@@ -237,7 +240,8 @@ type ContentfulContentTypeMediaReference implements ContentfulReference & Conten
   manyLocalized: [ContentfulAsset] @link(by: "id", from: "manyLocalized___NODE")
 }
 
-type ContentfulContentTypeBoolean implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+type ContentfulContentTypeBoolean implements ContentfulEntity & ContentfulEntry & Node
+  @dontInfer {
   sys: ContentfulSys!
   metadata: ContentfulMetadata!
   title: String
@@ -245,7 +249,8 @@ type ContentfulContentTypeBoolean implements ContentfulReference & ContentfulEnt
   booleanLocalized: Boolean
 }
 
-type ContentfulContentTypeDate implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+type ContentfulContentTypeDate implements ContentfulEntity & ContentfulEntry & Node
+  @dontInfer {
   sys: ContentfulSys!
   metadata: ContentfulMetadata!
   title: String
@@ -255,7 +260,8 @@ type ContentfulContentTypeDate implements ContentfulReference & ContentfulEntry 
   dateLocalized: Date @dateformat
 }
 
-type ContentfulContentTypeLocation implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+type ContentfulContentTypeLocation implements ContentfulEntity & ContentfulEntry & Node
+  @dontInfer {
   sys: ContentfulSys!
   metadata: ContentfulMetadata!
   title: String
@@ -263,7 +269,8 @@ type ContentfulContentTypeLocation implements ContentfulReference & ContentfulEn
   locationLocalized: ContentfulLocation
 }
 
-type ContentfulContentTypeJson implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+type ContentfulContentTypeJson implements ContentfulEntity & ContentfulEntry & Node
+  @dontInfer {
   sys: ContentfulSys!
   metadata: ContentfulMetadata!
   title: String
@@ -271,7 +278,8 @@ type ContentfulContentTypeJson implements ContentfulReference & ContentfulEntry 
   jsonLocalized: JSON
 }
 
-type ContentfulContentTypeRichText implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+type ContentfulContentTypeRichText implements ContentfulEntity & ContentfulEntry & Node
+  @dontInfer {
   sys: ContentfulSys!
   metadata: ContentfulMetadata!
   title: String
@@ -280,30 +288,45 @@ type ContentfulContentTypeRichText implements ContentfulReference & ContentfulEn
   richTextValidated: ContentfulRichText
 }
 
-type ContentfulContentTypeContentReference implements ContentfulReference & ContentfulEntry & Node @isPlaceholder @dontInfer {
+type ContentfulContentTypeContentReference implements ContentfulEntity & ContentfulEntry & Node
+  @isPlaceholder
+  @dontInfer {
   sys: ContentfulSys!
   metadata: ContentfulMetadata!
   title: String
   one: ContentfulEntry @link(by: "id", from: "one___NODE")
   oneLocalized: ContentfulEntry @link(by: "id", from: "oneLocalized___NODE")
-  many: [UnionContentfulContentReferenceNumberText] @link(by: "id", from: "many___NODE")
+  many: [UnionContentfulContentReferenceNumberText]
+    @link(by: "id", from: "many___NODE")
   manyLocalized: [ContentfulEntry] @link(by: "id", from: "manyLocalized___NODE")
 }
 
-union UnionContentfulContentReferenceNumberText = ContentfulContentTypeContentReference | ContentfulContentTypeNumber | ContentfulContentTypeText
+union UnionContentfulContentReferenceNumberText =
+    ContentfulContentTypeContentReference
+  | ContentfulContentTypeNumber
+  | ContentfulContentTypeText
 
-union UnionContentfulNumberText = ContentfulContentTypeNumber | ContentfulContentTypeText
+union UnionContentfulNumberText =
+    ContentfulContentTypeNumber
+  | ContentfulContentTypeText
 
-type ContentfulContentTypeValidatedContentReference implements ContentfulReference & ContentfulEntry & Node @dontInfer {
+type ContentfulContentTypeValidatedContentReference implements ContentfulEntity & ContentfulEntry & Node
+  @dontInfer {
   sys: ContentfulSys!
   metadata: ContentfulMetadata!
   title: String
-  oneItemSingleType: ContentfulContentTypeText @link(by: "id", from: "oneItemSingleType___NODE")
-  oneItemManyTypes: UnionContentfulNumberText @link(by: "id", from: "oneItemManyTypes___NODE")
-  oneItemAllTypes: ContentfulEntry @link(by: "id", from: "oneItemAllTypes___NODE")
-  multipleItemsSingleType: [ContentfulContentTypeText] @link(by: "id", from: "multipleItemsSingleType___NODE")
-  multipleItemsManyTypes: [UnionContentfulNumberText] @link(by: "id", from: "multipleItemsManyTypes___NODE")
-  multipleItemsAllTypes: [ContentfulEntry] @link(by: "id", from: "multipleItemsAllTypes___NODE")
+  oneItemSingleType: ContentfulContentTypeText
+    @link(by: "id", from: "oneItemSingleType___NODE")
+  oneItemManyTypes: UnionContentfulNumberText
+    @link(by: "id", from: "oneItemManyTypes___NODE")
+  oneItemAllTypes: ContentfulEntry
+    @link(by: "id", from: "oneItemAllTypes___NODE")
+  multipleItemsSingleType: [ContentfulContentTypeText]
+    @link(by: "id", from: "multipleItemsSingleType___NODE")
+  multipleItemsManyTypes: [UnionContentfulNumberText]
+    @link(by: "id", from: "multipleItemsManyTypes___NODE")
+  multipleItemsAllTypes: [ContentfulEntry]
+    @link(by: "id", from: "multipleItemsAllTypes___NODE")
 }
 
 type MarkdownHeading {
@@ -333,7 +356,13 @@ type MarkdownWordCount {
   words: Int
 }
 
-type MarkdownRemark implements Node @childOf(mimeTypes: ["text/markdown", "text/x-markdown"], types: ["ContentfulText"]) @derivedTypes @dontInfer {
+type MarkdownRemark implements Node
+  @childOf(
+    mimeTypes: ["text/markdown", "text/x-markdown"]
+    types: ["ContentfulText"]
+  )
+  @derivedTypes
+  @dontInfer {
   frontmatter: MarkdownRemarkFrontmatter
   excerpt: String
   rawMarkdownBody: String
@@ -443,7 +472,9 @@ enum ImagePlaceholder {
 }
 
 input BlurredOptions {
-  """Width of the generated low-res preview. Default is 20px"""
+  """
+  Width of the generated low-res preview. Default is 20px
+  """
   width: Int
 
   """
@@ -498,7 +529,27 @@ type ImageSharpResize {
 }
 
 type ImageSharp implements Node @childOf(types: ["File"]) @dontInfer {
-  fixed(width: Int, height: Int, base64Width: Int, jpegProgressive: Boolean = true, pngCompressionSpeed: Int = 4, grayscale: Boolean = false, duotone: DuotoneGradient, traceSVG: Potrace, quality: Int, jpegQuality: Int, pngQuality: Int, webpQuality: Int, toFormat: ImageFormat = AUTO, toFormatBase64: ImageFormat = AUTO, cropFocus: ImageCropFocus = ATTENTION, fit: ImageFit = COVER, background: String = "rgba(0,0,0,1)", rotate: Int = 0, trim: Float = 0): ImageSharpFixed
+  fixed(
+    width: Int
+    height: Int
+    base64Width: Int
+    jpegProgressive: Boolean = true
+    pngCompressionSpeed: Int = 4
+    grayscale: Boolean = false
+    duotone: DuotoneGradient
+    traceSVG: Potrace
+    quality: Int
+    jpegQuality: Int
+    pngQuality: Int
+    webpQuality: Int
+    toFormat: ImageFormat = AUTO
+    toFormatBase64: ImageFormat = AUTO
+    cropFocus: ImageCropFocus = ATTENTION
+    fit: ImageFit = COVER
+    background: String = "rgba(0,0,0,1)"
+    rotate: Int = 0
+    trim: Float = 0
+  ): ImageSharpFixed
   fluid(
     maxWidth: Int
     maxHeight: Int
@@ -616,19 +667,29 @@ type ImageSharp implements Node @childOf(types: ["File"]) @dontInfer {
     """
     sizes: String
 
-    """The default quality. This is overridden by any format-specific options"""
+    """
+    The default quality. This is overridden by any format-specific options
+    """
     quality: Int
 
-    """Options to pass to sharp when generating JPG images."""
+    """
+    Options to pass to sharp when generating JPG images.
+    """
     jpgOptions: JPGOptions
 
-    """Options to pass to sharp when generating PNG images."""
+    """
+    Options to pass to sharp when generating PNG images.
+    """
     pngOptions: PNGOptions
 
-    """Options to pass to sharp when generating WebP images."""
+    """
+    Options to pass to sharp when generating WebP images.
+    """
     webpOptions: WebPOptions
 
-    """Options to pass to sharp when generating AVIF images."""
+    """
+    Options to pass to sharp when generating AVIF images.
+    """
     avifOptions: AVIFOptions
 
     """
@@ -643,7 +704,27 @@ type ImageSharp implements Node @childOf(types: ["File"]) @dontInfer {
     backgroundColor: String
   ): JSON!
   original: ImageSharpOriginal
-  resize(width: Int, height: Int, quality: Int, jpegQuality: Int, pngQuality: Int, webpQuality: Int, jpegProgressive: Boolean = true, pngCompressionLevel: Int = 9, pngCompressionSpeed: Int = 4, grayscale: Boolean = false, duotone: DuotoneGradient, base64: Boolean = false, traceSVG: Potrace, toFormat: ImageFormat = AUTO, cropFocus: ImageCropFocus = ATTENTION, fit: ImageFit = COVER, background: String = "rgba(0,0,0,1)", rotate: Int = 0, trim: Float = 0): ImageSharpResize
+  resize(
+    width: Int
+    height: Int
+    quality: Int
+    jpegQuality: Int
+    pngQuality: Int
+    webpQuality: Int
+    jpegProgressive: Boolean = true
+    pngCompressionLevel: Int = 9
+    pngCompressionSpeed: Int = 4
+    grayscale: Boolean = false
+    duotone: DuotoneGradient
+    base64: Boolean = false
+    traceSVG: Potrace
+    toFormat: ImageFormat = AUTO
+    cropFocus: ImageCropFocus = ATTENTION
+    fit: ImageFit = COVER
+    background: String = "rgba(0,0,0,1)"
+    rotate: Int = 0
+    trim: Float = 0
+  ): ImageSharpResize
 }
 
 enum GatsbyImageFormat {

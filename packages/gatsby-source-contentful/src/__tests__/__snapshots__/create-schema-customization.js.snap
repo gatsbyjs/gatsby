@@ -173,7 +173,7 @@ Array [
         },
       },
       "interfaces": Array [
-        "ContentfulReference",
+        "ContentfulEntity",
         "Node",
       ],
       "name": "ContentfulAsset",
@@ -308,7 +308,7 @@ Array [
         },
       },
       "interfaces": Array [
-        "ContentfulReference",
+        "ContentfulEntity",
         "ContentfulEntry",
         "Node",
       ],
@@ -374,7 +374,7 @@ Array [
         },
       },
       "interfaces": Array [
-        "ContentfulReference",
+        "ContentfulEntity",
         "ContentfulEntry",
         "Node",
       ],
@@ -437,7 +437,7 @@ Array [
         },
       },
       "interfaces": Array [
-        "ContentfulReference",
+        "ContentfulEntity",
         "ContentfulEntry",
         "Node",
       ],
@@ -470,7 +470,7 @@ Array [
         },
       },
       "interfaces": Array [
-        "ContentfulReference",
+        "ContentfulEntity",
         "ContentfulEntry",
         "Node",
       ],
@@ -521,7 +521,7 @@ Array [
         },
       },
       "interfaces": Array [
-        "ContentfulReference",
+        "ContentfulEntity",
         "ContentfulEntry",
         "Node",
       ],
@@ -554,7 +554,7 @@ Array [
         },
       },
       "interfaces": Array [
-        "ContentfulReference",
+        "ContentfulEntity",
         "ContentfulEntry",
         "Node",
       ],
@@ -587,7 +587,7 @@ Array [
         },
       },
       "interfaces": Array [
-        "ContentfulReference",
+        "ContentfulEntity",
         "ContentfulEntry",
         "Node",
       ],
@@ -623,7 +623,7 @@ Array [
         },
       },
       "interfaces": Array [
-        "ContentfulReference",
+        "ContentfulEntity",
         "ContentfulEntry",
         "Node",
       ],
@@ -686,7 +686,7 @@ Array [
         },
       },
       "interfaces": Array [
-        "ContentfulReference",
+        "ContentfulEntity",
         "ContentfulEntry",
         "Node",
       ],
@@ -767,7 +767,7 @@ Array [
         },
       },
       "interfaces": Array [
-        "ContentfulReference",
+        "ContentfulEntity",
         "ContentfulEntry",
         "Node",
       ],
@@ -792,7 +792,7 @@ Array [
       "interfaces": Array [
         "Node",
       ],
-      "name": "ContentfulReference",
+      "name": "ContentfulEntity",
     },
   ],
   Array [
@@ -809,7 +809,7 @@ Array [
         },
       },
       "interfaces": Array [
-        "ContentfulReference",
+        "ContentfulEntity",
         "Node",
       ],
       "name": "ContentfulEntry",
