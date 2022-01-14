@@ -3,7 +3,7 @@
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 exports.__esModule = true;
-exports.getBuildInfo = exports.useFeedback = exports.useCookie = exports.useTrackEvent = void 0;
+exports.useTrackEvent = exports.useFeedback = exports.useCookie = exports.getBuildInfo = void 0;
 
 var _trackEvent = _interopRequireDefault(require("./trackEvent"));
 
