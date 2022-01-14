@@ -179,7 +179,7 @@ export function generateSchema({
   // Generic Types
   createTypes(
     schema.buildInterfaceType({
-      name: `ContentfulReference`,
+      name: `ContentfulEntity`,
       fields: {
         id: { type: `ID!` },
         sys: { type: `ContentfulSys!` },
@@ -196,7 +196,7 @@ export function generateSchema({
         sys: { type: `ContentfulSys!` },
         metadata: { type: `ContentfulMetadata!` },
       },
-      interfaces: [`ContentfulReference`, `Node`],
+      interfaces: [`ContentfulEntity`, `Node`],
     })
   )
 
@@ -321,9 +321,8 @@ export function generateSchema({
           size: { type: `Int` },
           width: { type: `Int` },
           height: { type: `Int` },
-          metadata: { type: `ContentfulMetadata!` },
         },
-        interfaces: [`ContentfulReference`, `Node`],
+        interfaces: [`ContentfulEntity`, `Node`],
       }),
       {
         schema,
@@ -481,7 +480,7 @@ export function generateSchema({
             metadata: { type: `ContentfulMetadata!` },
             ...fields,
           },
-          interfaces: [`ContentfulReference`, `ContentfulEntry`, `Node`],
+          interfaces: [`ContentfulEntity`, `ContentfulEntry`, `Node`],
           extensions: { dontInfer: {} },
         })
       )
