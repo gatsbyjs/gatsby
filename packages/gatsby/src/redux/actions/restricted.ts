@@ -19,7 +19,7 @@ import {
   IPrintTypeDefinitions,
   ICreateResolverContext,
   IGatsbyPluginContext,
-  IToggleFeatureAction,
+  ISetFeatureEnabledAction,
 } from "../types"
 
 type RestrictionActionNames =
@@ -28,7 +28,7 @@ type RestrictionActionNames =
   | "createResolverContext"
   | "addThirdPartySchema"
   | "printTypeDefinitions"
-  | "toggleFeature"
+  | "setFeatureEnabled"
 
 type SomeActionCreator =
   | ActionCreator<ActionsUnion>
@@ -432,15 +432,15 @@ export const actions = {
    * @example
    * // When you want to enable the custom /_gatsby/file & /_gatsby/image endpoints
    * exports.onPreInit = ({ actions }) => {
-   *   actions.toggleFeature('imageService', true)
+   *   actions.setFeatureEnabled('imageService', true)
    * }
    */
-  toggleFeature: (
-    name: IToggleFeatureAction["payload"]["name"],
-    value: IToggleFeatureAction["payload"]["value"]
-  ): IToggleFeatureAction => {
+  setFeatureEnabled: (
+    name: ISetFeatureEnabledAction["payload"]["name"],
+    value: ISetFeatureEnabledAction["payload"]["value"]
+  ): ISetFeatureEnabledAction => {
     return {
-      type: `TOGGLE_FEATURE`,
+      type: `ENABLE_FEATURE`,
       payload: {
         name,
         value,
@@ -567,7 +567,7 @@ export const availableActionsByAPI = mapAvailableActionsToAPIs({
   printTypeDefinitions: {
     [ALLOWED_IN]: [`createSchemaCustomization`],
   },
-  toggleFeature: {
+  setFeatureEnabled: {
     [ALLOWED_IN]: [`onPreInit`],
   },
 })

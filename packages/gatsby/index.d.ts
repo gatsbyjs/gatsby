@@ -16,8 +16,9 @@ import {
 import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
+import type { IFeaturesState } from "./dist/redux/types"
 
-export type AvailableFeatures = "imageService"
+export type AvailableFeatures = keyof IFeaturesState
 
 export {
   default as Link,
@@ -912,7 +913,7 @@ export interface NodePluginSchema {
 }
 export interface PreInitArgs extends ParentSpanPluginArgs {
   actions: Actions & {
-    toggleFeature(this: void, name: AvailableFeatures, value: boolean)
+    setFeatureEnabled(this: void, name: AvailableFeatures, value: boolean)
   }
 }
 

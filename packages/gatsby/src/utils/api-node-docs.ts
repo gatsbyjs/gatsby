@@ -404,16 +404,16 @@ export const onCreateWebpackConfig = true
 /**
  * The first API called during Gatsby execution, runs as soon as plugins are loaded, before cache initialization and bootstrap preparation.
  *
- * The [`toggleFeature`](/docs/actions/#toggleFeature) actions
+ * The [`setFeatureEnabled`](/docs/actions/#setFeatureEnabled) actions
  * are only available in this API. For details on their usage please refer to
  * the actions documentation.
  *
  * @param {object} $0
  * @param {object} $0.actions
- * @param {object} $0.actions.toggleFeature
+ * @param {object} $0.actions.setFeatureEnabled
  * @example
  * exports.onPreInit = ({ actions }) => {
- *   actions.toggleFeature('imageService', true);
+ *   actions.setFeatureEnabled('imageService', true);
  * }
  */
 export const onPreInit = true
