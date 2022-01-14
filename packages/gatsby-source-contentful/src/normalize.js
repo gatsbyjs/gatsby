@@ -719,6 +719,7 @@ export const createAssetNodes = ({
   defaultLocale,
   locales,
   space,
+  pluginConfig,
 }) => {
   const createNodePromises = []
   locales.forEach(locale => {
@@ -753,6 +754,15 @@ export const createAssetNodes = ({
       sys: {
         type: assetItem.sys.type,
       },
+    }
+
+    // Link tags
+    if (pluginConfig.get(`enableTags`)) {
+      assetNode.metadata = {
+        tags___NODE: assetItem.metadata.tags.map(tag =>
+          createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
+        ),
+      }
     }
 
     // Revision applies to entries, assets, and content types
