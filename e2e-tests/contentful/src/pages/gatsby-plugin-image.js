@@ -250,12 +250,6 @@ export const pageQuery = graphql`
         file {
           fileName
           url
-          details {
-            image {
-              width
-              height
-            }
-          }
         }
         constrained: gatsbyImageData(width: 420)
         fullWidth: gatsbyImageData(width: 200, layout: FIXED)
