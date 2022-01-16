@@ -828,7 +828,7 @@ export interface ISetSiteFunctions {
 export interface ISetFeatureEnabledAction {
   type: `ENABLE_FEATURE`
   payload: {
-    name: keyof IFeaturesState
+    name: string // keyof IFeaturesState
     value: boolean
   }
 }
