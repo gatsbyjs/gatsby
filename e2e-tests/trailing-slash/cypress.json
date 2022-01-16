@@ -1,3 +1,4 @@
 {
-  "videoUploadOnPasses": false
+  "videoUploadOnPasses": false,
+  "chromeWebSecurity": false
 }

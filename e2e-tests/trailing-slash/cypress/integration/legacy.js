@@ -71,7 +71,9 @@ describe(`legacy (direct visits)`, () => {
     cy.visit(`/`).waitForRouteChange()
   })
   it(`page-creator`, () => {
-    cy.visit(`/page-2`).waitForRouteChange().assertRoute(`/page-2/`)
+    cy.visit(`/page-2`)
+      .waitForRouteChange()
+      .assertRoute(IS_BUILD ? `/page-2/` : `/page-2`)
   })
   it(`create-page with`, () => {
     cy.visit(`/create-page/with/`)
@@ -81,7 +83,7 @@ describe(`legacy (direct visits)`, () => {
   it(`create-page without`, () => {
     cy.visit(`/create-page/without`)
       .waitForRouteChange()
-      .assertRoute(IS_BUILD ? `/create-page/without` : `/create-page/without/`)
+      .assertRoute(`/create-page/without`)
   })
   it(`fs-api-simple with`, () => {
     cy.visit(`/fs-api-simple/with/`)
@@ -91,7 +93,9 @@ describe(`legacy (direct visits)`, () => {
   it(`fs-api-simple without`, () => {
     cy.visit(`/fs-api-simple/without`)
       .waitForRouteChange()
-      .assertRoute(`/fs-api-simple/without/`)
+      .assertRoute(
+        IS_BUILD ? `/fs-api-simple/without/` : `/fs-api-simple/without`
+      )
   })
   it(`client-only-simple with`, () => {
     cy.visit(`/client-only/with/`)
@@ -121,6 +125,10 @@ describe(`legacy (direct visits)`, () => {
   it(`query-param-hash without`, () => {
     cy.visit(`/page-2?query_param=hello#anchor`)
       .waitForRouteChange()
-      .assertRoute(`/page-2/?query_param=hello#anchor`)
+      .assertRoute(
+        IS_BUILD
+          ? `/page-2/?query_param=hello#anchor`
+          : `/page-2?query_param=hello#anchor`
+      )
   })
 })
