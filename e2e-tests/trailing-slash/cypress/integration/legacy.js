@@ -70,33 +70,54 @@ describe(`legacy`, () => {
  })
 })
 
+const IS_BUILD = Cypress.env(`IS_BUILD`)
+
 describe(`legacy (direct visits)`, () => {
+  beforeEach(() => {
+    cy.visit(`/`).waitForRouteChange()
+  })
   it(`page-creator`, () => {
     cy.visit(`/page-2`).waitForRouteChange()
       .assertRoute(`/page-2/`)
   })
-  it(`create-page`, () => {
+  it(`create-page with`, () => {
     cy.visit(`/create-page/with/`).waitForRouteChange()
       .assertRoute(`/create-page/with/`)
-    cy.visit(`/create-page/without`).waitForRouteChange()
-      .assertRoute(`/create-page/without`)
   })
-  it(`fs-api-simple`, () => {
+  it(`create-page without`, () => {
+    cy.visit(`/create-page/without`).waitForRouteChange()
+      .assertRoute(IS_BUILD ? `/create-page/without` : `/create-page/without/`)
+  })
+  it(`fs-api-simple with`, () => {
     cy.visit(`/fs-api-simple/with/`).waitForRouteChange()
       .assertRoute(`/fs-api-simple/with/`)
+  })
+  it(`fs-api-simple without`, () => {
     cy.visit(`/fs-api-simple/without`).waitForRouteChange()
       .assertRoute(`/fs-api-simple/without/`)
   })
-  it(`client-only-simple`, () => {
+  it(`client-only-simple with`, () => {
     cy.visit(`/client-only/with/`).waitForRouteChange()
       .assertRoute(`/client-only/with/`)
+  })
+  it(`client-only-simple without`, () => {
     cy.visit(`/client-only/without`).waitForRouteChange()
       .assertRoute(`/client-only/without`)
   })
-  it(`client-only`, () => {
+  it(`client-only with`, () => {
     cy.visit(`/fs-api/with/with/`).waitForRouteChange()
       .assertRoute(`/fs-api/with/with/`)
+  })
+  it(`client-only without`, () => {
     cy.visit(`/fs-api/without/without`).waitForRouteChange()
       .assertRoute(`/fs-api/without/without`)
+  })
+  it(`query-param-hash with`, () => {
+    cy.visit(`/page-2/?query_param=hello#anchor`).waitForRouteChange()
+      .assertRoute(`/page-2/?query_param=hello#anchor`)
+  })
+  it(`query-param-hash without`, () => {
+  cy.visit(`/page-2?query_param=hello#anchor`).waitForRouteChange()
+    .assertRoute(`/page-2/?query_param=hello#anchor`)
   })
 })

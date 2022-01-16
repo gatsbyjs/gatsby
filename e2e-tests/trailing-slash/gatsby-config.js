@@ -1,10 +1,5 @@
-let hasBeenLogged = false
 const trailingSlash = process.env.TRAILING_SLASH || `legacy`
-
-if (!hasBeenLogged) {
-  console.info(`TrailingSlash: ${trailingSlash}`)
-  hasBeenLogged = true
-}
+console.info(`TrailingSlash: ${trailingSlash}`)
 
 module.exports = {
   trailingSlash,
