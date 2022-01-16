@@ -2,7 +2,9 @@ import * as React from "react"
 import { Link, graphql } from "gatsby"
 
 const IndexPage = ({ data }) => {
-  const { allPost: { nodes: posts } } = data
+  const {
+    allPost: { nodes: posts },
+  } = data
   return (
     <main>
       <h1>Trailing Slash Testing</h1>
@@ -71,7 +73,10 @@ const IndexPage = ({ data }) => {
           </Link>
         </li>
         <li>
-          <Link to="/client-only/without" data-testid="client-only-simple-without">
+          <Link
+            to="/client-only/without"
+            data-testid="client-only-simple-without"
+          >
             Client-Only Simple Without Trailing Slash
           </Link>
         </li>

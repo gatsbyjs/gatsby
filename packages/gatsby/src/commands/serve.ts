@@ -119,9 +119,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   router.use(compression())
   router.use(express.static(`public`, { dotfiles: `allow` }))
 
-  if (trailingSlash === `always`) {
-    router.use(configureTrailingSlash(trailingSlash))
-  }
+  router.use(configureTrailingSlash(trailingSlash))
 
   const compiledFunctionsDir = path.join(
     program.directory,

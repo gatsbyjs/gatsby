@@ -15,8 +15,8 @@ const posts = [
     id: 3,
     slug: `/`,
     title: `Index page`,
-    content: `This is an index page`
-  }
+    content: `This is an index page`,
+  },
 ]
 
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {

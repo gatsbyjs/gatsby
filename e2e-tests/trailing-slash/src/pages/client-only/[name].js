@@ -5,9 +5,7 @@ const ClientOnlyNamePage = ({ params }) => {
     <main>
       <h1 data-testid="title">{params.name}</h1>
       <pre>
-        <code>
-          {JSON.stringify(params, null, 2)}
-        </code>
+        <code>{JSON.stringify(params, null, 2)}</code>
       </pre>
     </main>
   )
