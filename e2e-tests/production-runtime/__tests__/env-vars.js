@@ -1,10 +1,10 @@
 const { exec } = require(`child_process`)
 
-const grepJSFilesFor = str =>
+const grepJSFilesFor = (str, pathToGrep) =>
   new Promise(resolve => {
-    const grep = exec(`grep -r "${str}" ./public/*.js`)
+    const grep = exec(`grep -r "${str}" ${pathToGrep}`)
 
-    grep.stdout.on(`data`, () => {
+    grep.stdout.on(`data`, data => {
       resolve(true)
       return
     })
@@ -17,8 +17,10 @@ const grepJSFilesFor = str =>
 
 const checkLeakedEnvVar = async () => {
   const isLeaked =
-    (await grepJSFilesFor(`VERY_SECRET_VAR`)) ||
-    (await grepJSFilesFor(`it's a secret`))
+    // we want to make sure unused VERY_SECRET_VAR doesn't end up in js bundles
+    (await grepJSFilesFor(`VERY_SECRET_VAR`, `./public/*.js`)) ||
+    // additionally we want to verify that its value don't end up anywhere in public dir
+    (await grepJSFilesFor(`it's a secret`, `./public`))
 
   if (isLeaked) {
     console.error(`Error: VERY_SECRET_VAR found in bundle`)
