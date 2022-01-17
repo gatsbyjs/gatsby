@@ -18,7 +18,6 @@ const IndicatorButton = ({
   const [showTooltip, setShowTooltip] = useState(tooltip?.show)
   const isFirstButton = buttonIndex === 0
   const marginTop = isFirstButton ? `0px` : `8px`
-
   const onButtonMouseEnter = () => {
     if (active) {
       setShowTooltip(true)
@@ -57,12 +56,13 @@ const IndicatorButton = ({
           active && hoverable && !highlighted ? `true` : `false`
         }
         data-gatsby-preview-indicator-highlighted-button={`${highlighted}`}
+        data-testid={`${testId}-button`}
         style={{ marginTop: marginTop }}
         onMouseEnter={onButtonMouseEnter}
         onMouseLeave={onMouseLeave}
         onClick={onButtonClick}
       >
-        <div data-testid={`${testId}-button`}>
+        <div>
           {iconSvg}
           {showSpinner && (
             <div data-gatsby-preview-indicator="spinner">{spinnerIcon}</div>

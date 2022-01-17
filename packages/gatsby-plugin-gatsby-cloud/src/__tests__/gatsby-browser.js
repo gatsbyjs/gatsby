@@ -4,6 +4,7 @@
 
 import React from "react"
 import "@testing-library/jest-dom/extend-expect"
+import { queryHelpers } from "@testing-library/dom"
 import userEvent from "@testing-library/user-event"
 import { render, screen, act, fireEvent } from "@testing-library/react"
 import { setInterval, setTimeout, clearInterval, clearTimeout } from "timers"
@@ -52,6 +53,20 @@ async function waitFor(callback, options = { timeout: 1000 }) {
 }
 
 describe(`Preview status indicator`, () => {
+  const assertTooltipVisibility = async ({ route, id, visible }) => {
+    process.env.GATSBY_PREVIEW_API_URL = createUrl(route)
+
+    await act(async () => {
+      render(<Indicator />)
+    })
+    const tooltip = screen.getByTestId(`${id}-tooltip`)
+    act(() => jest.advanceTimersByTime(2000))
+    if (visible) {
+      expect(tooltip).toBeVisible()
+    } else {
+      expect(tooltip).not.toBeVisible()
+    }
+  }
   const assertTooltipText = async ({ route, text, matcherType }) => {
     process.env.GATSBY_PREVIEW_API_URL = createUrl(route)
 
@@ -59,15 +74,38 @@ describe(`Preview status indicator`, () => {
       render(<Indicator />)
     })
 
-    jest.runOnlyPendingTimers()
+    const tooltip = screen.getByTestId(`link-tooltip`)
+    const button = screen.getByTestId(`link-button`)
+    console.log(`yahoo!`, tooltip)
+    // expect(tooltip).not.toBeVisible()
+    // act(() => {
+    //   fireEvent.mouseEnter(button)
+    // })
 
-    if (matcherType === `query`) {
-      expect(screen.queryByText(text, { exact: false })).not.toBeInTheDocument()
-    } else if (matcherType === `get`) {
-      await waitFor(() => {
-        expect(screen.getByText(text, { exact: false })).toBeInTheDocument()
-      })
-    }
+    // await waitFor(() => {
+    //   expect(tooltip).toBeVisible()
+    // })
+    // expect(tooltip).toBeVisible()
+    // expect(screen.getByTestId(`link-tooltip`)).toBeInTheDocument()
+
+    // let copyLinkTooltip
+    // await waitFor(() => {
+    //   copyLinkTooltip = screen.getByText(`Copy link`, {
+    //     exact: false,
+    //   })
+    // })
+    // console.log(`wohoo`, copyLinkTooltip)
+    // expect(copyLinkTooltip).toBeInTheDocument()
+
+    // jest.runOnlyPendingTimers()
+
+    // if (matcherType === `query`) {
+    //   expect(screen.queryByText(text, { exact: false })).not.toBeInTheDocument()
+    // } else if (matcherType === `get`) {
+    //   await waitFor(() => {
+    //     expect(screen.getByText(text, { exact: false })).toBeInTheDocument()
+    //   })
+    // }
   }
 
   const assertTrackEventGetsCalled = async ({
@@ -113,7 +151,7 @@ describe(`Preview status indicator`, () => {
   }
 
   beforeAll(() => {
-    server.listen()
+    act(() => server.listen())
   })
 
   beforeEach(() => {
@@ -268,65 +306,15 @@ describe(`Preview status indicator`, () => {
     })
 
     describe(`Gatsby Button`, () => {
-      it(`should show an error message when most recent build fails`, async () => {
-        await assertTooltipText({
-          route: `error`,
-          text: errorLogMessage,
-          matcherType: `get`,
-        })
-      })
-
-      it(`should have no tooltip when preview is up to date`, async () => {
-        await assertTooltipText({
-          route: `uptodate`,
-          text: initialStateMessage,
-          matcherType: `query`,
-        })
-      })
-
-      it(`should open a new window to build logs when tooltip is clicked on error`, async () => {
-        process.env.GATSBY_PREVIEW_API_URL = createUrl(`error`)
-        window.open = jest.fn()
-
-        let gatsbyButtonTooltipLink
-        const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/999/sites/111/builds/123/details`
-        const returnTo = encodeURIComponent(pathToBuildLogs)
-
-        act(() => {
+      it(`should have Gatsby Icon`, async () => {
+        await act(async () => {
           render(<Indicator />)
         })
-
-        await waitFor(() => {
-          gatsbyButtonTooltipLink = screen
-            .getByText(errorLogMessage, {
-              exact: false,
-            })
-            .closest(`a`)
-        })
-
-        expect(gatsbyButtonTooltipLink.getAttribute(`href`)).toContain(
-          `${pathToBuildLogs}?returnTo=${returnTo}`
-        )
-
-        await assertTrackEventGetsCalled({
-          route: `error`,
-          testId: `info-button`,
-          renderIndicator: false,
-        })
+        expect(screen.queryByTestId(`gatsby-button`)).toBeInTheDocument()
       })
     })
 
     describe(`Link Button`, () => {
-      // TODO: Test hoverability
-
-      it(`should have no tooltip when successful`, async () => {
-        await assertTooltipText({
-          route: `success`,
-          text: copyLinkMessage,
-          matcherType: `query`,
-        })
-      })
-
       it(`should have no tooltip when error`, async () => {
         await assertTooltipText({
           route: `error`,
@@ -337,7 +325,7 @@ describe(`Preview status indicator`, () => {
 
       it(`should have a copy link tooltip when building`, async () => {
         await assertTooltipText({
-          route: `building`,
+          route: `success`,
           text: copyLinkMessage,
           matcherType: `get`,
         })
@@ -391,6 +379,52 @@ describe(`Preview status indicator`, () => {
     })
 
     describe(`Info Button`, () => {
+      it(`should show an error message when most recent build fails`, async () => {
+        await assertTooltipText({
+          route: `error`,
+          text: errorLogMessage,
+          matcherType: `get`,
+        })
+      })
+
+      it(`should have no tooltip when preview is up to date`, async () => {
+        await assertTooltipText({
+          route: `uptodate`,
+          text: initialStateMessage,
+          matcherType: `query`,
+        })
+      })
+
+      it(`should open a new window to build logs when tooltip is clicked on error`, async () => {
+        process.env.GATSBY_PREVIEW_API_URL = createUrl(`error`)
+        window.open = jest.fn()
+
+        let gatsbyButtonTooltipLink
+        const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/999/sites/111/builds/123/details`
+        const returnTo = encodeURIComponent(pathToBuildLogs)
+
+        act(() => {
+          render(<Indicator />)
+        })
+
+        await waitFor(() => {
+          gatsbyButtonTooltipLink = screen
+            .getByText(errorLogMessage, {
+              exact: false,
+            })
+            .closest(`a`)
+        })
+
+        expect(gatsbyButtonTooltipLink.getAttribute(`href`)).toContain(
+          `${pathToBuildLogs}?returnTo=${returnTo}`
+        )
+
+        await assertTrackEventGetsCalled({
+          route: `error`,
+          testId: `info-button`,
+          renderIndicator: false,
+        })
+      })
       it(`should show a more recent succesful build when available`, async () => {
         await assertTooltipText({
           route: `success`,
@@ -408,26 +442,26 @@ describe(`Preview status indicator`, () => {
       })
 
       it(`should have no tooltip when successful`, async () => {
-        await assertTooltipText({
+        await assertTooltipVisibility({
           route: `success`,
-          text: infoButtonMessage,
-          matcherType: `query`,
+          id: `info`,
+          visible: false,
         })
       })
 
       it(`should have no tooltip when error`, async () => {
-        await assertTooltipText({
+        await assertTooltipVisibility({
           route: `error`,
-          text: infoButtonMessage,
-          matcherType: `query`,
+          id: `info`,
+          visible: false,
         })
       })
 
-      it(`should have no tooltip when building`, async () => {
-        await assertTooltipText({
-          route: `building`,
-          text: infoButtonMessage,
-          matcherType: `query`,
+      it(`should show tooltip when building`, async () => {
+        await assertTooltipVisibility({
+          route: `success`,
+          id: `info`,
+          visible: true,
         })
       })
 
