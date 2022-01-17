@@ -59,9 +59,6 @@ describe(`hot reloading non-js file`, () => {
       runImageSnapshot(`non-js-file--image-original`)
     })
 
-    // This test currently has a snapshot of the "original" image, since gatsby-remark-images hasn't
-    // been updated in development-runtime to include the hot reloading fix for images.
-    // TODO: update gatsby-remark-images and update the snapshot for this test
     it(`hot reloads with new content`, () => {
       cy.exec(
         `npm run update -- --file src/images/image.png --copy "src/images/new.png"`
