@@ -46,12 +46,12 @@ export function isTrackingEnabled(): boolean {
     enabled = true
     store.set(`telemetry.enabled`, enabled)
   }
-  trackingEnabled = enabled
 
   if (trackingDisabledFromEnvVar) {
     enabled = false
-    trackingEnabled = enabled
   }
+
+  trackingEnabled = enabled
 
   return enabled
 }
