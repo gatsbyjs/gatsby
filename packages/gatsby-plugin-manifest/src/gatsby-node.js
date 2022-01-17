@@ -1,6 +1,6 @@
 import * as fs from "fs"
 import * as path from "path"
-// TODO V5 use gatsby/sharp
+// TODO(v5): use gatsby/sharp
 import getSharpInstance from "./safe-sharp"
 import { createContentDigest, slash } from "gatsby-core-utils"
 import { defaultIcons, addDigestToPath, favicons } from "./common"
