@@ -446,7 +446,7 @@ const processAddedType = ({
 /**
  * @param {import("graphql-compose").AnyTypeComposer} typeComposer
  * @param {Array<import("graphql-compose").Directive>} directives
- * @return {{infer?: boolean, mimetype?: string, childOf?: string, nodeInterface?: boolean}}
+ * @return {{infer?: boolean, mimeTypes?: { types: Array<string> }, childOf?: { types: Array<string> }, nodeInterface?: boolean}}
  */
 const convertDirectivesToExtensions = (typeComposer, directives) => {
   const extensions = {}
