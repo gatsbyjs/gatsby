@@ -41,7 +41,7 @@ describe(`isTrackingEnabled`, () => {
     expect(cachedEnabled).toBeFalse()
   })
 
-  describe(`isTrackingEnabled / process.env.GATSBY_TELEMETRY_DISABLED`, () => {
+  describe(`process.env.GATSBY_TELEMETRY_DISABLED`, () => {
     beforeAll(() => {
       process.env.GATSBY_TELEMETRY_DISABLED = `true`
     })
