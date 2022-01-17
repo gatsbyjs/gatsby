@@ -44,8 +44,19 @@ describe(`hot reloading non-js file`, () => {
       cy.wait(1000)
     })
 
+    const runImageSnapshot = (snapshotName) => {
+      cy.get(`.gatsby-resp-image-wrapper`)
+      .find("img")
+      .each(($el, i) => {
+        cy.wrap($el).should("be.visible")
+        cy.wrap($el).should("have.attr", "srcset")
+        cy.wrap($el).should("have.attr", "src")
+        cy.wrap($el).matchImageSnapshot(`${snapshotName}-${i}`)
+      })
+    }
+
     it(`displays original content on launch`, () => {
-      cy.matchImageSnapshot(`non-js-file--image-original`)
+      runImageSnapshot(`non-js-file--image-original`)
     })
 
     // This test currently has a snapshot of the "original" image, since gatsby-remark-images hasn't
@@ -59,7 +70,7 @@ describe(`hot reloading non-js file`, () => {
       // wait for socket.io to update
       cy.wait(5000)
 
-      cy.matchImageSnapshot(`non-js-file--image-new`)
+      runImageSnapshot(`non-js-file--image-new`)
     })
   })
 })
