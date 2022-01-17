@@ -62,5 +62,5 @@ Open another terminal window and go to a folder where you can easily delete the 
 cd <path-to-playground>
 
 # Run the create-gatsby script
-node <some-path/packages/create-gatsby/cli.js
+node <some-path>/packages/create-gatsby/cli.js
 ```

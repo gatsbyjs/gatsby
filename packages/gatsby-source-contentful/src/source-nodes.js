@@ -427,7 +427,6 @@ export async function sourceNodes(
         space,
         useNameForId: pluginConfig.get(`useNameForId`),
         pluginConfig,
-        syncToken,
         unstable_createNodeManifest,
       })
     )
@@ -449,6 +448,7 @@ export async function sourceNodes(
           defaultLocale,
           locales,
           space,
+          pluginConfig,
         })
       ))
     )
