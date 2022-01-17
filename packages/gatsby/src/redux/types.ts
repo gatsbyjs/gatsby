@@ -224,7 +224,7 @@ export interface IStaticQueryResultState {
   staticQueryResultHash: string
 }
 
-// @ts-ignore @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IFeaturesState {
   // imageService: boolean
 }
@@ -826,7 +826,7 @@ export interface ISetSiteFunctions {
 export interface ISetFeatureEnabledAction {
   type: `ENABLE_FEATURE`
   payload: {
-    name: string // keyof IFeaturesState
+    name: string // keyof IFeaturesState - will add this back when we have a key (now ts is complaining about never)
     value: boolean
   }
 }
