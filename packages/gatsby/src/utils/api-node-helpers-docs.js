@@ -323,6 +323,7 @@ module.exports.basePath = true;
 
 /**
  * Check if a specific gatsby feature is enabled or disabled.
+ * For a list of features checkout [gatsby-plugin-utils](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-utils/README.md#hasFeature)
  *
  * @param {string} feature Feature to check.
  * @returns {boolean} True if feature is enabled.
