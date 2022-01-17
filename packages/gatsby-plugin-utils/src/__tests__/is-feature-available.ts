@@ -10,6 +10,10 @@ describe(`hasFeature`, () => {
     apis.features = [`imageService`]
     expect(hasFeature(`imageService`)).toBe(true)
   })
+  it(`should return false if the feature has a typo`, () => {
+    apis.features = [`imageService`]
+    expect(hasFeature(`imageServices`)).toBe(false)
+  })
 
   it(`should return false if gatsby doesn't have the feature`, () => {
     apis.features = []

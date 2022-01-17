@@ -63,3 +63,19 @@ if (isGatsbyNodeLifecycleSupported(`createSchemaCustomization`)) {
   }
 }
 ```
+
+### `hasFeature`
+
+Feature detection is now part of Gatsby. Has a plugin author you don't know what version of Gatsby a user is using. `hasFeature` allows you to check if the current version of Gatsby has a certain feature.
+
+Here's a list of features:
+
+#### Example
+
+```js
+const { hasFeature } = require(`gatsby-plugin-utils`)
+
+if (!hasFeature(`imageService`)) {
+  polyfillImageService()
+}
+```
