@@ -20,12 +20,12 @@ describe(`isTrackingEnabled`, () => {
     isTrackingEnabled = require(`../tracking`).isTrackingEnabled
   })
 
-  it(`is enabled by default`, async () => {
+  it(`is enabled by default`, () => {
     const enabled = isTrackingEnabled()
     expect(enabled).toBeTrue()
   })
 
-  it(`respects the setting of the config store`, async () => {
+  it(`respects the setting of the config store`, () => {
     get.mockImplementationOnce(key => {
       if (key === `telemetry.enabled`) {
         return false
@@ -46,7 +46,7 @@ describe(`isTrackingEnabled`, () => {
       process.env.GATSBY_TELEMETRY_DISABLED = `true`
     })
 
-    it(`respects the setting of the environment variable`, async () => {
+    it(`respects the setting of the environment variable`, () => {
       const enabled = isTrackingEnabled()
       expect(enabled).toBeFalse()
 
