@@ -16,9 +16,10 @@ import {
 import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 import { IncomingMessage, ServerResponse } from "http"
-import type { IFeaturesState } from "./dist/redux/types"
+// Sadly I can't import from build files because types are not generated at the correct time
+// import type { IFeaturesState } from "./dist/redux/types"
 
-export type AvailableFeatures = keyof IFeaturesState
+export type AvailableFeatures = never // "image-service" -- will change later
 
 export {
   default as Link,
