@@ -5,7 +5,7 @@ type ConstructConfigObjectResponse = Pick<
   "trailingSlash" | "assetPrefix" | "pathPrefix"
 >
 
-export function conststructConfigObject(
+export function constructConfigObject(
   gatsbyConfig: IGatsbyConfig
 ): ConstructConfigObjectResponse {
   return {

@@ -61,7 +61,7 @@ import {
   preparePageTemplateConfigs,
 } from "../utils/page-mode"
 import { validateEngines } from "../utils/validate-engines"
-import { conststructConfigObject } from "../utils/gatsby-cloud-config"
+import { constructConfigObject } from "../utils/gatsby-cloud-config"
 
 module.exports = async function build(
   program: IBuildArgs,
@@ -469,7 +469,7 @@ module.exports = async function build(
   })
 
   if (process.send) {
-    const gatsbyCloudConfig = conststructConfigObject(state.config)
+    const gatsbyCloudConfig = constructConfigObject(state.config)
 
     process.send({
       type: `LOG_ACTION`,

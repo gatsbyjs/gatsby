@@ -1,15 +1,15 @@
-import { conststructConfigObject } from "../gatsby-cloud-config"
+import { constructConfigObject } from "../gatsby-cloud-config"
 
 describe(`constructConfigObject`, () => {
   it(`should return defaults with empty config`, () => {
-    expect(conststructConfigObject({})).toEqual({
+    expect(constructConfigObject({})).toEqual({
       trailingSlash: `legacy`,
       pathPrefix: ``,
     })
   })
   it(`should pass defined keys to output`, () => {
     expect(
-      conststructConfigObject({
+      constructConfigObject({
         trailingSlash: `always`,
         pathPrefix: `/blog`,
         assetPrefix: `https://cdn.example.com`,

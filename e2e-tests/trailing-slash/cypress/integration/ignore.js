@@ -73,6 +73,7 @@ describe(`ignore (direct visits)`, () => {
   it(`page-creator`, () => {
     cy.visit(`/page-2`)
       .waitForRouteChange()
+      // TODO(v5): Should behave like "always"
       .assertRoute(IS_BUILD ? `/page-2/` : `/page-2`)
   })
   it(`create-page with`, () => {
