@@ -5,7 +5,7 @@ import Layout from "../../components/layout"
 export default function Index(props) {
   return (
     <Layout>
-      {props.data.markdown.nodes.map((node, index) => {
+      {props.data.markdown.nodes.sort((a, b) => a.fields.slug.localeCompare(b.fields.slug)).map((node, index) => {
         return (
           <Link
             key={node.gatsbyPath}
