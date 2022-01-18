@@ -1,7 +1,15 @@
 import runner from "@babel/helper-plugin-test-runner"
 
-jest.mock(`../babel-module-exports-helpers`, () => {
-  const original = jest.requireActual(`../babel-module-exports-helpers`)
+/**
+ * This suite is the same as `babel-plugin-remove-api` except it tests against files
+ * that are page templates.
+ *
+ * `@babel/helper-plugin-test-runner` helps us generate output fixtures
+ * to test against so it makes sense to have a separate suite and do our mocking here.
+ */
+
+jest.mock(`../../babel-module-exports-helpers`, () => {
+  const original = jest.requireActual(`../../babel-module-exports-helpers`)
 
   return {
     ...original,
