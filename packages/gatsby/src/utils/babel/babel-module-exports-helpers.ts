@@ -1,5 +1,5 @@
 import { ExportNamedDeclaration, ObjectPattern } from "@babel/types"
-import { NodePath } from "@babel/core"
+import { NodePath, PluginPass } from "@babel/core"
 
 /**
  * Check the node has at least one sibling.
@@ -8,6 +8,13 @@ function hasSibling(path: NodePath): boolean {
   return (
     [...path.getAllPrevSiblings(), ...path.getAllNextSiblings()].length !== 0
   )
+}
+
+/**
+ * Check the if the traversed node is from a page template.
+ */
+export function isPageTemplate(state: PluginPass): boolean {
+  return !!state.filename?.startsWith(`${state.cwd}/src/pages`)
 }
 
 /**
@@ -25,7 +32,7 @@ function hasSibling(path: NodePath): boolean {
  * This is cheaper than using a nested visitor and traversing upwards to check distance
  * from the export declaration.
  */
-function removeExportProperties(
+export function removeExportProperties(
   exportPath: NodePath<ExportNamedDeclaration>,
   objectPath: NodePath<ObjectPattern>,
   propertiesToRemove: Array<string>
@@ -58,5 +65,3 @@ function removeExportProperties(
     }
   }
 }
-
-export { removeExportProperties }

@@ -1,8 +1,14 @@
 import { declare } from "@babel/helper-plugin-utils"
 import * as t from "@babel/types"
 import { PluginObj, ConfigAPI, NodePath } from "@babel/core"
-import { removeExportProperties } from "./babel-module-exports"
+import {
+  removeExportProperties,
+  isPageTemplate,
+} from "./babel-module-exports-helpers"
 
+/**
+ * Remove certain exports from page templates (e.g. `getServerData`).
+ */
 export default declare(function removeApiCalls(
   api: ConfigAPI,
   options: { apis?: Array<string> }
@@ -99,6 +105,11 @@ export default declare(function removeApiCalls(
       ExportNamedDeclaration(path, state): void {
         const declaration = path.node.declaration
 
+        // Only remove exports on page templates
+        if (!isPageTemplate(state)) {
+          return
+        }
+
         if (t.isExportNamedDeclaration(path.node)) {
           const specifiersToKeep: Array<
             | t.ExportDefaultSpecifier
@@ -158,6 +169,7 @@ export default declare(function removeApiCalls(
       // Remove `module.exports = { foo }` and `exports.foo = {}` shaped exports
       ExpressionStatement(path, state): void {
         if (
+          !!isPageTemplate(state) || // Only remove exports on page templates
           !t.isAssignmentExpression(path.node.expression) ||
           !t.isMemberExpression(path.node.expression.left) ||
           (path.node.expression.left.object as t.Identifier).name !== `exports`
