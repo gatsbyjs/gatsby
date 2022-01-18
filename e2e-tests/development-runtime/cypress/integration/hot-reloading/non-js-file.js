@@ -34,23 +34,20 @@ describe(`hot reloading non-js file`, () => {
   })
 
   describe(`image`, () => {
-    beforeEach(() => {
+    beforeEach(() => {  
+      cy.visit(`/md-image/`).waitForRouteChange()
+      cy.wait(1000)
+
       cy.exec(
         `npm run update -- --file src/images/image.png --copy "src/images/original.png"`
       )
-      cy.wait(1000)
-  
-      cy.visit(`/md-image/`).waitForRouteChange()
-      cy.wait(1000)
+      cy.wait(2000)
     })
 
     const runImageSnapshot = (snapshotName) => {
       cy.get(`.gatsby-resp-image-wrapper`)
       .find("img")
       .each(($el, i) => {
-        cy.wrap($el).should("be.visible")
-        cy.wrap($el).should("have.attr", "srcset")
-        cy.wrap($el).should("have.attr", "src")
         cy.wrap($el).matchImageSnapshot(`${snapshotName}-${i}`)
       })
     }

@@ -17,7 +17,7 @@ export default function Index(props) {
           </Link>
         )
       })}
-      {props.data.images.nodes.map((node, index) => {
+      {props.data.images.nodes.sort((a, b) => a.parent.name.localeCompare(b.parent.name)).map((node, index) => {
         return (
           <Link
             key={node.gatsbyPath}
@@ -49,7 +49,7 @@ export const query = graphql`
       }
     }
 
-    images: allImageSharp(limit: 1, skip: 1) {
+    images: allImageSharp {
       nodes {
         parent {
           ... on File {
