@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.5.2/packages/gatsby-source-filesystem) (2022-01-17)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
 ### [4.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-filesystem@4.5.1/packages/gatsby-source-filesystem) (2022-01-12)
 
 **Note:** Version bump only for package gatsby-source-filesystem
