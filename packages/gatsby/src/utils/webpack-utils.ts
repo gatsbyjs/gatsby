@@ -121,6 +121,7 @@ interface IRuleUtils {
    * Handles JavaScript compilation via babel
    */
   js: RuleFactory<{ modulesThatUseGatsby?: Array<IModuleThatUseGatsby> }>
+  pageTemplates: RuleFactory
   dependencies: RuleFactory<{
     modulesThatUseGatsby?: Array<IModuleThatUseGatsby>
   }>
@@ -181,7 +182,7 @@ export const createWebpackUtils = (
   const PRODUCTION = !stage.includes(`develop`)
 
   const isSSR = stage.includes(`html`)
-  const { config } = store.getState()
+  const { components, config } = store.getState()
 
   const makeExternalOnly =
     (original: RuleFactory) =>
@@ -417,6 +418,11 @@ export const createWebpackUtils = (
       return {
         test: /\.(js|mjs|jsx)$/,
         include: (modulePath: string): boolean => {
+          // Handle page templates separately
+          if (components.has(modulePath)) {
+            return false
+          }
+
           // when it's not coming from node_modules we treat it as a source file.
           if (!vendorRegex.test(modulePath)) {
             return true
@@ -439,6 +445,29 @@ export const createWebpackUtils = (
       }
     }
     rules.js = js
+  }
+
+  /**
+   * Handle page templates separately to scope certain babel transforms appropriately
+   * (e.g. removing special module exports named `config` and `getServerData` in
+   * `babel-plugin-remove-api`).
+   */
+  {
+    const pageTemplates = (options): RuleSetRule => {
+      return {
+        test: /\.(js|mjs|jsx)$/,
+        include: (modulePath: string): boolean => components.has(modulePath),
+        type: `javascript/auto`,
+        use: [
+          loaders.js({
+            ...options,
+            compact: PRODUCTION,
+            pageTemplate: true, // Flag to check in `babel-loader`
+          }),
+        ],
+      }
+    }
+    rules.pageTemplates = pageTemplates
   }
 
   /**

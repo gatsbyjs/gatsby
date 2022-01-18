@@ -31,7 +31,7 @@ const getCustomOptions = stage => {
 const configItemsMemoCache = new Map()
 
 const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
-  const { stage, reactRuntime, reactImportSource } = options
+  const { stage, reactRuntime, reactImportSource, pageTemplate } = options
 
   if (configItemsMemoCache.has(stage)) {
     return configItemsMemoCache.get(stage)
@@ -54,7 +54,8 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
 
   if (
     _CFLAGS_.GATSBY_MAJOR === `4` &&
-    (stage === `develop` || stage === `build-javascript`)
+    (stage === `develop` || stage === `build-javascript`) &&
+    pageTemplate
   ) {
     requiredPlugins.push(
       babel.createConfigItem(
