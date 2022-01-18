@@ -38,6 +38,7 @@ There are many options available, including both self-hosted and commercially ho
 - [ElasticSearch](https://www.elastic.co/products/elasticsearch) — OSS and has commercial hosting available
 - [Solr](https://solr.apache.org) — OSS and has commercial hosting available
 - [Algolia](https://www.algolia.com/) — Commercial
+- [MeiliSearch](https://www.meilisearch.com/) - OSS
 
 Of these, the most common solution is Algolia. The Gatsby docs include a guide to adding Algolia to your site:
 

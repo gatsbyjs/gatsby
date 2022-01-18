@@ -2,7 +2,7 @@
 title: Building a Theme
 ---
 
-In this tutorial, you'll learn how to build a theme plugin for Gatsby. This tutorial is meant as a written companion to the [Gatsby Theme Authoring Egghead course](https://egghead.io/courses/gatsby-theme-authoring).
+In this tutorial, you'll learn how to build a theme plugin for Gatsby. This tutorial is meant as a written companion to the [Gatsby Theme Authoring Egghead course](https://egghead.io/courses/gatsby-theme-authoring). **Note:** The video instructions are slightly outdated at times, thus the written instructions here are the source of truth.
 
 ## Set up yarn workspaces
 

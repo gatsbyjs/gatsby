@@ -323,7 +323,9 @@ export async function processNodeManifests(): Promise<Map<
   string,
   string
 > | null> {
-  const verboseLogs = process.env.gatsby_log_level === `verbose`
+  const verboseLogs =
+    process.env.gatsby_log_level === `verbose` ||
+    process.env.VERBOSE_NODE_MANIFEST === `true`
 
   const startTime = Date.now()
   const { nodeManifests } = store.getState()
@@ -397,7 +399,7 @@ export async function processNodeManifests(): Promise<Map<
           ...listOfUniqueErrorIds,
         ].join(`, `)}]. `
       : ``) +
-      `Visit https://gatsby.dev/nodemanifest for more info on Node Manifests`
+      `To see full warning messages set process.env.VERBOSE_NODE_MANIFEST to "true".\nVisit https://gatsby.dev/nodemanifest for more info on Node Manifests.`
   )
 
   // clean up all pending manifests from the store

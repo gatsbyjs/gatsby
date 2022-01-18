@@ -13,8 +13,9 @@ describe(`collection-routing`, () => {
   })
 
   it(`can navigate to a collection route and see its content rendered`, () => {
+    // this test depends on the alphabetical sorting of markdown files
     cy.findByTestId(`collection-routing-blog-0`)
-    cy.should(`have.attr`, `data-testslug`, `/2018-12-14-hello-world/`)
+      .should(`have.attr`, `data-testslug`, `/2018-12-14-hello-world/`)
       .click()
     cy.waitForRouteChange()
       .assertRoute(`/collection-routing/2018-12-14-hello-world/`)
@@ -25,8 +26,9 @@ describe(`collection-routing`, () => {
   })
 
   it(`can navigate to a collection route that uses unions and see its content rendered`, () => {
+    // this test depends on the alphabetical sorting of image files
     cy.findByTestId(`collection-routing-image-0`)
-    cy.should(`have.attr`, `data-testimagename`, `gatsby-astronaut`)
+      .should(`have.attr`, `data-testimagename`, `gatsby-astronaut`)
       .click()
     cy.waitForRouteChange()
       .assertRoute(`/collection-routing/gatsby-astronaut/`)

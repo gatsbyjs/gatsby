@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.5.2/packages/gatsby-plugin-offline) (2022-01-17)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+### [5.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.5.1/packages/gatsby-plugin-offline) (2022-01-12)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+## [5.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.5.0/packages/gatsby-plugin-offline) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Bug Fixes
+
+- handle case of html and data files mismatch [#34225](https://github.com/gatsbyjs/gatsby/issues/34225) ([97e942e](https://github.com/gatsbyjs/gatsby/commit/97e942e28cccaf665fd94cfa8f3aed2c28237dbb))
+
+#### Chores
+
+- update dependency rewire to v6 for gatsby-plugin-offline [#34376](https://github.com/gatsbyjs/gatsby/issues/34376) ([63207a2](https://github.com/gatsbyjs/gatsby/commit/63207a2cd340890f8de38775e13247ea55f5731b))
+- upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
+- Replace cpx with cpy-cli [#34229](https://github.com/gatsbyjs/gatsby/issues/34229) ([af6632b](https://github.com/gatsbyjs/gatsby/commit/af6632b08e7867d5304cfb13448c2086fb622543))
+
 ## [5.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-offline@5.4.0/packages/gatsby-plugin-offline) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

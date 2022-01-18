@@ -1,6 +1,6 @@
 const PreactRefreshPlugin = require(`@prefresh/webpack`)
 
-exports.onCreateBabelConfig = ({ actions, stage }) => {
+export function onCreateBabelConfig({ actions, stage }) {
   if (stage === `develop`) {
     // enable react-refresh babel plugin to enable hooks
     // @see https://github.com/JoviDeCroock/prefresh/tree/master/packages/webpack#using-hooks
@@ -11,8 +11,15 @@ exports.onCreateBabelConfig = ({ actions, stage }) => {
   }
 }
 
-exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
+export function onCreateWebpackConfig({ stage, actions, getConfig }) {
   const webpackPlugins = []
+  const webpackConfig = getConfig()
+
+  if (webpackConfig.resolve?.alias) {
+    delete webpackConfig.resolve.alias.react
+    delete webpackConfig.resolve.alias[`react-dom`]
+  }
+
   if (stage === `develop`) {
     webpackPlugins.push(
       new PreactRefreshPlugin({
@@ -23,7 +30,6 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
     )
 
     // remove React refresh plugin, we want to add preact refresh instead.
-    const webpackConfig = getConfig()
     webpackConfig.plugins = webpackConfig.plugins.filter(
       plugin => plugin.constructor.name !== `ReactRefreshPlugin`
     )
@@ -32,12 +38,10 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
     webpackConfig.entry.commons.unshift(
       `@gatsbyjs/webpack-hot-middleware/client`
     )
-    actions.replaceWebpackConfig(webpackConfig)
   }
 
   // add preact to the framework bundle
   if (stage === `build-javascript` || stage === `develop`) {
-    const webpackConfig = getConfig()
     if (
       webpackConfig?.optimization?.splitChunks?.cacheGroups?.framework?.test
     ) {
@@ -50,16 +54,21 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
           /(?<!node_modules.*)[\\/]node_modules[\\/](preact)[\\/]/.test(
             module.resource
           ) || frameworkRegex.test(module.resource)
-
-      actions.replaceWebpackConfig(webpackConfig)
     }
   }
 
+  actions.replaceWebpackConfig(webpackConfig)
+
+  const extension =
+    stage === `build-javascript` || stage === `develop` ? `.module.js` : `.js`
   actions.setWebpackConfig({
     resolve: {
       alias: {
-        react: `preact/compat`,
-        "react-dom": `preact/compat`,
+        react: require.resolve(`preact/compat`).replace(`.js`, extension),
+        "react-dom/server": require
+          .resolve(`preact/compat/server`)
+          .replace(`.js`, extension),
+        "react-dom": require.resolve(`preact/compat`).replace(`.js`, extension),
       },
     },
     plugins: webpackPlugins,

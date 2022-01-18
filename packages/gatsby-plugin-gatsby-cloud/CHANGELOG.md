@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.5.2/packages/gatsby-plugin-gatsby-cloud) (2022-01-17)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
+### [4.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.5.1/packages/gatsby-plugin-gatsby-cloud) (2022-01-12)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
+## [4.5.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.5.0/packages/gatsby-plugin-gatsby-cloud) (2022-01-11)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.5)
+
+#### Bug Fixes
+
+- update dependency date-fns to ^2.28.0 for gatsby-plugin-gatsby-cloud [#34371](https://github.com/gatsbyjs/gatsby/issues/34371) ([4143125](https://github.com/gatsbyjs/gatsby/commit/414312568e7571c2150130e88fbb744a22ab08fe))
+
+#### Chores
+
+- update dependency msw to ^0.36.3 for gatsby-plugin-gatsby-cloud [#34368](https://github.com/gatsbyjs/gatsby/issues/34368) ([1367c79](https://github.com/gatsbyjs/gatsby/commit/1367c79ee0c85bff11d11de63d2b96747b0c2965))
+- update dependency @testing-library/jest-dom to ^5.16.1 [#34364](https://github.com/gatsbyjs/gatsby/issues/34364) ([5410274](https://github.com/gatsbyjs/gatsby/commit/5410274dfe21c09f94dabc6a17e2d2c3c3144ce6))
+- upgrade jest [#33277](https://github.com/gatsbyjs/gatsby/issues/33277) ([34cb202](https://github.com/gatsbyjs/gatsby/commit/34cb202d9c8c202f082edb03c4cc1815eb81abe1))
+
 ## [4.4.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-gatsby-cloud@4.4.0/packages/gatsby-plugin-gatsby-cloud) (2021-12-14)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v4.4)

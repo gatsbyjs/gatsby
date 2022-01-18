@@ -3,7 +3,8 @@ const { useMoreInfoQuery } = require("./src/hooks/use-more-info-query")
 const Github = require(`./src/components/github`).default
 
 // global css import (make sure warm rebuild doesn't invalidate every file when css is imported)
-require("./imported.css")
+// TODO: Uncomment imported.css to test issue https://github.com/gatsbyjs/gatsby/issues/33450
+// require("./imported.css")
 
 exports.wrapRootElement = ({ element }) => {
   return (

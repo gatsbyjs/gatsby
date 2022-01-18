@@ -493,7 +493,7 @@ If you're using any other process properties, you want to polyfill process.
 1. Install `process` library - `npm install process`
 2. Configure webpack to use the process polyfill.
 
-```diff:title=gatby-node.js
+```diff:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ actions, stage, plugins }) => {
   if (stage === 'build-javascript' || stage === 'develop') {
     actions.setWebpackConfig({

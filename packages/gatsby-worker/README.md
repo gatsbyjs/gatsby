@@ -29,6 +29,7 @@ const workerPool = new WorkerPool<typeof import("./worker")>(
     env: {
       CUSTOM_ENV_VAR_TO_SET_IN_WORKER: `foo`,
     },
+    silent: false,
   }
 )
 
@@ -56,7 +57,9 @@ const workerPool = new WorkerPool<TypeOfWorkerModule>(
     numWorkers?: number
     // Additional env vars to set in worker. Worker will inherit env vars of parent process
     // as well as additional `GATSBY_WORKER_ID` env var (starting with "1" for first worker)
-    env?: Record<string, string>
+    env?: Record<string, string>,
+    // Whether or not the output from forked process should ignored. Defaults to `false` if not defined.
+    silent?: boolean,
   }
 )
 ```
