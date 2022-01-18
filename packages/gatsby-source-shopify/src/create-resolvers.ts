@@ -5,9 +5,16 @@ import { shopifyTypes } from "./shopify-types"
 import { makeResolveGatsbyImageData } from "./resolve-gatsby-image-data"
 
 export function createResolvers(
-  { createResolvers, cache }: CreateResolversArgs,
-  { downloadImages, typePrefix = `` }: IShopifyPluginOptions
+  gatsbyApi: CreateResolversArgs,
+  pluginOptions: IShopifyPluginOptions
 ): void {
+  const { createResolvers, cache } = gatsbyApi
+  const {
+    downloadImages,
+    typePrefix = ``,
+    shopifyConnections: connections = [],
+  } = pluginOptions
+
   if (!downloadImages) {
     createResolvers({
       [`${typePrefix}ShopifyImage`]: {
@@ -20,27 +27,28 @@ export function createResolvers(
   }
 
   // Attach the metafield resolver to all types with a metafields field
-  for (const type of Object.keys(shopifyTypes)) {
-    if (
-      shopifyTypes?.[type]?.coupledNodeFields?.includes(`metafields___NODE`)
-    ) {
-      createResolvers({
-        [`${typePrefix}Shopify${type}`]: {
-          metafield: {
-            resolve: async (source, args, context) =>
-              context.nodeModel.findOne({
-                type: `${typePrefix}ShopifyMetafield`,
-                query: {
-                  filter: {
-                    key: { eq: args.key },
-                    namespace: { eq: args.namespace },
-                    id: { in: source.metafields___NODE },
+  for (const [type, value] of Object.entries(shopifyTypes)) {
+    if (value.coupledNodeFields?.includes(`metafields___NODE`)) {
+      // Only include the resolver if the type is included in the build
+      if (!value.optionalKey || connections.includes(value.optionalKey)) {
+        createResolvers({
+          [`${typePrefix}Shopify${type}`]: {
+            metafield: {
+              resolve: async (source: any, args: any, context: any) =>
+                context.nodeModel.findOne({
+                  type: `${typePrefix}ShopifyMetafield`,
+                  query: {
+                    filter: {
+                      key: { eq: args.key },
+                      namespace: { eq: args.namespace },
+                      id: { in: source.metafields___NODE },
+                    },
                   },
-                },
-              }),
+                }),
+            },
           },
-        },
-      })
+        })
+      }
     }
   }
 }

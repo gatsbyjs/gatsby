@@ -1,4 +1,4 @@
-import { SourceNodesArgs } from "gatsby"
+import { SourceNodesArgs, NodeInput } from "gatsby"
 
 import { eventsApi } from "./events"
 import { shopifyTypes } from "./shopify-types"
@@ -10,48 +10,50 @@ import {
   getLastBuildTime,
   setLastBuildTime,
 } from "./helpers"
+import { valid } from "joi"
 
-interface INodeMap {
-  [key: string]: IShopifyNode
+interface ICachedShopifyNode extends IShopifyNode, NodeInput {}
+
+interface ICachedShopifyNodeMap {
+  [key: string]: ICachedShopifyNode
 }
 
-function getNodesToDelete(
+/**
+ * validateNodes - Recursive function that returns an array of node ids that are validated
+ * @param gatsbyApi - Gatsby Helpers
+ * @param pluginOptions - Plugin Options Object
+ * @param nodeMap - Map Object of all nodes that haven't been deleted
+ * @param nodes - Array of nodes to validate
+ *
+ * Note: This function is designed to receive all top-level nodes on the first pass
+ * and then call itself recuresively afterwards for each coupled node field on the provided nodes
+ */
+function validateNodes(
   gatsbyApi: SourceNodesArgs,
-  nodeMap: INodeMap,
-  ids: Array<string>
+  pluginOptions: IShopifyPluginOptions,
+  nodeMap: ICachedShopifyNodeMap,
+  nodes: Array<ICachedShopifyNode>
 ): Array<string> {
-  const nodesToDelete: Array<string> = []
+  const validatedNodeIds: Array<string> = []
 
-  for (const id of ids) {
-    const node = nodeMap[id]
+  for (const node of nodes) {
+    validatedNodeIds.push(node.id)
 
-    if (node) {
-      gatsbyApi.reporter.info(
-        `Removing node with Shopify ID: ${node.shopifyId}`
+    const type = parseShopifyId(node.shopifyId)[1]
+    const coupledNodeFields = shopifyTypes[type].coupledNodeFields
+
+    if (coupledNodeFields) {
+      const coupledNodes = coupledNodeFields
+        .map(field => node[field].map((id: string) => nodeMap[id]))
+        .reduce((acc, value) => acc.concat(value), [])
+
+      validatedNodeIds.concat(
+        validateNodes(gatsbyApi, pluginOptions, nodeMap, coupledNodes)
       )
-      const type = parseShopifyId(node.shopifyId)[1]
-      const coupledNodeFields = shopifyTypes[type].coupledNodeFields
-
-      const coupledNodeIdsToDelete: Array<string> = []
-
-      if (coupledNodeFields) {
-        const coupledNodeIds = coupledNodeFields
-          .map((field: string) => node[field])
-          .reduce(
-            (acc: Array<string>, value: Array<string>) => acc.concat(value),
-            []
-          )
-
-        getNodesToDelete(gatsbyApi, nodeMap, coupledNodeIds)
-      }
-
-      return [...new Set([...coupledNodeIdsToDelete, id])]
-    } else {
-      console.error(`Could not find a node with ID: ${id}`)
     }
   }
 
-  return nodesToDelete
+  return [...new Set(validatedNodeIds)]
 }
 
 export async function sourceNodes(
@@ -64,9 +66,9 @@ export async function sourceNodes(
   const lastBuildTime = getLastBuildTime(gatsbyApi, pluginOptions)
 
   if (lastBuildTime !== undefined) {
-    gatsbyApi.reporter.info(`Cache is warm, running an incremental build`)
+    gatsbyApi.reporter.info(`Running an incremental build`)
   } else {
-    gatsbyApi.reporter.info(`Cache is cold, running a clean build`)
+    gatsbyApi.reporter.info(`Running a clean build`)
   }
 
   const {
@@ -107,43 +109,60 @@ export async function sourceNodes(
   }
 
   if (lastBuildTime) {
-    console.log(`starting building node map`)
-
-    const nodes = Object.keys(shopifyTypes)
+    const nodeMap: ICachedShopifyNodeMap = Object.keys(shopifyTypes)
       .map(type => gatsbyApi.getNodesByType(`${typePrefix}Shopify${type}`))
       .reduce((acc, value) => acc.concat(value), [])
-
-    const nodeMap: INodeMap = nodes.reduce((acc, value) => {
-      return { ...acc, [value.id]: value }
-    }, {})
-
-    console.log(`finished building node map`)
+      .reduce((acc, value) => {
+        return { ...acc, [value.id]: value }
+      }, {})
 
     const { fetchDestroyEventsSince } = eventsApi(pluginOptions)
     const destroyEvents = await fetchDestroyEventsSince(lastBuildTime)
 
-    gatsbyApi.reporter.info(
-      `${destroyEvents.length} items have been deleted since ${lastBuildTime}`
+    if (destroyEvents.length > 0) {
+      gatsbyApi.reporter.info(`Removing matching nodes from Gatsby`)
+    }
+
+    destroyEvents.forEach(event => {
+      const shopifyId = `gid://shopify/${event.subject_type}/${event.subject_id}`
+      const id = createNodeId(shopifyId, gatsbyApi, pluginOptions)
+      delete nodeMap[id]
+    })
+
+    const topLevelNodes = Object.values(nodeMap).filter(node => {
+      const type = parseShopifyId(node.shopifyId)[1]
+      return !shopifyTypes[type].coupled
+    })
+
+    const validatedNodeIds = validateNodes(
+      gatsbyApi,
+      pluginOptions,
+      nodeMap,
+      topLevelNodes
     )
 
-    if (destroyEvents.length) {
-      gatsbyApi.reporter.info(`Removing matching nodes from Gatsby`)
+    const deletionCounter: { [key: string]: number } = {}
 
-      const destroyedNodeIds = destroyEvents.map(event => {
-        const shopifyId = `gid://shopify/${event.subject_type}/${event.subject_id}`
-        return createNodeId(shopifyId, gatsbyApi, pluginOptions)
-      })
+    for (const node of Object.values(nodeMap)) {
+      if (validatedNodeIds.includes(node.id)) {
+        gatsbyApi.actions.touchNode(node)
+      } else {
+        const type = parseShopifyId(node.shopifyId)[1]
+        deletionCounter[type] = (deletionCounter[type] || 0) + 1
 
-      const allDestroyedNodeIds = getNodesToDelete(
-        gatsbyApi,
-        nodeMap,
-        destroyedNodeIds
-      )
+        const identifier = node.shopifyId
+          ? `shopify ID: ${node.shopifyId}`
+          : `internal ID: ${node.id}`
 
-      for (const node of nodes) {
-        if (!allDestroyedNodeIds.includes(node.id)) {
-          gatsbyApi.actions.touchNode(node)
-        }
+        gatsbyApi.reporter.info(`Deleting ${type} node with ${identifier}`)
+      }
+    }
+
+    // If Nodes were deleted
+    if (Object.values(nodeMap).length > validatedNodeIds.length) {
+      gatsbyApi.reporter.info(`===== NODE DELETION SUMMARY =====`)
+      for (const [key, value] of Object.entries(deletionCounter)) {
+        gatsbyApi.reporter.info(`${key}: ${value}`)
       }
     }
   }

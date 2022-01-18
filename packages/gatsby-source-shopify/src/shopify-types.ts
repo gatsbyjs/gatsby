@@ -7,7 +7,10 @@
 
 /*
  * key: The name of the reference field of the node
- * referenceFields: An object defining the defaults for reference fields
+ * coupled: Whether the node is coupled to another node or top-level
+ * optionalKey: The key if the node is optionally included in the plugin options
+ * imageFields: An array of fields containing image objects
+ * referenceFields: An array defining every field referencing other nodes
  * coupledNodeFields: An array of reference field keys that will be invalidated if that object is
  */
 
@@ -16,8 +19,10 @@
 interface IShopifyTypes {
   [key: string]: {
     key?: string
-    referenceFields?: Array<string>
+    coupled: boolean
+    optionalKey?: string
     imageFields?: Array<string>
+    referenceFields?: Array<string>
     coupledNodeFields?: Array<string>
   }
 }
@@ -25,37 +30,91 @@ interface IShopifyTypes {
 export const shopifyTypes: IShopifyTypes = {
   Collection: {
     key: `collections___NODE`,
+    coupled: false,
+    optionalKey: `collections`,
+    imageFields: [`image`],
     referenceFields: [`products___NODE`, `metafields___NODE`],
     coupledNodeFields: [`metafields___NODE`],
-    imageFields: [`image`],
   },
-  ExternalVideo: { key: `media___NODE`, imageFields: [`preview.image`] },
-  InventoryItem: { referenceFields: [`inventoryLevels___NODE`] },
-  InventoryLevel: { key: `inventoryLevels___NODE` },
-  LineItem: { key: `lineItems___NODE` },
-  Location: {},
-  Media: {},
-  MediaImage: { key: `media___NODE`, imageFields: [`image`, `preview.image`] },
-  Metafield: { key: `metafields___NODE` },
-  Model3d: { key: `media___NODE`, imageFields: [`preview.image`] },
-  Order: { referenceFields: [`lineItems___NODE`] },
+  ExternalVideo: {
+    key: `media___NODE`,
+    coupled: true,
+    imageFields: [`preview.image`],
+  },
+  InventoryItem: {
+    coupled: true,
+    referenceFields: [`inventoryLevels___NODE`],
+    coupledNodeFields: [`inventoryLevels___NODE`],
+  },
+  InventoryLevel: {
+    key: `inventoryLevels___NODE`,
+    coupled: true,
+  },
+  LineItem: {
+    key: `lineItems___NODE`,
+    coupled: true,
+  },
+  Location: {
+    coupled: false,
+    optionalKey: `locations`,
+  },
+  Media: {
+    coupled: true,
+  },
+  MediaImage: {
+    key: `media___NODE`,
+    coupled: true,
+    imageFields: [`image`, `preview.image`],
+  },
+  Metafield: {
+    key: `metafields___NODE`,
+    coupled: true,
+  },
+  Model3d: {
+    key: `media___NODE`,
+    coupled: true,
+    imageFields: [`preview.image`],
+  },
+  Order: {
+    coupled: false,
+    optionalKey: `orders`,
+    referenceFields: [`lineItems___NODE`],
+    coupledNodeFields: [`lineItems___NODE`],
+  },
   Product: {
     key: `products___NODE`,
+    coupled: false,
+    imageFields: [`featuredImage`],
     referenceFields: [
       `media___NODE`,
       `variants___NODE`,
       `metafields___NODE`,
       `collections___NODE`,
     ],
-    imageFields: [`featuredImage`],
-    coupledNodeFields: [`media___NODE`, `metafields___NODE`, `variants___NODE`],
+    coupledNodeFields: [`media___NODE`, `variants___NODE`, `metafields___NODE`],
   },
   ProductVariant: {
     key: `variants___NODE`,
-    referenceFields: [`metafields___NODE`, `media___NODE`],
+    coupled: true,
     imageFields: [`image`],
-    coupledNodeFields: [`InventoryLevel`, `Metafield`],
+    referenceFields: [
+      `inventoryLevels___NODE`,
+      `metafields___NODE`,
+      `media___NODE`,
+    ],
+    coupledNodeFields: [
+      `inventoryLevels___NODE`,
+      `metafields___NODE`,
+      `media___NODE`,
+    ],
   },
-  Video: { key: `media___NODE`, imageFields: [`preview.image`] },
-  ProductVariantPricePair: { key: `presentmentPrices` },
+  Video: {
+    key: `media___NODE`,
+    coupled: true,
+    imageFields: [`preview.image`],
+  },
+  ProductVariantPricePair: {
+    key: `presentmentPrices`,
+    coupled: true,
+  },
 }
