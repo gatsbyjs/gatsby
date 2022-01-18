@@ -8,6 +8,7 @@ export const BUILD_CSS_STAGE = `build-css`
 export const HEADERS_FILENAME = `_headers.json`
 export const REDIRECTS_FILENAME = `_redirects.json`
 export const PUBLIC_FUNCTIONS_FILENAME = `_functions.json`
+export const SITE_CONFIG_FILENAME = `_gatsby-config.json`
 export const CACHE_FUNCTIONS_FILENAME = `manifest.json`
 
 export const DEFAULT_OPTIONS = {
