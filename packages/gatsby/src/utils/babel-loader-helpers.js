@@ -62,7 +62,6 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
           resolve(`./babel/babel-plugin-remove-api`),
           {
             apis: [`getServerData`, `config`],
-            scope: `src/pages`,
           },
         ],
         {

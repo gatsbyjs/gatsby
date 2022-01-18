@@ -1,24 +1,18 @@
 import { declare } from "@babel/helper-plugin-utils"
 import * as t from "@babel/types"
 import { PluginObj, ConfigAPI, NodePath } from "@babel/core"
-import {
-  removeExportProperties,
-  isInScope,
-} from "./babel-module-exports-helpers"
+import { removeExportProperties } from "./babel-module-exports-helpers"
 
 /**
- * Remove specified module exports from files in a specified scope.
+ * Remove specified module exports from files.
  */
 export default declare(function removeApiCalls(
   api: ConfigAPI,
-  options: {
-    apis?: Array<string>
-    scope?: string // Relative to root dir
-  }
+  options: { apis?: Array<string> }
 ): PluginObj {
   api.assertVersion(7)
 
-  const { apis: apisToRemove = [], scope } = options
+  const apisToRemove = options?.apis ?? []
 
   if (!apisToRemove.length) {
     console.warn(
@@ -108,11 +102,6 @@ export default declare(function removeApiCalls(
       ExportNamedDeclaration(path, state): void {
         const declaration = path.node.declaration
 
-        // Only remove exports in specified scope
-        if (!isInScope(state, scope)) {
-          return
-        }
-
         if (t.isExportNamedDeclaration(path.node)) {
           const specifiersToKeep: Array<
             | t.ExportDefaultSpecifier
@@ -172,7 +161,6 @@ export default declare(function removeApiCalls(
       // Remove `module.exports = { foo }` and `exports.foo = {}` shaped exports
       ExpressionStatement(path, state): void {
         if (
-          !isInScope(state, scope) || // Only remove exports in specified scope
           !t.isAssignmentExpression(path.node.expression) ||
           !t.isMemberExpression(path.node.expression.left) ||
           (path.node.expression.left.object as t.Identifier).name !== `exports`

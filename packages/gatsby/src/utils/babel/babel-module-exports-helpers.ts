@@ -1,5 +1,5 @@
 import { ExportNamedDeclaration, ObjectPattern } from "@babel/types"
-import { NodePath, PluginPass } from "@babel/core"
+import { NodePath } from "@babel/core"
 
 /**
  * Check the node has at least one sibling.
@@ -8,22 +8,6 @@ export function hasSibling(path: NodePath): boolean {
   return (
     [...path.getAllPrevSiblings(), ...path.getAllNextSiblings()].length !== 0
   )
-}
-
-/**
- * Check the if the traversed node is from an in-scope file relative to the root directory.
- */
-export function isInScope(
-  state: PluginPass,
-  scope: string | undefined
-): boolean {
-  if (!scope) {
-    return true
-  }
-
-  const normalizedScope = scope?.startsWith(`/`) ? scope?.slice(1) : scope
-
-  return !!state.filename?.startsWith(`${state.cwd}/${normalizedScope}`)
 }
 
 /**
