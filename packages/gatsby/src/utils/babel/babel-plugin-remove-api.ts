@@ -3,7 +3,7 @@ import * as t from "@babel/types"
 import { PluginObj, ConfigAPI, NodePath } from "@babel/core"
 import {
   removeExportProperties,
-  isPageTemplate,
+  isInScope,
 } from "./babel-module-exports-helpers"
 
 /**
@@ -11,11 +11,14 @@ import {
  */
 export default declare(function removeApiCalls(
   api: ConfigAPI,
-  options: { apis?: Array<string> }
+  options: {
+    apis?: Array<string>
+    scope?: string // Relative to root dir
+  }
 ): PluginObj {
   api.assertVersion(7)
 
-  const apisToRemove = options?.apis ?? []
+  const { apis: apisToRemove = [], scope } = options
 
   if (!apisToRemove.length) {
     console.warn(
@@ -105,8 +108,8 @@ export default declare(function removeApiCalls(
       ExportNamedDeclaration(path, state): void {
         const declaration = path.node.declaration
 
-        // Only remove exports on page templates
-        if (!isPageTemplate(state)) {
+        // Only remove exports in specified scope
+        if (!isInScope(state, scope)) {
           return
         }
 
@@ -169,7 +172,7 @@ export default declare(function removeApiCalls(
       // Remove `module.exports = { foo }` and `exports.foo = {}` shaped exports
       ExpressionStatement(path, state): void {
         if (
-          !isPageTemplate(state) || // Only remove exports on page templates
+          !isInScope(state, scope) || // Only remove exports in specified scope
           !t.isAssignmentExpression(path.node.expression) ||
           !t.isMemberExpression(path.node.expression.left) ||
           (path.node.expression.left.object as t.Identifier).name !== `exports`

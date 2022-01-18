@@ -2,7 +2,7 @@ import runner from "@babel/helper-plugin-test-runner"
 
 /**
  * This suite is the same as `babel-plugin-remove-api` except it tests against files
- * that are page templates.
+ * that are in a specified scope.
  *
  * `@babel/helper-plugin-test-runner` helps us generate output fixtures
  * to test against so it makes sense to have a separate suite and do our mocking here.
@@ -13,7 +13,7 @@ jest.mock(`../../babel-module-exports-helpers`, () => {
 
   return {
     ...original,
-    isPageTemplate: (): boolean => true, // Simulate running `babel-plugin-remove-api` on page templates
+    isInScope: (): boolean => true, // Simulate running `babel-plugin-remove-api` on in-scope files
   }
 })
 

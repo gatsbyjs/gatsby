@@ -11,10 +11,19 @@ export function hasSibling(path: NodePath): boolean {
 }
 
 /**
- * Check the if the traversed node is from a page template.
+ * Check the if the traversed node is from an in-scope file relative to the root directory.
  */
-export function isPageTemplate(state: PluginPass): boolean {
-  return !!state.filename?.startsWith(`${state.cwd}/src/pages`)
+export function isInScope(
+  state: PluginPass,
+  scope: string | undefined
+): boolean {
+  if (!scope) {
+    return true
+  }
+
+  const normalizedScope = scope?.startsWith(`/`) ? scope?.slice(1) : scope
+
+  return !!state.filename?.startsWith(`${state.cwd}/${normalizedScope}`)
 }
 
 /**
