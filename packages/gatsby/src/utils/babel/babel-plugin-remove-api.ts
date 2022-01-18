@@ -169,7 +169,7 @@ export default declare(function removeApiCalls(
       // Remove `module.exports = { foo }` and `exports.foo = {}` shaped exports
       ExpressionStatement(path, state): void {
         if (
-          !!isPageTemplate(state) || // Only remove exports on page templates
+          !isPageTemplate(state) || // Only remove exports on page templates
           !t.isAssignmentExpression(path.node.expression) ||
           !t.isMemberExpression(path.node.expression.left) ||
           (path.node.expression.left.object as t.Identifier).name !== `exports`

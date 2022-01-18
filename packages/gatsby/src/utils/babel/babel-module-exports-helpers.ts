@@ -4,7 +4,7 @@ import { NodePath, PluginPass } from "@babel/core"
 /**
  * Check the node has at least one sibling.
  */
-function hasSibling(path: NodePath): boolean {
+export function hasSibling(path: NodePath): boolean {
   return (
     [...path.getAllPrevSiblings(), ...path.getAllNextSiblings()].length !== 0
   )

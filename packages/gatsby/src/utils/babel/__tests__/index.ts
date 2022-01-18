@@ -1,16 +1,17 @@
 import runner from "@babel/helper-plugin-test-runner"
 
+jest.mock(`../babel-module-exports-helpers`, () => {
+  const original = jest.requireActual(`../babel-module-exports-helpers`)
+
+  return {
+    ...original,
+    isPageTemplate: (): boolean => true, // Simulate running `babel-plugin-remove-api` on page templates
+  }
+})
+
 /**
  * `@babel/helper-plugin-test-runner` runs against all subdirs in the adjacent `fixtures` directory.
- * @see {@link https://babel.dev/docs/en/babel-helper-plugin-test-runner}
+ * @see {@link https://babel.dev/docs/en/babel-helper-plugin-test-runner} for docs
+ * @see {@link https://github.com/babel/babel/blob/main/packages/babel-helper-plugin-test-runner} for source code
  */
-
-beforeAll(() => {
-  process.env.REPLACE_ME = `env-var-replacement`
-})
-
-afterAll(() => {
-  delete process.env.REPLACE_ME
-})
-
 runner(__dirname)
