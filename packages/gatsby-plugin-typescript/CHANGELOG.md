@@ -7,8 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-plugin-typescript
 
-
-
 ### [4.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-typescript@4.5.1/packages/gatsby-plugin-typescript) (2022-01-12)
 
 **Note:** Version bump only for package gatsby-plugin-typescript

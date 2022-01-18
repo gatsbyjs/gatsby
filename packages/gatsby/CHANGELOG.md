@@ -10,8 +10,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - handle loaded page being potentially undefined [#34488](https://github.com/gatsbyjs/gatsby/issues/34488) [#34509](https://github.com/gatsbyjs/gatsby/issues/34509) ([0d29e95](https://github.com/gatsbyjs/gatsby/commit/0d29e9579baf308521c07336b09944b737664c52))
 - Fix issue with env variables not being passed to getServerData Fix [#34447](https://github.com/gatsbyjs/gatsby/issues/34447) Fix [#34508](https://github.com/gatsbyjs/gatsby/issues/34508) ([2fb74de](https://github.com/gatsbyjs/gatsby/commit/2fb74dec7d757f2d43d61be090475d98f4ca1b21))
 
-
-
 ### [4.5.2](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.5.2/packages/gatsby) (2022-01-12)
 
 **Note:** Version bump only for package gatsby

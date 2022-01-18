@@ -7,8 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package gatsby-plugin-page-creator
 
-
-
 ### [4.5.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-page-creator@4.5.1/packages/gatsby-plugin-page-creator) (2022-01-12)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator
