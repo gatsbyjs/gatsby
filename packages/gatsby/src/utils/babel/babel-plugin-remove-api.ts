@@ -7,7 +7,7 @@ import {
 } from "./babel-module-exports-helpers"
 
 /**
- * Remove certain exports from page templates (e.g. `getServerData`).
+ * Remove specified module exports from files in a specified scope.
  */
 export default declare(function removeApiCalls(
   api: ConfigAPI,
