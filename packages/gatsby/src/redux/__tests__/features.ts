@@ -21,7 +21,8 @@ describe(`Features actions`, () => {
     `)
   })
 
-  it(`should not be able to toggle a feature if another plugin already changed it`, () => {
+  // TODO enable when featuers are enabled
+  it.skip(`should not be able to toggle a feature if another plugin already changed it`, () => {
     const state = featuresReducer(
       undefined,
       actions.setFeatureEnabled(`imageService`, true)
