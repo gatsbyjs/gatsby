@@ -106,6 +106,16 @@ describe(`ignore (direct visits)`, () => {
       .waitForRouteChange()
       .assertRoute(`/fs-api-simple/without`)
   })
+  it(`fs-api client only splat with`, () => {
+    cy.visit(`/fs-api/with/with/`)
+      .waitForRouteChange()
+      .assertRoute(`/fs-api/with/with/`)
+  })
+  it(`fs-api client only splat without`, () => {
+    cy.visit(`/fs-api/without/without`)
+      .waitForRouteChange()
+      .assertRoute(`/fs-api/without/without`)
+  })
   it(`client-only-simple with`, () => {
     cy.visit(`/client-only/with/`)
       .waitForRouteChange()
@@ -115,16 +125,6 @@ describe(`ignore (direct visits)`, () => {
     cy.visit(`/client-only/without`)
       .waitForRouteChange()
       .assertRoute(`/client-only/without`)
-  })
-  it(`client-only with`, () => {
-    cy.visit(`/fs-api/with/with/`)
-      .waitForRouteChange()
-      .assertRoute(`/fs-api/with/with/`)
-  })
-  it(`client-only without`, () => {
-    cy.visit(`/fs-api/without/without`)
-      .waitForRouteChange()
-      .assertRoute(`/fs-api/without/without`)
   })
   it(`query-param-hash with`, () => {
     cy.visit(`/page-2/?query_param=hello#anchor`)
