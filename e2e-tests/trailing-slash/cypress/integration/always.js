@@ -72,12 +72,12 @@ describe(`always`, () => {
     cy.getTestElement(`query-param-hash`).click()
     cy.waitForRouteChange().assertRoute(`/page-2/?query_param=hello#anchor`)
   })
-  it(`client-only-simple without slash`, () => {
+  it(`client-only without slash`, () => {
     cy.getTestElement(`client-only-simple-without`).click()
     cy.waitForRouteChange().assertRoute(`/client-only/without/`)
     cy.getTestElement(`title`).should(`have.text`, `without`)
   })
-  it(`client-only-simple with slash`, () => {
+  it(`client-only with slash`, () => {
     cy.getTestElement(`client-only-simple-with`).click()
     cy.waitForRouteChange().assertRoute(`/client-only/with/`)
     cy.getTestElement(`title`).should(`have.text`, `with`)
