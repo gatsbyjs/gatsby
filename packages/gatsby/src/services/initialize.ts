@@ -604,6 +604,9 @@ export async function initialize({
   })
   activity.end()
 
+  // Track trailing slash option used in config
+  telemetry.trackFeatureIsUsed(`trailingSlash:${state.config.trailingSlash}`)
+
   // Collect resolvable extensions and attach to program.
   const extensions = [`.mjs`, `.js`, `.jsx`, `.wasm`, `.json`]
   // Change to this being an action and plugins implement `onPreBootstrap`
