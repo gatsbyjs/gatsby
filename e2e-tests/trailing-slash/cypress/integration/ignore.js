@@ -18,6 +18,24 @@ describe(`ignore`, () => {
     cy.getTestElement(`create-page-without`).click()
     cy.waitForRouteChange().assertRoute(`/create-page/without`)
   })
+  it(`fs-api with slash`, () => {
+    cy.getTestElement(`fs-api-with`).click()
+    cy.waitForRouteChange().assertRoute(`/fs-api/with/`)
+  })
+  it(`fs-api without slash`, () => {
+    cy.getTestElement(`fs-api-without`).click()
+    cy.waitForRouteChange().assertRoute(`/fs-api/without`)
+  })
+  it(`fs-api client only splat with slash`, () => {
+    cy.getTestElement(`fs-api-client-only-with`).click()
+    cy.waitForRouteChange().assertRoute(`/fs-api/with/with/`)
+    cy.getTestElement(`title`).should(`have.text`, `with`)
+  })
+  it(`fs-api client only splat without slash`, () => {
+    cy.getTestElement(`fs-api-client-only-without`).click()
+    cy.waitForRouteChange().assertRoute(`/fs-api/without/without`)
+    cy.getTestElement(`title`).should(`have.text`, `without`)
+  })
   it(`fs-api-simple with slash`, () => {
     cy.getTestElement(`fs-api-simple-with`).click()
     cy.waitForRouteChange().assertRoute(`/fs-api-simple/with/`)
