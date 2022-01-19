@@ -106,7 +106,7 @@ const Indicator = () => {
     shouldPoll.current = true
     pollData()
 
-    return () => {
+    return function cleanup() {
       shouldPoll.current = false
 
       if (timeoutRef.current) {
