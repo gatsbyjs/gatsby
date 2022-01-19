@@ -11,6 +11,9 @@ interface IRestClient {
   request: (path: string) => Promise<Response>
 }
 
+// TODO Update logic for handling errors (500 specifically) and update the
+// "hacky" code in createRestClient
+
 export function createGraphqlClient(
   options: IShopifyPluginOptions
 ): IGraphQLClient {
@@ -75,15 +78,11 @@ export function createRestClient(options: IShopifyPluginOptions): IRestClient {
 
     const resp = await fetch(url, fetchOptions)
 
-    if (!resp.ok) {
-      if (retries > 0) {
-        if (resp.status === 429) {
-          // rate limit
-          const retryAfter = parseFloat(resp.headers.get(`Retry-After`) || ``)
-          await new Promise(resolve => setTimeout(resolve, retryAfter))
-          return shopifyFetch(path, fetchOptions, retries - 1)
-        }
-      }
+    if (!resp.ok && retries > 0 && resp.status === 429) {
+      // rate limit
+      const retryAfter = parseFloat(resp.headers.get(`Retry-After`) || ``)
+      await new Promise(resolve => setTimeout(resolve, retryAfter))
+      return shopifyFetch(path, fetchOptions, retries - 1)
     }
 
     return resp
