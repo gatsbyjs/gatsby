@@ -54,7 +54,6 @@
     "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome"
   },
   "devDependencies": {
-    "@cypress/snapshot": "^2.1.7",
     "@testing-library/cypress": "^7.0.0",
     "cross-env": "^5.2.0",
     "cypress": "6.1.0",

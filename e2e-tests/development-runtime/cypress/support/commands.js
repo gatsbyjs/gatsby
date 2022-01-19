@@ -124,5 +124,3 @@ addMatchImageSnapshotCommand({
   failureThreshold: 0.08,
   failureThresholdType: `percent`,
 })
-
-require("@cypress/snapshot").register()
