@@ -10,6 +10,7 @@ import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
 import copyFunctionsManifest from "./copy-functions-manifest"
 import createRedirects from "./create-redirects"
+import createSiteConfig from "./create-site-config"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
 import { emitRoutes, emitFileNodes } from "./ipc"
 
@@ -111,6 +112,7 @@ exports.onPostBuild = async ({ store, getNodesByType }, userPluginOptions) => {
   await Promise.all([
     ensureEmittingFileNodesFinished,
     buildHeadersProgram(pluginData, pluginOptions),
+    createSiteConfig(pluginData, pluginOptions),
     createRedirects(pluginData, redirects, rewrites),
     copyFunctionsManifest(pluginData),
   ])
