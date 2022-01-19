@@ -26,14 +26,6 @@ describe(`ignore`, () => {
     cy.getTestElement(`fs-api-simple-without`).click()
     cy.waitForRouteChange().assertRoute(`/fs-api-simple/without`)
   })
-  it(`fs-api-simple with slash`, () => {
-    cy.getTestElement(`fs-api-simple-with`).click()
-    cy.waitForRouteChange().assertRoute(`/fs-api-simple/with/`)
-  })
-  it(`fs-api-simple without slash`, () => {
-    cy.getTestElement(`fs-api-simple-without`).click()
-    cy.waitForRouteChange().assertRoute(`/fs-api-simple/without`)
-  })
   it(`gatsbyPath works`, () => {
     cy.getTestElement(`gatsby-path-1`).should(
       "have.attr",
