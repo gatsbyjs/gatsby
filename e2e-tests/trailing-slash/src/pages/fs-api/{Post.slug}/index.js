@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Link } from "gatsby"
 
-const Template = ({ pageContext }) => {
+const FSApiPage = ({ pageContext }) => {
   return (
     <main>
       <h1>{pageContext.slug}</h1>
@@ -15,4 +15,4 @@ const Template = ({ pageContext }) => {
   )
 }
 
-export default Template
+export default FSApiPage

@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Link } from "gatsby"
 
-const FSApiSimple = ({ pageContext }) => {
+const FSApiSimplePage = ({ pageContext }) => {
   return (
     <main>
       <h1>{pageContext.slug}</h1>
@@ -15,4 +15,4 @@ const FSApiSimple = ({ pageContext }) => {
   )
 }
 
-export default FSApiSimple
+export default FSApiSimplePage
