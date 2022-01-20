@@ -183,6 +183,7 @@ export function generateSchema({
       fields: {
         id: { type: `ID!` },
         sys: { type: `ContentfulSys!` },
+        metadata: { type: `ContentfulMetadata!` },
       },
       interfaces: [`Node`],
     })
@@ -274,6 +275,8 @@ export function generateSchema({
         fields: {
           contentful_id: { type: `String!` },
           id: { type: `ID!` },
+          sys: { type: `ContentfulSys` },
+          metadata: { type: `ContentfulMetadata!` },
           gatsbyImageData: getGatsbyImageFieldConfig(
             async (...args) => resolveGatsbyImageData(...args, { cache }),
             {
@@ -312,7 +315,6 @@ export function generateSchema({
                 },
               }
             : {}),
-          sys: { type: `ContentfulSys` },
           title: { type: `String` },
           description: { type: `String` },
           contentType: { type: `String` },
@@ -323,6 +325,7 @@ export function generateSchema({
           height: { type: `Int` },
         },
         interfaces: [`ContentfulEntity`, `Node`],
+        extensions: { dontInfer: {} },
       }),
       {
         schema,

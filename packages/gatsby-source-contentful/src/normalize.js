@@ -568,7 +568,6 @@ export const createAssetNodes = ({
   defaultLocale,
   locales,
   space,
-  pluginConfig,
 }) => {
   const createNodePromises = []
   locales.forEach(locale => {
@@ -619,22 +618,16 @@ export const createAssetNodes = ({
       width: file.details?.image?.width ?? null,
       height: file.details?.image?.height ?? null,
       size: file.details?.size ?? null,
+      metadata: {
+        tags___NODE: assetItem.metadata.tags.map(tag =>
+          createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
+        ),
+      },
       title: assetItem.fields.title ? getField(assetItem.fields.title) : ``,
       description: assetItem.fields.description
         ? getField(assetItem.fields.description)
         : ``,
-      contentType: file.contentType,
-      fileName: file.fileName,
       url: `https:${file.url}`,
-    }
-
-    // Link tags
-    if (pluginConfig.get(`enableTags`)) {
-      assetNode.metadata = {
-        tags___NODE: assetItem.metadata.tags.map(tag =>
-          createNodeId(`ContentfulTag__${space.sys.id}__${tag.sys.id}`)
-        ),
-      }
     }
 
     // if the node hasn't changed, createNode may return `undefined` instead of a Promise on some versions of Gatsby
