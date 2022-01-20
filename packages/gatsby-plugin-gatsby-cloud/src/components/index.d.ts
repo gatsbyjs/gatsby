@@ -1,4 +1,4 @@
-declare module "gatsby-plugin-gatsby-cloud/components" {
+export declare module "gatsby-plugin-gatsby-cloud/components" {
   import React from "react"
 
   type GenericProps = { [key: string]: any }
