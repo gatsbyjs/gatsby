@@ -174,6 +174,7 @@ export function generateSchema({
       fields: {
         id: { type: `ID!` },
         sys: { type: `ContentfulSys!` },
+        metadata: { type: `ContentfulMetadata!` },
       },
       interfaces: [`Node`],
     })
@@ -280,6 +281,7 @@ export function generateSchema({
       fields: {
         id: { type: `ID!` },
         sys: { type: `ContentfulSys!` },
+        metadata: { type: `ContentfulMetadata!` },
         title: { type: `String` },
         description: { type: `String` },
         contentType: { type: `String` },
