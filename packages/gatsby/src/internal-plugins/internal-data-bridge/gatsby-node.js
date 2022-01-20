@@ -1,6 +1,6 @@
 const moment = require(`moment`)
 const chokidar = require(`chokidar`)
-const systemPath = require(`path`)
+const { resolveModule } = require(`../../utils/module-resolver`)
 const _ = require(`lodash`)
 
 const { emitter, store } = require(`../../redux`)
@@ -112,11 +112,10 @@ exports.sourceNodes = ({
     },
   })
 
-  const pathToGatsbyConfig = systemPath.join(
-    program.directory,
-    `gatsby-config.js`
-  )
-  watchConfig(pathToGatsbyConfig, createGatsbyConfigNode)
+  const pathToGatsbyConfig = resolveModule(program.directory, `./gatsby-config`)
+  if (pathToGatsbyConfig) {
+    watchConfig(pathToGatsbyConfig, createGatsbyConfigNode)
+  }
 
   // Create nodes for functions
   const { functions } = store.getState()

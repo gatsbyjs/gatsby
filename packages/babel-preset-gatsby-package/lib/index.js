@@ -1,12 +1,14 @@
+const path = require(`path`)
 const r = require(`./resolver`)
 
-function preset(context, options = {}) {
+function preset(_context, options = {}) {
   const {
     browser = false,
     debug = false,
     nodeVersion = `14.15.0`,
     esm = false,
     availableCompilerFlags = [`GATSBY_MAJOR`],
+    absoluteRuntime = false,
   } = options
   const {
     NODE_ENV,
@@ -39,6 +41,10 @@ function preset(context, options = {}) {
       node: nodeVersion,
     },
   }
+
+  const absoluteRuntimePath = absoluteRuntime
+    ? path.dirname(r("@babel/runtime/package.json"))
+    : undefined
 
   let parsedCompilerOptions = {}
   if (COMPILER_OPTIONS) {
@@ -75,6 +81,12 @@ function preset(context, options = {}) {
     plugins: [
       r(`@babel/plugin-proposal-nullish-coalescing-operator`),
       r(`@babel/plugin-proposal-optional-chaining`),
+      [
+        r(`@babel/plugin-transform-runtime`),
+        {
+          absoluteRuntime: absoluteRuntimePath
+        }
+      ],
       r(`@babel/plugin-transform-runtime`),
       r(`@babel/plugin-syntax-dynamic-import`),
       IS_TEST && r(`babel-plugin-dynamic-import-node`),

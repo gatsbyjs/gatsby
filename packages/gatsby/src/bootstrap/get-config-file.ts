@@ -1,9 +1,9 @@
 import { distance as levenshtein } from "fastest-levenshtein"
 import fs from "fs-extra"
 import { testRequireError } from "../utils/test-require-error"
+import { resolveModule } from "../utils/module-resolver"
 import report from "gatsby-cli/lib/reporter"
 import path from "path"
-import { sync as existsSync } from "fs-exists-cached"
 
 function isNearMatch(
   fileName: string | undefined,
@@ -53,7 +53,7 @@ export async function getConfigFile(
           nearMatch,
         },
       })
-    } else if (existsSync(path.join(rootDir, `src`, configName + `.js`))) {
+    } else if (resolveModule(path.join(rootDir, `src`), `./${configName}`)) {
       report.panic({
         id: `10125`,
         context: {

@@ -235,6 +235,15 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     testFitness: (): fitnessEnum => true,
   },
+  {
+    name: `TRANSPILE_JIT`,
+    env: `GATSBY_EXPERIMENTAL_TRANSPILE_CONFIG_JIT`,
+    command: `all`,
+    telemetryId: `TypescriptConfigJIT`,
+    experimental: true,
+    description: `Enable Typescript / ES6 parsing for gatsby-config & gatsby-node.`,
+    testFitness: (): fitnessEnum => true,
+  },
 ]
 
 export default activeFlags

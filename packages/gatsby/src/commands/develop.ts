@@ -25,6 +25,7 @@ import { getSslCert } from "../utils/get-ssl-cert"
 import { IProxyControls, startDevelopProxy } from "../utils/develop-proxy"
 import { IProgram, IDebugInfo } from "./types"
 import { flush as telemetryFlush } from "gatsby-telemetry"
+import { activateTranspiler } from "../services/transpiler"
 
 // Adapted from https://stackoverflow.com/a/16060619
 const requireUncached = (file: string): any => {
@@ -229,9 +230,13 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   const rootFile = (file: string): string => path.join(program.directory, file)
 
+  if (process.env.GATSBY_EXPERIMENTAL_TRANSPILE_CONFIG_JIT) {
+    activateTranspiler(program.directory)
+  }
+
   // Require gatsby-config.js before accessing process.env, to enable the user to change
   // environment variables from the config file.
-  let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
+  let lastConfig = requireUncached(rootFile(`gatsby-config`))
 
   // INTERNAL_STATUS_PORT allows for setting the websocket port used for monitoring
   // when the browser should prompt the user to restart the develop process.
@@ -440,15 +445,21 @@ module.exports = async (program: IProgram): Promise<void> => {
     }
   )
 
-  const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
+  const files = [
+    rootFile(`gatsby-config.js`),
+    rootFile(`gatsby-node.js`),
+    rootFile(`gatsby-config.ts`),
+    rootFile(`gatsby-node.ts`),
+  ]
+  const GATSBY_CONFIG_REGEX = /^gatsby-config\.[jt]s$/
   let watcher: chokidar.FSWatcher
 
   if (!isCI()) {
     watcher = chokidar.watch(files).on(`change`, filePath => {
       const file = path.basename(filePath)
 
-      if (file === `gatsby-config.js`) {
-        const newConfig = requireUncached(rootFile(`gatsby-config.js`))
+      if (file.match(GATSBY_CONFIG_REGEX)) {
+        const newConfig = requireUncached(rootFile(`gatsby-config`))
 
         if (!doesConfigChangeRequireRestart(lastConfig, newConfig)) {
           lastConfig = newConfig

@@ -9,6 +9,7 @@ import telemetry from "gatsby-telemetry"
 
 import apiRunnerNode from "../utils/api-runner-node"
 import { getBrowsersList } from "../utils/browserslist"
+import { resolveModule } from "../utils/module-resolver"
 import { Store, AnyAction } from "redux"
 import * as WorkerPool from "../utils/worker/pool"
 import { startPluginRunner } from "../redux/plugin-runner"
@@ -20,6 +21,7 @@ import { IGatsbyState, IStateProgram } from "../redux/types"
 import { IBuildContext } from "./types"
 import { detectLmdbStore } from "../datastore"
 import { loadConfigAndPlugins } from "../bootstrap/load-config-and-plugins"
+import { activateTranspiler } from "./transpiler"
 import type { InternalJob } from "../utils/jobs/types"
 import { enableNodeMutationsDetection } from "../utils/detect-node-mutations"
 
@@ -173,6 +175,10 @@ export async function initialize({
     processFlags: true,
   })
 
+  if (process.env.GATSBY_EXPERIMENTAL_TRANSPILE_CONFIG_JIT) {
+    activateTranspiler(program.directory)
+  }
+
   // TODO: figure out proper way of disabling loading indicator
   // for now GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
   // will work, but we don't want to force users into using env vars
@@ -310,11 +316,15 @@ export async function initialize({
   // The last, gatsby-node.js, is important as many gatsby sites put important
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
-  const hashes: any = await Promise.all([
-    md5File(`package.json`),
-    md5File(`${program.directory}/gatsby-config.js`).catch(() => {}), // ignore as this file isn't required),
-    md5File(`${program.directory}/gatsby-node.js`).catch(() => {}), // ignore as this file isn't required),
-  ])
+  const optionalFiles = [
+    resolveModule(program.directory, `./gatsby-config`),
+    resolveModule(program.directory, `./gatsby-node`),
+  ].filter(Boolean) as Array<string>
+  const hashes: any = await Promise.all(
+    [md5File(`package.json`)].concat(
+      optionalFiles.map(f => md5File(f).catch()) // ignore as these files aren't required
+    )
+  )
   const pluginsHash = crypto
     .createHash(`md5`)
     .update(JSON.stringify(pluginVersions.concat(hashes)))
