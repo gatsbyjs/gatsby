@@ -40,7 +40,10 @@ const IndexPage = ({ data }) => {
           </Link>
         </li>
         <li>
-          <Link to="/fs-api/without/without" data-testid="fs-api-client-only-without">
+          <Link
+            to="/fs-api/without/without"
+            data-testid="fs-api-client-only-without"
+          >
             FS API Client-Only Without Trailing Slash
           </Link>
         </li>
@@ -93,6 +96,22 @@ const IndexPage = ({ data }) => {
         <li>
           <Link to="/client-only/with/" data-testid="client-only-simple-with">
             Client-Only Simple With Trailing Slash
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/client-only-splat/without/without"
+            data-testid="client-only-splat-without"
+          >
+            Client-Only-Splat Without Trailing Slash
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/client-only-splat/with/with/"
+            data-testid="client-only-splat-with"
+          >
+            Client-Only-Splat With Trailing Slash
           </Link>
         </li>
         {posts.map(post => (

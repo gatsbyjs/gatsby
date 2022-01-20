@@ -82,6 +82,16 @@ describe(`never`, () => {
     cy.waitForRouteChange().assertRoute(`/client-only/with`)
     cy.getTestElement(`title`).should(`have.text`, `with`)
   })
+  it(`client-only-splat without slash`, () => {
+    cy.getTestElement(`client-only-splat-without`).click()
+    cy.waitForRouteChange().assertRoute(`/client-only-splat/without/without`)
+    cy.getTestElement(`title`).should(`have.text`, `without/without`)
+  })
+  it(`client-only-splat with slash`, () => {
+    cy.getTestElement(`client-only-splat-with`).click()
+    cy.waitForRouteChange().assertRoute(`/client-only-splat/with/with`)
+    cy.getTestElement(`title`).should(`have.text`, `with/with`)
+  })
 })
 
 describe(`never (direct visits)`, () => {
