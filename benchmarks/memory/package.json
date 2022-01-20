@@ -1,0 +1,24 @@
+{
+  "name": "memory-usage-benchmark",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Test site stress testing memory usage",
+  "license": "MIT",
+  "scripts": {
+    "start": "echo hello.js",
+    "build-image": "docker build -t gatsby-memory .",
+    "run-container": "docker run --mount type=bind,source=\"$(pwd)/../..\",target=/usr/src/app gatsby-memory"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby/tree/master/benchmarks/memory"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "gatsby": "4.6.0-next.3-dev-1642528625779",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}
