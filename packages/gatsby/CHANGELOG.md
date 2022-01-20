@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - handle session storage not being available [#34525](https://github.com/gatsbyjs/gatsby/issues/34525) [#34539](https://github.com/gatsbyjs/gatsby/issues/34539) ([e69270b](https://github.com/gatsbyjs/gatsby/commit/e69270b01aee337993ec4084d354bf5b09becadf))
 
-
-
 ### [4.5.3](https://github.com/gatsbyjs/gatsby/commits/gatsby@4.5.3/packages/gatsby) (2022-01-17)
 
 #### Bug Fixes
