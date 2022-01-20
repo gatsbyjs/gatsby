@@ -230,9 +230,7 @@ module.exports = async (program: IProgram): Promise<void> => {
 
   const rootFile = (file: string): string => path.join(program.directory, file)
 
-  if (process.env.GATSBY_EXPERIMENTAL_TRANSPILE_CONFIG_JIT) {
-    activateTranspiler(program.directory)
-  }
+  activateTranspiler(program.directory)
 
   // Require gatsby-config.js before accessing process.env, to enable the user to change
   // environment variables from the config file.

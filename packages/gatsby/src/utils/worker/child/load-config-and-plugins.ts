@@ -1,5 +1,6 @@
 import { loadConfigAndPlugins as internalLoadConfigAndPlugins } from "../../../bootstrap/load-config-and-plugins"
 import { store } from "../../../redux"
+import { activateTranspiler } from "../../../services/transpiler"
 import apiRunnerNode from "../../api-runner-node"
 
 export async function loadConfigAndPlugins(
@@ -14,6 +15,7 @@ export async function loadConfigAndPlugins(
       directory: siteDirectory,
     },
   })
+  activateTranspiler(program!.directory)
   await internalLoadConfigAndPlugins(...args)
 
   // Cache is already initialized

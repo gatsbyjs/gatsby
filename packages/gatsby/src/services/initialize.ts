@@ -170,14 +170,12 @@ export async function initialize({
   )
   activity.start()
 
+  activateTranspiler(program.directory)
+
   const { config, flattenedPlugins } = await loadConfigAndPlugins({
     siteDirectory: program.directory,
     processFlags: true,
   })
-
-  if (process.env.GATSBY_EXPERIMENTAL_TRANSPILE_CONFIG_JIT) {
-    activateTranspiler(program.directory)
-  }
 
   // TODO: figure out proper way of disabling loading indicator
   // for now GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop

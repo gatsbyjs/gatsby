@@ -22,7 +22,18 @@ export async function getConfigFile(
   configModule: any
   configFilePath: string
 }> {
-  const configPath = path.join(rootDir, configName)
+  const configPath = resolveModule(rootDir, `./${configName}`)
+
+  if (!configPath) {
+    report.panic({
+      id: `10123`,
+      context: {
+        configName,
+        message: `resolveModule could not find anything`,
+      },
+    })
+  }
+
   let configFilePath = ``
   let configModule: any
   try {
