@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import "./do-it-first"
+
 import os from "os"
 import semver from "semver"
 import util from "util"
