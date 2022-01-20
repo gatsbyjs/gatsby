@@ -1,7 +1,7 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "4.6.0-next.3",
+  "version": "4.6.0-next.4",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "cli.js"
@@ -11,7 +11,12 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.14.0",
+    "@babel/core": "^7.15.5",
+    "@babel/generator": "^7.16.8",
+    "@babel/helper-plugin-utils": "^7.16.7",
     "@babel/runtime": "^7.15.4",
+    "@babel/template": "^7.16.7",
+    "@babel/types": "^7.16.8",
     "@types/common-tags": "^1.8.1",
     "better-opn": "^2.1.1",
     "boxen": "^5.1.2",
@@ -20,13 +25,13 @@
     "common-tags": "^1.8.2",
     "configstore": "^5.0.1",
     "convert-hrtime": "^3.0.0",
-    "create-gatsby": "^2.6.0-next.2",
+    "create-gatsby": "^2.6.0-next.3",
     "envinfo": "^7.8.1",
     "execa": "^5.1.1",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^10.0.0",
-    "gatsby-core-utils": "^3.6.0-next.1",
-    "gatsby-telemetry": "^3.6.0-next.1",
+    "gatsby-core-utils": "^3.6.0-next.2",
+    "gatsby-telemetry": "^3.6.0-next.2",
     "hosted-git-info": "^3.0.8",
     "is-valid-path": "^0.1.1",
     "joi": "^17.4.2",
@@ -52,7 +57,6 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
-    "@babel/core": "^7.15.5",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^17.1.0",
     "@rollup/plugin-json": "^4.1.0",

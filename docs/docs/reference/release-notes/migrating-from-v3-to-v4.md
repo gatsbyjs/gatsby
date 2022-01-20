@@ -110,8 +110,8 @@ exports.sourceNodes = ({ actions, getNodesByType }) => {
 In case you only have an ID at hand (e.g. getting it from cache), you can use the `getNode()` API:
 
 ```js:title=gatsby-node.js
-exports.sourceNodes = async ({ actions, getNodesByType, cache }) => {
-  const { touchNode, getNode } = actions
+exports.sourceNodes = async ({ actions, getNode, getNodesByType, cache }) => {
+  const { touchNode } = actions
   const myNodeId = await cache.get("some-key")
 
   touchNode(getNode(myNodeId)) // highlight-line
