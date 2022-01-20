@@ -121,7 +121,6 @@ interface IRuleUtils {
    * Handles JavaScript compilation via babel
    */
   js: RuleFactory<{ modulesThatUseGatsby?: Array<IModuleThatUseGatsby> }>
-  pageTemplates: RuleFactory
   dependencies: RuleFactory<{
     modulesThatUseGatsby?: Array<IModuleThatUseGatsby>
   }>
@@ -417,57 +416,53 @@ export const createWebpackUtils = (
     } = {}): RuleSetRule => {
       return {
         test: /\.(js|mjs|jsx)$/,
-        include: (modulePath: string): boolean => {
-          // Handle page templates separately
-          if (components.has(modulePath)) {
-            return false
-          }
+        oneOf: [
+          /**
+           * Handle page templates separately to scope certain babel transforms appropriately
+           * (e.g. removing special module exports named `config` and `getServerData` in
+           * `babel-plugin-remove-api`).
+           */
+          {
+            include: (modulePath: string): boolean =>
+              components.has(modulePath),
+            type: `javascript/auto`,
+            use: [
+              loaders.js({
+                ...options,
+                compact: PRODUCTION,
+                pageTemplate: true, // Flag to check in `babel-loader`
+              }),
+            ],
+          },
+          /**
+           * All other source files.
+           */
+          {
+            include: (modulePath: string): boolean => {
+              // when it's not coming from node_modules we treat it as a source file.
+              if (!vendorRegex.test(modulePath)) {
+                return true
+              }
 
-          // when it's not coming from node_modules we treat it as a source file.
-          if (!vendorRegex.test(modulePath)) {
-            return true
-          }
-
-          // If the module uses Gatsby as a dependency
-          // we want to treat it as src so we can extract queries
-          return modulesThatUseGatsby.some(module =>
-            modulePath.includes(module.path)
-          )
-        },
-        type: `javascript/auto`,
-        use: [
-          loaders.js({
-            ...options,
-            configFile: true,
-            compact: PRODUCTION,
-          }),
+              // If the module uses Gatsby as a dependency
+              // we want to treat it as src so we can extract queries
+              return modulesThatUseGatsby.some(module =>
+                modulePath.includes(module.path)
+              )
+            },
+            type: `javascript/auto`,
+            use: [
+              loaders.js({
+                ...options,
+                configFile: true,
+                compact: PRODUCTION,
+              }),
+            ],
+          },
         ],
       }
     }
     rules.js = js
-  }
-
-  /**
-   * Handle page templates separately to scope certain babel transforms appropriately
-   * (e.g. removing special module exports named `config` and `getServerData` in
-   * `babel-plugin-remove-api`).
-   */
-  {
-    const pageTemplates = (options): RuleSetRule => {
-      return {
-        test: /\.(js|mjs|jsx)$/,
-        include: (modulePath: string): boolean => components.has(modulePath),
-        type: `javascript/auto`,
-        use: [
-          loaders.js({
-            ...options,
-            compact: PRODUCTION,
-            pageTemplate: true, // Flag to check in `babel-loader`
-          }),
-        ],
-      }
-    }
-    rules.pageTemplates = pageTemplates
   }
 
   /**
