@@ -87,7 +87,6 @@ function preset(_context, options = {}) {
           absoluteRuntime: absoluteRuntimePath
         }
       ],
-      r(`@babel/plugin-transform-runtime`),
       r(`@babel/plugin-syntax-dynamic-import`),
       IS_TEST && r(`babel-plugin-dynamic-import-node`),
       [
