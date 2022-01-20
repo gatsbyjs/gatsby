@@ -5,9 +5,11 @@
   "description": "Test site stress testing memory usage",
   "license": "MIT",
   "scripts": {
-    "start": "echo $PWD; echo -e '\n'; ls",
-    "build-image": "docker build -t gatsby-memory .",
-    "run-container": "docker run --mount type=bind,source=\"$(pwd)\",target=/usr/src/app gatsby-memory"
+    "start": "echo $PWD; ls ..",
+    "docker:build": "docker build -t gatsby-memory .",
+    "docker:start": "./scripts/docker-start",
+    "docker:connect": "./scripts/docker-connect",
+    "docker:stop": "./scripts/docker-stop"
   },
   "repository": {
     "type": "git",
