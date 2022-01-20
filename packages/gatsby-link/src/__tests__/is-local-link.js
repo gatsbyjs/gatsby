@@ -7,6 +7,12 @@ describe(`isLocalLink`, () => {
   it(`returns false on absolute link`, () => {
     expect(isLocalLink(`https://www.gatsbyjs.com`)).toBe(false)
   })
+  it(`returns undefined if input is undefined or not a string`, () => {
+    expect(isLocalLink(undefined)).toBeUndefined()
+    expect(isLocalLink(-1)).toBeUndefined()
+  })
+  /*
+  TODO(v5): Re-Add Tests
   it(`throws TypeError if input is undefined`, () => {
     expect(() => isLocalLink(undefined)).toThrowError(
       `Expected a \`string\`, got \`undefined\``
@@ -17,4 +23,5 @@ describe(`isLocalLink`, () => {
       `Expected a \`string\`, got \`number\``
     )
   })
+  */
 })

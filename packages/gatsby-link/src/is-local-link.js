@@ -4,7 +4,9 @@ const isAbsolute = path => ABSOLUTE_URL_REGEX.test(path)
 
 export const isLocalLink = path => {
   if (typeof path !== `string`) {
-    throw new TypeError(`Expected a \`string\`, got \`${typeof path}\``)
+    return undefined
+    // TODO(v5): Re-Add TypeError
+    // throw new TypeError(`Expected a \`string\`, got \`${typeof path}\``)
   }
 
   return !isAbsolute(path)
