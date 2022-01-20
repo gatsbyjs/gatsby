@@ -423,8 +423,7 @@ export const createWebpackUtils = (
            * `babel-plugin-remove-api`).
            */
           {
-            include: (modulePath: string): boolean =>
-              components.has(modulePath),
+            resourceQuery: /page-template/,
             type: `javascript/auto`,
             use: [
               loaders.js({
