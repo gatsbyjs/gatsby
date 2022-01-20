@@ -212,9 +212,15 @@ describe(`Preview status indicator`, () => {
 
   /**
    * SKIPPED TEST NOTE
-   * Some tests are skipped and this is because they were not working as expected and
-   * providing false positives. Fixing them will take some work that will be handled
-   * in a future PR.
+   * 1. The previous tests were written withe the assumption that the tooltips were
+   * displayed but not just not visible. Since logic was added that truly made the
+   * tooltips dissapear the current tests failed. In an effort to fix the these we
+   * ran into multiple issues concerning state and events that will take some refactoring to fix.
+   *
+   * 2. These tests only concern the hiding and showing the tooltip in certain cases
+   * so should affect coverage adversely
+   *
+   * 3. A PR to fix these test and other issues will be added when we refactor the plugin
    */
 
   describe(`Indicator`, () => {
