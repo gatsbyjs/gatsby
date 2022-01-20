@@ -219,7 +219,7 @@ Gatsby also supports _splat_ (or wildcard) routes, which are routes that will ma
 As an example, suppose that you are rendering images from [S3](/docs/how-to/previews-deploys-hosting/deploying-to-s3-cloudfront/) and the URL is actually the key to the asset in AWS. Here is how you might create your file:
 
 - `src/pages/image/[...].js` will generate a route like `/image/*`. `*` is accessible in your page's received properties with the key name `*`.
-- `src/pages/image/[...awsKey].js` will generate a route like `/image/*`. `*` is accessible in your page's received properties with the key name `awsKey`.
+- `src/pages/image/[...awsKey].js` will generate a route like `/image/*awsKey`. `*awsKey` is accessible in your page's received properties with the key name `awsKey`.
 
 ```js:title=src/pages/image/[...].js
 export default function ImagePage({ params }) {
