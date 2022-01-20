@@ -55,13 +55,13 @@ const TagsPage = ({ data }) => {
         data-cy-assets
         style={{ display: "flex", justifyContent: "space-between" }}
       >
-        {assets.map(({ title, file, metadata }) => {
+        {assets.map(({ title, url, metadata }) => {
           const slug = slugify(title, { strict: true, lower: true })
           return (
             <div data-cy-id={slug} key={slug}>
               <h3>{title}</h3>
               <img
-                src={`${file.url}?w=300&h=300&fit=thumb&f=face`}
+                src={`${url}?w=300&h=300&fit=thumb&f=face`}
                 style={{ width: 300 }}
                 alt={title}
               />
@@ -127,17 +127,15 @@ export const pageQuery = graphql`
       }
     }
     assets: allContentfulAsset(
-      sort: { fields: contentful_id }
+      sort: { fields: sys___id }
       filter: {
         metadata: { tags: { elemMatch: { contentful_id: { eq: "animal" } } } }
-        node_locale: { eq: "en-US" }
+        sys: { locale: { eq: "en-US" } }
       }
     ) {
       nodes {
         title
-        file {
-          url
-        }
+        url
         metadata {
           tags {
             name
