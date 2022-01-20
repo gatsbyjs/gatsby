@@ -42,8 +42,8 @@ const makeGetLocalizedField =
   field =>
     getLocalizedField({ field, locale, localesFallback })
 
-export const makeId = (space, nodeOrLink, locale) => {
-  // console.log("makeId", { space, nodeOrLink })
+// Create unique ID for Contentful entity. ALL_LOCALES is used for reference linking.
+export const makeId = (space, nodeOrLink, locale = `ALL_LOCALES`) => {
   const type = nodeOrLink.sys.linkType || nodeOrLink.sys.type
 
   // Sync API: Map deleted types to their actual type name
@@ -94,30 +94,24 @@ export const buildResolvableSet = ({
   existingNodes = [],
   assets = [],
   space,
-  locales,
 }) => {
   const resolvable = new Set()
   existingNodes.forEach(node => {
     if (node.internal.owner === `gatsby-source-contentful` && node?.sys?.id) {
       // We need to add only root level resolvable (assets and entries)
       // Derived nodes (markdown or JSON) will be recreated if needed.
-      resolvable.add(makeId(space, node, node.sys.locale))
+      resolvable.add(makeId(space, node))
+      // @todo this probably does not need to be resolved
     }
   })
 
   entryList.forEach(entries => {
     entries.forEach(entry => {
-      locales.forEach(locale => {
-        resolvable.add(makeId(space, entry, locale))
-      })
+      resolvable.add(makeId(space, entry))
     })
   })
 
-  assets.forEach(assetItem =>
-    locales.forEach(locale => {
-      resolvable.add(makeId(space, assetItem, locale))
-    })
-  )
+  assets.forEach(assetItem => resolvable.add(makeId(space, assetItem)))
 
   return resolvable
 }
@@ -349,12 +343,7 @@ export const createNodesForContentType = ({
     // First create nodes for each of the entries of that content type
     const entryNodes = entries
       .map(entryItem => {
-        // const entryNodeId = mId(
-        //   space.sys.id,
-        //   entryItem.sys.id,
-        //   entryItem.sys.type
-        // )
-        const entryNodeId = makeId(space, entryItem, locale)
+        const entryNodeId = makeId(space, entryItem, locale.code)
 
         const existingNode = getNode(entryNodeId)
         if (existingNode?.internal?.contentDigest === entryItem.sys.updatedAt) {
@@ -399,15 +388,8 @@ export const createNodesForContentType = ({
                 // creating an empty node field in case when original key field value
                 // is empty due to links to missing entities
                 const resolvableEntryItemFieldValue = entryItemFieldValue
-                  .filter(v => resolvable.has(makeId(space, v, locale)))
-                  // .map(function (v) {
-                  //   return mId(
-                  //     space.sys.id,
-                  //     v.sys.id,
-                  //     v.sys.linkType || v.sys.type
-                  //   )
-                  // })
-                  .map(v => makeId(space, v, locale))
+                  .filter(v => resolvable.has(makeId(space, v)))
+                  .map(v => makeId(space, v, locale.code))
                 if (resolvableEntryItemFieldValue.length !== 0) {
                   entryItemFields[`${entryItemFieldKey}___NODE`] =
                     resolvableEntryItemFieldValue
@@ -421,16 +403,11 @@ export const createNodesForContentType = ({
               entryItemFieldValue.sys.type &&
               entryItemFieldValue.sys.id
             ) {
-              if (resolvable.has(makeId(space, entryItemFieldValue, locale))) {
-                // entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
-                //   space.sys.id,
-                //   entryItemFieldValue.sys.id,
-                //   entryItemFieldValue.sys.linkType ||
-                //     entryItemFieldValue.sys.type
-                // )
+              if (resolvable.has(makeId(space, entryItemFieldValue))) {
                 entryItemFields[`${entryItemFieldKey}___NODE`] = makeId(
                   space,
-                  entryItemFieldValue
+                  entryItemFieldValue,
+                  locale.code
                 )
               }
               delete entryItemFields[entryItemFieldKey]
@@ -439,8 +416,7 @@ export const createNodesForContentType = ({
         })
 
         // Add reverse linkages if there are any for this node
-        const foreignReferences =
-          foreignReferenceMap[makeId(space, entryItem, locale)]
+        const foreignReferences = foreignReferenceMap[makeId(space, entryItem)]
         if (foreignReferences) {
           foreignReferences.forEach(({ name, node, space }) => {
             const existingReference = entryItemFields[name]
@@ -449,12 +425,12 @@ export const createNodesForContentType = ({
               // many-to-one reference which has already been recorded, so we can
               // skip it. However, if it is an array, add it:
               if (Array.isArray(existingReference)) {
-                entryItemFields[name].push(makeId(space, node, locale))
+                entryItemFields[name].push(makeId(space, node, locale.code))
               }
             } else {
               // If there is one foreign reference, there can be many.
               // Best to be safe and put it in an array to start with.
-              entryItemFields[name] = [makeId(space, node, locale)]
+              entryItemFields[name] = [makeId(space, node, locale.code)]
             }
           })
         }
@@ -589,19 +565,12 @@ export const createAssetNodes = ({
   assetItem,
   createNode,
   createNodeId,
-  defaultLocale,
   locales,
   space,
-  pluginConfig,
 }) => {
   const createNodePromises = []
   locales.forEach(locale => {
     const localesFallback = buildFallbackChain(locales)
-    // const mId = makeMakeId({
-    //   currentLocale: locale.code,
-    //   defaultLocale,
-    //   createNodeId,
-    // })
     const getField = makeGetLocalizedField({
       locale,
       localesFallback,
@@ -610,7 +579,6 @@ export const createAssetNodes = ({
     const file = getField(assetItem.fields.file)
 
     const assetNode = {
-      // id: mId(space.sys.id, assetItem.sys.id, assetItem.sys.type),
       id: makeId(space, assetItem, locale.code),
       parent: null,
       children: [],

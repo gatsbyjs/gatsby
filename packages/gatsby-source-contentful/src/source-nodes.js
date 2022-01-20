@@ -11,7 +11,6 @@ import {
   buildResolvableSet,
   createAssetNodes,
   createNodesForContentType,
-  generateReferenceId,
   makeId,
 } from "./normalize"
 import { createPluginConfig } from "./plugin-options"
@@ -305,7 +304,6 @@ export async function sourceNodes(
     entryList,
     assets,
     space,
-    locales,
   })
 
   // console.log({ resolvable })
@@ -337,17 +335,14 @@ export async function sourceNodes(
   // Update existing entry nodes that weren't updated but that need reverse
   // links added.
   existingNodes
-    .filter(
-      n =>
-        n?.sys?.type && newOrUpdatedEntries.has(makeId(space, n, n.sys.locale))
-    )
+    .filter(n => n?.sys?.type && newOrUpdatedEntries.has(makeId(space, n)))
     .forEach(n => {
-      const id = makeId(space, n, n.sys.locale)
+      const id = makeId(space, n)
 
       if (foreignReferenceMap[id]) {
         // Add reverse links
         foreignReferenceMap[id].forEach(({ name, node, space }) => {
-          const referenceId = generateReferenceId(space, node)
+          const referenceId = makeId(space, node)
 
           // Create reference when none exists
           if (!n[name]) {
@@ -369,32 +364,13 @@ export async function sourceNodes(
             })
           })
         })
-        // console.log(`existing node`, {
-        //   n,
-        //   id,
-        //   mapRes: foreignReferenceMap[id],
-        //   foreignReferenceMap,
-        // })
       }
     })
 
   function deleteContentfulNode(node) {
-    const normalizedType = node.sys.type.startsWith(`Deleted`)
-      ? node.sys.type.substring(`Deleted`.length)
-      : node.sys.type
-
     const localizedNodes = locales
       .map(locale => {
-        const nodeId = createNodeId(
-          // makeId({
-          //   spaceId: space.sys.id,
-          //   id: node.sys.id,
-          //   type: normalizedType,
-          //   currentLocale: locale.code,
-          //   defaultLocale,
-          // })
-          makeId(space, node, locale)
-        )
+        const nodeId = createNodeId(makeId(space, node, locale.code))
         return getNode(nodeId)
       })
       .filter(node => node)
@@ -480,10 +456,8 @@ export async function sourceNodes(
           assetItem: assets[i],
           createNode,
           createNodeId,
-          defaultLocale,
           locales,
           space,
-          pluginConfig,
         })
       ))
     )
