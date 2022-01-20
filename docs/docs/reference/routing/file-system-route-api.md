@@ -214,7 +214,7 @@ You can use square brackets (`[ ]`) in the file path to mark any dynamic segment
 
 #### Splat routes
 
-Gatsby also supports _splat_ (or wildcard) routes, which are routes that will match _anything_ after the splat. These are less common, but still have use cases.
+Gatsby also supports _splat_ (or wildcard) routes, which are routes that will match _anything_ after the splat. These are less common, but still have use cases. Use three periods in square brackets (`[...]`) in a file path to mark a page as a splat route.
 
 As an example, suppose that you are rendering images from [S3](/docs/how-to/previews-deploys-hosting/deploying-to-s3-cloudfront/) and the URL is actually the key to the asset in AWS. Here is how you might create your file:
 
