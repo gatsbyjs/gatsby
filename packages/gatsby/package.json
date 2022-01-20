@@ -37,6 +37,7 @@
     "babel-plugin-lodash": "^3.3.4",
     "babel-plugin-remove-graphql-queries": "^4.6.0-next.1",
     "babel-preset-gatsby": "^2.6.0-next.1",
+    "babel-preset-gatsby-package": "2.6.0-next.0",
     "better-opn": "^2.1.1",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
