@@ -1,6 +1,6 @@
-const {
-  takeHeapSnapshot,
-} = require(`./node_modules/gatsby/dist/utils/debug-memory.js`)
+// const {
+//   takeHeapSnapshot,
+// } = require(`./node_modules/gatsby/dist/utils/debug-memory.js`)
 
 // exports.createSchemaCustomization = ({ actions }) => {
 //   actions.createTypes(`
@@ -28,7 +28,7 @@ const {
 const NUM_NODES = 200
 
 exports.sourceNodes = async ({ actions }) => {
-  await takeHeapSnapshot(`sourceNodes-1`)
+  // await takeHeapSnapshot(`sourceNodes-1`)
 
   for (let i = 0; i < NUM_NODES; i++) {
     const largeSizeObj = {}
@@ -59,7 +59,7 @@ exports.sourceNodes = async ({ actions }) => {
 
   await new Promise(resolve => setTimeout(resolve, 100))
 
-  await takeHeapSnapshot(`sourceNodes-2`)
+  // await takeHeapSnapshot(`sourceNodes-2`)
 }
 
 // exports.onCreateNode = ({ node, actions, getNode }) => {
@@ -84,5 +84,5 @@ exports.createPages = async ({ getNode, action, graphql }) => {
   const node = getNode(`memory-1`)
   // console.log({ node })
   // console.info(`just using node`, node.id)
-  await takeHeapSnapshot(`create-pages`)
+  // await takeHeapSnapshot(`create-pages`)
 }
