@@ -181,7 +181,7 @@ export const createWebpackUtils = (
   const PRODUCTION = !stage.includes(`develop`)
 
   const isSSR = stage.includes(`html`)
-  const { components, config } = store.getState()
+  const { config } = store.getState()
 
   const makeExternalOnly =
     (original: RuleFactory) =>
