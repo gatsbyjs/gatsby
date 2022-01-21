@@ -10,10 +10,11 @@ export default function Home({ data }) {
 }
 
 export const q = graphql`
-  {
-    test(idClone: { eq: "memory-2" }) {
+  query ($id: String!) {
+    test(id: { eq: $id }) {
       id
       fooBar
     }
+    workerInfo(label: "eq-id")
   }
 `
