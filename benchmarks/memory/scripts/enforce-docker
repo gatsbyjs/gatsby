@@ -10,4 +10,4 @@ if [ ! -f /.dockerenv ]; then
   exit 1
 fi
 
-eval ${@:2}
+${@:1}
