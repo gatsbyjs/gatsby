@@ -38,20 +38,22 @@ describe(`webpack utils`, () => {
     it(`adds .js rule`, () => {
       expect(config.rules.js).toEqual(expect.any(Function))
     })
-
     it(`returns default values without any options`, () => {
       const rule = config.rules.js([])
-
       expect(rule).toMatchSnapshot({
-        use: [
+        oneOf: [
           {
-            loader: expect.stringContaining(`babel-loader`),
+            use: [{ loader: expect.stringContaining(`babel-loader`) }], // Page template rule
+          },
+          {
+            use: [{ loader: expect.stringContaining(`babel-loader`) }], // Catch-all JS rule
           },
         ],
       })
     })
-    describe(`include function`, () => {
+    describe(`page template rule resource query regex`, () => {
       let js
+      let pageTemplateRule
       beforeAll(() => {
         js = config.rules.js({
           modulesThatUseGatsby: [
@@ -61,39 +63,96 @@ describe(`webpack utils`, () => {
             },
           ],
         })
+        pageTemplateRule = js.oneOf[0]
       })
-
+      it(`matches page template files from user code`, () => {
+        expect(
+          pageTemplateRule.resourceQuery.test(
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/src/pages/index.js?page-template` // Simulates import from async-requires
+          )
+        ).toEqual(true)
+      })
+      it(`does not match other files from user code`, () => {
+        expect(
+          pageTemplateRule.resourceQuery.test(
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/src/pages/index.js`
+          )
+        ).toEqual(false)
+      })
+      it(`does not match files from .cache`, () => {
+        expect(
+          pageTemplateRule.resourceQuery.test(
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/.cache/production-app.js`
+          )
+        ).toEqual(false)
+      })
+      it(`does not match dependencies that use gatsby`, () => {
+        expect(
+          pageTemplateRule.resourceQuery.test(
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo/index.js`
+          )
+        ).toEqual(false)
+      })
+      it(`does not match other dependencies`, () => {
+        expect(
+          pageTemplateRule.resourceQuery.test(
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/react/index.js`
+          )
+        ).toEqual(false)
+      })
+      it(`does not include gatsby-browser.js`, () => {
+        expect(
+          pageTemplateRule.resourceQuery.test(
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/gatsby-browser.js`
+          )
+        ).toEqual(false)
+      })
+    })
+    describe(`catch-all js rule include function`, () => {
+      let js
+      let catchAllRule
+      beforeAll(() => {
+        js = config.rules.js({
+          modulesThatUseGatsby: [
+            {
+              name: `gatsby-seo`,
+              path: `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo`,
+            },
+          ],
+        })
+        catchAllRule = js.oneOf[1]
+      })
       it(`includes source files from user code`, () => {
         expect(
-          js.include(
+          catchAllRule.include(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/src/pages/index.js`
           )
         ).toEqual(true)
       })
       it(`includes files from .cache`, () => {
         expect(
-          js.include(
+          catchAllRule.include(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/.cache/production-app.js`
           )
         ).toEqual(true)
       })
       it(`includes dependencies that use gatsby`, () => {
         expect(
-          js.include(
+          catchAllRule.include(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo/index.js`
           )
         ).toEqual(true)
       })
       it(`does not include other dependencies`, () => {
         expect(
-          js.include(
+          catchAllRule.include(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/react/index.js`
           )
         ).toEqual(false)
       })
       it(`includes gatsby-browser.js`, () => {
         expect(
-          js.include(
+          catchAllRule.include(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/gatsby-browser.js`
           )
         ).toEqual(true)

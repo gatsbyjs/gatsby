@@ -31,22 +31,45 @@ Object {
 
 exports[`webpack utils js returns default values without any options 1`] = `
 Object {
-  "include": [Function],
-  "test": /\\\\\\.\\(js\\|mjs\\|jsx\\)\\$/,
-  "type": "javascript/auto",
-  "use": Array [
+  "oneOf": Array [
     Object {
-      "loader": StringContaining "babel-loader",
-      "options": Object {
-        "cacheDirectory": "<TEMP_DIR>/test/.cache/webpack/babel",
-        "compact": false,
-        "configFile": true,
-        "reactImportSource": undefined,
-        "reactRuntime": undefined,
-        "rootDir": "<TEMP_DIR>/test",
-        "stage": "develop",
-      },
+      "resourceQuery": /page-template/,
+      "type": "javascript/auto",
+      "use": Array [
+        Object {
+          "loader": StringContaining "babel-loader",
+          "options": Object {
+            "cacheDirectory": "<TEMP_DIR>/test/.cache/webpack/babel",
+            "compact": false,
+            "configFile": true,
+            "pageTemplate": true,
+            "reactImportSource": undefined,
+            "reactRuntime": undefined,
+            "rootDir": "<TEMP_DIR>/test",
+            "stage": "develop",
+          },
+        },
+      ],
+    },
+    Object {
+      "include": [Function],
+      "type": "javascript/auto",
+      "use": Array [
+        Object {
+          "loader": StringContaining "babel-loader",
+          "options": Object {
+            "cacheDirectory": "<TEMP_DIR>/test/.cache/webpack/babel",
+            "compact": false,
+            "configFile": true,
+            "reactImportSource": undefined,
+            "reactRuntime": undefined,
+            "rootDir": "<TEMP_DIR>/test",
+            "stage": "develop",
+          },
+        },
+      ],
     },
   ],
+  "test": /\\\\\\.\\(js\\|mjs\\|jsx\\)\\$/,
 }
 `;
