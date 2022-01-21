@@ -3,7 +3,6 @@ import fs from "fs-extra"
 import { testRequireError } from "../utils/test-require-error"
 import { resolveModule } from "../utils/module-resolver"
 import report from "gatsby-cli/lib/reporter"
-import path from "path"
 
 function isNearMatch(
   fileName: string | undefined,
@@ -22,21 +21,12 @@ export async function getConfigFile(
   configModule: any
   configFilePath: string
 }> {
-  const configPath = resolveModule(rootDir, `./${configName}`)
-
-  if (!configPath) {
-    report.panic({
-      id: `10123`,
-      context: {
-        configName,
-        message: `resolveModule could not find anything`,
-      },
-    })
-  }
+  let configPath = ``
 
   let configFilePath = ``
   let configModule: any
   try {
+    configPath = resolveModule(rootDir, `./${configName}`) as string
     configFilePath = require.resolve(configPath)
     configModule = require(configFilePath)
   } catch (err) {
@@ -46,7 +36,8 @@ export async function getConfigFile(
         return isNearMatch(fileName, configName, distance)
       })
     )
-    if (!testRequireError(configPath, err)) {
+    const ignore = true
+    if (!testRequireError(configPath, err) && !ignore) {
       report.panic({
         id: `10123`,
         error: err,
@@ -62,13 +53,6 @@ export async function getConfigFile(
         context: {
           configName,
           nearMatch,
-        },
-      })
-    } else if (resolveModule(path.join(rootDir, `src`), `./${configName}`)) {
-      report.panic({
-        id: `10125`,
-        context: {
-          configName,
         },
       })
     }
