@@ -51,6 +51,11 @@ describe(`webpack utils`, () => {
         ],
       })
     })
+    /**
+     * Test individual rule matching only, webpack's `oneOf` functionality is covered in their tests.
+     * @see {@link https://webpack.js.org/configuration/module/#ruleoneof} // webpack docs
+     * @see {@link https://github.com/webpack/webpack/search?q=oneOf+AND+it%28} // webpack source
+     */
     describe(`page template rule resource query regex`, () => {
       let js
       let pageTemplateRule
