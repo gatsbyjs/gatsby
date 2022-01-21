@@ -98,7 +98,21 @@ describe(`always (direct visits)`, () => {
   beforeEach(() => {
     cy.visit(`/`).waitForRouteChange()
   })
+
   it(`page-creator`, () => {
+    cy.intercept(/^\/page-2\/$/, req => {
+      req.continue(res => {
+        expect(res.statusCode).to.equal(200)
+      })
+    })
+
+    cy.intercept(/^\/page-2$/, req => {
+      req.continue(res => {
+        expect(res.statusCode).to.equal(301)
+        expect(res.headers.location).to.equal("/page-2/")
+      })
+    })
+
     cy.visit(`/page-2`).waitForRouteChange().assertRoute(`/page-2/`)
   })
   it(`create-page with`, () => {

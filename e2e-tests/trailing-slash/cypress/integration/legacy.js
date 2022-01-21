@@ -100,11 +100,25 @@ describe(`legacy (direct visits)`, () => {
   beforeEach(() => {
     cy.visit(`/`).waitForRouteChange()
   })
+
   it(`page-creator`, () => {
+    cy.intercept(/^\/page-2\/$/, req => {
+      req.continue(res => {
+        expect(res.statusCode).to.equal(200)
+      })
+    })
+
+    cy.intercept(/^\/page-2$/, req => {
+      req.continue(res => {
+        expect(res.statusCode).to.equal(200)
+      })
+    })
+
     cy.visit(`/page-2`)
       .waitForRouteChange()
       .assertRoute(IS_BUILD ? `/page-2/` : `/page-2`)
   })
+
   it(`create-page with`, () => {
     cy.visit(`/create-page/with/`)
       .waitForRouteChange()
