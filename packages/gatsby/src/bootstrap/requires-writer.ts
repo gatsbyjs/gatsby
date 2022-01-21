@@ -259,7 +259,7 @@ const preferDefault = m => (m && m.default) || m
       )
 
       return `  "${c.componentChunkName}": () => import("${slash(
-        `./${relativeComponentPath}?page-template`
+        `./${relativeComponentPath}`
       )}" /* webpackChunkName: "${c.componentChunkName}" */)`
     })
     .join(`,\n`)}

@@ -33,7 +33,7 @@ exports[`webpack utils js returns default values without any options 1`] = `
 Object {
   "oneOf": Array [
     Object {
-      "resourceQuery": /page-template/,
+      "issuer": /async-requires/,
       "type": "javascript/auto",
       "use": Array [
         Object {

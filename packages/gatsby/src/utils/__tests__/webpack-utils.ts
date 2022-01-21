@@ -56,7 +56,7 @@ describe(`webpack utils`, () => {
      * @see {@link https://webpack.js.org/configuration/module/#ruleoneof} // webpack docs
      * @see {@link https://github.com/webpack/webpack/search?q=oneOf+AND+it%28} // webpack source
      */
-    describe(`page template rule resource query regex`, () => {
+    describe(`page template rule issuer regex`, () => {
       let js
       let pageTemplateRule
       beforeAll(() => {
@@ -72,42 +72,42 @@ describe(`webpack utils`, () => {
       })
       it(`matches page template files from user code`, () => {
         expect(
-          pageTemplateRule.resourceQuery.test(
-            `/Users/sidharthachatterjee/Code/gatsby-seo-test/src/pages/index.js?page-template` // Simulates import from async-requires
+          pageTemplateRule.issuer.test(
+            `/Users/sidharthachatterjee/Code/gatsby-seo-test/.cache/_this_is_virtual_fs_path_/$virtual/async-requires.js`
           )
         ).toEqual(true)
       })
       it(`does not match other files from user code`, () => {
         expect(
-          pageTemplateRule.resourceQuery.test(
+          pageTemplateRule.issuer.test(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/src/pages/index.js`
           )
         ).toEqual(false)
       })
       it(`does not match files from .cache`, () => {
         expect(
-          pageTemplateRule.resourceQuery.test(
+          pageTemplateRule.issuer.test(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/.cache/production-app.js`
           )
         ).toEqual(false)
       })
       it(`does not match dependencies that use gatsby`, () => {
         expect(
-          pageTemplateRule.resourceQuery.test(
+          pageTemplateRule.issuer.test(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/gatsby-seo/index.js`
           )
         ).toEqual(false)
       })
       it(`does not match other dependencies`, () => {
         expect(
-          pageTemplateRule.resourceQuery.test(
+          pageTemplateRule.issuer.test(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/node_modules/react/index.js`
           )
         ).toEqual(false)
       })
       it(`does not include gatsby-browser.js`, () => {
         expect(
-          pageTemplateRule.resourceQuery.test(
+          pageTemplateRule.issuer.test(
             `/Users/sidharthachatterjee/Code/gatsby-seo-test/gatsby-browser.js`
           )
         ).toEqual(false)
