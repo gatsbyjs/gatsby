@@ -1,13 +1,14 @@
 // @ts-check
 import {
-  buildEntryList,
-  buildResolvableSet,
   buildForeignReferenceMap,
-  createNodesForContentType,
+  createNodes,
+  createContentTypeNodes,
+  buildResolvableSet,
   createAssetNodes,
   buildFallbackChain,
   getLocalizedField,
   makeId,
+  buildContentTypeMap,
 } from "../normalize"
 import { createPluginConfig } from "../plugin-options"
 
@@ -49,39 +50,12 @@ function countCreatedNodeTypesFromMock(mock) {
 }
 
 describe(`generic`, () => {
-  it(`builds entry list`, () => {
-    const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
-      contentTypeItems,
-    })
-
-    expect(entryList).toHaveLength(contentTypeItems.length)
-
-    expect(entryList[0][0].sys.contentType.sys.id).toBe(
-      `6XwpTaSiiI2Ak2Ww0oi6qa`
-    )
-    expect(entryList[0]).toHaveLength(2)
-    expect(entryList[1][0].sys.contentType.sys.id).toBe(`sFzTZbSuM8coEwygeUYes`)
-    expect(entryList[1]).toHaveLength(3)
-    expect(entryList[2][0].sys.contentType.sys.id).toBe(
-      `2PqfXUJwE8qSYKuM0U6w8M`
-    )
-    expect(entryList[2]).toHaveLength(4)
-    expect(entryList[3][0].sys.contentType.sys.id).toBe(`jsonTest`)
-    expect(entryList[3]).toHaveLength(1)
-
-    expect(entryList[4][0].sys.contentType.sys.id).toBe(`remarkTest`)
-  })
-
   it(`builds list of resolvable data`, () => {
-    const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
-      contentTypeItems,
-    })
+    const { entries } = currentSyncData
 
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
-      entryList,
+      entries,
     })
 
     const allNodes = [...currentSyncData.entries, ...currentSyncData.assets]
@@ -91,23 +65,26 @@ describe(`generic`, () => {
     )
   })
   it(`builds foreignReferenceMap`, () => {
-    const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
-      contentTypeItems,
-    })
+    const { entries } = currentSyncData
 
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
-      entryList,
+      entries,
+    })
+
+    const contentTypeMap = buildContentTypeMap({
+      contentTypeItems,
+      restrictedNodeFields,
+      conflictFieldPrefix,
+      useNameForId: true,
     })
 
     const foreignReferenceMap = buildForeignReferenceMap({
-      contentTypeItems,
-      entryList,
+      contentTypeMap,
+      entries,
       resolvable,
       defaultLocale,
       space,
-      useNameForId: true,
     })
     const referenceKeys = Object.keys(foreignReferenceMap)
     const expectedReferenceKeys = [
@@ -145,24 +122,40 @@ describe(`generic`, () => {
 })
 
 describe(`Process contentful data (by name)`, () => {
-  it(`builds foreignReferenceMap`, () => {
-    const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
+  it(`builds contentTypeMap`, () => {
+    const contentTypeMap = buildContentTypeMap({
       contentTypeItems,
+      restrictedNodeFields,
+      conflictFieldPrefix,
+      useNameForId: true,
     })
+    contentTypeItems.forEach(contentType => {
+      expect(contentTypeMap.has(contentType.name))
+    })
+    expect(contentTypeMap.size).toBe(contentTypeItems.length)
+  })
+
+  it(`builds foreignReferenceMap`, () => {
+    const { entries } = currentSyncData
 
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
-      entryList,
+      entries,
+    })
+
+    const contentTypeMap = buildContentTypeMap({
+      contentTypeItems,
+      restrictedNodeFields,
+      conflictFieldPrefix,
+      useNameForId: true,
     })
 
     const foreignReferenceMap = buildForeignReferenceMap({
-      contentTypeItems,
-      entryList,
+      contentTypeMap,
+      entries,
       resolvable,
       defaultLocale,
       space,
-      useNameForId: true,
     })
 
     expect(foreignReferenceMap[`24DPGBDeGEaYy8ms4Y8QMQ___Entry`][0].name).toBe(
@@ -175,46 +168,53 @@ describe(`Process contentful data (by name)`, () => {
   })
 
   it(`creates nodes for each entry`, () => {
-    const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
-      contentTypeItems,
-    })
+    const { entries } = currentSyncData
 
     const resolvable = buildResolvableSet({
       assets: currentSyncData.assets,
-      entryList,
+      entries,
+    })
+
+    const contentTypeMap = buildContentTypeMap({
+      contentTypeItems,
+      restrictedNodeFields,
+      conflictFieldPrefix,
+      useNameForId: true,
     })
 
     const foreignReferenceMap = buildForeignReferenceMap({
-      contentTypeItems,
-      entryList,
+      contentTypeMap,
+      entries,
       resolvable,
       defaultLocale,
       space,
-      useNameForId: true,
     })
 
     const createNode = jest.fn()
     const createNodeId = jest.fn(id => id)
     const getNode = jest.fn(() => undefined) // All nodes are new
-    contentTypeItems.forEach((contentTypeItem, i) => {
-      createNodesForContentType({
-        contentTypeItem,
-        restrictedNodeFields,
-        conflictFieldPrefix,
-        entries: entryList[i],
-        createNode,
-        createNodeId,
-        getNode,
-        resolvable,
-        foreignReferenceMap,
-        defaultLocale,
-        locales,
-        space,
-        useNameForId: true,
-        pluginConfig,
-        unstable_createNodeManifest,
-      })
+
+    createContentTypeNodes({
+      contentTypeMap,
+      createNode,
+      createNodeId,
+    })
+
+    createNodes({
+      contentTypeMap,
+      restrictedNodeFields,
+      conflictFieldPrefix,
+      entries,
+      createNode,
+      createNodeId,
+      getNode,
+      resolvable,
+      foreignReferenceMap,
+      defaultLocale,
+      locales,
+      space,
+      pluginConfig,
+      unstable_createNodeManifest: null,
     })
 
     const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
@@ -274,27 +274,29 @@ describe(`Process contentful data (by name)`, () => {
 
 describe(`Skip existing nodes in warm build`, () => {
   it(`creates nodes for each entry`, () => {
-    const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
-      contentTypeItems,
-    })
-
+    const createNode = jest.fn()
+    const createNodeId = jest.fn(id => id)
+    const { entries, assets } = currentSyncData
     const resolvable = buildResolvableSet({
-      assets: currentSyncData.assets,
-      entryList,
+      assets,
+      entries,
     })
 
-    const foreignReferenceMap = buildForeignReferenceMap({
+    const contentTypeMap = buildContentTypeMap({
       contentTypeItems,
-      entryList,
-      resolvable,
-      defaultLocale,
-      space,
+      restrictedNodeFields,
+      conflictFieldPrefix,
       useNameForId: true,
     })
 
-    const createNode = jest.fn()
-    const createNodeId = jest.fn(id => id)
+    const foreignReferenceMap = buildForeignReferenceMap({
+      contentTypeMap,
+      entries,
+      resolvable,
+      defaultLocale,
+      space,
+    })
+
     let doReturn = true
     const getNode = jest.fn(id => {
       if (doReturn) {
@@ -304,30 +306,33 @@ describe(`Skip existing nodes in warm build`, () => {
         // returned is not relevant to test so update if anything breaks.
         return {
           id,
-          internal: { contentDigest: entryList[0][0].sys.updatedAt },
+          internal: { contentDigest: entries[0].sys.updatedAt },
         }
       }
       // All other nodes are new ("unknown")
       return undefined
     })
-    contentTypeItems.forEach((contentTypeItem, i) => {
-      createNodesForContentType({
-        contentTypeItem,
-        restrictedNodeFields,
-        conflictFieldPrefix,
-        entries: entryList[i],
-        createNode,
-        createNodeId,
-        getNode,
-        resolvable,
-        foreignReferenceMap,
-        defaultLocale,
-        locales,
-        space,
-        useNameForId: true,
-        pluginConfig,
-        unstable_createNodeManifest,
-      })
+    createContentTypeNodes({
+      contentTypeMap,
+      createNode,
+      createNodeId,
+    })
+
+    createNodes({
+      contentTypeMap,
+      restrictedNodeFields,
+      conflictFieldPrefix,
+      entries,
+      createNode,
+      createNodeId,
+      getNode,
+      resolvable,
+      foreignReferenceMap,
+      defaultLocale,
+      locales,
+      space,
+      pluginConfig,
+      unstable_createNodeManifest: null,
     })
 
     const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
@@ -363,27 +368,28 @@ describe(`Skip existing nodes in warm build`, () => {
 
 describe(`Process existing mutated nodes in warm build`, () => {
   it(`creates nodes for each entry`, () => {
-    const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
-      contentTypeItems,
-    })
-
+    const createNode = jest.fn()
+    const createNodeId = jest.fn(id => id)
+    const { entries, assets } = currentSyncData
     const resolvable = buildResolvableSet({
-      assets: currentSyncData.assets,
-      entryList,
+      assets,
+      entries,
     })
-
-    const foreignReferenceMap = buildForeignReferenceMap({
+    const contentTypeMap = buildContentTypeMap({
       contentTypeItems,
-      entryList,
-      resolvable,
-      defaultLocale,
-      space,
+      restrictedNodeFields,
+      conflictFieldPrefix,
       useNameForId: true,
     })
 
-    const createNode = jest.fn()
-    const createNodeId = jest.fn(id => id)
+    const foreignReferenceMap = buildForeignReferenceMap({
+      contentTypeMap,
+      entries,
+      resolvable,
+      defaultLocale,
+      space,
+    })
+
     let doReturn = true
     const getNode = jest.fn(id => {
       if (doReturn) {
@@ -394,31 +400,34 @@ describe(`Process existing mutated nodes in warm build`, () => {
         return {
           id,
           internal: {
-            contentDigest: entryList[0][0].sys.updatedAt + `changed`,
+            contentDigest: entries[0].sys.updatedAt + `changed`,
           },
         }
       }
       // All other nodes are new ("unknown")
       return undefined
     })
-    contentTypeItems.forEach((contentTypeItem, i) => {
-      createNodesForContentType({
-        contentTypeItem,
-        restrictedNodeFields,
-        conflictFieldPrefix,
-        entries: entryList[i],
-        createNode,
-        createNodeId,
-        getNode,
-        resolvable,
-        foreignReferenceMap,
-        defaultLocale,
-        locales,
-        space,
-        useNameForId: true,
-        pluginConfig,
-        unstable_createNodeManifest,
-      })
+    createContentTypeNodes({
+      contentTypeMap,
+      createNode,
+      createNodeId,
+    })
+
+    createNodes({
+      contentTypeMap,
+      restrictedNodeFields,
+      conflictFieldPrefix,
+      entries,
+      createNode,
+      createNodeId,
+      getNode,
+      resolvable,
+      foreignReferenceMap,
+      defaultLocale,
+      locales,
+      space,
+      pluginConfig,
+      unstable_createNodeManifest: null,
     })
 
     const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
@@ -457,72 +466,96 @@ describe(`Process existing mutated nodes in warm build`, () => {
 })
 
 describe(`Process contentful data (by id)`, () => {
+  it(`builds contentTypeMap`, () => {
+    const contentTypeMap = buildContentTypeMap({
+      contentTypeItems,
+      restrictedNodeFields,
+      conflictFieldPrefix,
+      useNameForId: true,
+    })
+    contentTypeItems.forEach(contentType => {
+      expect(contentTypeMap.has(contentType.sys.id))
+    })
+    expect(contentTypeMap.size).toBe(contentTypeItems.length)
+  })
+
   it(`builds foreignReferenceMap`, () => {
-    const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
-      contentTypeItems,
-    })
+    const { entries, assets } = currentSyncData
     const resolvable = buildResolvableSet({
-      assets: currentSyncData.assets,
-      entryList,
+      assets,
+      entries,
     })
-    const foreignReferenceMap = buildForeignReferenceMap({
+
+    const contentTypeMap = buildContentTypeMap({
       contentTypeItems,
-      entryList,
-      resolvable,
-      defaultLocale,
-      space,
+      restrictedNodeFields,
+      conflictFieldPrefix,
       useNameForId: false,
     })
 
+    const foreignReferenceMap = buildForeignReferenceMap({
+      contentTypeMap,
+      entries,
+      resolvable,
+      defaultLocale,
+      space,
+    })
+
     expect(foreignReferenceMap[`24DPGBDeGEaYy8ms4Y8QMQ___Entry`][0].name).toBe(
-      `2pqfxujwe8qsykum0u6w8m___NODE`
+      `2PqfXUJwE8qSYKuM0U6w8M___NODE`
     )
 
     expect(foreignReferenceMap[`2Y8LhXLnYAYqKCGEWG4EKI___Asset`][0].name).toBe(
-      `sfztzbsum8coewygeuyes___NODE`
+      `sFzTZbSuM8coEwygeUYes___NODE`
     )
   })
 
   it(`creates nodes for each entry`, () => {
-    const entryList = buildEntryList({
-      mergedSyncData: currentSyncData,
-      contentTypeItems,
-    })
+    const { entries, assets } = currentSyncData
     const resolvable = buildResolvableSet({
-      assets: currentSyncData.assets,
-      entryList,
+      assets,
+      entries,
     })
-    const foreignReferenceMap = buildForeignReferenceMap({
+
+    const contentTypeMap = buildContentTypeMap({
       contentTypeItems,
-      entryList,
-      resolvable,
-      defaultLocale,
-      space,
+      restrictedNodeFields,
+      conflictFieldPrefix,
       useNameForId: false,
     })
 
+    const foreignReferenceMap = buildForeignReferenceMap({
+      contentTypeMap,
+      entries,
+      resolvable,
+      defaultLocale,
+      space,
+    })
     const createNode = jest.fn()
     const createNodeId = jest.fn(id => id)
+
     const getNode = jest.fn(() => undefined) // All nodes are new
-    contentTypeItems.forEach((contentTypeItem, i) => {
-      createNodesForContentType({
-        contentTypeItem,
-        restrictedNodeFields,
-        conflictFieldPrefix,
-        entries: entryList[i],
-        createNode,
-        createNodeId,
-        getNode,
-        resolvable,
-        foreignReferenceMap,
-        defaultLocale,
-        locales,
-        space,
-        useNameForId: false,
-        pluginConfig,
-        unstable_createNodeManifest,
-      })
+    createContentTypeNodes({
+      contentTypeMap,
+      createNode,
+      createNodeId,
+    })
+
+    createNodes({
+      contentTypeMap,
+      restrictedNodeFields,
+      conflictFieldPrefix,
+      entries,
+      createNode,
+      createNodeId,
+      getNode,
+      resolvable,
+      foreignReferenceMap,
+      defaultLocale,
+      locales,
+      space,
+      pluginConfig,
+      unstable_createNodeManifest: null,
     })
     const nodeTypeCounts = countCreatedNodeTypesFromMock(createNode.mock)
 

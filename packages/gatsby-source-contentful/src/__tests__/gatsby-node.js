@@ -52,11 +52,10 @@ describe(`gatsby-node`, () => {
     },
   }
   const parentSpan = {}
-  const createNodeId = jest.fn(value => value)
+  const createNodeId = jest.fn(id => id)
   let currentNodeMap
   const getNodes = () => Array.from(currentNodeMap.values())
   const getNode = id => currentNodeMap.get(id)
-  const getNodesByType = jest.fn()
 
   const getFieldValue = (value, locale, defaultLocale) =>
     value[locale] ?? value[defaultLocale]
@@ -74,7 +73,6 @@ describe(`gatsby-node`, () => {
         actions,
         getNode,
         getNodes,
-        getNodesByType,
         createNodeId,
         store,
         cache,
@@ -88,8 +86,9 @@ describe(`gatsby-node`, () => {
 
   const testIfContentTypesExists = contentTypeItems => {
     contentTypeItems.forEach(contentType => {
-      const contentTypeId = createNodeId(contentType.name)
-      expect(getNode(contentTypeId)).toMatchObject({
+      expect(
+        getNode(createNodeId(contentType.name.toLowerCase()))
+      ).toMatchObject({
         name: contentType.name,
         displayField: contentType.displayField,
         description: contentType.description,
@@ -385,13 +384,15 @@ describe(`gatsby-node`, () => {
     const createdBlogEntry =
       startersBlogFixture.createBlogPost().currentSyncData.entries[0]
     const createdBlogEntryIds = locales.map(locale =>
-      makeId({
-        spaceId: createdBlogEntry.sys.space.sys.id,
-        currentLocale: locale,
-        defaultLocale: locales[0],
-        id: createdBlogEntry.sys.id,
-        type: createdBlogEntry.sys.type,
-      })
+      createNodeId(
+        makeId({
+          spaceId: createdBlogEntry.sys.space.sys.id,
+          currentLocale: locale,
+          defaultLocale: locales[0],
+          id: createdBlogEntry.sys.id,
+          type: createdBlogEntry.sys.type,
+        })
+      )
     )
 
     // initial sync
@@ -433,13 +434,15 @@ describe(`gatsby-node`, () => {
     const updatedBlogEntry =
       startersBlogFixture.updateBlogPost().currentSyncData.entries[0]
     const updatedBlogEntryIds = locales.map(locale =>
-      makeId({
-        spaceId: updatedBlogEntry.sys.space.sys.id,
-        currentLocale: locale,
-        defaultLocale: locales[0],
-        id: updatedBlogEntry.sys.id,
-        type: updatedBlogEntry.sys.type,
-      })
+      createNodeId(
+        makeId({
+          spaceId: updatedBlogEntry.sys.space.sys.id,
+          currentLocale: locale,
+          defaultLocale: locales[0],
+          id: updatedBlogEntry.sys.id,
+          type: updatedBlogEntry.sys.type,
+        })
+      )
     )
 
     // initial sync
@@ -487,13 +490,15 @@ describe(`gatsby-node`, () => {
       ? removedBlogEntry.sys.type.substring(`Deleted`.length)
       : removedBlogEntry.sys.type
     const removedBlogEntryIds = locales.map(locale =>
-      makeId({
-        spaceId: removedBlogEntry.sys.space.sys.id,
-        currentLocale: locale,
-        defaultLocale: locales[0],
-        id: removedBlogEntry.sys.id,
-        type: normalizedType,
-      })
+      createNodeId(
+        makeId({
+          spaceId: removedBlogEntry.sys.space.sys.id,
+          currentLocale: locale,
+          defaultLocale: locales[0],
+          id: removedBlogEntry.sys.id,
+          type: normalizedType,
+        })
+      )
     )
 
     // initial sync
@@ -551,13 +556,15 @@ describe(`gatsby-node`, () => {
     const removedAssetEntry =
       startersBlogFixture.createBlogPost().currentSyncData.entries[0]
     const removedAssetEntryIds = locales.map(locale =>
-      makeId({
-        spaceId: removedAssetEntry.sys.space.sys.id,
-        currentLocale: locale,
-        defaultLocale: locales[0],
-        id: removedAssetEntry.sys.id,
-        type: removedAssetEntry.sys.type,
-      })
+      createNodeId(
+        makeId({
+          spaceId: removedAssetEntry.sys.space.sys.id,
+          currentLocale: locale,
+          defaultLocale: locales[0],
+          id: removedAssetEntry.sys.id,
+          type: removedAssetEntry.sys.type,
+        })
+      )
     )
 
     // initial sync

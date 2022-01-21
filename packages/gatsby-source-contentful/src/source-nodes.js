@@ -1,17 +1,17 @@
 // @ts-check
-import { createClient } from "contentful"
 import isOnline from "is-online"
 import _ from "lodash"
 
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
 import {
-  buildEntryList,
   buildForeignReferenceMap,
-  buildResolvableSet,
   createAssetNodes,
-  createNodesForContentType,
+  createNodes,
+  createContentTypeNodes,
   makeId,
+  buildResolvableSet,
+  buildContentTypeMap,
 } from "./normalize"
 import { createPluginConfig } from "./plugin-options"
 import { CODES } from "./report"
@@ -231,61 +231,9 @@ export async function sourceNodes(
   )
   processingActivity.start()
 
-  // Store a raw and unresolved copy of the data for caching
-  const mergedSyncDataRaw = _.cloneDeep(mergedSyncData)
+  const { assets, entries } = mergedSyncData
 
-  // Use the JS-SDK to resolve the entries and assets
-  const res = await createClient({
-    space: `none`,
-    accessToken: `fake-access-token`,
-  }).parseEntries({
-    items: mergedSyncData.entries,
-    includes: {
-      assets: mergedSyncData.assets,
-      entries: mergedSyncData.entries,
-    },
-  })
-
-  mergedSyncData.entries = res.items
-
-  // Inject raw API output to rich text fields
-  const richTextFieldMap = new Map()
-  contentTypeItems.forEach(contentType => {
-    richTextFieldMap.set(
-      contentType.sys.id,
-      contentType.fields
-        .filter(field => field.type === `RichText`)
-        .map(field => field.id)
-    )
-  })
-
-  const rawEntries = new Map()
-  mergedSyncDataRaw.entries.forEach(rawEntry =>
-    rawEntries.set(rawEntry.sys.id, rawEntry)
-  )
-
-  mergedSyncData.entries.forEach(entry => {
-    const contentTypeId = entry.sys.contentType.sys.id
-    const richTextFieldIds = richTextFieldMap.get(contentTypeId)
-    if (richTextFieldIds) {
-      richTextFieldIds.forEach(richTextFieldId => {
-        if (!entry.fields[richTextFieldId]) {
-          return
-        }
-        entry.fields[richTextFieldId] = rawEntries.get(entry.sys.id).fields[
-          richTextFieldId
-        ]
-      })
-    }
-  })
-
-  const { assets } = mergedSyncData
-
-  const entryList = buildEntryList({
-    mergedSyncData,
-    contentTypeItems,
-  })
-
+  // Array of all existing Contentful nodes
   const existingNodes = getNodes().filter(
     n =>
       n.internal.owner === `gatsby-source-contentful` &&
@@ -297,48 +245,49 @@ export async function sourceNodes(
 
   // Create map of resolvable ids so we can check links against them while creating
   // links.
-  const resolvable = buildResolvableSet({
-    existingNodes,
-    entryList,
-    assets,
+  const resolvable = buildResolvableSet({ entries, assets })
+
+  const contentTypeMap = buildContentTypeMap({
+    contentTypeItems,
+    restrictedNodeFields,
+    conflictFieldPrefix,
+    useNameForId: pluginConfig.get(`useNameForId`),
   })
 
   // Build foreign reference map before starting to insert any nodes
   const foreignReferenceMap = buildForeignReferenceMap({
-    contentTypeItems,
-    entryList,
+    contentTypeMap,
+    entries,
     resolvable,
     defaultLocale,
     space,
-    useNameForId: pluginConfig.get(`useNameForId`),
   })
 
   reporter.verbose(`Resolving Contentful references`)
 
   const newOrUpdatedEntries = new Set()
-  entryList.forEach(entries => {
-    entries.forEach(entry => {
-      newOrUpdatedEntries.add(`${entry.sys.id}___${entry.sys.type}`)
-    })
+  currentSyncData.entries.forEach(entry => {
+    newOrUpdatedEntries.add(`${entry.sys.id}___${entry.sys.type}`)
   })
 
-  // Update existing entry nodes that weren't updated but that need reverse
-  // links added.
+  // Update existing entry nodes that weren't updated but that need reverse links added.
   existingNodes
-    .filter(n => newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`))
+    .filter(n => !newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`))
     .forEach(n => {
       if (foreignReferenceMap[`${n.id}___${n.sys.type}`]) {
         foreignReferenceMap[`${n.id}___${n.sys.type}`].forEach(
           foreignReference => {
-            // Add reverse links
-            if (n[foreignReference.name]) {
-              n[foreignReference.name].push(foreignReference.id)
-              // It might already be there so we'll uniquify after pushing.
-              n[foreignReference.name] = _.uniq(n[foreignReference.name])
-            } else {
-              // If is one foreign reference, there can always be many.
-              // Best to be safe and put it in an array to start with.
-              n[foreignReference.name] = [foreignReference.id]
+            const { name, id } = foreignReference
+
+            // Create new reference field when none exists
+            if (!n[name]) {
+              n[name] = [id]
+              return
+            }
+
+            // Add non existing references to reference field
+            if (n[name] && !n[name].includes(id)) {
+              n[name].push(id)
             }
           }
         )
@@ -395,28 +344,24 @@ export async function sourceNodes(
   )
   creationActivity.start()
 
-  for (let i = 0; i < contentTypeItems.length; i++) {
-    const contentTypeItem = contentTypeItems[i]
+  await Promise.all(
+    createContentTypeNodes({
+      contentTypeMap,
+      createNode,
+      createNodeId,
+    })
+  )
 
-    if (entryList[i].length) {
-      reporter.info(
-        `Creating ${entryList[i].length} Contentful ${
-          pluginConfig.get(`useNameForId`)
-            ? contentTypeItem.name
-            : contentTypeItem.sys.id
-        } nodes`
-      )
-    }
+  if (entries.length) {
+    reporter.info(`Creating ${entries.length} Contentful Entry nodes`)
 
-    // A contentType can hold lots of entries which create nodes
-    // We wait until all nodes are created and processed until we handle the next one
     // TODO add batching in gatsby-core
     await Promise.all(
-      createNodesForContentType({
-        contentTypeItem,
+      createNodes({
+        contentTypeMap,
         restrictedNodeFields,
         conflictFieldPrefix,
-        entries: entryList[i],
+        entries,
         createNode,
         createNodeId,
         getNode,
@@ -425,7 +370,6 @@ export async function sourceNodes(
         defaultLocale,
         locales,
         space,
-        useNameForId: pluginConfig.get(`useNameForId`),
         pluginConfig,
         unstable_createNodeManifest,
       })
